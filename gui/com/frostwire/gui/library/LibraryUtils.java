@@ -476,27 +476,37 @@ public class LibraryUtils {
 
     public static boolean directoryContainsAudio(File directory, int depth) {
         Set<File> ignore = TorrentUtil.getIgnorableFiles();
-        return directoryContainsAudio(directory, depth, ignore);
+        return directoryContainsExtension(directory, depth, ignore, AudioPlayer.getPlayableExtensions());
     }
 
     public static boolean directoryContainsAudio(File directory) {
         Set<File> ignore = TorrentUtil.getIgnorableFiles();
-        return directoryContainsAudio(directory, 4, ignore);
+        return directoryContainsExtension(directory, 4, ignore, AudioPlayer.getPlayableExtensions());
     }
 
-    private static boolean directoryContainsAudio(File directory, int depth, Set<File> ignore) {
+    public static boolean directoryContainsExtension(File directory, int depth, String extensionWithoutDot) {
+        Set<File> ignore = TorrentUtil.getIgnorableFiles();
+        return directoryContainsExtension(directory, depth, ignore, extensionWithoutDot);
+    }
+
+    public static boolean directoryContainsExtension(File directory, String ... extensionWithoutDot) {
+        Set<File> ignore = TorrentUtil.getIgnorableFiles();
+        return directoryContainsExtension(directory, 4, ignore, extensionWithoutDot);
+    }
+
+    private static boolean directoryContainsExtension(File directory, int depth, Set<File> ignore, String ... extensionWithoutDot) {
         if (directory == null || !directory.isDirectory()) {
             return false;
         }
 
         for (File childFile : directory.listFiles()) {
             if (!childFile.isDirectory()) {
-                if (AudioPlayer.isPlayableFile(childFile) && !ignore.contains(childFile)) {
+                if (FilenameUtils.hasExtension(childFile.getAbsolutePath(), extensionWithoutDot) && !ignore.contains(childFile)) {
                     return true;
                 }
             } else {
                 if (depth > 0) {
-                    if (directoryContainsAudio(childFile, depth - 1, ignore)) {
+                    if (directoryContainsExtension(childFile, depth - 1, ignore, extensionWithoutDot)) {
                         return true;
                     }
                 }

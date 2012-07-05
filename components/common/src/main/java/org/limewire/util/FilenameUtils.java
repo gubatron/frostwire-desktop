@@ -969,6 +969,19 @@ public class FilenameUtils {
             return filename.substring(index + 1);
         }
     }
+    
+    public static boolean hasExtension(String filename, String ... extensionsWithoutDot) {
+
+        String extension = getExtension(filename).toLowerCase();
+        
+        for (String ext : extensionsWithoutDot) {
+            if (ext.equalsIgnoreCase(extension)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 
     //-----------------------------------------------------------------------
     /**

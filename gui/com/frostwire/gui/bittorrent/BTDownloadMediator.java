@@ -33,6 +33,7 @@ import jd.plugins.FilePackage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
@@ -569,8 +570,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         boolean isTransferFinished = dataLine.getInitializeObject().isCompleted();
 
         File saveLocation = dataLine.getInitializeObject().getSaveLocation();
+        
         boolean hasAudioFiles = selectionHasAudioFiles(saveLocation);
-
+        boolean hasMP4s = selectionHasMP4s(saveLocation);
+        
         boolean isSingleFile = selectionIsSingleFile(saveLocation);
 
         removeAction.putValue(Action.NAME, I18n.tr("Cancel Download"));
@@ -588,7 +591,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         copyMagnetAction.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
         copyHashAction.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
 
-        sendToItunesAction.setEnabled(isTransferFinished && hasAudioFiles);
+        sendToItunesAction.setEnabled(isTransferFinished && (hasAudioFiles || hasMP4s));
 
         shareTorrentAction.setEnabled(getSelectedDownloaders().length == 1 && dataLine.getInitializeObject().isPausable());
 
@@ -597,6 +600,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         removeYouTubeAction.setEnabled(isYouTubeDownload(dataLine.getInitializeObject()));
         BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
         BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
+    }
+
+    private boolean selectionHasMP4s(File saveLocation) {
+        boolean hasMP4Files = saveLocation != null && (LibraryUtils.directoryContainsExtension(saveLocation, 4, "mp4") || (saveLocation.isFile() && FilenameUtils.hasExtension(saveLocation.getAbsolutePath(), "mp4")));
+        return hasMP4Files;
     }
 
     private boolean selectionIsSingleFile(File saveLocation) {

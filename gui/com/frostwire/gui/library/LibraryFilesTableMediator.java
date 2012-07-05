@@ -690,7 +690,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             	boolean atLeastOneIsPlayable  = false;
             	
             	for (int i : sel) {
-            		if (AudioPlayer.isPlayableFile(getFile(i))) {
+            	    File f = getFile(i);
+            		if (AudioPlayer.isPlayableFile(f) || FilenameUtils.hasExtension(f.getAbsolutePath(), "mp4")) {
             			atLeastOneIsPlayable = true;
             			break;
             		}
@@ -698,7 +699,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             	
             	SEND_TO_ITUNES_ACTION.setEnabled(atLeastOneIsPlayable);
             } else {
-            	SEND_TO_ITUNES_ACTION.setEnabled(getMediaType().equals(MediaType.getAudioMediaType()));
+            	SEND_TO_ITUNES_ACTION.setEnabled(getMediaType().equals(MediaType.getAudioMediaType()) || FilenameUtils.hasExtension(selectedFile.getAbsolutePath(), "mp4") );
             }
         }
 

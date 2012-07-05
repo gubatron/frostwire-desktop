@@ -19,7 +19,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import com.frostwire.gui.BuyAction;
 import com.limegroup.gnutella.gui.search.SearchEngine;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ChatSettings;
@@ -415,12 +414,6 @@ public final class UpdateMessageReader implements ContentHandler {
 		// deal with the opening tag
 		if (localName.equalsIgnoreCase("update")) {
 			UpdateManager.getInstance().setServerTime(atts.getValue("time"));
-
-			// In case we want to change the default URL of buyUrls on all
-			// frostwire clients.
-			if (atts.getValue("buyUrl") != null) {
-				BuyAction.setRedirectUrl(atts.getValue("buyUrl"));
-			}
 
 			if (atts.getValue("torrentDetailsUrl") != null
 					&& atts.getValue("torrentDetailsUrl").length() > 0) {

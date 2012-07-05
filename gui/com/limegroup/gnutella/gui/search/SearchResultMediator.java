@@ -39,7 +39,6 @@ import javax.swing.table.TableColumnModel;
 
 import org.limewire.i18n.I18nMarker;
 
-import com.frostwire.gui.BuyAction;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.GUID;
@@ -122,16 +121,10 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     private ActionListener COPY_HASH_ACTION_LISTENER;
 
     ActionListener CONFIGURE_SHARING_LISTENER;
-    /**
-     * The BUY this item listener
-     */
-    ActionListener BUY_LISTENER;
     
     ActionListener DOWNLOAD_PARTIAL_FILES_LISTENER;
     
     ActionListener STOP_SEARCH_LISTENER;
-    
-    public BuyAction BUY_ACTION;    
     
     protected Box SOUTH_PANEL;
 
@@ -158,8 +151,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         TABLE.setTransferHandler(null);
         
         SOUTH_PANEL.setVisible(false);
-        
-        BUY_ACTION = new BuyAction();
     }
     
     /**
@@ -173,8 +164,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
                 .getAnyTypeMediaType());
         
         this.guid = STOPPED_GUID;
-        
-        BUY_ACTION = new BuyAction();
     }
 
     /**
@@ -189,8 +178,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         this.guid = guid;
         setupRealTable();
         resetFilters();
-        
-        BUY_ACTION = new BuyAction();
     }    
    
     /**
@@ -255,10 +242,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         };
         
         BUTTON_ROW = new SearchButtons(this).getComponent();
-        
-        if (BUY_ACTION == null)
-        	BUY_ACTION = new BuyAction();
-
     }
     
     
@@ -422,17 +405,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
             }
         };
             
-        BUY_LISTENER = new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		SearchResultDataLine[] lines = getAllSelectedLines();
-
-        		if (lines.length == 1 && lines[0] != null) {
-        			BUY_ACTION.setTableLine(lines[0]);
-        			BUY_ACTION.actionPerformed(e);
-        		}
-        	}
-        };
-        
         DOWNLOAD_PARTIAL_FILES_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 SearchResultDataLine[] lines = getAllSelectedLines();
@@ -536,7 +508,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
      * Sets the appropriate buttons to be disabled.
      */
     public void handleNoSelection() {
-        	setButtonEnabled(SearchButtons.BUY_BUTTON_INDEX, false);
         	setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, false);
         	setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, false);
         	setButtonEnabled(SearchButtons.STOP_SEARCH_BUTTON_INDEX, !isStopped());
@@ -552,7 +523,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
     	// Buy button only enabled for single selection.
     	SearchResultDataLine[] allSelectedLines = getAllSelectedLines();
-        setButtonEnabled(SearchButtons.BUY_BUTTON_INDEX, allSelectedLines != null && allSelectedLines.length == 1);
         setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, allSelectedLines != null && allSelectedLines.length == 1);
     }
     

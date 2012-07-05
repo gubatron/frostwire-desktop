@@ -10,7 +10,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.channels.FileChannel;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -47,7 +46,9 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  */
 public class AudioPlayer implements RefreshListener {
 
-	/**
+	private static final String[] PLAYABLE_EXTENSIONS = new String[] {"mp3","ogg","wav","wma","m4a","aac","flac"};
+
+    /**
 	 * Our list of AudioPlayerListeners that are currently listening for events
 	 * from this player
 	 */
@@ -69,8 +70,6 @@ public class AudioPlayer implements RefreshListener {
 	
 	private static AudioPlayer instance;
 	
-	private static List<String> playableExtensions;
-
 	private long durationInSeconds;
 
 	public static AudioPlayer instance() {
@@ -376,14 +375,12 @@ public class AudioPlayer implements RefreshListener {
 	}
 	
 	public static boolean isPlayableFile(String filename) {
-        String name = filename.toLowerCase();
-        
-        if (playableExtensions == null) {
-        	  playableExtensions = Arrays.asList("mp3","ogg","wav","wma","m4a","aac","flac");
-        }
-        
-        return playableExtensions.contains(FilenameUtils.getExtension(name).toLowerCase());
+        return FilenameUtils.hasExtension(filename, getPlayableExtensions());
     }
+	
+	public static String[] getPlayableExtensions() {
+	    return PLAYABLE_EXTENSIONS;
+	}
 	
 	public static boolean isPlayableFile(AudioSource audioSource) {
 	    if (audioSource.getFile() != null) {

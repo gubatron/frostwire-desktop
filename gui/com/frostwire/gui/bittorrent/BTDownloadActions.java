@@ -68,8 +68,8 @@ final class BTDownloadActions {
         private static final long serialVersionUID = 8230574519252660781L;
 
         public SendBTDownloaderAudioFilesToiTunes() {
-            putValue(Action.NAME, I18n.tr("Send audio to iTunes"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send audio files to iTunes"));
+            putValue(Action.NAME, I18n.tr("Send to iTunes"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send files to iTunes"));
             //putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH")
         }
 
