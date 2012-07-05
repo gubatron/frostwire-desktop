@@ -1,9 +1,10 @@
 frostwire (5.3.8) stable; urgency=high
+  * Sends MP4 files (videos) to iTunes.
   * Better language auto-detection on configuration wizard.
   * Fixes Drag and Drop issue with iTunes >= 10.6.3.
   * Fixes issues with Monova search.
 	
- -- FrostWire Team <contact@frostwire.com>  Wed, 27 Jun 2012 16:07:05 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 5 Jul 2012 14:10:15 -0500
 	
 frostwire (5.3.7) stable; urgency=high
   * New Feature: Export playlist to iTunes. 
