@@ -25,7 +25,7 @@ import org.h2.util.New;
 import org.h2.message.DbException;
 import org.h2.message.TraceObject;
 
-/*## Java 1.6 ##
+//## Java 1.6 ##
 import javax.sql.StatementEventListener;
 //*/
 
@@ -369,7 +369,7 @@ public class JdbcXAConnection extends TraceObject implements XAConnection, XARes
      *
      * @param listener the new statement event listener
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void addStatementEventListener(StatementEventListener listener) {
         throw new UnsupportedOperationException();
     }
@@ -380,7 +380,7 @@ public class JdbcXAConnection extends TraceObject implements XAConnection, XARes
      *
      * @param listener the statement event listener
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void removeStatementEventListener(StatementEventListener listener) {
         throw new UnsupportedOperationException();
     }

@@ -26,7 +26,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-/*## Java 1.6 ##
+//## Java 1.6 ##
 import java.sql.NClob;
 import java.sql.RowId;
 import java.sql.SQLXML;
@@ -3007,7 +3007,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      *
      * @param columnIndex (1,2,...)
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public RowId getRowId(int columnIndex) throws SQLException {
         throw unsupported("rowId");
     }
@@ -3018,7 +3018,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      *
      * @param columnLabel the column label
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public RowId getRowId(String columnLabel) throws SQLException {
         throw unsupported("rowId");
     }
@@ -3030,7 +3030,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @param columnIndex (1,2,...)
      * @param x the value
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateRowId(int columnIndex, RowId x) throws SQLException {
         throw unsupported("rowId");
     }
@@ -3042,7 +3042,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @param columnLabel the column label
      * @param x the value
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateRowId(String columnLabel, RowId x) throws SQLException {
         throw unsupported("rowId");
     }
@@ -3085,7 +3085,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @param x the value
      * @throws SQLException if the result set is closed or not updatable
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNString(int columnIndex, String x) throws SQLException {
         try {
             if (isDebugEnabled()) {
@@ -3106,7 +3106,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @param x the value
      * @throws SQLException if the result set is closed or not updatable
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNString(String columnLabel, String x) throws SQLException {
         try {
             if (isDebugEnabled()) {
@@ -3123,7 +3123,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     /**
      * [Not supported]
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNClob(int columnIndex, NClob x) throws SQLException {
         throw unsupported("NClob");
     }
@@ -3132,7 +3132,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     /**
      * [Not supported]
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNClob(int columnIndex, Reader x) throws SQLException {
         throw unsupported("NClob");
     }
@@ -3141,7 +3141,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     /**
      * [Not supported]
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNClob(int columnIndex, Reader x, long length)
             throws SQLException {
         throw unsupported("NClob");
@@ -3151,7 +3151,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     /**
      * [Not supported]
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNClob(String columnLabel, Reader x)
             throws SQLException {
         throw unsupported("NClob");
@@ -3161,7 +3161,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     /**
      * [Not supported]
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNClob(String columnLabel, Reader x, long length)
             throws SQLException {
         throw unsupported("NClob");
@@ -3171,7 +3171,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     /**
      * [Not supported]
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNClob(String columnLabel, NClob x) throws SQLException {
         throw unsupported("NClob");
     }
@@ -3185,7 +3185,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @return the value
      * @throws SQLException if the column is not found or if the result set is closed
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public NClob getNClob(int columnIndex) throws SQLException {
         try {
             int id = getNextId(TraceObject.CLOB);
@@ -3205,7 +3205,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @return the value
      * @throws SQLException if the column is not found or if the result set is closed
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public NClob getNClob(String columnLabel) throws SQLException {
         try {
             int id = getNextId(TraceObject.CLOB);
@@ -3221,7 +3221,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     /**
      * [Not supported] Returns the value of the specified column as a SQLXML object.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public SQLXML getSQLXML(int columnIndex) throws SQLException {
         throw unsupported("SQLXML");
     }
@@ -3230,7 +3230,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     /**
      * [Not supported] Returns the value of the specified column as a SQLXML object.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public SQLXML getSQLXML(String columnLabel) throws SQLException {
         throw unsupported("SQLXML");
     }
@@ -3239,7 +3239,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     /**
      * [Not supported] Updates a column in the current or insert row.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateSQLXML(int columnIndex, SQLXML xmlObject)
             throws SQLException {
         throw unsupported("SQLXML");
@@ -3249,7 +3249,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     /**
      * [Not supported] Updates a column in the current or insert row.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateSQLXML(String columnLabel, SQLXML xmlObject)
             throws SQLException {
         throw unsupported("SQLXML");
@@ -3264,7 +3264,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @throws SQLException if the column is not found or if the result set is
      *             closed
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public String getNString(int columnIndex) throws SQLException {
         try {
             debugCodeCall("getNString", columnIndex);
@@ -3283,7 +3283,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @throws SQLException if the column is not found or if the result set is
      *             closed
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public String getNString(String columnLabel) throws SQLException {
         try {
             debugCodeCall("getNString", columnLabel);
@@ -3302,7 +3302,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @throws SQLException if the column is not found or if the result set is
      *             closed
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public Reader getNCharacterStream(int columnIndex) throws SQLException {
         try {
             debugCodeCall("getNCharacterStream", columnIndex);
@@ -3321,7 +3321,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @throws SQLException if the column is not found or if the result set is
      *             closed
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public Reader getNCharacterStream(String columnLabel) throws SQLException {
         try {
             debugCodeCall("getNCharacterStream", columnLabel);
@@ -3339,7 +3339,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @param x the value
      * @throws SQLException if the result set is closed or not updatable
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNCharacterStream(int columnIndex, Reader x)
             throws SQLException {
         updateNCharacterStream(columnIndex, x, -1);
@@ -3354,7 +3354,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @param length the number of characters
      * @throws SQLException if the result set is closed or not updatable
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNCharacterStream(int columnIndex, Reader x, long length)
             throws SQLException {
         try {
@@ -3377,7 +3377,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @param x the value
      * @throws SQLException if the result set is closed or not updatable
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNCharacterStream(String columnLabel, Reader x)
             throws SQLException {
         updateNCharacterStream(columnLabel, x, -1);
@@ -3392,7 +3392,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @param length the number of characters
      * @throws SQLException if the result set is closed or not updatable
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNCharacterStream(String columnLabel, Reader x, long length)
             throws SQLException {
         try {
@@ -3411,7 +3411,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     /**
      * [Not supported] Return an object of this class if possible.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public <T> T unwrap(Class<T> iface) throws SQLException {
         throw unsupported("unwrap");
     }
@@ -3420,7 +3420,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     /**
      * [Not supported] Checks if unwrap can return an object of this class.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         throw unsupported("isWrapperFor");
     }

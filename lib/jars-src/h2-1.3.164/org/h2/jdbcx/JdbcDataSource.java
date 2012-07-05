@@ -361,7 +361,7 @@ public class JdbcDataSource extends TraceObject
      *
      * @param iface the class
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public <T> T unwrap(Class<T> iface) throws SQLException {
         throw unsupported("unwrap");
     }
@@ -372,7 +372,7 @@ public class JdbcDataSource extends TraceObject
      *
      * @param iface the class
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         throw unsupported("isWrapperFor");
     }

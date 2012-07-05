@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-/*## Java 1.6 ##
+//## Java 1.6 ##
 import java.sql.RowIdLifetime;
 //*/
 import java.sql.SQLException;
@@ -2729,7 +2729,7 @@ public class JdbcDatabaseMetaData extends TraceObject implements DatabaseMetaDat
     public int getJDBCMajorVersion() {
         debugCodeCall("getJDBCMajorVersion");
         int majorVersion = 3;
-        /*## Java 1.6 ##
+        //## Java 1.6 ##
         majorVersion = 4;
         //*/
         return majorVersion;
@@ -2799,7 +2799,7 @@ public class JdbcDatabaseMetaData extends TraceObject implements DatabaseMetaDat
      *
      * @return ROWID_UNSUPPORTED
      */
-    /*## Java 1.6 ##
+    //## Java 1.6 ##
     public RowIdLifetime getRowIdLifetime() {
         debugCodeCall("getRowIdLifetime");
         return RowIdLifetime.ROWID_UNSUPPORTED;
@@ -2809,7 +2809,7 @@ public class JdbcDatabaseMetaData extends TraceObject implements DatabaseMetaDat
     /**
      * [Not supported] Gets the list of schemas.
      */
-    /*## Java 1.6 ##
+    //## Java 1.6 ##
     public ResultSet getSchemas(String catalog, String schemaPattern)
             throws SQLException {
         throw unsupported("getSchemas(., .)");
@@ -2846,7 +2846,7 @@ public class JdbcDatabaseMetaData extends TraceObject implements DatabaseMetaDat
     /**
      * [Not supported] Return an object of this class if possible.
      */
-    /*## Java 1.6 ##
+    //## Java 1.6 ##
     public <T> T unwrap(Class<T> iface) throws SQLException {
         throw unsupported("unwrap");
     }
@@ -2855,7 +2855,7 @@ public class JdbcDatabaseMetaData extends TraceObject implements DatabaseMetaDat
     /**
      * [Not supported] Checks if unwrap can return an object of this class.
      */
-    /*## Java 1.6 ##
+    //## Java 1.6 ##
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         throw unsupported("isWrapperFor");
     }
@@ -2864,7 +2864,7 @@ public class JdbcDatabaseMetaData extends TraceObject implements DatabaseMetaDat
     /**
      * [Not supported] Gets the list of function columns.
      */
-    /*## Java 1.6 ##
+    //## Java 1.6 ##
     public ResultSet getFunctionColumns(String catalog, String schemaPattern,
             String functionNamePattern, String columnNamePattern)
             throws SQLException {
@@ -2875,7 +2875,7 @@ public class JdbcDatabaseMetaData extends TraceObject implements DatabaseMetaDat
     /**
      * [Not supported] Gets the list of functions.
      */
-    /*## Java 1.6 ##
+    //## Java 1.6 ##
     public ResultSet getFunctions(String catalog, String schemaPattern,
             String functionNamePattern) throws SQLException {
         throw unsupported("getFunctions");

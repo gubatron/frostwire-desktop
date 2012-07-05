@@ -32,7 +32,7 @@ import org.h2.util.MathUtils;
 import org.h2.util.New;
 import org.h2.value.DataType;
 
-/*## Java 1.6 ##
+//## Java 1.6 ##
 import java.sql.NClob;
 import java.sql.RowId;
 import java.sql.SQLXML;
@@ -776,7 +776,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public Reader getNCharacterStream(int columnIndex) throws SQLException {
         throw getUnsupportedException();
     }
@@ -785,7 +785,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public Reader getNCharacterStream(String columnLabel) throws SQLException {
         throw getUnsupportedException();
     }
@@ -794,7 +794,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public NClob getNClob(int columnIndex) throws SQLException {
         throw getUnsupportedException();
     }
@@ -803,7 +803,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public NClob getNClob(String columnLabel) throws SQLException {
         throw getUnsupportedException();
     }
@@ -812,7 +812,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public String getNString(int columnIndex) throws SQLException {
         return getString(columnIndex);
     }
@@ -821,7 +821,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public String getNString(String columnLabel) throws SQLException {
         return getString(columnLabel);
     }
@@ -902,7 +902,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public RowId getRowId(int columnIndex) throws SQLException {
         throw getUnsupportedException();
     }
@@ -911,7 +911,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public RowId getRowId(String columnLabel) throws SQLException {
         throw getUnsupportedException();
     }
@@ -944,7 +944,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public SQLXML getSQLXML(int columnIndex) throws SQLException {
         throw getUnsupportedException();
     }
@@ -953,7 +953,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public SQLXML getSQLXML(String columnLabel) throws SQLException {
         throw getUnsupportedException();
     }
@@ -1103,7 +1103,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateAsciiStream(int columnIndex, InputStream x)
             throws SQLException {
         update(columnIndex, x);
@@ -1113,7 +1113,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateAsciiStream(String columnLabel, InputStream x)
             throws SQLException {
         update(columnLabel, x);
@@ -1137,7 +1137,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateAsciiStream(int columnIndex, InputStream x, long length)
             throws SQLException {
         update(columnIndex, x);
@@ -1147,7 +1147,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateAsciiStream(String columnLabel, InputStream x, long length)
             throws SQLException {
         update(columnLabel, x);
@@ -1171,7 +1171,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateBinaryStream(int columnIndex, InputStream x)
             throws SQLException {
         update(columnIndex, x);
@@ -1181,7 +1181,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateBinaryStream(String columnLabel, InputStream x)
             throws SQLException {
         update(columnLabel, x);
@@ -1205,7 +1205,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateBinaryStream(int columnIndex, InputStream x, long length)
             throws SQLException {
         update(columnIndex, x);
@@ -1215,7 +1215,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateBinaryStream(String columnLabel, InputStream x, long length)
             throws SQLException {
         update(columnLabel, x);
@@ -1239,7 +1239,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateBlob(int columnIndex, InputStream x) throws SQLException {
         update(columnIndex, x);
     }
@@ -1248,7 +1248,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateBlob(String columnLabel, InputStream x) throws SQLException {
         update(columnLabel, x);
     }
@@ -1257,7 +1257,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateBlob(int columnIndex, InputStream x, long length)
             throws SQLException {
         update(columnIndex, x);
@@ -1267,7 +1267,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateBlob(String columnLabel, InputStream x, long length)
             throws SQLException {
         update(columnLabel, x);
@@ -1319,7 +1319,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateCharacterStream(int columnIndex, Reader x)
             throws SQLException {
         update(columnIndex, x);
@@ -1329,7 +1329,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateCharacterStream(String columnLabel, Reader x)
             throws SQLException {
         update(columnLabel, x);
@@ -1353,7 +1353,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateCharacterStream(int columnIndex, Reader x, long length)
             throws SQLException {
         update(columnIndex, x);
@@ -1363,7 +1363,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateCharacterStream(String columnLabel, Reader x, long length)
             throws SQLException {
         update(columnLabel, x);
@@ -1387,7 +1387,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateClob(int columnIndex, Reader x) throws SQLException {
         update(columnIndex, x);
     }
@@ -1396,7 +1396,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateClob(String columnLabel, Reader x) throws SQLException {
         update(columnLabel, x);
     }
@@ -1405,7 +1405,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateClob(int columnIndex, Reader x, long length)
             throws SQLException {
         update(columnIndex, x);
@@ -1415,7 +1415,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateClob(String columnLabel, Reader x, long length)
             throws SQLException {
         update(columnLabel, x);
@@ -1495,7 +1495,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNCharacterStream(int columnIndex, Reader x)
             throws SQLException {
         update(columnIndex, x);
@@ -1505,7 +1505,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNCharacterStream(String columnLabel, Reader x)
             throws SQLException {
         update(columnLabel, x);
@@ -1515,7 +1515,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNCharacterStream(int columnIndex, Reader x, long length)
             throws SQLException {
         update(columnIndex, x);
@@ -1525,7 +1525,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNCharacterStream(String columnLabel, Reader x, long length)
             throws SQLException {
         update(columnLabel, x);
@@ -1535,7 +1535,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNClob(int columnIndex, NClob x) throws SQLException {
         update(columnIndex, x);
     }
@@ -1544,7 +1544,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNClob(String columnLabel, NClob x) throws SQLException {
         update(columnLabel, x);
     }
@@ -1553,7 +1553,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNClob(int columnIndex, Reader x) throws SQLException {
         update(columnIndex, x);
     }
@@ -1562,7 +1562,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNClob(String columnLabel, Reader x) throws SQLException {
         update(columnLabel, x);
     }
@@ -1571,7 +1571,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNClob(int columnIndex, Reader x, long length)
             throws SQLException {
         update(columnIndex, x);
@@ -1581,7 +1581,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNClob(String columnLabel, Reader x, long length)
             throws SQLException {
         update(columnLabel, x);
@@ -1591,7 +1591,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNString(int columnIndex, String x) throws SQLException {
         update(columnIndex, x);
     }
@@ -1600,7 +1600,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateNString(String columnLabel, String x) throws SQLException {
         update(columnLabel, x);
     }
@@ -1665,7 +1665,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateRowId(int columnIndex, RowId x) throws SQLException {
         update(columnIndex, x);
     }
@@ -1674,7 +1674,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateRowId(String columnLabel, RowId x) throws SQLException {
         update(columnLabel, x);
     }
@@ -1697,7 +1697,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateSQLXML(int columnIndex, SQLXML x) throws SQLException {
         update(columnIndex, x);
     }
@@ -1706,7 +1706,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void updateSQLXML(String columnLabel, SQLXML x) throws SQLException {
         update(columnLabel, x);
     }
@@ -2193,7 +2193,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public <T> T unwrap(Class<T> iface) throws SQLException {
         throw getUnsupportedException();
     }
@@ -2202,7 +2202,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         throw getUnsupportedException();
     }

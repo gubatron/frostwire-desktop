@@ -82,7 +82,14 @@ public class GoogleSearchField extends SearchField {
     
     @Override
     public void setText(String t) {
-        t = t.replace("<html>", "").replace("</html>", "").replace("<b>", "").replace("</b>", "");
+        
+        try {
+            if (t!=null) {
+                t = t.replace("<html>", "").replace("</html>", "").replace("<b>", "").replace("</b>", "");
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         super.setText(t);
     }
 
