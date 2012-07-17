@@ -157,8 +157,8 @@ http://frostwire.com
 Forum
 http://forum.frostwire.com
 
-Mercurial Repository at BitBucket.org
-https://bitbucket.org/frostwire/frostwire.desktop
+Git Repository at GitHub.com
+https://github.com/frostwire/frostwire-desktop.git
 
 -FrostWire Team
-Last updated - February 16th 2012 17:24:12 EST
+Last updated - July 17th 2012 12:08:50 EST
