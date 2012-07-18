@@ -99,7 +99,10 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
         try {
 
-            if (torrentFileLocation != null && torrentFileLocation.exists()) {
+            // workaround to java issue
+            // http://bugs.sun.com/bugdatabase/view_bug.do;:YfiG?bug_id=4483097
+            boolean exists = torrentFileLocation.exists() || torrentFileLocation.getAbsoluteFile().exists();
+            if (torrentFileLocation != null && exists) {
                 _manager = startTorrentDownload(torrentFileLocation.getAbsolutePath(), UpdateSettings.UPDATES_DIR.getAbsolutePath(), this);
             }
 
