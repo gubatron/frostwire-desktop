@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.search;
 
 import java.io.File;
@@ -13,6 +28,7 @@ import org.limewire.util.I18NConvert;
 
 import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.bittorrent.websearch.soundcloud.SoundcloudTrackSearchResult;
 import com.frostwire.gui.filters.SearchFilter;
 import com.frostwire.gui.filters.SearchFilterFactory;
 import com.frostwire.gui.filters.SearchFilterFactoryImpl;
@@ -71,6 +87,8 @@ public final class SearchMediator {
     static final String TORRENT_DETAILS_STRING = I18n.tr("Torrent Details");
 
     static final String YOUTUBE_DETAILS_STRING = I18n.tr("View in YouTube");
+    
+    static final String SOUNDCLOUD_DETAILS_STRING = I18n.tr("View in Soundcloud");
 
     /**
      * Variable for the component that handles all search input from the user.
@@ -354,6 +372,8 @@ public final class SearchMediator {
 
             if (webResult instanceof YouTubeSearchResult) {
                 sr = new YouTubePackageSearchResult((YouTubeSearchResult) webResult, engine, info);
+            } else if (webResult instanceof SoundcloudTrackSearchResult) {
+                sr = new SoundcloudSearchResult((SoundcloudTrackSearchResult)webResult, engine, info);
             } else {
                 sr = new SearchEngineSearchResult(webResult, engine, info);
             }

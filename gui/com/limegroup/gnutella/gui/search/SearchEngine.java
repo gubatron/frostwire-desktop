@@ -32,11 +32,17 @@ import com.frostwire.bittorrent.websearch.isohunt.ISOHuntWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.kat.KATWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.mininova.MininovaWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.monova.MonovaWebSearchPerformer;
+import com.frostwire.bittorrent.websearch.soundcloud.SoundcloudSearchPerformer;
 import com.frostwire.bittorrent.websearch.tpb.TPBWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.vertor.VertorWebSearchPerformer;
 import com.frostwire.websearch.youtube.YouTubeSearchPerformer;
 import com.limegroup.gnutella.settings.SearchEnginesSettings;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public final class SearchEngine {
 
     public String redirectUrl = null;
@@ -55,6 +61,7 @@ public final class SearchEngine {
     public static final int TPB_ID = 6;
     public static final int MONOVA_ID = 7;
     public static final int YOUTUBE_ID = 9;
+    public static final int SOUNDCLOUD_ID = 10;
 
     public static final SearchEngine CLEARBITS = new SearchEngine(CLEARBITS_ID, "ClearBits", new ClearBitsWebSearchPerformer(), SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED);
     public static final SearchEngine MININOVA = new SearchEngine(MININOVA_ID, "Mininova", new MininovaWebSearchPerformer(), SearchEnginesSettings.MININOVA_SEARCH_ENABLED);
@@ -65,6 +72,7 @@ public final class SearchEngine {
     public static final SearchEngine TPB = new SearchEngine(TPB_ID, "TPB", new TPBWebSearchPerformer(), SearchEnginesSettings.TPB_SEARCH_ENABLED);
     public static final SearchEngine MONOVA = new SearchEngine(MONOVA_ID, "Monova", new MonovaWebSearchPerformer(), SearchEnginesSettings.MONOVA_SEARCH_ENABLED);
     public static final SearchEngine YOUTUBE = new SearchEngine(YOUTUBE_ID, "YouTube", new YouTubeSearchPerformer(), SearchEnginesSettings.YOUTUBE_SEARCH_ENABLED);
+    public static final SearchEngine SOUNDCLOUD = new SearchEngine(SOUNDCLOUD_ID, "Soundcloud", new SoundcloudSearchPerformer(), SearchEnginesSettings.SOUNDCLOUD_SEARCH_ENABLED);
 
     private SearchEngine(int id, String name, WebSearchPerformer performer, BooleanSetting setting) {
         _id = id;
@@ -91,7 +99,7 @@ public final class SearchEngine {
     }
 
     public static List<SearchEngine> getSearchEngines() {
-        return Arrays.asList(ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, VERTOR, TPB, MONOVA);
+        return Arrays.asList(ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, VERTOR, TPB, MONOVA, SOUNDCLOUD);
     }
     
     public WebSearchPerformer getPerformer() {
