@@ -355,7 +355,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
                 // ignore error
                 return IconManager.instance().getIconForFile(initializer.getSaveLocation());
             }
-        } else if (initializer instanceof YouTubeItemDownload) {
+        } else if (initializer instanceof YouTubeItemDownload || initializer instanceof SoundcloudTrackDownload) {
             return IconManager.instance().getIconForFile(new File(initializer.getDisplayName()));
         } else {
             return IconManager.instance().getIconForFile(initializer.getSaveLocation());

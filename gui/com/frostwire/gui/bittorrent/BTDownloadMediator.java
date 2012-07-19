@@ -588,8 +588,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         removeAction.setEnabled(true);
         resumeAction.setEnabled(resumable);
         pauseAction.setEnabled(pausable);
-        copyMagnetAction.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
-        copyHashAction.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
+        copyMagnetAction.setEnabled(!isHttpDownload(dataLine.getInitializeObject()));
+        copyHashAction.setEnabled(!isHttpDownload(dataLine.getInitializeObject()));
 
         sendToItunesAction.setEnabled(isTransferFinished && (hasAudioFiles || hasMP4s));
 
@@ -597,9 +597,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
         playSingleAudioFileAction.setEnabled(getSelectedDownloaders().length == 1 && hasAudioFiles && isSingleFile);
 
-        removeYouTubeAction.setEnabled(isYouTubeDownload(dataLine.getInitializeObject()));
-        BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
-        BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
+        removeYouTubeAction.setEnabled(isHttpDownload(dataLine.getInitializeObject()));
+        BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(!isHttpDownload(dataLine.getInitializeObject()));
+        BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION.setEnabled(!isHttpDownload(dataLine.getInitializeObject()));
     }
 
     private boolean selectionHasMP4s(File saveLocation) {
@@ -617,8 +617,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         return hasAudioFiles;
     }
 
-    private boolean isYouTubeDownload(BTDownload d) {
-        return d instanceof YouTubeVideoUrlDownload || d instanceof YouTubeItemDownload;
+    private boolean isHttpDownload(BTDownload d) {
+        return d instanceof YouTubeVideoUrlDownload || d instanceof YouTubeItemDownload || d instanceof SoundcloudTrackUrlDownload || d instanceof SoundcloudTrackDownload;
     }
 
     /**
@@ -863,6 +863,15 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             }
         });
     }
+    
+    public void openSoundcloudTrackUrl(final String trackUrl, final String title) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                BTDownload downloader = new SoundcloudTrackUrlDownload(trackUrl, title);
+                add(downloader);
+            }
+        });
+    }
 
     public void openYouTubeItem(final FilePackage filePackage) {
         GUIMediator.safeInvokeLater(new Runnable() {
@@ -879,6 +888,26 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                     // ignore
                 }
                 BTDownload downloader = new YouTubeItemDownload(filePackage);
+                add(downloader);
+            }
+        });
+    }
+    
+    public void openSoundcloudItem(final FilePackage filePackage, final String title) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                try {
+                    List<FilePackage> pks = new ArrayList<FilePackage>(DownloadController.getInstance().getPackages());
+                    for (FilePackage p : pks) {
+                        if (p.getChildren().get(0).getName().equals(filePackage.getChildren().get(0).getName())) {
+                            System.out.println("Soundcloud download duplicated");
+                            return;
+                        }
+                    }
+                } catch (Throwable e) {
+                    // ignore
+                }
+                BTDownload downloader = new SoundcloudTrackDownload(filePackage, title);
                 add(downloader);
             }
         });

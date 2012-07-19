@@ -12,10 +12,11 @@ import jd.plugins.LinkStatus;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.FilenameUtils;
+import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.I18n;
 
-public class YouTubeItemDownload implements BTDownload {
+public class SoundcloudTrackDownload implements BTDownload {
     
     private static final String STATE_DOWNLOADING = I18n.tr("Downloading");
     private static final String STATE_ERROR = I18n.tr("Error");
@@ -24,6 +25,7 @@ public class YouTubeItemDownload implements BTDownload {
     private static final String STATE_FINISHED = I18n.tr("Finished");
 
     private final FilePackage filePackage;
+    private final String title;
     private final DownloadLink link;
     private final Date dateCreated;
     private final String saveLocation;
@@ -34,8 +36,9 @@ public class YouTubeItemDownload implements BTDownload {
     
     private boolean finished;
 
-    public YouTubeItemDownload(FilePackage filePackage) {
+    public SoundcloudTrackDownload(FilePackage filePackage, String title) {
         this.filePackage = filePackage;
+        this.title = title;
         this.link = filePackage.getChildren().get(0);
         this.dateCreated = new Date();
         this.saveLocation = readSaveLocation(filePackage);
@@ -56,7 +59,7 @@ public class YouTubeItemDownload implements BTDownload {
 
     @Override
     public String getDisplayName() {
-        return FilenameUtils.getName(saveLocation);
+        return (StringUtils.isNullOrEmpty(title, true) ? FilenameUtils.getName(saveLocation) : title) + ".mp3";
     }
 
     @Override

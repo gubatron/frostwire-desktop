@@ -87,7 +87,7 @@ public class AudioPlayer implements RefreshListener {
 		// Whether or not we're running from source or from a binary
 		// distribution
 		boolean isRelease = !FrostWireUtils.getFrostWireJarPath().contains(
-				"frostwire.desktop");
+				"frostwire-desktop");
 
 		if (OSUtils.isWindows()) {
 			playerPath = (isRelease) ? FrostWireUtils.getFrostWireJarPath()

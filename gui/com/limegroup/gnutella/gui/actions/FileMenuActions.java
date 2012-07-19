@@ -245,6 +245,9 @@ public class FileMenuActions {
         } else if (userText.matches(".*youtube.com.*")) {
             GUIMediator.instance().openYouTubeVideoUrl(userText);
             return true;
+        } else if (userText.matches(".*soundcloud.com.*")) {
+            GUIMediator.instance().openSoundcloudTrackUrl(userText, null);
+            return true;
         } else if (userText.startsWith("http://")) {
             GUIMediator.instance().openTorrentURI(userText);
             return true;

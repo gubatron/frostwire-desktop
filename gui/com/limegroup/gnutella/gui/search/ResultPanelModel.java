@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.search;
 
 import java.util.HashMap;
@@ -318,11 +333,20 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchRe
         int c1 = a.getSeeds() + ((a.getFilenameNoExtension().indexOf(YouTubePackageItemSearchResult.AAC_HIGH_QUALITY) == 0) ? 1000 : 0);
         int c2 = b.getSeeds() + ((b.getFilenameNoExtension().indexOf(YouTubePackageItemSearchResult.AAC_HIGH_QUALITY) == 0) ? 1000 : 0);
         
-        if (a.getSearchEngine().getId() == SearchEngine.YOUTUBE_ID) {
+        int aSeId = a.getSearchEngine().getId();
+        int bSeId = b.getSearchEngine().getId();
+        
+        if (aSeId == SearchEngine.YOUTUBE_ID) {
             c1 += 1000;
         }
-        if (b.getSearchEngine().getId() == SearchEngine.YOUTUBE_ID) {
+        if (bSeId == SearchEngine.YOUTUBE_ID) {
             c2 += 1000;
+        }
+        if (aSeId == SearchEngine.SOUNDCLOUD_ID) {
+            c1 += 200;
+        }
+        if (bSeId == SearchEngine.SOUNDCLOUD_ID) {
+            c2 += 200;
         }
         
         return (c1 - c2) * _ascending;

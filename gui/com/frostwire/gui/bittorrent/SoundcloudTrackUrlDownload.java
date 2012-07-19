@@ -24,41 +24,44 @@ import java.util.Date;
 import java.util.List;
 
 import jd.controlling.linkcollector.LinkCollector;
+import jd.controlling.linkcollector.LinknameCleaner;
 import jd.controlling.linkcrawler.CrawledLink;
 import jd.controlling.linkcrawler.CrawledPackage;
 import jd.controlling.linkcrawler.LinkCrawler;
-import jd.controlling.linkcrawler.PackageInfo;
 import jd.plugins.DownloadLink;
 import jd.plugins.FilePackage;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.appwork.utils.StringUtils;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.jdownloader.controlling.filter.LinkFilterController;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
-public class YouTubeVideoUrlDownload implements BTDownload {
+public class SoundcloudTrackUrlDownload implements BTDownload {
 
-    private static final Log LOG = LogFactory.getLog(YouTubeVideoUrlDownload.class);
+    private static final Log LOG = LogFactory.getLog(SoundcloudTrackUrlDownload.class);
 
     private static final String STATE_CRAWLING = I18n.tr("Crawling");
     private static final String STATE_FINISHED = I18n.tr("Finished");
     private static final String STATE_ERROR = I18n.tr("Error");
     private static final String STATE_STOPPED = I18n.tr("Stopped");
 
-    private final String videoUrl;
+    private final String trackUrl;
+    private final String title;
     private final Date dateCreated;
 
     private String _state;
     private int progress;
 
-    public YouTubeVideoUrlDownload(String videoUrl) {
-        if (!videoUrl.startsWith("http://")) {
-            videoUrl = "http://" + videoUrl;
+    public SoundcloudTrackUrlDownload(String trackUrl, String title) {
+        if (!trackUrl.startsWith("http://")) {
+            trackUrl = "http://" + trackUrl;
         }
-        this.videoUrl = videoUrl;
+        this.trackUrl = trackUrl;
+        this.title = title;
         this.dateCreated = new Date();
         _state = STATE_CRAWLING;
         start();
@@ -76,7 +79,7 @@ public class YouTubeVideoUrlDownload implements BTDownload {
 
     @Override
     public String getDisplayName() {
-        return videoUrl;
+        return trackUrl;
     }
 
     @Override
@@ -223,7 +226,7 @@ public class YouTubeVideoUrlDownload implements BTDownload {
                     LinkCollector collector = LinkCollector.getInstance();
                     LinkCrawler crawler = new LinkCrawler();
                     crawler.setFilter(LinkFilterController.getInstance());
-                    crawler.crawl(videoUrl);
+                    crawler.crawl(trackUrl);
                     crawler.waitForCrawling();
 
                     if (_state.equals(STATE_STOPPED)) {
@@ -236,7 +239,7 @@ public class YouTubeVideoUrlDownload implements BTDownload {
                     final List<FilePackage> packages = new ArrayList<FilePackage>();
 
                     for (CrawledLink link : crawler.getCrawledLinks()) {
-                        CrawledPackage parent = PackageInfo.createCrawledPackage(link);
+                        CrawledPackage parent = createCrawledPackage(link);
                         parent.setControlledBy(collector);
                         link.setParentNode(parent);
                         ArrayList<CrawledLink> links = new ArrayList<CrawledLink>();
@@ -256,17 +259,12 @@ public class YouTubeVideoUrlDownload implements BTDownload {
                     GUIMediator.safeInvokeAndWait(new Runnable() {
                         public void run() {
                             try {
-
-                                PartialYouTubePackageDialog dlg = new PartialYouTubePackageDialog(GUIMediator.getAppFrame(), videoUrl, packages);
-
-                                dlg.setVisible(true);
-                                if (dlg.getFilesSelection() != null) {
-                                    for (FilePackage filePackage : dlg.getFilesSelection()) {
-                                        BTDownloadMediator.instance().openYouTubeItem(filePackage);
-                                    }
+                                // we assume there is only one link
+                                for (FilePackage filePackage : packages) {
+                                    BTDownloadMediator.instance().openSoundcloudItem(filePackage, title);
                                 }
                             } catch (Throwable e) {
-                                LOG.error("Error reading youtube package:" + e.getMessage(), e);
+                                LOG.error("Error reading soundcloud package:" + e.getMessage(), e);
                                 _state = STATE_ERROR;
                             }
                         }
@@ -274,18 +272,39 @@ public class YouTubeVideoUrlDownload implements BTDownload {
 
                     GUIMediator.safeInvokeAndWait(new Runnable() {
                         public void run() {
-                            BTDownloadMediator.instance().remove(YouTubeVideoUrlDownload.this);
+                            BTDownloadMediator.instance().remove(SoundcloudTrackUrlDownload.this);
                         }
                     });
                 } catch (Throwable e) {
-                    LOG.error("Error crawling youtube: " + videoUrl, e);
+                    LOG.error("Error crawling soundcloud: " + trackUrl, e);
                     _state = STATE_ERROR;
                 }
             }
         });
         t.setDaemon(true);
-        t.setName("YouTube Crawl: " + videoUrl);
+        t.setName("Soundcloud Crawl: " + trackUrl);
         t.start();
+    }
+
+    private CrawledPackage createCrawledPackage(CrawledLink link) {
+        CrawledPackage ret = new CrawledPackage();
+        /* fetch desired Packagename from info */
+        String pkgName = title;
+        if (StringUtils.isEmpty(pkgName)) {
+            /* no info available, so lets cleanup filename */
+            pkgName = LinknameCleaner.cleanFileName(link.getName());
+            ret.setName(pkgName);
+        } else {
+            ret.setName(pkgName);
+        }
+        ret.setCreated(link.getCreated());
+        ret.setComment("");
+        //if (dpi.isAutoExtractionEnabled() != null) ret.setAutoExtractionEnabled(dpi.isAutoExtractionEnabled());
+
+        //        if (!StringUtils.isEmpty(dpi.getDestinationFolder())) {
+        //            ret.setDownloadFolder(dpi.getDestinationFolder());
+        //        }
+        return ret;
     }
 
     private FilePackage createFilePackage(final CrawledPackage pkg, ArrayList<CrawledLink> plinks) {

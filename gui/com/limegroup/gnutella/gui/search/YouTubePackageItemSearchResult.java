@@ -36,6 +36,11 @@ import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
 
     private static final String AAC_LOW_QUALITY = "(AAC)";

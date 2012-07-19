@@ -28,6 +28,7 @@ import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.bittorrent.websearch.soundcloud.SoundcloudTrackSearchResult;
 import com.frostwire.gui.GuiFrostWireUtils;
 import com.limegroup.gnutella.GUID;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
 /**
@@ -94,7 +95,7 @@ public final class SoundcloudSearchResult extends AbstractSearchResult {
 
     @Override
     public void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
-        //GUIMediator.instance().openYouTubeVideoUrl(sr.getTorrentURI());
+        GUIMediator.instance().openSoundcloudTrackUrl(sr.getTorrentURI(), sr.getFilenameNoExtension());
     }
 
     @Override

@@ -1825,6 +1825,11 @@ public final class GUIMediator {
 	    getBTDownloadMediator().openYouTubeVideoUrl(videoUrl);
         setWindow(GUIMediator.Tabs.SEARCH);
 	}
+	
+	public void openSoundcloudTrackUrl(String trackUrl, String title) {
+        getBTDownloadMediator().openSoundcloudTrackUrl(trackUrl, title);
+        setWindow(GUIMediator.Tabs.SEARCH);
+    }
 
     public void openYouTubeItem(FilePackage filePackage) {
         getBTDownloadMediator().openYouTubeItem(filePackage);
