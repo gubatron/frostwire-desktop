@@ -494,7 +494,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         BTDownload[] selectedDownloaders = getSelectedDownloaders();
 
         if (selectedDownloaders.length == 1) {
-            playSingleAudioFileAction.setEnabled(selectionHasAudioFiles(selectedDownloaders[0].getSaveLocation()));
+            playSingleAudioFileAction.setEnabled(selectionHasAudioFiles(selectedDownloaders[0]));
         }
 
         if (playSingleAudioFileAction.isEnabled()) {
@@ -571,7 +571,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
         File saveLocation = dataLine.getInitializeObject().getSaveLocation();
         
-        boolean hasAudioFiles = selectionHasAudioFiles(saveLocation);
+        boolean hasAudioFiles = selectionHasAudioFiles(dataLine.getInitializeObject());
         boolean hasMP4s = selectionHasMP4s(saveLocation);
         
         boolean isSingleFile = selectionIsSingleFile(saveLocation);
@@ -612,7 +612,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         return isSingleFile;
     }
 
-    private boolean selectionHasAudioFiles(File saveLocation) {
+    private boolean selectionHasAudioFiles(BTDownload d) {
+        if (d instanceof SoundcloudTrackDownload) {
+            return true;
+        }
+        File saveLocation = d.getSaveLocation();
         boolean hasAudioFiles = saveLocation != null && (LibraryUtils.directoryContainsAudio(saveLocation, 4) || (saveLocation.isFile() && AudioPlayer.isPlayableFile(saveLocation)));
         return hasAudioFiles;
     }

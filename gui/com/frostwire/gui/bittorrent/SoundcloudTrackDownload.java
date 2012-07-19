@@ -102,7 +102,8 @@ public class SoundcloudTrackDownload implements BTDownload {
 
     @Override
     public File getSaveLocation() {
-        return new File(saveLocation);
+        DownloadLink dl = filePackage.getChildren().get(0);
+        return new File(dl.getFileOutput());
     }
 
     @Override
