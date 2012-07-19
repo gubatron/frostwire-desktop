@@ -65,6 +65,10 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
  * This class acts as a mediator between all of the components of the
  * download window.  It also constructs all of the download window
  * components.
+ * 
+ * @author gubatron
+ * @author aldenml
+ * 
  */
 public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRowFilteredModel, BTDownloadDataLine, BTDownload> {
     

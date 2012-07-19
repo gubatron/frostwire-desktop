@@ -39,6 +39,11 @@ import org.jdownloader.controlling.filter.LinkFilterController;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class YouTubeVideoUrlDownload implements BTDownload {
 
     private static final Log LOG = LogFactory.getLog(YouTubeVideoUrlDownload.class);

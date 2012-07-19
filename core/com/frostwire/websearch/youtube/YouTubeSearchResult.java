@@ -25,6 +25,11 @@ import org.limewire.util.FilenameUtils;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class YouTubeSearchResult implements WebSearchResult {
 
     //2010-07-15T16:02:42

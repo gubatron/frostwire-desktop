@@ -222,13 +222,16 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
             FileInputStream fis = new FileInputStream(installerDatFile);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            result = (InstallerMetaData) ois.readObject();
+            try {
+                result = (InstallerMetaData) ois.readObject();
 
-            if (result == null) {
-                return null;
+                if (result == null) {
+                    return null;
+                }
+            } finally {
+                fis.close();
+                ois.close();
             }
-
-            fis.close();
 
             return result;
 

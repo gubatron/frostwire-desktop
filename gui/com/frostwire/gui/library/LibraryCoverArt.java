@@ -178,32 +178,33 @@ public final class LibraryCoverArt extends JPanel implements ThemeObserver {
     private Image retrieveImageFromM4A(String filename) {
         try {
             FileInputStream fis = new FileInputStream(filename);
-            FileChannel inFC = fis.getChannel();
-            IsoFile iso = new IsoFile(inFC);
+            try {
+                FileChannel inFC = fis.getChannel();
+                IsoFile iso = new IsoFile(inFC);
 
-            Path p = new Path(iso);
+                Path p = new Path(iso);
 
-            AppleDataBox data = (AppleDataBox) p.getPath("/moov/udta/meta/ilst/covr/data");
-            if (data != null) {
-                if ((data.getFlags() & 0x1) == 0x1) { // jpg
-                    byte[] imageBytes = data.getData();
-                    try {
-                        return ImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
-                    } catch (IIOException e) {
-                        return JPEGImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
-                    }
-                } else if ((data.getFlags() & 0x2) == 0x2) { // png
-                    byte[] imageBytes = data.getData();
-                    try {
-                        return ImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
-                    } catch (IIOException e) {
-                        return null;
+                AppleDataBox data = (AppleDataBox) p.getPath("/moov/udta/meta/ilst/covr/data");
+                if (data != null) {
+                    if ((data.getFlags() & 0x1) == 0x1) { // jpg
+                        byte[] imageBytes = data.getData();
+                        try {
+                            return ImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
+                        } catch (IIOException e) {
+                            return JPEGImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
+                        }
+                    } else if ((data.getFlags() & 0x2) == 0x2) { // png
+                        byte[] imageBytes = data.getData();
+                        try {
+                            return ImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
+                        } catch (IIOException e) {
+                            return null;
+                        }
                     }
                 }
+            } finally {
+                fis.close();
             }
-
-            fis.close();
-
         } catch (Throwable e) {
             //LOG.error("Unable to read cover art from m4a");
         }
