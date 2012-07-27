@@ -32,7 +32,7 @@ public class BTDownloadCreator {
     private boolean _torrentInGlobalManager;
     private boolean createDownload;
 	private TOTorrent torrent;
-
+	
     public BTDownloadCreator(File torrentFile, File saveDir, boolean initialSeed, boolean[] filesSelection) throws TOTorrentException {
         _globalManager = AzureusStarter.getAzureusCore().getGlobalManager();
         _torrentFile = torrentFile;

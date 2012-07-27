@@ -24,12 +24,14 @@ import javax.swing.Action;
 import javax.swing.Icon;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
+import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.notify.Notification;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
@@ -42,6 +44,7 @@ import com.limegroup.gnutella.gui.tables.SeedsHolder;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 import com.limegroup.gnutella.gui.tables.SpeedRenderer;
 import com.limegroup.gnutella.gui.tables.TimeRemainingHolder;
+import com.limegroup.gnutella.settings.iTunesSettings;
 
 /**
  * This class handles all of the data for a single download, representing
@@ -407,14 +410,18 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
         if (!_notification) {
             _notification = true;
             Notification notification = null;
-            if (getInitializeObject().isCompleted()) {
+            BTDownload theDownload = getInitializeObject();
+            if (theDownload.isCompleted()) {
                 Action[] actions = null;
                 File file = getInitializeObject().getSaveLocation();
                 if (file != null) {
                     actions = new Action[] { new LaunchAction(file), new ShowInLibraryAction(file) };
                 }
-                notification = new Notification(getInitializeObject().getDisplayName(), getIcon(), actions);
+                notification = new Notification(theDownload.getDisplayName(), getIcon(), actions);
                 LibraryMediator.instance().getLibraryExplorer().clearDirectoryHolderCaches();
+
+               iTunesScanIfNecessaryForNonTorrentDownloadItem(theDownload, file);
+                
             } else {
                 return;
             }
@@ -424,8 +431,28 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
             }
         }
     }
-    
-    
+
+    /**
+     * Gubatron: iTunes auto scanning hack for non-torrents.
+     * This logic was taken from BTDownloadCreator::createDownload(DownloadManager downloadManager, final boolean triggerFilter)
+     * in that method, the DownloadManager (azureus) sets up a listener that takes care of this when the torrent download is finished.
+     * 
+     * With YouTubeItemDownload and SoundcloudTrackDownload I've yet to find the equivalent listeners to move this logic at the end of the
+     * download, for now, showNotification is the hack that I have...
+     * Suggestion: Use BTDownloadCreator to normalize the initialization of all downloads, and setup there the behavior of the
+     * equivalent download managers if they exist, if not we could create listeners, and so all this logic will be maintained
+     * in one place.
+     * 
+     * @param theDownload
+     * @param file
+     */
+    private void iTunesScanIfNecessaryForNonTorrentDownloadItem(BTDownload theDownload, File file) {
+        if ((OSUtils.isMacOSX() || OSUtils.isWindows()) && 
+                (theDownload instanceof YouTubeItemDownload || theDownload instanceof SoundcloudTrackDownload)
+                && iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(file)) {
+            iTunesMediator.instance().scanForSongs(file);
+        }
+    }
 
     private final class LaunchAction extends AbstractAction {
 
