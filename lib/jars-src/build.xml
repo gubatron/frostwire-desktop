@@ -23,6 +23,7 @@
     <ant dir="substance-58d3873"/>
     <ant dir="lucene-3.5.0"/>
     <ant dir="h2-1.3.164"/>
+    <ant dir="dnsjava-2.1.3"/>
     
     <antcall target="copyjars"/>
     
@@ -48,6 +49,7 @@
     <ant dir="substance-58d3873" target="clean"/>
     <ant dir="lucene-3.5.0" target="clean"/>
     <ant dir="h2-1.3.164" target="clean"/>
+    <ant dir="dnsjava-2.1.3" target="clean"/>
     
     <mkdir dir="dist"/>
     
@@ -72,6 +74,7 @@
     <copy file="dist/substance.jar" todir="../jars/"/>
     <copy file="dist/lucene-3.5.0.jar" todir="../jars/"/>
     <copy file="dist/h2-1.3.164.jar" todir="../jars/"/>
+    <copy file="dist/dnsjava-2.1.3.jar" todir="../jars/"/>
     
   </target>
 
