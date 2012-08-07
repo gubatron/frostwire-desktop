@@ -2,7 +2,7 @@
     <property name="build_dir" value="${basedir}"/>
     <property name="src_dir" value="${basedir}"/>
     <property name="doc_dir" value="${basedir}/doc"/>
-    <property name="dist_dir" value="${basedir}"/>
+    <property name="dist_dir" value="../dist"/>
     <property name="tests_dir" value="${basedir}/tests"/>
     <property name="reports_dir" value="${basedir}/reports"/>
     <property name="version" value="2.1.3"/>

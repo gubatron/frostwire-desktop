@@ -1080,6 +1080,8 @@ TRTrackerBTAnnouncerImpl
   
   		throws Exception
 	{
+ 	   reqUrl = DNSTracker.fixTrackerURL(reqUrl);
+       
    			// set context in case authentication dialog is required
  		
  		boolean errorLevel = true;
