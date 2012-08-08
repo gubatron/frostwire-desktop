@@ -30,6 +30,12 @@ import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public final class YouTubePackageSearchResult extends AbstractSearchResult {
 
     private final YouTubeSearchResult sr;

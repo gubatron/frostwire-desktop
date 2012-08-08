@@ -69,6 +69,12 @@ import com.limegroup.gnutella.gui.search.db.TorrentDBPojo;
 import com.limegroup.gnutella.gui.search.db.TorrentFileDBPojo;
 import com.limegroup.gnutella.settings.SearchSettings;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class LocalSearchEngine {
 
     private static final Log LOG = LogFactory.getLog(LocalSearchEngine.class);
