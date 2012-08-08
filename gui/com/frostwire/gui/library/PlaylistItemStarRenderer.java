@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.Component;
@@ -32,6 +33,9 @@ import com.limegroup.gnutella.gui.GUIMediator;
 /**
  *  Creates both a renderer and an editor for cells in the playlist table that display the name
  *  of the file being played.
+ *  
+ *  @author gubatron
+ *  @author aldenml
  */
 class PlaylistItemStarRenderer extends SubstanceDefaultTableCellRenderer {
 
