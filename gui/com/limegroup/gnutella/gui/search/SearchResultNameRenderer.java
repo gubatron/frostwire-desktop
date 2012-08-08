@@ -18,6 +18,7 @@
 
 package com.limegroup.gnutella.gui.search;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -25,18 +26,18 @@ import java.awt.Insets;
 import java.util.Map;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.TableUI;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 import org.pushingpixels.substance.api.ColorSchemeAssociationKind;
 import org.pushingpixels.substance.api.ComponentState;
 import org.pushingpixels.substance.api.SubstanceColorScheme;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
-import org.pushingpixels.substance.api.renderers.SubstanceRenderer;
 import org.pushingpixels.substance.internal.animation.StateTransitionTracker;
 import org.pushingpixels.substance.internal.animation.StateTransitionTracker.StateContributionInfo;
 import org.pushingpixels.substance.internal.ui.SubstanceTableUI;
@@ -45,6 +46,7 @@ import org.pushingpixels.substance.internal.utils.SubstanceColorSchemeUtilities;
 import org.pushingpixels.substance.internal.utils.SubstanceStripingUtils;
 import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorder;
+import org.pushingpixels.substance.internal.utils.icon.SubstanceIconFactory;
 
 import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
 
@@ -54,7 +56,7 @@ import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
  * @author aldenml
  * 
  */
-public final class SearchResultNameRenderer extends DefaultTableCellRenderer implements SkinTableCellRenderer{
+public final class SearchResultNameRenderer extends JPanel implements TableCellRenderer, SkinTableCellRenderer {
 
     private static final long serialVersionUID = -1624943333769190212L;
 
@@ -65,34 +67,10 @@ public final class SearchResultNameRenderer extends DefaultTableCellRenderer imp
         setupUI();
     }
 
-    private void setupUI() {
-        //setLayout(new BorderLayout());
-        putClientProperty(SubstanceLookAndFeel.COLORIZATION_FACTOR, 1.0);
-
-        //        labelMore = new JLabel(SubstanceIconFactory.getTreeIcon(null, true));
-        //        add(labelMore, BorderLayout.LINE_START);
-        //
-        //        labelText = new JLabel();
-        //        add(labelText, BorderLayout.LINE_START);
-    }
-
-    private void setValue(SearchResultNameHolder value, JTable table, boolean isSelected, boolean hasFocus, int row, int column) {
-        labelText.setText(fixText(value.getName()));
-
-    }
-
-    private String fixText(String text) {
-        if (text != null) {
-            text = text.replace("<html>", "<html><div width=\"1000000px\">");
-            text = text.replace("</html>", "</div></html>");
-        }
-        return text;
-    }
-
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        if (!SubstanceLookAndFeel.isCurrentLookAndFeel())
-            return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        //if (!SubstanceLookAndFeel.isCurrentLookAndFeel())
+        //    return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
         TableUI tableUI = table.getUI();
         SubstanceTableUI ui = (SubstanceTableUI) tableUI;
@@ -175,7 +153,7 @@ public final class SearchResultNameRenderer extends DefaultTableCellRenderer imp
             this.setBorder(new EmptyBorder(regInsets.top, regInsets.left, regInsets.bottom, regInsets.right));
         }
 
-        this.setValue(value);
+        this.setData((SearchResultNameHolder) value);
         this.setOpaque(false);
         this.setEnabled(table.isEnabled());
         return this;
@@ -225,5 +203,29 @@ public final class SearchResultNameRenderer extends DefaultTableCellRenderer imp
 
     @Override
     public final void paintComponents(Graphics g) {
+        super.paintComponents(g);
+    }
+
+    private void setupUI() {
+        setLayout(new BorderLayout());
+        putClientProperty(SubstanceLookAndFeel.COLORIZATION_FACTOR, 1.0);
+
+        labelMore = new JLabel(SubstanceIconFactory.getTreeIcon(null, true));
+        add(labelMore, BorderLayout.LINE_START);
+
+        labelText = new JLabel();
+        add(labelText, BorderLayout.LINE_START);
+    }
+
+    private void setData(SearchResultNameHolder value) {
+        labelText.setText(fixText(value.getName()));
+    }
+
+    private String fixText(String text) {
+        if (text != null) {
+            text = text.replace("<html>", "<html><div width=\"1000000px\">");
+            text = text.replace("</html>", "</div></html>");
+        }
+        return text;
     }
 }
