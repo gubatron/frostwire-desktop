@@ -954,13 +954,6 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         return ICON_RENDERER;
     }
 	
-	protected TableCellRenderer getLinkRenderer() {
-	    if (LINK_RENDERER == null) {
-	        LINK_RENDERER = new LinkRenderer();
-	    }
-	    return LINK_RENDERER;
-	}
-	
 	protected TableCellRenderer getIconAndNameRenderer() {
         if (ICON_AND_NAME_RENDERER == null) {
             ICON_AND_NAME_RENDERER = new IconAndNameRenderer();

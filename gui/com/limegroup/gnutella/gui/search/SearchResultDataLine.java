@@ -40,14 +40,13 @@ import com.limegroup.gnutella.gui.tables.ActionIconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolderImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
-import com.limegroup.gnutella.gui.tables.Linkable;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 import com.limegroup.gnutella.settings.BittorrentSettings;
 
 /** 
  * A single line of a search result.
  */
-public final class SearchResultDataLine extends AbstractDataLine<SearchResult> implements Linkable {
+public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
     /**
      * The SearchTableColumns.
      */
@@ -72,11 +71,11 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> i
      * The speed of this line.
      */
     private ResultSpeed _speed = null;
-    
+
     private ActionListener _downloadAction;
-    
+
     private ActionListener _torrentDetailsAction;
-    
+
     private ActionListener _torrentDetailsActionWithDelay;
 
     /**
@@ -129,20 +128,6 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> i
 
     }
 
-    public boolean isLink() {
-        if (RESULT instanceof Linkable)
-            return ((Linkable) RESULT).isLink();
-        else
-            return false;
-    }
-
-    public String getLinkUrl() {
-        if (RESULT instanceof Linkable)
-            return ((Linkable) RESULT).getLinkUrl();
-        else
-            return null;
-    }
-
     /**
      * Adds a new SearchResult to this TableLine.
      */
@@ -176,7 +161,7 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> i
     }
 
     public String toString() {
-    	return getFilename() + " ("+getSeeds()+")";
+        return getFilename() + " (" + getSeeds() + ")";
     };
 
     /**
@@ -210,7 +195,7 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> i
     public NamedMediaType getNamedMediaType() {
         return _mediaType;
     }
-    
+
     /**
      * Gets the other results for this line.
      */
@@ -262,8 +247,7 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> i
         if (ext.equals("torrent")) {
             String filename = getFilename().replace(".torrent", "");
 
-            Matcher fileExtensionMatcher = Pattern.compile(".*\\.(\\S*)$")
-                    .matcher(filename);
+            Matcher fileExtensionMatcher = Pattern.compile(".*\\.(\\S*)$").matcher(filename);
 
             if (fileExtensionMatcher.matches()) {
                 ext = fileExtensionMatcher.group(1);
@@ -357,14 +341,14 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> i
             return getIcon();
         case SearchTableColumns.NAME_IDX:
             if (getSearchResult() instanceof SearchEngineSearchResult) {
-            	    if (((SearchEngineSearchResult)getSearchResult()).allowDeepSearch()) {
-            	        return new ActionIconAndNameHolder(getTreeIcon(), _downloadAction, getFilenameNoExtension());
-            	    } else {
-            	        return new ActionIconAndNameHolder(null, null, getFilenameNoExtension());
-            	    }
-            	}
-            	
-            	return new ActionIconAndNameHolder(null, null, getFilenameNoExtension());            
+                if (((SearchEngineSearchResult) getSearchResult()).allowDeepSearch()) {
+                    return new ActionIconAndNameHolder(getTreeIcon(), _downloadAction, getFilenameNoExtension());
+                } else {
+                    return new ActionIconAndNameHolder(null, null, getFilenameNoExtension());
+                }
+            }
+
+            return new ActionIconAndNameHolder(null, null, getFilenameNoExtension());
         case SearchTableColumns.SIZE_IDX:
             return new SizeHolder(getSize());
         case SearchTableColumns.SOURCE_IDX:
@@ -372,16 +356,15 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> i
         case SearchTableColumns.ADDED_IDX:
             return getAddedOn();
         case SearchTableColumns.EXTENSION_IDX:
-        	return getExtension();
+            return getExtension();
         default:
             return null;
         }
     }
-    
+
     private Icon getTreeIcon() {
         return SubstanceIconFactory.getTreeIcon(null, true);
     }
-
 
     /**
      * Returns <code>true</code> if <code>this</code> {@link SearchResult}
@@ -396,7 +379,7 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> i
     public final boolean isSameKindAs(SearchResultDataLine line) {
         return getSearchResult().getClass().equals(line.getSearchResult().getClass());
     }
-    
+
     /**
      * Returns the underlying search result.  This is needed by {@link StoreResultPanel}.
      * 
