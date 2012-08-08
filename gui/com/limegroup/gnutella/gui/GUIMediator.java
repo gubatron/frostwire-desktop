@@ -1736,19 +1736,22 @@ public final class GUIMediator {
         getAppFrame().setCursor(cursor);
     }
 
-    public static void waitAndOpenURL(final String link, final long wait) {
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(wait);
+    public static void openURL(final String link, final long delay) {
+        if (delay > 0) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(delay);
+                    } catch (Throwable e) {
+                        // ignore
+                    }
                     openURL(link);
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            }
-        }).start();
+            }).start();
+        } else {
+            openURL(link);
+        }
     }
 
     public BTDownloadMediator getBTDownloadMediator() {

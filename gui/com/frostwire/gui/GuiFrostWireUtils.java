@@ -162,9 +162,9 @@ public final class GuiFrostWireUtils {
 				String queryParam="q="+ HTTPUtils.encode(query, "utf-8");
 				String torrentDetailsURLparam = "u="+ HTTPUtils.encode(torrentDetailsURL,"utf-8");
 				String torrentFileNameparam = "t=" + HTTPUtils.encode(torrentDetailsURL,"utf-8");
-				GUIMediator.waitAndOpenURL(redirectUrl + "?"+queryParam+"&"+torrentDetailsURLparam+"&"+torrentFileNameparam,delay);
+				GUIMediator.openURL(redirectUrl + "?"+queryParam+"&"+torrentDetailsURLparam+"&"+torrentFileNameparam,delay);
 			} else
-				GUIMediator.waitAndOpenURL(torrentDetailsURL, delay);
+				GUIMediator.openURL(torrentDetailsURL, delay);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
