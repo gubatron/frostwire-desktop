@@ -54,7 +54,6 @@ import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
  * @author aldenml
  * 
  */
-@SubstanceRenderer
 public final class SearchResultNameRenderer extends DefaultTableCellRenderer implements SkinTableCellRenderer{
 
     private static final long serialVersionUID = -1624943333769190212L;
