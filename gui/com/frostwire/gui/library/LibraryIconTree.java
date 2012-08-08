@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.Dimension;
@@ -40,6 +41,12 @@ import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class LibraryIconTree extends JTree {
 
     private static final long serialVersionUID = 3025054051505168836L;

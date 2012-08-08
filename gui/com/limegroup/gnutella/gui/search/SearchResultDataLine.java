@@ -339,15 +339,7 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
         case SearchTableColumns.TYPE_IDX:
             return getIcon();
         case SearchTableColumns.NAME_IDX:
-            if (getSearchResult() instanceof SearchEngineSearchResult) {
-                if (((SearchEngineSearchResult) getSearchResult()).allowDeepSearch()) {
-                    return new ActionIconAndNameHolder(getTreeIcon(), _downloadAction, getFilenameNoExtension());
-                } else {
-                    return new ActionIconAndNameHolder(null, null, getFilenameNoExtension());
-                }
-            }
-
-            return new ActionIconAndNameHolder(null, null, getFilenameNoExtension());
+            return new SearchResultNameHolder(RESULT);
         case SearchTableColumns.SIZE_IDX:
             return new SizeHolder(getSize());
         case SearchTableColumns.SOURCE_IDX:

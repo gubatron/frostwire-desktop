@@ -36,13 +36,11 @@ import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
  */
 public final class SearchResultNameHolder implements Comparable<SearchResultNameHolder> {
 
-    private final Icon moreIcon;
     private final ActionListener moreAction;
     private final ActionListener torrentDetailsAction;
     private final SearchResult sr;
 
     public SearchResultNameHolder(final SearchResult sr) {
-        moreIcon = SubstanceIconFactory.getTreeIcon(null, true);
         moreAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,10 +60,6 @@ public final class SearchResultNameHolder implements Comparable<SearchResultName
 
     public int compareTo(SearchResultNameHolder o) {
         return AbstractTableMediator.compare(sr.getFilenameNoExtension(), o.sr.getFilenameNoExtension());
-    }
-
-    public Icon getIcon() {
-        return moreIcon;
     }
 
     public String getName() {
