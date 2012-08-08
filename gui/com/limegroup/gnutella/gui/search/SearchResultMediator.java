@@ -36,15 +36,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.OverlayLayout;
 import javax.swing.border.AbstractBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -68,12 +65,10 @@ import com.limegroup.gnutella.gui.tables.ColumnPreferenceHandler;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.TableSettings;
-import com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.PopupUtils;
-import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.QueryUtils;
 
@@ -302,41 +297,13 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    onLeftClick();
-                } else {
-                    onRightClick(e);
-                }
-
-            }
-
-            /**
-             * Show popup menu with option to toggle torrent detail display.
-             * @param e
-             */
-            private void onRightClick(MouseEvent e) {
-                final JPopupMenu menu = new SkinPopupMenu();
-                final JCheckBoxMenuItem menuItem = new SkinCheckBoxMenuItem(I18n.tr("Show Torrent Details page when a download starts"), BittorrentSettings.TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD.getValue());
-                menuItem.addChangeListener(new ChangeListener() {
-
-                    @Override
-                    public void stateChanged(ChangeEvent e) {
-                        BittorrentSettings.TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD.setValue(menuItem.isSelected());
+                    final SearchResultDataLine[] lines = getAllSelectedLines();
+                    if (lines.length == 1) {
+                        SearchResult searchResult = lines[0].getSearchResult();
+                        searchResult.showDetails(true);
                     }
-                });
-                menu.add(menuItem);
-
-                JComponent source = (JComponent) e.getComponent();
-                menu.show(source, source.getX() - 100, source.getY());
-
+                }
             }
-
-            /**
-             * Show torrent details.
-             */
-            private void onLeftClick() {
-                SearchMediator.showTorrentDetails(SearchResultMediator.this, -1);
-            }
-
         };
 
         COPY_MAGNET_ACTION_LISTENER = new ActionListener() {

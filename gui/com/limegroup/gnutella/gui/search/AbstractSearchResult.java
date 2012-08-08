@@ -5,7 +5,9 @@ import java.awt.Color;
 import org.limewire.collection.ApproximateMatcher;
 import org.limewire.util.I18NConvert;
 
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
+import com.limegroup.gnutella.settings.SearchSettings;
 
 /**
  * A single SearchResult. These are returned in the {@link SearchInputPanel} and
@@ -91,7 +93,7 @@ public abstract class AbstractSearchResult implements SearchResult {
         if (!matcher.matches(getProcessedFilename(matcher), o.getProcessedFilename(matcher), allowedDifferences)) {
             return 3;
         }
-        
+
         return 0;
     }
 
@@ -102,17 +104,26 @@ public abstract class AbstractSearchResult implements SearchResult {
     public boolean canBeMarkedAsJunk() {
         return false;
     }
-    
+
     public boolean isOverrideRowColor() {
         return false;
     }
-    
+
     public Color getEvenRowColor() {
         return ThemeSettings.DEFAULT_TABLE_EVEN_ROW_COLOR.getValue();
     }
-    
+
     public Color getOddRowColor() {
         return ThemeSettings.DEFAULT_TABLE_ODD_ROW_COLOR.getValue();
     }
-        
+
+    public void showDetails(boolean now) {
+        if (now) {
+            GUIMediator.openURL(getWebSearchResult().getTorrentDetailsURL());
+        } else {
+            if (SearchSettings.SHOW_DETAIL_PAGE_AFTER_DOWNLOAD_START.getValue()) {
+                GUIMediator.openURL(getWebSearchResult().getTorrentDetailsURL(), SearchSettings.SHOW_DETAILS_DELAY);
+            }
+        }
+    }
 }

@@ -17,6 +17,9 @@ import com.limegroup.gnutella.MediaType;
  */
 public final class SearchSettings extends LimeProps {
     
+    /** Amount of time to wait in milliseconds before showing details page */
+    public static final long SHOW_DETAILS_DELAY = 8000;
+    
     private SearchSettings() {}
     
     /**
@@ -314,4 +317,6 @@ public final class SearchSettings extends LimeProps {
 	public static final IntSetting SMART_SEARCH_DEEP_SEARCH_ROUNDS = FACTORY.createIntSetting("SMART_SEARCH_DEEP_SEARCH_ROUNDS", 3);
 	
 	public static final IntSetting SMART_SEARCH_FULLTEXT_SEARCH_RESULTS_LIMIT = FACTORY.createIntSetting("SMART_SEARCH_FULLTEXT_SEARCH_RESULTS_LIMIT", 256);
+
+    public static final BooleanSetting SHOW_DETAIL_PAGE_AFTER_DOWNLOAD_START = FACTORY.createBooleanSetting("SHOW_DETAIL_PAGE_AFTER_DOWNLOAD_START", false);
 }

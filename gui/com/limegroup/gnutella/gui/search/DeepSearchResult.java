@@ -27,11 +27,9 @@ import javax.swing.JPopupMenu;
 import org.gudy.azureus2.core3.torrent.TOTorrentFile;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.gui.GuiFrostWireUtils;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
-import com.limegroup.gnutella.settings.BittorrentSettings;
 
 /**
  * 
@@ -43,13 +41,11 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
 
     private WebSearchResult _item;
     private SearchEngine _searchEngine;
-    private SearchInformation _info;
     private TOTorrentFile _torrentFile;
 
-    public DeepSearchResult(TOTorrentFile torrentFile, WebSearchResult item, SearchEngine searchEngine, SearchInformation searchInfo) {
+    public DeepSearchResult(TOTorrentFile torrentFile, WebSearchResult item, SearchEngine searchEngine) {
         _item = item;
         _searchEngine = searchEngine;
-        _info = searchInfo;
         _torrentFile = torrentFile;
     }
 
@@ -60,31 +56,31 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
 
     @Override
     public String getExtension() {
-        return _torrentFile.getRelativePath().substring(_torrentFile.getRelativePath().lastIndexOf(".")+1);
+        return _torrentFile.getRelativePath().substring(_torrentFile.getRelativePath().lastIndexOf(".") + 1);
     }
 
     @Override
     public String getFileName() {
-    	String fName = new File(_torrentFile.getRelativePath()).getName();
-    	if (fName.startsWith("/")) {
-    		return fName.substring(1);
-    	}
-    	return fName;
+        String fName = new File(_torrentFile.getRelativePath()).getName();
+        if (fName.startsWith("/")) {
+            return fName.substring(1);
+        }
+        return fName;
     }
 
     @Override
     public String getFilenameNoExtension() {
-    	if (_torrentFile.getRelativePath().indexOf("/") != -1) {
-    		String fileName = _torrentFile.getRelativePath().substring(_torrentFile.getRelativePath().lastIndexOf("/"));
-    		
-    		if (fileName.startsWith("/")) {
-    			fileName = fileName.substring(1);
-    		}
-    		
-    		return fileName.substring(0,fileName.lastIndexOf("."));
-    	}
-    	
-    	return _torrentFile.getRelativePath().substring(0,_torrentFile.getRelativePath().lastIndexOf("."));
+        if (_torrentFile.getRelativePath().indexOf("/") != -1) {
+            String fileName = _torrentFile.getRelativePath().substring(_torrentFile.getRelativePath().lastIndexOf("/"));
+
+            if (fileName.startsWith("/")) {
+                fileName = fileName.substring(1);
+            }
+
+            return fileName.substring(0, fileName.lastIndexOf("."));
+        }
+
+        return _torrentFile.getRelativePath().substring(0, _torrentFile.getRelativePath().lastIndexOf("."));
     }
 
     @Override
@@ -120,11 +116,10 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
     public String getVendor() {
         return _item.getVendor();
     }
-    
+
     @Override
     public void initialize(SearchResultDataLine line) {
         line.setAddedOn(getCreationTime());
-        
 
         //hack this to show the icon for mininova or for isohunt.
     }
@@ -137,11 +132,7 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
     @Override
     public void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
         GUIMediator.instance().openTorrentSearchResult(_item, _torrentFile.getRelativePath());
-        showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
-    }
-
-    public void showTorrentDetails(long delay) {
-        GuiFrostWireUtils.showTorrentDetails(delay, _searchEngine.redirectUrl, _info.getQuery(), _item.getTorrentDetailsURL(), getFileName());
+        showDetails(false);
     }
 
     @Override
@@ -155,7 +146,7 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
 
         PopupUtils.addMenuItem(SearchMediator.TORRENT_DETAILS_STRING, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showTorrentDetails(-1);
+                showDetails(true);
             }
         }, popupMenu, lines.length == 1, 2);
 
@@ -165,7 +156,7 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
     public int getSeeds() {
         return _item.getSeeds();
     }
-    
+
     public SearchEngine getSearchEngine() {
         return _searchEngine;
     }

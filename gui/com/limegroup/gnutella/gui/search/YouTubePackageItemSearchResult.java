@@ -30,7 +30,6 @@ import jd.plugins.FilePackage;
 import org.limewire.util.FilenameUtils;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.gui.GuiFrostWireUtils;
 import com.frostwire.websearch.youtube.YouTubeSearchResult;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -45,18 +44,17 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
 
     private static final String AAC_LOW_QUALITY = "(AAC)";
     static final String AAC_HIGH_QUALITY = "(AAC-High Quality)";
+
     private final YouTubeSearchResult sr;
     private final FilePackage filePackage;
     private final SearchEngine searchEngine;
-    private final SearchInformation info;
 
     private final String filename;
 
-    public YouTubePackageItemSearchResult(YouTubeSearchResult sr, FilePackage filePackage, SearchEngine searchEngine, SearchInformation info) {
+    public YouTubePackageItemSearchResult(YouTubeSearchResult sr, FilePackage filePackage, SearchEngine searchEngine) {
         this.sr = sr;
         this.filePackage = filePackage;
         this.searchEngine = searchEngine;
-        this.info = info;
 
         this.filename = readFilename(filePackage);
     }
@@ -69,12 +67,12 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
     @Override
     public String getFilenameNoExtension() {
         String fname = FilenameUtils.getBaseName(filename);
-        if (fname.indexOf(AAC_HIGH_QUALITY)>0) {
+        if (fname.indexOf(AAC_HIGH_QUALITY) > 0) {
             return AAC_HIGH_QUALITY + " " + fname.replace(AAC_HIGH_QUALITY, "");
-        } else if (fname.indexOf(AAC_LOW_QUALITY)>0) {
+        } else if (fname.indexOf(AAC_LOW_QUALITY) > 0) {
             return AAC_LOW_QUALITY + " " + fname.replace(AAC_LOW_QUALITY, "");
         }
-        
+
         return fname;
     }
 
@@ -116,6 +114,7 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
     @Override
     public void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
         GUIMediator.instance().openYouTubeItem(filePackage);
+        showDetails(false);
     }
 
     @Override
@@ -132,16 +131,11 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
         }, popupMenu, lines.length > 0, 1);
         PopupUtils.addMenuItem(SearchMediator.YOUTUBE_DETAILS_STRING, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showTorrentDetails(-1);
+                showDetails(true);
             }
         }, popupMenu, lines.length == 1, 2);
 
         return popupMenu;
-    }
-
-    @Override
-    public void showTorrentDetails(long delay) {
-        GuiFrostWireUtils.showTorrentDetails(delay, searchEngine.redirectUrl, info.getQuery(), sr.getTorrentDetailsURL(), getFileName());
     }
 
     @Override

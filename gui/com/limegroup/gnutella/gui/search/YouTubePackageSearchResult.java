@@ -25,7 +25,6 @@ import java.io.File;
 import javax.swing.JPopupMenu;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.gui.GuiFrostWireUtils;
 import com.frostwire.websearch.youtube.YouTubeSearchResult;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -35,12 +34,10 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
 
     private final YouTubeSearchResult sr;
     private final SearchEngine searchEngine;
-    private SearchInformation info;
 
-    public YouTubePackageSearchResult(YouTubeSearchResult sr, SearchEngine searchEngine, SearchInformation info) {
+    public YouTubePackageSearchResult(YouTubeSearchResult sr, SearchEngine searchEngine) {
         this.sr = sr;
         this.searchEngine = searchEngine;
-        this.info = info;
     }
 
     @Override
@@ -91,6 +88,7 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
     @Override
     public void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
         GUIMediator.instance().openYouTubeVideoUrl(sr.getTorrentURI());
+        showDetails(false);
     }
 
     @Override
@@ -107,16 +105,11 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
         }, popupMenu, lines.length > 0, 1);
         PopupUtils.addMenuItem(SearchMediator.YOUTUBE_DETAILS_STRING, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showTorrentDetails(-1);
+                showDetails(true);
             }
         }, popupMenu, lines.length == 1, 2);
 
         return popupMenu;
-    }
-
-    @Override
-    public void showTorrentDetails(long delay) {
-        GuiFrostWireUtils.showTorrentDetails(delay, searchEngine.redirectUrl, info.getQuery(), sr.getTorrentDetailsURL(), getFileName());
     }
 
     @Override

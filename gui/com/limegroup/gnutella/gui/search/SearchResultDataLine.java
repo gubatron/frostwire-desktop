@@ -41,7 +41,6 @@ import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolderImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
-import com.limegroup.gnutella.settings.BittorrentSettings;
 
 /** 
  * A single line of a search result.
@@ -114,12 +113,12 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
         };
         _torrentDetailsAction = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                RESULT.showTorrentDetails(-1);
+                RESULT.showDetails(true);
             }
         };
         _torrentDetailsActionWithDelay = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                RESULT.showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
+                RESULT.showDetails(false);
             }
         };
     }

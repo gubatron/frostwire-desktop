@@ -26,7 +26,6 @@ import javax.swing.JPopupMenu;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.bittorrent.websearch.soundcloud.SoundcloudTrackSearchResult;
-import com.frostwire.gui.GuiFrostWireUtils;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
@@ -40,12 +39,10 @@ public final class SoundcloudSearchResult extends AbstractSearchResult {
 
     private final SoundcloudTrackSearchResult sr;
     private final SearchEngine searchEngine;
-    private SearchInformation info;
 
-    public SoundcloudSearchResult(SoundcloudTrackSearchResult sr, SearchEngine searchEngine, SearchInformation info) {
+    public SoundcloudSearchResult(SoundcloudTrackSearchResult sr, SearchEngine searchEngine) {
         this.sr = sr;
         this.searchEngine = searchEngine;
-        this.info = info;
     }
 
     @Override
@@ -96,6 +93,7 @@ public final class SoundcloudSearchResult extends AbstractSearchResult {
     @Override
     public void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
         GUIMediator.instance().openSoundcloudTrackUrl(sr.getTorrentURI(), sr.getFilenameNoExtension());
+        showDetails(false);
     }
 
     @Override
@@ -112,16 +110,11 @@ public final class SoundcloudSearchResult extends AbstractSearchResult {
         }, popupMenu, lines.length > 0, 1);
         PopupUtils.addMenuItem(SearchMediator.SOUNDCLOUD_DETAILS_STRING, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showTorrentDetails(-1);
+                showDetails(true);
             }
         }, popupMenu, lines.length == 1, 2);
 
         return popupMenu;
-    }
-
-    @Override
-    public void showTorrentDetails(long delay) {
-        GuiFrostWireUtils.showTorrentDetails(delay, searchEngine.redirectUrl, info.getQuery(), sr.getTorrentDetailsURL(), getFileName());
     }
 
     @Override

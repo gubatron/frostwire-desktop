@@ -25,13 +25,11 @@ import java.io.File;
 import javax.swing.JPopupMenu;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.gui.GuiFrostWireUtils;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.search.db.TorrentDBPojo;
 import com.limegroup.gnutella.gui.search.db.TorrentFileDBPojo;
 import com.limegroup.gnutella.gui.util.PopupUtils;
-import com.limegroup.gnutella.settings.BittorrentSettings;
 
 /**
  * 
@@ -137,11 +135,7 @@ public class SmartSearchResult extends AbstractSearchResult implements Bittorren
     @Override
     public void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
         GUIMediator.instance().openTorrentSearchResult(_item, file.relativePath);
-        showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
-    }
-
-    public void showTorrentDetails(long delay) {
-        GuiFrostWireUtils.showTorrentDetails(delay, _searchEngine.redirectUrl, "", _item.getTorrentDetailsURL(), getFileName());
+        showDetails(false);
     }
 
     @Override
@@ -154,7 +148,7 @@ public class SmartSearchResult extends AbstractSearchResult implements Bittorren
 
         PopupUtils.addMenuItem(SearchMediator.TORRENT_DETAILS_STRING, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showTorrentDetails(-1);
+                showDetails(true);
             }
         }, popupMenu, lines.length == 1, 2);
 

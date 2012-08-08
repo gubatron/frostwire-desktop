@@ -164,8 +164,6 @@ public interface SearchResult {
      * @return
      */
     public boolean canBeMarkedAsJunk();
-    	
-    public void showTorrentDetails(long delay);
 
     public String getHash();
 
@@ -176,4 +174,6 @@ public interface SearchResult {
     public SearchEngine getSearchEngine();
     
     public WebSearchResult getWebSearchResult();
+    
+    public void showDetails(boolean now);
 }

@@ -10,16 +10,9 @@ import org.limewire.setting.ProbabilisticBooleanSetting;
  */
 public class BittorrentSettings extends LimeProps {
 	
-	/** Amount of time to wait in milliseconds before showing torrent details page */
-	public static final long SHOW_TORRENT_DETAILS_DELAY = 8000;
-
 	private BittorrentSettings() {
 		// empty constructor
 	}
-
-	public static BooleanSetting TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD = FACTORY
-			.createBooleanSetting("TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD",
-					false);
 
 	/**
 	 * Setting whether LimeWire should manage the BT settings automatically.

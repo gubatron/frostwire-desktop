@@ -234,7 +234,7 @@ public class LocalSearchEngine {
         return results;
     }
 
-    public List<DeepSearchResult> deepSearch(byte[] guid, String query, SearchInformation info) {
+    public List<DeepSearchResult> deepSearch(byte[] guid, String query) {
         SearchResultMediator rp = null;
 
         // Let's wait for enough search results from different search engines.
@@ -254,7 +254,7 @@ public class LocalSearchEngine {
                 return null;
             }
 
-            scanAvailableResults(guid, query, info, rp, scanYouTube);
+            scanAvailableResults(guid, query, rp, scanYouTube);
             scanYouTube = false;
 
             sleep();
@@ -275,7 +275,7 @@ public class LocalSearchEngine {
         }
     }
 
-    private void scanAvailableResults(byte[] guid, String query, SearchInformation info, SearchResultMediator rp, boolean scanYouTube) {
+    private void scanAvailableResults(byte[] guid, String query, SearchResultMediator rp, boolean scanYouTube) {
 
         int foundTorrents = 0;
 
@@ -306,7 +306,7 @@ public class LocalSearchEngine {
                 if (!KNOWN_INFO_HASHES.contains(webSearchResult.getHash())) {
                     KNOWN_INFO_HASHES.add(webSearchResult.getHash());
                     SearchEngine searchEngine = line.getSearchEngine();
-                    scanDotTorrent(order++, webSearchResult, guid, query, searchEngine, info);
+                    scanDotTorrent(order++, webSearchResult, guid, query, searchEngine);
                 }
             } else if (line.getInitializeObject() instanceof YouTubePackageSearchResult) {
                 if (!scanYouTube) {
@@ -315,7 +315,7 @@ public class LocalSearchEngine {
                 WebSearchResult webSearchResult = line.getSearchResult().getWebSearchResult();
                 SearchEngine searchEngine = line.getSearchEngine();
 
-                CrawlYouTubePackage task = new CrawlYouTubePackage(order++, guid, (YouTubeSearchResult) webSearchResult, searchEngine, info);
+                CrawlYouTubePackage task = new CrawlYouTubePackage(order++, guid, (YouTubeSearchResult) webSearchResult, searchEngine);
                 CRAWL_YOUTUBE_LINKS_EXECUTOR.execute(task);
             }
         }
@@ -346,9 +346,8 @@ public class LocalSearchEngine {
      * 
      * @param webSearchResult
      * @param searchEngine
-     * @param info
      */
-    private void scanDotTorrent(int order, WebSearchResult webSearchResult, byte[] guid, String query, SearchEngine searchEngine, SearchInformation info) {
+    private void scanDotTorrent(int order, WebSearchResult webSearchResult, byte[] guid, String query, SearchEngine searchEngine) {
         if (!torrentHasBeenIndexed(webSearchResult.getHash())) {
             // download the torrent
 
@@ -357,7 +356,7 @@ public class LocalSearchEngine {
                 rp.incrementSearchCount();
             }
 
-            DownloadTorrentTask task = new DownloadTorrentTask(order, guid, query, webSearchResult, searchEngine, info);
+            DownloadTorrentTask task = new DownloadTorrentTask(order, guid, query, webSearchResult, searchEngine);
             DOWNLOAD_TORRENTS_EXECUTOR.execute(task);
         } else {
             //System.out.println(webSearchResult.getHash() + " indexed");
@@ -404,15 +403,13 @@ public class LocalSearchEngine {
         private final Set<String> tokens;
         private final SearchEngine searchEngine;
         private final WebSearchResult webSearchResult;
-        private final SearchInformation info;
         private final CountDownLatch finishSignal;
 
-        public LocalSearchTorrentDownloaderListener(byte[] guid, String query, WebSearchResult webSearchResult, SearchEngine searchEngine, SearchInformation info, CountDownLatch finishSignal) {
+        public LocalSearchTorrentDownloaderListener(byte[] guid, String query, WebSearchResult webSearchResult, SearchEngine searchEngine, CountDownLatch finishSignal) {
             this.guid = guid;
             this.tokens = new HashSet<String>(Arrays.asList(query.toLowerCase().split(" ")));
             this.searchEngine = searchEngine;
             this.webSearchResult = webSearchResult;
-            this.info = info;
             this.finishSignal = finishSignal;
         }
 
@@ -472,7 +469,7 @@ public class LocalSearchEngine {
             TOTorrentFile[] fs = theTorrent.getFiles();
             for (int i = 0; i < fs.length; i++) {
                 try {
-                    final DeepSearchResult result = new DeepSearchResult(fs[i], webSearchResult, searchEngine, info);
+                    final DeepSearchResult result = new DeepSearchResult(fs[i], webSearchResult, searchEngine);
 
                     if (!filter.allow(result))
                         continue;
@@ -532,15 +529,13 @@ public class LocalSearchEngine {
         private final String query;
         private final SearchEngine searchEngine;
         private final WebSearchResult webSearchResult;
-        private final SearchInformation info;
 
-        public DownloadTorrentTask(int order, byte[] guid, String query, WebSearchResult webSearchResult, SearchEngine searchEngine, SearchInformation info) {
+        public DownloadTorrentTask(int order, byte[] guid, String query, WebSearchResult webSearchResult, SearchEngine searchEngine) {
             this.order = order;
             this.guid = guid;
             this.query = query;
             this.searchEngine = searchEngine;
             this.webSearchResult = webSearchResult;
-            this.info = info;
         }
 
         @Override
@@ -567,7 +562,7 @@ public class LocalSearchEngine {
 
             CountDownLatch finishSignal = new CountDownLatch(1);
 
-            TorrentDownloaderFactory.create(new LocalSearchTorrentDownloaderListener(guid, query, webSearchResult, searchEngine, info, finishSignal), webSearchResult.getTorrentURI(), webSearchResult.getTorrentDetailsURL(), saveDir).start();
+            TorrentDownloaderFactory.create(new LocalSearchTorrentDownloaderListener(guid, query, webSearchResult, searchEngine, finishSignal), webSearchResult.getTorrentURI(), webSearchResult.getTorrentDetailsURL(), saveDir).start();
 
             try {
                 finishSignal.await();
@@ -583,14 +578,12 @@ public class LocalSearchEngine {
         private final byte[] guid;
         private final SearchEngine searchEngine;
         private final YouTubeSearchResult webSearchResult;
-        private final SearchInformation info;
 
-        public CrawlYouTubePackage(int order, byte[] guid, YouTubeSearchResult webSearchResult, SearchEngine searchEngine, SearchInformation info) {
+        public CrawlYouTubePackage(int order, byte[] guid, YouTubeSearchResult webSearchResult, SearchEngine searchEngine) {
             this.order = order;
             this.guid = guid;
             this.searchEngine = searchEngine;
             this.webSearchResult = webSearchResult;
-            this.info = info;
         }
 
         @Override
@@ -709,7 +702,7 @@ public class LocalSearchEngine {
 
             for (FilePackage p : packages) {
                 try {
-                    final YouTubePackageItemSearchResult result = new YouTubePackageItemSearchResult(webSearchResult, p, searchEngine, info);
+                    final YouTubePackageItemSearchResult result = new YouTubePackageItemSearchResult(webSearchResult, p, searchEngine);
 
                     //youtube mp3 filter
                     if (p.getChildren().get(0).getFileOutput().endsWith(".mp3")) {

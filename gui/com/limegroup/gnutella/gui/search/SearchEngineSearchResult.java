@@ -25,11 +25,9 @@ import java.io.File;
 import javax.swing.JPopupMenu;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.gui.GuiFrostWireUtils;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
-import com.limegroup.gnutella.settings.BittorrentSettings;
 
 /**
  * 
@@ -41,12 +39,10 @@ public class SearchEngineSearchResult extends AbstractSearchResult implements Bi
 
     private WebSearchResult _item;
     private SearchEngine _searchEngine;
-    private SearchInformation _info;
 
-    public SearchEngineSearchResult(WebSearchResult item, SearchEngine searchEngine, SearchInformation searchInfo) {
+    public SearchEngineSearchResult(WebSearchResult item, SearchEngine searchEngine) {
         _item = item;
         _searchEngine = searchEngine;
-        _info = searchInfo;
     }
 
     @Override
@@ -121,11 +117,7 @@ public class SearchEngineSearchResult extends AbstractSearchResult implements Bi
     @Override
     public void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
         GUIMediator.instance().openTorrentSearchResult(_item, false);
-        showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
-    }
-
-    public void showTorrentDetails(long delay) {
-        GuiFrostWireUtils.showTorrentDetails(delay, _searchEngine.redirectUrl, _info.getQuery(), _item.getTorrentDetailsURL(), getFileName());
+        showDetails(false);
     }
 
     @Override
@@ -138,7 +130,7 @@ public class SearchEngineSearchResult extends AbstractSearchResult implements Bi
         PopupUtils.addMenuItem(SearchMediator.DOWNLOAD_PARTIAL_FILES_STRING, resultPanel.DOWNLOAD_PARTIAL_FILES_LISTENER, popupMenu, lines.length == 1, 2);
         PopupUtils.addMenuItem(SearchMediator.TORRENT_DETAILS_STRING, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showTorrentDetails(-1);
+                showDetails(true);
             }
         }, popupMenu, lines.length == 1, 3);
 

@@ -27,7 +27,6 @@ import org.pushingpixels.substance.internal.utils.icon.SubstanceIconFactory;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
-import com.limegroup.gnutella.settings.BittorrentSettings;
 
 /**
  * 
@@ -55,9 +54,7 @@ public final class SearchResultNameHolder implements Comparable<SearchResultName
         torrentDetailsAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (BittorrentSettings.TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD.getValue()) {
-                    GUIMediator.openURL(sr.getWebSearchResult().getTorrentDetailsURL(), BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
-                }
+                sr.showDetails(false);
             }
         };
         this.sr = sr;

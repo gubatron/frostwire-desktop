@@ -355,7 +355,7 @@ public final class SearchMediator {
                     }
                 }
 
-                LocalSearchEngine.instance().deepSearch(guid, query, info);
+                LocalSearchEngine.instance().deepSearch(guid, query);
             }
         });
         t.setDaemon(true);
@@ -371,11 +371,11 @@ public final class SearchMediator {
             SearchResult sr = null;
 
             if (webResult instanceof YouTubeSearchResult) {
-                sr = new YouTubePackageSearchResult((YouTubeSearchResult) webResult, engine, info);
+                sr = new YouTubePackageSearchResult((YouTubeSearchResult) webResult, engine);
             } else if (webResult instanceof SoundcloudTrackSearchResult) {
-                sr = new SoundcloudSearchResult((SoundcloudTrackSearchResult)webResult, engine, info);
+                sr = new SoundcloudSearchResult((SoundcloudTrackSearchResult)webResult, engine);
             } else {
-                sr = new SearchEngineSearchResult(webResult, engine, info);
+                sr = new SearchEngineSearchResult(webResult, engine);
             }
 
             result.add(sr);
@@ -444,16 +444,6 @@ public final class SearchMediator {
             throw new IllegalStateException("There should only be one search result selected: " + lines.length);
         }
         downloadLine(lines[0], new GUID(panel.getGUID()), null, null, true, panel.getSearchInformation());
-    }
-
-    public static void showTorrentDetails(SearchResultMediator panel, long delay) {
-        final SearchResultDataLine[] lines = panel.getAllSelectedLines();
-        if (lines.length != 1) {
-            throw new IllegalStateException("There should only be one search result selected: " + lines.length);
-        }
-
-        SearchResult searchResult = lines[0].getSearchResult();
-        searchResult.showTorrentDetails(delay);
     }
 
     /**
