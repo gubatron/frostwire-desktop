@@ -48,6 +48,7 @@ import javax.swing.table.TableRowSorter;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.util.TorrentUtils;
+import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
@@ -68,7 +69,7 @@ public class PartialFilesDialog extends JDialog {
     private LabeledTextField _filter;
     private RowFilter<Object, Object> _textBasedFilter = new RowFilterExtension();
 
-    private JLabel _label;
+    private JLabel labelTitle;
     private JTable _table;
     private JScrollPane _scrollPane;
     private JButton _buttonOK;
@@ -239,13 +240,22 @@ public class PartialFilesDialog extends JDialog {
 
     private void setupTitle() {
         GridBagConstraints c;
-        _label = new JLabel(_name.replace("_", " ").replace(".torrent", "").replace("&quot;", "\""));
-        _label.setFont(new Font("Dialog", Font.BOLD, 18));
+
+        String title = _torrent.getUTF8Name();
+        if (title == null) {
+            if (_torrent.getName() != null) {
+                title = StringUtils.getUTF8String(_torrent.getName());
+            } else {
+                title = _name.replace("_", " ").replace(".torrent", "").replace("&quot;", "\"");
+            }
+        }
+        labelTitle = new JLabel(title);
+        labelTitle.setFont(new Font("Dialog", Font.BOLD, 18));
         c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.WEST;
         c.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(_label, c);
+        getContentPane().add(labelTitle, c);
     }
 
     protected void onCheckBoxToggleAll(ItemEvent e) {
