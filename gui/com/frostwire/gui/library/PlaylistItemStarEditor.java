@@ -31,6 +31,12 @@ import javax.swing.table.TableCellEditor;
 import com.frostwire.alexandria.PlaylistItem;
 import com.limegroup.gnutella.gui.GUIMediator;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class PlaylistItemStarEditor extends AbstractCellEditor implements TableCellEditor {
 
     private static final long serialVersionUID = 2484867032644699734L;
