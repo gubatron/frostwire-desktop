@@ -132,4 +132,9 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
     public WebSearchResult getWebSearchResult() {
         return sr;
     }
+
+    @Override
+    public boolean allowDeepSearch() {
+        return true;
+    }
 }

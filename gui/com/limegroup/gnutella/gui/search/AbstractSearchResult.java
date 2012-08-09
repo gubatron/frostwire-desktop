@@ -26,6 +26,7 @@ import com.limegroup.gnutella.settings.SearchSettings;
  */
 public abstract class AbstractSearchResult implements SearchResult {
 
+    @Override
     public String getExtension() {
         String fullname = getFileName();
         if (fullname == null) {
@@ -38,6 +39,7 @@ public abstract class AbstractSearchResult implements SearchResult {
         return fullname.substring(i + 1);
     }
 
+    @Override
     public void showDetails(boolean now) {
         if (now) {
             GUIMediator.openURL(getWebSearchResult().getDetailsUrl());
@@ -46,5 +48,10 @@ public abstract class AbstractSearchResult implements SearchResult {
                 GUIMediator.openURL(getWebSearchResult().getDetailsUrl(), SearchSettings.SHOW_DETAILS_DELAY);
             }
         }
+    }
+    
+    @Override
+    public boolean allowDeepSearch() {
+        return false;
     }
 }

@@ -93,10 +93,6 @@ public class SearchEngineSearchResult extends AbstractSearchResult implements Bi
         return false;
     }
 
-    public boolean allowDeepSearch() {
-        return true;
-    }
-
     @Override
     public void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
         GUIMediator.instance().openTorrentSearchResult(_item, false);
@@ -135,5 +131,10 @@ public class SearchEngineSearchResult extends AbstractSearchResult implements Bi
     @Override
     public String getDisplayName() {
         return _item.getDisplayName();
+    }
+
+    @Override
+    public boolean allowDeepSearch() {
+        return true;
     }
 }

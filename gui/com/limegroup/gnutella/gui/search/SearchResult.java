@@ -119,4 +119,6 @@ public interface SearchResult {
     public void showDetails(boolean now);
     
     public String getDisplayName();
+    
+    public boolean allowDeepSearch();
 }

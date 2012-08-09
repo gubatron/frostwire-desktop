@@ -58,15 +58,11 @@ public final class SearchResultNameHolder implements Comparable<SearchResultName
         return AbstractTableMediator.compare(sr.getDisplayName(), o.sr.getDisplayName());
     }
 
-    public String getName() {
-        return sr.getDisplayName();
+    public SearchResult getSearchResult() {
+        return sr;
     }
 
     public String toString() {
-        return getName();
-    }
-
-    public ActionListener getAction() {
-        return moreAction;
+        return sr.getDisplayName();
     }
 }

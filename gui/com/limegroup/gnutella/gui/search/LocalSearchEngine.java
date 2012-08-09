@@ -293,6 +293,10 @@ public class LocalSearchEngine {
         for (int i = 0; i < allData.size(); i++) {
 
             SearchResultDataLine line = allData.get(i);
+            
+            if (!line.getInitializeObject().allowDeepSearch()) {
+                continue;
+            }
 
             if (line.getInitializeObject() instanceof SearchEngineSearchResult) {
                 if (foundTorrents >= MAXIMUM_TORRENTS_TO_SCAN) {
@@ -301,10 +305,7 @@ public class LocalSearchEngine {
                     }
                     continue;
                 }
-                if (!((SearchEngineSearchResult) line.getInitializeObject()).allowDeepSearch()) {
-                    continue;
-                }
-
+                
                 foundTorrents++;
 
                 WebSearchResult webSearchResult = line.getSearchResult().getWebSearchResult();

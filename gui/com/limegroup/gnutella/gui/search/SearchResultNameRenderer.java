@@ -228,7 +228,11 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
     }
 
     private void setData(SearchResultNameHolder value) {
-        labelText.setText(fixText(value.getName()));
+        SearchResult sr = value.getSearchResult();
+        
+        labelMore.setVisible(sr.allowDeepSearch());
+        
+        labelText.setText(fixText(sr.getDisplayName()));
     }
 
     private String fixText(String text) {
