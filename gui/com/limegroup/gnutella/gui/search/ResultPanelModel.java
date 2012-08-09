@@ -182,19 +182,6 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchRe
     public void slowRefresh() {
         super.refresh();
     }
-    
-    /**
-     * Adds sr to line as a new source.
-     */
-    protected int addNewResult(SearchResultDataLine line, SearchResult sr) {
-        int oldCount = line.getSeeds();
-        line.addNewResult(sr, METADATA);
-        int newCount = line.getSeeds();
-        int added = newCount - oldCount;
-        _numSources += added;
-        _numResults += 1;
-        return added;
-    }
 
     /**
      * Maintains the indexes HashMap & MetadataModel.

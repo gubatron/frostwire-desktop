@@ -78,7 +78,9 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
     /**
      * The date this was added to the network.
      */
-    private long _addedOn;
+    private Date addedOn;
+    
+    private SearchResultNameHolder nameHolder;
 
     public SearchResultDataLine(SearchTableColumns stc) {
         COLUMNS = stc;
@@ -89,12 +91,7 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
      */
     public void initialize(SearchResult sr) {
         super.initialize(sr);
-        initilizeStart(sr);
-        sr.initialize(this);
-        initializeEnd();
-    }
 
-    private void initilizeStart(SearchResult sr) {
         RESULT = sr;
         _mediaType = NamedMediaType.getFromExtension(getExtension());
         _speed = new ResultSpeed(sr.getSpeed(), sr.isMeasuredSpeed());
@@ -104,35 +101,8 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
                 RESULT.showDetails(true);
             }
         };
-    }
-
-    private void initializeEnd() {
-
-    }
-
-    /**
-     * Adds a new SearchResult to this TableLine.
-     */
-    void addNewResult(SearchResult sr, MetadataModel mm) {
-
-        if (_otherResults == null)
-            _otherResults = new LinkedList<SearchResult>();
-        _otherResults.add(sr);
-
-        // Set the speed correctly.
-        ResultSpeed newSpeed = new ResultSpeed(sr.getSpeed(), sr.isMeasuredSpeed());
-        // if we're changing a property, update the metadata model.
-        if (_speed.compareTo(newSpeed) < 0) {
-            if (mm != null)
-                mm.updateProperty(PropertyType.SPEED.getKey(), _speed, newSpeed, this);
-            _speed = newSpeed;
-        }
-
-        // Set the quality correctly.
-        _quality = Math.max(sr.getQuality(), _quality);
-
-        if (sr.getCreationTime() > 0)
-            _addedOn = Math.min(_addedOn, sr.getCreationTime());
+        addedOn = sr.getCreationTime() > 0 ? new Date(sr.getCreationTime()) : null;
+        nameHolder = new SearchResultNameHolder(sr);
     }
 
     /**
@@ -151,16 +121,6 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
      */
     ResultSpeed getSpeed() {
         return _speed;
-    }
-
-    /**
-     * Gets the creation time.
-     */
-    Date getAddedOn() {
-        if (_addedOn > 0)
-            return new Date(_addedOn);
-        else
-            return null;
     }
 
     private boolean isDownloading() {
@@ -319,13 +279,13 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
         case SearchTableColumns.TYPE_IDX:
             return getIcon();
         case SearchTableColumns.NAME_IDX:
-            return new SearchResultNameHolder(RESULT);
+            return nameHolder;
         case SearchTableColumns.SIZE_IDX:
             return new SizeHolder(getSize());
         case SearchTableColumns.SOURCE_IDX:
             return new ActionIconAndNameHolder(null, _torrentDetailsAction, "<html><a href=\"#\">" + RESULT.getVendor() + "</a></html>");
         case SearchTableColumns.ADDED_IDX:
-            return getAddedOn();
+            return addedOn;
         case SearchTableColumns.EXTENSION_IDX:
             return getExtension();
         default:
@@ -365,21 +325,6 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
      */
     public final void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
         RESULT.takeAction(line, guid, saveDir, fileName, saveAs, searchInfo);
-    }
-
-    /* -----------------------------------------------------------------------------
-     * These were exposed to give a {@link SearchResult} access to this
-     * TableLine in initialization.
-     * ----------------------------------------------------------------------------- 
-     */
-
-    /**
-     * Sets the new 'added on' date.
-     * 
-     * @param creationTime new 'added on' data
-     */
-    final void setAddedOn(long creationTime) {
-        _addedOn = creationTime;
     }
 
     public int getSeeds() {

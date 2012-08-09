@@ -116,13 +116,6 @@ public class SmartSearchResult extends AbstractSearchResult implements Bittorren
     }
 
     @Override
-    public void initialize(SearchResultDataLine line) {
-        line.setAddedOn(getCreationTime());
-
-        //hack this to show the icon for mininova or for isohunt.
-    }
-
-    @Override
     public boolean isMeasuredSpeed() {
         return false;
     }

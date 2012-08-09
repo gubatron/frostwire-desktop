@@ -113,13 +113,6 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
     }
 
     @Override
-    public void initialize(SearchResultDataLine line) {
-        line.setAddedOn(getCreationTime());
-
-        //hack this to show the icon for mininova or for isohunt.
-    }
-
-    @Override
     public boolean isMeasuredSpeed() {
         return false;
     }

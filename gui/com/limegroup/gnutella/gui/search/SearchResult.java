@@ -104,13 +104,6 @@ public interface SearchResult {
     void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName,
             boolean saveAs, SearchInformation searchInfo);
 
-    /**
-     * Initializes <code>line</code> to hold <code>this</code>.
-     * 
-     * @param line {@link SearchResultDataLine} that will hold <code>this</code>
-     */
-    void initialize(SearchResultDataLine line);
-    
     JPopupMenu createMenu(JPopupMenu popupMenu, SearchResultDataLine[] lines, SearchResultMediator rp);
     
     public String getHash();

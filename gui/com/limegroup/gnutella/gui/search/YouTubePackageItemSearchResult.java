@@ -113,11 +113,6 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
     }
 
     @Override
-    public void initialize(SearchResultDataLine line) {
-        line.setAddedOn(getCreationTime());
-    }
-
-    @Override
     public JPopupMenu createMenu(JPopupMenu popupMenu, SearchResultDataLine[] lines, SearchResultMediator rp) {
         PopupUtils.addMenuItem(SearchMediator.DOWNLOAD_STRING, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
