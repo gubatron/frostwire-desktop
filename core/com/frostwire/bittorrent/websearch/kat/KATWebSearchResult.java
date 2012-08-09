@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.bittorrent.websearch.kat;
 
 import java.text.ParseException;
@@ -23,10 +24,16 @@ import java.text.SimpleDateFormat;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.limegroup.gnutella.util.UrlUtils;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class KATWebSearchResult implements WebSearchResult {
-    
+
     private final KATItem _item;
-    
+
     public KATWebSearchResult(KATItem item) {
         _item = item;
     }
@@ -54,14 +61,11 @@ public class KATWebSearchResult implements WebSearchResult {
     public String getHash() {
         return _item.hash;
     }
-    
+
     public String getTorrentURI() {
         //KAT is no longer allowing torrent hot-linking, thus making the network more de-centralized.
         //Go magnets.
-        return "magnet:?xt=urn:btih:" +
-                   getHash() +
-                   "&dn="+UrlUtils.encode(getFileName()) + 
-                   "&tr=http%3A%2F%2Ftracker.publicbt.com%2Fannounce";
+        return "magnet:?xt=urn:btih:" + getHash() + "&dn=" + UrlUtils.encode(getFileName()) + "&tr=http%3A%2F%2Ftracker.publicbt.com%2Fannounce";
     }
 
     public long getSize() {

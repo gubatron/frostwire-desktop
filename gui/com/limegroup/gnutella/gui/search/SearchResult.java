@@ -15,12 +15,9 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Color;
 import java.io.File;
 
 import javax.swing.JPopupMenu;
-
-import org.limewire.collection.ApproximateMatcher;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.limegroup.gnutella.GUID;

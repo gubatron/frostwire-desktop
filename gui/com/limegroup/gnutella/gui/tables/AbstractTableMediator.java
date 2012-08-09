@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.tables;
 
 import java.awt.Dimension;
@@ -58,8 +73,7 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
  *   Refreshing the DATA_MODEL from the RefreshListener's call.
  *   @author Sam Berlin
  */
-public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E extends DataLine<I>, I>
-    implements ComponentMediator<I>, HeaderMouseObserver, ThemeObserver {
+public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E extends DataLine<I>, I> implements ComponentMediator<I>, HeaderMouseObserver, ThemeObserver {
 
     /**
      * The ID that uniquely defines this table.
@@ -108,17 +122,17 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * Variable for the ListSelectionListener for this component.
      */
     public ListSelectionListener SELECTION_LISTENER;
-    
+
     /**
      * KeyListener for moving based on typing.
      */
     public KeyListener AUTO_NAVIGATION_KEY_LISTENER;
-    
+
     /**
      * Variable for the TableSettings for this component.
      */
     public TableSettings SETTINGS;
-    
+
     /**
      * Variable for the SpeedRenderer for all components.
      */
@@ -138,34 +152,31 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * Variable for the ColorRenderer for all components.
      */
     private static TableCellRenderer COLOR_RENDERER;
-        
+
     /**
      * Variable for the IconRenderer for all components.
      */
     private static TableCellRenderer ICON_RENDERER;
-        
+
     /**
      * Variable for the IconAndNameRenderer for all components.
      */
     private static TableCellRenderer ICON_AND_NAME_RENDERER;
-    
+
     private static TableCellRenderer ACTION_ICON_AND_NAME_RENDERER;
-        
+
     /**
      * Variable for the default renderer for all components.
      */
     private static TableCellRenderer DEFAULT_RENDERER;
-        
+
     /**
      * Variable for the centered renderer.
      */
     private static TableCellRenderer CENTER_RENDERER;
-    
+
     /** Variable for the date renderer. */
     private static TableCellRenderer DATE_RENDERER;
-    
-    /** Renderer for strings that could be HTML. */
-    private static TableCellRenderer LINK_RENDERER;
 
     /**
      * A zero dimension to be used in all tables.
@@ -187,13 +198,13 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * The <tt>JScrollPane</tt> instance for scrolling through the table.
      */
     protected JScrollPane SCROLL_PANE;
-	
-	/**
-	 * Is true when the table is currently resorted. Should only be used by 
-	 * package internal event listeners, which want to suppress events during
-	 * resorting.
-	 */
-	protected boolean isResorting = false;
+
+    /**
+     * Is true when the table is currently resorted. Should only be used by 
+     * package internal event listeners, which want to suppress events during
+     * resorting.
+     */
+    protected boolean isResorting = false;
 
     /**
      * Basic constructor that uses a Template Pattern to delegate the
@@ -238,7 +249,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         this.setupTableHeaders();
         this.handleNoSelection();
     }
-    
+
     /**
      * Sets up Drag & Drop for the table.
      * Default implementation does nothing.
@@ -247,13 +258,14 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * Mouse[Motion]Listeners behind a proxy, and we don't need to
      * proxy listeners added from here.
      */
-    protected void setupDragAndDrop() {}
+    protected void setupDragAndDrop() {
+    }
 
     /**
      * Intended for updating the splash screen while this component loads.
      */
     protected abstract void updateSplashScreen();
-    
+
     /**
      * Retrieves or builds the correct settings.
      */
@@ -311,7 +323,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         TABLE.setTableSettings(SETTINGS);
         TABLE.getTableHeader().addMouseListener(new FlexibleColumnResizeAdapter());
     }
-    
+
     /**
      * Add input/action events to the table.
      *
@@ -328,19 +340,19 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
             }
         };
         installAction(map, enter, KeyEvent.VK_ENTER, "limewire.action");
-        
+
         Action delete = new AbstractAction() {
             private static final long serialVersionUID = 6973509148820061808L;
 
             public void actionPerformed(ActionEvent e) {
-                if(!TABLE.isEditing())
+                if (!TABLE.isEditing())
                     removeSelection();
             }
         };
         installAction(map, delete, KeyEvent.VK_BACK_SPACE, "limewire.delete");
         installAction(map, delete, KeyEvent.VK_DELETE, "limewire.delete");
     }
-    
+
     /**
      * Installs an action to the table with the specified key & signifier.
      */
@@ -349,10 +361,10 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         Object obj = map.get(stroke);
         // If the action already exists in the input map, just refocus
         // the action map.
-        if(obj != null) {
+        if (obj != null) {
             TABLE.getActionMap().put(obj, action);
         } else {
-        // Otherwise, install a new entry into both the input & action map.
+            // Otherwise, install a new entry into both the input & action map.
             map.put(stroke, sig);
             TABLE.getActionMap().put(sig, action);
         }
@@ -385,7 +397,8 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * Intended for setting up default editors.  By default,
      * no editors are added.
      */
-    protected void setDefaultEditors() { }
+    protected void setDefaultEditors() {
+    }
 
     /**
      * Sets up the MAIN_PANEL to have a uniform look among all tables.
@@ -442,25 +455,25 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         corner.setBackground(TABLE.getTableHeader().getBackground());
         corner.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         SCROLL_PANE.setCorner(JScrollPane.UPPER_RIGHT_CORNER, corner);
-        
+
         tablePane.add(SCROLL_PANE);
 
         TABLE_PANE = tablePane;
-        
+
         return tablePane;
     }
 
     public void updateTheme() {
-//        Color tableColor = SkinHandler.getTableBackgroundColor();
-//        
-//        if (TABLE_PANE == null) {
-//            return;
-//        }
-//
-//        TABLE_PANE.setBackground(tableColor);
-//        TABLE.setBackground(tableColor);
-//        TABLE.setOpaque(true);
-//        SCROLL_PANE.getViewport().setBackground(tableColor);
+        //        Color tableColor = SkinHandler.getTableBackgroundColor();
+        //        
+        //        if (TABLE_PANE == null) {
+        //            return;
+        //        }
+        //
+        //        TABLE_PANE.setBackground(tableColor);
+        //        TABLE.setBackground(tableColor);
+        //        TABLE.setOpaque(true);
+        //        SCROLL_PANE.getViewport().setBackground(tableColor);
     }
 
     /**
@@ -480,7 +493,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * @param o - object to add
      * @param index - index to insert into if the list is not sorted
      */
-    public void add(I o, int index ) {
+    public void add(I o, int index) {
         if (TABLE.isEditing()) {
             CellEditor editor = TABLE.getCellEditor();
             editor.cancelCellEditing();
@@ -492,13 +505,12 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         if (SETTINGS.REAL_TIME_SORT.getValue() && DATA_MODEL.isSorted())
             addedAt = DATA_MODEL.addSorted(o);
         else {
-            if( index >= 0 && index <= DATA_MODEL.getRowCount()) {
+            if (index >= 0 && index <= DATA_MODEL.getRowCount()) {
                 addedAt = DATA_MODEL.add(o, index);
-            }
-            else
+            } else
                 addedAt = DATA_MODEL.add(o);
         }
-        
+
         // if it was added...
         fixSelection(addedAt, inView);
     }
@@ -511,18 +523,18 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
             CellEditor editor = TABLE.getCellEditor();
             editor.cancelCellEditing();
         }
-        
+
         boolean inView = TABLE.isSelectionVisible();
         int addedAt = DATA_MODEL.add(o);
         fixSelection(addedAt, inView);
     }
-    
+
     /**
      * Removes the selection from where the row was added,
      * and puts the focus on a previously selected row.
      */
     protected void fixSelection(int addedAt, boolean inView) {
-        if ( addedAt >= 0 && addedAt < DATA_MODEL.getRowCount() ) {
+        if (addedAt >= 0 && addedAt < DATA_MODEL.getRowCount()) {
             // unselect the row to address a Java bug
             // (if the previous row was selected,
             //  then the newly added one will be selected also)
@@ -530,9 +542,9 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
             // (and must reselect an older row, 'cause unselecting moves
             //  the traversing focus)
             int selected = TABLE.getSelectedRow();
-            if(selected >= 0 && selected < DATA_MODEL.getRowCount()) {
+            if (selected >= 0 && selected < DATA_MODEL.getRowCount()) {
                 TABLE.addRowSelectionInterval(selected, selected);
-                if(inView)
+                if (inView)
                     TABLE.ensureRowVisible(selected);
             }
         }
@@ -545,7 +557,8 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      */
     public void remove(I o) {
         int idx = DATA_MODEL.getRow(o);
-        if (idx != -1) removeRow(idx);
+        if (idx != -1)
+            removeRow(idx);
     }
 
     /**
@@ -554,16 +567,16 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
     public void removeRow(int row) {
         DATA_MODEL.remove(row);
     }
-    
+
     /**
      * Moves a row in the table to a new location. 
      * @param oldLocation - table row to move
      * @param newLocation - location to insert the table row after it had been removed
      */
     public void moveRow(int oldLocation, int newLocation) {
-        if( oldLocation < 0 || oldLocation >= DATA_MODEL.getRowCount() )
+        if (oldLocation < 0 || oldLocation >= DATA_MODEL.getRowCount())
             throw new IllegalArgumentException("index " + oldLocation + " must be >= 0 and < TABLE.getRowCount()");
-        if( newLocation < 0 || newLocation >= DATA_MODEL.getRowCount())
+        if (newLocation < 0 || newLocation >= DATA_MODEL.getRowCount())
             throw new IllegalArgumentException("add index " + newLocation + " must be >= 0 and < TABLE.getRowCount()");
         E e = DATA_MODEL.get(oldLocation);
         DATA_MODEL.remove(oldLocation);
@@ -577,7 +590,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * Extending classes should NOT override this.
      * Instead, they should override doRefresh.
      */
-     public void refresh() {
+    public void refresh() {
         // We only want to refresh if the table is showing.
         // This saves on traversing through every item in non visible tables.
         // This will cause at most a one second lag on updating
@@ -662,9 +675,10 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
     protected JPopupMenu createColumnSelectionMenu() {
         return (new ColumnSelectionMenu(TABLE)).getComponent();
     }
-    
-    public void handleMouseClick(MouseEvent e) { }
-    
+
+    public void handleMouseClick(MouseEvent e) {
+    }
+
     /**
      * Forwards a double click to the 'action key'.
      */
@@ -680,7 +694,8 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         Point p = e.getPoint();
         int row = TABLE.rowAtPoint(p);
         //check its valid, should always be but cheap to check
-        if (row < 0) return;
+        if (row < 0)
+            return;
         if (!TABLE.getSelectionModel().isSelectedIndex(row)) {
             //if right clicked row is not selected, make it so
             TABLE.getSelectionModel().setSelectionInterval(row, row);
@@ -695,10 +710,10 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         handleRightMouseClick(e);
 
         JPopupMenu menu = createPopupMenu();
-        if(menu != null) {
+        if (menu != null) {
             try {
-                menu.show(TABLE, p.x+1, p.y-6);
-            } catch(IllegalComponentStateException icse) {
+                menu.show(TABLE, p.x + 1, p.y - 6);
+            } catch (IllegalComponentStateException icse) {
                 // happens occasionally, ignore.
             }
         }
@@ -716,7 +731,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
             sortAndMaintainSelection(c);
             // force the headers to repaint with new icons.
             th.repaint(th.getHeaderRect(col));
-            if(oldC != -1 && oldC != c) {
+            if (oldC != -1 && oldC != c) {
                 int oldCol = TABLE.convertColumnIndexToView(oldC);
                 th.repaint(th.getHeaderRect(oldCol));
             }
@@ -727,7 +742,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * Show the column selection menu.
      */
     public void handleHeaderPopupMenu(Point p) {
-        createColumnSelectionMenu().show(TABLE.getTableHeader(), p.x+1, p.y-6);
+        createColumnSelectionMenu().show(TABLE.getTableHeader(), p.x + 1, p.y - 6);
     }
 
     /**
@@ -764,7 +779,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         if (BUTTON_ROW != null)
             BUTTON_ROW.setButtonEnabled(buttonIdx, enabled);
     }
-    
+
     /**
      * Gets the size of the underlying model.
      */
@@ -801,7 +816,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         Object inView = null;
         for (int i = 0; i < rows.length; i++) {
             dls[i] = DATA_MODEL.get(rows[i]);
-            if(inView == null && TABLE.isRowVisible(rows[i]))
+            if (inView == null && TABLE.isRowVisible(rows[i]))
                 inView = dls[i];
         }
 
@@ -812,13 +827,13 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
             DATA_MODEL.sort(columnToSort);
 
         // reselect the rows.
-        for(int i = 0; i < rows.length; i++) {
-            int sel = DATA_MODEL.getRow((E)dls[i]);
+        for (int i = 0; i < rows.length; i++) {
+            int sel = DATA_MODEL.getRow((E) dls[i]);
             TABLE.addRowSelectionInterval(sel, sel);
-            if(inView == dls[i]) {
+            if (inView == dls[i]) {
                 TABLE.ensureRowVisible(sel);
                 inView = null;
-            }            
+            }
         }
     }
 
@@ -844,8 +859,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
             // TABLE.isShowing() should be checked last, since it's a
             // recursive call (and thus the most expensive)
             // through all the parents of the table.
-            if ( !active && SETTINGS.REAL_TIME_SORT.getValue() &&
-                 TABLE.isShowing() ) {
+            if (!active && SETTINGS.REAL_TIME_SORT.getValue() && TABLE.isShowing()) {
                 active = true;
                 SwingUtilities.invokeLater(this);
             }
@@ -864,19 +878,19 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
          */
         public void run() {
             try {
-                if (!TABLE.isEditing() &&
-                    (force || DATA_MODEL.needsResort())) {
-					isResorting = true;
+                if (!TABLE.isEditing() && (force || DATA_MODEL.needsResort())) {
+                    isResorting = true;
                     sortAndMaintainSelection(-1);
-					isResorting = false;
+                    isResorting = false;
                 }
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
             active = false;
             force = false;
         }
 
     }
-    
+
     /**
      * Convenience method to generically compare any two comparable
      * things.
@@ -892,97 +906,96 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * 'Number', which just uses an int comparison.
      */
     @SuppressWarnings("unchecked")
-	public
-    static int compare(Object o1, Object o2) {
+    public static int compare(Object o1, Object o2) {
         int retval;
-        
-        if ( o1 == null && o2 == null ) {
+
+        if (o1 == null && o2 == null) {
             retval = 0;
-        } else if ( o1 == null ) {
+        } else if (o1 == null) {
             retval = -1;
-        } else if ( o2 == null ) {
+        } else if (o2 == null) {
             retval = 1;
-        } else if ( o1.getClass() == String.class ) {
-            retval = StringUtils.compareFullPrimary( (String)o1, (String)o2 );
-        } else if( o1 instanceof java.lang.Comparable ) {
-            retval = ((java.lang.Comparable<Object>)o1).compareTo(o2);
+        } else if (o1.getClass() == String.class) {
+            retval = StringUtils.compareFullPrimary((String) o1, (String) o2);
+        } else if (o1 instanceof java.lang.Comparable) {
+            retval = ((java.lang.Comparable<Object>) o1).compareTo(o2);
         } else {
             retval = 0;
         }
         return retval;
     }
 
-	/**
-	 * Returns whether the table is resorting. 
-	 */
-	boolean isResorting() {
-		return isResorting;
-	}
-	
-	protected TableCellRenderer getProgressBarRenderer() {
-	    if (PROGRESS_BAR_RENDERER == null) {
-	        PROGRESS_BAR_RENDERER = new ProgressBarRenderer();
-	    }
-	    return PROGRESS_BAR_RENDERER;
-	}
-	
-	protected TableCellRenderer getChatRenderer() {
+    /**
+     * Returns whether the table is resorting. 
+     */
+    boolean isResorting() {
+        return isResorting;
+    }
+
+    protected TableCellRenderer getProgressBarRenderer() {
+        if (PROGRESS_BAR_RENDERER == null) {
+            PROGRESS_BAR_RENDERER = new ProgressBarRenderer();
+        }
+        return PROGRESS_BAR_RENDERER;
+    }
+
+    protected TableCellRenderer getChatRenderer() {
         if (CHAT_RENDERER == null) {
             CHAT_RENDERER = new ChatRenderer();
         }
         return CHAT_RENDERER;
     }
-	
-	protected TableCellRenderer getSpeedRenderer() {
+
+    protected TableCellRenderer getSpeedRenderer() {
         if (SPEED_RENDERER == null) {
             SPEED_RENDERER = new SpeedRenderer();
         }
         return SPEED_RENDERER;
     }
-	
-	protected TableCellRenderer getColorRenderer() {
+
+    protected TableCellRenderer getColorRenderer() {
         if (COLOR_RENDERER == null) {
             COLOR_RENDERER = new ColorRenderer();
         }
         return COLOR_RENDERER;
     }
-	
-	protected TableCellRenderer getIconRenderer() {
+
+    protected TableCellRenderer getIconRenderer() {
         if (ICON_RENDERER == null) {
             ICON_RENDERER = new IconRenderer();
         }
         return ICON_RENDERER;
     }
-	
-	protected TableCellRenderer getIconAndNameRenderer() {
+
+    protected TableCellRenderer getIconAndNameRenderer() {
         if (ICON_AND_NAME_RENDERER == null) {
             ICON_AND_NAME_RENDERER = new IconAndNameRenderer();
         }
         return ICON_AND_NAME_RENDERER;
     }
-	
-	protected TableCellRenderer getActionIconAndNameRenderer() {
-	    if (ACTION_ICON_AND_NAME_RENDERER == null) {
-	        ACTION_ICON_AND_NAME_RENDERER = new ActionIconAndNameRenderer();
-	    }
-	    return ACTION_ICON_AND_NAME_RENDERER;
-	}
-	
-	protected TableCellRenderer getDefaultRenderer() {
+
+    protected TableCellRenderer getActionIconAndNameRenderer() {
+        if (ACTION_ICON_AND_NAME_RENDERER == null) {
+            ACTION_ICON_AND_NAME_RENDERER = new ActionIconAndNameRenderer();
+        }
+        return ACTION_ICON_AND_NAME_RENDERER;
+    }
+
+    protected TableCellRenderer getDefaultRenderer() {
         if (DEFAULT_RENDERER == null) {
             DEFAULT_RENDERER = new SubstanceDefaultTableCellRenderer();
         }
         return DEFAULT_RENDERER;
     }
-	
-	protected TableCellRenderer getCenterRenderer() {
+
+    protected TableCellRenderer getCenterRenderer() {
         if (CENTER_RENDERER == null) {
             CENTER_RENDERER = new CenteredRenderer();
         }
         return CENTER_RENDERER;
     }
-	
-	protected TableCellRenderer getDateRenderer() {
+
+    protected TableCellRenderer getDateRenderer() {
         if (DATE_RENDERER == null) {
             DATE_RENDERER = new DateRenderer();
         }

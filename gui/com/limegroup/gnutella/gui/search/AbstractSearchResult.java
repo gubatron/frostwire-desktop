@@ -15,13 +15,7 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Color;
-
-import org.limewire.collection.ApproximateMatcher;
-import org.limewire.util.I18NConvert;
-
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /**

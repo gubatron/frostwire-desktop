@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,52 +28,52 @@ import com.frostwire.bittorrent.websearch.WebSearchResult;
 public class SoundcloudTrackSearchResult implements WebSearchResult {
 
     private final SoundcloudItem item;
-	private final String trackUrl;
-	
-	public SoundcloudTrackSearchResult(SoundcloudItem item) {
-		this.item = item;
-		trackUrl = "http://soundcloud.com" + item.uri;
-	}
-	
-	@Override
-	public String getFileName() {
-		return item.name + ".mp3";
-	}
+    private final String trackUrl;
 
-	@Override
-	public long getSize() {
-		return -1;
-	}
+    public SoundcloudTrackSearchResult(SoundcloudItem item) {
+        this.item = item;
+        trackUrl = "http://soundcloud.com" + item.uri;
+    }
 
-	@Override
-	public long getCreationTime() {
-		return -1;
-	}
+    @Override
+    public String getFileName() {
+        return item.name + ".mp3";
+    }
 
-	@Override
-	public String getVendor() {
-		return "Soundcloud";
-	}
+    @Override
+    public long getSize() {
+        return -1;
+    }
 
-	@Override
-	public String getHash() {
-		return null;
-	}
+    @Override
+    public long getCreationTime() {
+        return -1;
+    }
 
-	@Override
-	public String getTorrentURI() {
-		return trackUrl;
-	}
+    @Override
+    public String getVendor() {
+        return "Soundcloud";
+    }
 
-	@Override
-	public int getSeeds() {
-		return -1;
-	}
+    @Override
+    public String getHash() {
+        return null;
+    }
 
-	@Override
-	public String getDetailsUrl() {
-		return trackUrl;
-	}
+    @Override
+    public String getTorrentURI() {
+        return trackUrl;
+    }
+
+    @Override
+    public int getSeeds() {
+        return -1;
+    }
+
+    @Override
+    public String getDetailsUrl() {
+        return trackUrl;
+    }
 
     @Override
     public String getDisplayName() {

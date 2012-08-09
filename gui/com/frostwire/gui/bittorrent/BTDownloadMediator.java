@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
  * 
  */
 public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRowFilteredModel, BTDownloadDataLine, BTDownload> {
-    
+
     private static final Log LOG = LogFactory.getLog(BTDownloadMediator.class);
 
     public static final int MIN_HEIGHT = 150;
@@ -309,7 +309,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         if (!AzureusStarter.isAzureusCoreStarted()) {
             return 0;
         }
-        
+
         AzureusCore azureusCore = AzureusStarter.getAzureusCore();
 
         if (azureusCore == null) {
@@ -574,10 +574,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         boolean isTransferFinished = dataLine.getInitializeObject().isCompleted();
 
         File saveLocation = dataLine.getInitializeObject().getSaveLocation();
-        
+
         boolean hasAudioFiles = selectionHasAudioFiles(dataLine.getInitializeObject());
         boolean hasMP4s = selectionHasMP4s(saveLocation);
-        
+
         boolean isSingleFile = selectionIsSingleFile(saveLocation);
 
         removeAction.putValue(Action.NAME, I18n.tr("Cancel Download"));
@@ -653,8 +653,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     public void openTorrentSearchResult(final WebSearchResult webSearchResult, final boolean partialDownload, final ActionListener postPartialDownloadAction) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(webSearchResult.getTorrentURI(), webSearchResult.getDetailsUrl(), webSearchResult.getDisplayName(), webSearchResult
-                        .getHash(), webSearchResult.getSize(), partialDownload, postPartialDownloadAction);
+                BTDownload downloader = new TorrentFetcherDownload(webSearchResult.getTorrentURI(), webSearchResult.getDetailsUrl(), webSearchResult.getDisplayName(), webSearchResult.getHash(), webSearchResult.getSize(), partialDownload, postPartialDownloadAction);
                 add(downloader);
             }
         });
@@ -707,9 +706,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                     e.printStackTrace();
                     if (!e.toString().contains("No files selected by user")) {
                         // could not read torrent file or bad torrent file.
-                        GUIMediator.showError(
-                                I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.",
-                                        torrentFile.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
+                        GUIMediator.showError(I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.", torrentFile.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
                         //System.out.println("***Error happened from Download Mediator: " +  ioe);
                         //GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
                     }
@@ -764,9 +761,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                     e.printStackTrace();
                     if (!e.toString().contains("No files selected by user")) {
                         // could not read torrent file or bad torrent file.
-                        GUIMediator.showError(
-                                I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.",
-                                        torrentFile.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
+                        GUIMediator.showError(I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.", torrentFile.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
                         //System.out.println("***Error happened from Download Mediator: " +  ioe);
                         //GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
                     }
@@ -871,7 +866,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             }
         });
     }
-    
+
     public void openSoundcloudTrackUrl(final String trackUrl, final String title) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
@@ -900,7 +895,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             }
         });
     }
-    
+
     public void openSoundcloudItem(final FilePackage filePackage, final String title) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {

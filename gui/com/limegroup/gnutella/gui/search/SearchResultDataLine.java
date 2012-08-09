@@ -15,7 +15,6 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -27,8 +26,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.Icon;
-
-import org.pushingpixels.substance.internal.utils.icon.SubstanceIconFactory;
 
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.GUID;
@@ -71,11 +68,7 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
      */
     private ResultSpeed _speed = null;
 
-    private ActionListener _downloadAction;
-
     private ActionListener _torrentDetailsAction;
-
-    private ActionListener _torrentDetailsActionWithDelay;
 
     /**
      * The quality of this line.
@@ -106,19 +99,9 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
         _mediaType = NamedMediaType.getFromExtension(getExtension());
         _speed = new ResultSpeed(sr.getSpeed(), sr.isMeasuredSpeed());
         _quality = sr.getQuality();
-        _downloadAction = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                GUIMediator.instance().openTorrentSearchResult(getInitializeObject().getWebSearchResult(), true, _torrentDetailsActionWithDelay);
-            }
-        };
         _torrentDetailsAction = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 RESULT.showDetails(true);
-            }
-        };
-        _torrentDetailsActionWithDelay = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                RESULT.showDetails(false);
             }
         };
     }
@@ -265,7 +248,7 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
     public String getFilename() {
         return RESULT.getFileName();
     }
-    
+
     public String getDisplayName() {
         return RESULT.getDisplayName();
     }
