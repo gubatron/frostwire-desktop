@@ -15,8 +15,8 @@ public class AudioSource {
      */
     private final File file;
 
-    private final URL url;
-    
+    private final String url;
+
     private final PlaylistItem playlistItem;
 
     public AudioSource(File file) {
@@ -31,25 +31,25 @@ public class AudioSource {
 
     @Override
     public String toString() {
-    	String name = null;
-    	if (getFile()!=null) {
-    		name = getFile().getName();
-    	} else {
-    		name = url.getPath();
-    	}
-    	return "[AudioSource@"+hashCode()+": "+name+"]";
+        String name = null;
+        if (getFile() != null) {
+            name = getFile().getName();
+        } else {
+            name = url;
+        }
+        return "[AudioSource@" + hashCode() + ": " + name + "]";
     }
-    
-    public AudioSource(URL url) {
+
+    public AudioSource(String url) {
         if (url == null) {
-            throw new NullPointerException("URL cannot be null");
+            throw new NullPointerException("Url cannot be null");
         }
 
         this.file = null;
         this.url = url;
         this.playlistItem = null;
     }
-    
+
     public AudioSource(PlaylistItem playlistItem) {
         if (playlistItem == null) {
             throw new NullPointerException("PlaylistItem cannot be null");
@@ -64,14 +64,14 @@ public class AudioSource {
         return file;
     }
 
-    public URL getURL() {
+    public String getURL() {
         return url;
     }
-    
+
     public PlaylistItem getPlaylistItem() {
         return playlistItem;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         AudioSource o = (AudioSource) obj;

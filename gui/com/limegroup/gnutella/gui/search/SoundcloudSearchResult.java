@@ -21,11 +21,32 @@ package com.limegroup.gnutella.gui.search;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.JPopupMenu;
 
+import jd.controlling.linkcrawler.CrawledLink;
+import jd.controlling.linkcrawler.LinkCrawler;
+import jd.http.Browser;
+import jd.http.URLConnectionAdapter;
+import jd.nutils.encoding.Encoding;
+import jd.plugins.DownloadLink;
+import jd.plugins.LinkStatus;
+import jd.plugins.PluginException;
+import jd.plugins.DownloadLink.AvailableStatus;
+import jd.utils.locale.JDL;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.appwork.utils.formatter.SizeFormatter;
+import org.jdownloader.controlling.filter.LinkFilterController;
+
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.bittorrent.websearch.soundcloud.SoundcloudTrackSearchResult;
+import com.frostwire.gui.library.DeviceDiscoveryClerk;
+import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.StreamAudioSource;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
@@ -35,10 +56,17 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
  * @author aldenml
  *
  */
-public final class SoundcloudSearchResult extends AbstractSearchResult {
+public final class SoundcloudSearchResult extends AbstractSearchResult implements StreamableSearchResult {
+
+    private static final Log LOG = LogFactory.getLog(SoundcloudSearchResult.class);
+
+    private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     private final SoundcloudTrackSearchResult sr;
     private final SearchEngine searchEngine;
+
+    private String streamUrl;
+    private boolean streamUrlCrawled;
 
     public SoundcloudSearchResult(SoundcloudTrackSearchResult sr, SearchEngine searchEngine) {
         this.sr = sr;
@@ -133,7 +161,68 @@ public final class SoundcloudSearchResult extends AbstractSearchResult {
     }
 
     @Override
-    public String getStreamUrl() {
-        return sr.getDetailsUrl();
+    public void play() {
+        executor.execute(new PlayTask());
+    }
+
+    private String crawlStreamUrl(String detailsUrl) {
+        String url = null;
+        try {
+            Browser br = new Browser();
+            br.getPage(detailsUrl);
+            if (br.containsHTML("Oops, looks like we can\\'t find that page"))
+                throw new PluginException(LinkStatus.ERROR_FILE_NOT_FOUND);
+            String filename = br.getRegex("<em>(.*?)</em>").getMatch(0);
+            br.setFollowRedirects(true);
+            if (filename == null)
+                throw new PluginException(LinkStatus.ERROR_PLUGIN_DEFECT);
+            String username = br.getRegex("\"username\":\"(.*?)\"").getMatch(0);
+            filename = Encoding.htmlDecode(filename.trim());
+            String type = br.getRegex("title=\"Uploaded format\">(.*?)<").getMatch(0);
+            if (type == null) {
+                type = br.getRegex("class=\"file\\-type\">(.*?)</span>").getMatch(0);
+                if (type == null)
+                    type = "mp3";
+            }
+            username = username.trim();
+            if (username != null && !filename.contains(username))
+                filename += " - " + username;
+            filename += "." + type;
+            if (!br.containsHTML("class=\"download pl\\-button\"")) {
+                String[] data = br.getRegex("\"uid\":\"(.*?)\".*?\"token\":\"(.*?)\"").getRow(0);
+                url = "http://media.soundcloud.com/stream/" + data[0] + "?stream_token=" + data[1];
+                URLConnectionAdapter con = br.openGetConnection(url);
+                if (!con.getContentType().contains("html")) {
+                    //parameter.setDownloadSize(con.getLongContentLength());
+                } else {
+                    throw new PluginException(LinkStatus.ERROR_PLUGIN_DEFECT);
+                }
+                con.disconnect();
+                //parameter.getLinkStatus().setStatusText(JDL.L("plugins.hoster.SoundCloudCom.status.previewavailable", "Preview is downloadable"));
+            } else {
+                String filesize = br.getRegex("The file you're about to download has a size of (.*?)\"").getMatch(0);
+                if (filesize != null) {
+                    //parameter.setDownloadSize(SizeFormatter.getSize(filesize));
+                }
+                url = detailsUrl + "/download";
+                //parameter.getLinkStatus().setStatusText(JDL.L("plugins.hoster.SoundCloudCom.status.downloadavailable", "Original file is downloadable"));
+            }
+            //parameter.setFinalFileName(filename);
+        } catch (Throwable e) {
+            LOG.error("Error crawling soundcloud stream url from: " + detailsUrl, e);
+        }
+        return url;
+    }
+
+    private final class PlayTask implements Runnable {
+
+        public PlayTask() {
+        }
+
+        @Override
+        public void run() {
+            String streamUrl = crawlStreamUrl(sr.getDetailsUrl());
+            GUIMediator.instance().launchAudio(new StreamAudioSource(streamUrl, "Soundcloud: " + sr.getDisplayName()));
+        }
     }
 }

@@ -76,12 +76,12 @@ import com.limegroup.gnutella.util.QueryUtils;
  * It is the Mediator to the Table part of the Library display.
  */
 final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediator<LibraryInternetRadioTableModel, LibraryInternetRadioTableDataLine, InternetRadioStation> {
-    
+
     private Action importRadioStationAction;
     private Action copyStreamUrlAction;
     private Action LAUNCH_ACTION;
     private Action DELETE_ACTION;
-    
+
     /**
      * instance, for singelton access
      */
@@ -99,7 +99,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
      */
     protected void buildListeners() {
         super.buildListeners();
-        
+
         importRadioStationAction = new AddRadioStationAction();
         copyStreamUrlAction = new CopyStreamUrlAction();
         LAUNCH_ACTION = new LaunchAction();
@@ -131,7 +131,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         menu.add(new SkinMenuItem(DELETE_ACTION));
 
         int[] rows = TABLE.getSelectedRows();
-        
+
         DELETE_ACTION.setEnabled(true);
 
         menu.addSeparator();
@@ -140,19 +140,19 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
         return menu;
     }
-    
+
     @Override
     protected void addListeners() {
-    	super.addListeners();
+        super.addListeners();
 
-    	TABLE.addKeyListener(new KeyAdapter() {
-        	@Override
-        	public void keyReleased(KeyEvent e) {
-        		if (LibraryUtils.isRefreshKeyEvent(e)) {
-        			//LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
-        		}        		
-        	}
-		});
+        TABLE.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (LibraryUtils.isRefreshKeyEvent(e)) {
+                    //LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+                }
+            }
+        });
     }
 
     private JMenu createSearchSubMenu(LibraryInternetRadioTableDataLine dl) {
@@ -190,10 +190,8 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         super("LIBRARY_INTERNET_RADIO_TABLE");
         setMediaType(MediaType.getAudioMediaType());
         ThemeMediator.addThemeObserver(this);
-        
 
         LimeTableColumn genreColumn = LibraryInternetRadioTableDataLine.GENRE_COLUMN;
-        
 
         if (genreColumn != null && TablesHandlerSettings.getVisibility(genreColumn.getId(), genreColumn.getDefaultVisibility()).getValue()) {
             DATA_MODEL.sort(LibraryInternetRadioTableDataLine.GENRE_IDX); //ascending
@@ -206,7 +204,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     protected void setupDragAndDrop() {
         TABLE.setDragEnabled(true);
         TABLE.setDropMode(DropMode.INSERT_ROWS);
-       // TABLE.setTransferHandler(new LibraryPlaylistsTableTransferHandler(this));
+        // TABLE.setTransferHandler(new LibraryPlaylistsTableTransferHandler(this));
     }
 
     @Override
@@ -214,7 +212,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         super.setDefaultRenderers();
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
         TABLE.setDefaultRenderer(InternetRadioBookmark.class, new InternetRadioBookmarkRenderer());
-        
+
     }
 
     /**
@@ -225,12 +223,11 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         TableColumn tc;
         tc = model.getColumn(LibraryInternetRadioTableDataLine.WEBSITE_IDX);
         tc.setCellEditor(new ActionIconAndNameEditor());
-        
+
         //Hey Gosling, nice inconsistency here...
         //Why not TABLE.setDefaultCellEditor(Clazz, EditorObj)???
-        
-        
-        tc =  model.getColumn(LibraryInternetRadioTableDataLine.BOOKMARKED_IDX);
+
+        tc = model.getColumn(LibraryInternetRadioTableDataLine.BOOKMARKED_IDX);
         tc.setCellEditor(new InternetRadioBookmarkEditor());
 
         TABLE.addMouseMotionListener(new MouseMotionAdapter() {
@@ -250,9 +247,8 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
                     currentCellRow = hitRow;
                 }
             }
-        });    
-        
-        
+        });
+
     }
 
     /**
@@ -286,8 +282,8 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
             return;
         }
 
-//        currentPlaylist = playlist;
-//        List<PlaylistItem> items = currentPlaylist.getItems();
+        //        currentPlaylist = playlist;
+        //        List<PlaylistItem> items = currentPlaylist.getItems();
 
         clearTable();
         for (int i = 0; i < items.size(); i++) {
@@ -370,18 +366,13 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
      */
     public void removeSelection() {
         LibraryInternetRadioTableDataLine[] lines = getSelectedLibraryLines();
-    
-		int result = JOptionPane
-		.showConfirmDialog(
-				GUIMediator.getAppFrame(),
-				I18n.trn(I18n.tr("Are you sure you want to remove the selected radio station?"),I18n.tr("Are you sure you want to remove the selected radio stations?"),lines.length),
-				I18n.tr("Are you sure?"),
-				JOptionPane.YES_NO_OPTION,
-				JOptionPane.QUESTION_MESSAGE);
 
-		if (result != JOptionPane.YES_OPTION) {
-			return;
-		}
+        int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.trn(I18n.tr("Are you sure you want to remove the selected radio station?"), I18n.tr("Are you sure you want to remove the selected radio stations?"), lines.length), I18n.tr("Are you sure?"), JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (result != JOptionPane.YES_OPTION) {
+            return;
+        }
 
         for (LibraryInternetRadioTableDataLine line : lines) {
             InternetRadioStation item = line.getInitializeObject();
@@ -390,7 +381,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
         LibraryMediator.instance().getLibraryExplorer().selectRadio();
         clearSelection();
-        
+
         super.removeSelection();
     }
 
@@ -405,9 +396,9 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         }
 
         try {
-            AudioSource audioSource = new InternetRadioAudioSource(new URL(line.getInitializeObject().getUrl()),line.getInitializeObject());
+            AudioSource audioSource = new InternetRadioAudioSource(line.getInitializeObject().getUrl(), line.getInitializeObject());
             AudioPlayer.instance().asyncLoadSong(audioSource, true, false, null, getFileView());
-        } catch (Exception e) {	
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -473,11 +464,11 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
      * disabling all necessary buttons and menu items.
      */
     public void handleNoSelection() {
-        
+
         copyStreamUrlAction.setEnabled(false);
         LAUNCH_ACTION.setEnabled(false);
         DELETE_ACTION.setEnabled(false);
-        
+
         SEND_TO_FRIEND_ACTION.setEnabled(false);
     }
 
@@ -521,7 +512,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
             launch();
         }
     }
-    
+
     public static final class AddRadioStationAction extends AbstractAction {
 
         private static final long serialVersionUID = 7087376528613706765L;
@@ -529,7 +520,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         public AddRadioStationAction() {
             super(I18n.tr("Add Radio"));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Add a new Radio Station. You must enter the Stream's URL"));
-            putValue(LimeAction.ICON_NAME,"LIBRARY_ADD_RADIO_STATION");
+            putValue(LimeAction.ICON_NAME, "LIBRARY_ADD_RADIO_STATION");
         }
 
         @Override
@@ -578,14 +569,14 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         List<AudioSource> result = new ArrayList<AudioSource>(size);
         for (int i = 0; i < size; i++) {
             try {
-                URL url = new URL(DATA_MODEL.get(i).getInitializeObject().getUrl());
-                result.add(new InternetRadioAudioSource(url,DATA_MODEL.get(i).getInitializeObject()));
+                String url = DATA_MODEL.get(i).getInitializeObject().getUrl();
+                result.add(new InternetRadioAudioSource(url, DATA_MODEL.get(i).getInitializeObject()));
             } catch (Throwable e) {
             }
         }
         return result;
     }
-    
+
     @Override
     protected void sortAndMaintainSelection(int columnToSort) {
         super.sortAndMaintainSelection(columnToSort);
@@ -600,7 +591,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
             }
         }
     }
-    
+
     private final class CopyStreamUrlAction extends AbstractAction {
 
         private static final long serialVersionUID = 5603390659365617618L;
@@ -624,10 +615,6 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
     @Override
     protected AudioSource createAudioSource(LibraryInternetRadioTableDataLine line) {
-        try {
-            return new InternetRadioAudioSource(new URL(line.getInitializeObject().getUrl()),line.getInitializeObject());
-        } catch (MalformedURLException e) {
-            return null;
-        }
+        return new InternetRadioAudioSource(line.getInitializeObject().getUrl(), line.getInitializeObject());
     }
 }

@@ -69,6 +69,8 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
     private JLabel labelPlay;
     private JLabel labelDownload;
 
+    private SearchResult sr;
+
     public SearchResultNameRenderer() {
         setupUI();
     }
@@ -250,19 +252,21 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
 
     private void labelPlay_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
-            System.out.println("play");
+            if (sr instanceof StreamableSearchResult) {
+                ((StreamableSearchResult) sr).play();
+            }
         }
     }
 
     private void setData(SearchResultNameHolder value, ComponentState state) {
-        final SearchResult sr = value.getSearchResult();
+        this.sr = value.getSearchResult();
 
         labelMore.setVisible(sr.allowDeepSearch());
 
         labelText.setText(fixText(sr.getDisplayName()));
 
         boolean showButtons = state.equals(ComponentState.ROLLOVER_SELECTED) || state.equals(ComponentState.ROLLOVER_UNSELECTED);
-        labelPlay.setVisible(showButtons && sr.getStreamUrl() != null);
+        labelPlay.setVisible(showButtons && (sr instanceof StreamableSearchResult));
         labelDownload.setVisible(showButtons);
     }
 

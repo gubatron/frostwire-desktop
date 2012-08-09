@@ -54,9 +54,4 @@ public abstract class AbstractSearchResult implements SearchResult {
     public boolean allowDeepSearch() {
         return false;
     }
-
-    @Override
-    public String getStreamUrl() {
-        return null;
-    }
 }

@@ -1,7 +1,5 @@
 package com.frostwire.gui.player;
 
-import java.net.URL;
-
 import com.frostwire.gui.library.Device;
 import com.frostwire.gui.library.FileDescriptor;
 
@@ -10,7 +8,7 @@ public class DeviceAudioSource extends AudioSource {
     private final Device device;
     private final FileDescriptor fd;
 
-    public DeviceAudioSource(URL url, Device device, FileDescriptor fd) {
+    public DeviceAudioSource(String url, Device device, FileDescriptor fd) {
         super(url);
         this.device = device;
         this.fd = fd;

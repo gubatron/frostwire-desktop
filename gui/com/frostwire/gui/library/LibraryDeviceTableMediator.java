@@ -20,7 +20,6 @@ package com.frostwire.gui.library;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -74,7 +73,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
     private Device device;
     private byte fileType;
-    
+
     private FileDescriptorFilter FILE_DESCRIPTOR_FILTER;
 
     /**
@@ -216,11 +215,11 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         TABLE.addMouseListener(listener);
         TABLE.addMouseMotionListener(listener);
     }
-    
+
     @Override
     public void handleMouseDoubleClick(MouseEvent e) {
         super.handleMouseDoubleClick(e);
-        
+
         if (LAUNCH_ACTION.isEnabled()) {
             LAUNCH_ACTION.actionPerformed(null);
         } else if (saveToAction.isEnabled()) {
@@ -254,7 +253,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
                     addUnsorted(fds.get(i));
                 }
                 forceResort();
-                
+
                 LibraryMediator.instance().getLibraryExplorer().executePendingRunnables();
             }
         });
@@ -315,7 +314,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         }
 
         try {
-            URL url = new URL(device.getDownloadURL(line.getInitializeObject()));
+            String url = device.getDownloadURL(line.getInitializeObject());
             AudioSource audioSource = new DeviceAudioSource(url, device, line.getInitializeObject());
             if (AudioPlayer.isPlayableFile(audioSource)) {
                 AudioPlayer.instance().asyncLoadSong(audioSource, true, true, null, getFileView());
@@ -345,7 +344,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
         LAUNCH_ACTION.setEnabled(sel.length == 1 && (fileType == DeviceConstants.FILE_TYPE_AUDIO || fileType == DeviceConstants.FILE_TYPE_RINGTONES) && AudioPlayer.isPlayableFile(fd.filePath));
         saveToAction.setEnabled(true);
-        
+
         if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setDefault();
         }
@@ -377,7 +376,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         for (AbstractLibraryTableDataLine<FileDescriptor> line : selectedLines) {
             fds.add(line.getInitializeObject());
         }
-        
+
         ThreadExecutor.startThread(new DownloadTask(LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.getValue(), device, fds.toArray(new FileDescriptor[0])), "DownloadFromDevice");
     }
 
@@ -425,7 +424,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         List<AudioSource> result = new ArrayList<AudioSource>(size);
         for (int i = 0; i < size; i++) {
             try {
-                URL url = new URL(device.getDownloadURL(DATA_MODEL.get(i).getInitializeObject()));
+                String url = device.getDownloadURL(DATA_MODEL.get(i).getInitializeObject());
                 result.add(new DeviceAudioSource(url, device, DATA_MODEL.get(i).getInitializeObject()));
             } catch (Throwable e) {
             }
@@ -453,27 +452,27 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         // TODO Auto-generated method stub
         return null;
     }
-    
+
     public void filter(String query) {
         FILE_DESCRIPTOR_FILTER.setQuery(query);
         DATA_MODEL.filtersChanged();
     }
-    
+
     @Override
     public void clearTable() {
         super.clearTable();
         FILE_DESCRIPTOR_FILTER.setQuery(null);
     }
-    
+
     class FileDescriptorFilter implements TableLineFilter<LibraryDeviceTableDataLine> {
-        
+
         private String query;
         private Set<String> tokens;
-        
+
         public String getQuery() {
             return query;
         }
-        
+
         public void setQuery(String query) {
             if (StringUtils.isNullOrEmpty(query, true) || query.equals(".")) {
                 this.query = null;
@@ -483,14 +482,14 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
                 this.tokens = new HashSet<String>(Arrays.asList(this.query.toLowerCase().split(" ")));
             }
         }
-        
+
         @Override
         public boolean allow(LibraryDeviceTableDataLine node) {
             if (tokens == null) {
                 return true;
             }
             FileDescriptor fd = node.getInitializeObject();
-            
+
             String keywords = (fd.title + " " + fd.artist + " " + fd.album + " " + fd.year).toLowerCase();
 
             boolean foundMatch = true;
@@ -501,7 +500,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
                     break;
                 }
             }
-            
+
             return foundMatch;
         }
     }

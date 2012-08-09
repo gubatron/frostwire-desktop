@@ -121,6 +121,4 @@ public interface SearchResult {
     public String getDisplayName();
     
     public boolean allowDeepSearch();
-    
-    public String getStreamUrl();
 }
