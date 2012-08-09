@@ -19,19 +19,13 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.Component;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * @author gubatron
@@ -42,8 +36,6 @@ public class SearchResultNameEditor extends AbstractCellEditor implements TableC
 
     private static final long serialVersionUID = -1173782952710148468L;
 
-    private static final Log LOG = LogFactory.getLog(SearchResultNameEditor.class);
-    
     private final SearchResultNameRenderer renderer;
 
     public SearchResultNameEditor() {
@@ -55,40 +47,16 @@ public class SearchResultNameEditor extends AbstractCellEditor implements TableC
     }
 
     public Component getTableCellEditorComponent(final JTable table, Object value, boolean isSelected, int row, int column) {
-        SearchResultNameHolder in = (SearchResultNameHolder) value;
-
         final Component component = renderer.getTableCellRendererComponent(table, value, isSelected, true, row, column);
-        //        component.addMouseListener(new MouseAdapter() {
-        //            @Override
-        //            public void mouseReleased(MouseEvent e) {
-        //                if (e.getButton() == MouseEvent.BUTTON1) {
-        //                    if (actionRegion == null) {
-        //                        component_mousePressed(e);
-        //                    } else {
-        //                        if (actionRegion.contains(e.getPoint())) {
-        //                            component_mousePressed(e);
-        //                        } else {
-        //                            if (e.getClickCount() >= 2) {
-        //                                Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(table, MouseEvent.MOUSE_CLICKED, e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), false));
-        //                            }
-        //                        }
-        //                    }
-        //                } else if (e.getButton() == MouseEvent.BUTTON3) {
-        //                    Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(table, e.getID(), e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), true));
-        //                }
-        //            }
-        //        });
+        if (component.getMouseListeners() == null || component.getMouseListeners().length == 0) {
+            component.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(component, e.getID(), e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), true));
+                }
+            });
+        }
 
         return component;
-    }
-
-    protected void component_mousePressed(MouseEvent e) {
-        //        if (action != null) {
-        //            try {
-        //                action.actionPerformed(new ActionEvent(e.getSource(), e.getID(), ""));
-        //            } catch (Throwable e1) {
-        //                LOG.error("Error performing action", e1);
-        //            }
-        //        }
     }
 }

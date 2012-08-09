@@ -24,6 +24,8 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Map;
 
 import javax.swing.JLabel;
@@ -230,6 +232,12 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         add(labelText, c);
 
         labelPlay = new JLabel(SubstanceIconFactory.getTreeIcon(null, true));
+        labelPlay.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                labelPlay_mouseReleased(e);
+            }
+        });
         c = new GridBagConstraints();
         c.gridx = GridBagConstraints.RELATIVE;
         add(labelPlay, c);
@@ -238,6 +246,12 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         c = new GridBagConstraints();
         c.gridx = GridBagConstraints.RELATIVE;
         add(labelDownload, c);
+    }
+
+    private void labelPlay_mouseReleased(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            System.out.println("play");
+        }
     }
 
     private void setData(SearchResultNameHolder value, ComponentState state) {
