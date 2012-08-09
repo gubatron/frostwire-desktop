@@ -245,6 +245,12 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         add(labelPlay, c);
 
         labelDownload = new JLabel(SubstanceIconFactory.getTreeIcon(null, true));
+        labelDownload.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                labelDownload_mouseReleased(e);
+            }
+        });
         c = new GridBagConstraints();
         c.gridx = GridBagConstraints.RELATIVE;
         add(labelDownload, c);
@@ -255,6 +261,12 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
             if (sr instanceof StreamableSearchResult) {
                 ((StreamableSearchResult) sr).play();
             }
+        }
+    }
+    
+    private void labelDownload_mouseReleased(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            sr.takeAction(null, null, null, null, false, null);
         }
     }
 
