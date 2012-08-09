@@ -131,4 +131,9 @@ public final class SoundcloudSearchResult extends AbstractSearchResult {
     public WebSearchResult getWebSearchResult() {
         return sr;
     }
+
+    @Override
+    public String getStreamUrl() {
+        return sr.getDetailsUrl();
+    }
 }

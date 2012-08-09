@@ -43,8 +43,11 @@ public class SearchResultNameEditor extends AbstractCellEditor implements TableC
     private static final long serialVersionUID = -1173782952710148468L;
 
     private static final Log LOG = LogFactory.getLog(SearchResultNameEditor.class);
+    
+    private final SearchResultNameRenderer renderer;
 
     public SearchResultNameEditor() {
+        renderer = new SearchResultNameRenderer();
     }
 
     public Object getCellEditorValue() {
@@ -54,7 +57,7 @@ public class SearchResultNameEditor extends AbstractCellEditor implements TableC
     public Component getTableCellEditorComponent(final JTable table, Object value, boolean isSelected, int row, int column) {
         SearchResultNameHolder in = (SearchResultNameHolder) value;
 
-        final Component component = new SearchResultNameRenderer().getTableCellRendererComponent(table, value, isSelected, true, row, column);
+        final Component component = renderer.getTableCellRendererComponent(table, value, isSelected, true, row, column);
         //        component.addMouseListener(new MouseAdapter() {
         //            @Override
         //            public void mouseReleased(MouseEvent e) {

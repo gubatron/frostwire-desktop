@@ -49,9 +49,14 @@ public abstract class AbstractSearchResult implements SearchResult {
             }
         }
     }
-    
+
     @Override
     public boolean allowDeepSearch() {
         return false;
+    }
+
+    @Override
+    public String getStreamUrl() {
+        return null;
     }
 }

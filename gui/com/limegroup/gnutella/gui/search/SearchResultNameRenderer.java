@@ -64,6 +64,8 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
 
     private JLabel labelMore;
     private JLabel labelText;
+    private JLabel labelPlay;
+    private JLabel labelDownload;
 
     public SearchResultNameRenderer() {
         setupUI();
@@ -155,7 +157,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
             this.setBorder(new EmptyBorder(regInsets.top, regInsets.left, regInsets.bottom, regInsets.right));
         }
 
-        this.setData((SearchResultNameHolder) value);
+        this.setData((SearchResultNameHolder) value, currState);
         this.setOpaque(false);
         this.setEnabled(table.isEnabled());
         return this;
@@ -224,15 +226,30 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         c = new GridBagConstraints();
         c.gridx = GridBagConstraints.RELATIVE;
         c.weightx = 1.0;
+        c.fill = GridBagConstraints.HORIZONTAL;
         add(labelText, c);
+
+        labelPlay = new JLabel(SubstanceIconFactory.getTreeIcon(null, true));
+        c = new GridBagConstraints();
+        c.gridx = GridBagConstraints.RELATIVE;
+        add(labelPlay, c);
+
+        labelDownload = new JLabel(SubstanceIconFactory.getTreeIcon(null, true));
+        c = new GridBagConstraints();
+        c.gridx = GridBagConstraints.RELATIVE;
+        add(labelDownload, c);
     }
 
-    private void setData(SearchResultNameHolder value) {
-        SearchResult sr = value.getSearchResult();
-        
+    private void setData(SearchResultNameHolder value, ComponentState state) {
+        final SearchResult sr = value.getSearchResult();
+
         labelMore.setVisible(sr.allowDeepSearch());
-        
+
         labelText.setText(fixText(sr.getDisplayName()));
+
+        boolean showButtons = state.equals(ComponentState.ROLLOVER_SELECTED) || state.equals(ComponentState.ROLLOVER_UNSELECTED);
+        labelPlay.setVisible(showButtons && sr.getStreamUrl() != null);
+        labelDownload.setVisible(showButtons);
     }
 
     private String fixText(String text) {
