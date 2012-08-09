@@ -26,26 +26,17 @@ import java.util.concurrent.Executors;
 
 import javax.swing.JPopupMenu;
 
-import jd.controlling.linkcrawler.CrawledLink;
-import jd.controlling.linkcrawler.LinkCrawler;
 import jd.http.Browser;
 import jd.http.URLConnectionAdapter;
 import jd.nutils.encoding.Encoding;
-import jd.plugins.DownloadLink;
 import jd.plugins.LinkStatus;
 import jd.plugins.PluginException;
-import jd.plugins.DownloadLink.AvailableStatus;
-import jd.utils.locale.JDL;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.appwork.utils.formatter.SizeFormatter;
-import org.jdownloader.controlling.filter.LinkFilterController;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.bittorrent.websearch.soundcloud.SoundcloudTrackSearchResult;
-import com.frostwire.gui.library.DeviceDiscoveryClerk;
-import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.StreamAudioSource;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -221,8 +212,14 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
 
         @Override
         public void run() {
-            String streamUrl = crawlStreamUrl(sr.getDetailsUrl());
-            GUIMediator.instance().launchAudio(new StreamAudioSource(streamUrl, "Soundcloud: " + sr.getDisplayName()));
+            if (!streamUrlCrawled) {
+                streamUrl = crawlStreamUrl(sr.getDetailsUrl());
+                streamUrlCrawled = true;
+            }
+            if (streamUrl != null) {
+                crawlStreamUrl(sr.getDetailsUrl());
+                GUIMediator.instance().launchAudio(new StreamAudioSource(streamUrl, "Soundcloud: " + sr.getDisplayName()));
+            }
         }
     }
 }
