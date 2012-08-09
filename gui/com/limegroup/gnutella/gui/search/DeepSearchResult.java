@@ -69,7 +69,7 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
     }
 
     @Override
-    public String getFilenameNoExtension() {
+    public String getDisplayName() {
         if (_torrentFile.getRelativePath().indexOf("/") != -1) {
             String fileName = _torrentFile.getRelativePath().substring(_torrentFile.getRelativePath().lastIndexOf("/"));
 
@@ -100,11 +100,6 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
     @Override
     public long getSize() {
         return _torrentFile.getLength();
-    }
-
-    @Override
-    public float getSpamRating() {
-        return 0;
     }
 
     @Override

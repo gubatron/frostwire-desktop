@@ -59,15 +59,15 @@ public final class SearchResultNameHolder implements Comparable<SearchResultName
     }
 
     public int compareTo(SearchResultNameHolder o) {
-        return AbstractTableMediator.compare(sr.getFilenameNoExtension(), o.sr.getFilenameNoExtension());
+        return AbstractTableMediator.compare(sr.getDisplayName(), o.sr.getDisplayName());
     }
 
     public String getName() {
-        return sr.getFilenameNoExtension();
+        return sr.getDisplayName();
     }
 
     public String toString() {
-        return sr.getFilenameNoExtension();
+        return getName();
     }
 
     public ActionListener getAction() {

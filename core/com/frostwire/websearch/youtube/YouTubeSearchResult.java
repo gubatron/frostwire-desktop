@@ -74,11 +74,6 @@ public class YouTubeSearchResult implements WebSearchResult {
     }
 
     @Override
-    public String getFilenameNoExtension() {
-        return FilenameUtils.getBaseName(getFileName());
-    }
-
-    @Override
     public String getHash() {
         return null;
     }
@@ -94,7 +89,7 @@ public class YouTubeSearchResult implements WebSearchResult {
     }
 
     @Override
-    public String getTorrentDetailsURL() {
+    public String getDetailsUrl() {
         return videoUrl;
     }
 
@@ -118,5 +113,10 @@ public class YouTubeSearchResult implements WebSearchResult {
         url = url.replace("https://", "http://").replace("&feature=youtube_gdata", "");
 
         return url;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return FilenameUtils.getBaseName(getFileName());
     }
 }

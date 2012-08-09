@@ -22,12 +22,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.Map;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
@@ -207,14 +210,22 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
     }
 
     private void setupUI() {
-        setLayout(new BorderLayout());
+        setLayout(new GridBagLayout());
         putClientProperty(SubstanceLookAndFeel.COLORIZATION_FACTOR, 1.0);
 
+        GridBagConstraints c;
+
         labelMore = new JLabel(SubstanceIconFactory.getTreeIcon(null, true));
-        add(labelMore, BorderLayout.LINE_START);
+        c = new GridBagConstraints();
+        c.gridx = GridBagConstraints.RELATIVE;
+        add(labelMore, c);
 
         labelText = new JLabel();
-        add(labelText, BorderLayout.LINE_START);
+        labelText.setHorizontalTextPosition(SwingConstants.LEFT);
+        c = new GridBagConstraints();
+        c.gridx = GridBagConstraints.RELATIVE;
+        c.weightx = 1.0;
+        add(labelText, c);
     }
 
     private void setData(SearchResultNameHolder value) {
@@ -222,10 +233,9 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
     }
 
     private String fixText(String text) {
-        if (text != null) {
-            text = text.replace("<html>", "<html><div width=\"1000000px\">");
-            text = text.replace("</html>", "</div></html>");
+        if (text == null) {
+            text = " - ";
         }
-        return text;
+        return "<html><div width=\"1000000px\">" + text + "</div></html>";
     }
 }

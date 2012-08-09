@@ -65,7 +65,7 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
     }
 
     @Override
-    public String getFilenameNoExtension() {
+    public String getDisplayName() {
         String fname = FilenameUtils.getBaseName(filename);
         if (fname.indexOf(AAC_HIGH_QUALITY) > 0) {
             return AAC_HIGH_QUALITY + " " + fname.replace(AAC_HIGH_QUALITY, "");
@@ -103,11 +103,6 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
 
     @Override
     public int getQuality() {
-        return 0;
-    }
-
-    @Override
-    public float getSpamRating() {
         return 0;
     }
 

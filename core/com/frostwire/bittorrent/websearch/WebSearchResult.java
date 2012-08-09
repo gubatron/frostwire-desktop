@@ -34,13 +34,13 @@ public interface WebSearchResult {
 
     public String getVendor();
 
-    public String getFilenameNoExtension();
-
     public String getHash();
 
     public String getTorrentURI();
 
     public int getSeeds();
 
-    public String getTorrentDetailsURL();
+    public String getDetailsUrl();
+    
+    public String getDisplayName();
 }

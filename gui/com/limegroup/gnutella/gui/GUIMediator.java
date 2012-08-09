@@ -1835,7 +1835,7 @@ public final class GUIMediator {
 
 	public void openTorrentSearchResult(WebSearchResult item,
 			String relativePath) {
-        getBTDownloadMediator().openTorrentURI(item.getTorrentURI(), item.getTorrentDetailsURL(), relativePath, item.getHash(), null);
+        getBTDownloadMediator().openTorrentURI(item.getTorrentURI(), item.getDetailsUrl(), relativePath, item.getHash(), null);
         setWindow(GUIMediator.Tabs.SEARCH);
 	}
 	

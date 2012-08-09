@@ -51,8 +51,8 @@ public final class SoundcloudSearchResult extends AbstractSearchResult {
     }
 
     @Override
-    public String getFilenameNoExtension() {
-        return sr.getFilenameNoExtension();
+    public String getDisplayName() {
+        return sr.getDisplayName();
     }
 
     @Override
@@ -86,13 +86,8 @@ public final class SoundcloudSearchResult extends AbstractSearchResult {
     }
 
     @Override
-    public float getSpamRating() {
-        return 0;
-    }
-
-    @Override
     public void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
-        GUIMediator.instance().openSoundcloudTrackUrl(sr.getTorrentURI(), sr.getFilenameNoExtension());
+        GUIMediator.instance().openSoundcloudTrackUrl(sr.getTorrentURI(), sr.getDisplayName());
         showDetails(false);
     }
 

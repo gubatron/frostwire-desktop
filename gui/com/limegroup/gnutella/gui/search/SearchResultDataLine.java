@@ -214,13 +214,6 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
     }
 
     /**
-     * Gets the filename without the extension.
-     */
-    String getFilenameNoExtension() {
-        return RESULT.getFilenameNoExtension();
-    }
-
-    /**
      * Returns the icon & extension.
      */
     IconAndNameHolder getIconAndExtension() {
@@ -271,6 +264,10 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
      */
     public String getFilename() {
         return RESULT.getFileName();
+    }
+    
+    public String getDisplayName() {
+        return RESULT.getDisplayName();
     }
 
     /**
@@ -353,10 +350,6 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
         }
     }
 
-    private Icon getTreeIcon() {
-        return SubstanceIconFactory.getTreeIcon(null, true);
-    }
-
     /**
      * Returns <code>true</code> if <code>this</code> {@link SearchResult}
      * is the same kind as <code>line</code>'s, e.g. one from gnutella and
@@ -378,32 +371,6 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
      */
     public final SearchResult getSearchResult() {
         return RESULT;
-    }
-
-    public final boolean isOverrideRowColor() {
-        return RESULT.isOverrideRowColor();
-    }
-
-    /**
-     * Returns the color for painting an even row. Delegates to the member
-     * {@link SearchResult}.
-     * 
-     * @return the color for painting an even row. Delegates to the member
-     *         {@link SearchResult}
-     */
-    public final Color getEvenRowColor() {
-        return RESULT.getEvenRowColor();
-    }
-
-    /**
-     * Returns the color for painting an odd row. Delegates to the member
-     * {@link SearchResult}.
-     * 
-     * @return the color for painting an odd row. Delegates to the member
-     *         {@link SearchResult}
-     */
-    public final Color getOddRowColor() {
-        return RESULT.getOddRowColor();
     }
 
     /**

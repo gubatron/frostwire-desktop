@@ -382,7 +382,7 @@ public class LocalSearchEngine {
         torrentPojo.searchEngineID = searchEngine.getId();
         torrentPojo.seeds = searchResult.getSeeds();
         torrentPojo.size = searchResult.getSize();
-        torrentPojo.torrentDetailsURL = searchResult.getTorrentDetailsURL();
+        torrentPojo.torrentDetailsURL = searchResult.getDetailsUrl();
         torrentPojo.torrentURI = searchResult.getTorrentURI();
         torrentPojo.vendor = searchResult.getVendor();
 
@@ -568,7 +568,7 @@ public class LocalSearchEngine {
 
             CountDownLatch finishSignal = new CountDownLatch(1);
 
-            TorrentDownloaderFactory.create(new LocalSearchTorrentDownloaderListener(guid, query, webSearchResult, searchEngine, finishSignal), webSearchResult.getTorrentURI(), webSearchResult.getTorrentDetailsURL(), saveDir).start();
+            TorrentDownloaderFactory.create(new LocalSearchTorrentDownloaderListener(guid, query, webSearchResult, searchEngine, finishSignal), webSearchResult.getTorrentURI(), webSearchResult.getDetailsUrl(), saveDir).start();
 
             try {
                 finishSignal.await();
@@ -631,7 +631,7 @@ public class LocalSearchEngine {
 
                 matchResults(packages);
             } catch (Throwable e) {
-                LOG.error("Error crawling youtube: " + webSearchResult.getFilenameNoExtension(), e);
+                LOG.error("Error crawling youtube: " + webSearchResult.getDisplayName(), e);
             }
         }
 

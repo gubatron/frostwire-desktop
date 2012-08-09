@@ -52,8 +52,8 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
     }
 
     @Override
-    public String getFilenameNoExtension() {
-        return sr.getFilenameNoExtension();
+    public String getDisplayName() {
+        return sr.getDisplayName();
     }
 
     @Override
@@ -83,11 +83,6 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
 
     @Override
     public int getQuality() {
-        return 0;
-    }
-
-    @Override
-    public float getSpamRating() {
         return 0;
     }
 

@@ -6,7 +6,6 @@ public class TorrentDBPojo {
 	public long size;
 	public long creationTime;
 	public String vendor;
-	public String fileNameNoExtension;
 	public String hash;
 	public String torrentURI;
 	public int seeds;

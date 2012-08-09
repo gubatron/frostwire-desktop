@@ -83,53 +83,10 @@ public interface SearchResult {
      */
     int getQuality();
     
-    /** 
-     * @return <code>0</code> for not spam or a higher value for spam
-     */
-    float getSpamRating();
-    
-    boolean isOverrideRowColor();
-
-    /**
-     * Returns the color for painting an even row.
-     * 
-     * @return the color for painting an even row
-     */
-    Color getEvenRowColor();
-
-    /**
-     * Returns the color for painting an odd row.
-     * 
-     * @return the color for painting an odd row
-     */
-    Color getOddRowColor();
-
-    /**
-     * Gets the filename without the extension.
-     */
-    String getFilenameNoExtension();
-
     /**
      * Returns the extension of this result.
      */
     String getExtension();
-
-    /** 
-     * Compares <code>this</code> against <code>o</code> approximately:
-     * <ul>
-     *  <li> Returns <code>0</code> if <code>o</code> is similar to this. 
-     *  <li> Returns <code>1</code> if they have non-similar extensions.
-     *  <li> Returns <code>2</code> if they have non-similar sizes.
-     *  <li> Returns <code>3</code> if they have non-similar names.
-     * <ul>
-     *
-     * Design note: this takes an ApproximateMatcher as an argument so that many
-     * comparisons may be done with the same matcher, greatly reducing the
-     * number of allocations.<b>
-     *
-     * <b>This method is not thread-safe.</b>
-     */
-    int match(SearchResult o, ApproximateMatcher matcher);
 
     /**
      * This method is called when a {@link SearchResultDataLine} is clicked on in the
@@ -159,12 +116,6 @@ public interface SearchResult {
     
     JPopupMenu createMenu(JPopupMenu popupMenu, SearchResultDataLine[] lines, SearchResultMediator rp);
     
-    /**
-     * Wether or not this result can be marked as Junk.
-     * @return
-     */
-    public boolean canBeMarkedAsJunk();
-
     public String getHash();
 
     public String getTorrentURI();
@@ -176,4 +127,6 @@ public interface SearchResult {
     public WebSearchResult getWebSearchResult();
     
     public void showDetails(boolean now);
+    
+    public String getDisplayName();
 }

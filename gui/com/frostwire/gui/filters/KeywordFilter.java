@@ -110,7 +110,7 @@ public class KeywordFilter implements SearchFilter {
     }
 
     public boolean allow(SearchResult m) {
-        return !matches(m.getFilenameNoExtension());
+        return !matches(m.getDisplayName());
     }
 
     /** 

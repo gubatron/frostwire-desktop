@@ -215,32 +215,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
         setupDataModel();
 
-        TABLE = new LimeJTable(DATA_MODEL) {
-            /*
-             * Override the line color methods to show special
-             * colors for The LimeWire Store&#8482; song results.
-             */
-
-            /**
-             * 
-             */
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected boolean isOverrideRowColor(int row) {
-                return getLine(row).isOverrideRowColor();
-            }
-
-            @Override
-            protected Color getEvenRowColor(int row) {
-                return getLine(row).getEvenRowColor();
-            }
-
-            @Override
-            protected Color getOddRowColor(int row) {
-                return getLine(row).getOddRowColor();
-            }
-        };
+        TABLE = new LimeJTable(DATA_MODEL);
 
         BUTTON_ROW = new SearchButtons(this).getComponent();
     }

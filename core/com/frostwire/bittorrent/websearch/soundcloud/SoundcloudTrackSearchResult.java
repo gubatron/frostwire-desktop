@@ -56,11 +56,6 @@ public class SoundcloudTrackSearchResult implements WebSearchResult {
 	}
 
 	@Override
-	public String getFilenameNoExtension() {
-		return item.title;
-	}
-
-	@Override
 	public String getHash() {
 		return null;
 	}
@@ -76,7 +71,12 @@ public class SoundcloudTrackSearchResult implements WebSearchResult {
 	}
 
 	@Override
-	public String getTorrentDetailsURL() {
+	public String getDetailsUrl() {
 		return trackUrl;
 	}
+
+    @Override
+    public String getDisplayName() {
+        return item.title;
+    }
 }

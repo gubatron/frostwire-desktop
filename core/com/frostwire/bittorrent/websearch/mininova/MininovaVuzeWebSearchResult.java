@@ -52,7 +52,12 @@ public class MininovaVuzeWebSearchResult implements WebSearchResult {
         return _item.seeds + _item.superseeds;
     }
 
-    public String getTorrentDetailsURL() {
+    public String getDetailsUrl() {
         return _item.cdp;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return _item.title;
     }
 }

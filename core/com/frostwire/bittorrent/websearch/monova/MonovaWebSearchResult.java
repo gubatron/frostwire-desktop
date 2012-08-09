@@ -116,11 +116,6 @@ public class MonovaWebSearchResult implements WebSearchResult {
     }
 
     @Override
-    public String getFilenameNoExtension() {
-        return fileName;
-    }
-
-    @Override
     public String getHash() {
         return infoHash;
     }
@@ -136,7 +131,12 @@ public class MonovaWebSearchResult implements WebSearchResult {
     }
 
     @Override
-    public String getTorrentDetailsURL() {
+    public String getDetailsUrl() {
         return torrentDetailsURI;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return fileName;
     }
 }

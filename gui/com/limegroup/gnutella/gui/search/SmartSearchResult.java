@@ -72,7 +72,7 @@ public class SmartSearchResult extends AbstractSearchResult implements Bittorren
     }
 
     @Override
-    public String getFilenameNoExtension() {
+    public String getDisplayName() {
 
         if (file.relativePath.indexOf("/") != -1) {
             String fileName = file.relativePath.substring(file.relativePath.lastIndexOf("/"));
@@ -103,11 +103,6 @@ public class SmartSearchResult extends AbstractSearchResult implements Bittorren
     @Override
     public long getSize() {
         return file.size;
-    }
-
-    @Override
-    public float getSpamRating() {
-        return 0;
     }
 
     @Override
@@ -196,11 +191,6 @@ public class SmartSearchResult extends AbstractSearchResult implements Bittorren
         }
 
         @Override
-        public String getFilenameNoExtension() {
-            return _torrentDBPojo.fileNameNoExtension;
-        }
-
-        @Override
         public String getHash() {
             return _torrentDBPojo.hash;
         }
@@ -216,8 +206,13 @@ public class SmartSearchResult extends AbstractSearchResult implements Bittorren
         }
 
         @Override
-        public String getTorrentDetailsURL() {
+        public String getDetailsUrl() {
             return _torrentDBPojo.torrentDetailsURL;
+        }
+
+        @Override
+        public String getDisplayName() {
+            return null;
         }
     }
 }

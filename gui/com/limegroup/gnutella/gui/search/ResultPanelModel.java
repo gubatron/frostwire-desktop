@@ -58,13 +58,6 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchRe
     private final Map<String, Integer> _indexes = new HashMap<String, Integer>();
     
     /**
-     * The TableLineGrouper to use for slow matching.
-     *
-     * Allocated when needed.
-     */
-    private TableLineGrouper _grouper;
-
-    /**
      * The number of sources for this search.
      */
     private int _numSources;
@@ -252,10 +245,9 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchRe
      * Metadata and Grouper.
      */
     public void clear() {
-        if(METADATA != null)
+        if(METADATA != null) {
             METADATA.clear();
-        if(_grouper != null)
-            _grouper.clear();
+        }
         simpleClear();
     }
     
@@ -330,8 +322,8 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchRe
                 return spamRet;
         }
         
-        int c1 = a.getSeeds() + ((a.getFilenameNoExtension().indexOf(YouTubePackageItemSearchResult.AAC_HIGH_QUALITY) == 0) ? 1000 : 0);
-        int c2 = b.getSeeds() + ((b.getFilenameNoExtension().indexOf(YouTubePackageItemSearchResult.AAC_HIGH_QUALITY) == 0) ? 1000 : 0);
+        int c1 = a.getSeeds() + ((a.getDisplayName().indexOf(YouTubePackageItemSearchResult.AAC_HIGH_QUALITY) == 0) ? 1000 : 0);
+        int c2 = b.getSeeds() + ((b.getDisplayName().indexOf(YouTubePackageItemSearchResult.AAC_HIGH_QUALITY) == 0) ? 1000 : 0);
         
         int aSeId = a.getSearchEngine().getId();
         int bSeId = b.getSearchEngine().getId();

@@ -53,8 +53,12 @@ public class ExtratorrentResponseWebSearchResult implements WebSearchResult {
         return _item.seeds;
     }
 
-    public String getTorrentDetailsURL() {
+    public String getDetailsUrl() {
         return _item.link;
     }
 
+    @Override
+    public String getDisplayName() {
+        return _item.title;
+    }
 }

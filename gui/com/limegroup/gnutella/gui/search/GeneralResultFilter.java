@@ -107,7 +107,7 @@ public class GeneralResultFilter implements TableLineFilter<SearchResultDataLine
             inSizeRange = size == _maxResultsSize;
         }
         
-        boolean hasKeywords = hasKeywords(node.getFilenameNoExtension());
+        boolean hasKeywords = hasKeywords(node.getDisplayName());
 
         return inSeedRange && inSizeRange && hasKeywords;
     }

@@ -53,8 +53,12 @@ public class VertorResponseWebSearchResult implements WebSearchResult {
         return Integer.valueOf(_item.seeds);
     }
 
-    public String getTorrentDetailsURL() {
+    public String getDetailsUrl() {
         return _item.url;
     }
 
+    @Override
+    public String getDisplayName() {
+        return _item.name;
+    }
 }

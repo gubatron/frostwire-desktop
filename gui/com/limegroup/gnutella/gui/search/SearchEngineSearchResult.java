@@ -61,11 +61,6 @@ public class SearchEngineSearchResult extends AbstractSearchResult implements Bi
     }
 
     @Override
-    public String getFilenameNoExtension() {
-        return _item.getFilenameNoExtension();
-    }
-
-    @Override
     public int getQuality() {
         return 0;
     }
@@ -81,11 +76,6 @@ public class SearchEngineSearchResult extends AbstractSearchResult implements Bi
     @Override
     public long getSize() {
         return _item.getSize();
-    }
-
-    @Override
-    public float getSpamRating() {
-        return 0;
     }
 
     @Override
@@ -147,5 +137,10 @@ public class SearchEngineSearchResult extends AbstractSearchResult implements Bi
 
     public WebSearchResult getWebSearchResult() {
         return _item;
+    }
+    
+    @Override
+    public String getDisplayName() {
+        return _item.getDisplayName();
     }
 }
