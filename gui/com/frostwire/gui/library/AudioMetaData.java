@@ -109,30 +109,29 @@ public class AudioMetaData {
             Mp3File mp3 = new Mp3File(file.getAbsolutePath());
             if (mp3.hasId3v2Tag()) {
                 ID3v2 tag = mp3.getId3v2Tag();
-                if (StringUtils.isNullOrEmpty(title, true)) {
+                if (!StringUtils.isNullOrEmpty(tag.getTitle(), true)) {
                     title = tag.getTitle();
                 }
-                if (StringUtils.isNullOrEmpty(artist, true)) {
+                if (!StringUtils.isNullOrEmpty(tag.getArtist(), true)) {
                     artist = tag.getArtist();
                 }
-                if (StringUtils.isNullOrEmpty(album, true)) {
+                if (!StringUtils.isNullOrEmpty(tag.getAlbum(), true)) {
                     album = tag.getAlbum();
                 }
-                if (StringUtils.isNullOrEmpty(comment, true) || comment.startsWith("0")) {
+                if (!StringUtils.isNullOrEmpty(tag.getComment(), true) || comment.startsWith("0")) {
                     comment = tag.getComment();
                 }
-                if (StringUtils.isNullOrEmpty(genre, true) || genre.trim().equals("Unknown")) {
+                if (!StringUtils.isNullOrEmpty(tag.getGenreDescription(), true) || genre.trim().equals("Unknown")) {
                     genre = tag.getGenreDescription();
                 }
-                if (StringUtils.isNullOrEmpty(track, true)) {
+                if (!StringUtils.isNullOrEmpty(tag.getTrack(), true)) {
                     track = tag.getTrack();
                 }
-                if (StringUtils.isNullOrEmpty(year, true)) {
+                if (!StringUtils.isNullOrEmpty(tag.getYear(), true)) {
                     year = tag.getYear();
                 }
                 
                 durationInSecs = mp3.getLengthInSeconds();
-                
             }
         } catch (Exception e) {
             // ignore
