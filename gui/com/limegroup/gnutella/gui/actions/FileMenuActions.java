@@ -255,7 +255,7 @@ public class FileMenuActions {
     public static boolean openMagnetOrTorrent(final String userText) {
 
         if (userText.startsWith("magnet:?xt=urn:btih")) {
-            GUIMediator.instance().openTorrentURI(userText);
+            GUIMediator.instance().openTorrentURI(userText, true);
             return true;
         } else if (userText.matches(".*youtube.com.*")) {
             GUIMediator.instance().openYouTubeVideoUrl(userText);
@@ -264,7 +264,7 @@ public class FileMenuActions {
             GUIMediator.instance().openSoundcloudTrackUrl(userText, null);
             return true;
         } else if (userText.startsWith("http://")) {
-            GUIMediator.instance().openTorrentURI(userText);
+            GUIMediator.instance().openTorrentURI(userText, true);
             return true;
         } else {
 
@@ -272,7 +272,7 @@ public class FileMenuActions {
             File file = new File(userText);
             if (isFileSystemPath(file)) {
                 if (file.exists()) {
-                    GUIMediator.instance().openTorrentFile(file); // Open the torrent file
+                    GUIMediator.instance().openTorrentFile(file, true); // Open the torrent file
                     return true;
                 } else {
                     // TODO show error dialog telling

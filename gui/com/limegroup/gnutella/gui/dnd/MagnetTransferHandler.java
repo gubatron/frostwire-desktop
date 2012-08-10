@@ -52,7 +52,7 @@ public class MagnetTransferHandler extends LimeTransferHandler {
 			String request = (String) t.getTransferData(FileTransferable.URIFlavor);
 			
 			if (request.contains("xt=urn:btih")) {
-				GUIMediator.instance().openTorrentURI(request);
+				GUIMediator.instance().openTorrentURI(request, true);
 				return true;
 			}
 			

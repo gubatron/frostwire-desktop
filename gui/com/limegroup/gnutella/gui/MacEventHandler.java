@@ -123,14 +123,14 @@ public class MacEventHandler {
             if (!GUIMediator.isConstructed() || !GuiCoreMediator.getLifecycleManager().isStarted())
                 externalControl.enqueueControlRequest(file.getAbsolutePath());
             else if (file.getAbsolutePath().startsWith("magnet:?xt=urn:btih")) {
-            	GUIMediator.instance().openTorrentURI(file.getAbsolutePath());
+            	GUIMediator.instance().openTorrentURI(file.getAbsolutePath(), false);
             }
         }
         else if (filename.endsWith("torrent")) {
             if (!GUIMediator.isConstructed() || !GuiCoreMediator.getLifecycleManager().isStarted())
                 externalControl.enqueueControlRequest(file.getAbsolutePath());
             else
-                GUIMediator.instance().openTorrentFile(file);
+                GUIMediator.instance().openTorrentFile(file, false);
         } else {
             //PackagedMediaFileLauncher.launchFile(filename, false);
         }

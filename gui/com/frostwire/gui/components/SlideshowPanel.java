@@ -190,9 +190,9 @@ public class SlideshowPanel extends JPanel {
                     }
                     if (slide.torrent != null) {
                         if (slide.torrent.toLowerCase().startsWith("http")) {
-                            GUIMediator.instance().openTorrentURI(slide.torrent);
+                            GUIMediator.instance().openTorrentURI(slide.torrent, false);
                         } else if (slide.torrent.toLowerCase().startsWith("magnet:?")) {
-                            GUIMediator.instance().openTorrentURI(slide.torrent);
+                            GUIMediator.instance().openTorrentURI(slide.torrent, false);
                         }
                     }
                 } catch (Exception ex) {

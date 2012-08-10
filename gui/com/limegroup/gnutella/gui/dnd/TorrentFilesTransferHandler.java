@@ -47,11 +47,14 @@ public class TorrentFilesTransferHandler extends LimeTransferHandler {
 
 		try {
 			File[] files = DNDUtils.getFiles(t);
-			if (files.length > 0 && areAllTorrentFiles(files)) {
-				for (File file : files) {
-					GUIMediator.instance().openTorrentFile(file);
-				}
-				return true;
+			if (areAllTorrentFiles(files)) {
+			    if (files.length == 1) {
+			        GUIMediator.instance().openTorrentFile(files[0], true);
+			    } else {
+			        for (File file : files) {
+	                    GUIMediator.instance().openTorrentFile(file, false);
+	                }
+			    }
 			}
 		} catch (UnsupportedFlavorException e) {
 		} catch (IOException e) {

@@ -760,10 +760,6 @@ public final class GUIMediator {
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
-    public final void openTorrentFile(File torrentFile) {
-        openTorrentFile(torrentFile, false);
-    }
-
     public final void openTorrentFile(File torrentFile, boolean partialSelection) {
         getBTDownloadMediator().openTorrentFile(torrentFile, partialSelection);
         setWindow(GUIMediator.Tabs.SEARCH);
@@ -774,16 +770,8 @@ public final class GUIMediator {
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
-    public final void openTorrentURI(String uri) {
-        openTorrentURI(uri, false);
-    }
-    
     public final void openTorrentURI(String uri, boolean partialDownload) {
-        openTorrentURI(uri, partialDownload, null);
-    }
-
-    public final void openTorrentURI(String uri, boolean partialDownload, ActionListener postPartialDownloadAction) {
-        getBTDownloadMediator().openTorrentURI(uri, partialDownload, postPartialDownloadAction);
+        getBTDownloadMediator().openTorrentURI(uri, partialDownload, null);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
