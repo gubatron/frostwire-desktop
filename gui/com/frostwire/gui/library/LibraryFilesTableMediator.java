@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.Component;
@@ -82,6 +83,10 @@ import com.limegroup.gnutella.util.QueryUtils;
  * This class wraps the JTable that displays files in the library,
  * controlling access to the table and the various table properties.
  * It is the Mediator to the Table part of the Library display.
+ * 
+ * @author gubatron
+ * @author aldenml
+ * 
  */
 final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<LibraryFilesTableModel, LibraryFilesTableDataLine, File> {
 
@@ -121,24 +126,24 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         DELETE_ACTION = new RemoveAction();
         RENAME_ACTION = new RenameAction();
         SEND_TO_ITUNES_ACTION = new SendAudioFilesToiTunes();
-        
-    }
-    
-    @Override
-    protected void addListeners() {
-    	super.addListeners();
-    	
-    	TABLE.addKeyListener(new KeyAdapter() {
-        	@Override
-        	public void keyReleased(KeyEvent e) {
-        		if (LibraryUtils.isRefreshKeyEvent(e)) {
-        			LibraryMediator.instance().getLibraryExplorer().refreshSelection(true);
-        		}        		
-        	}
-		});
 
     }
-    
+
+    @Override
+    protected void addListeners() {
+        super.addListeners();
+
+        TABLE.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (LibraryUtils.isRefreshKeyEvent(e)) {
+                    LibraryMediator.instance().getLibraryExplorer().refreshSelection(true);
+                }
+            }
+        });
+
+    }
+
     @Override
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
@@ -176,11 +181,11 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
 
         menu.add(new SkinMenuItem(CREATE_TORRENT_ACTION));
-        
+
         if (areAllSelectedFilesPlayable()) {
             menu.add(createAddToPlaylistSubMenu());
         }
-        
+
         menu.add(new SkinMenuItem(SEND_TO_FRIEND_ACTION));
         menu.add(new SkinMenuItem(SEND_TO_ITUNES_ACTION));
 
@@ -218,17 +223,17 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         return menu;
     }
 
-	private boolean areAllSelectedFilesPlayable() {
-		boolean selectionIsAllAudio = true;
+    private boolean areAllSelectedFilesPlayable() {
+        boolean selectionIsAllAudio = true;
         int[] selectedRows = TABLE.getSelectedRows();
         for (int i : selectedRows) {
-        	if (!AudioPlayer.isPlayableFile(DATA_MODEL.get(i).getInitializeObject())) {
-        		selectionIsAllAudio = false;
-        		break;
-        	}        	
+            if (!AudioPlayer.isPlayableFile(DATA_MODEL.get(i).getInitializeObject())) {
+                selectionIsAllAudio = false;
+                break;
+            }
         }
-		return selectionIsAllAudio;
-	}
+        return selectionIsAllAudio;
+    }
 
     private JMenu createSearchSubMenu(LibraryFilesTableDataLine dl) {
         SkinMenu menu = new SkinMenu(I18n.tr("Search"));
@@ -319,31 +324,31 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             setMediaType(MediaType.getAnyTypeMediaType());
         }
         clearTable();
-        
-        List<List<File>> partitionedFiles = CollectionUtils.split(100, Arrays.asList(dirHolder.getFiles()));
-        
-        for (List<File> partition : partitionedFiles) {
-        	final List<File> fPartition = partition;
-        	
-        	BackgroundExecutorService.schedule(new Runnable() {
 
-				@Override
-				public void run() {
-		        	SwingUtilities.invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							for (File file : fPartition) {
-								addUnsorted(file);
-							}
-							LibraryMediator.instance().getLibrarySearch().addResults(fPartition.size());
-						}
-		        	});
-		        	Thread.yield();
-				}
-        	});
-        	
+        List<List<File>> partitionedFiles = CollectionUtils.split(100, Arrays.asList(dirHolder.getFiles()));
+
+        for (List<File> partition : partitionedFiles) {
+            final List<File> fPartition = partition;
+
+            BackgroundExecutorService.schedule(new Runnable() {
+
+                @Override
+                public void run() {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (File file : fPartition) {
+                                addUnsorted(file);
+                            }
+                            LibraryMediator.instance().getLibrarySearch().addResults(fPartition.size());
+                        }
+                    });
+                    Thread.yield();
+                }
+            });
+
         }
-        
+
         forceResort();
     }
 
@@ -422,16 +427,16 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             return new Object[] { I18n.tr("Delete"), I18n.tr("Cancel") };
         }
     }
-    
+
     public List<AudioSource> getFileView() {
         int size = DATA_MODEL.getRowCount();
         List<AudioSource> result = new ArrayList<AudioSource>(size);
         for (int i = 0; i < size; i++) {
             try {
-            	File file = DATA_MODEL.get(i).getFile();
-            	if (AudioPlayer.isPlayableFile(file)) {
-            		result.add(new AudioSource(DATA_MODEL.get(i).getFile()));
-            	}
+                File file = DATA_MODEL.get(i).getFile();
+                if (AudioPlayer.isPlayableFile(file)) {
+                    result.add(new AudioSource(DATA_MODEL.get(i).getFile()));
+                }
             } catch (Exception e) {
                 return Collections.emptyList();
             }
@@ -470,15 +475,12 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         listPanel.getList().setVisibleRowCount(4);
 
         // display list of files that should be deleted
-        Object[] message = new Object[] {
-                new MultiLineLabel(I18n.tr("Are you sure you want to delete the selected file(s), thus removing it from your computer?"), 400),
-                Box.createVerticalStrut(ButtonRow.BUTTON_SEP), listPanel, Box.createVerticalStrut(ButtonRow.BUTTON_SEP) };
+        Object[] message = new Object[] { new MultiLineLabel(I18n.tr("Are you sure you want to delete the selected file(s), thus removing it from your computer?"), 400), Box.createVerticalStrut(ButtonRow.BUTTON_SEP), listPanel, Box.createVerticalStrut(ButtonRow.BUTTON_SEP) };
 
         // get platform dependent options which are displayed as buttons in the dialog
         Object[] removeOptions = createRemoveOptions();
 
-        int option = JOptionPane.showOptionDialog(MessageService.getParentComponent(), message, I18n.tr("Message"), JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null, removeOptions, removeOptions[0] /* default option */);
+        int option = JOptionPane.showOptionDialog(MessageService.getParentComponent(), message, I18n.tr("Message"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, removeOptions, removeOptions[0] /* default option */);
 
         if (option == removeOptions.length - 1 /* "cancel" option index */
                 || option == JOptionPane.CLOSED_OPTION) {
@@ -520,13 +522,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
 
         // display list of files that could not be deleted
-        message = new Object[] {
-                new MultiLineLabel(
-                        I18n.tr("The following files could not be deleted. They may be in use by another application or are currently being downloaded to."),
-                        400), Box.createVerticalStrut(ButtonRow.BUTTON_SEP), new JScrollPane(createFileList(undeletedFileNames)) };
+        message = new Object[] { new MultiLineLabel(I18n.tr("The following files could not be deleted. They may be in use by another application or are currently being downloaded to."), 400), Box.createVerticalStrut(ButtonRow.BUTTON_SEP), new JScrollPane(createFileList(undeletedFileNames)) };
 
         JOptionPane.showMessageDialog(MessageService.getParentComponent(), message, I18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
-        
+
         super.removeSelection();
     }
 
@@ -650,7 +649,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (stopAudio || !playAudio) {
             AudioPlayer.instance().stop();
         }
-        
+
         if (playAudio) {
             GUILauncher.launch(providers);
         } else {
@@ -682,24 +681,24 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (selectedFile != null && !selectedFile.getName().endsWith(".torrent")) {
             CREATE_TORRENT_ACTION.setEnabled(sel.length == 1);
         }
-        
+
         if (selectedFile != null) {
             SEND_TO_FRIEND_ACTION.setEnabled(sel.length == 1);
 
             if (getMediaType().equals(MediaType.getAnyTypeMediaType())) {
-            	boolean atLeastOneIsPlayable  = false;
-            	
-            	for (int i : sel) {
-            	    File f = getFile(i);
-            		if (AudioPlayer.isPlayableFile(f) || FilenameUtils.hasExtension(f.getAbsolutePath(), "mp4")) {
-            			atLeastOneIsPlayable = true;
-            			break;
-            		}
-            	}
-            	
-            	SEND_TO_ITUNES_ACTION.setEnabled(atLeastOneIsPlayable);
+                boolean atLeastOneIsPlayable = false;
+
+                for (int i : sel) {
+                    File f = getFile(i);
+                    if (AudioPlayer.isPlayableFile(f) || FilenameUtils.hasExtension(f.getAbsolutePath(), "mp4")) {
+                        atLeastOneIsPlayable = true;
+                        break;
+                    }
+                }
+
+                SEND_TO_ITUNES_ACTION.setEnabled(atLeastOneIsPlayable);
             } else {
-            	SEND_TO_ITUNES_ACTION.setEnabled(getMediaType().equals(MediaType.getAudioMediaType()) || FilenameUtils.hasExtension(selectedFile.getAbsolutePath(), "mp4") );
+                SEND_TO_ITUNES_ACTION.setEnabled(getMediaType().equals(MediaType.getAudioMediaType()) || FilenameUtils.hasExtension(selectedFile.getAbsolutePath(), "mp4"));
             }
         }
 
@@ -708,7 +707,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         } else {
             OPEN_IN_FOLDER_ACTION.setEnabled(false);
         }
-        
+
         if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setFile(selectedFile);
         }
@@ -772,7 +771,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             launch(true);
         }
     }
-    
+
     private final class LaunchOSAction extends AbstractAction {
 
         /**
@@ -893,26 +892,26 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             startRename();
         }
     }
-    
-	private class SendAudioFilesToiTunes extends AbstractAction {
 
-		private static final long serialVersionUID = 4726989286129406765L;
+    private class SendAudioFilesToiTunes extends AbstractAction {
 
-		public SendAudioFilesToiTunes() {
-			putValue(Action.NAME, I18n.tr("Send to iTunes"));
+        private static final long serialVersionUID = 4726989286129406765L;
+
+        public SendAudioFilesToiTunes() {
+            putValue(Action.NAME, I18n.tr("Send to iTunes"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send audio files to iTunes"));
-    	}
-    	
-    	@Override
-		public void actionPerformed(ActionEvent e) {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
             int[] rows = TABLE.getSelectedRows();
             for (int i = 0; i < rows.length; i++) {
                 int index = rows[i]; // current index to add
                 File file = DATA_MODEL.getFile(index);
-                
-				iTunesMediator.instance().scanForSongs(file);                
+
+                iTunesMediator.instance().scanForSongs(file);
             }
-		}
+        }
     }
 
     /**
@@ -970,7 +969,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             return _file;
         }
     }
-    
+
     @Override
     protected void sortAndMaintainSelection(int columnToSort) {
         super.sortAndMaintainSelection(columnToSort);
@@ -980,7 +979,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     public void resetAudioPlayerFileView() {
         Playlist playlist = AudioPlayer.instance().getCurrentPlaylist();
         if (playlist == null) {
-        	AudioPlayer.instance().setPlaylistFilesView(getFileView());
+            AudioPlayer.instance().setPlaylistFilesView(getFileView());
         }
     }
 

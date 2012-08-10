@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.io.File;
@@ -27,6 +28,12 @@ import com.frostwire.mp3.ID3v2;
 import com.frostwire.mp3.Mp3File;
 import com.frostwire.mplayer.MPlayer;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class AudioMetaData {
 
     private String title;
@@ -86,7 +93,7 @@ public class AudioMetaData {
 
     private void readUsingMPlayer(File file) {
         MPlayer mplayer = new MPlayer();
-        
+
         try {
             Map<String, String> properties = mplayer.getProperties(file.getAbsolutePath());
 
@@ -130,7 +137,7 @@ public class AudioMetaData {
                 if (!StringUtils.isNullOrEmpty(tag.getYear(), true)) {
                     year = tag.getYear();
                 }
-                
+
                 durationInSecs = mp3.getLengthInSeconds();
             }
         } catch (Exception e) {

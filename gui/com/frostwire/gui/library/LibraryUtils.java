@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -489,12 +489,12 @@ public class LibraryUtils {
         return directoryContainsExtension(directory, depth, ignore, extensionWithoutDot);
     }
 
-    public static boolean directoryContainsExtension(File directory, String ... extensionWithoutDot) {
+    public static boolean directoryContainsExtension(File directory, String... extensionWithoutDot) {
         Set<File> ignore = TorrentUtil.getIgnorableFiles();
         return directoryContainsExtension(directory, 4, ignore, extensionWithoutDot);
     }
 
-    private static boolean directoryContainsExtension(File directory, int depth, Set<File> ignore, String ... extensionWithoutDot) {
+    private static boolean directoryContainsExtension(File directory, int depth, Set<File> ignore, String... extensionWithoutDot) {
         if (directory == null || !directory.isDirectory()) {
             return false;
         }
