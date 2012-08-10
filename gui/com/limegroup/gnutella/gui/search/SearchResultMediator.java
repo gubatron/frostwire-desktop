@@ -110,11 +110,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     ActionListener DOWNLOAD_LISTENER;
 
     /**
-     * The "download as" listener.
-     */
-    ActionListener DOWNLOAD_AS_LISTENER;
-
-    /**
      * The browse host listener.
      */
 
@@ -260,12 +255,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         DOWNLOAD_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 SearchMediator.doDownload(SearchResultMediator.this);
-            }
-        };
-
-        DOWNLOAD_AS_LISTENER = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                SearchMediator.doDownloadAs(SearchResultMediator.this);
             }
         };
 

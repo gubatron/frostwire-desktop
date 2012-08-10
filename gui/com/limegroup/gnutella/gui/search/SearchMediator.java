@@ -430,22 +430,7 @@ public final class SearchMediator {
             }
         });
     }
-
-    /**
-     * Opens a dialog where you can specify the download directory and final
-     * filename for the selected file.
-     * @param panel
-     * @throws IllegalStateException when there is more than one file selected
-     * for download or there is no file selected.
-     */
-    static void doDownloadAs(final SearchResultMediator panel) {
-        final SearchResultDataLine[] lines = panel.getAllSelectedLines();
-        if (lines.length != 1) {
-            throw new IllegalStateException("There should only be one search result selected: " + lines.length);
-        }
-        downloadLine(lines[0], new GUID(panel.getGUID()), null, null, true, panel.getSearchInformation());
-    }
-
+   
     /**
      * Downloads all the selected lines.
      */
