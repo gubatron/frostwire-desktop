@@ -70,7 +70,11 @@ public class YouTubeSearchResult implements WebSearchResult {
 
     @Override
     public String getSource() {
-        return "YouTube";
+        if (entry.author != null && entry.author.size() > 0 && entry.author.get(0).name != null && entry.author.get(0).name.title != null) {
+            return "YouTube - " + entry.author.get(0).name.title;
+        } else {
+            return "YouTube";
+        }
     }
 
     @Override

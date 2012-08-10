@@ -24,7 +24,7 @@ package com.frostwire.websearch.youtube;
  * @author aldenml
  *
  */
-public class YouTubeResponse {
+public class YouTubeAuthorName {
 
-    public YouTubeFeed feed;
+    public String title;
 }

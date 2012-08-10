@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,12 @@ import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.limegroup.gnutella.settings.SearchEnginesSettings;
 import com.limegroup.gnutella.util.UrlUtils;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class YouTubeSearchPerformer implements WebSearchPerformer {
 
     public List<WebSearchResult> search(String keywords) {
@@ -83,6 +89,6 @@ public class YouTubeSearchPerformer implements WebSearchPerformer {
     }
 
     private String fixJson(String json) {
-        return json.replace("\"$t\"", "\"title\"");
+        return json.replace("\"$t\"", "\"title\"").replace("\"yt$userId\"", "\"ytuserId\"");
     }
 }

@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,12 @@ package com.frostwire.websearch.youtube;
 
 import java.util.List;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class YouTubeFeed {
 
     public List<YouTubeEntry> entry;
