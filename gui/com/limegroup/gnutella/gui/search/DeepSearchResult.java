@@ -108,8 +108,8 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
     }
 
     @Override
-    public String getVendor() {
-        return _item.getVendor();
+    public String getSource() {
+        return _item.getSource();
     }
 
     @Override

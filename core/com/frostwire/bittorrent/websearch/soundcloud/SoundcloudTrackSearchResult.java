@@ -51,8 +51,12 @@ public class SoundcloudTrackSearchResult implements WebSearchResult {
     }
 
     @Override
-    public String getVendor() {
-        return "Soundcloud";
+    public String getSource() {
+        if (item.user != null && item.user.username != null) {
+            return "Soundcloud - " + item.user.username;
+        } else {
+            return "Soundcloud";
+        }
     }
 
     @Override

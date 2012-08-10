@@ -87,8 +87,8 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
     }
 
     @Override
-    public String getVendor() {
-        return sr.getVendor();
+    public String getSource() {
+        return sr.getSource();
     }
 
     @Override

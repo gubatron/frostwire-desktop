@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.bittorrent.websearch;
+package com.frostwire.bittorrent.websearch.soundcloud;
 
 /**
  * 
@@ -24,23 +24,8 @@ package com.frostwire.bittorrent.websearch;
  * @author aldenml
  *
  */
-public interface WebSearchResult {
+public class SoundcloundUser {
 
-    public String getFileName();
-
-    public long getSize();
-
-    public long getCreationTime();
-
-    public String getSource();
-
-    public String getHash();
-
-    public String getTorrentURI();
-
-    public int getSeeds();
-
-    public String getDetailsUrl();
-
-    public String getDisplayName();
+    public String username;
+    public String permalink;
 }

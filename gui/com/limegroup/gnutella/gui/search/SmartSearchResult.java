@@ -111,8 +111,8 @@ public class SmartSearchResult extends AbstractSearchResult implements Bittorren
     }
 
     @Override
-    public String getVendor() {
-        return _item.getVendor();
+    public String getSource() {
+        return _item.getSource();
     }
 
     @Override
@@ -179,7 +179,7 @@ public class SmartSearchResult extends AbstractSearchResult implements Bittorren
         }
 
         @Override
-        public String getVendor() {
+        public String getSource() {
             return _torrentDBPojo.vendor;
         }
 

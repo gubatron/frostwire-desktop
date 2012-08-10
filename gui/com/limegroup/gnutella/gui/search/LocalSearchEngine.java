@@ -385,7 +385,7 @@ public class LocalSearchEngine {
         torrentPojo.size = searchResult.getSize();
         torrentPojo.torrentDetailsURL = searchResult.getDetailsUrl();
         torrentPojo.torrentURI = searchResult.getTorrentURI();
-        torrentPojo.vendor = searchResult.getVendor();
+        torrentPojo.vendor = searchResult.getSource();
 
         TOTorrentFile[] files = theTorrent.getFiles();
         TorrentFileDBPojo[] tfPojos = new TorrentFileDBPojo[files.length];

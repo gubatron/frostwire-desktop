@@ -68,7 +68,7 @@ public class MininovaVuzeWebSearchResult implements WebSearchResult {
         return Long.valueOf(_item.size);
     }
 
-    public String getVendor() {
+    public String getSource() {
         return "Mininova";
     }
 

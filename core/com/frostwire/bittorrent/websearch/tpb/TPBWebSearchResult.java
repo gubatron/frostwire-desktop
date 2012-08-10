@@ -162,7 +162,7 @@ public class TPBWebSearchResult implements WebSearchResult {
     }
 
     @Override
-    public String getVendor() {
+    public String getSource() {
         return "TPB";
     }
 

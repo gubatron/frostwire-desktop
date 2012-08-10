@@ -135,7 +135,7 @@ public class MonovaWebSearchResult implements WebSearchResult {
     }
 
     @Override
-    public String getVendor() {
+    public String getSource() {
         return "Monova";
     }
 

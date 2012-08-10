@@ -57,7 +57,7 @@ public class VertorResponseWebSearchResult implements WebSearchResult {
         return result;
     }
 
-    public String getVendor() {
+    public String getSource() {
         return "Vertor";
     }
 

@@ -72,7 +72,7 @@ public class KATWebSearchResult implements WebSearchResult {
         return _item.size;
     }
 
-    public String getVendor() {
+    public String getSource() {
         return "KAT";
     }
 

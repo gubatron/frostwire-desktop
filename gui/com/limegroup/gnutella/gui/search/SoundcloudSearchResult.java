@@ -85,8 +85,8 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
     }
 
     @Override
-    public String getVendor() {
-        return sr.getVendor();
+    public String getSource() {
+        return sr.getSource();
     }
 
     @Override

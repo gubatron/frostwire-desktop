@@ -44,10 +44,7 @@ public interface SearchResult {
      */
     long getCreationTime();
     
-    /**
-     * @return the name of vendor who created this artifact
-     */
-    String getVendor();
+    public String getSource();
     
     /**
      * @return the connection speed of this result or

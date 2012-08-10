@@ -57,7 +57,7 @@ public class ExtratorrentResponseWebSearchResult implements WebSearchResult {
         return result;
     }
 
-    public String getVendor() {
+    public String getSource() {
         return "Extratorrent";
     }
 

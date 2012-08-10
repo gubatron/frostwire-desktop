@@ -69,7 +69,7 @@ public class ISOHuntWebSearchResult implements WebSearchResult {
         return Long.valueOf(_item.length);
     }
 
-    public String getVendor() {
+    public String getSource() {
         return "ISOHunt";
     }
 

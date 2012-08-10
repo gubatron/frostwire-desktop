@@ -69,7 +69,7 @@ public class ClearBitsWebSearchResult implements WebSearchResult {
         return Long.valueOf(_item.mb_size * 1024 * 1024);
     }
 
-    public String getVendor() {
+    public String getSource() {
         return "ClearBits";
     }
 

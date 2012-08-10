@@ -224,7 +224,7 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
      * Returns the vendor code of the result.
      */
     String getVendor() {
-        return RESULT.getVendor();
+        return RESULT.getSource();
     }
 
     /**
@@ -283,7 +283,7 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
         case SearchTableColumns.SIZE_IDX:
             return new SizeHolder(getSize());
         case SearchTableColumns.SOURCE_IDX:
-            return new ActionIconAndNameHolder(null, _torrentDetailsAction, "<html><a href=\"#\">" + RESULT.getVendor() + "</a></html>");
+            return new ActionIconAndNameHolder(null, _torrentDetailsAction, "<html><a href=\"#\">" + RESULT.getSource() + "</a></html>");
         case SearchTableColumns.ADDED_IDX:
             return addedOn;
         case SearchTableColumns.EXTENSION_IDX:

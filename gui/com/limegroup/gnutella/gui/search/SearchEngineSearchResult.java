@@ -84,8 +84,8 @@ public class SearchEngineSearchResult extends AbstractSearchResult implements Bi
     }
 
     @Override
-    public String getVendor() {
-        return _item.getVendor();
+    public String getSource() {
+        return _item.getSource();
     }
 
     @Override
