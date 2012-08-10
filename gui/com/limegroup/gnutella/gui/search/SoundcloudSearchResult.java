@@ -105,7 +105,7 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
     }
 
     @Override
-    public void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
+    public void download(boolean partial) {
         GUIMediator.instance().openSoundcloudTrackUrl(sr.getTorrentURI(), sr.getDisplayName());
         showDetails(false);
     }
@@ -114,7 +114,7 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
     public JPopupMenu createMenu(JPopupMenu popupMenu, SearchResultDataLine[] lines, SearchResultMediator rp) {
         PopupUtils.addMenuItem(SearchMediator.DOWNLOAD_STRING, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                takeAction(null, null, null, null, false, null);
+                download(false);
             }
         }, popupMenu, lines.length > 0, 1);
         PopupUtils.addMenuItem(SearchMediator.SOUNDCLOUD_DETAILS_STRING, new ActionListener() {

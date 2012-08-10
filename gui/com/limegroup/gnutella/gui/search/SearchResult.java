@@ -85,24 +85,7 @@ public interface SearchResult {
      */
     String getExtension();
 
-    /**
-     * This method is called when a {@link SearchResultDataLine} is clicked on in the
-     * {@link SearchResultMediator}, and the user wants to take some action, such as
-     * downloading or displaying the result in a browser.
-     * 
-     * @param line the line on which was clicked; this is needed for the
-     *        {@link GnutellaSearchResult} so it can pass the line back to
-     *        {@link SearchMediator} to do the download
-     * @param guid the GUID of the result; used for the reason above
-     * @param saveDir if we were to download the result, it would go here; used
-     *        for the reason above
-     * @param fileName name of the file in which we would save the result on a
-     *        download; used for the reason above
-     * @param saveAs used for the reason above
-     * @param searchInfo the info used for the original search
-     */
-    void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName,
-            boolean saveAs, SearchInformation searchInfo);
+    public void download(boolean partial);
 
     JPopupMenu createMenu(JPopupMenu popupMenu, SearchResultDataLine[] lines, SearchResultMediator rp);
     

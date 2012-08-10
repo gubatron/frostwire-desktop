@@ -118,17 +118,17 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
     }
 
     @Override
-    public void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
+    public void download(boolean partial) {
         GUIMediator.instance().openTorrentSearchResult(_item, _torrentFile.getRelativePath());
         showDetails(false);
     }
 
     @Override
     public JPopupMenu createMenu(JPopupMenu popupMenu, SearchResultDataLine[] lines, SearchResultMediator resultPanel) {
-
+        
         PopupUtils.addMenuItem(SearchMediator.DOWNLOAD_STRING, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                takeAction(null, null, null, null, false, null);
+                download(false);
             }
         }, popupMenu, lines.length > 0, 1);
 

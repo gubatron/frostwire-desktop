@@ -266,7 +266,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
     
     private void labelDownload_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
-            sr.takeAction(null, null, null, null, false, null);
+            sr.download(false);
         }
     }
 

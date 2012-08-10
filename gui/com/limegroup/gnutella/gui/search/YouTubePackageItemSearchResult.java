@@ -107,7 +107,7 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
     }
 
     @Override
-    public void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
+    public void download(boolean partial) {
         GUIMediator.instance().openYouTubeItem(filePackage);
         showDetails(false);
     }
@@ -116,7 +116,7 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
     public JPopupMenu createMenu(JPopupMenu popupMenu, SearchResultDataLine[] lines, SearchResultMediator rp) {
         PopupUtils.addMenuItem(SearchMediator.DOWNLOAD_STRING, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                takeAction(null, null, null, null, false, null);
+                download(false);
             }
         }, popupMenu, lines.length > 0, 1);
         PopupUtils.addMenuItem(SearchMediator.YOUTUBE_DETAILS_STRING, new ActionListener() {

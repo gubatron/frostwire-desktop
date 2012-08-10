@@ -453,7 +453,7 @@ public final class SearchMediator {
         if (line == null)
             throw new NullPointerException("Tried to download null line");
 
-        line.takeAction(line, guid, saveDir, fileName, saveAs, searchInfo);
+        line.getSearchResult().download(false);
     }
 
     ////////////////////////// Other Controls ///////////////////////////

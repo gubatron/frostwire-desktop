@@ -316,17 +316,6 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
         return RESULT;
     }
 
-    /**
-     * Delegate to the {@link #RESULT} to take some action, such as download or
-     * display in browser, etc.
-     * 
-     * @see SearchResult#takeAction(SearchResultDataLine, GUID, File, String, boolean,
-     *      SearchInformation)
-     */
-    public final void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
-        RESULT.takeAction(line, guid, saveDir, fileName, saveAs, searchInfo);
-    }
-
     public int getSeeds() {
         return RESULT.getSeeds();
     }

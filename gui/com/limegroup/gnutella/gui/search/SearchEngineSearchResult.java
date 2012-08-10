@@ -94,8 +94,8 @@ public class SearchEngineSearchResult extends AbstractSearchResult implements Bi
     }
 
     @Override
-    public void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
-        GUIMediator.instance().openTorrentSearchResult(_item, false);
+    public void download(boolean partial) {
+        GUIMediator.instance().openTorrentSearchResult(_item, partial);
         showDetails(false);
     }
 
@@ -103,7 +103,7 @@ public class SearchEngineSearchResult extends AbstractSearchResult implements Bi
     public JPopupMenu createMenu(JPopupMenu popupMenu, SearchResultDataLine[] lines, SearchResultMediator resultPanel) {
         PopupUtils.addMenuItem(SearchMediator.DOWNLOAD_STRING, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                takeAction(null, null, null, null, false, null);
+                download(false);
             }
         }, popupMenu, lines.length > 0, 1);
         PopupUtils.addMenuItem(SearchMediator.DOWNLOAD_PARTIAL_FILES_STRING, resultPanel.DOWNLOAD_PARTIAL_FILES_LISTENER, popupMenu, lines.length == 1, 2);
