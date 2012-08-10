@@ -52,7 +52,11 @@ public class SearchResultNameEditor extends AbstractCellEditor implements TableC
             component.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(component, e.getID(), e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), true));
+                    if (e.getButton() == MouseEvent.BUTTON1) {
+                        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(component, e.getID(), e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), true));
+                    } else {
+                        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(table, e.getID(), e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), true));
+                    }
                 }
             });
         }
