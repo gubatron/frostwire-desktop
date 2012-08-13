@@ -161,7 +161,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         }
 
         _popup.addSeparator();
-        _popup.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Configure Options"), I18n.tr("You can configure the FrostWire\'s Options."))));
+        _popup.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.LIBRARY_KEY, I18n.tr("Configure Options"), I18n.tr("You can configure the FrostWire\'s Options."))));
     }
 
     private void setupModel() {
