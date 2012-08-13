@@ -42,7 +42,7 @@ public class SoundcloudTrackSearchResult implements WebSearchResult {
 
     @Override
     public long getSize() {
-        return -1;
+        return Math.round((item.duration * 128f) / 8f);
     }
 
     @Override
@@ -82,5 +82,9 @@ public class SoundcloudTrackSearchResult implements WebSearchResult {
     @Override
     public String getDisplayName() {
         return item.title;
+    }
+
+    public String getStreamUrl() {
+        return item.streamUrl;
     }
 }

@@ -56,9 +56,6 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
     private final SoundcloudTrackSearchResult sr;
     private final SearchEngine searchEngine;
 
-    private String streamUrl;
-    private boolean streamUrlCrawled;
-
     public SoundcloudSearchResult(SoundcloudTrackSearchResult sr, SearchEngine searchEngine, String query) {
         super(query);
         this.sr = sr;
@@ -157,55 +154,6 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
         executor.execute(new PlayTask());
     }
 
-    private String crawlStreamUrl(String detailsUrl) {
-        String url = null;
-        try {
-            Browser br = new Browser();
-            br.getPage(detailsUrl);
-            if (br.containsHTML("Oops, looks like we can\\'t find that page"))
-                throw new PluginException(LinkStatus.ERROR_FILE_NOT_FOUND);
-            String filename = br.getRegex("<em>(.*?)</em>").getMatch(0);
-            br.setFollowRedirects(true);
-            if (filename == null)
-                throw new PluginException(LinkStatus.ERROR_PLUGIN_DEFECT);
-            String username = br.getRegex("\"username\":\"(.*?)\"").getMatch(0);
-            filename = Encoding.htmlDecode(filename.trim());
-            String type = br.getRegex("title=\"Uploaded format\">(.*?)<").getMatch(0);
-            if (type == null) {
-                type = br.getRegex("class=\"file\\-type\">(.*?)</span>").getMatch(0);
-                if (type == null)
-                    type = "mp3";
-            }
-            username = username.trim();
-            if (username != null && !filename.contains(username))
-                filename += " - " + username;
-            filename += "." + type;
-            if (!br.containsHTML("class=\"download pl\\-button\"")) {
-                String[] data = br.getRegex("\"uid\":\"(.*?)\".*?\"token\":\"(.*?)\"").getRow(0);
-                url = "http://media.soundcloud.com/stream/" + data[0] + "?stream_token=" + data[1];
-                URLConnectionAdapter con = br.openGetConnection(url);
-                if (!con.getContentType().contains("html")) {
-                    //parameter.setDownloadSize(con.getLongContentLength());
-                } else {
-                    throw new PluginException(LinkStatus.ERROR_PLUGIN_DEFECT);
-                }
-                con.disconnect();
-                //parameter.getLinkStatus().setStatusText(JDL.L("plugins.hoster.SoundCloudCom.status.previewavailable", "Preview is downloadable"));
-            } else {
-                String filesize = br.getRegex("The file you're about to download has a size of (.*?)\"").getMatch(0);
-                if (filesize != null) {
-                    //parameter.setDownloadSize(SizeFormatter.getSize(filesize));
-                }
-                url = detailsUrl + "/download";
-                //parameter.getLinkStatus().setStatusText(JDL.L("plugins.hoster.SoundCloudCom.status.downloadavailable", "Original file is downloadable"));
-            }
-            //parameter.setFinalFileName(filename);
-        } catch (Throwable e) {
-            LOG.error("Error crawling soundcloud stream url from: " + detailsUrl, e);
-        }
-        return url;
-    }
-
     private final class PlayTask implements Runnable {
 
         public PlayTask() {
@@ -213,14 +161,7 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
 
         @Override
         public void run() {
-            if (!streamUrlCrawled) {
-                streamUrl = crawlStreamUrl(sr.getDetailsUrl());
-                streamUrlCrawled = true;
-            }
-            if (streamUrl != null) {
-                crawlStreamUrl(sr.getDetailsUrl());
-                GUIMediator.instance().launchAudio(new StreamAudioSource(streamUrl, "Soundcloud: " + sr.getDisplayName()));
-            }
+            GUIMediator.instance().launchAudio(new StreamAudioSource(sr.getStreamUrl(), "Soundcloud: " + sr.getDisplayName()));
         }
     }
 }
