@@ -47,7 +47,7 @@ public class SoundcloudTrackSearchResult implements WebSearchResult {
 
     @Override
     public long getCreationTime() {
-        return -1;
+        return item.date;
     }
 
     @Override

@@ -22,6 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -43,20 +44,22 @@ import com.limegroup.gnutella.settings.SearchEnginesSettings;
  *
  */
 public class SoundcloudSearchPerformer implements WebSearchPerformer {
-    
+
     private static final Log LOG = LogFactory.getLog(SoundcloudSearchPerformer.class);
-    
+
+    private SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMMM, dd yyyy HH:mm:ss Z");
+
     public List<WebSearchResult> search(String keywords) {
         List<WebSearchResult> result = new ArrayList<WebSearchResult>();
-        
+
         try {
             keywords = URLEncoder.encode(keywords, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             LOG.error("Can't UTF-8 encode keywords: " + keywords, e);
         }
-        
+
         int pages = getMaxResults() / 10;
-        
+
         for (int i = 0; i < pages; i++) {
             result.addAll(searchPage(i + 1, keywords));
         }
@@ -66,7 +69,7 @@ public class SoundcloudSearchPerformer implements WebSearchPerformer {
 
     private List<WebSearchResult> searchPage(int page, String keywords) {
         List<WebSearchResult> result = new ArrayList<WebSearchResult>();
-        
+
         HttpFetcher fetcher = null;
         try {
             fetcher = new HttpFetcher(getURI(page, keywords), HTTP_TIMEOUT);
@@ -83,19 +86,24 @@ public class SoundcloudSearchPerformer implements WebSearchPerformer {
         String html = StringUtils.getUTF8String(htmlBytes);
 
         String regex = getRegex();
-        
+
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(html);
-        
+
         JsonEngine engine = new JsonEngine();
-        
+
         int max = getMaxResults();
-        
+
         int i = 0;
-        
+
         while (matcher.find() && i < max) {
             try {
-                SoundcloudItem item = engine.toObject(matcher.group(1), SoundcloudItem.class);
+                SoundcloudItem item = engine.toObject(matcher.group(2), SoundcloudItem.class);
+                try {
+                    item.date = DATE_FORMAT.parse(matcher.group(1)).getTime();
+                } catch (Throwable e) {
+                    item.date = -1;
+                }
                 WebSearchResult sr = new SoundcloudTrackSearchResult(item);
                 if (sr != null) {
                     result.add(sr);
@@ -105,7 +113,7 @@ public class SoundcloudSearchPerformer implements WebSearchPerformer {
                 // do nothing
             }
         }
-        
+
         return result;
     }
 
@@ -114,7 +122,7 @@ public class SoundcloudSearchPerformer implements WebSearchPerformer {
     }
 
     public String getRegex() {
-        return "(?is)window.SC.bufferTracks.push\\((.*?)\\);";
+        return "(?is)<abbr title='(.*?)'.*?window.SC.bufferTracks.push\\((.*?)\\);";
     }
 
     protected int getMaxResults() {

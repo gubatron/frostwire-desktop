@@ -66,4 +66,5 @@ public class SoundcloudItem {
     public String name;
     public String title;
     public String streamUrl;
+    public long date;
 }
