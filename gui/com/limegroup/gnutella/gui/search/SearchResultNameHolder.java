@@ -58,7 +58,7 @@ public final class SearchResultNameHolder implements Comparable<SearchResultName
         for (String token : query.split("\\s+")) {
             StringBuilder sb = new StringBuilder(2 * str.length());
             for (int i = 0; i < str.length();) {
-                if (i + token.length() < str.length()) {
+                if (i + token.length() <= str.length()) {
                     String s = str.substring(i, token.length() + i);
                     if (s.equalsIgnoreCase(token)) {
                         sb.append("<b>" + s + "</b>");

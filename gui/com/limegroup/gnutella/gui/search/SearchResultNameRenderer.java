@@ -231,8 +231,8 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         labelPlay = new JLabel(SubstanceIconFactory.getTreeIcon(null, true));
         labelPlay.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseReleased(MouseEvent e) {
-                labelPlay_mouseReleased(e);
+            public void mouseClicked(MouseEvent e) {
+                labelPlay_mouseClicked(e);
             }
         });
         c = new GridBagConstraints();
@@ -242,8 +242,8 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         labelPartialDownload = new JLabel(SubstanceIconFactory.getTreeIcon(null, true));
         labelPartialDownload.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseReleased(MouseEvent e) {
-                labelPartialDownload_mouseReleased(e);
+            public void mouseClicked(MouseEvent e) {
+                labelPartialDownload_mouseClicked(e);
             }
         });
         c = new GridBagConstraints();
@@ -253,8 +253,8 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         labelDownload = new JLabel(SubstanceIconFactory.getTreeIcon(null, true));
         labelDownload.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseReleased(MouseEvent e) {
-                labelDownload_mouseReleased(e);
+            public void mouseClicked(MouseEvent e) {
+                labelDownload_mouseClicked(e);
             }
         });
         c = new GridBagConstraints();
@@ -262,7 +262,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         add(labelDownload, c);
     }
 
-    private void labelPlay_mouseReleased(MouseEvent e) {
+    private void labelPlay_mouseClicked(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
             if (sr instanceof StreamableSearchResult) {
                 ((StreamableSearchResult) sr).play();
@@ -270,7 +270,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         }
     }
 
-    private void labelPartialDownload_mouseReleased(MouseEvent e) {
+    private void labelPartialDownload_mouseClicked(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
             if (sr.allowDeepSearch()) {
                 sr.download(true);
@@ -278,7 +278,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         }
     }
 
-    private void labelDownload_mouseReleased(MouseEvent e) {
+    private void labelDownload_mouseClicked(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
             sr.download(false);
         }
