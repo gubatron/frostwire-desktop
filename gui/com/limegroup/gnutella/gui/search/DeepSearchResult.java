@@ -43,7 +43,8 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
     private SearchEngine _searchEngine;
     private TOTorrentFile _torrentFile;
 
-    public DeepSearchResult(TOTorrentFile torrentFile, WebSearchResult item, SearchEngine searchEngine) {
+    public DeepSearchResult(TOTorrentFile torrentFile, WebSearchResult item, SearchEngine searchEngine, String query) {
+        super(query);
         _item = item;
         _searchEngine = searchEngine;
         _torrentFile = torrentFile;

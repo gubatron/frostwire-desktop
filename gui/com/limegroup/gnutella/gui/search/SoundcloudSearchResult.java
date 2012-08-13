@@ -59,7 +59,8 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
     private String streamUrl;
     private boolean streamUrlCrawled;
 
-    public SoundcloudSearchResult(SoundcloudTrackSearchResult sr, SearchEngine searchEngine) {
+    public SoundcloudSearchResult(SoundcloudTrackSearchResult sr, SearchEngine searchEngine, String query) {
+        super(query);
         this.sr = sr;
         this.searchEngine = searchEngine;
     }

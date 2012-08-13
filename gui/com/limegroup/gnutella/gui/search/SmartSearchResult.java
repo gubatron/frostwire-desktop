@@ -45,7 +45,8 @@ public class SmartSearchResult extends AbstractSearchResult implements Bittorren
     TorrentDBPojo torrent;
     TorrentFileDBPojo file;
 
-    public SmartSearchResult(TorrentDBPojo torrentPojo, TorrentFileDBPojo torrentFilePojo) {
+    public SmartSearchResult(TorrentDBPojo torrentPojo, TorrentFileDBPojo torrentFilePojo, String query) {
+        super(query);
         torrent = torrentPojo;
         _item = new WebSearchResultProxy(torrent);
         file = torrentFilePojo;

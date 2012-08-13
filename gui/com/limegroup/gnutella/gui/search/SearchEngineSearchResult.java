@@ -40,7 +40,8 @@ public class SearchEngineSearchResult extends AbstractSearchResult implements Bi
     private WebSearchResult _item;
     private SearchEngine _searchEngine;
 
-    public SearchEngineSearchResult(WebSearchResult item, SearchEngine searchEngine) {
+    public SearchEngineSearchResult(WebSearchResult item, SearchEngine searchEngine, String query) {
+        super(query);
         _item = item;
         _searchEngine = searchEngine;
     }

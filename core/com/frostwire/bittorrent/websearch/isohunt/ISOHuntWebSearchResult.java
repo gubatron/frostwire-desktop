@@ -35,6 +35,8 @@ public class ISOHuntWebSearchResult implements WebSearchResult {
 
     public ISOHuntWebSearchResult(ISOHuntItem item) {
         _item = item;
+
+        _item.title = _item.title.replace("<b>", "").replace("</b>", "");
     }
 
     public long getCreationTime() {
@@ -49,12 +51,7 @@ public class ISOHuntWebSearchResult implements WebSearchResult {
     }
 
     public String getFileName() {
-        String titleNoTags = _item.title.replace("<b>", "").replace("</b>", "");
-        return titleNoTags + ".torrent";
-    }
-
-    public String getFilenameNoExtension() {
-        return "<html>" + _item.title + "</html>";
+        return _item.title + ".torrent";
     }
 
     public String getHash() {

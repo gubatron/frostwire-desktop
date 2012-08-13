@@ -227,7 +227,7 @@ public class LocalSearchEngine {
 
                 TorrentFileDBPojo torrentFilePojo = JSON_ENGINE.toObject(fileJSON, TorrentFileDBPojo.class);
 
-                results.add(new SmartSearchResult(torrentPojo, torrentFilePojo));
+                results.add(new SmartSearchResult(torrentPojo, torrentFilePojo, query));
                 KNOWN_INFO_HASHES.add(torrentPojo.hash);
             } catch (Throwable e) {
                 // keep going dude
@@ -322,7 +322,7 @@ public class LocalSearchEngine {
                 WebSearchResult webSearchResult = line.getSearchResult().getWebSearchResult();
                 SearchEngine searchEngine = line.getSearchEngine();
 
-                CrawlYouTubePackage task = new CrawlYouTubePackage(order++, guid, (YouTubeSearchResult) webSearchResult, searchEngine);
+                CrawlYouTubePackage task = new CrawlYouTubePackage(order++, guid, query, (YouTubeSearchResult) webSearchResult, searchEngine);
                 CRAWL_YOUTUBE_LINKS_EXECUTOR.execute(task);
             }
         }
@@ -407,6 +407,7 @@ public class LocalSearchEngine {
         private final AtomicBoolean finished = new AtomicBoolean(false);
 
         private final byte[] guid;
+        private final String query;
         private final Set<String> tokens;
         private final SearchEngine searchEngine;
         private final WebSearchResult webSearchResult;
@@ -414,6 +415,7 @@ public class LocalSearchEngine {
 
         public LocalSearchTorrentDownloaderListener(byte[] guid, String query, WebSearchResult webSearchResult, SearchEngine searchEngine, CountDownLatch finishSignal) {
             this.guid = guid;
+            this.query = query;
             this.tokens = new HashSet<String>(Arrays.asList(query.toLowerCase().split(" ")));
             this.searchEngine = searchEngine;
             this.webSearchResult = webSearchResult;
@@ -476,7 +478,7 @@ public class LocalSearchEngine {
             TOTorrentFile[] fs = theTorrent.getFiles();
             for (int i = 0; i < fs.length; i++) {
                 try {
-                    final DeepSearchResult result = new DeepSearchResult(fs[i], webSearchResult, searchEngine);
+                    final DeepSearchResult result = new DeepSearchResult(fs[i], webSearchResult, searchEngine, query);
 
                     if (!filter.allow(result))
                         continue;
@@ -583,12 +585,14 @@ public class LocalSearchEngine {
 
         private final int order;
         private final byte[] guid;
+        private final String query;
         private final SearchEngine searchEngine;
         private final YouTubeSearchResult webSearchResult;
 
-        public CrawlYouTubePackage(int order, byte[] guid, YouTubeSearchResult webSearchResult, SearchEngine searchEngine) {
+        public CrawlYouTubePackage(int order, byte[] guid, String query, YouTubeSearchResult webSearchResult, SearchEngine searchEngine) {
             this.order = order;
             this.guid = guid;
+            this.query = query;
             this.searchEngine = searchEngine;
             this.webSearchResult = webSearchResult;
         }
@@ -709,7 +713,7 @@ public class LocalSearchEngine {
 
             for (FilePackage p : packages) {
                 try {
-                    final YouTubePackageItemSearchResult result = new YouTubePackageItemSearchResult(webSearchResult, p, searchEngine);
+                    final YouTubePackageItemSearchResult result = new YouTubePackageItemSearchResult(webSearchResult, p, searchEngine, query);
 
                     //youtube mp3 filter
                     if (p.getChildren().get(0).getFileOutput().endsWith(".mp3")) {

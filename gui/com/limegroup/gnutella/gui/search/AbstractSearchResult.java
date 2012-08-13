@@ -26,6 +26,12 @@ import com.limegroup.gnutella.settings.SearchSettings;
  */
 public abstract class AbstractSearchResult implements SearchResult {
 
+    private String query;
+
+    public AbstractSearchResult(String query) {
+        this.query = query;
+    }
+
     @Override
     public String getExtension() {
         String fullname = getFileName();
@@ -53,5 +59,10 @@ public abstract class AbstractSearchResult implements SearchResult {
     @Override
     public boolean allowDeepSearch() {
         return false;
+    }
+
+    @Override
+    public String getQuery() {
+        return query;
     }
 }

@@ -18,10 +18,8 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import org.limewire.util.LCS;
 
-import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 
 /**
@@ -32,26 +30,12 @@ import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
  */
 public final class SearchResultNameHolder implements Comparable<SearchResultNameHolder> {
 
-    private final ActionListener moreAction;
-    private final ActionListener torrentDetailsAction;
     private final SearchResult sr;
+    private final String html;
 
     public SearchResultNameHolder(final SearchResult sr) {
-        moreAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (sr instanceof BittorrentSearchResult) {
-                    GUIMediator.instance().openTorrentSearchResult(sr.getWebSearchResult(), true, torrentDetailsAction);
-                }
-            }
-        };
-        torrentDetailsAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sr.showDetails(false);
-            }
-        };
         this.sr = sr;
+        this.html = "<html><div width=\"1000000px\">" + simpleHighlighter(sr.getQuery(), sr.getDisplayName()) + "</div></html>";
     }
 
     public int compareTo(SearchResultNameHolder o) {
@@ -62,7 +46,34 @@ public final class SearchResultNameHolder implements Comparable<SearchResultName
         return sr;
     }
 
+    public String getHtml() {
+        return html;
+    }
+
     public String toString() {
         return sr.getDisplayName();
+    }
+
+    private String simpleHighlighter(String query, String str) {
+        for (String token : query.split("\\s+")) {
+            StringBuilder sb = new StringBuilder(2 * str.length());
+            for (int i = 0; i < str.length();) {
+                if (i + token.length() < str.length()) {
+                    String s = str.substring(i, token.length() + i);
+                    if (s.equalsIgnoreCase(token)) {
+                        sb.append("<b>" + s + "</b>");
+                        i += s.length();
+                    } else {
+                        sb.append(str.charAt(i));
+                        i++;
+                    }
+                } else {
+                    sb.append(str.charAt(i));
+                    i++;
+                }
+            }
+            str = sb.toString();
+        }
+        return str;
     }
 }

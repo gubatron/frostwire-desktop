@@ -54,10 +54,6 @@ public class KATWebSearchResult implements WebSearchResult {
         return titleNoTags + ".torrent";
     }
 
-    public String getFilenameNoExtension() {
-        return "<html>" + _item.title + "</html>";
-    }
-
     public String getHash() {
         return _item.hash;
     }

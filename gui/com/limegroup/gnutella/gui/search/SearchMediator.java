@@ -371,11 +371,11 @@ public final class SearchMediator {
             SearchResult sr = null;
 
             if (webResult instanceof YouTubeSearchResult) {
-                sr = new YouTubePackageSearchResult((YouTubeSearchResult) webResult, engine);
+                sr = new YouTubePackageSearchResult((YouTubeSearchResult) webResult, engine, info.getQuery());
             } else if (webResult instanceof SoundcloudTrackSearchResult) {
-                sr = new SoundcloudSearchResult((SoundcloudTrackSearchResult)webResult, engine);
+                sr = new SoundcloudSearchResult((SoundcloudTrackSearchResult)webResult, engine, info.getQuery());
             } else {
-                sr = new SearchEngineSearchResult(webResult, engine);
+                sr = new SearchEngineSearchResult(webResult, engine, info.getQuery());
             }
 
             result.add(sr);

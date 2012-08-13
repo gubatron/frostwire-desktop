@@ -61,10 +61,6 @@ public class ExtratorrentResponseWebSearchResult implements WebSearchResult {
         return "Extratorrent";
     }
 
-    public String getFilenameNoExtension() {
-        return "<html>" + _item.title + "</html>";
-    }
-
     public String getHash() {
         return _item.hash;
     }

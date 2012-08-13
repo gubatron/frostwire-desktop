@@ -34,7 +34,7 @@ public class LCS {
     public static String lcsHtml(String s1, String s2) {
         String rs1 = new StringBuffer(s1).reverse().toString();
         String rs2 = new StringBuffer(s2).reverse().toString();
-        LcsString seq = new LcsString(rs1, rs2);
+        LcsString seq = new LcsString(rs1, rs2, true);
         return seq.getHtml(true);
     }
 
@@ -107,7 +107,7 @@ public class LCS {
             return (null == x1 && null == y1) || x1.equals(y1);
         }
 
-        private boolean isXYEqual(int i, int j) {
+        protected boolean isXYEqual(int i, int j) {
             return equals(valueOfXInternal(i), valueOfYInternal(j));
         }
 
@@ -191,7 +191,7 @@ public class LCS {
 
             while (!(i == 0 && j == 0)) {
                 if (i > 0 && j > 0 && isXYEqual(i, j)) {
-                    this.diff.add(new DiffEntry<VALUE>(DiffType.NONE, valueOfXInternal(i)));
+                    this.diff.add(new DiffEntry<VALUE>(DiffType.NONE, valueOfYInternal(j)));
                     i--;
                     j--;
 
@@ -296,12 +296,19 @@ public class LCS {
     }
 
     public static class LcsString extends LongestCommonSubsequence<Character> {
+        
         private String x;
         private String y;
+        private final boolean ignoreCase;
 
-        public LcsString(String from, String to) {
+        public LcsString(String from, String to, boolean ignoreCase) {
             this.x = from;
             this.y = to;
+            this.ignoreCase = ignoreCase;
+        }
+        
+        public LcsString(String from, String to) {
+            this(from, to, false);
         }
 
         protected int lengthOfY() {
@@ -318,6 +325,15 @@ public class LCS {
 
         protected Character valueOfY(int index) {
             return y.charAt(index);
+        }
+        
+        @Override
+        protected boolean equals(Character x1, Character y1) {
+            if (ignoreCase) {
+                return (null == x1 && null == y1) || Character.toLowerCase(x1) == Character.toLowerCase(y1);
+            } else {
+                return super.equals(x1, y1);
+            }
         }
 
         public String getHtmlDiff() {

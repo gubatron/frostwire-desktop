@@ -61,10 +61,6 @@ public class VertorResponseWebSearchResult implements WebSearchResult {
         return "Vertor";
     }
 
-    public String getFilenameNoExtension() {
-        return "<html>" + _item.name + "</html>";
-    }
-
     public String getHash() {
         return null;
     }

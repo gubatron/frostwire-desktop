@@ -287,18 +287,11 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
     private void setData(SearchResultNameHolder value, ComponentState state) {
         this.sr = value.getSearchResult();
 
-        labelText.setText(fixText(sr.getDisplayName()));
+        labelText.setText(value.getHtml());
 
         boolean showButtons = state.equals(ComponentState.ROLLOVER_SELECTED) || state.equals(ComponentState.ROLLOVER_UNSELECTED);
         labelPlay.setVisible(showButtons && (sr instanceof StreamableSearchResult));
         labelPartialDownload.setVisible(showButtons && sr.allowDeepSearch());
         labelDownload.setVisible(showButtons);
-    }
-
-    private String fixText(String text) {
-        if (text == null) {
-            text = " - ";
-        }
-        return "<html><div width=\"1000000px\">" + text + "</div></html>";
     }
 }

@@ -41,7 +41,8 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
     private final YouTubeSearchResult sr;
     private final SearchEngine searchEngine;
 
-    public YouTubePackageSearchResult(YouTubeSearchResult sr, SearchEngine searchEngine) {
+    public YouTubePackageSearchResult(YouTubeSearchResult sr, SearchEngine searchEngine, String query) {
+        super(query);
         this.sr = sr;
         this.searchEngine = searchEngine;
     }
