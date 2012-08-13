@@ -345,9 +345,11 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
             }
             PopupUtils.addMenuItem(I18n.tr("Copy Magnet"), COPY_MAGNET_ACTION_LISTENER, menu, !isStopped() && allWithHash);
             PopupUtils.addMenuItem(I18n.tr("Copy Hash"), COPY_HASH_ACTION_LISTENER, menu, !isStopped() && allWithHash);
-        }
 
-        menu.add(createSearchAgainMenu(lines.length > 0 ? lines[0] : null));
+            menu.add(createSearchAgainMenu(lines[0]));
+        } else {
+            menu.add(new SkinMenuItem(new RepeatSearchAction()));
+        }
 
         return (new SearchResultMenu(this)).addToMenu(menu, lines);
     }
@@ -370,14 +372,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         if (SearchMediator.validateInfo(info) == SearchMediator.QUERY_VALID) {
             menu.add(new SkinMenuItem(new SearchAction(info, I18nMarker.marktr("Search for Keywords: {0}"))));
         }
-
-        //        LimeXMLDocument doc = line.getXMLDocument();
-        //        if (doc != null) {
-        //            Action[] actions = ActionUtils.createSearchActions(doc);
-        //            for (int i = 0; i < actions.length; i++) {
-        //                menu.add(new SkinMenuItem(actions[i]));
-        //            }
-        //        }
 
         return menu;
     }
