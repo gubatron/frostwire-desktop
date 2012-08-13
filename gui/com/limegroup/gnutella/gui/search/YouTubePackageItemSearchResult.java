@@ -20,7 +20,6 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.swing.JPopupMenu;
 
@@ -31,7 +30,6 @@ import org.limewire.util.FilenameUtils;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.websearch.youtube.YouTubeSearchResult;
-import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -50,6 +48,7 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
     private final SearchEngine searchEngine;
 
     private final String filename;
+    private final long size;
 
     public YouTubePackageItemSearchResult(YouTubeSearchResult sr, FilePackage filePackage, SearchEngine searchEngine, String query) {
         super(query);
@@ -58,6 +57,7 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
         this.searchEngine = searchEngine;
 
         this.filename = readFilename(filePackage);
+        this.size = filePackage.getChildren().get(0).getLongProperty("size", -1);
     }
 
     @Override
@@ -79,7 +79,7 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
 
     @Override
     public long getSize() {
-        return sr.getSize();
+        return size;
     }
 
     @Override
