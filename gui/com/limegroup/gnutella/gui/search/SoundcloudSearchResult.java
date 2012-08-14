@@ -20,25 +20,14 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.swing.JPopupMenu;
 
-import jd.http.Browser;
-import jd.http.URLConnectionAdapter;
-import jd.nutils.encoding.Encoding;
-import jd.plugins.LinkStatus;
-import jd.plugins.PluginException;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.bittorrent.websearch.soundcloud.SoundcloudTrackSearchResult;
 import com.frostwire.gui.player.StreamAudioSource;
-import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -48,8 +37,6 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
  *
  */
 public final class SoundcloudSearchResult extends AbstractSearchResult implements StreamableSearchResult {
-
-    private static final Log LOG = LogFactory.getLog(SoundcloudSearchResult.class);
 
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 

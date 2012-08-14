@@ -25,7 +25,6 @@ import java.io.File;
 import javax.swing.JPopupMenu;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.search.db.TorrentDBPojo;
 import com.limegroup.gnutella.gui.search.db.TorrentFileDBPojo;

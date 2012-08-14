@@ -20,12 +20,10 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.swing.JPopupMenu;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 

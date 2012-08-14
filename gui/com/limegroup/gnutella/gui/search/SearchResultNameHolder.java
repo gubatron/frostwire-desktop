@@ -18,8 +18,6 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import org.limewire.util.LCS;
-
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 
 /**

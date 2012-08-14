@@ -27,7 +27,6 @@ import javax.swing.JPopupMenu;
 import org.gudy.azureus2.core3.torrent.TOTorrentFile;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
