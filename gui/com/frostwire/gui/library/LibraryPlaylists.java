@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
@@ -77,6 +78,12 @@ import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class LibraryPlaylists extends AbstractLibraryListPanel {
 
     private static final long serialVersionUID = 6317109161466445259L;
