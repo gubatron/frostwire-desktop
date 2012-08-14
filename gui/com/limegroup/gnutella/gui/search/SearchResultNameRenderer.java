@@ -50,8 +50,8 @@ import org.pushingpixels.substance.internal.utils.SubstanceColorSchemeUtilities;
 import org.pushingpixels.substance.internal.utils.SubstanceStripingUtils;
 import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorder;
-import org.pushingpixels.substance.internal.utils.icon.SubstanceIconFactory;
 
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
 
 /**
@@ -228,7 +228,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         c.fill = GridBagConstraints.HORIZONTAL;
         add(labelText, c);
 
-        labelPlay = new JLabel(SubstanceIconFactory.getTreeIcon(null, true));
+        labelPlay = new JLabel(GUIMediator.getThemeImage("search_result_play_over"));
         labelPlay.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -237,9 +237,10 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         });
         c = new GridBagConstraints();
         c.gridx = GridBagConstraints.RELATIVE;
+        c.ipadx = 1;
         add(labelPlay, c);
 
-        labelPartialDownload = new JLabel(SubstanceIconFactory.getTreeIcon(null, true));
+        labelPartialDownload = new JLabel(GUIMediator.getThemeImage("search_result_details_over"));
         labelPartialDownload.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -248,9 +249,10 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         });
         c = new GridBagConstraints();
         c.gridx = GridBagConstraints.RELATIVE;
+        c.ipadx = 1;
         add(labelPartialDownload, c);
 
-        labelDownload = new JLabel(SubstanceIconFactory.getTreeIcon(null, true));
+        labelDownload = new JLabel(GUIMediator.getThemeImage("search_result_download_over"));
         labelDownload.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -259,6 +261,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         });
         c = new GridBagConstraints();
         c.gridx = GridBagConstraints.RELATIVE;
+        c.ipadx = 1;
         add(labelDownload, c);
     }
 
