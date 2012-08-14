@@ -20,8 +20,6 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.swing.JPopupMenu;
 
@@ -37,8 +35,6 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
  *
  */
 public final class SoundcloudSearchResult extends AbstractSearchResult implements StreamableSearchResult {
-
-    private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     private final SoundcloudTrackSearchResult sr;
     private final SearchEngine searchEngine;
@@ -138,17 +134,6 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
 
     @Override
     public void play() {
-        executor.execute(new PlayTask());
-    }
-
-    private final class PlayTask implements Runnable {
-
-        public PlayTask() {
-        }
-
-        @Override
-        public void run() {
-            GUIMediator.instance().launchAudio(new StreamAudioSource(sr.getStreamUrl(), "Soundcloud: " + sr.getDisplayName()));
-        }
+        GUIMediator.instance().launchAudio(new StreamAudioSource(sr.getStreamUrl(), "Soundcloud: " + sr.getDisplayName()));
     }
 }
