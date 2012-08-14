@@ -36,21 +36,11 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchRe
      * 
      */
     private static final long serialVersionUID = -2382156313320196261L;
-
-    /**
-     * The model storing metadata information.
-     */
-    protected final MetadataModel METADATA;
     
     /**
      * The columns.
      */
     protected final SearchTableColumns COLUMNS = new SearchTableColumns();
-    
-    /**
-     * Whether or not metadata is being tallied.
-     */
-    protected boolean _useMetadata = true;
     
     /**
      * HashMap for quick access to indexes based on SHA1 info.
@@ -65,25 +55,10 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchRe
     private int _numResults;
     
     /**
-     * Constructs a new ResultPanelModel with a new MetadataModel.
-     */
-    ResultPanelModel() {
-        this(new MetadataModel());
-    }
-    
-    /**
      * Constructs a new ResultPanelModel with the given MetadataModel.
      */
-    ResultPanelModel(MetadataModel mm) {
+    ResultPanelModel() {
         super(SearchResultDataLine.class);
-        METADATA = mm;
-    }
-    
-    /**
-     * Whether or not the line should add to the metadata.
-     */
-    void setUseMetadata(boolean use) {
-        _useMetadata = use;
     }
     
     /**
@@ -127,14 +102,6 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchRe
         else {
             return compareCount(ta, tb, false);
         }
-    }
-    
-    /**
-     * Returns the metadata model storing information about each result
-     * for easy filtering.
-     */
-    MetadataModel getMetadataModel() {
-        return METADATA;
     }
     
     /** 
@@ -194,8 +161,6 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchRe
             _indexes.put(sha1, new Integer(row));
         int addedAt = super.add(tl, row);
         remapIndexes(addedAt + 1);
-        if(_useMetadata)
-            METADATA.addNew(tl); // MUST be after add, else callbacks whack out
         return addedAt;
     }
     
@@ -232,9 +197,6 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchRe
      * Metadata and Grouper.
      */
     public void clear() {
-        if(METADATA != null) {
-            METADATA.clear();
-        }
         simpleClear();
     }
     

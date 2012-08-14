@@ -588,13 +588,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         DATA_MODEL.setJunkFilter(null);
     }
 
-    /**
-     * Gets the MetadataModel used for results.
-     */
-    MetadataModel getMetadataModel() {
-        return ((ResultPanelModel) DATA_MODEL).getMetadataModel();
-    }
-
     public List<SearchResultDataLine> getAllData() {
         return ((TableRowFilteredModel) DATA_MODEL).getAllData();
     }

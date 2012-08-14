@@ -17,10 +17,8 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.Collections;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,14 +26,10 @@ import java.util.regex.Pattern;
 import javax.swing.Icon;
 
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
-import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.IconManager;
-import com.limegroup.gnutella.gui.search.Selector.PropertyType;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
 import com.limegroup.gnutella.gui.tables.ActionIconAndNameHolder;
-import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
-import com.limegroup.gnutella.gui.tables.IconAndNameHolderImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 
@@ -71,16 +65,15 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
     private ActionListener _torrentDetailsAction;
 
     /**
-     * The quality of this line.
-     */
-    private int _quality;
-
-    /**
      * The date this was added to the network.
      */
     private Date addedOn;
-    
-    private SearchResultNameHolder nameHolder;
+
+    private SearchResultNameHolder name;
+    private Object seeds;
+    private Icon icon;
+    private SizeHolder size;
+    private ActionIconAndNameHolder source;
 
     public SearchResultDataLine(SearchTableColumns stc) {
         COLUMNS = stc;
@@ -95,14 +88,17 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
         RESULT = sr;
         _mediaType = NamedMediaType.getFromExtension(getExtension());
         _speed = new ResultSpeed(sr.getSpeed(), sr.isMeasuredSpeed());
-        _quality = sr.getQuality();
         _torrentDetailsAction = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 RESULT.showDetails(true);
             }
         };
         addedOn = sr.getCreationTime() > 0 ? new Date(sr.getCreationTime()) : null;
-        nameHolder = new SearchResultNameHolder(sr);
+        name = new SearchResultNameHolder(sr);
+        seeds = RESULT.getSeeds() <= 0 ? "" : RESULT.getSeeds();
+        icon = getIcon();
+        size = new SizeHolder(getSize());
+        source = new ActionIconAndNameHolder(null, _torrentDetailsAction, "<html><a href=\"#\">" + RESULT.getSource() + "</a></html>");
     }
 
     /**
@@ -154,14 +150,6 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
      */
     boolean isLaunchable() {
         return false;
-    }
-
-    /**
-     * Returns the icon & extension.
-     */
-    IconAndNameHolder getIconAndExtension() {
-        String ext = getExtension();
-        return new IconAndNameHolderImpl(getIcon(), ext);
     }
 
     /**
@@ -271,19 +259,15 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
     public Object getValueAt(int index) {
         switch (index) {
         case SearchTableColumns.COUNT_IDX:
-            if (RESULT.getSeeds() < 0) {
-                return "";
-            } else {
-                return new Integer(RESULT.getSeeds());
-            }
+            return seeds;
         case SearchTableColumns.TYPE_IDX:
-            return getIcon();
+            return icon;
         case SearchTableColumns.NAME_IDX:
-            return nameHolder;
+            return name;
         case SearchTableColumns.SIZE_IDX:
-            return new SizeHolder(getSize());
+            return size;
         case SearchTableColumns.SOURCE_IDX:
-            return new ActionIconAndNameHolder(null, _torrentDetailsAction, "<html><a href=\"#\">" + RESULT.getSource() + "</a></html>");
+            return source;
         case SearchTableColumns.ADDED_IDX:
             return addedOn;
         case SearchTableColumns.EXTENSION_IDX:

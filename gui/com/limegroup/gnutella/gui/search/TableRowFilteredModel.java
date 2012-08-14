@@ -93,9 +93,6 @@ public class TableRowFilteredModel extends ResultPanelModel {
                 return super.add(tl, row);
             } else {
                 HIDDEN.add(tl);
-                if(_useMetadata) {
-                    METADATA.addNew(tl);
-                }
                 _numSources += tl.getSeeds();
                 _numResults += 1;
             }
@@ -150,8 +147,6 @@ public class TableRowFilteredModel extends ResultPanelModel {
         List<SearchResultDataLine> hidden = new ArrayList<SearchResultDataLine>(HIDDEN);
         simpleClear();
         
-        setUseMetadata(false);
-        
         // For stuff in _list, we can just re-add the DataLines as-is.
         if(isSorted()) {
             for(int i = 0; i < existing.size(); i++) {
@@ -192,8 +187,6 @@ public class TableRowFilteredModel extends ResultPanelModel {
             for(SearchResultDataLine line : mergeMap.values())
                 add(line);
         }
-        
-        setUseMetadata(true);
     }
 
     public int getFilteredResults() {
