@@ -348,7 +348,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
         FileDescriptor fd = DATA_MODEL.get(sel[0]).getInitializeObject();
 
-        LAUNCH_ACTION.setEnabled(sel.length == 1 && (fileType == DeviceConstants.FILE_TYPE_AUDIO || fileType == DeviceConstants.FILE_TYPE_RINGTONES) && AudioPlayer.isPlayableFile(fd.filePath));
+        LAUNCH_ACTION.setEnabled(sel.length == 1 && (fileType == DeviceConstants.FILE_TYPE_AUDIO || fileType == DeviceConstants.FILE_TYPE_RINGTONES || fileType == DeviceConstants.FILE_TYPE_VIDEOS) && AudioPlayer.isPlayableFile(fd.filePath));
         saveToAction.setEnabled(true);
 
         if (sel.length == 1) {
