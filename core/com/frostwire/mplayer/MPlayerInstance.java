@@ -41,6 +41,7 @@ import org.gudy.azureus2.core3.util.SimpleTimer;
 import org.gudy.azureus2.core3.util.SystemTime;
 import org.gudy.azureus2.core3.util.TimerEvent;
 import org.gudy.azureus2.core3.util.TimerEventPerformer;
+import org.limewire.util.OSUtils;
 
 
 public class 
@@ -161,6 +162,11 @@ MPlayerInstance
 			}*/
 			
 			cmdList.add("-noautosub");
+			
+            if (OSUtils.isMacOSX()) {
+                cmdList.add("-vo");
+                cmdList.add("corevideo:buffer_name=fwmplayer");
+            }
 			
 //			if(Utils.isWindows()) {
 //				cmdList.add("-priority");

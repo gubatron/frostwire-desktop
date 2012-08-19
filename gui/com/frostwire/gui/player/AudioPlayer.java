@@ -67,7 +67,7 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  */
 public class AudioPlayer implements RefreshListener {
 
-    private static final String[] PLAYABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wav", "wma", "m4a", "aac", "flac" };
+    private static final String[] PLAYABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wav", "wma", "m4a", "aac", "flac", "mp4" };
 
     /**
      * Our list of AudioPlayerListeners that are currently listening for events
