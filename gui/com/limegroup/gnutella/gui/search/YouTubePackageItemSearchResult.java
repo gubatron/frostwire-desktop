@@ -29,6 +29,7 @@ import jd.plugins.FilePackage;
 import org.limewire.util.FilenameUtils;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.gui.player.StreamAudioSource;
 import com.frostwire.websearch.youtube.YouTubeSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
@@ -38,7 +39,7 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
  * @author aldenml
  *
  */
-public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
+public final class YouTubePackageItemSearchResult extends AbstractSearchResult implements StreamableSearchResult {
 
     private static final String AAC_LOW_QUALITY = "(AAC)";
     static final String AAC_HIGH_QUALITY = "(AAC-High Quality)";
@@ -152,6 +153,12 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
     @Override
     public WebSearchResult getWebSearchResult() {
         return sr;
+    }
+
+    @Override
+    public void play() {
+        String streamUrl = filePackage.getChildren().get(0).getDownloadURL();
+        GUIMediator.instance().launchAudio(new StreamAudioSource(streamUrl, "YouTube: " + sr.getDisplayName()));
     }
 
     private String readFilename(FilePackage filePackage) {
