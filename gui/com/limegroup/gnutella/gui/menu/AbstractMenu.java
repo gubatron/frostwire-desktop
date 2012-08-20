@@ -107,10 +107,14 @@ abstract class AbstractMenu implements Menu {
         MENU.addSeparator();
     }
 
+    protected void refresh() {
+    }
+
     private class RefreshMenuListener implements MenuListener {
 
         @Override
         public void menuSelected(MenuEvent e) {
+            refresh();
         }
 
         @Override

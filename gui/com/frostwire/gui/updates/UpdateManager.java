@@ -209,6 +209,10 @@ public final class UpdateManager implements Serializable {
     private void handlePossibleUpdateMessage(UpdateMessageReader umr) {
         UpdateMessage updateMessage = umr.getUpdateMessage();
         
+        if (updateMessage != null) {
+            UpdateMediator.instance().setUpdateMessage(updateMessage);
+        }
+        
         // attempt to show system Update Message if needed
         if (umr.hasUpdateMessage() && updateMessage.getVersion() != null && !updateMessage.getVersion().trim().equals("")
                 && UpdateManager.isFrostWireOld(updateMessage.getVersion())) {

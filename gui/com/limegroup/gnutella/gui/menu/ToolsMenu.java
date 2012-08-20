@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.updates.UpdateMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.iTunesMediator;
@@ -31,6 +32,8 @@ import com.limegroup.gnutella.gui.actions.AbstractAction;
  * Contains all of the menu items for the tools menu.
  */
 final class ToolsMenu extends AbstractMenu {
+
+    private final UpdateAction updateAction;
 
     /**
      * Creates a new <tt>ToolsMenu</tt>, using the <tt>key</tt> 
@@ -43,12 +46,19 @@ final class ToolsMenu extends AbstractMenu {
     ToolsMenu() {
         super(I18n.tr("&Tools"));
 
+        this.updateAction = new UpdateAction();
+
         if (OSUtils.isMacOSX() || OSUtils.isWindows()) {
             addMenuItem(new RebuildiTunesPlaylist());
         }
 
         addMenuItem(new ShowOptionsAction());
-        addMenuItem(new UpdateAction());
+        addMenuItem(updateAction);
+    }
+
+    @Override
+    protected void refresh() {
+        updateAction.refresh();
     }
 
     private static class RebuildiTunesPlaylist extends AbstractAction {
@@ -91,10 +101,17 @@ final class ToolsMenu extends AbstractMenu {
 
         public UpdateAction() {
             super(I18n.tr("&Update FrostWire"));
-            putValue(LONG_DESCRIPTION, I18nMarker.marktr("Update FrostWire to the latest version"));
+            putValue(LONG_DESCRIPTION, I18n.tr("Update FrostWire to the latest version"));
         }
 
         public void actionPerformed(ActionEvent e) {
+        }
+
+        public void refresh() {
+            if (UpdateMediator.instance().isUpdated()) {
+                putValue(NAME, I18n.tr("You are up to date with FrostWire") + " " + "v." + UpdateMediator.instance().getLatestVersion());
+                this.setEnabled(false);
+            }
         }
     }
 }
