@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,6 +69,8 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
     private DownloadManager _manager = null;
     private UpdateMessage _updateMessage;
     private File _executableFile;
+    
+    private static String lastMD5;
 
     public InstallerUpdater(UpdateMessage updateMessage) {
         _updateMessage = updateMessage;
@@ -470,6 +472,10 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
         System.out.println(buf.toString());
     }
+    
+    public static final String getLastMD5() {
+        return lastMD5;
+    }
 
     /**
      * Returns true if the MD5 of the file corresponds to the given MD5 string.
@@ -488,8 +494,12 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
         if (expectedMD5.length() != 32) {
             throw new Exception("Invalid Expected MD5, not 32 chars long");
         }
+        
+        String md5 = getMD5(f).trim();
+        
+        lastMD5 = md5;
 
-        return getMD5(f).trim().equalsIgnoreCase(expectedMD5.trim());
+        return md5.equalsIgnoreCase(expectedMD5.trim());
     }
 
     public final static String getMD5(File f) throws Exception {

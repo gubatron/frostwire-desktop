@@ -105,12 +105,34 @@ final class ToolsMenu extends AbstractMenu {
         }
 
         public void actionPerformed(ActionEvent e) {
+            if (UpdateMediator.instance().isUpdateDownloaded()) {
+                UpdateMediator.instance().showUpdateMessage();
+            } else {
+                UpdateMediator.instance().checkForUpdate();
+            }
         }
 
         public void refresh() {
             if (UpdateMediator.instance().isUpdated()) {
-                putValue(NAME, I18n.tr("You are up to date with FrostWire") + " " + "v." + UpdateMediator.instance().getLatestVersion());
+                String text = I18n.tr("You are up to date with FrostWire") + " " + "v." + UpdateMediator.instance().getLatestVersion();
+                putValue(NAME, text);
+                putValue(LONG_DESCRIPTION, text);
                 this.setEnabled(false);
+            } else if (UpdateMediator.instance().isUpdateDownloading()) {
+                String text = I18n.tr("Downloading update...");
+                putValue(NAME, text);
+                putValue(LONG_DESCRIPTION, text);
+                this.setEnabled(false);
+            } else if (UpdateMediator.instance().isUpdateDownloaded()) {
+                String text = I18n.tr("Install update") + " " + "v." + UpdateMediator.instance().getLatestVersion();
+                putValue(NAME, text);
+                putValue(LONG_DESCRIPTION, text);
+                this.setEnabled(true);
+            } else {
+                String text = I18n.tr("Check for update");
+                putValue(NAME, text);
+                putValue(LONG_DESCRIPTION, text);
+                this.setEnabled(true);
             }
         }
     }

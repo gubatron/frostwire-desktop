@@ -27,7 +27,6 @@ import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Timer;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -81,7 +80,6 @@ public final class UpdateManager implements Serializable {
 
     transient private static HashSet<UpdateMessage> _seenMessages;
 
-    transient Timer _timer = null;
     transient UpdateMessage _updateMessage = null;
     transient HashSet<UpdateMessage> _announcements = null;
 
@@ -121,18 +119,6 @@ public final class UpdateManager implements Serializable {
      */
     public static void scheduleUpdateCheckTask(int secondsAfter) {
         scheduleUpdateCheckTask(secondsAfter, null);
-    }
-
-    public Timer getTimer() {
-        if (_timer == null) {
-            _timer = new Timer();
-        }
-        return _timer;
-    }
-
-    public void terminateUpdateCheckTask() {
-        _timer.cancel();
-        _timer.purge();
     }
 
     /** The singleton instance */
