@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.menu;
 
 import java.awt.event.ActionEvent;
@@ -20,13 +35,8 @@ import com.limegroup.gnutella.settings.UISettings;
  */
 final class ViewMenu extends AbstractMenu {
 
-    private ShowHideMenu SHOW_HIDE_MENU;
-
     ViewMenu(final String key) {
         super(I18n.tr("&View"));
-        SHOW_HIDE_MENU = new ShowHideMenu();
-        //MENU.add(SHOW_HIDE_MENU.getMenu());
-        //addSeparator();
 
         MENU.add(new ThemeMenu().getMenu());
 
@@ -43,16 +53,12 @@ final class ViewMenu extends AbstractMenu {
         addMenuItem(new ChangeFontSizeAction(2, I18n.tr("&Increase Font Size"), I18n.tr("Increases the Font Size")));
 
         addMenuItem(new ChangeFontSizeAction(-2, I18n.tr("&Decrease Font Size"), I18n.tr("Decreases the Font Size")));
-        
+
         addMenuItem(new ResetFontSizeAction());
 
         MENU.addSeparator();
 
         addMenuItem(new ShowLanguageWindowAction());
-    }
-
-    public void refreshShowHideMenu() {
-        SHOW_HIDE_MENU.refreshMenu();
     }
 
     private static class ShowLanguageWindowAction extends AbstractAction {
@@ -96,7 +102,7 @@ final class ViewMenu extends AbstractMenu {
          * 
          */
         private static final long serialVersionUID = -1098362918446138044L;
-        
+
         public static BooleanSetting newsetting;
 
         public ToggleSmileySettingAction(BooleanSetting setting, String name, String description) {
@@ -118,14 +124,14 @@ final class ViewMenu extends AbstractMenu {
         public ResetFontSizeAction() {
             super(I18n.tr("Reset Font Size"));
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent arg0) {
             ThemeMediator.resetFontSizes();
         }
-        
+
     }
-    
+
     private static class ChangeFontSizeAction extends AbstractAction {
 
         /**
@@ -143,11 +149,11 @@ final class ViewMenu extends AbstractMenu {
 
         public void actionPerformed(ActionEvent e) {
             int inc = ThemeSettings.FONT_SIZE_INCREMENT.getValue();
-            
-//            if (inc <= -4 || inc >= 4) {
-//                return;
-//            }
-            
+
+            //            if (inc <= -4 || inc >= 4) {
+            //                return;
+            //            }
+
             inc += increment;
             ThemeSettings.FONT_SIZE_INCREMENT.setValue(inc);
             ThemeMediator.setFontSizeDelta(increment);
