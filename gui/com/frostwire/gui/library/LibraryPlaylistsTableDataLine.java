@@ -42,7 +42,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
      * Title column
      */
     static final int TITLE_IDX = 1;
-    private static final LimeTableColumn TITLE_COLUMN = new LimeTableColumn(TITLE_IDX, "PLAYLIST_TABLE_TITLE", I18n.tr("Title"), 80, true, PlaylistItemProperty.class);
+    private static final LimeTableColumn TITLE_COLUMN = new LimeTableColumn(TITLE_IDX, "PLAYLIST_TABLE_TITLE", I18n.tr("Title"), 80, true, LibraryNameHolder.class);
 
     /**
      * Artist column
@@ -156,7 +156,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
         case SIZE_IDX:
             return new PlaylistItemProperty(sizeHolder.toString(), playing, exists,idx);
         case TITLE_IDX:
-            return new PlaylistItemProperty(initializer.getTrackTitle(), playing, exists,idx);
+            return new LibraryNameHolder(this,initializer.getTrackTitle(),playing,exists,idx);
         case TRACK_IDX:
             return new PlaylistItemProperty(initializer.getTrackNumber(), playing, exists,idx);
         case TYPE_IDX:

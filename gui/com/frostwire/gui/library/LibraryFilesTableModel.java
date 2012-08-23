@@ -208,6 +208,6 @@ final class LibraryFilesTableModel extends HashBasedDataLineModel<LibraryFilesTa
 //		return min == max &&
 //		       col == LibraryTableDataLine.NAME_IDX &&
 //			   _table.getSelectedRow() == row;
-	    return false;
+        return col == LibraryFilesTableDataLine.NAME_IDX;
 	}
 }

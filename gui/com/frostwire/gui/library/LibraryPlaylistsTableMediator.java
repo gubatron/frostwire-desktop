@@ -309,6 +309,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         super.setDefaultRenderers();
         TABLE.setDefaultRenderer(PlaylistItemProperty.class, new PlaylistItemPropertyRenderer());
         TABLE.setDefaultRenderer(PlaylistItemStar.class, new PlaylistItemStarRenderer());
+        TABLE.setDefaultRenderer(LibraryNameHolder.class, new LibraryNameHolderRenderer());
     }
 
     /**
@@ -316,9 +317,11 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
      */
     protected void setDefaultEditors() {
         TableColumnModel model = TABLE.getColumnModel();
+
         TableColumn tc = model.getColumn(LibraryPlaylistsTableDataLine.STARRED_IDX);
         tc.setCellEditor(new PlaylistItemStarEditor());
 
+        
         TABLE.addMouseMotionListener(new MouseMotionAdapter() {
             int currentCellColumn = -1;
             int currentCellRow = -1;
@@ -337,6 +340,9 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
                 }
             }
         });
+        
+        tc = model.getColumn(LibraryPlaylistsTableDataLine.TITLE_IDX);
+        tc.setCellEditor(new LibraryNameHolderEditor());
     }
 
     /**

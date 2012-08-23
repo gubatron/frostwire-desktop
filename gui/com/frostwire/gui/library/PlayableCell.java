@@ -84,4 +84,8 @@ public class PlayableCell implements Comparable<PlayableCell> {
             return 0;
         }
     }
+    
+    public Object getDataLine() {
+        return dataLine;
+    }
 }

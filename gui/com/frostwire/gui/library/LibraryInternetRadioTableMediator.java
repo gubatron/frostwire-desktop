@@ -215,7 +215,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         super.setDefaultRenderers();
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
         TABLE.setDefaultRenderer(InternetRadioBookmark.class, new InternetRadioBookmarkRenderer());
-
+        TABLE.setDefaultRenderer(LibraryNameHolder.class, new LibraryNameHolderRenderer());
     }
 
     /**
@@ -251,7 +251,9 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
                 }
             }
         });
-
+        
+        tc = model.getColumn(LibraryInternetRadioTableDataLine.NAME_IDX);
+        tc.setCellEditor(new LibraryNameHolderEditor());
     }
 
     /**
