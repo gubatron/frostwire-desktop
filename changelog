@@ -1,3 +1,10 @@
+frostwire (5.3.9) stable; urgency=high
+  * BEP 34 compliant. FrostWire now checks DNS TXT records for tracker 
+    config.
+  * Soundcloud integration (Search, Streaming and Downloads).
+
+ -- FrostWire Team <contact@frostwire.com>  Thu, 23 Aug 2012 14:10:15 -0500
+
 frostwire (5.3.8) stable; urgency=high
   * Sends MP4 files (videos) to iTunes.
   * Better language auto-detection on configuration wizard.
