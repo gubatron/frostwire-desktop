@@ -106,7 +106,7 @@ final class ToolsMenu extends AbstractMenu {
 
         public void actionPerformed(ActionEvent e) {
             if (UpdateMediator.instance().isUpdateDownloaded()) {
-                UpdateMediator.instance().showUpdateMessage();
+                UpdateMediator.instance().startUpdate();
             } else {
                 UpdateMediator.instance().checkForUpdate();
             }

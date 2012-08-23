@@ -3,6 +3,7 @@ package com.limegroup.gnutella.gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -11,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Map;
@@ -19,19 +21,25 @@ import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import org.pushingpixels.substance.internal.utils.SubstanceTextUtilities;
+import org.pushingpixels.trident.Timeline;
+import org.pushingpixels.trident.Timeline.TimelineState;
+import org.pushingpixels.trident.callback.TimelineCallbackAdapter;
 
 import com.frostwire.gui.player.AudioPlayerComponent;
 import com.frostwire.gui.tabs.Tab;
+import com.frostwire.gui.updates.UpdateMediator;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
-public class ApplicationHeader extends JPanel implements ThemeObserver {
+public class ApplicationHeader extends JPanel implements ThemeObserver, RefreshListener {
 
     /*
     * The property to store the selected icon in.
@@ -68,6 +76,13 @@ public class ApplicationHeader extends JPanel implements ThemeObserver {
     private final Image headerButtonBackgroundUnselected;
     
     private LogoPanel logoPanel;
+    
+    private JLabel updateButton;
+    private ImageIcon updateImageButtonOn;
+    private ImageIcon updateImageButtonOff;
+    
+    /** Contains the Update Button and the Player */
+    private JPanel eastPanel;
 
     public ApplicationHeader(Map<Tabs, Tab> tabs) {
         setLayout(new BorderLayout());
@@ -82,7 +97,20 @@ public class ApplicationHeader extends JPanel implements ThemeObserver {
 
         addTabButtons(tabs);
         addLogoPanel();
+        
+        addEastPanel();
+        addUpdateButton();
         addAudioPlayerComponent();
+        
+        GUIMediator.addRefreshListener(this);
+        
+
+    }
+
+    private void addEastPanel() {
+        eastPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,10,0));
+        eastPanel.setOpaque(false);
+        add(eastPanel, BorderLayout.LINE_END);
     }
 
     private void initBackground() {
@@ -125,10 +153,35 @@ public class ApplicationHeader extends JPanel implements ThemeObserver {
         mediaPanelFrame.setOpaque(false);
         mediaPanelFrame.add(mediaPanel);
         
-        
-        add(mediaPanelFrame, BorderLayout.LINE_END);
+        eastPanel.add(mediaPanelFrame);
     }
 
+    private void addUpdateButton() {
+        updateImageButtonOn = GUIMediator.getThemeImage("update_button_on");
+        updateImageButtonOff = GUIMediator.getThemeImage("update_button_off");
+        
+        updateButton = new JLabel(updateImageButtonOn);
+        updateButton.setToolTipText(I18n.tr("A new update has been downloaded."));
+        Dimension d = new Dimension(32,32);
+        
+        updateButton.setVisible(false);
+        updateButton.setSize(d);
+        updateButton.setPreferredSize(d);
+        updateButton.setMinimumSize(d);
+        updateButton.setMaximumSize(d);
+        updateButton.setBorder(null);
+        updateButton.setOpaque(false);
+        
+        updateButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                UpdateMediator.instance().showUpdateMessage();
+            }
+        });
+        
+        eastPanel.add(updateButton);
+    }
+    
     private void addLogoPanel() {
         add(logoPanel = new LogoPanel(), BorderLayout.CENTER);
     }
@@ -314,6 +367,74 @@ public class ApplicationHeader extends JPanel implements ThemeObserver {
         Component[] components = getComponents();
         for (Component c : components) {
             c.repaint();
+        }
+    }
+
+    @Override
+    public void refresh() {
+        showUpdateButton(!UpdateMediator.instance().isUpdated() && 
+                         UpdateMediator.instance().isUpdateDownloaded());
+    }
+
+    public static class IntermittentButton {
+        private JLabel buttonReference;
+        private ImageIcon imgOn;
+        private ImageIcon imgOff;
+
+        /** Pass the label you want to animate */
+        public IntermittentButton(JLabel button, ImageIcon on, ImageIcon off) {
+            buttonReference = button;
+            imgOn = on;
+            imgOff = off;
+        }
+        
+        public void setImage(final boolean on) {
+            GUIMediator.safeInvokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    buttonReference.setIcon((on) ? imgOn : imgOff);
+                }
+            });
+        }
+    }
+    
+    private void showUpdateButton(boolean show) {
+        if (updateButton.isVisible() == show) {
+            return;
+        }
+        
+        updateButton.setVisible(show);
+        
+        if (show) {
+            //Animate the button.
+            final Timeline timeline = new Timeline(new IntermittentButton(updateButton,updateImageButtonOn,updateImageButtonOff));
+            
+            timeline.addCallback(new TimelineCallbackAdapter() {
+                private long lastChange = 0;
+                private boolean lastState = false;
+                
+                @Override
+                public void onTimelinePulse(float durationFraction, float timelinePosition) {
+                    int currentSecond = (int) (durationFraction*timeline.getDuration()/1000);
+                    if (currentSecond != lastChange) {
+                        lastChange = currentSecond;
+                        updateButton.setIcon((lastState) ? updateImageButtonOn : updateImageButtonOff);
+                        lastState = !lastState;
+                    }
+                }
+                
+                @Override
+                public void onTimelineStateChanged(TimelineState oldState,
+                        TimelineState newState, float durationFraction,
+                        float timelinePosition) {
+                    if (newState == TimelineState.DONE) {
+                        updateButton.setIcon(updateImageButtonOn);
+                    }
+                }
+            });
+            
+            timeline.setDuration(30000);
+            timeline.play();
         }
     }
 }

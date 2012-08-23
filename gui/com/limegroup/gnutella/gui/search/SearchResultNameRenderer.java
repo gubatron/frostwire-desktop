@@ -51,6 +51,7 @@ import org.pushingpixels.substance.internal.utils.SubstanceStripingUtils;
 import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorder;
 
+import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
 
@@ -202,6 +203,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
     @Override
     protected final void paintComponent(Graphics g) {
         super.paintComponent(g);
+        updatePlayButtons();
     }
 
     @Override
@@ -267,8 +269,9 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
 
     private void labelPlay_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
-            if (sr instanceof StreamableSearchResult) {
+            if (sr instanceof StreamableSearchResult && !isStreamableSourceBeingPlayed(sr)) {
                 ((StreamableSearchResult) sr).play();
+                updatePlayButtons();
             }
         }
     }
@@ -296,5 +299,26 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         labelPlay.setVisible(showButtons && (sr instanceof StreamableSearchResult));
         labelPartialDownload.setVisible(showButtons && sr.allowDeepSearch());
         labelDownload.setVisible(showButtons);
+        
+        if (showButtons) {
+            updatePlayButtons();
+        }
+        
+        if (isStreamableSourceBeingPlayed(sr)) {
+            labelPlay.setVisible(true);
+        }
+    }
+
+    public void updatePlayButtons() {
+      labelPlay.setIcon((isStreamableSourceBeingPlayed(sr)) ? GUIMediator.getThemeImage("speaker") : GUIMediator.getThemeImage("search_result_play_over"));
+    }
+
+    private boolean isStreamableSourceBeingPlayed(SearchResult sr) {
+        if (!(sr instanceof StreamableSearchResult)) {
+            return false;
+        }
+        
+        StreamableSearchResult ssr = (StreamableSearchResult) sr;
+        return AudioPlayer.instance().isThisBeingPlayed(ssr.getStreamUrl());
     }
 }

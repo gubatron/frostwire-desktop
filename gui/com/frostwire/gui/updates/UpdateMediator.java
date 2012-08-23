@@ -20,12 +20,15 @@ package com.frostwire.gui.updates;
 
 import java.io.File;
 
+import javax.swing.JOptionPane;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.UpdateSettings;
 
 /**
@@ -121,7 +124,7 @@ public final class UpdateMediator {
         return null;
     }
 
-    public void showUpdateMessage() {
+    public void startUpdate() {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 File executableFile = getUpdateBinaryFile();
@@ -170,5 +173,17 @@ public final class UpdateMediator {
 
     public void setUpdateMessage(UpdateMessage msg) {
         this.latestMsg = msg;
+    }
+    
+    public void showUpdateMessage() {
+        if (latestMsg == null) {
+            return;
+        }
+        
+        int result = JOptionPane.showConfirmDialog(null, latestMsg.getMessageInstallerReady(), I18n.tr("Update"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+        if (result == JOptionPane.YES_OPTION) {
+            startUpdate();
+        }
     }
 }
