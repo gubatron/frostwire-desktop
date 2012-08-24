@@ -54,6 +54,7 @@ import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorde
 
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.DeviceAudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
@@ -257,6 +258,13 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
                 } else if (dataLine instanceof LibraryInternetRadioTableDataLine) {
                     LibraryInternetRadioTableDataLine irDataLine = (LibraryInternetRadioTableDataLine) dataLine;
                     audioSource = new InternetRadioAudioSource(irDataLine.getInitializeObject().getUrl(), irDataLine.getInitializeObject());
+                } else if (dataLine instanceof LibraryDeviceTableDataLine) {
+                    LibraryDeviceTableDataLine dl = (LibraryDeviceTableDataLine) dataLine;
+                    Device device = LibraryMediator.instance().getLibraryExplorer().getSelectedDeviceFiles();
+                    if (device != null) {
+                        String url = device.getDownloadURL(dl.getInitializeObject());
+                        audioSource = new DeviceAudioSource(url, device, dl.getInitializeObject());
+                    }
                 }
 
                 if (audioSource != null && !isSourceBeingPlayed()) {
@@ -283,6 +291,8 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
             return true;
         } else if (dl instanceof LibraryInternetRadioTableDataLine) {
             return true;
+        } else if (dl instanceof LibraryDeviceTableDataLine) {
+            return AudioPlayer.isPlayableFile(((LibraryDeviceTableDataLine) dl).getInitializeObject().filePath);
         } else {
             return false;
         }

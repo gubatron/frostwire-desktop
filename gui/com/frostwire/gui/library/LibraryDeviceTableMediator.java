@@ -36,6 +36,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -199,6 +201,15 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         super.setDefaultRenderers();
         TABLE.setDefaultRenderer(PlayableIconCell.class, new PlayableIconCellRenderer());
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
+        TABLE.setDefaultRenderer(LibraryNameHolder.class, new LibraryNameHolderRenderer());
+    }
+    
+    protected void setDefaultEditors() {
+        TableColumnModel model = TABLE.getColumnModel();
+        TableColumn tc;
+        
+        tc = model.getColumn(LibraryDeviceTableDataLine.TITLE_IDX);
+        tc.setCellEditor(new LibraryNameHolderEditor());
     }
 
     /**

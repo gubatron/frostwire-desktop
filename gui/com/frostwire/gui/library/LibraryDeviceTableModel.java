@@ -205,4 +205,8 @@ final class LibraryDeviceTableModel extends HashBasedDataLineModel<LibraryDevice
         }
 
     }
+    
+    public boolean isCellEditable(int row, int col) {
+        return col == LibraryDeviceTableDataLine.TITLE_IDX;
+    }
 }
