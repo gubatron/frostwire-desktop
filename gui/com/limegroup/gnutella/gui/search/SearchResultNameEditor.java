@@ -64,6 +64,15 @@ public class SearchResultNameEditor extends AbstractCellEditor implements TableC
                     component.invalidate();
                 }
             });
+            component.addMouseMotionListener(new MouseAdapter() {
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    if (table.isEditing()) {
+                        TableCellEditor editor = table.getCellEditor();
+                        editor.cancelCellEditing();
+                    }
+                }
+            });
         }
 
         return component;

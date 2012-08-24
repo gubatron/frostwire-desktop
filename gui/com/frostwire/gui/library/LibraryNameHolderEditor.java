@@ -50,7 +50,6 @@ public class LibraryNameHolderEditor extends AbstractCellEditor implements Table
         final Component component = renderer.getTableCellRendererComponent(table, value, isSelected, true, row, column);
         if (component.getMouseListeners() == null || component.getMouseListeners().length == 0) {
             component.addMouseListener(new MouseAdapter() {
-                
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if (e.getButton() == MouseEvent.BUTTON1) {
@@ -63,6 +62,15 @@ public class LibraryNameHolderEditor extends AbstractCellEditor implements Table
                     }
                     e.consume();
                     component.invalidate();
+                }
+            });
+            component.addMouseMotionListener(new MouseAdapter() {
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    if (table.isEditing()) {
+                        TableCellEditor editor = table.getCellEditor();
+                        editor.cancelCellEditing();
+                    }
                 }
             });
         }

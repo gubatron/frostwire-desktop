@@ -684,7 +684,6 @@ public class LibraryUtils {
         String strLine;
         int numLine = 0;
         while ((strLine = d.readLine()) != null) {
-            System.out.println(strLine);
             pls += strLine + "\n";
             if (strLine.startsWith("File1=")) {
                 String streamUrl = strLine.split("=")[1];
