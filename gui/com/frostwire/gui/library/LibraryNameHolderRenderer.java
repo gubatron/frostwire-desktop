@@ -52,6 +52,7 @@ import org.pushingpixels.substance.internal.utils.SubstanceStripingUtils;
 import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorder;
 
+import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -71,7 +72,7 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
     private JLabel labelText;
     private JLabel labelPlay;
     private LibraryNameHolder libraryNameHolder;
-    
+
     public LibraryNameHolderRenderer() {
         setupUI();
     }
@@ -244,19 +245,18 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
 
     private void labelPlay_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
-            if (libraryNameHolder != null &&
-                libraryNameHolder.getDataLine() != null) {
-                
+            if (libraryNameHolder != null && libraryNameHolder.getDataLine() != null) {
+
                 AudioSource audioSource = null;
                 Object dataLine = libraryNameHolder.getDataLine();
-                
+
                 if (dataLine instanceof LibraryFilesTableDataLine) {
                     audioSource = new AudioSource(((LibraryFilesTableDataLine) dataLine).getFile());
                 } else if (dataLine instanceof LibraryPlaylistsTableDataLine) {
                     audioSource = new AudioSource(((LibraryPlaylistsTableDataLine) dataLine).getPlayListItem());
                 } else if (dataLine instanceof LibraryInternetRadioTableDataLine) {
                     LibraryInternetRadioTableDataLine irDataLine = (LibraryInternetRadioTableDataLine) dataLine;
-                    audioSource = new InternetRadioAudioSource(irDataLine.getInitializeObject().getUrl(),irDataLine.getInitializeObject());
+                    audioSource = new InternetRadioAudioSource(irDataLine.getInitializeObject().getUrl(), irDataLine.getInitializeObject());
                 }
 
                 if (audioSource != null && !isSourceBeingPlayed()) {
@@ -271,18 +271,31 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
         libraryNameHolder = value;
         labelText.setText(value.toString());
         boolean showButtons = state.equals(ComponentState.ROLLOVER_SELECTED) || state.equals(ComponentState.ROLLOVER_UNSELECTED);
-        labelPlay.setVisible(showButtons && !isSourceBeingPlayed());
+        labelPlay.setVisible(showButtons && !isSourceBeingPlayed() && isPlayableDataLine());
         setFontColor(libraryNameHolder.isPlaying(), table, row, column);
+    }
+
+    private boolean isPlayableDataLine() {
+        Object dl = libraryNameHolder.getDataLine();
+        if (dl instanceof LibraryFilesTableDataLine) {
+            return AudioPlayer.isPlayableFile(((LibraryFilesTableDataLine) dl).getFile());
+        } else if (dl instanceof LibraryPlaylistsTableDataLine) {
+            return true;
+        } else if (dl instanceof LibraryInternetRadioTableDataLine) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean isSourceBeingPlayed() {
         if (libraryNameHolder == null) {
             return false;
         }
-        
+
         return libraryNameHolder.isPlaying();
     }
-    
+
     /**
      * Check what font color to use if this song is playing. 
      */
