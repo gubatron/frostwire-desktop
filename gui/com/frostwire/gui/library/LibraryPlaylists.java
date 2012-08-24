@@ -106,6 +106,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     private Action refreshAction = new RefreshAction();
     private Action refreshID3TagsAction = new RefreshID3TagsAction();
     private Action deleteAction = new DeleteAction();
+    private Action cleanupPlaylistAction = new CleanupPlaylistAction();
     private Action renameAction = new StartRenamingPlaylistAction();
     private Action importToPlaylistAction = new ImportToPlaylistAction();
     private Action importToNewPlaylistAction = new ImportToNewPlaylistAction();
@@ -158,6 +159,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         _popup.add(new SkinMenuItem(refreshID3TagsAction));
         _popup.add(new SkinMenuItem(renameAction));
         _popup.add(new SkinMenuItem(deleteAction));
+        _popup.add(new SkinMenuItem(cleanupPlaylistAction));
         _popup.addSeparator();
         _popup.add(new SkinMenuItem(importToPlaylistAction));
         _popup.add(new SkinMenuItem(importToNewPlaylistAction));
@@ -705,9 +707,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     }
 
     private class DeleteAction extends AbstractAction {
-        /**
-         * 
-         */
+        
         private static final long serialVersionUID = 520856485566457934L;
 
         public DeleteAction() {
@@ -731,6 +731,26 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
                 selectedPlaylist.delete();
                 _model.removeElement(_list.getSelectedValue());
                 LibraryMediator.instance().clearLibraryTable();
+            }
+        }
+    }
+    
+    private final class CleanupPlaylistAction extends AbstractAction {
+
+        private static final long serialVersionUID = 8400749433148927596L;
+
+        public CleanupPlaylistAction() {
+            putValue(Action.NAME, I18n.tr("Cleanup playlist"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Remove the deleted items"));
+            putValue(LimeAction.ICON_NAME, "PLAYLIST_CLEANUP");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            Playlist selectedPlaylist = getSelectedPlaylist();
+
+            if (selectedPlaylist != null) {
+                LibraryUtils.cleanup(selectedPlaylist);
+                LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
             }
         }
     }
