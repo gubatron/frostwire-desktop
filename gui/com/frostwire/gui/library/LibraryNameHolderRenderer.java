@@ -260,6 +260,7 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
                 }
 
                 if (audioSource != null && !isSourceBeingPlayed()) {
+                    labelPlay.setVisible(false);
                     GUIMediator.instance().launchAudio(audioSource);
                 }
             }
