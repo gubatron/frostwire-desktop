@@ -574,6 +574,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		
 		savePath = _saveAsDialog.getSelectedFile().getAbsolutePath();	
 		
+		if (!savePath.endsWith(".torrent")) {
+		    savePath = savePath + ".torrent";
+		}
+		
 		return true;
 	}
 
