@@ -3,6 +3,7 @@ frostwire (5.4.0) stable; urgency=high
   * Search engines update.
   * UX Upgrade: Only one file type per search. Users were getting confused
     with mixed file types in results.
+  * UX Upgrade: Forbid multiple selection on partial file selection dialog.
 
  -- FrostWire Team <contact@frostwire.com>  Mon, 17 Sep 2012 18:00:00 -0500
 
