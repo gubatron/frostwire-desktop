@@ -173,6 +173,7 @@ public class PartialFilesDialog extends JDialog {
         GridBagConstraints c;
         _table = new JTable();
         _table.setPreferredScrollableViewportSize(new Dimension(600, 300));
+        _table.setRowSelectionAllowed(false);
         _table.setModel(_model);
         _table.getColumnModel().getColumn(0).setHeaderValue("");
 
