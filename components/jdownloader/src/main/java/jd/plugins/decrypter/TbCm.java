@@ -17,7 +17,14 @@
 package jd.plugins.decrypter;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,11 +32,13 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import jd.PluginWrapper;
 import jd.config.SubConfiguration;
 import jd.controlling.AccountController;
+import jd.controlling.JDLogger;
 import jd.controlling.ProgressController;
 import jd.http.Browser;
 import jd.http.Request;
@@ -49,6 +58,19 @@ import jd.plugins.PluginForDecrypt;
 import jd.plugins.PluginForHost;
 import jd.utils.JDUtilities;
 import jd.utils.locale.JDL;
+
+import com.frostwire.mp4.DefaultMp4Builder;
+import com.frostwire.mp4.IsoFile;
+import com.frostwire.mp4.Movie;
+import com.frostwire.mp4.MovieCreator;
+import com.frostwire.mp4.Track;
+import com.frostwire.mp4.boxes.Box;
+import com.frostwire.mp4.boxes.FileTypeBox;
+import com.frostwire.mp4.boxes.MetaBox;
+import com.frostwire.mp4.boxes.UserDataBox;
+import com.frostwire.mp4.boxes.apple.AppleCoverBox;
+import com.frostwire.mp4.boxes.apple.AppleItemListBox;
+
 import de.savemytube.flv.FLV;
 
 @DecrypterPlugin(revision = "$Revision: 18484 $", interfaceVersion = 2, names = { "youtube.com" }, urls = { "https?://[\\w\\.]*?youtube\\.com/(embed/|.*?watch.*?v=|.*?watch.*?v%3D|view_play_list\\?p=|playlist\\?(p|list)=|.*?g/c/|.*?grid/user/|v/)[a-z\\-_A-Z0-9]+(.*?page=\\d+)?" }, flags = { 0 })
@@ -68,6 +90,7 @@ public class TbCm extends PluginForDecrypt {
 
     public static enum DestinationFormat {
         AUDIOMP3("Audio (MP3)", new String[] { ".mp3" }),
+        AUDIOAAC("Audio (AAC)", new String[] { ".m4a" }), 
         VIDEOFLV("Video (FLV)", new String[] { ".flv" }),
         VIDEOMP4("Video (MP4)", new String[] { ".mp4" }),
         VIDEOWEBM("Video (Webm)", new String[] { ".webm" }),
@@ -151,6 +174,17 @@ public class TbCm extends PluginForDecrypt {
                 return true;
             default:
                 System.out.println("Don't know how to convert " + InType.getText() + " to " + OutType.getText());
+                downloadlink.getLinkStatus().setErrorMessage(JDL.L("convert.progress.unknownintype", "Unknown format"));
+                return false;
+            }
+        case VIDEOMP4:
+            // Inputformat MP4
+            switch (OutType) {
+            case AUDIOAAC:
+                TbCm.LOG.info("Convert MP4 to mpa...");
+                return demuxMP4Audio(downloadlink);
+            default:
+                TbCm.LOG.warning("Don't know how to convert " + InType.getText() + " to " + OutType.getText());
                 downloadlink.getLinkStatus().setErrorMessage(JDL.L("convert.progress.unknownintype", "Unknown format"));
                 return false;
             }
@@ -346,6 +380,8 @@ public class TbCm extends PluginForDecrypt {
                 String dlLink = "";
                 String vQuality = "";
                 DestinationFormat cMode = null;
+                
+                boolean addedAACHQ = false;
 
                 for (final Integer format : LinksFound.keySet()) {
                     if (ytVideo.containsKey(format)) {
@@ -380,6 +416,42 @@ public class TbCm extends PluginForDecrypt {
                                 this.addtopos(DestinationFormat.AUDIOMP3, dlLink, 0, "", format);
                             } else if (this.br.openGetConnection(dlLink).getResponseCode() == 200) {
                                 this.addtopos(DestinationFormat.AUDIOMP3, dlLink, this.br.getHttpConnection().getLongContentLength(), "", format);
+                            }
+                        } catch (final Throwable e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                this.br.getHttpConnection().disconnect();
+                            } catch (final Throwable e) {
+                            }
+                        }
+                    }
+                 // hack to support AAC
+                    if (format == 18) {
+                        try {
+                            String desc = "(AAC)";//"(AAC-Low Quality)";
+                            if (fast) {
+                                this.addtopos(DestinationFormat.AUDIOAAC, dlLink, 0, desc, format);
+                            } else if (this.br.openGetConnection(dlLink).getResponseCode() == 200) {
+                                this.addtopos(DestinationFormat.AUDIOAAC, dlLink, this.br.getHttpConnection().getLongContentLength(), desc, format);
+                            }
+                        } catch (final Throwable e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                this.br.getHttpConnection().disconnect();
+                            } catch (final Throwable e) {
+                            }
+                        }
+                    }
+                    if (!addedAACHQ && (format == 22 || format == 37)) {
+                        addedAACHQ = true;
+                        try {
+                            String desc = "(AAC-High Quality)";
+                            if (fast) {
+                                this.addtopos(DestinationFormat.AUDIOAAC, dlLink, 0, desc, format);
+                            } else if (this.br.openGetConnection(dlLink).getResponseCode() == 200) {
+                                this.addtopos(DestinationFormat.AUDIOAAC, dlLink, this.br.getHttpConnection().getLongContentLength(), desc, format);
                             }
                         } catch (final Throwable e) {
                             e.printStackTrace();
@@ -637,5 +709,164 @@ public class TbCm extends PluginForDecrypt {
         }
         return true;
     }
+    
+    private static final Logger LOG = JDLogger.getLogger();
 
+    private static boolean demuxMP4Audio(DownloadLink dl) {
+        String filename = dl.getFileOutput();
+        try {
+            String mp4Filename = filename.replace(".m4a", ".mp4");
+            final String jpgFilename = filename.replace(".m4a", ".jpg");
+            downloadThumbnail(dl, jpgFilename);
+            new File(filename).renameTo(new File(mp4Filename));
+            FileInputStream fis = new FileInputStream(mp4Filename);
+            FileChannel inFC = fis.getChannel();
+            Movie inVideo = MovieCreator.build(inFC);
+
+            Track audioTrack = null;
+
+            for (Track trk : inVideo.getTracks()) {
+                if (trk.getHandler().equals("soun")) {
+                    audioTrack = trk;
+                    break;
+                }
+            }
+
+            if (audioTrack == null) {
+                TbCm.LOG.info("No Audio track in MP4 file!!! - " + filename);
+                return false;
+            }
+
+            Movie outMovie = new Movie();
+            outMovie.addTrack(audioTrack);
+
+            IsoFile out = new DefaultMp4Builder() {
+                protected Box createUdta(Movie movie) {
+                    return addThumbnailBox(jpgFilename);
+                };
+            }.build(outMovie);
+            String audioFilename = filename;
+            FileOutputStream fos = new FileOutputStream(audioFilename);
+            out.getBoxes(FileTypeBox.class).get(0).setMajorBrand("M4A ");
+            out.getBox(fos.getChannel());
+            fos.close();
+
+            if (!new File(mp4Filename).delete()) {
+                new File(mp4Filename).deleteOnExit();
+            }
+            File jpgFile = new File(jpgFilename);
+            if (jpgFile.exists() && !jpgFile.delete()) {
+                jpgFile.deleteOnExit();
+            }
+
+            fis.close();
+
+            return true;
+        } catch (Throwable e) {
+            TbCm.LOG.info("Error demuxing MP4 audio - " + filename);
+            return false;
+        }
+    }
+    
+    private static void asyncDownloadThumbnail(final DownloadLink dl, final String jpgFilename) {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                downloadThumbnail(dl, jpgFilename);
+            }
+        }, "YouTube thumbnail download");
+        t.setDaemon(true);
+        t.start();
+    }
+
+    private static void downloadThumbnail(DownloadLink dl, String jpgFilename) {
+        try {
+            String videoLink = (String) dl.getProperty("videolink", null);
+            //http://www.youtube.com/watch?v=[id]
+            //http://i.ytimg.com/vi/[id]/hqdefault.jpg
+            String id = videoLink.replace("http://www.youtube.com/watch?v=", "");
+            String url = "http://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+            simpleHTTP(url, jpgFilename);
+            
+        } catch (Throwable e) {
+            TbCm.LOG.info("Unable to get youtube thumbnail - " + dl.getFileOutput());
+        }
+    }
+    
+    private static void simpleHTTP(String url, String jpgFilename) throws Throwable {
+        URL u = new URL(url);
+        URLConnection con = u.openConnection();
+        con.setConnectTimeout(1000);
+        con.setReadTimeout(1000);
+        InputStream in = con.getInputStream();
+        OutputStream out = new FileOutputStream(jpgFilename);
+
+        try {
+            
+            byte[] b = new byte[1024];
+            int n = 0;
+            while ((n = in.read(b, 0, b.length)) != -1) {
+                out.write(b, 0, n);
+            }
+        } finally {
+            try {
+                out.close();
+            } catch (Throwable e) {
+                // ignore   
+            }
+            try {
+                in.close();
+            } catch (Throwable e) {
+                // ignore   
+            }
+        }
+    }
+    
+    private static UserDataBox addThumbnailBox(String jpgFilename) {
+        File jpgFile = new File(jpgFilename);
+        if (!jpgFile.exists()) {
+            return null;
+        }
+
+        byte[] jpgData = toByteArray(jpgFile);
+        if (jpgData == null) {
+            return null;
+        }
+        
+        //"/moov/udta/meta/ilst/covr/data"
+        UserDataBox udta = new UserDataBox();
+        
+        MetaBox meta = new MetaBox();
+        udta.addBox(meta);
+        
+        AppleItemListBox ilst = new AppleItemListBox();
+        meta.addBox(ilst);
+        
+        AppleCoverBox covr = new AppleCoverBox();
+        covr.setJpg(jpgData);
+        ilst.addBox(covr);
+        
+        return udta;
+    }
+
+    private static byte[] toByteArray(File file) {
+        InputStream in = null;
+
+        try {
+            int length = (int) file.length();
+            byte[] array = new byte[length];
+            in = new FileInputStream(file);
+
+            int offset = 0;
+            while (offset < length) {
+                offset += in.read(array, offset, (length - offset));
+            }
+            in.close();
+            return array;
+        } catch (Throwable e) {
+            TbCm.LOG.info("Error reading local youtube thumbnail - " + file);
+        }
+
+        return null;
+    }
 }
