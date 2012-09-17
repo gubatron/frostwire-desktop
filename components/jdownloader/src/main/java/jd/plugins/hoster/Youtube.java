@@ -43,10 +43,10 @@ import jd.plugins.decrypter.TbCm.DestinationFormat;
 import jd.utils.JDUtilities;
 import jd.utils.locale.JDL;
 
-@HostPlugin(revision = "$Revision: 16066 $", interfaceVersion = 2, names = { "youtube.com" }, urls = { "httpJDYoutube://[\\w\\.\\-]*?youtube\\.com/(videoplayback\\?.+|get_video\\?.*?video_id=.+&.+(&fmt=\\d+)?)" }, flags = { 2 })
+@HostPlugin(revision = "$Revision: 18484 $", interfaceVersion = 2, names = { "youtube.com" }, urls = { "httpJDYoutube://[\\w\\.\\-]*?youtube\\.com/(videoplayback\\?.+|get_video\\?.*?video_id=.+&.+(&fmt=\\d+)?)" }, flags = { 2 })
 public class Youtube extends PluginForHost {
 
-    private static final Object                              lock         = new Object();
+    private static Object                                    lock         = new Object();
     private boolean                                          prem         = false;
     private static final String                              IDASFILENAME = "ISASFILENAME";
     private static final String                              ALLOW_MP3    = "ALLOW_MP3";
@@ -59,13 +59,16 @@ public class Youtube extends PluginForHost {
 
     public static String unescape(final String s) {
         char ch;
+        char ch2;
         final StringBuilder sb = new StringBuilder();
         int ii;
         int i;
         for (i = 0; i < s.length(); i++) {
             ch = s.charAt(i);
             switch (ch) {
+            case '%':
             case '\\':
+                ch2 = ch;
                 ch = s.charAt(++i);
                 StringBuilder sb2 = null;
                 switch (ch) {
@@ -96,6 +99,9 @@ public class Youtube extends PluginForHost {
                     sb.append((char) Long.parseLong(sb2.toString(), 16));
                     continue;
                 default:
+                    if (ch2 == '%') {
+                        sb.append(ch2);
+                    }
                     sb.append(ch);
                     continue;
                 }
@@ -162,16 +168,6 @@ public class Youtube extends PluginForHost {
             this.dl.getConnection().disconnect();
             throw new PluginException(LinkStatus.ERROR_RETRY);
         }
-//        try {
-//            org.jdownloader.extensions.neembuu.DownloadSession downloadSession = new org.jdownloader.extensions.neembuu.DownloadSession(downloadLink, this.dl, this, this.dl.getConnection(), this.br.cloneBrowser());
-//            if (org.jdownloader.extensions.neembuu.NeembuuExtension.tryHandle(downloadSession)) {
-//                org.jdownloader.extensions.neembuu.WatchAsYouDownloadSession watchAsYouDownloadSession = downloadSession.getWatchAsYouDownloadSession();
-//                watchAsYouDownloadSession.waitForDownloadToFinish();
-//            }
-//        } catch (Throwable e) {
-//            // Neembuu extension is not installed
-//        }
-        logger.severe("Neembuu could not handle this link/filehost. Using default download system.");
         if (this.dl.startDownload()) {
             this.postprocess(downloadLink);
         }
@@ -223,8 +219,7 @@ public class Youtube extends PluginForHost {
                 String checkConnection = br.getRegex("iframeUri: '(https.*?)'").getMatch(0);
                 if (checkConnection != null) {
                     /*
-                     * dont know if this is important but seems to set pstMsg to
-                     * 1 ;)
+                     * dont know if this is important but seems to set pstMsg to 1 ;)
                      */
                     checkConnection = unescape(checkConnection);
                     br.cloneBrowser().getPage(checkConnection);
@@ -297,9 +292,6 @@ public class Youtube extends PluginForHost {
             if (convertto.equals(DestinationFormat.VIDEOWEBM) || convertto.equals(DestinationFormat.VIDEOMP4) || convertto.equals(DestinationFormat.VIDEO3GP)) {
                 InType = convertto;
             }
-            if (convertto.equals(DestinationFormat.AUDIOAAC)) {
-                InType = DestinationFormat.VIDEOMP4;
-            }
             if (!TbCm.ConvertFile(downloadLink, InType, convertto)) {
                 logger.severe("Video-Convert failed!");
             }
@@ -308,29 +300,41 @@ public class Youtube extends PluginForHost {
 
     @Override
     public AvailableStatus requestFileInformation(final DownloadLink downloadLink) throws Exception {
-        if (downloadLink.getBooleanProperty("valid", true)) {
-            downloadLink.setFinalFileName(downloadLink.getStringProperty("name", "video.tmp"));
-            downloadLink.setDownloadSize((Long) downloadLink.getProperty("size", 0l));
-            return AvailableStatus.TRUE;
-        } else {
-            downloadLink.setFinalFileName(downloadLink.getStringProperty("name", "video.tmp"));
-            downloadLink.setDownloadSize((Long) downloadLink.getProperty("size", 0l));
-            final PluginForDecrypt plugin = JDUtilities.getPluginForDecrypt("youtube.com");
+        // For streaming extension to tell her that these links can be streamed without account
+        System.out.println("Youtube: " + downloadLink);
 
-            if (plugin == null) { throw new PluginException(LinkStatus.ERROR_PLUGIN_DEFECT, "cannot decrypt videolink"); }
-            if (downloadLink.getStringProperty("fmtNew", null) == null) { throw new PluginException(LinkStatus.ERROR_FATAL, "You have to add link again"); }
-            if (downloadLink.getStringProperty("videolink", null) == null) { throw new PluginException(LinkStatus.ERROR_FATAL, "You have to add link again"); }
+        downloadLink.setProperty("STREAMING", true);
+        for (int i = 0; i < 4; i++) {
+            if (downloadLink.getBooleanProperty("valid", true)) {
+                downloadLink.setFinalFileName(downloadLink.getStringProperty("name", "video.tmp"));
+                downloadLink.setDownloadSize((Long) downloadLink.getProperty("size", 0l));
+                return AvailableStatus.TRUE;
+            } else {
+                downloadLink.setFinalFileName(downloadLink.getStringProperty("name", "video.tmp"));
+                downloadLink.setDownloadSize((Long) downloadLink.getProperty("size", 0l));
+                final PluginForDecrypt plugin = JDUtilities.getPluginForDecrypt("youtube.com");
+                if (plugin == null) { throw new PluginException(LinkStatus.ERROR_PLUGIN_DEFECT, "cannot decrypt videolink"); }
+                if (downloadLink.getStringProperty("fmtNew", null) == null) { throw new PluginException(LinkStatus.ERROR_FATAL, "You have to add link again"); }
+                if (downloadLink.getStringProperty("videolink", null) == null) { throw new PluginException(LinkStatus.ERROR_FATAL, "You have to add link again"); }
 
-            final HashMap<Integer, String[]> LinksFound = ((TbCm) plugin).getLinks(downloadLink.getStringProperty("videolink", null), this.prem, this.br);
+                final HashMap<Integer, String[]> LinksFound = ((TbCm) plugin).getLinks(downloadLink.getStringProperty("videolink", null), this.prem, this.br, 0);
 
-            if (LinksFound.isEmpty()) {
-                if (this.br.containsHTML("<div\\s+id=\"verify-age-actions\">")) { throw new PluginException(LinkStatus.ERROR_FATAL, "The entered account couldn't pass the age verification!"); }
-                throw new PluginException(LinkStatus.ERROR_FILE_NOT_FOUND);
+                if (LinksFound == null || LinksFound.isEmpty()) {
+                    if (this.br.containsHTML("<div\\s+id=\"verify-age-actions\">")) { throw new PluginException(LinkStatus.ERROR_FATAL, "The entered account couldn't pass the age verification!"); }
+                    throw new PluginException(LinkStatus.ERROR_FILE_NOT_FOUND);
+                }
+                if (LinksFound.get(downloadLink.getIntegerProperty("fmtNew", 0)) == null) {
+                    // too fast connections??
+                    Thread.sleep(5000);
+                    continue;
+
+                }
+                downloadLink.setUrlDownload(LinksFound.get(downloadLink.getIntegerProperty("fmtNew", 0))[0]);
+                return AvailableStatus.TRUE;
             }
-            downloadLink.setUrlDownload(LinksFound.get(downloadLink.getIntegerProperty("fmtNew", 0))[0]);
-            return AvailableStatus.TRUE;
         }
 
+        throw new PluginException(LinkStatus.ERROR_FILE_NOT_FOUND);
     }
 
     @Override
