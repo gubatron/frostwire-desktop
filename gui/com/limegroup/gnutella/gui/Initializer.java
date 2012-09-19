@@ -31,6 +31,7 @@ import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
+import com.limegroup.gnutella.util.MacOSXUtils;
 
 /** Initializes (creates, starts, & displays) the LimeWire Core & UI. */
 public final class Initializer {
@@ -197,6 +198,10 @@ public final class Initializer {
             stopwatch.reset();
             Thread.yield();
             //stopwatch.resetAndLog("Thread yield");
+        }
+        
+        if ( OSUtils.isMacOSX() ) {
+        	MacOSXUtils.setLoginStatus(StartupSettings.RUN_ON_STARTUP.getValue());
         }
         
         if (args.length >= 1 && "-startup".equals(args[0]))
