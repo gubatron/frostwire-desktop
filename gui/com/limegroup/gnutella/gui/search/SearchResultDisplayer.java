@@ -46,6 +46,7 @@ import com.frostwire.gui.components.SlideshowPanel;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.themes.SkinTabbedPane;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -642,10 +643,11 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
     private String titleOf(SearchResultMediator rp) {
         int current = rp.filteredResults();
         int total = rp.totalResults();
+        
         if (current < total)
-            return rp.getTitle() + " (" + current + "/" + total + ")";
+            return rp.getTitle() + " (" + current + " " + I18n.tr("results") +")";
         else
-            return rp.getTitle() + " (" + total + ")";
+            return rp.getTitle() + " (" + total + " " + I18n.tr("results")  +")";
     }
 
     /**
