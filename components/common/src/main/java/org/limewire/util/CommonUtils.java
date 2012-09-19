@@ -12,6 +12,7 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.management.ManagementFactory;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.CharacterCodingException;
@@ -23,6 +24,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+
 /**
  * Provides convenience functionality ranging from getting user information,
  * copying files to getting the stack traces of all current threads.
@@ -487,6 +489,29 @@ public class CommonUtils {
      */
     public static File getCurrentDirectory() {
     	return new File(System.getProperty("user.dir"));
+    }
+    
+    public static String getExecutableDirectory() {
+    	
+    	Class<?> clazz = null;
+    	String path;
+    	String defaultPath = "/Applications/FrostWire.app/";
+    	String decodedPath = defaultPath;
+    	
+    	try {
+    		clazz = Class.forName("com.limegroup.gnutella.gui.Main");
+    		
+    		if ( clazz != null ) {
+				path = clazz.getProtectionDomain().getCodeSource().getLocation().getPath();
+		    	decodedPath = URLDecoder.decode(path, "UTF-8");
+    		}
+    		
+    	} catch (Throwable t) {
+    		decodedPath = defaultPath;
+    	}
+    	
+    	return decodedPath;
+    	
     }
     
     /**
