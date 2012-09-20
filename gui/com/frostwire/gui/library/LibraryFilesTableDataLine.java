@@ -186,7 +186,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	    case ICON_IDX:
 	        return new PlayableIconCell(getIcon(), isPlaying);
 	    case NAME_IDX:
-	        return new PlayableCell(this, _name, isPlaying, idx);	                    
+	        return new LibraryNameHolder(this, _name, isPlaying, true, idx);	                    
 	    case SIZE_IDX:
 	        return new PlayableCell(this, _sizeHolder,isPlaying, idx);
 	    case TYPE_IDX:
@@ -246,7 +246,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	                    GUIMediator.getThemeImage("question_mark"), 18, true, PlayableIconCell.class),
 	            
 	            new LimeTableColumn(NAME_IDX, "LIBRARY_TABLE_NAME", I18n.tr("Name"),
-	                    239, true, PlayableCell.class),
+	                    239, true, LibraryNameHolder.class),
 	            
 	            new LimeTableColumn(SIZE_IDX, "LIBRARY_TABLE_SIZE", I18n.tr("Size"),
 	                    62, true, PlayableCell.class),

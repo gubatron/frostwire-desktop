@@ -114,9 +114,9 @@ public class DownloadTask extends DeviceTask {
                         }
                     }
 
+                    close(fos);
                     incompleteFile.renameTo(file);
                 } finally {
-                    close(fos);
                     close(is);
                 }
             }

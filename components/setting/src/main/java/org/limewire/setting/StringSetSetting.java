@@ -1,11 +1,14 @@
 package org.limewire.setting;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
 
 /**
+ * TODO: Make all these SetSetting classes extend from an AbstractSetSetting<T> class
+ * 
  * Provides a <code>String</code> <code>Set</code> setting value. As a 
  * subclass of <code>Setting</code>, the setting has a key.
  * <p>
@@ -17,6 +20,7 @@ import java.util.StringTokenizer;
  * <p>
  * Create a <code>StringSetSetting</code> object with a 
  * {@link SettingsFactory#createStringSetSetting(String, String)}.
+ * 
  */
 public class StringSetSetting extends AbstractSetting {
 
@@ -112,5 +116,4 @@ public class StringSetSetting extends AbstractSetting {
     public synchronized boolean contains(String s) {
         return value.contains(s);
     }
-
 }

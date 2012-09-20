@@ -1,3 +1,54 @@
+frostwire (5.4.1) stable; urgency=high
+  * Bug fix: Run on startup for Mac finally works. The BitTorrent network
+    will get a boost of upstream bandwidth.
+
+ -- FrostWire Team <contact@frostwire.com>  Wed, 19 Sep 2012 18:00:00 -0500
+
+
+frostwire (5.4.0) stable; urgency=high
+  * No more sound distortion with the FrostWire player volume levels.
+  * Search engines update.
+  * UX Upgrade: Only one file type per search. Users were getting confused
+    with mixed file types in results.
+  * UX Upgrade: Forbid multiple selection on partial file selection dialog.
+
+ -- FrostWire Team <contact@frostwire.com>  Mon, 17 Sep 2012 18:00:00 -0500
+
+frostwire (5.3.9) stable; urgency=high
+  * BEP 34 compliant. FrostWire now checks DNS TXT records for tracker 
+    config.
+  * Soundcloud integration (Search, Streaming and Downloads).
+  * Fixes issue with partial download title window not showing the name
+    of the torrent correctly.
+  * UI Improvement: Action hints on top of search results to stream or
+    download or see the contents of the torrent.
+  * UI Improvement: Action hint on top of playable contents in the
+    library.
+  * UI Improvement: Search result Source now includes the name of the
+    author if available.
+  * UI Improvement: Search keywords are bolded in the titles of search
+    results.
+  * UI Improvement: Creation date for non-torrent search results available.
+  * UI Improvement: File size of non-torrent search results available.
+  * UI Improvement: Opening 'Configure Options' on the Library takes user
+    to the Library Settings pane.
+  * UI Improvement: Right clicking on the title of a search tab now
+    shows the only action available (Repeat Search) directly.
+  * UI Improvement: A FrostWire update can now be invoked from the 'Tools'
+    menu.
+  * UI Improvement: New Notification update button will be available on
+    the Window header to let the user know visually that there's a 
+    FrostWire update available.
+  * UI Improvement: Added 'Cleanup Playlist' right click menu item in 
+    playlists.
+  * UX Improvement: When saving a newly created .torrent, FrostWire
+    will make sure the file is saved with the .torrent extension.
+  * Fixes issue with file names downloaded from FrostWire for Android.
+  * Fixes issue adding new radio stations to the library.
+  * Fix of MP3 ID3 tags unicode parsing.
+
+ -- FrostWire Team <contact@frostwire.com>  Fri, 24 Aug 2012 20:43:35 -0500
+
 frostwire (5.3.8) stable; urgency=high
   * Sends MP4 files (videos) to iTunes.
   * Better language auto-detection on configuration wizard.

@@ -53,7 +53,7 @@ final class SchemaBox extends JPanel {
     /**
      * String for 'Select Type'
      */
-    private static final String SELECT_TYPE = I18n.tr("Select Search Types:");
+    private static final String SELECT_TYPE = I18n.tr("What are you looking for?");
 
     /**
      * The property that the media type is stored in.
@@ -93,6 +93,8 @@ final class SchemaBox extends JPanel {
             ThemeMediator.CURRENT_THEME.getCustomUI().getFilterTitleColor());
     
     private Set<AbstractButton> buttons = new HashSet<AbstractButton>();
+    
+    private AbstractButton lastSelectedButton;
 
     /**
      * Constructs the SchemaBox.
@@ -108,7 +110,7 @@ final class SchemaBox extends JPanel {
         addSchemas(allSchemas);
 
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel(SELECT_TYPE));
+        panel.add(new JLabel("<html><b>"+SELECT_TYPE+"</b></html>"));
         add(panel);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -222,6 +224,7 @@ final class SchemaBox extends JPanel {
         Icon disabledIcon = null;
         Icon rolloverIcon = null;
         final AbstractButton button = new JRadioButton(type.getName());
+        
         button.putClientProperty(MEDIA, type);
         button.putClientProperty(SELECTED, icon);
         if (icon != null) {
@@ -251,39 +254,24 @@ final class SchemaBox extends JPanel {
         panel.setBorder(buttonBorder);
         SCHEMAS.add(panel);
         
-        if (SearchSettings.LAST_MEDIA_TYPES_USED.getValue().contains(type.getMediaType().getMimeType())) {
+        if (SearchSettings.LAST_MEDIA_TYPE_USED.getValue().contains(type.getMediaType().getMimeType())) {
             button.setSelected(true);
-        } else {
-            button.setSelected(false);
+            lastSelectedButton = button;
         }
 
-        if (SearchSettings.LAST_MEDIA_TYPES_USED.getValue().isEmpty() && type.getMediaType().equals(MediaType.getAudioMediaType())) {
+        if (SearchSettings.LAST_MEDIA_TYPE_USED.getValue().isEmpty() && type.getMediaType().equals(MediaType.getAudioMediaType())) {
             button.setSelected(true);
+            
         }
         
         buttons.add(button);
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (checkButtonStates()) {
-                    onFileTypeChanged(button);
-                } else {
-                    button.setSelected(true);
-                }
+                onFileTypeChanged(button);
             }
         });
     }
-    
-    private boolean checkButtonStates() {
-        int count = 0;
-        
-        for (AbstractButton b : buttons) {
-            if (b.isSelected()) {
-                count++;
-            }
-        }
-        
-        return count > 0;
-    }
+
 
     /**
      * Iterates through all the elements in the group
@@ -337,14 +325,19 @@ final class SchemaBox extends JPanel {
     protected void onFileTypeChanged(AbstractButton button) {
         NamedMediaType type = (NamedMediaType) button.getClientProperty(MEDIA); 
         
-        if (button.isSelected()) {
-            SearchSettings.LAST_MEDIA_TYPES_USED.add(type.getMediaType().getMimeType());
-        } else {
-            SearchSettings.LAST_MEDIA_TYPES_USED.remove(type.getMediaType().getMimeType());
+        String mimeType = type.getMediaType().getMimeType();
+        SearchSettings.LAST_MEDIA_TYPE_USED.setValue(mimeType);
+        
+        if (lastSelectedButton != null) {
+            lastSelectedButton.setSelected(false);
         }
+        
+        lastSelectedButton = button;
+        lastSelectedButton.setSelected(true);
         
         updateSearchResults(new MediaTypeFilter());
     }
+    
     
     private void updateSearchResults(TableLineFilter<SearchResultDataLine> filter) {
         List<SearchResultMediator> resultPanels = SearchMediator.getSearchResultDisplayer().getResultPanels();

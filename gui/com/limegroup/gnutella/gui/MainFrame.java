@@ -283,7 +283,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         }
     }
 
-    // inherit doc comment
     public void updateTheme() {
         FRAME.setJMenuBar(getMenuMediator().getMenuBar());
         //LOGO_PANEL.updateTheme();
@@ -292,7 +291,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         //for(GUIMediator.Tabs tab : GUIMediator.Tabs.values())
         //  updateTabIcon(tab);
     }
-
+    
     /**
      * Build the Tab Structure based on advertising mode and Windows
      */

@@ -49,7 +49,7 @@ class PlayableCellRenderer extends SubstanceDefaultTableCellRenderer {
     }
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-    	PlayableCell cell = (PlayableCell) value;
+    	    PlayableCell cell = (PlayableCell) value;
         
         super.getTableCellRendererComponent(table, cell.toString(), isSelected, hasFocus, row, column);
         setFontColor(cell.isPlaying(), table, row, column);

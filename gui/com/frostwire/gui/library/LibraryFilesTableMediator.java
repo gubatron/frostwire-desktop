@@ -43,6 +43,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.limewire.collection.CollectionUtils;
 import org.limewire.collection.Tuple;
@@ -147,6 +149,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     @Override
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
+        TABLE.setDefaultRenderer(LibraryNameHolder.class, new LibraryNameHolderRenderer());
         TABLE.setDefaultRenderer(PlayableIconCell.class, new PlayableIconCellRenderer());
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
     }
@@ -284,9 +287,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      * Sets the default editors.
      */
     protected void setDefaultEditors() {
-        //TableColumnModel model = TABLE.getColumnModel();
-        //TableColumn tc = model.getColumn(LibraryFilesTableDataLine.NAME_IDX);
-        //tc.setCellEditor(new LibraryTableCellEditor(this));
+        TableColumnModel model = TABLE.getColumnModel();
+        TableColumn tc = model.getColumn(LibraryFilesTableDataLine.NAME_IDX);
+        tc.setCellEditor(new LibraryNameHolderEditor());
     }
 
     /**

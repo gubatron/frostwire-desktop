@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.menu;
 
 import java.awt.Font;
@@ -8,6 +23,8 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import javax.swing.plaf.FontUIResource;
 
 import org.limewire.util.OSUtils;
@@ -45,6 +62,7 @@ abstract class AbstractMenu implements Menu {
         // using an action here to get the mnemonic parsed
         MENU = new JMenu(new MenuAction(name));
         MENU.setFont(FONT);
+        MENU.addMenuListener(new RefreshMenuListener());
     }
 
     /**
@@ -89,10 +107,27 @@ abstract class AbstractMenu implements Menu {
         MENU.addSeparator();
     }
 
+    protected void refresh() {
+    }
+
+    private class RefreshMenuListener implements MenuListener {
+
+        @Override
+        public void menuSelected(MenuEvent e) {
+            refresh();
+        }
+
+        @Override
+        public void menuDeselected(MenuEvent e) {
+        }
+
+        @Override
+        public void menuCanceled(MenuEvent e) {
+        }
+    }
+
     private static class MenuAction extends AbstractAction {
-        /**
-         * 
-         */
+
         private static final long serialVersionUID = -4311768902578846258L;
 
         public MenuAction(String name) {

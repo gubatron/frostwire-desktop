@@ -68,11 +68,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     private JPanel PLAY_PAUSE_BUTTON_CONTAINER;
 
     /**
-     * Constant for the stop button.
-     */
-    private final MediaButton STOP_BUTTON = new MediaButton(I18n.tr("Stop"), "stop_up", "stop_dn");
-
-    /**
      * Constant for the forward button.
      */
     private final MediaButton NEXT_BUTTON = new MediaButton(I18n.tr("Next"), "forward_up", "forward_dn");
@@ -138,6 +133,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
 
         GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
+
     }
 
     public JPanel getMediaPanel() {
@@ -207,7 +203,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         PLAY_PAUSE_BUTTON_CONTAINER.add(PAUSE_BUTTON, "PAUSE");
         buttonPanel.add(PLAY_PAUSE_BUTTON_CONTAINER);
 
-        buttonPanel.add(STOP_BUTTON);
         buttonPanel.add(NEXT_BUTTON);
         buttonPanel.add(Box.createHorizontalStrut(10));
 
@@ -281,7 +276,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         PLAY_BUTTON.addActionListener(new PlayListener());
         PAUSE_BUTTON.addActionListener(new PauseListener());
 
-        STOP_BUTTON.addActionListener(new StopListener());
         NEXT_BUTTON.addActionListener(new NextListener());
         PREV_BUTTON.addActionListener(new BackListener());
         VOLUME.addChangeListener(new VolumeSliderListener());
@@ -292,7 +286,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     public void unregisterListeners() {
         PLAY_BUTTON.removeActionListener(new PlayListener());
         PAUSE_BUTTON.removeActionListener(new PauseListener());
-        STOP_BUTTON.removeActionListener(new StopListener());
         NEXT_BUTTON.removeActionListener(new NextListener());
         PREV_BUTTON.removeActionListener(new BackListener());
         VOLUME.removeChangeListener(new VolumeSliderListener());
@@ -309,7 +302,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     public void updateTheme() {
         PLAY_BUTTON.updateTheme();
         PAUSE_BUTTON.updateTheme();
-        STOP_BUTTON.updateTheme();
         NEXT_BUTTON.updateTheme();
         PREV_BUTTON.updateTheme();
         VOLUME.updateTheme();
@@ -670,15 +662,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     private class PlayListener implements ActionListener {
         public void actionPerformed(ActionEvent ae) {
             play();
-        }
-    }
-
-    /**
-     * Listens for the stopped button being pressed.
-     */
-    private class StopListener implements ActionListener {
-        public void actionPerformed(ActionEvent ae) {
-            stopSong();
         }
     }
 

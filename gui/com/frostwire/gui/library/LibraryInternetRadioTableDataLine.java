@@ -41,7 +41,7 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
     private static final LimeTableColumn BOOKMARKED_COLUMN = new LimeTableColumn(BOOKMARKED_IDX, "INTERNET_RADIO_TABLE_BOOKMARKED", I18n.tr("Bookmarked"), 20, true, false, false, InternetRadioBookmark.class);
 
     static final int NAME_IDX = 1;
-    private static final LimeTableColumn NAME_COLUMN = new LimeTableColumn(NAME_IDX, "INTERNET_RADIO_TABLE_NAME", I18n.tr("Name"), 484, true, PlayableCell.class);
+    private static final LimeTableColumn NAME_COLUMN = new LimeTableColumn(NAME_IDX, "INTERNET_RADIO_TABLE_NAME", I18n.tr("Name"), 484, true, LibraryNameHolder.class);
     
     static final int GENRE_IDX = 2;
     static final LimeTableColumn GENRE_COLUMN = new LimeTableColumn(GENRE_IDX, "INTERNET_RADIO_TABLE_GENRE", I18n.tr("Genre"), 268, true, PlayableCell.class);
@@ -98,7 +98,7 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
         case BOOKMARKED_IDX:
         	return new InternetRadioBookmark(this, playing);
         case NAME_IDX:
-            return new PlayableCell(this, initializer.getName(), playing, idx);
+            return new LibraryNameHolder(this, initializer.getName(), playing, true, idx);
         case DESCRIPTION_IDX:
             return new PlayableCell(this, initializer.getDescription(), playing, idx);
         case URL_IDX:

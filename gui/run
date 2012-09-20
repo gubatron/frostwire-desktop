@@ -73,15 +73,9 @@ export JAVA_HOME
 echo $JAVA_HOME
 java -version
 
-# uncomment if you want to do the serialver with the classpath all setup.
-#serialver $*
-#exit 0
-
-# Minor hack to get proper space quoting in OS X
-# "\"FrostWire CVS\"", "FrostWire\040CVS", and "'FrostWire CVS'" all fail
 case ${PLATFORM} in
     Darwin)
-        java ${OPTS} -Xdock:name="FrostWire CVS" -Ddebug=1 com.limegroup.gnutella.gui.Main $* ;;
+        java ${OPTS} -Xdock:name="FrostWire GIT" -Ddebug=1 com.limegroup.gnutella.gui.Main $* ;;
     *)
         java ${OPTS} -Ddebug=1 com.limegroup.gnutella.gui.Main $* ;;
 esac

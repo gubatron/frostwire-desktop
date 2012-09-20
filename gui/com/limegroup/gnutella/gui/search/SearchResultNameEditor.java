@@ -61,6 +61,16 @@ public class SearchResultNameEditor extends AbstractCellEditor implements TableC
                         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(table, e.getID(), e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), true, e.getButton()));
                     }
                     e.consume();
+                    component.invalidate();
+                }
+            });
+            component.addMouseMotionListener(new MouseAdapter() {
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    if (table.isEditing()) {
+                        TableCellEditor editor = table.getCellEditor();
+                        editor.cancelCellEditing();
+                    }
                 }
             });
         }

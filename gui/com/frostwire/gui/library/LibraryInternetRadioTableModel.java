@@ -20,7 +20,6 @@ package com.frostwire.gui.library;
 import java.io.File;
 
 import com.frostwire.alexandria.InternetRadioStation;
-import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
 import com.limegroup.gnutella.gui.tables.HashBasedDataLineModel;
 
 /**
@@ -87,20 +86,7 @@ final class LibraryInternetRadioTableModel extends HashBasedDataLineModel<Librar
 //            fireTableRowsUpdated(row, row);
         }
     }
-
-	/**
-	 * Returns the file extension for the given row.
-	 *
-	 * @param row  The row of the file
-	 *
-	 * @return  A <code>String</code> object containing the file extension
-	 */
-	String getType(int row) {
-	    return (String)(
-	             (ColoredCellImpl)get(row).getValueAt(
-	                LibraryInternetRadioTableDataLine.TYPE_IDX)).getValue();
-	}
-
+	
 	/**
 	 * Returns the file object stored in the given row.
 	 *
@@ -124,6 +110,8 @@ final class LibraryInternetRadioTableModel extends HashBasedDataLineModel<Librar
 	 *         <code>false</code> otherwise
 	 */
 	public boolean isCellEditable(int row, int col) {
-	    return col == LibraryInternetRadioTableDataLine.WEBSITE_IDX || col == LibraryInternetRadioTableDataLine.BOOKMARKED_IDX;
+	    return col == LibraryInternetRadioTableDataLine.WEBSITE_IDX || 
+	           col == LibraryInternetRadioTableDataLine.BOOKMARKED_IDX ||
+	           col == LibraryInternetRadioTableDataLine.NAME_IDX;
 	}
 }

@@ -81,10 +81,18 @@ public class SmartSearchResult extends AbstractSearchResult implements Bittorren
                 fileName = fileName.substring(1);
             }
 
-            return fileName.substring(0, fileName.lastIndexOf("."));
+            if (fileName.contains(".")) {
+                return fileName.substring(0, fileName.lastIndexOf("."));
+            } else {
+                return fileName;
+            }
         }
 
-        return file.relativePath.substring(0, file.relativePath.lastIndexOf("."));
+        if (file.relativePath.contains(".")) {
+            return file.relativePath.substring(0, file.relativePath.lastIndexOf("."));
+        } else {
+            return file.relativePath;
+        }
     }
 
     @Override

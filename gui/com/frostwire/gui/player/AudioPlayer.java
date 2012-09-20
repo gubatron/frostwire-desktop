@@ -370,7 +370,7 @@ public class AudioPlayer implements RefreshListener {
      */
     public void setVolume(double fGain) {
         volume = fGain;
-        mplayer.setVolume((int) (fGain * 100));
+        mplayer.setVolume((int) (fGain * 30));
         PlayerSettings.PLAYER_VOLUME.setValue((float) volume);
         notifyVolumeChanged();
     }

@@ -32,6 +32,8 @@ import java.util.concurrent.ExecutorService;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.FileUtils;
 import org.limewire.util.FilenameUtils;
@@ -53,6 +55,8 @@ import com.limegroup.gnutella.gui.I18n;
  * 
  */
 public class LibraryUtils {
+
+    private static final Log LOG = LogFactory.getLog(LibraryUtils.class);
 
     private static final ExecutorService executor;
 
@@ -650,10 +654,11 @@ public class LibraryUtils {
                 }
             });
 
-        } catch (Exception e) {
+        } catch (Throwable e) {
+            LOG.error("Error adding radio station", e);
             GUIMediator.safeInvokeLater(new Runnable() {
                 public void run() {
-                    JOptionPane.showMessageDialog(GUIMediator.getAppFrame(), I18n.tr("Error importing Radio Station from") + url, I18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(GUIMediator.getAppFrame(), I18n.tr("Error importing Radio Station from") + " " + url, I18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
                 }
             });
         } finally {
@@ -665,6 +670,7 @@ public class LibraryUtils {
         URL url = new URL(urlStr);
         URLConnection conn = url.openConnection();
         conn.setConnectTimeout(10000);
+        conn.setRequestProperty("User-Agent", "Java");
         InputStream is = conn.getInputStream();
         BufferedReader d = null;
         if (conn.getContentEncoding() != null) {
@@ -698,7 +704,7 @@ public class LibraryUtils {
 
         is.close();
 
-        if (props != null) {
+        if (props != null && props[0] != null) {
             return LibraryMediator.getLibrary().newInternetRadioStation(props[0], props[0], props[1], props[2], props[3], props[4], props[5], pls, false);
         } else {
             return null;
@@ -710,6 +716,7 @@ public class LibraryUtils {
         System.out.print(" - " + streamUrl);
         URLConnection conn = url.openConnection();
         conn.setConnectTimeout(10000);
+        conn.setRequestProperty("User-Agent", "Java");
         InputStream is = conn.getInputStream();
         BufferedReader d = null;
         if (conn.getContentEncoding() != null) {

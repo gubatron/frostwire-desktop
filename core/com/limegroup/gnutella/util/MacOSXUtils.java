@@ -14,20 +14,11 @@ import org.limewire.util.CommonUtils;
 public class MacOSXUtils {
     
     static {
-//        if (OSUtils.isMacOSX105()) {
-//            try {
-//                System.loadLibrary("MacOSXUtilsTiger");
-//            }
-//            catch (UnsatisfiedLinkError err) {
-//                ErrorService.error(err);
-//            }
-//        } else {
         	try {
         		System.loadLibrary("MacOSXUtilsLeopard");
         	} catch (UnsatisfiedLinkError err) {
             	ErrorService.error(err);
             }
-//        }
     }
     
     private MacOSXUtils() {}
@@ -38,11 +29,14 @@ public class MacOSXUtils {
     private static final String APP_NAME = "FrostWire.app";
 
     /**
-     * Modifies the loginwindow.plist file to either include or exclude
-     * starting up FrostWire.
+     * Modifies mac OSX environment to run this application on startup
      */
     public static void setLoginStatus(boolean allow) {
-        SetLoginStatusNative(allow);
+    	
+    	String rawDir = CommonUtils.getExecutableDirectory();
+    	String path = rawDir.substring(0, rawDir.indexOf(APP_NAME) + APP_NAME.length());
+    	
+        SetLoginStatusNative(allow, path );
     }
     
     /**
@@ -53,20 +47,6 @@ public class MacOSXUtils {
     }
     
     /**
-     * Retrieves the app directory & name.
-     * If the user is not running from the bundled app as we named it,
-     * defaults to /Applications/FrostWire/ as the directory of the app.
-     */
-    public static String getAppDir() {
-        String appDir = "/Applications/FrostWire/";
-        String path = CommonUtils.getCurrentDirectory().getPath();
-        int app = path.indexOf("FrostWire.app");
-        if(app != -1)
-            appDir = path.substring(0, app);
-        return appDir + APP_NAME;
-    }
-    
-    /**
      * Gets the full user's name.
      */
     private static final native String GetCurrentFullUserName();
@@ -74,5 +54,5 @@ public class MacOSXUtils {
     /**
      * [Un]registers FrostWire from the startup items list.
      */
-    private static final native void SetLoginStatusNative(boolean allow);
+    private static final native void SetLoginStatusNative(boolean allow, String appPath);
 }

@@ -46,7 +46,7 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
      * Title column
      */
     static final int TITLE_IDX = 1;
-    private static final LimeTableColumn TITLE_COLUMN = new LimeTableColumn(TITLE_IDX, "DEVICE_TABLE_TITLE", I18n.tr("Title"), 80, true, PlayableCell.class);
+    private static final LimeTableColumn TITLE_COLUMN = new LimeTableColumn(TITLE_IDX, "DEVICE_TABLE_TITLE", I18n.tr("Title"), 80, true, LibraryNameHolder.class);
     
     /**
      * Artist column
@@ -135,7 +135,7 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
         case ICON_IDX:
             return new PlayableIconCell(getIcon(), playing);
         case TITLE_IDX:
-            return new PlayableCell(this, initializer.title, playing, idx);
+            return new LibraryNameHolder(this, initializer.title, playing, true, idx);
         case ARTIST_IDX:
             return new PlayableCell(this, filterUnknown(initializer.artist), playing, idx);
         case ALBUM_IDX:

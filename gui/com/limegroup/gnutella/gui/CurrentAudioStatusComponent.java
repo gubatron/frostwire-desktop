@@ -95,7 +95,13 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
             public void mousePressed(MouseEvent e) {
                 if (AudioPlayer.instance().getCurrentSong().getFile() != null || AudioPlayer.instance().getCurrentSong().getPlaylistItem() != null || AudioPlayer.instance().getCurrentSong() instanceof InternetRadioAudioSource || AudioPlayer.instance().getCurrentSong() instanceof DeviceAudioSource) {
                     showCurrentSong();
-                } else if (AudioPlayer.instance().getCurrentSong().getURL() != null) {
+                } else if (AudioPlayer.instance().getCurrentSong() instanceof StreamAudioSource) {
+                    StreamAudioSource audioSource = (StreamAudioSource) AudioPlayer.instance().getCurrentSong();
+                    if (audioSource.getDetailsUrl() != null) {
+                        GUIMediator.openURL(audioSource.getDetailsUrl());
+                    }
+                }
+                else if (AudioPlayer.instance().getCurrentSong().getURL() != null) {
                     GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
                 }
             }

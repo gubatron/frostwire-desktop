@@ -27,13 +27,20 @@ package com.frostwire.gui.player;
 public class StreamAudioSource extends AudioSource {
 
     private final String title;
+    
+    private final String detailsUrl;
 
-    public StreamAudioSource(String url, String title) {
+    public StreamAudioSource(String url, String title, String detailsUrl) {
         super(url);
         this.title = title;
+        this.detailsUrl = detailsUrl;
     }
 
     public String getTitle() {
         return title;
+    }
+    
+    public String getDetailsUrl() {
+        return detailsUrl;
     }
 }

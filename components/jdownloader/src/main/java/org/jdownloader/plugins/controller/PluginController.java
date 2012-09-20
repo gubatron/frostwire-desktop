@@ -49,8 +49,10 @@ public class PluginController<T extends Plugin> {
                 if (hosterpath.contains("hoster")) {
                     ret.add(new PluginInfo<T>(new File("lw-jdownloader.jar"), (Class<T>) cl.loadClass("jd.plugins.hoster.DirectHTTP")));
                     ret.add(new PluginInfo<T>(new File("lw-jdownloader.jar"), (Class<T>) cl.loadClass("jd.plugins.hoster.Youtube")));
+                    ret.add(new PluginInfo<T>(new File("lw-jdownloader.jar"), (Class<T>) cl.loadClass("jd.plugins.hoster.SoundcloudCom")));
                 } else if (hosterpath.contains("decrypter")) {
                     ret.add(new PluginInfo<T>(new File("lw-jdownloader.jar"), (Class<T>) cl.loadClass("jd.plugins.decrypter.TbCm")));
+                    ret.add(new PluginInfo<T>(new File("lw-jdownloader.jar"), (Class<T>) cl.loadClass("jd.plugins.decrypter.SoundCloudComDecrypter")));
                 }
             } catch (Throwable e) {
                 Log.exception(e);
