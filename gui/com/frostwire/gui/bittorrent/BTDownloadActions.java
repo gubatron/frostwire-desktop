@@ -52,6 +52,7 @@ final class BTDownloadActions {
     static final ShowInLibraryAction SHOW_IN_LIBRARY_ACTION = new ShowInLibraryAction();
     static final ResumeAction RESUME_ACTION = new ResumeAction();
     static final PauseAction PAUSE_ACTION = new PauseAction();
+    static final ClearInactiveAction CLEAR_INACTIVE_ACTION = new ClearInactiveAction();
     static final RemoveAction REMOVE_ACTION = new RemoveAction(false, false);
     static final RemoveAction REMOVE_YOUTUBE_ACTION = new RemoveYouTubeAction();
     static final RemoveAction REMOVE_TORRENT_ACTION = new RemoveAction(true, false);
@@ -88,12 +89,9 @@ final class BTDownloadActions {
         }
 
     }
-
+    
     private static abstract class RefreshingAction extends AbstractAction {
 
-        /**
-         * 
-         */
         private static final long serialVersionUID = -937688457597255711L;
 
         public final void actionPerformed(ActionEvent e) {
@@ -102,8 +100,11 @@ final class BTDownloadActions {
         }
 
         protected abstract void performAction(ActionEvent e);
+
     }
 
+	
+    
     private static class ShowDetailsAction extends RefreshingAction {
 
         /**
@@ -304,6 +305,24 @@ final class BTDownloadActions {
             putValue(LimeAction.SHORT_NAME, I18n.tr("Remove Download and Data"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Remove Download and Data from selected downloads"));
         }
+    }
+    
+    private static class ClearInactiveAction extends RefreshingAction {
+
+        private static final long serialVersionUID = 808308856961429212L;
+
+        public ClearInactiveAction() {
+            putValue(Action.NAME, I18n.tr("Clear Inactive"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Clear Inactive"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Clear Inactive (completed) transfers from the Transfers list."));
+            putValue(LimeAction.ICON_NAME, "DOWNLOAD_CLEAR_INACTIVE");
+        }
+        
+        @Override
+        protected void performAction(ActionEvent e) {
+            BTDownloadMediator.instance().removeCompleted();
+        }
+
     }
 
     private static class CopyMagnetAction extends RefreshingAction {
