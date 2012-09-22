@@ -1,4 +1,5 @@
 frostwire (5.4.1) stable; urgency=high
+  * UI Improvement: Transfer manager now has 'Clear Inactive' button.
   * Bug fix: Run on startup for Mac finally works. The BitTorrent network
     will get a boost of upstream bandwidth.
 
