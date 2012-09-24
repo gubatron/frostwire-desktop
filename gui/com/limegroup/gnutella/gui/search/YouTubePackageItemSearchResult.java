@@ -158,7 +158,7 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult i
     @Override
     public void play() {
         String streamUrl = filePackage.getChildren().get(0).getDownloadURL();
-        GUIMediator.instance().launchAudio(new StreamAudioSource(streamUrl, "YouTube: " + sr.getDisplayName()));
+        GUIMediator.instance().launchAudio(new StreamAudioSource(streamUrl, "YouTube: " + sr.getDisplayName(), sr.getDetailsUrl()));
     }
 
     private String readFilename(FilePackage filePackage) {
