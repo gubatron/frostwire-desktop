@@ -169,4 +169,10 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult i
 
         return dl.getName();
     }
+
+    @Override
+    public String getStreamUrl() {
+        String streamUrl = filePackage.getChildren().get(0).getDownloadURL();
+        return streamUrl;
+    }
 }
