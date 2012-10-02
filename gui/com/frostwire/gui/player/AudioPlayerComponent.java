@@ -42,6 +42,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MediaButton;
+import com.limegroup.gnutella.gui.MediaComponentMediator;
 import com.limegroup.gnutella.gui.MediaSlider;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -370,8 +371,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * Toggles full screen view
      */
     public void toggleFullScreen() {
-        MediaPlayerTab mpTab = (MediaPlayerTab)GUIMediator.instance().getMainFrame().getTab(Tabs.MEDIA_PLAYER);
-        mpTab.getMPlayerComponent().toggleFullScreen();
+        MediaComponentMediator.instance().GetMPlayerComponent().toggleFullScreen();
     }
 
     /**
