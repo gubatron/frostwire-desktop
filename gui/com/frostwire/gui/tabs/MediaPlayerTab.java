@@ -49,4 +49,8 @@ public final class MediaPlayerTab extends AbstractTab {
     public JComponent getComponent() {
         return PANEL;
     }
+    
+    public MPlayerComponent getMPlayerComponent() {
+        return mplayerComponent;
+    }
 }

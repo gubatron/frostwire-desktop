@@ -33,6 +33,7 @@ public class MPlayerComponentOSX extends CocoaComponent implements MPlayerCompon
 
     private static final int JMPlayer_addNotify = 1;
     private static final int JMPlayer_dispose = 2;
+    private static final int JMPlayer_toggleFS = 3;
 
     private long nsObject = 0;
 
@@ -103,6 +104,11 @@ public class MPlayerComponentOSX extends CocoaComponent implements MPlayerCompon
             sendMessage(messageID, message);
         }
     }
-
+    
+    @Override
+    public void toggleFullScreen() {
+        sendMsg(JMPlayer_toggleFS);
+    }
+    
     private native long createNSView1();
 }

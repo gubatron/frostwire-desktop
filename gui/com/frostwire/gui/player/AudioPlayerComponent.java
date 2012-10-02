@@ -36,8 +36,10 @@ import javax.swing.event.ChangeListener;
 
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
+import com.frostwire.gui.tabs.MediaPlayerTab;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MediaButton;
 import com.limegroup.gnutella.gui.MediaSlider;
@@ -59,6 +61,11 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * Constant for the play button.
      */
     private final MediaButton PLAY_BUTTON = new MediaButton(I18n.tr("Play"), "play_up", "play_dn");
+
+    /**
+     * Constant for the full screen button.
+     */
+    private final MediaButton FS_BUTTON = new MediaButton(I18n.tr("FullScreen"), "play_up", "play_dn");
 
     /**
      * Constant for the pause button.
@@ -203,6 +210,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         PLAY_PAUSE_BUTTON_CONTAINER.add(PAUSE_BUTTON, "PAUSE");
         buttonPanel.add(PLAY_PAUSE_BUTTON_CONTAINER);
 
+        buttonPanel.add(FS_BUTTON);
         buttonPanel.add(NEXT_BUTTON);
         buttonPanel.add(Box.createHorizontalStrut(10));
 
@@ -275,17 +283,17 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     public void registerListeners() {
         PLAY_BUTTON.addActionListener(new PlayListener());
         PAUSE_BUTTON.addActionListener(new PauseListener());
-
+        FS_BUTTON.addActionListener(new FullScreenListener());
         NEXT_BUTTON.addActionListener(new NextListener());
         PREV_BUTTON.addActionListener(new BackListener());
         VOLUME.addChangeListener(new VolumeSliderListener());
         PROGRESS.addMouseListener(new ProgressBarMouseAdapter());
-
     }
 
     public void unregisterListeners() {
         PLAY_BUTTON.removeActionListener(new PlayListener());
         PAUSE_BUTTON.removeActionListener(new PauseListener());
+        FS_BUTTON.removeActionListener(new FullScreenListener());
         NEXT_BUTTON.removeActionListener(new NextListener());
         PREV_BUTTON.removeActionListener(new BackListener());
         VOLUME.removeChangeListener(new VolumeSliderListener());
@@ -302,6 +310,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     public void updateTheme() {
         PLAY_BUTTON.updateTheme();
         PAUSE_BUTTON.updateTheme();
+        FS_BUTTON.updateTheme();
         NEXT_BUTTON.updateTheme();
         PREV_BUTTON.updateTheme();
         VOLUME.updateTheme();
@@ -355,6 +364,14 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
                 LibraryMediator.instance().playCurrentSelection();
             }
         }
+    }
+    
+    /**
+     * Toggles full screen view
+     */
+    public void toggleFullScreen() {
+        MediaPlayerTab mpTab = (MediaPlayerTab)GUIMediator.instance().getMainFrame().getTab(Tabs.MEDIA_PLAYER);
+        mpTab.getMPlayerComponent().toggleFullScreen();
     }
 
     /**
@@ -665,6 +682,15 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         }
     }
 
+    /**
+     * Listens for the fs button being pressed.
+     */
+    private class FullScreenListener implements ActionListener {
+        public void actionPerformed(ActionEvent ae) {
+            toggleFullScreen();
+        }
+    }
+    
     /**
      * Listens for the next button being pressed.
      */

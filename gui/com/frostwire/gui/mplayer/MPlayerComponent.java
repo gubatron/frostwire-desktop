@@ -29,4 +29,5 @@ import java.awt.Component;
 public interface MPlayerComponent {
 
     public Component getComponent();
+    public void toggleFullScreen();
 }
