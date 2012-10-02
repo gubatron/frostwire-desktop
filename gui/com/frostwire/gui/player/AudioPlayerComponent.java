@@ -371,7 +371,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * Toggles full screen view
      */
     public void toggleFullScreen() {
-        MediaComponentMediator.instance().GetMPlayerComponent().toggleFullScreen();
+        MediaComponentMediator.instance().getMPlayerComponent().toggleFullScreen();
     }
 
     /**

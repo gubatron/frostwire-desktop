@@ -40,7 +40,7 @@ public final class MediaPlayerTab extends AbstractTab {
     public MediaPlayerTab() {
         super(I18n.tr("Player"), I18n.tr("Media Player"), "chat_tab");
 
-        MPlayerComponent mplayerComponent = MediaComponentMediator.instance().GetMPlayerComponent();
+        MPlayerComponent mplayerComponent = MediaComponentMediator.instance().getMPlayerComponent();
         PANEL.add(mplayerComponent.getComponent());
     }
 

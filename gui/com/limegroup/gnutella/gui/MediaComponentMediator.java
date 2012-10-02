@@ -12,13 +12,13 @@ public class MediaComponentMediator {
         mplayerComponent = MPlayerComponentFactory.instance().createPlayerComponent();
     }
     
-    public static synchronized MediaComponentMediator instance() {
+    public static MediaComponentMediator instance() {
         if (_instance == null)
             _instance = new MediaComponentMediator();
         return _instance;
     }
     
-    public MPlayerComponent GetMPlayerComponent() {
+    public MPlayerComponent getMPlayerComponent() {
         return mplayerComponent;
     }
 }
