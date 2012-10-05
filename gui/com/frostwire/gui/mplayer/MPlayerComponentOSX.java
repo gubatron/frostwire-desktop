@@ -21,6 +21,8 @@ package com.frostwire.gui.mplayer;
 import java.awt.Component;
 import java.awt.Dimension;
 
+import org.limewire.util.CommonUtils;
+
 import com.apple.eawt.CocoaComponent;
 
 /**
@@ -50,7 +52,7 @@ public class MPlayerComponentOSX extends CocoaComponent implements MPlayerCompon
         com.apple.concurrent.Dispatch.getInstance().getBlockingMainQueueExecutor().execute(new Runnable() {
             @Override
             public void run() {
-                nsObject = createNSView1();
+                nsObject = createNSView1(CommonUtils.getExecutableDirectory());
             }
         });
 
@@ -110,5 +112,5 @@ public class MPlayerComponentOSX extends CocoaComponent implements MPlayerCompon
         sendMsg(JMPlayer_toggleFS);
     }
     
-    private native long createNSView1();
+    private native long createNSView1(String appPath);
 }
