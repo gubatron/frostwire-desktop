@@ -168,10 +168,10 @@ public class DeviceDiscoveryClerk {
         int listeningPort = ((data[0x1e] & 0xFF) << 8) + (data[0x1f] & 0xFF);
         boolean bye = (data[0x33] & 0xFF) != 0;
 
-        handleDeviceState(address, listeningPort, bye);
+        //handleDeviceState(address, listeningPort, bye);
     }
 
-    private void handleDeviceState(InetAddress address, int listeningPort, boolean bye) {
+    public void handleDeviceState(InetAddress address, int listeningPort, boolean bye) {
         String key = address.getHostAddress() + ":" + listeningPort;
 
         if (!bye) {

@@ -42,6 +42,8 @@ import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
+import com.frostwire.gui.upnp.UPnPManager;
+import com.frostwire.gui.upnp.desktop.DesktopUPnPManager;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -74,14 +76,16 @@ public class LibraryMediator {
     private CardLayout _tablesViewLayout = new CardLayout();
     private JPanel _tablesPanel;
     private JSplitPane splitPane;
-    
-    private Map<Object,Integer> scrollbarValues;
-	private Object lastSelectedKey;
-	private AbstractLibraryTableMediator<?, ?, ?> lastSelectedMediator;
-	
-	private Set<Integer> idScanned;	
-	
-	private AbstractLibraryTableMediator<?, ?, ?> currentMediator;
+
+    private Map<Object, Integer> scrollbarValues;
+    private Object lastSelectedKey;
+    private AbstractLibraryTableMediator<?, ?, ?> lastSelectedMediator;
+
+    private Set<Integer> idScanned;
+
+    private AbstractLibraryTableMediator<?, ?, ?> currentMediator;
+
+    private DeviceDiscoveryClerk clerk;
 
     /**
      * @return the <tt>LibraryMediator</tt> instance
@@ -95,12 +99,12 @@ public class LibraryMediator {
 
     public LibraryMediator() {
         GUIMediator.setSplashScreenString(I18n.tr("Loading Library Window..."));
-        
+
         idScanned = new HashSet<Integer>();
 
         getComponent(); // creates MAIN_PANEL
-        
-        scrollbarValues =  new HashMap<Object, Integer>();
+
+        scrollbarValues = new HashMap<Object, Integer>();
 
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, getLibraryLeftPanel(), getLibraryRightPanel());
         splitPane.setContinuousLayout(true);
@@ -121,26 +125,31 @@ public class LibraryMediator {
         DividerLocationSettingUpdater.install(splitPane, UISettings.UI_LIBRARY_MAIN_DIVIDER_LOCATION);
 
         MAIN_PANEL.add(splitPane);
-        
-        DeviceDiscoveryClerk clerk = new DeviceDiscoveryClerk();
-        clerk.start();
-    }
-    
-    protected Object getSelectedKey() {
-		if (getSelectedPlaylist() != null) {
-			return getSelectedPlaylist();
-		} else {
-			return getLibraryExplorer().getSelectedDirectoryHolder();
-		}
-	}
 
-	public static Library getLibrary() {
+        clerk = new DeviceDiscoveryClerk();
+        clerk.start();
+        ((DesktopUPnPManager) UPnPManager.instance()).start();
+    }
+
+    public DeviceDiscoveryClerk getDeviceDiscoveryClerk() {
+        return clerk;
+    }
+
+    protected Object getSelectedKey() {
+        if (getSelectedPlaylist() != null) {
+            return getSelectedPlaylist();
+        } else {
+            return getLibraryExplorer().getSelectedDirectoryHolder();
+        }
+    }
+
+    public static Library getLibrary() {
         if (LIBRARY == null) {
             LIBRARY = new Library(LibrarySettings.LIBRARY_DATABASE);
         }
         return LIBRARY;
     }
-    
+
     public LibraryExplorer getLibraryExplorer() {
         if (libraryExplorer == null) {
             libraryExplorer = new LibraryExplorer();
@@ -188,7 +197,7 @@ public class LibraryMediator {
     public void showView(String key) {
         rememberScrollbarsOnMediators(key);
         _tablesViewLayout.show(_tablesPanel, key);
-        
+
         if (key.equals(FILES_TABLE_KEY)) {
             currentMediator = LibraryFilesTableMediator.instance();
         } else if (key.equals(PLAYLISTS_TABLE_KEY)) {
@@ -201,7 +210,7 @@ public class LibraryMediator {
             currentMediator = null;
         }
     }
-    
+
     private void rememberScrollbarsOnMediators(String key) {
         AbstractLibraryTableMediator<?, ?, ?> tableMediator = null;
         AbstractLibraryListPanel listPanel = null;
@@ -241,11 +250,11 @@ public class LibraryMediator {
         showView(FILES_TABLE_KEY);
         LibraryFilesTableMediator.instance().updateTableFiles(dirHolder);
     }
-    
-    public void clearDirectoryHolderCaches() {    	
+
+    public void clearDirectoryHolderCaches() {
         getLibraryExplorer().clearDirectoryHolderCaches();
     }
-    
+
     public void updateTableFiles(Device device, byte fileType) {
         clearLibraryTable();
         showView(DEVICE_TABLE_KEY);
@@ -257,7 +266,7 @@ public class LibraryMediator {
         showView(PLAYLISTS_TABLE_KEY);
         LibraryPlaylistsTableMediator.instance().updateTableItems(playlist);
     }
-    
+
     public void showInternetRadioStations(List<InternetRadioStation> internetRadioStations) {
         clearLibraryTable();
         showView(INTERNET_RADIO_TABLE_KEY);
@@ -284,7 +293,7 @@ public class LibraryMediator {
         }
         getLibrarySearch().addResults(items.size());
     }
-    
+
     public void addInternetRadioStationsToLibraryTable(List<InternetRadioStation> items) {
         for (InternetRadioStation item : items) {
             LibraryInternetRadioTableMediator.instance().add(item);
@@ -312,10 +321,10 @@ public class LibraryMediator {
 
         panel.add(getLibrarySearch(), BorderLayout.PAGE_START);
         panel.add(_tablesPanel, BorderLayout.CENTER);
-        
+
         return panel;
     }
-    
+
     public void setSelectedFile(File file) {
         getLibraryExplorer().selectFinishedDownloads();
         LibraryFilesTableMediator.instance().setFileSelected(file);
@@ -377,7 +386,7 @@ public class LibraryMediator {
 
             libraryFiles.selectAudio();
         } else if (currentSong instanceof InternetRadioAudioSource) {
-        	//selects the audio node at the top
+            //selects the audio node at the top
             LibraryExplorer libraryFiles = getLibraryExplorer();
 
             //select the song once it's available on the right hand side
@@ -393,7 +402,7 @@ public class LibraryMediator {
 
             libraryFiles.selectRadio();
         } else if (currentSong instanceof DeviceAudioSource) {
-          //selects the audio node at the top
+            //selects the audio node at the top
             LibraryExplorer libraryFiles = getLibraryExplorer();
 
             //select the song once it's available on the right hand side
@@ -443,31 +452,26 @@ public class LibraryMediator {
         getLibrary().restoreDefaultRadioStations();
     }
 
-    
-
     /**
      * If a file has been selected on the right hand side, this method will select such file.
      * 
      * If there's a radio station, or if there's more than one file selected, or none, it will return null.
      * @return
      */
-	public File getSelectedFile() {
-		File toExplore = null;
-		
-		DirectoryHolder selectedDirectoryHolder = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
-		boolean fileBasedDirectoryHolderSelected = selectedDirectoryHolder instanceof SavedFilesDirectoryHolder || 
-		selectedDirectoryHolder instanceof MediaTypeSavedFilesDirectoryHolder ||
-		selectedDirectoryHolder instanceof TorrentDirectoryHolder;
-		
-		if (fileBasedDirectoryHolderSelected &&	LibraryFilesTableMediator.instance().getSelectedLines().size() == 1) {
-			toExplore = LibraryFilesTableMediator.instance().getSelectedLines().get(0).getFile();
-			
-		} else if (LibraryPlaylistsTableMediator.instance().getSelectedLines() != null &&
-				LibraryPlaylistsTableMediator.instance().getSelectedLines().size() == 1) {
-			toExplore = LibraryPlaylistsTableMediator.instance().getSelectedLines().get(0).getFile();
-		}
-		return toExplore;
-	}
+    public File getSelectedFile() {
+        File toExplore = null;
+
+        DirectoryHolder selectedDirectoryHolder = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
+        boolean fileBasedDirectoryHolderSelected = selectedDirectoryHolder instanceof SavedFilesDirectoryHolder || selectedDirectoryHolder instanceof MediaTypeSavedFilesDirectoryHolder || selectedDirectoryHolder instanceof TorrentDirectoryHolder;
+
+        if (fileBasedDirectoryHolderSelected && LibraryFilesTableMediator.instance().getSelectedLines().size() == 1) {
+            toExplore = LibraryFilesTableMediator.instance().getSelectedLines().get(0).getFile();
+
+        } else if (LibraryPlaylistsTableMediator.instance().getSelectedLines() != null && LibraryPlaylistsTableMediator.instance().getSelectedLines().size() == 1) {
+            toExplore = LibraryPlaylistsTableMediator.instance().getSelectedLines().get(0).getFile();
+        }
+        return toExplore;
+    }
 
     public void playCurrentSelection() {
         if (currentMediator != null) {
@@ -478,11 +482,11 @@ public class LibraryMediator {
     public void handleDeviceNew(Device device) {
         getLibraryExplorer().handleDeviceNew(device);
     }
-    
+
     public void handleDeviceAlive(Device device) {
         getLibraryExplorer().handleDeviceAlive(device);
     }
-    
+
     public void handleDeviceStale(Device device) {
         getLibraryExplorer().handleDeviceStale(device);
     }
