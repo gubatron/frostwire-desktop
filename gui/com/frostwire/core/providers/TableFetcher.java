@@ -16,28 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.core;
+package com.frostwire.core.providers;
+
+import com.frostwire.core.FileDescriptor;
+
 
 /**
- * Static class containing all constants in one place.
- * 
  * @author gubatron
  * @author aldenml
- * 
+ *
  */
-public final class CommonConstants {
+public interface TableFetcher {
 
-    private CommonConstants() {
-    }
+    public String[] getColumns();
 
-    // generic file types
-    public static final byte FILE_TYPE_AUDIO = 0x00;
-    public static final byte FILE_TYPE_PICTURES = 0x01;
-    public static final byte FILE_TYPE_VIDEOS = 0x02;
-    public static final byte FILE_TYPE_DOCUMENTS = 0x03;
-    public static final byte FILE_TYPE_APPLICATIONS = 0x04;
-    public static final byte FILE_TYPE_RINGTONES = 0x05;
-    public static final byte FILE_TYPE_TORRENTS = 0x06;
-    
-    public static final String MIME_TYPE_ANDROID_PACKAGE_ARCHIVE = "application/vnd.android.package-archive";
+    public String getSortByExpression();
+
+    public Uri getContentUri();
+
+    public void prepare(Cursor cur);
+
+    public FileDescriptor fetch(Cursor cur);
+
+    public byte getFileType();
 }

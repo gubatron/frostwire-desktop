@@ -18,12 +18,22 @@
 
 package com.frostwire.gui;
 
-import java.util.Collections;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.frostwire.core.ConfigurationManager;
 import com.frostwire.core.Constants;
+import com.frostwire.core.ContentResolver;
 import com.frostwire.core.FileDescriptor;
+import com.frostwire.core.providers.BaseColumns;
+import com.frostwire.core.providers.Cursor;
+import com.frostwire.core.providers.TableFetcher;
+import com.frostwire.core.providers.TableFetchers;
+import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.library.Finger;
 
 /**
@@ -32,6 +42,8 @@ import com.frostwire.gui.library.Finger;
  *
  */
 public final class Librarian {
+
+    private static final Logger LOG = Logger.getLogger(Librarian.class.getName());
 
     private static final Librarian instance = new Librarian();
 
@@ -90,12 +102,115 @@ public final class Librarian {
         return 0;
     }
 
-    private int getNumFiles(byte fileTypeAudio, boolean b) {
-        // TODO Auto-generated method stub
-        return 0;
+    /**
+     * 
+     * @param fileType
+     * @param onlyShared - If false, forces getting all files, shared or unshared. 
+     * @return
+     */
+    public int getNumFiles(byte fileType, boolean onlyShared) {
+        TableFetcher fetcher = TableFetchers.getFetcher(fileType);
+
+        //        if (cache[fileType].cacheValid(onlyShared)) {
+        //            return cache[fileType].getCount(onlyShared);
+        //        }
+
+        Cursor c = null;
+
+        int result = 0;
+        int numFiles = 0;
+
+        try {
+            ContentResolver cr = new ContentResolver();// context.getContentResolver();
+            c = cr.query(fetcher.getContentUri(), new String[] { BaseColumns._ID }, null, null, null);
+            numFiles = c != null ? c.getCount() : 0;
+        } catch (Exception e) {
+            LOG.log(Level.WARNING, "Failed to get num of files", e);
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+
+        result = numFiles;// onlyShared ? (getSharedFiles(fileType).size()) : numFiles;
+
+        //updateCacheNumFiles(fileType, result, onlyShared);
+
+        return result;
     }
 
-    public List<FileDescriptor> getFiles(byte fileType, int i, int maxValue, boolean b) {
-        return Collections.emptyList();
+    public List<FileDescriptor> getFiles(byte fileType, int offset, int pageSize, boolean sharedOnly) {
+        return getFiles(offset, pageSize, TableFetchers.getFetcher(fileType), sharedOnly);
+    }
+
+    public void scan(File file) {
+        scan(file, TorrentUtil.getIgnorableFiles());
+    }
+
+    private void scan(File file, Set<File> ignorableFiles) {
+        if (ignorableFiles.contains(file)) {
+            return;
+        }
+
+        if (file.isDirectory()) {
+            for (File child : file.listFiles()) {
+                if (child.isDirectory() || child.isFile()) {
+                    scan(child);
+                }
+            }
+        } else if (file.isFile()) {
+            new UniversalScanner().scan(file.getAbsolutePath());
+        }
+    }
+
+    private List<FileDescriptor> getFiles(int offset, int pageSize, TableFetcher fetcher, boolean sharedOnly) {
+        return getFiles(offset, pageSize, fetcher, null, null, sharedOnly);
+    }
+
+    private List<FileDescriptor> getFiles(int offset, int pageSize, TableFetcher fetcher, String where, String[] whereArgs, boolean sharedOnly) {
+        List<FileDescriptor> result = new ArrayList<FileDescriptor>();
+
+        Cursor c = null;
+        //Set<Integer> sharedIds = getSharedFiles(fetcher.getFileType());
+
+        try {
+
+            ContentResolver cr = new ContentResolver();// context.getContentResolver();
+
+            String[] columns = fetcher.getColumns();
+            String sort = fetcher.getSortByExpression();
+
+            c = cr.query(fetcher.getContentUri(), columns, where, whereArgs, sort);
+
+            if (c == null || !c.moveToPosition(offset)) {
+                return result;
+            }
+
+            fetcher.prepare(c);
+
+            int count = 1;
+
+            do {
+                FileDescriptor fd = fetcher.fetch(c);
+
+                fd.shared = true;//sharedIds.contains(fd.id);
+
+                if (sharedOnly && !fd.shared) {
+                    continue;
+                }
+
+                result.add(fd);
+
+            } while (c.moveToNext() && count++ < pageSize);
+
+        } catch (Throwable e) {
+            LOG.log(Level.WARNING, "General failure getting files", e);
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+
+        return result;
     }
 }

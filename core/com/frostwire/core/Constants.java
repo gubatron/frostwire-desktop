@@ -40,6 +40,8 @@ public final class Constants {
     public static final byte FILE_TYPE_APPLICATIONS = CommonConstants.FILE_TYPE_APPLICATIONS;
     public static final byte FILE_TYPE_RINGTONES = CommonConstants.FILE_TYPE_RINGTONES;
     public static final byte FILE_TYPE_TORRENTS = CommonConstants.FILE_TYPE_TORRENTS;
+    
+    public static final String MIME_TYPE_ANDROID_PACKAGE_ARCHIVE = CommonConstants.MIME_TYPE_ANDROID_PACKAGE_ARCHIVE;
 
     public static final String FROSTWIRE_VERSION_STRING = FrostWireUtils.getFrostWireVersion();
 
