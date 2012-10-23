@@ -19,7 +19,9 @@
 package com.frostwire.gui.upnp.desktop;
 
 import java.net.InetAddress;
+import java.util.UUID;
 
+import org.limewire.util.ByteUtils;
 import org.teleal.cling.UpnpService;
 import org.teleal.cling.binding.annotations.AnnotationLocalServiceBinder;
 import org.teleal.cling.model.DefaultServiceManager;
@@ -68,6 +70,7 @@ public class DesktopUPnPManager extends UPnPManager {
     @Override
     public PingInfo getLocalPingInfo() {
         PingInfo p = new PingInfo();
+        p.uuid = ByteUtils.encodeHex(ByteUtils.uuidToByteArray(UUID.randomUUID()));
         p.listeningPort = 40000;//NetworkManager.instance().getListeningPort();
         p.numSharedFiles = 10000;//Librarian.instance().getNumFiles();
         p.nickname = "desktop";//ConfigurationManager.instance().getNickname();

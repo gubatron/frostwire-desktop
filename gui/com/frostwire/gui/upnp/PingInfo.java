@@ -26,6 +26,7 @@ package com.frostwire.gui.upnp;
  */
 public class PingInfo {
 
+    public String uuid;
     public int listeningPort;
     public int numSharedFiles;
     public String nickname;

@@ -87,8 +87,6 @@ public class UPnPService implements Runnable {
                 }
             }
 
-            service.getRegistry().addDevice(localDevice);
-
             // refresh the list with all known devices
             for (Device<?, ?, ?> device : this.service.getRegistry().getDevices()) {
                 registryListener.deviceAdded(device);
@@ -99,7 +97,7 @@ public class UPnPService implements Runnable {
 
             // search asynchronously for all devices
             this.service.getControlPoint().search();
-
+            
         } catch (Throwable e) {
             LOG.log(Level.WARNING, "Exception occured with the UPnP framework", e);
         }
