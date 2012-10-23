@@ -1,6 +1,7 @@
 package com.limegroup.gnutella.settings;
 
 import java.io.File;
+import java.util.UUID;
 
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.FileSetting;
@@ -8,6 +9,7 @@ import org.limewire.setting.FloatSetting;
 import org.limewire.setting.IntSetting;
 import org.limewire.setting.LongSetting;
 import org.limewire.setting.StringSetting;
+import org.limewire.util.ByteUtils;
 import org.limewire.util.OSUtils;
 
 /**
@@ -137,7 +139,7 @@ public class ApplicationSettings extends LimeProps {
      * Sets whether or not Connection Tab should be enabled.
      */
     public static final BooleanSetting CONNECTION_VIEW_ENABLED = FACTORY.createBooleanSetting("CONNECTION_VIEW_ENABLED", true);
-    
+
     /**
      * Sets whether or not Console Tab should be enabled.
      */
@@ -145,27 +147,6 @@ public class ApplicationSettings extends LimeProps {
 
     /** Whether or not the logging tab is enabled / visible. */
     public static final BooleanSetting LOGGING_VIEW_ENABLED = FACTORY.createBooleanSetting("LOGGING_VIEW_ENABLED", false);
-
-    /**
-     * Sets whether or not SWT Browser Tab should be enabled.
-     */
-    public static final BooleanSetting SWT_BROWSER_VIEW_ENABLED = FACTORY.createBooleanSetting("SWT_BROWSER_VIEW_ENABLED", true);
-
-    /**
-     * Sets the name of the jar file to load on startup, which is read
-     * in from the properties file by RunLime.
-     */
-    public static final StringSetting JAR_NAME = FACTORY.createStringSetting("JAR_NAME", "FrostWire.jar");
-
-    /**
-     * Sets the classpath for legacy RunLime.jars.
-     */
-    public static final StringSetting CLASSPATH = FACTORY.createStringSetting("CLASSPATH", JAR_NAME.getValue());
-
-    /**
-     * Whether or not we are acting as a peer server.
-     */
-    public static final BooleanSetting SERVER = FACTORY.createBooleanSetting("SERVER", false);
 
     /**
      * Setting for whether or not to create an additional manual GC thread.
@@ -183,8 +164,7 @@ public class ApplicationSettings extends LimeProps {
      * Enable the MagnetClipboardListener on non Windows and Mac OS
      * systems
      */
-    public static final BooleanSetting MAGNET_CLIPBOARD_LISTENER = FACTORY.createBooleanSetting("MAGNET_CLIPBOARD_LISTENER",
-            !OSUtils.isWindows() && !OSUtils.isAnyMac());
+    public static final BooleanSetting MAGNET_CLIPBOARD_LISTENER = FACTORY.createBooleanSetting("MAGNET_CLIPBOARD_LISTENER", !OSUtils.isWindows() && !OSUtils.isAnyMac());
 
     /**
      * Whether LimeWire should handle magnets.
@@ -209,13 +189,15 @@ public class ApplicationSettings extends LimeProps {
      * to the system tray on windows.
      */
     public static final BooleanSetting MINIMIZE_TO_TRAY = FACTORY.createBooleanSetting("MINIMIZE_TO_TRAY", OSUtils.supportsTray());
-    
+
     public static final BooleanSetting SHOW_HIDE_EXIT_DIALOG = FACTORY.createBooleanSetting("SHOW_HIDE_EXIT_DIALOG", true);
-    
+
     /**
      * Whether or not to show SEEDING torrents on the transfer manager
      */
     public static final BooleanSetting SHOW_SEEDING_TRANSFERS = FACTORY.createBooleanSetting("SHOW_SEEDING_TRANSFERS", true);
+
+    public static final StringSetting APP_UUID = FACTORY.createStringSetting("APP_UUID", ByteUtils.encodeHex(ByteUtils.uuidToByteArray(UUID.randomUUID())));
 
     /**
      * Gets the current language setting.

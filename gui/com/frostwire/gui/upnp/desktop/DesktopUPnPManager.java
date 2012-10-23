@@ -19,15 +19,16 @@
 package com.frostwire.gui.upnp.desktop;
 
 import java.net.InetAddress;
-import java.util.UUID;
 
-import org.limewire.util.ByteUtils;
 import org.teleal.cling.UpnpService;
 import org.teleal.cling.binding.annotations.AnnotationLocalServiceBinder;
 import org.teleal.cling.model.DefaultServiceManager;
 import org.teleal.cling.model.meta.LocalDevice;
 import org.teleal.cling.model.meta.LocalService;
 
+import com.frostwire.core.ConfigurationManager;
+import com.frostwire.core.Constants;
+import com.frostwire.gui.Librarian;
 import com.frostwire.gui.library.DeviceDiscoveryClerk;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.upnp.PingInfo;
@@ -70,10 +71,10 @@ public class DesktopUPnPManager extends UPnPManager {
     @Override
     public PingInfo getLocalPingInfo() {
         PingInfo p = new PingInfo();
-        p.uuid = ByteUtils.encodeHex(ByteUtils.uuidToByteArray(UUID.randomUUID()));
-        p.listeningPort = 40000;//NetworkManager.instance().getListeningPort();
-        p.numSharedFiles = 10000;//Librarian.instance().getNumFiles();
-        p.nickname = "desktop";//ConfigurationManager.instance().getNickname();
+        p.uuid = ConfigurationManager.instance().getUUIDString();
+        p.listeningPort = Constants.EXTERNAL_CONTROL_LISTENING_PORT;
+        p.numSharedFiles = Librarian.instance().getNumFiles();
+        p.nickname = ConfigurationManager.instance().getNickname();
 
         return p;
     }

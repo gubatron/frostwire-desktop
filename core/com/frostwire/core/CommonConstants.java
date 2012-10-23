@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,33 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.player;
-
-import com.frostwire.core.FileDescriptor;
-import com.frostwire.gui.library.Device;
+package com.frostwire.core;
 
 /**
+ * Static class containing all constants in one place.
  * 
  * @author gubatron
  * @author aldenml
- *
+ * 
  */
-public class DeviceAudioSource extends AudioSource {
+public final class CommonConstants {
 
-    private final Device device;
-    private final FileDescriptor fd;
-
-    public DeviceAudioSource(String url, Device device, FileDescriptor fd) {
-        super(url);
-        this.device = device;
-        this.fd = fd;
+    private CommonConstants() {
     }
 
-    public Device getDevice() {
-        return device;
-    }
-
-    public FileDescriptor getFileDescriptor() {
-        return fd;
-    }
+    // generic file types
+    public static final byte FILE_TYPE_AUDIO = 0x00;
+    public static final byte FILE_TYPE_PICTURES = 0x01;
+    public static final byte FILE_TYPE_VIDEOS = 0x02;
+    public static final byte FILE_TYPE_DOCUMENTS = 0x03;
+    public static final byte FILE_TYPE_APPLICATIONS = 0x04;
+    public static final byte FILE_TYPE_RINGTONES = 0x05;
+    public static final byte FILE_TYPE_TORRENTS = 0x06;
 }

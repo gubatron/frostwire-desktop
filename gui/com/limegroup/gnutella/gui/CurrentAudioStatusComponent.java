@@ -38,8 +38,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
-import com.frostwire.gui.library.FileDescriptor;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioPlayerListener;

@@ -38,6 +38,8 @@ import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
+import com.frostwire.core.Constants;
+import com.frostwire.gui.httpserver.HttpServerManager;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
@@ -86,6 +88,7 @@ public class LibraryMediator {
     private AbstractLibraryTableMediator<?, ?, ?> currentMediator;
 
     private DeviceDiscoveryClerk clerk;
+    private HttpServerManager httpServerManager;
 
     /**
      * @return the <tt>LibraryMediator</tt> instance
@@ -128,6 +131,8 @@ public class LibraryMediator {
 
         clerk = new DeviceDiscoveryClerk();
         clerk.start();
+        httpServerManager = new HttpServerManager();
+        httpServerManager.start(Constants.EXTERNAL_CONTROL_LISTENING_PORT);
         ((DesktopUPnPManager) UPnPManager.instance()).start();
     }
 

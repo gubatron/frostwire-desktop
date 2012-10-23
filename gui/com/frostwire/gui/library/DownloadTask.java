@@ -25,6 +25,7 @@ import java.net.URL;
 
 import org.limewire.util.FilenameUtils;
 
+import com.frostwire.core.FileDescriptor;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 

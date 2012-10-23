@@ -19,6 +19,8 @@ package com.frostwire.gui.library;
 
 import java.util.List;
 
+import com.frostwire.core.FileDescriptor;
+
 
 public class FileDescriptorList {
 

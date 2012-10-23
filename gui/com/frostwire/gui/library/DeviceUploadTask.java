@@ -21,6 +21,7 @@ import java.io.File;
 
 import org.limewire.util.FilenameUtils;
 
+import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.library.ProgressFileEntity.ProgressFileEntityListener;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;

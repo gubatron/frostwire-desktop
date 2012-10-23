@@ -21,6 +21,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.gui.tables.HashBasedDataLineModel;
 

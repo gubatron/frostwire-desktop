@@ -48,15 +48,15 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Executor;
-
-import android.util.Log;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Provides implementation for HTTP
  */
 public class HttpServer {
 
-    private static final String TAG = "FW.HttpServer";
+    private static final Logger LOG = Logger.getLogger(HttpServer.class.getName());
 
     private static final int CLOCK_TICK = ServerConfig.getClockTick();
     private static final long IDLE_INTERVAL = ServerConfig.getIdleInterval();
@@ -272,7 +272,7 @@ public class HttpServer {
                     }
                 }
             } catch (IOException e) {
-                Log.e(TAG, "Dispatcher (1)", e);
+                LOG.log(Level.WARNING, "Dispatcher (1)", e);
                 c.close();
             }
         }
@@ -328,17 +328,17 @@ public class HttpServer {
                                 }
                             } catch (IOException e) {
                                 HttpConnection conn = (HttpConnection) key.attachment();
-                                Log.e(TAG, "Dispatcher (2)", e);
+                                LOG.log(Level.WARNING, "Dispatcher (2)", e);
                                 conn.close();
                             }
                         }
                     }
                 } catch (CancelledKeyException e) {
-                    Log.e(TAG, "Dispatcher (3)", e);
+                    LOG.log(Level.WARNING, "Dispatcher (3)", e);
                 } catch (IOException e) {
-                    Log.e(TAG, "Dispatcher (4)", e);
+                    LOG.log(Level.WARNING, "Dispatcher (4)", e);
                 } catch (Exception e) {
-                    Log.e(TAG, "Dispatcher (7)", e);
+                    LOG.log(Level.WARNING, "Dispatcher (7)", e);
                 }
             }
         }
@@ -348,10 +348,10 @@ public class HttpServer {
                 Exchange t = new Exchange(chan, _protocol, conn);
                 _executor.execute(t);
             } catch (HttpError e1) {
-                Log.e(TAG, "Dispatcher (5)", e1);
+                LOG.log(Level.WARNING, "Dispatcher (5)", e1);
                 conn.close();
             } catch (IOException e) {
-                Log.e(TAG, "Dispatcher (6)", e);
+                LOG.log(Level.WARNING, "Dispatcher (6)", e);
                 conn.close();
             }
         }
@@ -361,13 +361,13 @@ public class HttpServer {
 
     static synchronized void dprint(String s) {
         if (debug) {
-            Log.d(TAG, s);
+            LOG.log(Level.WARNING, s);
         }
     }
 
     static synchronized void dprint(Exception e) {
         if (debug) {
-            Log.e(TAG, e.getMessage(), e);
+            LOG.log(Level.WARNING, e.getMessage(), e);
         }
     }
 
@@ -504,14 +504,14 @@ public class HttpServer {
                 uc.doFilter(_tx);
 
             } catch (IOException e1) {
-                Log.e(TAG, "ServerImpl.Exchange (1), e: " + e1.getMessage());
+                LOG.log(Level.WARNING, "ServerImpl.Exchange (1), e: " + e1.getMessage());
                 _connection.close();
             } catch (NumberFormatException e3) {
                 reject(Code.HTTP_BAD_REQUEST, requestLine, "NumberFormatException thrown");
             } catch (URISyntaxException e) {
                 reject(Code.HTTP_BAD_REQUEST, requestLine, "URISyntaxException thrown");
             } catch (Throwable e4) {
-                Log.e(TAG, "ServerImpl.Exchange (2)", e4);
+                LOG.log(Level.WARNING, "ServerImpl.Exchange (2)", e4);
                 _connection.close();
             }
         }
@@ -556,7 +556,7 @@ public class HttpServer {
                     _connection.close();
                 }
             } catch (IOException e) {
-                Log.e(TAG, "ServerImpl.sendReply", e);
+                LOG.log(Level.WARNING, "ServerImpl.sendReply", e);
                 _connection.close();
             }
         }

@@ -38,6 +38,7 @@ import org.limewire.util.NetworkUtils;
 import com.frostwire.HttpFetcher;
 import com.frostwire.HttpFetcherListener;
 import com.frostwire.JsonEngine;
+import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.library.ProgressFileEntity.ProgressFileEntityListener;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;

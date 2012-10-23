@@ -16,33 +16,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.player;
+package com.frostwire.core;
 
-import com.frostwire.core.FileDescriptor;
-import com.frostwire.gui.library.Device;
+import org.limewire.util.CommonUtils;
+
+import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /**
- * 
  * @author gubatron
  * @author aldenml
  *
  */
-public class DeviceAudioSource extends AudioSource {
+public final class ConfigurationManager {
 
-    private final Device device;
-    private final FileDescriptor fd;
+    private static final ConfigurationManager instance = new ConfigurationManager();
 
-    public DeviceAudioSource(String url, Device device, FileDescriptor fd) {
-        super(url);
-        this.device = device;
-        this.fd = fd;
+    public static ConfigurationManager instance() {
+        return instance;
     }
 
-    public Device getDevice() {
-        return device;
+    private ConfigurationManager() {
+
     }
 
-    public FileDescriptor getFileDescriptor() {
-        return fd;
+    public String getUUIDString() {
+        return ApplicationSettings.APP_UUID.getValue();
+    }
+
+    public String getNickname() {
+        return CommonUtils.getUserName();
     }
 }

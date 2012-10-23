@@ -26,6 +26,7 @@ import javax.swing.Icon;
 
 import org.limewire.util.StringUtils;
 
+import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
