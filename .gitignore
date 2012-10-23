@@ -18,3 +18,4 @@ lib/themes/themes.jar
 lib/mplayer/upx
 messages.mo
 *.swp
+.settings/
