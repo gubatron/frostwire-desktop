@@ -51,7 +51,7 @@ public final class MPlayerComponentFactory {
     public MPlayerComponent createPlayerComponent() {
         if (loadLibrary()) {
             if (IS_OS_WINDOWS) {
-                return null;//new IExplorerComponent();
+                return new MPlayerComponentJava();
             } else if (IS_OS_MAC) {
                 return new MPlayerComponentOSX();
             }
@@ -66,9 +66,7 @@ public final class MPlayerComponentFactory {
                 //force loading of libjawt.so/jawt.dll
                 Toolkit.getDefaultToolkit();
 
-                if (IS_OS_WINDOWS) {
-                    //System.loadLibrary(IEXPLORER_LIBRARY);
-                } else if (IS_OS_MAC) {
+                if (IS_OS_MAC) {
                     System.loadLibrary(JMPLAYER_LIBRARY);
                 }
 

@@ -112,5 +112,12 @@ public class MPlayerComponentOSX extends CocoaComponent implements MPlayerCompon
         sendMsg(JMPlayer_toggleFS);
     }
     
+    @Override
+	public long getWindowID() {
+		return 0;  // always returns 0 on OSX
+	}
+    
     private native long createNSView1(String appPath);
+
+	
 }

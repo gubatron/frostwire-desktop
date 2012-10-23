@@ -29,6 +29,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -42,6 +43,9 @@ import org.gudy.azureus2.core3.util.SystemTime;
 import org.gudy.azureus2.core3.util.TimerEvent;
 import org.gudy.azureus2.core3.util.TimerEventPerformer;
 import org.limewire.util.OSUtils;
+
+import com.frostwire.gui.mplayer.MPlayerComponent;
+import com.limegroup.gnutella.gui.MediaComponentMediator;
 
 
 public class 
@@ -167,6 +171,14 @@ MPlayerInstance
                 cmdList.add("-vo");
                 cmdList.add("corevideo:buffer_name=fwmplayer");
             }
+            
+            if(OSUtils.isWindows()) {
+            	cmdList.add("-vo");
+            	cmdList.add("directx");
+            	                
+            	cmdList.add("-wid");
+            	cmdList.add( String.valueOf(MediaComponentMediator.instance().getMPlayerComponent().getWindowID()));
+            }
 			
 //			if(Utils.isWindows()) {
 //				cmdList.add("-priority");
@@ -204,22 +216,13 @@ MPlayerInstance
 			//cmdList.add("-volume");
 			//cmdList.add("0");
 			
-			cmdList.add(fileOrUrl);
+            //fileOrUrl = "C:\\Users\\erichpleny\\Documents\\Creative Commons Video.mp4";
+            
+			cmdList.add(String.format("\"%s\"", fileOrUrl));
 			
 			String[] cmd = cmdList.toArray(new String[cmdList.size()]);
-			
-//			for(int i = 0 ; i < cmd.length ; i++) {
-//				if(cmd[i].contains(" ")) {
-//					System.out.print("\"");
-//				}
-//				System.out.print(cmd[i]);
-//				if(cmd[i].contains(" ")) {
-//					System.out.print("\"");
-//				}
-//				System.out.print(" ");
-//			}
-//			System.out.println("\n");
-			
+			String cmdString = Arrays.toString(cmd).replace(", ", " ");
+			System.out.println(String.format("starting mplayer: %s", cmdString));
 			
 			try {
 				//mPlayerProcess = Runtime.getRuntime().exec(cmd);
