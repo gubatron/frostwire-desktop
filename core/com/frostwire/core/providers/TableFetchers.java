@@ -25,6 +25,8 @@ import com.frostwire.core.providers.MediaStore.Images.ImageColumns;
 import com.frostwire.core.providers.MediaStore.Video.VideoColumns;
 import com.frostwire.core.providers.UniversalStore.Applications.ApplicationsColumns;
 import com.frostwire.core.providers.UniversalStore.Documents.DocumentsColumns;
+import com.frostwire.database.Cursor;
+import com.frostwire.net.Uri;
 
 /**
  * Help yourself with TableFetchers.

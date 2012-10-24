@@ -15,6 +15,8 @@
 
 package com.frostwire.core.providers;
 
+import com.frostwire.net.Uri;
+
 
 /**
  * @author gubatron

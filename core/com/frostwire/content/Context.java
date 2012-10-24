@@ -16,27 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.core.providers;
-
-import com.frostwire.core.FileDescriptor;
-
+package com.frostwire.content;
 
 /**
  * @author gubatron
  * @author aldenml
  *
  */
-public interface TableFetcher {
+public class Context {
 
-    public String[] getColumns();
-
-    public String getSortByExpression();
-
-    public Uri getContentUri();
-
-    public void prepare(Cursor cur);
-
-    public FileDescriptor fetch(Cursor cur);
-
-    public byte getFileType();
 }

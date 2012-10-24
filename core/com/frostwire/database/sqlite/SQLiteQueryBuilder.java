@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.frostwire.core.sqlite;
+package com.frostwire.database.sqlite;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -23,7 +23,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import com.frostwire.core.providers.BaseColumns;
-import com.frostwire.core.providers.Cursor;
+import com.frostwire.database.Cursor;
 
 /**
  * This is a convience class that helps build SQL queries to be sent to

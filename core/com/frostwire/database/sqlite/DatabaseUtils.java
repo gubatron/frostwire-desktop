@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.frostwire.core.sqlite;
+package com.frostwire.database.sqlite;
 
-import com.frostwire.core.providers.Cursor;
+import com.frostwire.database.Cursor;
 
 
 /**

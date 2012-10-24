@@ -16,14 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.core.providers;
+package com.frostwire.content;
 
+import com.frostwire.database.Cursor;
+import com.frostwire.net.Uri;
 
 /**
- * 
  * @author gubatron
  * @author aldenml
- * 
+ *
  */
 public class ContentResolver {
 
@@ -60,7 +61,6 @@ public class ContentResolver {
      * @see Cursor
      */
     public final Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        // TODO Auto-generated method stub
         return null;
     }
 }

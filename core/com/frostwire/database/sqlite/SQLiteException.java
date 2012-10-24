@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-package com.frostwire.core.sqlite;
+package com.frostwire.database.sqlite;
 
-public class TextUtils {
+import com.frostwire.database.SQLException;
 
-    private TextUtils() { /* cannot be instantiated */ }
-    
-    /**
-     * Returns true if the string is null or 0-length.
-     * @param str the string to be examined
-     * @return true if str is null or zero length
-     */
-    public static boolean isEmpty(CharSequence str) {
-        if (str == null || str.length() == 0)
-            return true;
-        else
-            return false;
+/**
+ * A SQLite exception that indicates there was an error with SQL parsing or execution.
+ */
+public class SQLiteException extends SQLException {
+    public SQLiteException() {}
+
+    public SQLiteException(String error) {
+        super(error);
     }
 }

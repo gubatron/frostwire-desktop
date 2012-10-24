@@ -25,14 +25,14 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.frostwire.content.ContentResolver;
 import com.frostwire.core.ConfigurationManager;
 import com.frostwire.core.Constants;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.core.providers.BaseColumns;
-import com.frostwire.core.providers.ContentResolver;
-import com.frostwire.core.providers.Cursor;
 import com.frostwire.core.providers.TableFetcher;
 import com.frostwire.core.providers.TableFetchers;
+import com.frostwire.database.Cursor;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.library.Finger;
 

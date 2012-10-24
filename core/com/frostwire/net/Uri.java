@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.frostwire.core.providers;
+package com.frostwire.net;
 
 //import android.os.Parcel;
 //import android.os.Parcelable;

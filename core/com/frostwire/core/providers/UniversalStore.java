@@ -19,6 +19,7 @@
 package com.frostwire.core.providers;
 
 import com.frostwire.core.providers.MediaStore.MediaColumns;
+import com.frostwire.net.Uri;
 
 /**
  * The Media provider contains meta data for all available media on both

@@ -38,7 +38,9 @@ import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * Class to initialize the azureus core. Keeps a static reference to the initialized core
+ * 
  * @author gubatron
+ * @author aldenml
  *
  */
 public final class AzureusStarter {
