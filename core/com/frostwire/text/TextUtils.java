@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.frostwire.database.sqlite;
+package com.frostwire.text;
 
 public class TextUtils {
 

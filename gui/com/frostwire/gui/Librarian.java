@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.frostwire.content.ContentResolver;
+import com.frostwire.content.Context;
 import com.frostwire.core.ConfigurationManager;
 import com.frostwire.core.Constants;
 import com.frostwire.core.FileDescriptor;
@@ -45,6 +46,8 @@ public final class Librarian {
 
     private static final Logger LOG = Logger.getLogger(Librarian.class.getName());
 
+    private final Context context;
+
     private static final Librarian instance = new Librarian();
 
     public static Librarian instance() {
@@ -52,6 +55,7 @@ public final class Librarian {
     }
 
     private Librarian() {
+        context = new Context();
     }
 
     public Finger finger(boolean local) {
@@ -98,8 +102,18 @@ public final class Librarian {
     }
 
     public int getNumFiles() {
-        // TODO Auto-generated method stub
-        return 0;
+        int result = 0;
+
+        for (byte i = 0; i < 6; i++) {
+            //update numbers if you have to.
+            //if (!cache[i].cacheValid(true)) {
+            //    cache[i].updateShared(getNumFiles(i, true));
+            //}
+
+            result += getNumFiles(i, true);//cache[i].shared;
+        }
+
+        return result < 0 ? 0 : result;
     }
 
     /**
@@ -121,7 +135,7 @@ public final class Librarian {
         int numFiles = 0;
 
         try {
-            ContentResolver cr = new ContentResolver();// context.getContentResolver();
+            ContentResolver cr = context.getContentResolver();
             c = cr.query(fetcher.getContentUri(), new String[] { BaseColumns._ID }, null, null, null);
             numFiles = c != null ? c.getCount() : 0;
         } catch (Exception e) {
@@ -175,7 +189,7 @@ public final class Librarian {
 
         try {
 
-            ContentResolver cr = new ContentResolver();// context.getContentResolver();
+            ContentResolver cr = context.getContentResolver();
 
             String[] columns = fetcher.getColumns();
             String sort = fetcher.getSortByExpression();

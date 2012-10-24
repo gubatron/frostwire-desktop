@@ -34,8 +34,8 @@ import com.frostwire.database.SQLException;
 import com.frostwire.database.sqlite.SQLiteDatabase;
 import com.frostwire.database.sqlite.SQLiteOpenHelper;
 import com.frostwire.database.sqlite.SQLiteQueryBuilder;
-import com.frostwire.database.sqlite.TextUtils;
 import com.frostwire.net.Uri;
+import com.frostwire.text.TextUtils;
 
 /**
  * @author gubatron

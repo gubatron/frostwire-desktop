@@ -25,4 +25,9 @@ package com.frostwire.content;
  */
 public class Context {
 
+    public ContentResolver getContentResolver() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 
 import com.frostwire.core.providers.BaseColumns;
 import com.frostwire.database.Cursor;
+import com.frostwire.text.TextUtils;
 
 /**
  * This is a convience class that helps build SQL queries to be sent to

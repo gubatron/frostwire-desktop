@@ -18,6 +18,8 @@
 
 package com.frostwire.content;
 
+import com.frostwire.core.providers.DocumentsProvider;
+import com.frostwire.core.providers.UniversalStore;
 import com.frostwire.database.Cursor;
 import com.frostwire.net.Uri;
 
@@ -61,6 +63,34 @@ public class ContentResolver {
      * @see Cursor
      */
     public final Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        ContentProvider provider = acquireProvider(uri);
+        if (provider == null) {
+            return null;
+        }
+        try {
+            Cursor qCursor = provider.query(uri, projection, selection, selectionArgs, sortOrder);
+            if (qCursor == null) {
+                releaseProvider(provider);
+                return null;
+            }
+            // force query execution
+            qCursor.getCount();
+
+            return qCursor;
+        } catch (RuntimeException e) {
+            releaseProvider(provider);
+            throw e;
+        }
+    }
+
+    private ContentProvider acquireProvider(Uri uri) {
+        if (uri.getAuthority().equals(UniversalStore.UNIVERSAL_DOCUMENTS_AUTHORITY)) {
+            return new DocumentsProvider();
+        }
+
         return null;
+    }
+
+    private void releaseProvider(ContentProvider provider) {
     }
 }

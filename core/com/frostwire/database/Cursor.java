@@ -18,12 +18,28 @@
 
 package com.frostwire.database;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author gubatron
  * @author aldenml
  *
  */
 public class Cursor {
+
+    private static final Logger LOG = Logger.getLogger(Cursor.class.getName());
+
+    private final Statement statement;
+    private final ResultSet resultSet;
+
+    public Cursor(Statement statement, ResultSet resultSet) {
+        this.statement = statement;
+        this.resultSet = resultSet;
+    }
 
     public int getInt(int idCol) {
         // TODO Auto-generated method stub
@@ -51,8 +67,16 @@ public class Cursor {
     }
 
     public void close() {
-        // TODO Auto-generated method stub
-        
+        try {
+            resultSet.close();
+        } catch (SQLException e) {
+            LOG.log(Level.WARNING, "Error closing cursor result set", e);
+        }
+        try {
+            statement.close();
+        } catch (SQLException e) {
+            LOG.log(Level.WARNING, "Error closing cursor inner statement", e);
+        }
     }
 
     public boolean moveToPosition(int offset) {

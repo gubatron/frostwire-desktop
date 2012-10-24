@@ -1,26 +1,66 @@
 /*
- * Copyright (C) 2006 The Android Open Source Project
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.frostwire.database.sqlite;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.frostwire.content.ContentValues;
 import com.frostwire.database.Cursor;
 import com.frostwire.database.SQLException;
+import com.frostwire.text.TextUtils;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class SQLiteDatabase {
+
+    private static final Logger LOG = Logger.getLogger(SQLiteDatabase.class.getName());
+
+    private String path;
+    private Connection connection;
+
+    private final AtomicBoolean open = new AtomicBoolean(false);
+
+    static {
+        try {
+            Class.forName("org.h2.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Getter for the path to the database file.
+     *
+     * @return the path to our database file.
+     */
+    public final String getPath() {
+        return path;
+    }
 
     /**
      * Runs the provided SQL and returns a cursor over the result set.
@@ -35,7 +75,26 @@ public class SQLiteDatabase {
      * {@link Cursor}s are not synchronized, see the documentation for more details.
      */
     public Cursor rawQueryWithFactory(CursorFactory cursorFactory, String sql, String[] selectionArgs, String editTable) {
-        return null;
+        verifyDbIsOpen();
+
+        Cursor cursor = null;
+
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            synchronized (connection) {
+                statement = prepareStatement(connection, sql, (Object[]) selectionArgs);
+
+                resultSet = statement.executeQuery();
+
+                return new Cursor(statement, resultSet);
+            }
+        } catch (Throwable e) {
+            LOG.log(Level.WARNING, "Error performing SQL statement: " + sql, e);
+        }
+
+        return cursor;
     }
 
     /**
@@ -128,7 +187,35 @@ public class SQLiteDatabase {
      * @return the row ID of the newly inserted row, or -1 if an error occurred
      */
     public long insert(String table, String nullColumnHack, ContentValues values) {
-        return 0;
+        verifyDbIsOpen();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("INSERT");
+        sql.append(" INTO ");
+        sql.append(table);
+        sql.append('(');
+
+        Object[] bindArgs = null;
+        int size = (values != null && values.size() > 0) ? values.size() : 0;
+        if (size > 0) {
+            bindArgs = new Object[size];
+            int i = 0;
+            for (String colName : values.keySet()) {
+                sql.append((i > 0) ? "," : "");
+                sql.append(colName);
+                bindArgs[i++] = values.get(colName);
+            }
+            sql.append(')');
+            sql.append(" VALUES (");
+            for (i = 0; i < size; i++) {
+                sql.append((i > 0) ? ",?" : "?");
+            }
+        } else {
+            sql.append(nullColumnHack + ") VALUES (NULL");
+        }
+        sql.append(')');
+
+        return executeSql(sql.toString(), bindArgs);
     }
 
     /**
@@ -142,7 +229,10 @@ public class SQLiteDatabase {
      *         whereClause.
      */
     public int delete(String table, String whereClause, String[] whereArgs) {
-        return 0;
+        verifyDbIsOpen();
+
+        String sql = "DELETE FROM " + table + (!TextUtils.isEmpty(whereClause) ? " WHERE " + whereClause : "");
+        return executeSql(sql, whereArgs);
     }
 
     /**
@@ -156,24 +246,79 @@ public class SQLiteDatabase {
      * @return the number of rows affected
      */
     public int update(String table, ContentValues values, String whereClause, String[] whereArgs) {
-        return 0;
+        verifyDbIsOpen();
+
+        if (values == null || values.size() == 0) {
+            throw new IllegalArgumentException("Empty values");
+        }
+
+        StringBuilder sql = new StringBuilder(120);
+        sql.append("UPDATE ");
+        sql.append(table);
+        sql.append(" SET ");
+
+        // move all bind args to one array
+        int setValuesSize = values.size();
+        int bindArgsSize = (whereArgs == null) ? setValuesSize : (setValuesSize + whereArgs.length);
+        Object[] bindArgs = new Object[bindArgsSize];
+        int i = 0;
+        for (String colName : values.keySet()) {
+            sql.append((i > 0) ? "," : "");
+            sql.append(colName);
+            bindArgs[i++] = values.get(colName);
+            sql.append("=?");
+        }
+        if (whereArgs != null) {
+            for (i = setValuesSize; i < bindArgsSize; i++) {
+                bindArgs[i] = whereArgs[i - setValuesSize];
+            }
+        }
+        if (!TextUtils.isEmpty(whereClause)) {
+            sql.append(" WHERE ");
+            sql.append(whereClause);
+        }
+
+        return executeSql(sql.toString(), bindArgs);
+    }
+
+    /**
+     * @return true if the DB is currently open (has not been closed)
+     */
+    public boolean isOpen() {
+        return open.get();
+    }
+
+    public void close() {
+        if (open.compareAndSet(true, false)) {
+            try {
+                Statement statement = connection.createStatement();
+                statement.execute("SHUTDOWN");
+                connection.close();
+            } catch (Throwable e) {
+                LOG.log(Level.WARNING, "Error closing the smart search database", e);
+            }
+        }
     }
 
     private int executeSql(String sql, Object[] bindArgs) throws SQLException {
-        //        if (DatabaseUtils.getSqlStatementType(sql) == DatabaseUtils.STATEMENT_ATTACH) {
-        //            disableWriteAheadLogging();
-        //            mHasAttachedDbs = true;
-        //        }
-        //        SQLiteStatement statement = new SQLiteStatement(this, sql, bindArgs);
-        //        try {
-        //            return statement.executeUpdateDelete();
-        //        } catch (SQLiteDatabaseCorruptException e) {
-        //            onCorruption();
-        //            throw e;
-        //        } finally {
-        //            statement.close();
-        //        }
-        return 0;
+        PreparedStatement statement = null;
+        try {
+            synchronized (connection) {
+                statement = prepareStatement(connection, sql.toString(), bindArgs);
+
+                return statement.executeUpdate();
+            }
+        } catch (Throwable e) {
+            LOG.log(Level.WARNING, "Error performing SQL statement: " + sql, e);
+            return -1;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Throwable e) {
+                }
+            }
+        }
     }
 
     /**
@@ -197,6 +342,24 @@ public class SQLiteDatabase {
         } else {
             throw new IllegalStateException("Invalid tables");
         }
+    }
+
+    void verifyDbIsOpen() {
+        if (!isOpen()) {
+            throw new IllegalStateException("database " + getPath() + " already closed");
+        }
+    }
+
+    private PreparedStatement prepareStatement(Connection connection, String sql, Object... arguments) throws Exception {
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        if (arguments != null) {
+            for (int i = 0; i < arguments.length; i++) {
+                statement.setObject(i + 1, arguments[i]);
+            }
+        }
+        return statement;
     }
 
     /**
