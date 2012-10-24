@@ -29,9 +29,14 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  */
 public class Context {
 
+    private final ContentResolver cr;
+
+    public Context() {
+        this.cr = new ContentResolver(this);
+    }
+
     public ContentResolver getContentResolver() {
-        // TODO Auto-generated method stub
-        return null;
+        return cr;
     }
 
     /**

@@ -56,6 +56,8 @@ public class SQLiteDatabase {
     public SQLiteDatabase(String path, Connection connection) {
         this.path = path;
         this.connection = connection;
+        
+        open.set(true);
     }
 
     /**
@@ -198,7 +200,7 @@ public class SQLiteDatabase {
         sql.append("INSERT");
         sql.append(" INTO ");
         sql.append(table);
-        sql.append('(');
+        sql.append(" (");
 
         Object[] bindArgs = null;
         int size = (values != null && values.size() > 0) ? values.size() : 0;

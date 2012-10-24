@@ -32,7 +32,11 @@ import com.frostwire.net.Uri;
  */
 public abstract class ContentProvider {
     
-    private Context mContext = null;
+    private Context context = null;
+    
+    public ContentProvider(Context context) {
+        this.context = context;
+    }
     
     /**
      * Retrieves the Context this provider is running in.  Only available once
@@ -40,7 +44,7 @@ public abstract class ContentProvider {
      * constructor.
      */
     public final Context getContext() {
-        return mContext;
+        return context;
     }
 
     public abstract boolean onCreate();

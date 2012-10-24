@@ -29,7 +29,13 @@ import com.frostwire.net.Uri;
  */
 public class ContentResolver {
 
-    private static final ContentProvider files = new FilesProvider();
+    private static ContentProvider files;
+
+    private final Context context;
+
+    public ContentResolver(Context context) {
+        this.context = context;
+    }
 
     /**
      * <p>
@@ -111,7 +117,12 @@ public class ContentResolver {
         }
     }
 
-    private ContentProvider acquireProvider(Uri uri) {
+    private synchronized ContentProvider acquireProvider(Uri uri) {
+        if (files == null) {
+            files = new FilesProvider(context);
+            files.onCreate();
+        }
+
         return files;
     }
 

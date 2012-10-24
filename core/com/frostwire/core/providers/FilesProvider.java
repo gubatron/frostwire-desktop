@@ -46,7 +46,8 @@ public class FilesProvider extends ContentProvider {
 
     private static final Logger LOG = Logger.getLogger(FilesProvider.class.getName());
 
-    private static final String DATABASE_NAME = "documents.db";
+    private static final String DATABASE_NAME = "files";
+
     private static final int DATABASE_VERSION = 1;
     private static final String DOCUMENTS_TABLE_NAME = "documents";
 
@@ -73,6 +74,10 @@ public class FilesProvider extends ContentProvider {
         projectionMap.put(DocumentsColumns.DATE_ADDED, DocumentsColumns.DATE_ADDED);
         projectionMap.put(DocumentsColumns.DATE_MODIFIED, DocumentsColumns.DATE_MODIFIED);
         projectionMap.put(DocumentsColumns.MIME_TYPE, DocumentsColumns.MIME_TYPE);
+    }
+
+    public FilesProvider(Context context) {
+        super(context);
     }
 
     @Override
@@ -256,8 +261,10 @@ public class FilesProvider extends ContentProvider {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE " + DOCUMENTS_TABLE_NAME + " (" + DocumentsColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + DocumentsColumns.DATA + " TEXT," + DocumentsColumns.SIZE + " INTEGER," + DocumentsColumns.DISPLAY_NAME + " TEXT," + DocumentsColumns.TITLE + " TEXT,"
-                    + DocumentsColumns.DATE_ADDED + " INTEGER," + DocumentsColumns.DATE_MODIFIED + " INTEGER," + DocumentsColumns.MIME_TYPE + " TEXT" + ");");
+            db.execSQL("SET IGNORECASE TRUE");
+
+            db.execSQL("CREATE TABLE " + DOCUMENTS_TABLE_NAME + " (" + DocumentsColumns._ID + " INTEGER IDENTITY," + DocumentsColumns.DATA + " VARCHAR," + DocumentsColumns.SIZE + " INTEGER," + DocumentsColumns.DISPLAY_NAME + " VARCHAR," + DocumentsColumns.TITLE + " VARCHAR,"
+                    + DocumentsColumns.DATE_ADDED + " BIGINT," + DocumentsColumns.DATE_MODIFIED + " BIGINT," + DocumentsColumns.MIME_TYPE + " VARCHAR" + ");");
         }
 
         @Override

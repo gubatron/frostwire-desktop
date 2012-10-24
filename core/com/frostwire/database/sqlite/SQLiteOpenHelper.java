@@ -40,8 +40,8 @@ public abstract class SQLiteOpenHelper {
     private final SQLiteDatabase db;
 
     public SQLiteOpenHelper(Context context, String name, CursorFactory factory, int version) {
-        dbpath = new File(context.getDatabasePath(name), String.valueOf(version)).getAbsolutePath();
-        db = openDatabase(dbpath);
+        dbpath = context.getDatabasePath(name).getAbsolutePath();
+        db = openDatabase(dbpath, name, version);
     }
 
     public synchronized SQLiteDatabase getWritableDatabase() {
@@ -102,16 +102,18 @@ public abstract class SQLiteOpenHelper {
     public void onOpen(SQLiteDatabase db) {
     }
 
-    private SQLiteDatabase openDatabase(String dbpath) {
+    private SQLiteDatabase openDatabase(String dbpath, String name, int version) {
         try {
             StringBuilder sb = new StringBuilder();
             sb.append("jdbc:h2:");
-            sb.append(dbpath);
+            String folderpath = dbpath + "." + version;
+            String fullpath = folderpath + File.separator + name;
+            sb.append(fullpath);
 
-            boolean create = !(new File(dbpath).exists());
+            boolean create = !(new File(folderpath).exists());
 
             Connection connection = DriverManager.getConnection(sb.toString(), "SA", "");
-            SQLiteDatabase db = new SQLiteDatabase(dbpath, connection);
+            SQLiteDatabase db = new SQLiteDatabase(fullpath, connection);
 
             if (create) {
                 onCreate(db);
