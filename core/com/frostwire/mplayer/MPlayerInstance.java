@@ -218,7 +218,7 @@ MPlayerInstance
 			//cmdList.add("-volume");
 			//cmdList.add("0");
 			
-            //fileOrUrl = "C:\\Users\\erichpleny\\Documents\\Creative Commons Video.mp4";
+            fileOrUrl = "C:\\Users\\erichpleny\\Documents\\Creative Commons Video.mp4";
             
 			cmdList.add(String.format("\"%s\"", fileOrUrl));
 			
