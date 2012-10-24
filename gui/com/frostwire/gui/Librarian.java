@@ -27,9 +27,9 @@ import java.util.logging.Logger;
 
 import com.frostwire.core.ConfigurationManager;
 import com.frostwire.core.Constants;
-import com.frostwire.core.ContentResolver;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.core.providers.BaseColumns;
+import com.frostwire.core.providers.ContentResolver;
 import com.frostwire.core.providers.Cursor;
 import com.frostwire.core.providers.TableFetcher;
 import com.frostwire.core.providers.TableFetchers;
