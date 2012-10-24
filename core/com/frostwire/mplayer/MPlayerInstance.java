@@ -175,7 +175,9 @@ MPlayerInstance
             if(OSUtils.isWindows()) {
             	cmdList.add("-vo");
             	cmdList.add("directx");
-            	                
+            	cmdList.add("-double");
+            	cmdList.add("-colorkey");
+            	cmdList.add("0x010101");
             	cmdList.add("-wid");
             	cmdList.add( String.valueOf(MediaComponentMediator.instance().getMPlayerComponent().getWindowID()));
             }
