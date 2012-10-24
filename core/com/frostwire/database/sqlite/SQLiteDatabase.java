@@ -56,7 +56,7 @@ public class SQLiteDatabase {
     public SQLiteDatabase(String path, Connection connection) {
         this.path = path;
         this.connection = connection;
-        
+
         open.set(true);
     }
 
@@ -359,7 +359,7 @@ public class SQLiteDatabase {
 
     private PreparedStatement prepareStatement(Connection connection, String sql, Object... arguments) throws Exception {
 
-        PreparedStatement statement = connection.prepareStatement(sql);
+        PreparedStatement statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
         if (arguments != null) {
             for (int i = 0; i < arguments.length; i++) {

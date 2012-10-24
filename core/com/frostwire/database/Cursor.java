@@ -126,7 +126,10 @@ public class Cursor {
      */
     public int getCount() {
         try {
-            return rs.getFetchSize();
+            rs.last();
+            int rows = rs.getRow();
+            rs.beforeFirst();
+            return rows;
         } catch (SQLException e) {
             LOG.log(Level.WARNING, "Error getting result set size", e);
         }
