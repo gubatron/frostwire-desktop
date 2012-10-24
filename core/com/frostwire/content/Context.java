@@ -18,6 +18,10 @@
 
 package com.frostwire.content;
 
+import java.io.File;
+
+import com.limegroup.gnutella.settings.ApplicationSettings;
+
 /**
  * @author gubatron
  * @author aldenml
@@ -30,4 +34,18 @@ public class Context {
         return null;
     }
 
+    /**
+     * Returns the absolute path on the filesystem where a database created with
+     * {@link #openOrCreateDatabase} is stored.
+     *
+     * @param name The name of the database for which you would like to get
+     *          its path.
+     *
+     * @return Returns an absolute path to the given database.
+     *
+     * @see #openOrCreateDatabase
+     */
+    public File getDatabasePath(String name) {
+        return new File(ApplicationSettings.APP_DATABASES_PATH.getValue(), name);
+    }
 }

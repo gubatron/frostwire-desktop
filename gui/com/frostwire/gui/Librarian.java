@@ -173,7 +173,7 @@ public final class Librarian {
                 }
             }
         } else if (file.isFile()) {
-            new UniversalScanner().scan(file.getAbsolutePath());
+            new UniversalScanner(context).scan(file.getAbsolutePath());
         }
     }
 

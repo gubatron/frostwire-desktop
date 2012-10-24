@@ -18,6 +18,12 @@
 
 package com.frostwire.database.sqlite;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.frostwire.content.Context;
 import com.frostwire.database.sqlite.SQLiteDatabase.CursorFactory;
 
@@ -28,16 +34,22 @@ import com.frostwire.database.sqlite.SQLiteDatabase.CursorFactory;
  */
 public abstract class SQLiteOpenHelper {
 
+    private static final Logger LOG = Logger.getLogger(SQLiteOpenHelper.class.getName());
+
+    private final String dbpath;
+    private final SQLiteDatabase db;
+
     public SQLiteOpenHelper(Context context, String name, CursorFactory factory, int version) {
-        // TODO Auto-generated constructor stub
+        dbpath = new File(context.getDatabasePath(name), String.valueOf(version)).getAbsolutePath();
+        db = openDatabase(dbpath);
     }
 
     public synchronized SQLiteDatabase getWritableDatabase() {
-        return null;
+        return db;
     }
 
     public synchronized SQLiteDatabase getReadableDatabase() {
-        return null;
+        return db;
     }
 
     /**
@@ -90,4 +102,25 @@ public abstract class SQLiteOpenHelper {
     public void onOpen(SQLiteDatabase db) {
     }
 
+    private SQLiteDatabase openDatabase(String dbpath) {
+        try {
+            StringBuilder sb = new StringBuilder();
+            sb.append("jdbc:h2:");
+            sb.append(dbpath);
+
+            boolean create = !(new File(dbpath).exists());
+
+            Connection connection = DriverManager.getConnection(sb.toString(), "SA", "");
+            SQLiteDatabase db = new SQLiteDatabase(dbpath, connection);
+
+            if (create) {
+                onCreate(db);
+            }
+
+            return db;
+        } catch (Throwable e) {
+            LOG.log(Level.SEVERE, "Error opening the database", e);
+            throw new RuntimeException(e);
+        }
+    }
 }

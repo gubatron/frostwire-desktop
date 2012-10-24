@@ -53,6 +53,11 @@ public class SQLiteDatabase {
         }
     }
 
+    public SQLiteDatabase(String path, Connection connection) {
+        this.path = path;
+        this.connection = connection;
+    }
+
     /**
      * Getter for the path to the database file.
      *

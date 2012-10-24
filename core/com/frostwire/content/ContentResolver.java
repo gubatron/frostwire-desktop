@@ -18,8 +18,7 @@
 
 package com.frostwire.content;
 
-import com.frostwire.core.providers.DocumentsProvider;
-import com.frostwire.core.providers.UniversalStore;
+import com.frostwire.core.providers.FilesProvider;
 import com.frostwire.database.Cursor;
 import com.frostwire.net.Uri;
 
@@ -29,6 +28,8 @@ import com.frostwire.net.Uri;
  *
  */
 public class ContentResolver {
+
+    private static final ContentProvider files = new FilesProvider();
 
     /**
      * <p>
@@ -83,12 +84,35 @@ public class ContentResolver {
         }
     }
 
-    private ContentProvider acquireProvider(Uri uri) {
-        if (uri.getAuthority().equals(UniversalStore.UNIVERSAL_DOCUMENTS_AUTHORITY)) {
-            return new DocumentsProvider();
+    /**
+     * Inserts a row into a table at the given URL.
+     *
+     * If the content provider supports transactions the insertion will be atomic.
+     *
+     * @param uri The URL of the table to insert into.
+     * @param values The initial values for the newly inserted row. The key is the column name for
+     *               the field. Passing an empty ContentValues will create an empty row.
+     * @return the URL of the newly created row.
+     */
+    public final Uri insert(Uri uri, ContentValues values) {
+        ContentProvider provider = acquireProvider(uri);
+        if (provider == null) {
+            return null;
         }
+        try {
+            Uri createdRow = provider.insert(uri, values);
+            return createdRow;
+        } catch (RuntimeException e) {
+            // Arbitrary and not worth documenting, as Activity
+            // Manager will kill this process shortly anyway.
+            return null;
+        } finally {
+            releaseProvider(provider);
+        }
+    }
 
-        return null;
+    private ContentProvider acquireProvider(Uri uri) {
+        return files;
     }
 
     private void releaseProvider(ContentProvider provider) {

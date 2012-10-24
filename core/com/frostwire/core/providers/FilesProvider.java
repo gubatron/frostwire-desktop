@@ -42,9 +42,9 @@ import com.frostwire.text.TextUtils;
  * @author aldenml
  *
  */
-public class DocumentsProvider extends ContentProvider {
+public class FilesProvider extends ContentProvider {
 
-    private static final Logger LOG = Logger.getLogger(DocumentsProvider.class.getName());
+    private static final Logger LOG = Logger.getLogger(FilesProvider.class.getName());
 
     private static final String DATABASE_NAME = "documents.db";
     private static final int DATABASE_VERSION = 1;
@@ -147,7 +147,7 @@ public class DocumentsProvider extends ContentProvider {
             values = new ContentValues();
         }
 
-        Long now = Long.valueOf(System.currentTimeMillis()/1000);
+        Long now = Long.valueOf(System.currentTimeMillis() / 1000);
 
         // Make sure that the fields are all set
         if (values.containsKey(DocumentsColumns.DATA) == false) {
@@ -195,7 +195,7 @@ public class DocumentsProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String where, String[] whereArgs) {
-        
+
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
         int count;
@@ -221,7 +221,7 @@ public class DocumentsProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String where, String[] whereArgs) {
-        
+
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
         int count;
