@@ -34,41 +34,113 @@ public class Cursor {
     private static final Logger LOG = Logger.getLogger(Cursor.class.getName());
 
     private final Statement statement;
-    private final ResultSet resultSet;
+    private final ResultSet rs;
 
-    public Cursor(Statement statement, ResultSet resultSet) {
+    public Cursor(Statement statement, ResultSet rs) {
         this.statement = statement;
-        this.resultSet = resultSet;
+        this.rs = rs;
     }
 
-    public int getInt(int idCol) {
-        // TODO Auto-generated method stub
+    /**
+     * Returns the value of the requested column as an int.
+     *
+     * <p>The result and whether this method throws an exception when the
+     * column value is null, the column type is not an integral type, or the
+     * integer value is outside the range [<code>Integer.MIN_VALUE</code>,
+     * <code>Integer.MAX_VALUE</code>] is implementation-defined.
+     *
+     * @param columnIndex the zero-based index of the target column.
+     * @return the value of that column as an int.
+     */
+    public int getInt(int columnIndex) {
+        try {
+            return rs.getInt(columnIndex);
+        } catch (SQLException e) {
+            LOG.log(Level.WARNING, "Error reading typed result set value", e);
+        }
         return 0;
     }
 
-    public String getString(int pathCol) {
-        // TODO Auto-generated method stub
+    /**
+     * Returns the value of the requested column as a String.
+     *
+     * <p>The result and whether this method throws an exception when the
+     * column value is null or the column type is not a string type is
+     * implementation-defined.
+     *
+     * @param columnIndex the zero-based index of the target column.
+     * @return the value of that column as a String.
+     */
+    public String getString(int columnIndex) {
+        try {
+            return rs.getString(columnIndex);
+        } catch (SQLException e) {
+            LOG.log(Level.WARNING, "Error reading typed result set value", e);
+        }
         return null;
     }
 
-    public long getLong(int dateAddedCol) {
-        // TODO Auto-generated method stub
+    /**
+     * Returns the value of the requested column as a long.
+     *
+     * <p>The result and whether this method throws an exception when the
+     * column value is null, the column type is not an integral type, or the
+     * integer value is outside the range [<code>Long.MIN_VALUE</code>,
+     * <code>Long.MAX_VALUE</code>] is implementation-defined.
+     *
+     * @param columnIndex the zero-based index of the target column.
+     * @return the value of that column as a long.
+     */
+    public long getLong(int columnIndex) {
+        try {
+            return rs.getLong(columnIndex);
+        } catch (SQLException e) {
+            LOG.log(Level.WARNING, "Error reading typed result set value", e);
+        }
         return 0;
     }
 
-    public int getColumnIndex(String dateAdded) {
-        // TODO Auto-generated method stub
-        return 0;
+    /**
+     * Returns the zero-based index for the given column name, or -1 if the column doesn't exist.
+     * If you expect the column to exist use {@link #getColumnIndexOrThrow(String)} instead, which
+     * will make the error more clear.
+     *
+     * @param columnName the name of the target column.
+     * @return the zero-based column index for the given column name, or -1 if
+     * the column name does not exist.
+     * @see #getColumnIndexOrThrow(String)
+     */
+    public int getColumnIndex(String columnName) {
+        try {
+            return rs.findColumn(columnName);
+        } catch (SQLException e) {
+            LOG.log(Level.WARNING, "Error getting column index for name: " + columnName, e);
+        }
+        return -1;
     }
 
+    /**
+     * Returns the numbers of rows in the cursor.
+     *
+     * @return the number of rows in the cursor.
+     */
     public int getCount() {
-        // TODO Auto-generated method stub
+        try {
+            return rs.getFetchSize();
+        } catch (SQLException e) {
+            LOG.log(Level.WARNING, "Error getting result set size", e);
+        }
         return 0;
     }
 
+    /**
+     * Closes the Cursor, releasing all of its resources and making it completely invalid.
+     * Unlike {@link #deactivate()} a call to {@link #requery()} will not make the Cursor valid
+     * again.
+     */
     public void close() {
         try {
-            resultSet.close();
+            rs.close();
         } catch (SQLException e) {
             LOG.log(Level.WARNING, "Error closing cursor result set", e);
         }
@@ -79,14 +151,39 @@ public class Cursor {
         }
     }
 
+    /**
+     * Move the cursor to an absolute position. The valid
+     * range of values is -1 &lt;= position &lt;= count.
+     *
+     * <p>This method will return true if the request destination was reachable, 
+     * otherwise, it returns false.
+     *
+     * @param position the zero-based position to move to.
+     * @return whether the requested move fully succeeded.
+     */
     public boolean moveToPosition(int offset) {
-        // TODO Auto-generated method stub
+        try {
+            return rs.relative(offset);
+        } catch (SQLException e) {
+            LOG.log(Level.WARNING, "Error moving inside the result set, offset: " + offset, e);
+        }
         return false;
     }
 
+    /**
+     * Move the cursor to the next row.
+     *
+     * <p>This method will return false if the cursor is already past the
+     * last entry in the result set.
+     *
+     * @return whether the move succeeded.
+     */
     public boolean moveToNext() {
-        // TODO Auto-generated method stub
+        try {
+            return rs.next();
+        } catch (SQLException e) {
+            LOG.log(Level.WARNING, "Error moving inside the result set, to next", e);
+        }
         return false;
     }
-
 }
