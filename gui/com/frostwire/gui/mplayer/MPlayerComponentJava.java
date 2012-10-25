@@ -1,5 +1,6 @@
 package com.frostwire.gui.mplayer;
 
+import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
@@ -22,98 +23,75 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-public class MPlayerComponentJava extends JLayeredPane implements MPlayerComponent {
+public class MPlayerComponentJava extends Container implements MPlayerComponent {
 
 	private static final long serialVersionUID = -5860833860676831251L;
-	private Canvas video = null;
-	private JPanel controlOverlay = null;
 	
-	private Container priorParent = null;
-	private JFrame    fullscreenWindow = null;
-	private boolean   isFullscreen = false;
+	private Canvas video;
+	private JPanel controlsOverlay;
+	private JFrame fullscreenWindow;
+	private JLayeredPane fullscreenPane;
 	
 	public MPlayerComponentJava() {
 		
-		Dimension d = new Dimension(500,500);
-        setPreferredSize(d);
-        setMinimumSize(d);
-        setOpaque(true);
-        setVisible(true);
+		Dimension defaultVideoDim = new Dimension(500,500);
+		Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
         
+		setLayout( new BorderLayout() );
+		
         // initialize video canvas
         video = new Canvas();
-        //video.setMinimumSize(d);
-        video.setSize(d);
+        video.setPreferredSize(defaultVideoDim);
+        //video.setMinimumSize(new Dimension(0,0));
+        //video.setMaximumSize(screenDim);
         video.setVisible(true);
         video.setBackground(Color.BLACK);
-        video.setEnabled(true);
-        video.setBounds(0, 0, (int) d.getWidth(), (int) d.getHeight()); //jLayered pane needs you to use setBounds on its components, otherwise they're not shown
-        video.setIgnoreRepaint(false);
+        //video.setBounds(0, 0, defaultVideoDim.width, defaultVideoDim.height); //jLayered pane needs you to use setBounds on its components, otherwise they're not shown
+        //video.setIgnoreRepaint(false);
+        add(video);
         
         // initialize control overlay
         Dimension overlayDim = new Dimension( 400, 100 );
-        Rectangle overlayRect = new Rectangle(d.width/2 - overlayDim.width/2, d.height/2 - overlayDim.height/2, overlayDim.width, overlayDim.height);
-        controlOverlay = new JPanel(new FlowLayout());
-        controlOverlay.setVisible(true);
-        controlOverlay.setBounds( overlayRect );
-        controlOverlay.setBackground(new Color(255, 255, 255,255)); //background color with alpha
-        controlOverlay.setOpaque(false);
+        controlsOverlay = new JPanel(new FlowLayout());
+        controlsOverlay.setVisible(true);
+        controlsOverlay.setBounds( 0, 0, overlayDim.width, overlayDim.height );
+        controlsOverlay.setOpaque(true);
+        controlsOverlay.setBackground(Color.darkGray);
         JButton button = new JButton("Button on FirstPanel");
         button.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				MPlayerComponentJava.this.toggleFullScreen();
 			}
         });
-        controlOverlay.add(button);
-        
-        
-        // add overlay and video canvas
-        add(video, JLayeredPane.DEFAULT_LAYER);
-        add(controlOverlay, JLayeredPane.PALETTE_LAYER);
-        
-        /*
-        // add listener for parent changes
-        this.addHierarchyListener( new HierarchyListener() {
-			public void hierarchyChanged(HierarchyEvent e) {
-				if ( (e.getChangeFlags() & HierarchyEvent.PARENT_CHANGED) == 
-						HierarchyEvent.PARENT_CHANGED ) {
-					
-					if ( MPlayerComponentJava.this.getParent() != null) {
-					}
-					
-					resizeToParent();
-				}
-			}
-        });
-        */
+        controlsOverlay.add(button);
         
         // initialize fullscreen window
         fullscreenWindow = new JFrame();
+        fullscreenWindow.setLayout(null);
         fullscreenWindow.setUndecorated(true);
-        fullscreenWindow.getContentPane().setPreferredSize( Toolkit.getDefaultToolkit().getScreenSize() );
-        fullscreenWindow.pack();
+        fullscreenWindow.setSize( screenDim );
         fullscreenWindow.setResizable(false);
         fullscreenWindow.setAlwaysOnTop(true);
         fullscreenWindow.setVisible(false);
         
-	}
-	
-	/*
-	private void resizeToParent() {
-		if ( getParent() != null ) {
-			Dimension d = getParent().getSize();
-			setSize(d);
-			resetOverlayPosition();
-		}
-	}
+        fullscreenPane = new JLayeredPane();
+        fullscreenPane.setBounds(0, 0, screenDim.width, screenDim.height);
+        fullscreenPane.add(controlsOverlay, JLayeredPane.PALETTE_LAYER);
+        fullscreenWindow.getContentPane().add(fullscreenPane);
+    	
+        resetOverlayPosition();
+    }
 	
 	private void resetOverlayPosition() {
-		Rectangle overlayRect = getBounds();
-		overlayRect.x = getSize().width/2 - overlayRect.width/2;
-		overlayRect.y = getSize().height/2 - overlayRect.height/2;
-		setBounds( overlayRect );
+		
+		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		Rectangle overlayRect = controlsOverlay.getBounds();
+		overlayRect.x = (int) (screen.width*0.5 - overlayRect.width/2);
+		overlayRect.y = (int) (screen.height*0.75 - overlayRect.height/2);
+		controlsOverlay.setBounds( overlayRect );
 	}
-	*/
+	
 	
 	@Override
 	public Component getComponent() {
@@ -123,32 +101,23 @@ public class MPlayerComponentJava extends JLayeredPane implements MPlayerCompone
 	@Override
 	public void toggleFullScreen() {
 
-		if (false == isFullscreen) {
-			
-			// remember previous parent
-			priorParent = getParent();
-			priorParent.remove(this);
-			
-			// add us as the child to window
-			fullscreenWindow.getContentPane().add(this);
-			
-			// show fullscreen window
-			fullscreenWindow.setVisible(true);
-						
-		} else {
-			
-			// remove from fullscreen
-			fullscreenWindow.getContentPane().remove(this);
-			
-			// add us as child to prior parent
-			priorParent.add(this);
-			priorParent = null;
-			
-			// hide fullscreen window
-			fullscreenWindow.setVisible(false);
-		}
+		Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
 		
-		isFullscreen = !isFullscreen;
+		if (video.getParent() == this) { // entering fullscreen
+			
+			video.setSize( screenDim );
+			fullscreenPane.add(video, JLayeredPane.DEFAULT_LAYER);
+			fullscreenWindow.setVisible(true);
+			
+			
+		} else { // leaving fullscreen
+			
+			fullscreenWindow.setVisible(false);
+			
+			video.setSize( getSize() );
+			add(video);
+			validate();
+		}
 	}
 
 	@SuppressWarnings("deprecation")
