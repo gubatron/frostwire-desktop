@@ -21,12 +21,10 @@ import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.CharArraySetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.IntSetting;
-import org.limewire.setting.StringSetSetting;
 import org.limewire.setting.StringSetting;
 import org.limewire.util.CommonUtils;
 
 import com.limegroup.gnutella.MediaType;
-
 
 /**
  * Settings for searches.
