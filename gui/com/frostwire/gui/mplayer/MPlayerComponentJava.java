@@ -6,25 +6,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,16 +19,15 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.plaf.BorderUIResource;
-
+import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.AudioPlayerListener;
+import com.frostwire.gui.player.AudioSource;
+import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.ResourceManager;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
-public class MPlayerComponentJava extends Container implements MPlayerComponent, ProgressSliderListener {
+public class MPlayerComponentJava extends Container implements MPlayerComponent, ProgressSliderListener, AudioPlayerListener {
 
 	private static final long serialVersionUID = -5860833860676831251L;
 	
@@ -53,6 +39,8 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 	private JSlider volumeSlider;
 	private ProgressSlider progressSlider;
 	
+	private AudioPlayer player;
+	
 	public MPlayerComponentJava() {
 		
 		setLayout( new BorderLayout() );
@@ -60,6 +48,9 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 		initializeVideoControl();
         initializeControlsOverlay();
         initializeFullscreenWindow();
+        
+        player = AudioPlayer.instance();
+        player.addAudioPlayerListener(this);
     }
 	
 	private void initializeVideoControl() {
@@ -235,17 +226,28 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 		
 		if (video.getParent() == this) { // entering fullscreen
 			
+			MediaPlaybackState priorState = player.getState();
+			player.stop();
+			
 			video.setSize( screenDim );
 			fullscreenPane.add(video, JLayeredPane.DEFAULT_LAYER);
 			fullscreenWindow.setVisible(true);
+
+			player.reopenAndContinue( priorState );
 			
 		} else { // leaving fullscreen
 			
+			MediaPlaybackState priorState = player.getState();
+			System.out.println("toggle fullscreen: " + priorState.toString());
+			player.stop();
+				
 			fullscreenWindow.setVisible(false);
 			
 			video.setSize( getSize() );
 			add(video);
 			validate();
+			
+			player.reopenAndContinue( priorState );
 		}
 	}
 
@@ -293,7 +295,39 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 
 	@Override
 	public void onProgressSliderValueChange(int seconds) {
-		System.out.println("onProgressSliderValueChanged - seconds: " + String.valueOf(seconds));
+	}
+
+	/*
+	 * AudioPlayerListener events 
+	 */
+	
+	@Override
+	public void songOpened(AudioPlayer audioPlayer, AudioSource audioSource) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void progressChange(AudioPlayer audioPlayer, float currentTimeInSecs) {
+		progressSlider.setTotalTime((int) player.getDurationInSecs() );
+		progressSlider.setCurrentTime((int)currentTimeInSecs);
+	}
+
+	@Override
+	public void volumeChange(AudioPlayer audioPlayer, double currentVolume) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void stateChange(AudioPlayer audioPlayer, MediaPlaybackState state) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void icyInfo(AudioPlayer audioPlayer, String data) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

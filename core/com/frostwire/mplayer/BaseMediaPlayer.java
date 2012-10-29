@@ -46,6 +46,9 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 	
 	private String 				openedFile;
 	
+	private boolean				isReopening = false;
+	private float				reopeningPos;
+	private MediaPlaybackState  reopeningPriorState;
 	//private SubtitleMonitor		subtitleMonitor;
 	
 	protected PlayerPreferences preferences;
@@ -145,6 +148,15 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 
 	public void doLoadSubtitlesFile(String file) {
 		doLoadSubtitlesFile(file, true);
+	}
+	
+	public void reopenAndContinue(MediaPlaybackState priorState) {
+		
+		reopeningPos = currentPositionInSecs;
+		reopeningPriorState = priorState;
+		isReopening = true;
+		
+		open(openedFile);
 	}
 	
 	public void open(String fileOrUrl) {
@@ -251,7 +263,6 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		if(currentState == MediaPlaybackState.Playing || currentState == MediaPlaybackState.Paused) {			
 			doSeek(timeInSecs);
 		}
-		
 	}
 
 	
@@ -375,6 +386,12 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 				listener.stateChanged( newState);
 			}
 		}
+		
+		if (isReopening && MediaPlaybackState.Playing == currentState) {
+			seek(reopeningPos);
+			
+			
+		}
 	}
 	
 	
@@ -394,6 +411,22 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 				for(PositionListener listener : positionListeners) {
 					listener.positionChanged(currentTimeInSecs);
 				}			
+			}
+			
+			if (isReopening) {
+				
+				isReopening = false;
+				
+				switch(reopeningPriorState) {
+				case Paused: 
+					pause(); 
+					break;
+				case Stopped: 
+					stop(); 
+					break;
+				default: 
+					;
+				}
 			}
 		}
 	}

@@ -517,6 +517,7 @@ MPlayerInstance
 	doSeek(
 		float timeInSecs ) 
 	{
+		
 		synchronized( this ){
 		
 			if( isSeeking ){

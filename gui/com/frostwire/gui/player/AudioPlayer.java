@@ -318,6 +318,14 @@ public class AudioPlayer implements RefreshListener {
     }
 
     /**
+     * reopen current media/seek to current position (for fullscreen transitions)
+     * @param priorState 
+     */
+    public void reopenAndContinue(MediaPlaybackState priorState) {
+    	mplayer.reopenAndContinue( priorState );
+    }
+    
+    /**
      * Begins playing a song
      */
     public void playSong() {
