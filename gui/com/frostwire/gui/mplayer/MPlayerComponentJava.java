@@ -7,9 +7,13 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Insets;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.Window;
@@ -17,13 +21,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
+import javax.swing.AbstractButton;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.plaf.BorderUIResource;
 
-public class MPlayerComponentJava extends Container implements MPlayerComponent {
+import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.ResourceManager;
+import com.limegroup.gnutella.gui.themes.ThemeSettings;
+
+public class MPlayerComponentJava extends Container implements MPlayerComponent, ProgressSliderListener {
 
 	private static final long serialVersionUID = -5860833860676831251L;
 	
@@ -32,41 +50,145 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent 
 	private JFrame fullscreenWindow;
 	private JLayeredPane fullscreenPane;
 	
+	private JSlider volumeSlider;
+	private ProgressSlider progressSlider;
+	
 	public MPlayerComponentJava() {
 		
-		Dimension defaultVideoDim = new Dimension(500,500);
-		Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-        
 		setLayout( new BorderLayout() );
 		
-        // initialize video canvas
-        video = new Canvas();
+		initializeVideoControl();
+        initializeControlsOverlay();
+        initializeFullscreenWindow();
+    }
+	
+	private void initializeVideoControl() {
+		
+		Dimension defaultVideoDim = new Dimension(500,500);
+		
+		video = new Canvas();
         video.setPreferredSize(defaultVideoDim);
-        //video.setMinimumSize(new Dimension(0,0));
-        //video.setMaximumSize(screenDim);
         video.setVisible(true);
         video.setBackground(Color.BLACK);
-        //video.setBounds(0, 0, defaultVideoDim.width, defaultVideoDim.height); //jLayered pane needs you to use setBounds on its components, otherwise they're not shown
-        //video.setIgnoreRepaint(false);
+        video.setIgnoreRepaint(false);
         add(video);
+	}
+	
+	private void initializeControlsOverlay() {
+		
+		
+		ImageIcon bkgndImage = GUIMediator.getThemeImage("fc_background");
+	
+		controlsOverlay = new JPanel(null);
+        controlsOverlay.setBounds( 0, 0, bkgndImage.getIconWidth(), bkgndImage.getIconHeight() );
+        controlsOverlay.setOpaque(false);
         
-        // initialize control overlay
-        Dimension overlayDim = new Dimension( 400, 100 );
-        controlsOverlay = new JPanel(new FlowLayout());
-        controlsOverlay.setVisible(true);
-        controlsOverlay.setBounds( 0, 0, overlayDim.width, overlayDim.height );
-        controlsOverlay.setOpaque(true);
-        controlsOverlay.setBackground(Color.darkGray);
-        JButton button = new JButton("Button on FirstPanel");
-        button.addActionListener( new ActionListener() {
+        // background image
+        // ------------------
+        JLabel bkgnd = new JLabel( bkgndImage );
+        bkgnd.setBackground(new Color(0,0,0,0));
+        bkgnd.setSize( bkgndImage.getIconWidth(), bkgndImage.getIconHeight());
+        	
+        // play button
+        // ------------
+        Point playButtonPos = new Point(236, 13);
+        JButton playButton;
+		playButton = MPlayerComponentJava.createMPlayerButton("fc_play", playButtonPos );
+		playButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MPlayerComponentJava.this.onPlayPressed();
+			}
+		});
+		controlsOverlay.add(playButton);
+        
+        // fast forward button
+		// --------------------
+        Point fastForwardButtonPos = new Point(306, 18);
+        JButton fastForwardButton;
+		fastForwardButton = MPlayerComponentJava.createMPlayerButton("fc_next", fastForwardButtonPos );
+		playButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MPlayerComponentJava.this.onFastForwardPressed();
+			}
+		});
+		controlsOverlay.add(fastForwardButton);
+        
+        // rewind button
+		// --------------
+        Point rewindButtonPos = new Point(182, 18);
+        JButton rewindButton;
+        rewindButton = MPlayerComponentJava.createMPlayerButton("fc_previous", rewindButtonPos);
+        rewindButton.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MPlayerComponentJava.this.onRewindPressed();
+			}
+        });
+		controlsOverlay.add(rewindButton);
+            
+        // full screen exit button
+		// ------------------------
+        Point fullscreenButtonPos = new Point(390, 22);
+        JButton fullscreenButton;
+        fullscreenButton = MPlayerComponentJava.createMPlayerButton("fc_fullscreen_exit", fullscreenButtonPos);
+        fullscreenButton.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				MPlayerComponentJava.this.toggleFullScreen();
 			}
         });
-        controlsOverlay.add(button);
+		controlsOverlay.add(fullscreenButton);
         
-        // initialize fullscreen window
-        fullscreenWindow = new JFrame();
+        // volume slider
+		// --------------
+		JPanel volumePanel = new JPanel( new BorderLayout());
+		volumePanel.setBounds(20, 20, 125, 25);
+		volumePanel.setOpaque(false);
+		
+		ImageIcon volMinIcon = GUIMediator.getThemeImage("fc_volume_off");
+		JLabel volMinLabel = new JLabel( volMinIcon );
+		volMinLabel.setOpaque(false);
+		volMinLabel.setSize( volMinIcon.getIconWidth(), volMinIcon.getIconHeight());
+        volumePanel.add(volMinLabel, BorderLayout.WEST);
+        
+        volumeSlider = new JSlider();
+        volumeSlider.setOpaque(false);
+        volumeSlider.setFocusable(false);
+        volumeSlider.addChangeListener( new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				MPlayerComponentJava.this.onVolumeChanged(((JSlider)e.getSource()).getValue());
+			}
+        });
+        volumePanel.add(volumeSlider, BorderLayout.CENTER);
+        
+        ImageIcon volMaxIcon = GUIMediator.getThemeImage("fc_volume_on");
+		JLabel volMaxLabel = new JLabel( volMaxIcon );
+		volMaxLabel.setSize( volMaxIcon.getIconWidth(), volMaxIcon.getIconHeight());
+        volumePanel.add(volMaxLabel, BorderLayout.EAST);
+        
+        controlsOverlay.add(volumePanel);
+        
+        
+        // progress slider
+        // ----------------
+        progressSlider = new ProgressSlider();
+        progressSlider.addProgressSliderListener(this);
+        progressSlider.setLocation(20, 70);
+        controlsOverlay.add(progressSlider);
+        
+        controlsOverlay.add(bkgnd);
+        
+        // initialize default overlay position
+		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+		Rectangle overlayRect = controlsOverlay.getBounds();
+		overlayRect.x = (int) (screen.width*0.5 - overlayRect.width/2);
+		overlayRect.y = (int) (screen.height*0.75 - overlayRect.height/2);
+		controlsOverlay.setBounds( overlayRect );
+	}
+	
+	private void initializeFullscreenWindow() {
+		
+		Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+        
+		fullscreenWindow = new JFrame();
         fullscreenWindow.setLayout(null);
         fullscreenWindow.setUndecorated(true);
         fullscreenWindow.setSize( screenDim );
@@ -78,18 +200,26 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent 
         fullscreenPane.setBounds(0, 0, screenDim.width, screenDim.height);
         fullscreenPane.add(controlsOverlay, JLayeredPane.PALETTE_LAYER);
         fullscreenWindow.getContentPane().add(fullscreenPane);
-    	
-        resetOverlayPosition();
-    }
+	}
 	
-	private void resetOverlayPosition() {
+	public static JButton createMPlayerButton(final String image, final Point pos) {
 		
-		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+		ImageIcon buttonImage = GUIMediator.getThemeImage(image);
+        
+		// create button
+		JButton button = new JButton();
 		
-		Rectangle overlayRect = controlsOverlay.getBounds();
-		overlayRect.x = (int) (screen.width*0.5 - overlayRect.width/2);
-		overlayRect.y = (int) (screen.height*0.75 - overlayRect.height/2);
-		controlsOverlay.setBounds( overlayRect );
+		// customize UI
+		button.setIcon( buttonImage );
+        button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
+		button.setRolloverEnabled(true);
+		button.setMargin(new Insets(0,0,0,0));
+		button.setFocusPainted(false);
+		button.setSize( new Dimension(buttonImage.getIconWidth(), buttonImage.getIconHeight()) );
+        button.setLocation( pos );
+        
+		return button;
 	}
 	
 	
@@ -108,7 +238,6 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent 
 			video.setSize( screenDim );
 			fullscreenPane.add(video, JLayeredPane.DEFAULT_LAYER);
 			fullscreenWindow.setVisible(true);
-			
 			
 		} else { // leaving fullscreen
 			
@@ -139,5 +268,32 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent 
 		return hWnd;
 	}
 
+	/*
+	 * UI control event handlers
+	 */
+	public void onPlayPressed() {
+		System.out.println("onPlayPressed");
+	}
+	
+	public void onFastForwardPressed() {
+		System.out.println("onFastForwardPressed");
+	}
+	
+	public void onRewindPressed() {
+		System.out.println("onRewindPressed");
+	}
+	
+	public void onFullscreenPressed() {
+		System.out.println("onFullscreenPressed");
+	}
+
+	private void onVolumeChanged( int value) {
+		System.out.println("onVolumeChanged - value:" + String.valueOf(value));
+	}
+
+	@Override
+	public void onProgressSliderValueChange(int seconds) {
+		System.out.println("onProgressSliderValueChanged - seconds: " + String.valueOf(seconds));
+	}
 
 }
