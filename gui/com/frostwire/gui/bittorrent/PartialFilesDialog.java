@@ -33,6 +33,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -48,12 +49,15 @@ import javax.swing.table.TableRowSorter;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.util.TorrentUtils;
+import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.LabeledTextField;
+import com.limegroup.gnutella.gui.search.NamedMediaType;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 
 /**
@@ -82,6 +86,9 @@ public class PartialFilesDialog extends JDialog {
     private boolean[] _filesSelection;
     private JCheckBox _checkBoxToggleAll;
 
+    /** Has the table been painted at least once? */
+	protected boolean tablePainted;
+
     public PartialFilesDialog(JFrame frame, File torrentFile) throws TOTorrentException {
         super(frame, I18n.tr("Select files to download"));
 
@@ -104,10 +111,11 @@ public class PartialFilesDialog extends JDialog {
 
         setupUI();
         setLocationRelativeTo(frame);
+
     }
 
     protected void setupUI() {
-        setResizable(false);
+        setResizable(true);
         getContentPane().setLayout(new GridBagLayout());
 
         // title
@@ -171,17 +179,44 @@ public class PartialFilesDialog extends JDialog {
 
     private void setupTable() {
         GridBagConstraints c;
-        _table = new JTable();
+        _table = new JTable(){
+        	public void paint(java.awt.Graphics g) {
+        		super.paint(g);
+      		
+				try {
+					if (tablePainted) {
+						return;
+					}
+					tablePainted = true;
+
+					GUIUtils.adjustColumnWidth(_model, 2, 620, 10, this);
+					GUIUtils.adjustColumnWidth(_model, 3, 150, 10, this);
+				} catch (Exception e) {
+					tablePainted = false;
+				}
+        		
+        	};
+        };
+        
         _table.setPreferredScrollableViewportSize(new Dimension(600, 300));
         _table.setRowSelectionAllowed(false);
         _table.setModel(_model);
-        _table.getColumnModel().getColumn(0).setHeaderValue("");
-
-        _table.getColumnModel().getColumn(1).setHeaderValue(I18n.tr("File"));
-        _table.getColumnModel().getColumn(2).setHeaderValue(I18n.tr("Size"));
-        _table.getColumnModel().getColumn(0).setPreferredWidth(30);
-        _table.getColumnModel().getColumn(1).setPreferredWidth(620);
-        _table.getColumnModel().getColumn(2).setPreferredWidth(60);
+        _table.getColumnModel().getColumn(0).setHeaderValue(""); //checkbox
+        _table.getColumnModel().getColumn(1).setHeaderValue(""); //icon
+        _table.getColumnModel().getColumn(2).setHeaderValue(I18n.tr("File"));
+        _table.getColumnModel().getColumn(3).setHeaderValue(I18n.tr("Type"));
+        _table.getColumnModel().getColumn(4).setHeaderValue(I18n.tr("Extension"));
+        _table.getColumnModel().getColumn(5).setHeaderValue(I18n.tr("Size"));
+        
+        
+        _table.getColumnModel().getColumn(0).setPreferredWidth(30);//checkbox
+        _table.getColumnModel().getColumn(1).setPreferredWidth(30);//icon
+        _table.getColumnModel().getColumn(2).setPreferredWidth(620);
+        _table.getColumnModel().getColumn(3).setPreferredWidth(150);
+        _table.getColumnModel().getColumn(4).setPreferredWidth(60);
+        _table.getColumnModel().getColumn(5).setPreferredWidth(60);
+        
+        
 
         _scrollPane = new JScrollPane(_table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         _table.setFillsViewportHeight(true);
@@ -344,7 +379,7 @@ public class PartialFilesDialog extends JDialog {
 
         @Override
         public int getColumnCount() {
-            return 3;
+            return 6;
         }
 
         @Override
@@ -354,12 +389,20 @@ public class PartialFilesDialog extends JDialog {
 
         @Override
         public Class<?> getColumnClass(int columnIndex) {
+
+        	
             switch (columnIndex) {
             case 0:
                 return Boolean.class;
             case 1:
-                return String.class;
+            	return Icon.class;
             case 2:
+                return String.class;
+            case 3:
+            	return String.class;
+            case 4:
+            	return String.class;
+            case 5:
                 return SizeHolder.class;
             default:
                 return null;
@@ -368,12 +411,27 @@ public class PartialFilesDialog extends JDialog {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
+        	String filePath = _fileInfos[rowIndex].torrentFile.getRelativePath();
+        	String extension = FilenameUtils.getExtension(filePath);
+        	
             switch (columnIndex) {
             case 0:
+            	//checkbox
                 return _fileInfos[rowIndex].selected;
             case 1:
-                return _fileInfos[rowIndex].torrentFile.getRelativePath();
+            	//icon
+            	return IconManager.instance().getIconForExtension(extension);
             case 2:
+            	//path
+                return filePath;
+            case 3:
+            	//human type
+            	return guessHumanType(extension);
+            case 4:
+            	//extension
+            	return extension;
+            case 5:
+            	//file size
                 return new SizeHolder(_fileInfos[rowIndex].torrentFile.getLength());
             default:
                 return null;
@@ -419,5 +477,14 @@ public class PartialFilesDialog extends JDialog {
         public TorrentFileInfo[] getFileInfos() {
             return _fileInfos;
         }
+
+		private String guessHumanType(String extension) {
+			try {
+				return NamedMediaType.getFromExtension(extension).getMediaType().getDescriptionKey();
+			} catch (Throwable t) {
+				return I18n.tr("Unknown");
+			}
+		}
+
     }
 }
