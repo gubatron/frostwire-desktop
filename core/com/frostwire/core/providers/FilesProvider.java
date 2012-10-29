@@ -19,6 +19,7 @@
 package com.frostwire.core.providers;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.frostwire.content.ContentProvider;
@@ -26,6 +27,7 @@ import com.frostwire.content.ContentUris;
 import com.frostwire.content.ContentValues;
 import com.frostwire.content.Context;
 import com.frostwire.content.UriMatcher;
+import com.frostwire.core.Constants;
 import com.frostwire.core.providers.UniversalStore.Documents;
 import com.frostwire.core.providers.UniversalStore.Documents.DocumentsColumns;
 import com.frostwire.core.providers.UniversalStore.Documents.Media;
@@ -36,6 +38,7 @@ import com.frostwire.database.sqlite.SQLiteOpenHelper;
 import com.frostwire.database.sqlite.SQLiteQueryBuilder;
 import com.frostwire.net.Uri;
 import com.frostwire.text.TextUtils;
+import com.limegroup.gnutella.gui.init.SetupManager;
 
 /**
  * @author gubatron
@@ -49,31 +52,72 @@ public class FilesProvider extends ContentProvider {
     private static final String DATABASE_NAME = "files";
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DOCUMENTS_TABLE_NAME = "documents";
 
-    private static final int DOCUMENTS_ALL = 1;
-    private static final int DOCUMENTS_ID = 2;
+    private static final String AUDIO_TABLE_NAME = "audio";
+    private static final String PICTURES_TABLE_NAME = "pictures";
+    private static final String VIDEOS_TABLE_NAME = "videos";
+    private static final String DOCUMENTS_TABLE_NAME = "documents";
+    private static final String APPLICATIONS_TABLE_NAME = "applications";
+    private static final String RINGTONES_TABLE_NAME = "ringtones";
+
+    private static final int AUDIO_ALL = 1;
+    private static final int PICTURES_ALL = 2;
+    private static final int VIDEOS_ALL = 3;
+    private static final int DOCUMENTS_ALL = 4;
+    private static final int APPLICATIONS_ALL = 5;
+    private static final int RINGTONES_ALL = 6;
+
+    private static final int AUDIO_ID = 7;
+    private static final int PICTURES_ID = 8;
+    private static final int VIDEOS_ID = 9;
+    private static final int DOCUMENTS_ID = 10;
+    private static final int APPLICATIONS_ID = 11;
+    private static final int RINGTONES_ID = 12;
 
     private static final UriMatcher uriMatcher;
-    private static HashMap<String, String> projectionMap;
+
+    private static HashMap<Integer, String> tables;
+    private static HashMap<Integer, HashMap<String, String>> projections;
 
     private DatabaseHelper databaseHelper;
 
     static {
 
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(UniversalStore.UNIVERSAL_DOCUMENTS_AUTHORITY, "documents", DOCUMENTS_ALL);
-        uriMatcher.addURI(UniversalStore.UNIVERSAL_DOCUMENTS_AUTHORITY, "documents/#", DOCUMENTS_ID);
 
-        projectionMap = new HashMap<String, String>();
-        projectionMap.put(DocumentsColumns._ID, DocumentsColumns._ID);
-        projectionMap.put(DocumentsColumns.DATA, DocumentsColumns.DATA);
-        projectionMap.put(DocumentsColumns.SIZE, DocumentsColumns.SIZE);
-        projectionMap.put(DocumentsColumns.DISPLAY_NAME, DocumentsColumns.DISPLAY_NAME);
-        projectionMap.put(DocumentsColumns.TITLE, DocumentsColumns.TITLE);
-        projectionMap.put(DocumentsColumns.DATE_ADDED, DocumentsColumns.DATE_ADDED);
-        projectionMap.put(DocumentsColumns.DATE_MODIFIED, DocumentsColumns.DATE_MODIFIED);
-        projectionMap.put(DocumentsColumns.MIME_TYPE, DocumentsColumns.MIME_TYPE);
+        uriMatcher.addURI(MediaStore.AUTHORITY, "external/audio/media", AUDIO_ALL);
+        uriMatcher.addURI(MediaStore.AUTHORITY, "external/images/media", PICTURES_ALL);
+        uriMatcher.addURI(MediaStore.AUTHORITY, "external/video/media", VIDEOS_ALL);
+        uriMatcher.addURI(UniversalStore.UNIVERSAL_DOCUMENTS_AUTHORITY, "documents", DOCUMENTS_ALL);
+        uriMatcher.addURI(UniversalStore.UNIVERSAL_APPLICATIONS_AUTHORITY, "applications", APPLICATIONS_ALL);
+        uriMatcher.addURI(MediaStore.AUTHORITY, "internal/audio/media", RINGTONES_ALL);
+
+        uriMatcher.addURI(MediaStore.AUTHORITY, "external/audio/media/#", AUDIO_ID);
+        uriMatcher.addURI(MediaStore.AUTHORITY, "external/images/media/#", PICTURES_ID);
+        uriMatcher.addURI(MediaStore.AUTHORITY, "external/video/media/#", VIDEOS_ID);
+        uriMatcher.addURI(UniversalStore.UNIVERSAL_DOCUMENTS_AUTHORITY, "documents/#", DOCUMENTS_ID);
+        uriMatcher.addURI(UniversalStore.UNIVERSAL_APPLICATIONS_AUTHORITY, "documents/#", APPLICATIONS_ID);
+        uriMatcher.addURI(MediaStore.AUTHORITY, "internal/audio/media/#", RINGTONES_ID);
+
+        tables = new HashMap<Integer, String>();
+
+        tables.put(AUDIO_ALL, AUDIO_TABLE_NAME);
+        tables.put(PICTURES_ALL, PICTURES_TABLE_NAME);
+        tables.put(VIDEOS_ALL, VIDEOS_TABLE_NAME);
+        tables.put(DOCUMENTS_ALL, DOCUMENTS_TABLE_NAME);
+        tables.put(APPLICATIONS_ALL, APPLICATIONS_TABLE_NAME);
+        tables.put(RINGTONES_ALL, RINGTONES_TABLE_NAME);
+
+        tables.put(AUDIO_ID, AUDIO_TABLE_NAME);
+        tables.put(PICTURES_ID, PICTURES_TABLE_NAME);
+        tables.put(VIDEOS_ID, VIDEOS_TABLE_NAME);
+        tables.put(DOCUMENTS_ID, DOCUMENTS_TABLE_NAME);
+        tables.put(APPLICATIONS_ID, APPLICATIONS_TABLE_NAME);
+        tables.put(RINGTONES_ID, RINGTONES_TABLE_NAME);
+
+        projections = new HashMap<Integer, HashMap<String, String>>();
+
+        projections.put(DOCUMENTS_ALL, getDocumentsProjectionMap());
     }
 
     public FilesProvider(Context context) {
@@ -96,11 +140,11 @@ public class FilesProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)) {
         case DOCUMENTS_ALL:
-            qb.setProjectionMap(projectionMap);
+            //qb.setProjectionMap(documentsPM);
             break;
 
         case DOCUMENTS_ID:
-            qb.setProjectionMap(projectionMap);
+            //qb.setProjectionMap(documentsPM);
             qb.appendWhere(DocumentsColumns._ID + "=" + uri.getPathSegments().get(1));
             break;
 
@@ -222,6 +266,36 @@ public class FilesProvider extends ContentProvider {
         //getContext().getContentResolver().notifyChange(uri, null);
 
         return count;
+    }
+    
+    private static HashMap<String, String> getAudioProjectionMap() {
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        map.put(DocumentsColumns._ID, DocumentsColumns._ID);
+        map.put(DocumentsColumns.DATA, DocumentsColumns.DATA);
+        map.put(DocumentsColumns.SIZE, DocumentsColumns.SIZE);
+        map.put(DocumentsColumns.DISPLAY_NAME, DocumentsColumns.DISPLAY_NAME);
+        map.put(DocumentsColumns.TITLE, DocumentsColumns.TITLE);
+        map.put(DocumentsColumns.DATE_ADDED, DocumentsColumns.DATE_ADDED);
+        map.put(DocumentsColumns.DATE_MODIFIED, DocumentsColumns.DATE_MODIFIED);
+        map.put(DocumentsColumns.MIME_TYPE, DocumentsColumns.MIME_TYPE);
+
+        return map;
+    }
+
+    private static HashMap<String, String> getDocumentsProjectionMap() {
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        map.put(DocumentsColumns._ID, DocumentsColumns._ID);
+        map.put(DocumentsColumns.DATA, DocumentsColumns.DATA);
+        map.put(DocumentsColumns.SIZE, DocumentsColumns.SIZE);
+        map.put(DocumentsColumns.DISPLAY_NAME, DocumentsColumns.DISPLAY_NAME);
+        map.put(DocumentsColumns.TITLE, DocumentsColumns.TITLE);
+        map.put(DocumentsColumns.DATE_ADDED, DocumentsColumns.DATE_ADDED);
+        map.put(DocumentsColumns.DATE_MODIFIED, DocumentsColumns.DATE_MODIFIED);
+        map.put(DocumentsColumns.MIME_TYPE, DocumentsColumns.MIME_TYPE);
+
+        return map;
     }
 
     @Override

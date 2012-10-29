@@ -31,8 +31,10 @@ import com.frostwire.content.ContentValues;
 import com.frostwire.content.Context;
 import com.frostwire.core.Constants;
 import com.frostwire.core.FileDescriptor;
+import com.frostwire.core.providers.UniversalStore;
 import com.frostwire.core.providers.UniversalStore.Documents;
 import com.frostwire.core.providers.UniversalStore.Documents.DocumentsColumns;
+import com.frostwire.database.Cursor;
 import com.frostwire.net.Uri;
 
 /**
@@ -56,6 +58,10 @@ public class UniversalScanner {
 
     private void scanDocument(String filePath) {
         File file = new File(filePath);
+        
+        if (documentExists(filePath, file.length())) {
+            return;
+        }
 
         String displayName = FilenameUtils.getBaseName(file.getName());
 
@@ -76,6 +82,26 @@ public class UniversalScanner {
         FileDescriptor fd = new FileDescriptor();
         fd.fileType = Constants.FILE_TYPE_DOCUMENTS;
         fd.id = Integer.valueOf(uri.getLastPathSegment());
+    }
+    
+    private boolean documentExists(String filePath, long size) {
+        boolean result = false;
+
+        Cursor c = null;
+
+        try {
+            ContentResolver cr = context.getContentResolver();
+            c = cr.query(UniversalStore.Documents.Media.CONTENT_URI, new String[] { DocumentsColumns._ID }, DocumentsColumns.DATA + "=?" + " AND " + DocumentsColumns.SIZE + "=?", new String[] { filePath, String.valueOf(size) }, null);
+            result = c != null && c.getCount() != 0;
+        } catch (Throwable e) {
+            LOG.log(Level.WARNING, "Error detecting if file exists: " + filePath, e);
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+
+        return result;
     }
 
     public static String getMimeType(String filePath) {

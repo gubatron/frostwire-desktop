@@ -18,6 +18,9 @@
 
 package com.frostwire.content;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.frostwire.core.providers.FilesProvider;
 import com.frostwire.database.Cursor;
 import com.frostwire.net.Uri;
@@ -29,7 +32,7 @@ import com.frostwire.net.Uri;
  */
 public class ContentResolver {
 
-    private static ContentProvider files;
+    private static List<ContentProvider> providers;
 
     private final Context context;
 
@@ -117,15 +120,38 @@ public class ContentResolver {
         }
     }
 
-    private synchronized ContentProvider acquireProvider(Uri uri) {
-        if (files == null) {
-            files = new FilesProvider(context);
-            files.onCreate();
+    private ContentProvider acquireProvider(Uri uri) {
+        setupProviders();
+
+        ContentProvider provider = null;
+
+        for (ContentProvider p : providers) {
+            try {
+                String mime = p.getType(uri);
+                if (mime != null) {
+                    provider = p;
+                    break;
+                }
+            } catch (Throwable e) {
+                // ignore
+            }
         }
 
-        return files;
+        return provider;
     }
 
     private void releaseProvider(ContentProvider provider) {
+    }
+
+    private synchronized void setupProviders() {
+        if (providers == null) {
+            providers = new ArrayList<ContentProvider>();
+
+            ContentProvider provider = null;
+
+            provider = new FilesProvider(context);
+            provider.onCreate();
+            providers.add(provider);
+        }
     }
 }
