@@ -501,7 +501,7 @@ public class MPlayer extends BaseMediaPlayer {
 
 		reportNewState(MediaPlaybackState.Playing);
 	}
-
+	
 	public void doSeek(float timeInSecs) {
 		MPlayerInstance instance = getCurrentInstance();
 

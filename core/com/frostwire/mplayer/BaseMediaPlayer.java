@@ -187,6 +187,18 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		doLoadSubtitlesFile(file);
 	}
 	
+	public void fastForward() {
+		if (currentState == MediaPlaybackState.Playing) {
+			seek( (float) (currentPositionInSecs + 10.0));
+		}
+	}
+	
+	public void rewind() {
+		if (currentState == MediaPlaybackState.Playing){
+			seek( (float) (currentPositionInSecs - 10.0));
+		}
+	}
+	
 	public void pause() {
 		if(currentState == MediaPlaybackState.Playing) {
 			doPause();

@@ -359,6 +359,15 @@ public class AudioPlayer implements RefreshListener {
         currentSong = null;
         notifyState(getState());
     }
+    
+    
+    public void fastForward() {
+    	mplayer.fastForward();
+    }
+    
+    public void rewind() {
+    	mplayer.rewind();
+    }
 
     /**
      * Seeks to a new location in the current song

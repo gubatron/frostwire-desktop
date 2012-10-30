@@ -41,6 +41,8 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 	
 	private AudioPlayer player;
 	
+	private JButton playButton, pauseButton;
+	
 	public MPlayerComponentJava() {
 		
 		setLayout( new BorderLayout() );
@@ -83,8 +85,7 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
         // play button
         // ------------
         Point playButtonPos = new Point(236, 13);
-        JButton playButton;
-		playButton = MPlayerComponentJava.createMPlayerButton("fc_play", playButtonPos );
+        playButton = MPlayerComponentJava.createMPlayerButton("fc_play", playButtonPos );
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MPlayerComponentJava.this.onPlayPressed();
@@ -92,12 +93,23 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 		});
 		controlsOverlay.add(playButton);
         
+		// pause button
+		// --------------
+		Point pauseButtonPos = new Point(236, 13);
+        pauseButton = MPlayerComponentJava.createMPlayerButton("fc_play", pauseButtonPos );
+		pauseButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MPlayerComponentJava.this.onPausePressed();
+			}
+		});
+		controlsOverlay.add(pauseButton);
+		
         // fast forward button
 		// --------------------
         Point fastForwardButtonPos = new Point(306, 18);
         JButton fastForwardButton;
 		fastForwardButton = MPlayerComponentJava.createMPlayerButton("fc_next", fastForwardButtonPos );
-		playButton.addActionListener(new ActionListener() {
+		pauseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MPlayerComponentJava.this.onFastForwardPressed();
 			}
@@ -274,27 +286,28 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 	 * UI control event handlers
 	 */
 	public void onPlayPressed() {
-		System.out.println("onPlayPressed");
+		player.togglePause();
+	}
+	
+	public void onPausePressed() {
+		player.togglePause();
 	}
 	
 	public void onFastForwardPressed() {
-		System.out.println("onFastForwardPressed");
+		player.fastForward();
 	}
 	
 	public void onRewindPressed() {
-		System.out.println("onRewindPressed");
-	}
-	
-	public void onFullscreenPressed() {
-		System.out.println("onFullscreenPressed");
+		player.rewind();
 	}
 
 	private void onVolumeChanged( int value) {
-		System.out.println("onVolumeChanged - value:" + String.valueOf(value));
+		
 	}
 
 	@Override
 	public void onProgressSliderValueChange(int seconds) {
+		player.seek((float)seconds);
 	}
 
 	/*
@@ -314,14 +327,23 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 
 	@Override
 	public void volumeChange(AudioPlayer audioPlayer, double currentVolume) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void stateChange(AudioPlayer audioPlayer, MediaPlaybackState state) {
-		// TODO Auto-generated method stub
-		
+		switch(state) {
+		case Playing:
+			pauseButton.setVisible(true);
+			playButton.setVisible(false);
+			break;
+		case Paused:
+		case Stopped:
+			pauseButton.setVisible(false);
+			playButton.setVisible(true);
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
