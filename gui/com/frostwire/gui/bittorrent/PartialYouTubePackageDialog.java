@@ -34,6 +34,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -52,12 +53,18 @@ import jd.plugins.FilePackage;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.limewire.util.FilenameUtils;
 
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.LabeledTextField;
+import com.limegroup.gnutella.gui.search.NamedMediaType;
 
 public class PartialYouTubePackageDialog extends JDialog {
+	
+	/** First time this component has been painted */
+	private boolean tablePainted;
 
     private static final long serialVersionUID = -7028188722959174740L;
 
@@ -101,7 +108,7 @@ public class PartialYouTubePackageDialog extends JDialog {
     }
 
     protected void setupUI() {
-        setResizable(false);
+        setResizable(true);
         getContentPane().setLayout(new GridBagLayout());
 
         // title
@@ -165,16 +172,40 @@ public class PartialYouTubePackageDialog extends JDialog {
 
     private void setupTable() {
         GridBagConstraints c;
-        _table = new JTable();
+        _table = new JTable() {
+        	public void paint(java.awt.Graphics g) {
+        		
+        		super.paint(g);
+        		
+				try {
+					if (tablePainted) {
+						return;
+					}
+					tablePainted = true;
+
+					GUIUtils.adjustColumnWidth(_model, 2, 620, 10, this);
+					GUIUtils.adjustColumnWidth(_model, 3, 150, 10, this);
+				} catch (Exception e) {
+					tablePainted = false;
+				}
+        		
+        	};
+        };
+         
+        
         _table.setPreferredScrollableViewportSize(new Dimension(600, 300));
         _table.setModel(_model);
-        _table.getColumnModel().getColumn(0).setHeaderValue("");
-
-        _table.getColumnModel().getColumn(1).setHeaderValue(I18n.tr("File"));
-        _table.getColumnModel().getColumn(2).setHeaderValue(I18n.tr("Type"));
-        _table.getColumnModel().getColumn(0).setPreferredWidth(30);
-        _table.getColumnModel().getColumn(1).setPreferredWidth(620);
-        _table.getColumnModel().getColumn(2).setPreferredWidth(60);
+        _table.getColumnModel().getColumn(0).setHeaderValue(""); //checkbox
+        _table.getColumnModel().getColumn(1).setHeaderValue(""); //icon
+        _table.getColumnModel().getColumn(2).setHeaderValue(I18n.tr("File"));
+        _table.getColumnModel().getColumn(3).setHeaderValue(I18n.tr("Type"));
+        _table.getColumnModel().getColumn(4).setHeaderValue(I18n.tr("Extension"));
+        
+        _table.getColumnModel().getColumn(0).setPreferredWidth(30);//checkbox
+        _table.getColumnModel().getColumn(1).setPreferredWidth(30);//icon
+        _table.getColumnModel().getColumn(2).setPreferredWidth(620);
+        _table.getColumnModel().getColumn(3).setPreferredWidth(150);
+        _table.getColumnModel().getColumn(4).setPreferredWidth(60);
 
         _scrollPane = new JScrollPane(_table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         _table.setFillsViewportHeight(true);
@@ -337,7 +368,7 @@ public class PartialYouTubePackageDialog extends JDialog {
 
         @Override
         public int getColumnCount() {
-            return 3;
+            return 5;
         }
 
         @Override
@@ -349,11 +380,20 @@ public class PartialYouTubePackageDialog extends JDialog {
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
             case 0:
+            	//checkbox
                 return Boolean.class;
             case 1:
-                return String.class;
+            	//icon
+            	return Icon.class;
             case 2:
+            	//path
                 return String.class;
+            case 3:
+            	//type
+                return String.class;
+            case 4:
+            	//extension
+            	return String.class;
             default:
                 return null;
             }
@@ -361,13 +401,25 @@ public class PartialYouTubePackageDialog extends JDialog {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
+        	String fileName = readFilename(_fileInfos[rowIndex].file);
+        	String extension = FilenameUtils.getExtension(fileName);
             switch (columnIndex) {
             case 0:
+            	
+            	//checkbox
                 return _fileInfos[rowIndex].selected;
             case 1:
-                return readFilename(_fileInfos[rowIndex].file);
+            	//icon
+            	return IconManager.instance().getIconForExtension(extension);
             case 2:
-                return FilenameUtils.getExtension(readFilename(_fileInfos[rowIndex].file));
+            	//file name
+                return fileName;
+            case 3:
+            	//(human readable type)
+            	return guessHumanType(fileName, extension);
+            case 4:
+            	//extension
+                return extension;
             default:
                 return null;
             }
@@ -423,5 +475,41 @@ public class PartialYouTubePackageDialog extends JDialog {
         public FilePackageInfo[] getFileInfos() {
             return _fileInfos;
         }
+        
+    	public String guessHumanType(String filename, String extension) {
+			try {
+				// first if it's a video or audio
+				StringBuilder humanType = new StringBuilder();
+
+				MediaType mediaType = NamedMediaType
+						.getFromExtension(extension).getMediaType();
+
+				if (mediaType.equals(MediaType.getAudioMediaType())) {
+					humanType.append(I18n.tr("Audio"));
+				} else if (mediaType.equals(MediaType.getVideoMediaType())) {
+					humanType.append(I18n.tr("Video"));
+				}
+
+				humanType.append(" ");
+
+				// now the quality
+				if (filename.contains("High Quality")
+						|| filename.contains("(720p_")
+						|| filename.contains("(1080p_")) {
+					humanType.append(I18n.tr("(High Quality)"));
+				} else if (filename.contains("(AAC)")
+						|| filename.contains("(480p_")) {
+					humanType.append(I18n.tr("(Medium Quality"));
+				} else {
+					humanType.append(I18n.tr("(Poor Quality)"));
+				}
+
+				return humanType.toString();
+			} catch (Throwable t) {
+				return I18n.tr("Unknown");
+			}
+    	}
     }
+
+
 }

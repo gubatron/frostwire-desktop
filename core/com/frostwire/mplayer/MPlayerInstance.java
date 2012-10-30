@@ -174,10 +174,39 @@ MPlayerInstance
             
             if(OSUtils.isWindows()) {
             	cmdList.add("-vo");
+            	//Gubatron: Erich, this will eliminate flickering, however
+            	//this driver will not keep aspect ratio, you'll have to
+            	//recalculate the size of the canvas on windows resize event.
+            	//Gotcha 1: You won't be able to know the aspect ratio until the first frame
+            	//of the video has been rendered.
+            	//
+            	//Gotcha 2: You must make sure the VM you are using on your mac supports Direct3D.
+            	// mplayer will throw a text error that you should parse in order to let the user know
+            	// that she must make sure to have her Direct3D drivers up to date to have video playback
+            	// on FrostWire.
+            	//
+            	// I'd recommend installing Vuze on your windows environment to use as a reference
+            	// if video playback works on Vuze it should work here as well, they're also using
+            	// mplayer, and they're forcing users to have direct3d installed because the performance
+            	// with directx is poor (flickering on resize, flickering on window move, the background wil come out in funky colors)
+            	//
+            	// What I'd do, would be first trying "direct3d, if it fails, use "gl", if it fails fall back to "directx"
+            	//
+            	/**
+            	 * @see MplayerApp.Player.parseVideoSize() to get the video size.
+            	 * @see MPlayerApp.resizeCanvas() (this implementation is incomplete, it's only working if the video is bigger than the canvas, didn't implement downsizing for this proof of concept.)
+            	 */
+            	
+            	//cmdList.add("direct3d");
+            	//cmdList.add("gl");
             	cmdList.add("directx");
+            	            	
             	cmdList.add("-double");
+            	
+            	//these should no longer necessary when you use the direct3d driver
             	cmdList.add("-colorkey");
             	cmdList.add("0x010101");
+            	
             	cmdList.add("-wid");
             	cmdList.add( String.valueOf(MediaComponentMediator.instance().getMPlayerComponent().getWindowID()));
             }
@@ -218,7 +247,7 @@ MPlayerInstance
 			//cmdList.add("-volume");
 			//cmdList.add("0");
 			
-            fileOrUrl = "C:\\Users\\erichpleny\\Documents\\Creative Commons Video.mp4";
+            //fileOrUrl = "C:\\Users\\erichpleny\\Documents\\Creative Commons Video.mp4";
             
 			cmdList.add(String.format("\"%s\"", fileOrUrl));
 			
@@ -517,7 +546,6 @@ MPlayerInstance
 	doSeek(
 		float timeInSecs ) 
 	{
-		
 		synchronized( this ){
 		
 			if( isSeeking ){

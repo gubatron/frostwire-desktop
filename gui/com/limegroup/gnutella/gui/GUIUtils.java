@@ -51,11 +51,13 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
+import javax.swing.table.TableModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -802,5 +804,44 @@ public final class GUIUtils {
     		return GUIUtils.getCodeForCharKey(text.substring(index + 1, index + 2));
     	}
     	return -1;
+    }
+    
+    /**
+     * It will adjust the column width to match the widest element.
+     * (You might not want to use this for every column, consider some columns might be really long)
+     * @param model
+     * @param columnIndex
+     * @param table
+     * @return
+     */
+    public static void adjustColumnWidth(TableModel model, int columnIndex, int maxWidth, int rightPadding, JTable table) {
+    	
+    	if (columnIndex > model.getColumnCount()-1) {
+    		//invalid column index
+    		return;
+    	}
+    	
+    	if (!model.getColumnClass(columnIndex).equals(String.class)) {
+    		return;
+    	}
+    	
+    	String longestValue = "";
+    	for (int row = 0; row < model.getRowCount(); row++) {
+    		String strValue = (String) model.getValueAt(row, columnIndex);
+    		if (strValue != null && strValue.length() > longestValue.length()) {
+    			longestValue = strValue;
+    		}
+    	}
+    	
+    	Graphics g = table.getGraphics();
+    	
+    	try {
+    		int suggestedWidth = (int) g.getFontMetrics(table.getFont()).getStringBounds(longestValue, g).getWidth();
+    		table.getColumnModel().getColumn(columnIndex).setPreferredWidth(((suggestedWidth > maxWidth) ? maxWidth : suggestedWidth)+rightPadding);
+    	} catch (Exception e) {
+    		table.getColumnModel().getColumn(columnIndex).setPreferredWidth(maxWidth);
+    		e.printStackTrace();
+    	}
+    
     }
 }
