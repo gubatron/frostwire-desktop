@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.event.ActionEvent;
@@ -32,6 +33,12 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tables.ActionIconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTableDataLine<InternetRadioStation> {
 	
     /**

@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.io.File;
@@ -23,8 +24,8 @@ import java.util.Date;
 
 import javax.swing.Icon;
 
+import com.frostwire.gui.Librarian;
 import com.frostwire.gui.player.AudioPlayer;
-import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
@@ -35,7 +36,10 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 /**
  * This class acts as a single line containing all
  * the necessary Library info.
- * @author Sam Berlin
+ * 
+ * @author gubatron
+ * @author aldenml
+ * 
  */
 public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLine<File> {
     
@@ -70,6 +74,8 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
      */
     static final int MODIFICATION_TIME_IDX = 5;
     
+    static final int SHARE_IDX = 6;
+    
     /**
      * Add the columns to static array _in the proper order_.
      * The *_IDX variables above need to match the corresponding
@@ -88,9 +94,6 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	
 	/** Cached SizeHolder */
 	private SizeHolder _sizeHolder;
-
-	/** Variable to hold the file descriptor */
-	private FileDesc _fileDesc;
 
 	/** Variable for the path */
 	private String _path;
@@ -114,8 +117,6 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 		super();
 		_model = ltm;
 	}
-
-	public FileDesc getFileDesc() { return _fileDesc; }
 
 	public int getColumnCount() { return getLimeTableColumns().length; }
 
@@ -160,11 +161,6 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         }
     }
     
-    void setFileDesc(FileDesc fd) {
-        initialize(fd.getFile());
-        _fileDesc = fd;
-    }
-    
     /**
      * Returns the file of this data line.
      */
@@ -194,12 +190,9 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	    case PATH_IDX:
 	        return new PlayableCell(this, _path, isPlaying, idx);
         case MODIFICATION_TIME_IDX:
-			// it's cheaper to use the cached value if available,
-			// hope it's always up to date
-			if (_fileDesc != null) {
-				return new PlayableCell(this, new Date(_fileDesc.lastModified()),isPlaying, idx);
-			}
 			return new PlayableCell(this, new Date(initializer.lastModified()),isPlaying, idx);
+        case SHARE_IDX:
+            return getFileShareStateIcon();
 	    }
 	    return null;
 	}
@@ -260,6 +253,9 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	            new LimeTableColumn(MODIFICATION_TIME_IDX, 
 	                    "LIBRARY_TABLE_MODIFICATION_TIME", I18n.tr("Last Modified"),
 	                    20, false, PlayableCell.class),
+	                    
+	            new LimeTableColumn(SHARE_IDX, "LIBRARY_TABLE_SHARE", I18n.tr("Share"),
+	                    18, true, Icon.class)
 	        };
 	        ltColumns = temp;
 	    }
@@ -287,5 +283,18 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         } else {
             return null;
         }
+	}
+	
+	private Icon getFileShareStateIcon() {
+	    int state = Librarian.instance().getFileShareState(_path);
+	    switch (state) {
+	    case Librarian.FILE_STATE_UNSHARED:
+	        return LibraryUtils.FILE_UNSHARED_ICON;
+	    case Librarian.FILE_STATE_SHARING:
+	        return LibraryUtils.FILE_SHARING_ICON;
+	    case Librarian.FILE_STATE_SHARED:
+	        return LibraryUtils.FILE_SHARED_ICON;
+	    }
+	    return null;
 	}
 }

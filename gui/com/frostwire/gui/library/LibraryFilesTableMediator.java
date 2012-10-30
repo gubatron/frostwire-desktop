@@ -47,7 +47,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import org.limewire.collection.CollectionUtils;
-import org.limewire.collection.Tuple;
 import org.limewire.util.FileUtils;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
@@ -57,7 +56,6 @@ import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
-import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.CheckBoxList;
@@ -290,6 +288,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         TableColumnModel model = TABLE.getColumnModel();
         TableColumn tc = model.getColumn(LibraryFilesTableDataLine.NAME_IDX);
         tc.setCellEditor(new LibraryNameHolderEditor());
+        
+        tc = model.getColumn(LibraryFilesTableDataLine.SHARE_IDX);
+        tc.setCellEditor(new FileShareEditor());
     }
 
     /**
@@ -463,18 +464,17 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             editor.cancelCellEditing();
         }
 
-        List<Tuple<File, FileDesc>> files = new ArrayList<Tuple<File, FileDesc>>(rows.length);
+        List<File> files = new ArrayList<File>(rows.length);
 
         // sort row indices and go backwards so list indices don't change when
         // removing the files from the model list
         Arrays.sort(rows);
         for (int i = rows.length - 1; i >= 0; i--) {
             File file = DATA_MODEL.getFile(rows[i]);
-            FileDesc fd = DATA_MODEL.getFileDesc(rows[i]);
-            files.add(new Tuple<File, FileDesc>(file, fd));
+            files.add(file);
         }
 
-        CheckBoxListPanel<Tuple<File, FileDesc>> listPanel = new CheckBoxListPanel<Tuple<File, FileDesc>>(files, new TupleTextProvider(), true);
+        CheckBoxListPanel<File> listPanel = new CheckBoxListPanel<File>(files, new FileTextProvider(), true);
         listPanel.getList().setVisibleRowCount(4);
 
         // display list of files that should be deleted
@@ -491,21 +491,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
 
         // remove still selected files
-        List<Tuple<File, FileDesc>> selected = listPanel.getSelectedElements();
+        List<File> selected = listPanel.getSelectedElements();
         List<String> undeletedFileNames = new ArrayList<String>();
 
-        for (Tuple<File, FileDesc> tuple : selected) {
-            File file = tuple.getFirst();
-            FileDesc fd = tuple.getSecond();
-            //            if (_isIncomplete && hasActiveDownloader(file)) {
-            //                undeletedFileNames.add(getCompleteFileName(file));
-            //                continue;
-            //            }
-
-            if (fd != null) {
-                //GuiCoreMediator.getUploadManager().killUploadsForFileDesc(fd);
-            }
-
+        for (File file : selected) {
             // removeOptions > 2 => OS offers trash options
             boolean removed = FileUtils.delete(file, removeOptions.length > 2 && option == 0 /* "move to trash" option index */);
             if (removed) {
@@ -940,22 +929,22 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     /**
      * Renders the file part of the Tuple<File, FileDesc> in CheckBoxList<Tuple<File, FileDesc>>.
      */
-    private class TupleTextProvider implements CheckBoxList.TextProvider<Tuple<File, FileDesc>> {
+    private class FileTextProvider implements CheckBoxList.TextProvider<File> {
 
-        public Icon getIcon(Tuple<File, FileDesc> obj) {
-            String extension = FileUtils.getFileExtension(obj.getFirst());
+        public Icon getIcon(File obj) {
+            String extension = FileUtils.getFileExtension(obj);
             if (extension != null) {
                 return IconManager.instance().getIconForExtension(extension);
             }
             return null;
         }
 
-        public String getText(Tuple<File, FileDesc> obj) {
-            return getCompleteFileName(obj.getFirst());
+        public String getText(File obj) {
+            return getCompleteFileName(obj);
         }
 
-        public String getToolTipText(Tuple<File, FileDesc> obj) {
-            return obj.getFirst().getAbsolutePath();
+        public String getToolTipText(File obj) {
+            return obj.getAbsolutePath();
         }
 
     }

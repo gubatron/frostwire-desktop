@@ -46,6 +46,10 @@ public final class Librarian {
 
     private static final Logger LOG = Logger.getLogger(Librarian.class.getName());
 
+    public static final int FILE_STATE_UNSHARED = 0;
+    public static final int FILE_STATE_SHARING = 1;
+    public static final int FILE_STATE_SHARED = 2;
+    
     private final Context context;
 
     private static final Librarian instance = new Librarian();
@@ -159,6 +163,10 @@ public final class Librarian {
 
     public void scan(File file) {
         scan(file, TorrentUtil.getIgnorableFiles());
+    }
+    
+    public int getFileShareState(String path) {
+        return FILE_STATE_UNSHARED;
     }
 
     private void scan(File file, Set<File> ignorableFiles) {

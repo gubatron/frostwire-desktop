@@ -23,13 +23,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractCellEditor;
-import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
-import com.frostwire.alexandria.InternetRadioStation;
-import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.tables.IconRenderer;
 
 /**
  * 
@@ -37,18 +36,11 @@ import com.limegroup.gnutella.gui.GUIMediator;
  * @author aldenml
  *
  */
-public class InternetRadioBookmarkEditor extends AbstractCellEditor implements TableCellEditor {
+public class FileShareEditor extends AbstractCellEditor implements TableCellEditor {
 
-	private static final long serialVersionUID = 8617767980030779166L;
-	private static final Icon bookmarkedOn;
-    private static final Icon bookmarkedOff;
-   
-    static {
-    	bookmarkedOn = GUIMediator.getThemeImage("radio_bookmarked_on");
-    	bookmarkedOff = GUIMediator.getThemeImage("radio_bookmarked_off");
-    }
+    private static final long serialVersionUID = -1754077059065368054L;
 
-    public InternetRadioBookmarkEditor() {
+    public FileShareEditor() {
     }
 
     public Object getCellEditorValue() {
@@ -56,14 +48,19 @@ public class InternetRadioBookmarkEditor extends AbstractCellEditor implements T
     }
 
     public Component getTableCellEditorComponent(final JTable table, final Object value, boolean isSelected, int row, int column) {
-        final LibraryInternetRadioTableDataLine line = ((InternetRadioBookmark) value).getLine();
+        final ImageIcon icon = (ImageIcon) value;
 
-        final JLabel component = (JLabel) new InternetRadioBookmarkRenderer().getTableCellRendererComponent(table, value, isSelected, true, row, column);
+        final JLabel component = (JLabel) new IconRenderer().getTableCellRendererComponent(table, value, isSelected, true, row, column);
         component.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                InternetRadioStation radioStation = line.getInitializeObject();
-                if (line.getInitializeObject().isBookmarked()) {
+                //File f = line.getInitializeObject();
+
+                //int state = Librarian.instance().getFileShareState(f.getAbsolutePath());
+
+                /*
+                switch ()
+                if () {
                     radioStation.setBookmarked(false);
                     radioStation.save();
                     component.setIcon(bookmarkedOff);
@@ -72,10 +69,11 @@ public class InternetRadioBookmarkEditor extends AbstractCellEditor implements T
                     radioStation.save();
                     component.setIcon(bookmarkedOn);
                 }
+                */
             }
         });
 
-        component.setIcon((line.getInitializeObject().isBookmarked()) ? bookmarkedOn : bookmarkedOff);
+        component.setIcon(icon);
 
         return component;
     }
