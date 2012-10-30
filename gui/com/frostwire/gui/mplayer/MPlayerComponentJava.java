@@ -7,11 +7,19 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import com.frostwire.gui.player.AudioPlayer;
@@ -44,14 +53,55 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 	private boolean isPlayerProgressUpdate = false;
 	private JButton playButton, pauseButton;
 	
+	private Timer hideTimer;
+	private static final int HIDE_DELAY = 7000;
+	
 	public MPlayerComponentJava() {
 		
 		setLayout( new BorderLayout() );
 		
+		// initialize UI
 		initializeVideoControl();
         initializeControlsOverlay();
         initializeFullscreenWindow();
         
+		// initialize display timer
+		hideTimer = new Timer(HIDE_DELAY, new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MPlayerComponentJava.this.onHideTimerExpired();
+			}
+		});
+		hideTimer.setRepeats(false);
+		hideTimer.start();
+		
+		// initialize mouse movement monitoring
+		/*
+		addMouseMotionListener(new MouseAdapter() {
+            public void mouseMoved(MouseEvent e) {
+            	System.out.println("MPlayerCOmponentJava");
+                MPlayerComponentJava.this.onMouseMoved();
+            }
+        });
+		*/
+		
+		// initialize keyboard handling
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+           public boolean dispatchKeyEvent(KeyEvent e) {
+                if (e.getID() == KeyEvent.KEY_PRESSED) {
+                    switch (e.getKeyCode()) {
+	                    case KeyEvent.VK_P: player.togglePause(); return true;
+	                    case KeyEvent.VK_F: toggleFullScreen(); return true;
+	                    case KeyEvent.VK_RIGHT:
+	                    case KeyEvent.VK_PERIOD: player.fastForward(); return true;
+	                    case KeyEvent.VK_LEFT:
+	                    case KeyEvent.VK_COMMA: player.rewind(); return true;
+                    }
+                }
+                return false;
+            }
+        });
+		
+		// initialize player
         player = AudioPlayer.instance();
         player.addAudioPlayerListener(this);
     }
@@ -65,22 +115,22 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
         video.setVisible(true);
         video.setBackground(Color.BLACK);
         video.setIgnoreRepaint(false);
+        
         add(video);
 	}
 	
 	private void initializeControlsOverlay() {
 		
-		
 		ImageIcon bkgndImage = GUIMediator.getThemeImage("fc_background");
 	
 		controlsOverlay = new JPanel(null);
         controlsOverlay.setBounds( 0, 0, bkgndImage.getIconWidth(), bkgndImage.getIconHeight() );
-        controlsOverlay.setOpaque(false);
+        controlsOverlay.setVisible(true);
         
         // background image
         // ------------------
         JLabel bkgnd = new JLabel( bkgndImage );
-        bkgnd.setBackground(new Color(0,0,0,0));
+        bkgnd.setOpaque(false);
         bkgnd.setSize( bkgndImage.getIconWidth(), bkgndImage.getIconHeight());
         	
         // play button
@@ -93,6 +143,7 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 			}
 		});
 		controlsOverlay.add(playButton);
+		
         
 		// pause button
 		// --------------
@@ -204,6 +255,22 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
         fullscreenPane.setBounds(0, 0, screenDim.width, screenDim.height);
         fullscreenPane.add(controlsOverlay, JLayeredPane.PALETTE_LAYER);
         fullscreenWindow.getContentPane().add(fullscreenPane);
+        
+        /*
+        fullscreenWindow.addMouseMotionListener(new MouseAdapter() {
+        	public void mouseMoved(MouseEvent e) {
+        		System.out.println("fullscreenWindow");
+        		MPlayerComponentJava.this.onMouseMoved();
+        	}
+        });
+        
+        fullscreenPane.addMouseMotionListener(new MouseAdapter() {
+        	public void mouseMoved(MouseEvent e) {
+        		System.out.println("fullscreenPane");
+        		MPlayerComponentJava.this.onMouseMoved();
+        	}
+        });
+        */
 	}
 	
 	public static JButton createMPlayerButton(final String image, final Point pos) {
@@ -237,7 +304,7 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 
 		Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
 		
-		if (video.getParent() == this) { // entering fullscreen
+		if (video.getParent() == this) { // entering full screen
 			
 			MediaPlaybackState priorState = player.getState();
 			player.stop();
@@ -248,12 +315,11 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 
 			player.reopenAndContinue( priorState );
 			
-		} else { // leaving fullscreen
+		} else { // leaving full screen
 			
 			MediaPlaybackState priorState = player.getState();
-			System.out.println("toggle fullscreen: " + priorState.toString());
 			player.stop();
-				
+			
 			fullscreenWindow.setVisible(false);
 			
 			video.setSize( getSize() );
@@ -313,6 +379,19 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 		}
 	}
 
+	/*
+	 * Timer / Animation event handlers
+	 */
+	public void onHideTimerExpired() {
+		controlsOverlay.setVisible(false);
+	}
+	
+	public void onMouseMoved() {
+		System.out.println("onMouseMoved");
+		controlsOverlay.setVisible(true);
+		hideTimer.start();
+	}
+	
 	/*
 	 * AudioPlayerListener events 
 	 */
