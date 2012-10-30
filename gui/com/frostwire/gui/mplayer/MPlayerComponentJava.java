@@ -41,6 +41,7 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 	
 	private AudioPlayer player;
 	
+	private boolean isPlayerProgressUpdate = false;
 	private JButton playButton, pauseButton;
 	
 	public MPlayerComponentJava() {
@@ -307,7 +308,9 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 
 	@Override
 	public void onProgressSliderValueChange(int seconds) {
-		player.seek((float)seconds);
+		if ( !isPlayerProgressUpdate) {
+			player.seek((float)seconds);
+		}
 	}
 
 	/*
@@ -321,8 +324,11 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 
 	@Override
 	public void progressChange(AudioPlayer audioPlayer, float currentTimeInSecs) {
+		
+		isPlayerProgressUpdate = true;
 		progressSlider.setTotalTime((int) player.getDurationInSecs() );
 		progressSlider.setCurrentTime((int)currentTimeInSecs);
+		isPlayerProgressUpdate = false;
 	}
 
 	@Override
