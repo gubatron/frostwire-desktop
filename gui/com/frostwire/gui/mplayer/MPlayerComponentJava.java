@@ -97,7 +97,7 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 		// pause button
 		// --------------
 		Point pauseButtonPos = new Point(236, 13);
-        pauseButton = MPlayerComponentJava.createMPlayerButton("fc_play", pauseButtonPos );
+        pauseButton = MPlayerComponentJava.createMPlayerButton("fc_pause", pauseButtonPos );
 		pauseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MPlayerComponentJava.this.onPausePressed();
@@ -110,7 +110,7 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
         Point fastForwardButtonPos = new Point(306, 18);
         JButton fastForwardButton;
 		fastForwardButton = MPlayerComponentJava.createMPlayerButton("fc_next", fastForwardButtonPos );
-		pauseButton.addActionListener(new ActionListener() {
+		fastForwardButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MPlayerComponentJava.this.onFastForwardPressed();
 			}
@@ -337,6 +337,7 @@ public class MPlayerComponentJava extends Container implements MPlayerComponent,
 
 	@Override
 	public void stateChange(AudioPlayer audioPlayer, MediaPlaybackState state) {
+		
 		switch(state) {
 		case Playing:
 			pauseButton.setVisible(true);
