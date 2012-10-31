@@ -42,7 +42,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MediaButton;
-import com.limegroup.gnutella.gui.MediaComponentMediator;
+import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.limegroup.gnutella.gui.MediaSlider;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -356,6 +356,8 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * Begins playing the loaded song
      */
     public void play() {
+    	
+    	
         if (PLAYER.getCurrentSong() != null) {
             if (PLAYER.getState() == MediaPlaybackState.Paused || PLAYER.getState() == MediaPlaybackState.Playing) {
                 PLAYER.togglePause();
@@ -371,7 +373,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * Toggles full screen view
      */
     public void toggleFullScreen() {
-        MediaComponentMediator.instance().getMPlayerComponent().toggleFullScreen();
+        MPlayerMediator.instance().showPlayerWindow(true);
     }
 
     /**

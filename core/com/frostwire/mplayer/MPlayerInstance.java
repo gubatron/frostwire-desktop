@@ -45,7 +45,7 @@ import org.gudy.azureus2.core3.util.TimerEventPerformer;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.mplayer.MPlayerComponent;
-import com.limegroup.gnutella.gui.MediaComponentMediator;
+import com.limegroup.gnutella.gui.MPlayerMediator;
 
 
 public class 
@@ -197,9 +197,9 @@ MPlayerInstance
             	 * @see MPlayerApp.resizeCanvas() (this implementation is incomplete, it's only working if the video is bigger than the canvas, didn't implement downsizing for this proof of concept.)
             	 */
             	
-            	//cmdList.add("direct3d");
+            	cmdList.add("direct3d");
             	//cmdList.add("gl");
-            	cmdList.add("directx");
+            	//cmdList.add("directx");
             	            	
             	cmdList.add("-double");
             	
@@ -208,7 +208,7 @@ MPlayerInstance
             	cmdList.add("0x010101");
             	
             	cmdList.add("-wid");
-            	cmdList.add( String.valueOf(MediaComponentMediator.instance().getMPlayerComponent().getWindowID()));
+            	cmdList.add( String.valueOf(MPlayerMediator.instance().getCanvasComponentHwnd()));
             }
 			
 //			if(Utils.isWindows()) {
@@ -247,7 +247,7 @@ MPlayerInstance
 			//cmdList.add("-volume");
 			//cmdList.add("0");
 			
-            //fileOrUrl = "C:\\Users\\erichpleny\\Documents\\Creative Commons Video.mp4";
+            fileOrUrl = "C:\\Users\\erichpleny\\Documents\\Creative Commons Video.mp4";
             
 			cmdList.add(String.format("\"%s\"", fileOrUrl));
 			

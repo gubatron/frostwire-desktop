@@ -108,8 +108,9 @@ public class MPlayerComponentOSX extends CocoaComponent implements MPlayerCompon
     }
     
     @Override
-    public void toggleFullScreen() {
+    public boolean toggleFullScreen() {
         sendMsg(JMPlayer_toggleFS);
+        return true;
     }
     
     @Override

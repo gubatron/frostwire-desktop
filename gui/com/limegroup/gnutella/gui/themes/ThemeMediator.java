@@ -197,7 +197,8 @@ public class ThemeMediator {
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             FileUtils.close(input);
         }
         

@@ -620,7 +620,7 @@ public class MPlayerApp extends JFrame {
 
                 t.setVisible(true);
 
-                t.getPlayer().play("mplayer.exe", "C:\\Users\\aldenml\\Downloads\\test.mp4");
+                t.getPlayer().play("mplayer.exe", "C:\\Users\\erichpleny\\Documents\\test.avi");
             }
         });
     }

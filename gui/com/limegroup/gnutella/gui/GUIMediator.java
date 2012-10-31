@@ -300,6 +300,11 @@ public final class GUIMediator {
     private ChatMediator CHAT_MEDIATOR;
 
     /**
+     * Media Player Mediator
+     */
+    private MPlayerMediator MPLAYER_MEDIATOR;
+    
+    /**
      * Constant handle to the <tt>DownloadView</tt> class that is responsible
      * for displaying the status of the network and connectivity to the user.
      */
@@ -330,6 +335,7 @@ public final class GUIMediator {
     private GUIMediator() {
         MAIN_FRAME = new MainFrame(getAppFrame());
         OPTIONS_MEDIATOR = MAIN_FRAME.getOptionsMediator();
+        MPLAYER_MEDIATOR = MPlayerMediator.instance();
         _remoteDownloadsAllowed = true;
     }
 
@@ -551,6 +557,10 @@ public final class GUIMediator {
      */
     public final MainFrame getMainFrame() {
         return MAIN_FRAME;
+    }
+    
+    public final MPlayerMediator getMPlayerMediator() {
+    	return MPLAYER_MEDIATOR;
     }
 
     /**

@@ -15,6 +15,7 @@
 
 package com.frostwire.mplayer;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -37,7 +38,8 @@ public class MPlayer extends BaseMediaPlayer {
 	private volatile boolean disposed = false;
 
 	private Thread outputParser;
-
+	private Dimension videoSize = null;
+	
 	public MPlayer() {
 		this(null);
 	}
@@ -379,7 +381,9 @@ public class MPlayer extends BaseMediaPlayer {
 		} else if (line.startsWith(ICY_INFO)) {
 		    String data = line.substring(ICY_INFO.length()).trim();
 		    reportIcyInfo(data);
-		}
+		} else if (line.contains("VO: [direct3d]")) {
+            parseVideoSize(line);
+        }
 
 		// else System.out.println(line);
 
@@ -400,6 +404,18 @@ public class MPlayer extends BaseMediaPlayer {
 
 	private double abs(float f) {
 		return f > 0 ? f : -f;
+	}
+	
+	private void parseVideoSize(String line) {
+        String[] arr = line.split(" ")[2].split("x");
+        int w = Integer.parseInt(arr[0]);
+        int h = Integer.parseInt(arr[1]);
+
+        videoSize = new Dimension(w, h);
+    }
+	
+	public Dimension getVideoSize() {
+		return videoSize;
 	}
 
 	public void doLoadSubtitlesFile(String file, boolean autoPlay) {

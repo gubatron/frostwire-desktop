@@ -54,6 +54,7 @@ import com.frostwire.mplayer.MPlayer;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.mplayer.PositionListener;
 import com.frostwire.mplayer.StateListener;
+import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.settings.PlayerSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -175,6 +176,11 @@ public class AudioPlayer implements RefreshListener {
         });
     }
 
+    public MPlayer getMediaPlayer() {
+    	// this is a hack for now, until the media player controller is set up
+    	return mplayer;
+    }
+    
     public AudioSource getCurrentSong() {
         return currentSong;
     }
@@ -329,6 +335,10 @@ public class AudioPlayer implements RefreshListener {
      * Begins playing a song
      */
     public void playSong() {
+    	
+    	// temporary hack - make sure video player window is showing
+    	MPlayerMediator.instance().showPlayerWindow(true);
+    	
         mplayer.stop();
         setVolume(volume);
 

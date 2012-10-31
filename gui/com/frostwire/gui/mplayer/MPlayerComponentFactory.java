@@ -27,15 +27,11 @@ import java.awt.Toolkit;
 public final class MPlayerComponentFactory {
 
     private static final String JMPLAYER_LIBRARY = "JMPlayer";
-
     private static final String OS_NAME = System.getProperty("os.name");
-
     private static final boolean IS_OS_WINDOWS = isCurrentOS("Windows");
-
     private static final boolean IS_OS_MAC = isCurrentOS("Mac");
 
     private static boolean nativeLibLoaded = false;
-
     private static MPlayerComponentFactory instance;
 
     public static synchronized MPlayerComponentFactory instance() {

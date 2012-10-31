@@ -25,7 +25,7 @@ import javax.swing.JPanel;
 
 import com.frostwire.gui.mplayer.MPlayerComponent;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.MediaComponentMediator;
+import com.limegroup.gnutella.gui.MPlayerMediator;
 
 /**
  * 
@@ -40,8 +40,8 @@ public final class MediaPlayerTab extends AbstractTab {
     public MediaPlayerTab() {
         super(I18n.tr("Player"), I18n.tr("Media Player"), "chat_tab");
 
-        MPlayerComponent mplayerComponent = MediaComponentMediator.instance().getMPlayerComponent();
-        PANEL.add(mplayerComponent.getComponent());
+        //MPlayerComponent mplayerComponent = MPlayerGUIMediator.instance().getMPlayerComponent();
+        //PANEL.add(mplayerComponent.getComponent());
     }
 
     public JComponent getComponent() {
