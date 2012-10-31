@@ -22,3 +22,6 @@ messages.mo
 .settings/
 *.sdf
 *.suo
+*.user
+*UpgradeLog.xml
+_UpgradeReport_Files/
