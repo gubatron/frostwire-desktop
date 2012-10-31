@@ -73,7 +73,7 @@ public class DesktopUPnPManager extends UPnPManager {
         PingInfo p = new PingInfo();
         p.uuid = ConfigurationManager.instance().getUUIDString();
         p.listeningPort = Constants.EXTERNAL_CONTROL_LISTENING_PORT;
-        p.numSharedFiles = Librarian.instance().getNumFiles();
+        p.numSharedFiles = Librarian.instance().getNumSharedFiles();
         p.nickname = ConfigurationManager.instance().getNickname();
 
         return p;

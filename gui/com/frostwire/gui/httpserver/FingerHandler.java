@@ -62,7 +62,7 @@ class FingerHandler implements HttpHandler {
     }
 
     private String getResponse(HttpExchange exchange) {
-        Finger finger = Librarian.instance().finger(false);
+        Finger finger = Librarian.instance().finger();
         return JsonUtils.toJson(finger);
     }
 }

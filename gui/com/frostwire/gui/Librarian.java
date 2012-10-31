@@ -20,6 +20,7 @@ package com.frostwire.gui;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -30,7 +31,8 @@ import com.frostwire.content.Context;
 import com.frostwire.core.ConfigurationManager;
 import com.frostwire.core.Constants;
 import com.frostwire.core.FileDescriptor;
-import com.frostwire.core.providers.BaseColumns;
+import com.frostwire.core.providers.ShareFilesDB;
+import com.frostwire.core.providers.ShareFilesDB.Columns;
 import com.frostwire.core.providers.TableFetcher;
 import com.frostwire.core.providers.TableFetchers;
 import com.frostwire.database.Cursor;
@@ -49,7 +51,7 @@ public final class Librarian {
     public static final int FILE_STATE_UNSHARED = 0;
     public static final int FILE_STATE_SHARING = 1;
     public static final int FILE_STATE_SHARED = 2;
-    
+
     private final Context context;
 
     private static final Librarian instance = new Librarian();
@@ -62,13 +64,13 @@ public final class Librarian {
         context = new Context();
     }
 
-    public Finger finger(boolean local) {
+    public Finger finger() {
         Finger finger = new Finger();
 
         finger.uuid = ConfigurationManager.instance().getUUIDString();
         finger.nickname = ConfigurationManager.instance().getNickname();
         finger.frostwireVersion = Constants.FROSTWIRE_VERSION_STRING;
-        finger.totalShared = getNumFiles();
+        finger.totalShared = getNumSharedFiles();
 
         DeviceInfo di = new DeviceInfo();
         finger.deviceVersion = di.getVersion();
@@ -79,45 +81,24 @@ public final class Librarian {
         finger.deviceBrand = di.getBrand();
         finger.deviceScreen = di.getScreenMetrics();
 
-        finger.numSharedAudioFiles = getNumFiles(Constants.FILE_TYPE_AUDIO, true);
-        finger.numSharedVideoFiles = getNumFiles(Constants.FILE_TYPE_VIDEOS, true);
-        finger.numSharedPictureFiles = getNumFiles(Constants.FILE_TYPE_PICTURES, true);
-        finger.numSharedDocumentFiles = getNumFiles(Constants.FILE_TYPE_DOCUMENTS, true);
-        finger.numSharedApplicationFiles = getNumFiles(Constants.FILE_TYPE_APPLICATIONS, true);
-        finger.numSharedRingtoneFiles = getNumFiles(Constants.FILE_TYPE_RINGTONES, true);
-
-        if (local) {
-            finger.numTotalAudioFiles = getNumFiles(Constants.FILE_TYPE_AUDIO, false);
-            finger.numTotalVideoFiles = getNumFiles(Constants.FILE_TYPE_VIDEOS, false);
-            finger.numTotalPictureFiles = getNumFiles(Constants.FILE_TYPE_PICTURES, false);
-            finger.numTotalDocumentFiles = getNumFiles(Constants.FILE_TYPE_DOCUMENTS, false);
-            finger.numTotalApplicationFiles = getNumFiles(Constants.FILE_TYPE_APPLICATIONS, false);
-            finger.numTotalRingtoneFiles = getNumFiles(Constants.FILE_TYPE_RINGTONES, false);
-        } else {
-            finger.numTotalAudioFiles = finger.numSharedAudioFiles;
-            finger.numTotalVideoFiles = finger.numSharedVideoFiles;
-            finger.numTotalPictureFiles = finger.numSharedPictureFiles;
-            finger.numTotalDocumentFiles = finger.numSharedDocumentFiles;
-            finger.numTotalApplicationFiles = finger.numSharedApplicationFiles;
-            finger.numTotalRingtoneFiles = finger.numSharedRingtoneFiles;
-        }
+        finger.numSharedAudioFiles = getNumSharedFiles(Constants.FILE_TYPE_AUDIO);
+        finger.numSharedVideoFiles = getNumSharedFiles(Constants.FILE_TYPE_VIDEOS);
+        finger.numSharedPictureFiles = getNumSharedFiles(Constants.FILE_TYPE_PICTURES);
+        finger.numSharedDocumentFiles = getNumSharedFiles(Constants.FILE_TYPE_DOCUMENTS);
+        finger.numSharedApplicationFiles = getNumSharedFiles(Constants.FILE_TYPE_APPLICATIONS);
+        finger.numSharedRingtoneFiles = getNumSharedFiles(Constants.FILE_TYPE_RINGTONES);
 
         return finger;
     }
 
-    public int getNumFiles() {
+    public int getNumSharedFiles() {
         int result = 0;
 
         for (byte i = 0; i < 6; i++) {
-            //update numbers if you have to.
-            //if (!cache[i].cacheValid(true)) {
-            //    cache[i].updateShared(getNumFiles(i, true));
-            //}
-
-            result += getNumFiles(i, true);//cache[i].shared;
+            result += getNumSharedFiles(i);
         }
 
-        return result < 0 ? 0 : result;
+        return result;
     }
 
     /**
@@ -126,35 +107,60 @@ public final class Librarian {
      * @param onlyShared - If false, forces getting all files, shared or unshared. 
      * @return
      */
-    public int getNumFiles(byte fileType, boolean onlyShared) {
-        TableFetcher fetcher = TableFetchers.getFetcher(fileType);
-
-        //        if (cache[fileType].cacheValid(onlyShared)) {
-        //            return cache[fileType].getCount(onlyShared);
-        //        }
-
+    public int getNumSharedFiles(byte fileType) {
         Cursor c = null;
 
-        int result = 0;
         int numFiles = 0;
 
         try {
-            ContentResolver cr = context.getContentResolver();
-            c = cr.query(fetcher.getContentUri(), new String[] { BaseColumns._ID }, null, null, null);
-            numFiles = c != null ? c.getCount() : 0;
+            ShareFilesDB db = ShareFilesDB.intance();
+
+            String[] columns = new String[] { Columns.ID, Columns.FILE_PATH };
+            String where = Columns.FILE_TYPE + " = ?";
+            String[] whereArgs = new String[] { String.valueOf(fileType) };
+
+            c = db.query(columns, where, whereArgs, null);
+
+            List<FileDescriptor> fds = filteredOutBadRows(c);
+
+            numFiles = fds.size();
+
         } catch (Exception e) {
-            LOG.log(Level.WARNING, "Failed to get num of files", e);
+            LOG.log(Level.WARNING, "Failed to get num of shared files", e);
         } finally {
             if (c != null) {
                 c.close();
             }
         }
 
-        result = numFiles;// onlyShared ? (getSharedFiles(fileType).size()) : numFiles;
+        return numFiles;
+    }
 
-        //updateCacheNumFiles(fileType, result, onlyShared);
+    private List<FileDescriptor> filteredOutBadRows(Cursor c) {
+        int filePathCol = c.getColumnIndex(Columns.FILE_PATH);
 
-        return result;
+        if (filePathCol == -1) {
+            throw new IllegalArgumentException("Can't perform filtering without file path column in cursor");
+        }
+
+        List<FileDescriptor> fds = new LinkedList<FileDescriptor>();
+
+        int num = c.getCount();
+
+        for (int i = 0; i < num; i++) {
+            String filePath = c.getString(filePathCol);
+
+            if (!(new File(filePath)).exists()) {
+
+            }
+            
+            FileDescriptor fd = new FileDescriptor();
+            
+            
+            fds.add(fd);
+        }
+
+        return fds;
     }
 
     public List<FileDescriptor> getFiles(byte fileType, int offset, int pageSize, boolean sharedOnly) {
@@ -164,7 +170,7 @@ public final class Librarian {
     public void scan(File file) {
         scan(file, TorrentUtil.getIgnorableFiles());
     }
-    
+
     public int getFileShareState(String path) {
         return FILE_STATE_UNSHARED;
     }
@@ -238,6 +244,6 @@ public final class Librarian {
 
     public void shareFile(String path, boolean share) {
         // TODO Auto-generated method stub
-        
+
     }
 }
