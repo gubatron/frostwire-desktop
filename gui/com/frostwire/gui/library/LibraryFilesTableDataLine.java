@@ -24,7 +24,6 @@ import java.util.Date;
 
 import javax.swing.Icon;
 
-import com.frostwire.gui.Librarian;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -192,7 +191,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         case MODIFICATION_TIME_IDX:
 			return new PlayableCell(this, new Date(initializer.lastModified()),isPlaying, idx);
         case SHARE_IDX:
-            return getFileShareStateIcon();
+            return new FileShareCell(_path);
 	    }
 	    return null;
 	}
@@ -255,7 +254,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	                    20, false, PlayableCell.class),
 	                    
 	            new LimeTableColumn(SHARE_IDX, "LIBRARY_TABLE_SHARE", I18n.tr("Share"),
-	                    18, true, Icon.class)
+	                    18, true, FileShareCell.class)
 	        };
 	        ltColumns = temp;
 	    }
@@ -283,18 +282,5 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         } else {
             return null;
         }
-	}
-	
-	private Icon getFileShareStateIcon() {
-	    int state = Librarian.instance().getFileShareState(_path);
-	    switch (state) {
-	    case Librarian.FILE_STATE_UNSHARED:
-	        return LibraryUtils.FILE_UNSHARED_ICON;
-	    case Librarian.FILE_STATE_SHARING:
-	        return LibraryUtils.FILE_SHARING_ICON;
-	    case Librarian.FILE_STATE_SHARED:
-	        return LibraryUtils.FILE_SHARED_ICON;
-	    }
-	    return null;
 	}
 }

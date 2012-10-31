@@ -23,12 +23,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractCellEditor;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
-import com.limegroup.gnutella.gui.tables.IconRenderer;
+import com.frostwire.gui.Librarian;
 
 /**
  * 
@@ -36,11 +35,11 @@ import com.limegroup.gnutella.gui.tables.IconRenderer;
  * @author aldenml
  *
  */
-public class FileShareEditor extends AbstractCellEditor implements TableCellEditor {
+public class FileShareCellEditor extends AbstractCellEditor implements TableCellEditor {
 
     private static final long serialVersionUID = -1754077059065368054L;
 
-    public FileShareEditor() {
+    public FileShareCellEditor() {
     }
 
     public Object getCellEditorValue() {
@@ -48,32 +47,29 @@ public class FileShareEditor extends AbstractCellEditor implements TableCellEdit
     }
 
     public Component getTableCellEditorComponent(final JTable table, final Object value, boolean isSelected, int row, int column) {
-        final ImageIcon icon = (ImageIcon) value;
+        final FileShareCell cell = (FileShareCell) value;
 
-        final JLabel component = (JLabel) new IconRenderer().getTableCellRendererComponent(table, value, isSelected, true, row, column);
+        final JLabel component = (JLabel) new FileShareCellRenderer().getTableCellRendererComponent(table, value, isSelected, true, row, column);
         component.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                //File f = line.getInitializeObject();
-
-                //int state = Librarian.instance().getFileShareState(f.getAbsolutePath());
-
-                /*
-                switch ()
-                if () {
-                    radioStation.setBookmarked(false);
-                    radioStation.save();
-                    component.setIcon(bookmarkedOff);
-                } else {
-                    radioStation.setBookmarked(true);
-                    radioStation.save();
-                    component.setIcon(bookmarkedOn);
+                String path = cell.getPath();
+                int state = Librarian.instance().getFileShareState(path);
+                switch (state) {
+                case Librarian.FILE_STATE_UNSHARED:
+                    Librarian.instance().shareFile(path, true);
+                    component.setIcon(LibraryUtils.FILE_SHARING_ICON);
+                    break;
+                case Librarian.FILE_STATE_SHARING: //nothing to do for now
+                    break;
+                case Librarian.FILE_STATE_SHARED:
+                    Librarian.instance().shareFile(path, false);
+                    component.setIcon(LibraryUtils.FILE_UNSHARED_ICON);
                 }
-                */
             }
         });
 
-        component.setIcon(icon);
+        component.setIcon(FileShareCellRenderer.getNextFileShareStateIcon(cell.getPath()));
 
         return component;
     }

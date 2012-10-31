@@ -150,6 +150,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         TABLE.setDefaultRenderer(LibraryNameHolder.class, new LibraryNameHolderRenderer());
         TABLE.setDefaultRenderer(PlayableIconCell.class, new PlayableIconCellRenderer());
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
+        TABLE.setDefaultRenderer(FileShareCell.class, new FileShareCellRenderer());
     }
 
     /**
@@ -290,7 +291,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         tc.setCellEditor(new LibraryNameHolderEditor());
         
         tc = model.getColumn(LibraryFilesTableDataLine.SHARE_IDX);
-        tc.setCellEditor(new FileShareEditor());
+        tc.setCellEditor(new FileShareCellEditor());
     }
 
     /**

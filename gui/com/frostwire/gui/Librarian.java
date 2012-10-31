@@ -235,4 +235,9 @@ public final class Librarian {
 
         return result;
     }
+
+    public void shareFile(String path, boolean share) {
+        // TODO Auto-generated method stub
+        
+    }
 }
