@@ -19,7 +19,7 @@
  */
 
 
-package com.frostwire.mplayer;
+package com.frostwire.gui.mplayer;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -44,6 +44,9 @@ import org.gudy.azureus2.core3.util.TimerEvent;
 import org.gudy.azureus2.core3.util.TimerEventPerformer;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.mplayer.Language;
+import com.frostwire.mplayer.LanguageSource;
+import com.frostwire.mplayer.PlayerPreferences;
 import com.limegroup.gnutella.gui.MPlayerMediator;
 
 
