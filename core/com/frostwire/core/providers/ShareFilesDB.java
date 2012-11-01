@@ -2,7 +2,9 @@ package com.frostwire.core.providers;
 
 import java.util.logging.Logger;
 
+import com.frostwire.content.ContentValues;
 import com.frostwire.content.Context;
+import com.frostwire.core.Constants;
 import com.frostwire.database.Cursor;
 import com.frostwire.database.sqlite.SQLiteDatabase;
 import com.frostwire.database.sqlite.SQLiteOpenHelper;
@@ -53,6 +55,66 @@ public final class ShareFilesDB {
         Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, orderBy);
 
         return c;
+    }
+    
+    public long insert(ContentValues initialValues) {
+        ContentValues values;
+
+        if (initialValues != null) {
+            values = new ContentValues(initialValues);
+        } else {
+            values = new ContentValues();
+        }
+
+        Long now = Long.valueOf(System.currentTimeMillis());
+        
+        if (values.containsKey(Columns.FILE_TYPE) == false) {
+            values.put(Columns.FILE_TYPE, Constants.FILE_TYPE_DOCUMENTS);
+        }
+        
+        if (values.containsKey(Columns.FILE_PATH) == false) {
+            throw new IllegalArgumentException("No file path specified");
+        }
+        
+        if (values.containsKey(Columns.FILE_SIZE) == false) {
+            values.put(Columns.FILE_SIZE, 0);
+        }
+        
+        if (values.containsKey(Columns.MIME) == false) {
+            values.put(Columns.MIME, "");
+        }
+        
+        if (values.containsKey(Columns.DATE_ADDED) == false) {
+            values.put(Columns.DATE_ADDED, now);
+        }
+
+        if (values.containsKey(Columns.DATE_MODIFIED) == false) {
+            values.put(Columns.DATE_MODIFIED, now);
+        }
+        
+        if (values.containsKey(Columns.SHARED) == false) {
+            values.put(Columns.SHARED, false);
+        }
+        
+        if (values.containsKey(Columns.TITLE) == false) {
+            values.put(Columns.TITLE, "");
+        }
+        
+        if (values.containsKey(Columns.ARTIST) == false) {
+            values.put(Columns.ARTIST, "");
+        }
+        
+        if (values.containsKey(Columns.ALBUM) == false) {
+            values.put(Columns.ALBUM, "");
+        }
+        
+        if (values.containsKey(Columns.YEAR) == false) {
+            values.put(Columns.YEAR, "");
+        }
+
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
+        return db.insert(TABLE_NAME, "", values);
     }
 
     public static final class Columns {

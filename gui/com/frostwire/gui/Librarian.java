@@ -26,18 +26,24 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.limewire.util.FilenameUtils;
+
 import com.frostwire.content.ContentResolver;
+import com.frostwire.content.ContentValues;
 import com.frostwire.content.Context;
 import com.frostwire.core.ConfigurationManager;
 import com.frostwire.core.Constants;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.core.providers.ShareFilesDB;
 import com.frostwire.core.providers.ShareFilesDB.Columns;
+import com.frostwire.core.providers.UniversalStore.Documents;
+import com.frostwire.core.providers.UniversalStore.Documents.DocumentsColumns;
 import com.frostwire.core.providers.TableFetcher;
 import com.frostwire.core.providers.TableFetchers;
 import com.frostwire.database.Cursor;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.library.Finger;
+import com.frostwire.net.Uri;
 
 /**
  * @author gubatron
@@ -153,10 +159,9 @@ public final class Librarian {
             if (!(new File(filePath)).exists()) {
 
             }
-            
+
             FileDescriptor fd = new FileDescriptor();
-            
-            
+
             fds.add(fd);
         }
 
@@ -242,8 +247,30 @@ public final class Librarian {
         return result;
     }
 
-    public void shareFile(String path, boolean share) {
-        // TODO Auto-generated method stub
+    public void shareFile(String filePath, boolean share) {
+        File file = new File(filePath);
 
+        //        if (documentExists(path, file.length())) {
+        //            return;
+        //        }
+
+        ContentValues values = new ContentValues();
+
+        values.put(Columns.FILE_TYPE, 0);
+        values.put(Columns.FILE_PATH, filePath);
+        values.put(Columns.FILE_SIZE, file.length());
+        values.put(Columns.MIME, "--");//getMimeType(filePath));
+        values.put(Columns.DATE_ADDED, System.currentTimeMillis());
+        values.put(Columns.DATE_MODIFIED, file.lastModified());
+        values.put(Columns.SHARED, share);
+
+        values.put(Columns.TITLE, "");
+        values.put(Columns.ARTIST, "");
+        values.put(Columns.ALBUM, "");
+        values.put(Columns.YEAR, "");
+
+        ShareFilesDB db = ShareFilesDB.intance();
+
+        db.insert(values);
     }
 }
