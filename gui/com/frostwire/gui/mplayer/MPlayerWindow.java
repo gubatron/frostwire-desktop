@@ -15,6 +15,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.geom.Point2D;
 import java.awt.peer.ComponentPeer;
 
 import javax.swing.JFrame;
@@ -41,7 +42,7 @@ public class MPlayerWindow extends JFrame {
 	private Timer hideTimer;
 	private static final int HIDE_DELAY = 3000;
 	
-    private Point prevMousePosition = null;
+    private Point2D prevMousePosition = null;
 
 	public MPlayerWindow() {
         initializeUI();
@@ -259,12 +260,20 @@ public class MPlayerWindow extends JFrame {
 	private class MPlayerMouseMotionAdapter extends MouseMotionAdapter {
 		@Override
         public void mouseMoved(MouseEvent e) {
-			Point currMousePosition = e.getPoint();
+			
+			Point2D currMousePosition = e.getPoint();
+			
+			if ( prevMousePosition == null ) {
+				prevMousePosition = currMousePosition;
+			}
+			
+			double distance = currMousePosition.distance(prevMousePosition);
 
-	    	if (prevMousePosition != null && !prevMousePosition.equals(currMousePosition)) {
+	    	if (distance > 10) {
 	            hideTimer.restart();
 	        	animateAlphaThread.animateToOpaque();
 	        }
+	    	
 	        prevMousePosition = currMousePosition;
         }
 	}
