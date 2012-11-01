@@ -128,7 +128,7 @@ public final class GUIMediator {
 
     public static enum Tabs {
         SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library")),
-                CHAT(I18n.tr("C&hat")), MEDIA_PLAYER(I18n.tr("&Player"));
+                CHAT(I18n.tr("C&hat"));
 
         private Action navAction;
 

@@ -26,6 +26,7 @@ import org.limewire.util.SystemUtils;
 import sun.awt.windows.WComponentPeer;
 
 import com.frostwire.gui.player.MediaPlayer;
+import com.limegroup.gnutella.gui.GUIMediator;
 
 public class MPlayerWindow extends JFrame {
 
@@ -56,6 +57,7 @@ public class MPlayerWindow extends JFrame {
 		Dimension d = new Dimension(800, 600);
         
 		// initialize window
+		setIconImage(GUIMediator.getThemeImage("frosthires").getImage());
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setTitle("Frostwire Media Player");
         setBackground(Color.black);

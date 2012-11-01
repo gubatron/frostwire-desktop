@@ -49,7 +49,6 @@ import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.tabs.ChatTab;
 import com.frostwire.gui.tabs.LibraryTab;
-import com.frostwire.gui.tabs.MediaPlayerTab;
 import com.frostwire.gui.tabs.SearchDownloadTab;
 import com.frostwire.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
@@ -124,7 +123,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     /**
      * The array of tabs in the main application window.
      */
-    private Map<GUIMediator.Tabs, Tab> TABS = new HashMap<GUIMediator.Tabs, Tab>(7);
+    private Map<GUIMediator.Tabs, Tab> TABS = new HashMap<GUIMediator.Tabs, Tab>(3);
 
     /**
      * The last state of the X/Y location and the time it was set.
@@ -303,7 +302,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getBTDownloadMediator()));
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryTab(getLibraryMediator()));
         TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(getChatMediator()));
-        TABS.put(GUIMediator.Tabs.MEDIA_PLAYER, new MediaPlayerTab());
 
         TABBED_PANE.setPreferredSize(new Dimension(10000, 10000));
 
