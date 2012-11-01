@@ -38,10 +38,10 @@ import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
-import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -323,8 +323,8 @@ public class LibraryMediator {
 
     public void selectCurrentSong() {
         //Select current playlist.
-        Playlist currentPlaylist = AudioPlayer.instance().getCurrentPlaylist();
-        final AudioSource currentSong = AudioPlayer.instance().getCurrentSong();
+        Playlist currentPlaylist = MediaPlayer.instance().getCurrentPlaylist();
+        final AudioSource currentSong = MediaPlayer.instance().getCurrentSong();
 
         //If the current song is being played from a playlist.
         if (currentPlaylist != null && currentSong != null && currentSong.getPlaylistItem() != null) {

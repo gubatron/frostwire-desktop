@@ -44,7 +44,6 @@ import org.gudy.azureus2.core3.util.TimerEvent;
 import org.gudy.azureus2.core3.util.TimerEventPerformer;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.mplayer.MPlayerComponent;
 import com.limegroup.gnutella.gui.MPlayerMediator;
 
 

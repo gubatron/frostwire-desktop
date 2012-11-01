@@ -45,7 +45,7 @@ import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.library.LibraryPlaylistsTableTransferable.Item;
-import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
@@ -401,7 +401,7 @@ public class LibraryUtils {
     private static void addToPlaylist(Playlist playlist, List<? extends AbstractLibraryTableDataLine<?>> lines) {
         for (int i = 0; i < lines.size() && !playlist.isDeleted(); i++) {
             AbstractLibraryTableDataLine<?> line = lines.get(i);
-            if (AudioPlayer.isPlayableFile(line.getFile())) {
+            if (MediaPlayer.isPlayableFile(line.getFile())) {
                 LibraryUtils.addPlaylistItem(playlist, line.getFile(), false);
             }
         }
@@ -414,7 +414,7 @@ public class LibraryUtils {
     private static int addToPlaylist(Playlist playlist, File[] files, boolean starred, int index, Set<File> ignore) {
         int count = 0;
         for (int i = 0; i < files.length && !playlist.isDeleted(); i++) {
-            if (AudioPlayer.isPlayableFile(files[i]) && !ignore.contains(files[i])) {
+            if (MediaPlayer.isPlayableFile(files[i]) && !ignore.contains(files[i])) {
                 LibraryUtils.addPlaylistItem(playlist, files[i], starred, index + count);
                 count++;
             } else if (files[i].isDirectory()) {
@@ -480,12 +480,12 @@ public class LibraryUtils {
 
     public static boolean directoryContainsAudio(File directory, int depth) {
         Set<File> ignore = TorrentUtil.getIgnorableFiles();
-        return directoryContainsExtension(directory, depth, ignore, AudioPlayer.getPlayableExtensions());
+        return directoryContainsExtension(directory, depth, ignore, MediaPlayer.getPlayableExtensions());
     }
 
     public static boolean directoryContainsAudio(File directory) {
         Set<File> ignore = TorrentUtil.getIgnorableFiles();
-        return directoryContainsExtension(directory, 4, ignore, AudioPlayer.getPlayableExtensions());
+        return directoryContainsExtension(directory, 4, ignore, MediaPlayer.getPlayableExtensions());
     }
 
     public static boolean directoryContainsExtension(File directory, int depth, String extensionWithoutDot) {
@@ -553,7 +553,7 @@ public class LibraryUtils {
                 String baseName = FilenameUtils.getBaseName(file.getAbsolutePath());
                 names.add(baseName);
                 findNames(names, file.listFiles());
-            } else if (AudioPlayer.isPlayableFile(file)) {
+            } else if (MediaPlayer.isPlayableFile(file)) {
                 String baseName = FilenameUtils.getBaseName(file.getAbsolutePath());
                 names.add(baseName);
             }

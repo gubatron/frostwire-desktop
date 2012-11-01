@@ -41,7 +41,7 @@ import com.frostwire.gui.bittorrent.BTDownloadActions.AddToPlaylistAction;
 import com.frostwire.gui.bittorrent.BTDownloadActions.CreateNewPlaylistAction;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
-import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
@@ -391,7 +391,7 @@ public class BTDownloadMediatorAdvancedMenuFactory {
                 if (!LibraryUtils.directoryContainsAudio(saveLocation)) {
                     return null;
                 }
-            } else if (!AudioPlayer.isPlayableFile(saveLocation)) {
+            } else if (!MediaPlayer.isPlayableFile(saveLocation)) {
                 return null;
             }
         }

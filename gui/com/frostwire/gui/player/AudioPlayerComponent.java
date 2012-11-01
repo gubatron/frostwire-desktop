@@ -36,13 +36,11 @@ import javax.swing.event.ChangeListener;
 
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
-import com.frostwire.gui.tabs.MediaPlayerTab;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.MediaButton;
 import com.limegroup.gnutella.gui.MPlayerMediator;
+import com.limegroup.gnutella.gui.MediaButton;
 import com.limegroup.gnutella.gui.MediaSlider;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -54,7 +52,7 @@ import com.limegroup.gnutella.util.Tagged;
  * This class sets up JPanel with MediaPlayer on it, and takes care of GUI
  * MediaPlayer events.
  */
-public final class AudioPlayerComponent implements AudioPlayerListener, RefreshListener, ThemeObserver {
+public final class AudioPlayerComponent implements MediaPlayerListener, RefreshListener, ThemeObserver {
 
     public static final String STREAMING_AUDIO = "Streaming Audio";
 
@@ -100,9 +98,9 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     private final JLabel progressSongLength = new JLabel("--:--:--");
 
     /**
-     * The MP3 player.
+     * The media player.
      */
-    private final AudioPlayer PLAYER;
+    private final MediaPlayer PLAYER;
 
     /**
      * The ProgressBar dimensions for showing the name & play progress.
@@ -136,8 +134,8 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * Constructs a new <tt>MediaPlayerComponent</tt>.
      */
     public AudioPlayerComponent() {
-        PLAYER = AudioPlayer.instance();
-        PLAYER.addAudioPlayerListener(this);
+        PLAYER = MediaPlayer.instance();
+        PLAYER.addMediaPlayerListener(this);
 
         GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
@@ -409,7 +407,8 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * This event is thrown everytime a new song is opened and is ready to be
      * played.
      */
-    public void songOpened(AudioPlayer audioPlayer, AudioSource audioSource) {
+    @Override
+    public void mediaOpened(MediaPlayer mediaPlayer, AudioSource audioSource) {
         currentPlayListItem = audioSource;
 
         setVolumeValue();
@@ -426,7 +425,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * This event is thrown a number of times a second. It updates the current
      * frames that have been read, along with position and bytes read
      */
-    public void progressChange(AudioPlayer audioPlayer, float currentTimeInSecs) {
+    public void progressChange(MediaPlayer mediaPlayer, float currentTimeInSecs) {
         _progress = currentTimeInSecs;
         progressCurrentTime.setText(LibraryUtils.getSecondsInDDHHMMSS((int) _progress));
 
@@ -441,7 +440,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         }
     }
 
-    public void stateChange(AudioPlayer audioPlayer, MediaPlaybackState state) {
+    public void stateChange(MediaPlayer mediaPlayer, MediaPlaybackState state) {
         if (state == MediaPlaybackState.Opening) {
             setVolumeValue();
         } else if (state == MediaPlaybackState.Stopped || state == MediaPlaybackState.Closed) {
@@ -775,7 +774,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     }
 
     @Override
-    public void volumeChange(AudioPlayer audioPlayer, double currentVolume) {
+    public void volumeChange(MediaPlayer mediaPlayer, double currentVolume) {
         VolumeSliderListener oldListener = (VolumeSliderListener) VOLUME.getChangeListeners()[0];
         VOLUME.removeChangeListener(oldListener);
         VOLUME.setValue((int) (VOLUME.getMaximum() * currentVolume));
@@ -783,7 +782,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     }
 
     @Override
-    public void icyInfo(AudioPlayer audioPlayer, String data) {
+    public void icyInfo(MediaPlayer mediaPlayer, String data) {
 
     }
 }

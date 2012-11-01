@@ -26,7 +26,7 @@ import java.util.List;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.InternetRadioStation;
-import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tables.ActionIconAndNameHolder;
@@ -117,7 +117,7 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
 
     private boolean isPlaying() {
         if (initializer != null) {
-            return AudioPlayer.instance().isThisBeingPlayed(initializer.getUrl());
+            return MediaPlayer.instance().isThisBeingPlayed(initializer.getUrl());
         }
 
         return false;

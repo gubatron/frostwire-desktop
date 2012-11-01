@@ -25,8 +25,7 @@ import org.limewire.util.SystemUtils;
 
 import sun.awt.windows.WComponentPeer;
 
-import com.frostwire.gui.player.AudioPlayer;
-import com.frostwire.mplayer.MPlayer;
+import com.frostwire.gui.player.MediaPlayer;
 
 public class MPlayerWindow extends JFrame {
 
@@ -228,15 +227,11 @@ public class MPlayerWindow extends JFrame {
 	private class MPlayerComponentHandler extends ComponentAdapter {
         @Override
         public void componentResized(ComponentEvent e) {
-        	MPlayer mplayer = AudioPlayer.instance().getMediaPlayer();
-            if (mplayer != null) {
-            	Dimension size = mplayer.getVideoSize();
-            	
-            	if (size != null) {
-	                resizeCanvas(size);
-	                positionOverlayControls();
-            	}
-            }
+        	Dimension size = MediaPlayer.instance().getCurrentVideoSize();
+            if (size != null) {
+                resizeCanvas(size);
+                positionOverlayControls();
+        	}
         }
     }
 	

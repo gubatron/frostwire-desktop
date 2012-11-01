@@ -61,7 +61,7 @@ import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.components.SortedListModel;
 import com.frostwire.gui.components.SortedListModel.SortOrder;
-import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -287,7 +287,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
         if (cell == null) {
             // handle special case
-            if (_model.getSize() == 2 && AudioPlayer.instance().getCurrentPlaylist() == null) {
+            if (_model.getSize() == 2 && MediaPlayer.instance().getCurrentPlaylist() == null) {
                 _list.setSelectedIndex(1);
             }
             return;

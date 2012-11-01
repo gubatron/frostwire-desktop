@@ -29,7 +29,7 @@ import javax.swing.TransferHandler;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.alexandria.PlaylistItem;
-import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.FileTransferable;
@@ -109,7 +109,7 @@ class LibraryFilesTableTransferHandler extends TransferHandler {
             try {
                 File[] files = DNDUtils.getFiles(support.getTransferable());
                 for (File file : files) {
-                    if (AudioPlayer.isPlayableFile(file)) {
+                    if (MediaPlayer.isPlayableFile(file)) {
                         return true;
                     } else if (file.isDirectory()) {
                         if (LibraryUtils.directoryContainsAudio(file)) {

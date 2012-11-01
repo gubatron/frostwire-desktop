@@ -47,9 +47,9 @@ import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
-import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -402,7 +402,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
         try {
             AudioSource audioSource = new InternetRadioAudioSource(line.getInitializeObject().getUrl(), line.getInitializeObject());
-            AudioPlayer.instance().asyncLoadSong(audioSource, true, false, null, getFileView());
+            MediaPlayer.instance().asyncLoadSong(audioSource, true, false, null, getFileView());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -424,7 +424,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
             if (selectedFile.isDirectory()) {
                 GUIMediator.launchExplorer(selectedFile);
                 return;
-            } else if (!AudioPlayer.isPlayableFile(selectedFile)) {
+            } else if (!MediaPlayer.isPlayableFile(selectedFile)) {
                 GUIMediator.launchFile(selectedFile);
                 return;
             }
@@ -589,10 +589,10 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     }
 
     private void resetAudioPlayerFileView() {
-        Playlist playlist = AudioPlayer.instance().getCurrentPlaylist();
+        Playlist playlist = MediaPlayer.instance().getCurrentPlaylist();
         if (playlist == null) {
-            if (AudioPlayer.instance().getPlaylistFilesView() != null) {
-                AudioPlayer.instance().setPlaylistFilesView(getFileView());
+            if (MediaPlayer.instance().getPlaylistFilesView() != null) {
+            	MediaPlayer.instance().setPlaylistFilesView(getFileView());
             }
         }
     }

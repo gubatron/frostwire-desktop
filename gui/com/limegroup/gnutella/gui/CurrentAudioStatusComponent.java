@@ -41,11 +41,11 @@ import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
 import com.frostwire.gui.library.FileDescriptor;
 import com.frostwire.gui.library.LibraryMediator;
-import com.frostwire.gui.player.AudioPlayer;
-import com.frostwire.gui.player.AudioPlayerListener;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
+import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaPlayerListener;
 import com.frostwire.gui.player.StreamAudioSource;
 import com.frostwire.mplayer.MediaPlaybackState;
 
@@ -57,7 +57,7 @@ import com.frostwire.mplayer.MediaPlaybackState;
  * @author aldenml
  * 
  */
-public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerListener {
+public class CurrentAudioStatusComponent extends JPanel implements MediaPlayerListener {
 
     private static final Log LOG = LogFactory.getLog(CurrentAudioStatusComponent.class);
 
@@ -75,7 +75,7 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
     private String currentStatusLabel;
 
     public CurrentAudioStatusComponent() {
-        AudioPlayer.instance().addAudioPlayerListener(this);
+    	MediaPlayer.instance().addMediaPlayerListener(this);
         lastState = MediaPlaybackState.Uninitialized;
         initComponents();
     }
@@ -93,15 +93,15 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
         text.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (AudioPlayer.instance().getCurrentSong().getFile() != null || AudioPlayer.instance().getCurrentSong().getPlaylistItem() != null || AudioPlayer.instance().getCurrentSong() instanceof InternetRadioAudioSource || AudioPlayer.instance().getCurrentSong() instanceof DeviceAudioSource) {
+                if (MediaPlayer.instance().getCurrentSong().getFile() != null || MediaPlayer.instance().getCurrentSong().getPlaylistItem() != null || MediaPlayer.instance().getCurrentSong() instanceof InternetRadioAudioSource || MediaPlayer.instance().getCurrentSong() instanceof DeviceAudioSource) {
                     showCurrentSong();
-                } else if (AudioPlayer.instance().getCurrentSong() instanceof StreamAudioSource) {
-                    StreamAudioSource audioSource = (StreamAudioSource) AudioPlayer.instance().getCurrentSong();
+                } else if (MediaPlayer.instance().getCurrentSong() instanceof StreamAudioSource) {
+                    StreamAudioSource audioSource = (StreamAudioSource) MediaPlayer.instance().getCurrentSong();
                     if (audioSource.getDetailsUrl() != null) {
                         GUIMediator.openURL(audioSource.getDetailsUrl());
                     }
                 }
-                else if (AudioPlayer.instance().getCurrentSong().getURL() != null) {
+                else if (MediaPlayer.instance().getCurrentSong().getURL() != null) {
                     GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
                 }
             }
@@ -134,7 +134,7 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            AudioSource currentSong = AudioPlayer.instance().getCurrentSong();
+            AudioSource currentSong = MediaPlayer.instance().getCurrentSong();
 
             if (currentSong == null) {
                 return;
@@ -168,10 +168,10 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
     }
 
     @Override
-    public void songOpened(AudioPlayer audioPlayer, AudioSource audioSource) {
+    public void mediaOpened(MediaPlayer mediaPlayer, AudioSource audioSource) {
         try {
             //update controls
-            AudioSource currentSong = audioPlayer.getCurrentSong();
+            AudioSource currentSong = mediaPlayer.getCurrentSong();
             PlaylistItem playlistItem = currentSong.getPlaylistItem();
 
             String currentText = null;
@@ -224,17 +224,17 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
     }
 
     @Override
-    public void progressChange(AudioPlayer audioPlayer, float currentTimeInSecs) {
+    public void progressChange(MediaPlayer mediaPlayer, float currentTimeInSecs) {
 
     }
 
     @Override
-    public void volumeChange(AudioPlayer audioPlayer, double currentVolume) {
+    public void volumeChange(MediaPlayer mediaPlayer, double currentVolume) {
 
     }
 
     @Override
-    public void stateChange(AudioPlayer audioPlayer, MediaPlaybackState state) {
+    public void stateChange(MediaPlayer mediaPlayer, MediaPlaybackState state) {
 
         if (lastState == state) {
             return;
@@ -264,7 +264,7 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 
         final String currentTextFinal = currentText;
 
-        AudioSource currentSong = AudioPlayer.instance().getCurrentSong();
+        AudioSource currentSong = MediaPlayer.instance().getCurrentSong();
 
         //only share files that exist
         shareButton.setVisible(currentSong != null && (currentSong.getFile() != null || (currentSong.getPlaylistItem() != null && currentSong.getPlaylistItem().getFilePath() != null && new File(currentSong.getPlaylistItem().getFilePath()).exists())));
@@ -280,7 +280,7 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
     }
 
     @Override
-    public void icyInfo(AudioPlayer audioPlayer, String data) {
+    public void icyInfo(MediaPlayer mediaPlayer, String data) {
         for (String s : data.split(";")) {
             if (s.startsWith("StreamTitle=")) {
                 try {

@@ -52,7 +52,7 @@ import org.pushingpixels.substance.internal.utils.SubstanceStripingUtils;
 import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorder;
 
-import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
@@ -286,13 +286,13 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
     private boolean isPlayableDataLine() {
         Object dl = libraryNameHolder.getDataLine();
         if (dl instanceof LibraryFilesTableDataLine) {
-            return AudioPlayer.isPlayableFile(((LibraryFilesTableDataLine) dl).getFile());
+            return MediaPlayer.isPlayableFile(((LibraryFilesTableDataLine) dl).getFile());
         } else if (dl instanceof LibraryPlaylistsTableDataLine) {
             return true;
         } else if (dl instanceof LibraryInternetRadioTableDataLine) {
             return true;
         } else if (dl instanceof LibraryDeviceTableDataLine) {
-            return AudioPlayer.isPlayableFile(((LibraryDeviceTableDataLine) dl).getInitializeObject().filePath);
+            return MediaPlayer.isPlayableFile(((LibraryDeviceTableDataLine) dl).getInitializeObject().filePath);
         } else {
             return false;
         }

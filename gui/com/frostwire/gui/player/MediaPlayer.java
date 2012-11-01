@@ -25,8 +25,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.nio.channels.FileChannel;
 import java.util.LinkedList;
 import java.util.List;
@@ -58,24 +56,23 @@ import com.frostwire.mplayer.StateListener;
 import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.settings.PlayerSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
- * An audio player to play compressed and uncompressed music.
+ * An media player to play compressed and uncompressed media.
  * 
  * @author gubatron
  * @author aldenml
  * 
  */
-public class AudioPlayer implements RefreshListener {
+public class MediaPlayer implements RefreshListener {
 
     private static final String[] PLAYABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wav", "wma", "m4a", "aac", "flac", "mp4" };
 
     /**
-     * Our list of AudioPlayerListeners that are currently listening for events
+     * Our list of MediaPlayerListeners that are currently listening for events
      * from this player
      */
-    private List<AudioPlayerListener> listenerList = new CopyOnWriteArrayList<AudioPlayerListener>();
+    private List<MediaPlayerListener> listenerList = new CopyOnWriteArrayList<MediaPlayerListener>();
 
     private MPlayer mplayer;
     private AudioSource currentSong;
@@ -91,44 +88,30 @@ public class AudioPlayer implements RefreshListener {
 
     private final ExecutorService playExecutor;
 
-    private static AudioPlayer instance;
+    private static MediaPlayer instance;
 
     private long durationInSeconds;
 
-    public static AudioPlayer instance() {
+    public static MediaPlayer instance() {
         if (instance == null) {
-            instance = new AudioPlayer();
+        	if ( OSUtils.isWindows() ) {
+        		instance = new MediaPlayerWindows();
+        	} else if (OSUtils.isMacOSX()) {
+        		instance = new MediaPlayerOSX();
+        	} else {
+        		instance = new MediaPlayer();
+        	}
         }
         return instance;
     }
 
-    private AudioPlayer() {
+    protected MediaPlayer() {
         lastRandomFiles = new LinkedList<AudioSource>();
         playExecutor = ExecutorsHelper.newProcessingQueue("AudioPlayer-PlayExecutor");
-        String playerPath = "";
 
-        // Whether or not we're running from source or from a binary
-        // distribution
-        boolean isRelease = !FrostWireUtils.getFrostWireJarPath().contains("frostwire-desktop");
-
-        if (OSUtils.isWindows()) {
-            playerPath = (isRelease) ? FrostWireUtils.getFrostWireJarPath() + File.separator + "fwplayer.exe" : "lib/native/fwplayer.exe";
-            playerPath = decode(playerPath);
-
-            if (!new File(playerPath).exists()) {
-                playerPath = decode("../lib/native/fwplayer.exe");
-            }
-
-        } else if (OSUtils.isMacOSX()) {
-            String macOSFolder = new File(FrostWireUtils.getFrostWireJarPath()).getParentFile().getParent() + File.separator + "MacOS";
-
-            playerPath = (isRelease) ? macOSFolder + File.separator + "fwplayer" : "lib/native/fwplayer";
-        } else {
-            playerPath = "/usr/bin/mplayer";
-        }
-
-        // System.out.println("LimeWirePlayer - player path: ["+playerPath+"]");
-
+        String playerPath;
+        playerPath = getPlayerPath();
+        
         MPlayer.initialise(new File(playerPath));
         mplayer = new MPlayer();
         mplayer.addPositionListener(new PositionListener() {
@@ -176,6 +159,14 @@ public class AudioPlayer implements RefreshListener {
             }
         });
     }
+    
+    protected String getPlayerPath() {
+    	return "/usr/bin/mplayer";
+    }
+    
+    protected float getVolumeGainFactor() {
+    	return 30;
+    }
 
     public Dimension getCurrentVideoSize() {
     	if ( mplayer != null ) {
@@ -216,16 +207,16 @@ public class AudioPlayer implements RefreshListener {
     }
 
     /**
-     * Adds the specified AudioPlayer listener to the list
+     * Adds the specified MediaPlayer listener to the list
      */
-    public void addAudioPlayerListener(AudioPlayerListener listener) {
+    public void addMediaPlayerListener(MediaPlayerListener listener) {
         listenerList.add(listener);
     }
 
     /**
-     * Removes the specified AudioPlayer listener from the list
+     * Removes the specified MediaPlayer listener from the list
      */
-    public void removeAudioPlayerListener(AudioPlayerListener listener) {
+    public void removeMediaPlayerListener(MediaPlayerListener listener) {
         listenerList.remove(listener);
     }
 
@@ -394,7 +385,7 @@ public class AudioPlayer implements RefreshListener {
      */
     public void setVolume(double fGain) {
         volume = fGain;
-        mplayer.setVolume((int) (fGain * 100));
+        mplayer.setVolume((int) (fGain * getVolumeGainFactor()));
         PlayerSettings.PLAYER_VOLUME.setValue((float) volume);
         notifyVolumeChanged();
     }
@@ -496,8 +487,8 @@ public class AudioPlayer implements RefreshListener {
      * rate, sample rate, media type(MPEG, Streaming,etc..), etc..
      */
     protected void fireOpened(AudioSource audioSource) {
-        for (AudioPlayerListener listener : listenerList) {
-            listener.songOpened(this, audioSource);
+        for (MediaPlayerListener listener : listenerList) {
+            listener.mediaOpened(this, audioSource);
         }
     }
 
@@ -508,13 +499,13 @@ public class AudioPlayer implements RefreshListener {
      * passed along to objects such as a FFT for visual feedback of the song
      */
     protected void fireProgress(float currentTimeInSecs) {
-        for (AudioPlayerListener listener : listenerList) {
+        for (MediaPlayerListener listener : listenerList) {
             listener.progressChange(this, currentTimeInSecs);
         }
     }
 
     protected void fireVolumeChanged(double currentVolume) {
-        for (AudioPlayerListener listener : listenerList) {
+        for (MediaPlayerListener listener : listenerList) {
             listener.volumeChange(this, currentVolume);
         }
     }
@@ -525,13 +516,13 @@ public class AudioPlayer implements RefreshListener {
      * STOPPED -> EOF
      */
     protected void fireState(MediaPlaybackState state) {
-        for (AudioPlayerListener listener : listenerList) {
+        for (MediaPlayerListener listener : listenerList) {
             listener.stateChange(this, state);
         }
     }
 
     protected void fireIcyInfo(String data) {
-        for (AudioPlayerListener listener : listenerList) {
+        for (MediaPlayerListener listener : listenerList) {
             listener.icyInfo(this, data);
         }
     }
@@ -789,14 +780,5 @@ public class AudioPlayer implements RefreshListener {
         return mplayer.getDurationInSecs();
     }
 
-    private static String decode(String s) {
-        if (s == null) {
-            return "";
-        }
-        try {
-            return (URLDecoder.decode(s, "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            return s;
-        }
-    }
+
 }

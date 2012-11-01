@@ -53,8 +53,8 @@ import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
-import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -518,8 +518,8 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         }
 
         AudioSource audioSource = new AudioSource(line.getPlayListItem());
-        if (AudioPlayer.isPlayableFile(audioSource)) {
-            AudioPlayer.instance().asyncLoadSong(audioSource, true, true, currentPlaylist, getFileView());
+        if (MediaPlayer.isPlayableFile(audioSource)) {
+        	MediaPlayer.instance().asyncLoadSong(audioSource, true, true, currentPlaylist, getFileView());
         }
     }
 
@@ -539,7 +539,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             if (selectedFile.isDirectory()) {
                 GUIMediator.launchExplorer(selectedFile);
                 return;
-            } else if (!AudioPlayer.isPlayableFile(selectedFile)) {
+            } else if (!MediaPlayer.isPlayableFile(selectedFile)) {
                 GUIMediator.launchFile(selectedFile);
                 return;
             }
@@ -551,7 +551,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             providers[i] = new FileProvider(DATA_MODEL.getFile(rows[i]));
         }
         if (!playAudio) {
-            AudioPlayer.instance().stop();
+        	MediaPlayer.instance().stop();
         }
         
         if (playAudio) {
@@ -875,10 +875,10 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     }
 
     private void resetAudioPlayerFileView() {
-        Playlist playlist = AudioPlayer.instance().getCurrentPlaylist();
+        Playlist playlist = MediaPlayer.instance().getCurrentPlaylist();
         if (playlist != null && playlist.equals(currentPlaylist)) {
-            if (AudioPlayer.instance().getPlaylistFilesView() != null) {
-                AudioPlayer.instance().setPlaylistFilesView(getFileView());
+            if (MediaPlayer.instance().getPlaylistFilesView() != null) {
+            	MediaPlayer.instance().setPlaylistFilesView(getFileView());
             }
         }
     }

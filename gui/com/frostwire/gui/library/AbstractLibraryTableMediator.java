@@ -33,8 +33,8 @@ import javax.swing.JOptionPane;
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
-import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -269,7 +269,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         try {
             AudioSource audioSource = createAudioSource(line);
             if (audioSource != null) {
-                AudioPlayer.instance().asyncLoadSong(audioSource, true, false, null, getFileView());
+            	MediaPlayer.instance().asyncLoadSong(audioSource, true, false, null, getFileView());
             }
         } catch (Exception e) { 
             e.printStackTrace();

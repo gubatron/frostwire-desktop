@@ -55,8 +55,8 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRendere
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
-import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -230,7 +230,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         boolean selectionIsAllAudio = true;
         int[] selectedRows = TABLE.getSelectedRows();
         for (int i : selectedRows) {
-            if (!AudioPlayer.isPlayableFile(DATA_MODEL.get(i).getInitializeObject())) {
+            if (!MediaPlayer.isPlayableFile(DATA_MODEL.get(i).getInitializeObject())) {
                 selectionIsAllAudio = false;
                 break;
             }
@@ -437,7 +437,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         for (int i = 0; i < size; i++) {
             try {
                 File file = DATA_MODEL.get(i).getFile();
-                if (AudioPlayer.isPlayableFile(file)) {
+                if (MediaPlayer.isPlayableFile(file)) {
                     result.add(new AudioSource(DATA_MODEL.get(i).getFile()));
                 }
             } catch (Exception e) {
@@ -509,8 +509,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             // removeOptions > 2 => OS offers trash options
             boolean removed = FileUtils.delete(file, removeOptions.length > 2 && option == 0 /* "move to trash" option index */);
             if (removed) {
-                if (AudioPlayer.instance().isThisBeingPlayed(file)) {
-                    AudioPlayer.instance().stop();
+                if (MediaPlayer.instance().isThisBeingPlayed(file)) {
+                	MediaPlayer.instance().stop();
                 }
                 DATA_MODEL.remove(DATA_MODEL.getRow(file));
             } else {
@@ -593,8 +593,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (line == null) {
             return;
         }
-        if (getMediaType().equals(MediaType.getAudioMediaType()) && AudioPlayer.isPlayableFile(line.getFile())) {
-            AudioPlayer.instance().asyncLoadSong(new AudioSource(line.getFile()), true, true, null, getFileView());
+        if (getMediaType().equals(MediaType.getAudioMediaType()) && MediaPlayer.isPlayableFile(line.getFile())) {
+        	MediaPlayer.instance().asyncLoadSong(new AudioSource(line.getFile()), true, true, null, getFileView());
             return;
         }
 
@@ -629,7 +629,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             if (selectedFile.isDirectory()) {
                 GUIMediator.launchExplorer(selectedFile);
                 return;
-            } else if (!AudioPlayer.isPlayableFile(selectedFile)) {
+            } else if (!MediaPlayer.isPlayableFile(selectedFile)) {
                 GUIMediator.launchFile(selectedFile);
                 return;
             }
@@ -650,7 +650,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             providers[i] = new FileProvider(DATA_MODEL.getFile(rows[i]));
         }
         if (stopAudio || !playAudio) {
-            AudioPlayer.instance().stop();
+        	MediaPlayer.instance().stop();
         }
 
         if (playAudio) {
@@ -693,7 +693,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
                 for (int i : sel) {
                     File f = getFile(i);
-                    if (AudioPlayer.isPlayableFile(f) || FilenameUtils.hasExtension(f.getAbsolutePath(), "mp4")) {
+                    if (MediaPlayer.isPlayableFile(f) || FilenameUtils.hasExtension(f.getAbsolutePath(), "mp4")) {
                         atLeastOneIsPlayable = true;
                         break;
                     }
@@ -980,15 +980,15 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     }
 
     public void resetAudioPlayerFileView() {
-        Playlist playlist = AudioPlayer.instance().getCurrentPlaylist();
+        Playlist playlist = MediaPlayer.instance().getCurrentPlaylist();
         if (playlist == null) {
-            AudioPlayer.instance().setPlaylistFilesView(getFileView());
+        	MediaPlayer.instance().setPlaylistFilesView(getFileView());
         }
     }
 
     @Override
     protected AudioSource createAudioSource(LibraryFilesTableDataLine line) {
-        if (AudioPlayer.isPlayableFile(line.getInitializeObject())) {
+        if (MediaPlayer.isPlayableFile(line.getInitializeObject())) {
             return new AudioSource(line.getInitializeObject());
         } else {
             return null;

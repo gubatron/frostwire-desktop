@@ -69,9 +69,9 @@ import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.HideExitDialog;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.library.LibraryMediator;
-import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
+import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.tabs.Tab;
 import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
@@ -1602,9 +1602,9 @@ public final class GUIMediator {
      */
     public void launchAudio(AudioSource song) {
 
-        if (AudioPlayer.instance().getCurrentSong() != null)
+        if (MediaPlayer.instance().getCurrentSong() != null)
             try {
-                AudioPlayer.instance().stop();
+            	MediaPlayer.instance().stop();
                 // it needs to pause for a bit, otherwise it'll play the same song.
                 // must be a sync bug somewhere, but this fixes it
                 Thread.sleep(1000);
@@ -1612,8 +1612,8 @@ public final class GUIMediator {
                 e.printStackTrace();
             }
 
-        //AudioPlayer.instance().loadSong(song);
-       AudioPlayer.instance().asyncLoadSong(song, true, !song.getClass().equals(InternetRadioAudioSource.class));
+        //MediaPlayer.instance().loadSong(song);
+        MediaPlayer.instance().asyncLoadSong(song, true, !song.getClass().equals(InternetRadioAudioSource.class));
     }
 
     /**
@@ -1621,7 +1621,7 @@ public final class GUIMediator {
      * 
      */
     public boolean attemptStopAudio() {
-        AudioPlayer mediaPlayer = AudioPlayer.instance();
+    	MediaPlayer mediaPlayer = MediaPlayer.instance();
         mediaPlayer.stop();
         return true;
     }

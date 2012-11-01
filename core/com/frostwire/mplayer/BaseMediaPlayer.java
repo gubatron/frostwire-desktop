@@ -150,15 +150,6 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		doLoadSubtitlesFile(file, true);
 	}
 	
-	public void reopenAndContinue(MediaPlaybackState priorState) {
-		
-		reopeningPos = currentPositionInSecs;
-		reopeningPriorState = priorState;
-		isReopening = true;
-		
-		open(openedFile);
-	}
-	
 	public void open(String fileOrUrl) {
 		if(currentState == MediaPlaybackState.Uninitialized || currentState == MediaPlaybackState.Stopped) {
 			openedFile = fileOrUrl;
