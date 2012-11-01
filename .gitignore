@@ -25,3 +25,6 @@ messages.mo
 *.user
 *UpgradeLog.xml
 _UpgradeReport_Files/
+Debug/
+ipch/
+*.opensdf

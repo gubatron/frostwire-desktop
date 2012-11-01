@@ -41,10 +41,14 @@ public class MPlayerWindow extends JFrame {
 	private Timer hideTimer;
 	private static final int HIDE_DELAY = 3000;
 	
+	private MediaPlayer player;
+	
     private Point2D prevMousePosition = null;
 
 	public MPlayerWindow() {
         initializeUI();
+        
+        player = MediaPlayer.instance();
     }
 	
 	private void initializeUI () {
@@ -129,6 +133,8 @@ public class MPlayerWindow extends JFrame {
 			if (!mplayerComponent.toggleFullScreen()) {
 				SystemUtils.toggleFullScreen(getHwnd());
 			}
+			
+			positionOverlayControls();
 		}
     }
 	
@@ -194,8 +200,7 @@ public class MPlayerWindow extends JFrame {
 		Dimension window = getSize();
 		
 		Point pos = new Point((screen.width - window.width) / 2, (screen.height - window.height) / 2);
-		setLocation( pos );
-		
+		setLocation( pos );	
 	}
 	
 	/**
@@ -240,12 +245,12 @@ public class MPlayerWindow extends JFrame {
         public boolean dispatchKeyEvent(KeyEvent e) {
             if (e.getID() == KeyEvent.KEY_PRESSED && isVisible()) {
             	switch (e.getKeyCode()) {
-	            	case KeyEvent.VK_P: return true;//player.togglePause(); return true;
+	            	case KeyEvent.VK_P: player.togglePause(); return true;
 	                case KeyEvent.VK_F: toggleFullScreen(); return true;
 	                case KeyEvent.VK_RIGHT:
-	                case KeyEvent.VK_PERIOD: return true;//player.fastForward(); return true;
+	                case KeyEvent.VK_PERIOD: player.fastForward(); return true;
 	                case KeyEvent.VK_LEFT:
-	                case KeyEvent.VK_COMMA: return true;//player.rewind(); return true;
+	                case KeyEvent.VK_COMMA: player.rewind(); return true;
                 }
             }
             return false;

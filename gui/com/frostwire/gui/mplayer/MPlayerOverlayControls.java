@@ -1,9 +1,9 @@
 package com.frostwire.gui.mplayer;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -19,20 +19,36 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaPlayerListener;
+import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.sun.awt.AWTUtilities;
 
-public class MPlayerOverlayControls extends JDialog implements ProgressSliderListener, AlphaTarget {
+public class MPlayerOverlayControls extends JDialog implements ProgressSliderListener, AlphaTarget, MediaPlayerListener {
 
 	private static final long serialVersionUID = -6148347816829785754L;
 
 	private JSlider volumeSlider;
 	private ProgressSlider progressSlider;
-	private JButton playButton, pauseButton, fullscreenButton;
+	private JButton playButton, pauseButton, fullscreenExitButton, fullscreenEnterButton;
 	
-	public MPlayerOverlayControls(Frame frame) {
-        super(frame);
-        setupUI();
+	private MediaPlayer player;
+	private MPlayerWindow window;
+	
+	private double durationInSeconds = 0.0;
+	private double currentTimeInSeconds = 0.0;
+	private boolean isHandlingProgressChange = false;
+	
+	public MPlayerOverlayControls(MPlayerWindow parentWindow) {
+		
+		player = MediaPlayer.instance();
+		player.addMediaPlayerListener(this);
+		
+		window = parentWindow;
+		
+		setupUI();
     }
 
     protected void setupUI() {
@@ -45,6 +61,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
     	setPreferredSize(winSize);
         setSize(winSize);
         setUndecorated(true);
+        this.setBackground(new Color(0,0,0,0));
         
         panel.setLayout(null);
     	panel.setBounds(0, 0, winSize.width, winSize.height);
@@ -105,13 +122,24 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         // full screen exit button
 		// ------------------------
         Point fullscreenButtonPos = new Point(390, 22);
-        fullscreenButton = MPlayerOverlayControls.createMPlayerButton("fc_fullscreen_exit", fullscreenButtonPos);
-        fullscreenButton.addActionListener( new ActionListener() {
+        fullscreenExitButton = MPlayerOverlayControls.createMPlayerButton("fc_fullscreen_exit", fullscreenButtonPos);
+        fullscreenExitButton.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				MPlayerOverlayControls.this.onFullscreenPressed();
+				MPlayerOverlayControls.this.onFullscreenExitPressed();
 			}
         });
-		panel.add(fullscreenButton);
+		panel.add(fullscreenExitButton);
+		
+		// full screen enter button
+		// ------------------------
+        fullscreenEnterButton = MPlayerOverlayControls.createMPlayerButton("fc_fullscreen_enter", fullscreenButtonPos);
+        fullscreenEnterButton.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MPlayerOverlayControls.this.onFullscreenEnterPressed();
+			}
+        });
+		panel.add(fullscreenEnterButton);
+		
         
         // volume slider
 		// --------------
@@ -157,7 +185,6 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
     @Override
 	public void setAlpha( final float alpha) {
 		SwingUtilities.invokeLater(new Runnable() {
-
             @Override
             public void run() {
                 AWTUtilities.setWindowOpacity(MPlayerOverlayControls.this, alpha);
@@ -171,7 +198,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         });
 	}
     
-    public static JButton createMPlayerButton(final String image, final Point pos) {
+    private static JButton createMPlayerButton(final String image, final Point pos) {
 		
 		ImageIcon buttonImage = GUIMediator.getThemeImage(image);
         
@@ -192,34 +219,90 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 	}
     
     public void setIsFullscreen(boolean fullscreen) {
-    	fullscreenButton.setVisible(fullscreen);
+    	fullscreenExitButton.setVisible(fullscreen);
+    	fullscreenEnterButton.setVisible(!fullscreen);
     }
     
     public void onPlayPressed() {
-		
+    	player.togglePause();
 	}
 	
 	public void onPausePressed() {
-		
-	}
+		player.togglePause();
+    }
 	
 	public void onFastForwardPressed() {
-		
+		player.fastForward();
 	}
 	
 	public void onRewindPressed() {
-		
+		player.rewind();
 	}
 
 	private void onVolumeChanged( int value) {
-		
+		player.setVolume( (double)value / 100.0 );
 	}
 
-	public void onProgressSliderValueChange(int seconds) {
-		
+	public void onProgressSliderValueChange(int value) {
+		if ( isHandlingProgressChange == false ) {
+			
+			float time = (float) (value / 100.0 * durationInSeconds);
+			player.seek(time);
+		}
 	}
 	
-	public void onFullscreenPressed() {
+	public void onFullscreenEnterPressed() {
+		window.toggleFullScreen();
+	}
+	
+	public void onFullscreenExitPressed() {
+		window.toggleFullScreen();
+	}
+
+	@Override
+	public void mediaOpened(MediaPlayer mediaPlayer, AudioSource audioSource) {
+	}
+
+	@Override
+	public void progressChange(MediaPlayer mediaPlayer, float currentTimeInSecs) {
+		durationInSeconds = mediaPlayer.getDurationInSecs();
+		currentTimeInSeconds = currentTimeInSecs;
 		
+		// adjust progress slider
+		isHandlingProgressChange = true;
+		progressSlider.setTotalTime((int)durationInSeconds);
+		progressSlider.setCurrentTime((int)currentTimeInSeconds);
+		isHandlingProgressChange = false;
+	}
+
+	@Override
+	public void volumeChange(MediaPlayer mediaPlayer, double currentVolume) {
+		volumeSlider.setValue((int) (currentVolume * 100));
+	}
+
+	@Override
+	public void stateChange(MediaPlayer mediaPlayer, MediaPlaybackState state) {
+		switch( state ) {
+		case Playing:
+			pauseButton.setVisible(true);
+			playButton.setVisible(false);
+			break;
+		case Paused:
+			pauseButton.setVisible(false);
+			playButton.setVisible(true);
+			break;
+		case Closed:
+		case Failed:
+		case Opening:
+		case Stopped:
+		case Uninitialized:
+		default:
+			break;
+		
+		}
+	}
+
+	@Override
+	public void icyInfo(MediaPlayer mediaPlayer, String data) {
 	}
 }

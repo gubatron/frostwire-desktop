@@ -1,5 +1,7 @@
 package com.limegroup.gnutella.gui;
 
+import javax.swing.SwingUtilities;
+
 import com.frostwire.gui.mplayer.MPlayerWindow;
 
 public class MPlayerMediator {
@@ -21,11 +23,27 @@ public class MPlayerMediator {
     	return mplayerWindow.getCanvasComponentHwnd();
     }
     
-    public void showPlayerWindow(boolean visible) {
-    	mplayerWindow.setVisible(visible);
+    public void showPlayerWindow(final boolean visible) {
+    	try {
+			SwingUtilities.invokeAndWait(new Runnable() {
+				public void run() {
+					mplayerWindow.setVisible(visible);
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     public void toggleFullScreen() {
-    	mplayerWindow.toggleFullScreen();
+    	try {
+			SwingUtilities.invokeAndWait(new Runnable() {
+				public void run() {
+					mplayerWindow.toggleFullScreen();
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 }
