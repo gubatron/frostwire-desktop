@@ -46,8 +46,6 @@ import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
-import sun.audio.AudioPlayer;
-
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
