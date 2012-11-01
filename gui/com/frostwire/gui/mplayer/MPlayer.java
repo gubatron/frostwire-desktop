@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.mplayer;
+package com.frostwire.gui.mplayer;
 
 import java.awt.Dimension;
 import java.io.File;
@@ -26,6 +26,17 @@ import java.util.regex.Pattern;
 
 import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.util.Debug;
+
+import com.frostwire.mplayer.BaseMediaPlayer;
+import com.frostwire.mplayer.IcyInfoListener;
+import com.frostwire.mplayer.Language;
+import com.frostwire.mplayer.LanguageSource;
+import com.frostwire.mplayer.MediaPlaybackState;
+import com.frostwire.mplayer.MetaDataListener;
+import com.frostwire.mplayer.PlayerPreferences;
+import com.frostwire.mplayer.PositionListener;
+import com.frostwire.mplayer.StateListener;
+import com.frostwire.mplayer.VolumeListener;
 
 public class MPlayer extends BaseMediaPlayer {
 
