@@ -25,6 +25,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.channels.FileChannel;
 import java.util.LinkedList;
 import java.util.List;
@@ -324,10 +325,9 @@ public class MediaPlayer implements RefreshListener {
      */
     public void playSong() {
     	
-    	// temporary hack - make sure video player window is showing
     	MPlayerMediator.instance().showPlayerWindow(true);
-    	
-        mplayer.stop();
+			    
+    	mplayer.stop();
         setVolume(volume);
 
         if (currentSong.getFile() != null) {
@@ -339,6 +339,7 @@ public class MediaPlayer implements RefreshListener {
         }
 
         notifyState(getState());
+    	
     }
 
     /**
