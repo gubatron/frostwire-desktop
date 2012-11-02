@@ -73,6 +73,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release Unicode|Win32'">$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release Unicode|Win32'">$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release Unicode|Win32'">false</LinkIncremental>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files (x86)\Java\jdk1.7.0\include\win32;C:\Program Files (x86)\Java\jdk1.7.0\include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug Unicode|Win32'">C:\Program Files (x86)\Java\jdk1.7.0\include\win32;C:\Program Files (x86)\Java\jdk1.7.0\include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release Unicode|Win32'">C:\Program Files (x86)\Java\jdk1.7.0\include\win32;C:\Program Files (x86)\Java\jdk1.7.0\include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Program Files (x86)\Java\jdk1.7.0\include\win32;C:\Program Files (x86)\Java\jdk1.7.0\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -165,6 +169,7 @@
     <ClCompile Include="Shell.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="SystemUtilities.cpp" />
+    <ClCompile Include="WinRegistryWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Firewall.h" />
@@ -173,6 +178,7 @@
     <ClInclude Include="Shell.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SystemUtilities.h" />
+    <ClInclude Include="WinRegistryWrapper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -55,12 +55,7 @@ static int createRenderingContext(void)
     HWND layer = HWND_NOTOPMOST;
     RECT r;
     int style = (!vo_fs) ? (WS_OVERLAPPEDWINDOW | WS_SIZEBOX) : (WS_POPUP);
-
-    if (vo_fs)
-    {
-        layer = HWND_TOPMOST;
-    }
-
+	
     updateScreenProperties();
     ShowWindow(vo_window, SW_HIDE);
     SetWindowLong(vo_window, GWL_STYLE, style);
