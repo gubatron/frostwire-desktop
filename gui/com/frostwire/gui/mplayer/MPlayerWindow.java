@@ -15,6 +15,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
 import java.awt.peer.ComponentPeer;
 
@@ -26,6 +28,7 @@ import org.limewire.util.SystemUtils;
 import sun.awt.windows.WComponentPeer;
 
 import com.frostwire.gui.player.MediaPlayer;
+import java.awt.event.MouseAdapter;
 
 public class MPlayerWindow extends JFrame {
 
@@ -65,6 +68,7 @@ public class MPlayerWindow extends JFrame {
         // initialize events
         addMouseMotionListener(new MPlayerMouseMotionAdapter());
         addComponentListener(new MPlayerComponentHandler());
+        addWindowListener( new MPlayerWindowAdapter());
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new MPlayerKeyEventDispatcher() ); 
         
         // initialize content pane & video canvas
@@ -84,6 +88,7 @@ public class MPlayerWindow extends JFrame {
         overlayControls.setVisible(false);
         overlayControls.setAlwaysOnTop(true);
         overlayControls.setIsFullscreen(isFullscreen);
+        overlayControls.addMouseListener(new MPlayerMouseAdapter() );
         
         // initialize animation alpha thread
         animateAlphaThread = new AlphaAnimationThread(overlayControls);
@@ -108,8 +113,8 @@ public class MPlayerWindow extends JFrame {
 		if ( visible != isVisible() ) {
 		
 			super.setVisible(visible);
-		
-			if ( isVisible() ) {
+			
+			if ( visible ) {
 				
 				overlayControls.setVisible(true);
 				hideTimer.start();
@@ -238,6 +243,11 @@ public class MPlayerWindow extends JFrame {
                 positionOverlayControls();
         	}
         }
+        
+        @Override
+        public void componentMoved(ComponentEvent e) {
+        	positionOverlayControls();
+        }
     }
 	
 	private class MPlayerKeyEventDispatcher implements KeyEventDispatcher {
@@ -255,6 +265,14 @@ public class MPlayerWindow extends JFrame {
             }
             return false;
         }
+	}
+	
+	private class MPlayerMouseAdapter extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			animateAlphaThread.animateToOpaque();
+			hideTimer.restart();
+		}
 	}
 	
 	private class MPlayerMouseMotionAdapter extends MouseMotionAdapter {
@@ -276,5 +294,15 @@ public class MPlayerWindow extends JFrame {
 	    	
 	        prevMousePosition = currMousePosition;
         }
+	}
+	
+	private class MPlayerWindowAdapter extends WindowAdapter {
+
+		@Override
+		public void windowClosing(WindowEvent arg0) {
+			System.out.println("windowClosing");
+			player.stop();
+		}
+		
 	}
 }
