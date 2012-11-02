@@ -249,9 +249,7 @@ MPlayerInstance
 			//cmdList.add("-volume");
 			//cmdList.add("0");
 			
-            fileOrUrl = "C:\\Users\\erichpleny\\Documents\\Creative Commons Video.mp4";
-            
-			cmdList.add(String.format("\"%s\"", fileOrUrl));
+            cmdList.add(String.format("\"%s\"", fileOrUrl));
 			
 			String[] cmd = cmdList.toArray(new String[cmdList.size()]);
 			String cmdString = Arrays.toString(cmd).replace(", ", " ");
