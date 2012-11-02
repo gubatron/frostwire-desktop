@@ -300,7 +300,6 @@ public class MPlayerWindow extends JFrame {
 
 		@Override
 		public void windowClosing(WindowEvent arg0) {
-			System.out.println("windowClosing");
 			player.stop();
 		}
 		
