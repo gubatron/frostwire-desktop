@@ -25,11 +25,15 @@ public class MPlayerMediator {
     
     public void showPlayerWindow(final boolean visible) {
     	try {
-			SwingUtilities.invokeAndWait(new Runnable() {
-				public void run() {
-					mplayerWindow.setVisible(visible);
-				}
-			});
+    		if(SwingUtilities.isEventDispatchThread()) {
+    			mplayerWindow.setVisible(visible);
+    		} else {
+				SwingUtilities.invokeAndWait(new Runnable() {
+					public void run() {
+						mplayerWindow.setVisible(visible);
+					}
+				});
+    		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

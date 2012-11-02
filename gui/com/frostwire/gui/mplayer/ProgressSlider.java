@@ -20,8 +20,8 @@ public class ProgressSlider extends JPanel {
 	private JLabel remainingTime;
 	private JLabel elapsedTime;
 	
-	private int totalTime = 0;
-	private int currentTime = 0;
+	private float totalTime = 0;
+	private float currentTime = 0;
 	
 	private LinkedList<ProgressSliderListener> listeners = new LinkedList<ProgressSliderListener>();
 	
@@ -64,13 +64,14 @@ public class ProgressSlider extends JPanel {
 	}
 	
 	public void setTotalTime(int seconds) {
-		totalTime = seconds;
-		currentTime = 0;
-		updateUIControls();
+		if ( seconds != totalTime ) {
+			totalTime = seconds;
+			updateUIControls();
+		}
+		
 	}
 	
 	public void setCurrentTime(int seconds) {
-		
 		if ( seconds != currentTime) {
 			currentTime = seconds;
 			updateUIControls();
@@ -80,16 +81,17 @@ public class ProgressSlider extends JPanel {
 	public void onProgressSliderValueChanged( int value ) {
 		
 		int seconds = (int) (value / 100.0 * totalTime);
-		
 		for (ProgressSliderListener l : listeners ) {
-			l.onProgressSliderValueChange(seconds);
+			l.onProgressSliderTimeValueChange(seconds);
 		}
 	}
 	
 	private void updateUIControls() {
-		elapsedTime.setText(TimeUtils.getTimeFormatedString(currentTime));
-		remainingTime.setText(TimeUtils.getTimeFormatedString(totalTime - currentTime));
-		progressSlider.setValue((int) ((float)currentTime / (float)totalTime * 100));
+		elapsedTime.setText(TimeUtils.getTimeFormatedString((int) currentTime));
+		remainingTime.setText(TimeUtils.getTimeFormatedString((int) (totalTime - currentTime)));
+		
+		int progressValue = (int) (currentTime / totalTime * 100);
+		progressSlider.setValue(Math.max(0, Math.min(100,progressValue)));
 	}
 
 }

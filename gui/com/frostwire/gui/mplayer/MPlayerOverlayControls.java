@@ -218,7 +218,14 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
     }
     
     public void onPlayPressed() {
-    	player.togglePause();
+    	MediaPlaybackState curState = player.getState();
+    	
+    	if (curState == MediaPlaybackState.Playing ||
+    		curState == MediaPlaybackState.Paused) {
+    		player.togglePause();
+    	} else if (curState == MediaPlaybackState.Closed) {
+    		player.playSong();
+    	}
 	}
 	
 	public void onPausePressed() {
@@ -237,11 +244,9 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 		player.setVolume( (double)value / 100.0 );
 	}
 
-	public void onProgressSliderValueChange(int value) {
+	public void onProgressSliderTimeValueChange(int seconds) {
 		if ( isHandlingProgressChange == false ) {
-			
-			float time = (float) (value / 100.0 * durationInSeconds);
-			player.seek(time);
+			player.seek(seconds);
 		}
 	}
 	
@@ -286,6 +291,8 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 			playButton.setVisible(true);
 			break;
 		case Closed:
+			playButton.setVisible(true);
+			pauseButton.setVisible(false);
 		case Failed:
 		case Opening:
 		case Stopped:
