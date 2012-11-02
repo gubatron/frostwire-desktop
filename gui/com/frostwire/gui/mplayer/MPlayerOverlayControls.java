@@ -188,12 +188,6 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
             @Override
             public void run() {
                 AWTUtilities.setWindowOpacity(MPlayerOverlayControls.this, alpha);
-                if (alpha == 0 && MPlayerOverlayControls.this.isVisible()) {
-                	MPlayerOverlayControls.this.setVisible(false);
-                }
-                if (alpha > 0 && !MPlayerOverlayControls.this.isVisible()) {
-                	MPlayerOverlayControls.this.setVisible(true);
-                }
             }
         });
 	}

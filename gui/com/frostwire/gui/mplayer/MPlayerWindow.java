@@ -89,6 +89,7 @@ public class MPlayerWindow extends JFrame {
         overlayControls.setAlwaysOnTop(true);
         overlayControls.setIsFullscreen(isFullscreen);
         overlayControls.addMouseListener(new MPlayerMouseAdapter() );
+        overlayControls.addMouseMotionListener(new MPlayerMouseMotionAdapter());
         
         // initialize animation alpha thread
         animateAlphaThread = new AlphaAnimationThread(overlayControls);
@@ -113,19 +114,19 @@ public class MPlayerWindow extends JFrame {
 		if ( visible != isVisible() ) {
 		
 			super.setVisible(visible);
+			overlayControls.setVisible(visible);
 			
 			if ( visible ) {
 				
-				overlayControls.setVisible(true);
-				hideTimer.start();
-				
 				centerOnScreen();
 				positionOverlayControls();
-			
+				
+				showOverlay(false);
+				requestFocus();
+				
 			} else {
 			
-				overlayControls.setVisible(false);
-				hideTimer.stop();
+				hideOverlay(false);
 			}
 		}
 	}
@@ -233,6 +234,24 @@ public class MPlayerWindow extends JFrame {
         animateAlphaThread.setDisposed();
         super.dispose();
     }
+	
+	private void showOverlay(boolean animate) {
+		if (animate)
+			animateAlphaThread.animateToOpaque();
+		else
+			overlayControls.setVisible(true);
+		
+		hideTimer.restart();
+	}
+	
+	private void hideOverlay(boolean animate) {
+		if (animate)
+			animateAlphaThread.animateToTransparent();
+		else
+			overlayControls.setVisible(false);
+		
+		hideTimer.stop();
+	}
     
 	private class MPlayerComponentHandler extends ComponentAdapter {
         @Override
@@ -269,9 +288,18 @@ public class MPlayerWindow extends JFrame {
 	
 	private class MPlayerMouseAdapter extends MouseAdapter {
 		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			animateAlphaThread.animateToOpaque();
-			hideTimer.restart();
+		public void mouseClicked(MouseEvent e) {
+			showOverlay(false);
+		}
+		
+		@Override
+		public void mousePressed(MouseEvent e) {
+			showOverlay(false);
+		}
+		
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			showOverlay(false);
 		}
 	}
 	
@@ -279,29 +307,45 @@ public class MPlayerWindow extends JFrame {
 		@Override
         public void mouseMoved(MouseEvent e) {
 			
-			Point2D currMousePosition = e.getPoint();
-			
-			if ( prevMousePosition == null ) {
-				prevMousePosition = currMousePosition;
+			if (MPlayerWindow.this.isActive()) {
+				Point2D currMousePosition = e.getPoint();
+				
+				if ( prevMousePosition == null ) {
+					prevMousePosition = currMousePosition;
+				}
+				
+				double distance = currMousePosition.distance(prevMousePosition);
+	
+		    	if (distance > 10) {
+		            showOverlay(true);
+		        }
+		    	
+		        prevMousePosition = currMousePosition;
 			}
-			
-			double distance = currMousePosition.distance(prevMousePosition);
-
-	    	if (distance > 10) {
-	            hideTimer.restart();
-	        	animateAlphaThread.animateToOpaque();
-	        }
-	    	
-	        prevMousePosition = currMousePosition;
         }
 	}
 	
 	private class MPlayerWindowAdapter extends WindowAdapter {
 
 		@Override
-		public void windowClosing(WindowEvent arg0) {
+		public void windowClosing(WindowEvent e) {
 			player.stop();
 		}
 		
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+			if (e.getOppositeWindow() == overlayControls) {
+				requestFocus();
+			} else {
+				hideOverlay(false);
+			}
+		}
+		
+		@Override
+		public void windowActivated(WindowEvent e) {
+			if (e.getOppositeWindow() != overlayControls) {
+				showOverlay(false);
+			}
+		}	
 	}
 }
