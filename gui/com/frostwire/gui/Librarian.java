@@ -20,13 +20,12 @@ package com.frostwire.gui;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.limewire.util.FilenameUtils;
 
 import com.frostwire.content.ContentResolver;
 import com.frostwire.content.ContentValues;
@@ -36,14 +35,11 @@ import com.frostwire.core.Constants;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.core.providers.ShareFilesDB;
 import com.frostwire.core.providers.ShareFilesDB.Columns;
-import com.frostwire.core.providers.UniversalStore.Documents;
-import com.frostwire.core.providers.UniversalStore.Documents.DocumentsColumns;
 import com.frostwire.core.providers.TableFetcher;
 import com.frostwire.core.providers.TableFetchers;
 import com.frostwire.database.Cursor;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.library.Finger;
-import com.frostwire.net.Uri;
 
 /**
  * @author gubatron
@@ -60,6 +56,8 @@ public final class Librarian {
 
     private final Context context;
 
+    private final Set<String> pathSharedCache;
+
     private static final Librarian instance = new Librarian();
 
     public static Librarian instance() {
@@ -67,7 +65,8 @@ public final class Librarian {
     }
 
     private Librarian() {
-        context = new Context();
+        this.context = new Context();
+        this.pathSharedCache = new HashSet<String>();
     }
 
     public Finger finger() {
@@ -122,8 +121,8 @@ public final class Librarian {
             ShareFilesDB db = ShareFilesDB.intance();
 
             String[] columns = new String[] { Columns.ID, Columns.FILE_PATH };
-            String where = Columns.FILE_TYPE + " = ?";
-            String[] whereArgs = new String[] { String.valueOf(fileType) };
+            String where = Columns.FILE_TYPE + " = ? AND " + Columns.SHARED + " = ?";
+            String[] whereArgs = new String[] { String.valueOf(fileType), String.valueOf(true) };
 
             c = db.query(columns, where, whereArgs, null);
 
@@ -151,16 +150,17 @@ public final class Librarian {
 
         List<FileDescriptor> fds = new LinkedList<FileDescriptor>();
 
-        int num = c.getCount();
-
-        for (int i = 0; i < num; i++) {
+        while (c.moveToNext()) {
             String filePath = c.getString(filePathCol);
 
             if (!(new File(filePath)).exists()) {
-
+                pathSharedCache.remove(filePath);
+                continue;
             }
 
-            FileDescriptor fd = new FileDescriptor();
+            pathSharedCache.add(filePath);
+
+            FileDescriptor fd = cursorToFileDescriptor(c);
 
             fds.add(fd);
         }
@@ -272,5 +272,73 @@ public final class Librarian {
         ShareFilesDB db = ShareFilesDB.intance();
 
         db.insert(values);
+    }
+
+    private FileDescriptor cursorToFileDescriptor(Cursor c) {
+        FileDescriptor fd = new FileDescriptor();
+
+        int col = -1;
+
+        col = c.getColumnIndex(Columns.ID);
+        if (col != -1) {
+            fd.id = c.getInt(col);
+        }
+
+        col = c.getColumnIndex(Columns.FILE_TYPE);
+        if (col != -1) {
+            fd.fileType = c.getByte(col);
+        }
+
+        col = c.getColumnIndex(Columns.FILE_PATH);
+        if (col != -1) {
+            fd.filePath = c.getString(col);
+        }
+
+        col = c.getColumnIndex(Columns.FILE_SIZE);
+        if (col != -1) {
+            fd.fileSize = c.getLong(col);
+        }
+
+        col = c.getColumnIndex(Columns.MIME);
+        if (col != -1) {
+            fd.mime = c.getString(col);
+        }
+
+        col = c.getColumnIndex(Columns.DATE_ADDED);
+        if (col != -1) {
+            fd.dateAdded = c.getLong(col);
+        }
+
+        col = c.getColumnIndex(Columns.DATE_MODIFIED);
+        if (col != -1) {
+            fd.dateModified = c.getLong(col);
+        }
+
+        col = c.getColumnIndex(Columns.SHARED);
+        if (col != -1) {
+            fd.shared = c.getBoolean(col);
+        }
+
+        col = c.getColumnIndex(Columns.TITLE);
+        if (col != -1) {
+            fd.title = c.getString(col);
+        }
+
+        col = c.getColumnIndex(Columns.ARTIST);
+        if (col != -1) {
+            fd.artist = c.getString(col);
+        }
+
+        col = c.getColumnIndex(Columns.ALBUM);
+        if (col != -1) {
+            fd.album = c.getString(col);
+        }
+
+        col = c.getColumnIndex(Columns.YEAR);
+        if (col != -1) {
+            fd.year = c.getString(col);
+        }
+
+        return fd;
     }
 }

@@ -19,11 +19,8 @@
 package com.frostwire.gui.httpserver;
 
 import java.net.InetSocketAddress;
-import java.util.concurrent.Executor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.limewire.concurrent.ExecutorsHelper;
 
 import com.frostwire.httpserver.HttpServer;
 
@@ -36,22 +33,21 @@ public class HttpServerManager {
 
     private static final Logger LOG = Logger.getLogger(HttpServerManager.class.getName());
 
-    private final Executor threadPool;
     //private final SessionManager sessionManager;
 
     private HttpServer httpServer;
 
     public HttpServerManager() {
-        this.threadPool = ExecutorsHelper.newFixedSizeThreadPool(3, "HttpServer");
+        //this.threadPool = Executors.newCachedThreadPool();// ExecutorsHelper.n.newFixedSizeThreadPool(3, "HttpServer");
         //this.sessionManager = new SessionManager();
     }
 
-//    public SessionManager getSessionManager() {
-//        return sessionManager;
-//    }
+    //    public SessionManager getSessionManager() {
+    //        return sessionManager;
+    //    }
 
     public void start(int port) {
-        
+
         if (httpServer != null) {
             return;
         }
@@ -66,7 +62,6 @@ public class HttpServerManager {
             //httpServer.createContext("/dekstop-upload-request", new DesktopUploadRequestHandler(sessionManager));
             //httpServer.createContext("/desktop-upload", new DesktopUploadHandler(sessionManager));
 
-            httpServer.setExecutor(threadPool);
             httpServer.start();
 
         } catch (Throwable e) {

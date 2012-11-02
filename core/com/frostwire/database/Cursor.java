@@ -114,7 +114,7 @@ public class Cursor {
         try {
             return rs.findColumn(columnName);
         } catch (SQLException e) {
-            LOG.log(Level.WARNING, "Error getting column index for name: " + columnName, e);
+            //LOG.log(Level.WARNING, "Error getting column index for name: " + columnName, e);
         }
         return -1;
     }
@@ -186,6 +186,24 @@ public class Cursor {
             return rs.next();
         } catch (SQLException e) {
             LOG.log(Level.WARNING, "Error moving inside the result set, to next", e);
+        }
+        return false;
+    }
+    
+    public byte getByte(int columnIndex) {
+        try {
+            return rs.getByte(columnIndex);
+        } catch (SQLException e) {
+            LOG.log(Level.WARNING, "Error reading typed result set value", e);
+        }
+        return 0;
+    }
+    
+    public boolean getBoolean(int columnIndex) {
+        try {
+            return rs.getBoolean(columnIndex);
+        } catch (SQLException e) {
+            LOG.log(Level.WARNING, "Error reading typed result set value", e);
         }
         return false;
     }

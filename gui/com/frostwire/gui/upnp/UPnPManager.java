@@ -120,7 +120,7 @@ public abstract class UPnPManager {
                     if (deviceInfo.getDevice() instanceof RemoteDevice) {
                         address = InetAddress.getByName(((RemoteDeviceIdentity) deviceInfo.getDevice().getIdentity()).getDescriptorURL().getHost());
                     } else {
-                        address = InetAddress.getByName("127.0.0.1");
+                        address = InetAddress.getByName("0.0.0.0");
                     }
 
                     handlePeerDevice(p, address, added);
