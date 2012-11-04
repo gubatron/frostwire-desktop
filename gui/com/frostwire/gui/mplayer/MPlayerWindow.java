@@ -25,6 +25,19 @@ import javax.swing.Timer;
 
 import org.limewire.util.SystemUtils;
 
+/** Gubatron: This is certainly not compiling on Linux 
+ * wonder if the solution here will be to wrap WComponentPeer
+ * inside a generic FrostWireComponentPeer implementation
+ * that gets loaded up using Java Reflection.
+ * 
+ * Otherwise, I see us having to create 2 or 3 verisions of
+ * MPlayerWindow and have the project compile differently
+ * under different OSes, which sounds like a bad idea, we've never
+ * had to do that.
+ * 
+ * what do yo guys think?
+ * (leave comments in github under this comment please)
+ * */
 import sun.awt.windows.WComponentPeer;
 
 import com.frostwire.gui.player.MediaPlayer;
