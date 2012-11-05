@@ -29,13 +29,18 @@ import org.limewire.util.FilenameUtils;
 import com.frostwire.content.ContentResolver;
 import com.frostwire.content.ContentValues;
 import com.frostwire.content.Context;
+import com.frostwire.core.CommonConstants;
 import com.frostwire.core.Constants;
 import com.frostwire.core.FileDescriptor;
+import com.frostwire.core.providers.ShareFilesDB;
 import com.frostwire.core.providers.UniversalStore;
+import com.frostwire.core.providers.ShareFilesDB.Columns;
 import com.frostwire.core.providers.UniversalStore.Documents;
 import com.frostwire.core.providers.UniversalStore.Documents.DocumentsColumns;
 import com.frostwire.database.Cursor;
 import com.frostwire.net.Uri;
+import com.limegroup.gnutella.MediaType;
+import com.limegroup.gnutella.gui.search.NamedMediaType;
 
 /**
  * @author gubatron
@@ -53,37 +58,54 @@ public class UniversalScanner {
     }
 
     public void scan(String filePath) {
-        scanDocument(filePath);
+        try {
+            MediaType mt = MediaType.getMediaTypeForExtension(FilenameUtils.getExtension(filePath));
+
+            if (mt.equals(MediaType.getAudioMediaType())) {
+                //scanAudio
+            } else if (mt.equals(MediaType.getImageMediaType())) {
+                //scanPictures
+            } else if (mt.equals(MediaType.getVideoMediaType())) {
+                //scanVideo
+            } else {
+                scanDocument(filePath, true);
+            }
+
+        } catch (Throwable e) {
+            scanDocument(filePath, true);
+            LOG.log(Level.WARNING, "Error scanning file, scanned as document: " + filePath, e);
+        }
     }
 
-    private void scanDocument(String filePath) {
+    private void scanDocument(String filePath, boolean shared) {
         File file = new File(filePath);
-        
+
         if (documentExists(filePath, file.length())) {
             return;
         }
 
         String displayName = FilenameUtils.getBaseName(file.getName());
 
-        ContentResolver cr = context.getContentResolver();
-
         ContentValues values = new ContentValues();
 
-        values.put(DocumentsColumns.DATA, filePath);
-        values.put(DocumentsColumns.SIZE, file.length());
-        values.put(DocumentsColumns.DISPLAY_NAME, displayName);
-        values.put(DocumentsColumns.TITLE, displayName);
-        values.put(DocumentsColumns.DATE_ADDED, System.currentTimeMillis());
-        values.put(DocumentsColumns.DATE_MODIFIED, file.lastModified());
-        values.put(DocumentsColumns.MIME_TYPE, getMimeType(filePath));
+        values.put(Columns.FILE_TYPE, Constants.FILE_TYPE_DOCUMENTS);
+        values.put(Columns.FILE_PATH, filePath);
+        values.put(Columns.FILE_SIZE, file.length());
+        values.put(Columns.MIME, getMimeType(filePath));
+        values.put(Columns.DATE_ADDED, System.currentTimeMillis());
+        values.put(Columns.DATE_MODIFIED, file.lastModified());
+        values.put(Columns.SHARED, shared);
 
-        Uri uri = cr.insert(Documents.Media.CONTENT_URI, values);
+        values.put(Columns.TITLE, displayName);
+        values.put(Columns.ARTIST, "");
+        values.put(Columns.ALBUM, "");
+        values.put(Columns.YEAR, "");
 
-        FileDescriptor fd = new FileDescriptor();
-        fd.fileType = Constants.FILE_TYPE_DOCUMENTS;
-        fd.id = Integer.valueOf(uri.getLastPathSegment());
+        ShareFilesDB db = ShareFilesDB.intance();
+
+        db.insert(values);
     }
-    
+
     private boolean documentExists(String filePath, long size) {
         boolean result = false;
 

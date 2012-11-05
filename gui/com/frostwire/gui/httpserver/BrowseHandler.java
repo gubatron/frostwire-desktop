@@ -85,7 +85,7 @@ class BrowseHandler implements HttpHandler {
     }
 
     private String getResponse(HttpExchange exchange, byte fileType) {
-        List<FileDescriptor> fileDescriptors = Librarian.instance().getFiles(fileType, 0, Integer.MAX_VALUE, true);
+        List<FileDescriptor> fileDescriptors = Librarian.instance().getSharedFiles(fileType);
 
         FileDescriptorList list = new FileDescriptorList();
         list.files = fileDescriptors;

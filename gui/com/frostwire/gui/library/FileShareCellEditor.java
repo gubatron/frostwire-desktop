@@ -68,6 +68,15 @@ public class FileShareCellEditor extends AbstractCellEditor implements TableCell
                 }
             }
         });
+        component.addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                if (table.isEditing()) {
+                    TableCellEditor editor = table.getCellEditor();
+                    editor.cancelCellEditing();
+                }
+            }
+        });
 
         component.setIcon(FileShareCellRenderer.getNextFileShareStateIcon(cell.getPath()));
 

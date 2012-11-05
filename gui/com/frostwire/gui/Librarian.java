@@ -20,15 +20,17 @@ package com.frostwire.gui;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.frostwire.content.ContentResolver;
-import com.frostwire.content.ContentValues;
 import com.frostwire.content.Context;
 import com.frostwire.core.ConfigurationManager;
 import com.frostwire.core.Constants;
@@ -56,7 +58,9 @@ public final class Librarian {
 
     private final Context context;
 
-    private final Set<String> pathSharedCache;
+    private final Set<String> pathSharedSet;
+    private final Set<String> pathSharingSet;
+    private final ExecutorService shareFileExec;
 
     private static final Librarian instance = new Librarian();
 
@@ -66,7 +70,9 @@ public final class Librarian {
 
     private Librarian() {
         this.context = new Context();
-        this.pathSharedCache = new HashSet<String>();
+        this.pathSharedSet = Collections.synchronizedSet(new HashSet<String>());
+        this.pathSharingSet = Collections.synchronizedSet(new HashSet<String>());
+        this.shareFileExec = Executors.newSingleThreadExecutor();
     }
 
     public Finger finger() {
@@ -120,7 +126,7 @@ public final class Librarian {
         try {
             ShareFilesDB db = ShareFilesDB.intance();
 
-            String[] columns = new String[] { Columns.ID, Columns.FILE_PATH };
+            String[] columns = new String[] { Columns.ID, Columns.FILE_PATH, Columns.SHARED };
             String where = Columns.FILE_TYPE + " = ? AND " + Columns.SHARED + " = ?";
             String[] whereArgs = new String[] { String.valueOf(fileType), String.valueOf(true) };
 
@@ -154,18 +160,51 @@ public final class Librarian {
             String filePath = c.getString(filePathCol);
 
             if (!(new File(filePath)).exists()) {
-                pathSharedCache.remove(filePath);
+                pathSharedSet.remove(filePath);
                 continue;
             }
 
-            pathSharedCache.add(filePath);
-
             FileDescriptor fd = cursorToFileDescriptor(c);
+
+            if (fd.shared) {
+                pathSharedSet.add(filePath);
+            } else {
+                pathSharedSet.remove(filePath);
+            }
 
             fds.add(fd);
         }
 
         return fds;
+    }
+
+    public List<FileDescriptor> getSharedFiles(byte fileType) {
+        List<FileDescriptor> result = new ArrayList<FileDescriptor>();
+
+        Cursor c = null;
+
+        try {
+            ShareFilesDB db = ShareFilesDB.intance();
+
+            String[] columns = new String[] { Columns.ID, Columns.FILE_TYPE, Columns.FILE_PATH, Columns.FILE_SIZE, Columns.MIME, Columns.DATE_ADDED, Columns.DATE_MODIFIED, Columns.SHARED, Columns.TITLE, Columns.ARTIST, Columns.ALBUM, Columns.YEAR };
+            String where = Columns.FILE_TYPE + " = ? AND " + Columns.SHARED + " = ?";
+            String[] whereArgs = new String[] { String.valueOf(fileType), String.valueOf(true) };
+
+            c = db.query(columns, where, whereArgs, null);
+
+            List<FileDescriptor> fds = filteredOutBadRows(c);
+
+            return fds;
+
+        } catch (Throwable e) {
+            LOG.log(Level.WARNING, "General failure getting files", e);
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+
+        return result;
     }
 
     public List<FileDescriptor> getFiles(byte fileType, int offset, int pageSize, boolean sharedOnly) {
@@ -177,6 +216,9 @@ public final class Librarian {
     }
 
     public int getFileShareState(String path) {
+        if (pathSharedSet.contains(path)) {
+            return FILE_STATE_SHARED;
+        }
         return FILE_STATE_UNSHARED;
     }
 
@@ -247,31 +289,37 @@ public final class Librarian {
         return result;
     }
 
-    public void shareFile(String filePath, boolean share) {
-        File file = new File(filePath);
+    public void shareFile(final String filePath, final boolean share) {
+        if (pathSharingSet.contains(filePath)) {
+            return;
+        }
 
-        //        if (documentExists(path, file.length())) {
-        //            return;
-        //        }
+        pathSharingSet.add(filePath);
 
-        ContentValues values = new ContentValues();
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                deleteFromShareTable(filePath);
 
-        values.put(Columns.FILE_TYPE, 0);
-        values.put(Columns.FILE_PATH, filePath);
-        values.put(Columns.FILE_SIZE, file.length());
-        values.put(Columns.MIME, "--");//getMimeType(filePath));
-        values.put(Columns.DATE_ADDED, System.currentTimeMillis());
-        values.put(Columns.DATE_MODIFIED, file.lastModified());
-        values.put(Columns.SHARED, share);
+                if (share) {
+                    new UniversalScanner(context).scan(filePath);
+                    pathSharingSet.remove(filePath);
+                }
+            }
+        };
 
-        values.put(Columns.TITLE, "");
-        values.put(Columns.ARTIST, "");
-        values.put(Columns.ALBUM, "");
-        values.put(Columns.YEAR, "");
+        shareFileExec.execute(r);
+    }
+
+    private void deleteFromShareTable(String filePath) {
+        pathSharedSet.remove(filePath);
+
+        String where = Columns.FILE_PATH + " = ?";
+        String[] whereArgs = new String[] { filePath };
 
         ShareFilesDB db = ShareFilesDB.intance();
 
-        db.insert(values);
+        db.delete(where, whereArgs);
     }
 
     private FileDescriptor cursorToFileDescriptor(Cursor c) {

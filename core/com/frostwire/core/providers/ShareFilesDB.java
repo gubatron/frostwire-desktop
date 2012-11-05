@@ -9,6 +9,7 @@ import com.frostwire.database.Cursor;
 import com.frostwire.database.sqlite.SQLiteDatabase;
 import com.frostwire.database.sqlite.SQLiteOpenHelper;
 import com.frostwire.database.sqlite.SQLiteQueryBuilder;
+import com.frostwire.net.Uri;
 import com.frostwire.text.TextUtils;
 
 public final class ShareFilesDB {
@@ -116,6 +117,19 @@ public final class ShareFilesDB {
 
         return db.insert(TABLE_NAME, "", values);
     }
+    
+    public int delete(String where, String[] whereArgs) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
+        return db.delete(TABLE_NAME, where, whereArgs);
+    }
+    
+    public int update(ContentValues values, String where, String[] whereArgs) {
+
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
+        return db.update(TABLE_NAME, values, where, whereArgs);
+    }
 
     public static final class Columns {
 
@@ -156,6 +170,7 @@ public final class ShareFilesDB {
 
             db.execSQL("CREATE INDEX idx_" + TABLE_NAME + "_" + Columns.ID + " ON " + TABLE_NAME + " (" + Columns.ID + ")");
             db.execSQL("CREATE INDEX idx_" + TABLE_NAME + "_" + Columns.FILE_TYPE + " ON " + TABLE_NAME + " (" + Columns.FILE_TYPE + ")");
+            db.execSQL("CREATE INDEX idx_" + TABLE_NAME + "_" + Columns.FILE_PATH + " ON " + TABLE_NAME + " (" + Columns.FILE_PATH + ")");
             db.execSQL("CREATE INDEX idx_" + TABLE_NAME + "_" + Columns.SHARED + " ON " + TABLE_NAME + " (" + Columns.SHARED + ")");
         }
 
