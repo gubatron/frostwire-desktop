@@ -38,6 +38,7 @@ import com.frostwire.core.providers.ShareFilesDB.Columns;
 import com.frostwire.core.providers.UniversalStore.Documents;
 import com.frostwire.core.providers.UniversalStore.Documents.DocumentsColumns;
 import com.frostwire.database.Cursor;
+import com.frostwire.gui.library.AudioMetaData;
 import com.frostwire.net.Uri;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
@@ -62,11 +63,11 @@ public class UniversalScanner {
             MediaType mt = MediaType.getMediaTypeForExtension(FilenameUtils.getExtension(filePath));
 
             if (mt.equals(MediaType.getAudioMediaType())) {
-                //scanAudio
+                scanAudio(filePath, true);
             } else if (mt.equals(MediaType.getImageMediaType())) {
                 //scanPictures
             } else if (mt.equals(MediaType.getVideoMediaType())) {
-                //scanVideo
+                scanVideo(filePath, true); // until we integrate mplayer for video and research metadata extraction
             } else {
                 scanDocument(filePath, true);
             }
@@ -77,24 +78,51 @@ public class UniversalScanner {
         }
     }
 
-    private void scanDocument(String filePath, boolean shared) {
-        File file = new File(filePath);
-
-        if (documentExists(filePath, file.length())) {
-            return;
-        }
-
-        String displayName = FilenameUtils.getBaseName(file.getName());
-
-        ContentValues values = new ContentValues();
-
-        values.put(Columns.FILE_TYPE, Constants.FILE_TYPE_DOCUMENTS);
+    private void fillCommonValues(ContentValues values, byte fileType, String filePath, File file, boolean shared) {
+        values.put(Columns.FILE_TYPE, fileType);
         values.put(Columns.FILE_PATH, filePath);
         values.put(Columns.FILE_SIZE, file.length());
         values.put(Columns.MIME, getMimeType(filePath));
         values.put(Columns.DATE_ADDED, System.currentTimeMillis());
         values.put(Columns.DATE_MODIFIED, file.lastModified());
         values.put(Columns.SHARED, shared);
+    }
+
+    private void scanAudio(String filePath, boolean shared) {
+        File file = new File(filePath);
+
+        AudioMetaData mt = new AudioMetaData(file);
+
+        ContentValues values = new ContentValues();
+
+        fillCommonValues(values, Constants.FILE_TYPE_AUDIO, filePath, file, shared);
+
+        values.put(Columns.TITLE, mt.getTitle());
+        values.put(Columns.ARTIST, mt.getArtist());
+        values.put(Columns.ALBUM, mt.getAlbum());
+        values.put(Columns.YEAR, mt.getYear());
+
+        ShareFilesDB db = ShareFilesDB.intance();
+
+        db.insert(values);
+    }
+    
+    private void scanVideo(String filePath, boolean shared) {
+        scanBasic(Constants.FILE_TYPE_VIDEOS, filePath, shared);
+    }
+    
+    private void scanDocument(String filePath, boolean shared) {
+        scanBasic(Constants.FILE_TYPE_DOCUMENTS, filePath, shared);
+    }
+    
+    private void scanBasic(byte fileType, String filePath, boolean shared) {
+        File file = new File(filePath);
+
+        String displayName = FilenameUtils.getBaseName(file.getName());
+
+        ContentValues values = new ContentValues();
+
+        fillCommonValues(values, fileType, filePath, file, shared);
 
         values.put(Columns.TITLE, displayName);
         values.put(Columns.ARTIST, "");

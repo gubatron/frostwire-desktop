@@ -9,7 +9,6 @@ import com.frostwire.database.Cursor;
 import com.frostwire.database.sqlite.SQLiteDatabase;
 import com.frostwire.database.sqlite.SQLiteOpenHelper;
 import com.frostwire.database.sqlite.SQLiteQueryBuilder;
-import com.frostwire.net.Uri;
 import com.frostwire.text.TextUtils;
 
 public final class ShareFilesDB {
@@ -57,7 +56,7 @@ public final class ShareFilesDB {
 
         return c;
     }
-    
+
     public long insert(ContentValues initialValues) {
         ContentValues values;
 
@@ -68,23 +67,23 @@ public final class ShareFilesDB {
         }
 
         Long now = Long.valueOf(System.currentTimeMillis());
-        
+
         if (values.containsKey(Columns.FILE_TYPE) == false) {
             values.put(Columns.FILE_TYPE, Constants.FILE_TYPE_DOCUMENTS);
         }
-        
+
         if (values.containsKey(Columns.FILE_PATH) == false) {
             throw new IllegalArgumentException("No file path specified");
         }
-        
+
         if (values.containsKey(Columns.FILE_SIZE) == false) {
             values.put(Columns.FILE_SIZE, 0);
         }
-        
+
         if (values.containsKey(Columns.MIME) == false) {
             values.put(Columns.MIME, "");
         }
-        
+
         if (values.containsKey(Columns.DATE_ADDED) == false) {
             values.put(Columns.DATE_ADDED, now);
         }
@@ -92,23 +91,23 @@ public final class ShareFilesDB {
         if (values.containsKey(Columns.DATE_MODIFIED) == false) {
             values.put(Columns.DATE_MODIFIED, now);
         }
-        
+
         if (values.containsKey(Columns.SHARED) == false) {
             values.put(Columns.SHARED, false);
         }
-        
+
         if (values.containsKey(Columns.TITLE) == false) {
             values.put(Columns.TITLE, "");
         }
-        
+
         if (values.containsKey(Columns.ARTIST) == false) {
             values.put(Columns.ARTIST, "");
         }
-        
+
         if (values.containsKey(Columns.ALBUM) == false) {
             values.put(Columns.ALBUM, "");
         }
-        
+
         if (values.containsKey(Columns.YEAR) == false) {
             values.put(Columns.YEAR, "");
         }
@@ -117,18 +116,22 @@ public final class ShareFilesDB {
 
         return db.insert(TABLE_NAME, "", values);
     }
-    
+
     public int delete(String where, String[] whereArgs) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
-        return db.delete(TABLE_NAME, where, whereArgs);
+        int count = db.delete(TABLE_NAME, where, whereArgs);
+
+        return count;
     }
-    
+
     public int update(ContentValues values, String where, String[] whereArgs) {
 
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
-        return db.update(TABLE_NAME, values, where, whereArgs);
+        int count = db.update(TABLE_NAME, values, where, whereArgs);
+
+        return count;
     }
 
     public static final class Columns {

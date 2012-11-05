@@ -58,7 +58,7 @@ public final class Librarian {
 
     private final Context context;
 
-    private final Set<String> pathSharedSet;
+    //private final Set<String> pathSharedSet;
     private final Set<String> pathSharingSet;
     private final ExecutorService shareFileExec;
 
@@ -70,7 +70,7 @@ public final class Librarian {
 
     private Librarian() {
         this.context = new Context();
-        this.pathSharedSet = Collections.synchronizedSet(new HashSet<String>());
+        //this.pathSharedSet = Collections.synchronizedSet(new HashSet<String>());
         this.pathSharingSet = Collections.synchronizedSet(new HashSet<String>());
         this.shareFileExec = Executors.newSingleThreadExecutor();
     }
@@ -147,6 +147,35 @@ public final class Librarian {
         return numFiles;
     }
 
+    public boolean isFileShared(String filePath) {
+        Cursor c = null;
+
+        boolean isShared = false;
+
+        try {
+            ShareFilesDB db = ShareFilesDB.intance();
+
+            String[] columns = new String[] { Columns.ID, Columns.FILE_PATH, Columns.SHARED };
+            String where = Columns.FILE_PATH + " = ?";
+            String[] whereArgs = new String[] { filePath };
+
+            c = db.query(columns, where, whereArgs, null);
+
+            List<FileDescriptor> fds = filteredOutBadRows(c);
+
+            isShared = fds.size() == 1;
+
+        } catch (Exception e) {
+            LOG.log(Level.WARNING, "Failed to get num of shared files", e);
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+
+        return isShared;
+    }
+
     private List<FileDescriptor> filteredOutBadRows(Cursor c) {
         int filePathCol = c.getColumnIndex(Columns.FILE_PATH);
 
@@ -156,24 +185,34 @@ public final class Librarian {
 
         List<FileDescriptor> fds = new LinkedList<FileDescriptor>();
 
+        final Set<String> toRemove = new HashSet<String>();
+
         while (c.moveToNext()) {
             String filePath = c.getString(filePathCol);
 
             if (!(new File(filePath)).exists()) {
-                pathSharedSet.remove(filePath);
+                //pathSharedSet.remove(filePath);
+                toRemove.add(filePath);
                 continue;
             }
 
             FileDescriptor fd = cursorToFileDescriptor(c);
 
-            if (fd.shared) {
-                pathSharedSet.add(filePath);
-            } else {
-                pathSharedSet.remove(filePath);
-            }
-
             fds.add(fd);
         }
+
+        shareFileExec.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    for (String filePath : toRemove) {
+                        deleteFromShareTable(filePath);
+                    }
+                } catch (Throwable e) {
+                    LOG.log(Level.WARNING, "Error deleting no existent files", e);
+                }
+            }
+        });
 
         return fds;
     }
@@ -215,10 +254,15 @@ public final class Librarian {
         scan(file, TorrentUtil.getIgnorableFiles());
     }
 
-    public int getFileShareState(String path) {
-        if (pathSharedSet.contains(path)) {
+    public int getFileShareState(String filePath) {
+        if (pathSharingSet.contains(filePath)) {
+            return FILE_STATE_SHARING;
+        }
+
+        if (isFileShared(filePath)) {// pathSharedSet.contains(path)) {
             return FILE_STATE_SHARED;
         }
+
         return FILE_STATE_UNSHARED;
     }
 
@@ -303,8 +347,10 @@ public final class Librarian {
 
                 if (share) {
                     new UniversalScanner(context).scan(filePath);
-                    pathSharingSet.remove(filePath);
+                    //pathSharedSet.add(filePath);
                 }
+
+                pathSharingSet.remove(filePath);
             }
         };
 
@@ -312,7 +358,7 @@ public final class Librarian {
     }
 
     private void deleteFromShareTable(String filePath) {
-        pathSharedSet.remove(filePath);
+        //pathSharedSet.remove(filePath);
 
         String where = Columns.FILE_PATH + " = ?";
         String[] whereArgs = new String[] { filePath };

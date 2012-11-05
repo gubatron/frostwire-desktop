@@ -66,6 +66,11 @@ public class FileShareCellEditor extends AbstractCellEditor implements TableCell
                     Librarian.instance().shareFile(path, false);
                     component.setIcon(LibraryUtils.FILE_UNSHARED_ICON);
                 }
+                
+                if (table.isEditing()) {
+                    TableCellEditor editor = table.getCellEditor();
+                    editor.cancelCellEditing();
+                }
             }
         });
         component.addMouseMotionListener(new MouseAdapter() {
