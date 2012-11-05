@@ -25,23 +25,23 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.limewire.util.FilenameUtils;
+import org.limewire.util.StringUtils;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifIFD0Descriptor;
+import com.drew.metadata.exif.ExifIFD0Directory;
 import com.frostwire.content.ContentResolver;
 import com.frostwire.content.ContentValues;
 import com.frostwire.content.Context;
-import com.frostwire.core.CommonConstants;
 import com.frostwire.core.Constants;
-import com.frostwire.core.FileDescriptor;
 import com.frostwire.core.providers.ShareFilesDB;
-import com.frostwire.core.providers.UniversalStore;
 import com.frostwire.core.providers.ShareFilesDB.Columns;
-import com.frostwire.core.providers.UniversalStore.Documents;
+import com.frostwire.core.providers.UniversalStore;
 import com.frostwire.core.providers.UniversalStore.Documents.DocumentsColumns;
 import com.frostwire.database.Cursor;
 import com.frostwire.gui.library.AudioMetaData;
-import com.frostwire.net.Uri;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.gui.search.NamedMediaType;
 
 /**
  * @author gubatron
@@ -65,7 +65,7 @@ public class UniversalScanner {
             if (mt.equals(MediaType.getAudioMediaType())) {
                 scanAudio(filePath, true);
             } else if (mt.equals(MediaType.getImageMediaType())) {
-                //scanPictures
+                scanPictures(filePath, true);
             } else if (mt.equals(MediaType.getVideoMediaType())) {
                 scanVideo(filePath, true); // until we integrate mplayer for video and research metadata extraction
             } else {
@@ -76,6 +76,56 @@ public class UniversalScanner {
             scanDocument(filePath, true);
             LOG.log(Level.WARNING, "Error scanning file, scanned as document: " + filePath, e);
         }
+    }
+
+    private void scanPictures(String filePath, boolean shared) {
+        File file = new File(filePath);
+
+        ContentValues values = new ContentValues();
+
+        fillCommonValues(values, Constants.FILE_TYPE_PICTURES, filePath, file, shared);
+
+        try {
+            Metadata metadata = ImageMetadataReader.readMetadata(file);
+
+            ExifIFD0Directory dir = metadata.getDirectory(ExifIFD0Directory.class);
+            ExifIFD0Descriptor desc = new ExifIFD0Descriptor(dir);
+
+            String title = desc.getWindowsTitleDescription();
+            if (StringUtils.isNullOrEmpty(title, true)) {
+                title = FilenameUtils.getBaseName(file.getName());
+            }
+
+            String artist = desc.getWindowsAuthorDescription();
+            if (StringUtils.isNullOrEmpty(artist, true)) {
+                artist = dir.getString(ExifIFD0Directory.TAG_ARTIST, "UTF-8");
+            }
+            if (StringUtils.isNullOrEmpty(artist, true)) {
+                artist = "";
+            }
+
+            String album = "";
+            String year = dir.getString(ExifIFD0Directory.TAG_DATETIME);
+            if (StringUtils.isNullOrEmpty(year, true)) {
+                year = "";
+            }
+
+            values.put(Columns.TITLE, title);
+            values.put(Columns.ARTIST, artist);
+            values.put(Columns.ALBUM, album);
+            values.put(Columns.YEAR, year);
+        } catch (Throwable e) {
+            String displayName = FilenameUtils.getBaseName(file.getName());
+
+            values.put(Columns.TITLE, displayName);
+            values.put(Columns.ARTIST, "");
+            values.put(Columns.ALBUM, "");
+            values.put(Columns.YEAR, "");
+        }
+
+        ShareFilesDB db = ShareFilesDB.intance();
+
+        db.insert(values);
     }
 
     private void fillCommonValues(ContentValues values, byte fileType, String filePath, File file, boolean shared) {
@@ -91,30 +141,39 @@ public class UniversalScanner {
     private void scanAudio(String filePath, boolean shared) {
         File file = new File(filePath);
 
-        AudioMetaData mt = new AudioMetaData(file);
-
         ContentValues values = new ContentValues();
 
         fillCommonValues(values, Constants.FILE_TYPE_AUDIO, filePath, file, shared);
 
-        values.put(Columns.TITLE, mt.getTitle());
-        values.put(Columns.ARTIST, mt.getArtist());
-        values.put(Columns.ALBUM, mt.getAlbum());
-        values.put(Columns.YEAR, mt.getYear());
+        try {
+            AudioMetaData mt = new AudioMetaData(file);
+
+            values.put(Columns.TITLE, mt.getTitle());
+            values.put(Columns.ARTIST, mt.getArtist());
+            values.put(Columns.ALBUM, mt.getAlbum());
+            values.put(Columns.YEAR, mt.getYear());
+        } catch (Throwable e) {
+            String displayName = FilenameUtils.getBaseName(file.getName());
+
+            values.put(Columns.TITLE, displayName);
+            values.put(Columns.ARTIST, "");
+            values.put(Columns.ALBUM, "");
+            values.put(Columns.YEAR, "");
+        }
 
         ShareFilesDB db = ShareFilesDB.intance();
 
         db.insert(values);
     }
-    
+
     private void scanVideo(String filePath, boolean shared) {
         scanBasic(Constants.FILE_TYPE_VIDEOS, filePath, shared);
     }
-    
+
     private void scanDocument(String filePath, boolean shared) {
         scanBasic(Constants.FILE_TYPE_DOCUMENTS, filePath, shared);
     }
-    
+
     private void scanBasic(byte fileType, String filePath, boolean shared) {
         File file = new File(filePath);
 
