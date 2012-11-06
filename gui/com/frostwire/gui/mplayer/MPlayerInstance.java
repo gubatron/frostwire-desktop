@@ -205,17 +205,17 @@ MPlayerInstance
             	            	
             	cmdList.add("-double");
             	
-            	//these should no longer necessary when you use the direct3d driver
-            	cmdList.add("-colorkey");
-            	cmdList.add("0x010101");
+            	cmdList.add("-priority");
+				cmdList.add("high");
             	
+				cmdList.add("-framedrop");
+				
             	cmdList.add("-wid");
             	cmdList.add( String.valueOf(MPlayerMediator.instance().getCanvasComponentHwnd()));
             }
 			
 //			if(Utils.isWindows()) {
-//				cmdList.add("-priority");
-//				cmdList.add("high");
+//				
 //			} else {
 //				cmdList.add(0,ShellUtilityFinder.getNice());
 //				cmdList.add(1,"-n");
