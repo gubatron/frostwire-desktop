@@ -189,7 +189,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 		SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-            	MPlayerOverlayControls.this.setOpacity(alpha);
+            	AWTUtilities.setWindowOpacity(MPlayerOverlayControls.this, alpha);
             }
         });
 	}
@@ -312,7 +312,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 	
 	public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, getOpacity()));
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, AWTUtilities.getWindowOpacity(this)));
         
         super.paint(g2);
         
