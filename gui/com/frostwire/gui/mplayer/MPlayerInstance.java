@@ -230,8 +230,14 @@ MPlayerInstance
 			//cmdList.add("-volume");
 			//cmdList.add("0");
 			
-            cmdList.add(String.format("\"%s\"", fileOrUrl));
-			
+            if(OSUtils.isMacOSX()) {
+            	cmdList.add(fileOrUrl);
+            } else if (OSUtils.isWindows()) {
+            	cmdList.add(String.format("\"%s\"", fileOrUrl));
+            } else {
+            	cmdList.add(":(:(:( need to find out how to formate file or URL on this platform");
+            }
+            
 			String[] cmd = cmdList.toArray(new String[cmdList.size()]);
 			String cmdString = Arrays.toString(cmd).replace(", ", " ");
 			System.out.println(String.format("starting mplayer: %s", cmdString));
