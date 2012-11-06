@@ -1,9 +1,12 @@
 package com.frostwire.gui.mplayer;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
@@ -40,10 +43,14 @@ import org.limewire.util.SystemUtils;
  * */
 import sun.awt.windows.WComponentPeer;
 
+import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaPlayerListener;
+import com.frostwire.mplayer.MediaPlaybackState;
+
 import java.awt.event.MouseAdapter;
 
-public class MPlayerWindow extends JFrame {
+public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 
 	private static final long serialVersionUID = -9154474667503959284L;
 
@@ -60,11 +67,13 @@ public class MPlayerWindow extends JFrame {
 	private MediaPlayer player;
 	
     private Point2D prevMousePosition = null;
-
+    private boolean handleVideoResize = true;
+    
 	public MPlayerWindow() {
         initializeUI();
         
         player = MediaPlayer.instance();
+        player.addMediaPlayerListener(this);
     }
 	
 	private void initializeUI () {
@@ -76,7 +85,7 @@ public class MPlayerWindow extends JFrame {
         setTitle("Frostwire Media Player");
         setBackground(Color.black);
 		setPreferredSize(d);
-        setSize(d);
+		setSize(d);
         
         // initialize events
         addMouseMotionListener(new MPlayerMouseMotionAdapter());
@@ -88,6 +97,7 @@ public class MPlayerWindow extends JFrame {
 		Container pane = getContentPane();
         pane.setBackground(Color.black);
         pane.setLayout(null);
+        pane.setSize(d);
         
         mplayerComponent = MPlayerComponentFactory.instance().createPlayerComponent();
         videoCanvas = mplayerComponent.getComponent();
@@ -177,39 +187,31 @@ public class MPlayerWindow extends JFrame {
         }
     }
 	
-    private void resizeCanvas(Dimension videoSize) {
-        Dimension c = getContentPane().getSize();
-        if (c == null || videoSize == null) {
-            return; // too early
+    private void resizeCanvas() {
+        
+		Dimension videoSize = MediaPlayer.instance().getCurrentVideoSize(); 
+    	Dimension contentSize = getSize();
+        if (contentSize == null || videoSize == null) {
+            return; // can not resize until videoSize is available
         }
-        Dimension r = aspectResize(c, videoSize);
-
-        if (r.width < c.width) {
-            int dx = (c.width - r.width) / 2;
-            videoCanvas.setBounds(dx, 0, r.width, c.height);
+        
+        Dimension canvasSize = new Dimension(contentSize);
+        float targetAspectRatio = (float)videoSize.width / (float)videoSize.height;
+        
+        if (canvasSize.width / targetAspectRatio < contentSize.height) {
+        	canvasSize.height = (int) (canvasSize.width / targetAspectRatio);
+        } else {
+        	canvasSize.width = (int) (canvasSize.height * targetAspectRatio);
         }
-        if (r.height < c.height) {
-            int dy = (c.height - r.height) / 2;
-            videoCanvas.setBounds(0, dy, c.width, r.height);
-        }
+        
+        Point tl = new Point();
+        tl.x = (int) ((float)(contentSize.width - canvasSize.width) / 2.0f);
+        tl.y = (int) ((float)(contentSize.height - canvasSize.height) / 2.0f);
+        
+        videoCanvas.setBounds(tl.x, tl.y, canvasSize.width, canvasSize.height);
     }
 
-    // not perfect, take in consideration smaller videos, works fine for 1080p videos
-    private Dimension aspectResize(Dimension c, Dimension v) {
-        Dimension r = new Dimension();
-
-        float ratioW = c.width * 1.0f / v.width;
-        float ratioH = c.height * 1.0f / v.height;
-
-        float ratio = ratioW < ratioH ? ratioW : ratioH;
-
-        r.width = (int) (v.width * ratio);
-        r.height = (int) (v.height * ratio);
-
-        return r;
-    }
-	
-	
+    
 	/**
 	 * centers the window in the current screen
 	 */
@@ -227,15 +229,17 @@ public class MPlayerWindow extends JFrame {
 	 */
 	private void positionOverlayControls() {
 		
-		Dimension controlsSize = overlayControls.getSize();
-		Dimension windowSize = getSize();
-		Point windowPos = getLocationOnScreen();
-		
-		Point controlPos = new Point();
-		controlPos.x = (int) ((windowSize.width - controlsSize.width) * 0.5 + windowPos.x);
-		controlPos.y = (int) ((windowSize.height - controlsSize.height) - 20 + windowPos.y);
-		
-		overlayControls.setLocation(controlPos);
+		if ( isVisible() ) {
+			Dimension controlsSize = overlayControls.getSize();
+			Dimension windowSize = getSize();
+			Point windowPos = getLocationOnScreen();
+			
+			Point controlPos = new Point();
+			controlPos.x = (int) ((windowSize.width - controlsSize.width) * 0.5 + windowPos.x);
+			controlPos.y = (int) ((windowSize.height - controlsSize.height) - 20 + windowPos.y);
+			
+			overlayControls.setLocation(controlPos);
+		}
 	}
 
 	private void onHideTimerExpired() {
@@ -246,6 +250,16 @@ public class MPlayerWindow extends JFrame {
     public void dispose() {
         animateAlphaThread.setDisposed();
         super.dispose();
+    }
+	
+	@Override
+	public void paint(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.0f));
+        
+        super.paint(g2);
+        
+        g2.dispose();
     }
 	
 	private void showOverlay(boolean animate) {
@@ -269,11 +283,8 @@ public class MPlayerWindow extends JFrame {
 	private class MPlayerComponentHandler extends ComponentAdapter {
         @Override
         public void componentResized(ComponentEvent e) {
-        	Dimension size = MediaPlayer.instance().getCurrentVideoSize();
-            if (size != null) {
-                resizeCanvas(size);
-                positionOverlayControls();
-        	}
+        	resizeCanvas();
+            positionOverlayControls();
         }
         
         @Override
@@ -361,4 +372,29 @@ public class MPlayerWindow extends JFrame {
 			}
 		}	
 	}
+
+	@Override
+	public void mediaOpened(MediaPlayer audioPlayer, AudioSource audioSource) {	}
+
+	@Override
+	public void progressChange(MediaPlayer audioPlayer, float currentTimeInSecs) { }
+
+	@Override
+	public void volumeChange(MediaPlayer audioPlayer, double currentVolume) { }
+
+	@Override
+	public void stateChange(MediaPlayer audioPlayer, MediaPlaybackState state) {
+		
+		if ( state == MediaPlaybackState.Playing && handleVideoResize ) {
+			handleVideoResize = false;
+			resizeCanvas();
+		}
+		
+		if ( state != MediaPlaybackState.Playing ){
+			handleVideoResize = true;
+		}
+	}
+
+	@Override
+	public void icyInfo(MediaPlayer audioPlayer, String data) { }
 }
