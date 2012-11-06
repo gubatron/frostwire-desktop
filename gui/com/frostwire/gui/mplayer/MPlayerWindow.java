@@ -84,9 +84,7 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setTitle("Frostwire Media Player");
         setBackground(Color.black);
-		setPreferredSize(d);
-		setSize(d);
-        
+		
         // initialize events
         addMouseMotionListener(new MPlayerMouseMotionAdapter());
         addComponentListener(new MPlayerComponentHandler());
@@ -98,13 +96,18 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
         pane.setBackground(Color.black);
         pane.setLayout(null);
         pane.setSize(d);
+        pane.setPreferredSize(d);
         
         mplayerComponent = MPlayerComponentFactory.instance().createPlayerComponent();
         videoCanvas = mplayerComponent.getComponent();
         videoCanvas.setBackground(Color.black);
         videoCanvas.setSize(d);
+        videoCanvas.setPreferredSize(d);
         videoCanvas.addMouseMotionListener(new MPlayerMouseMotionAdapter());
         pane.add(videoCanvas);
+        
+        // adjust frame size
+        pack();
         
         // initialize overlay controls
         overlayControls = new MPlayerOverlayControls(this);
@@ -190,7 +193,7 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
     private void resizeCanvas() {
         
 		Dimension videoSize = MediaPlayer.instance().getCurrentVideoSize(); 
-    	Dimension contentSize = getSize();
+    	Dimension contentSize = getContentPane().getSize();
         if (contentSize == null || videoSize == null) {
             return; // can not resize until videoSize is available
         }
