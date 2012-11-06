@@ -175,33 +175,14 @@ MPlayerInstance
             }
             
             if(OSUtils.isWindows()) {
-            	cmdList.add("-vo");
-            	//Gubatron: Erich, this will eliminate flickering, however
-            	//this driver will not keep aspect ratio, you'll have to
-            	//recalculate the size of the canvas on windows resize event.
-            	//Gotcha 1: You won't be able to know the aspect ratio until the first frame
-            	//of the video has been rendered.
-            	//
-            	//Gotcha 2: You must make sure the VM you are using on your mac supports Direct3D.
-            	// mplayer will throw a text error that you should parse in order to let the user know
-            	// that she must make sure to have her Direct3D drivers up to date to have video playback
-            	// on FrostWire.
-            	//
-            	// I'd recommend installing Vuze on your windows environment to use as a reference
-            	// if video playback works on Vuze it should work here as well, they're also using
-            	// mplayer, and they're forcing users to have direct3d installed because the performance
-            	// with directx is poor (flickering on resize, flickering on window move, the background wil come out in funky colors)
-            	//
-            	// What I'd do, would be first trying "direct3d, if it fails, use "gl", if it fails fall back to "directx"
-            	//
-            	/**
-            	 * @see MplayerApp.Player.parseVideoSize() to get the video size.
-            	 * @see MPlayerApp.resizeCanvas() (this implementation is incomplete, it's only working if the video is bigger than the canvas, didn't implement downsizing for this proof of concept.)
-            	 */
             	
-            	cmdList.add("direct3d");
-            	//cmdList.add("gl");
-            	//cmdList.add("directx");
+            	// setting video output driver mode.
+            	// NOTE:
+            	//  this is now a prioritized list of drives that mplayer will try, in order of priority, 
+            	//  until it finds one that works.  there is no need to parse output of mplayer unless we
+            	//  decide we want to block video output for cases other than direct3d on windows.
+            	cmdList.add("-vo");
+            	cmdList.add("direct3d,gl,directx,sdl");
             	            	
             	cmdList.add("-double");
             	
