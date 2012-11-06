@@ -40,6 +40,8 @@ import com.frostwire.gui.upnp.UPnPRegistryListener;
 public class UPnPService implements Runnable {
 
     private static final Logger LOG = Logger.getLogger(UPnPService.class.getName());
+    
+    final static String HACK_STREAM_HANDLER_SYSTEM_PROPERTY = "hackStreamHandlerProperty";
 
     private UpnpService service;
     private UPnPRegistryListener registryListener;
@@ -68,6 +70,11 @@ public class UPnPService implements Runnable {
 
     public void run() {
         try {
+            
+            // This is to disable the set of URL URLStreamHandlerFactory
+            // inside StreamClientImpl. Now handled with new coded added to
+            // azureus core.
+            System.setProperty(HACK_STREAM_HANDLER_SYSTEM_PROPERTY, "alreadyWorkedAroundTheEvilJDK");
 
             service = new UpnpServiceImpl();
 
