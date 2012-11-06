@@ -37,7 +37,7 @@ import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * 
- * @author gubatro
+ * @author gubatron
  * @author aldenml
  *
  */
