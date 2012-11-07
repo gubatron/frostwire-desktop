@@ -58,7 +58,7 @@ public class HttpServerManager {
 
             httpServer.createContext("/finger", new FingerHandler());
             httpServer.createContext("/browse", new BrowseHandler());
-            //httpServer.createContext("/download", new DownloadHandler());
+            httpServer.createContext("/download", new DownloadHandler());
             //httpServer.createContext("/dekstop-upload-request", new DesktopUploadRequestHandler(sessionManager));
             //httpServer.createContext("/desktop-upload", new DesktopUploadHandler(sessionManager));
 

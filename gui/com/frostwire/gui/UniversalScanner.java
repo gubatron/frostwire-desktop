@@ -83,7 +83,8 @@ public class UniversalScanner {
 
         ContentValues values = new ContentValues();
 
-        fillCommonValues(values, Constants.FILE_TYPE_PICTURES, filePath, file, shared);
+        String mime = "image/" + FilenameUtils.getExtension(filePath);
+        fillCommonValues(values, Constants.FILE_TYPE_PICTURES, filePath, file, mime, shared);
 
         try {
             Metadata metadata = ImageMetadataReader.readMetadata(file);
@@ -128,11 +129,11 @@ public class UniversalScanner {
         db.insert(values);
     }
 
-    private void fillCommonValues(ContentValues values, byte fileType, String filePath, File file, boolean shared) {
+    private void fillCommonValues(ContentValues values, byte fileType, String filePath, File file, String mime, boolean shared) {
         values.put(Columns.FILE_TYPE, fileType);
         values.put(Columns.FILE_PATH, filePath);
         values.put(Columns.FILE_SIZE, file.length());
-        values.put(Columns.MIME, getMimeType(filePath));
+        values.put(Columns.MIME, mime);
         values.put(Columns.DATE_ADDED, System.currentTimeMillis());
         values.put(Columns.DATE_MODIFIED, file.lastModified());
         values.put(Columns.SHARED, shared);
@@ -143,7 +144,8 @@ public class UniversalScanner {
 
         ContentValues values = new ContentValues();
 
-        fillCommonValues(values, Constants.FILE_TYPE_AUDIO, filePath, file, shared);
+        String mime = "audio/" + FilenameUtils.getExtension(filePath);
+        fillCommonValues(values, Constants.FILE_TYPE_AUDIO, filePath, file, mime, shared);
 
         try {
             AudioMetaData mt = new AudioMetaData(file);
@@ -167,21 +169,22 @@ public class UniversalScanner {
     }
 
     private void scanVideo(String filePath, boolean shared) {
-        scanBasic(Constants.FILE_TYPE_VIDEOS, filePath, shared);
+        String mime = "video/" + FilenameUtils.getExtension(filePath);
+        scanBasic(Constants.FILE_TYPE_VIDEOS, filePath, mime, shared);
     }
 
     private void scanDocument(String filePath, boolean shared) {
-        scanBasic(Constants.FILE_TYPE_DOCUMENTS, filePath, shared);
+        scanBasic(Constants.FILE_TYPE_DOCUMENTS, filePath, getMimeType(filePath), shared);
     }
 
-    private void scanBasic(byte fileType, String filePath, boolean shared) {
+    private void scanBasic(byte fileType, String filePath, String mime, boolean shared) {
         File file = new File(filePath);
 
         String displayName = FilenameUtils.getBaseName(file.getName());
 
         ContentValues values = new ContentValues();
 
-        fillCommonValues(values, fileType, filePath, file, shared);
+        fillCommonValues(values, fileType, filePath, file, mime, shared);
 
         values.put(Columns.TITLE, displayName);
         values.put(Columns.ARTIST, "");

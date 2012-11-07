@@ -57,7 +57,7 @@ public class Device {
 
     static {
         //upload files to 3 different devices at the same time.
-        executor = ExecutorsHelper.newFixedSizeThreadPool(3,"UploadToDeviceExecutor");
+        executor = ExecutorsHelper.newFixedSizeThreadPool(3, "UploadToDeviceExecutor");
     }
 
     public static int ACTION_BROWSE = 0;
@@ -172,7 +172,14 @@ public class Device {
     public URL getDownloadURL(int type, int id) {
         try {
 
-            return new URL("http://" + _address.getHostAddress() + ":" + _port + "/download?type=" + type + "&id=" + id);
+            String ip = _address.getHostAddress();
+
+            if (ip.equals("0.0.0.0")) {
+                // we need to replace with a real nic address
+                ip = NetworkUtils.getLocalAddress().getHostAddress();
+            }
+
+            return new URL("http://" + ip + ":" + _port + "/download?type=" + type + "&id=" + id);
 
         } catch (Exception e) {
             notifyOnActionFailed(ACTION_DOWNLOAD, e);
@@ -182,7 +189,7 @@ public class Device {
     }
 
     public String getDownloadURL(FileDescriptor fd) {
-        return "http://" + _address.getHostAddress() + ":" + _port + "/download?type=" + fd.fileType + "&id=" + fd.id;
+        return getDownloadURL(fd.fileType, fd.id).toString();
     }
 
     public byte[] download(int type, int id) {

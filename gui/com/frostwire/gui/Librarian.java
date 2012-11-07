@@ -438,4 +438,33 @@ public final class Librarian {
 
         return fd;
     }
+
+    public FileDescriptor getFileDescriptor(byte fileType, int fileId) {
+        FileDescriptor result = null;
+
+        Cursor c = null;
+
+        try {
+            ShareFilesDB db = ShareFilesDB.intance();
+
+            String[] columns = new String[] { Columns.ID, Columns.FILE_TYPE, Columns.FILE_PATH, Columns.FILE_SIZE, Columns.MIME, Columns.DATE_ADDED, Columns.DATE_MODIFIED, Columns.SHARED, Columns.TITLE, Columns.ARTIST, Columns.ALBUM, Columns.YEAR };
+            String where = Columns.FILE_TYPE + " = ? AND " + Columns.ID + " = ? AND " + Columns.SHARED + " = ?";
+            String[] whereArgs = new String[] { String.valueOf(fileType), String.valueOf(fileId), String.valueOf(true) };
+
+            c = db.query(columns, where, whereArgs, null);
+
+            List<FileDescriptor> fds = filteredOutBadRows(c);
+
+            return fds.size() > 0 ? fds.get(0) : null;
+
+        } catch (Throwable e) {
+            LOG.log(Level.WARNING, "General failure getting files", e);
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+
+        return result;
+    }
 }
