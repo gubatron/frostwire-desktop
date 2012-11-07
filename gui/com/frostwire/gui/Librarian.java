@@ -42,6 +42,7 @@ import com.frostwire.core.providers.TableFetchers;
 import com.frostwire.database.Cursor;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.library.Finger;
+import com.frostwire.gui.upnp.UPnPManager;
 
 /**
  * @author gubatron
@@ -351,6 +352,8 @@ public final class Librarian {
                 }
 
                 pathSharingSet.remove(filePath);
+
+                UPnPManager.instance().refreshPing();
             }
         };
 
