@@ -82,7 +82,7 @@ class DownloadHandler implements HttpHandler {
             //    return;
             //}
 
-            FileDescriptor fd = Librarian.instance().getFileDescriptor(type, id);
+            FileDescriptor fd = Librarian.instance().getSharedFileDescriptor(type, id);
             if (fd == null) {
                 throw new IOException("There is no such file shared");
             }

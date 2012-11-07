@@ -36,8 +36,6 @@ import org.teleal.cling.model.meta.RemoteDevice;
 import org.teleal.cling.model.meta.RemoteDeviceIdentity;
 import org.teleal.cling.model.meta.Service;
 import org.teleal.cling.model.state.StateVariableValue;
-import org.teleal.cling.model.types.BooleanDatatype;
-import org.teleal.cling.model.types.Datatype;
 import org.teleal.cling.model.types.ServiceId;
 import org.teleal.cling.model.types.UDAServiceId;
 
@@ -168,7 +166,7 @@ public abstract class UPnPManager {
         });
     }
 
-    @SuppressWarnings({ "rawtypes" })
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     private void subscribeToDeviceInfo(UpnpService service, final Service<?, ?> deviceInfo) {
         // 1 min timeout
         service.getControlPoint().execute(new SubscriptionCallback(deviceInfo, 60) {

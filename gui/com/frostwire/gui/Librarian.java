@@ -439,7 +439,7 @@ public final class Librarian {
         return fd;
     }
 
-    public FileDescriptor getFileDescriptor(byte fileType, int fileId) {
+    public FileDescriptor getSharedFileDescriptor(byte fileType, int fileId) {
         FileDescriptor result = null;
 
         Cursor c = null;

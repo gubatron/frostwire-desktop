@@ -92,6 +92,7 @@ public class DesktopUPnPManager extends UPnPManager {
     @Override
     protected void handlePeerDevice(PingInfo p, InetAddress address, boolean added) {
         DeviceDiscoveryClerk clerk = LibraryMediator.instance().getDeviceDiscoveryClerk();
+        
         clerk.handleDeviceState(address, p.listeningPort, !added);
     }
 

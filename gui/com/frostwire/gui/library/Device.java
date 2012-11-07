@@ -115,10 +115,6 @@ public class Device {
         return finger.nickname;
     }
 
-    public String getKey() {
-        return _address.getHostAddress() + ":" + _port;
-    }
-
     public int getTotalShared() {
         return finger.numSharedApplicationFiles + finger.numSharedDocumentFiles + finger.numSharedPictureFiles + finger.numSharedVideoFiles + finger.numSharedRingtoneFiles + finger.numSharedAudioFiles;
     }
@@ -306,7 +302,7 @@ public class Device {
 
     @Override
     public int hashCode() {
-        return getKey().hashCode();
+        return getAddress().hashCode();
     }
 
     @Override

@@ -53,12 +53,12 @@ public class DeviceDiscoveryClerk {
 
     private static final long STALE_DEVICE_TIMEOUT = 14000;
 
-    private Map<String, Device> deviceCache;
+    private Map<InetAddress, Device> deviceCache;
 
     private JsonEngine jsonEngine;
 
     public DeviceDiscoveryClerk() {
-        deviceCache = Collections.synchronizedMap(new HashMap<String, Device>());
+        deviceCache = Collections.synchronizedMap(new HashMap<InetAddress, Device>());
         jsonEngine = new JsonEngine();
     }
 
@@ -172,21 +172,19 @@ public class DeviceDiscoveryClerk {
     }
 
     public void handleDeviceState(InetAddress address, int listeningPort, boolean bye) {
-        String key = address.getHostAddress() + ":" + listeningPort;
-
         if (!bye) {
-            retrieveFinger(key, address, listeningPort);
+            retrieveFinger(address, listeningPort);
         } else {
-            if (deviceCache.containsKey(key)) {
-                Device device = deviceCache.get(key);
-                handleDeviceStale(key, device);
+            if (deviceCache.containsKey(address)) {
+                Device device = deviceCache.get(address);
+                handleDeviceStale(address, device);
             }
         }
     }
 
-    private boolean retrieveFinger(final String key, InetAddress address, int listeningPort) {
+    private boolean retrieveFinger(final InetAddress address, int listeningPort) {
         try {
-            URI uri = new URI("http://" + key + "/finger");
+            URI uri = new URI("http://" + address.getHostAddress() + ":" + listeningPort + "/finger");
 
             HttpFetcher fetcher = new HttpFetcher(uri);
 
@@ -202,31 +200,31 @@ public class DeviceDiscoveryClerk {
             Finger finger = jsonEngine.toObject(json, Finger.class);
 
             synchronized (deviceCache) {
-                if (deviceCache.containsKey(key)) {
-                    Device device = deviceCache.get(key);
+                if (deviceCache.containsKey(address)) {
+                    Device device = deviceCache.get(address);
                     device.setFinger(finger);
-                    handleDeviceAlive(key, device);
+                    handleDeviceAlive(address, device);
                 } else {
                     Device device = new Device(address, listeningPort, finger);
                     device.setOnActionFailedListener(new OnActionFailedListener() {
                         public void onActionFailed(Device device, int action, Exception e) {
-                            handleDeviceStale(key, device);
+                            handleDeviceStale(address, device);
                         }
                     });
-                    handleDeviceNew(key, device);
+                    handleDeviceNew(address, device);
                 }
             }
 
             return true;
         } catch (Throwable e) {
-            LOG.error("Failed to connnect to " + key);
+            LOG.error("Failed to connnect to " + address);
         }
 
         return false;
     }
 
-    private void handleDeviceNew(String key, final Device device) {
-        deviceCache.put(key, device);
+    private void handleDeviceNew(InetAddress address, final Device device) {
+        deviceCache.put(address, device);
         device.setTimestamp(System.currentTimeMillis());
 
         //LOG.info("Device New: " + device);
@@ -238,7 +236,7 @@ public class DeviceDiscoveryClerk {
         });
     }
 
-    private void handleDeviceAlive(String key, final Device device) {
+    private void handleDeviceAlive(InetAddress address, final Device device) {
         device.setTimestamp(System.currentTimeMillis());
 
         //LOG.info("Device Alive: " + device);
@@ -250,8 +248,8 @@ public class DeviceDiscoveryClerk {
         });
     }
 
-    private void handleDeviceStale(String key, final Device device) {
-        deviceCache.remove(key);
+    private void handleDeviceStale(InetAddress address, final Device device) {
+        deviceCache.remove(address);
 
         LOG.info("Device Slate: " + device);
 
@@ -272,8 +270,8 @@ public class DeviceDiscoveryClerk {
                         if (device.getTimestamp() + STALE_DEVICE_TIMEOUT < now) {
 
                             // last chance
-                            if (!retrieveFinger(device.getKey(), device.getAddress(), device.getPort())) {
-                                handleDeviceStale(device.getKey(), device);
+                            if (!retrieveFinger(device.getAddress(), device.getPort())) {
+                                handleDeviceStale(device.getAddress(), device);
                             }
                         }
                     }
