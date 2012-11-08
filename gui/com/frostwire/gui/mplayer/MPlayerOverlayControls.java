@@ -204,13 +204,13 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 		
 		// customize UI
 		button.setIcon( buttonImage );
-        button.setContentAreaFilled(false);
+		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
 		button.setRolloverEnabled(true);
 		button.setMargin(new Insets(0,0,0,0));
 		button.setFocusPainted(false);
 		button.setSize( new Dimension(buttonImage.getIconWidth(), buttonImage.getIconHeight()) );
-        button.setLocation( pos );
+		button.setLocation( pos );
         
 		return button;
 	}
@@ -322,7 +322,4 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         
         g2.dispose();
     }
-
-    
-
 }
