@@ -9,5 +9,7 @@ public interface MPlayerUIEventListener {
     public void onUIFastForwardPressed();
     public void onUIRewindPressed();
     public void onUIToggleFullscreenPressed();
+	public void onUIProgressSlideStart();
+	public void onUIProgressSlideEnd();
 	
 }

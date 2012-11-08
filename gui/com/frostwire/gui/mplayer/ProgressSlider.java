@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
 import javax.swing.JLabel;
@@ -45,6 +47,24 @@ public class ProgressSlider extends JPanel {
 				ProgressSlider.this.onProgressSliderValueChanged(((JSlider)e.getSource()).getValue());
 			}
         });
+        progressSlider.addMouseListener( new MouseAdapter() {
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				for (ProgressSliderListener l : listeners ) {
+					l.onProgressSliderMouseDown();
+				}
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				for (ProgressSliderListener l : listeners ) {
+					l.onProgressSliderMouseUp();
+				}
+			}
+        	
+        });
+        
         add(progressSlider, BorderLayout.CENTER);
         
         remainingTime = new JLabel("--:--");

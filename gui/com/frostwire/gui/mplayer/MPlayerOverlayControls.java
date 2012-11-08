@@ -11,7 +11,6 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -246,6 +245,16 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 			MPlayerUIEventHandler.instance().onSeekToTime((float)seconds);
 		}
 	}
+
+	@Override
+	public void onProgressSliderMouseDown() {
+		MPlayerUIEventHandler.instance().onProgressSlideEnd();
+	}
+
+	@Override
+	public void onProgressSliderMouseUp() {
+		MPlayerUIEventHandler.instance().onProgressSlideStart();
+	}
 	
 	public void onFullscreenEnterPressed() {
 		MPlayerUIEventHandler.instance().onToggleFullscreenPressed();
@@ -313,6 +322,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         
         g2.dispose();
     }
+
     
 
 }

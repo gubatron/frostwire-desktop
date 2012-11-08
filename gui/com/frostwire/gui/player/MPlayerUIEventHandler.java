@@ -68,4 +68,16 @@ public class MPlayerUIEventHandler {
         	listener.onUIToggleFullscreenPressed();
         }
     }
+
+	public void onProgressSlideStart() {
+		for ( MPlayerUIEventListener listener : listeners ) {
+        	listener.onUIProgressSlideStart();
+        }
+	}
+
+	public void onProgressSlideEnd() {
+		for ( MPlayerUIEventListener listener : listeners ) {
+        	listener.onUIProgressSlideEnd();
+        }
+	}
 }

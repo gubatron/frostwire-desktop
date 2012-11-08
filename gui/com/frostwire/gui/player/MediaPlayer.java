@@ -348,8 +348,15 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
      * Toggle pause the current song
      */
     public void togglePause() {
+    	togglePause(true);
+    }
+    
+    public void togglePause(boolean notify) {
         mplayer.togglePause();
-        notifyState(getState());
+        
+        if(notify) {
+        	notifyState(getState());
+        }
     }
 
     /**
@@ -823,6 +830,16 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 	@Override
 	public void onUIToggleFullscreenPressed() {
 		MPlayerMediator.instance().toggleFullScreen();
+	}
+
+	@Override
+	public void onUIProgressSlideStart() {
+		togglePause(false);
+	}
+
+	@Override
+	public void onUIProgressSlideEnd() {
+		togglePause(false);
 	}
 
 
