@@ -14,7 +14,7 @@ public class MediaPlayerOSX extends MediaPlayer {
 
         playerPath = (isRelease) ? macOSFolder + File.separator + "fwplayer" : "lib/native/fwplayer";
 		
-        playerPath = "/opt/local/bin/mplayer";
+        //playerPath = "/opt/local/bin/mplayer";
         
 		return playerPath;
 	}
