@@ -785,20 +785,17 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 
 	@Override
 	public void onUIVolumeChanged(float volume) {
-		System.out.println("ui volume changed");
 		setVolume(volume);
 	}
 
 	@Override
 	public void onUISeekToTime(float seconds) {
-		System.out.println("ui seek to time");
 		seek(seconds);
 	}
 
 	@Override
 	public void onUIPlayPressed() {
-		System.out.println("ui play pressed");
-    	MediaPlaybackState curState = mplayer.getCurrentState();
+		MediaPlaybackState curState = mplayer.getCurrentState();
     	
     	if (curState == MediaPlaybackState.Playing ||
     		curState == MediaPlaybackState.Paused) {
@@ -810,26 +807,22 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 
 	@Override
 	public void onUIPausePressed() {
-		System.out.println("ui pause pressed");
-    	togglePause();
+		togglePause();
 	}
 
 	@Override
 	public void onUIFastForwardPressed() {
-		System.out.println("ui fast forward pressed");
-    	fastForward();
+		fastForward();
 	}
 
 	@Override
 	public void onUIRewindPressed() {
-		System.out.println("ui rewind pressed");
-    	rewind();
+		rewind();
 	}
 
 	@Override
 	public void onUIToggleFullscreenPressed() {
-		System.out.println("ui toggle fullscreen pressed");
-    	MPlayerMediator.instance().toggleFullScreen();
+		MPlayerMediator.instance().toggleFullScreen();
 	}
 
 
