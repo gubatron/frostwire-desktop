@@ -11,6 +11,11 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -18,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -29,7 +35,7 @@ import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.sun.awt.AWTUtilities;
 
-public class MPlayerOverlayControls extends JDialog implements ProgressSliderListener, AlphaTarget, MediaPlayerListener {
+public class MPlayerOverlayControls extends JDialog implements ProgressSliderListener, AlphaTarget, MediaPlayerListener, MouseMotionListener, MouseListener {
 
 	private static final long serialVersionUID = -6148347816829785754L;
 
@@ -43,7 +49,11 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 	private double currentTimeInSeconds = 0.0;
 	private boolean isHandlingProgressChange = false;
 	
-	public MPlayerOverlayControls() {
+	private Timer hideTimer;
+	
+	public MPlayerOverlayControls(Timer hideTimer) {
+		
+		this.hideTimer = hideTimer;
 		
 		player = MediaPlayer.instance();
 		player.addMediaPlayerListener(this);
@@ -84,6 +94,8 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 				MPlayerOverlayControls.this.onPlayPressed();
 			}
 		});
+		playButton.addMouseListener(this);
+		playButton.addMouseMotionListener(this);
 		panel.add(playButton);
 		
         
@@ -96,6 +108,8 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 				MPlayerOverlayControls.this.onPausePressed();
 			}
 		});
+		pauseButton.addMouseListener(this);
+		pauseButton.addMouseMotionListener(this);
 		panel.add(pauseButton);
 		
         // fast forward button
@@ -108,6 +122,8 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 				MPlayerOverlayControls.this.onFastForwardPressed();
 			}
 		});
+		fastForwardButton.addMouseListener(this);
+		fastForwardButton.addMouseMotionListener(this);
 		panel.add(fastForwardButton);
         
         // rewind button
@@ -120,6 +136,8 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 				MPlayerOverlayControls.this.onRewindPressed();
 			}
         });
+        rewindButton.addMouseListener(this);
+		rewindButton.addMouseMotionListener(this);
 		panel.add(rewindButton);
             
         // full screen exit button
@@ -131,6 +149,8 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 				MPlayerOverlayControls.this.onFullscreenExitPressed();
 			}
         });
+        fullscreenExitButton.addMouseListener(this);
+		fullscreenExitButton.addMouseMotionListener(this);
 		panel.add(fullscreenExitButton);
 		
 		// full screen enter button
@@ -141,6 +161,8 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 				MPlayerOverlayControls.this.onFullscreenEnterPressed();
 			}
         });
+        fullscreenEnterButton.addMouseListener(this);
+		fullscreenEnterButton.addMouseMotionListener(this);
 		panel.add(fullscreenEnterButton);
 		
         
@@ -164,7 +186,9 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 				MPlayerOverlayControls.this.onVolumeChanged(((JSlider)e.getSource()).getValue());
 			}
         });
-        volumePanel.add(volumeSlider, BorderLayout.CENTER);
+        volumeSlider.addMouseListener(this);
+		volumeSlider.addMouseMotionListener(this);
+		volumePanel.add(volumeSlider, BorderLayout.CENTER);
         
         ImageIcon volMaxIcon = GUIMediator.getThemeImage("fc_volume_on");
 		JLabel volMaxLabel = new JLabel( volMaxIcon );
@@ -179,7 +203,9 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         progressSlider = new ProgressSlider();
         progressSlider.addProgressSliderListener(this);
         progressSlider.setLocation(20, 70);
-        panel.add(progressSlider);
+        progressSlider.addMouseListener(this);
+		progressSlider.addMouseMotionListener(this);
+		panel.add(progressSlider);
         
         panel.add(bkgnd);
         
@@ -248,12 +274,14 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 
 	@Override
 	public void onProgressSliderMouseDown() {
-		MPlayerUIEventHandler.instance().onProgressSlideEnd();
+		MPlayerUIEventHandler.instance().onProgressSlideStart();
+		hideTimer.stop();
 	}
 
 	@Override
 	public void onProgressSliderMouseUp() {
-		MPlayerUIEventHandler.instance().onProgressSlideStart();
+		MPlayerUIEventHandler.instance().onProgressSlideEnd();
+		hideTimer.restart();
 	}
 	
 	public void onFullscreenEnterPressed() {
@@ -313,6 +341,19 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 	public void icyInfo(MediaPlayer mediaPlayer, String data) {
 	}
 	
+
+	/*
+	 * overrides for mouse input processing of client controls
+	 */
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		hideTimer.stop();
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		hideTimer.restart();
+	}
 	
 	public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();

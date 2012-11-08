@@ -91,7 +91,11 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
     private static MediaPlayer instance;
 
     private long durationInSeconds;
-
+    private boolean isPlayPausedForSliding = false;
+    private boolean isSliding = false;
+    
+    private boolean stateNotificationsEnabled = true;
+    
     public static MediaPlayer instance() {
         if (instance == null) {
         	if ( OSUtils.isWindows() ) {
@@ -348,17 +352,10 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
      * Toggle pause the current song
      */
     public void togglePause() {
-    	togglePause(true);
+    	mplayer.togglePause();
+    	notifyState(getState());
     }
     
-    public void togglePause(boolean notify) {
-        mplayer.togglePause();
-        
-        if(notify) {
-        	notifyState(getState());
-        }
-    }
-
     /**
      * Stops the current song
      */
@@ -381,10 +378,10 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
      * Seeks to a new location in the current song
      */
     public void seek(float timeInSecs) {
-        mplayer.seek(timeInSecs);
-        notifyState(getState());
+    	mplayer.seek(timeInSecs);
+    	notifyState(getState());
     }
-
+    
     /**
      * Sets the gain(volume) for the outputline
      * 
@@ -464,11 +461,14 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
      *            the new value
      */
     protected void notifyState(final MediaPlaybackState state) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                fireState(state);
-            }
-        });
+        
+    	if ( stateNotificationsEnabled ) {
+	    	SwingUtilities.invokeLater(new Runnable() {
+	            public void run() {
+	                fireState(state);
+	            }
+	        });
+    	}
     }
 
     /**
@@ -834,12 +834,22 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 
 	@Override
 	public void onUIProgressSlideStart() {
-		togglePause(false);
+		stateNotificationsEnabled = false;
+		
+		if ( mplayer.getCurrentState() == MediaPlaybackState.Playing ) {
+			isPlayPausedForSliding = true;
+			togglePause();
+		}
 	}
 
 	@Override
 	public void onUIProgressSlideEnd() {
-		togglePause(false);
+		if (isPlayPausedForSliding) {
+			isPlayPausedForSliding = false;
+			togglePause();
+		}
+		
+		stateNotificationsEnabled = true;
 	}
 
 
