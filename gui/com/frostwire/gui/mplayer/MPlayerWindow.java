@@ -67,6 +67,14 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 		
 		Dimension d = new Dimension(800, 600);
         
+        // initialize auto-hide timer
+		hideTimer = new Timer(HIDE_DELAY, new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MPlayerWindow.this.onHideTimerExpired();
+			}
+		});
+		hideTimer.setRepeats(false);
+		
 		// initialize window
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setTitle("Frostwire Media Player");
@@ -97,7 +105,7 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
         pack();
         
         // initialize overlay controls
-        overlayControls = new MPlayerOverlayControls();
+        overlayControls = new MPlayerOverlayControls(hideTimer);
         overlayControls.setVisible(false);
         overlayControls.setAlwaysOnTop(true);
         overlayControls.setIsFullscreen(isFullscreen);
@@ -109,13 +117,7 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
         animateAlphaThread.setDaemon(true);
         animateAlphaThread.start();
 
-        // initialize auto-hide timer
-		hideTimer = new Timer(HIDE_DELAY, new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				MPlayerWindow.this.onHideTimerExpired();
-			}
-		});
-		hideTimer.setRepeats(false);
+
 	}
 
 	/**
