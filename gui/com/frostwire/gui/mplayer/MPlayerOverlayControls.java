@@ -62,7 +62,10 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
     	setPreferredSize(winSize);
         setSize(winSize);
         setUndecorated(true);
-        this.setBackground(new Color(0,0,0,0));
+        setBackground(new Color(0,0,0,0));
+        
+        // osx specific (won't harm windows/linux)
+        getRootPane().putClientProperty("apple.awt.draggableWindowBackground", Boolean.FALSE);
         
         panel.setLayout(null);
     	panel.setBounds(0, 0, winSize.width, winSize.height);
