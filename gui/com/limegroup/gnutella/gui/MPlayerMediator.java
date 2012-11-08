@@ -41,11 +41,15 @@ public class MPlayerMediator {
 
     public void toggleFullScreen() {
     	try {
-			SwingUtilities.invokeAndWait(new Runnable() {
-				public void run() {
-					mplayerWindow.toggleFullScreen();
-				}
-			});
+    		if ( !SwingUtilities.isEventDispatchThread()) {
+				SwingUtilities.invokeAndWait(new Runnable() {
+					public void run() {
+						mplayerWindow.toggleFullScreen();
+					}
+				});
+    		} else {
+    			mplayerWindow.toggleFullScreen();
+    		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

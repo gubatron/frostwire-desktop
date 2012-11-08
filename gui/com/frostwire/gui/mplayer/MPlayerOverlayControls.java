@@ -23,6 +23,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerListener;
 import com.frostwire.mplayer.MediaPlaybackState;
@@ -38,18 +39,16 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 	private JButton playButton, pauseButton, fullscreenExitButton, fullscreenEnterButton;
 	
 	private MediaPlayer player;
-	private MPlayerWindow window;
 	
 	private double durationInSeconds = 0.0;
 	private double currentTimeInSeconds = 0.0;
 	private boolean isHandlingProgressChange = false;
 	
-	public MPlayerOverlayControls(MPlayerWindow parentWindow) {
+	public MPlayerOverlayControls() {
 		
 		player = MediaPlayer.instance();
 		player.addMediaPlayerListener(this);
 		
-		window = parentWindow;
 		setupUI();
     }
 
@@ -220,44 +219,37 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
     }
     
     public void onPlayPressed() {
-    	MediaPlaybackState curState = player.getState();
-    	
-    	if (curState == MediaPlaybackState.Playing ||
-    		curState == MediaPlaybackState.Paused) {
-    		player.togglePause();
-    	} else if (curState == MediaPlaybackState.Closed) {
-    		player.playSong();
-    	}
+    	MPlayerUIEventHandler.instance().onPlayPressed();
 	}
 	
 	public void onPausePressed() {
-		player.togglePause();
+		MPlayerUIEventHandler.instance().onPausePressed();
     }
 	
 	public void onFastForwardPressed() {
-		player.fastForward();
+		MPlayerUIEventHandler.instance().onFastForwardPressed();
 	}
 	
 	public void onRewindPressed() {
-		player.rewind();
+		MPlayerUIEventHandler.instance().onRewindPressed();
 	}
 
 	private void onVolumeChanged( int value) {
-		player.setVolume( (double)value / 100.0 );
+		MPlayerUIEventHandler.instance().onVolumeChanged((float)value / 100.0f);
 	}
 
 	public void onProgressSliderTimeValueChange(int seconds) {
 		if ( isHandlingProgressChange == false ) {
-			player.seek(seconds);
+			MPlayerUIEventHandler.instance().onSeekToTime((float)seconds);
 		}
 	}
 	
 	public void onFullscreenEnterPressed() {
-		window.toggleFullScreen();
+		MPlayerUIEventHandler.instance().onToggleFullscreenPressed();
 	}
 	
 	public void onFullscreenExitPressed() {
-		window.toggleFullScreen();
+		MPlayerUIEventHandler.instance().onToggleFullscreenPressed();
 	}
 
 	@Override

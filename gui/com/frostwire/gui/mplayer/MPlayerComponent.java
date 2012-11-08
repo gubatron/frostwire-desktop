@@ -29,8 +29,8 @@ import java.awt.Component;
 public interface MPlayerComponent {
 
 	public Component getComponent();
+	public boolean toggleFullScreen();
+	
 	public long getWindowID();
     
-    // player UI commands
-    public boolean toggleFullScreen();
 }

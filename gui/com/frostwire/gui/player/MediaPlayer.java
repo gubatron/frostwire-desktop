@@ -25,7 +25,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.channels.FileChannel;
 import java.util.LinkedList;
 import java.util.List;
@@ -65,7 +64,7 @@ import com.limegroup.gnutella.settings.PlayerSettings;
  * @author aldenml
  * 
  */
-public class MediaPlayer implements RefreshListener {
+public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 
     private static final String[] PLAYABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wav", "wma", "m4a", "aac", "flac", "mp4" };
 
@@ -159,6 +158,9 @@ public class MediaPlayer implements RefreshListener {
                 return false;
             }
         });
+        
+        // prepare to receive UI events
+        MPlayerUIEventHandler.instance().addListener(this);
     }
     
     protected String getPlayerPath() {
@@ -168,7 +170,7 @@ public class MediaPlayer implements RefreshListener {
     protected float getVolumeGainFactor() {
     	return 30;
     }
-
+    
     public Dimension getCurrentVideoSize() {
     	if ( mplayer != null ) {
     		return mplayer.getVideoSize();
@@ -780,6 +782,55 @@ public class MediaPlayer implements RefreshListener {
 
         return mplayer.getDurationInSecs();
     }
+
+	@Override
+	public void onUIVolumeChanged(float volume) {
+		System.out.println("ui volume changed");
+		setVolume(volume);
+	}
+
+	@Override
+	public void onUISeekToTime(float seconds) {
+		System.out.println("ui seek to time");
+		seek(seconds);
+	}
+
+	@Override
+	public void onUIPlayPressed() {
+		System.out.println("ui play pressed");
+    	MediaPlaybackState curState = mplayer.getCurrentState();
+    	
+    	if (curState == MediaPlaybackState.Playing ||
+    		curState == MediaPlaybackState.Paused) {
+    		togglePause();
+    	} else if (curState == MediaPlaybackState.Closed) {
+    		playSong();
+    	}
+	}
+
+	@Override
+	public void onUIPausePressed() {
+		System.out.println("ui pause pressed");
+    	togglePause();
+	}
+
+	@Override
+	public void onUIFastForwardPressed() {
+		System.out.println("ui fast forward pressed");
+    	fastForward();
+	}
+
+	@Override
+	public void onUIRewindPressed() {
+		System.out.println("ui rewind pressed");
+    	rewind();
+	}
+
+	@Override
+	public void onUIToggleFullscreenPressed() {
+		System.out.println("ui toggle fullscreen pressed");
+    	MPlayerMediator.instance().toggleFullScreen();
+	}
 
 
 }

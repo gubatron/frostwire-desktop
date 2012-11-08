@@ -52,7 +52,6 @@ public class ProgressSlider extends JPanel {
         remainingTime.setForeground(Color.white);
         add(remainingTime, BorderLayout.EAST);
         
-        updateUIControls();
 	}
 	
 	public void addProgressSliderListener( ProgressSliderListener listener ) {
@@ -66,9 +65,9 @@ public class ProgressSlider extends JPanel {
 	public void setTotalTime(int seconds) {
 		if ( seconds != totalTime ) {
 			totalTime = seconds;
+			currentTime = 0;
 			updateUIControls();
 		}
-		
 	}
 	
 	public void setCurrentTime(int seconds) {

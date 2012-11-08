@@ -21,25 +21,46 @@ package com.frostwire.gui.mplayer;
 import java.awt.Component;
 import java.awt.Dimension;
 
+import javax.swing.SwingUtilities;
+
 import org.limewire.util.CommonUtils;
 
 import com.apple.eawt.CocoaComponent;
+import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MPlayerUIEventHandler;
+import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaPlayerListener;
+import com.frostwire.mplayer.MediaPlaybackState;
 
 /**
  * @author aldenml
  *
  */
-public class MPlayerComponentOSX extends CocoaComponent implements MPlayerComponent {
+public class MPlayerComponentOSX extends CocoaComponent implements MPlayerComponent, MediaPlayerListener {
 
     private static final long serialVersionUID = -8610816510893757828L;
 
     private static final int JMPlayer_addNotify = 1;
     private static final int JMPlayer_dispose = 2;
-    private static final int JMPlayer_toggleFS = 3;
-
+    
+    // ui events
+    private static final int JMPlayer_volumeChanged = 3;
+    private static final int JMPlayer_timeInitialized = 4;
+    private static final int JMPlayer_progressChanged = 5;
+    private static final int JMPlayer_stateChanged = 6;
+    private static final int JMPlayer_toggleFS = 7;
+    
+    // states
+    private static final int JMPlayer_statePlaying = 1;
+    private static final int JMPlayer_statePaused = 2;
+    private static final int JMPlayer_stateStopped = 3;
+    
+    private boolean refreshPlayTime = false;
+    
     private long nsObject = 0;
 
     public MPlayerComponentOSX() {
+    	MediaPlayer.instance().addMediaPlayerListener(this);
     }
 
     @Override
@@ -90,7 +111,18 @@ public class MPlayerComponentOSX extends CocoaComponent implements MPlayerCompon
         dispose();
         super.finalize();
     }
-
+    
+    @Override
+    public boolean toggleFullScreen() {
+        sendMsg(JMPlayer_toggleFS);
+        return true;
+    }
+    
+    @Override
+	public long getWindowID() {
+		return 0;  // always returns 0 on OSX
+	}
+    
     protected void dispose() {
         sendMsg(JMPlayer_dispose);
     }
@@ -104,21 +136,122 @@ public class MPlayerComponentOSX extends CocoaComponent implements MPlayerCompon
     private void sendMsg(int messageID, Object message) {
         if (nsObject != 0) {
             sendMessage(messageID, message);
+            
         }
     }
-    
-    @Override
-    public boolean toggleFullScreen() {
-        sendMsg(JMPlayer_toggleFS);
-        return true;
-    }
-    
-    @Override
-	public long getWindowID() {
-		return 0;  // always returns 0 on OSX
-	}
+
     
     private native long createNSView1(String appPath);
+    
+    /*
+     * JNI Hook methods - forward all to the UIEventHandler
+     */
+	public void onVolumeChanged(final float volume) {
+		SwingUtilities.invokeLater( new Runnable() {
+			@Override
+			public void run() {
+				MPlayerUIEventHandler.instance().onVolumeChanged(volume);
+			}
+		});
+	}
+    public void onSeekToTime(final float seconds) {
+    	SwingUtilities.invokeLater( new Runnable() {
+			@Override
+			public void run() {
+				MPlayerUIEventHandler.instance().onSeekToTime(seconds);
+			}
+    	});
+    }
+    public void onPlayPressed() {
+    	SwingUtilities.invokeLater( new Runnable() {
+			@Override
+			public void run() {
+				MPlayerUIEventHandler.instance().onPlayPressed();
+			}
+    	});
+    }
+    public void onPausePressed() {
+    	SwingUtilities.invokeLater( new Runnable() {
+			@Override
+			public void run() {
+				MPlayerUIEventHandler.instance().onPausePressed();
+			}
+    	});
+    }
+    public void onFastForwardPressed() {
+    	SwingUtilities.invokeLater( new Runnable() {
+			@Override
+			public void run() {
+				MPlayerUIEventHandler.instance().onFastForwardPressed();
+			}
+    	});
+    }
+    public void onRewindPressed() {
+    	SwingUtilities.invokeLater( new Runnable() {
+			@Override
+			public void run() {
+				MPlayerUIEventHandler.instance().onRewindPressed();
+			}
+    	});
+    }
+    public void onToggleFullscreenPressed() {
+    	SwingUtilities.invokeLater( new Runnable() {
+			@Override
+			public void run() {
+				MPlayerUIEventHandler.instance().onToggleFullscreenPressed();
+			} 
+		});		
+    }
 
-	
+    /*
+     * MediaPlayer Listener events - to send back to the native side.
+     */
+	@Override
+	public void mediaOpened(MediaPlayer audioPlayer, AudioSource audioSource) {}
+
+	@Override
+	public void progressChange(MediaPlayer audioPlayer, float currentTimeInSecs) {
+		sendMsg(JMPlayer_progressChanged, Float.valueOf(currentTimeInSecs));
+	}
+
+	@Override
+	public void volumeChange(MediaPlayer audioPlayer, double currentVolume) {
+		sendMsg(JMPlayer_volumeChanged, Float.valueOf((float)currentVolume));
+	}
+
+	@Override
+	public void stateChange(MediaPlayer audioPlayer, MediaPlaybackState state) {
+		int s;
+		
+		switch(state) {
+		case Playing : 
+			s=JMPlayer_statePlaying; 
+			break;
+		case Paused: 
+			s=JMPlayer_statePaused; 
+			break;
+		case Stopped: 
+			s=JMPlayer_stateStopped; 
+			break;
+		default: 
+			s=-1; 
+			break;
+		}
+		
+		if ( state == MediaPlaybackState.Playing && refreshPlayTime ) {
+			refreshPlayTime = false;
+			sendMsg(JMPlayer_timeInitialized, Float.valueOf(MediaPlayer.instance().getDurationInSecs()));
+		}
+		
+		if ( state != MediaPlaybackState.Playing ) {
+			refreshPlayTime = true;
+		}
+		
+		if ( s != -1 ) {
+			sendMsg(JMPlayer_stateChanged, Integer.valueOf(s));
+		}
+	}
+
+	@Override
+	public void icyInfo(MediaPlayer audioPlayer, String data) {}
 }
