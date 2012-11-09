@@ -335,8 +335,10 @@ public final class GUIMediator {
     private GUIMediator() {
         MAIN_FRAME = new MainFrame(getAppFrame());
         OPTIONS_MEDIATOR = MAIN_FRAME.getOptionsMediator();
-        MPLAYER_MEDIATOR = MPlayerMediator.instance();
+        
         _remoteDownloadsAllowed = true;
+        
+        
     }
 
     /**
@@ -560,6 +562,9 @@ public final class GUIMediator {
     }
     
     public final MPlayerMediator getMPlayerMediator() {
+    	if (MPLAYER_MEDIATOR == null) {
+    		MPLAYER_MEDIATOR = MPlayerMediator.instance();
+    	}
     	return MPLAYER_MEDIATOR;
     }
 

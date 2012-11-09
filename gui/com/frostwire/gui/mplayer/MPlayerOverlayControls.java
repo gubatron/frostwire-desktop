@@ -11,7 +11,6 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -221,15 +220,6 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         });
 	}
     
-    public void paint(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g.create();
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, AWTUtilities.getWindowOpacity(this)));
-        
-        super.paint(g2);
-        
-        g2.dispose();
-    }
-
     private static JButton createMPlayerButton(final String image, final Point pos) {
 		
 		ImageIcon buttonImage = GUIMediator.getThemeImage(image);
@@ -239,13 +229,13 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 		
 		// customize UI
 		button.setIcon( buttonImage );
-        button.setContentAreaFilled(false);
+		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
 		button.setRolloverEnabled(true);
 		button.setMargin(new Insets(0,0,0,0));
 		button.setFocusPainted(false);
 		button.setSize( new Dimension(buttonImage.getIconWidth(), buttonImage.getIconHeight()) );
-        button.setLocation( pos );
+		button.setLocation( pos );
         
 		return button;
 	}
@@ -364,24 +354,41 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 		hideTimer.restart();
 	}
 	
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-	}
+	public void paint(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, AWTUtilities.getWindowOpacity(this)));
+        
+        super.paint(g2);
+        
+        g2.dispose();
+    }
 
-	@Override
-	public void mouseMoved(MouseEvent arg0) {
-		hideTimer.restart();
-	}
-	
-	@Override
-	public void mouseClicked(MouseEvent e) {
-	}
+    @Override
+    public void mouseClicked(MouseEvent arg0) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
+    @Override
+    public void mouseEntered(MouseEvent arg0) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public void mouseExited(MouseEvent e) {
-	}
+    @Override
+    public void mouseExited(MouseEvent arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent arg0) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent arg0) {
+        hideTimer.restart();        
+    }
 }

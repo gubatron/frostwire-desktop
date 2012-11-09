@@ -6,7 +6,7 @@ import com.frostwire.gui.mplayer.MPlayerWindow;
 
 public class MPlayerMediator {
 
-    private static MPlayerMediator _instance;
+    private static MPlayerMediator instance;
     private final MPlayerWindow mplayerWindow;
 
     private MPlayerMediator() {
@@ -14,9 +14,18 @@ public class MPlayerMediator {
     }
     
     public static MPlayerMediator instance() {
-        if (_instance == null)
-            _instance = new MPlayerMediator();
-        return _instance;
+        if (instance == null) {
+        	try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+            	@Override
+            	public void run() {
+            		instance = new MPlayerMediator();
+            	}});
+        	} catch (Exception e) {
+        		
+        	}
+        }
+        return instance;
     }
     
     public long getCanvasComponentHwnd() {
