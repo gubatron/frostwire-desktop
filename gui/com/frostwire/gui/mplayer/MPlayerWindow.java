@@ -78,7 +78,6 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setTitle("Frostwire Media Player");
         setBackground(new Color(0,0,0,255));
-        setUndecorated(true);
         
         // initialize events
         addMouseMotionListener(new MPlayerMouseMotionAdapter());
