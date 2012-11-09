@@ -392,7 +392,7 @@ public class MPlayer extends BaseMediaPlayer {
 		} else if (line.startsWith(ICY_INFO)) {
 		    String data = line.substring(ICY_INFO.length()).trim();
 		    reportIcyInfo(data);
-		} else if (line.contains("VO: [direct3d]")) {
+		} else if (line.contains("VO: ")) {
             parseVideoSize(line);
         }
 
