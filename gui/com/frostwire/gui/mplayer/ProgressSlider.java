@@ -98,7 +98,6 @@ public class ProgressSlider extends JPanel {
 	}
 	
 	public void onProgressSliderValueChanged( int value ) {
-		
 		int seconds = (int) (value / 100.0 * totalTime);
 		for (ProgressSliderListener l : listeners ) {
 			l.onProgressSliderTimeValueChange(seconds);
@@ -109,7 +108,7 @@ public class ProgressSlider extends JPanel {
 		elapsedTime.setText(TimeUtils.getTimeFormatedString((int) currentTime));
 		remainingTime.setText(TimeUtils.getTimeFormatedString((int) (totalTime - currentTime)));
 		
-		int progressValue = (int) (currentTime / totalTime * 100);
+		int progressValue = (int) (currentTime / totalTime * 100.0);
 		progressSlider.setValue(Math.max(0, Math.min(100,progressValue)));
 	}
 
