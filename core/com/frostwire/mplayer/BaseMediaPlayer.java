@@ -179,13 +179,15 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 	}
 	
 	public void fastForward() {
-		if (currentState == MediaPlaybackState.Playing) {
+		if (currentState == MediaPlaybackState.Playing ||
+			currentState == MediaPlaybackState.Paused) {
 			seek( (float) (currentPositionInSecs + 10.0));
 		}
 	}
 	
 	public void rewind() {
-		if (currentState == MediaPlaybackState.Playing){
+		if (currentState == MediaPlaybackState.Playing ||
+			currentState == MediaPlaybackState.Paused){
 			seek( (float) (currentPositionInSecs - 10.0));
 		}
 	}
@@ -200,7 +202,6 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		if(currentState == MediaPlaybackState.Paused) {
 			doResume();
 		}
-		
 	}
 	
 	public void togglePause() {
