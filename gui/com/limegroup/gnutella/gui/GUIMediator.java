@@ -337,6 +337,8 @@ public final class GUIMediator {
         OPTIONS_MEDIATOR = MAIN_FRAME.getOptionsMediator();
         
         _remoteDownloadsAllowed = true;
+        
+        
     }
 
     /**
@@ -563,7 +565,6 @@ public final class GUIMediator {
     	if (MPLAYER_MEDIATOR == null) {
     		MPLAYER_MEDIATOR = MPlayerMediator.instance();
     	}
-    	
     	return MPLAYER_MEDIATOR;
     }
 

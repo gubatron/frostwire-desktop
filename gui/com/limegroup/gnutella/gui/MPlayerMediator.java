@@ -15,7 +15,15 @@ public class MPlayerMediator {
     
     public static MPlayerMediator instance() {
         if (instance == null) {
-            instance = new MPlayerMediator();
+        	try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+            	@Override
+            	public void run() {
+            		instance = new MPlayerMediator();
+            	}});
+        	} catch (Exception e) {
+        		
+        	}
         }
         return instance;
     }

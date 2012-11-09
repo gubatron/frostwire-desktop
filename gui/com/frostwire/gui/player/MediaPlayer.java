@@ -92,7 +92,7 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 
     private long durationInSeconds;
     private boolean isPlayPausedForSliding = false;
-    private boolean isSliding = false;
+    //private boolean isSliding = false; //not used.
     
     private boolean stateNotificationsEnabled = true;
     

@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
@@ -34,8 +35,6 @@ import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerListener;
 import com.frostwire.mplayer.MediaPlaybackState;
-
-import java.awt.event.MouseAdapter;
 
 public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 
@@ -57,7 +56,7 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
     private boolean handleVideoResize = true;
     
 	public MPlayerWindow() {
-        initializeUI();
+		initializeUI();	
         
         player = MediaPlayer.instance();
         player.addMediaPlayerListener(this);
@@ -78,6 +77,7 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 		// initialize window
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setTitle("Frostwire Media Player");
+        setUndecorated(true);
         setBackground(new Color(0,0,0,0));
         
         // initialize events
