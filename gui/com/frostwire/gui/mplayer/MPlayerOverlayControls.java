@@ -389,7 +389,6 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 
     @Override
     public void mouseMoved(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-        
+        hideTimer.restart();        
     }
 }
