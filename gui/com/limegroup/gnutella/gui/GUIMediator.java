@@ -73,6 +73,7 @@ import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.tabs.Tab;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.bugs.FatalBugManager;
@@ -1618,7 +1619,12 @@ public final class GUIMediator {
             }
 
         //MediaPlayer.instance().loadSong(song);
-        MediaPlayer.instance().asyncLoadSong(song, true, !song.getClass().equals(InternetRadioAudioSource.class));
+        boolean playNextSong = !song.getClass().equals(InternetRadioAudioSource.class);
+        if ( song.getFile() != null && MediaType.getVideoMediaType().matches(song.getFile().getAbsolutePath()) ) {
+        	playNextSong = false;
+        }
+		
+        MediaPlayer.instance().asyncLoadSong(song, true, playNextSong);
     }
 
     /**

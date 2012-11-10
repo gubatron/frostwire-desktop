@@ -760,7 +760,9 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
             return null;
         }
         int n = playlistFilesView.size();
-        if (n == 1) {
+        if (n == 0 ) {
+        	return null;
+        } else if (n == 1) {
             return playlistFilesView.get(0);
         }
         int index = new Random(System.currentTimeMillis()).nextInt(n);
