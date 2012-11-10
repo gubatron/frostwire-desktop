@@ -53,6 +53,7 @@ import com.frostwire.mplayer.IcyInfoListener;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.mplayer.PositionListener;
 import com.frostwire.mplayer.StateListener;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.settings.PlayerSettings;
@@ -331,21 +332,26 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
      */
     public void playSong() {
     	
-    	MPlayerMediator.instance().showPlayerWindow(true);
-			    
     	mplayer.stop();
         setVolume(volume);
 
+        String filename = "";
         if (currentSong.getFile() != null) {
-            mplayer.open(currentSong.getFile().getAbsolutePath());
+            filename = currentSong.getFile().getAbsolutePath();
         } else if (currentSong.getURL() != null) {
-            mplayer.open(currentSong.getURL().toString());
+            filename = currentSong.getURL().toString();
         } else if (currentSong.getPlaylistItem() != null) {
-            mplayer.open(currentSong.getPlaylistItem().getFilePath());
+            filename = currentSong.getPlaylistItem().getFilePath();
         }
-
+        
+        if (filename.length() > 0) {
+	        boolean isVideoFile = MediaType.getVideoMediaType().matches(filename);
+	        MPlayerMediator.instance().showPlayerWindow(isVideoFile);
+	        
+	        mplayer.open(filename);
+        }
+        
         notifyState(getState());
-    	
     }
 
     /**
