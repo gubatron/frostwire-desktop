@@ -13,8 +13,6 @@ public class MediaPlayerOSX extends MediaPlayer {
 		boolean isRelease = !FrostWireUtils.getFrostWireJarPath().contains("frostwire-desktop");
 
         playerPath = (isRelease) ? macOSFolder + File.separator + "fwplayer" : "lib/native/fwplayer";
-		
-        //playerPath = "/opt/local/bin/mplayer";
         
 		return playerPath;
 	}
