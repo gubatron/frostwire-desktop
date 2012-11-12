@@ -53,7 +53,7 @@ public class MPlayerComponentOSX extends CocoaComponent implements MPlayerCompon
     // states
     private static final int JMPlayer_statePlaying = 1;
     private static final int JMPlayer_statePaused = 2;
-    private static final int JMPlayer_stateStopped = 3;
+    private static final int JMPlayer_stateClosed = 3;
     
     private boolean refreshPlayTime = false;
     
@@ -248,8 +248,8 @@ public class MPlayerComponentOSX extends CocoaComponent implements MPlayerCompon
 		case Paused: 
 			s=JMPlayer_statePaused; 
 			break;
-		case Stopped: 
-			s=JMPlayer_stateStopped; 
+		case Closed: 
+			s=JMPlayer_stateClosed; 
 			break;
 		default: 
 			s=-1; 

@@ -321,6 +321,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 		case Closed:
 			playButton.setVisible(true);
 			pauseButton.setVisible(false);
+			break;
 		case Failed:
 		case Opening:
 		case Stopped:
