@@ -67,7 +67,7 @@ import com.limegroup.gnutella.settings.PlayerSettings;
  */
 public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 
-    private static final String[] PLAYABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wav", "wma", "m4a", "aac", "flac", "mp4" };
+    private static final String[] PLAYABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wav", "wma", "m4a", "aac", "flac", "mp4", "flv", "avi", "mov", "mkv", "mpg", "mpeg", "3gp" };
 
     /**
      * Our list of MediaPlayerListeners that are currently listening for events
