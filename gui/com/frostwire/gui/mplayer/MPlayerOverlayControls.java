@@ -46,7 +46,6 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 	
 	private double durationInSeconds = 0.0;
 	private double currentTimeInSeconds = 0.0;
-	private boolean isHandlingProgressChange = false;
 	
 	private Timer hideTimer;
 	
@@ -265,10 +264,8 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 		MPlayerUIEventHandler.instance().onVolumeChanged((float)value / 100.0f);
 	}
 
-	public void onProgressSliderTimeValueChange(int seconds) {
-		if ( isHandlingProgressChange == false ) {
-			MPlayerUIEventHandler.instance().onSeekToTime((float)seconds);
-		}
+	public void onProgressSliderTimeValueChange(float seconds) {
+		MPlayerUIEventHandler.instance().onSeekToTime(seconds);
 	}
 
 	@Override
@@ -301,10 +298,8 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 		currentTimeInSeconds = currentTimeInSecs;
 		
 		// adjust progress slider
-		isHandlingProgressChange = true;
-		progressSlider.setTotalTime((int)durationInSeconds);
-		progressSlider.setCurrentTime((int)currentTimeInSeconds);
-		isHandlingProgressChange = false;
+		progressSlider.setTotalTime((int) Math.round(durationInSeconds));
+		progressSlider.setCurrentTime((int) Math.round(currentTimeInSeconds));
 	}
 
 	@Override

@@ -25,6 +25,8 @@ public class ProgressSlider extends JPanel {
 	private float totalTime = 0;
 	private float currentTime = 0;
 	
+	private boolean mplayerSettingProgress = false;
+	
 	private LinkedList<ProgressSliderListener> listeners = new LinkedList<ProgressSliderListener>();
 	
 	public ProgressSlider() {
@@ -61,8 +63,9 @@ public class ProgressSlider extends JPanel {
 				for (ProgressSliderListener l : listeners ) {
 					l.onProgressSliderMouseUp();
 				}
+				
+				
 			}
-        	
         });
         
         add(progressSlider, BorderLayout.CENTER);
@@ -82,7 +85,7 @@ public class ProgressSlider extends JPanel {
 		listeners.remove(listener);
 	}
 	
-	public void setTotalTime(int seconds) {
+	public void setTotalTime(float seconds) {
 		if ( seconds != totalTime ) {
 			totalTime = seconds;
 			currentTime = 0;
@@ -90,7 +93,7 @@ public class ProgressSlider extends JPanel {
 		}
 	}
 	
-	public void setCurrentTime(int seconds) {
+	public void setCurrentTime(float seconds) {
 		if ( seconds != currentTime) {
 			currentTime = seconds;
 			updateUIControls();
@@ -98,9 +101,11 @@ public class ProgressSlider extends JPanel {
 	}
 	
 	public void onProgressSliderValueChanged( int value ) {
-		int seconds = (int) (value / 100.0 * totalTime);
-		for (ProgressSliderListener l : listeners ) {
-			l.onProgressSliderTimeValueChange(seconds);
+		if ( !mplayerSettingProgress ) {
+			float seconds = (float) ((float)value / 100.0 * totalTime);
+			for (ProgressSliderListener l : listeners ) {
+				l.onProgressSliderTimeValueChange(seconds);
+			}
 		}
 	}
 	
@@ -109,7 +114,10 @@ public class ProgressSlider extends JPanel {
 		remainingTime.setText(TimeUtils.getTimeFormatedString((int) (totalTime - currentTime)));
 		
 		int progressValue = (int) (currentTime / totalTime * 100.0);
+
+		mplayerSettingProgress = true;
 		progressSlider.setValue(Math.max(0, Math.min(100,progressValue)));
+		mplayerSettingProgress = false;
 	}
 
 }
