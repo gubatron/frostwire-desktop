@@ -202,6 +202,24 @@ public class MPlayerComponentOSX extends CocoaComponent implements MPlayerCompon
 			} 
 		});		
     }
+    
+    public void onProgressSliderStarted() {
+    	SwingUtilities.invokeLater( new Runnable() {
+			@Override
+			public void run() {
+				MPlayerUIEventHandler.instance().onProgressSlideStart();
+			} 
+		});
+    }
+    
+    public void onProgressSliderEnded() {
+    	SwingUtilities.invokeLater( new Runnable() {
+			@Override
+			public void run() {
+				MPlayerUIEventHandler.instance().onProgressSlideEnd();
+			} 
+		});
+    }
 
     /*
      * MediaPlayer Listener events - to send back to the native side.
