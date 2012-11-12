@@ -12,7 +12,7 @@ public class MediaPlayerOSX extends MediaPlayer {
 		String macOSFolder = new File(FrostWireUtils.getFrostWireJarPath()).getParentFile().getParent() + File.separator + "MacOS";
 		boolean isRelease = !FrostWireUtils.getFrostWireJarPath().contains("frostwire-desktop");
 
-        playerPath = (isRelease) ? macOSFolder + File.separator + "fwplayer" : "lib/native/fwplayer";
+        playerPath = (isRelease) ? macOSFolder + File.separator + "fwplayer_osx" : "lib/native/fwplayer_osx";
         
 		return playerPath;
 	}
