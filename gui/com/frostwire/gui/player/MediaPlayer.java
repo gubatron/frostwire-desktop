@@ -846,7 +846,7 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 		
 		if ( mplayer.getCurrentState() == MediaPlaybackState.Playing ) {
 			isPlayPausedForSliding = true;
-			togglePause();
+			mplayer.pause();
 		}
 	}
 
@@ -854,7 +854,7 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 	public void onUIProgressSlideEnd() {
 		if (isPlayPausedForSliding) {
 			isPlayPausedForSliding = false;
-			togglePause();
+			mplayer.play();
 		}
 		
 		stateNotificationsEnabled = true;

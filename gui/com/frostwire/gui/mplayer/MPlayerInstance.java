@@ -392,7 +392,7 @@ MPlayerInstance
 				return;
 			}
 			
-			commands.add((pauseKeep&&paused ? "pausing_keep_force " : "" ) + cmd);
+			commands.add((pauseKeep ? "pausing_keep " : "" ) + cmd);
 			
 			command_sem.release();
 		}
@@ -535,12 +535,13 @@ MPlayerInstance
 	{
 		synchronized( this ){
 		
-			if( isSeeking ){
 			
+			if( isSeeking ){
+				
 				nextSeek = timeInSecs;
 				
 			}else{
-
+				
 				isSeeking = true;
 
 				nextSeek = -1;
@@ -551,16 +552,7 @@ MPlayerInstance
 				
 				seekingSendTime	= -1;
 				
-				// sendCommand("mute 1");
-				
 				sendCommand("seek " + value + " 2");
-				
-				if ( paused ){
-					
-					sendCommand("frame_step",false);
-				}
-				
-				//sendCommand("mute 0");
 				
 				sendCommand("get_time_pos");
 			}
