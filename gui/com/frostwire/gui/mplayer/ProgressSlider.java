@@ -25,7 +25,7 @@ public class ProgressSlider extends JPanel {
 	private float totalTime = 0;
 	private float currentTime = 0;
 	
-	private boolean mplayerSettingProgress = false;
+	private boolean mousePressed = false;
 	
 	private LinkedList<ProgressSliderListener> listeners = new LinkedList<ProgressSliderListener>();
 	
@@ -46,25 +46,29 @@ public class ProgressSlider extends JPanel {
         progressSlider.setFocusable(false);
         progressSlider.addChangeListener( new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				ProgressSlider.this.onProgressSliderValueChanged(((JSlider)e.getSource()).getValue());
+				if ( mousePressed ) {
+					float seconds = (float) (progressSlider.getValue() / 100.0 * totalTime);
+					for (ProgressSliderListener l : listeners ) {
+						l.onProgressSliderTimeValueChange(seconds);
+					}
+				}
 			}
         });
+        
         progressSlider.addMouseListener( new MouseAdapter() {
-
 			@Override
 			public void mousePressed(MouseEvent e) {
+				mousePressed = true;
 				for (ProgressSliderListener l : listeners ) {
 					l.onProgressSliderMouseDown();
 				}
 			}
-
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				mousePressed = false;
 				for (ProgressSliderListener l : listeners ) {
 					l.onProgressSliderMouseUp();
 				}
-				
-				
 			}
         });
         
@@ -100,24 +104,13 @@ public class ProgressSlider extends JPanel {
 		}
 	}
 	
-	public void onProgressSliderValueChanged( int value ) {
-		if ( !mplayerSettingProgress ) {
-			float seconds = (float) ((float)value / 100.0 * totalTime);
-			for (ProgressSliderListener l : listeners ) {
-				l.onProgressSliderTimeValueChange(seconds);
-			}
-		}
-	}
-	
 	private void updateUIControls() {
 		elapsedTime.setText(TimeUtils.getTimeFormatedString((int) currentTime));
 		remainingTime.setText(TimeUtils.getTimeFormatedString((int) (totalTime - currentTime)));
 		
 		int progressValue = (int) (currentTime / totalTime * 100.0);
 
-		mplayerSettingProgress = true;
 		progressSlider.setValue(Math.max(0, Math.min(100,progressValue)));
-		mplayerSettingProgress = false;
 	}
 
 }
