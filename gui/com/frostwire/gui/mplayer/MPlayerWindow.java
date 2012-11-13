@@ -7,10 +7,12 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -23,10 +25,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
 import java.awt.peer.ComponentPeer;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
+import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 
 import sun.awt.windows.WComponentPeer;
@@ -35,6 +39,7 @@ import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerListener;
 import com.frostwire.mplayer.MediaPlaybackState;
+import com.limegroup.gnutella.gui.LimeJFrame;
 
 public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 
@@ -78,6 +83,8 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setTitle("Frostwire Media Player");
         setBackground(new Color(0,0,0));
+        initWindowIcon();
+        
         
         // initialize events
         addMouseMotionListener(new MPlayerMouseMotionAdapter());
@@ -118,6 +125,27 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 
 
 	}
+	
+	/**
+	 * Gets the application icon from the main window and puts it on the player window.
+	 */
+	private void initWindowIcon() {
+	    if (OSUtils.isMacOSX()) {
+	        //no need.
+	        return;
+	    }
+	    
+	    for (Window w : getWindows()) {
+	        if (w.getParent()==null && w instanceof LimeJFrame) {
+	            List<Image> iconImages = w.getIconImages();
+	            if (iconImages.size() > 0) {
+	            	Image image = iconImages.get(0);
+	            	setIconImage(image);
+	            	return;
+	            }
+	        }
+	    }
+    }
 
 	/**
 	 * correctly set visibility and positioning of window and control overlay
