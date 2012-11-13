@@ -24,13 +24,12 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JTree;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.db.LibraryDatabase;
@@ -51,7 +50,7 @@ public class LibraryIconTree extends JTree {
 
     private static final long serialVersionUID = 3025054051505168836L;
 
-    private static final Log LOG = LogFactory.getLog(LibraryIconTree.class);
+    private static final Logger LOG = Logger.getLogger(LibraryIconTree.class.getName());
 
     private Image speaker;
 
@@ -95,7 +94,7 @@ public class LibraryIconTree extends JTree {
                 }
             }
         } catch (Throwable e) {
-            LOG.error("Error painting the speaker icon, e:" + e.getMessage());
+            LOG.log(Level.WARNING, "Error painting the speaker icon", e);
         }
     }
 
@@ -120,9 +119,11 @@ public class LibraryIconTree extends JTree {
 
     private void paintIcon(Graphics g, Image image, TreePath path) {
         Rectangle rect = getUI().getPathBounds(this, path);
-        Dimension lsize = rect.getSize();
-        Point llocation = rect.getLocation();
-        g.drawImage(image, llocation.x + lsize.width - speaker.getWidth(null) - 4, llocation.y + (lsize.height - speaker.getHeight(null)) / 2, null);
+        if (rect != null) {
+            Dimension lsize = rect.getSize();
+            Point llocation = rect.getLocation();
+            g.drawImage(image, llocation.x + lsize.width - speaker.getWidth(null) - 4, llocation.y + (lsize.height - speaker.getHeight(null)) / 2, null);
+        }
     }
 
     private TreePath getAudioPath() {

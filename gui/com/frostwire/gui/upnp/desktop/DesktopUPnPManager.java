@@ -93,11 +93,11 @@ public class DesktopUPnPManager extends UPnPManager {
     }
 
     @Override
-    protected void handlePeerDevice(String identity, PingInfo p, InetAddress address, boolean added) {
-        LOG.info("Identity: " + identity + ", added: " + added);
+    protected void handlePeerDevice(String udn, PingInfo p, InetAddress address, boolean added) {
+        LOG.info("Device UDN: " + udn + ", added: " + added);
         DeviceDiscoveryClerk clerk = LibraryMediator.instance().getDeviceDiscoveryClerk();
 
-        clerk.handleDeviceState(identity, address, p != null ? p.listeningPort : 0, !added);
+        clerk.handleDeviceState(udn, address, p != null ? p.listeningPort : 0, !added);
     }
 
     @SuppressWarnings("unchecked")

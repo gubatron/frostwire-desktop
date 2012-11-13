@@ -89,7 +89,7 @@ public abstract class UPnPManager {
         LOG.info("Removing device by UDN=" + udn);
     }
 
-    protected abstract void handlePeerDevice(String identity, PingInfo p, InetAddress address, boolean added);
+    protected abstract void handlePeerDevice(String udn, PingInfo p, InetAddress address, boolean added);
 
     private void handleDevice(Device<?, ?, ?> device, boolean added) {
         if (added) {
@@ -210,9 +210,8 @@ public abstract class UPnPManager {
 
             @Override
             protected void ended(GENASubscription subscription, CancelReason reason, UpnpResponse responseStatus) {
-                LOG.log(Level.INFO, "Ended subscrition to device info with id=" + subscription.getSubscriptionId() + "");
-                InetAddress address = getAddressFromDevice(deviceInfo.getDevice());
-                handlePeerDevice(getIdentityUdn(deviceInfo.getDevice()).toString(), null, address, false);
+                LOG.log(Level.INFO, "Ended subscrition to device info with id=" + subscription.getSubscriptionId() + ", restoring attempt");
+                invokeGetPingInfo(UPnPManager.this.getService(), deviceInfo);
             }
         };
 
