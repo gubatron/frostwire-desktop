@@ -66,6 +66,7 @@ public class Device {
 
     private static JsonEngine JSON_ENGINE = new JsonEngine();
 
+    private final String udn;
     private InetAddress _address;
     private int _port;
     private Finger finger;
@@ -73,10 +74,15 @@ public class Device {
     private OnActionFailedListener _listener;
     private long timestamp;
 
-    public Device(InetAddress address, int port, Finger finger) {
+    public Device(String udn, InetAddress address, int port, Finger finger) {
+        this.udn = udn;
         this._address = address;
         this._port = port;
         this.finger = finger;
+    }
+    
+    public String getUdn() {
+        return udn;
     }
 
     public InetAddress getAddress() {

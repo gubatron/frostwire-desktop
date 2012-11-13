@@ -40,6 +40,7 @@ import org.limewire.util.NetworkUtils;
 import com.frostwire.HttpFetcher;
 import com.frostwire.JsonEngine;
 import com.frostwire.gui.library.Device.OnActionFailedListener;
+import com.frostwire.gui.upnp.UPnPManager;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 
 /**
@@ -53,136 +54,27 @@ public class DeviceDiscoveryClerk {
 
     private static final long STALE_DEVICE_TIMEOUT = 14000;
 
-    private Map<InetAddress, Device> deviceCache;
+    private Map<String, Device> deviceCache;
 
     private JsonEngine jsonEngine;
 
     public DeviceDiscoveryClerk() {
-        deviceCache = Collections.synchronizedMap(new HashMap<InetAddress, Device>());
+        deviceCache = Collections.synchronizedMap(new HashMap<String, Device>());
         jsonEngine = new JsonEngine();
     }
 
-    public void start() {
-        try {
-            startBroadcast();
-        } catch (Throwable e) {
-            LOG.error("Error starting broadcast", e);
-        }
-
-        try {
-            startMulticast();
-        } catch (Exception e) {
-            LOG.error("Error starting multicast", e);
-        }
-
-        new Thread(new CleanStaleDevices(), "CleanStaleDevices").start();
-    }
-
-    private void startBroadcast() throws Exception {
-
-        final DatagramSocket socket = new DatagramSocket(null);
-        socket.setReuseAddress(true);
-        socket.setBroadcast(true);
-        socket.setSoTimeout(60000);
-
-        socket.bind(new InetSocketAddress(DeviceConstants.PORT_BROADCAST));
-
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    byte[] data = new byte[65535];
-
-                    while (true) {
-                        try {
-
-                            DatagramPacket packet = new DatagramPacket(data, data.length);
-                            socket.receive(packet);
-                            handleDatagramPacket(packet, false);
-
-                        } catch (InterruptedIOException e) {
-                        }
-                    }
-
-                } catch (Throwable e) {
-                    LOG.error("Error receiving broadcast", e);
-                } finally {
-                    socket.close();
-                    socket.disconnect();
-                }
-            }
-        }, "BroadcastClerk").start();
-    }
-
-    private void startMulticast() throws Exception {
-
-        final InetAddress groupInetAddress = InetAddress.getByAddress(new byte[] { (byte) 224, 0, 1, 16 });
-
-        final MulticastSocket socket = new MulticastSocket(DeviceConstants.PORT_MULTICAST);
-        socket.setSoTimeout(60000);
-        socket.setTimeToLive(254);
-        socket.setReuseAddress(true);
-
-        InetAddress address = null;
-
-        if (!ConnectionSettings.CUSTOM_INETADRESS.isDefault()) {
-            address = InetAddress.getByName(ConnectionSettings.CUSTOM_INETADRESS.getValue());
-        } else {
-            address = NetworkUtils.getLocalAddress();
-        }
-        socket.setNetworkInterface(NetworkInterface.getByInetAddress(address));
-
-        socket.joinGroup(groupInetAddress);
-
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    byte[] data = new byte[65535];
-
-                    while (true) {
-                        try {
-
-                            DatagramPacket packet = new DatagramPacket(data, data.length);
-                            socket.receive(packet);
-                            handleDatagramPacket(packet, true);
-
-                        } catch (InterruptedIOException e) {
-                        }
-                    }
-
-                } catch (Throwable e) {
-                    LOG.error("Error receiving broadcast", e);
-                } finally {
-                    socket.close();
-                    socket.disconnect();
-                }
-            }
-        }, "MulticastClerk").start();
-    }
-
-    private void handleDatagramPacket(DatagramPacket packet, boolean multicast) {
-
-        InetAddress address = packet.getAddress();
-
-        byte[] data = packet.getData();
-
-        int listeningPort = ((data[0x1e] & 0xFF) << 8) + (data[0x1f] & 0xFF);
-        boolean bye = (data[0x33] & 0xFF) != 0;
-
-        //handleDeviceState(address, listeningPort, bye);
-    }
-
-    public void handleDeviceState(InetAddress address, int listeningPort, boolean bye) {
+    public void handleDeviceState(String key, InetAddress address, int listeningPort, boolean bye) {
         if (!bye) {
-            retrieveFinger(address, listeningPort);
+            retrieveFinger(key, address, listeningPort);
         } else {
-            if (deviceCache.containsKey(address)) {
-                Device device = deviceCache.get(address);
-                handleDeviceStale(address, device);
+            if (deviceCache.containsKey(key)) {
+                Device device = deviceCache.get(key);
+                handleDeviceStale(key, address, device);
             }
         }
     }
 
-    private boolean retrieveFinger(final InetAddress address, int listeningPort) {
+    private boolean retrieveFinger(final String key, final InetAddress address, int listeningPort) {
         try {
             URI uri = new URI("http://" + address.getHostAddress() + ":" + listeningPort + "/finger");
 
@@ -200,18 +92,18 @@ public class DeviceDiscoveryClerk {
             Finger finger = jsonEngine.toObject(json, Finger.class);
 
             synchronized (deviceCache) {
-                if (deviceCache.containsKey(address)) {
-                    Device device = deviceCache.get(address);
+                if (deviceCache.containsKey(key)) {
+                    Device device = deviceCache.get(key);
                     device.setFinger(finger);
                     handleDeviceAlive(address, device);
                 } else {
-                    Device device = new Device(address, listeningPort, finger);
+                    Device device = new Device(key, address, listeningPort, finger);
                     device.setOnActionFailedListener(new OnActionFailedListener() {
                         public void onActionFailed(Device device, int action, Exception e) {
-                            handleDeviceStale(address, device);
+                            handleDeviceStale(key, address, device);
                         }
                     });
-                    handleDeviceNew(address, device);
+                    handleDeviceNew(key, address, device);
                 }
             }
 
@@ -223,8 +115,8 @@ public class DeviceDiscoveryClerk {
         return false;
     }
 
-    private void handleDeviceNew(InetAddress address, final Device device) {
-        deviceCache.put(address, device);
+    private void handleDeviceNew(String key, InetAddress address, final Device device) {
+        deviceCache.put(key, device);
         device.setTimestamp(System.currentTimeMillis());
 
         //LOG.info("Device New: " + device);
@@ -248,42 +140,16 @@ public class DeviceDiscoveryClerk {
         });
     }
 
-    private void handleDeviceStale(InetAddress address, final Device device) {
-        deviceCache.remove(address);
+    private void handleDeviceStale(String key, InetAddress address, final Device device) {
+        deviceCache.remove(key);
 
         LOG.info("Device Slate: " + device);
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 LibraryMediator.instance().handleDeviceStale(device);
+                UPnPManager.instance().removeRemoteDevice(device.getUdn());
             }
         });
-    }
-
-    private final class CleanStaleDevices implements Runnable {
-        public void run() {
-            while (true) {
-                try {
-                    long now = System.currentTimeMillis();
-
-                    for (Device device : new ArrayList<Device>(deviceCache.values())) {
-                        if (device.getTimestamp() + STALE_DEVICE_TIMEOUT < now) {
-
-                            // last chance
-                            if (!retrieveFinger(device.getAddress(), device.getPort())) {
-                                handleDeviceStale(device.getAddress(), device);
-                            }
-                        }
-                    }
-                } catch (Throwable e) {
-                    LOG.error("Error performing clean device stale routine", e);
-                }
-
-                try {
-                    Thread.sleep(STALE_DEVICE_TIMEOUT);
-                } catch (InterruptedException e) {
-                }
-            }
-        }
     }
 }

@@ -40,7 +40,7 @@ import com.frostwire.gui.upnp.UPnPRegistryListener;
 public class UPnPService implements Runnable {
 
     private static final Logger LOG = Logger.getLogger(UPnPService.class.getName());
-    
+
     final static String HACK_STREAM_HANDLER_SYSTEM_PROPERTY = "hackStreamHandlerProperty";
 
     private UpnpService service;
@@ -70,7 +70,7 @@ public class UPnPService implements Runnable {
 
     public void run() {
         try {
-            
+
             // This is to disable the set of URL URLStreamHandlerFactory
             // inside StreamClientImpl. Now handled with new coded added to
             // azureus core.
@@ -104,7 +104,7 @@ public class UPnPService implements Runnable {
 
             // search asynchronously for all devices
             this.service.getControlPoint().search();
-            
+
         } catch (Throwable e) {
             LOG.log(Level.WARNING, "Exception occured with the UPnP framework", e);
         }

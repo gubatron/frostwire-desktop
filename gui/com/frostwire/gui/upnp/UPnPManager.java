@@ -32,12 +32,15 @@ import org.teleal.cling.model.gena.GENASubscription;
 import org.teleal.cling.model.message.UpnpResponse;
 import org.teleal.cling.model.meta.Action;
 import org.teleal.cling.model.meta.Device;
+import org.teleal.cling.model.meta.DeviceIdentity;
 import org.teleal.cling.model.meta.RemoteDevice;
 import org.teleal.cling.model.meta.RemoteDeviceIdentity;
 import org.teleal.cling.model.meta.Service;
 import org.teleal.cling.model.state.StateVariableValue;
 import org.teleal.cling.model.types.ServiceId;
 import org.teleal.cling.model.types.UDAServiceId;
+import org.teleal.cling.model.types.UDN;
+import org.teleal.cling.registry.Registry;
 
 import com.frostwire.gui.upnp.desktop.DesktopUPnPManager;
 import com.frostwire.util.JsonUtils;
@@ -80,18 +83,23 @@ public abstract class UPnPManager {
 
     public abstract void refreshPing();
 
-    protected abstract void handlePeerDevice(PingInfo p, InetAddress address, boolean added);
+    public void removeRemoteDevice(String udn) {
+        Registry registry = getService().getRegistry();
+        registry.removeDevice(UDN.valueOf(udn));
+        LOG.info("Removing device by UDN=" + udn);
+    }
+
+    protected abstract void handlePeerDevice(String identity, PingInfo p, InetAddress address, boolean added);
 
     private void handleDevice(Device<?, ?, ?> device, boolean added) {
         if (added) {
             Service<?, ?> deviceInfo;
             if ((deviceInfo = device.findService(deviceInfoId)) != null) {
-                invokeGetPingInfo(getService(), deviceInfo, added);
-                subscribeToDeviceInfo(getService(), deviceInfo);
+                invokeGetPingInfo(getService(), deviceInfo);
             }
         } else {
             InetAddress address = getAddressFromDevice(device);
-            handlePeerDevice(null, address, added);
+            handlePeerDevice(getIdentityUdn(device), null, address, false);
         }
     }
 
@@ -104,11 +112,12 @@ public abstract class UPnPManager {
         service.getControlPoint().execute(new ActionCallback(actionInvocation) {
             @Override
             public void success(ActionInvocation invocation) {
+                LOG.info("Invoked SetPingInfo");
             }
 
             @Override
             public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMsg) {
-                LOG.info(defaultMsg);
+                LOG.info("Failed to invoke SetPingInfo -> " + defaultMsg);
             }
         });
     }
@@ -129,19 +138,19 @@ public abstract class UPnPManager {
         return address;
     }
 
-    private void onPingInfo(String json, Device<?, ?, ?> device, boolean added) {
+    private void onPingInfo(String json, Device<?, ?, ?> device) {
         try {
             PingInfo p = JsonUtils.toObject(json, PingInfo.class);
             InetAddress address = getAddressFromDevice(device);
 
-            handlePeerDevice(p, address, added);
+            handlePeerDevice(getIdentityUdn(device), p, address, true);
         } catch (Throwable e) {
             LOG.log(Level.INFO, "Error processing ping info", e);
         }
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private void invokeGetPingInfo(UpnpService service, final Service<?, ?> deviceInfo, final boolean added) {
+    private void invokeGetPingInfo(UpnpService service, final Service<?, ?> deviceInfo) {
         Action<?> action = deviceInfo.getAction("GetPingInfo");
         if (action == null) {
             return;
@@ -153,7 +162,9 @@ public abstract class UPnPManager {
             public void success(ActionInvocation invocation) {
                 try {
                     String json = invocation.getOutput()[0].toString();
-                    onPingInfo(json, deviceInfo.getDevice(), added);
+                    onPingInfo(json, deviceInfo.getDevice());
+
+                    subscribeToDeviceInfo(getService(), deviceInfo);
                 } catch (Throwable e) {
                     LOG.log(Level.INFO, "Error processing GetPingInfo return", e);
                 }
@@ -167,9 +178,9 @@ public abstract class UPnPManager {
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private void subscribeToDeviceInfo(UpnpService service, final Service<?, ?> deviceInfo) {
+    private void subscribeToDeviceInfo(final UpnpService upnpService, final Service<?, ?> deviceInfo) {
         // 1 min timeout
-        service.getControlPoint().execute(new SubscriptionCallback(deviceInfo, 60) {
+        SubscriptionCallback callback = new SubscriptionCallback(deviceInfo, 60) {
             @Override
             protected void failed(GENASubscription subscription, UpnpResponse responseStatus, Exception exception, String defaultMsg) {
                 LOG.log(Level.INFO, "failed subscrition to device info");
@@ -188,7 +199,7 @@ public abstract class UPnPManager {
                 Object value = stateValue.getValue();
                 if (value instanceof String) {
                     String json = (String) value;
-                    onPingInfo(json, deviceInfo.getDevice(), true);
+                    onPingInfo(json, deviceInfo.getDevice());
                 }
             }
 
@@ -199,7 +210,20 @@ public abstract class UPnPManager {
 
             @Override
             protected void ended(GENASubscription subscription, CancelReason reason, UpnpResponse responseStatus) {
+                LOG.log(Level.INFO, "Ended subscrition to device info with id=" + subscription.getSubscriptionId() + "");
+                InetAddress address = getAddressFromDevice(deviceInfo.getDevice());
+                handlePeerDevice(getIdentityUdn(deviceInfo.getDevice()).toString(), null, address, false);
             }
-        });
+        };
+
+        upnpService.getControlPoint().execute(callback);
+    }
+
+    private String getIdentityUdn(Device<?, ?, ?> device) {
+        if (device.getIdentity() instanceof DeviceIdentity) {
+            return ((DeviceIdentity) device.getIdentity()).getUdn().getIdentifierString();
+        } else {
+            return device.getIdentity().toString();
+        }
     }
 }

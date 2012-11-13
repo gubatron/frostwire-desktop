@@ -41,7 +41,6 @@ public abstract class UPnPRegistryListener extends DefaultRegistryListener {
 
     @Override
     public void remoteDeviceDiscoveryStarted(Registry registry, RemoteDevice device) {
-        deviceAdded(device);
     }
 
     @Override
@@ -52,6 +51,11 @@ public abstract class UPnPRegistryListener extends DefaultRegistryListener {
 
     @Override
     public void remoteDeviceAdded(Registry registry, RemoteDevice device) {
+        deviceAdded(device);
+    }
+    
+    @Override
+    public void remoteDeviceUpdated(Registry registry, RemoteDevice device) {
         deviceAdded(device);
     }
 

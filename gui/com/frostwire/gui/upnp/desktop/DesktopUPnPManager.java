@@ -19,6 +19,7 @@
 package com.frostwire.gui.upnp.desktop;
 
 import java.net.InetAddress;
+import java.util.logging.Logger;
 
 import org.teleal.cling.UpnpService;
 import org.teleal.cling.binding.annotations.AnnotationLocalServiceBinder;
@@ -43,6 +44,8 @@ import com.frostwire.gui.upnp.UPnPManager;
  * 
  */
 public class DesktopUPnPManager extends UPnPManager {
+
+    private static final Logger LOG = Logger.getLogger(DesktopUPnPManager.class.getName());
 
     private final UPnPService service;
 
@@ -90,10 +93,11 @@ public class DesktopUPnPManager extends UPnPManager {
     }
 
     @Override
-    protected void handlePeerDevice(PingInfo p, InetAddress address, boolean added) {
+    protected void handlePeerDevice(String identity, PingInfo p, InetAddress address, boolean added) {
+        LOG.info("Identity: " + identity + ", added: " + added);
         DeviceDiscoveryClerk clerk = LibraryMediator.instance().getDeviceDiscoveryClerk();
-        
-        clerk.handleDeviceState(address, p.listeningPort, !added);
+
+        clerk.handleDeviceState(identity, address, p != null ? p.listeningPort : 0, !added);
     }
 
     @SuppressWarnings("unchecked")

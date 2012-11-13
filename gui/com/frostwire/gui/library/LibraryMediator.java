@@ -134,7 +134,6 @@ public class LibraryMediator {
         ((DesktopUPnPManager) UPnPManager.instance()).start();
         
         clerk = new DeviceDiscoveryClerk();
-        clerk.start();
     }
 
     public DeviceDiscoveryClerk getDeviceDiscoveryClerk() {
