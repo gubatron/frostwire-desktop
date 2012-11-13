@@ -27,6 +27,7 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -69,6 +70,8 @@ import com.limegroup.gnutella.gui.themes.ThemeSettings;
 public final class LibraryNameHolderRenderer extends JPanel implements TableCellRenderer, SkinTableCellRenderer {
 
     private static final long serialVersionUID = -1624943333769190212L;
+
+    private static final Logger LOG = Logger.getLogger(LibraryNameHolderRenderer.class.getName());
 
     private JLabel labelText;
     private JLabel labelPlay;
@@ -276,11 +279,15 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
     }
 
     private void setData(LibraryNameHolder value, ComponentState state, JTable table, int row, int column) {
-        libraryNameHolder = value;
-        labelText.setText(value.toString());
-        boolean showButtons = state.equals(ComponentState.ROLLOVER_SELECTED) || state.equals(ComponentState.ROLLOVER_UNSELECTED);
-        labelPlay.setVisible(showButtons && !isSourceBeingPlayed() && isPlayableDataLine());
-        setFontColor(libraryNameHolder.isPlaying(), table, row, column);
+        try {
+            libraryNameHolder = value;
+            labelText.setText(value.toString());
+            boolean showButtons = state.equals(ComponentState.ROLLOVER_SELECTED) || state.equals(ComponentState.ROLLOVER_UNSELECTED);
+            labelPlay.setVisible(showButtons && !isSourceBeingPlayed() && isPlayableDataLine());
+            setFontColor(libraryNameHolder.isPlaying(), table, row, column);
+        } catch (Throwable e) {
+            LOG.warning("Error puting data in name holder renderer");
+        }
     }
 
     private boolean isPlayableDataLine() {
