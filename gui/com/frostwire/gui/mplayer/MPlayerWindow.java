@@ -136,12 +136,16 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 				positionOverlayControls();
 				
 				showOverlay(false);
-				requestFocus();
 				
 			} else {
 			
 				hideOverlay(false);
 			}
+		}
+		
+		if ( visible ) {
+			// make sure window is on top of visible windows
+			toFront();
 		}
 	}
 	
