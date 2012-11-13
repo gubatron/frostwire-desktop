@@ -319,17 +319,36 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 	private class MPlayerKeyEventDispatcher implements KeyEventDispatcher {
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
-            if (e.getID() == KeyEvent.KEY_PRESSED && isVisible()) {
-            	switch (e.getKeyCode()) {
-	            	case KeyEvent.VK_P: player.togglePause(); return true;
-	                case KeyEvent.VK_F: toggleFullScreen(); return true;
-	                case KeyEvent.VK_RIGHT:
-	                case KeyEvent.VK_PERIOD: player.fastForward(); return true;
-	                case KeyEvent.VK_LEFT:
-	                case KeyEvent.VK_COMMA: player.rewind(); return true;
-                }
-            }
-            return false;
+			if (e.getID() == KeyEvent.KEY_PRESSED && isVisible()) {
+				switch (e.getKeyCode()) {
+				case KeyEvent.VK_P:
+					player.togglePause();
+					return true;
+				case KeyEvent.VK_F:
+					toggleFullScreen();
+					return true;
+				case KeyEvent.VK_RIGHT:
+				case KeyEvent.VK_PERIOD:
+					player.fastForward();
+					return true;
+				case KeyEvent.VK_LEFT:
+				case KeyEvent.VK_COMMA:
+					player.rewind();
+					return true;
+				}
+
+				// Alt+Enter, Alt+F, Ctrl+Enter, Ctrl+F full screen shorcuts
+				// seen in other players.
+				if (e.isAltDown() || e.isMetaDown() || e.isControlDown()) {
+					switch (e.getKeyCode()) {
+					case KeyEvent.VK_F:
+					case KeyEvent.VK_ENTER:
+						toggleFullScreen();
+						return true;
+					}
+				}
+			}
+			return false;
         }
 	}
 	

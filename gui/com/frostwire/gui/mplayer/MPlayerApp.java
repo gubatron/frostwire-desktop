@@ -114,19 +114,36 @@ public class MPlayerApp extends JFrame {
             }
         });
 
+        //If you
+        
+        //TODO: Use MPlayerKeyDispatcher, or an implementation that uses a player which has all the commands
+        //required. Not sure under what circumstances this code is being used, or if it's being used at all.
+        //I suppose this file MPlayerApp.java is what we did as proof of concept. 
+        //If this class is no longer being used, let's remove it from the source code.
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
+            	
+            	/** Warning, you're probably looking at the wrong code.
+            	 *  Go to: MPlayerWindow.MPlayerKeyEventDispatcher for the actual code handling the window player keys.
+            	 */
+           	
                 if (e.getID() == KeyEvent.KEY_PRESSED) {
                     switch (e.getKeyCode()) {
                     case KeyEvent.VK_P:
+                    case KeyEvent.VK_SPACE:
                         togglePause();
                         return true;
+
+                    	
                     case KeyEvent.VK_F:
                         toggleFullScreen();
                         return true;
                     }
                 }
+                
+                //volume up, volume down
+                
                 return false;
             }
         });
@@ -209,6 +226,10 @@ public class MPlayerApp extends JFrame {
                 player.doPause();
             }
         }
+    }
+    
+    private void volumeUp() {
+    	
     }
 
     private void toggleFullScreen() {

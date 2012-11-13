@@ -402,6 +402,10 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
         PlayerSettings.PLAYER_VOLUME.setValue((float) volume);
         notifyVolumeChanged();
     }
+    
+    public double getVolume() {
+    	return volume;
+    }
 
     protected void notifyVolumeChanged() {
         SwingUtilities.invokeLater(new Runnable() {
