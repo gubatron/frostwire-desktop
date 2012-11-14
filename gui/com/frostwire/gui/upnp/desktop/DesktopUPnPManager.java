@@ -36,6 +36,7 @@ import com.frostwire.gui.upnp.PingInfo;
 import com.frostwire.gui.upnp.UPnPFWDevice;
 import com.frostwire.gui.upnp.UPnPFWDeviceInfo;
 import com.frostwire.gui.upnp.UPnPManager;
+import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
@@ -103,6 +104,9 @@ public class DesktopUPnPManager extends UPnPManager {
 
     @Override
     protected void handlePeerDevice(String udn, PingInfo p, InetAddress address, boolean added) {
+        if (!LibrarySettings.LIBRARY_WIFI_SHARING_ENABLED.getValue() && added) {
+            return;
+        }
         LOG.info("Device UDN: " + udn + ", added: " + added);
         DeviceDiscoveryClerk clerk = LibraryMediator.instance().getDeviceDiscoveryClerk();
 

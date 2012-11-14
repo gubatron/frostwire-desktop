@@ -19,6 +19,7 @@
 package com.frostwire.gui.upnp;
 
 import java.net.InetAddress;
+import java.util.Collection;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,6 +43,7 @@ import org.teleal.cling.model.types.ServiceId;
 import org.teleal.cling.model.types.UDAServiceId;
 import org.teleal.cling.model.types.UDN;
 import org.teleal.cling.registry.Registry;
+import org.teleal.cling.registry.RegistryListener;
 
 import com.frostwire.gui.upnp.desktop.DesktopUPnPManager;
 import com.frostwire.util.JsonUtils;
@@ -97,6 +99,14 @@ public abstract class UPnPManager {
             getService().getRegistry().resume();
             if (getService().getRegistry().getLocalDevices().size() == 0) {
                 getService().getRegistry().addDevice(getLocalDevice());
+            }
+            Collection<RegistryListener> listeners = getService().getRegistry().getListeners();
+            for (Device<?, ?, ?> device : getService().getRegistry().getDevices()) {
+                for (RegistryListener l : listeners) {
+                    if (l instanceof UPnPRegistryListener) {
+                        ((UPnPRegistryListener) l).deviceAdded(device);
+                    }
+                }
             }
             getService().getControlPoint().search();
         }

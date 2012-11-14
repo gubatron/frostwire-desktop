@@ -21,6 +21,7 @@ package com.frostwire.gui.httpserver;
 import java.io.IOException;
 
 import com.frostwire.httpserver.HttpHandler;
+import com.limegroup.gnutella.settings.LibrarySettings;
 
 /**
  * @author gubatron
@@ -30,8 +31,8 @@ import com.frostwire.httpserver.HttpHandler;
 public abstract class AbstractHandler implements HttpHandler {
 
     protected void assertUPnPActive() throws IOException {
-//        if (!ConfigurationManager.instance().getBoolean(Constants.PREF_KEY_NETWORK_USE_UPNP)) {
-//            throw new IOException("UPnP deactivated");
-//        }
+        if (!LibrarySettings.LIBRARY_WIFI_SHARING_ENABLED.getValue()) {
+            throw new IOException("UPnP deactivated");
+        }
     }
 }

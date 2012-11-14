@@ -29,6 +29,7 @@ import org.teleal.cling.model.meta.LocalDevice;
 import com.frostwire.gui.upnp.UPnPFWDevice;
 import com.frostwire.gui.upnp.UPnPManager;
 import com.frostwire.gui.upnp.UPnPRegistryListener;
+import com.limegroup.gnutella.settings.LibrarySettings;
 
 /**
  * 
@@ -87,21 +88,22 @@ public class UPnPService implements Runnable {
                 }
             });
 
-            this.service.getRegistry().addDevice(getLocalDevice());
+            if (LibrarySettings.LIBRARY_WIFI_SHARING_ENABLED.getValue()) {
+                this.service.getRegistry().addDevice(getLocalDevice());
 
-            // refresh the list with all known devices
-            for (Device<?, ?, ?> device : this.service.getRegistry().getDevices()) {
-                registryListener.deviceAdded(device);
+                // refresh the list with all known devices
+                for (Device<?, ?, ?> device : this.service.getRegistry().getDevices()) {
+                    registryListener.deviceAdded(device);
+                }
+
+                // getting ready for future device advertisements
+                this.service.getRegistry().addListener(registryListener);
+
+                Thread.sleep(5000);
+
+                // search asynchronously for all devices
+                this.service.getControlPoint().search();
             }
-
-            // getting ready for future device advertisements
-            this.service.getRegistry().addListener(registryListener);
-            
-            Thread.sleep(5000);
-
-            // search asynchronously for all devices
-            this.service.getControlPoint().search();
-
         } catch (Throwable e) {
             LOG.log(Level.WARNING, "Exception occured with the UPnP framework", e);
         }
