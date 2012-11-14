@@ -70,6 +70,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         setSize(winSize);
         setUndecorated(true);
         setBackground(new Color(0,0,0,0));
+        AWTUtilities.setWindowOpaque(this, false);
         
         // osx specific (won't harm windows/linux)
         getRootPane().putClientProperty("apple.awt.draggableWindowBackground", Boolean.FALSE);
@@ -350,15 +351,6 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 		hideTimer.restart();
 	}
 	
-	public void paint(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g.create();
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, AWTUtilities.getWindowOpacity(this)));
-        
-        super.paint(g2);
-        
-        g2.dispose();
-    }
-
     @Override
     public void mouseClicked(MouseEvent arg0) {
         // TODO Auto-generated method stub
