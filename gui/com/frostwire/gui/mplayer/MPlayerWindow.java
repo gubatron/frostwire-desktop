@@ -286,19 +286,23 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
     }
 	
 	private void showOverlay(boolean animate) {
-		if (animate)
+		if (animate) {
 			animateAlphaThread.animateToOpaque();
-		else
+		}
+		else {
 			overlayControls.setVisible(true);
-		
+		}
+			
 		hideTimer.restart();
 	}
 	
 	private void hideOverlay(boolean animate) {
-		if (animate)
+		if (animate) {
 			animateAlphaThread.animateToTransparent();
-		else
+		}
+		else {
 			overlayControls.setVisible(false);
+		}
 		
 		hideTimer.stop();
 	}
