@@ -16,20 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.upnp;
+package com.frostwire.gui.httpserver;
+
+import java.io.IOException;
+
+import com.frostwire.httpserver.HttpHandler;
 
 /**
- * 
  * @author gubatron
  * @author aldenml
- * 
+ *
  */
-public class PingInfo {
+public abstract class AbstractHandler implements HttpHandler {
 
-    public String uuid;
-    public int listeningPort;
-    public int numSharedFiles;
-    public String nickname;
-    public int deviceMajorType;
-    public String clientVersion;
+    protected void assertUPnPActive() throws IOException {
+//        if (!ConfigurationManager.instance().getBoolean(Constants.PREF_KEY_NETWORK_USE_UPNP)) {
+//            throw new IOException("UPnP deactivated");
+//        }
+    }
 }

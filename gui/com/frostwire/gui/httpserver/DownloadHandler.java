@@ -31,25 +31,26 @@ import org.apache.http.client.utils.URLEncodedUtils;
 
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.Librarian;
+import com.frostwire.httpserver.Code;
+import com.frostwire.httpserver.HttpExchange;
 //import com.frostwire.android.core.ConfigurationManager;
 //import com.frostwire.android.core.FileDescriptor;
 //import com.frostwire.android.gui.Librarian;
 //import com.frostwire.android.gui.transfers.PeerHttpUpload;
 //import com.frostwire.android.gui.transfers.TransferManager;
-import com.frostwire.httpserver.Code;
-import com.frostwire.httpserver.HttpExchange;
-import com.frostwire.httpserver.HttpHandler;
 
 /**
  * @author gubatron
  * @author aldenml
  *
  */
-class DownloadHandler implements HttpHandler {
+class DownloadHandler extends AbstractHandler {
 
     private static final Logger LOG = Logger.getLogger(DownloadHandler.class.getName());
 
+    @Override
     public void handle(HttpExchange exchange) throws IOException {
+        assertUPnPActive();
 
         OutputStream os = null;
         FileInputStream fis = null;

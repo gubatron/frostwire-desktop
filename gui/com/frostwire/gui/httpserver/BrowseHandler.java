@@ -30,7 +30,6 @@ import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.Librarian;
 import com.frostwire.httpserver.Code;
 import com.frostwire.httpserver.HttpExchange;
-import com.frostwire.httpserver.HttpHandler;
 import com.frostwire.util.JsonUtils;
 
 /**
@@ -38,11 +37,13 @@ import com.frostwire.util.JsonUtils;
  * @author aldenml
  *
  */
-class BrowseHandler implements HttpHandler {
+class BrowseHandler extends AbstractHandler {
 
     private static final Logger LOG = Logger.getLogger(BrowseHandler.class.getName());
 
+    @Override
     public void handle(HttpExchange exchange) throws IOException {
+        assertUPnPActive();
 
         GZIPOutputStream os = null;
 

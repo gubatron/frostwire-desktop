@@ -23,7 +23,6 @@ import java.util.logging.Logger;
 
 import org.teleal.cling.UpnpService;
 import org.teleal.cling.UpnpServiceImpl;
-import org.teleal.cling.model.ValidationException;
 import org.teleal.cling.model.meta.Device;
 import org.teleal.cling.model.meta.LocalDevice;
 
@@ -57,6 +56,9 @@ public class UPnPService implements Runnable {
     }
 
     public static LocalDevice getLocalDevice() {
+        if (localDevice == null) {
+            localDevice = createLocalDevice();
+        }
         return localDevice;
     }
 
@@ -85,14 +87,7 @@ public class UPnPService implements Runnable {
                 }
             });
 
-            if (localDevice == null) {
-                try {
-                    localDevice = createLocalDevice();
-                    this.service.getRegistry().addDevice(localDevice);
-                } catch (ValidationException e) {
-                    LOG.log(Level.WARNING, "Unable to create and register local UPnP frostwire device", e);
-                }
-            }
+            this.service.getRegistry().addDevice(createLocalDevice());
 
             // refresh the list with all known devices
             for (Device<?, ?, ?> device : this.service.getRegistry().getDevices()) {
@@ -110,9 +105,13 @@ public class UPnPService implements Runnable {
         }
     }
 
-    private LocalDevice createLocalDevice() throws ValidationException {
-        UPnPFWDevice device = UPnPManager.instance().getUPnPLocalDevice();
+    private static LocalDevice createLocalDevice() {
+        try {
+            UPnPFWDevice device = UPnPManager.instance().getUPnPLocalDevice();
 
-        return new LocalDevice(device.getIdentity(), device.getType(), device.getDetails(), device.getIcon(), device.getServices());
+            return new LocalDevice(device.getIdentity(), device.getType(), device.getDetails(), device.getIcon(), device.getServices());
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
     }
 }

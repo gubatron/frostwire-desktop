@@ -36,6 +36,7 @@ import com.frostwire.gui.upnp.PingInfo;
 import com.frostwire.gui.upnp.UPnPFWDevice;
 import com.frostwire.gui.upnp.UPnPFWDeviceInfo;
 import com.frostwire.gui.upnp.UPnPManager;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * 
@@ -63,6 +64,11 @@ public class DesktopUPnPManager extends UPnPManager {
     }
 
     @Override
+    public LocalDevice getLocalDevice() {
+        return UPnPService.getLocalDevice();
+    }
+
+    @Override
     public UPnPFWDevice getUPnPLocalDevice() {
         DesktopUPnPFWDeviceDesc desc = new DesktopUPnPFWDeviceDesc();
 
@@ -74,10 +80,13 @@ public class DesktopUPnPManager extends UPnPManager {
     @Override
     public PingInfo getLocalPingInfo() {
         PingInfo p = new PingInfo();
+
         p.uuid = ConfigurationManager.instance().getUUIDString();
         p.listeningPort = Constants.EXTERNAL_CONTROL_LISTENING_PORT;
         p.numSharedFiles = Librarian.instance().getNumSharedFiles();
         p.nickname = ConfigurationManager.instance().getNickname();
+        p.deviceMajorType = Constants.DEVICE_MAJOR_TYPE_DESKTOP;
+        p.clientVersion = FrostWireUtils.getFrostWireVersion();
 
         return p;
     }
