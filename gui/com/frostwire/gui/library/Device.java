@@ -158,7 +158,7 @@ public class Device {
 
             setTimestamp(System.currentTimeMillis());
 
-            String json = new String(jsonBytes);
+            String json = new String(jsonBytes, "UTF-8");
 
             FileDescriptorList list = JSON_ENGINE.toObject(json, FileDescriptorList.class);
 

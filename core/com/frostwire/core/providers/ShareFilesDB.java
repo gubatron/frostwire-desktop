@@ -66,7 +66,7 @@ public final class ShareFilesDB {
             values = new ContentValues();
         }
 
-        Long now = Long.valueOf(System.currentTimeMillis());
+        Long now = Long.valueOf(System.currentTimeMillis() / 1000);
 
         if (values.containsKey(Columns.FILE_TYPE) == false) {
             values.put(Columns.FILE_TYPE, Constants.FILE_TYPE_DOCUMENTS);

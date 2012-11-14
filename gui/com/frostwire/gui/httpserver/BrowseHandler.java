@@ -67,11 +67,12 @@ class BrowseHandler extends AbstractHandler {
             String response = getResponse(exchange, type);
 
             exchange.getResponseHeaders().set("Content-Encoding", "gzip");
+            exchange.getResponseHeaders().set("Content-Type", "text/json; charset=UTF-8");
             exchange.sendResponseHeaders(Code.HTTP_OK, 0);
 
             os = new GZIPOutputStream(exchange.getResponseBody());
 
-            os.write(response.getBytes());
+            os.write(response.getBytes("UTF-8"));
             os.finish();
 
         } catch (IOException e) {

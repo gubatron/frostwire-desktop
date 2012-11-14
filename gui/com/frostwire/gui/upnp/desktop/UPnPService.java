@@ -96,6 +96,8 @@ public class UPnPService implements Runnable {
 
             // getting ready for future device advertisements
             this.service.getRegistry().addListener(registryListener);
+            
+            Thread.sleep(5000);
 
             // search asynchronously for all devices
             this.service.getControlPoint().search();

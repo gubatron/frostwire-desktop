@@ -134,7 +134,7 @@ public class UniversalScanner {
         values.put(Columns.FILE_PATH, filePath);
         values.put(Columns.FILE_SIZE, file.length());
         values.put(Columns.MIME, mime);
-        values.put(Columns.DATE_ADDED, System.currentTimeMillis());
+        values.put(Columns.DATE_ADDED, System.currentTimeMillis() / 1000);
         values.put(Columns.DATE_MODIFIED, file.lastModified());
         values.put(Columns.SHARED, shared);
     }
