@@ -67,6 +67,10 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
         player.addMediaPlayerListener(this);
     }
 	
+	public MediaPlayer getMediaPlayer() {
+		return player;
+	}
+	
 	private void initializeUI () {
 		
 		Dimension d = new Dimension(800, 600);

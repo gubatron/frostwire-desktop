@@ -46,8 +46,8 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 	
 	private String 				openedFile;
 	
-	private float				reopeningPos;
-	private MediaPlaybackState  reopeningPriorState;
+	//private float				reopeningPos;
+	//private MediaPlaybackState  reopeningPriorState;
 	//private SubtitleMonitor		subtitleMonitor;
 	
 	protected PlayerPreferences preferences;

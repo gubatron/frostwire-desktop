@@ -3,6 +3,7 @@ package com.limegroup.gnutella.gui;
 import javax.swing.SwingUtilities;
 
 import com.frostwire.gui.mplayer.MPlayerWindow;
+import com.frostwire.gui.player.MediaPlayer;
 
 public class MPlayerMediator {
 
@@ -11,6 +12,17 @@ public class MPlayerMediator {
 
     private MPlayerMediator() {
     	mplayerWindow = new MPlayerWindow();
+    }
+    
+    public MPlayerWindow getMPlayerWindow() {
+    	return mplayerWindow;
+    }
+    
+    public MediaPlayer getMediaPlayer() {
+    	if (mplayerWindow == null) {
+    		return null;
+    	}
+    	return mplayerWindow.getMediaPlayer();
     }
     
     public static MPlayerMediator instance() {
@@ -35,11 +47,17 @@ public class MPlayerMediator {
     public void showPlayerWindow(final boolean visible) {
     	try {
     		if(SwingUtilities.isEventDispatchThread()) {
-    			mplayerWindow.setVisible(visible);
+    			//the mplayerWindow might not have been initialized yet since it's
+    			//initialized on the UI thread. 
+    			if (mplayerWindow != null) {
+    				mplayerWindow.setVisible(visible);
+    			}
     		} else {
 				SwingUtilities.invokeAndWait(new Runnable() {
 					public void run() {
-						mplayerWindow.setVisible(visible);
+						if (mplayerWindow != null) {
+							mplayerWindow.setVisible(visible);
+						}
 					}
 				});
     		}

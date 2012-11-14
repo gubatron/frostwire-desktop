@@ -230,12 +230,10 @@ MPlayerInstance
 			//cmdList.add("-volume");
 			//cmdList.add("0");
 			
-            if(OSUtils.isMacOSX()) {
+            if(OSUtils.isMacOSX() || OSUtils.isLinux()) {
             	cmdList.add(fileOrUrl);
             } else if (OSUtils.isWindows()) {
             	cmdList.add(String.format("\"%s\"", fileOrUrl));
-            } else {
-            	cmdList.add(":(:(:( need to find out how to formate file or URL on this platform");
             }
             
 			String[] cmd = cmdList.toArray(new String[cmdList.size()]);
