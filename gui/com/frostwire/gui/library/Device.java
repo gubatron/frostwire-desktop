@@ -308,7 +308,7 @@ public class Device {
 
     @Override
     public int hashCode() {
-        return getAddress().hashCode();
+        return udn.hashCode();
     }
 
     @Override

@@ -87,7 +87,7 @@ public class UPnPService implements Runnable {
                 }
             });
 
-            this.service.getRegistry().addDevice(createLocalDevice());
+            this.service.getRegistry().addDevice(getLocalDevice());
 
             // refresh the list with all known devices
             for (Device<?, ?, ?> device : this.service.getRegistry().getDevices()) {
