@@ -111,14 +111,18 @@ public abstract class UPnPManager {
     protected abstract void handlePeerDevice(String udn, PingInfo p, InetAddress address, boolean added);
 
     private void handleDevice(Device<?, ?, ?> device, boolean added) {
+        Service<?, ?> deviceInfo = device.findService(deviceInfoId);
+        if (deviceInfo == null) {
+            // not a fw device
+            return;
+        }
+
+        String udn = getIdentityUdn(device);
         if (added) {
-            Service<?, ?> deviceInfo;
-            if ((deviceInfo = device.findService(deviceInfoId)) != null) {
-                invokeGetPingInfo(getService(), deviceInfo);
-            }
+            invokeGetPingInfo(getService(), deviceInfo);
         } else {
             InetAddress address = getAddressFromDevice(device);
-            handlePeerDevice(getIdentityUdn(device), null, address, false);
+            handlePeerDevice(udn, null, address, false);
         }
     }
 
@@ -191,18 +195,17 @@ public abstract class UPnPManager {
 
             @Override
             public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMsg) {
-                LOG.info(defaultMsg);
+                LOG.info("Failed to invoke ping on device: " + deviceInfo.getDevice() + ", reason=" + operation);
             }
         });
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private void subscribeToDeviceInfo(final UpnpService upnpService, final Service<?, ?> deviceInfo) {
-        // 1 min timeout
-        SubscriptionCallback callback = new SubscriptionCallback(deviceInfo, 60) {
+        final SubscriptionCallback callback = new SubscriptionCallback(deviceInfo) {
             @Override
             protected void failed(GENASubscription subscription, UpnpResponse responseStatus, Exception exception, String defaultMsg) {
-                LOG.log(Level.INFO, "failed subscrition to device info");
+                //LOG.log(Level.INFO, "failed subscription to device info");
             }
 
             @Override
@@ -230,7 +233,7 @@ public abstract class UPnPManager {
             @Override
             protected void ended(GENASubscription subscription, CancelReason reason, UpnpResponse responseStatus) {
                 LOG.log(Level.INFO, "Ended subscrition to device info with id=" + subscription.getSubscriptionId() + ", restoring attempt");
-                invokeGetPingInfo(UPnPManager.this.getService(), deviceInfo);
+                upnpService.getControlPoint().search();
             }
         };
 
