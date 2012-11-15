@@ -39,10 +39,12 @@ import org.limewire.util.OSUtils;
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleAudioFileAction;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.transfers.PeerHttpUpload;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
@@ -592,8 +594,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         removeAction.setEnabled(true);
         resumeAction.setEnabled(resumable);
         pauseAction.setEnabled(pausable);
-        copyMagnetAction.setEnabled(!isHttpDownload(dataLine.getInitializeObject()));
-        copyHashAction.setEnabled(!isHttpDownload(dataLine.getInitializeObject()));
+        copyMagnetAction.setEnabled(!isHttpTransfer(dataLine.getInitializeObject()));
+        copyHashAction.setEnabled(!isHttpTransfer(dataLine.getInitializeObject()));
 
         sendToItunesAction.setEnabled(isTransferFinished && (hasAudioFiles || hasMP4s));
 
@@ -601,9 +603,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
         playSingleAudioFileAction.setEnabled(getSelectedDownloaders().length == 1 && hasAudioFiles && isSingleFile);
 
-        removeYouTubeAction.setEnabled(isHttpDownload(dataLine.getInitializeObject()));
-        BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(!isHttpDownload(dataLine.getInitializeObject()));
-        BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION.setEnabled(!isHttpDownload(dataLine.getInitializeObject()));
+        removeYouTubeAction.setEnabled(isYouTubeTransfer(dataLine.getInitializeObject()));
+        BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(!isHttpTransfer(dataLine.getInitializeObject()));
+        BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION.setEnabled(!isHttpTransfer(dataLine.getInitializeObject()));
     }
 
     private boolean selectionHasMP4s(File saveLocation) {
@@ -625,8 +627,12 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         return hasAudioFiles;
     }
 
-    private boolean isHttpDownload(BTDownload d) {
-        return d instanceof YouTubeVideoUrlDownload || d instanceof YouTubeItemDownload || d instanceof SoundcloudTrackUrlDownload || d instanceof SoundcloudTrackDownload;
+    private boolean isHttpTransfer(BTDownload d) {
+        return isYouTubeTransfer(d) || d instanceof SoundcloudTrackUrlDownload || d instanceof SoundcloudTrackDownload || d instanceof BTPeerHttpUpload;
+    }
+
+    private boolean isYouTubeTransfer(BTDownload d) {
+        return d instanceof YouTubeVideoUrlDownload || d instanceof YouTubeItemDownload;
     }
 
     /**
@@ -914,5 +920,18 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                 add(downloader);
             }
         });
+    }
+
+    public PeerHttpUpload upload(FileDescriptor fd) {
+        final BTPeerHttpUpload d = new BTPeerHttpUpload(fd);
+
+        GUIMediator.safeInvokeLater(new Runnable() {
+            @Override
+            public void run() {
+                add(d);
+            }
+        });
+
+        return d.getUpload();
     }
 }

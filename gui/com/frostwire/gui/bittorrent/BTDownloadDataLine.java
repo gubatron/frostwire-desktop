@@ -53,7 +53,7 @@ import com.limegroup.gnutella.settings.iTunesSettings;
  * instance.
  */
 final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
-    
+
     private static final String PARTIAL_DOWNLOAD_TEXT = I18n.tr(" (Partial)");
 
     /**
@@ -97,7 +97,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     private String _shareRatio;
 
     private String _seedToPeerRatio;
-    
+
     private Date dateCreated;
 
     private boolean _notification;
@@ -105,8 +105,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
      * Column index for the file name.
      */
     static final int FILE_INDEX = 0;
-    private static final LimeTableColumn FILE_COLUMN = new LimeTableColumn(FILE_INDEX, "DOWNLOAD_NAME_COLUMN", I18n.tr("Name"), 201, true,
-            IconAndNameHolder.class);
+    private static final LimeTableColumn FILE_COLUMN = new LimeTableColumn(FILE_INDEX, "DOWNLOAD_NAME_COLUMN", I18n.tr("Name"), 201, true, IconAndNameHolder.class);
 
     /**
      * Column index for the file size.
@@ -124,37 +123,31 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
      * Column index for the progress of the download.
      */
     static final int PROGRESS_INDEX = 3;
-    private static final LimeTableColumn PROGRESS_COLUMN = new LimeTableColumn(PROGRESS_INDEX, "DOWNLOAD_PROGRESS_COLUMN", I18n.tr("Progress"), 71, true,
-            ProgressBarHolder.class);
+    private static final LimeTableColumn PROGRESS_COLUMN = new LimeTableColumn(PROGRESS_INDEX, "DOWNLOAD_PROGRESS_COLUMN", I18n.tr("Progress"), 71, true, ProgressBarHolder.class);
 
     /**
      * Column index for actual amount of bytes downloaded.
      */
     static final int BYTES_DOWNLOADED_INDEX = 4;
-    private static final LimeTableColumn BYTES_DOWNLOADED_COLUMN = new LimeTableColumn(BYTES_DOWNLOADED_INDEX, "DOWNLOAD_BYTES_DOWNLOADED_COLUMN",
-            I18n.tr("Downloaded"), 20, true, SizeHolder.class);
+    private static final LimeTableColumn BYTES_DOWNLOADED_COLUMN = new LimeTableColumn(BYTES_DOWNLOADED_INDEX, "DOWNLOAD_BYTES_DOWNLOADED_COLUMN", I18n.tr("Downloaded"), 20, true, SizeHolder.class);
 
     static final int BYTES_UPLOADED_INDEX = 5;
-    private static final LimeTableColumn BYTES_UPLOADED_COLUMN = new LimeTableColumn(BYTES_UPLOADED_INDEX, "DOWNLOAD_BYTES_UPLOADED_COLUMN", I18n.tr("Uploaded"), 20,
-            false, SizeHolder.class);
+    private static final LimeTableColumn BYTES_UPLOADED_COLUMN = new LimeTableColumn(BYTES_UPLOADED_INDEX, "DOWNLOAD_BYTES_UPLOADED_COLUMN", I18n.tr("Uploaded"), 20, false, SizeHolder.class);
 
     /**
      * Column index for the download speed.
      */
     static final int DOWNLOAD_SPEED_INDEX = 6;
-    private static final LimeTableColumn DOWNLOAD_SPEED_COLUMN = new LimeTableColumn(DOWNLOAD_SPEED_INDEX, "DOWNLOAD_SPEED_COLUMN", I18n.tr("Down Speed"), 58,
-            true, SpeedRenderer.class);
+    private static final LimeTableColumn DOWNLOAD_SPEED_COLUMN = new LimeTableColumn(DOWNLOAD_SPEED_INDEX, "DOWNLOAD_SPEED_COLUMN", I18n.tr("Down Speed"), 58, true, SpeedRenderer.class);
 
     static final int UPLOAD_SPEED_INDEX = 7;
-    private static final LimeTableColumn UPLOAD_SPEED_COLUMN = new LimeTableColumn(UPLOAD_SPEED_INDEX, "UPLOAD_SPEED_COLUMN", I18n.tr("Up Speed"), 58, true,
-            SpeedRenderer.class);
+    private static final LimeTableColumn UPLOAD_SPEED_COLUMN = new LimeTableColumn(UPLOAD_SPEED_INDEX, "UPLOAD_SPEED_COLUMN", I18n.tr("Up Speed"), 58, true, SpeedRenderer.class);
 
     /**
      * Column index for the download time remaining.
      */
     static final int TIME_INDEX = 8;
-    private static final LimeTableColumn TIME_COLUMN = new LimeTableColumn(TIME_INDEX, "DOWNLOAD_TIME_REMAINING_COLUMN", I18n.tr("Time"), 49, true,
-            TimeRemainingHolder.class);
+    private static final LimeTableColumn TIME_COLUMN = new LimeTableColumn(TIME_INDEX, "DOWNLOAD_TIME_REMAINING_COLUMN", I18n.tr("Time"), 49, true, TimeRemainingHolder.class);
 
     static final int SEEDS_INDEX = 9;
     private static final LimeTableColumn SEEDS_COLUMN = new LimeTableColumn(SEEDS_INDEX, "SEEDS_STATUS_COLUMN", I18n.tr("Seeds"), 80, true, String.class);
@@ -163,16 +156,13 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     private static final LimeTableColumn PEERS_COLUMN = new LimeTableColumn(PEERS_INDEX, "PEERS_STATUS_COLUMN", I18n.tr("Peers"), 80, false, String.class);
 
     static final int SHARE_RATIO_INDEX = 11;
-    private static final LimeTableColumn SHARE_RATIO_COLUMN = new LimeTableColumn(SHARE_RATIO_INDEX, "SHARE_RATIO_COLUMN", I18n.tr("Share Ratio"), 80, false,
-            String.class);
+    private static final LimeTableColumn SHARE_RATIO_COLUMN = new LimeTableColumn(SHARE_RATIO_INDEX, "SHARE_RATIO_COLUMN", I18n.tr("Share Ratio"), 80, false, String.class);
 
     static final int SEED_TO_PEER_RATIO_INDEX = 12;
-    private static final LimeTableColumn SEED_TO_PEER_RATIO_COLUMN = new LimeTableColumn(SEED_TO_PEER_RATIO_INDEX, "SEED_TO_PEER_RATIO_COLUMN",
-            I18n.tr("Seeds/Peers"), 80, false, String.class);
-    
+    private static final LimeTableColumn SEED_TO_PEER_RATIO_COLUMN = new LimeTableColumn(SEED_TO_PEER_RATIO_INDEX, "SEED_TO_PEER_RATIO_COLUMN", I18n.tr("Seeds/Peers"), 80, false, String.class);
+
     static final int DATE_CREATED_INDEX = 13;
-    static final LimeTableColumn DATE_CREATED_COLUMN = new LimeTableColumn(DATE_CREATED_INDEX, "DATE_CREATED_COLUMN",
-            I18n.tr("Started On"), 80, false, Date.class);
+    static final LimeTableColumn DATE_CREATED_COLUMN = new LimeTableColumn(DATE_CREATED_INDEX, "DATE_CREATED_COLUMN", I18n.tr("Started On"), 80, false, Date.class);
 
     /**
      * Number of columns to display
@@ -198,13 +188,13 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     }
 
     public boolean isSeeding() {
-    	if (initializer==null) {
-    		return false;
-    	}
-    		
-    	return initializer.getState() == DownloadManager.STATE_SEEDING;
+        if (initializer == null) {
+            return false;
+        }
+
+        return initializer.getState() == DownloadManager.STATE_SEEDING;
     }
-    
+
     /**
      * Returns the <tt>Object</tt> stored at the specified column in this
      * line of data.
@@ -238,7 +228,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
         case TIME_INDEX:
             if (initializer.isCompleted()) {
                 return new TimeRemainingHolder(0);
-            } else if (_downloadSpeed < 0.001) {
+            } else if (_downloadSpeed < 0.001 && !(initializer instanceof BTPeerHttpUpload)) {
                 return new TimeRemainingHolder(-1);
             } else {
                 return new TimeRemainingHolder(_timeLeft);
@@ -293,7 +283,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
         }
         return null;
     }
-    
+
     static LimeTableColumn staticGetColumn(int idx) {
         switch (idx) {
         case FILE_INDEX:
@@ -344,11 +334,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
         String peers = I18n.tr("Peers") + ": " + getInitializeObject().getPeersString();
         String seeds = I18n.tr("Seeds") + ": " + getInitializeObject().getSeedsString();
         String size = I18n.tr("Size") + ": " + new SizeHolder(getInitializeObject().getSize());
-        String time = I18n.tr("ETA")
-                + ": "
-                + (getInitializeObject().isCompleted() ? new TimeRemainingHolder(0)
-                        : (getInitializeObject().getDownloadSpeed() < 0.001 ? new TimeRemainingHolder(-1) : new TimeRemainingHolder(getInitializeObject()
-                                .getETA())));
+        String time = I18n.tr("ETA") + ": " + (getInitializeObject().isCompleted() ? new TimeRemainingHolder(0) : (getInitializeObject().getDownloadSpeed() < 0.001 ? new TimeRemainingHolder(-1) : new TimeRemainingHolder(getInitializeObject().getETA())));
 
         info[0] = name;
         info[1] = status;
@@ -420,8 +406,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
                 notification = new Notification(theDownload.getDisplayName(), getIcon(), actions);
                 LibraryMediator.instance().getLibraryExplorer().clearDirectoryHolderCaches();
 
-               iTunesScanIfNecessaryForNonTorrentDownloadItem(theDownload, file);
-                
+                iTunesScanIfNecessaryForNonTorrentDownloadItem(theDownload, file);
+
             } else {
                 return;
             }
@@ -447,9 +433,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
      * @param file
      */
     private void iTunesScanIfNecessaryForNonTorrentDownloadItem(BTDownload theDownload, File file) {
-        if ((OSUtils.isMacOSX() || OSUtils.isWindows()) && 
-                (theDownload instanceof YouTubeItemDownload || theDownload instanceof SoundcloudTrackDownload)
-                && iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(file)) {
+        if ((OSUtils.isMacOSX() || OSUtils.isWindows()) && (theDownload instanceof YouTubeItemDownload || theDownload instanceof SoundcloudTrackDownload) && iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(file)) {
             iTunesMediator.instance().scanForSongs(file);
         }
     }

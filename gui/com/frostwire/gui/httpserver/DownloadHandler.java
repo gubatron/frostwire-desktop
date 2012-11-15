@@ -31,13 +31,10 @@ import org.apache.http.client.utils.URLEncodedUtils;
 
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.Librarian;
+import com.frostwire.gui.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.transfers.PeerHttpUpload;
 import com.frostwire.httpserver.Code;
 import com.frostwire.httpserver.HttpExchange;
-//import com.frostwire.android.core.ConfigurationManager;
-//import com.frostwire.android.core.FileDescriptor;
-//import com.frostwire.android.gui.Librarian;
-//import com.frostwire.android.gui.transfers.PeerHttpUpload;
-//import com.frostwire.android.gui.transfers.TransferManager;
 
 /**
  * @author gubatron
@@ -58,7 +55,7 @@ class DownloadHandler extends AbstractHandler {
         byte type = -1;
         int id = -1;
 
-        //PeerHttpUpload upload = null;
+        PeerHttpUpload upload = null;
 
         try {
 
@@ -89,6 +86,7 @@ class DownloadHandler extends AbstractHandler {
             }
 
             //upload = TransferManager.instance().upload(fd);
+            upload = BTDownloadMediator.instance().upload(fd);
 
             exchange.getResponseHeaders().add("Content-Type", fd.mime);
             exchange.sendResponseHeaders(Code.HTTP_OK, fd.fileSize);
@@ -102,15 +100,15 @@ class DownloadHandler extends AbstractHandler {
 
             while ((n = fis.read(buffer, 0, buffer.length)) != -1) {
                 os.write(buffer, 0, n);
-                //upload.addBytesSent(n);
+                upload.addBytesSent(n);
 
-                //if (upload.isCanceled()) {
-                //    try {
-                //        throw new IOException("Upload cancelled");
-                //    } finally {
-                //        os.close();
-                //    }
-                //}
+                if (upload.isCanceled()) {
+                    try {
+                        throw new IOException("Upload cancelled");
+                    } finally {
+                        os.close();
+                    }
+                }
             }
 
         } catch (IOException e) {
@@ -126,9 +124,9 @@ class DownloadHandler extends AbstractHandler {
                 // ignore
             }
 
-            //if (upload != null) {
-            //    upload.complete();
-            //}
+            if (upload != null) {
+                upload.complete();
+            }
         }
     }
 
@@ -142,8 +140,8 @@ class DownloadHandler extends AbstractHandler {
         }
     }
 
-    private void sendBusyResponse(HttpExchange exchange) throws IOException {
-        exchange.getResponseHeaders().add("Retry-After", "10"); // retry in 10 seconds
-        exchange.sendResponseHeaders(Code.HTTP_UNAVAILABLE, 0);
-    }
+    //    private void sendBusyResponse(HttpExchange exchange) throws IOException {
+    //        exchange.getResponseHeaders().add("Retry-After", "10"); // retry in 10 seconds
+    //        exchange.sendResponseHeaders(Code.HTTP_UNAVAILABLE, 0);
+    //    }
 }

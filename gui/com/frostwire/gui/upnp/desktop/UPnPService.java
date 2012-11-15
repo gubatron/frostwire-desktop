@@ -48,6 +48,8 @@ public class UPnPService implements Runnable {
 
     private static LocalDevice localDevice;
 
+    private boolean running;
+
     public UPnPService(UPnPRegistryListener registryListener) {
         this.registryListener = registryListener;
     }
@@ -74,6 +76,8 @@ public class UPnPService implements Runnable {
     public void run() {
         try {
 
+            running = true;
+
             // This is to disable the set of URL URLStreamHandlerFactory
             // inside StreamClientImpl. Now handled with new coded added to
             // azureus core.
@@ -84,6 +88,7 @@ public class UPnPService implements Runnable {
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 @Override
                 public void run() {
+                    running = false;
                     service.shutdown();
                 }
             });
@@ -98,11 +103,14 @@ public class UPnPService implements Runnable {
 
                 // getting ready for future device advertisements
                 this.service.getRegistry().addListener(registryListener);
+            }
 
+            while (running) {
                 Thread.sleep(5000);
 
-                // search asynchronously for all devices
-                this.service.getControlPoint().search();
+                if (LibrarySettings.LIBRARY_WIFI_SHARING_ENABLED.getValue()) {
+                    this.service.getControlPoint().search();
+                }
             }
         } catch (Throwable e) {
             LOG.log(Level.WARNING, "Exception occured with the UPnP framework", e);
