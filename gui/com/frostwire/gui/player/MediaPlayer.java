@@ -85,7 +85,7 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
     private List<AudioSource> playlistFilesView;
     private RepeatMode repeatMode;
     private boolean shuffle;
-    private boolean playNextSong;
+    private boolean playNextMedia;
 
     private double volume;
     private float volumeGainFactor;
@@ -152,7 +152,7 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 
         repeatMode = PlayerSettings.LOOP_PLAYLIST.getValue() ? RepeatMode.All : RepeatMode.None;
         shuffle = PlayerSettings.SHUFFLE_PLAYLIST.getValue();
-        playNextSong = true;
+        playNextMedia = true;
         volume = PlayerSettings.PLAYER_VOLUME.getValue();
         notifyVolumeChanged();
 
@@ -275,9 +275,9 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
     /**
      * Loads a AudioSource into the player to play next
      */
-    public void loadSong(AudioSource source, boolean play, boolean playNextSong, Playlist currentPlaylist, List<AudioSource> playlistFilesView) {
+    public void loadMedia(AudioSource source, boolean play, boolean playNextSong, Playlist currentPlaylist, List<AudioSource> playlistFilesView) {
         currentSong = source;
-        this.playNextSong = playNextSong;
+        this.playNextMedia = playNextSong;
         this.currentPlaylist = currentPlaylist;
         this.playlistFilesView = playlistFilesView;
         notifyOpened(source);
@@ -287,15 +287,16 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
             if (currentSong.getFile() != null) {
                 LibraryMediator.instance().getLibraryCoverArt().setFile(currentSong.getFile());
                 calculateDurationInSecs(currentSong.getFile());
+                playMedia();
             } else if (currentSong.getPlaylistItem() != null) {
                 LibraryMediator.instance().getLibraryCoverArt().setFile(new File(currentSong.getPlaylistItem().getFilePath()));
+                playMedia();
                 durationInSeconds = (long) currentSong.getPlaylistItem().getTrackDurationInSecs();
-            } else if (currentSong instanceof InternetRadioAudioSource) {
+            } else if (currentSong instanceof InternetRadioAudioSource || currentSong instanceof StreamAudioSource) {
                 LibraryMediator.instance().getLibraryCoverArt().setDefault();
-            } else if (currentSong instanceof StreamAudioSource) {
-                LibraryMediator.instance().getLibraryCoverArt().setDefault();
+                playMedia(false);
             }
-            playSong();
+            
         }
     }
 
@@ -342,37 +343,32 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
         }
     }
 
-    public void asyncLoadSong(final AudioSource source, final boolean play, final boolean playNextSong, final Playlist currentPlaylist, final List<AudioSource> playlistFilesView) {
+    public void asyncLoadMedia(final AudioSource source, final boolean play, final boolean playNextSong, final Playlist currentPlaylist, final List<AudioSource> playlistFilesView) {
         playExecutor.execute(new Runnable() {
             public void run() {
-                loadSong(source, play, playNextSong, currentPlaylist, playlistFilesView);
+                loadMedia(source, play, playNextSong, currentPlaylist, playlistFilesView);
             }
         });
     }
 
-    public void loadSong(AudioSource source, boolean play, boolean playNextSong) {
-        loadSong(source, play, playNextSong, currentPlaylist, playlistFilesView);
+    public void loadMedia(AudioSource source, boolean play, boolean playNextSong) {
+        loadMedia(source, play, playNextSong, currentPlaylist, playlistFilesView);
     }
 
-    public void asyncLoadSong(final AudioSource source, final boolean play, final boolean playNextSong) {
+    public void asyncLoadMedia(final AudioSource source, final boolean play, final boolean playNextSong) {
         playExecutor.execute(new Runnable() {
             public void run() {
-                loadSong(source, play, playNextSong);
+                loadMedia(source, play, playNextSong);
             }
         });
     }
 
-    public void loadSong(AudioSource audioSource) {
-        loadSong(audioSource, false, false, null, null);
+    public void loadMedia(AudioSource audioSource) {
+        loadMedia(audioSource, false, false, null, null);
     }
 
-    
-    /**
-     * Begins playing a song
-     */
-    public void playSong() {
-    	
-    	mplayer.stop();
+	private String stopAndPrepareFilename() {
+		mplayer.stop();
         setVolume(volume);
 
         String filename = "";
@@ -383,10 +379,38 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
         } else if (currentSong.getPlaylistItem() != null) {
             filename = currentSong.getPlaylistItem().getFilePath();
         }
+		return filename;
+	}
+    
+    /** Force showing or not the media player window */
+    public void playMedia(boolean showPlayerWindow) {
+      	String filename = stopAndPrepareFilename();
+        
+        if (filename.length() > 0) {
+	        MPlayerMediator mplayerMediator = MPlayerMediator.instance();
+	        
+	        if (mplayerMediator != null) {
+	        	mplayerMediator.showPlayerWindow(showPlayerWindow);
+	        }
+	        
+	        mplayer.open(filename);
+        }
+        
+        notifyState(getState());
+    }
+    
+    /**
+     * Plays a file and determines wether or not to show the player window based on the MediaType of the file.
+     */
+    public void playMedia() {
+    	
+    	String filename = stopAndPrepareFilename();
         
         if (filename.length() > 0) {
 	        boolean isVideoFile = MediaType.getVideoMediaType().matches(filename);
 	        MPlayerMediator mplayerMediator = MPlayerMediator.instance();
+	        
+	        
 	        
 	        if (mplayerMediator != null) {
 	        	mplayerMediator.showPlayerWindow(isVideoFile);
@@ -600,7 +624,7 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
     }
 
     private void handleNextSong() {
-        if (!playNextSong) {
+        if (!playNextMedia) {
             return;
         }
 
@@ -622,7 +646,7 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 
         if (song != null) {
             //System.out.println(song.getFile());
-            asyncLoadSong(song, true, true, currentPlaylist, playlistFilesView);
+            asyncLoadMedia(song, true, true, currentPlaylist, playlistFilesView);
         }
     }
 
@@ -864,7 +888,7 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
     		curState == MediaPlaybackState.Paused) {
     		togglePause();
     	} else if (curState == MediaPlaybackState.Closed) {
-    		playSong();
+    		playMedia();
     	}
 	}
 

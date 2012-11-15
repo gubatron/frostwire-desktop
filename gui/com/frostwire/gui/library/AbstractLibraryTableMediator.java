@@ -269,7 +269,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         try {
             AudioSource audioSource = createAudioSource(line);
             if (audioSource != null) {
-            	MediaPlayer.instance().asyncLoadSong(audioSource, true, false, null, getFileView());
+            	MediaPlayer.instance().asyncLoadMedia(audioSource, true, false, null, getFileView());
             }
         } catch (Exception e) { 
             e.printStackTrace();

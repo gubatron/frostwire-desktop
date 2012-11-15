@@ -335,7 +335,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
             String url = device.getDownloadURL(line.getInitializeObject());
             AudioSource audioSource = new DeviceAudioSource(url, device, line.getInitializeObject());
             if (MediaPlayer.isPlayableFile(audioSource)) {
-            	MediaPlayer.instance().asyncLoadSong(audioSource, true, true, null, getFileView());
+            	MediaPlayer.instance().asyncLoadMedia(audioSource, true, true, null, getFileView());
             }
         } catch (Throwable e) {
             LOG.error("Error loading the streaming", e);

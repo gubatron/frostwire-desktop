@@ -519,7 +519,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         AudioSource audioSource = new AudioSource(line.getPlayListItem());
         if (MediaPlayer.isPlayableFile(audioSource)) {
-        	MediaPlayer.instance().asyncLoadSong(audioSource, true, true, currentPlaylist, getFileView());
+        	MediaPlayer.instance().asyncLoadMedia(audioSource, true, true, currentPlaylist, getFileView());
         }
     }
 

@@ -1624,7 +1624,7 @@ public final class GUIMediator {
         	playNextSong = false;
         }
 		
-        MediaPlayer.instance().asyncLoadSong(song, true, playNextSong);
+        MediaPlayer.instance().asyncLoadMedia(song, true, playNextSong);
     }
 
     /**

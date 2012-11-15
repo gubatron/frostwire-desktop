@@ -402,7 +402,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
         try {
             AudioSource audioSource = new InternetRadioAudioSource(line.getInitializeObject().getUrl(), line.getInitializeObject());
-            MediaPlayer.instance().asyncLoadSong(audioSource, true, false, null, getFileView());
+            MediaPlayer.instance().asyncLoadMedia(audioSource, true, false, null, getFileView());
         } catch (Exception e) {
             e.printStackTrace();
         }

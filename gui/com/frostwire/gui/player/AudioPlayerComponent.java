@@ -697,7 +697,7 @@ public final class AudioPlayerComponent implements MediaPlayerListener, RefreshL
             }
 
             if (nextSong != null) {
-                PLAYER.asyncLoadSong(nextSong, true, true);
+                PLAYER.asyncLoadMedia(nextSong, true, true);
             }
         }
     }
@@ -718,7 +718,7 @@ public final class AudioPlayerComponent implements MediaPlayerListener, RefreshL
             AudioSource previousSong = PLAYER.getPreviousSong(currentSong);
 
             if (previousSong != null) {
-                PLAYER.asyncLoadSong(previousSong, true, true);
+                PLAYER.asyncLoadMedia(previousSong, true, true);
             }
         }
     }

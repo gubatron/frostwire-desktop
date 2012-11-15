@@ -28,7 +28,7 @@ public class MPlayerMediator {
     public static MPlayerMediator instance() {
         if (instance == null) {
         	try {
-            SwingUtilities.invokeAndWait(new Runnable() {
+            GUIMediator.safeInvokeAndWait(new Runnable() {
             	@Override
             	public void run() {
             		instance = new MPlayerMediator();
