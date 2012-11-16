@@ -40,7 +40,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
@@ -339,16 +338,17 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
                 @Override
                 public void run() {
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            for (File file : fPartition) {
-                                addUnsorted(file);
+                    for (final File file : fPartition) {
+                        GUIMediator.safeInvokeAndWait(new Runnable() {
+                            public void run() {
+                                addUnsorted(file);        
+                                Thread.yield();
                             }
-                            LibraryMediator.instance().getLibrarySearch().addResults(fPartition.size());
-                        }
-                    });
-                    Thread.yield();
+                        });
+                    }
+                    LibraryMediator.instance().getLibrarySearch().addResults(fPartition.size());
+
+                    
                 }
             });
 

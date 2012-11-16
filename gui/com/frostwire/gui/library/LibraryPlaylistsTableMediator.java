@@ -377,11 +377,16 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         }
 
         currentPlaylist = playlist;
-        List<PlaylistItem> items = currentPlaylist.getItems();
+        List<PlaylistItem> items = currentPlaylist.getItems(); 
 
         clearTable();
-        for (int i = 0; i < items.size(); i++) {
-            addUnsorted(items.get(i));
+        for (final PlaylistItem item : items) {
+            GUIMediator.safeInvokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    addUnsorted(item);
+                }
+            });
         }
         forceResort();
     }
