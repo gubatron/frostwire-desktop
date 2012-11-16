@@ -46,7 +46,20 @@ class DownloadHandler extends AbstractHandler {
     private static final Logger LOG = Logger.getLogger(DownloadHandler.class.getName());
 
     @Override
-    public void handle(HttpExchange exchange) throws IOException {
+    public void handle(final HttpExchange exchange) throws IOException {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    internalHandler(exchange);
+                } catch (IOException e) {
+                    LOG.log(Level.WARNING, "DownloadHandler async handle error", e);
+                }
+            }
+        }).start();
+    }
+    
+    public void internalHandler(HttpExchange exchange) throws IOException {
         assertUPnPActive();
 
         OutputStream os = null;
