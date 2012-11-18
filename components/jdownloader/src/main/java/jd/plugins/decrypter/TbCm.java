@@ -814,11 +814,11 @@ public class TbCm extends PluginForDecrypt {
         }
     }
     
-    private static void simpleHTTP(String url, String jpgFilename) throws Throwable {
+    static void simpleHTTP(String url, String jpgFilename) throws Throwable {
         URL u = new URL(url);
         URLConnection con = u.openConnection();
-        con.setConnectTimeout(1000);
-        con.setReadTimeout(1000);
+        con.setConnectTimeout(3000);
+        con.setReadTimeout(3000);
         InputStream in = con.getInputStream();
         OutputStream out = new FileOutputStream(jpgFilename);
 

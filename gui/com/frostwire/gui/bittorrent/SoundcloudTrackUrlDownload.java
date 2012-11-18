@@ -39,6 +39,7 @@ import org.jdownloader.controlling.filter.LinkFilterController;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.search.SoundcloudSearchResult;
 
 /**
  * @author gubatron
@@ -57,17 +58,21 @@ public class SoundcloudTrackUrlDownload implements BTDownload {
     private final String trackUrl;
     private final String title;
     private final Date dateCreated;
+    
+    private final SoundcloudSearchResult sr;
 
     private String _state;
     private int progress;
 
-    public SoundcloudTrackUrlDownload(String trackUrl, String title) {
+    public SoundcloudTrackUrlDownload(String trackUrl, String title, SoundcloudSearchResult sr) {
         if (!trackUrl.startsWith("http://")) {
             trackUrl = "http://" + trackUrl;
         }
         this.trackUrl = trackUrl;
         this.title = title;
         this.dateCreated = new Date();
+        
+        this.sr = sr;
         _state = STATE_CRAWLING;
         start();
     }
@@ -266,7 +271,7 @@ public class SoundcloudTrackUrlDownload implements BTDownload {
                             try {
                                 // we assume there is only one link
                                 for (FilePackage filePackage : packages) {
-                                    BTDownloadMediator.instance().openSoundcloudItem(filePackage, title);
+                                    BTDownloadMediator.instance().openSoundcloudItem(filePackage, title, sr);
                                 }
                             } catch (Throwable e) {
                                 LOG.error("Error reading soundcloud package:" + e.getMessage(), e);

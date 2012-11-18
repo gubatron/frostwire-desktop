@@ -79,6 +79,7 @@ import com.limegroup.gnutella.gui.bugs.FatalBugManager;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.search.SearchMediator;
+import com.limegroup.gnutella.gui.search.SoundcloudSearchResult;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.gui.shell.ShellAssociationManager;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
@@ -1833,7 +1834,12 @@ public final class GUIMediator {
 	}
 	
 	public void openSoundcloudTrackUrl(String trackUrl, String title) {
-        getBTDownloadMediator().openSoundcloudTrackUrl(trackUrl, title);
+        getBTDownloadMediator().openSoundcloudTrackUrl(trackUrl, title, null);
+        setWindow(GUIMediator.Tabs.SEARCH);
+    }
+	
+	public void openSoundcloudTrackUrl(String trackUrl, String title, SoundcloudSearchResult sr) {
+        getBTDownloadMediator().openSoundcloudTrackUrl(trackUrl, title, sr);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
