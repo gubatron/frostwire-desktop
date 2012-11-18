@@ -29,11 +29,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+
+import org.limewire.util.FilenameUtils;
 
 import jd.PluginWrapper;
 import jd.config.SubConfiguration;
@@ -66,10 +70,16 @@ import com.frostwire.mp4.MovieCreator;
 import com.frostwire.mp4.Track;
 import com.frostwire.mp4.boxes.Box;
 import com.frostwire.mp4.boxes.FileTypeBox;
+import com.frostwire.mp4.boxes.HandlerBox;
 import com.frostwire.mp4.boxes.MetaBox;
 import com.frostwire.mp4.boxes.UserDataBox;
+import com.frostwire.mp4.boxes.apple.AppleAlbumArtistBox;
+import com.frostwire.mp4.boxes.apple.AppleAlbumBox;
+import com.frostwire.mp4.boxes.apple.AppleArtistBox;
 import com.frostwire.mp4.boxes.apple.AppleCoverBox;
 import com.frostwire.mp4.boxes.apple.AppleItemListBox;
+import com.frostwire.mp4.boxes.apple.AppleMediaTypeBox;
+import com.frostwire.mp4.boxes.apple.AppleTrackTitleBox;
 
 import de.savemytube.flv.FLV;
 
@@ -162,11 +172,11 @@ public class TbCm extends PluginForDecrypt {
                 System.out.println("Convert FLV to mp3...");
                 new FLV(downloadlink.getFileOutput(), true, true);
 
-                // FLV lšschen
+                // FLV lï¿½schen
                 if (!new File(downloadlink.getFileOutput()).delete()) {
                     new File(downloadlink.getFileOutput()).deleteOnExit();
                 }
-                // AVI lšschen
+                // AVI lï¿½schen
                 if (!new File(downloadlink.getFileOutput().replaceAll(TbCm.TEMP_EXT, ".avi")).delete()) {
                     new File(downloadlink.getFileOutput().replaceAll(TbCm.TEMP_EXT, ".avi")).deleteOnExit();
                 }
@@ -712,8 +722,8 @@ public class TbCm extends PluginForDecrypt {
     
     private static final Logger LOG = JDLogger.getLogger();
 
-    private static boolean demuxMP4Audio(DownloadLink dl) {
-        String filename = dl.getFileOutput();
+    private static boolean demuxMP4Audio(final DownloadLink dl) {
+        final String filename = dl.getFileOutput();
         try {
             String mp4Filename = filename.replace(".m4a", ".mp4");
             final String jpgFilename = filename.replace(".m4a", ".jpg");
@@ -741,13 +751,24 @@ public class TbCm extends PluginForDecrypt {
             outMovie.addTrack(audioTrack);
 
             IsoFile out = new DefaultMp4Builder() {
+                protected FileTypeBox createFileTypeBox(Movie movie) {
+                    List<String> minorBrands = new LinkedList<String>();
+                    minorBrands.add("M4A ");
+                    minorBrands.add("mp42");
+                    minorBrands.add("isom");
+                    minorBrands.add("\0\0\0\0");
+
+                    return new FileTypeBox("M4A ", 0, minorBrands);
+                };
+
                 protected Box createUdta(Movie movie) {
-                    return addThumbnailBox(jpgFilename);
+                    String videoLink = (String) dl.getProperty("videolink", "YouTube.com");
+                    
+                    return addUserDataBox(FilenameUtils.getBaseName(filename), videoLink, jpgFilename);
                 };
             }.build(outMovie);
             String audioFilename = filename;
             FileOutputStream fos = new FileOutputStream(audioFilename);
-            out.getBoxes(FileTypeBox.class).get(0).setMajorBrand("M4A ");
             out.getBox(fos.getChannel());
             fos.close();
 
@@ -822,7 +843,7 @@ public class TbCm extends PluginForDecrypt {
         }
     }
     
-    private static UserDataBox addThumbnailBox(String jpgFilename) {
+    private static UserDataBox addUserDataBox(String title, String author, String jpgFilename) {
         File jpgFile = new File(jpgFilename);
         if (!jpgFile.exists()) {
             return null;
@@ -832,20 +853,44 @@ public class TbCm extends PluginForDecrypt {
         if (jpgData == null) {
             return null;
         }
-        
+
         //"/moov/udta/meta/ilst/covr/data"
         UserDataBox udta = new UserDataBox();
-        
+
         MetaBox meta = new MetaBox();
         udta.addBox(meta);
         
+        HandlerBox hdlr = new HandlerBox();
+        hdlr.setHandlerType("mdir");
+        meta.addBox(hdlr);
+
         AppleItemListBox ilst = new AppleItemListBox();
         meta.addBox(ilst);
         
+        AppleTrackTitleBox cnam = new AppleTrackTitleBox();
+        cnam.setValue(title);
+        ilst.addBox(cnam);
+        
+        AppleArtistBox cART = new AppleArtistBox();
+        cART.setValue(author);
+        ilst.addBox(cART);
+        
+        AppleAlbumArtistBox aART = new AppleAlbumArtistBox();
+        aART.setValue(title + " " + author);
+        ilst.addBox(aART);
+        
+        AppleAlbumBox calb = new AppleAlbumBox();
+        calb.setValue(title + " " + author + " via YouTube.com");
+        ilst.addBox(calb);
+        
+        AppleMediaTypeBox stik = new AppleMediaTypeBox();
+        stik.setValue("1");
+        ilst.addBox(stik);
+
         AppleCoverBox covr = new AppleCoverBox();
         covr.setJpg(jpgData);
         ilst.addBox(covr);
-        
+
         return udta;
     }
 
