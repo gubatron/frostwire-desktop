@@ -28,4 +28,5 @@ _UpgradeReport_Files/
 Debug/
 Release/
 ipch/
+tags
 *.opensdf
