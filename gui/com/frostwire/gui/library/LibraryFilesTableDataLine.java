@@ -124,6 +124,8 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 		_model = ltm;
 	}
 
+	public boolean isShared() { return shared; }
+	
 	public int getColumnCount() { return getLimeTableColumns().length; }
 
 	/**
@@ -297,4 +299,8 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
             return null;
         }
 	}
+
+    public void setShared(boolean share) {
+        shared = share;
+    }
 }

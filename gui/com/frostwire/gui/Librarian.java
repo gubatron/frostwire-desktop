@@ -335,6 +335,10 @@ public final class Librarian {
     }
 
     public void shareFile(final String filePath, final boolean share) {
+        shareFile(filePath, share, true);
+    }
+    
+    public void shareFile(final String filePath, final boolean share, final boolean refreshPing) {
         if (pathSharingSet.contains(filePath)) {
             return;
         }
@@ -353,7 +357,9 @@ public final class Librarian {
 
                 pathSharingSet.remove(filePath);
 
-                UPnPManager.instance().refreshPing();
+                if (refreshPing) {
+                    UPnPManager.instance().refreshPing();
+                }
             }
         };
 

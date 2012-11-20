@@ -52,9 +52,11 @@ import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
 import com.frostwire.alexandria.Playlist;
+import com.frostwire.gui.Librarian;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.upnp.UPnPManager;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.CheckBoxList;
@@ -89,6 +91,8 @@ import com.limegroup.gnutella.util.QueryUtils;
  */
 final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<LibraryFilesTableModel, LibraryFilesTableDataLine, File> {
 
+
+
     /**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
      */
@@ -99,6 +103,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     public static Action DELETE_ACTION;
     public static Action RENAME_ACTION;
     public static Action SEND_TO_ITUNES_ACTION;
+    public static Action WIFI_UNSHARE_ACTION;
+    public static Action WIFI_SHARE_ACTION;
 
     /**
      * instance, for singleton access
@@ -125,6 +131,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         DELETE_ACTION = new RemoveAction();
         RENAME_ACTION = new RenameAction();
         SEND_TO_ITUNES_ACTION = new SendAudioFilesToiTunes();
+        WIFI_SHARE_ACTION = new WiFiShareAction(true);
+        WIFI_UNSHARE_ACTION = new WiFiShareAction(false);
 
     }
 
@@ -168,8 +176,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
     // inherit doc comment
     protected JPopupMenu createPopupMenu() {
-        if (TABLE.getSelectionModel().isSelectionEmpty())
+        if (TABLE.getSelectionModel().isSelectionEmpty()) {
             return null;
+        }
 
         JPopupMenu menu = new SkinPopupMenu();
 
@@ -186,6 +195,11 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (areAllSelectedFilesPlayable()) {
             menu.add(createAddToPlaylistSubMenu());
         }
+        
+        boolean anyBeingShared = isAnyBeingShared();
+        WIFI_SHARE_ACTION.setEnabled(!anyBeingShared);
+        WIFI_UNSHARE_ACTION.setEnabled(!anyBeingShared);
+        menu.add(new SkinMenuItem(areAllSelectedFilesShared() ? WIFI_UNSHARE_ACTION : WIFI_SHARE_ACTION));    
 
         menu.add(new SkinMenuItem(SEND_TO_FRIEND_ACTION));
         menu.add(new SkinMenuItem(SEND_TO_ITUNES_ACTION));
@@ -222,6 +236,38 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         menu.add(createSearchSubMenu(line));
 
         return menu;
+    }
+
+    /**
+     * If a file in the current selection is being shared, this returns true.
+     * @return
+     */
+    private boolean isAnyBeingShared() {
+        boolean oneBeingShared = false;
+        int[] selectedRows = TABLE.getSelectedRows();
+        for (int i : selectedRows) {
+            LibraryFilesTableDataLine libraryFilesTableDataLine = DATA_MODEL.get(i);
+
+            if (Librarian.instance().getFileShareState(libraryFilesTableDataLine.getInitializeObject().getAbsolutePath()) == Librarian.FILE_STATE_SHARING) {
+                oneBeingShared = true;
+                break;
+            }
+        }
+        return oneBeingShared; 
+    }
+    
+    private boolean areAllSelectedFilesShared() {
+        boolean allAreShared = true;
+        int[] selectedRows = TABLE.getSelectedRows();
+        for (int i : selectedRows) {
+            LibraryFilesTableDataLine libraryFilesTableDataLine = DATA_MODEL.get(i);
+
+            if (!libraryFilesTableDataLine.isShared()) {
+                allAreShared = false;
+                break;
+            }
+        }
+        return allAreShared;    
     }
 
     private boolean areAllSelectedFilesPlayable() {
@@ -703,6 +749,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setFile(selectedFile);
         }
+        
+        boolean anyBeingShared = isAnyBeingShared();
+        WIFI_SHARE_ACTION.setEnabled(!anyBeingShared);
+        WIFI_UNSHARE_ACTION.setEnabled(!anyBeingShared);
     }
 
     /**
@@ -981,6 +1031,42 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             return new AudioSource(line.getInitializeObject());
         } else {
             return null;
+        }
+    }
+    
+    private class WiFiShareAction extends AbstractAction {
+        
+        private static final long serialVersionUID = 1889199111839641873L;
+        private boolean share;
+        
+        public WiFiShareAction(boolean share) {
+            super(share ? I18n.tr("Share") : I18n.tr("Unshare"));
+            this.share = share;
+            String actionName = share ? I18n.tr("Share") : I18n.tr("Unshare");
+            
+            putValue(LimeAction.SHORT_NAME, actionName);
+            putValue(Action.LONG_DESCRIPTION, actionName+" "+I18n.tr("file on local Wi-Fi network"));
+            putValue(Action.SMALL_ICON, GUIMediator.getThemeImage(share ? "file_unshared" : "file_shared"));
+            putValue(LimeAction.ICON_NAME, share ? "WIFI_UNSHARED" : "WIFI_SHARED");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int[] rows = TABLE.getSelectedRows();
+            for (int i = 0; i < rows.length; i++) {
+                int index = rows[i]; // current index to add
+                File file = DATA_MODEL.getFile(index);
+                LibraryFilesTableDataLine dataLine = DATA_MODEL.get(i);
+                try {
+                    dataLine.setShared(share);
+                    Librarian.instance().shareFile(file.getAbsolutePath(), share, false);
+                    
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            
+            UPnPManager.instance().refreshPing();
         }
     }
 }
