@@ -50,10 +50,28 @@ public class MPlayerUIEventHandler {
         	listener.onUIVolumeChanged(volume);
         }
     }
+    
+    public void onVolumeIncremented() {
+        for ( MPlayerUIEventListener listener : listeners ) {
+        	listener.onUIVolumeIncremented();
+        }
+    }
 
+    public void onVolumeDecremented() {
+        for ( MPlayerUIEventListener listener : listeners ) {
+        	listener.onUIVolumeDecremented();
+        }
+    }
+    
     public void onSeekToTime(float seconds) {
         for ( MPlayerUIEventListener listener : listeners ) {
         	listener.onUISeekToTime(seconds);
+        }
+    }
+    
+    public void onTogglePlayPausePressed() {
+    	for ( MPlayerUIEventListener listener : listeners ) {
+        	listener.onUITogglePlayPausePressed();
         }
     }
     

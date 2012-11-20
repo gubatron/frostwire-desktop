@@ -465,14 +465,23 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
      *             - thrown when the soundcard does not support this operation
      */
     public void setVolume(double fGain) {
-        volume = fGain;
-        mplayer.setVolume((int) (fGain * getVolumeGainFactor()));
+    	
+        volume = Math.max(Math.min(fGain, 1.0), 0.0);
+        mplayer.setVolume((int) (volume * getVolumeGainFactor()));
         PlayerSettings.PLAYER_VOLUME.setValue((float) volume);
         notifyVolumeChanged();
     }
     
     public double getVolume() {
     	return volume;
+    }
+    
+    public void incrementVolume() {
+    	setVolume(getVolume() + 0.1);
+    }
+    
+    public void decrementVolume() {
+    	setVolume(getVolume() - 0.1);
     }
 
     protected void notifyVolumeChanged() {
@@ -930,6 +939,21 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 		}
 		
 		stateNotificationsEnabled = true;
+	}
+
+	@Override
+	public void onUIVolumeIncremented() {
+		incrementVolume();
+	}
+
+	@Override
+	public void onUIVolumeDecremented() {
+		decrementVolume();
+	}
+
+	@Override
+	public void onUITogglePlayPausePressed() {
+		togglePause();
 	}
 
 

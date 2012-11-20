@@ -218,7 +218,6 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 				metaDataListeners.remove(listener);
 			}
 		}
-		
 	}
 
 	public void removeStateListener(StateListener listener) {
@@ -227,7 +226,6 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 				stateListeners.remove(listener);
 			}
 		}
-		
 	}
 
 	
@@ -237,7 +235,6 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 				volumeListeners.remove(listener);
 			}
 		}
-		
 	}
 	
 	
@@ -247,7 +244,6 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 				positionListeners.remove(listener);
 			}
 		}
-		
 	}
 	
 	public void removeIcyInfoListener(IcyInfoListener listener) {
@@ -268,6 +264,13 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		}
 	}
 
+	public void incrementVolume() {
+		setVolume(getVolume() + 10);
+	}
+	
+	public void decrementVolume() {
+		setVolume(getVolume() - 10);
+	}
 	
 	public void setVolume(int volume) {
 		if(currentState == MediaPlaybackState.Playing || currentState == MediaPlaybackState.Paused) {

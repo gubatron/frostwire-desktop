@@ -154,7 +154,26 @@ public class MPlayerComponentOSX extends CocoaComponent implements MPlayerCompon
 			}
 		});
 	}
-    public void onSeekToTime(final float seconds) {
+	
+	public void onIncrementVolumePressed() {
+		SwingUtilities.invokeLater( new Runnable() {
+			@Override
+			public void run() {
+				MPlayerUIEventHandler.instance().onVolumeIncremented();
+			}
+		});
+	}
+	
+	public void onDecrementVolumePressed() {
+		SwingUtilities.invokeLater( new Runnable() {
+			@Override
+			public void run() {
+				MPlayerUIEventHandler.instance().onVolumeDecremented();
+			}
+		});
+	}
+    
+	public void onSeekToTime(final float seconds) {
     	SwingUtilities.invokeLater( new Runnable() {
 			@Override
 			public void run() {

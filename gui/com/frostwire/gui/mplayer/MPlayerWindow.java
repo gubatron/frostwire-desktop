@@ -54,6 +54,7 @@ import org.limewire.util.SystemUtils;
 import sun.awt.windows.WComponentPeer;
 
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerListener;
 import com.frostwire.mplayer.MediaPlaybackState;
@@ -85,6 +86,7 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
         player.addMediaPlayerListener(this);
     }
 	
+
 	public MediaPlayer getMediaPlayer() {
 		return player;
 	}
@@ -184,18 +186,17 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 				
 				centerOnScreen();
 				positionOverlayControls();
-				
 				showOverlay(false);
-				
 			} else {
-			
+	
 				hideOverlay(false);
 			}
 		}
 		
 		if ( visible ) {
-			// make sure window is on top of visible windows
+			// make sure window is on top of visible windows & has focus
 			toFront();
+			requestFocus();
 		}
 	}
 	
@@ -345,39 +346,52 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 	private class MPlayerKeyEventDispatcher implements KeyEventDispatcher {
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
-			if (e.getID() == KeyEvent.KEY_PRESSED) {
+        	
+        	if (!isVisible()) {
+        		return false;
+        	}
+        	
+        	if (e.getID() == KeyEvent.KEY_PRESSED) {
 				switch (e.getKeyCode()) {
-				case KeyEvent.VK_P:
-					player.togglePause();
-					return true;
-				case KeyEvent.VK_F:
-					toggleFullScreen();
-					return true;
-				case KeyEvent.VK_RIGHT:
-				case KeyEvent.VK_PERIOD:
-					if (isVisible()) {
-						player.fastForward();
+					case KeyEvent.VK_P:
+					case KeyEvent.VK_SPACE:
+						MPlayerUIEventHandler.instance().onTogglePlayPausePressed();
 						return true;
-					}
-				case KeyEvent.VK_LEFT:
-				case KeyEvent.VK_COMMA:
-					if (isVisible()) {
-						player.rewind();
-						return true;
-					}
-				}
-
-				// Alt+Enter, Alt+F, Ctrl+Enter, Ctrl+F full screen shorcuts
-				// seen in other players.
-				if (isVisible() && (e.isAltDown() || e.isMetaDown() || e.isControlDown())) {
-					switch (e.getKeyCode()) {
 					case KeyEvent.VK_F:
-					case KeyEvent.VK_ENTER:
 						toggleFullScreen();
 						return true;
-					}
+					case KeyEvent.VK_RIGHT:
+					case KeyEvent.VK_PERIOD:
+						MPlayerUIEventHandler.instance().onFastForwardPressed();
+						return true;
+					case KeyEvent.VK_LEFT:
+					case KeyEvent.VK_COMMA:
+						MPlayerUIEventHandler.instance().onRewindPressed();
+						return true;
+					case KeyEvent.VK_UP:
+					case KeyEvent.VK_PLUS:
+						MPlayerUIEventHandler.instance().onVolumeIncremented();
+						return true;
+					case KeyEvent.VK_DOWN:
+					case KeyEvent.VK_MINUS:
+						MPlayerUIEventHandler.instance().onVolumeDecremented();
+						return true;
+				}
+				
+				// shft + - for volume increment
+				if (e.isShiftDown() && e.getKeyCode() == KeyEvent.VK_EQUALS) {
+					MPlayerUIEventHandler.instance().onVolumeIncremented();
+					return true;
+				}
+
+				// Alt+Enter, Ctrl+Enter full screen shorcuts - seen in other players.
+				if ( ( e.isAltDown() || e.isMetaDown() || e.isControlDown()) && 
+					   e.getKeyCode() == KeyEvent.VK_ENTER) {
+					MPlayerUIEventHandler.instance().onToggleFullscreenPressed();
+					return true;
 				}
 			}
+			
 			return false;
         }
 	}
@@ -469,4 +483,5 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 
 	@Override
 	public void icyInfo(MediaPlayer audioPlayer, String data) { }
+
 }
