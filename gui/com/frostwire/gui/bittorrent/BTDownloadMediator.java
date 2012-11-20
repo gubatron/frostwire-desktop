@@ -50,6 +50,7 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
+import com.limegroup.gnutella.gui.search.SoundcloudSearchResult;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
@@ -873,10 +874,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         });
     }
 
-    public void openSoundcloudTrackUrl(final String trackUrl, final String title) {
+    public void openSoundcloudTrackUrl(final String trackUrl, final String title, final SoundcloudSearchResult sr) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new SoundcloudTrackUrlDownload(trackUrl, title);
+                BTDownload downloader = new SoundcloudTrackUrlDownload(trackUrl, title, sr);
                 add(downloader);
             }
         });
@@ -902,7 +903,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         });
     }
 
-    public void openSoundcloudItem(final FilePackage filePackage, final String title) {
+    public void openSoundcloudItem(final FilePackage filePackage, final String title, final SoundcloudSearchResult sr) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 try {
@@ -916,7 +917,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                 } catch (Throwable e) {
                     // ignore
                 }
-                BTDownload downloader = new SoundcloudTrackDownload(filePackage, title);
+                BTDownload downloader = new SoundcloudTrackDownload(filePackage, title, sr);
                 add(downloader);
             }
         });

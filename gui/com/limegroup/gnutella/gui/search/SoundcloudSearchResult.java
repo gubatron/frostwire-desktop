@@ -87,7 +87,7 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
 
     @Override
     public void download(boolean partial) {
-        GUIMediator.instance().openSoundcloudTrackUrl(sr.getTorrentURI(), sr.getDisplayName());
+        GUIMediator.instance().openSoundcloudTrackUrl(sr.getTorrentURI(), sr.getDisplayName(), this);
         showDetails(false);
     }
 
@@ -140,5 +140,17 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
     @Override
     public String getStreamUrl() {
         return sr.getStreamUrl();
+    }
+
+    public String getThumbnailUrl() {
+        return sr.getThumbnailUrl();
+    }
+
+    public String getUsername() {
+        return sr.getUsername();
+    }
+
+    public String getDetailsUrl() {
+        return sr.getDetailsUrl();
     }
 }

@@ -118,6 +118,18 @@ public abstract class UPnPManager {
         LOG.info("Removing device by UDN=" + udn);
     }
 
+    public void refreshRemoteDevices() {
+        for (RemoteDevice device : getService().getRegistry().getRemoteDevices()) {
+            Service<?, ?> deviceInfo = device.findService(deviceInfoId);
+            if (deviceInfo == null) {
+                // not a fw device
+                continue;
+            }
+
+            invokeGetPingInfo(getService(), deviceInfo, false);
+        }
+    }
+
     protected abstract void handlePeerDevice(String udn, PingInfo p, InetAddress address, boolean added);
 
     private void handleDevice(Device<?, ?, ?> device, boolean added) {
@@ -129,7 +141,7 @@ public abstract class UPnPManager {
 
         String udn = getIdentityUdn(device);
         if (added) {
-            invokeGetPingInfo(getService(), deviceInfo);
+            invokeGetPingInfo(getService(), deviceInfo, true);
         } else {
             InetAddress address = getAddressFromDevice(device);
             handlePeerDevice(udn, null, address, false);
@@ -183,7 +195,7 @@ public abstract class UPnPManager {
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private void invokeGetPingInfo(UpnpService service, final Service<?, ?> deviceInfo) {
+    private void invokeGetPingInfo(UpnpService service, final Service<?, ?> deviceInfo, final boolean subscribe) {
         Action<?> action = deviceInfo.getAction("GetPingInfo");
         if (action == null) {
             return;
@@ -197,7 +209,9 @@ public abstract class UPnPManager {
                     String json = invocation.getOutput()[0].toString();
                     onPingInfo(json, deviceInfo.getDevice());
 
-                    subscribeToDeviceInfo(getService(), deviceInfo);
+                    if (subscribe) {
+                        subscribeToDeviceInfo(getService(), deviceInfo);
+                    }
                 } catch (Throwable e) {
                     LOG.log(Level.INFO, "Error processing GetPingInfo return", e);
                 }
