@@ -357,6 +357,12 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 					case KeyEvent.VK_SPACE:
 						MPlayerUIEventHandler.instance().onTogglePlayPausePressed();
 						return true;
+					case KeyEvent.VK_W:
+						if ( OSUtils.isMacOSX() && e.isMetaDown() ) {
+							player.stop();
+							MPlayerWindow.this.setVisible(false);
+							return true;
+						}
 					case KeyEvent.VK_F:
 						toggleFullScreen();
 						return true;
