@@ -134,7 +134,7 @@ public class DefaultMp4Builder implements Mp4Builder {
         return new FileTypeBox("isom", 0, minorBrands);
     }
 
-    private MovieBox createMovieBox(Movie movie) {
+    protected MovieBox createMovieBox(Movie movie) {
         MovieBox movieBox = new MovieBox();
         List<Box> movieBoxChildren = new LinkedList<Box>();
         MovieHeaderBox mvhd = new MovieHeaderBox();
@@ -184,7 +184,7 @@ public class DefaultMp4Builder implements Mp4Builder {
         return null;
     }
 
-    private TrackBox createTrackBox(Track track, Movie movie) {
+    protected TrackBox createTrackBox(Track track, Movie movie) {
 
         LOG.info("Creating Mp4TrackImpl " + track);
         TrackBox trackBox = new TrackBox();

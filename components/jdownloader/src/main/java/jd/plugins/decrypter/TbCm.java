@@ -39,8 +39,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-import org.limewire.util.FilenameUtils;
-
 import jd.PluginWrapper;
 import jd.config.SubConfiguration;
 import jd.controlling.AccountController;
@@ -65,6 +63,8 @@ import jd.plugins.PluginForHost;
 import jd.utils.JDUtilities;
 import jd.utils.locale.JDL;
 
+import org.limewire.util.FilenameUtils;
+
 import com.frostwire.mp4.DefaultMp4Builder;
 import com.frostwire.mp4.IsoFile;
 import com.frostwire.mp4.Movie;
@@ -74,16 +74,17 @@ import com.frostwire.mp4.boxes.Box;
 import com.frostwire.mp4.boxes.FileTypeBox;
 import com.frostwire.mp4.boxes.HandlerBox;
 import com.frostwire.mp4.boxes.MetaBox;
+import com.frostwire.mp4.boxes.MovieBox;
+import com.frostwire.mp4.boxes.TrackBox;
 import com.frostwire.mp4.boxes.UserDataBox;
 import com.frostwire.mp4.boxes.apple.AppleAlbumArtistBox;
 import com.frostwire.mp4.boxes.apple.AppleAlbumBox;
 import com.frostwire.mp4.boxes.apple.AppleArtistBox;
 import com.frostwire.mp4.boxes.apple.AppleCoverBox;
 import com.frostwire.mp4.boxes.apple.AppleItemListBox;
-
-import com.frostwire.mp4.boxes.mp4.objectdescriptors.BitWriterBuffer;
 import com.frostwire.mp4.boxes.apple.AppleMediaTypeBox;
 import com.frostwire.mp4.boxes.apple.AppleTrackTitleBox;
+import com.frostwire.mp4.boxes.mp4.objectdescriptors.BitWriterBuffer;
 
 import de.savemytube.flv.FLV;
 
@@ -751,8 +752,6 @@ public class TbCm extends PluginForDecrypt {
                 return false;
             }
             
-            extractAAC(audioTrack);
-
             Movie outMovie = new Movie();
             outMovie.addTrack(audioTrack);
 
@@ -765,6 +764,21 @@ public class TbCm extends PluginForDecrypt {
                     minorBrands.add("\0\0\0\0");
 
                     return new FileTypeBox("M4A ", 0, minorBrands);
+                };
+                
+                protected MovieBox createMovieBox(Movie movie) {
+                    MovieBox moov = super.createMovieBox(movie);
+                    moov.getMovieHeaderBox().setVersion(0);
+                    return moov;
+                };
+                
+                protected TrackBox createTrackBox(Track track, Movie movie) {
+                    TrackBox trak = super.createTrackBox(track, movie);
+                    
+                    trak.getTrackHeaderBox().setVersion(0);
+                    trak.getTrackHeaderBox().setVolume(1.0f);
+                    
+                    return trak;
                 };
 
                 protected Box createUdta(Movie movie) {
@@ -1006,13 +1020,5 @@ public class TbCm extends PluginForDecrypt {
         }
 
         return null;
-    }
-    
-    public static void main(String[] args) {
-        try {
-            TbCm.extractAAC(null);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
     }
 }
