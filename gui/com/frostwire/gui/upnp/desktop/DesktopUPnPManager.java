@@ -110,7 +110,7 @@ public class DesktopUPnPManager extends UPnPManager {
         LOG.info("Device UDN: " + udn + ", added: " + added);
         DeviceDiscoveryClerk clerk = LibraryMediator.instance().getDeviceDiscoveryClerk();
 
-        clerk.handleDeviceState(udn, address, p != null ? p.listeningPort : 0, !added);
+        clerk.handleDeviceState(udn, address, p != null ? p.listeningPort : 0, !added, p);
     }
 
     @SuppressWarnings("unchecked")

@@ -18,15 +18,8 @@
 
 package com.frostwire.gui.library;
 
-import java.io.InterruptedIOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.MulticastSocket;
-import java.net.NetworkInterface;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,13 +28,12 @@ import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.util.NetworkUtils;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.JsonEngine;
 import com.frostwire.gui.library.Device.OnActionFailedListener;
+import com.frostwire.gui.upnp.PingInfo;
 import com.frostwire.gui.upnp.UPnPManager;
-import com.limegroup.gnutella.settings.ConnectionSettings;
 
 /**
  * @author gubatron
@@ -63,9 +55,9 @@ public class DeviceDiscoveryClerk {
         jsonEngine = new JsonEngine();
     }
 
-    public void handleDeviceState(String key, InetAddress address, int listeningPort, boolean bye) {
+    public void handleDeviceState(String key, InetAddress address, int listeningPort, boolean bye, PingInfo pinfo) {
         if (!bye) {
-            retrieveFinger(key, address, listeningPort);
+            retrieveFinger(key, address, listeningPort, pinfo);
         } else {
             if (deviceCache.containsKey(key)) {
                 Device device = deviceCache.get(key);
@@ -74,7 +66,7 @@ public class DeviceDiscoveryClerk {
         }
     }
 
-    private boolean retrieveFinger(final String key, final InetAddress address, int listeningPort) {
+    private boolean retrieveFinger(final String key, final InetAddress address, int listeningPort, PingInfo pinfo) {
         try {
             URI uri = new URI("http://" + address.getHostAddress() + ":" + listeningPort + "/finger");
 
@@ -97,7 +89,7 @@ public class DeviceDiscoveryClerk {
                     device.setFinger(finger);
                     handleDeviceAlive(address, device);
                 } else {
-                    Device device = new Device(key, address, listeningPort, finger);
+                    Device device = new Device(key, address, listeningPort, finger, pinfo);
                     device.setOnActionFailedListener(new OnActionFailedListener() {
                         public void onActionFailed(Device device, int action, Exception e) {
                             handleDeviceStale(key, address, device);

@@ -13,10 +13,10 @@ public class DevicesNode extends LibraryNode {
 
     static {
         //plus: has children
-        plusDevices = GUIMediator.getThemeImage("android_small");
+        plusDevices = GUIMediator.getThemeImage("wifi_sharing_small");
         
         //minus: has no children
-        minusDevices = GUIMediator.getThemeImage("android_small");
+        minusDevices = GUIMediator.getThemeImage("wifi_sharing_small");
     }
 
     public DevicesNode(String text) {
