@@ -18,17 +18,20 @@ package jd.plugins.decrypter;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -70,6 +73,7 @@ import com.frostwire.mp4.boxes.MetaBox;
 import com.frostwire.mp4.boxes.UserDataBox;
 import com.frostwire.mp4.boxes.apple.AppleCoverBox;
 import com.frostwire.mp4.boxes.apple.AppleItemListBox;
+import com.frostwire.mp4.boxes.mp4.objectdescriptors.BitWriterBuffer;
 
 import de.savemytube.flv.FLV;
 
@@ -736,6 +740,8 @@ public class TbCm extends PluginForDecrypt {
                 TbCm.LOG.info("No Audio track in MP4 file!!! - " + filename);
                 return false;
             }
+            
+            extractAAC(audioTrack);
 
             Movie outMovie = new Movie();
             outMovie.addTrack(audioTrack);
@@ -768,6 +774,93 @@ public class TbCm extends PluginForDecrypt {
         }
     }
     
+    private static void extractAAC(Track audioTrack) throws Throwable {
+        
+        FileInputStream fis = new FileInputStream("takeAAC-from-this.m4a");
+        FileChannel inFC = fis.getChannel();
+        Movie inVideo = MovieCreator.build(inFC);
+
+        audioTrack = null;
+
+        for (Track trk : inVideo.getTracks()) {
+            if (trk.getHandler().equals("soun")) {
+                audioTrack = trk;
+                break;
+            }
+        }
+        
+        List<ByteBuffer> samples = audioTrack.getSamples();
+        FileOutputStream fos = null;
+        
+        try {
+            fos = new FileOutputStream("extractAAC.aac");
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        for (ByteBuffer sample : samples) {
+            //0xff
+            //0xf1
+            //0x50
+            //0x80
+            //??
+            //?f
+            //0xfc
+
+            ByteBuffer headerBuffer = ByteBuffer.allocate(7);
+            BitWriterBuffer bitWriter = new BitWriterBuffer(headerBuffer);
+            
+            bitWriter.writeBits(4095, 12); //syncword
+            bitWriter.writeBits(0,3);
+            bitWriter.writeBits(1,1); //protection
+            bitWriter.writeBits(5152,14);
+            
+            int remaining = sample.remaining();
+            bitWriter.writeBits(remaining + 7, 13);
+            
+            bitWriter.writeBits(2047, 11); //buffer fullness
+            bitWriter.writeBits(0,2);
+
+            fos.write(headerBuffer.array(),0,7);
+            
+            while (sample.hasRemaining()) {
+                try {
+                    fos.write(sample.get());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        try {
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+        
+        //this tries to put an AAC inside an MP4 container.
+        /*
+        try {
+            AACTrackImpl aacTrack = new AACTrackImpl(new FileInputStream("onlyAAC.aac"));
+            Movie m = new Movie();
+            m.addTrack(aacTrack);
+            DefaultMp4Builder mp4Builder = new DefaultMp4Builder();
+            IsoFile isoFile = mp4Builder.build(m);
+
+            FileOutputStream fos = new FileOutputStream("output.m4a");
+            isoFile.getBox(fos.getChannel());
+            fos.close();
+            System.out.println("TbCM.extractAAC: onlyAAC.aac ready");
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        */
+        
+    }
+
     private static void asyncDownloadThumbnail(final DownloadLink dl, final String jpgFilename) {
         Thread t = new Thread(new Runnable() {
             @Override
@@ -868,5 +961,13 @@ public class TbCm extends PluginForDecrypt {
         }
 
         return null;
+    }
+    
+    public static void main(String[] args) {
+        try {
+            TbCm.extractAAC(null);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 }
