@@ -59,7 +59,7 @@ final class LibraryFilesTransferHandler extends TransferHandler {
         try {
             LibraryNode node = getNodeFromLocation(support.getDropLocation());
 
-            if (!(node instanceof DirectoryHolderNode) && !(node instanceof DeviceNode)) {
+            if (!(node instanceof DirectoryHolderNode) && !(node instanceof DeviceNode) && !(node instanceof DeviceFileTypeTreeNode)) {
                 return false;
             }
 
@@ -77,7 +77,7 @@ final class LibraryFilesTransferHandler extends TransferHandler {
                     return true;
                 }
 
-                if (node instanceof DeviceNode) {
+                if (node instanceof DeviceNode || node instanceof DeviceFileTypeTreeNode) {
                     return true;
                 }
 
@@ -117,7 +117,7 @@ final class LibraryFilesTransferHandler extends TransferHandler {
             Transferable transferable = support.getTransferable();
             LibraryNode node = getNodeFromLocation(support.getDropLocation());
 
-            if (node instanceof DeviceNode) {
+            if (node instanceof DeviceNode || node instanceof DeviceFileTypeTreeNode) {
                 File[] files = null;
                 if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
                     PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable.getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
@@ -127,7 +127,17 @@ final class LibraryFilesTransferHandler extends TransferHandler {
                 }
 
                 if (files != null) {
-                    ((DeviceNode) node).getDevice().upload(files);
+                    Device device = null;
+                    
+                    if (node instanceof DeviceNode) {
+                        device = ((DeviceNode) node).getDevice();
+                    }  else if (node instanceof DeviceFileTypeTreeNode) {
+                        device = ((DeviceFileTypeTreeNode) node).getDevice();
+                    }
+                    
+                    if (device != null) {
+                        device.upload(files);
+                    }
                 }
 
             } else {
