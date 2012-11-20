@@ -24,6 +24,7 @@ import java.util.Date;
 
 import javax.swing.Icon;
 
+import com.frostwire.gui.Librarian;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -116,6 +117,8 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	 */
 	private boolean _iconScheduledForLoad = false;
 
+    private boolean shared = false;
+
 	public LibraryFilesTableDataLine(LibraryFilesTableModel ltm) {
 		super();
 		_model = ltm;
@@ -158,11 +161,17 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         if( initializer.isFile() ) {
             long oldSize = _size; 
             _size = initializer.length();
-            if (oldSize != _size)
+            if (oldSize != _size) {
                 _sizeHolder = new SizeHolder(_size);
+            }
+            
+            shared  = Librarian.instance().isFileShared(initializer.getAbsolutePath());
+            
         } else if (initializer.isDirectory()) {
         	    _sizeHolder = new SizeHolder(0);
         }
+        
+        
     }
     
     /**
@@ -196,7 +205,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         case MODIFICATION_TIME_IDX:
 			return new PlayableCell(this, new Date(initializer.lastModified()),isPlaying, idx);
         case SHARE_IDX:
-            return new FileShareCell(initializer.getAbsolutePath());
+            return new FileShareCell(initializer.getAbsolutePath(),shared);
 	    }
 	    return null;
 	}

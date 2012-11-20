@@ -24,15 +24,26 @@ package com.frostwire.gui.library;
  * @author aldenml
  *
  */
-public class FileShareCell {
+public class FileShareCell implements Comparable<FileShareCell> {
 
     private final String path;
+    private final boolean shared;
 
-    public FileShareCell(String path) {
+    public FileShareCell(String path, boolean shared) {
         this.path = path;
+        this.shared = shared;
     }
 
     public String getPath() {
         return path;
+    }
+    
+    public boolean isShared() {
+        return shared;
+    }
+
+    @Override
+    public int compareTo(FileShareCell other) {
+        return Boolean.valueOf(isShared()).compareTo(other.isShared());
     }
 }
