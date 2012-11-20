@@ -270,7 +270,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
                 for (int i = 0; i < fds.size(); i++) {
                     final FileDescriptor fileDescriptor = fds.get(i);
-                    GUIMediator.safeInvokeAndWait(new Runnable() {
+                    GUIMediator.safeInvokeLater(new Runnable() {
                         @Override
                         public void run() {
                             addUnsorted(fileDescriptor);
