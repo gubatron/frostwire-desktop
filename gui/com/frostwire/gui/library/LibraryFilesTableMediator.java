@@ -339,10 +339,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 @Override
                 public void run() {
                     for (final File file : fPartition) {
-                        GUIMediator.safeInvokeAndWait(new Runnable() {
+                        GUIMediator.safeInvokeLater(new Runnable() {
                             public void run() {
-                                addUnsorted(file);        
-                                Thread.yield();
+                                addUnsorted(file);
                             }
                         });
                     }
