@@ -52,6 +52,7 @@ import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.LimeAction;
@@ -268,7 +269,13 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
                 }
 
                 for (int i = 0; i < fds.size(); i++) {
-                    addUnsorted(fds.get(i));
+                    final FileDescriptor fileDescriptor = fds.get(i);
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            addUnsorted(fileDescriptor);
+                        }
+                    });
                 }
                 forceResort();
 
@@ -386,7 +393,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         handleSelection(TABLE.getSelectedRow());
     }
 
-    private void downloadSelectedItems() {
+    void downloadSelectedItems() {
         List<AbstractLibraryTableDataLine<FileDescriptor>> selectedLines = getSelectedLines();
 
         List<FileDescriptor> fds = new ArrayList<FileDescriptor>(selectedLines.size());

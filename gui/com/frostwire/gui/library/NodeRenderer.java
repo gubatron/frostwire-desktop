@@ -24,6 +24,8 @@ import javax.swing.JTree;
 
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultTreeCellRenderer;
 
+import com.limegroup.gnutella.gui.I18n;
+
 public class NodeRenderer extends SubstanceDefaultTreeCellRenderer {
 
     private static final long serialVersionUID = -1834835893663476044L;
@@ -46,6 +48,9 @@ public class NodeRenderer extends SubstanceDefaultTreeCellRenderer {
         } else if (value instanceof DeviceNode) {
             DeviceNode node = (DeviceNode) value;
             setIcon(leaf ? node.getMinusIcon() : node.getPlusIcon());
+            if (node.getDevice().isLocal()) {
+                setText(I18n.tr("My files"));
+            }
         } else if (value instanceof DeviceFileTypeTreeNode) {
             DeviceFileTypeTreeNode node = (DeviceFileTypeTreeNode) value;
             setIcon(node.getIcon());

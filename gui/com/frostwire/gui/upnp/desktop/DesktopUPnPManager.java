@@ -19,6 +19,7 @@
 package com.frostwire.gui.upnp.desktop;
 
 import java.net.InetAddress;
+import java.util.logging.Logger;
 
 import org.teleal.cling.UpnpService;
 import org.teleal.cling.binding.annotations.AnnotationLocalServiceBinder;
@@ -35,6 +36,8 @@ import com.frostwire.gui.upnp.PingInfo;
 import com.frostwire.gui.upnp.UPnPFWDevice;
 import com.frostwire.gui.upnp.UPnPFWDeviceInfo;
 import com.frostwire.gui.upnp.UPnPManager;
+import com.limegroup.gnutella.settings.LibrarySettings;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * 
@@ -43,6 +46,8 @@ import com.frostwire.gui.upnp.UPnPManager;
  * 
  */
 public class DesktopUPnPManager extends UPnPManager {
+
+    private static final Logger LOG = Logger.getLogger(DesktopUPnPManager.class.getName());
 
     private final UPnPService service;
 
@@ -60,6 +65,11 @@ public class DesktopUPnPManager extends UPnPManager {
     }
 
     @Override
+    public LocalDevice getLocalDevice() {
+        return UPnPService.getLocalDevice();
+    }
+
+    @Override
     public UPnPFWDevice getUPnPLocalDevice() {
         DesktopUPnPFWDeviceDesc desc = new DesktopUPnPFWDeviceDesc();
 
@@ -71,10 +81,13 @@ public class DesktopUPnPManager extends UPnPManager {
     @Override
     public PingInfo getLocalPingInfo() {
         PingInfo p = new PingInfo();
+
         p.uuid = ConfigurationManager.instance().getUUIDString();
         p.listeningPort = Constants.EXTERNAL_CONTROL_LISTENING_PORT;
-        p.numSharedFiles = Librarian.instance().getNumFiles();
+        p.numSharedFiles = Librarian.instance().getNumSharedFiles();
         p.nickname = ConfigurationManager.instance().getNickname();
+        p.deviceMajorType = Constants.DEVICE_MAJOR_TYPE_DESKTOP;
+        p.clientVersion = FrostWireUtils.getFrostWireVersion();
 
         return p;
     }
@@ -90,9 +103,14 @@ public class DesktopUPnPManager extends UPnPManager {
     }
 
     @Override
-    protected void handlePeerDevice(PingInfo p, InetAddress address, boolean added) {
+    protected void handlePeerDevice(String udn, PingInfo p, InetAddress address, boolean added) {
+        if (!LibrarySettings.LIBRARY_WIFI_SHARING_ENABLED.getValue() && added) {
+            return;
+        }
+        LOG.info("Device UDN: " + udn + ", added: " + added);
         DeviceDiscoveryClerk clerk = LibraryMediator.instance().getDeviceDiscoveryClerk();
-        clerk.handleDeviceState(address, p.listeningPort, !added);
+
+        clerk.handleDeviceState(udn, address, p != null ? p.listeningPort : 0, !added, p);
     }
 
     @SuppressWarnings("unchecked")

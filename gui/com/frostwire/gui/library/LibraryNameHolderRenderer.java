@@ -27,6 +27,7 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -70,8 +71,12 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
 
     private static final long serialVersionUID = -1624943333769190212L;
 
+    private static final Logger LOG = Logger.getLogger(LibraryNameHolderRenderer.class.getName());
+
     private JLabel labelText;
     private JLabel labelPlay;
+    private JLabel labelDownload;
+    
     private LibraryNameHolder libraryNameHolder;
 
     public LibraryNameHolderRenderer() {
@@ -242,6 +247,18 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
         c.gridx = GridBagConstraints.RELATIVE;
         c.ipadx = 1;
         add(labelPlay, c);
+        
+        labelDownload = new JLabel(GUIMediator.getThemeImage("search_result_download_over"));
+        labelDownload.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                labelDownload_mouseReleased(e);
+            }
+        });
+        c = new GridBagConstraints();
+        c.gridx = GridBagConstraints.RELATIVE;
+        c.ipadx = 1;
+        add(labelDownload, c);
     }
 
     private void labelPlay_mouseReleased(MouseEvent e) {
@@ -274,13 +291,51 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
             }
         }
     }
+    
+    private void labelDownload_mouseReleased(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            if (libraryNameHolder != null && libraryNameHolder.getDataLine() != null) {
+                Object dataLine = libraryNameHolder.getDataLine();
+                
+                if (dataLine instanceof LibraryDeviceTableDataLine) {
+                    Device device = LibraryMediator.instance().getLibraryExplorer().getSelectedDeviceFiles();
+                    if (device != null) {
+                        LibraryDeviceTableMediator.instance().downloadSelectedItems();
+                    }
+                }
+            }
+        }
+    }
 
     private void setData(LibraryNameHolder value, ComponentState state, JTable table, int row, int column) {
-        libraryNameHolder = value;
-        labelText.setText(value.toString());
-        boolean showButtons = state.equals(ComponentState.ROLLOVER_SELECTED) || state.equals(ComponentState.ROLLOVER_UNSELECTED);
-        labelPlay.setVisible(showButtons && !isSourceBeingPlayed() && isPlayableDataLine());
-        setFontColor(libraryNameHolder.isPlaying(), table, row, column);
+        try {
+            libraryNameHolder = value;
+            labelText.setText(value.toString());
+            boolean showButtons = state.equals(ComponentState.ROLLOVER_SELECTED) || state.equals(ComponentState.ROLLOVER_UNSELECTED);
+            labelPlay.setVisible(showButtons && !isSourceBeingPlayed() && isPlayableDataLine());
+            labelDownload.setVisible(showButtons && isDownloadableFromOtherDevice());
+            setFontColor(libraryNameHolder.isPlaying(), table, row, column);
+        } catch (Throwable e) {
+            LOG.warning("Error puting data in name holder renderer");
+        }
+    }
+    
+    private boolean isDownloadableFromOtherDevice() {
+        boolean result = false;
+        if (libraryNameHolder != null && libraryNameHolder.getDataLine() != null) {
+            Object dataLine = libraryNameHolder.getDataLine();
+
+            if (dataLine instanceof LibraryDeviceTableDataLine) {
+
+                Device device = LibraryMediator.instance().getLibraryExplorer().getSelectedDeviceFiles();
+                if (device != null && !device.isLocal()) {
+                    result = true;
+                }
+            }
+        }
+        return result;
+        
+
     }
 
     private boolean isPlayableDataLine() {

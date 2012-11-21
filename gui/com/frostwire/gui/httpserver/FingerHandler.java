@@ -26,7 +26,6 @@ import com.frostwire.gui.Librarian;
 import com.frostwire.gui.library.Finger;
 import com.frostwire.httpserver.Code;
 import com.frostwire.httpserver.HttpExchange;
-import com.frostwire.httpserver.HttpHandler;
 import com.frostwire.util.JsonUtils;
 
 /**
@@ -34,11 +33,14 @@ import com.frostwire.util.JsonUtils;
  * @author aldenml
  *
  */
-class FingerHandler implements HttpHandler {
+class FingerHandler extends AbstractHandler {
 
     private static final Logger LOG = Logger.getLogger(FingerHandler.class.getName());
 
+    @Override
     public void handle(HttpExchange exchange) throws IOException {
+        assertUPnPActive();
+
         OutputStream os = null;
 
         try {
@@ -62,7 +64,7 @@ class FingerHandler implements HttpHandler {
     }
 
     private String getResponse(HttpExchange exchange) {
-        Finger finger = Librarian.instance().finger(false);
+        Finger finger = Librarian.instance().finger();
         return JsonUtils.toJson(finger);
     }
 }

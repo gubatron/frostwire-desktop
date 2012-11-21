@@ -40,6 +40,8 @@ import com.frostwire.HttpFetcherListener;
 import com.frostwire.JsonEngine;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.library.ProgressFileEntity.ProgressFileEntityListener;
+import com.frostwire.gui.upnp.PingInfo;
+import com.frostwire.gui.upnp.UPnPManager;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.util.EncodingUtils;
@@ -57,7 +59,7 @@ public class Device {
 
     static {
         //upload files to 3 different devices at the same time.
-        executor = ExecutorsHelper.newFixedSizeThreadPool(3,"UploadToDeviceExecutor");
+        executor = ExecutorsHelper.newFixedSizeThreadPool(3, "UploadToDeviceExecutor");
     }
 
     public static int ACTION_BROWSE = 0;
@@ -66,6 +68,7 @@ public class Device {
 
     private static JsonEngine JSON_ENGINE = new JsonEngine();
 
+    private final String udn;
     private InetAddress _address;
     private int _port;
     private Finger finger;
@@ -73,10 +76,28 @@ public class Device {
     private OnActionFailedListener _listener;
     private long timestamp;
 
-    public Device(InetAddress address, int port, Finger finger) {
+    private PingInfo pingInfo;
+
+    private boolean local;
+
+    public Device(String udn, InetAddress address, int port, Finger finger, PingInfo pinfo) {
+        this.udn = udn;
         this._address = address;
         this._port = port;
         this.finger = finger;
+        this.pingInfo = pinfo;
+        this.local = udn.equals(UPnPManager.instance().getLocalDevice().getIdentity().getUdn().getIdentifierString());
+    }
+    
+    /**
+     * aka isMe()
+     */
+    public boolean isLocal() {
+        return local;
+    }
+    
+    public String getUdn() {
+        return udn;
     }
 
     public InetAddress getAddress() {
@@ -113,10 +134,6 @@ public class Device {
 
     public String getName() {
         return finger.nickname;
-    }
-
-    public String getKey() {
-        return _address.getHostAddress() + ":" + _port;
     }
 
     public int getTotalShared() {
@@ -156,7 +173,7 @@ public class Device {
 
             setTimestamp(System.currentTimeMillis());
 
-            String json = new String(jsonBytes);
+            String json = new String(jsonBytes, "UTF-8");
 
             FileDescriptorList list = JSON_ENGINE.toObject(json, FileDescriptorList.class);
 
@@ -172,7 +189,14 @@ public class Device {
     public URL getDownloadURL(int type, int id) {
         try {
 
-            return new URL("http://" + _address.getHostAddress() + ":" + _port + "/download?type=" + type + "&id=" + id);
+            String ip = _address.getHostAddress();
+
+            if (ip.equals("0.0.0.0")) {
+                // we need to replace with a real nic address
+                ip = NetworkUtils.getLocalAddress().getHostAddress();
+            }
+
+            return new URL("http://" + ip + ":" + _port + "/download?type=" + type + "&id=" + id);
 
         } catch (Exception e) {
             notifyOnActionFailed(ACTION_DOWNLOAD, e);
@@ -182,7 +206,11 @@ public class Device {
     }
 
     public String getDownloadURL(FileDescriptor fd) {
-        return "http://" + _address.getHostAddress() + ":" + _port + "/download?type=" + fd.fileType + "&id=" + fd.id;
+        return getDownloadURL(fd.fileType, fd.id).toString();
+    }
+    
+    public int getDeviceType() {
+        return  pingInfo.deviceMajorType;
     }
 
     public byte[] download(int type, int id) {
@@ -299,7 +327,7 @@ public class Device {
 
     @Override
     public int hashCode() {
-        return getKey().hashCode();
+        return udn.hashCode();
     }
 
     @Override

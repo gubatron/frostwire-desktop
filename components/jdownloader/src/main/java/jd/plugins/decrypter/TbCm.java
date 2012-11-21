@@ -18,17 +18,21 @@ package jd.plugins.decrypter;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -59,6 +63,8 @@ import jd.plugins.PluginForHost;
 import jd.utils.JDUtilities;
 import jd.utils.locale.JDL;
 
+import org.limewire.util.FilenameUtils;
+
 import com.frostwire.mp4.DefaultMp4Builder;
 import com.frostwire.mp4.IsoFile;
 import com.frostwire.mp4.Movie;
@@ -66,10 +72,19 @@ import com.frostwire.mp4.MovieCreator;
 import com.frostwire.mp4.Track;
 import com.frostwire.mp4.boxes.Box;
 import com.frostwire.mp4.boxes.FileTypeBox;
+import com.frostwire.mp4.boxes.HandlerBox;
 import com.frostwire.mp4.boxes.MetaBox;
+import com.frostwire.mp4.boxes.MovieBox;
+import com.frostwire.mp4.boxes.TrackBox;
 import com.frostwire.mp4.boxes.UserDataBox;
+import com.frostwire.mp4.boxes.apple.AppleAlbumArtistBox;
+import com.frostwire.mp4.boxes.apple.AppleAlbumBox;
+import com.frostwire.mp4.boxes.apple.AppleArtistBox;
 import com.frostwire.mp4.boxes.apple.AppleCoverBox;
 import com.frostwire.mp4.boxes.apple.AppleItemListBox;
+import com.frostwire.mp4.boxes.apple.AppleMediaTypeBox;
+import com.frostwire.mp4.boxes.apple.AppleTrackTitleBox;
+import com.frostwire.mp4.boxes.mp4.objectdescriptors.BitWriterBuffer;
 
 import de.savemytube.flv.FLV;
 
@@ -162,11 +177,11 @@ public class TbCm extends PluginForDecrypt {
                 System.out.println("Convert FLV to mp3...");
                 new FLV(downloadlink.getFileOutput(), true, true);
 
-                // FLV lšschen
+                // FLV lï¿½schen
                 if (!new File(downloadlink.getFileOutput()).delete()) {
                     new File(downloadlink.getFileOutput()).deleteOnExit();
                 }
-                // AVI lšschen
+                // AVI lï¿½schen
                 if (!new File(downloadlink.getFileOutput().replaceAll(TbCm.TEMP_EXT, ".avi")).delete()) {
                     new File(downloadlink.getFileOutput().replaceAll(TbCm.TEMP_EXT, ".avi")).deleteOnExit();
                 }
@@ -712,8 +727,8 @@ public class TbCm extends PluginForDecrypt {
     
     private static final Logger LOG = JDLogger.getLogger();
 
-    private static boolean demuxMP4Audio(DownloadLink dl) {
-        String filename = dl.getFileOutput();
+    private static boolean demuxMP4Audio(final DownloadLink dl) {
+        final String filename = dl.getFileOutput();
         try {
             String mp4Filename = filename.replace(".m4a", ".mp4");
             final String jpgFilename = filename.replace(".m4a", ".jpg");
@@ -736,18 +751,44 @@ public class TbCm extends PluginForDecrypt {
                 TbCm.LOG.info("No Audio track in MP4 file!!! - " + filename);
                 return false;
             }
-
+            
             Movie outMovie = new Movie();
             outMovie.addTrack(audioTrack);
 
             IsoFile out = new DefaultMp4Builder() {
+                protected FileTypeBox createFileTypeBox(Movie movie) {
+                    List<String> minorBrands = new LinkedList<String>();
+                    minorBrands.add("M4A ");
+                    minorBrands.add("mp42");
+                    minorBrands.add("isom");
+                    minorBrands.add("\0\0\0\0");
+
+                    return new FileTypeBox("M4A ", 0, minorBrands);
+                };
+                
+                protected MovieBox createMovieBox(Movie movie) {
+                    MovieBox moov = super.createMovieBox(movie);
+                    moov.getMovieHeaderBox().setVersion(0);
+                    return moov;
+                };
+                
+                protected TrackBox createTrackBox(Track track, Movie movie) {
+                    TrackBox trak = super.createTrackBox(track, movie);
+                    
+                    trak.getTrackHeaderBox().setVersion(0);
+                    trak.getTrackHeaderBox().setVolume(1.0f);
+                    
+                    return trak;
+                };
+
                 protected Box createUdta(Movie movie) {
-                    return addThumbnailBox(jpgFilename);
+                    String videoLink = (String) dl.getProperty("videolink", "YouTube.com");
+                    
+                    return addUserDataBox(FilenameUtils.getBaseName(filename), videoLink, jpgFilename);
                 };
             }.build(outMovie);
             String audioFilename = filename;
             FileOutputStream fos = new FileOutputStream(audioFilename);
-            out.getBoxes(FileTypeBox.class).get(0).setMajorBrand("M4A ");
             out.getBox(fos.getChannel());
             fos.close();
 
@@ -768,6 +809,93 @@ public class TbCm extends PluginForDecrypt {
         }
     }
     
+    private static void extractAAC(Track audioTrack) throws Throwable {
+        
+        FileInputStream fis = new FileInputStream("takeAAC-from-this.m4a");
+        FileChannel inFC = fis.getChannel();
+        Movie inVideo = MovieCreator.build(inFC);
+
+        audioTrack = null;
+
+        for (Track trk : inVideo.getTracks()) {
+            if (trk.getHandler().equals("soun")) {
+                audioTrack = trk;
+                break;
+            }
+        }
+        
+        List<ByteBuffer> samples = audioTrack.getSamples();
+        FileOutputStream fos = null;
+        
+        try {
+            fos = new FileOutputStream("extractAAC.aac");
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        for (ByteBuffer sample : samples) {
+            //0xff
+            //0xf1
+            //0x50
+            //0x80
+            //??
+            //?f
+            //0xfc
+
+            ByteBuffer headerBuffer = ByteBuffer.allocate(7);
+            BitWriterBuffer bitWriter = new BitWriterBuffer(headerBuffer);
+            
+            bitWriter.writeBits(4095, 12); //syncword
+            bitWriter.writeBits(0,3);
+            bitWriter.writeBits(1,1); //protection
+            bitWriter.writeBits(5152,14);
+            
+            int remaining = sample.remaining();
+            bitWriter.writeBits(remaining + 7, 13);
+            
+            bitWriter.writeBits(2047, 11); //buffer fullness
+            bitWriter.writeBits(0,2);
+
+            fos.write(headerBuffer.array(),0,7);
+            
+            while (sample.hasRemaining()) {
+                try {
+                    fos.write(sample.get());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        try {
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+        
+        //this tries to put an AAC inside an MP4 container.
+        /*
+        try {
+            AACTrackImpl aacTrack = new AACTrackImpl(new FileInputStream("onlyAAC.aac"));
+            Movie m = new Movie();
+            m.addTrack(aacTrack);
+            DefaultMp4Builder mp4Builder = new DefaultMp4Builder();
+            IsoFile isoFile = mp4Builder.build(m);
+
+            FileOutputStream fos = new FileOutputStream("output.m4a");
+            isoFile.getBox(fos.getChannel());
+            fos.close();
+            System.out.println("TbCM.extractAAC: onlyAAC.aac ready");
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        */
+        
+    }
+
     private static void asyncDownloadThumbnail(final DownloadLink dl, final String jpgFilename) {
         Thread t = new Thread(new Runnable() {
             @Override
@@ -793,11 +921,11 @@ public class TbCm extends PluginForDecrypt {
         }
     }
     
-    private static void simpleHTTP(String url, String jpgFilename) throws Throwable {
+    static void simpleHTTP(String url, String jpgFilename) throws Throwable {
         URL u = new URL(url);
         URLConnection con = u.openConnection();
-        con.setConnectTimeout(1000);
-        con.setReadTimeout(1000);
+        con.setConnectTimeout(3000);
+        con.setReadTimeout(3000);
         InputStream in = con.getInputStream();
         OutputStream out = new FileOutputStream(jpgFilename);
 
@@ -822,7 +950,7 @@ public class TbCm extends PluginForDecrypt {
         }
     }
     
-    private static UserDataBox addThumbnailBox(String jpgFilename) {
+    private static UserDataBox addUserDataBox(String title, String author, String jpgFilename) {
         File jpgFile = new File(jpgFilename);
         if (!jpgFile.exists()) {
             return null;
@@ -832,20 +960,44 @@ public class TbCm extends PluginForDecrypt {
         if (jpgData == null) {
             return null;
         }
-        
+
         //"/moov/udta/meta/ilst/covr/data"
         UserDataBox udta = new UserDataBox();
-        
+
         MetaBox meta = new MetaBox();
         udta.addBox(meta);
         
+        HandlerBox hdlr = new HandlerBox();
+        hdlr.setHandlerType("mdir");
+        meta.addBox(hdlr);
+
         AppleItemListBox ilst = new AppleItemListBox();
         meta.addBox(ilst);
         
+        AppleTrackTitleBox cnam = new AppleTrackTitleBox();
+        cnam.setValue(title);
+        ilst.addBox(cnam);
+        
+        AppleArtistBox cART = new AppleArtistBox();
+        cART.setValue(author);
+        ilst.addBox(cART);
+        
+        AppleAlbumArtistBox aART = new AppleAlbumArtistBox();
+        aART.setValue(title + " " + author);
+        ilst.addBox(aART);
+        
+        AppleAlbumBox calb = new AppleAlbumBox();
+        calb.setValue(title + " " + author + " via YouTube.com");
+        ilst.addBox(calb);
+        
+        AppleMediaTypeBox stik = new AppleMediaTypeBox();
+        stik.setValue("1");
+        ilst.addBox(stik);
+
         AppleCoverBox covr = new AppleCoverBox();
         covr.setJpg(jpgData);
         ilst.addBox(covr);
-        
+
         return udta;
     }
 

@@ -103,13 +103,8 @@ public class DefaultMp4Builder implements Mp4Builder {
         }
 
         IsoFile isoFile = new IsoFile();
-        // ouch that is ugly but I don't know how to do it else
-        List<String> minorBrands = new LinkedList<String>();
-        minorBrands.add("isom");
-        minorBrands.add("iso2");
-        minorBrands.add("avc1");
-
-        isoFile.addBox(new FileTypeBox("isom", 0, minorBrands));
+        
+        isoFile.addBox(createFileTypeBox(movie));
         isoFile.addBox(createMovieBox(movie));
         InterleaveChunkMdat mdat = new InterleaveChunkMdat(movie);
         isoFile.addBox(mdat);
@@ -129,8 +124,17 @@ public class DefaultMp4Builder implements Mp4Builder {
 
         return isoFile;
     }
+    
+    protected FileTypeBox createFileTypeBox(Movie movie) {
+        List<String> minorBrands = new LinkedList<String>();
+        minorBrands.add("isom");
+        minorBrands.add("iso2");
+        minorBrands.add("avc1");
+        
+        return new FileTypeBox("isom", 0, minorBrands);
+    }
 
-    private MovieBox createMovieBox(Movie movie) {
+    protected MovieBox createMovieBox(Movie movie) {
         MovieBox movieBox = new MovieBox();
         List<Box> movieBoxChildren = new LinkedList<Box>();
         MovieHeaderBox mvhd = new MovieHeaderBox();
@@ -180,7 +184,7 @@ public class DefaultMp4Builder implements Mp4Builder {
         return null;
     }
 
-    private TrackBox createTrackBox(Track track, Movie movie) {
+    protected TrackBox createTrackBox(Track track, Movie movie) {
 
         LOG.info("Creating Mp4TrackImpl " + track);
         TrackBox trackBox = new TrackBox();

@@ -287,13 +287,15 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
             return;
         }
 
-        //        currentPlaylist = playlist;
-        //        List<PlaylistItem> items = currentPlaylist.getItems();
-
         clearTable();
-        for (int i = 0; i < items.size(); i++) {
-            addUnsorted(items.get(i));
+        for (final InternetRadioStation item : items) {
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    addUnsorted(item);
+                }
+            });
         }
+
         forceResort();
     }
 

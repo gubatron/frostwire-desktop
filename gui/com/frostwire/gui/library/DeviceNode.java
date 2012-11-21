@@ -20,6 +20,7 @@ package com.frostwire.gui.library;
 
 import javax.swing.Icon;
 
+import com.frostwire.core.Constants;
 import com.limegroup.gnutella.gui.GUIMediator;
 
 /**
@@ -35,8 +36,10 @@ public class DeviceNode extends LibraryNode {
     private static final Icon phoneMinusDevices;
     private static final Icon tabletPlusDevices;
     private static final Icon tabletMinusDevices;
-    private static final Icon tvPlusDevices;
-    private static final Icon tvMinusDevices;
+    private static final Icon myPlusDevices;
+    private static final Icon myMinusDevices;
+    private static final Icon desktopPlusDevices;
+    private static final Icon desktopMinusDevices;
 
     static {
         //plus: has children, minus: has no children
@@ -46,8 +49,12 @@ public class DeviceNode extends LibraryNode {
         tabletPlusDevices = GUIMediator.getThemeImage("tablet_small_plus");
         tabletMinusDevices = GUIMediator.getThemeImage("tablet_small");
         
-        tvPlusDevices = GUIMediator.getThemeImage("tv_small_plus");
-        tvMinusDevices = GUIMediator.getThemeImage("tv_small");
+        myPlusDevices = GUIMediator.getThemeImage("me_small_plus");
+        myMinusDevices = GUIMediator.getThemeImage("me_small");
+
+        desktopPlusDevices = GUIMediator.getThemeImage("desktop_small_plus");
+        desktopMinusDevices = GUIMediator.getThemeImage("desktop_small");
+
     }
 
     private final Device device;
@@ -70,33 +77,19 @@ public class DeviceNode extends LibraryNode {
     }
 
     private Icon getIcon(boolean plus) {
-        switch (getType()) {
-        case PHONE:
+        switch (getDevice().getDeviceType()) {
+        case Constants.DEVICE_MAJOR_TYPE_PHONE:
             return plus ? phonePlusDevices : phoneMinusDevices;
-        case TABLET:
+        case Constants.DEVICE_MAJOR_TYPE_TABLET:
             return plus ? tabletPlusDevices : tabletMinusDevices;
-        case TV:
-            return plus ? tvPlusDevices : tvMinusDevices;
+        case Constants.DEVICE_MAJOR_TYPE_DESKTOP:
+            if (getDevice().isLocal()) {
+                return plus ? myPlusDevices : myMinusDevices;
+            }
+            return plus ? desktopPlusDevices : desktopMinusDevices;
         default:
             return plus ? phonePlusDevices : phoneMinusDevices;
         }
     }
 
-    private DeviceType getType() {
-        ScreenMetrics sm = device.getFinger().deviceScreen;
-
-        if (sm == null) {
-            return DeviceType.PHONE;
-        }
-
-        if (sm.widthPixels > 1000 || sm.heightPixels > 1000) {
-            return DeviceType.TABLET;
-        }
-
-        return DeviceType.PHONE;
-    }
-
-    private enum DeviceType {
-        PHONE, TABLET, TV
-    }
 }

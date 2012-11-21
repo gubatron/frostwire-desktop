@@ -18,6 +18,7 @@
 
 package com.frostwire.gui.upnp.desktop;
 
+import com.frostwire.core.ConfigurationManager;
 import com.frostwire.gui.upnp.UPnPFWDeviceDesc;
 
 /**
@@ -48,7 +49,7 @@ public class DesktopUPnPFWDeviceDesc implements UPnPFWDeviceDesc {
 
     @Override
     public String getIdentitySalt() {
-        return "";//ConfigurationManager.instance().getUUIDString();
+        return ConfigurationManager.instance().getUUIDString();
     }
 
     @Override

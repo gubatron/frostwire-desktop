@@ -255,8 +255,8 @@ public final class SearchMediator {
 
         if (query.length() == 0) {
             return QUERY_EMPTY;
-        } else if (query.length() <= 2 && !(query.length() == 2 && ((Character.isDigit(query.charAt(0)) && Character.isLetter(query.charAt(1))) || (Character.isLetter(query.charAt(0)) && Character.isDigit(query.charAt(1)))))) {
-            return QUERY_TOO_SHORT;
+        /*} else if (query.length() <= 2 && !(query.length() == 2 && ((Character.isDigit(query.charAt(0)) && Character.isLetter(query.charAt(1))) || (Character.isLetter(query.charAt(0)) && Character.isDigit(query.charAt(1)))))) {
+            return QUERY_TOO_SHORT;*/
         } else if (query.length() > SearchSettings.MAX_QUERY_LENGTH.getValue()) {
             return QUERY_TOO_LONG;
         } else {

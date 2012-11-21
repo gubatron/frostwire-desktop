@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.io.File;
@@ -28,6 +29,10 @@ import com.limegroup.gnutella.gui.tables.SizeHolder;
  * Library specific DataLineModel.
  * Uses HashBasedDataLineModel instead of BasicDataLineModel
  * for quicker access to row's based on the file.
+ * 
+ * @author gubatron
+ * @author aldenml
+ * 
  */
 final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPlaylistsTableDataLine, PlaylistItem> {
 

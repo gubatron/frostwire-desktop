@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.Component;
@@ -30,6 +31,12 @@ import javax.swing.table.TableCellEditor;
 import com.frostwire.alexandria.InternetRadioStation;
 import com.limegroup.gnutella.gui.GUIMediator;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class InternetRadioBookmarkEditor extends AbstractCellEditor implements TableCellEditor {
 
 	private static final long serialVersionUID = 8617767980030779166L;

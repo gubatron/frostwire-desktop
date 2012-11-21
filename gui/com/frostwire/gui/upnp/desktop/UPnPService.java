@@ -23,13 +23,13 @@ import java.util.logging.Logger;
 
 import org.teleal.cling.UpnpService;
 import org.teleal.cling.UpnpServiceImpl;
-import org.teleal.cling.model.ValidationException;
 import org.teleal.cling.model.meta.Device;
 import org.teleal.cling.model.meta.LocalDevice;
 
 import com.frostwire.gui.upnp.UPnPFWDevice;
 import com.frostwire.gui.upnp.UPnPManager;
 import com.frostwire.gui.upnp.UPnPRegistryListener;
+import com.limegroup.gnutella.settings.LibrarySettings;
 
 /**
  * 
@@ -41,10 +41,14 @@ public class UPnPService implements Runnable {
 
     private static final Logger LOG = Logger.getLogger(UPnPService.class.getName());
 
+    final static String HACK_STREAM_HANDLER_SYSTEM_PROPERTY = "hackStreamHandlerProperty";
+
     private UpnpService service;
     private UPnPRegistryListener registryListener;
 
     private static LocalDevice localDevice;
+
+    private boolean running;
 
     public UPnPService(UPnPRegistryListener registryListener) {
         this.registryListener = registryListener;
@@ -55,6 +59,9 @@ public class UPnPService implements Runnable {
     }
 
     public static LocalDevice getLocalDevice() {
+        if (localDevice == null) {
+            localDevice = createLocalDevice();
+        }
         return localDevice;
     }
 
@@ -69,43 +76,54 @@ public class UPnPService implements Runnable {
     public void run() {
         try {
 
+            running = true;
+
+            // This is to disable the set of URL URLStreamHandlerFactory
+            // inside StreamClientImpl. Now handled with new coded added to
+            // azureus core.
+            System.setProperty(HACK_STREAM_HANDLER_SYSTEM_PROPERTY, "alreadyWorkedAroundTheEvilJDK");
+
             service = new UpnpServiceImpl();
 
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 @Override
                 public void run() {
+                    running = false;
                     service.shutdown();
                 }
             });
 
-            if (localDevice == null) {
-                try {
-                    localDevice = createLocalDevice();
-                    this.service.getRegistry().addDevice(localDevice);
-                } catch (ValidationException e) {
-                    LOG.log(Level.WARNING, "Unable to create and register local UPnP frostwire device", e);
+            if (LibrarySettings.LIBRARY_WIFI_SHARING_ENABLED.getValue()) {
+                this.service.getRegistry().addDevice(getLocalDevice());
+
+                // refresh the list with all known devices
+                for (Device<?, ?, ?> device : this.service.getRegistry().getDevices()) {
+                    registryListener.deviceAdded(device);
+                }
+
+                // getting ready for future device advertisements
+                this.service.getRegistry().addListener(registryListener);
+            }
+
+            while (running) {
+                Thread.sleep(5000);
+
+                if (LibrarySettings.LIBRARY_WIFI_SHARING_ENABLED.getValue()) {
+                    this.service.getControlPoint().search();
                 }
             }
-
-            // refresh the list with all known devices
-            for (Device<?, ?, ?> device : this.service.getRegistry().getDevices()) {
-                registryListener.deviceAdded(device);
-            }
-
-            // getting ready for future device advertisements
-            this.service.getRegistry().addListener(registryListener);
-
-            // search asynchronously for all devices
-            this.service.getControlPoint().search();
-            
         } catch (Throwable e) {
             LOG.log(Level.WARNING, "Exception occured with the UPnP framework", e);
         }
     }
 
-    private LocalDevice createLocalDevice() throws ValidationException {
-        UPnPFWDevice device = UPnPManager.instance().getUPnPLocalDevice();
+    private static LocalDevice createLocalDevice() {
+        try {
+            UPnPFWDevice device = UPnPManager.instance().getUPnPLocalDevice();
 
-        return new LocalDevice(device.getIdentity(), device.getType(), device.getDetails(), device.getIcon(), device.getServices());
+            return new LocalDevice(device.getIdentity(), device.getType(), device.getDetails(), device.getIcon(), device.getServices());
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
     }
 }

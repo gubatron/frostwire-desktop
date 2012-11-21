@@ -10,6 +10,7 @@ import org.limewire.setting.IntSetting;
 import org.limewire.setting.LongSetting;
 import org.limewire.setting.StringSetting;
 import org.limewire.util.ByteUtils;
+import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
 /**
@@ -198,6 +199,8 @@ public class ApplicationSettings extends LimeProps {
     public static final BooleanSetting SHOW_SEEDING_TRANSFERS = FACTORY.createBooleanSetting("SHOW_SEEDING_TRANSFERS", true);
 
     public static final StringSetting APP_UUID = FACTORY.createStringSetting("APP_UUID", ByteUtils.encodeHex(ByteUtils.uuidToByteArray(UUID.randomUUID())));
+
+    public static final FileSetting APP_DATABASES_PATH = FACTORY.createFileSetting("APP_DATABASES_PATH", new File(CommonUtils.getUserSettingsDir(), "dbs"));
 
     /**
      * Gets the current language setting.

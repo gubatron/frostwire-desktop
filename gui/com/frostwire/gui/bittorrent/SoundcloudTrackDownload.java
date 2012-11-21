@@ -33,6 +33,7 @@ import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.search.SoundcloudSearchResult;
 
 /**
  * @author gubatron
@@ -40,7 +41,7 @@ import com.limegroup.gnutella.gui.I18n;
  *
  */
 public class SoundcloudTrackDownload implements BTDownload {
-    
+
     private static final String STATE_DOWNLOADING = I18n.tr("Downloading");
     private static final String STATE_ERROR = I18n.tr("Error");
     private static final String STATE_STOPPED = I18n.tr("Stopped");
@@ -52,19 +53,27 @@ public class SoundcloudTrackDownload implements BTDownload {
     private final DownloadLink link;
     private final Date dateCreated;
     private final String saveLocation;
-    
+
     private boolean deleteDataWhenRemove;
-    
+
     private boolean started;
-    
+
     private boolean finished;
 
-    public SoundcloudTrackDownload(FilePackage filePackage, String title) {
+    public SoundcloudTrackDownload(FilePackage filePackage, String title, SoundcloudSearchResult sr) {
         this.filePackage = filePackage;
         this.title = title;
         this.link = filePackage.getChildren().get(0);
         this.dateCreated = new Date();
         this.saveLocation = readSaveLocation(filePackage);
+
+        if (sr != null) {
+            link.setProperty("setid3tag", true);
+            link.setProperty("thumbnailUrl", sr.getThumbnailUrl());
+            link.setProperty("username", sr.getUsername());
+            link.setProperty("title", sr.getDisplayName());
+            link.setProperty("detailsUrl", sr.getDetailsUrl());
+        }
 
         this.started = false;
         start();
@@ -87,7 +96,7 @@ public class SoundcloudTrackDownload implements BTDownload {
 
     @Override
     public boolean isResumable() {
-        return started && !isPausable() && !finished; 
+        return started && !isPausable() && !finished;
     }
 
     @Override
@@ -105,7 +114,7 @@ public class SoundcloudTrackDownload implements BTDownload {
         if (link.getLinkStatus().hasStatus(LinkStatus.DOWNLOADINTERFACE_IN_PROGRESS)) {
             return DownloadManager.STATE_DOWNLOADING;
         }
-        
+
         return DownloadManager.STATE_STOPPED;
     }
 
@@ -153,7 +162,7 @@ public class SoundcloudTrackDownload implements BTDownload {
             finished = true;
             return STATE_FINISHED;
         }
-        
+
         if (!started) {
             return STATE_WAITING;
         }
@@ -241,7 +250,7 @@ public class SoundcloudTrackDownload implements BTDownload {
 
     @Override
     public void updateDownloadManager(DownloadManager downloadManager) {
-        
+
     }
 
     @Override
@@ -265,7 +274,7 @@ public class SoundcloudTrackDownload implements BTDownload {
 
         }, true);
     }
-    
+
     private String readSaveLocation(FilePackage filePackage) {
         DownloadLink dl = filePackage.getChildren().get(0);
         if (dl.getStringProperty("convertto", "").equals("AUDIOMP3")) {

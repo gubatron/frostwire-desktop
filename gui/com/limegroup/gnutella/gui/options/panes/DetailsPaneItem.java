@@ -64,6 +64,7 @@ public class DetailsPaneItem extends AbstractPaneItem {
         DETAILS_CHECK_BOX.setSelected(SearchSettings.SHOW_DETAIL_PAGE_AFTER_DOWNLOAD_START.getValue());
     }
 
+    @Override
     public boolean isDirty() {
         if (SearchSettings.SHOW_DETAIL_PAGE_AFTER_DOWNLOAD_START.getValue() != DETAILS_CHECK_BOX.isSelected()) {
             return true;

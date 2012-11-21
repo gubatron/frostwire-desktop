@@ -129,11 +129,11 @@ public class LibraryMediator {
 
         MAIN_PANEL.add(splitPane);
 
-        clerk = new DeviceDiscoveryClerk();
-        clerk.start();
         httpServerManager = new HttpServerManager();
         httpServerManager.start(Constants.EXTERNAL_CONTROL_LISTENING_PORT);
         ((DesktopUPnPManager) UPnPManager.instance()).start();
+        
+        clerk = new DeviceDiscoveryClerk();
     }
 
     public DeviceDiscoveryClerk getDeviceDiscoveryClerk() {

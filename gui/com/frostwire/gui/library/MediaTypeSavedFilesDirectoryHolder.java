@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.io.File;
@@ -28,6 +29,12 @@ import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class MediaTypeSavedFilesDirectoryHolder implements DirectoryHolder {
 
 	private MediaType type;

@@ -40,10 +40,14 @@ public final class Constants {
     public static final byte FILE_TYPE_APPLICATIONS = CommonConstants.FILE_TYPE_APPLICATIONS;
     public static final byte FILE_TYPE_RINGTONES = CommonConstants.FILE_TYPE_RINGTONES;
     public static final byte FILE_TYPE_TORRENTS = CommonConstants.FILE_TYPE_TORRENTS;
-    
+
     public static final String MIME_TYPE_ANDROID_PACKAGE_ARCHIVE = CommonConstants.MIME_TYPE_ANDROID_PACKAGE_ARCHIVE;
 
     public static final String FROSTWIRE_VERSION_STRING = FrostWireUtils.getFrostWireVersion();
 
     public static final int EXTERNAL_CONTROL_LISTENING_PORT = 45100;
+
+    public static final int DEVICE_MAJOR_TYPE_DESKTOP = CommonConstants.DEVICE_MAJOR_TYPE_DESKTOP;
+    public static final int DEVICE_MAJOR_TYPE_PHONE = CommonConstants.DEVICE_MAJOR_TYPE_PHONE;
+    public static final int DEVICE_MAJOR_TYPE_TABLET = CommonConstants.DEVICE_MAJOR_TYPE_TABLET;
 }

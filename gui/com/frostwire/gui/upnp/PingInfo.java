@@ -30,4 +30,6 @@ public class PingInfo {
     public int listeningPort;
     public int numSharedFiles;
     public String nickname;
+    public int deviceMajorType;
+    public String clientVersion;
 }

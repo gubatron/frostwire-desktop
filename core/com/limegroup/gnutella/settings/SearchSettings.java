@@ -21,12 +21,10 @@ import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.CharArraySetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.IntSetting;
-import org.limewire.setting.StringSetSetting;
 import org.limewire.setting.StringSetting;
 import org.limewire.util.CommonUtils;
 
 import com.limegroup.gnutella.MediaType;
-
 
 /**
  * Settings for searches.
@@ -272,7 +270,7 @@ public final class SearchSettings extends LimeProps {
      * Setting for the maximum number of bytes to allow in queries.
      */
     public static final IntSetting MAX_QUERY_LENGTH =
-        FACTORY.createIntSetting("MAX_QUERY_LENGTH", 50);
+        FACTORY.createIntSetting("MAX_QUERY_LENGTH", 512);
 
     /**
      * Setting for the maximum number of bytes to allow in XML queries.

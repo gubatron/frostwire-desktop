@@ -38,6 +38,11 @@ public final class CommonConstants {
     public static final byte FILE_TYPE_APPLICATIONS = 0x04;
     public static final byte FILE_TYPE_RINGTONES = 0x05;
     public static final byte FILE_TYPE_TORRENTS = 0x06;
-    
+
     public static final String MIME_TYPE_ANDROID_PACKAGE_ARCHIVE = "application/vnd.android.package-archive";
+
+    // device types
+    public static final int DEVICE_MAJOR_TYPE_DESKTOP = 0;
+    public static final int DEVICE_MAJOR_TYPE_PHONE = 1;
+    public static final int DEVICE_MAJOR_TYPE_TABLET = 2;
 }

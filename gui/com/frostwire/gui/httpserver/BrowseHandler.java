@@ -30,7 +30,6 @@ import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.Librarian;
 import com.frostwire.httpserver.Code;
 import com.frostwire.httpserver.HttpExchange;
-import com.frostwire.httpserver.HttpHandler;
 import com.frostwire.util.JsonUtils;
 
 /**
@@ -38,11 +37,13 @@ import com.frostwire.util.JsonUtils;
  * @author aldenml
  *
  */
-class BrowseHandler implements HttpHandler {
+class BrowseHandler extends AbstractHandler {
 
     private static final Logger LOG = Logger.getLogger(BrowseHandler.class.getName());
 
+    @Override
     public void handle(HttpExchange exchange) throws IOException {
+        assertUPnPActive();
 
         GZIPOutputStream os = null;
 
@@ -66,11 +67,12 @@ class BrowseHandler implements HttpHandler {
             String response = getResponse(exchange, type);
 
             exchange.getResponseHeaders().set("Content-Encoding", "gzip");
+            exchange.getResponseHeaders().set("Content-Type", "text/json; charset=UTF-8");
             exchange.sendResponseHeaders(Code.HTTP_OK, 0);
 
             os = new GZIPOutputStream(exchange.getResponseBody());
 
-            os.write(response.getBytes());
+            os.write(response.getBytes("UTF-8"));
             os.finish();
 
         } catch (IOException e) {
@@ -85,7 +87,7 @@ class BrowseHandler implements HttpHandler {
     }
 
     private String getResponse(HttpExchange exchange, byte fileType) {
-        List<FileDescriptor> fileDescriptors = Librarian.instance().getFiles(fileType, 0, Integer.MAX_VALUE, true);
+        List<FileDescriptor> fileDescriptors = Librarian.instance().getSharedFiles(fileType);
 
         FileDescriptorList list = new FileDescriptorList();
         list.files = fileDescriptors;

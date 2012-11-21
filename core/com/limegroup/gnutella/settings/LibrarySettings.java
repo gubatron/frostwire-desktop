@@ -20,6 +20,7 @@ package com.limegroup.gnutella.settings;
 
 import java.io.File;
 
+import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.FileSetSetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.util.CommonUtils;
@@ -52,4 +53,6 @@ public class LibrarySettings extends LimeProps {
     public static final FileSetting USER_MUSIC_FOLDER = FACTORY.createFileSetting("USER_MUSIC_FOLDER", FrostWireUtils.getUserMusicFolder());
 
     public static final FileSetting LIBRARY_FROM_DEVICE_DATA_DIR_SETTING = FACTORY.createFileSetting("LIBRARY_FROM_DEVICE_DATA_DIR_SETTING", DEFAULT_LIBRARY_FROM_DEVICE_DATA_DIR).setAlwaysSave(true);
+
+    public static final BooleanSetting LIBRARY_WIFI_SHARING_ENABLED = FACTORY.createBooleanSetting("LIBRARY_WIFI_SHARING_ENABLED", true);
 }

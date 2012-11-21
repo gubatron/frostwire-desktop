@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
+import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
 import org.apache.commons.logging.Log;
@@ -55,6 +56,16 @@ import com.limegroup.gnutella.gui.I18n;
  * 
  */
 public class LibraryUtils {
+    
+    public static final Icon FILE_UNSHARED_ICON;
+    public static final Icon FILE_SHARING_ICON;
+    public static final Icon FILE_SHARED_ICON;
+
+    static {
+        FILE_UNSHARED_ICON = GUIMediator.getThemeImage("file_unshared");
+        FILE_SHARING_ICON = GUIMediator.getThemeImage("file_sharing");
+        FILE_SHARED_ICON = GUIMediator.getThemeImage("file_shared");
+    }
 
     private static final Log LOG = LogFactory.getLog(LibraryUtils.class);
 
