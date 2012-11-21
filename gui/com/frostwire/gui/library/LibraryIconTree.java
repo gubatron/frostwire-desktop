@@ -33,9 +33,9 @@ import javax.swing.tree.TreePath;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.db.LibraryDatabase;
-import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.DeviceAudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
+import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -68,7 +68,7 @@ public class LibraryIconTree extends JTree {
         super.paintComponent(g);
 
         try {
-            AudioPlayer player = AudioPlayer.instance();
+        	MediaPlayer player = MediaPlayer.instance();
 
             if (player.getState() != MediaPlaybackState.Stopped) {
                 if (player.getCurrentSong() instanceof InternetRadioAudioSource) {

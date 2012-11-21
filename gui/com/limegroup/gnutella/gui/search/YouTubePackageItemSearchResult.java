@@ -29,7 +29,9 @@ import jd.plugins.FilePackage;
 import org.limewire.util.FilenameUtils;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.gui.player.StreamAudioSource;
 import com.frostwire.websearch.youtube.YouTubeSearchResult;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -38,7 +40,7 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
  * @author aldenml
  *
  */
-public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
+public final class YouTubePackageItemSearchResult extends AbstractSearchResult implements StreamableSearchResult {
 
     private static final String AAC_LOW_QUALITY = "(AAC)";
     static final String AAC_HIGH_QUALITY = "(AAC-High Quality)";
@@ -154,6 +156,14 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
         return sr;
     }
 
+    @Override
+    public void play() {
+        String streamUrl = filePackage.getChildren().get(0).getDownloadURL();
+        MediaType mediaType = MediaType.getMediaTypeForExtension(FilenameUtils.getExtension(filename));
+        boolean showPlayerWindow = mediaType.equals(MediaType.getVideoMediaType());
+        GUIMediator.instance().launchAudio(new StreamAudioSource(streamUrl, "YouTube: " + sr.getDisplayName(), sr.getDetailsUrl(), showPlayerWindow));
+    }
+
     private String readFilename(FilePackage filePackage) {
         DownloadLink dl = filePackage.getChildren().get(0);
         if (dl.getStringProperty("convertto", "").equals("AUDIOMP3")) {
@@ -161,5 +171,11 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
         }
 
         return dl.getName();
+    }
+
+    @Override
+    public String getStreamUrl() {
+        String streamUrl = filePackage.getChildren().get(0).getDownloadURL();
+        return streamUrl;
     }
 }

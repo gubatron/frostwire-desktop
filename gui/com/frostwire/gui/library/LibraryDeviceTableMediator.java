@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.event.ActionEvent;
@@ -47,9 +48,9 @@ import org.limewire.util.StringUtils;
 
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.filters.TableLineFilter;
-import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -341,8 +342,8 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         try {
             String url = device.getDownloadURL(line.getInitializeObject());
             AudioSource audioSource = new DeviceAudioSource(url, device, line.getInitializeObject());
-            if (AudioPlayer.isPlayableFile(audioSource)) {
-                AudioPlayer.instance().asyncLoadSong(audioSource, true, true, null, getFileView());
+            if (MediaPlayer.isPlayableFile(audioSource)) {
+            	MediaPlayer.instance().asyncLoadMedia(audioSource, true, true, null, getFileView());
             }
         } catch (Throwable e) {
             LOG.error("Error loading the streaming", e);
@@ -367,7 +368,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
         FileDescriptor fd = DATA_MODEL.get(sel[0]).getInitializeObject();
 
-        LAUNCH_ACTION.setEnabled(sel.length == 1 && (fileType == DeviceConstants.FILE_TYPE_AUDIO || fileType == DeviceConstants.FILE_TYPE_RINGTONES) && AudioPlayer.isPlayableFile(fd.filePath));
+        LAUNCH_ACTION.setEnabled(sel.length == 1 && (fileType == DeviceConstants.FILE_TYPE_AUDIO || fileType == DeviceConstants.FILE_TYPE_RINGTONES || fileType == DeviceConstants.FILE_TYPE_VIDEOS) && MediaPlayer.isPlayableFile(fd.filePath));
         saveToAction.setEnabled(true);
 
         if (sel.length == 1) {

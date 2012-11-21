@@ -89,7 +89,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     private LibraryMediator LIBRARY_MEDIATOR;
 
     private ChatMediator CHAT_MEDIATOR;
-    
+
     /**
      * Constant handle to the <tt>OptionsMediator</tt> class that is
      * responsible for displaying customizable options to the user.
@@ -123,8 +123,8 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     /**
      * The array of tabs in the main application window.
      */
-    private Map<GUIMediator.Tabs, Tab> TABS = new HashMap<GUIMediator.Tabs, Tab>(7);
-    
+    private Map<GUIMediator.Tabs, Tab> TABS = new HashMap<GUIMediator.Tabs, Tab>(3);
+
     /**
      * The last state of the X/Y location and the time it was set.
      * This is necessary to preserve the maximize size & prior size,
@@ -134,12 +134,13 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     private WindowState lastState = null;
 
     private ApplicationHeader APPLICATION_HEADER;
-    
+
     /** simple state. */
     private static class WindowState {
         private final int x;
         private final int y;
         private final long time;
+
         WindowState() {
             x = ApplicationSettings.WINDOW_X.getValue();
             y = ApplicationSettings.WINDOW_Y.getValue();
@@ -156,31 +157,32 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         //starts the Frostwire update manager, and will trigger a task in 5 seconds.
         // RELEASE
         com.frostwire.gui.updates.UpdateManager.scheduleUpdateCheckTask(0);
-        
+
         // DEBUG
         //com.frostwire.gui.updates.UpdateManager.scheduleUpdateCheckTask(0,"http://update1.frostwire.com/example.php");
 
         FRAME = frame;
         Dimension minFrameDimensions = null;
         if (OSUtils.isMacOSX()) {
-        	minFrameDimensions = new Dimension(875,97);
+            minFrameDimensions = new Dimension(875, 97);
         } else {
-        	minFrameDimensions = new Dimension(875,134);
+            minFrameDimensions = new Dimension(875, 134);
         }
         FRAME.setMinimumSize(minFrameDimensions);
         new DropTarget(FRAME, new TransferHandlerDropTargetListener(DNDUtils.DEFAULT_TRANSFER_HANDLER));
 
         TABBED_PANE = new JPanel(new CardLayout());
         TABBED_PANE.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_LIGHT_NOISE, true);
-        
+
         // Add a listener for saving the dimensions of the window &
         // position the search icon overlay correctly.
         FRAME.addComponentListener(new ComponentListener() {
-            public void componentHidden(ComponentEvent e) {}
-            
+            public void componentHidden(ComponentEvent e) {
+            }
+
             public void componentShown(ComponentEvent e) {
             }
-            
+
             public void componentMoved(ComponentEvent e) {
                 lastState = new WindowState();
                 saveWindowState();
@@ -197,7 +199,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
                 saveWindowState();
             }
         });
- 
+
         // Listen for the window closing, to save settings.
         FRAME.addWindowListener(new WindowAdapter() {
             public void windowDeiconified(WindowEvent e) {
@@ -207,7 +209,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
                 // method to restore applications from minimize and
                 // auto-shutdown modes.  Non-windows systems restore
                 // the application using the following code.
-                if(!OSUtils.supportsTray() || !ResourceManager.instance().isTrayIconAvailable())
+                if (!OSUtils.supportsTray() || !ResourceManager.instance().isTrayIconAvailable())
                     GUIMediator.restoreView();
             }
 
@@ -224,19 +226,19 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 
         FRAME.setJMenuBar(getMenuMediator().getMenuBar());
         JPanel contentPane = new JPanel();
-        
+
         FRAME.setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout());
-        
+
         buildTabs();
-        
+
         APPLICATION_HEADER = new ApplicationHeader(TABS);
         LOGO_PANEL = APPLICATION_HEADER.getLogoPanel();
         contentPane.add(APPLICATION_HEADER, BorderLayout.PAGE_START);
-        
+
         //ADD TABBED PANE
         contentPane.add(TABBED_PANE, BorderLayout.CENTER);
-        
+
         //ADD STATUS LINE
         contentPane.add(getStatusLine().getComponent(), BorderLayout.PAGE_END);
 
@@ -246,23 +248,23 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         if (ApplicationSettings.MAGNET_CLIPBOARD_LISTENER.getValue()) {
             FRAME.addWindowListener(MagnetClipboardListener.getInstance());
         }
-        
+
         PowerManager pm = new PowerManager();
         FRAME.addWindowListener(pm);
         GUIMediator.addRefreshListener(pm);
     }
-    
+
     public ApplicationHeader getApplicationHeader() {
         return APPLICATION_HEADER;
     }
-    
+
     /** Saves the state of the Window to settings. */
     void saveWindowState() {
         int state = FRAME.getExtendedState();
-        if(state == Frame.NORMAL) {
+        if (state == Frame.NORMAL) {
             // save the screen size and location 
             Dimension dim = GUIMediator.getAppSize();
-            if((dim.height > 100) && (dim.width > 100)) {
+            if ((dim.height > 100) && (dim.width > 100)) {
                 Point loc = GUIMediator.getAppLocation();
                 ApplicationSettings.APP_WIDTH.setValue(dim.width);
                 ApplicationSettings.APP_HEIGHT.setValue(dim.height);
@@ -270,9 +272,9 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
                 ApplicationSettings.WINDOW_Y.setValue(loc.y);
                 ApplicationSettings.MAXIMIZE_WINDOW.setValue(false);
             }
-        } else if( (state & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH) {
+        } else if ((state & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH) {
             ApplicationSettings.MAXIMIZE_WINDOW.setValue(true);
-            if(lastState != null && lastState.time == System.currentTimeMillis()) {
+            if (lastState != null && lastState.time == System.currentTimeMillis()) {
                 ApplicationSettings.WINDOW_X.setValue(lastState.x);
                 ApplicationSettings.WINDOW_Y.setValue(lastState.y);
                 lastState = null;
@@ -282,76 +284,38 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 
     public void updateTheme() {
         FRAME.setJMenuBar(getMenuMediator().getMenuBar());
-	}
+        //LOGO_PANEL.updateTheme();
+        //setSearchIconLocation();
+        //updateLogoHeight();
+        //for(GUIMediator.Tabs tab : GUIMediator.Tabs.values())
+        //  updateTabIcon(tab);
+    }
     
     /**
      * Build the Tab Structure based on advertising mode and Windows
      */
     private void buildTabs() {
-    	//Enable right click on Tabs to hide/show tabs
-    	TABBED_PANE.addMouseListener(com.frostwire.gui.tabs.TabRightClickAdapter.getInstance());
-    	
-    	SEARCH_MEDIATOR = new SearchMediator();
-        
-    	TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getBTDownloadMediator()));
+        TABBED_PANE.addMouseListener(com.frostwire.gui.tabs.TabRightClickAdapter.getInstance());
+
+        SEARCH_MEDIATOR = new SearchMediator();
+
+        TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getBTDownloadMediator()));
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryTab(getLibraryMediator()));
         TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(getChatMediator()));
-	    
-	    TABBED_PANE.setPreferredSize(new Dimension(10000, 10000));
-	    
-	    /*
-	    // listener for updating the tab's titles & tooltips.
-        PropertyChangeListener propertyChangeListener = new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent evt) {
-                Tab tab = (Tab)evt.getSource();
-                int idx = getTabIndex(tab);
-                if(idx != -1) {
-                    if("title".equals(evt.getPropertyName()))
-                        TABBED_PANE.setTitleAt(idx, (String)evt.getNewValue());
-                    else if("tooltip".equals(evt.getPropertyName()))
-                        TABBED_PANE.setToolTipTextAt(idx, (String)evt.getNewValue());
-                }
-            }
-        };*/
-        
+
+        TABBED_PANE.setPreferredSize(new Dimension(10000, 10000));
+
         // add all tabs initially....
-        for(GUIMediator.Tabs tab : GUIMediator.Tabs.values()) {
+        for (GUIMediator.Tabs tab : GUIMediator.Tabs.values()) {
             Tab t = TABS.get(tab);
-            if(t != null) {
+            if (t != null) {
                 this.addTab(t);
-                //t.addPropertyChangeListener(propertyChangeListener);
             }
         }
 
         TABBED_PANE.setRequestFocusEnabled(false);
-
-        /*
-        TABBED_PANE.addMouseListener(new MouseListener() {
-            public void mouseClicked(MouseEvent e) {
-                TabbedPaneUI ui = TABBED_PANE.getUI();
-                int idx = ui.tabForCoordinate(TABBED_PANE, e.getX(), e.getY());
-                if(idx != -1) {
-                    Tab tab = getTabForIndex(idx);
-                    if(tab != null)
-                        tab.mouseClicked();
-                }
-
-            }
-            public void mouseEntered(MouseEvent e) {}
-            public void mouseExited(MouseEvent e) {}
-            public void mousePressed(MouseEvent e) {}
-            public void mouseReleased(MouseEvent e) {}
-        });      */    
-
-        // remove tabs according to Settings Manager...
-        //if (!ApplicationSettings.LIBRARY_VIEW_ENABLED.getValue())
-        //    this.setTabVisible(GUIMediator.Tabs.LIBRARY, false);
-        //if (!ApplicationSettings.CHAT_VIEW_ENABLED.getValue())
-        //    this.setTabVisible(GUIMediator.Tabs.CHAT, false);
-
     }
 
-    
     /**
      * Adds a tab to the <tt>JTabbedPane</tt> based on the data supplied
      * in the <tt>Tab</tt> instance.
@@ -362,15 +326,15 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     private void addTab(Tab tab) {
         TABBED_PANE.add(tab.getComponent(), tab.getTitle());
     }
-    
+
     /**
      * Sets the selected index in the wrapped <tt>JTabbedPane</tt>.
      *
      * @param index the tab index to select
      */
     public final void setSelectedTab(GUIMediator.Tabs tab) {
-        CardLayout cl = (CardLayout)(TABBED_PANE.getLayout());
-        
+        CardLayout cl = (CardLayout) (TABBED_PANE.getLayout());
+
         Tab t = TABS.get(tab);
         cl.show(TABBED_PANE, t.getTitle());
         APPLICATION_HEADER.selectTab(t);
@@ -385,48 +349,46 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         GraphicsDevice gd = ge.getDefaultScreenDevice();
         GraphicsConfiguration gc = gd.getDefaultConfiguration();
         Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(gc);
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        
+
         int locX = 0;
         int locY = 0;
 
-        int appWidth  = Math.min(screenSize.width-insets.left-insets.right, ApplicationSettings.APP_WIDTH.getValue());
-        int appHeight = Math.min(screenSize.height-insets.top-insets.bottom, ApplicationSettings.APP_HEIGHT.getValue());
-        
+        int appWidth = Math.min(screenSize.width - insets.left - insets.right, ApplicationSettings.APP_WIDTH.getValue());
+        int appHeight = Math.min(screenSize.height - insets.top - insets.bottom, ApplicationSettings.APP_HEIGHT.getValue());
+
         // Set the location of our window based on whether or not
         // the user has run the program before, and therefore may have 
         // modified the location of the main window.
-        if(ApplicationSettings.RUN_ONCE.getValue()) {
+        if (ApplicationSettings.RUN_ONCE.getValue()) {
             locX = Math.max(insets.left, ApplicationSettings.WINDOW_X.getValue());
             locY = Math.max(insets.top, ApplicationSettings.WINDOW_Y.getValue());
         } else {
             locX = (screenSize.width - appWidth) / 2;
             locY = (screenSize.height - appHeight) / 2;
         }
-        
+
         // Make sure the Window is visible and not for example 
         // somewhere in the very bottom right corner.
-        if (locX+appWidth > screenSize.width) {
+        if (locX + appWidth > screenSize.width) {
             locX = Math.max(insets.left, screenSize.width - insets.left - insets.right - appWidth);
         }
-        
-        if (locY+appHeight > screenSize.height) {
+
+        if (locY + appHeight > screenSize.height) {
             locY = Math.max(insets.top, screenSize.height - insets.top - insets.bottom - appHeight);
         }
-        
+
         FRAME.setLocation(locX, locY);
         FRAME.setSize(new Dimension(appWidth, appHeight));
         FRAME.getContentPane().setSize(new Dimension(appWidth, appHeight));
-        ((JComponent)FRAME.getContentPane()).setPreferredSize(new Dimension(appWidth, appHeight));
-        
+        ((JComponent) FRAME.getContentPane()).setPreferredSize(new Dimension(appWidth, appHeight));
+
         //re-maximize if we shutdown while maximized.
-        if(ApplicationSettings.MAXIMIZE_WINDOW.getValue() 
-                && Toolkit.getDefaultToolkit().isFrameStateSupported(Frame.MAXIMIZED_BOTH)) {
+        if (ApplicationSettings.MAXIMIZE_WINDOW.getValue() && Toolkit.getDefaultToolkit().isFrameStateSupported(Frame.MAXIMIZED_BOTH)) {
             FRAME.setExtendedState(Frame.MAXIMIZED_BOTH);
         }
     }
-
 
     /**
      * Should be called whenever state may have changed, so MainFrame can then
@@ -434,15 +396,15 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     public void refresh() {
     }
-    
+
     final BTDownloadMediator getBTDownloadMediator() {
         if (BT_DOWNLOAD_MEDIATOR == null) {
-            
+
             BT_DOWNLOAD_MEDIATOR = BTDownloadMediator.instance();
         }
         return BT_DOWNLOAD_MEDIATOR;
     }
-    
+
     /**
      * Returns a reference to the <tt>LibraryMediator</tt> instance.
      *
@@ -503,9 +465,9 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      *
      * @param searching the searching status of the application
      */
-    public final void setSearching(boolean searching) {    
+    public final void setSearching(boolean searching) {
         LOGO_PANEL.setSearching(searching);
-		refresh();
+        refresh();
     }
 
     public Tabs getSelectedTab() {
@@ -517,19 +479,19 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
                 }
             }
         }
-       
+
         return null;
     }
-    
+
     private Component getCurrentTabComponent() {
         Component currentPanel = null;
 
         for (Component component : TABBED_PANE.getComponents()) {
             if (component.isVisible()) {
-                if (component instanceof JPanel) 
+                if (component instanceof JPanel)
                     currentPanel = component;
                 else if (component instanceof JScrollPane)
-                    currentPanel =  ((JScrollPane) component).getViewport().getComponent(0);
+                    currentPanel = ((JScrollPane) component).getViewport().getComponent(0);
             }
         }
 
@@ -537,6 +499,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     }
 
     public Tab getTab(Tabs tabs) {
-       return TABS.get(tabs);
+        return TABS.get(tabs);
     }
 }

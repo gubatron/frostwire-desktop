@@ -25,7 +25,7 @@ import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.PlaylistItem;
-import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
@@ -169,7 +169,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
 
     private boolean isPlaying() {
         if (initializer != null) {
-            return AudioPlayer.instance().isThisBeingPlayed(initializer);
+            return MediaPlayer.instance().isThisBeingPlayed(initializer);
         }
 
         return false;

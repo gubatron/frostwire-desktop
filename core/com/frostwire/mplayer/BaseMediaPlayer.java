@@ -46,6 +46,8 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 	
 	private String 				openedFile;
 	
+	//private float				reopeningPos;
+	//private MediaPlaybackState  reopeningPriorState;
 	//private SubtitleMonitor		subtitleMonitor;
 	
 	protected PlayerPreferences preferences;
@@ -175,6 +177,20 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		doLoadSubtitlesFile(file);
 	}
 	
+	public void fastForward() {
+		if (currentState == MediaPlaybackState.Playing ||
+			currentState == MediaPlaybackState.Paused) {
+			seek( (float) (currentPositionInSecs + 10.0));
+		}
+	}
+	
+	public void rewind() {
+		if (currentState == MediaPlaybackState.Playing ||
+			currentState == MediaPlaybackState.Paused){
+			seek( (float) (currentPositionInSecs - 10.0));
+		}
+	}
+	
 	public void pause() {
 		if(currentState == MediaPlaybackState.Playing) {
 			doPause();
@@ -185,7 +201,6 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		if(currentState == MediaPlaybackState.Paused) {
 			doResume();
 		}
-		
 	}
 	
 	public void togglePause() {
@@ -203,7 +218,6 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 				metaDataListeners.remove(listener);
 			}
 		}
-		
 	}
 
 	public void removeStateListener(StateListener listener) {
@@ -212,7 +226,6 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 				stateListeners.remove(listener);
 			}
 		}
-		
 	}
 
 	
@@ -222,7 +235,6 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 				volumeListeners.remove(listener);
 			}
 		}
-		
 	}
 	
 	
@@ -232,7 +244,6 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 				positionListeners.remove(listener);
 			}
 		}
-		
 	}
 	
 	public void removeIcyInfoListener(IcyInfoListener listener) {
@@ -251,9 +262,15 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		if(currentState == MediaPlaybackState.Playing || currentState == MediaPlaybackState.Paused) {			
 			doSeek(timeInSecs);
 		}
-		
 	}
 
+	public void incrementVolume() {
+		setVolume(getVolume() + 10);
+	}
+	
+	public void decrementVolume() {
+		setVolume(getVolume() - 10);
+	}
 	
 	public void setVolume(int volume) {
 		if(currentState == MediaPlaybackState.Playing || currentState == MediaPlaybackState.Paused) {

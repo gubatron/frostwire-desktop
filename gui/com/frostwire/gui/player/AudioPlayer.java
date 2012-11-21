@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 package com.frostwire.gui.player;
 
+import java.awt.Dimension;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
@@ -47,13 +48,14 @@ import org.limewire.util.OSUtils;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.library.LibraryMediator;
+import com.frostwire.gui.mplayer.MPlayer;
 import com.frostwire.mp3.Mp3File;
 import com.frostwire.mp4.IsoFile;
 import com.frostwire.mplayer.IcyInfoListener;
-import com.frostwire.mplayer.MPlayer;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.mplayer.PositionListener;
 import com.frostwire.mplayer.StateListener;
+import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.settings.PlayerSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -67,7 +69,7 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  */
 public class AudioPlayer implements RefreshListener {
 
-    private static final String[] PLAYABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wav", "wma", "m4a", "aac", "flac" };
+    private static final String[] PLAYABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wav", "wma", "m4a", "aac", "flac", "mp4" };
 
     /**
      * Our list of AudioPlayerListeners that are currently listening for events
@@ -175,6 +177,14 @@ public class AudioPlayer implements RefreshListener {
         });
     }
 
+    public Dimension getCurrentVideoSize() {
+    	if ( mplayer != null ) {
+    		return mplayer.getVideoSize();
+    	} else {
+    		return null;
+    	}
+    }
+    
     public AudioSource getCurrentSong() {
         return currentSong;
     }
@@ -317,10 +327,15 @@ public class AudioPlayer implements RefreshListener {
         loadSong(audioSource, false, false, null, null);
     }
 
+    
     /**
      * Begins playing a song
      */
     public void playSong() {
+    	
+    	// temporary hack - make sure video player window is showing
+    	MPlayerMediator.instance().showPlayerWindow(true);
+    	
         mplayer.stop();
         setVolume(volume);
 
@@ -351,6 +366,15 @@ public class AudioPlayer implements RefreshListener {
         currentSong = null;
         notifyState(getState());
     }
+    
+    
+    public void fastForward() {
+    	mplayer.fastForward();
+    }
+    
+    public void rewind() {
+    	mplayer.rewind();
+    }
 
     /**
      * Seeks to a new location in the current song
@@ -370,7 +394,7 @@ public class AudioPlayer implements RefreshListener {
      */
     public void setVolume(double fGain) {
         volume = fGain;
-        mplayer.setVolume((int) (fGain * 30));
+        mplayer.setVolume((int) (fGain * 100));
         PlayerSettings.PLAYER_VOLUME.setValue((float) volume);
         notifyVolumeChanged();
     }

@@ -26,9 +26,8 @@ import java.util.List;
 import javax.swing.Icon;
 
 import org.limewire.util.StringUtils;
-
 import com.frostwire.core.FileDescriptor;
-import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
@@ -162,7 +161,7 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
     private boolean isPlaying() {
         if (initializer != null) {
             String url = device.getDownloadURL(initializer);
-           return AudioPlayer.instance().isThisBeingPlayed(url);
+           return MediaPlayer.instance().isThisBeingPlayed(url);
         }
 
         return false;

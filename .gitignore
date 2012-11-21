@@ -10,6 +10,7 @@ lib/jars/other/themes.jar
 components/http/build/classes/org/limewire/http/package.html
 hs_err_*.log
 .DS_Store
+._.DS_Store
 components/azureus/src/main/resources/org/gudy/azureus2/internat/*
 lib/jars-src/commons-logging-1.0.4-src/target/*
 builder
@@ -18,3 +19,15 @@ lib/themes/themes.jar
 lib/mplayer/upx
 messages.mo
 .settings/
+*.swp
+.settings/
+*.sdf
+*.suo
+*.user
+*UpgradeLog.xml
+_UpgradeReport_Files/
+Debug/
+Release/
+ipch/
+tags
+*.opensdf

@@ -13,6 +13,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import javax.imageio.ImageIO;
+import javax.swing.JPopupMenu;
+import javax.swing.ToolTipManager;
 
 import org.limewire.util.OSUtils;
 
@@ -33,8 +35,14 @@ public class Main {
 	 * @param args the array of command line arguments
 	 */
 	public static void main(String args[]) {
+	    System.setProperty("sun.awt.noerasebackground", "true");
+
+        ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);
+        JPopupMenu.setDefaultLightWeightPopupEnabled(false);
+        
 		if (OSUtils.isMacOSX()) {
 			System.setProperty("apple.laf.useScreenMenuBar", "true");
+			System.setProperty("com.apple.eawt.CocoaComponent.CompatibilityMode", "false");
 		}
 		//System.out.println("1: Main.main("+args+")");
 		

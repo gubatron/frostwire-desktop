@@ -69,10 +69,11 @@ import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.HideExitDialog;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.library.LibraryMediator;
-import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
+import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.tabs.Tab;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.bugs.FatalBugManager;
@@ -301,6 +302,11 @@ public final class GUIMediator {
     private ChatMediator CHAT_MEDIATOR;
 
     /**
+     * Media Player Mediator
+     */
+    private MPlayerMediator MPLAYER_MEDIATOR;
+    
+    /**
      * Constant handle to the <tt>DownloadView</tt> class that is responsible
      * for displaying the status of the network and connectivity to the user.
      */
@@ -331,7 +337,10 @@ public final class GUIMediator {
     private GUIMediator() {
         MAIN_FRAME = new MainFrame(getAppFrame());
         OPTIONS_MEDIATOR = MAIN_FRAME.getOptionsMediator();
+        
         _remoteDownloadsAllowed = true;
+        
+        
     }
 
     /**
@@ -552,6 +561,13 @@ public final class GUIMediator {
      */
     public final MainFrame getMainFrame() {
         return MAIN_FRAME;
+    }
+    
+    public final MPlayerMediator getMPlayerMediator() {
+    	if (MPLAYER_MEDIATOR == null) {
+    		MPLAYER_MEDIATOR = MPlayerMediator.instance();
+    	}
+    	return MPLAYER_MEDIATOR;
     }
 
     /**
@@ -1593,9 +1609,9 @@ public final class GUIMediator {
      */
     public void launchAudio(AudioSource song) {
 
-        if (AudioPlayer.instance().getCurrentSong() != null)
+        if (MediaPlayer.instance().getCurrentSong() != null)
             try {
-                AudioPlayer.instance().stop();
+            	MediaPlayer.instance().stop();
                 // it needs to pause for a bit, otherwise it'll play the same song.
                 // must be a sync bug somewhere, but this fixes it
                 Thread.sleep(1000);
@@ -1603,8 +1619,13 @@ public final class GUIMediator {
                 e.printStackTrace();
             }
 
-        //AudioPlayer.instance().loadSong(song);
-       AudioPlayer.instance().asyncLoadSong(song, true, !song.getClass().equals(InternetRadioAudioSource.class));
+        //MediaPlayer.instance().loadSong(song);
+        boolean playNextSong = !song.getClass().equals(InternetRadioAudioSource.class);
+        if ( song.getFile() != null && MediaType.getVideoMediaType().matches(song.getFile().getAbsolutePath()) ) {
+        	    playNextSong = false;
+        }
+		
+        MediaPlayer.instance().asyncLoadMedia(song, true, playNextSong);
     }
 
     /**
@@ -1612,7 +1633,7 @@ public final class GUIMediator {
      * 
      */
     public boolean attemptStopAudio() {
-        AudioPlayer mediaPlayer = AudioPlayer.instance();
+    	MediaPlayer mediaPlayer = MediaPlayer.instance();
         mediaPlayer.stop();
         return true;
     }

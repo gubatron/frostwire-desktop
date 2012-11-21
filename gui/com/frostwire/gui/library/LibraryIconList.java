@@ -28,7 +28,7 @@ import javax.swing.ListModel;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.library.LibraryPlaylists.LibraryPlaylistsListCell;
-import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.GUIMediator;
 
@@ -51,7 +51,7 @@ public class LibraryIconList extends JList {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        AudioPlayer player = AudioPlayer.instance();
+        MediaPlayer player = MediaPlayer.instance();
 
         if (player.getState() != MediaPlaybackState.Stopped) {
             if (player.getCurrentSong() != null && player.getCurrentPlaylist() != null && player.getPlaylistFilesView() != null) {

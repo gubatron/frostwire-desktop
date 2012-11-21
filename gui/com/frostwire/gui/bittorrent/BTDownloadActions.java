@@ -30,8 +30,8 @@ import javax.swing.JOptionPane;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
-import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -460,8 +460,8 @@ final class BTDownloadActions {
         public void actionPerformed(ActionEvent e) {
             File file = BTDownloadMediator.instance().getSelectedDownloaders()[0].getSaveLocation();
             
-            if (AudioPlayer.isPlayableFile(file)) {
-                AudioPlayer.instance().loadSong(new AudioSource(file),true,false);
+            if (MediaPlayer.isPlayableFile(file)) {
+            	MediaPlayer.instance().loadMedia(new AudioSource(file),true,false);
             }
         }
     }

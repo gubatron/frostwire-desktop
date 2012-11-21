@@ -1,4 +1,7 @@
 /*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml), Erich Pleny (erichpleny)
+ * Copyright (c) 2012, FrostWire(R). All rights reserved.
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -13,8 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.mplayer;
+package com.frostwire.gui.mplayer;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -25,6 +29,17 @@ import java.util.regex.Pattern;
 
 import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.util.Debug;
+
+import com.frostwire.mplayer.BaseMediaPlayer;
+import com.frostwire.mplayer.IcyInfoListener;
+import com.frostwire.mplayer.Language;
+import com.frostwire.mplayer.LanguageSource;
+import com.frostwire.mplayer.MediaPlaybackState;
+import com.frostwire.mplayer.MetaDataListener;
+import com.frostwire.mplayer.PlayerPreferences;
+import com.frostwire.mplayer.PositionListener;
+import com.frostwire.mplayer.StateListener;
+import com.frostwire.mplayer.VolumeListener;
 
 public class MPlayer extends BaseMediaPlayer {
 
@@ -37,7 +52,8 @@ public class MPlayer extends BaseMediaPlayer {
 	private volatile boolean disposed = false;
 
 	private Thread outputParser;
-
+	private Dimension videoSize = null;
+	
 	public MPlayer() {
 		this(null);
 	}
@@ -379,7 +395,9 @@ public class MPlayer extends BaseMediaPlayer {
 		} else if (line.startsWith(ICY_INFO)) {
 		    String data = line.substring(ICY_INFO.length()).trim();
 		    reportIcyInfo(data);
-		}
+		} else if (line.contains("VO: ")) {
+            parseVideoSize(line);
+        }
 
 		// else System.out.println(line);
 
@@ -400,6 +418,18 @@ public class MPlayer extends BaseMediaPlayer {
 
 	private double abs(float f) {
 		return f > 0 ? f : -f;
+	}
+	
+	private void parseVideoSize(String line) {
+        String[] arr = line.split(" ")[2].split("x");
+        int w = Integer.parseInt(arr[0]);
+        int h = Integer.parseInt(arr[1]);
+
+        videoSize = new Dimension(w, h);
+    }
+	
+	public Dimension getVideoSize() {
+		return videoSize;
 	}
 
 	public void doLoadSubtitlesFile(String file, boolean autoPlay) {
@@ -501,7 +531,7 @@ public class MPlayer extends BaseMediaPlayer {
 
 		reportNewState(MediaPlaybackState.Playing);
 	}
-
+	
 	public void doSeek(float timeInSecs) {
 		MPlayerInstance instance = getCurrentInstance();
 

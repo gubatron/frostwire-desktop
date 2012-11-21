@@ -19,7 +19,6 @@
 package com.frostwire.core.providers;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import com.frostwire.content.ContentProvider;
@@ -27,7 +26,6 @@ import com.frostwire.content.ContentUris;
 import com.frostwire.content.ContentValues;
 import com.frostwire.content.Context;
 import com.frostwire.content.UriMatcher;
-import com.frostwire.core.Constants;
 import com.frostwire.core.providers.UniversalStore.Documents;
 import com.frostwire.core.providers.UniversalStore.Documents.DocumentsColumns;
 import com.frostwire.core.providers.UniversalStore.Documents.Media;
@@ -38,7 +36,6 @@ import com.frostwire.database.sqlite.SQLiteOpenHelper;
 import com.frostwire.database.sqlite.SQLiteQueryBuilder;
 import com.frostwire.net.Uri;
 import com.frostwire.text.TextUtils;
-import com.limegroup.gnutella.gui.init.SetupManager;
 
 /**
  * @author gubatron

@@ -43,8 +43,8 @@ import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleAudioFileAction;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.library.LibraryUtils;
-import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.transfers.PeerHttpUpload;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
@@ -624,7 +624,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             return true;
         }
         File saveLocation = d.getSaveLocation();
-        boolean hasAudioFiles = saveLocation != null && (LibraryUtils.directoryContainsAudio(saveLocation, 4) || (saveLocation.isFile() && AudioPlayer.isPlayableFile(saveLocation)));
+        boolean hasAudioFiles = saveLocation != null && (LibraryUtils.directoryContainsAudio(saveLocation, 4) || (saveLocation.isFile() && MediaPlayer.isPlayableFile(saveLocation)));
         return hasAudioFiles;
     }
 

@@ -51,7 +51,7 @@ import org.pushingpixels.substance.internal.utils.SubstanceStripingUtils;
 import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorder;
 
-import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
 
@@ -319,6 +319,6 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         }
         
         StreamableSearchResult ssr = (StreamableSearchResult) sr;
-        return AudioPlayer.instance().isThisBeingPlayed(ssr.getStreamUrl());
+        return MediaPlayer.instance().isThisBeingPlayed(ssr.getStreamUrl());
     }
 }

@@ -519,10 +519,13 @@ public class CommonUtils {
     		if ( clazz != null ) {
 				path = clazz.getProtectionDomain().getCodeSource().getLocation().getPath();
 		    	decodedPath = URLDecoder.decode(path, "UTF-8");
+                if (decodedPath != null && decodedPath.toLowerCase().lastIndexOf("frostwire.jar") != -1) {
+                    decodedPath = decodedPath.substring(0, decodedPath.toLowerCase().lastIndexOf("frostwire.jar"));
+                }
     		}
     		
     	} catch (Throwable t) {
-    		decodedPath = defaultPath;
+    	    decodedPath = defaultPath;
     	}
     	
     	return decodedPath;

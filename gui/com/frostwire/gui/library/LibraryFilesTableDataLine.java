@@ -25,7 +25,7 @@ import java.util.Date;
 import javax.swing.Icon;
 
 import com.frostwire.gui.Librarian;
-import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
@@ -214,7 +214,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 
 	private boolean isPlaying() {
 		if (initializer != null) {
-			return AudioPlayer.instance().isThisBeingPlayed(
+			return MediaPlayer.instance().isThisBeingPlayed(
 					initializer);
 		}
 
