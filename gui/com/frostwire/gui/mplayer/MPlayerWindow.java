@@ -385,7 +385,7 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 				}
 				
 				// shft + - for volume increment
-				if (e.isShiftDown() && e.getKeyCode() == KeyEvent.VK_EQUALS) {
+				if (e.getKeyCode() == KeyEvent.VK_EQUALS) {
 					MPlayerUIEventHandler.instance().onVolumeIncremented();
 					return true;
 				}
