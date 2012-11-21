@@ -393,7 +393,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         handleSelection(TABLE.getSelectedRow());
     }
 
-    private void downloadSelectedItems() {
+    void downloadSelectedItems() {
         List<AbstractLibraryTableDataLine<FileDescriptor>> selectedLines = getSelectedLines();
 
         List<FileDescriptor> fds = new ArrayList<FileDescriptor>(selectedLines.size());
