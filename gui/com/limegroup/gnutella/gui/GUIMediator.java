@@ -1621,7 +1621,7 @@ public final class GUIMediator {
         //MediaPlayer.instance().loadSong(song);
         boolean playNextSong = !song.getClass().equals(InternetRadioAudioSource.class);
         if ( song.getFile() != null && MediaType.getVideoMediaType().matches(song.getFile().getAbsolutePath()) ) {
-        	playNextSong = false;
+        	    playNextSong = false;
         }
 		
         MediaPlayer.instance().asyncLoadMedia(song, true, playNextSong);

@@ -144,7 +144,7 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
         this.deselected = new HashSet<File>(blackListSet);
         
         if (!precheckFolders) {
-        	addFoldersToExclude(new HashSet<File>(Arrays.asList(roots)));
+        	    addFoldersToExclude(new HashSet<File>(Arrays.asList(roots)));
         }
 
         // center

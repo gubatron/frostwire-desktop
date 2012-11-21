@@ -30,10 +30,13 @@ public class StreamAudioSource extends AudioSource {
     
     private final String detailsUrl;
 
-    public StreamAudioSource(String url, String title, String detailsUrl) {
+    private final boolean showPlayerWindow;
+    
+    public StreamAudioSource(String url, String title, String detailsUrl, boolean showPlayerWindow) {
         super(url);
         this.title = title;
         this.detailsUrl = detailsUrl;
+        this.showPlayerWindow = showPlayerWindow;
     }
 
     public String getTitle() {
@@ -42,5 +45,9 @@ public class StreamAudioSource extends AudioSource {
     
     public String getDetailsUrl() {
         return detailsUrl;
+    }
+    
+    public boolean showPlayerWindow() {
+        return showPlayerWindow;
     }
 }

@@ -19,8 +19,10 @@
 package com.frostwire.gui.library;
 
 import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.InvalidDnDOperationException;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JComponent;
 import javax.swing.JTree;
@@ -34,7 +36,10 @@ import org.limewire.util.OSUtils;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.MediaType;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
+import com.limegroup.gnutella.gui.options.OptionsConstructor;
+import com.limegroup.gnutella.settings.LibrarySettings;
 
 /**
  * @author gubatron
@@ -65,6 +70,12 @@ final class LibraryFilesTransferHandler extends TransferHandler {
 
             if (node instanceof DirectoryHolderNode) {
                 DirectoryHolder dirHolder = ((DirectoryHolderNode) node).getDirectoryHolder();
+                
+                //dropping folder or folders on file types and finished downloads.
+                if (droppingFoldersToAddToLibrary(support, dirHolder,true)) {
+                   return true;
+                }
+                
                 if ((!(dirHolder instanceof MediaTypeSavedFilesDirectoryHolder) || !((MediaTypeSavedFilesDirectoryHolder) dirHolder).getMediaType().equals(MediaType.getAudioMediaType())) && !(dirHolder instanceof StarredDirectoryHolder)) {
                     return false;
                 }
@@ -107,6 +118,35 @@ final class LibraryFilesTransferHandler extends TransferHandler {
         return false;
     }
 
+    private boolean droppingFoldersToAddToLibrary(TransferSupport support, DirectoryHolder dirHolder, boolean invokingFromCanImport) throws UnsupportedFlavorException, IOException {
+        try {
+            //Mac doesn't have the data flavors until importData() is invoked.
+            if (invokingFromCanImport && OSUtils.isMacOSX()) {
+                return true;
+            }
+            
+            return isSharedFolderReceiver(dirHolder) && 
+                DNDUtils.containsFileFlavors(support.getDataFlavors()) &&
+                areAllFilesDirectories(DNDUtils.getFiles(support.getTransferable()));
+        } catch (Exception e) {
+            
+            
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    private boolean areAllFilesDirectories(File[] files) {
+        boolean result = true;
+        for (File f: files) {
+            if (!f.isDirectory()) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
     @Override
     public boolean importData(TransferSupport support) {
         if (!canImport(support)) {
@@ -116,7 +156,7 @@ final class LibraryFilesTransferHandler extends TransferHandler {
         try {
             Transferable transferable = support.getTransferable();
             LibraryNode node = getNodeFromLocation(support.getDropLocation());
-
+            
             if (node instanceof DeviceNode) {
                 File[] files = null;
                 if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
@@ -132,7 +172,26 @@ final class LibraryFilesTransferHandler extends TransferHandler {
 
             } else {
 
-                if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
+                if (node instanceof DirectoryHolderNode) {
+                    DirectoryHolder dirHolder = ((DirectoryHolderNode)node).getDirectoryHolder();
+                    if (droppingFoldersToAddToLibrary(support, dirHolder, false)) {
+                        try {
+                            //add to library
+                            File[] files = DNDUtils.getFiles(support.getTransferable());
+                            for (File f : files) {
+                                LibrarySettings.DIRECTORIES_TO_INCLUDE.add(f);
+                                LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.remove(f);
+                            }
+                            
+                            LibraryMediator.instance().clearDirectoryHolderCaches();
+                            
+                            //show tools -> library option pane
+                            GUIMediator.instance().setOptionsVisible(true, OptionsConstructor.LIBRARY_KEY);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
                     PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable.getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
                     LibraryUtils.createNewPlaylist(playlistItems, isStarredDirectoryHolder(support.getDropLocation()));
                 } else {
@@ -149,6 +208,17 @@ final class LibraryFilesTransferHandler extends TransferHandler {
         }
 
         return false;
+    }
+
+    /**
+     * Checks if this directory holder is either one of:
+     * Audio,Video,Images,Documents,Apps,Torrents or Finished Downloads directory holder.
+     * @param directoryHolder
+     * @return
+     */
+    private boolean isSharedFolderReceiver(DirectoryHolder directoryHolder) {
+        return directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder ||
+               directoryHolder instanceof FileSettingDirectoryHolder;
     }
 
     @Override

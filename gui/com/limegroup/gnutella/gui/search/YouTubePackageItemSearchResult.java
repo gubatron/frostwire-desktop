@@ -31,6 +31,7 @@ import org.limewire.util.FilenameUtils;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.player.StreamAudioSource;
 import com.frostwire.websearch.youtube.YouTubeSearchResult;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -158,7 +159,9 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult i
     @Override
     public void play() {
         String streamUrl = filePackage.getChildren().get(0).getDownloadURL();
-        GUIMediator.instance().launchAudio(new StreamAudioSource(streamUrl, "YouTube: " + sr.getDisplayName(), sr.getDetailsUrl()));
+        MediaType mediaType = MediaType.getMediaTypeForExtension(FilenameUtils.getExtension(filename));
+        boolean showPlayerWindow = mediaType.equals(MediaType.getVideoMediaType());
+        GUIMediator.instance().launchAudio(new StreamAudioSource(streamUrl, "YouTube: " + sr.getDisplayName(), sr.getDetailsUrl(), showPlayerWindow));
     }
 
     private String readFilename(FilePackage filePackage) {

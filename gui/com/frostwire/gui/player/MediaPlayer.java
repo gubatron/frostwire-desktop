@@ -292,11 +292,13 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
                 LibraryMediator.instance().getLibraryCoverArt().setFile(new File(currentSong.getPlaylistItem().getFilePath()));
                 playMedia();
                 durationInSeconds = (long) currentSong.getPlaylistItem().getTrackDurationInSecs();
-            } else if (currentSong instanceof InternetRadioAudioSource || currentSong instanceof StreamAudioSource) {
+            } else if (currentSong instanceof InternetRadioAudioSource) {
                 LibraryMediator.instance().getLibraryCoverArt().setDefault();
                 playMedia(false);
+            } else if (currentSong instanceof StreamAudioSource) {
+                LibraryMediator.instance().getLibraryCoverArt().setDefault();
+                playMedia(((StreamAudioSource) currentSong).showPlayerWindow());
             }
-            
         }
     }
 
