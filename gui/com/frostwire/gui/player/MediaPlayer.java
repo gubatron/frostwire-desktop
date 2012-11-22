@@ -298,6 +298,9 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
             } else if (currentSong instanceof StreamAudioSource) {
                 LibraryMediator.instance().getLibraryCoverArt().setDefault();
                 playMedia(((StreamAudioSource) currentSong).showPlayerWindow());
+            } else if (currentSong instanceof DeviceAudioSource) {
+                LibraryMediator.instance().getLibraryCoverArt().setDefault();
+                playMedia(((DeviceAudioSource) currentSong).showPlayerWindow());
             }
         }
     }

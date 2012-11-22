@@ -4,6 +4,7 @@ frostwire (5.5.0) stable; urgency=high
   * New video preview on cloud based video search results.
   * New Wi-Fi sharing between FrostWire for Desktop and Android.
   * New Wi-Fi sharing/announcement/discovery protocol via UPnP standards.
+  * New Stream Video/Audio stored shared on Android devices.
   * UX Improvement: Add folders to library with drag and drop on
     library tree.
   * UX Improvement: cloud audio downloads now have album art.

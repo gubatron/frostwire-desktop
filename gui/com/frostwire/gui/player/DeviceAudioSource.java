@@ -18,6 +18,7 @@
 
 package com.frostwire.gui.player;
 
+import com.frostwire.core.Constants;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.library.Device;
 
@@ -32,10 +33,12 @@ public class DeviceAudioSource extends AudioSource {
     private final Device device;
     private final FileDescriptor fd;
 
+
     public DeviceAudioSource(String url, Device device, FileDescriptor fd) {
         super(url);
         this.device = device;
         this.fd = fd;
+
     }
 
     public Device getDevice() {
@@ -44,5 +47,9 @@ public class DeviceAudioSource extends AudioSource {
 
     public FileDescriptor getFileDescriptor() {
         return fd;
+    }
+    
+    public boolean showPlayerWindow() {
+        return fd.fileType == Constants.FILE_TYPE_VIDEOS;
     }
 }
