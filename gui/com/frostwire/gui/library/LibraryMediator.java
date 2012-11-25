@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
@@ -41,7 +42,6 @@ import com.frostwire.alexandria.db.LibraryDatabase;
 
 import com.frostwire.core.Constants;
 import com.frostwire.gui.httpserver.HttpServerManager;
-import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
@@ -55,6 +55,12 @@ import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.UISettings;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class LibraryMediator {
 
     private static final String FILES_TABLE_KEY = "LIBRARY_FILES_TABLE";
