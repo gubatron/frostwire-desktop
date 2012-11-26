@@ -67,11 +67,9 @@ import com.limegroup.gnutella.settings.PlayerSettings;
  * @author aldenml
  * 
  */
-public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
+public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 
-    private static final String MPLAYER_DEFAULT_LINUX_PATH = "/usr/bin/mplayer";
-
-	private static final String[] PLAYABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wav", "wma", "m4a", "aac", "flac", "mp4", "flv", "avi", "mov", "mkv", "mpg", "mpeg", "3gp" };
+    private static final String[] PLAYABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wav", "wma", "m4a", "aac", "flac", "mp4", "flv", "avi", "mov", "mkv", "mpg", "mpeg", "3gp" };
 
     /**
      * Our list of MediaPlayerListeners that are currently listening for events
@@ -88,8 +86,7 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
     private boolean playNextMedia;
 
     private double volume;
-    private float volumeGainFactor;
-
+    
     private Queue<AudioSource> lastRandomFiles;
 
     private final ExecutorService playExecutor;
@@ -98,8 +95,6 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 
     private long durationInSeconds;
     private boolean isPlayPausedForSliding = false;
-    //private boolean isSliding = false; //not used.
-    
     private boolean stateNotificationsEnabled = true;
     
     public static MediaPlayer instance() {
@@ -108,10 +103,11 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
         		instance = new MediaPlayerWindows();
         	} else if (OSUtils.isMacOSX()) {
         		instance = new MediaPlayerOSX();
-        	} else {
-        		instance = new MediaPlayer();
+        	} else if (OSUtils.isLinux()) {
+        		instance = new MediaPlayerLinux();
         	}
-        }
+    	}
+        
         return instance;
     }
 
@@ -119,8 +115,6 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
         lastRandomFiles = new LinkedList<AudioSource>();
         playExecutor = ExecutorsHelper.newProcessingQueue("AudioPlayer-PlayExecutor");
         
-        initVolumeGainFactor();
-
         String playerPath;
         playerPath = getPlayerPath();
         
@@ -174,46 +168,11 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
         // prepare to receive UI events
         MPlayerUIEventHandler.instance().addListener(this);
     }
-    
-    private void initVolumeGainFactor() {
-    	volumeGainFactor = 30;
-    	
-		if (OSUtils.isLinux()) {
-			volumeGainFactor = 100;
-		}
-		
-	}
 
-    protected String getPlayerPath() {
-        if (OSUtils.isLinux()) {
-            File f = new File(MPLAYER_DEFAULT_LINUX_PATH);
-            if (!f.exists()) {
-                
-                GUIMediator.safeInvokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        
-                        String instructions = I18n
-                                .tr("<br><br>To Install <b>mplayer</b> in Ubuntu open a terminal window and type \"<b>sudo apt-get install mplayer</b>\".<br><br>If you have installed mplayer already at a custom location, <b>make sure to have a symlink pointing to your mplayer executable</b> at <b><font color=\"blue\">"
-                                        + MPLAYER_DEFAULT_LINUX_PATH + "</font></b>");
-                        
-                        if (!OSUtils.isUbuntu()) {
-                            instructions = "";
-                        }
-                        
-                        GUIMediator.showError(I18n.tr("<html><b>FrostWire requires Mplayer to play your media</b> but I could not find it in your computer.<br><br>If you want to use FrostWire as a media player <b>Please install mplayer and restart FrostWire.</b>")
-                                + I18n.tr(instructions));
-                                
-                    }
-                });
-
-            }
-        }
-        return MPLAYER_DEFAULT_LINUX_PATH;
-    }
+    protected abstract String getPlayerPath();
     
     protected float getVolumeGainFactor() {
-    	return volumeGainFactor;
+    	return 100.0f;
     }
     
     public Dimension getCurrentVideoSize() {

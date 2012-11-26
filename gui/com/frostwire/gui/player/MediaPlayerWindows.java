@@ -42,7 +42,7 @@ public class MediaPlayerWindows extends MediaPlayer {
 	}
 	
 	protected float getVolumeGainFactor() {
-		return 100.0f;
+		return 30.0f;
 	}
 	
     private static String decode(String s) {
