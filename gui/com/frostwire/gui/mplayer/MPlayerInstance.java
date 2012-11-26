@@ -163,27 +163,14 @@ MPlayerInstance
 			cmdList.add("-osdlevel");
 			cmdList.add("0");
 			
-			/*if(Utils.isWindows()) {
-				cmdList.add("-nofontconfig");
-			}*/
-			
 			cmdList.add("-noautosub");
 			
+			cmdList.add("-vo");
             if (OSUtils.isMacOSX()) {
-                cmdList.add("-vo");
                 cmdList.add("corevideo:buffer_name=fwmplayer");
             } else if (OSUtils.isWindows()) {
-            	
-            	// setting video output driver mode.
-            	// NOTE:
-            	//  this is now a prioritized list of drives that mplayer will try, in order of priority, 
-            	//  until it finds one that works.  there is no need to parse output of mplayer unless we
-            	//  decide we want to block video output for cases other than direct3d on windows.
-            	cmdList.add("-vo");
             	cmdList.add("direct3d,gl,directx,sdl");
-            	
             }else if (OSUtils.isLinux()) {
-            	cmdList.add("-vo");
             	cmdList.add("x11,gl,sdl");
             }
             
@@ -201,6 +188,10 @@ MPlayerInstance
             	cmdList.add( String.valueOf(MPlayerMediator.instance().getCanvasComponentHwnd()));
             }
 			
+            if (OSUtils.isLinux()) {
+            	cmdList.add("-zoom"); // auto zooms video to fit canvas area
+            }
+            
 			if(OSUtils.isMacOSX()) {
             	cmdList.add(fileOrUrl);
             } else if (OSUtils.isWindows()) {
@@ -232,13 +223,12 @@ MPlayerInstance
 							String line;
 							while( (line = brStdOut.readLine()) != null) {
 								if ( LOG && !line.startsWith( "A:" )){
-									
 									System.out.println( "STDOUT<- " + line );
 								}
 								output_consumer.consume( line );
 							}
 						} catch (Exception e) {
-							e.printStackTrace();
+							//e.printStackTrace();
 						}
 					};
 				};
@@ -252,14 +242,13 @@ MPlayerInstance
 							while( (line = brStdErr.readLine()) != null) {
 								
 								if ( LOG && !line.startsWith( "A:" )){
-									
 									System.out.println( "STDERR<- " + line );
 								}
 								
 								output_consumer.consume( line );
 							}
 						} catch (Exception e) {
-							e.printStackTrace();
+							//e.printStackTrace();
 						}
 					};
 				};
