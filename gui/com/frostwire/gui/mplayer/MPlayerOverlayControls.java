@@ -41,6 +41,8 @@ import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.limewire.util.OSUtils;
+
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
@@ -85,7 +87,10 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         setSize(winSize);
         setUndecorated(true);
         setBackground(new Color(0,0,0,0));
-        AWTUtilities.setWindowOpaque(this, false);
+        
+        if (OSUtils.isWindows()) {
+        	AWTUtilities.setWindowOpaque(this, false);
+        }
         
         // osx specific (won't harm windows/linux)
         getRootPane().putClientProperty("apple.awt.draggableWindowBackground", Boolean.FALSE);
@@ -222,7 +227,6 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 		panel.add(progressSlider);
         
         panel.add(bkgnd);
-        
     }
     
     @Override
@@ -230,7 +234,10 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 		SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-            	AWTUtilities.setWindowOpacity(MPlayerOverlayControls.this, alpha);
+            	
+            	if (OSUtils.isWindows()) {
+            		AWTUtilities.setWindowOpacity(MPlayerOverlayControls.this, alpha);
+            	}
             }
         });
 	}
@@ -349,8 +356,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 	}
 
 	@Override
-	public void icyInfo(MediaPlayer mediaPlayer, String data) {
-	}
+	public void icyInfo(MediaPlayer mediaPlayer, String data) {}
 	
 
 	/*
@@ -367,28 +373,16 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 	}
 	
     @Override
-    public void mouseClicked(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void mouseClicked(MouseEvent arg0) {}
 
     @Override
-    public void mouseEntered(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void mouseEntered(MouseEvent arg0) {}
 
     @Override
-    public void mouseExited(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void mouseExited(MouseEvent arg0) {}
 
     @Override
-    public void mouseDragged(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void mouseDragged(MouseEvent arg0) {}
 
     @Override
     public void mouseMoved(MouseEvent arg0) {

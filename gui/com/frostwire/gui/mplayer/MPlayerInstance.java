@@ -53,7 +53,7 @@ import com.limegroup.gnutella.gui.MPlayerMediator;
 public class 
 MPlayerInstance 
 {
-	private static final boolean LOG	= false;
+	private static final boolean LOG	= true;
 			
 	private static File BINARY_PATH;
 
@@ -172,9 +172,7 @@ MPlayerInstance
             if (OSUtils.isMacOSX()) {
                 cmdList.add("-vo");
                 cmdList.add("corevideo:buffer_name=fwmplayer");
-            }
-            
-            if(OSUtils.isWindows()) {
+            } else if (OSUtils.isWindows()) {
             	
             	// setting video output driver mode.
             	// NOTE:
@@ -183,65 +181,40 @@ MPlayerInstance
             	//  decide we want to block video output for cases other than direct3d on windows.
             	cmdList.add("-vo");
             	cmdList.add("direct3d,gl,directx,sdl");
-            	            	
-            	cmdList.add("-double");
             	
+            }else if (OSUtils.isLinux()) {
+            	cmdList.add("-vo");
+            	cmdList.add("x11,gl,sdl");
+            }
+            
+            if(OSUtils.isWindows()) {
             	cmdList.add("-priority");
-				cmdList.add("high");
-            	
-				cmdList.add("-framedrop");
-				
-            	cmdList.add("-wid");
+				cmdList.add("high");        
+            }
+            
+            if (OSUtils.isWindows() || OSUtils.isLinux()) {
+                
+            	cmdList.add("-double");
+            	cmdList.add("-framedrop");
+            
+				cmdList.add("-wid");
             	cmdList.add( String.valueOf(MPlayerMediator.instance().getCanvasComponentHwnd()));
             }
 			
-//			if(Utils.isWindows()) {
-//				
-//			} else {
-//				cmdList.add(0,ShellUtilityFinder.getNice());
-//				cmdList.add(1,"-n");
-//				cmdList.add(2,"0");
-//			}
-//			
-//			if(Utils.isWindows()) {
-//				
-//				cmdList.add("-ass");
-//				cmdList.add("-ass-color");
-//				cmdList.add("FFFFFF00");
-//				cmdList.add("-ass-border-color");
-//				cmdList.add("00000040");
-//			}
-			
-//			Font font = Font.getFont("LiberationSans-Bold.ttf");
-//			if(font != null) {			
-//				cmdList.add("-font");
-//				cmdList.add(font.getFontPath());
-//				cmdList.add("-subfont-text-scale");
-//				//cmdList.add(Utils.isWindows() ? "4" : "2.5");
-//				cmdList.add("-subfont-blur");
-//				cmdList.add("4");
-//				cmdList.add("-subfont-outline");
-//				cmdList.add("2");
-//			}
-//			
-//			cmdList.add("-framedrop");
-			
-			//Set the volume at 0 as we load, as we don't want to hear sound before we resize / seek.
-			//cmdList.add("-volume");
-			//cmdList.add("0");
-			
-            if(OSUtils.isMacOSX() || OSUtils.isLinux()) {
+			if(OSUtils.isMacOSX()) {
             	cmdList.add(fileOrUrl);
             } else if (OSUtils.isWindows()) {
             	cmdList.add(String.format("\"%s\"", fileOrUrl));
+            } else if (OSUtils.isLinux()) {
+            	cmdList.add(fileOrUrl);
             }
+			
             
 			String[] cmd = cmdList.toArray(new String[cmdList.size()]);
 			String cmdString = Arrays.toString(cmd).replace(", ", " ");
 			System.out.println(String.format("starting mplayer: %s", cmdString));
 			
 			try {
-				//mPlayerProcess = Runtime.getRuntime().exec(cmd);
 				ProcessBuilder pb = new ProcessBuilder(cmd);
 				mPlayerProcess = pb.start();
 				
@@ -258,14 +231,14 @@ MPlayerInstance
 						try {
 							String line;
 							while( (line = brStdOut.readLine()) != null) {
-//								if ( LOG && !line.startsWith( "A:" )){
-//									
-//									System.out.println( "<- " + line );
-//								}
+								if ( LOG && !line.startsWith( "A:" )){
+									
+									System.out.println( "STDOUT<- " + line );
+								}
 								output_consumer.consume( line );
 							}
 						} catch (Exception e) {
-							//e.printStackTrace();
+							e.printStackTrace();
 						}
 					};
 				};
@@ -277,14 +250,16 @@ MPlayerInstance
 						try {
 							String line;
 							while( (line = brStdErr.readLine()) != null) {
-//								if ( LOG && !line.startsWith( "A:" )){
-//									
-//									System.out.println( "<- " + line );
-//								}
+								
+								if ( LOG && !line.startsWith( "A:" )){
+									
+									System.out.println( "STDERR<- " + line );
+								}
+								
 								output_consumer.consume( line );
 							}
 						} catch (Exception e) {
-							//e.printStackTrace();
+							e.printStackTrace();
 						}
 					};
 				};

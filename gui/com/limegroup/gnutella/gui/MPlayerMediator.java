@@ -11,7 +11,7 @@ public class MPlayerMediator {
     private final MPlayerWindow mplayerWindow;
 
     private MPlayerMediator() {
-    	mplayerWindow = new MPlayerWindow();
+    	mplayerWindow = MPlayerWindow.createMPlayerWindow();
     }
     
     public MPlayerWindow getMPlayerWindow() {

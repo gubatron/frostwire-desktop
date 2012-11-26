@@ -60,13 +60,13 @@ import com.frostwire.gui.player.MediaPlayerListener;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.LimeJFrame;
 
-public class MPlayerWindow extends JFrame implements MediaPlayerListener {
+public abstract class MPlayerWindow extends JFrame implements MediaPlayerListener {
 
 	private static final long serialVersionUID = -9154474667503959284L;
 
 	private MPlayerOverlayControls overlayControls;
     private MPlayerComponent mplayerComponent;
-	private Component videoCanvas;
+	protected Component videoCanvas;
     private boolean isFullscreen = false;
     
     private AlphaAnimationThread animateAlphaThread;
@@ -79,12 +79,22 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
     private Point2D prevMousePosition = null;
     private boolean handleVideoResize = true;
     
-	public MPlayerWindow() {
+	protected MPlayerWindow() {
 		initializeUI();	
         
         player = MediaPlayer.instance();
         player.addMediaPlayerListener(this);
     }
+	
+	public static MPlayerWindow createMPlayerWindow() {
+		if (OSUtils.isWindows()) {
+			return new MPlayerWindow_Windows();
+		} else if (OSUtils.isLinux()) {
+			return new MPlayerWindow_Linux();
+		} else  {
+			return null;
+		}
+	}
 	
 
 	public MediaPlayer getMediaPlayer() {
@@ -213,25 +223,8 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 		}
     }
 	
-	public long getCanvasComponentHwnd() {
-        @SuppressWarnings("deprecation")
-        ComponentPeer cp = videoCanvas.getPeer();
-        if ((cp instanceof WComponentPeer)) {
-            return ((WComponentPeer) cp).getHWnd();
-        } else {
-            return 0;
-        }
-    }
-	
-	public long getHwnd() {
-		@SuppressWarnings("deprecation")
-        ComponentPeer cp = getPeer();
-        if ((cp instanceof WComponentPeer)) {
-            return ((WComponentPeer) cp).getHWnd();
-        } else {
-            return 0;
-        }
-    }
+	public abstract long getCanvasComponentHwnd();
+	public abstract long getHwnd();
 	
     private void resizeCanvas() {
         
