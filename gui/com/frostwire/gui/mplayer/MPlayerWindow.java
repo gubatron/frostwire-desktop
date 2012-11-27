@@ -42,7 +42,6 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
-import java.awt.peer.ComponentPeer;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -51,8 +50,6 @@ import javax.swing.Timer;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 
-import sun.awt.windows.WComponentPeer;
-
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
@@ -60,7 +57,7 @@ import com.frostwire.gui.player.MediaPlayerListener;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.LimeJFrame;
 
-public abstract class MPlayerWindow extends JFrame implements MediaPlayerListener {
+public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 
 	private static final long serialVersionUID = -9154474667503959284L;
 
@@ -91,9 +88,12 @@ public abstract class MPlayerWindow extends JFrame implements MediaPlayerListene
 			return new MPlayerWindow_Windows();
 		} else if (OSUtils.isLinux()) {
 			return new MPlayerWindow_Linux();
-		} else  {
+		} else if (OSUtils.isMacOSX()) {
+			return new MPlayerWindow();
+		} else {
 			return null;
 		}
+		
 	}
 	
 
@@ -223,8 +223,13 @@ public abstract class MPlayerWindow extends JFrame implements MediaPlayerListene
 		}
     }
 	
-	public abstract long getCanvasComponentHwnd();
-	public abstract long getHwnd();
+	public long getCanvasComponentHwnd() {
+		return 0;
+	}
+	
+	public long getHwnd() {
+		return 0;
+	}
 	
     private void resizeCanvas() {
         
