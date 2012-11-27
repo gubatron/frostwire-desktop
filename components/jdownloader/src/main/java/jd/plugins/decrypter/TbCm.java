@@ -16,6 +16,7 @@
 
 package jd.plugins.decrypter;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -790,7 +791,8 @@ public class TbCm extends PluginForDecrypt {
             String audioFilename = filename;
             FileOutputStream fos = new FileOutputStream(audioFilename);
             out.getBox(fos.getChannel());
-            fos.close();
+            
+            closeQuietly(fos);
 
             if (!new File(mp4Filename).delete()) {
                 new File(mp4Filename).deleteOnExit();
@@ -800,7 +802,7 @@ public class TbCm extends PluginForDecrypt {
                 jpgFile.deleteOnExit();
             }
 
-            fis.close();
+            closeQuietly(fis);
 
             return true;
         } catch (Throwable e) {
@@ -1020,5 +1022,15 @@ public class TbCm extends PluginForDecrypt {
         }
 
         return null;
+    }
+    
+    private static void closeQuietly(Closeable closeable) {
+        try {
+            if (closeable != null) {
+                closeable.close();
+            }
+        } catch (IOException ioe) {
+            // ignore
+        }
     }
 }
