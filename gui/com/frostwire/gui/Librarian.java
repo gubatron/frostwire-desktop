@@ -367,14 +367,25 @@ public final class Librarian {
     }
 
     private void deleteFromShareTable(String filePath) {
-        //pathSharedSet.remove(filePath);
-
         String where = Columns.FILE_PATH + " = ?";
         String[] whereArgs = new String[] { filePath };
 
         ShareFilesDB db = ShareFilesDB.intance();
 
         db.delete(where, whereArgs);
+    }
+    
+    public void deleteFolderFilesFromShareTable(String folderPath) {
+        String where = Columns.FILE_PATH + " LIKE ?";
+        String[] whereArgs = new String[] { folderPath + "%" };
+
+        ShareFilesDB db = ShareFilesDB.intance();
+
+        try {
+            db.delete(where, whereArgs);
+        } catch (Exception e) {
+        
+        }
     }
 
     private FileDescriptor cursorToFileDescriptor(Cursor c) {

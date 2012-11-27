@@ -17,10 +17,12 @@ import javax.swing.event.TreeSelectionListener;
 
 import org.limewire.util.FileUtils;
 
+import com.frostwire.gui.Librarian;
 import com.frostwire.gui.library.AddLibraryDirectoryAction;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.RecursiveLibraryDirectoryPanel;
 import com.frostwire.gui.library.RemoveLibraryDirectoryAction;
+import com.frostwire.gui.upnp.UPnPManager;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -158,11 +160,30 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
 	        }
         }
 	    
+	    if (isDirty()) {
+	        updateSharedTable();
+	    }
+	    
 	    LibraryMediator.instance().clearDirectoryHolderCaches();
         return false;
 	}
 	
-	public boolean isDirty() {
+	
+	/** If folders have been removed from the Library, let's make sure
+	 * no files in those folders remain shared on the Wi-Fi network.*/
+	private void updateSharedTable() {
+	    Set<File> initialCopy = new HashSet<File>(initialFoldersToInclude);
+	    initialCopy.removeAll(LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue());
+	    initialCopy.addAll(LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
+	    
+	    for (File folderToUnshare : initialCopy) {
+	        Librarian.instance().deleteFolderFilesFromShareTable(folderToUnshare.getAbsolutePath());
+	    }
+	    
+	    UPnPManager.instance().refreshPing();
+    }
+
+    public boolean isDirty() {
 	    return !initialFoldersToInclude.equals(directoryPanel.getRootsToInclude())
 	    || !initialFoldersToExclude.equals(directoryPanel.getFoldersToExclude());
     }
