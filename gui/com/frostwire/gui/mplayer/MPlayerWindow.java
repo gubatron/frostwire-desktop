@@ -48,7 +48,6 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import org.limewire.util.OSUtils;
-import org.limewire.util.SystemUtils;
 
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.MPlayerUIEventHandler;
@@ -62,7 +61,7 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 	private static final long serialVersionUID = -9154474667503959284L;
 
 	private MPlayerOverlayControls overlayControls;
-    private MPlayerComponent mplayerComponent;
+    protected MPlayerComponent mplayerComponent;
 	protected Component videoCanvas;
     private boolean isFullscreen = false;
     
@@ -85,11 +84,11 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 	
 	public static MPlayerWindow createMPlayerWindow() {
 		if (OSUtils.isWindows()) {
-			return new MPlayerWindow_Windows();
+			return new MPlayerWindowWin32();
 		} else if (OSUtils.isLinux()) {
-			return new MPlayerWindow_Linux();
+			return new MPlayerWindowLinux();
 		} else if (OSUtils.isMacOSX()) {
-			return new MPlayerWindow();
+			return new MPlayerWindowOSX();
 		} else {
 			return null;
 		}
@@ -214,10 +213,6 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 		if ( isVisible() ) {
 			isFullscreen = !isFullscreen;
 			overlayControls.setIsFullscreen(isFullscreen);
-			
-			if (!mplayerComponent.toggleFullScreen()) {
-				SystemUtils.toggleFullScreen(getHwnd());
-			}
 			
 			positionOverlayControls();
 		}

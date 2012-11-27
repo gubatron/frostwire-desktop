@@ -1,8 +1,10 @@
 package com.frostwire.gui.mplayer;
 
+import org.limewire.util.SystemUtils;
+
 import sun.awt.X11.XComponentPeer;
 
-public class MPlayerWindow_Linux extends MPlayerWindow {
+public class MPlayerWindowLinux extends MPlayerWindow {
 
 	private static final long serialVersionUID = -4373778544356324171L;
 
@@ -26,5 +28,11 @@ public class MPlayerWindow_Linux extends MPlayerWindow {
         } else {
             return 0;
         }
+	}
+	
+	@Override
+	public void toggleFullScreen() {
+		//SystemUtils.toggleFullScreen(getHwnd());
+		super.toggleFullScreen();
 	}
 }

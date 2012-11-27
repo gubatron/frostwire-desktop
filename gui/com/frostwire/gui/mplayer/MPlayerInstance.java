@@ -53,7 +53,7 @@ import com.limegroup.gnutella.gui.MPlayerMediator;
 public class 
 MPlayerInstance 
 {
-	private static final boolean LOG	= true;
+	private static final boolean LOG	= false;
 			
 	private static File BINARY_PATH;
 
