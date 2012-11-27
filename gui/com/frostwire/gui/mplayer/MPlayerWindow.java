@@ -382,6 +382,10 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 					case KeyEvent.VK_MINUS:
 						MPlayerUIEventHandler.instance().onVolumeDecremented();
 						return true;
+					case KeyEvent.VK_ESCAPE:
+						if (isFullscreen) {
+							MPlayerUIEventHandler.instance().onToggleFullscreenPressed();
+						}
 				}
 				
 				// shft + - for volume increment
