@@ -1,0 +1,3 @@
+
+bool toggleFullScreen(long winID);
+

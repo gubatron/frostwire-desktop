@@ -32,7 +32,7 @@ public class MPlayerWindowLinux extends MPlayerWindow {
 	
 	@Override
 	public void toggleFullScreen() {
-		//SystemUtils.toggleFullScreen(getHwnd());
+		SystemUtils.toggleFullScreen(getHwnd());
 		super.toggleFullScreen();
 	}
 }
