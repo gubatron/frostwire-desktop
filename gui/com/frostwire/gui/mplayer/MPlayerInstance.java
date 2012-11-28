@@ -42,6 +42,7 @@ import org.gudy.azureus2.core3.util.SimpleTimer;
 import org.gudy.azureus2.core3.util.SystemTime;
 import org.gudy.azureus2.core3.util.TimerEvent;
 import org.gudy.azureus2.core3.util.TimerEventPerformer;
+import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.mplayer.Language;
@@ -175,24 +176,30 @@ MPlayerInstance
             }
             
             if(OSUtils.isWindows()) {
-            	
-            	// setting video output driver mode.
-            	// NOTE:
-            	//  this is now a prioritized list of drives that mplayer will try, in order of priority, 
-            	//  until it finds one that works.  there is no need to parse output of mplayer unless we
-            	//  decide we want to block video output for cases other than direct3d on windows.
-            	cmdList.add("-vo");
-            	cmdList.add("direct3d,gl,directx,sdl");
-            	            	
-            	cmdList.add("-double");
-            	
-            	cmdList.add("-priority");
-				cmdList.add("high");
-            	
-				cmdList.add("-framedrop");
-				
-            	cmdList.add("-wid");
-            	cmdList.add( String.valueOf(MPlayerMediator.instance().getCanvasComponentHwnd()));
+                
+                // setting video output driver mode.
+                // NOTE:
+                //  this is now a prioritized list of drives that mplayer will try, in order of priority, 
+                //  until it finds one that works.  there is no need to parse output of mplayer unless we
+                //  decide we want to block video output for cases other than direct3d on windows.
+                cmdList.add("-vo");
+                cmdList.add("direct3d,gl,directx,sdl");
+                            	
+                cmdList.add("-double");
+                
+                cmdList.add("-priority");
+                cmdList.add("high");
+                
+                cmdList.add("-framedrop");
+                
+                cmdList.add("-wid");
+                cmdList.add( String.valueOf(MPlayerMediator.instance().getCanvasComponentHwnd()));
+                
+                //workaround for mplayer on windows not being able to decode wma correctly with the wma demuxer.
+                //by passing lavf it'll force mplayer to use ffmpeg's demuxer (libavformat).
+                if (FilenameUtils.hasExtension(fileOrUrl, "wma","wmv","asf")) {
+                    cmdList.add("-demuxer lavf");
+                }
             }
 			
 //			if(Utils.isWindows()) {
@@ -231,9 +238,9 @@ MPlayerInstance
 			//cmdList.add("0");
 			
             if(OSUtils.isMacOSX() || OSUtils.isLinux()) {
-            	cmdList.add(fileOrUrl);
+            	    cmdList.add(fileOrUrl);
             } else if (OSUtils.isWindows()) {
-            	cmdList.add(String.format("\"%s\"", fileOrUrl));
+            	    cmdList.add(String.format("\"%s\"", fileOrUrl));
             }
             
 			String[] cmd = cmdList.toArray(new String[cmdList.size()]);
