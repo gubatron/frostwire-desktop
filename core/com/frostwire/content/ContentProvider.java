@@ -19,9 +19,6 @@
 package com.frostwire.content;
 
 import java.sql.SQLException;
-
-import sun.jkernel.Bundle;
-
 import com.frostwire.database.Cursor;
 import com.frostwire.net.Uri;
 
