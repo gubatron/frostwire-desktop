@@ -24,6 +24,7 @@ import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class MediaPlayerOSX extends MediaPlayer {
 
+	@Override
 	protected String getPlayerPath() {
 		
 		String playerPath;
@@ -34,5 +35,10 @@ public class MediaPlayerOSX extends MediaPlayer {
         
 		return playerPath;
 	}
+	
+	@Override
+    protected float getVolumeGainFactor() {
+    	return 30.0f;
+    }
 	
 }
