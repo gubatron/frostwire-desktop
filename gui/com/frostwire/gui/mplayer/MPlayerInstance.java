@@ -198,7 +198,8 @@ MPlayerInstance
                 //workaround for mplayer on windows not being able to decode wma correctly with the wma demuxer.
                 //by passing lavf it'll force mplayer to use ffmpeg's demuxer (libavformat).
                 if (FilenameUtils.hasExtension(fileOrUrl, "wma","wmv","asf")) {
-                    cmdList.add("-demuxer lavf");
+                    cmdList.add("-demuxer");
+                    cmdList.add("lavf");
                 }
             }
 			
