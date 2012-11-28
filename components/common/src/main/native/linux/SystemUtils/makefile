@@ -1,7 +1,7 @@
 CC    = g++
-INCLUDES          = -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux
-CFLAGS         = -c -Wall -fPIC
-LDFLAGS        = -shared 
+INCLUDES       = -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux
+CFLAGS         = -std=c++0x -c -Wall -fPIC
+LDFLAGS        = -shared -lX11
 DEBUGFLAGS     = -O0 -D _DEBUG
 RELEASEFLAGS   = -O2 -D NDEBUG # -fwhole-program
 
@@ -16,6 +16,7 @@ all: $(SOURCES) $(TARGET) $(DESTINATION)
 
 $(DESTINATION): $(TARGET)
 	cp $(TARGET) $(DESTINATION)
+	@echo BUILD SUCCESS
 
 $(TARGET): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@

@@ -8,6 +8,10 @@ public class MPlayerWindowLinux extends MPlayerWindow {
 
 	private static final long serialVersionUID = -4373778544356324171L;
 
+	public MPlayerWindowLinux() {
+		System.out.println("MPlayerWindowLinux hwnd: " + getHwnd());
+	}
+	
 	@Override
 	public long getCanvasComponentHwnd() {
 		@SuppressWarnings("deprecation")

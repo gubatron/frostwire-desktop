@@ -1,3 +1,12 @@
+#include <X11/Xlib.h>
 
-bool toggleFullScreen(long winID);
+struct Hints
+{
+    unsigned long flags;
+    unsigned long functions;
+    unsigned long decorations;
+    long input_mode;
+    unsigned long status;
+};
 
+bool toggleFullScreen(unsigned long winID);

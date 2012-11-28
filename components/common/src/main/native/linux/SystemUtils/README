@@ -1,0 +1,7 @@
+this is the SystemUtils.so shared library for linux.
+
+currently it only supports toggling fullscreen through the JNI-enabled api: toggleFullScreen.
+
+NOTE:
+in order to get this project to build on linux, you may need to install the X11 development lib.  you can do this by running: sudo apt-get install libx11-dev.
+
