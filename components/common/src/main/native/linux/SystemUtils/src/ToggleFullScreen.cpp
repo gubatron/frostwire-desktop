@@ -18,15 +18,6 @@ bool toggleFullScreen(unsigned long winID) {
     display = XOpenDisplay(NULL);
     MOTIF_ATOM = XInternAtom(display,"_MOTIF_WM_HINTS", true);
     
-    // ------------------------
-    // set window decorations
-    // ------------------------
-    if (!isFullScreen) {
-
-
-    } else {
-    }
-    
     if (!isFullScreen) {
         
         // Set window decorations
