@@ -3,11 +3,13 @@ package com.frostwire.gui.mplayer;
 import org.limewire.util.SystemUtils;
 
 import sun.awt.X11.XComponentPeer;
+import sun.awt.X11.XWindow;
 
 public class MPlayerWindowLinux extends MPlayerWindow {
 
 	private static final long serialVersionUID = -4373778544356324171L;
-
+	private static boolean isFullScreen = false;
+	
 	public MPlayerWindowLinux() {
 		System.out.println("MPlayerWindowLinux hwnd: " + getHwnd());
 	}
@@ -36,7 +38,12 @@ public class MPlayerWindowLinux extends MPlayerWindow {
 	
 	@Override
 	public void toggleFullScreen() {
-		SystemUtils.toggleFullScreen(getHwnd());
+		//SystemUtils.toggleFullScreen(getHwnd());
+		
+		setExtendedState( isFullScreen ? NORMAL : MAXIMIZED_BOTH);
 		super.toggleFullScreen();
+		
+		isFullScreen = !isFullScreen;
+		
 	}
 }
