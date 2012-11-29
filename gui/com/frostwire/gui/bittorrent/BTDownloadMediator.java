@@ -28,6 +28,7 @@ import javax.swing.Action;
 import javax.swing.JPopupMenu;
 
 import jd.controlling.downloadcontroller.DownloadController;
+import jd.controlling.downloadcontroller.DownloadWatchDog;
 import jd.plugins.FilePackage;
 
 import org.apache.commons.logging.Log;
@@ -322,8 +323,13 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         return (download) ? azureusCore.getGlobalManager().getStats().getDataReceiveRate() : azureusCore.getGlobalManager().getStats().getDataSendRate();
     }
 
+    /** bytes/sec */
+    private int getCloudDownloadsBandwidth() {
+        return DownloadWatchDog.getInstance().getDownloadSpeedManager().getSpeed();
+    }
+    
     public double getDownloadsBandwidth() {
-        return getBandwidth(true) / 1000;
+        return (getBandwidth(true) + getCloudDownloadsBandwidth())/1000;
     }
 
     public double getUploadsBandwidth() {

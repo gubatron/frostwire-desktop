@@ -8,6 +8,7 @@ frostwire (5.5.0) stable; urgency=high
   * UX Improvement: Add folders to library with drag and drop on
     library tree.
   * UX Improvement: cloud audio downloads now have album art.
+  * Core Search Performance lowers CPU usage dramatically while indexing.
   * Core Improvement: broader compatibility on cloud demuxed downloads.
   * UI Improvement: partial download/torrent content window now includes
     file extension, file type icon.
@@ -19,7 +20,7 @@ frostwire (5.5.0) stable; urgency=high
   * Bug fix: Run on startup for Mac finally works. The BitTorrent network
     will get a boost of upstream bandwidth.
 
- -- FrostWire Team <contact@frostwire.com>  Wed, 21 Nov 2012 18:00:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 29 Nov 2012 16:00:00 -0500
 
 frostwire (5.4.0) stable; urgency=high
   * No more sound distortion with the FrostWire player volume levels.
