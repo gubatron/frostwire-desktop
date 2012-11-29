@@ -155,6 +155,18 @@ MPlayerInstance
 			
 			cmdList.add("-slave");
 			
+			//cache tunning for http streaming, without this some
+			//songs might not play.
+            if (fileOrUrl.toLowerCase().startsWith("http")) {
+                //64Kb
+                cmdList.add("-cache");
+                cmdList.add("64");
+                
+                //the cache has to be filled at least 50% to start playback
+                cmdList.add("-cache-min");
+                cmdList.add("50");
+            }
+			
 			//cmdList.add("-quiet");
 			
 			cmdList.add("-identify");
@@ -202,6 +214,8 @@ MPlayerInstance
                     cmdList.add("lavf");
                 }
             }
+            
+
 			
 //			if(Utils.isWindows()) {
 //				
