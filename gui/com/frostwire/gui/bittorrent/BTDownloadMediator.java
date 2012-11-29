@@ -350,8 +350,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             super.add(downloader, DATA_MODEL.getRowCount());
             if (DATA_MODEL.getRowCount() > 0) {
                 int row = DATA_MODEL.getRow(downloader);
-                TABLE.setSelectedRow(row);
-                TABLE.ensureSelectionVisible();
+                if (row != -1) {
+                    TABLE.setSelectedRow(row);
+                    TABLE.ensureSelectionVisible();
+                }
             }
         }
     }
