@@ -56,7 +56,6 @@ import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.JsonEngine;
-import com.frostwire.alexandria.LibraryUtils;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.filters.SearchFilter;
 import com.frostwire.websearch.youtube.YouTubeEntry;
@@ -172,10 +171,11 @@ public class LocalSearchEngine {
      * if there are matches.
      */
     public List<SmartSearchResult> search(String query) {
-        query = LibraryUtils.fuzzyLuceneQuery(query);
+        //query = LibraryUtils.fuzzyLuceneQuery(query);
 
         //FULL TEXT SEARCH, Returns the File IDs we care about.
-        String fullTextIndexSql = "SELECT * FROM FTL_SEARCH(?, ?, 0)";
+        //String fullTextIndexSql = "SELECT * FROM FTL_SEARCH(?, ?, 0)"; //lucene
+        String fullTextIndexSql = "SELECT * FROM FT_SEARCH(?, ?, 0)";
 
         //System.out.println(fullTextIndexSql);
         List<List<Object>> matchedFileRows = DB.query(fullTextIndexSql, query, LOCAL_SEARCH_RESULTS_LIMIT);
