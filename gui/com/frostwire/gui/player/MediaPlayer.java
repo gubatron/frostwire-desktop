@@ -71,7 +71,7 @@ public class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 
     private static final String MPLAYER_DEFAULT_LINUX_PATH = "/usr/bin/mplayer";
 
-	private static final String[] PLAYABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wav", "wma", "m4a", "aac", "flac", "mp4", "flv", "avi", "mov", "mkv", "mpg", "mpeg", "3gp", "m4v", "webm" };
+	private static final String[] PLAYABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wav", "wma", "wmv", "m4a", "aac", "flac", "mp4", "flv", "avi", "mov", "mkv", "mpg", "mpeg", "3gp", "m4v", "webm" };
 
     /**
      * Our list of MediaPlayerListeners that are currently listening for events
