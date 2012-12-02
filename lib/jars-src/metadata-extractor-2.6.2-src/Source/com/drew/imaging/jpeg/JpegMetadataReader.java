@@ -32,7 +32,7 @@ import com.drew.metadata.jpeg.JpegCommentReader;
 import com.drew.metadata.jpeg.JpegDirectory;
 import com.drew.metadata.jpeg.JpegReader;
 import com.drew.metadata.photoshop.PhotoshopReader;
-import com.drew.metadata.xmp.XmpReader;
+//import com.drew.metadata.xmp.XmpReader;
 
 import java.io.File;
 import java.io.IOException;
@@ -108,8 +108,8 @@ public class JpegMetadataReader
             if (app1Segment.length > 3 && "EXIF".equalsIgnoreCase(new String(app1Segment, 0, 4)))
                 new ExifReader().extract(new ByteArrayReader(app1Segment), metadata);
 
-            if (app1Segment.length > 27 && "http://ns.adobe.com/xap/1.0/".equalsIgnoreCase(new String(app1Segment, 0, 28)))
-                new XmpReader().extract(new ByteArrayReader(app1Segment), metadata);
+            //if (app1Segment.length > 27 && "http://ns.adobe.com/xap/1.0/".equalsIgnoreCase(new String(app1Segment, 0, 28)))
+            //    new XmpReader().extract(new ByteArrayReader(app1Segment), metadata);
         }
 
         // Loop through all APP2 segments, looking for something we can process.

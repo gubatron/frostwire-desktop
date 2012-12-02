@@ -118,6 +118,6 @@ public class SampleUsage
      */
     public static void main(String[] args)
     {
-        new SampleUsage("/Users/gubatron/workspace.frostwire/frostwire-desktop/lib/jars-src/metadata-extractor-2.6.2-src/Tests/com/drew/metadata/withIptcExifGps.jpg");
+        new SampleUsage("/home/aldenml/Development/workspace/frostwire-desktop/lib/jars-src/metadata-extractor-2.6.2-src/Tests/com/drew/metadata/withIptcExifGps.jpg");
     }
 }
