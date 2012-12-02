@@ -42,16 +42,12 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
-import java.awt.peer.ComponentPeer;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import org.limewire.util.OSUtils;
-import org.limewire.util.SystemUtils;
-
-import sun.awt.windows.WComponentPeer;
 
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.MPlayerUIEventHandler;
@@ -65,8 +61,8 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 	private static final long serialVersionUID = -9154474667503959284L;
 
 	private MPlayerOverlayControls overlayControls;
-    private MPlayerComponent mplayerComponent;
-	private Component videoCanvas;
+    protected MPlayerComponent mplayerComponent;
+	protected Component videoCanvas;
     private boolean isFullscreen = false;
     
     private AlphaAnimationThread animateAlphaThread;
@@ -79,12 +75,25 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
     private Point2D prevMousePosition = null;
     private boolean handleVideoResize = true;
     
-	public MPlayerWindow() {
+	protected MPlayerWindow() {
 		initializeUI();	
         
         player = MediaPlayer.instance();
         player.addMediaPlayerListener(this);
     }
+	
+	public static MPlayerWindow createMPlayerWindow() {
+		if (OSUtils.isWindows()) {
+			return new MPlayerWindowWin32();
+		} else if (OSUtils.isLinux()) {
+			return new MPlayerWindowLinux();
+		} else if (OSUtils.isMacOSX()) {
+			return new MPlayerWindowOSX();
+		} else {
+			return null;
+		}
+		
+	}
 	
 
 	public MediaPlayer getMediaPlayer() {
@@ -205,33 +214,17 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 			isFullscreen = !isFullscreen;
 			overlayControls.setIsFullscreen(isFullscreen);
 			
-			if (!mplayerComponent.toggleFullScreen()) {
-				SystemUtils.toggleFullScreen(getHwnd());
-			}
-			
 			positionOverlayControls();
 		}
     }
 	
 	public long getCanvasComponentHwnd() {
-        @SuppressWarnings("deprecation")
-        ComponentPeer cp = videoCanvas.getPeer();
-        if ((cp instanceof WComponentPeer)) {
-            return ((WComponentPeer) cp).getHWnd();
-        } else {
-            return 0;
-        }
-    }
+		return 0;
+	}
 	
 	public long getHwnd() {
-		@SuppressWarnings("deprecation")
-        ComponentPeer cp = getPeer();
-        if ((cp instanceof WComponentPeer)) {
-            return ((WComponentPeer) cp).getHWnd();
-        } else {
-            return 0;
-        }
-    }
+		return 0;
+	}
 	
     private void resizeCanvas() {
         

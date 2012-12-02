@@ -50,12 +50,12 @@ public class SystemUtils {
 					System.loadLibrary("SystemUtilities");
 					canLoad = true;
 				}
-				
-			} else if (OSUtils.isMacOSX()) {
+			} else if (OSUtils.isMacOSX() || OSUtils.isLinux()) {
 				System.loadLibrary("SystemUtilities");
 				canLoad = true;
 			}
 		} catch (UnsatisfiedLinkError noGo) {
+			System.out.println("ERROR: " + noGo.getMessage());
 			canLoad = false;
 		}
 		isLoaded = canLoad;
@@ -222,7 +222,7 @@ public class SystemUtils {
     }
     
     public static final boolean toggleFullScreen(long hwnd) {
-        if(isLoaded && OSUtils.isWindows()) {
+        if(isLoaded && (OSUtils.isWindows() || OSUtils.isLinux()) ) {
             return toggleFullScreenNative(hwnd);
         }
         

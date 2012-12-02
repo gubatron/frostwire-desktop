@@ -32,5 +32,4 @@ public interface MPlayerComponent {
 	public boolean toggleFullScreen();
 	
 	public long getWindowID();
-    
 }

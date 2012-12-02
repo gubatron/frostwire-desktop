@@ -29,6 +29,7 @@ public final class MPlayerComponentFactory {
     private static final String JMPLAYER_LIBRARY = "JMPlayer";
     private static final String OS_NAME = System.getProperty("os.name");
     private static final boolean IS_OS_WINDOWS = isCurrentOS("Windows");
+    private static final boolean IS_OS_LINUX = isCurrentOS("Linux");
     private static final boolean IS_OS_MAC = isCurrentOS("Mac");
 
     private static boolean nativeLibLoaded = false;
@@ -50,6 +51,8 @@ public final class MPlayerComponentFactory {
                 return new MPlayerComponentJava();
             } else if (IS_OS_MAC) {
                 return new MPlayerComponentOSX();
+            } else if (IS_OS_LINUX) {
+            	return new MPlayerComponentJava();
             }
         }
 

@@ -176,15 +176,15 @@ MPlayerInstance
 			cmdList.add("-osdlevel");
 			cmdList.add("0");
 			
-			/*if(Utils.isWindows()) {
-				cmdList.add("-nofontconfig");
-			}*/
-			
 			cmdList.add("-noautosub");
 			
+			cmdList.add("-vo");
             if (OSUtils.isMacOSX()) {
-                cmdList.add("-vo");
                 cmdList.add("corevideo:buffer_name=fwmplayer");
+            } else if (OSUtils.isWindows()) {
+            	cmdList.add("direct3d,gl,directx,sdl");
+            }else if (OSUtils.isLinux()) {
+            	cmdList.add("x11,gl,sdl");
             }
             
             if(OSUtils.isWindows()) {
@@ -194,8 +194,8 @@ MPlayerInstance
                 //  this is now a prioritized list of drives that mplayer will try, in order of priority, 
                 //  until it finds one that works.  there is no need to parse output of mplayer unless we
                 //  decide we want to block video output for cases other than direct3d on windows.
-                cmdList.add("-vo");
-                cmdList.add("direct3d,gl,directx,sdl");
+                //cmdList.add("-vo");
+                //cmdList.add("direct3d,gl,directx,sdl");
                             	
                 cmdList.add("-double");
                 
@@ -212,11 +212,19 @@ MPlayerInstance
                 if (FilenameUtils.hasExtension(fileOrUrl, "wma","wmv","asf")) {
                     cmdList.add("-demuxer");
                     cmdList.add("lavf");
-                }
+                }     
+            }
+            
+            if (OSUtils.isLinux()) {
+                
+            	cmdList.add("-double");
+            	cmdList.add("-framedrop");
+            
+				cmdList.add("-wid");
+            	cmdList.add( String.valueOf(MPlayerMediator.instance().getCanvasComponentHwnd()));
             }
             
 
-			
 //			if(Utils.isWindows()) {
 //				
 //			} else {
@@ -252,18 +260,24 @@ MPlayerInstance
 			//cmdList.add("-volume");
 			//cmdList.add("0");
 			
-            if(OSUtils.isMacOSX() || OSUtils.isLinux()) {
-            	    cmdList.add(fileOrUrl);
-            } else if (OSUtils.isWindows()) {
-            	    cmdList.add(String.format("\"%s\"", fileOrUrl));
+            if (OSUtils.isLinux()) {
+            	cmdList.add("-zoom"); // auto zooms video to fit canvas area
             }
+            
+			if(OSUtils.isMacOSX()) {
+            	cmdList.add(fileOrUrl);
+            } else if (OSUtils.isWindows()) {
+            	cmdList.add(String.format("\"%s\"", fileOrUrl));
+            } else if (OSUtils.isLinux()) {
+            	cmdList.add(fileOrUrl);
+            }
+			
             
 			String[] cmd = cmdList.toArray(new String[cmdList.size()]);
 			String cmdString = Arrays.toString(cmd).replace(", ", " ");
 			System.out.println(String.format("starting mplayer: %s", cmdString));
 			
 			try {
-				//mPlayerProcess = Runtime.getRuntime().exec(cmd);
 				ProcessBuilder pb = new ProcessBuilder(cmd);
 				mPlayerProcess = pb.start();
 				
@@ -281,8 +295,7 @@ MPlayerInstance
 							String line;
 							while( (line = brStdOut.readLine()) != null) {
 //								if ( LOG && !line.startsWith( "A:" )){
-//									
-//									System.out.println( "<- " + line );
+//									System.out.println( "STDOUT<- " + line );
 //								}
 								output_consumer.consume( line );
 							}
@@ -299,10 +312,11 @@ MPlayerInstance
 						try {
 							String line;
 							while( (line = brStdErr.readLine()) != null) {
+								
 //								if ( LOG && !line.startsWith( "A:" )){
-//									
-//									System.out.println( "<- " + line );
+//									System.out.println( "STDERR<- " + line );
 //								}
+								
 								output_consumer.consume( line );
 							}
 						} catch (Exception e) {
