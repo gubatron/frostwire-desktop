@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="mrjadapter" default="main" basedir=".">
+
+	<property name="jars" value="../dist/"/>
+
+    <path id="default.classpath">
+		<fileset dir="${jars}" includes="*.jar" excludes="cling-kernel.jar"/>
+	</path>
+
+	<target name="main">
+		<mkdir dir="bin" />
+
+		<!-- build -->
+		<javac srcdir="src" destdir="bin" fork="true" target="1.6">
+			<classpath refid="default.classpath"/>
+		</javac>
+
+		<!-- jar -->
+		<jar jarfile="../dist/cling-kernel.jar">
+			<fileset dir="bin" />
+		</jar>
+
+	</target>
+
+	<target name="clean">
+
+		<delete dir="bin" />
+
+	</target>
+
+</project>
