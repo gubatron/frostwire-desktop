@@ -20,12 +20,12 @@ package com.frostwire.gui.upnp;
 
 import java.beans.PropertyChangeSupport;
 
-import org.teleal.cling.binding.annotations.UpnpAction;
-import org.teleal.cling.binding.annotations.UpnpOutputArgument;
-import org.teleal.cling.binding.annotations.UpnpService;
-import org.teleal.cling.binding.annotations.UpnpServiceId;
-import org.teleal.cling.binding.annotations.UpnpServiceType;
-import org.teleal.cling.binding.annotations.UpnpStateVariable;
+import org.fourthline.cling.binding.annotations.UpnpAction;
+import org.fourthline.cling.binding.annotations.UpnpOutputArgument;
+import org.fourthline.cling.binding.annotations.UpnpService;
+import org.fourthline.cling.binding.annotations.UpnpServiceId;
+import org.fourthline.cling.binding.annotations.UpnpServiceType;
+import org.fourthline.cling.binding.annotations.UpnpStateVariable;
 
 import com.frostwire.util.JsonUtils;
 

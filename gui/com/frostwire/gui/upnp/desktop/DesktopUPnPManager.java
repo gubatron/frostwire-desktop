@@ -21,11 +21,11 @@ package com.frostwire.gui.upnp.desktop;
 import java.net.InetAddress;
 import java.util.logging.Logger;
 
-import org.teleal.cling.UpnpService;
-import org.teleal.cling.binding.annotations.AnnotationLocalServiceBinder;
-import org.teleal.cling.model.DefaultServiceManager;
-import org.teleal.cling.model.meta.LocalDevice;
-import org.teleal.cling.model.meta.LocalService;
+import org.fourthline.cling.UpnpService;
+import org.fourthline.cling.binding.annotations.AnnotationLocalServiceBinder;
+import org.fourthline.cling.model.DefaultServiceManager;
+import org.fourthline.cling.model.meta.LocalDevice;
+import org.fourthline.cling.model.meta.LocalService;
 
 import com.frostwire.core.ConfigurationManager;
 import com.frostwire.core.Constants;
