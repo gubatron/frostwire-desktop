@@ -50,7 +50,7 @@ public class SystemUtils {
 					System.loadLibrary("SystemUtilities");
 					canLoad = true;
 				}
-			} else if (OSUtils.isMacOSX() || OSUtils.isLinux()) {
+			} else if (OSUtils.isMacOSX()) {
 				System.loadLibrary("SystemUtilities");
 				canLoad = true;
 			}
