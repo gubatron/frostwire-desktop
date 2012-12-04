@@ -163,10 +163,11 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                             ProcessBuilder pbuilder = new ProcessBuilder(commands);
                             pbuilder.start();
                         } else if (OSUtils.isLinux() && OSUtils.isUbuntu()) {
-                            String[] commands = new String[] { "gdebi-gtk", _executableFile.getAbsolutePath() };
-
-                            ProcessBuilder pbuilder = new ProcessBuilder(commands);
-                            pbuilder.start();
+                        	boolean success = trySoftwareCenter() || tryGdebiGtk();
+                        	
+                        	if (!success) {
+                        		throw new IOException("Unable to install update");
+                        	}
                         } else if (OSUtils.isMacOSX()) {
                             String[] mountCommand = new String[] { "hdiutil", "attach", _executableFile.getAbsolutePath() };
 
@@ -189,6 +190,28 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
             }
         });
     }
+    
+    private boolean trySoftwareCenter() {
+    	return tryUbuntuInstallCmd("/usr/bin/software-center");
+    }
+    
+	private boolean tryGdebiGtk() {
+		return tryUbuntuInstallCmd("gdebi-gtk");
+	}
+
+	private boolean tryUbuntuInstallCmd(String cmd) {
+		try {
+			String[] commands = new String[] { cmd,
+					_executableFile.getAbsolutePath() };
+
+			ProcessBuilder pbuilder = new ProcessBuilder(commands);
+			pbuilder.start();
+
+			return true;
+		} catch (Throwable e) {
+			return false;
+		}
+	}
 
     private File downloadDotTorrent() {
 
