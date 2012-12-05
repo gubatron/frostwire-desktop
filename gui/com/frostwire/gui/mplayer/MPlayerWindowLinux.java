@@ -1,5 +1,9 @@
 package com.frostwire.gui.mplayer;
 
+import java.awt.AlphaComposite;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 import sun.awt.X11.XComponentPeer;
 
 public class MPlayerWindowLinux extends MPlayerWindow {
@@ -37,4 +41,10 @@ public class MPlayerWindowLinux extends MPlayerWindow {
 		setExtendedState( isFullScreen ? MAXIMIZED_BOTH : NORMAL);
 		super.toggleFullScreen();
 	}
+	
+	// on linux, alpha composite trick not working to get desired background color.  however,
+	// changing default paint behavior of window does work.
+	@Override
+	public void paint(Graphics g) {
+    }
 }
