@@ -87,7 +87,7 @@ public class PartialFilesDialog extends JDialog {
     private JCheckBox _checkBoxToggleAll;
 
     /** Has the table been painted at least once? */
-	protected boolean tablePainted;
+    protected boolean tablePainted;
 
     public PartialFilesDialog(JFrame frame, File torrentFile) throws TOTorrentException {
         super(frame, I18n.tr("Select files to download"));
@@ -179,25 +179,27 @@ public class PartialFilesDialog extends JDialog {
 
     private void setupTable() {
         GridBagConstraints c;
-        _table = new JTable(){
-        	public void paint(java.awt.Graphics g) {
-        		super.paint(g);
-      		
-				try {
-					if (tablePainted) {
-						return;
-					}
-					tablePainted = true;
+        _table = new JTable() {
+            private static final long serialVersionUID = -4266029708016964901L;
 
-					GUIUtils.adjustColumnWidth(_model, 2, 620, 10, this);
-					GUIUtils.adjustColumnWidth(_model, 3, 150, 10, this);
-				} catch (Exception e) {
-					tablePainted = false;
-				}
-        		
-        	};
+            public void paint(java.awt.Graphics g) {
+                super.paint(g);
+
+                try {
+                    if (tablePainted) {
+                        return;
+                    }
+                    tablePainted = true;
+
+                    GUIUtils.adjustColumnWidth(_model, 2, 620, 10, this);
+                    GUIUtils.adjustColumnWidth(_model, 3, 150, 10, this);
+                } catch (Exception e) {
+                    tablePainted = false;
+                }
+
+            };
         };
-        
+
         _table.setPreferredScrollableViewportSize(new Dimension(600, 300));
         _table.setRowSelectionAllowed(false);
         _table.setModel(_model);
@@ -207,16 +209,13 @@ public class PartialFilesDialog extends JDialog {
         _table.getColumnModel().getColumn(3).setHeaderValue(I18n.tr("Type"));
         _table.getColumnModel().getColumn(4).setHeaderValue(I18n.tr("Extension"));
         _table.getColumnModel().getColumn(5).setHeaderValue(I18n.tr("Size"));
-        
-        
+
         _table.getColumnModel().getColumn(0).setPreferredWidth(30);//checkbox
         _table.getColumnModel().getColumn(1).setPreferredWidth(30);//icon
         _table.getColumnModel().getColumn(2).setPreferredWidth(620);
         _table.getColumnModel().getColumn(3).setPreferredWidth(150);
         _table.getColumnModel().getColumn(4).setPreferredWidth(60);
         _table.getColumnModel().getColumn(5).setPreferredWidth(60);
-        
-        
 
         _scrollPane = new JScrollPane(_table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         _table.setFillsViewportHeight(true);
@@ -340,9 +339,11 @@ public class PartialFilesDialog extends JDialog {
     private final class RowFilterExtension extends RowFilter<Object, Object> {
 
         @Override
-        public boolean include(javax.swing.RowFilter.Entry<? extends Object, ? extends Object> entry) {
+        public boolean include(RowFilter.Entry<? extends Object, ? extends Object> entry) {
 
-            String fileName = (String) entry.getValue(1);
+            Object value = entry.getValue(2);
+
+            String fileName = value != null && value instanceof String ? (String) value : "";
 
             String[] tokens = _filter.getText().split(" ");
 
@@ -390,18 +391,17 @@ public class PartialFilesDialog extends JDialog {
         @Override
         public Class<?> getColumnClass(int columnIndex) {
 
-        	
             switch (columnIndex) {
             case 0:
                 return Boolean.class;
             case 1:
-            	return Icon.class;
+                return Icon.class;
             case 2:
                 return String.class;
             case 3:
-            	return String.class;
+                return String.class;
             case 4:
-            	return String.class;
+                return String.class;
             case 5:
                 return SizeHolder.class;
             default:
@@ -411,27 +411,27 @@ public class PartialFilesDialog extends JDialog {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-        	String filePath = _fileInfos[rowIndex].torrentFile.getRelativePath();
-        	String extension = FilenameUtils.getExtension(filePath);
-        	
+            String filePath = _fileInfos[rowIndex].torrentFile.getRelativePath();
+            String extension = FilenameUtils.getExtension(filePath);
+
             switch (columnIndex) {
             case 0:
-            	//checkbox
+                //checkbox
                 return _fileInfos[rowIndex].selected;
             case 1:
-            	//icon
-            	return IconManager.instance().getIconForExtension(extension);
+                //icon
+                return IconManager.instance().getIconForExtension(extension);
             case 2:
-            	//path
+                //path
                 return filePath;
             case 3:
-            	//human type
-            	return guessHumanType(extension);
+                //human type
+                return guessHumanType(extension);
             case 4:
-            	//extension
-            	return extension;
+                //extension
+                return extension;
             case 5:
-            	//file size
+                //file size
                 return new SizeHolder(_fileInfos[rowIndex].torrentFile.getLength());
             default:
                 return null;
@@ -478,13 +478,12 @@ public class PartialFilesDialog extends JDialog {
             return _fileInfos;
         }
 
-		private String guessHumanType(String extension) {
-			try {
-				return NamedMediaType.getFromExtension(extension).getMediaType().getDescriptionKey();
-			} catch (Throwable t) {
-				return I18n.tr("Unknown");
-			}
-		}
-
+        private String guessHumanType(String extension) {
+            try {
+                return NamedMediaType.getFromExtension(extension).getMediaType().getDescriptionKey();
+            } catch (Throwable t) {
+                return I18n.tr("Unknown");
+            }
+        }
     }
 }
