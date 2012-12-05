@@ -88,7 +88,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         setUndecorated(true);
         setBackground(new Color(0,0,0,0));
         
-        if (OSUtils.isWindows()) {
+        if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
         	AWTUtilities.setWindowOpaque(this, false);
         }
         
