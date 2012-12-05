@@ -1,3 +1,10 @@
+frostwire (5.5.1) stable; urgency=high
+  * New Clear Inactive button on transfers (TO MERGE)
+  * New setting to use the default system media player instead of FrostWire's (TODO)
+  * Bug fix: filtering on torrent detail dialog was broken.
+
+ -- FrostWire Team <contact@frostwire.com>  Wed, 05 Dec 2012 16:00:00 -0500
+
 frostwire (5.5.0) stable; urgency=high
   * New FrostWire video player.
   * New audio preview on cloud based audio search results.
