@@ -80,7 +80,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         
     	Container panel = getContentPane();
 
-        ImageIcon bkgndImage = GUIMediator.getThemeImage("fc_background");
+        ImageIcon bkgndImage = GUIMediator.getThemeImage( OSUtils.isLinux() ? "fc_background_linux" : "fc_background");
         Dimension winSize = new Dimension( bkgndImage.getIconWidth(), bkgndImage.getIconHeight());
         
     	setPreferredSize(winSize);
