@@ -71,7 +71,7 @@ public class PartialFilesDialog extends JDialog {
     private static final long serialVersionUID = 4312306965758592618L;
 
     private LabeledTextField _filter;
-    private RowFilter<Object, Object> _textBasedFilter = new RowFilterExtension();
+    private RowFilter<Object, Object> textBasedFilter;
 
     private JLabel labelTitle;
     private JTable _table;
@@ -248,6 +248,8 @@ public class PartialFilesDialog extends JDialog {
     private void setupTextFilter() {
         GridBagConstraints c;
         _filter = new LabeledTextField("Filter files", 30);
+        textBasedFilter = new RowFilterExtension(_filter, 2);
+
         _filter.addKeyListener(new KeyAdapter() {
 
             @Override
@@ -260,7 +262,7 @@ public class PartialFilesDialog extends JDialog {
                 _checkBoxToggleAll.setSelected(false);
 
                 TableRowSorter<TorrentTableModel> sorter = new TableRowSorter<TorrentTableModel>(_model);
-                sorter.setRowFilter(_textBasedFilter);
+                sorter.setRowFilter(textBasedFilter);
                 _table.setRowSorter(sorter);
             }
 
@@ -336,16 +338,24 @@ public class PartialFilesDialog extends JDialog {
         return _filesSelection;
     }
 
-    private final class RowFilterExtension extends RowFilter<Object, Object> {
+    static final class RowFilterExtension extends RowFilter<Object, Object> {
+
+        private final LabeledTextField labelFilter;
+        private final int columnIndex;
+
+        public RowFilterExtension(LabeledTextField labelFilter, int columnIndex) {
+            this.labelFilter = labelFilter;
+            this.columnIndex = columnIndex;
+        }
 
         @Override
         public boolean include(RowFilter.Entry<? extends Object, ? extends Object> entry) {
 
-            Object value = entry.getValue(2);
+            Object value = entry.getValue(columnIndex);
 
             String fileName = value != null && value instanceof String ? (String) value : "";
 
-            String[] tokens = _filter.getText().split(" ");
+            String[] tokens = labelFilter.getText().split(" ");
 
             for (String t : tokens) {
                 if (!fileName.toLowerCase().contains(t.toLowerCase())) {

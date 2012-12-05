@@ -53,6 +53,7 @@ import jd.plugins.FilePackage;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.limewire.util.FilenameUtils;
 
+import com.frostwire.gui.bittorrent.PartialFilesDialog.RowFilterExtension;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
@@ -62,14 +63,14 @@ import com.limegroup.gnutella.gui.LabeledTextField;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
 
 public class PartialYouTubePackageDialog extends JDialog {
-	
-	/** First time this component has been painted */
-	private boolean tablePainted;
+
+    /** First time this component has been painted */
+    private boolean tablePainted;
 
     private static final long serialVersionUID = -7028188722959174740L;
 
     private LabeledTextField _filter;
-    private RowFilter<Object, Object> _textBasedFilter = new RowFilterExtension();
+    private RowFilter<Object, Object> textBasedFilter;
 
     private JLabel _label;
     private JTable _table;
@@ -173,26 +174,27 @@ public class PartialYouTubePackageDialog extends JDialog {
     private void setupTable() {
         GridBagConstraints c;
         _table = new JTable() {
-        	public void paint(java.awt.Graphics g) {
-        		
-        		super.paint(g);
-        		
-				try {
-					if (tablePainted) {
-						return;
-					}
-					tablePainted = true;
+            private static final long serialVersionUID = 6757772984341572968L;
 
-					GUIUtils.adjustColumnWidth(_model, 2, 620, 10, this);
-					GUIUtils.adjustColumnWidth(_model, 3, 150, 10, this);
-				} catch (Exception e) {
-					tablePainted = false;
-				}
-        		
-        	};
+            public void paint(java.awt.Graphics g) {
+
+                super.paint(g);
+
+                try {
+                    if (tablePainted) {
+                        return;
+                    }
+                    tablePainted = true;
+
+                    GUIUtils.adjustColumnWidth(_model, 2, 620, 10, this);
+                    GUIUtils.adjustColumnWidth(_model, 3, 150, 10, this);
+                } catch (Exception e) {
+                    tablePainted = false;
+                }
+
+            };
         };
-         
-        
+
         _table.setPreferredScrollableViewportSize(new Dimension(600, 300));
         _table.setModel(_model);
         _table.getColumnModel().getColumn(0).setHeaderValue(""); //checkbox
@@ -200,7 +202,7 @@ public class PartialYouTubePackageDialog extends JDialog {
         _table.getColumnModel().getColumn(2).setHeaderValue(I18n.tr("File"));
         _table.getColumnModel().getColumn(3).setHeaderValue(I18n.tr("Type"));
         _table.getColumnModel().getColumn(4).setHeaderValue(I18n.tr("Extension"));
-        
+
         _table.getColumnModel().getColumn(0).setPreferredWidth(30);//checkbox
         _table.getColumnModel().getColumn(1).setPreferredWidth(30);//icon
         _table.getColumnModel().getColumn(2).setPreferredWidth(620);
@@ -238,6 +240,8 @@ public class PartialYouTubePackageDialog extends JDialog {
     private void setupTextFilter() {
         GridBagConstraints c;
         _filter = new LabeledTextField("Filter files", 30);
+        textBasedFilter = new RowFilterExtension(_filter, 2);
+
         _filter.addKeyListener(new KeyAdapter() {
 
             @Override
@@ -250,7 +254,7 @@ public class PartialYouTubePackageDialog extends JDialog {
                 _checkBoxToggleAll.setSelected(false);
 
                 TableRowSorter<FilePackageTableModel> sorter = new TableRowSorter<FilePackageTableModel>(_model);
-                sorter.setRowFilter(_textBasedFilter);
+                sorter.setRowFilter(textBasedFilter);
                 _table.setRowSorter(sorter);
             }
 
@@ -319,25 +323,6 @@ public class PartialYouTubePackageDialog extends JDialog {
         return _filesSelection;
     }
 
-    private final class RowFilterExtension extends RowFilter<Object, Object> {
-
-        @Override
-        public boolean include(javax.swing.RowFilter.Entry<? extends Object, ? extends Object> entry) {
-
-            String fileName = (String) entry.getValue(1);
-
-            String[] tokens = _filter.getText().split(" ");
-
-            for (String t : tokens) {
-                if (!fileName.toLowerCase().contains(t.toLowerCase())) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-    }
-
     public class FilePackageInfo {
         public FilePackage file;
         public boolean selected;
@@ -380,20 +365,20 @@ public class PartialYouTubePackageDialog extends JDialog {
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
             case 0:
-            	//checkbox
+                //checkbox
                 return Boolean.class;
             case 1:
-            	//icon
-            	return Icon.class;
+                //icon
+                return Icon.class;
             case 2:
-            	//path
+                //path
                 return String.class;
             case 3:
-            	//type
+                //type
                 return String.class;
             case 4:
-            	//extension
-            	return String.class;
+                //extension
+                return String.class;
             default:
                 return null;
             }
@@ -401,24 +386,24 @@ public class PartialYouTubePackageDialog extends JDialog {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-        	String fileName = readFilename(_fileInfos[rowIndex].file);
-        	String extension = FilenameUtils.getExtension(fileName);
+            String fileName = readFilename(_fileInfos[rowIndex].file);
+            String extension = FilenameUtils.getExtension(fileName);
             switch (columnIndex) {
             case 0:
-            	
-            	//checkbox
+
+                //checkbox
                 return _fileInfos[rowIndex].selected;
             case 1:
-            	//icon
-            	return IconManager.instance().getIconForExtension(extension);
+                //icon
+                return IconManager.instance().getIconForExtension(extension);
             case 2:
-            	//file name
+                //file name
                 return fileName;
             case 3:
-            	//(human readable type)
-            	return guessHumanType(fileName, extension);
+                //(human readable type)
+                return guessHumanType(fileName, extension);
             case 4:
-            	//extension
+                //extension
                 return extension;
             default:
                 return null;
@@ -475,41 +460,36 @@ public class PartialYouTubePackageDialog extends JDialog {
         public FilePackageInfo[] getFileInfos() {
             return _fileInfos;
         }
-        
-    	public String guessHumanType(String filename, String extension) {
-			try {
-				// first if it's a video or audio
-				StringBuilder humanType = new StringBuilder();
 
-				MediaType mediaType = NamedMediaType
-						.getFromExtension(extension).getMediaType();
+        public String guessHumanType(String filename, String extension) {
+            try {
+                // first if it's a video or audio
+                StringBuilder humanType = new StringBuilder();
 
-				if (mediaType.equals(MediaType.getAudioMediaType())) {
-					humanType.append(I18n.tr("Audio"));
-				} else if (mediaType.equals(MediaType.getVideoMediaType())) {
-					humanType.append(I18n.tr("Video"));
-				}
+                MediaType mediaType = NamedMediaType.getFromExtension(extension).getMediaType();
 
-				humanType.append(" ");
+                if (mediaType.equals(MediaType.getAudioMediaType())) {
+                    humanType.append(I18n.tr("Audio"));
+                } else if (mediaType.equals(MediaType.getVideoMediaType())) {
+                    humanType.append(I18n.tr("Video"));
+                }
 
-				// now the quality
-				if (filename.contains("High Quality")
-						|| filename.contains("(720p_")
-						|| filename.contains("(1080p_")) {
-					humanType.append(I18n.tr("(High Quality)"));
-				} else if (filename.contains("(AAC)")
-						|| filename.contains("(480p_")) {
-					humanType.append(I18n.tr("(Medium Quality"));
-				} else {
-					humanType.append(I18n.tr("(Poor Quality)"));
-				}
+                humanType.append(" ");
 
-				return humanType.toString();
-			} catch (Throwable t) {
-				return I18n.tr("Unknown");
-			}
-    	}
+                // now the quality
+                if (filename.contains("High Quality") || filename.contains("(720p_") || filename.contains("(1080p_")) {
+                    humanType.append(I18n.tr("(High Quality)"));
+                } else if (filename.contains("(AAC)") || filename.contains("(480p_")) {
+                    humanType.append(I18n.tr("(Medium Quality"));
+                } else {
+                    humanType.append(I18n.tr("(Poor Quality)"));
+                }
+
+                return humanType.toString();
+            } catch (Throwable t) {
+                return I18n.tr("Unknown");
+            }
+        }
     }
-
 
 }
