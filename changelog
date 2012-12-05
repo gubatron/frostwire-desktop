@@ -1,5 +1,5 @@
 frostwire (5.5.1) stable; urgency=high
-  * New Clear Inactive button on transfers (TO MERGE)
+  * New Clear Inactive button on transfers.
   * New setting to use the default system media player instead of FrostWire's (TODO)
   * Bug fix: filtering on torrent detail dialog was broken.
 
