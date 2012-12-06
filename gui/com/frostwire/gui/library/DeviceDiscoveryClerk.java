@@ -44,8 +44,6 @@ public class DeviceDiscoveryClerk {
 
     private static final Log LOG = LogFactory.getLog(DeviceDiscoveryClerk.class);
 
-    private static final long STALE_DEVICE_TIMEOUT = 14000;
-
     private Map<String, Device> deviceCache;
 
     private JsonEngine jsonEngine;

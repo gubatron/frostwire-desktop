@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.BasicStroke;
@@ -76,6 +77,10 @@ import com.limegroup.gnutella.util.QueryUtils;
  * This class wraps the JTable that displays files in the library,
  * controlling access to the table and the various table properties.
  * It is the Mediator to the Table part of the Library display.
+ * 
+ * @author gubatron
+ * @author aldenml
+ * 
  */
 final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<LibraryPlaylistsTableModel, LibraryPlaylistsTableDataLine, PlaylistItem> {
 
@@ -96,7 +101,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     private Action exportPlaylistAction = new ExportPlaylistAction();
 
     private Action cleanupPlaylistAction = new CleanupPlaylistAction();
-    
+
     private Action refreshID3TagsAction = new RefreshID3TagsAction();
 
     /**
@@ -137,16 +142,15 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         super.setupConstants();
         MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryPlaylistsTableModel();
-        
-        
+
         TABLE = new LimeJTable(DATA_MODEL) {
-            
+
             private Image bigAudioIcon = GUIMediator.getThemeImage("audio128x128").getImage();
-            
+
             protected void paintComponent(java.awt.Graphics g) {
                 //System.out.println("LibraryPlaylistTableMediator.getRowCount() " + TABLE.getRowCount());
-                if (TABLE.getRowCount()==0) {
-                    drawHelpGraphics(g,bigAudioIcon);
+                if (TABLE.getRowCount() == 0) {
+                    drawHelpGraphics(g, bigAudioIcon);
                 } else {
                     super.paintComponent(g);
                 }
@@ -155,34 +159,34 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         Action[] aa = new Action[] { LAUNCH_ACTION, OPEN_IN_FOLDER_ACTION, SEND_TO_FRIEND_ACTION, DELETE_ACTION, OPTIONS_ACTION };
         BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
     }
-    
+
     private void drawHelpGraphics(java.awt.Graphics g, Image icon) {
-        
+
         Graphics2D g2d = (Graphics2D) g;
         int helpPadding = 20;
-        
-        g2d.setStroke(new BasicStroke(6,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 10.0f, new float[] {16.0f,20.0f},0.0f));
-        g2d.setRenderingHint (RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        
+
+        g2d.setStroke(new BasicStroke(6, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 10.0f, new float[] { 16.0f, 20.0f }, 0.0f));
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
         g2d.setColor(Color.WHITE);
-        g2d.fillRect(0,0, TABLE.getWidth(), TABLE.getHeight());
-        
+        g2d.fillRect(0, 0, TABLE.getWidth(), TABLE.getHeight());
+
         g2d.setColor(ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder());
-        g2d.drawRoundRect(helpPadding, helpPadding, TABLE.getWidth()-helpPadding*2, TABLE.getHeight()-helpPadding*2, 6, 6);
-        
+        g2d.drawRoundRect(helpPadding, helpPadding, TABLE.getWidth() - helpPadding * 2, TABLE.getHeight() - helpPadding * 2, 6, 6);
+
         try {
-            if ((TABLE.getHeight()-helpPadding*3) < (icon.getHeight(null))) {
-                int newIconDimension = TABLE.getHeight() - helpPadding*2 - 5;
+            if ((TABLE.getHeight() - helpPadding * 3) < (icon.getHeight(null))) {
+                int newIconDimension = TABLE.getHeight() - helpPadding * 2 - 5;
                 if (newIconDimension > 16) {
                     g2d.drawImage(icon, (TABLE.getWidth() - newIconDimension) / 2, (TABLE.getHeight() - newIconDimension) / 2, newIconDimension, newIconDimension, null);
                 }
             } else {
                 g2d.drawImage(icon, (TABLE.getWidth() - icon.getWidth(null)) / 2, (TABLE.getHeight() - icon.getHeight(null)) / 2, null);
             }
-        } catch (Throwable t) { 
+        } catch (Throwable t) {
             //don't stop till you get enough
-        }        
-        
+        }
+
     }
 
     // inherit doc comment
@@ -204,7 +208,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         menu.add(new SkinMenuItem(SEND_TO_ITUNES_ACTION));
 
-        
         menu.addSeparator();
         menu.add(new SkinMenuItem(DELETE_ACTION));
 
@@ -242,19 +245,19 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         return menu;
     }
-    
+
     @Override
     protected void addListeners() {
-    	super.addListeners();
+        super.addListeners();
 
-    	TABLE.addKeyListener(new KeyAdapter() {
-        	@Override
-        	public void keyReleased(KeyEvent e) {
-        		if (LibraryUtils.isRefreshKeyEvent(e)) {
-        			LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
-        		}        		
-        	}
-		});
+        TABLE.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (LibraryUtils.isRefreshKeyEvent(e)) {
+                    LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+                }
+            }
+        });
     }
 
     private JMenu createSearchSubMenu(LibraryPlaylistsTableDataLine dl) {
@@ -321,7 +324,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         TableColumn tc = model.getColumn(LibraryPlaylistsTableDataLine.STARRED_IDX);
         tc.setCellEditor(new PlaylistItemStarEditor());
 
-        
         TABLE.addMouseMotionListener(new MouseMotionAdapter() {
             int currentCellColumn = -1;
             int currentCellRow = -1;
@@ -340,7 +342,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
                 }
             }
         });
-        
+
         tc = model.getColumn(LibraryPlaylistsTableDataLine.TITLE_IDX);
         tc.setCellEditor(new LibraryNameHolderEditor());
     }
@@ -377,7 +379,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         }
 
         currentPlaylist = playlist;
-        List<PlaylistItem> items = currentPlaylist.getItems(); 
+        List<PlaylistItem> items = currentPlaylist.getItems();
 
         clearTable();
         for (final PlaylistItem item : items) {
@@ -475,7 +477,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             }
 
             LibraryMediator.instance().getLibraryExplorer().refreshSelection();
-            
+
         } else {
 
             for (LibraryPlaylistsTableDataLine line : lines) {
@@ -487,30 +489,9 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
             clearSelection();
         }
-        
+
         super.removeSelection();
     }
-
-    /**
-     * Creates a JList of files and sets and makes it non-selectable. 
-     */
-    //    private static JList createFileList(List<String> fileNames) {
-    //        JList fileList = new JList(fileNames.toArray());
-    //        fileList.setVisibleRowCount(5);
-    //        fileList.setCellRenderer(new FileNameListCellRenderer());
-    //        //fileList.setSelectionForeground(fileList.getForeground());
-    //        //fileList.setSelectionBackground(fileList.getBackground());
-    //        fileList.setFocusable(false);
-    //        return fileList;
-    //    }
-
-    //    /**
-    //     * Returns the human readable file name for incomplete files or
-    //     * just the regular file name otherwise. 
-    //     */
-    //    private String getCompleteFileName(File file) {
-    //        return file.getName();
-    //    }
 
     public void handleActionKey() {
         playSong();
@@ -524,7 +505,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         AudioSource audioSource = new AudioSource(line.getPlayListItem());
         if (MediaPlayer.isPlayableFile(audioSource)) {
-        	MediaPlayer.instance().asyncLoadMedia(audioSource, true, true, currentPlaylist, getFileView());
+            MediaPlayer.instance().asyncLoadMedia(audioSource, true, true, currentPlaylist, getFileView());
         }
     }
 
@@ -556,9 +537,9 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             providers[i] = new FileProvider(DATA_MODEL.getFile(rows[i]));
         }
         if (!playAudio) {
-        	MediaPlayer.instance().stop();
+            MediaPlayer.instance().stop();
         }
-        
+
         if (playAudio) {
             GUILauncher.launch(providers);
         } else {
@@ -601,7 +582,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         } else {
             OPEN_IN_FOLDER_ACTION.setEnabled(false);
         }
-        
+
         if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setFile(getSelectedLibraryLines()[0].getFile());
         }
@@ -628,7 +609,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     public void setPlayerEnabled(boolean value) {
         handleSelection(TABLE.getSelectedRow());
     }
-    
 
     private boolean hasExploreAction() {
         return OSUtils.isWindows() || OSUtils.isMacOSX();
@@ -655,7 +635,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             launch(true);
         }
     }
-    
+
     private final class LaunchOSAction extends AbstractAction {
 
         /**
@@ -740,26 +720,26 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         }
     }
-    
+
     private class SendAudioFilesToiTunes extends AbstractAction {
 
-		private static final long serialVersionUID = 4726989286129406765L;
+        private static final long serialVersionUID = 4726989286129406765L;
 
-		public SendAudioFilesToiTunes() {
-			putValue(Action.NAME, I18n.tr("Send to iTunes"));
+        public SendAudioFilesToiTunes() {
+            putValue(Action.NAME, I18n.tr("Send to iTunes"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send audio files to iTunes"));
-    	}
-    	
-    	@Override
-		public void actionPerformed(ActionEvent e) {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
             int[] rows = TABLE.getSelectedRows();
             for (int i = 0; i < rows.length; i++) {
                 int index = rows[i]; // current index to add
                 File file = DATA_MODEL.getFile(index);
-                
-				iTunesMediator.instance().scanForSongs(file);                
+
+                iTunesMediator.instance().scanForSongs(file);
             }
-		}
+        }
     }
 
     private final class RemoveFromPlaylistAction extends AbstractAction {
@@ -838,11 +818,11 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
         }
     }
-    
+
     private final class RefreshID3TagsAction extends AbstractAction {
 
         private static final long serialVersionUID = 758150680592618044L;
-        
+
         public RefreshID3TagsAction() {
             putValue(Action.NAME, I18n.tr("Refresh Audio Properties"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Refresh the audio properties based on ID3 tags"));
@@ -872,7 +852,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         }
         return result;
     }
-    
+
     @Override
     protected void sortAndMaintainSelection(int columnToSort) {
         super.sortAndMaintainSelection(columnToSort);
@@ -883,7 +863,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         Playlist playlist = MediaPlayer.instance().getCurrentPlaylist();
         if (playlist != null && playlist.equals(currentPlaylist)) {
             if (MediaPlayer.instance().getPlaylistFilesView() != null) {
-            	MediaPlayer.instance().setPlaylistFilesView(getFileView());
+                MediaPlayer.instance().setPlaylistFilesView(getFileView());
             }
         }
     }

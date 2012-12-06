@@ -91,8 +91,6 @@ import com.limegroup.gnutella.util.QueryUtils;
  */
 final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<LibraryFilesTableModel, LibraryFilesTableDataLine, File> {
 
-
-
     /**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
      */
@@ -195,11 +193,11 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (areAllSelectedFilesPlayable()) {
             menu.add(createAddToPlaylistSubMenu());
         }
-        
+
         boolean anyBeingShared = isAnyBeingShared();
         WIFI_SHARE_ACTION.setEnabled(!anyBeingShared);
         WIFI_UNSHARE_ACTION.setEnabled(!anyBeingShared);
-        menu.add(new SkinMenuItem(areAllSelectedFilesShared() ? WIFI_UNSHARE_ACTION : WIFI_SHARE_ACTION));    
+        menu.add(new SkinMenuItem(areAllSelectedFilesShared() ? WIFI_UNSHARE_ACTION : WIFI_SHARE_ACTION));
 
         menu.add(new SkinMenuItem(SEND_TO_FRIEND_ACTION));
         menu.add(new SkinMenuItem(SEND_TO_ITUNES_ACTION));
@@ -253,9 +251,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 break;
             }
         }
-        return oneBeingShared; 
+        return oneBeingShared;
     }
-    
+
     private boolean areAllSelectedFilesShared() {
         boolean allAreShared = true;
         int[] selectedRows = TABLE.getSelectedRows();
@@ -267,7 +265,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 break;
             }
         }
-        return allAreShared;    
+        return allAreShared;
     }
 
     private boolean areAllSelectedFilesPlayable() {
@@ -334,7 +332,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         TableColumnModel model = TABLE.getColumnModel();
         TableColumn tc = model.getColumn(LibraryFilesTableDataLine.NAME_IDX);
         tc.setCellEditor(new LibraryNameHolderEditor());
-        
+
         tc = model.getColumn(LibraryFilesTableDataLine.SHARE_IDX);
         tc.setCellEditor(new FileShareCellEditor());
     }
@@ -393,7 +391,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                     }
                     LibraryMediator.instance().getLibrarySearch().addResults(fPartition.size());
 
-                    
                 }
             });
 
@@ -545,7 +542,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             boolean removed = FileUtils.delete(file, removeOptions.length > 2 && option == 0 /* "move to trash" option index */);
             if (removed) {
                 if (MediaPlayer.instance().isThisBeingPlayed(file)) {
-                	MediaPlayer.instance().stop();
+                    MediaPlayer.instance().stop();
                 }
                 DATA_MODEL.remove(DATA_MODEL.getRow(file));
             } else {
@@ -629,7 +626,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             return;
         }
         if (getMediaType().equals(MediaType.getAudioMediaType()) && MediaPlayer.isPlayableFile(line.getFile())) {
-        	MediaPlayer.instance().asyncLoadMedia(new AudioSource(line.getFile()), true, false, null, getFileView());
+            MediaPlayer.instance().asyncLoadMedia(new AudioSource(line.getFile()), true, false, null, getFileView());
             return;
         }
 
@@ -685,7 +682,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             providers[i] = new FileProvider(DATA_MODEL.getFile(rows[i]));
         }
         if (stopAudio || !playAudio) {
-        	MediaPlayer.instance().stop();
+            MediaPlayer.instance().stop();
         }
 
         if (playAudio) {
@@ -749,7 +746,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setFile(selectedFile);
         }
-        
+
         boolean anyBeingShared = isAnyBeingShared();
         WIFI_SHARE_ACTION.setEnabled(!anyBeingShared);
         WIFI_UNSHARE_ACTION.setEnabled(!anyBeingShared);
@@ -1021,7 +1018,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     public void resetAudioPlayerFileView() {
         Playlist playlist = MediaPlayer.instance().getCurrentPlaylist();
         if (playlist == null) {
-        	MediaPlayer.instance().setPlaylistFilesView(getFileView());
+            MediaPlayer.instance().setPlaylistFilesView(getFileView());
         }
     }
 
@@ -1033,19 +1030,19 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             return null;
         }
     }
-    
+
     private class WiFiShareAction extends AbstractAction {
-        
+
         private static final long serialVersionUID = 1889199111839641873L;
         private boolean share;
-        
+
         public WiFiShareAction(boolean share) {
             super(share ? I18n.tr("Share") : I18n.tr("Unshare"));
             this.share = share;
             String actionName = share ? I18n.tr("Share") : I18n.tr("Unshare");
-            
+
             putValue(LimeAction.SHORT_NAME, actionName);
-            putValue(Action.LONG_DESCRIPTION, actionName+" "+I18n.tr("file on local Wi-Fi network"));
+            putValue(Action.LONG_DESCRIPTION, actionName + " " + I18n.tr("file on local Wi-Fi network"));
             putValue(Action.SMALL_ICON, GUIMediator.getThemeImage(share ? "file_unshared" : "file_shared"));
             putValue(LimeAction.ICON_NAME, share ? "WIFI_UNSHARED" : "WIFI_SHARED");
         }
@@ -1060,12 +1057,12 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 try {
                     dataLine.setShared(share);
                     Librarian.instance().shareFile(file.getAbsolutePath(), share, false);
-                    
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
-            
+
             UPnPManager.instance().refreshPing();
         }
     }
