@@ -54,8 +54,11 @@ import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.mplayer.PositionListener;
 import com.frostwire.mplayer.StateListener;
 import com.limegroup.gnutella.MediaType;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.limegroup.gnutella.gui.RefreshListener;
+import com.limegroup.gnutella.gui.util.GUILauncher;
+import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
 import com.limegroup.gnutella.settings.PlayerSettings;
 
 /**
@@ -233,6 +236,10 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      * Loads a AudioSource into the player to play next
      */
     public void loadMedia(AudioSource source, boolean play, boolean playNextSong, Playlist currentPlaylist, List<AudioSource> playlistFilesView) {
+        if (true) {
+            launchInOS(source);
+            return;
+        }
         currentSong = source;
         this.playNextMedia = playNextSong;
         this.currentPlaylist = currentPlaylist;
@@ -910,4 +917,17 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         togglePause();
     }
 
+    private void launchInOS(AudioSource media) {
+        if (media == null) {
+            return;
+        }
+
+        if (media.getFile() != null) {
+            GUIMediator.launchFile(media.getFile());
+        } else if (media.getPlaylistItem() != null) {
+            GUIMediator.launchFile(new File(media.getPlaylistItem().getFilePath()));
+        } else if (media.getURL() != null) {
+            GUIMediator.openURL(media.getURL());
+        }
+    }
 }
