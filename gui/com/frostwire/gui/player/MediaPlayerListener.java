@@ -28,18 +28,18 @@ public interface MediaPlayerListener {
     /**
      * Open callback, stream is ready to play.
      */
-    public void mediaOpened(MediaPlayer audioPlayer, MediaSource audioSource);
+    public void mediaOpened(MediaPlayer mediaPlayer, MediaSource mediaSource);
 
-    public void progressChange(MediaPlayer audioPlayer, float currentTimeInSecs);
+    public void progressChange(MediaPlayer mediaPlayer, float currentTimeInSecs);
     
-    public void volumeChange(MediaPlayer audioPlayer, double currentVolume);
+    public void volumeChange(MediaPlayer mediaPlayer, double currentVolume);
 
     /**
      * Notification callback for basicplayer events such as opened, eom ...
      *
      * @param event
      */
-    public void stateChange(MediaPlayer audioPlayer, MediaPlaybackState state);
+    public void stateChange(MediaPlayer mediaPlayer, MediaPlaybackState state);
     
-    public void icyInfo(MediaPlayer audioPlayer, String data);
+    public void icyInfo(MediaPlayer mediaPlayer, String data);
 }

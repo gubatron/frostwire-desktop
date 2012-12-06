@@ -621,7 +621,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     }
 
     @Override
-    protected MediaSource createAudioSource(LibraryInternetRadioTableDataLine line) {
+    protected MediaSource createMediaSource(LibraryInternetRadioTableDataLine line) {
         return new InternetRadioAudioSource(line.getInitializeObject().getUrl(), line.getInitializeObject());
     }
 }

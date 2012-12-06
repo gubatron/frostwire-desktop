@@ -33,7 +33,7 @@ import javax.swing.tree.TreePath;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.db.LibraryDatabase;
-import com.frostwire.gui.player.DeviceAudioSource;
+import com.frostwire.gui.player.DeviceMediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.mplayer.MediaPlaybackState;
@@ -76,8 +76,8 @@ public class LibraryIconTree extends JTree {
                     if (path != null) {
                         paintIcon(g, speaker, path);
                     }
-                } else if (player.getCurrentMedia() instanceof DeviceAudioSource) {
-                    TreePath path = getDeviceFileTypePath((DeviceAudioSource) player.getCurrentMedia());
+                } else if (player.getCurrentMedia() instanceof DeviceMediaSource) {
+                    TreePath path = getDeviceFileTypePath((DeviceMediaSource) player.getCurrentMedia());
                     if (path != null) {
                         paintIcon(g, speaker, path);
                     }
@@ -98,14 +98,14 @@ public class LibraryIconTree extends JTree {
         }
     }
 
-    private TreePath getDeviceFileTypePath(DeviceAudioSource audioSource) {
+    private TreePath getDeviceFileTypePath(DeviceMediaSource mediaSource) {
         Enumeration<?> e = ((LibraryNode) getModel().getRoot()).depthFirstEnumeration();
         while (e.hasMoreElements()) {
             LibraryNode node = (LibraryNode) e.nextElement();
             if (node instanceof DeviceFileTypeTreeNode) {
                 Device device = ((DeviceFileTypeTreeNode) node).getDevice();
                 byte fileType = ((DeviceFileTypeTreeNode) node).getFileType();
-                if (device.equals(audioSource.getDevice()) && fileType == audioSource.getFileDescriptor().fileType) {
+                if (device.equals(mediaSource.getDevice()) && fileType == mediaSource.getFileDescriptor().fileType) {
                     return new TreePath(node.getPath());
                 }
             }

@@ -312,7 +312,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 	}
 
 	@Override
-	public void mediaOpened(MediaPlayer mediaPlayer, MediaSource audioSource) {
+	public void mediaOpened(MediaPlayer mediaPlayer, MediaSource mediaSource) {
 	}
 
 	@Override

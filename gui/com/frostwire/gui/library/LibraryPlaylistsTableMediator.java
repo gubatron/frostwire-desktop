@@ -494,18 +494,18 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     }
 
     public void handleActionKey() {
-        playSong();
+        playMedia();
     }
 
-    private void playSong() {
+    private void playMedia() {
         LibraryPlaylistsTableDataLine line = DATA_MODEL.get(TABLE.getSelectedRow());
         if (line == null) {
             return;
         }
 
-        MediaSource audioSource = new MediaSource(line.getPlayListItem());
-        if (MediaPlayer.isPlayableFile(audioSource)) {
-            MediaPlayer.instance().asyncLoadMedia(audioSource, true, true, currentPlaylist, getFilesView());
+        MediaSource mediaSource = new MediaSource(line.getPlayListItem());
+        if (MediaPlayer.isPlayableFile(mediaSource)) {
+            MediaPlayer.instance().asyncLoadMedia(mediaSource, true, true, currentPlaylist, getFilesView());
         }
     }
 
@@ -513,7 +513,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
      * Launches the associated applications for each selected file
      * in the library if it can.
      */
-    void launch(boolean playAudio) {
+    void launch(boolean playMedia) {
         int[] rows = TABLE.getSelectedRows();
         if (rows.length == 0) {
             return;
@@ -536,11 +536,11 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         for (int i = 0; i < rows.length; i++) {
             providers[i] = new FileProvider(DATA_MODEL.getFile(rows[i]));
         }
-        if (!playAudio) {
+        if (!playMedia) {
             MediaPlayer.instance().stop();
         }
 
-        if (playAudio) {
+        if (playMedia) {
             GUILauncher.launch(providers);
         } else {
             GUIMediator.launchFile(selectedFile);
@@ -869,7 +869,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     }
 
     @Override
-    protected MediaSource createAudioSource(LibraryPlaylistsTableDataLine line) {
+    protected MediaSource createMediaSource(LibraryPlaylistsTableDataLine line) {
         return new MediaSource(line.getInitializeObject());
     }
 }

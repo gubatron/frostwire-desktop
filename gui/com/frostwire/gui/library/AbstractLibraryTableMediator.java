@@ -266,16 +266,16 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         }
 
         try {
-            MediaSource audioSource = createAudioSource(line);
-            if (audioSource != null) {
-                MediaPlayer.instance().asyncLoadMedia(audioSource, true, false, null, getFilesView());
+            MediaSource mediaSource = createMediaSource(line);
+            if (mediaSource != null) {
+                MediaPlayer.instance().asyncLoadMedia(mediaSource, true, false, null, getFilesView());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    protected abstract MediaSource createAudioSource(E line);
+    protected abstract MediaSource createMediaSource(E line);
 
     @Override
     public void removeSelection() {

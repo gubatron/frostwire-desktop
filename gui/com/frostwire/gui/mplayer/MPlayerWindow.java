@@ -463,7 +463,7 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 	}
 
 	@Override
-	public void mediaOpened(MediaPlayer audioPlayer, MediaSource audioSource) {	}
+	public void mediaOpened(MediaPlayer audioPlayer, MediaSource mediaSource) {	}
 
 	@Override
 	public void progressChange(MediaPlayer audioPlayer, float currentTimeInSecs) { }

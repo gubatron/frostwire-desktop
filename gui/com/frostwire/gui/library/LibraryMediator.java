@@ -43,7 +43,7 @@ import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.core.Constants;
 import com.frostwire.gui.httpserver.HttpServerManager;
 import com.frostwire.gui.player.MediaSource;
-import com.frostwire.gui.player.DeviceAudioSource;
+import com.frostwire.gui.player.DeviceMediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.upnp.UPnPManager;
 import com.frostwire.gui.upnp.desktop.DesktopUPnPManager;
@@ -414,7 +414,7 @@ public class LibraryMediator {
             });
 
             libraryFiles.selectRadio();
-        } else if (currentMedia instanceof DeviceAudioSource) {
+        } else if (currentMedia instanceof DeviceMediaSource) {
             //selects the audio node at the top
             LibraryExplorer libraryFiles = getLibraryExplorer();
 
@@ -423,13 +423,13 @@ public class LibraryMediator {
                 public void run() {
                     GUIMediator.safeInvokeLater(new Runnable() {
                         public void run() {
-                            LibraryDeviceTableMediator.instance().setItemSelected(((DeviceAudioSource) currentMedia).getFileDescriptor());
+                            LibraryDeviceTableMediator.instance().setItemSelected(((DeviceMediaSource) currentMedia).getFileDescriptor());
                         }
                     });
                 }
             });
 
-            libraryFiles.selectDeviceFileType(((DeviceAudioSource) currentMedia).getDevice(), ((DeviceAudioSource) currentMedia).getFileDescriptor().fileType);
+            libraryFiles.selectDeviceFileType(((DeviceMediaSource) currentMedia).getDevice(), ((DeviceMediaSource) currentMedia).getFileDescriptor().fileType);
         }
 
         //Scroll to current song.

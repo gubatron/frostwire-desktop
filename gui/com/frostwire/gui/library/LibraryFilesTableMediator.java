@@ -1023,7 +1023,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     }
 
     @Override
-    protected MediaSource createAudioSource(LibraryFilesTableDataLine line) {
+    protected MediaSource createMediaSource(LibraryFilesTableDataLine line) {
         if (MediaPlayer.isPlayableFile(line.getInitializeObject())) {
             return new MediaSource(line.getInitializeObject());
         } else {

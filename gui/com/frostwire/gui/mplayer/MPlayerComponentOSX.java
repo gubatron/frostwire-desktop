@@ -244,7 +244,7 @@ public class MPlayerComponentOSX extends CocoaComponent implements MPlayerCompon
      * MediaPlayer Listener events - to send back to the native side.
      */
 	@Override
-	public void mediaOpened(MediaPlayer audioPlayer, MediaSource audioSource) {}
+	public void mediaOpened(MediaPlayer audioPlayer, MediaSource mediaSource) {}
 
 	@Override
 	public void progressChange(MediaPlayer audioPlayer, float currentTimeInSecs) {

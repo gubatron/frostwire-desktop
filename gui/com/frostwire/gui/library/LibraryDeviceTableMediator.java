@@ -49,7 +49,7 @@ import org.limewire.util.StringUtils;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.player.MediaSource;
-import com.frostwire.gui.player.DeviceAudioSource;
+import com.frostwire.gui.player.DeviceMediaSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -329,11 +329,11 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
     public void handleActionKey() {
         if (fileType == DeviceConstants.FILE_TYPE_AUDIO || fileType == DeviceConstants.FILE_TYPE_RINGTONES) {
-            playSong();
+            playMedia();
         }
     }
 
-    private void playSong() {
+    private void playMedia() {
         LibraryDeviceTableDataLine line = DATA_MODEL.get(TABLE.getSelectedRow());
         if (line == null) {
             return;
@@ -341,9 +341,9 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
         try {
             String url = device.getDownloadURL(line.getInitializeObject());
-            MediaSource audioSource = new DeviceAudioSource(url, device, line.getInitializeObject());
-            if (MediaPlayer.isPlayableFile(audioSource)) {
-                MediaPlayer.instance().asyncLoadMedia(audioSource, true, true, null, getFilesView());
+            MediaSource mediaSource = new DeviceMediaSource(url, device, line.getInitializeObject());
+            if (MediaPlayer.isPlayableFile(mediaSource)) {
+                MediaPlayer.instance().asyncLoadMedia(mediaSource, true, true, null, getFilesView());
             }
         } catch (Throwable e) {
             LOG.error("Error loading the streaming", e);
@@ -424,7 +424,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         }
 
         public void actionPerformed(ActionEvent ae) {
-            playSong();
+            playMedia();
         }
     }
 
@@ -451,7 +451,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         for (int i = 0; i < size; i++) {
             try {
                 String url = device.getDownloadURL(DATA_MODEL.get(i).getInitializeObject());
-                result.add(new DeviceAudioSource(url, device, DATA_MODEL.get(i).getInitializeObject()));
+                result.add(new DeviceMediaSource(url, device, DATA_MODEL.get(i).getInitializeObject()));
             } catch (Throwable e) {
             }
         }
@@ -474,7 +474,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     }
 
     @Override
-    protected MediaSource createAudioSource(LibraryDeviceTableDataLine line) {
+    protected MediaSource createMediaSource(LibraryDeviceTableDataLine line) {
         // TODO Auto-generated method stub
         return null;
     }

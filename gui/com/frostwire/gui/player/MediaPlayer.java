@@ -231,7 +231,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     }
 
     /**
-     * Loads a AudioSource into the player to play next
+     * Loads a MediaSource into the player to play next
      */
     public void loadMedia(MediaSource source, boolean play, boolean playNextSong, Playlist currentPlaylist, List<MediaSource> playlistFilesView) {
         if (PlayerSettings.USE_OS_DEFAULT_PLAYER.getValue()) {
@@ -261,9 +261,9 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             } else if (currentMedia instanceof StreamMediaSource) {
                 LibraryMediator.instance().getLibraryCoverArt().setDefault();
                 playMedia(((StreamMediaSource) currentMedia).showPlayerWindow());
-            } else if (currentMedia instanceof DeviceAudioSource) {
+            } else if (currentMedia instanceof DeviceMediaSource) {
                 LibraryMediator.instance().getLibraryCoverArt().setDefault();
-                playMedia(((DeviceAudioSource) currentMedia).showPlayerWindow());
+                playMedia(((DeviceMediaSource) currentMedia).showPlayerWindow());
             }
         }
     }
@@ -465,17 +465,17 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         return PLAYABLE_EXTENSIONS;
     }
 
-    public static boolean isPlayableFile(MediaSource audioSource) {
-        if (audioSource.getFile() != null) {
-            return audioSource.getFile().exists() && isPlayableFile(audioSource.getFile());
-        } else if (audioSource.getPlaylistItem() != null) {
-            return new File(audioSource.getPlaylistItem().getFilePath()).exists() && isPlayableFile(audioSource.getPlaylistItem().getFilePath());
-        } else if (audioSource instanceof InternetRadioAudioSource) {
+    public static boolean isPlayableFile(MediaSource mediaSource) {
+        if (mediaSource.getFile() != null) {
+            return mediaSource.getFile().exists() && isPlayableFile(mediaSource.getFile());
+        } else if (mediaSource.getPlaylistItem() != null) {
+            return new File(mediaSource.getPlaylistItem().getFilePath()).exists() && isPlayableFile(mediaSource.getPlaylistItem().getFilePath());
+        } else if (mediaSource instanceof InternetRadioAudioSource) {
             return true;
-        } else if (audioSource instanceof StreamMediaSource) {
+        } else if (mediaSource instanceof StreamMediaSource) {
             return true;
-        } else if (audioSource instanceof DeviceAudioSource) {
-            return isPlayableFile(((DeviceAudioSource) audioSource).getFileDescriptor().filePath);
+        } else if (mediaSource instanceof DeviceMediaSource) {
+            return isPlayableFile(((DeviceMediaSource) mediaSource).getFileDescriptor().filePath);
         } else {
             return false;
         }
@@ -487,10 +487,10 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      * @param properties
      *            - any properties about the source that we extracted
      */
-    protected void notifyOpened(final MediaSource audioSource) {
+    protected void notifyOpened(final MediaSource mediaSource) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                fireOpened(audioSource);
+                fireOpened(mediaSource);
             }
         });
     }
@@ -544,9 +544,9 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      * properties map contains information about the type of song such as bit
      * rate, sample rate, media type(MPEG, Streaming,etc..), etc..
      */
-    protected void fireOpened(MediaSource audioSource) {
+    protected void fireOpened(MediaSource mediaSource) {
         for (MediaPlayerListener listener : listenerList) {
-            listener.mediaOpened(this, audioSource);
+            listener.mediaOpened(this, mediaSource);
         }
     }
 
@@ -602,21 +602,21 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             return;
         }
 
-        MediaSource song = null;
+        MediaSource media = null;
 
         if (getRepeatMode() == RepeatMode.Song) {
-            song = currentMedia;
+            media = currentMedia;
         } else if (isShuffle()) {
-            song = getNextRandomSong(currentMedia);
+            media = getNextRandomSong(currentMedia);
         } else if (getRepeatMode() == RepeatMode.All) {
-            song = getNextContinuousSong(currentMedia);
+            media = getNextContinuousMedia(currentMedia);
         } else {
-            song = getNextSong(currentMedia);
+            media = getNextMedia(currentMedia);
         }
 
-        if (song != null) {
+        if (media != null) {
             //System.out.println(song.getFile());
-            asyncLoadMedia(song, true, true, currentPlaylist, playlistFilesView);
+            asyncLoadMedia(media, true, true, currentPlaylist, playlistFilesView);
         }
     }
 
@@ -691,7 +691,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
 
         MediaSource songFile;
         int count = 4;
-        while ((songFile = findRandomSongFile(currentMedia)) == null && count-- > 0)
+        while ((songFile = findRandomMediaFile(currentMedia)) == null && count-- > 0)
             ;
 
         if (count > 0) {
@@ -708,7 +708,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         return songFile;
     }
 
-    public MediaSource getNextContinuousSong(MediaSource currentMedia) {
+    public MediaSource getNextContinuousMedia(MediaSource currentMedia) {
         if (playlistFilesView == null) {
             return null;
         }
@@ -723,7 +723,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
                 if (currentMedia.equals(f1)) {
                     for (int j = 1; j < n; j++) {
                         MediaSource file = playlistFilesView.get((j + i) % n);
-                        if (isPlayableFile(file) || file instanceof DeviceAudioSource) {
+                        if (isPlayableFile(file) || file instanceof DeviceMediaSource) {
                             return file;
                         }
                     }
@@ -736,7 +736,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         return null;
     }
 
-    public MediaSource getNextSong(MediaSource currentMedia) {
+    public MediaSource getNextMedia(MediaSource currentMedia) {
         if (playlistFilesView == null) {
             return null;
         }
@@ -772,7 +772,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         return null;
     }
 
-    public MediaSource getPreviousSong(MediaSource currentMedia) {
+    public MediaSource getPreviousMedia(MediaSource currentMedia) {
         if (playlistFilesView == null) {
             return null;
         }
@@ -797,7 +797,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         return null;
     }
 
-    private MediaSource findRandomSongFile(MediaSource excludeFile) {
+    private MediaSource findRandomMediaFile(MediaSource excludeFile) {
         if (playlistFilesView == null) {
             return null;
         }
