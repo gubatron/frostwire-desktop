@@ -54,16 +54,16 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     protected Action OPTIONS_ACTION;
 
     private int needToScrollTo;
-    
+
     private AdjustmentListener adjustmentListener;
-    
+
     protected AbstractLibraryTableMediator(String id) {
         super(id);
         GUIMediator.addRefreshListener(this);
         mediaType = MediaType.getAnyTypeMediaType();
         needToScrollTo = -1;
     }
-    
+
     @Override
     protected void setupConstants() {
     }
@@ -76,15 +76,15 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         }
         return lines;
     }
-    
+
     public I getItemAt(int row) {
-    	try {
-    		return DATA_MODEL.get(row).getInitializeObject();
-    	} catch (Exception e) {
-    		return null;
-    	}
+        try {
+            return DATA_MODEL.get(row).getInitializeObject();
+        } catch (Exception e) {
+            return null;
+        }
     }
-    
+
     /**
      * This method selects the given item and ensures that it's visible (scrolls to it)
      * @param item
@@ -100,7 +100,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         }
         return false;
     }
-    
+
     /**
      * Convenience method to select an item at the given row.
      * 
@@ -108,7 +108,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
      * @return
      */
     public boolean selectItemAt(int row) {
-    	return setItemSelected(getItemAt(row));
+        return setItemSelected(getItemAt(row));
     }
 
     @Override
@@ -127,7 +127,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         return comp;
     }
 
-    public abstract List<AudioSource> getFileView();
+    public abstract List<AudioSource> getFilesView();
 
     public MediaType getMediaType() {
         return mediaType;
@@ -141,8 +141,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     protected void buildListeners() {
         super.buildListeners();
         SEND_TO_FRIEND_ACTION = new SendToFriendAction();
-        OPTIONS_ACTION = new ConfigureOptionsAction(OptionsConstructor.LIBRARY_KEY, I18n.tr("Options"), I18n
-                .tr("You can configure the folders you share in FrostWire\'s Options."));
+        OPTIONS_ACTION = new ConfigureOptionsAction(OptionsConstructor.LIBRARY_KEY, I18n.tr("Options"), I18n.tr("You can configure the folders you share in FrostWire\'s Options."));
     }
 
     protected SkinMenu createAddToPlaylistSubMenu() {
@@ -169,7 +168,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
 
         return menu;
     }
-    
+
     private void adjustmentListener_adjustmentValueChanged(AdjustmentEvent e) {
         try {
             int value = needToScrollTo;
@@ -234,21 +233,21 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
 
         @Override
         public void actionPerformed(ActionEvent e) {
-                File file = LibraryMediator.instance().getSelectedFile();
-                
-                if (file == null) {
-                	return;
-                }
-                
-                int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Do you want to send this file to a friend?") + "\n\n\"" + file.getName() + "\"", I18n.tr("Send files with FrostWire"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            File file = LibraryMediator.instance().getSelectedFile();
 
-                if (result == JOptionPane.YES_OPTION) {
-                    new SendFileProgressDialog(GUIMediator.getAppFrame(), file).setVisible(true);
-                    GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
-                }
+            if (file == null) {
+                return;
+            }
+
+            int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Do you want to send this file to a friend?") + "\n\n\"" + file.getName() + "\"", I18n.tr("Send files with FrostWire"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+            if (result == JOptionPane.YES_OPTION) {
+                new SendFileProgressDialog(GUIMediator.getAppFrame(), file).setVisible(true);
+                GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
+            }
         }
     }
-    
+
     void scrollTo(int value) {
         needToScrollTo = value;
     }
@@ -269,19 +268,19 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         try {
             AudioSource audioSource = createAudioSource(line);
             if (audioSource != null) {
-            	MediaPlayer.instance().asyncLoadMedia(audioSource, true, false, null, getFileView());
+                MediaPlayer.instance().asyncLoadMedia(audioSource, true, false, null, getFilesView());
             }
-        } catch (Exception e) { 
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     protected abstract AudioSource createAudioSource(E line);
-    
+
     @Override
     public void removeSelection() {
         super.removeSelection();
-        
+
         LibraryMediator.instance().clearDirectoryHolderCaches();
     }
 }

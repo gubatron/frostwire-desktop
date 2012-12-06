@@ -206,11 +206,11 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
         TABLE.setDefaultRenderer(LibraryNameHolder.class, new LibraryNameHolderRenderer());
     }
-    
+
     protected void setDefaultEditors() {
         TableColumnModel model = TABLE.getColumnModel();
         TableColumn tc;
-        
+
         tc = model.getColumn(LibraryDeviceTableDataLine.TITLE_IDX);
         tc.setCellEditor(new LibraryNameHolderEditor());
     }
@@ -343,7 +343,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
             String url = device.getDownloadURL(line.getInitializeObject());
             AudioSource audioSource = new DeviceAudioSource(url, device, line.getInitializeObject());
             if (MediaPlayer.isPlayableFile(audioSource)) {
-            	MediaPlayer.instance().asyncLoadMedia(audioSource, true, true, null, getFileView());
+                MediaPlayer.instance().asyncLoadMedia(audioSource, true, true, null, getFilesView());
             }
         } catch (Throwable e) {
             LOG.error("Error loading the streaming", e);
@@ -445,7 +445,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     }
 
     @Override
-    public List<AudioSource> getFileView() {
+    public List<AudioSource> getFilesView() {
         int size = DATA_MODEL.getRowCount();
         List<AudioSource> result = new ArrayList<AudioSource>(size);
         for (int i = 0; i < size; i++) {

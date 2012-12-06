@@ -505,7 +505,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         AudioSource audioSource = new AudioSource(line.getPlayListItem());
         if (MediaPlayer.isPlayableFile(audioSource)) {
-            MediaPlayer.instance().asyncLoadMedia(audioSource, true, true, currentPlaylist, getFileView());
+            MediaPlayer.instance().asyncLoadMedia(audioSource, true, true, currentPlaylist, getFilesView());
         }
     }
 
@@ -840,7 +840,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     }
 
     @Override
-    public List<AudioSource> getFileView() {
+    public List<AudioSource> getFilesView() {
         int size = DATA_MODEL.getRowCount();
         List<AudioSource> result = new ArrayList<AudioSource>(size);
         for (int i = 0; i < size; i++) {
@@ -863,7 +863,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         Playlist playlist = MediaPlayer.instance().getCurrentPlaylist();
         if (playlist != null && playlist.equals(currentPlaylist)) {
             if (MediaPlayer.instance().getPlaylistFilesView() != null) {
-                MediaPlayer.instance().setPlaylistFilesView(getFileView());
+                MediaPlayer.instance().setPlaylistFilesView(getFilesView());
             }
         }
     }

@@ -26,6 +26,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -53,10 +54,10 @@ import org.pushingpixels.substance.internal.utils.SubstanceStripingUtils;
 import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorder;
 
-import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
+import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
@@ -266,27 +267,37 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
             if (libraryNameHolder != null && libraryNameHolder.getDataLine() != null) {
 
                 AudioSource audioSource = null;
+                List<AudioSource> filesView = null;
+                boolean playNextSong = false;
                 Object dataLine = libraryNameHolder.getDataLine();
 
                 if (dataLine instanceof LibraryFilesTableDataLine) {
                     audioSource = new AudioSource(((LibraryFilesTableDataLine) dataLine).getFile());
+                    filesView = LibraryFilesTableMediator.instance().getFilesView();
+                    playNextSong = false;
                 } else if (dataLine instanceof LibraryPlaylistsTableDataLine) {
                     audioSource = new AudioSource(((LibraryPlaylistsTableDataLine) dataLine).getPlayListItem());
+                    filesView = LibraryPlaylistsTableMediator.instance().getFilesView();
+                    playNextSong = true;
                 } else if (dataLine instanceof LibraryInternetRadioTableDataLine) {
                     LibraryInternetRadioTableDataLine irDataLine = (LibraryInternetRadioTableDataLine) dataLine;
                     audioSource = new InternetRadioAudioSource(irDataLine.getInitializeObject().getUrl(), irDataLine.getInitializeObject());
+                    filesView = LibraryInternetRadioTableMediator.instance().getFilesView();
+                    playNextSong = false;
                 } else if (dataLine instanceof LibraryDeviceTableDataLine) {
                     LibraryDeviceTableDataLine dl = (LibraryDeviceTableDataLine) dataLine;
                     Device device = LibraryMediator.instance().getLibraryExplorer().getSelectedDeviceFiles();
                     if (device != null) {
                         String url = device.getDownloadURL(dl.getInitializeObject());
                         audioSource = new DeviceAudioSource(url, device, dl.getInitializeObject());
+                        filesView = LibraryDeviceTableMediator.instance().getFilesView();
+                        playNextSong = true;
                     }
                 }
 
                 if (audioSource != null && !isSourceBeingPlayed()) {
                     labelPlay.setVisible(false);
-                    GUIMediator.instance().launchAudio(audioSource);
+                    MediaPlayer.instance().asyncLoadMedia(audioSource, true, playNextSong, null, filesView);
                 }
             }
         }

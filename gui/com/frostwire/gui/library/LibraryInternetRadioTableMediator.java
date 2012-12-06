@@ -404,7 +404,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
         try {
             AudioSource audioSource = new InternetRadioAudioSource(line.getInitializeObject().getUrl(), line.getInitializeObject());
-            MediaPlayer.instance().asyncLoadMedia(audioSource, true, false, null, getFileView());
+            MediaPlayer.instance().asyncLoadMedia(audioSource, true, false, null, getFilesView());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -571,7 +571,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     }
 
     @Override
-    public List<AudioSource> getFileView() {
+    public List<AudioSource> getFilesView() {
         int size = DATA_MODEL.getRowCount();
         List<AudioSource> result = new ArrayList<AudioSource>(size);
         for (int i = 0; i < size; i++) {
@@ -594,7 +594,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         Playlist playlist = MediaPlayer.instance().getCurrentPlaylist();
         if (playlist == null) {
             if (MediaPlayer.instance().getPlaylistFilesView() != null) {
-            	MediaPlayer.instance().setPlaylistFilesView(getFileView());
+            	MediaPlayer.instance().setPlaylistFilesView(getFilesView());
             }
         }
     }
