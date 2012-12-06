@@ -40,9 +40,11 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -73,6 +75,7 @@ public class PartialFilesDialog extends JDialog {
     private LabeledTextField _filter;
     private RowFilter<Object, Object> textBasedFilter;
 
+    private JPanel panel;
     private JLabel labelTitle;
     private JTable _table;
     private JScrollPane _scrollPane;
@@ -111,12 +114,12 @@ public class PartialFilesDialog extends JDialog {
 
         setupUI();
         setLocationRelativeTo(frame);
-
     }
 
     protected void setupUI() {
         setResizable(true);
-        getContentPane().setLayout(new GridBagLayout());
+        setMinimumSize(new Dimension(400, 300));
+        panel = new JPanel(new GridBagLayout());
 
         // title
         setupTitle();
@@ -134,6 +137,8 @@ public class PartialFilesDialog extends JDialog {
 
         // cancel button
         setupCancelButton();
+
+        getContentPane().add(panel);
 
         pack();
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -155,7 +160,8 @@ public class PartialFilesDialog extends JDialog {
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.EAST;
         c.ipadx = 18;
-        getContentPane().add(_buttonCancel, c);
+        c.gridy = 4;
+        panel.add(_buttonCancel, c);
     }
 
     private void setupOkButton() {
@@ -168,13 +174,15 @@ public class PartialFilesDialog extends JDialog {
         });
 
         c = new GridBagConstraints();
-        c.insets = new Insets(4, 430, 8, 4);
+        c.insets = new Insets(4, 100, 8, 4);
         c.fill = GridBagConstraints.NONE;
         c.gridwidth = GridBagConstraints.RELATIVE;
         c.anchor = GridBagConstraints.EAST;
         c.ipadx = 20;
         c.weightx = 1.0;
-        getContentPane().add(_buttonOK, c);
+        c.gridy = 4;
+
+        panel.add(_buttonOK, c);
     }
 
     private void setupTable() {
@@ -222,9 +230,15 @@ public class PartialFilesDialog extends JDialog {
         _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         c = new GridBagConstraints();
         c.insets = new Insets(5, 5, 5, 5);
+        c.gridx = 0;
+        c.gridy = 3;
+        c.gridwidth = 2;
+        c.gridheight = 1;
+        c.anchor = GridBagConstraints.WEST;
         c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        getContentPane().add(_scrollPane, c);
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        panel.add(_scrollPane, c);
     }
 
     private void setupToggleAllSelectionCheckbox() {
@@ -238,16 +252,21 @@ public class PartialFilesDialog extends JDialog {
         });
 
         c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 2;
         c.gridwidth = 1;
+        c.gridheight = 1;
         c.anchor = GridBagConstraints.WEST;
-        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1.0;
         c.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(_checkBoxToggleAll, c);
+        panel.add(_checkBoxToggleAll, c);
     }
 
     private void setupTextFilter() {
         GridBagConstraints c;
         _filter = new LabeledTextField("Filter files", 30);
+        _filter.setMinimumSize(_filter.getPreferredSize()); // fix odd behavior
         textBasedFilter = new RowFilterExtension(_filter, 2);
 
         _filter.addKeyListener(new KeyAdapter() {
@@ -269,10 +288,14 @@ public class PartialFilesDialog extends JDialog {
         });
 
         c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 2;
+        c.gridheight = 1;
         c.anchor = GridBagConstraints.WEST;
-        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.weightx = 1.0;
         c.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(_filter, c);
+        panel.add(_filter, c);
     }
 
     private void setupTitle() {
@@ -288,11 +311,17 @@ public class PartialFilesDialog extends JDialog {
         }
         labelTitle = new JLabel(title);
         labelTitle.setFont(new Font("Dialog", Font.BOLD, 18));
+        labelTitle.setHorizontalAlignment(SwingConstants.LEFT);
         c = new GridBagConstraints();
-        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 2;
+        c.gridheight = 1;
         c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1.0;
         c.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(labelTitle, c);
+        panel.add(labelTitle, c);
     }
 
     protected void onCheckBoxToggleAll(ItemEvent e) {

@@ -16,6 +16,7 @@
 package com.limegroup.gnutella.gui.actions;
 
 import java.awt.Canvas;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -117,11 +118,10 @@ public class FileMenuActions {
             constraints.anchor = GridBagConstraints.NORTHWEST;
             constraints.fill = GridBagConstraints.HORIZONTAL;
             constraints.insets = new Insets(0, SPACE, 2 * SPACE, 0);
-//            panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, the file path or web address of a torrent file, or a YouTube Web address and FrostWire will start downloading it for you."),
- //                   true), constraints);
+            //            panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, the file path or web address of a torrent file, or a YouTube Web address and FrostWire will start downloading it for you."),
+            //                   true), constraints);
 
-            panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, the file path or web address of a torrent file and FrostWire will start downloading it for you."),
-                    true), constraints);
+            panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, the file path or web address of a torrent file and FrostWire will start downloading it for you."), true), constraints);
 
             // open label
             constraints = new GridBagConstraints();
@@ -168,6 +168,7 @@ public class FileMenuActions {
             panel.add(row, constraints);
 
             dialog.getRootPane().setDefaultButton(row.getButtonAtIndex(0));
+            dialog.setMinimumSize(new Dimension(250, 150));
         }
 
         private class PasteAction extends AbstractAction {
