@@ -67,7 +67,7 @@ import com.limegroup.gnutella.settings.PlayerSettings;
  */
 public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventListener {
 
-	private static final String[] PLAYABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wav", "wma", "wmv", "m4a", "aac", "flac", "mp4", "flv", "avi", "mov", "mkv", "mpg", "mpeg", "3gp", "m4v", "webm" };
+    private static final String[] PLAYABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wav", "wma", "wmv", "m4a", "aac", "flac", "mp4", "flv", "avi", "mov", "mkv", "mpg", "mpeg", "3gp", "m4v", "webm" };
 
     /**
      * Our list of MediaPlayerListeners that are currently listening for events
@@ -84,7 +84,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     private boolean playNextMedia;
 
     private double volume;
-    
+
     private Queue<AudioSource> lastRandomFiles;
 
     private final ExecutorService playExecutor;
@@ -94,28 +94,28 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     private long durationInSeconds;
     private boolean isPlayPausedForSliding = false;
     private boolean stateNotificationsEnabled = true;
-    
+
     public static MediaPlayer instance() {
         if (instance == null) {
-        	if ( OSUtils.isWindows() ) {
-        		instance = new MediaPlayerWindows();
-        	} else if (OSUtils.isMacOSX()) {
-        		instance = new MediaPlayerOSX();
-        	} else if (OSUtils.isLinux()) {
-        		instance = new MediaPlayerLinux();
-        	}
-    	}
-        
+            if (OSUtils.isWindows()) {
+                instance = new MediaPlayerWindows();
+            } else if (OSUtils.isMacOSX()) {
+                instance = new MediaPlayerOSX();
+            } else if (OSUtils.isLinux()) {
+                instance = new MediaPlayerLinux();
+            }
+        }
+
         return instance;
     }
 
     protected MediaPlayer() {
         lastRandomFiles = new LinkedList<AudioSource>();
         playExecutor = ExecutorsHelper.newProcessingQueue("AudioPlayer-PlayExecutor");
-        
+
         String playerPath;
         playerPath = getPlayerPath();
-        
+
         MPlayer.initialise(new File(playerPath));
         mplayer = new MPlayer();
         mplayer.addPositionListener(new PositionListener() {
@@ -162,25 +162,25 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
                 return false;
             }
         });
-        
+
         // prepare to receive UI events
         MPlayerUIEventHandler.instance().addListener(this);
     }
 
     protected abstract String getPlayerPath();
-    
+
     protected float getVolumeGainFactor() {
-    	return 100.0f;
+        return 100.0f;
     }
-    
+
     public Dimension getCurrentVideoSize() {
-    	if ( mplayer != null ) {
-    		return mplayer.getVideoSize();
-    	} else {
-    		return null;
-    	}
+        if (mplayer != null) {
+            return mplayer.getVideoSize();
+        } else {
+            return null;
+        }
     }
-    
+
     public AudioSource getCurrentSong() {
         return currentSong;
     }
@@ -325,12 +325,8 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         });
     }
 
-    public void loadMedia(AudioSource audioSource) {
-        loadMedia(audioSource, false, false, null, null);
-    }
-
-	private String stopAndPrepareFilename() {
-		mplayer.stop();
+    private String stopAndPrepareFilename() {
+        mplayer.stop();
         setVolume(volume);
 
         String filename = "";
@@ -341,46 +337,44 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         } else if (currentSong.getPlaylistItem() != null) {
             filename = currentSong.getPlaylistItem().getFilePath();
         }
-		return filename;
-	}
-    
+        return filename;
+    }
+
     /** Force showing or not the media player window */
     public void playMedia(boolean showPlayerWindow) {
-      	String filename = stopAndPrepareFilename();
-        
+        String filename = stopAndPrepareFilename();
+
         if (filename.length() > 0) {
-	        MPlayerMediator mplayerMediator = MPlayerMediator.instance();
-	        
-	        if (mplayerMediator != null) {
-	        	mplayerMediator.showPlayerWindow(showPlayerWindow);
-	        }
-	        
-	        mplayer.open(filename);
+            MPlayerMediator mplayerMediator = MPlayerMediator.instance();
+
+            if (mplayerMediator != null) {
+                mplayerMediator.showPlayerWindow(showPlayerWindow);
+            }
+
+            mplayer.open(filename);
         }
-        
+
         notifyState(getState());
     }
-    
+
     /**
      * Plays a file and determines wether or not to show the player window based on the MediaType of the file.
      */
     public void playMedia() {
-    	
-    	String filename = stopAndPrepareFilename();
-        
+
+        String filename = stopAndPrepareFilename();
+
         if (filename.length() > 0) {
-	        boolean isVideoFile = MediaType.getVideoMediaType().matches(filename);
-	        MPlayerMediator mplayerMediator = MPlayerMediator.instance();
-	        
-	        
-	        
-	        if (mplayerMediator != null) {
-	        	mplayerMediator.showPlayerWindow(isVideoFile);
-	        }
-	        
-	        mplayer.open(filename);
+            boolean isVideoFile = MediaType.getVideoMediaType().matches(filename);
+            MPlayerMediator mplayerMediator = MPlayerMediator.instance();
+
+            if (mplayerMediator != null) {
+                mplayerMediator.showPlayerWindow(isVideoFile);
+            }
+
+            mplayer.open(filename);
         }
-        
+
         notifyState(getState());
     }
 
@@ -388,10 +382,10 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      * Toggle pause the current song
      */
     public void togglePause() {
-    	mplayer.togglePause();
-    	notifyState(getState());
+        mplayer.togglePause();
+        notifyState(getState());
     }
-    
+
     /**
      * Stops the current song
      */
@@ -400,24 +394,23 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         currentSong = null;
         notifyState(getState());
     }
-    
-    
+
     public void fastForward() {
-    	mplayer.fastForward();
+        mplayer.fastForward();
     }
-    
+
     public void rewind() {
-    	mplayer.rewind();
+        mplayer.rewind();
     }
 
     /**
      * Seeks to a new location in the current song
      */
     public void seek(float timeInSecs) {
-    	mplayer.seek(timeInSecs);
-    	notifyState(getState());
+        mplayer.seek(timeInSecs);
+        notifyState(getState());
     }
-    
+
     /**
      * Sets the gain(volume) for the outputline
      * 
@@ -427,23 +420,23 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      *             - thrown when the soundcard does not support this operation
      */
     public void setVolume(double fGain) {
-    	
+
         volume = Math.max(Math.min(fGain, 1.0), 0.0);
         mplayer.setVolume((int) (volume * getVolumeGainFactor()));
         PlayerSettings.PLAYER_VOLUME.setValue((float) volume);
         notifyVolumeChanged();
     }
-    
+
     public double getVolume() {
-    	return volume;
+        return volume;
     }
-    
+
     public void incrementVolume() {
-    	setVolume(getVolume() + 0.1);
+        setVolume(getVolume() + 0.1);
     }
-    
+
     public void decrementVolume() {
-    	setVolume(getVolume() - 0.1);
+        setVolume(getVolume() - 0.1);
     }
 
     protected void notifyVolumeChanged() {
@@ -510,14 +503,14 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      *            the new value
      */
     protected void notifyState(final MediaPlaybackState state) {
-        
-    	if ( stateNotificationsEnabled ) {
-	    	SwingUtilities.invokeLater(new Runnable() {
-	            public void run() {
-	                fireState(state);
-	            }
-	        });
-    	}
+
+        if (stateNotificationsEnabled) {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    fireState(state);
+                }
+            });
+        }
     }
 
     /**
@@ -803,8 +796,8 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             return null;
         }
         int n = playlistFilesView.size();
-        if (n == 0 ) {
-        	return null;
+        if (n == 0) {
+            return null;
         } else if (n == 1) {
             return playlistFilesView.get(0);
         }
@@ -841,82 +834,80 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         return mplayer.getDurationInSecs();
     }
 
-	@Override
-	public void onUIVolumeChanged(float volume) {
-		setVolume(volume);
-	}
+    @Override
+    public void onUIVolumeChanged(float volume) {
+        setVolume(volume);
+    }
 
-	@Override
-	public void onUISeekToTime(float seconds) {
-		seek(seconds);
-	}
+    @Override
+    public void onUISeekToTime(float seconds) {
+        seek(seconds);
+    }
 
-	@Override
-	public void onUIPlayPressed() {
-		MediaPlaybackState curState = mplayer.getCurrentState();
-    	
-    	if (curState == MediaPlaybackState.Playing ||
-    		curState == MediaPlaybackState.Paused) {
-    		togglePause();
-    	} else if (curState == MediaPlaybackState.Closed) {
-    		playMedia();
-    	}
-	}
+    @Override
+    public void onUIPlayPressed() {
+        MediaPlaybackState curState = mplayer.getCurrentState();
 
-	@Override
-	public void onUIPausePressed() {
-		togglePause();
-	}
+        if (curState == MediaPlaybackState.Playing || curState == MediaPlaybackState.Paused) {
+            togglePause();
+        } else if (curState == MediaPlaybackState.Closed) {
+            playMedia();
+        }
+    }
 
-	@Override
-	public void onUIFastForwardPressed() {
-		fastForward();
-	}
+    @Override
+    public void onUIPausePressed() {
+        togglePause();
+    }
 
-	@Override
-	public void onUIRewindPressed() {
-		rewind();
-	}
+    @Override
+    public void onUIFastForwardPressed() {
+        fastForward();
+    }
 
-	@Override
-	public void onUIToggleFullscreenPressed() {
-		MPlayerMediator.instance().toggleFullScreen();
-	}
+    @Override
+    public void onUIRewindPressed() {
+        rewind();
+    }
 
-	@Override
-	public void onUIProgressSlideStart() {
-		stateNotificationsEnabled = false;
-		
-		if ( mplayer.getCurrentState() == MediaPlaybackState.Playing ) {
-			isPlayPausedForSliding = true;
-			mplayer.pause();
-		}
-	}
+    @Override
+    public void onUIToggleFullscreenPressed() {
+        MPlayerMediator.instance().toggleFullScreen();
+    }
 
-	@Override
-	public void onUIProgressSlideEnd() {
-		if (isPlayPausedForSliding) {
-			isPlayPausedForSliding = false;
-			mplayer.play();
-		}
-		
-		stateNotificationsEnabled = true;
-	}
+    @Override
+    public void onUIProgressSlideStart() {
+        stateNotificationsEnabled = false;
 
-	@Override
-	public void onUIVolumeIncremented() {
-		incrementVolume();
-	}
+        if (mplayer.getCurrentState() == MediaPlaybackState.Playing) {
+            isPlayPausedForSliding = true;
+            mplayer.pause();
+        }
+    }
 
-	@Override
-	public void onUIVolumeDecremented() {
-		decrementVolume();
-	}
+    @Override
+    public void onUIProgressSlideEnd() {
+        if (isPlayPausedForSliding) {
+            isPlayPausedForSliding = false;
+            mplayer.play();
+        }
 
-	@Override
-	public void onUITogglePlayPausePressed() {
-		togglePause();
-	}
+        stateNotificationsEnabled = true;
+    }
 
+    @Override
+    public void onUIVolumeIncremented() {
+        incrementVolume();
+    }
+
+    @Override
+    public void onUIVolumeDecremented() {
+        decrementVolume();
+    }
+
+    @Override
+    public void onUITogglePlayPausePressed() {
+        togglePause();
+    }
 
 }
