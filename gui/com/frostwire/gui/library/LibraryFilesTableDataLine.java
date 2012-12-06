@@ -42,44 +42,43 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
  * 
  */
 public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLine<File> {
-    
+
     /**
      * Constant for the column with the wi-fi shared state.
-     */    
+     */
     static final int SHARE_IDX = 0;
-    
+
     /**
      * Constant for the column with the icon of the file.
      */
     static final int ICON_IDX = 1;
-    
-	/**
-	 * Constant for the column with the name of the file.
-	 */
-	static final int NAME_IDX = 2;
-	
-	/**
-	 * Constant for the column storing the size of the file.
-	 */
-	static final int SIZE_IDX = 3;
-	
-	/**
-	 * Constant for the column storing the file type (extension or more
-	 * more general type) of the file.
-	 */
-	static final int TYPE_IDX = 4;
-	
-	/**
-	 * Constant for the column storing the file's path
-	 */
-	static final int PATH_IDX = 5;
-    
+
+    /**
+     * Constant for the column with the name of the file.
+     */
+    static final int NAME_IDX = 2;
+
+    /**
+     * Constant for the column storing the size of the file.
+     */
+    static final int SIZE_IDX = 3;
+
+    /**
+     * Constant for the column storing the file type (extension or more
+     * more general type) of the file.
+     */
+    static final int TYPE_IDX = 4;
+
+    /**
+     * Constant for the column storing the file's path
+     */
+    static final int PATH_IDX = 5;
+
     /**
      * Constant for the column indicating the mod time of a file.
      */
     static final int MODIFICATION_TIME_IDX = 6;
 
-    
     /**
      * Add the columns to static array _in the proper order_.
      * The *_IDX variables above need to match the corresponding
@@ -87,95 +86,99 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
      */
     private static LimeTableColumn[] ltColumns;
 
-	/** Variable for the name */
-	private String _name;
+    /** Variable for the name */
+    private String _name;
 
-	/** Variable for the type */
-	private String _type;
+    /** Variable for the type */
+    private String _type;
 
-	/** Variable for the size */
-	private long _size;
-	
-	/** Cached SizeHolder */
-	private SizeHolder _sizeHolder;
+    /** Variable for the size */
+    private long _size;
 
-	/** Variable for the path */
-	private String _path;
-	
-	/**
-	 * The model this is being displayed on
-	 */
-	private final LibraryFilesTableModel _model;
-	
-	/**
-	 * Whether or not the icon has been loaded.
-	 */
-	private boolean _iconLoaded = false;
-	
-	/**
-	 * Whether or not the icon has been scheduled to load.
-	 */
-	private boolean _iconScheduledForLoad = false;
+    /** Cached SizeHolder */
+    private SizeHolder _sizeHolder;
+
+    /** Variable for the path */
+    private String _path;
+
+    /**
+     * The model this is being displayed on
+     */
+    private final LibraryFilesTableModel _model;
+
+    /**
+     * Whether or not the icon has been loaded.
+     */
+    private boolean _iconLoaded = false;
+
+    /**
+     * Whether or not the icon has been scheduled to load.
+     */
+    private boolean _iconScheduledForLoad = false;
 
     private boolean shared = false;
 
-	public LibraryFilesTableDataLine(LibraryFilesTableModel ltm) {
-		super();
-		_model = ltm;
-	}
+    public LibraryFilesTableDataLine(LibraryFilesTableModel ltm) {
+        super();
+        _model = ltm;
+    }
 
-	public boolean isShared() { return shared; }
-	
-	public int getColumnCount() { return getLimeTableColumns().length; }
+    public boolean isShared() {
+        return shared;
+    }
 
-	/**
-	 * Initialize the object.
-	 * It will fail if not given a FileDesc or a File
-	 * (File is retained for compatibility with the Incomplete folder)
-	 */
+    public int getColumnCount() {
+        return getLimeTableColumns().length;
+    }
+
+    /**
+     * Initialize the object.
+     * It will fail if not given a FileDesc or a File
+     * (File is retained for compatibility with the Incomplete folder)
+     */
     public void initialize(File file) {
         super.initialize(file);
-        
+
         String fullPath = file.getPath();
         try {
             fullPath = file.getCanonicalPath();
-        } catch(IOException ioe) {}
-        
-		_name = initializer.getName();
-		_type = "";
-		
+        } catch (IOException ioe) {
+        }
+
+        _name = initializer.getName();
+        _type = "";
+
         if (!file.isDirectory()) {
-        	//_isDirectory = false;
+            //_isDirectory = false;
             int index = _name.lastIndexOf(".");
             int index2 = fullPath.lastIndexOf(File.separator);
-            _path = fullPath.substring(0,index2);
+            _path = fullPath.substring(0, index2);
             if (index != -1 && index != 0) {
-                _type = _name.substring(index+1);
+                _type = _name.substring(index + 1);
                 _name = _name.substring(0, index);
             }
         } else {
-            	_path = fullPath;
-            	//_isDirectory = true;
+            _path = fullPath;
+            //_isDirectory = true;
         }
 
         // only load file sizes, do nothing for directories
         // directories implicitly set SizeHolder to null and display nothing
-        if( initializer.isFile() ) {
-            long oldSize = _size; 
+        if (initializer.isFile()) {
+            long oldSize = _size;
             _size = initializer.length();
             if (oldSize != _size) {
                 _sizeHolder = new SizeHolder(_size);
             }
-            
-            shared  = Librarian.instance().isFileShared(initializer.getAbsolutePath());
-            
+
+            shared = Librarian.instance().isFileShared(initializer.getAbsolutePath());
+
         } else if (initializer.isDirectory()) {
-        	    _sizeHolder = new SizeHolder(0);
+            _sizeHolder = new SizeHolder(0);
         }
-        
-        
+
     }
-    
+
     /**
      * Returns the file of this data line.
      */
@@ -183,103 +186,91 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         return initializer;
     }
 
-	/**
-	 * Returns the object stored in the specified cell in the table.
-	 *
-	 * @param idx  The column of the cell to access
-	 *
-	 * @return  The <code>Object</code> stored at the specified "cell" in
-	 *          the list
-	 */
-	public Object getValueAt(int idx) {
-		boolean isPlaying = isPlaying();
-	    switch (idx) {
-	    case ICON_IDX:
-	        return new PlayableIconCell(getIcon(), isPlaying);
-	    case NAME_IDX:
-	        return new LibraryNameHolder(this, _name, isPlaying, true, idx);	                    
-	    case SIZE_IDX:
-	        return new PlayableCell(this, _sizeHolder,isPlaying, idx);
-	    case TYPE_IDX:
-	        return new PlayableCell(this, _type, isPlaying, idx);
-	    case PATH_IDX:
-	        return new PlayableCell(this, _path, isPlaying, idx);
+    /**
+     * Returns the object stored in the specified cell in the table.
+     *
+     * @param idx  The column of the cell to access
+     *
+     * @return  The <code>Object</code> stored at the specified "cell" in
+     *          the list
+     */
+    public Object getValueAt(int idx) {
+        boolean isPlaying = isPlaying();
+        switch (idx) {
+        case ICON_IDX:
+            return new PlayableIconCell(getIcon(), isPlaying);
+        case NAME_IDX:
+            return new LibraryNameHolder(this, _name, isPlaying, true, idx);
+        case SIZE_IDX:
+            return new PlayableCell(this, _sizeHolder, isPlaying, idx);
+        case TYPE_IDX:
+            return new PlayableCell(this, _type, isPlaying, idx);
+        case PATH_IDX:
+            return new PlayableCell(this, _path, isPlaying, idx);
         case MODIFICATION_TIME_IDX:
-			return new PlayableCell(this, new Date(initializer.lastModified()),isPlaying, idx);
+            return new PlayableCell(this, new Date(initializer.lastModified()), isPlaying, idx);
         case SHARE_IDX:
-            return new FileShareCell(initializer.getAbsolutePath(),shared);
-	    }
-	    return null;
-	}
+            return new FileShareCell(initializer.getAbsolutePath(), shared);
+        }
+        return null;
+    }
 
-	private boolean isPlaying() {
-		if (initializer != null) {
-			return MediaPlayer.instance().isThisBeingPlayed(
-					initializer);
-		}
+    private boolean isPlaying() {
+        if (initializer != null) {
+            return MediaPlayer.instance().isThisBeingPlayed(initializer);
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	public LimeTableColumn getColumn(int idx) {
-	    return getLimeTableColumns()[idx];
-	}
-	
-	public boolean isClippable(int idx) {
-	    switch(idx) {
+    public LimeTableColumn getColumn(int idx) {
+        return getLimeTableColumns()[idx];
+    }
+
+    public boolean isClippable(int idx) {
+        switch (idx) {
         case ICON_IDX:
             return false;
         default:
             return true;
         }
     }
-    
+
     public int getTypeAheadColumn() {
         return NAME_IDX;
     }
 
-	public boolean isDynamic(int idx) {
-	    return false;
-	}
+    public boolean isDynamic(int idx) {
+        return false;
+    }
 
-	public String[] getToolTipArray(int col) {
-		return new String[] {getInitializeObject().getAbsolutePath()};
-	}
-	
-	private LimeTableColumn[] getLimeTableColumns() {
-	    if (ltColumns == null) {
-	        LimeTableColumn[] temp =
-	        {
-                new LimeTableColumn(SHARE_IDX, "LIBRARY_TABLE_SHARE", I18n.tr("Wi-Fi Shared"),
-                        18, true, FileShareCell.class),
+    public String[] getToolTipArray(int col) {
+        return new String[] { getInitializeObject().getAbsolutePath() };
+    }
 
-	            new LimeTableColumn(ICON_IDX, "LIBRARY_TABLE_ICON", I18n.tr("Icon"),
-	                    GUIMediator.getThemeImage("question_mark"), 18, true, PlayableIconCell.class),
-	            
-	            new LimeTableColumn(NAME_IDX, "LIBRARY_TABLE_NAME", I18n.tr("Name"),
-	                    239, true, LibraryNameHolder.class),
-	            
-	            new LimeTableColumn(SIZE_IDX, "LIBRARY_TABLE_SIZE", I18n.tr("Size"),
-	                    62, true, PlayableCell.class),
+    private LimeTableColumn[] getLimeTableColumns() {
+        if (ltColumns == null) {
+            LimeTableColumn[] temp = { new LimeTableColumn(SHARE_IDX, "LIBRARY_TABLE_SHARE", I18n.tr("Wi-Fi Shared"), 18, true, FileShareCell.class),
 
-	            new LimeTableColumn(TYPE_IDX, "LIBRARY_TABLE_TYPE", I18n.tr("Type"),
-	                    48, true, PlayableCell.class),
-	                                                    
-	            new LimeTableColumn(PATH_IDX, "LIBRARY_TABLE_PATH", I18n.tr("Path"),
-	                    108, true, PlayableCell.class),
+            new LimeTableColumn(ICON_IDX, "LIBRARY_TABLE_ICON", I18n.tr("Icon"), GUIMediator.getThemeImage("question_mark"), 18, true, PlayableIconCell.class),
 
-	            new LimeTableColumn(MODIFICATION_TIME_IDX, 
-	                    "LIBRARY_TABLE_MODIFICATION_TIME", I18n.tr("Last Modified"),
-	                    20, false, PlayableCell.class)
-	        };
-	        ltColumns = temp;
-	    }
-	    return ltColumns;
-	}
-	
-	private Icon getIcon() {
-	    boolean iconAvailable = IconManager.instance().isIconForFileAvailable(initializer);
-        if(!iconAvailable && !_iconScheduledForLoad) {
+            new LimeTableColumn(NAME_IDX, "LIBRARY_TABLE_NAME", I18n.tr("Name"), 239, true, LibraryNameHolder.class),
+
+            new LimeTableColumn(SIZE_IDX, "LIBRARY_TABLE_SIZE", I18n.tr("Size"), 62, true, PlayableCell.class),
+
+            new LimeTableColumn(TYPE_IDX, "LIBRARY_TABLE_TYPE", I18n.tr("Type"), 48, true, PlayableCell.class),
+
+            new LimeTableColumn(PATH_IDX, "LIBRARY_TABLE_PATH", I18n.tr("Path"), 108, true, PlayableCell.class),
+
+            new LimeTableColumn(MODIFICATION_TIME_IDX, "LIBRARY_TABLE_MODIFICATION_TIME", I18n.tr("Last Modified"), 20, false, PlayableCell.class) };
+            ltColumns = temp;
+        }
+        return ltColumns;
+    }
+
+    private Icon getIcon() {
+        boolean iconAvailable = IconManager.instance().isIconForFileAvailable(initializer);
+        if (!iconAvailable && !_iconScheduledForLoad) {
             _iconScheduledForLoad = true;
             BackgroundExecutorService.schedule(new Runnable() {
                 public void run() {
@@ -293,12 +284,12 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
                 }
             });
             return null;
-        } else if(_iconLoaded || iconAvailable) {
+        } else if (_iconLoaded || iconAvailable) {
             return IconManager.instance().getIconForFile(initializer);
         } else {
             return null;
         }
-	}
+    }
 
     public void setShared(boolean share) {
         shared = share;

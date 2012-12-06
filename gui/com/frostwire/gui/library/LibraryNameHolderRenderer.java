@@ -76,7 +76,7 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
     private JLabel labelText;
     private JLabel labelPlay;
     private JLabel labelDownload;
-    
+
     private LibraryNameHolder libraryNameHolder;
 
     public LibraryNameHolderRenderer() {
@@ -247,7 +247,7 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
         c.gridx = GridBagConstraints.RELATIVE;
         c.ipadx = 1;
         add(labelPlay, c);
-        
+
         labelDownload = new JLabel(GUIMediator.getThemeImage("search_result_download_over"));
         labelDownload.addMouseListener(new MouseAdapter() {
             @Override
@@ -291,12 +291,12 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
             }
         }
     }
-    
+
     private void labelDownload_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
             if (libraryNameHolder != null && libraryNameHolder.getDataLine() != null) {
                 Object dataLine = libraryNameHolder.getDataLine();
-                
+
                 if (dataLine instanceof LibraryDeviceTableDataLine) {
                     Device device = LibraryMediator.instance().getLibraryExplorer().getSelectedDeviceFiles();
                     if (device != null) {
@@ -319,7 +319,7 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
             LOG.warning("Error puting data in name holder renderer");
         }
     }
-    
+
     private boolean isDownloadableFromOtherDevice() {
         boolean result = false;
         if (libraryNameHolder != null && libraryNameHolder.getDataLine() != null) {
@@ -334,7 +334,6 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
             }
         }
         return result;
-        
 
     }
 
