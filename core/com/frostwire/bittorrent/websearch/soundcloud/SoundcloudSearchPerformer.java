@@ -123,7 +123,7 @@ public class SoundcloudSearchPerformer implements WebSearchPerformer {
     }
 
     public URI getURI(int page, String encodedKeywords) throws URISyntaxException {
-        return new URI("http://soundcloud.com/tracks/search?page=" + page + "&q[fulltext]=" + encodedKeywords + "q[downloadable]=true&advanced=1");
+        return new URI("http://soundcloud.com/tracks/search?page=" + page + "&q[fulltext]=" + encodedKeywords + "&q[downloadable]=true&advanced=1");
     }
 
     public String getRegex() {
