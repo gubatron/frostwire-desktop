@@ -1,6 +1,7 @@
 frostwire (5.5.1) stable; urgency=high
   * New Clear Inactive button on transfers.
-  * New setting to use the default system media player instead of FrostWire's (TODO)
+  * New setting to use the default system media player instead of
+    FrostWire's.
   * Bug fix: filtering on torrent detail dialog was broken.
 
  -- FrostWire Team <contact@frostwire.com>  Wed, 05 Dec 2012 16:00:00 -0500

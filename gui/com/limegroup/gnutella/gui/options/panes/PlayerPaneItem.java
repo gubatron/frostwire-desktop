@@ -26,20 +26,20 @@ import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
-import com.limegroup.gnutella.settings.iTunesSettings;
+import com.limegroup.gnutella.settings.PlayerSettings;
 
 /**
  * @author gubatron
  * @author aldenml
  *
  */
-public final class iTunesPreferencePaneItem extends AbstractPaneItem {
+public final class PlayerPaneItem extends AbstractPaneItem {
 
-    public final static String TITLE = I18n.tr("Importing");
+    public final static String TITLE = I18n.tr("FrostWire Media Player");
 
-    public final static String LABEL = I18n.tr("You can have FrostWire import newly downloaded songs into iTunes.");
+    public final static String LABEL = I18n.tr("You can play your media with the native operating system player if the format is supported.");
 
-    private final String CHECK_BOX_LABEL = I18nMarker.marktr("Enable iTunes importing:");
+    private final String CHECK_BOX_LABEL = I18nMarker.marktr("Play with the native media player:");
 
     /**
      * Constant for the check box that specifies whether or not downloads 
@@ -54,7 +54,7 @@ public final class iTunesPreferencePaneItem extends AbstractPaneItem {
      * @param key the key for this <tt>AbstractPaneItem</tt> that the
      *        superclass uses to generate locale-specific keys
      */
-    public iTunesPreferencePaneItem() {
+    public PlayerPaneItem() {
         super(TITLE, LABEL);
 
         LabeledComponent comp = new LabeledComponent(CHECK_BOX_LABEL, CHECK_BOX, LabeledComponent.LEFT_GLUE, LabeledComponent.LEFT);
@@ -69,7 +69,7 @@ public final class iTunesPreferencePaneItem extends AbstractPaneItem {
      * window is shown.
      */
     public void initOptions() {
-        CHECK_BOX.setSelected(iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue());
+        CHECK_BOX.setSelected(PlayerSettings.PLAYER_PLAY_IN_OS.getValue());
     }
 
     /**
@@ -81,11 +81,11 @@ public final class iTunesPreferencePaneItem extends AbstractPaneItem {
      * @throws IOException if the options could not be applied for some reason
      */
     public boolean applyOptions() throws IOException {
-        iTunesSettings.ITUNES_SUPPORT_ENABLED.setValue(CHECK_BOX.isSelected());
+        PlayerSettings.PLAYER_PLAY_IN_OS.setValue(CHECK_BOX.isSelected());
         return false;
     }
 
     public boolean isDirty() {
-        return iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() != CHECK_BOX.isSelected();
+        return PlayerSettings.PLAYER_PLAY_IN_OS.getValue() != CHECK_BOX.isSelected();
     }
 }
