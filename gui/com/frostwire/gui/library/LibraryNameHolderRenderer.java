@@ -54,7 +54,7 @@ import org.pushingpixels.substance.internal.utils.SubstanceStripingUtils;
 import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorder;
 
-import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.DeviceAudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
@@ -266,17 +266,17 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
         if (e.getButton() == MouseEvent.BUTTON1) {
             if (libraryNameHolder != null && libraryNameHolder.getDataLine() != null) {
 
-                AudioSource audioSource = null;
-                List<AudioSource> filesView = null;
+                MediaSource audioSource = null;
+                List<MediaSource> filesView = null;
                 boolean playNextSong = false;
                 Object dataLine = libraryNameHolder.getDataLine();
 
                 if (dataLine instanceof LibraryFilesTableDataLine) {
-                    audioSource = new AudioSource(((LibraryFilesTableDataLine) dataLine).getFile());
+                    audioSource = new MediaSource(((LibraryFilesTableDataLine) dataLine).getFile());
                     filesView = LibraryFilesTableMediator.instance().getFilesView();
                     playNextSong = false;
                 } else if (dataLine instanceof LibraryPlaylistsTableDataLine) {
-                    audioSource = new AudioSource(((LibraryPlaylistsTableDataLine) dataLine).getPlayListItem());
+                    audioSource = new MediaSource(((LibraryPlaylistsTableDataLine) dataLine).getPlayListItem());
                     filesView = LibraryPlaylistsTableMediator.instance().getFilesView();
                     playNextSong = true;
                 } else if (dataLine instanceof LibraryInternetRadioTableDataLine) {

@@ -28,7 +28,7 @@ public interface MediaPlayerListener {
     /**
      * Open callback, stream is ready to play.
      */
-    public void mediaOpened(MediaPlayer audioPlayer, AudioSource audioSource);
+    public void mediaOpened(MediaPlayer audioPlayer, MediaSource audioSource);
 
     public void progressChange(MediaPlayer audioPlayer, float currentTimeInSecs);
     

@@ -54,7 +54,7 @@ public class LibraryIconList extends JList {
         MediaPlayer player = MediaPlayer.instance();
 
         if (player.getState() != MediaPlaybackState.Stopped) {
-            if (player.getCurrentSong() != null && player.getCurrentPlaylist() != null && player.getPlaylistFilesView() != null) {
+            if (player.getCurrentMedia() != null && player.getCurrentPlaylist() != null && player.getPlaylistFilesView() != null) {
                 int index = getPlaylistIndex(player.getCurrentPlaylist());
                 if (index != -1) {
                     paintIcon(g, speaker, index);

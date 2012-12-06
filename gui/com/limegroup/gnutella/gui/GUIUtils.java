@@ -65,7 +65,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.player.MediaPlayer;
-import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaSource;
 import com.limegroup.gnutella.SpeedConstants;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
@@ -616,7 +616,7 @@ public final class GUIUtils {
                         public void run(){
                             GUIMediator.safeInvokeAndWait(new Runnable() {
                                 public void run() {
-                                    GUIMediator.instance().launchAudio(new AudioSource(file));
+                                    GUIMediator.instance().launchAudio(new MediaSource(file));
                                 }
                             });
                         }
@@ -627,7 +627,7 @@ public final class GUIUtils {
                         public void run(){
                             GUIMediator.safeInvokeAndWait(new Runnable() {
                                 public void run() {
-                                    GUIMediator.instance().launchAudio(new AudioSource(file));
+                                    GUIMediator.instance().launchAudio(new MediaSource(file));
                                 }
                             });
                         }
@@ -661,7 +661,7 @@ public final class GUIUtils {
     public static boolean launchAndEnqueueFile(File file, boolean audioLaunched) {        
     	if (MediaPlayer.isPlayableFile(file) && GUIMediator.isPlaylistVisible()) {
     		GUIMediator.instance().attemptStopAudio();
-			GUIMediator.instance().launchAudio(new AudioSource(file));    		
+			GUIMediator.instance().launchAudio(new MediaSource(file));    		
 			return true;
     	}
     	else {

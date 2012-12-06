@@ -69,7 +69,7 @@ public final class PlayerPaneItem extends AbstractPaneItem {
      * window is shown.
      */
     public void initOptions() {
-        CHECK_BOX.setSelected(PlayerSettings.PLAYER_PLAY_IN_OS.getValue());
+        CHECK_BOX.setSelected(PlayerSettings.USE_OS_DEFAULT_PLAYER.getValue());
     }
 
     /**
@@ -81,11 +81,11 @@ public final class PlayerPaneItem extends AbstractPaneItem {
      * @throws IOException if the options could not be applied for some reason
      */
     public boolean applyOptions() throws IOException {
-        PlayerSettings.PLAYER_PLAY_IN_OS.setValue(CHECK_BOX.isSelected());
+        PlayerSettings.USE_OS_DEFAULT_PLAYER.setValue(CHECK_BOX.isSelected());
         return false;
     }
 
     public boolean isDirty() {
-        return PlayerSettings.PLAYER_PLAY_IN_OS.getValue() != CHECK_BOX.isSelected();
+        return PlayerSettings.USE_OS_DEFAULT_PLAYER.getValue() != CHECK_BOX.isSelected();
     }
 }

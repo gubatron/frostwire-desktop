@@ -49,7 +49,7 @@ import javax.swing.Timer;
 
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerListener;
@@ -463,7 +463,7 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 	}
 
 	@Override
-	public void mediaOpened(MediaPlayer audioPlayer, AudioSource audioSource) {	}
+	public void mediaOpened(MediaPlayer audioPlayer, MediaSource audioSource) {	}
 
 	@Override
 	public void progressChange(MediaPlayer audioPlayer, float currentTimeInSecs) { }

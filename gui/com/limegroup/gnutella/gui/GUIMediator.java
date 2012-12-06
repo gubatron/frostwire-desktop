@@ -69,7 +69,7 @@ import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.HideExitDialog;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.library.LibraryMediator;
-import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.tabs.Tab;
@@ -1607,9 +1607,9 @@ public final class GUIMediator {
      *            - song to play now
      * 
      */
-    public void launchAudio(AudioSource song) {
+    public void launchAudio(MediaSource song) {
 
-        if (MediaPlayer.instance().getCurrentSong() != null)
+        if (MediaPlayer.instance().getCurrentMedia() != null)
             try {
             	MediaPlayer.instance().stop();
                 // it needs to pause for a bit, otherwise it'll play the same song.

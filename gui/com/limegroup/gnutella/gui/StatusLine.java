@@ -112,7 +112,7 @@ public final class StatusLine implements ThemeObserver {
 	private JPanel _centerPanel;
 	private Component _centerComponent;
 
-	private CurrentAudioStatusComponent _audioStatusComponent;
+	private CurrentMediaStatusComponent _audioStatusComponent;
     
     ///////////////////////////////////////////////////////////////////////////
     //  Construction
@@ -141,7 +141,7 @@ public final class StatusLine implements ThemeObserver {
         });
 
         GUIMediator.setSplashScreenString(I18n.tr("Creating Audio Status Component..."));
-        _audioStatusComponent = new CurrentAudioStatusComponent();
+        _audioStatusComponent = new CurrentMediaStatusComponent();
 
         //  make icons and panels for connection quality
         GUIMediator.setSplashScreenString(I18n.tr("Creating Connection Quality Indicator..."));

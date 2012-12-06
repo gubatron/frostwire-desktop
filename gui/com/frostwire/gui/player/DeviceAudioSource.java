@@ -28,7 +28,7 @@ import com.frostwire.gui.library.Device;
  * @author aldenml
  *
  */
-public class DeviceAudioSource extends AudioSource {
+public class DeviceAudioSource extends MediaSource {
 
     private final Device device;
     private final FileDescriptor fd;

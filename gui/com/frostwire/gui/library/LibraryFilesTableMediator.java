@@ -54,7 +54,7 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRendere
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.Librarian;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
-import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.upnp.UPnPManager;
 import com.limegroup.gnutella.MediaType;
@@ -475,14 +475,14 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
     }
 
-    public List<AudioSource> getFilesView() {
+    public List<MediaSource> getFilesView() {
         int size = DATA_MODEL.getRowCount();
-        List<AudioSource> result = new ArrayList<AudioSource>(size);
+        List<MediaSource> result = new ArrayList<MediaSource>(size);
         for (int i = 0; i < size; i++) {
             try {
                 File file = DATA_MODEL.get(i).getFile();
                 if (MediaPlayer.isPlayableFile(file)) {
-                    result.add(new AudioSource(DATA_MODEL.get(i).getFile()));
+                    result.add(new MediaSource(DATA_MODEL.get(i).getFile()));
                 }
             } catch (Exception e) {
                 return Collections.emptyList();
@@ -626,7 +626,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             return;
         }
         if (getMediaType().equals(MediaType.getAudioMediaType()) && MediaPlayer.isPlayableFile(line.getFile())) {
-            MediaPlayer.instance().asyncLoadMedia(new AudioSource(line.getFile()), true, false, null, getFilesView());
+            MediaPlayer.instance().asyncLoadMedia(new MediaSource(line.getFile()), true, false, null, getFilesView());
             return;
         }
 
@@ -1023,9 +1023,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     }
 
     @Override
-    protected AudioSource createAudioSource(LibraryFilesTableDataLine line) {
+    protected MediaSource createAudioSource(LibraryFilesTableDataLine line) {
         if (MediaPlayer.isPlayableFile(line.getInitializeObject())) {
-            return new AudioSource(line.getInitializeObject());
+            return new MediaSource(line.getInitializeObject());
         } else {
             return null;
         }

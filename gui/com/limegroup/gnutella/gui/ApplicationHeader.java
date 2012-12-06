@@ -32,7 +32,7 @@ import org.pushingpixels.trident.Timeline;
 import org.pushingpixels.trident.Timeline.TimelineState;
 import org.pushingpixels.trident.callback.TimelineCallbackAdapter;
 
-import com.frostwire.gui.player.AudioPlayerComponent;
+import com.frostwire.gui.player.MediaPlayerComponent;
 import com.frostwire.gui.tabs.Tab;
 import com.frostwire.gui.updates.UpdateMediator;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
@@ -132,7 +132,7 @@ public class ApplicationHeader extends JPanel implements ThemeObserver, RefreshL
     }
 
     private void addAudioPlayerComponent() {
-        final JPanel mediaPanel = new AudioPlayerComponent().getMediaPanel(true);
+        final JPanel mediaPanel = new MediaPlayerComponent().getMediaPanel(true);
         mediaPanel.setMinimumSize(new Dimension(300,45));
         mediaPanel.setPreferredSize(new Dimension(300,45));
         

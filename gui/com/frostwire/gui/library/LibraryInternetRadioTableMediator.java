@@ -47,7 +47,7 @@ import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
-import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.MediaType;
@@ -403,7 +403,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         }
 
         try {
-            AudioSource audioSource = new InternetRadioAudioSource(line.getInitializeObject().getUrl(), line.getInitializeObject());
+            MediaSource audioSource = new InternetRadioAudioSource(line.getInitializeObject().getUrl(), line.getInitializeObject());
             MediaPlayer.instance().asyncLoadMedia(audioSource, true, false, null, getFilesView());
         } catch (Exception e) {
             e.printStackTrace();
@@ -571,9 +571,9 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     }
 
     @Override
-    public List<AudioSource> getFilesView() {
+    public List<MediaSource> getFilesView() {
         int size = DATA_MODEL.getRowCount();
-        List<AudioSource> result = new ArrayList<AudioSource>(size);
+        List<MediaSource> result = new ArrayList<MediaSource>(size);
         for (int i = 0; i < size; i++) {
             try {
                 String url = DATA_MODEL.get(i).getInitializeObject().getUrl();
@@ -621,7 +621,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     }
 
     @Override
-    protected AudioSource createAudioSource(LibraryInternetRadioTableDataLine line) {
+    protected MediaSource createAudioSource(LibraryInternetRadioTableDataLine line) {
         return new InternetRadioAudioSource(line.getInitializeObject().getUrl(), line.getInitializeObject());
     }
 }

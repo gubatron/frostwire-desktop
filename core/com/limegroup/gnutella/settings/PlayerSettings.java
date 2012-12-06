@@ -32,5 +32,5 @@ public class PlayerSettings extends LimeProps {
 
     public static FloatSetting PLAYER_VOLUME = FACTORY.createFloatSetting("PLAYER_VOLUME", 0.5f);
 
-    public static BooleanSetting PLAYER_PLAY_IN_OS = FACTORY.createBooleanSetting("PLAYER_PLAY_IN_OS", false);
+    public static BooleanSetting USE_OS_DEFAULT_PLAYER = FACTORY.createBooleanSetting("USE_OS_DEFAULT_PLAYER", false);
 }

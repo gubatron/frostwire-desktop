@@ -42,7 +42,7 @@ import com.frostwire.alexandria.db.LibraryDatabase;
 
 import com.frostwire.core.Constants;
 import com.frostwire.gui.httpserver.HttpServerManager;
-import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.DeviceAudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.upnp.UPnPManager;
@@ -343,13 +343,13 @@ public class LibraryMediator {
         LibraryFilesTableMediator.instance().setFileSelected(file);
     }
 
-    public void selectCurrentSong() {
+    public void selectCurrentMedia() {
         //Select current playlist.
         Playlist currentPlaylist = MediaPlayer.instance().getCurrentPlaylist();
-        final AudioSource currentSong = MediaPlayer.instance().getCurrentSong();
+        final MediaSource currentMedia = MediaPlayer.instance().getCurrentMedia();
 
         //If the current song is being played from a playlist.
-        if (currentPlaylist != null && currentSong != null && currentSong.getPlaylistItem() != null) {
+        if (currentPlaylist != null && currentMedia != null && currentMedia.getPlaylistItem() != null) {
             if (currentPlaylist.getId() != LibraryDatabase.STARRED_PLAYLIST_ID) {
 
                 //select the song once it's available on the right hand side
@@ -357,7 +357,7 @@ public class LibraryMediator {
                     public void run() {
                         GUIMediator.safeInvokeLater(new Runnable() {
                             public void run() {
-                                LibraryPlaylistsTableMediator.instance().setItemSelected(currentSong.getPlaylistItem());
+                                LibraryPlaylistsTableMediator.instance().setItemSelected(currentMedia.getPlaylistItem());
                             }
                         });
                     }
@@ -373,7 +373,7 @@ public class LibraryMediator {
                     public void run() {
                         GUIMediator.safeInvokeLater(new Runnable() {
                             public void run() {
-                                LibraryPlaylistsTableMediator.instance().setItemSelected(currentSong.getPlaylistItem());
+                                LibraryPlaylistsTableMediator.instance().setItemSelected(currentMedia.getPlaylistItem());
                             }
                         });
                     }
@@ -382,7 +382,7 @@ public class LibraryMediator {
                 libraryFiles.selectStarred();
             }
 
-        } else if (currentSong != null && currentSong.getFile() != null) {
+        } else if (currentMedia != null && currentMedia.getFile() != null) {
             //selects the audio node at the top
             LibraryExplorer libraryFiles = getLibraryExplorer();
 
@@ -391,14 +391,14 @@ public class LibraryMediator {
                 public void run() {
                     GUIMediator.safeInvokeLater(new Runnable() {
                         public void run() {
-                            LibraryFilesTableMediator.instance().setFileSelected(currentSong.getFile());
+                            LibraryFilesTableMediator.instance().setFileSelected(currentMedia.getFile());
                         }
                     });
                 }
             });
 
             libraryFiles.selectAudio();
-        } else if (currentSong instanceof InternetRadioAudioSource) {
+        } else if (currentMedia instanceof InternetRadioAudioSource) {
             //selects the audio node at the top
             LibraryExplorer libraryFiles = getLibraryExplorer();
 
@@ -407,14 +407,14 @@ public class LibraryMediator {
                 public void run() {
                     GUIMediator.safeInvokeLater(new Runnable() {
                         public void run() {
-                            LibraryInternetRadioTableMediator.instance().setItemSelected(((InternetRadioAudioSource) currentSong).getInternetRadioStation());
+                            LibraryInternetRadioTableMediator.instance().setItemSelected(((InternetRadioAudioSource) currentMedia).getInternetRadioStation());
                         }
                     });
                 }
             });
 
             libraryFiles.selectRadio();
-        } else if (currentSong instanceof DeviceAudioSource) {
+        } else if (currentMedia instanceof DeviceAudioSource) {
             //selects the audio node at the top
             LibraryExplorer libraryFiles = getLibraryExplorer();
 
@@ -423,13 +423,13 @@ public class LibraryMediator {
                 public void run() {
                     GUIMediator.safeInvokeLater(new Runnable() {
                         public void run() {
-                            LibraryDeviceTableMediator.instance().setItemSelected(((DeviceAudioSource) currentSong).getFileDescriptor());
+                            LibraryDeviceTableMediator.instance().setItemSelected(((DeviceAudioSource) currentMedia).getFileDescriptor());
                         }
                     });
                 }
             });
 
-            libraryFiles.selectDeviceFileType(((DeviceAudioSource) currentSong).getDevice(), ((DeviceAudioSource) currentSong).getFileDescriptor().fileType);
+            libraryFiles.selectDeviceFileType(((DeviceAudioSource) currentMedia).getDevice(), ((DeviceAudioSource) currentMedia).getFileDescriptor().fileType);
         }
 
         //Scroll to current song.

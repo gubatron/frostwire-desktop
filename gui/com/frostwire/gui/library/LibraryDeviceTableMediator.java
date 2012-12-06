@@ -48,7 +48,7 @@ import org.limewire.util.StringUtils;
 
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.filters.TableLineFilter;
-import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.DeviceAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.MediaType;
@@ -341,7 +341,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
         try {
             String url = device.getDownloadURL(line.getInitializeObject());
-            AudioSource audioSource = new DeviceAudioSource(url, device, line.getInitializeObject());
+            MediaSource audioSource = new DeviceAudioSource(url, device, line.getInitializeObject());
             if (MediaPlayer.isPlayableFile(audioSource)) {
                 MediaPlayer.instance().asyncLoadMedia(audioSource, true, true, null, getFilesView());
             }
@@ -445,9 +445,9 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     }
 
     @Override
-    public List<AudioSource> getFilesView() {
+    public List<MediaSource> getFilesView() {
         int size = DATA_MODEL.getRowCount();
-        List<AudioSource> result = new ArrayList<AudioSource>(size);
+        List<MediaSource> result = new ArrayList<MediaSource>(size);
         for (int i = 0; i < size; i++) {
             try {
                 String url = device.getDownloadURL(DATA_MODEL.get(i).getInitializeObject());
@@ -474,7 +474,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     }
 
     @Override
-    protected AudioSource createAudioSource(LibraryDeviceTableDataLine line) {
+    protected MediaSource createAudioSource(LibraryDeviceTableDataLine line) {
         // TODO Auto-generated method stub
         return null;
     }

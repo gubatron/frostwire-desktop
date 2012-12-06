@@ -54,7 +54,7 @@ import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
-import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -503,7 +503,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             return;
         }
 
-        AudioSource audioSource = new AudioSource(line.getPlayListItem());
+        MediaSource audioSource = new MediaSource(line.getPlayListItem());
         if (MediaPlayer.isPlayableFile(audioSource)) {
             MediaPlayer.instance().asyncLoadMedia(audioSource, true, true, currentPlaylist, getFilesView());
         }
@@ -840,12 +840,12 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     }
 
     @Override
-    public List<AudioSource> getFilesView() {
+    public List<MediaSource> getFilesView() {
         int size = DATA_MODEL.getRowCount();
-        List<AudioSource> result = new ArrayList<AudioSource>(size);
+        List<MediaSource> result = new ArrayList<MediaSource>(size);
         for (int i = 0; i < size; i++) {
             try {
-                result.add(new AudioSource(DATA_MODEL.get(i).getPlayListItem()));
+                result.add(new MediaSource(DATA_MODEL.get(i).getPlayListItem()));
             } catch (Exception e) {
                 return Collections.emptyList();
             }
@@ -869,7 +869,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     }
 
     @Override
-    protected AudioSource createAudioSource(LibraryPlaylistsTableDataLine line) {
-        return new AudioSource(line.getInitializeObject());
+    protected MediaSource createAudioSource(LibraryPlaylistsTableDataLine line) {
+        return new MediaSource(line.getInitializeObject());
     }
 }

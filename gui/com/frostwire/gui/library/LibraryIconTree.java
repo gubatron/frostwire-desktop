@@ -71,22 +71,22 @@ public class LibraryIconTree extends JTree {
         	MediaPlayer player = MediaPlayer.instance();
 
             if (player.getState() != MediaPlaybackState.Stopped) {
-                if (player.getCurrentSong() instanceof InternetRadioAudioSource) {
+                if (player.getCurrentMedia() instanceof InternetRadioAudioSource) {
                     TreePath path = getRadioPath();
                     if (path != null) {
                         paintIcon(g, speaker, path);
                     }
-                } else if (player.getCurrentSong() instanceof DeviceAudioSource) {
-                    TreePath path = getDeviceFileTypePath((DeviceAudioSource) player.getCurrentSong());
+                } else if (player.getCurrentMedia() instanceof DeviceAudioSource) {
+                    TreePath path = getDeviceFileTypePath((DeviceAudioSource) player.getCurrentMedia());
                     if (path != null) {
                         paintIcon(g, speaker, path);
                     }
-                } else if (player.getCurrentSong() != null && player.getCurrentPlaylist() == null && player.getPlaylistFilesView() != null) {
+                } else if (player.getCurrentMedia() != null && player.getCurrentPlaylist() == null && player.getPlaylistFilesView() != null) {
                     TreePath path = getAudioPath();
                     if (path != null) {
                         paintIcon(g, speaker, path);
                     }
-                } else if (player.getCurrentSong() != null && player.getCurrentPlaylist() != null && player.getPlaylistFilesView() != null) {
+                } else if (player.getCurrentMedia() != null && player.getCurrentPlaylist() != null && player.getPlaylistFilesView() != null) {
                     TreePath path = getPlaylistPath(player.getCurrentPlaylist());
                     if (path != null) {
                         paintIcon(g, speaker, path);

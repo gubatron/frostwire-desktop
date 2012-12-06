@@ -26,7 +26,7 @@ import javax.swing.SwingUtilities;
 import org.limewire.util.CommonUtils;
 
 import com.apple.eawt.CocoaComponent;
-import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerListener;
@@ -244,7 +244,7 @@ public class MPlayerComponentOSX extends CocoaComponent implements MPlayerCompon
      * MediaPlayer Listener events - to send back to the native side.
      */
 	@Override
-	public void mediaOpened(MediaPlayer audioPlayer, AudioSource audioSource) {}
+	public void mediaOpened(MediaPlayer audioPlayer, MediaSource audioSource) {}
 
 	@Override
 	public void progressChange(MediaPlayer audioPlayer, float currentTimeInSecs) {

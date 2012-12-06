@@ -26,7 +26,7 @@ import com.frostwire.alexandria.InternetRadioStation;
  * @author aldenml
  *
  */
-public class InternetRadioAudioSource extends AudioSource {
+public class InternetRadioAudioSource extends MediaSource {
 
     private InternetRadioStation station;
 

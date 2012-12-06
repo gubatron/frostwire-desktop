@@ -25,7 +25,7 @@ import javax.swing.JPopupMenu;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.bittorrent.websearch.soundcloud.SoundcloudTrackSearchResult;
-import com.frostwire.gui.player.StreamAudioSource;
+import com.frostwire.gui.player.StreamMediaSource;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -134,7 +134,7 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
 
     @Override
     public void play() {
-        GUIMediator.instance().launchAudio(new StreamAudioSource(sr.getStreamUrl(), "Soundcloud: " + sr.getDisplayName(), sr.getDetailsUrl(), false));
+        GUIMediator.instance().launchAudio(new StreamMediaSource(sr.getStreamUrl(), "Soundcloud: " + sr.getDisplayName(), sr.getDetailsUrl(), false));
     }
 
     @Override

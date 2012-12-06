@@ -77,16 +77,16 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     private List<MediaPlayerListener> listenerList = new CopyOnWriteArrayList<MediaPlayerListener>();
 
     private MPlayer mplayer;
-    private AudioSource currentSong;
+    private MediaSource currentMedia;
     private Playlist currentPlaylist;
-    private List<AudioSource> playlistFilesView;
+    private List<MediaSource> playlistFilesView;
     private RepeatMode repeatMode;
     private boolean shuffle;
     private boolean playNextMedia;
 
     private double volume;
 
-    private Queue<AudioSource> lastRandomFiles;
+    private Queue<MediaSource> lastRandomFiles;
 
     private final ExecutorService playExecutor;
 
@@ -111,7 +111,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     }
 
     protected MediaPlayer() {
-        lastRandomFiles = new LinkedList<AudioSource>();
+        lastRandomFiles = new LinkedList<MediaSource>();
         playExecutor = ExecutorsHelper.newProcessingQueue("AudioPlayer-PlayExecutor");
 
         String playerPath;
@@ -182,15 +182,15 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         }
     }
 
-    public AudioSource getCurrentSong() {
-        return currentSong;
+    public MediaSource getCurrentMedia() {
+        return currentMedia;
     }
 
     public Playlist getCurrentPlaylist() {
         return currentPlaylist;
     }
 
-    public List<AudioSource> getPlaylistFilesView() {
+    public List<MediaSource> getPlaylistFilesView() {
         return playlistFilesView;
     }
 
@@ -233,13 +233,13 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     /**
      * Loads a AudioSource into the player to play next
      */
-    public void loadMedia(AudioSource source, boolean play, boolean playNextSong, Playlist currentPlaylist, List<AudioSource> playlistFilesView) {
-        if (PlayerSettings.PLAYER_PLAY_IN_OS.getValue()) {
+    public void loadMedia(MediaSource source, boolean play, boolean playNextSong, Playlist currentPlaylist, List<MediaSource> playlistFilesView) {
+        if (PlayerSettings.USE_OS_DEFAULT_PLAYER.getValue()) {
             playInOS(source);
             return;
         }
 
-        currentSong = source;
+        currentMedia = source;
         this.playNextMedia = playNextSong;
         this.currentPlaylist = currentPlaylist;
         this.playlistFilesView = playlistFilesView;
@@ -247,23 +247,23 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         if (play) {
             durationInSeconds = -1;
 
-            if (currentSong.getFile() != null) {
-                LibraryMediator.instance().getLibraryCoverArt().setFile(currentSong.getFile());
-                calculateDurationInSecs(currentSong.getFile());
+            if (currentMedia.getFile() != null) {
+                LibraryMediator.instance().getLibraryCoverArt().setFile(currentMedia.getFile());
+                calculateDurationInSecs(currentMedia.getFile());
                 playMedia();
-            } else if (currentSong.getPlaylistItem() != null) {
-                LibraryMediator.instance().getLibraryCoverArt().setFile(new File(currentSong.getPlaylistItem().getFilePath()));
+            } else if (currentMedia.getPlaylistItem() != null) {
+                LibraryMediator.instance().getLibraryCoverArt().setFile(new File(currentMedia.getPlaylistItem().getFilePath()));
                 playMedia();
-                durationInSeconds = (long) currentSong.getPlaylistItem().getTrackDurationInSecs();
-            } else if (currentSong instanceof InternetRadioAudioSource) {
+                durationInSeconds = (long) currentMedia.getPlaylistItem().getTrackDurationInSecs();
+            } else if (currentMedia instanceof InternetRadioAudioSource) {
                 LibraryMediator.instance().getLibraryCoverArt().setDefault();
                 playMedia(false);
-            } else if (currentSong instanceof StreamAudioSource) {
+            } else if (currentMedia instanceof StreamMediaSource) {
                 LibraryMediator.instance().getLibraryCoverArt().setDefault();
-                playMedia(((StreamAudioSource) currentSong).showPlayerWindow());
-            } else if (currentSong instanceof DeviceAudioSource) {
+                playMedia(((StreamMediaSource) currentMedia).showPlayerWindow());
+            } else if (currentMedia instanceof DeviceAudioSource) {
                 LibraryMediator.instance().getLibraryCoverArt().setDefault();
-                playMedia(((DeviceAudioSource) currentSong).showPlayerWindow());
+                playMedia(((DeviceAudioSource) currentMedia).showPlayerWindow());
             }
         }
     }
@@ -311,7 +311,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         }
     }
 
-    public void asyncLoadMedia(final AudioSource source, final boolean play, final boolean playNextSong, final Playlist currentPlaylist, final List<AudioSource> playlistFilesView) {
+    public void asyncLoadMedia(final MediaSource source, final boolean play, final boolean playNextSong, final Playlist currentPlaylist, final List<MediaSource> playlistFilesView) {
         playExecutor.execute(new Runnable() {
             public void run() {
                 loadMedia(source, play, playNextSong, currentPlaylist, playlistFilesView);
@@ -319,11 +319,11 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         });
     }
 
-    public void loadMedia(AudioSource source, boolean play, boolean playNextSong) {
+    public void loadMedia(MediaSource source, boolean play, boolean playNextSong) {
         loadMedia(source, play, playNextSong, currentPlaylist, playlistFilesView);
     }
 
-    public void asyncLoadMedia(final AudioSource source, final boolean play, final boolean playNextSong) {
+    public void asyncLoadMedia(final MediaSource source, final boolean play, final boolean playNextSong) {
         playExecutor.execute(new Runnable() {
             public void run() {
                 loadMedia(source, play, playNextSong);
@@ -336,12 +336,12 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         setVolume(volume);
 
         String filename = "";
-        if (currentSong.getFile() != null) {
-            filename = currentSong.getFile().getAbsolutePath();
-        } else if (currentSong.getURL() != null) {
-            filename = currentSong.getURL().toString();
-        } else if (currentSong.getPlaylistItem() != null) {
-            filename = currentSong.getPlaylistItem().getFilePath();
+        if (currentMedia.getFile() != null) {
+            filename = currentMedia.getFile().getAbsolutePath();
+        } else if (currentMedia.getURL() != null) {
+            filename = currentMedia.getURL().toString();
+        } else if (currentMedia.getPlaylistItem() != null) {
+            filename = currentMedia.getPlaylistItem().getFilePath();
         }
         return filename;
     }
@@ -397,7 +397,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      */
     public void stop() {
         mplayer.stop();
-        currentSong = null;
+        currentMedia = null;
         notifyState(getState());
     }
 
@@ -465,14 +465,14 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         return PLAYABLE_EXTENSIONS;
     }
 
-    public static boolean isPlayableFile(AudioSource audioSource) {
+    public static boolean isPlayableFile(MediaSource audioSource) {
         if (audioSource.getFile() != null) {
             return audioSource.getFile().exists() && isPlayableFile(audioSource.getFile());
         } else if (audioSource.getPlaylistItem() != null) {
             return new File(audioSource.getPlaylistItem().getFilePath()).exists() && isPlayableFile(audioSource.getPlaylistItem().getFilePath());
         } else if (audioSource instanceof InternetRadioAudioSource) {
             return true;
-        } else if (audioSource instanceof StreamAudioSource) {
+        } else if (audioSource instanceof StreamMediaSource) {
             return true;
         } else if (audioSource instanceof DeviceAudioSource) {
             return isPlayableFile(((DeviceAudioSource) audioSource).getFileDescriptor().filePath);
@@ -487,7 +487,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      * @param properties
      *            - any properties about the source that we extracted
      */
-    protected void notifyOpened(final AudioSource audioSource) {
+    protected void notifyOpened(final MediaSource audioSource) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 fireOpened(audioSource);
@@ -544,7 +544,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      * properties map contains information about the type of song such as bit
      * rate, sample rate, media type(MPEG, Streaming,etc..), etc..
      */
-    protected void fireOpened(AudioSource audioSource) {
+    protected void fireOpened(MediaSource audioSource) {
         for (MediaPlayerListener listener : listenerList) {
             listener.mediaOpened(this, audioSource);
         }
@@ -602,16 +602,16 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             return;
         }
 
-        AudioSource song = null;
+        MediaSource song = null;
 
         if (getRepeatMode() == RepeatMode.Song) {
-            song = currentSong;
+            song = currentMedia;
         } else if (isShuffle()) {
-            song = getNextRandomSong(currentSong);
+            song = getNextRandomSong(currentMedia);
         } else if (getRepeatMode() == RepeatMode.All) {
-            song = getNextContinuousSong(currentSong);
+            song = getNextContinuousSong(currentMedia);
         } else {
-            song = getNextSong(currentSong);
+            song = getNextSong(currentMedia);
         }
 
         if (song != null) {
@@ -625,17 +625,17 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             return false;
         }
 
-        AudioSource currentSong = getCurrentSong();
-        if (currentSong == null) {
+        MediaSource currentMedia = getCurrentMedia();
+        if (currentMedia == null) {
             return false;
         }
 
-        File currentSongFile = currentSong.getFile();
+        File currentMediaFile = currentMedia.getFile();
 
-        if (currentSongFile != null && file.equals(currentSongFile))
+        if (currentMediaFile != null && file.equals(currentMediaFile))
             return true;
 
-        PlaylistItem playlistItem = currentSong.getPlaylistItem();
+        PlaylistItem playlistItem = currentMedia.getPlaylistItem();
         if (playlistItem != null && new File(playlistItem.getFilePath()).equals(file)) {
             return true;
         }
@@ -648,14 +648,14 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             return false;
         }
 
-        AudioSource currentSong = getCurrentSong();
-        if (currentSong == null) {
+        MediaSource currentMedia = getCurrentMedia();
+        if (currentMedia == null) {
             return false;
         }
 
-        String currentSongUrl = currentSong.getURL();
+        String currentMediaUrl = currentMedia.getURL();
 
-        if (currentSongUrl != null && file.toLowerCase().equals(currentSongUrl.toString().toLowerCase())) {
+        if (currentMediaUrl != null && file.toLowerCase().equals(currentMediaUrl.toString().toLowerCase())) {
             return true;
         }
 
@@ -667,31 +667,31 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             return false;
         }
 
-        AudioSource currentSong = getCurrentSong();
-        if (currentSong == null) {
+        MediaSource currentMedia = getCurrentMedia();
+        if (currentMedia == null) {
             return false;
         }
 
-        PlaylistItem currentSongFile = currentSong.getPlaylistItem();
+        PlaylistItem currentMediaFile = currentMedia.getPlaylistItem();
 
-        if (currentSongFile != null && playlistItem.equals(currentSongFile))
+        if (currentMediaFile != null && playlistItem.equals(currentMediaFile))
             return true;
 
         return false;
     }
 
-    public synchronized void setPlaylistFilesView(List<AudioSource> playlistFilesView) {
+    public synchronized void setPlaylistFilesView(List<MediaSource> playlistFilesView) {
         this.playlistFilesView = playlistFilesView;
     }
 
-    public AudioSource getNextRandomSong(AudioSource currentSong) {
+    public MediaSource getNextRandomSong(MediaSource currentMedia) {
         if (playlistFilesView == null) {
             return null;
         }
 
-        AudioSource songFile;
+        MediaSource songFile;
         int count = 4;
-        while ((songFile = findRandomSongFile(currentSong)) == null && count-- > 0)
+        while ((songFile = findRandomSongFile(currentMedia)) == null && count-- > 0)
             ;
 
         if (count > 0) {
@@ -700,7 +700,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
                 lastRandomFiles.poll();
             }
         } else {
-            songFile = currentSong;
+            songFile = currentMedia;
             lastRandomFiles.clear();
             lastRandomFiles.add(songFile);
         }
@@ -708,7 +708,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         return songFile;
     }
 
-    public AudioSource getNextContinuousSong(AudioSource currentSong) {
+    public MediaSource getNextContinuousSong(MediaSource currentMedia) {
         if (playlistFilesView == null) {
             return null;
         }
@@ -719,10 +719,10 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         }
         for (int i = 0; i < n; i++) {
             try {
-                AudioSource f1 = playlistFilesView.get(i);
-                if (currentSong.equals(f1)) {
+                MediaSource f1 = playlistFilesView.get(i);
+                if (currentMedia.equals(f1)) {
                     for (int j = 1; j < n; j++) {
-                        AudioSource file = playlistFilesView.get((j + i) % n);
+                        MediaSource file = playlistFilesView.get((j + i) % n);
                         if (isPlayableFile(file) || file instanceof DeviceAudioSource) {
                             return file;
                         }
@@ -736,7 +736,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         return null;
     }
 
-    public AudioSource getNextSong(AudioSource currentSong) {
+    public MediaSource getNextSong(MediaSource currentMedia) {
         if (playlistFilesView == null) {
             return null;
         }
@@ -755,10 +755,10 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
 
         for (int i = 0; i < n; i++) {
             try {
-                AudioSource f1 = playlistFilesView.get(i);
-                if (currentSong.equals(f1)) {
+                MediaSource f1 = playlistFilesView.get(i);
+                if (currentMedia.equals(f1)) {
                     for (int j = i + 1; j < n; j++) {
-                        AudioSource file = playlistFilesView.get(j);
+                        MediaSource file = playlistFilesView.get(j);
                         if (isPlayableFile(file)) {
                             return file;
                         }
@@ -772,7 +772,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         return null;
     }
 
-    public AudioSource getPreviousSong(AudioSource currentSong) {
+    public MediaSource getPreviousSong(MediaSource currentMedia) {
         if (playlistFilesView == null) {
             return null;
         }
@@ -780,10 +780,10 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         int n = playlistFilesView.size();
         for (int i = 0; i < n; i++) {
             try {
-                AudioSource f1 = playlistFilesView.get(i);
-                if (currentSong.equals(f1)) {
+                MediaSource f1 = playlistFilesView.get(i);
+                if (currentMedia.equals(f1)) {
                     for (int j = i - 1; j >= 0; j--) {
-                        AudioSource file = playlistFilesView.get(j);
+                        MediaSource file = playlistFilesView.get(j);
                         if (isPlayableFile(file)) {
                             return file;
                         }
@@ -797,7 +797,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         return null;
     }
 
-    private AudioSource findRandomSongFile(AudioSource excludeFile) {
+    private MediaSource findRandomSongFile(MediaSource excludeFile) {
         if (playlistFilesView == null) {
             return null;
         }
@@ -811,7 +811,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
 
         for (int i = index; i < n; i++) {
             try {
-                AudioSource file = playlistFilesView.get(i);
+                MediaSource file = playlistFilesView.get(i);
 
                 if (!lastRandomFiles.contains(file) && !file.equals(excludeFile) && isPlayableFile(file)) {
                     return file;
@@ -916,7 +916,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         togglePause();
     }
 
-    private void playInOS(AudioSource source) {
+    private void playInOS(MediaSource source) {
         if (source == null) {
             return;
         }

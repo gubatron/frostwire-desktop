@@ -43,7 +43,7 @@ import javax.swing.event.ChangeListener;
 
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerListener;
@@ -312,7 +312,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 	}
 
 	@Override
-	public void mediaOpened(MediaPlayer mediaPlayer, AudioSource audioSource) {
+	public void mediaOpened(MediaPlayer mediaPlayer, MediaSource audioSource) {
 	}
 
 	@Override

@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
-import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -480,7 +480,7 @@ final class BTDownloadActions {
             File file = BTDownloadMediator.instance().getSelectedDownloaders()[0].getSaveLocation();
             
             if (MediaPlayer.isPlayableFile(file)) {
-            	MediaPlayer.instance().loadMedia(new AudioSource(file),true,false);
+            	MediaPlayer.instance().loadMedia(new MediaSource(file),true,false);
             }
         }
     }
