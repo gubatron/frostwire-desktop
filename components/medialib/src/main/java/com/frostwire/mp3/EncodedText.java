@@ -1,5 +1,6 @@
 package com.frostwire.mp3;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.CharacterCodingException;
@@ -99,7 +100,15 @@ public class EncodedText {
 			byteBuffer = encoder.encode(CharBuffer.wrap(s));
 			return BufferTools.copyBuffer(byteBuffer.array(), 0, byteBuffer.limit());
 		} catch (CharacterCodingException e) {
-			return null;
+			return stringToUTF8Bytes(s);
 		}
+	}
+	
+	private static byte[] stringToUTF8Bytes(String s) {
+	    try {
+            return s.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e1) {
+            return s.getBytes();
+        }
 	}
 }

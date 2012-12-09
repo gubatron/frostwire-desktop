@@ -241,7 +241,14 @@ public class SoundcloudCom extends PluginForHost {
     }
     
     private String cleanupFilename(String filename) {
-        return filename.replace("&#8482;", "TM");
+        filename = filename.replace("&#8482;", "TM");
+        
+        // bug in jdownloader?
+        if (filename.endsWith(".m4a")) {
+            filename = filename.replace(".m4a", ".mp3");
+        }
+        
+        return filename;
     }
 
     static void simpleHTTP(String url, OutputStream out, int timeout) throws Throwable {
