@@ -58,7 +58,7 @@ public class SoundcloudSearchPerformer implements WebSearchPerformer {
             LOG.error("Can't UTF-8 encode keywords: " + keywords, e);
         }
 
-        int pages = getMaxResults() / 10;
+        int pages = getMaxResults() / 4;
 
         for (int i = 0; i < pages; i++) {
             result.addAll(searchPage(i + 1, keywords));
