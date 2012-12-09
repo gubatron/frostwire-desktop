@@ -129,6 +129,7 @@ public class SoundcloudCom extends PluginForHost {
             parameter.getLinkStatus().setStatusText(JDL.L("plugins.hoster.SoundCloudCom.status.pluginBroken", "The host plugin is broken!"));
             return AvailableStatus.FALSE;
         }
+        filename = cleanupFilename(filename);
         parameter.setFinalFileName(filename);
         parameter.setProperty("directlink", url + "?client_id=" + CLIENTID);
         return AvailableStatus.TRUE;
@@ -237,6 +238,10 @@ public class SoundcloudCom extends PluginForHost {
         } catch (Throwable e) {
             return false;
         }
+    }
+    
+    private String cleanupFilename(String filename) {
+        return filename.replace("&#8482;", "TM");
     }
 
     static void simpleHTTP(String url, OutputStream out, int timeout) throws Throwable {
