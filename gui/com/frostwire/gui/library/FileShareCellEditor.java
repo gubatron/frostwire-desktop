@@ -57,12 +57,14 @@ public class FileShareCellEditor extends AbstractCellEditor implements TableCell
                 int state = Librarian.instance().getFileShareState(path);
                 switch (state) {
                 case Librarian.FILE_STATE_UNSHARED:
+                    cell.getDataLine().setShared(true);
                     Librarian.instance().shareFile(path, true);
                     component.setIcon(LibraryUtils.FILE_SHARING_ICON);
                     break;
                 case Librarian.FILE_STATE_SHARING: //nothing to do for now
                     break;
                 case Librarian.FILE_STATE_SHARED:
+                    cell.getDataLine().setShared(false);
                     Librarian.instance().shareFile(path, false);
                     component.setIcon(LibraryUtils.FILE_UNSHARED_ICON);
                 }

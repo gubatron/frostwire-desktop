@@ -210,7 +210,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         case MODIFICATION_TIME_IDX:
             return new PlayableCell(this, new Date(initializer.lastModified()), isPlaying, idx);
         case SHARE_IDX:
-            return new FileShareCell(initializer.getAbsolutePath(), shared);
+            return new FileShareCell(this, initializer.getAbsolutePath(), shared);
         }
         return null;
     }

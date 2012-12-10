@@ -26,14 +26,20 @@ package com.frostwire.gui.library;
  */
 public class FileShareCell implements Comparable<FileShareCell> {
 
+    private final LibraryFilesTableDataLine dataLine;
     private final String path;
     private final boolean shared;
 
-    public FileShareCell(String path, boolean shared) {
+    public FileShareCell(LibraryFilesTableDataLine libraryFilesTableDataLine, String path, boolean shared) {
+        this.dataLine = libraryFilesTableDataLine;
         this.path = path;
         this.shared = shared;
     }
 
+    public LibraryFilesTableDataLine getDataLine() {
+        return dataLine;
+    }
+    
     public String getPath() {
         return path;
     }
@@ -45,5 +51,5 @@ public class FileShareCell implements Comparable<FileShareCell> {
     @Override
     public int compareTo(FileShareCell other) {
         return Boolean.valueOf(isShared()).compareTo(other.isShared());
-    }
+    }   
 }

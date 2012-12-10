@@ -199,14 +199,20 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         //unshare to shared, this is "being shared"
         boolean noneSharing = !isAnyBeingShared();
         boolean allShared  = areAllSelectedFilesShared();
-        WIFI_SHARE_ACTION.setEnabled(noneSharing);
+        
+        WIFI_SHARE_ACTION.setEnabled(noneSharing && !allShared);
         
         //unsharing is immediate.
         WIFI_UNSHARE_ACTION.setEnabled(noneSharing && allShared);
         
         //menu.add(new SkinMenuItem(areAllSelectedFilesShared() ? WIFI_UNSHARE_ACTION : WIFI_SHARE_ACTION));
-        menu.add(WIFI_SHARE_ACTION);
-        menu.add(WIFI_UNSHARE_ACTION);
+        if (WIFI_SHARE_ACTION.isEnabled()) {
+            menu.add(WIFI_SHARE_ACTION);
+        }
+        
+        if (WIFI_UNSHARE_ACTION.isEnabled()) {
+            menu.add(WIFI_UNSHARE_ACTION);
+        }
 
         menu.add(new SkinMenuItem(SEND_TO_FRIEND_ACTION));
         menu.add(new SkinMenuItem(SEND_TO_ITUNES_ACTION));
@@ -1052,8 +1058,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
             putValue(LimeAction.SHORT_NAME, actionName);
             putValue(Action.LONG_DESCRIPTION, actionName + " " + I18n.tr("file on local Wi-Fi network"));
-            putValue(Action.SMALL_ICON, GUIMediator.getThemeImage(share ? "file_unshared" : "file_shared"));
-            putValue(LimeAction.ICON_NAME, share ? "WIFI_UNSHARED" : "WIFI_SHARED");
+            putValue(Action.SMALL_ICON, GUIMediator.getThemeImage(share ? "file_shared":"file_unshared"));
+            putValue(LimeAction.ICON_NAME, share ? "WIFI_SHARED":"WIFI_UNSHARED");
         }
 
         @Override
@@ -1064,8 +1070,17 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 File file = DATA_MODEL.getFile(index);
                 LibraryFilesTableDataLine dataLine = DATA_MODEL.get(i);
                 try {
-                    dataLine.setShared(share);
-                    Librarian.instance().shareFile(file.getAbsolutePath(), share, false);
+                    //this is so that we avoid re-sharing what's already shared.
+                    //we nest this logic for clarity.
+                    if (share) {
+                        if (!dataLine.isShared()) {
+                            actualShare(dataLine, file);
+                        }
+                    } 
+                    //this happens only when.
+                    else {
+                        actualShare(dataLine,file);
+                    }
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -1073,6 +1088,11 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             }
 
             UPnPManager.instance().refreshPing();
+        }
+        
+        private void actualShare(LibraryFilesTableDataLine dataLine, File file) {
+            dataLine.setShared(share);
+            Librarian.instance().shareFile(file.getAbsolutePath(), share, false);
         }
     }
 }
