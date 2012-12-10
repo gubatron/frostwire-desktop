@@ -201,7 +201,7 @@ public final class Initializer {
         }
         
         if ( OSUtils.isMacOSX() ) {
-        	MacOSXUtils.setLoginStatus(StartupSettings.RUN_ON_STARTUP.getValue());
+            MacOSXUtils.setLoginStatus(StartupSettings.RUN_ON_STARTUP.getValue());
         }
         
         if (args.length >= 1 && "-startup".equals(args[0]))
