@@ -262,7 +262,9 @@ public class FileMenuActions {
             GUIMediator.instance().openYouTubeVideoUrl(userText);
             return true;
         } else if (userText.matches(".*soundcloud.com.*")) {
-            GUIMediator.instance().openSoundcloudTrackUrl(userText, null);
+            //the new soundcloud redirects to what seems to be an ajax page
+            String soundCloudURL = userText.replace("soundcloud.com/#", "soundcloud.com/");
+            GUIMediator.instance().openSoundcloudTrackUrl(soundCloudURL, null);
             return true;
         } else if (userText.startsWith("http://")) {
             GUIMediator.instance().openTorrentURI(userText, true);
