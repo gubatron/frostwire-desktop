@@ -274,7 +274,7 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
                 if (dataLine instanceof LibraryFilesTableDataLine) {
                     mediaSource = new MediaSource(((LibraryFilesTableDataLine) dataLine).getFile());
                     filesView = LibraryFilesTableMediator.instance().getFilesView();
-                    playNextSong = false;
+                    playNextSong = true;
                 } else if (dataLine instanceof LibraryPlaylistsTableDataLine) {
                     mediaSource = new MediaSource(((LibraryPlaylistsTableDataLine) dataLine).getPlayListItem());
                     filesView = LibraryPlaylistsTableMediator.instance().getFilesView();
