@@ -2,9 +2,14 @@ frostwire (5.5.1) stable; urgency=high
   * New Clear Inactive button on transfers.
   * New setting to use the default system media player instead of
     FrostWire's.
+  * New Download Cloud URLs, Torrents and Magnets by entering
+    urls on the search field.
+  * Bug fix: sharing/unsharing popup menu behavior while sharing on Wi-Fi
+  * Bug fix: resizing issues on preview download dialogs.
   * Bug fix: filtering on torrent detail dialog was broken.
   * Bug fix: Library continuous playback working from play button.
   * Bug fix: Cloud download error fixed.
+  * Bug fix: Media lib unicode issue.
 
  -- FrostWire Team <contact@frostwire.com>  Mon, 10 Dec 2012 12:00:00 -0500
 
