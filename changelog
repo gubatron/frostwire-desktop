@@ -3,9 +3,10 @@ frostwire (5.5.1) stable; urgency=high
   * New setting to use the default system media player instead of
     FrostWire's.
   * Bug fix: filtering on torrent detail dialog was broken.
-  * Bug fix: Library play from button in name cell with wrong behavior.
+  * Bug fix: Library continuous playback working from play button.
+  * Bug fix: Cloud download error fixed.
 
- -- FrostWire Team <contact@frostwire.com>  Wed, 05 Dec 2012 16:00:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Mon, 10 Dec 2012 12:00:00 -0500
 
 frostwire (5.5.0) stable; urgency=high
   * New FrostWire video player.
