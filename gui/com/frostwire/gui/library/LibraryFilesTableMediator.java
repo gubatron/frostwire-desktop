@@ -282,7 +282,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
         return allAreShared;
     }
-
+    
     private boolean areAllSelectedFilesPlayable() {
         boolean selectionIsAllAudio = true;
         int[] selectedRows = TABLE.getSelectedRows();
@@ -1073,7 +1073,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                     //this is so that we avoid re-sharing what's already shared.
                     //we nest this logic for clarity.
                     if (share) {
-                        if (!dataLine.isShared()) {
+                        if (!Librarian.instance().isFileShared(file.getAbsolutePath())) {
                             actualShare(dataLine, file);
                         }
                     } 
