@@ -38,6 +38,7 @@ import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
+import com.limegroup.gnutella.gui.actions.FileMenuActions;
 import com.limegroup.gnutella.gui.themes.SkinCustomUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -139,6 +140,7 @@ class SearchInputPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxPanel.Y_AXIS));        
         add(SCHEMA_BOX);
         add(Box.createVerticalStrut(3));
+        SEARCH_FIELD.setPrompt(I18n.tr("Search or enter URL"));
         SEARCH_FIELD.setMinimumSize(new Dimension(100, 27));
         add(SEARCH_FIELD);
         add(Box.createVerticalStrut(5));
@@ -347,6 +349,14 @@ class SearchInputPanel extends JPanel {
     private class SearchListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String query = SEARCH_FIELD.getText();
+            
+            //start a download from the search box by entering a URL.
+            if (FileMenuActions.openMagnetOrTorrent(query)) {
+                SEARCH_FIELD.setText("");
+                SEARCH_FIELD.hidePopup();
+                return;
+            }
+            
             final SearchInformation info = SearchInformation.createTitledKeywordSearch(query, null, MediaType.getTorrentMediaType(), query);
 
             // If the search worked, store & clear it.
