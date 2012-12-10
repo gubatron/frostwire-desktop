@@ -54,8 +54,8 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRendere
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.Librarian;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
-import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.upnp.UPnPManager;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -194,10 +194,19 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             menu.add(createAddToPlaylistSubMenu());
         }
 
-        boolean anyBeingShared = isAnyBeingShared();
-        WIFI_SHARE_ACTION.setEnabled(!anyBeingShared);
-        WIFI_UNSHARE_ACTION.setEnabled(!anyBeingShared);
-        menu.add(new SkinMenuItem(areAllSelectedFilesShared() ? WIFI_UNSHARE_ACTION : WIFI_SHARE_ACTION));
+        //sharing takes a while...
+        //there's an in between state while the file is changing from
+        //unshare to shared, this is "being shared"
+        boolean noneSharing = !isAnyBeingShared();
+        boolean allShared  = areAllSelectedFilesShared();
+        WIFI_SHARE_ACTION.setEnabled(noneSharing);
+        
+        //unsharing is immediate.
+        WIFI_UNSHARE_ACTION.setEnabled(noneSharing && allShared);
+        
+        //menu.add(new SkinMenuItem(areAllSelectedFilesShared() ? WIFI_UNSHARE_ACTION : WIFI_SHARE_ACTION));
+        menu.add(WIFI_SHARE_ACTION);
+        menu.add(WIFI_UNSHARE_ACTION);
 
         menu.add(new SkinMenuItem(SEND_TO_FRIEND_ACTION));
         menu.add(new SkinMenuItem(SEND_TO_ITUNES_ACTION));
