@@ -80,7 +80,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         
     	Container panel = getContentPane();
 
-        ImageIcon bkgndImage = GUIMediator.getThemeImage("fc_background");
+        ImageIcon bkgndImage = GUIMediator.getThemeImage( OSUtils.isLinux() ? "fc_background_linux" : "fc_background");
         Dimension winSize = new Dimension( bkgndImage.getIconWidth(), bkgndImage.getIconHeight());
         
     	setPreferredSize(winSize);
@@ -88,7 +88,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         setUndecorated(true);
         setBackground(new Color(0,0,0,0));
         
-        if (OSUtils.isWindows()) {
+        if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
         	AWTUtilities.setWindowOpaque(this, false);
         }
         
@@ -237,6 +237,12 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
             	
             	if (OSUtils.isWindows()) {
             		AWTUtilities.setWindowOpacity(MPlayerOverlayControls.this, alpha);
+            	} else if (OSUtils.isLinux()) { // on linux, only handle visibility
+            		if (MPlayerOverlayControls.this.isVisible() && alpha == 0.0) {
+            			MPlayerOverlayControls.this.setVisible(false);
+            		} else if (MPlayerOverlayControls.this.isVisible() == false && alpha != 0.0) {
+            			MPlayerOverlayControls.this.setVisible(true);
+            		}
             	}
             }
         });

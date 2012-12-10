@@ -138,6 +138,7 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
         videoCanvas.setSize(d);
         videoCanvas.setPreferredSize(d);
         videoCanvas.addMouseMotionListener(new MPlayerMouseMotionAdapter());
+        videoCanvas.addMouseListener(new MPlayerMouseAdapter());
         pane.add(videoCanvas);
         
         // adjust frame size
@@ -402,7 +403,11 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 	private class MPlayerMouseAdapter extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			showOverlay(false);
+			if (e.getClickCount() == 2) {
+				MPlayerUIEventHandler.instance().onToggleFullscreenPressed();
+			} else {
+				showOverlay(false);
+			}
 		}
 		
 		@Override

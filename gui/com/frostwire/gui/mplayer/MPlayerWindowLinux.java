@@ -1,18 +1,15 @@
 package com.frostwire.gui.mplayer;
 
-import org.limewire.util.SystemUtils;
+import java.awt.AlphaComposite;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import sun.awt.X11.XComponentPeer;
-import sun.awt.X11.XWindow;
 
 public class MPlayerWindowLinux extends MPlayerWindow {
 
 	private static final long serialVersionUID = -4373778544356324171L;
 	private static boolean isFullScreen = false;
-	
-	public MPlayerWindowLinux() {
-		System.out.println("MPlayerWindowLinux hwnd: " + getHwnd());
-	}
 	
 	@Override
 	public long getCanvasComponentHwnd() {
@@ -38,12 +35,16 @@ public class MPlayerWindowLinux extends MPlayerWindow {
 	
 	@Override
 	public void toggleFullScreen() {
-		//SystemUtils.toggleFullScreen(getHwnd());
-		
-		setExtendedState( isFullScreen ? NORMAL : MAXIMIZED_BOTH);
-		super.toggleFullScreen();
 		
 		isFullScreen = !isFullScreen;
 		
+		setExtendedState( isFullScreen ? MAXIMIZED_BOTH : NORMAL);
+		super.toggleFullScreen();
 	}
+	
+	// on linux, alpha composite trick not working to get desired background color.  however,
+	// changing default paint behavior of window does work.
+	@Override
+	public void paint(Graphics g) {
+    }
 }
