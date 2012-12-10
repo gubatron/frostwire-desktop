@@ -275,7 +275,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         for (int i : selectedRows) {
             LibraryFilesTableDataLine libraryFilesTableDataLine = DATA_MODEL.get(i);
 
-            if (!libraryFilesTableDataLine.isShared()) {
+            if (Librarian.instance().getFileShareState(libraryFilesTableDataLine.getInitializeObject().getAbsolutePath()) != Librarian.FILE_STATE_SHARED) {
                 allAreShared = false;
                 break;
             }
