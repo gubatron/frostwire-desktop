@@ -5,6 +5,13 @@ frostwire (5.5.1) stable; urgency=high
   * New Download Cloud URLs, Torrents and Magnets by entering
     urls on the search field.
   * New toggle full screen video playback with double click.
+  * Enhancement: Library file tables now show file modified date field and
+    files are sorted by it in descending order so user can easily find
+    newest files added to the library.
+  * Enhancement: Playlist tables now show the track number column and
+    are by default sorted by it in ascending order to enjoy
+    albums in the order they were meant to be heard by the content
+    creators.
   * Bug fix: sharing/unsharing popup menu behavior while sharing on Wi-Fi
   * Bug fix: resizing issues on preview download dialogs.
   * Bug fix: filtering on torrent detail dialog was broken.
