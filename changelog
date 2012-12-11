@@ -12,6 +12,7 @@ frostwire (5.5.1) stable; urgency=high
     are by default sorted by it in ascending order to enjoy
     albums in the order they were meant to be heard by the content
     creators.
+  * Enhancement: mime type guessing is faster when sharing files on Wi-Fi
   * Bug fix: Library was getting confused with file extensions as part of file names.
   * Bug fix: sharing/unsharing popup menu behavior while sharing on Wi-Fi
   * Bug fix: resizing issues on preview download dialogs.
