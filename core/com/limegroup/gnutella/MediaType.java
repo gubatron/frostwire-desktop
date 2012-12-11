@@ -12,6 +12,7 @@ import java.util.TreeSet;
 
 import org.limewire.collection.Comparators;
 import org.limewire.i18n.I18nMarker;
+import org.limewire.util.FilenameUtils;
 
 /**
  * A generic type of media, i.e., "video" or "audio".
@@ -202,6 +203,8 @@ public class MediaType implements Serializable {
      */
     private final Set<String> exts;
     
+    private final String[] extsArray;
+    
     /**
      * Whether or not this is one of the default media types.
      */
@@ -217,6 +220,7 @@ public class MediaType implements Serializable {
         this.schema = schema;
         this.descriptionKey = null;
         this.exts = Collections.emptySet();
+        this.extsArray = new String[0];
         this.isDefault = false;
     }
     
@@ -239,11 +243,13 @@ public class MediaType implements Serializable {
         this.isDefault = true;
         if(extensions == null) {
             this.exts = Collections.emptySet();
+            this.extsArray = new String[0];
         } else {
             Set<String> set =
                 new TreeSet<String>(Comparators.caseInsensitiveStringComparator());
             set.addAll(Arrays.asList(extensions));
             this.exts = set;
+            this.extsArray = exts.toArray(new String[0]);
         }
     }
         
@@ -256,14 +262,7 @@ public class MediaType implements Serializable {
         if (exts == null)
             return true;
 
-        //Get suffix of filename.
-        int j = filename.lastIndexOf(".");
-        if (j == -1 || j == filename.length())
-            return false;
-        String suffix = filename.substring(j+1);
-
-        // Match with extensions.
-        return exts.contains(suffix);
+        return FilenameUtils.hasExtension(filename, extsArray);
     }
     
     /** 
