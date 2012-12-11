@@ -12,6 +12,7 @@ frostwire (5.5.1) stable; urgency=high
     are by default sorted by it in ascending order to enjoy
     albums in the order they were meant to be heard by the content
     creators.
+  * Bug fix: Library was getting confused with file extensions as part of file names.
   * Bug fix: sharing/unsharing popup menu behavior while sharing on Wi-Fi
   * Bug fix: resizing issues on preview download dialogs.
   * Bug fix: filtering on torrent detail dialog was broken.
@@ -19,7 +20,7 @@ frostwire (5.5.1) stable; urgency=high
   * Bug fix: Cloud download error fixed.
   * Bug fix: Media lib unicode issue.
 
- -- FrostWire Team <contact@frostwire.com>  Mon, 10 Dec 2012 17:00:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Mon, 10 Dec 2012 20:00:00 -0500
 
 frostwire (5.5.0) stable; urgency=high
   * New FrostWire video player.
