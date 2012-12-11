@@ -65,7 +65,7 @@ final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPla
      */
     @Override
     public int add(PlaylistItem o) {
-        return add(o, getRowCount());
+        return addSorted(o);//, getRowCount());
     }
 
 	/**

@@ -124,7 +124,7 @@ public class BasicDataLineModel<T extends DataLine<E>, E> extends AbstractTableM
         _isSorted = true;
         resort();
     }
-
+    
     // Re-sort the list to provide real-time sorting
     public void resort() {
         if (_isSorted) {

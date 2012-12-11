@@ -66,7 +66,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
      * Track column
      */
     static final int TRACK_IDX = 5;
-    private static final LimeTableColumn TRACK_COLUMN = new LimeTableColumn(TRACK_IDX, "PLAYLIST_TABLE_TRACK", I18n.tr("Track"), 20, false, PlaylistItemProperty.class);
+    private static final LimeTableColumn TRACK_COLUMN = new LimeTableColumn(TRACK_IDX, "PLAYLIST_TABLE_TRACK", I18n.tr("Track"), 20, true, PlaylistItemProperty.class);
 
     /**
      * Genre column

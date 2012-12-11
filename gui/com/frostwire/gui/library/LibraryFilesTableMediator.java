@@ -165,6 +165,12 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         super.setupConstants();
         MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryFilesTableModel();
+        
+        //sort by modification time in descending order by default
+        //so user can quickly find newest files.
+        DATA_MODEL.sort(LibraryFilesTableDataLine.MODIFICATION_TIME_IDX);
+        DATA_MODEL.sort(LibraryFilesTableDataLine.MODIFICATION_TIME_IDX);
+        
         TABLE = new LimeJTable(DATA_MODEL);
         DATA_MODEL.setTable(TABLE);
         Action[] aa = new Action[] { LAUNCH_ACTION, OPEN_IN_FOLDER_ACTION, SEND_TO_FRIEND_ACTION, DELETE_ACTION, OPTIONS_ACTION };

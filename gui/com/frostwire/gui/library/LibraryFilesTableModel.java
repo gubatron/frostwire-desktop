@@ -80,7 +80,7 @@ final class LibraryFilesTableModel extends HashBasedDataLineModel<LibraryFilesTa
      */
     @Override
     public int add(File o) {
-        return add(o, getRowCount());
+        return addSorted(o);//, getRowCount());
     }
 
     /**
