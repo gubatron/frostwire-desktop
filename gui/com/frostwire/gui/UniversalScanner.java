@@ -19,6 +19,7 @@
 package com.frostwire.gui;
 
 import java.io.File;
+import java.net.FileNameMap;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
@@ -62,7 +63,9 @@ public class UniversalScanner {
         try {
             MediaType mt = MediaType.getMediaTypeForExtension(FilenameUtils.getExtension(filePath));
 
-            if (mt.equals(MediaType.getAudioMediaType())) {
+            if (mt == null) {
+            	scanDocument(filePath, true);
+            } else if (mt.equals(MediaType.getAudioMediaType())) {
                 scanAudio(filePath, true);
             } else if (mt.equals(MediaType.getImageMediaType())) {
                 scanPictures(filePath, true);
@@ -218,10 +221,8 @@ public class UniversalScanner {
 
     public static String getMimeType(String filePath) {
         try {
-            URL u = new URL("file://" + filePath);
-            URLConnection uc = null;
-            uc = u.openConnection();
-            return uc.getContentType();
+            FileNameMap fnameMap = URLConnection.getFileNameMap();
+            return fnameMap.getContentTypeFor(filePath);
         } catch (Throwable e) {
             LOG.log(Level.WARNING, "Failed to read mime type for: " + filePath);
             return "";
