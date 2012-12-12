@@ -742,9 +742,9 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         }
 
         int n = playlistFilesView.size();
-        if (n == 1) {
-            return playlistFilesView.get(0);
-        }
+//        if (n == 1) {
+//            return playlistFilesView.get(0);
+//        }
 
         //PlaylistFilesView should probably have a HashTable<AudioSource,Integer>
         //Where the integer is the index of the AudioSource on playlistFilesView.
