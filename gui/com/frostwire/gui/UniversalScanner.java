@@ -19,9 +19,6 @@
 package com.frostwire.gui;
 
 import java.io.File;
-import java.net.FileNameMap;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,6 +39,7 @@ import com.frostwire.core.providers.UniversalStore;
 import com.frostwire.core.providers.UniversalStore.Documents.DocumentsColumns;
 import com.frostwire.database.Cursor;
 import com.frostwire.gui.library.AudioMetaData;
+import com.frostwire.util.MimeDetector;
 import com.limegroup.gnutella.MediaType;
 
 /**
@@ -64,7 +62,7 @@ public class UniversalScanner {
             MediaType mt = MediaType.getMediaTypeForExtension(FilenameUtils.getExtension(filePath));
 
             if (mt == null) {
-            	scanDocument(filePath, true);
+                scanDocument(filePath, true);
             } else if (mt.equals(MediaType.getAudioMediaType())) {
                 scanAudio(filePath, true);
             } else if (mt.equals(MediaType.getImageMediaType())) {
@@ -219,13 +217,12 @@ public class UniversalScanner {
         return result;
     }
 
-    public static String getMimeType(String filePath) {
+    private static String getMimeType(String filePath) {
         try {
-            FileNameMap fnameMap = URLConnection.getFileNameMap();
-            return fnameMap.getContentTypeFor(filePath);
+            return MimeDetector.getMimeType(FilenameUtils.getExtension(filePath));
         } catch (Throwable e) {
             LOG.log(Level.WARNING, "Failed to read mime type for: " + filePath);
-            return "";
+            return MimeDetector.UNKNOWN;
         }
     }
 }
