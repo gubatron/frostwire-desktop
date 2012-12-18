@@ -3,6 +3,8 @@ package com.frostwire.gui;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.limewire.util.OSUtils;
+
 import sun.awt.windows.WComponentPeer;
 
 import com.frostwire.gui.bittorrent.BTDownload;
@@ -11,6 +13,8 @@ import com.frostwire.tips.AppStateContext;
 import com.frostwire.tips.AppStateContext.Download;
 import com.frostwire.tips.TipsEngine;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.LanguageUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 public final class TipsClient {
 
@@ -23,7 +27,7 @@ public final class TipsClient {
     }
 
     private TipsClient() {
-        this.engine = new TipsEngine();
+        this.engine = new TipsEngine(OSUtils.getFullOS(),FrostWireUtils.getFrostWireVersion(),LanguageUtils.getLocaleString());
     }
 
     public void call() {
