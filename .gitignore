@@ -35,3 +35,4 @@ ipch/
 tags
 *.opensdf
 components/resources/dist/lw-resources.jar
+fwtips.jar
