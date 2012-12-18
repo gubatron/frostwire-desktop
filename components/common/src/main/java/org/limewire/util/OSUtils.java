@@ -181,6 +181,10 @@ public class OSUtils {
     public static String getOSVersion() {
         return System.getProperty("os.version");
     }
+    
+    public static String getFullOS() {
+        return getOS() + " " + getOSVersion() + " " + getArchitecture();
+    }
 
     /**
      * Returns true if this is Windows NT or Windows 2000 and
