@@ -1,6 +1,6 @@
 package com.frostwire.tips;
 
-public class TipsEngine {
+public final class TipsEngine {
 
     public TipsEngine(String os, String version, String language) {
     

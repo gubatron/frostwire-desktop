@@ -6,7 +6,7 @@ public final class AppStateContext {
 
     private long parentHwnd;
     private boolean parentActive;
-    private long mouseIdleTimeMillis;
+    private long idleTimeMillis;
     private List<Download> downloads;
     private boolean noAnalyze;
 
@@ -30,12 +30,12 @@ public final class AppStateContext {
         this.parentActive = parentActive;
     }
 
-    public long getMouseIdleTimeMillis() {
-        return mouseIdleTimeMillis;
+    public long getIdleTimeMillis() {
+        return idleTimeMillis;
     }
 
-    public void setMouseIdleTimeMillis(long mouseIdleTimeMillis) {
-        this.mouseIdleTimeMillis = mouseIdleTimeMillis;
+    public void setIdleTimeMillis(long idleTimeMillis) {
+        this.idleTimeMillis = idleTimeMillis;
     }
 
     public List<Download> getDownloads() {

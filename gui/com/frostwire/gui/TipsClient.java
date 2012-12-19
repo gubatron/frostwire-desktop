@@ -43,7 +43,7 @@ public final class TipsClient {
 
         context.setParentHwnd(getParentHwnd());
         context.setParentActive(GUIMediator.getAppFrame().isActive());
-        context.setMouseIdleTimeMillis(MouseTracker.instance().idleTimeMillis());
+        context.setIdleTimeMillis(MouseTracker.instance().idleTimeMillis());
         context.setDownloads(getDownloads());
         context.setNoAnalyze(false);
 

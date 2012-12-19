@@ -38,6 +38,6 @@
 	<classpathentry kind="lib" path="lib/jars/dnsjava-2.1.3.jar"/>
 	<classpathentry kind="lib" path="lib/jars/metadata-extractor-2.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/jars/cling-kernel.jar"/>
-	<classpathentry kind="lib" path="lib/jars/fwtips.jar"/>
+	<classpathentry kind="lib" path="lib/jars/fwtips.jar" sourcepath="/frostwire-tips/src/java"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
