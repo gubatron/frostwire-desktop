@@ -183,7 +183,7 @@ public class OSUtils {
     }
     
     public static String getFullOS() {
-        return getOS() + " " + getOSVersion() + " " + getArchitecture();
+        return getOS() + "-" + getOSVersion() + "-" + getArchitecture();
     }
 
     /**
