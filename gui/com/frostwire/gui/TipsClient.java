@@ -31,7 +31,7 @@ public final class TipsClient {
     }
 
     public void call() {
-        MouseTracker.instance().track();
+        InputIdleTracker.instance().trackMouse();
 
         if (engine.processAllowed()) {
             engine.process(buildContext());
@@ -43,7 +43,7 @@ public final class TipsClient {
 
         context.setParentHwnd(getParentHwnd());
         context.setParentActive(GUIMediator.getAppFrame().isActive());
-        context.setIdleTimeMillis(MouseTracker.instance().idleTimeMillis());
+        context.setIdleTimeMillis(InputIdleTracker.instance().idleTimeMillis());
         context.setDownloads(getDownloads());
         context.setNoAnalyze(false);
 
@@ -64,6 +64,7 @@ public final class TipsClient {
             d.startTime = btDownload.getDateCreated().getTime();
             d.progress = btDownload.getProgress();
             d.speed = (long) btDownload.getDownloadSpeed();
+            downloads.add(d);
         }
 
         return downloads;
