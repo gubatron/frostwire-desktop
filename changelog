@@ -1,5 +1,6 @@
 frostwire (5.5.2) stable; urgency=high
   * Bug fix: Repeat media play setting with only one item.
+  * Bug fix: New mime detector based on a bigger table.
 
  -- FrostWire Team <contact@frostwire.com>  Mon, 10 Dec 2012 20:00:00 -0500
 
