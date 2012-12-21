@@ -65,6 +65,7 @@ import com.limegroup.gnutella.gui.options.panes.PlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.PopupsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyLoginPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyPaneItem;
+import com.limegroup.gnutella.gui.options.panes.ShowFrostWireRecommendationsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ShowPromoOverlaysPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ShutdownPaneItem;
 import com.limegroup.gnutella.gui.options.panes.SmartSearchDBPaneItem;
@@ -158,7 +159,6 @@ public final class OptionsConstructor {
     static final String FIREWALL_KEY = "OPTIONS_FIREWALL_MAIN_TITLE";
     static final String GUI_KEY = "OPTIONS_GUI_MAIN_TITLE";
     static final String AUTOCOMPLETE_KEY = "OPTIONS_AUTOCOMPLETE_MAIN_TITLE";
-    static final String SHOW_PROMOTION_OVERLAYS_KEY = "OPTIONS_SHOW_PROMOTION_OVERLAYS_MAIN_TITLE";
     static final String STARTUP_KEY = "OPTIONS_STARTUP_MAIN_TITLE";
     static final String PROXY_KEY = "OPTIONS_PROXY_MAIN_TITLE";
     static final String NETWORK_INTERFACE_KEY = "OPTIONS_NETWORK_INTERFACE_MAIN_TITLE";
@@ -297,8 +297,12 @@ public final class OptionsConstructor {
         }
 
         //view options
-        addOption(OptionsMediator.ROOT_NODE_KEY, GUI_KEY, I18n.tr("View"), PopupsPaneItem.class, NotificationsPaneItem.class, ShowPromoOverlaysPaneItem.class, AutoCompletePaneItem.class);
-
+        if (OSUtils.isWindows()) {
+            addOption(OptionsMediator.ROOT_NODE_KEY, GUI_KEY, I18n.tr("View"), PopupsPaneItem.class, NotificationsPaneItem.class, ShowPromoOverlaysPaneItem.class, ShowFrostWireRecommendationsPaneItem.class, AutoCompletePaneItem.class);
+        } else {
+            addOption(OptionsMediator.ROOT_NODE_KEY, GUI_KEY, I18n.tr("View"), PopupsPaneItem.class, NotificationsPaneItem.class, ShowPromoOverlaysPaneItem.class, AutoCompletePaneItem.class);
+        }        
+        
         //community chat
         addOption(OptionsMediator.ROOT_NODE_KEY, CHAT_KEY, I18n.tr("Community Chat"), ChatCommunityPaneItem.class);
 

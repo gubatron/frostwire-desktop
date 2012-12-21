@@ -65,6 +65,7 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.TablesHandlerSettings;
+import com.limegroup.gnutella.settings.UpdateManagerSettings;
 
 /**
  * This class acts as a mediator between all of the components of the
@@ -307,7 +308,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         
 		clearInactiveAction.setEnabled(anyClearable);
 		
-		TipsClient.instance().call();
+		if (OSUtils.isWindows() && UpdateManagerSettings.SHOW_FROSTWIRE_RECOMMENDATIONS.getValue()) {
+		    TipsClient.instance().call();
+		}
     }
 
     public int getActiveDownloads() {
