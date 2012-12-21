@@ -72,11 +72,13 @@ public class NotifyUserProxy implements NotifyUser {
     }
 
     public void showMessage(Notification notification) {
+    	
         if (!UISettings.SHOW_NOTIFICATIONS.getValue() || OSUtils.isMacOSX()) {
             return;
         }
         
-        _notifier.showMessage(notification);
+        //_notifier.showMessage(notification);
+        
     }
 
 }

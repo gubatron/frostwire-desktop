@@ -72,7 +72,7 @@ public final class ShowFrostWireRecommendationsPaneItem extends AbstractPaneItem
 	 * window is shown.
 	 */
     public void initOptions() {
-        CHECK_BOX.setSelected(UpdateManagerSettings.SHOW_PROMOTION_OVERLAYS.getValue());
+        CHECK_BOX.setSelected(UpdateManagerSettings.SHOW_FROSTWIRE_RECOMMENDATIONS.getValue());
     }
 
     /**
@@ -84,12 +84,12 @@ public final class ShowFrostWireRecommendationsPaneItem extends AbstractPaneItem
 	 * @throws IOException if the options could not be applied for some reason
 	 */
     public boolean applyOptions() throws IOException {
-    	UpdateManagerSettings.SHOW_PROMOTION_OVERLAYS.setValue(CHECK_BOX.isSelected());
+    	UpdateManagerSettings.SHOW_FROSTWIRE_RECOMMENDATIONS.setValue(CHECK_BOX.isSelected());
         return false;
     }
     
     public boolean isDirty() {
-        return UpdateManagerSettings.SHOW_PROMOTION_OVERLAYS.getValue() != CHECK_BOX.isSelected();   
+        return UpdateManagerSettings.SHOW_FROSTWIRE_RECOMMENDATIONS.getValue() != CHECK_BOX.isSelected();   
     }    
 }
 
