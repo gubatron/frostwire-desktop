@@ -138,8 +138,8 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         promoSlides = null;
 
         if (!UpdateManagerSettings.SHOW_PROMOTION_OVERLAYS.getValue()) {
-            Slide s1 = new Slide("http://static.frostwire.com/images/overlays/default_now_on_android.png", "http://www.frostwire.com/?from=defaultSlide", 10000);
-            Slide s2 = new Slide("http://static.frostwire.com/images/overlays/frostclick_default_overlay.jpg", "http://www.frostclick.com/?from=defaultSlide", 10000);
+            Slide s1 = new Slide("http://static.frostwire.com/images/overlays/default_now_on_android.png", "http://www.frostwire.com/?from=defaultSlide", 240000);
+            Slide s2 = new Slide("http://static.frostwire.com/images/overlays/frostclick_default_overlay.jpg", "http://www.frostclick.com/?from=defaultSlide", 240000);
             promoSlides = new SlideshowPanel(Arrays.asList(s1, s2), false);
         } else {
             promoSlides = new SlideshowPanel(UpdateManagerSettings.OVERLAY_SLIDESHOW_JSON_URL.getValue());
