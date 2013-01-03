@@ -13,11 +13,13 @@ import org.limewire.util.CommonUtils;
  */
 public class MacOSXUtils {
     
+	private static boolean initialized = false;
+	
     static {
         	try {
         		System.loadLibrary("MacOSXUtilsLeopard");
-        	} catch (UnsatisfiedLinkError err) {
-            	ErrorService.error(err);
+        		initialized = true;
+        	} catch (Throwable err) {
             }
     }
     
@@ -33,17 +35,24 @@ public class MacOSXUtils {
      */
     public static void setLoginStatus(boolean allow) {
     	
-    	String rawDir = CommonUtils.getExecutableDirectory();
-    	String path = rawDir.substring(0, rawDir.indexOf(APP_NAME) + APP_NAME.length());
-    	
-        SetLoginStatusNative(allow, path );
+    	if (initialized) {
+	    	String rawDir = CommonUtils.getExecutableDirectory();
+	    	String path = rawDir.substring(0, rawDir.indexOf(APP_NAME) + APP_NAME.length());
+	    	
+	        SetLoginStatusNative(allow, path );
+    	}
     }
     
     /**
      * Gets the full user's name.
      */
     public static String getUserName() {
-        return GetCurrentFullUserName();
+    	if (initialized) {
+    		return GetCurrentFullUserName();
+    	}
+    	else {
+    		return "";
+    	}
     }
     
     /**
