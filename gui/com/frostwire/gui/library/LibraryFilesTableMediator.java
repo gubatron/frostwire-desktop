@@ -64,6 +64,7 @@ import com.limegroup.gnutella.gui.CheckBoxListPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
+import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.PaddedPanel;
@@ -559,12 +560,16 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         List<String> undeletedFileNames = new ArrayList<String>();
 
         for (File file : selected) {
-            // removeOptions > 2 => OS offers trash options
+            
+        	if (MediaPlayer.instance().isThisBeingPlayed(file)) {
+                MediaPlayer.instance().stop();
+                MPlayerMediator.instance().showPlayerWindow(false);
+            }
+        	
+        	// removeOptions > 2 => OS offers trash options
             boolean removed = FileUtils.delete(file, removeOptions.length > 2 && option == 0 /* "move to trash" option index */);
             if (removed) {
-                if (MediaPlayer.instance().isThisBeingPlayed(file)) {
-                    MediaPlayer.instance().stop();
-                }
+                
                 DATA_MODEL.remove(DATA_MODEL.getRow(file));
             } else {
                 undeletedFileNames.add(getCompleteFileName(file));
