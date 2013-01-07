@@ -132,9 +132,6 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
                                                              // current file
                     handleNextSong();
                 }
-                if (newState == MediaPlaybackState.Playing || newState == MediaPlaybackState.Paused) {
-                    setVolume(volume);
-                }
             }
         });
         mplayer.addIcyInfoListener(new IcyInfoListener() {
