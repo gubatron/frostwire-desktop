@@ -49,14 +49,14 @@ import javax.swing.Timer;
 
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.player.MediaPlayerAdapter;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
-import com.frostwire.gui.player.MediaPlayerListener;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.LimeJFrame;
 
-public class MPlayerWindow extends JFrame implements MediaPlayerListener {
+public class MPlayerWindow extends JFrame {
 
 	private static final long serialVersionUID = -9154474667503959284L;
 
@@ -79,7 +79,22 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 		initializeUI();	
         
         player = MediaPlayer.instance();
-        player.addMediaPlayerListener(this);
+        player.addMediaPlayerListener(new MediaPlayerAdapter() {
+        	@Override public void mediaOpened(MediaPlayer mediaPlayer, MediaSource mediaSource) {
+        		MPlayerWindow.this.setPlayerWindowTitle();
+        	}
+        	@Override public void stateChange(MediaPlayer audioPlayer, MediaPlaybackState state) {
+        		
+        		if ( state == MediaPlaybackState.Playing && handleVideoResize ) {
+        			handleVideoResize = false;
+        			resizeCanvas();
+        		}
+        		
+        		if ( state != MediaPlaybackState.Playing ){
+        			handleVideoResize = true;
+        		}
+        	}
+        });
     }
 	
 	public static MPlayerWindow createMPlayerWindow() {
@@ -114,7 +129,7 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 		
 		// initialize window
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setTitle("Frostwire Media Player");
+        setPlayerWindowTitle();
         setBackground(new Color(0,0,0));
         initWindowIcon();
         
@@ -157,7 +172,6 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
         animateAlphaThread.setDaemon(true);
         animateAlphaThread.start();
 
-
 	}
 	
 	/**
@@ -180,6 +194,16 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 	        }
 	    }
     }
+	
+	private void setPlayerWindowTitle() {
+		MediaSource source = MediaPlayer.instance().getCurrentMedia();
+		
+		if (source != null) {
+			setTitle("Frostwire Media Player -  " + source.getTitleText());
+		} else {
+			setTitle("Frostwire Media Player");
+		}
+	}
 
 	/**
 	 * correctly set visibility and positioning of window and control overlay
@@ -466,30 +490,4 @@ public class MPlayerWindow extends JFrame implements MediaPlayerListener {
 			}
 		}	
 	}
-
-	@Override
-	public void mediaOpened(MediaPlayer audioPlayer, MediaSource mediaSource) {	}
-
-	@Override
-	public void progressChange(MediaPlayer audioPlayer, float currentTimeInSecs) { }
-
-	@Override
-	public void volumeChange(MediaPlayer audioPlayer, double currentVolume) { }
-
-	@Override
-	public void stateChange(MediaPlayer audioPlayer, MediaPlaybackState state) {
-		
-		if ( state == MediaPlaybackState.Playing && handleVideoResize ) {
-			handleVideoResize = false;
-			resizeCanvas();
-		}
-		
-		if ( state != MediaPlaybackState.Playing ){
-			handleVideoResize = true;
-		}
-	}
-
-	@Override
-	public void icyInfo(MediaPlayer audioPlayer, String data) { }
-
 }
