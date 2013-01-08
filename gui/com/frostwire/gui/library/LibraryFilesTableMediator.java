@@ -45,6 +45,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.collection.CollectionUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.FilenameUtils;
@@ -54,6 +55,7 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRendere
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.Librarian;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
+import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.upnp.UPnPManager;
@@ -560,7 +562,14 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         List<String> undeletedFileNames = new ArrayList<String>();
 
         for (File file : selected) {
+            DownloadManager dm = null;
             
+        	// stop seeding if seeding
+        	if ((dm = TorrentUtil.getDownloadManager(file)) != null) {
+        		dm.stopIt(DownloadManager.STATE_STOPPED, false, false);
+        	}
+        	
+        	// close media player if still playing
         	if (MediaPlayer.instance().isThisBeingPlayed(file)) {
                 MediaPlayer.instance().stop();
                 MPlayerMediator.instance().showPlayerWindow(false);

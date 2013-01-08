@@ -229,6 +229,29 @@ public final class TorrentUtil {
         return set;
     }
 
+    public static DownloadManager getDownloadManager(File f) {
+    	if (AzureusStarter.isAzureusCoreStarted()) {
+            List<?> dms = AzureusStarter.getAzureusCore().getGlobalManager().getDownloadManagers();
+            for (Object obj : dms) {
+                DownloadManager dm = (DownloadManager) obj;
+
+                DiskManagerFileInfoSet infoSet = dm.getDiskManagerFileInfoSet();
+                for (DiskManagerFileInfo fileInfo : infoSet.getFiles()) {
+                    try {
+                    	
+                    	if (f.equals(fileInfo.getFile(false)) ) {
+                    		return dm;
+                    	}
+                    	
+                    } catch (Throwable e) {
+                        LOG.error("Error getting file information", e);
+                    }
+                }
+            }
+        }
+    	return null;
+    }
+    
     public static Set<File> getIncompleteFiles() {
         Set<File> set = new HashSet<File>();
 
