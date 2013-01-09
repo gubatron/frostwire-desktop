@@ -52,6 +52,7 @@ import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.AzureusStarter;
+import com.frostwire.HttpClient;
 import com.frostwire.HttpFetcher;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -124,7 +125,10 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
             updateFolder.setWritable(true);
         }
         try {
-            new HttpFetcher(new URI(_updateMessage.getInstallerUrl())).save(installerFileLocation);
+            //new HttpFetcher(new URI(_updateMessage.getInstallerUrl())).save(installerFileLocation);
+            HttpClient httpClient = new HttpClient();
+            httpClient.save(_updateMessage.getInstallerUrl(), installerFileLocation, true);
+            
             saveMetaData();
             cleanupOldUpdates();
 
