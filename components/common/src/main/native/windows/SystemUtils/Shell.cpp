@@ -23,6 +23,45 @@ CString GetRunningPath() {
 	return bay;
 }
 
+JNIEXPORT jstring JNICALL Java_org_limewire_util_SystemUtils_getShortFileNameNative(JNIEnv *e, jclass c, jstring name) {
+	return MakeJavaString(e, GetShortFileName(GetJavaString(e, name)));
+}
+
+CString GetShortFileName(LPCTSTR name) {
+	
+	// prepend prefix so GetShortPathNameW() handles long strings correctly
+	CString longFileName = _T("\\\\?\\");
+	longFileName += name;
+	
+	// prepare string length
+	int cchBuffer = longFileName.GetLength() + 1;
+	
+	// prepare input wchar buffer
+	WCHAR * wcsLongName = new WCHAR[cchBuffer];
+	memset(wcsLongName, 0, (cchBuffer) * sizeof(WCHAR) );
+	
+	// convert tchar string to wcs
+	mbstowcs(wcsLongName, (LPCTSTR)longFileName, cchBuffer);
+
+	// prepare output wchar buffer
+	WCHAR * wcsShortName = new WCHAR[cchBuffer];
+	memset(wcsShortName, 0, (cchBuffer) * sizeof(WCHAR) );
+
+	// call API to get short path name
+	GetShortPathNameW(wcsLongName, wcsShortName, cchBuffer);
+
+	// store result (convert to tchar)
+	CString shortFileName = wcsShortName;
+
+	// removed \\?\ prefix
+	CString finalShortFileName = (LPCTSTR)shortFileName + 4;
+	
+	delete []wcsLongName;
+	delete []wcsShortName;
+
+	return finalShortFileName;
+}
+
 // Takes a special folder name, like "ApplicationData"
 // Looks up the full path to that folder for the current user as the user has customized it
 // Returns the path like "C:\Documents and Settings\UserName\Application Data", or blank on error

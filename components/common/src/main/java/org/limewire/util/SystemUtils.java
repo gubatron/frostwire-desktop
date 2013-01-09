@@ -43,10 +43,10 @@ public class SystemUtils {
 		boolean canLoad = false;
 		try {
 			if (OSUtils.isWindows() && OSUtils.isGoodWindows()) {
-				if (OSUtils.isMachineX64()) {
+				/*if (OSUtils.isMachineX64()) {
 					System.loadLibrary("SystemUtilitiesX64");
 					canLoad = true;
-				} else {
+				} else */ {
 					System.loadLibrary("SystemUtilities");
 					canLoad = true;
 				}
@@ -467,6 +467,15 @@ public class SystemUtils {
         throw new IOException("native code not linked");
     }
     
+    public static String getShortFileName(String fileName) {
+    	if(OSUtils.isWindows() && isLoaded) {
+    		return getShortFileNameNative(fileName);
+    	} else {
+    		return null;
+    	}
+    	
+    }
+    
     /**
      * Moves a file to the platform-specific trash can or recycle bin.
      * 
@@ -545,7 +554,8 @@ public class SystemUtils {
      */
 
     private static final native String getRunningPathNative();
-    private static final native String getSpecialPathNative(String name);    
+    private static final native String getSpecialPathNative(String name);
+    private static final native String getShortFileNameNative(String fileName);
     private static final native void openURLNative(String url);
     private static final native void openFileNative(String path);
     private static final native void openFileParamsNative(String path, String params);

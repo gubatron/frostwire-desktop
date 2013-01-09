@@ -21,6 +21,7 @@ extern "C" {
 	// Functions in Shell.cpp
 	JNIEXPORT jstring JNICALL Java_org_limewire_util_SystemUtils_getRunningPathNative(JNIEnv *e, jclass c);
 	JNIEXPORT jstring JNICALL Java_org_limewire_util_SystemUtils_getSpecialPathNative(JNIEnv *e, jclass c, jstring name);
+	JNIEXPORT jstring JNICALL Java_org_limewire_util_SystemUtils_getShortFileNameNative(JNIEnv *e, jclass c, jstring name);
 	JNIEXPORT void JNICALL Java_org_limewire_util_SystemUtils_openURLNative(JNIEnv *e, jclass c, jstring url);
 	JNIEXPORT void JNICALL Java_org_limewire_util_SystemUtils_openFileNative(JNIEnv *e, jclass c, jstring path);
 	JNIEXPORT void JNICALL Java_org_limewire_util_SystemUtils_openFileParamsNative(JNIEnv *e, jclass c, jstring path, jstring params);
@@ -48,3 +49,4 @@ CString SetWindowIcon(JNIEnv *e, jclass c, jobject frame, LPCTSTR bin, LPCTSTR i
 CString SetWindowTopMost(JNIEnv *e, jclass c, jobject frame, LPCTSTR bin);
 bool FlushIconCache();
 void GetIcons(LPCTSTR icon);
+CString GetShortFileName(LPCTSTR name);

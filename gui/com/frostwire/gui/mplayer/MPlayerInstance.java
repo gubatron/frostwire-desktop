@@ -44,6 +44,7 @@ import org.gudy.azureus2.core3.util.TimerEvent;
 import org.gudy.azureus2.core3.util.TimerEventPerformer;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
+import org.limewire.util.SystemUtils;
 
 import com.frostwire.mplayer.Language;
 import com.frostwire.mplayer.LanguageSource;
@@ -267,7 +268,12 @@ MPlayerInstance
 			if(OSUtils.isMacOSX()) {
             	cmdList.add(fileOrUrl);
             } else if (OSUtils.isWindows()) {
-            	cmdList.add(String.format("\"%s\"", fileOrUrl));
+            	String shortFileName = SystemUtils.getShortFileName(fileOrUrl);
+            	if (fileOrUrl.length() > 250 && shortFileName != null) {
+            		cmdList.add(String.format("\"%s\"", shortFileName));
+            	} else {
+            		cmdList.add(String.format("\"%s\"", fileOrUrl));
+            	}
             } else if (OSUtils.isLinux()) {
             	cmdList.add(fileOrUrl);
             }
