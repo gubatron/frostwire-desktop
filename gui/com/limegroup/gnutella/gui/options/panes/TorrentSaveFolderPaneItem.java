@@ -10,12 +10,12 @@ import com.limegroup.gnutella.settings.SharingSettings;
 
 public class TorrentSaveFolderPaneItem extends AbstractPaneItem {
 
-	public final static String TITLE = I18n.tr("Torrent Data Save Folder");
+	public final static String TITLE = I18n.tr("Default Save Folder");
 	
 	private TorrentSaveFolderComponent COMPONENT;
 	
 	public TorrentSaveFolderPaneItem() {
-        super(TITLE, I18n.tr("Choose the folder where the torrent data will be saved"));
+        super(TITLE, I18n.tr("Choose the folder where downloads will be saved to"));
         
         COMPONENT = new TorrentSaveFolderComponent(false);
         add(COMPONENT);

@@ -197,7 +197,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         root.add(new DirectoryHolderNode(new InternetRadioDirectoryHolder()));
         root.add(new DirectoryHolderNode(new StarredDirectoryHolder()));
         root.add(new DirectoryHolderNode(new TorrentDirectoryHolder()));
-        root.add(new DirectoryHolderNode(new SavedFilesDirectoryHolder(SharingSettings.TORRENT_DATA_DIR_SETTING, I18n.tr("Finished Downloads"))));
+        root.add(new DirectoryHolderNode(new SavedFilesDirectoryHolder(SharingSettings.TORRENT_DATA_DIR_SETTING, I18n.tr("Default Save Folder"))));
 
         devicesNode = new DevicesNode(I18n.tr("Wi-Fi Sharing"));
         root.add(devicesNode);

@@ -117,6 +117,9 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         MAIN_PANEL = new PaddedPanel();
         FILE_DESCRIPTOR_FILTER = new FileDescriptorFilter();
         DATA_MODEL = new LibraryDeviceTableModel(FILE_DESCRIPTOR_FILTER);
+        DATA_MODEL.sort(LibraryDeviceTableDataLine.DATE_ADDED_IDX);
+        DATA_MODEL.sort(LibraryDeviceTableDataLine.DATE_ADDED_IDX);
+        
         TABLE = new LimeJTable(DATA_MODEL);
         Action[] aa = new Action[] { LAUNCH_ACTION, saveToAction, OPTIONS_ACTION };
         BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);

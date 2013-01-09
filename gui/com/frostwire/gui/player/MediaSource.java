@@ -18,6 +18,8 @@ package com.frostwire.gui.player;
 import java.io.File;
 
 import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.core.FileDescriptor;
+import com.limegroup.gnutella.MediaType;
 
 /**
  *  A wrapper for the source of an audio file that is currently playing
@@ -33,6 +35,10 @@ public class MediaSource {
     private final String url;
 
     private final PlaylistItem playlistItem;
+    
+    private String titleText = "";
+    private String toolTipText = "";
+	
 
     public MediaSource(File file) {
         if (file == null) {
@@ -42,6 +48,7 @@ public class MediaSource {
         this.file = file;
         this.url = null;
         this.playlistItem = null;
+        initializeDisplayText();
     }
 
     @Override
@@ -63,6 +70,7 @@ public class MediaSource {
         this.file = null;
         this.url = url;
         this.playlistItem = null;
+        initializeDisplayText();
     }
 
     public MediaSource(PlaylistItem playlistItem) {
@@ -73,6 +81,7 @@ public class MediaSource {
         this.file = null;
         this.url = null;
         this.playlistItem = playlistItem;
+        initializeDisplayText();
     }
 
     public File getFile() {
@@ -100,5 +109,59 @@ public class MediaSource {
             return playlistItem.equals(o.playlistItem);
         }
         return false;
+    }
+    
+    private void initializeDisplayText() {
+    	
+    	PlaylistItem playlistItem = getPlaylistItem();
+        
+		if (this instanceof DeviceMediaSource) {
+            
+			FileDescriptor fd = ((DeviceMediaSource) this).getFileDescriptor();
+            String artistName = fd.artist;
+            String songTitle = fd.title;
+
+            String albumToolTip = fd.album;
+            String yearToolTip = fd.year;
+
+            titleText = artistName + " - " + songTitle;
+            toolTipText = artistName + " - " + songTitle + albumToolTip + yearToolTip;
+        
+		} else if ( this instanceof StreamMediaSource) {
+            
+        	titleText = ((StreamMediaSource) this).getTitle();
+            toolTipText = "";
+        
+		} else if (playlistItem != null) {
+            
+        	String artistName = playlistItem.getTrackArtist();
+            String songTitle = playlistItem.getTrackTitle();
+
+            String albumToolTip = (playlistItem.getTrackAlbum() != null && playlistItem.getTrackAlbum().length() > 0) ? " - " + playlistItem.getTrackAlbum() : "";
+            String yearToolTip = (playlistItem.getTrackYear() != null && playlistItem.getTrackYear().length() > 0) ? " (" + playlistItem.getTrackYear() + ")" : "";
+
+            titleText = artistName + " - " + songTitle;
+            toolTipText = artistName + " - " + songTitle + albumToolTip + yearToolTip;
+
+        } else if (getFile() != null) {
+        
+        	titleText = getFile().getName();
+            toolTipText = getFile().getAbsolutePath();
+        
+        } else if (getFile() == null && getURL() != null) {
+        
+        	System.out.println("StreamURL: " + getURL().toString());
+            titleText = "internet "; // generic internet stream
+            toolTipText = "";
+        
+        }
+    }
+    
+    public String getTitleText() {
+    	return titleText;
+    }
+    
+    public String getToolTipText() {
+    	return toolTipText;
     }
 }
