@@ -19,6 +19,7 @@
 package com.frostwire.gui.httpserver;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -102,11 +103,14 @@ class DownloadHandler extends AbstractHandler {
             upload = BTDownloadMediator.instance().upload(fd);
 
             exchange.getResponseHeaders().add("Content-Type", fd.mime);
-            exchange.sendResponseHeaders(Code.HTTP_OK, fd.fileSize);
+            
+            File file = new File(fd.filePath);
+            
+            exchange.sendResponseHeaders(Code.HTTP_OK, file.length());
 
             os = exchange.getResponseBody();
 
-            fis = new FileInputStream(fd.filePath);
+            fis = new FileInputStream(file);
 
             byte[] buffer = new byte[4 * 1024];
             int n;
