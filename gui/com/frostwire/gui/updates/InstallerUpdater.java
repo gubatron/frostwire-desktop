@@ -53,6 +53,7 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.AzureusStarter;
 import com.frostwire.HttpClient;
+import com.frostwire.HttpClient.RangeNotSupportedException;
 import com.frostwire.HttpFetcher;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -70,7 +71,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
     private DownloadManager _manager = null;
     private UpdateMessage _updateMessage;
     private File _executableFile;
-    
+
     private static String lastMD5;
 
     public InstallerUpdater(UpdateMessage updateMessage) {
@@ -127,8 +128,13 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
         try {
             //new HttpFetcher(new URI(_updateMessage.getInstallerUrl())).save(installerFileLocation);
             HttpClient httpClient = new HttpClient();
-            httpClient.save(_updateMessage.getInstallerUrl(), installerFileLocation, true);
-            
+            try {
+                httpClient.save(_updateMessage.getInstallerUrl(), installerFileLocation, true);
+            } catch (RangeNotSupportedException e) {
+                // recovery in case the server does not support resume
+                httpClient.save(_updateMessage.getInstallerUrl(), installerFileLocation, false);
+            }
+
             saveMetaData();
             cleanupOldUpdates();
 
@@ -167,11 +173,11 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                             ProcessBuilder pbuilder = new ProcessBuilder(commands);
                             pbuilder.start();
                         } else if (OSUtils.isLinux() && OSUtils.isUbuntu()) {
-                        	boolean success = trySoftwareCenter() || tryGdebiGtk();
-                        	
-                        	if (!success) {
-                        		throw new IOException("Unable to install update");
-                        	}
+                            boolean success = trySoftwareCenter() || tryGdebiGtk();
+
+                            if (!success) {
+                                throw new IOException("Unable to install update");
+                            }
                         } else if (OSUtils.isMacOSX()) {
                             String[] mountCommand = new String[] { "hdiutil", "attach", _executableFile.getAbsolutePath() };
 
@@ -194,28 +200,27 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
             }
         });
     }
-    
+
     private boolean trySoftwareCenter() {
-    	return tryUbuntuInstallCmd("/usr/bin/software-center");
+        return tryUbuntuInstallCmd("/usr/bin/software-center");
     }
-    
-	private boolean tryGdebiGtk() {
-		return tryUbuntuInstallCmd("gdebi-gtk");
-	}
 
-	private boolean tryUbuntuInstallCmd(String cmd) {
-		try {
-			String[] commands = new String[] { cmd,
-					_executableFile.getAbsolutePath() };
+    private boolean tryGdebiGtk() {
+        return tryUbuntuInstallCmd("gdebi-gtk");
+    }
 
-			ProcessBuilder pbuilder = new ProcessBuilder(commands);
-			pbuilder.start();
+    private boolean tryUbuntuInstallCmd(String cmd) {
+        try {
+            String[] commands = new String[] { cmd, _executableFile.getAbsolutePath() };
 
-			return true;
-		} catch (Throwable e) {
-			return false;
-		}
-	}
+            ProcessBuilder pbuilder = new ProcessBuilder(commands);
+            pbuilder.start();
+
+            return true;
+        } catch (Throwable e) {
+            return false;
+        }
+    }
 
     private File downloadDotTorrent() {
 
@@ -499,7 +504,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
         System.out.println(buf.toString());
     }
-    
+
     public static final String getLastMD5() {
         return lastMD5;
     }
@@ -521,9 +526,9 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
         if (expectedMD5.length() != 32) {
             throw new Exception("Invalid Expected MD5, not 32 chars long");
         }
-        
+
         String md5 = getMD5(f).trim();
-        
+
         lastMD5 = md5;
 
         return md5.equalsIgnoreCase(expectedMD5.trim());

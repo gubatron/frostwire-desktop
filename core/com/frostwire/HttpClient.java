@@ -18,6 +18,7 @@
 package com.frostwire;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -44,13 +45,17 @@ public final class HttpClient {
     public String get(String url, int timeout, String userAgent) {
         String result = null;
 
+        ByteArrayOutputStream baos = null;
+
         try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            baos = new ByteArrayOutputStream();
             get(url, baos, timeout, userAgent, -1);
 
             result = new String(baos.toByteArray(), "UTF-8");
         } catch (Throwable e) {
             // ignore
+        } finally {
+            closeQuietly(baos);
         }
 
         return result;
@@ -64,15 +69,19 @@ public final class HttpClient {
         FileOutputStream fos = null;
         int rangeStart = 0;
 
-        if (resume && file.exists()) {
-            fos = new FileOutputStream(file, true);
-            rangeStart = (int) file.length();
-        } else {
-            fos = new FileOutputStream(file);
-            rangeStart = -1;
-        }
+        try {
+            if (resume && file.exists()) {
+                fos = new FileOutputStream(file, true);
+                rangeStart = (int) file.length();
+            } else {
+                fos = new FileOutputStream(file);
+                rangeStart = -1;
+            }
 
-        get(url, fos, timeout, userAgent, rangeStart);
+            get(url, fos, timeout, userAgent, rangeStart);
+        } finally {
+            closeQuietly(fos);
+        }
     }
 
     private void get(String url, OutputStream out, int timeout, String userAgent, int rangeStart) throws IOException {
@@ -89,7 +98,7 @@ public final class HttpClient {
         InputStream in = conn.getInputStream();
 
         if (rangeStart > 0 && !conn.getHeaderField("Accept-Ranges").equals("bytes")) {
-            throw new IOException("Server does not support bytes range request");
+            throw new RangeNotSupportedException("Server does not support bytes range request");
         }
 
         try {
@@ -110,6 +119,25 @@ public final class HttpClient {
             } catch (Throwable e) {
                 // ignore   
             }
+        }
+    }
+
+    private static void closeQuietly(Closeable closeable) {
+        try {
+            if (closeable != null) {
+                closeable.close();
+            }
+        } catch (IOException ioe) {
+            // ignore
+        }
+    }
+
+    public static final class RangeNotSupportedException extends IOException {
+
+        private static final long serialVersionUID = -3356618211960630147L;
+
+        public RangeNotSupportedException(String message) {
+            super(message);
         }
     }
 }
