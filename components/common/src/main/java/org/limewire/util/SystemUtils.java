@@ -42,15 +42,7 @@ public class SystemUtils {
 	static {
 		boolean canLoad = false;
 		try {
-			if (OSUtils.isWindows() && OSUtils.isGoodWindows()) {
-				/*if (OSUtils.isMachineX64()) {
-					System.loadLibrary("SystemUtilitiesX64");
-					canLoad = true;
-				} else */ {
-					System.loadLibrary("SystemUtilities");
-					canLoad = true;
-				}
-			} else if (OSUtils.isMacOSX()) {
+			if ((OSUtils.isWindows() && OSUtils.isGoodWindows()) || OSUtils.isMacOSX() ) {
 				System.loadLibrary("SystemUtilities");
 				canLoad = true;
 			}
