@@ -68,6 +68,14 @@ MPlayerInstance
 		killProcesses( false );
 	}
 	
+	// indicates how commands should handle pause
+	// see http://www.mplayerhq.hu/DOCS/tech/slave.txt for details
+	public enum CommandPauseMode {
+		NONE,         // pass no pause prefix with the command
+		KEEP,         // pass the pausing_keep prefix
+		KEEP_FORCE    // pass the pausing_keep_force prefix
+	};
+	
 	//private PlayerPreferences preferences;
 	
 	public MPlayerInstance(PlayerPreferences preferences) {
@@ -423,7 +431,7 @@ MPlayerInstance
 	protected void 
 	sendCommand(
 		String 	cmd,
-		boolean pauseKeep )
+		CommandPauseMode pauseMode)
 	{
 		synchronized( this ){
 			
@@ -432,7 +440,15 @@ MPlayerInstance
 				return;
 			}
 			
-			commands.add((pauseKeep ? "pausing_keep " : "" ) + cmd);
+			String prefix = "";
+			
+			if (CommandPauseMode.KEEP_FORCE == pauseMode) {
+				prefix = "pausing_keep_force ";
+			} else if (CommandPauseMode.KEEP == pauseMode) {
+				prefix = "pausing_keep ";
+			}
+			
+			commands.add(prefix + cmd);
 			
 			command_sem.release();
 		}
@@ -442,7 +458,7 @@ MPlayerInstance
 	sendCommand(
 		String cmd ) 
 	{
-		sendCommand( cmd, true );		
+		sendCommand( cmd, CommandPauseMode.NONE );		
 	}
 	
 	protected void 
@@ -515,7 +531,7 @@ MPlayerInstance
 							
 							//System.out.println("pausedStateChanging() sending pause");						
 							
-							sendCommand( "pause", false );
+							sendCommand( "pause", CommandPauseMode.NONE );
 							
 							SimpleTimer.addEvent(
 									"MP:PO2",
@@ -541,7 +557,7 @@ MPlayerInstance
 		
 			pausedStateChanging();
 			
-			sendCommand( "pause", false );		
+			sendCommand( "pause", CommandPauseMode.NONE );		
 
 			return( true );
 		}
@@ -562,7 +578,7 @@ MPlayerInstance
 			
 			pausedStateChanging();
 			
-			sendCommand( "pause", false );
+			sendCommand( "pause", CommandPauseMode.NONE );
 
 			return( true );
 		}
@@ -658,10 +674,8 @@ MPlayerInstance
 		int volume) 
 	{
 		synchronized( this ){
-		
-			sendCommand("volume " + volume + " 1");
-		
-			//sendCommand("get_property VOLUME");
+			CommandPauseMode pauseMode = paused ? CommandPauseMode.KEEP_FORCE : CommandPauseMode.NONE;
+			sendCommand("volume " + volume + " 1", pauseMode);
 		}
 	}
 
@@ -737,7 +751,7 @@ MPlayerInstance
 					
 					redraw_last_frame = now;
 					
-					sendCommand( "frame_step", false);
+					sendCommand( "frame_step", CommandPauseMode.NONE);
 				}
 			}else{
 				
@@ -745,7 +759,7 @@ MPlayerInstance
 					
 				redraw_last_frame = now;
 				
-				sendCommand( "frame_step", false);
+				sendCommand( "frame_step", CommandPauseMode.NONE);
 		
 				redrawing = true;
 				
