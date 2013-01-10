@@ -118,6 +118,7 @@ MPlayerInstance
 	public void 
 	doOpen(
 		String 					fileOrUrl,
+		int                     initialVolume,
 		final OutputConsumer	_outputConsumer )
 	{
 		synchronized( this ){
@@ -265,9 +266,9 @@ MPlayerInstance
 //			
 //			cmdList.add("-framedrop");
 			
-			//Set the volume at 0 as we load, as we don't want to hear sound before we resize / seek.
-			//cmdList.add("-volume");
-			//cmdList.add("0");
+			//Set the initial volume.
+			cmdList.add("-volume");
+			cmdList.add( String.valueOf(initialVolume) );
 			
             if (OSUtils.isLinux()) {
             	cmdList.add("-zoom"); // auto zooms video to fit canvas area
@@ -669,9 +670,7 @@ MPlayerInstance
 		}
 	}
 	
-	protected void 
-	doSetVolume(
-		int volume) 
+	protected void doSetVolume(int volume) 
 	{
 		synchronized( this ){
 			CommandPauseMode pauseMode = paused ? CommandPauseMode.KEEP_FORCE : CommandPauseMode.NONE;

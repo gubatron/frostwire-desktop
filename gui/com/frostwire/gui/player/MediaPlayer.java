@@ -354,7 +354,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
                 mplayerMediator.showPlayerWindow(showPlayerWindow);
             }
 
-            mplayer.open(filename);
+            mplayer.open(filename, getAdjustedVolume());
         }
 
         notifyState(getState());
@@ -374,8 +374,8 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             if (mplayerMediator != null) {
                 mplayerMediator.showPlayerWindow(isVideoFile);
             }
-
-            mplayer.open(filename);
+            
+            mplayer.open(filename, getAdjustedVolume());
         }
 
         notifyState(getState());
@@ -425,11 +425,15 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     public void setVolume(double fGain) {
 
         volume = Math.max(Math.min(fGain, 1.0), 0.0);
-        mplayer.setVolume((int) (volume * getVolumeGainFactor()));
+        mplayer.setVolume( getAdjustedVolume() );
         PlayerSettings.PLAYER_VOLUME.setValue((float) volume);
         notifyVolumeChanged();
     }
-
+    
+    private int getAdjustedVolume() {
+    	return (int) (volume * getVolumeGainFactor());
+    }
+    
     public double getVolume() {
         return volume;
     }

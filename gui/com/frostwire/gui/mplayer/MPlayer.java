@@ -477,7 +477,7 @@ public class MPlayer extends BaseMediaPlayer {
 		}
 	}
 
-	public void doOpen(String fileOrUrl) {
+	public void doOpen(String fileOrUrl, int initialVolume) {
 
 		MPlayerInstance instance;
 
@@ -493,7 +493,7 @@ public class MPlayer extends BaseMediaPlayer {
 		firstLengthReceived = false;
 		firstVolumeReceived = false;
 
-		instance.doOpen(fileOrUrl, new MPlayerInstance.OutputConsumer() {
+		instance.doOpen(fileOrUrl, initialVolume, new MPlayerInstance.OutputConsumer() {
 			public void consume(String line) {
 				synchronized (output) {
 					output.add(line);

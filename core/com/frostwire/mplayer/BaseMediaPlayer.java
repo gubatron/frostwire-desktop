@@ -137,7 +137,7 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 	public abstract void setMetaDataListener(MetaDataListener listener);
 	public abstract void setPositionListener(PositionListener listener);
 	public abstract void setIcyInfoListener(IcyInfoListener listener);
-	public abstract void doOpen(String fileOrUrl);
+	public abstract void doOpen(String fileOrUrl, int initialVolume);
 	public abstract void doPause();
 	public abstract void doResume();
 	public abstract void doStop();
@@ -149,17 +149,17 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		doLoadSubtitlesFile(file, true);
 	}
 	
-	public void open(String fileOrUrl) {
+	public void open(String fileOrUrl, int initialVolume) {
 		if(currentState == MediaPlaybackState.Uninitialized || currentState == MediaPlaybackState.Stopped) {
 			openedFile = fileOrUrl;
 			//subtitleMonitor = new SubtitleMonitor(fileOrUrl);
-			doOpen(fileOrUrl);
+			doOpen(fileOrUrl, initialVolume);
 		} else {
 			doStop();
 			initialize();
 			openedFile = fileOrUrl;
 			//subtitleMonitor = new SubtitleMonitor(fileOrUrl);
-			doOpen(fileOrUrl);
+			doOpen(fileOrUrl, initialVolume);
 		}
 		
 		//Finds subtitles

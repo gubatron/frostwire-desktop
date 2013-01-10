@@ -4,7 +4,7 @@ import java.util.Map;
 
 public interface MediaPlayer {
 
-    public void open(String fileOrUrl);
+    public void open(String fileOrUrl, int initialVolume);
 
     public void seek(float time);
 
