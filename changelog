@@ -1,8 +1,14 @@
 frostwire (5.5.2) stable; urgency=high
+  * Upgrade: Now 'Movies' or 'My Videos' folder is included by default on new
+    installs since we now have a built-in video player.
   * UI fix: Video Player Window Title now shows the file name being played.
   * UI fix: Library > "Finished Downloads" renamed to "Default Save Folder"
   * UI fix: When browsing another device on the Wi-Fi network newest shared files
     are shown at the top of the table.
+  * Bug fix: On first installation FrostWire wasn't able to add 'From Devices' folder
+    to the Library.
+  * Bug fix: When restoring default settings FrostWire was not restoring default
+    library folders.
   * Bug fix: Player remembers volume level from last song played.
   * Bug fix: Sends correct file sizes on HTTP headers for shared files that
     have changed in size after being shared.
