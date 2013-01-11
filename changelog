@@ -11,6 +11,8 @@ frostwire (5.5.2) stable; urgency=high
   * Bug fix: Video player doesn't skip frames when resuming from pause.
   * Bug fix: Video player doesn't move frames when paused and volume slider
     is being moved.
+  * Bug fix: Dropping a .torrent starts a download and doesn't ask to send to
+    a friend.
   * Bug fix: (Windows) can delete files that are being played or seeded
     from the Library.
   * Bug fix: (Mac) compatibility with Mac OSX 10.5.x restored.
