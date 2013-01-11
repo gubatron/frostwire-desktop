@@ -25,6 +25,7 @@ import org.limewire.setting.FileSetSetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.util.CommonUtils;
 
+import com.frostwire.AzureusStarter;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
@@ -51,8 +52,42 @@ public class LibrarySettings extends LimeProps {
     public static final FileSetSetting DIRECTORIES_TO_INCLUDE_FROM_FROSTWIRE4 = FACTORY.createFileSetSetting("DIRECTORIES_TO_INCLUDE_FROM_FROSTWIRE4", new File[0]);
 
     public static final FileSetting USER_MUSIC_FOLDER = FACTORY.createFileSetting("USER_MUSIC_FOLDER", FrostWireUtils.getUserMusicFolder());
+    
+    public static final FileSetting USER_VIDEO_FOLDER = FACTORY.createFileSetting("USER_VIDEO_FOLDER", FrostWireUtils.getUserVideoFolder());
 
     public static final FileSetting LIBRARY_FROM_DEVICE_DATA_DIR_SETTING = FACTORY.createFileSetting("LIBRARY_FROM_DEVICE_DATA_DIR_SETTING", DEFAULT_LIBRARY_FROM_DEVICE_DATA_DIR).setAlwaysSave(true);
 
     public static final BooleanSetting LIBRARY_WIFI_SHARING_ENABLED = FACTORY.createBooleanSetting("LIBRARY_WIFI_SHARING_ENABLED", true);
+
+    
+    public static void setupInitialLibraryFolders() {
+        LibrarySettings.DIRECTORIES_TO_INCLUDE.add(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
+        
+        for (File f : FrostWireUtils.getFrostWire4SaveDirectories()) {
+            LibrarySettings.DIRECTORIES_TO_INCLUDE.add(f);
+            LibrarySettings.DIRECTORIES_TO_INCLUDE_FROM_FROSTWIRE4.add(f);
+        }
+        
+        if (LibrarySettings.USER_MUSIC_FOLDER.getValue().exists()) {
+            LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.USER_MUSIC_FOLDER.getValue());
+        }
+        
+        if (LibrarySettings.USER_VIDEO_FOLDER.getValue().exists()) {
+            LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.USER_VIDEO_FOLDER.getValue());
+        }
+        
+        File fromDeviceFolder = LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.getValue();
+        if (!fromDeviceFolder.exists()) {
+            fromDeviceFolder.mkdir();
+        }
+        
+        LibrarySettings.DIRECTORIES_TO_INCLUDE.add(fromDeviceFolder);
+        
+        File azureusUserPath = new File(CommonUtils.getUserSettingsDir() + File.separator + "azureus" + File.separator);
+        if (!azureusUserPath.exists()) {
+            System.setProperty("azureus.config.path", azureusUserPath.getAbsolutePath());
+            System.setProperty("azureus.install.path", azureusUserPath.getAbsolutePath());
+            AzureusStarter.revertToDefaultConfiguration();
+        }
+    }
 }

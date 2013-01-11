@@ -113,31 +113,9 @@ class BitTorrentSettingsWindow extends SetupWindow {
         }
         
         // setup initial library folders here
-        setupInitialLibraryFolders();
+        LibrarySettings.setupInitialLibraryFolders();
 	}
 
-	// TODO Pending refactor for a better place
-    private void setupInitialLibraryFolders() {
-        LibrarySettings.DIRECTORIES_TO_INCLUDE.add(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
-        
-        for (File f : FrostWireUtils.getFrostWire4SaveDirectories()) {
-            LibrarySettings.DIRECTORIES_TO_INCLUDE.add(f);
-            LibrarySettings.DIRECTORIES_TO_INCLUDE_FROM_FROSTWIRE4.add(f);
-        }
-        
-        if (LibrarySettings.USER_MUSIC_FOLDER.getValue().exists()) {
-            LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.USER_MUSIC_FOLDER.getValue());
-        }
-        
-        LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.getValue());
-        
-        File azureusUserPath = new File(CommonUtils.getUserSettingsDir() + File.separator + "azureus" + File.separator);
-        if (!azureusUserPath.exists()) {
-            System.setProperty("azureus.config.path", azureusUserPath.getAbsolutePath());
-            System.setProperty("azureus.install.path", azureusUserPath.getAbsolutePath());
-            AzureusStarter.revertToDefaultConfiguration();
-        }
-    }
 }
 
 

@@ -26,6 +26,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
+import com.limegroup.gnutella.settings.LibrarySettings;
 
 /**
  * This class acts as a mediator for the different components of the options
@@ -179,6 +180,7 @@ public final class OptionsMediator implements ThemeObserver {
 	public final void revertOptions() {
 	    SettingsGroupManager.instance().revertToDefault();
 	    AzureusStarter.revertToDefaultConfiguration();
+	    LibrarySettings.setupInitialLibraryFolders();
         GUIMediator.showMessage(I18n.tr("One or more options will take effect the next time FrostWire is restarted."));	    
     }
 
