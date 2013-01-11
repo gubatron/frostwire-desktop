@@ -1,7 +1,23 @@
 frostwire (5.5.2) stable; urgency=high
+  * UI fix: Video Player Window Title now shows the file name being played.
+  * UI fix: Library > "Finished Downloads" renamed to "Default Save Folder"
+  * UI fix: When browsing another device on the Wi-Fi network newest shared files
+    are shown at the top of the table.
+  * Bug fix: Player remembers volume level from last song played.
+  * Bug fix: Sends correct file sizes on HTTP headers for shared files that
+    have changed in size after being shared.
   * Bug fix: Repeat media play setting with only one item.
   * Bug fix: New mime detector based on a bigger table.
-
+  * Bug fix: Video player doesn't skip frames when resuming from pause.
+  * Bug fix: Video player doesn't move frames when paused and volume slider
+    is being moved.
+  * Bug fix: Dropping a .torrent starts a download and doesn't ask to send to
+    a friend.
+  * Bug fix: (Windows) can delete files that are being played or seeded
+    from the Library.
+  * Bug fix: (Mac) compatibility with Mac OSX 10.5.x restored.
+  * Bug fix: (Windows) media player can open files with long paths.
+  
  -- FrostWire Team <contact@frostwire.com>  Mon, 10 Dec 2012 20:00:00 -0500
 
 frostwire (5.5.1) stable; urgency=high

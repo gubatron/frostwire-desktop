@@ -86,6 +86,7 @@ public class DownloadTask extends DeviceTask {
 
                 try {
                     is = url.openStream();
+                    
 
                     File file = buildFile(savePath, FilenameUtils.getName(currentFD.filePath));
                     File incompleteFile = buildIncompleteFile(file);
@@ -100,8 +101,9 @@ public class DownloadTask extends DeviceTask {
                         if (!isRunning()) {
                             return;
                         }
-
+                        
                         fos.write(buffer, 0, n);
+                        fos.flush();
                         totalWritten += n;
                         setProgress((int) ((totalWritten * 100) / totalBytes));
 
@@ -113,18 +115,27 @@ public class DownloadTask extends DeviceTask {
                                 }
                             });
                         }
+                        
+                        //System.out.println("Progress: " + getProgress() + " Total Written: " + totalWritten + " Total Bytes: " + totalBytes);
                     }
 
-                    close(fos);
                     incompleteFile.renameTo(file);
                 } finally {
                     close(is);
+                    close(fos);
                 }
             }
 
             setProgress(100);
         } catch (Throwable e) {
+            e.printStackTrace();
             onError(e);
+            
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Wi-Fi download error. Please try again."));
+                }
+            });
         } finally {
             GUIMediator.safeInvokeLater(new Runnable() {
                 public void run() {

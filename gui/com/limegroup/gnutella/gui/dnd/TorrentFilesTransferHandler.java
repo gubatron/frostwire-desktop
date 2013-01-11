@@ -70,6 +70,7 @@ public class TorrentFilesTransferHandler extends LimeTransferHandler {
 	                    GUIMediator.instance().openTorrentFile(file, false);
 	                }
 			    }
+			    return true;
 			}
 		} catch (UnsupportedFlavorException e) {
 		} catch (IOException e) {
