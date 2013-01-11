@@ -11,6 +11,7 @@ gui/log4.log
 lib/jars/other/themes.jar
 components/common/src/main/native/linux/SystemUtils/*.so
 components/http/build/classes/org/limewire/http/package.html
+DerivedData/
 hs_err_*.log
 .DS_Store
 ._.DS_Store
