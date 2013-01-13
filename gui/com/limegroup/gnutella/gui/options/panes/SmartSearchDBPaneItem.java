@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -13,6 +14,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.search.LocalSearchEngine;
+import com.limegroup.gnutella.settings.SearchSettings;
 
 
 public final class SmartSearchDBPaneItem extends AbstractPaneItem {
@@ -23,6 +25,8 @@ public final class SmartSearchDBPaneItem extends AbstractPaneItem {
 
 	private JLabel _numTorrentsLabel;
 	private JLabel _numFilesLabel;
+	
+	private JCheckBox smartSearchEnabled;
 	
 	private long _numTorrents = 0;
 	private long _numFiles = 0;
@@ -45,6 +49,8 @@ public final class SmartSearchDBPaneItem extends AbstractPaneItem {
         _numTorrentsLabel.setFont(font);
         _numFilesLabel.setFont(font);
         
+        smartSearchEnabled = new JCheckBox(I18n.tr("Enable Smart Search"), SearchSettings.SMART_SEARCH_ENABLED.getValue());
+        
         LabeledComponent numTorrentsComp = new LabeledComponent(I18n.tr("Total torrents indexed"), _numTorrentsLabel);
         LabeledComponent numFilesComp = new LabeledComponent(I18n.tr("Total files indexed"), _numFilesLabel);
         
@@ -65,6 +71,11 @@ public final class SmartSearchDBPaneItem extends AbstractPaneItem {
 			};
 		});
         
+        
+        add(smartSearchEnabled);
+
+        add(getVerticalSeparator());
+        
         add(numTorrentsComp.getComponent());
         add(numFilesComp.getComponent());
         
@@ -74,11 +85,15 @@ public final class SmartSearchDBPaneItem extends AbstractPaneItem {
     }
     
     protected void resetSmartSearchDB() {
-    	int showConfirmDialog = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("If you continue you will erase all the information related to\n"+_numTorrents+" torrents and "+_numFiles+" files that FrostWire has learned to speed up your search results.\nDo you wish to continue?"), I18n.tr("Are you sure?"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-    	
-    	if (showConfirmDialog == JOptionPane.YES_OPTION) {
-    		LocalSearchEngine.instance().resetDB();
-    	}
+        int showConfirmDialog = JOptionPane.showConfirmDialog(
+                GUIMediator.getAppFrame(),
+                I18n.tr("If you continue you will erase all the information related to\n" + _numTorrents + " torrents and " + _numFiles
+                        + " files that FrostWire has learned to speed up your search results.\nDo you wish to continue?"), I18n.tr("Are you sure?"), JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (showConfirmDialog == JOptionPane.YES_OPTION) {
+            LocalSearchEngine.instance().resetDB();
+        }
     }
 
 	/**
@@ -88,11 +103,13 @@ public final class SmartSearchDBPaneItem extends AbstractPaneItem {
      * window is shown.
      */
     public void initOptions() {
-    	_numTorrents = LocalSearchEngine.instance().getTotalTorrents();
-    	_numTorrentsLabel.setText(String.valueOf(_numTorrents));
-    	
-    	_numFiles = LocalSearchEngine.instance().getTotalFiles();
-    	_numFilesLabel.setText(String.valueOf(_numFiles));
+        _numTorrents = LocalSearchEngine.instance().getTotalTorrents();
+        _numTorrentsLabel.setText(String.valueOf(_numTorrents));
+
+        _numFiles = LocalSearchEngine.instance().getTotalFiles();
+        _numFilesLabel.setText(String.valueOf(_numFiles));
+        
+        smartSearchEnabled.setSelected(SearchSettings.SMART_SEARCH_ENABLED.getValue());
     }
     
     /**
@@ -104,6 +121,7 @@ public final class SmartSearchDBPaneItem extends AbstractPaneItem {
      * @throws IOException if the options could not be applied for some reason
      */
     public boolean applyOptions() throws IOException {
+        SearchSettings.SMART_SEARCH_ENABLED.setValue(smartSearchEnabled.isSelected());
         return true;
     }
     

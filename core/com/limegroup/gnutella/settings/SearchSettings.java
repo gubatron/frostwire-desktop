@@ -324,6 +324,8 @@ public final class SearchSettings extends LimeProps {
 
 	public static final StringSetting LAST_MEDIA_TYPE_USED = FACTORY.createStringSetting("LAST_MEDIA_TYPE_USED", MediaType.getAudioMediaType().getMimeType());
 	
+	public static final BooleanSetting SMART_SEARCH_ENABLED = FACTORY.createBooleanSetting("SMART_SEARCH_ENABLED", true);
+	
 	public static final IntSetting SMART_SEARCH_START_DELAY = FACTORY.createIntSetting("SMART_SEARCH_START_DELAY", 2000);
 	
 	public static final IntSetting SMART_SEARCH_MAXIMUM_TORRENTS_TO_SCAN = FACTORY.createIntSetting("SMART_SEARCH_MAXIMUM_TORRENTS_TO_SCAN", 20);

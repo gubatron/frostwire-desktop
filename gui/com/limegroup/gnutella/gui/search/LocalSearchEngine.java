@@ -171,6 +171,11 @@ public class LocalSearchEngine {
      * if there are matches.
      */
     public List<SmartSearchResult> search(String query) {
+        if (!SearchSettings.SMART_SEARCH_ENABLED.getValue()) {
+            System.out.println("Skipping local search, smart search disabled.");
+            return new ArrayList<SmartSearchResult>();
+        }
+
         //query = LibraryUtils.fuzzyLuceneQuery(query);
 
         //FULL TEXT SEARCH, Returns the File IDs we care about.
@@ -376,6 +381,12 @@ public class LocalSearchEngine {
     }
 
     private void indexTorrent(WebSearchResult searchResult, TOTorrent theTorrent, SearchEngine searchEngine) {
+        
+        if (!SearchSettings.SMART_SEARCH_ENABLED.getValue()) {
+            System.out.println("LocalSearchEngine.indexTorrent - skipping, smart search disabled.");
+            return;
+        }
+        
         TorrentDBPojo torrentPojo = new TorrentDBPojo();
         torrentPojo.creationTime = searchResult.getCreationTime();
         torrentPojo.fileName = searchResult.getFileName();

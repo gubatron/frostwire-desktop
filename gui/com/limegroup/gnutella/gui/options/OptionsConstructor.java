@@ -60,7 +60,6 @@ import com.limegroup.gnutella.gui.options.panes.LibraryFoldersPaneItem;
 import com.limegroup.gnutella.gui.options.panes.LibraryInternetRadioPaneItem;
 import com.limegroup.gnutella.gui.options.panes.MaximumSearchesPaneItem;
 import com.limegroup.gnutella.gui.options.panes.NetworkInterfacePaneItem;
-import com.limegroup.gnutella.gui.options.panes.NotificationsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.PlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.PopupsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyLoginPaneItem;

@@ -321,6 +321,7 @@ public final class SearchMediator {
     }
 
     public static void doLocalSearch(final byte[] guid, final String query, final SearchInformation info) {
+        
         Thread t = new Thread(new Runnable() {
             public void run() {
 
