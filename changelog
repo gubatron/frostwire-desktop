@@ -1,6 +1,9 @@
 frostwire (5.5.2) stable; urgency=high
   * Upgrade: Now 'Movies' or 'My Videos' folder is included by default on new
     installs since we now have a built-in video player.
+  * Upgrade: The Smart Search engine can now be disabled. No torrents will be
+    indexed and no search against the local database will be performed if
+    disabled.
   * UI fix: Video Player Window Title now shows the file name being played.
   * UI fix: Library > "Finished Downloads" renamed to "Default Save Folder"
   * UI fix: When browsing another device on the Wi-Fi network newest shared files
