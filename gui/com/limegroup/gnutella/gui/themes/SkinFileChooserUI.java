@@ -37,6 +37,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.filechooser.FileView;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicFileChooserUI;
@@ -141,12 +142,22 @@ public class SkinFileChooserUI extends BaseFileChooserUI {
          * @return File icon.
          */
         public Icon getDefaultIcon(File f) {
+            Icon icon = null;
             JFileChooser fileChooser = getFileChooser();
-            Icon icon = fileChooser.getFileSystemView().getSystemIcon(f);
 
-            if (SubstanceCoreUtilities.useThemedDefaultIcon(null)) {
-                icon = SubstanceCoreUtilities.getThemedIcon(fileChooser, icon);
+            if (fileChooser != null) {
+
+                FileSystemView fileSystemView = fileChooser.getFileSystemView();
+
+                if (fileSystemView != null) {
+                    icon = fileSystemView.getSystemIcon(f);
+
+                    if (SubstanceCoreUtilities.useThemedDefaultIcon(null)) {
+                        icon = SubstanceCoreUtilities.getThemedIcon(fileChooser, icon);
+                    }
+                }
             }
+
             return icon;
         }
     }
