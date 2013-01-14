@@ -315,7 +315,7 @@ public class LocalSearchEngine {
 
                 WebSearchResult webSearchResult = line.getSearchResult().getWebSearchResult();
 
-                if (!KNOWN_INFO_HASHES.contains(webSearchResult.getHash())) {
+                if (!SearchSettings.SMART_SEARCH_ENABLED.getValue() || !KNOWN_INFO_HASHES.contains(webSearchResult.getHash())) {
                     KNOWN_INFO_HASHES.add(webSearchResult.getHash());
                     SearchEngine searchEngine = line.getSearchEngine();
                     scanDotTorrent(order++, webSearchResult, guid, query, searchEngine);
