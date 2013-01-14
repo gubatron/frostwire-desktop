@@ -74,7 +74,7 @@ public final class HttpClient {
                 fos = new FileOutputStream(file, true);
                 rangeStart = (int) file.length();
             } else {
-                fos = new FileOutputStream(file);
+                fos = new FileOutputStream(file, false);
                 rangeStart = -1;
             }
 
@@ -96,6 +96,12 @@ public final class HttpClient {
         }
 
         InputStream in = conn.getInputStream();
+
+        long expectedFileSize = Long.parseLong(conn.getHeaderField("Content-Length"));
+
+        if (rangeStart > 0 && rangeStart > expectedFileSize) {
+            throw new HttpRangeOutOfBoundsException(rangeStart, expectedFileSize);
+        }
 
         if (rangeStart > 0 && !conn.getHeaderField("Accept-Ranges").equals("bytes")) {
             throw new RangeNotSupportedException("Server does not support bytes range request");
@@ -132,7 +138,19 @@ public final class HttpClient {
         }
     }
 
-    public static final class RangeNotSupportedException extends IOException {
+    public static class HttpRangeException extends IOException {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1891038288667531894L;
+
+        public HttpRangeException(String message) {
+            super(message);
+        }
+    }
+
+    public static final class RangeNotSupportedException extends HttpRangeException {
 
         private static final long serialVersionUID = -3356618211960630147L;
 
@@ -140,4 +158,15 @@ public final class HttpClient {
             super(message);
         }
     }
+
+    public static final class HttpRangeOutOfBoundsException extends HttpRangeException {
+        
+        private static final long serialVersionUID = -335661829606230147L;
+
+        public HttpRangeOutOfBoundsException(int rangeStart, long expectedFileSize) {
+            super("HttpRange Out of Bounds error: start=" + rangeStart + " expected file size=" + expectedFileSize);
+        }
+
+    }
+
 }

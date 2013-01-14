@@ -53,7 +53,7 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.AzureusStarter;
 import com.frostwire.HttpClient;
-import com.frostwire.HttpClient.RangeNotSupportedException;
+import com.frostwire.HttpClient.HttpRangeException;
 import com.frostwire.HttpFetcher;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -130,7 +130,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
             HttpClient httpClient = new HttpClient();
             try {
                 httpClient.save(_updateMessage.getInstallerUrl(), installerFileLocation, true);
-            } catch (RangeNotSupportedException e) {
+            } catch (HttpRangeException e) {
                 // recovery in case the server does not support resume
                 httpClient.save(_updateMessage.getInstallerUrl(), installerFileLocation, false);
             }
