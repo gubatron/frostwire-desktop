@@ -55,7 +55,7 @@ import com.limegroup.gnutella.gui.MPlayerMediator;
 public class 
 MPlayerInstance 
 {
-	private static final boolean LOG	= false;
+	private static final boolean LOG	= true;
 			
 	private static File BINARY_PATH;
 
@@ -616,9 +616,9 @@ MPlayerInstance
 				
 				seekingSendTime	= -1;
 				
-				sendCommand("seek " + value + " 2");
+				sendCommand("seek " + value + " 2", CommandPauseMode.KEEP);
 				
-				sendCommand("get_time_pos");
+				sendCommand("get_time_pos", CommandPauseMode.KEEP);
 			}
 		}
 	}
