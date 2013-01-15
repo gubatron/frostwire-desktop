@@ -295,7 +295,7 @@ MPlayerInstance
             }
 			
             
-			String[] cmd = cmdList.toArray(new String[cmdList.size()]);
+			String[] cmd = cmdList.toArray(new String[0]);
 			String cmdString = Arrays.toString(cmd).replace(", ", " ");
 			System.out.println(String.format("starting mplayer: %s", cmdString));
 			
