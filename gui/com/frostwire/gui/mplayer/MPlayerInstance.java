@@ -300,6 +300,10 @@ MPlayerInstance
 			System.out.println(String.format("starting mplayer: %s", cmdString));
 			
 			try {
+			    System.out.println("File Path: [" + cmdList.get(cmdList.size() - 1) + "]");
+			} catch (Exception e9) { }
+			
+			try {
 				ProcessBuilder pb = new ProcessBuilder(cmd);
 				mPlayerProcess = pb.start();
 				
