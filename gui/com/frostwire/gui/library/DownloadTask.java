@@ -119,6 +119,7 @@ public class DownloadTask extends DeviceTask {
                         //System.out.println("Progress: " + getProgress() + " Total Written: " + totalWritten + " Total Bytes: " + totalBytes);
                     }
 
+                    close(fos);
                     incompleteFile.renameTo(file);
                 } finally {
                     close(is);

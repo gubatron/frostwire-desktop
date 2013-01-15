@@ -19,7 +19,6 @@ import java.io.File;
 
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.core.FileDescriptor;
-import com.limegroup.gnutella.MediaType;
 
 /**
  *  A wrapper for the source of an audio file that is currently playing
@@ -111,9 +110,9 @@ public class MediaSource {
         return false;
     }
     
-    private void initializeDisplayText() {
+    protected void initializeDisplayText() {
     	
-    	PlaylistItem playlistItem = getPlaylistItem();
+    	    PlaylistItem playlistItem = getPlaylistItem();
         
 		if (this instanceof DeviceMediaSource) {
             
@@ -129,12 +128,12 @@ public class MediaSource {
         
 		} else if ( this instanceof StreamMediaSource) {
             
-        	titleText = ((StreamMediaSource) this).getTitle();
+		    titleText = ((StreamMediaSource) this).getTitle();
             toolTipText = "";
         
 		} else if (playlistItem != null) {
             
-        	String artistName = playlistItem.getTrackArtist();
+        	    String artistName = playlistItem.getTrackArtist();
             String songTitle = playlistItem.getTrackTitle();
 
             String albumToolTip = (playlistItem.getTrackAlbum() != null && playlistItem.getTrackAlbum().length() > 0) ? " - " + playlistItem.getTrackAlbum() : "";
@@ -145,12 +144,12 @@ public class MediaSource {
 
         } else if (getFile() != null) {
         
-        	titleText = getFile().getName();
+            titleText = getFile().getName();
             toolTipText = getFile().getAbsolutePath();
         
         } else if (getFile() == null && getURL() != null) {
         
-        	System.out.println("StreamURL: " + getURL().toString());
+            System.out.println("StreamURL: " + getURL().toString());
             titleText = "internet "; // generic internet stream
             toolTipText = "";
         
@@ -158,10 +157,10 @@ public class MediaSource {
     }
     
     public String getTitleText() {
-    	return titleText;
+    	    return titleText;
     }
     
     public String getToolTipText() {
-    	return toolTipText;
+    	    return toolTipText;
     }
 }

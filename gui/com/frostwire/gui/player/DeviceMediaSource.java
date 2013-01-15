@@ -38,7 +38,7 @@ public class DeviceMediaSource extends MediaSource {
         super(url);
         this.device = device;
         this.fd = fd;
-
+        initializeDisplayText();
     }
 
     public Device getDevice() {
