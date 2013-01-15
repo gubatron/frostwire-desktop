@@ -25,8 +25,6 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LanguageWindow;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.actions.ToggleSettingAction;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.UISettings;
 
 /**
@@ -50,11 +48,11 @@ final class ViewMenu extends AbstractMenu {
         toggleAction = new ToggleSmileySettingAction(UISettings.SMILEYS_IN_CHAT, I18n.tr("Show Smi&leys"), I18n.tr("Show emoticons in chat"));
         addToggleMenuItem(toggleAction);
 
-        addMenuItem(new ChangeFontSizeAction(2, I18n.tr("&Increase Font Size"), I18n.tr("Increases the Font Size")));
+        //addMenuItem(new ChangeFontSizeAction(2, I18n.tr("&Increase Font Size"), I18n.tr("Increases the Font Size")));
 
-        addMenuItem(new ChangeFontSizeAction(-2, I18n.tr("&Decrease Font Size"), I18n.tr("Decreases the Font Size")));
+        //addMenuItem(new ChangeFontSizeAction(-2, I18n.tr("&Decrease Font Size"), I18n.tr("Decreases the Font Size")));
 
-        addMenuItem(new ResetFontSizeAction());
+        //addMenuItem(new ResetFontSizeAction());
 
         MENU.addSeparator();
 
@@ -117,47 +115,4 @@ final class ViewMenu extends AbstractMenu {
         }
     }
 
-    private static class ResetFontSizeAction extends AbstractAction {
-
-        private static final long serialVersionUID = -4678340681263959986L;
-
-        public ResetFontSizeAction() {
-            super(I18n.tr("Reset Font Size"));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent arg0) {
-            ThemeMediator.resetFontSizes();
-        }
-
-    }
-
-    private static class ChangeFontSizeAction extends AbstractAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -6517433597971721717L;
-
-        private final int increment;
-
-        public ChangeFontSizeAction(int inc, String name, String description) {
-            super(name);
-            putValue(LONG_DESCRIPTION, description);
-            increment = inc;
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            int inc = ThemeSettings.FONT_SIZE_INCREMENT.getValue();
-
-            //            if (inc <= -4 || inc >= 4) {
-            //                return;
-            //            }
-
-            inc += increment;
-            ThemeSettings.FONT_SIZE_INCREMENT.setValue(inc);
-            ThemeMediator.setFontSizeDelta(increment);
-            ThemeMediator.updateComponentHierarchy();
-        }
-    }
 }
