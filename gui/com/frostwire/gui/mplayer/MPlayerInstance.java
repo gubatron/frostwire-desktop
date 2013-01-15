@@ -266,25 +266,32 @@ MPlayerInstance
 //			
 //			cmdList.add("-framedrop");
 			
-			//Set the initial volume.
-			cmdList.add("-volume");
-			cmdList.add( String.valueOf(initialVolume) );
-			
+            //Set the initial volume.
+            cmdList.add("-volume");
+            cmdList.add(String.valueOf(initialVolume));
+
             if (OSUtils.isLinux()) {
-            	cmdList.add("-zoom"); // auto zooms video to fit canvas area
+                cmdList.add("-zoom"); // auto zooms video to fit canvas area
             }
-            
-			if(OSUtils.isMacOSX()) {
-            	cmdList.add(fileOrUrl);
+
+            if (OSUtils.isMacOSX()) {
+                cmdList.add(fileOrUrl);
             } else if (OSUtils.isWindows()) {
-            	String shortFileName = SystemUtils.getShortFileName(fileOrUrl);
-            	if (fileOrUrl.length() > 250 && shortFileName != null) {
-            		cmdList.add(String.format("\"%s\"", shortFileName));
-            	} else {
-            		cmdList.add(String.format("\"%s\"", fileOrUrl));
-            	}
+
+                if (fileOrUrl.length() > 250 && !fileOrUrl.toLowerCase().startsWith("http://")) {
+                    String shortFileName = SystemUtils.getShortFileName(fileOrUrl);
+
+                    if (shortFileName == null) {
+                        shortFileName = fileOrUrl;
+                    }
+                    
+                    cmdList.add(String.format("\"%s\"", shortFileName));
+                } else {
+                    cmdList.add(String.format("\"%s\"", fileOrUrl));
+                }
+                
             } else if (OSUtils.isLinux()) {
-            	cmdList.add(fileOrUrl);
+                cmdList.add(fileOrUrl);
             }
 			
             

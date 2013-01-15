@@ -460,12 +460,11 @@ public class SystemUtils {
     }
     
     public static String getShortFileName(String fileName) {
-    	if(OSUtils.isWindows() && isLoaded) {
-    		return getShortFileNameNative(fileName);
-    	} else {
-    		return null;
-    	}
-    	
+        	if(OSUtils.isWindows() && isLoaded) {
+        		return getShortFileNameNative(fileName);
+        	} else {
+        		return fileName;
+        	}
     }
     
     /**
