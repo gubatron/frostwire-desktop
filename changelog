@@ -29,7 +29,7 @@ frostwire (5.5.2) stable; urgency=high
   * Bug fix: prevents NPE when opening a .torrent and trying to show icons when
     the file system chooser wasn't available.
   
- -- FrostWire Team <contact@frostwire.com>  Mon, 10 Dec 2012 20:00:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Tue, 15 Jan 2013 20:00:00 -0500
 
 frostwire (5.5.1) stable; urgency=high
   * New Clear Inactive button on transfers.
