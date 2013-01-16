@@ -45,8 +45,6 @@ import com.limegroup.gnutella.gui.MediaSlider;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
-import com.limegroup.gnutella.util.FrostWireUtils;
-import com.limegroup.gnutella.util.Tagged;
 
 /**
  * This class sets up JPanel with MediaPlayer on it, and takes care of GUI
@@ -541,82 +539,9 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         return res.toString();
     }
 
-    String addToPlaylist(Map<String, String> args) {
+    
 
-        Tagged<String> urlString = FrostWireUtils.getArg(args, "url", "AddToPlaylist");
-        if (!urlString.isValid())
-            return urlString.getValue();
-
-        Tagged<String> nameString = FrostWireUtils.getArg(args, "name", "AddtoPlaylist");
-        if (!nameString.isValid())
-            return nameString.getValue();
-
-        Tagged<String> lengthString = FrostWireUtils.getArg(args, "length", "AddtoPlaylist");
-        if (!lengthString.isValid())
-            return lengthString.getValue();
-
-        Tagged<String> artistString = FrostWireUtils.getArg(args, "artist", "AddtoPlaylist");
-        if (!artistString.isValid())
-            return artistString.getValue();
-
-        Tagged<String> albumString = FrostWireUtils.getArg(args, "album", "AddtoPlaylist");
-        if (!albumString.isValid())
-            return albumString.getValue();
-
-        // We won't accept full URLs
-        // String baseDir = "http://riaa.com";
-        // int port = 0;
-        // if (port > 0) {
-        // baseDir += ":" + port;
-        // }
-
-        // String url = baseDir + urlString.getValue();
-        // try {
-        // String decodedURL = URLDecoder.decode(url);
-        // URL u = new URL(decodedURL);
-        // PlayListItem song = new PlayListItem(u.toURI(), new AudioSource(u),
-        // nameString.getValue(), false);
-        // GUIMediator.instance().launchAudio(song);
-        // } catch (IOException e) {
-        // ErrorService.error(e, "invalid URL:" + url);
-        // return "ERROR:invalid.url:" + url;
-        // } catch (URISyntaxException e) {
-        // ErrorService.error(e, "invalid URL:" + url);
-        // return "ERROR:invalid.url:" + url;
-        // }
-        return "ok";
-    }
-
-    String playURL(Map<String, String> args) {
-
-        Tagged<String> urlString = FrostWireUtils.getArg(args, "url", "PlayURL");
-        if (!urlString.isValid())
-            return urlString.getValue();
-
-        // We won't accept full URLs
-        // String baseDir = "http://riaa.com";
-        // int port = 0;
-        // if (port > 0) {
-        // baseDir += ":" + port;
-        // }
-
-        // String url = baseDir + urlString.getValue();
-        // String name = getName(url);
-        // try {
-        // String decodedURL = URLDecoder.decode(url);
-        // URL u = new URL(decodedURL);
-        // PlayListItem song = new PlayListItem(u.toURI(), new AudioSource(u),
-        // name, false);
-        // GUIMediator.instance().launchAudio(song);
-        // } catch (IOException e) {
-        // ErrorService.error(e, "invalid URL:" + url);
-        // return "ERROR:invalid.url:" + url;
-        // } catch (URISyntaxException e) {
-        // ErrorService.error(e, "invalid URL:" + url);
-        // return "ERRORinvalid.url:" + url;
-        // }
-        return "ok";
-    }
+    
 
     // private String getName(String url) {
     // int ilast = url.lastIndexOf('/');
