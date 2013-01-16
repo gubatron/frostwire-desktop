@@ -85,7 +85,7 @@ public class MediaType implements Serializable {
                 "cbr", "cbz", "cb7", "chm","dnl","djvu",
                 "epub","pdb","fb2","xeb","ceb","prc","pkg",
                 "opf","pdg","pdb","tr2","tr3","cbr","cbz","cb7",
-                "cbt","cba"
+                "cbt","cba","docx"
             });
             
     /**
@@ -97,7 +97,7 @@ public class MediaType implements Serializable {
                 "bin", "mdb", "sh", "csh", "awk", "pl",
                 "rpm", "deb", "gz", "gzip", "z", "bz2", "zoo", "tar", "tgz",
                 "taz", "shar", "hqx", "sit", "dmg", "7z", "jar", "zip", "nrg",
-                "cue", "iso", "jnlp", "rar", "sh"
+                "cue", "iso", "jnlp", "rar", "sh","apk"
             });
 
     /**
