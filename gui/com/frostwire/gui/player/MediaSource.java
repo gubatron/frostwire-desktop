@@ -69,6 +69,22 @@ public class MediaSource {
         this.file = null;
         this.url = url;
         this.playlistItem = null;
+        
+        //PLEASE FIX: initializeDisplayText() can't be called so early
+        //or initializeDisplayText() must be re-implemented.
+        //
+        //When you code a parent class method (in this case initializeDisplayText()) that makes checks about
+        //children classes, that's probably a hint of bad design, because you have to know in advance
+        //how future inheritance will work. If you make children classes depend on this method, then you always
+        //have to go to the parent class and this will become (as it already is) a source of never ending bugs.
+        //
+        //For now we have work around that will keep breaking, I suggest instead to make initializeDisplayText()
+        //an abstract method, and the constructor of each class should be responsible of implementing it and invoking
+        //it only after its member variables have properly been initialized.
+        //
+        //When children constructors invoke super(), they will invoke initializeDisplayText()
+        //and initializeDisplayText() will break left and right with a bunch of fields that
+        //have not been populated yet.
         initializeDisplayText();
     }
 
