@@ -204,6 +204,8 @@ public final class MRJAdapter implements MRJFolderConstants
 			if (dot != -1)
 				en = dot;
 			mrjVersion = new Float(prop.substring(st, en)).floatValue();
+		} else {
+		    mrjVersion = 5.0f; // fake number to work with openjdk 1.7
 		}
 		
 		// Instantiate the Cocoa class loader if we're on Mac OS X
