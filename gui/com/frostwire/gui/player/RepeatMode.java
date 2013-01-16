@@ -20,4 +20,14 @@ package com.frostwire.gui.player;
 
 public enum RepeatMode {
     None, Song, All;
+    
+    public RepeatMode getNextState() {
+    	if (this == None) {
+    		return Song;
+    	} else if (this == Song) {
+    		return All;
+    	} else {
+    		return None;
+    	}
+    }
 }
