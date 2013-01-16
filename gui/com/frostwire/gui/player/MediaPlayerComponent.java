@@ -27,6 +27,8 @@ import java.awt.event.MouseEvent;
 import java.util.Map;
 
 import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -122,7 +124,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     private JToggleButton SHUFFLE_BUTTON;
 
-    private JToggleButton LOOP_BUTTON;
+    private JButton LOOP_BUTTON;
 
     private CardLayout PLAY_PAUSE_CARD_LAYOUT;
 
@@ -240,15 +242,13 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         SHUFFLE_BUTTON.setToolTipText(I18n.tr("Shuffle songs"));
         SHUFFLE_BUTTON.setSelected(PLAYER.isShuffle());
 
-        LOOP_BUTTON = new JToggleButton();
+        LOOP_BUTTON = new JButton();
         LOOP_BUTTON.setBorderPainted(false);
         LOOP_BUTTON.setContentAreaFilled(false);
         LOOP_BUTTON.setBackground(null);
-        LOOP_BUTTON.setIcon(GUIMediator.getThemeImage("loop_off"));
-        LOOP_BUTTON.setSelectedIcon(GUIMediator.getThemeImage("loop_on"));
+        LOOP_BUTTON.setIcon(getCurrentLoopButtonImage());
         LOOP_BUTTON.setToolTipText(I18n.tr("Repeat songs"));
-        LOOP_BUTTON.setSelected(PLAYER.getRepeatMode() == RepeatMode.All);
-
+        
         SHUFFLE_BUTTON.addActionListener(new ActionListener() {
 
             @Override
@@ -260,12 +260,22 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         LOOP_BUTTON.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PLAYER.setRepeatMode((LOOP_BUTTON.isSelected()) ? RepeatMode.All : RepeatMode.None);
+                PLAYER.setRepeatMode( PLAYER.getRepeatMode().getNextState());
+                LOOP_BUTTON.setIcon(getCurrentLoopButtonImage());
             }
         });
 
     }
 
+    private ImageIcon getCurrentLoopButtonImage() {
+    	if (PLAYER.getRepeatMode() == RepeatMode.All) {
+    		return GUIMediator.getThemeImage("loop_on");
+    	} else if (PLAYER.getRepeatMode() == RepeatMode.Song) {
+    		return GUIMediator.getThemeImage("loop_on");
+    	} else { // RepeatMode.None
+    		return GUIMediator.getThemeImage("loop_off");
+    	}
+    }
     private void showPauseButton() {
         PLAY_PAUSE_CARD_LAYOUT.show(PLAY_PAUSE_BUTTON_CONTAINER, "PAUSE");
     }
