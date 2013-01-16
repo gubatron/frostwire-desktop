@@ -789,6 +789,30 @@ public final class MimeDetector {
         map.put("user", "text/plain");
         map.put("mme", "application/base64");
 
+        map.put("ogx", "application/ogg");
+        map.put("ogv", "video/ogg");
+        map.put("oga", "audio/ogg");
+        map.put("ogg", "audio/ogg");
+        map.put("spx", "audio/ogg");
+        map.put("flac", "audio/flac");
+        map.put("anx", "application/annodex");
+        map.put("axa", "audio/annodex");
+        map.put("axv", "video/annodex");
+        map.put("xspf", "application/xspf+xml");
+        map.put("kate", "application/kate");
+
+        map.put("flv", "video/x-flv");
+        map.put("f4v", "video/mp4");
+        map.put("f4p", "video/mp4");
+        map.put("f4a", "audio/mp4");
+        map.put("f4b", "audio/mp4");
+
+        map.put("mka", "audio/x-matroska");
+        map.put("mkv", "video/x-matroska");
+        map.put("mk3d", "video/x-matroska-3d");
+
+        map.put("webm", "video/webm");
+
         return map;
     }
 }
