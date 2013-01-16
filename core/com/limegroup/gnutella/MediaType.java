@@ -85,7 +85,7 @@ public class MediaType implements Serializable {
                 "cbr", "cbz", "cb7", "chm","dnl","djvu",
                 "epub","pdb","fb2","xeb","ceb","prc","pkg",
                 "opf","pdg","pdb","tr2","tr3","cbr","cbz","cb7",
-                "cbt","cba"
+                "cbt","cba","docx"
             });
             
     /**
@@ -108,7 +108,7 @@ public class MediaType implements Serializable {
             new String[] {
                 "exe", "zip", "jar", "cab", "msi", "msp",
                 "arj", "rar", "ace", "lzh", "lha", "bin", "nrg", "cue", 
-                "iso", "jnlp"
+                "iso", "jnlp", "apk"
             });            
         
     /**
