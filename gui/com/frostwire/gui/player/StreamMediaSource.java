@@ -37,7 +37,10 @@ public class StreamMediaSource extends MediaSource {
         this.title = title;
         this.detailsUrl = detailsUrl;
         this.showPlayerWindow = showPlayerWindow;
-        initializeDisplayText();
+        
+        // initialize display text
+        titleText = this.title;
+        toolTipText = "";
     }
 
     public String getTitle() {

@@ -38,7 +38,16 @@ public class DeviceMediaSource extends MediaSource {
         super(url);
         this.device = device;
         this.fd = fd;
-        initializeDisplayText();
+        
+        // initialize display text (Device Media Source)
+        String artistName = this.fd.artist;
+        String songTitle = this.fd.title;
+
+        String albumToolTip = this.fd.album;
+        String yearToolTip = this.fd.year;
+
+        titleText = artistName + " - " + songTitle;
+        toolTipText = artistName + " - " + songTitle + albumToolTip + yearToolTip;
     }
 
     public Device getDevice() {

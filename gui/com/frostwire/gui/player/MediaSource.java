@@ -18,7 +18,6 @@ package com.frostwire.gui.player;
 import java.io.File;
 
 import com.frostwire.alexandria.PlaylistItem;
-import com.frostwire.core.FileDescriptor;
 
 /**
  *  A wrapper for the source of an audio file that is currently playing
@@ -30,15 +29,14 @@ public class MediaSource {
      * current audio source that is loaded in the music player
      */
     private final File file;
-
     private final String url;
-
     private final PlaylistItem playlistItem;
     
-    private String titleText = "";
-    private String toolTipText = "";
-	
-
+    // NOTE: these can be initialized by derived classes
+    // to customize display text
+    protected String titleText = "";
+    protected String toolTipText = "";
+    
     public MediaSource(File file) {
         if (file == null) {
             throw new NullPointerException("File cannot be null");
@@ -47,7 +45,45 @@ public class MediaSource {
         this.file = file;
         this.url = null;
         this.playlistItem = null;
-        initializeDisplayText();
+        
+        // initialize display text (File)
+        titleText = this.file.getName();
+        toolTipText = this.file.getAbsolutePath();
+    }
+
+
+    public MediaSource(String url) {
+        if (url == null) {
+            throw new NullPointerException("Url cannot be null");
+        }
+
+        this.file = null;
+        this.url = url;
+        this.playlistItem = null;
+        
+        // initialize display text (URL)
+        titleText = "internet "; // generic internet stream
+        toolTipText = "";
+    }
+
+    public MediaSource(PlaylistItem playlistItem) {
+        if (playlistItem == null) {
+            throw new NullPointerException("PlaylistItem cannot be null");
+        }
+
+        this.file = null;
+        this.url = null;
+        this.playlistItem = playlistItem;
+        
+        // initialize display text (playlist)
+        String artistName = playlistItem.getTrackArtist();
+        String songTitle = playlistItem.getTrackTitle();
+
+        String albumToolTip = (playlistItem.getTrackAlbum() != null && playlistItem.getTrackAlbum().length() > 0) ? " - " + playlistItem.getTrackAlbum() : "";
+        String yearToolTip = (playlistItem.getTrackYear() != null && playlistItem.getTrackYear().length() > 0) ? " (" + playlistItem.getTrackYear() + ")" : "";
+
+        titleText = artistName + " - " + songTitle;
+        toolTipText = artistName + " - " + songTitle + albumToolTip + yearToolTip;
     }
 
     @Override
@@ -59,44 +95,6 @@ public class MediaSource {
             name = url;
         }
         return "[MediaSource@" + hashCode() + ": " + name + "]";
-    }
-
-    public MediaSource(String url) {
-        if (url == null) {
-            throw new NullPointerException("Url cannot be null");
-        }
-
-        this.file = null;
-        this.url = url;
-        this.playlistItem = null;
-        
-        //PLEASE FIX: initializeDisplayText() can't be called so early
-        //or initializeDisplayText() must be re-implemented.
-        //
-        //When you code a parent class method (in this case initializeDisplayText()) that makes checks about
-        //children classes, that's probably a hint of bad design, because you have to know in advance
-        //how future inheritance will work. If you make children classes depend on this method, then you always
-        //have to go to the parent class and this will become (as it already is) a source of never ending bugs.
-        //
-        //For now we have work around that will keep breaking, I suggest instead to make initializeDisplayText()
-        //an abstract method, and the constructor of each class should be responsible of implementing it and invoking
-        //it only after its member variables have properly been initialized.
-        //
-        //When children constructors invoke super(), they will invoke initializeDisplayText()
-        //and initializeDisplayText() will break left and right with a bunch of fields that
-        //have not been populated yet.
-        initializeDisplayText();
-    }
-
-    public MediaSource(PlaylistItem playlistItem) {
-        if (playlistItem == null) {
-            throw new NullPointerException("PlaylistItem cannot be null");
-        }
-
-        this.file = null;
-        this.url = null;
-        this.playlistItem = playlistItem;
-        initializeDisplayText();
     }
 
     public File getFile() {
@@ -124,52 +122,6 @@ public class MediaSource {
             return playlistItem.equals(o.playlistItem);
         }
         return false;
-    }
-    
-    protected void initializeDisplayText() {
-    	
-    	    PlaylistItem playlistItem = getPlaylistItem();
-        
-		if (this instanceof DeviceMediaSource) {
-            
-			FileDescriptor fd = ((DeviceMediaSource) this).getFileDescriptor();
-            String artistName = fd.artist;
-            String songTitle = fd.title;
-
-            String albumToolTip = fd.album;
-            String yearToolTip = fd.year;
-
-            titleText = artistName + " - " + songTitle;
-            toolTipText = artistName + " - " + songTitle + albumToolTip + yearToolTip;
-        
-		} else if ( this instanceof StreamMediaSource) {
-            
-		    titleText = ((StreamMediaSource) this).getTitle();
-            toolTipText = "";
-        
-		} else if (playlistItem != null) {
-            
-        	    String artistName = playlistItem.getTrackArtist();
-            String songTitle = playlistItem.getTrackTitle();
-
-            String albumToolTip = (playlistItem.getTrackAlbum() != null && playlistItem.getTrackAlbum().length() > 0) ? " - " + playlistItem.getTrackAlbum() : "";
-            String yearToolTip = (playlistItem.getTrackYear() != null && playlistItem.getTrackYear().length() > 0) ? " (" + playlistItem.getTrackYear() + ")" : "";
-
-            titleText = artistName + " - " + songTitle;
-            toolTipText = artistName + " - " + songTitle + albumToolTip + yearToolTip;
-
-        } else if (getFile() != null) {
-        
-            titleText = getFile().getName();
-            toolTipText = getFile().getAbsolutePath();
-        
-        } else if (getFile() == null && getURL() != null) {
-        
-            System.out.println("StreamURL: " + getURL().toString());
-            titleText = "internet "; // generic internet stream
-            toolTipText = "";
-        
-        }
     }
     
     public String getTitleText() {
