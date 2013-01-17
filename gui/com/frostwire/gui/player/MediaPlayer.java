@@ -140,7 +140,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             }
         });
 
-        repeatMode = PlayerSettings.LOOP_PLAYLIST.getValue() ? RepeatMode.All : RepeatMode.None;
+        repeatMode = RepeatMode.values()[PlayerSettings.LOOP_PLAYLIST.getValue()];
         shuffle = PlayerSettings.SHUFFLE_PLAYLIST.getValue();
         playNextMedia = true;
         volume = PlayerSettings.PLAYER_VOLUME.getValue();
@@ -197,7 +197,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
 
     public void setRepeatMode(RepeatMode repeatMode) {
         this.repeatMode = repeatMode;
-        PlayerSettings.LOOP_PLAYLIST.setValue(repeatMode == RepeatMode.All);
+        PlayerSettings.LOOP_PLAYLIST.setValue(repeatMode.getValue());
     }
 
     public boolean isShuffle() {
@@ -605,11 +605,11 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
 
         MediaSource media = null;
 
-        if (getRepeatMode() == RepeatMode.Song) {
+        if (getRepeatMode() == RepeatMode.SONG) {
             media = currentMedia;
         } else if (isShuffle()) {
             media = getNextRandomSong(currentMedia);
-        } else if (getRepeatMode() == RepeatMode.All) {
+        } else if (getRepeatMode() == RepeatMode.ALL) {
             media = getNextContinuousMedia(currentMedia);
         } else {
             media = getNextMedia(currentMedia);

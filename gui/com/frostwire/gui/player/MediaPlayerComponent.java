@@ -268,9 +268,9 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     }
 
     private ImageIcon getCurrentLoopButtonImage() {
-    	if (PLAYER.getRepeatMode() == RepeatMode.All) {
+    	if (PLAYER.getRepeatMode() == RepeatMode.ALL) {
     		return GUIMediator.getThemeImage("loop_on");
-    	} else if (PLAYER.getRepeatMode() == RepeatMode.Song) {
+    	} else if (PLAYER.getRepeatMode() == RepeatMode.SONG) {
     		return GUIMediator.getThemeImage("loop_on");
     	} else { // RepeatMode.None
     		return GUIMediator.getThemeImage("loop_off");
