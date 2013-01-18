@@ -40,6 +40,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingWorker;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
@@ -1022,29 +1023,49 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Extracting audio from videos..."));
+            short videoCount = (short) TABLE.getSelectedRows().length;
+            
+            //can't happen, but just in case.
+            if (videoCount < 1) {
+                return;
+            }
+            
+            String status =I18n.tr("Extracting audio from " + videoCount + " selected videos...");
+            if (videoCount == 1) {
+                status = I18n.tr("Extracting audio from selected video...");
+            }
+            
+            LibraryMediator.instance().getLibrarySearch().pushStatus(status);
+            
+            SwingWorker demuxWorker = new SwingWorker<Void, Void>() {
 
-            //when this is almost done it'll invoke switchToAudioAndRefresh
-            new Thread(new Runnable() {
                 @Override
-                public void run() {
+                protected Void doInBackground() throws Exception {
                     demuxSelectedFiles();
-                    
-                    GUIMediator.safeInvokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            switchToAudioAndRefresh();
-                            LibraryMediator.instance().getLibrarySearch().pushStatus("");
-                        }
-                    });
-                }}).start();
+                    return null;
+                }
+                
+                @Override
+                protected void done() {
+                    switchToAudioAndRefresh();
+                    super.done();
+                }
+                
+            };
+            demuxWorker.execute();
         }
 
         private void switchToAudioAndRefresh() {
-            //selects the audio node at the top
-            LibraryExplorer explorer = LibraryMediator.instance().getLibraryExplorer();
-            explorer.selectAudio();
-            explorer.refreshSelection(true);
+            //this must be done only in the event dispatch thread.
+            GUIMediator.safeInvokeAndWait(new Runnable() {
+                @Override
+                public void run() {
+                    LibraryExplorer explorer = LibraryMediator.instance().getLibraryExplorer();
+                    explorer.refreshSelection(true);
+                    explorer.selectAudio();
+                    LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Done extracting audio."));
+                }
+            });
         }
 
         private void demuxSelectedFiles() {
@@ -1055,7 +1076,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
                 TbCm.demuxMP4Audio(file.getAbsolutePath(), null);
             }
-            switchToAudioAndRefresh();
         }
         
     }
