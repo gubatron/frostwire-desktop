@@ -45,6 +45,8 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import jd.plugins.decrypter.TbCm;
+
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.collection.CollectionUtils;
 import org.limewire.util.FileUtils;
@@ -100,6 +102,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     public static Action LAUNCH_ACTION;
     public static Action LAUNCH_OS_ACTION;
     public static Action OPEN_IN_FOLDER_ACTION;
+    public static Action DEMUX_MP4_AUDIO_ACTION;
     public static Action CREATE_TORRENT_ACTION;
     public static Action DELETE_ACTION;
     public static Action RENAME_ACTION;
@@ -128,6 +131,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         LAUNCH_ACTION = new LaunchAction();
         LAUNCH_OS_ACTION = new LaunchOSAction();
         OPEN_IN_FOLDER_ACTION = new OpenInFolderAction();
+        DEMUX_MP4_AUDIO_ACTION = new DemuxMP4Audio();
         CREATE_TORRENT_ACTION = new CreateTorrentAction();
         DELETE_ACTION = new RemoveAction();
         RENAME_ACTION = new RenameAction();
@@ -195,6 +199,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
         if (hasExploreAction()) {
             menu.add(new SkinMenuItem(OPEN_IN_FOLDER_ACTION));
+        }
+        
+        if (areAllSelectedFilesMP4s()) {
+            menu.add(DEMUX_MP4_AUDIO_ACTION);
         }
 
         menu.add(new SkinMenuItem(CREATE_TORRENT_ACTION));
@@ -291,6 +299,20 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
         return allAreShared;
     }
+    
+    private boolean areAllSelectedFilesMP4s() {
+        boolean selectionIsAllMP4 = true;
+        int[] selectedRows = TABLE.getSelectedRows();
+        for (int i : selectedRows) {
+            if (!DATA_MODEL.getFile(i).getAbsolutePath().toLowerCase().endsWith("mp4")) {
+                selectionIsAllMP4 = false;
+                break;
+            }
+        }
+        
+        return selectionIsAllMP4;
+    }
+
     
     private boolean areAllSelectedFilesPlayable() {
         boolean selectionIsAllAudio = true;
@@ -986,6 +1008,56 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 iTunesMediator.instance().scanForSongs(file);
             }
         }
+    }
+    
+    private class DemuxMP4Audio extends AbstractAction {
+
+        private static final long serialVersionUID = 2994040746359495494L;
+        
+        public DemuxMP4Audio() {
+            putValue(Action.NAME, I18n.tr("Extract Audio"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Extract .m4a Audio from this .mp4 video"));
+
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Extracting audio from videos..."));
+
+            //when this is almost done it'll invoke switchToAudioAndRefresh
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    demuxSelectedFiles();
+                    
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            switchToAudioAndRefresh();
+                            LibraryMediator.instance().getLibrarySearch().pushStatus("");
+                        }
+                    });
+                }}).start();
+        }
+
+        private void switchToAudioAndRefresh() {
+            //selects the audio node at the top
+            LibraryExplorer explorer = LibraryMediator.instance().getLibraryExplorer();
+            explorer.selectAudio();
+            explorer.refreshSelection(true);
+        }
+
+        private void demuxSelectedFiles() {
+            int[] rows = TABLE.getSelectedRows();
+            for (int i = 0; i < rows.length; i++) {
+                int index = rows[i]; // current index to add
+                File file = DATA_MODEL.getFile(index);
+
+                TbCm.demuxMP4Audio(file.getAbsolutePath(), null);
+            }
+            switchToAudioAndRefresh();
+        }
+        
     }
 
     /**

@@ -740,10 +740,18 @@ public class TbCm extends PluginForDecrypt {
      * @return
      */
     public static boolean demuxMP4Audio(final String filename, final String youTubeVideoLink) {
-        
         try {
-            String mp4Filename = filename.replace(".m4a", ".mp4");
-            final String jpgFilename = filename.replace(".m4a", ".jpg");
+            String mp4Filename =  null;
+            String jpegFname = null;
+            if (filename.toLowerCase().endsWith(".mp4")) {
+                mp4Filename = filename;//.replace(".mp4", ".m4a");
+                jpegFname = filename.replace(".mp4", ".jpg");
+            } else if (filename.toLowerCase().endsWith(".m4a")) {
+                mp4Filename = filename.replace(".m4a", ".mp4");
+                jpegFname = filename.replace(".m4a", ".jpg");
+            }
+
+            final String jpgFilename = jpegFname;
             downloadThumbnail(youTubeVideoLink, jpgFilename);
             new File(filename).renameTo(new File(mp4Filename));
             FileInputStream fis = new FileInputStream(mp4Filename);
@@ -800,7 +808,14 @@ public class TbCm extends PluginForDecrypt {
                     return addUserDataBox(FilenameUtils.getBaseName(filename), vidLink, jpgFilename);
                 };
             }.build(outMovie);
-            String audioFilename = filename;
+            String audioFilename = null;
+            
+            if (filename.toLowerCase().endsWith(".m4a")) {
+                audioFilename = filename;
+            } else if (filename.toLowerCase().endsWith(".mp4")){
+                audioFilename = filename.toLowerCase().replace(".mp4", ".m4a");
+            }
+            
             FileOutputStream fos = new FileOutputStream(audioFilename);
             out.getBox(fos.getChannel());
             
