@@ -730,7 +730,7 @@ public class TbCm extends PluginForDecrypt {
     
     private static boolean demuxMP4Audio(final DownloadLink dl) {
         final String filename = dl.getFileOutput();
-        return demuxMP4Audio(filename, (String) dl.getProperty("videolink",null));
+        return demuxMP4Audio(filename, (String) dl.getProperty("videolink",null),true);
     }
 
     /**
@@ -739,7 +739,7 @@ public class TbCm extends PluginForDecrypt {
      * @param youTubeVideoLink - YouTube URL for the video (optional)
      * @return
      */
-    public static boolean demuxMP4Audio(final String filename, final String youTubeVideoLink) {
+    public static boolean demuxMP4Audio(final String filename, final String youTubeVideoLink, final boolean deleteMP4) {
         try {
             String mp4Filename =  null;
             String jpegFname = null;
@@ -821,9 +821,12 @@ public class TbCm extends PluginForDecrypt {
             
             closeQuietly(fos);
 
-            if (!new File(mp4Filename).delete()) {
-                new File(mp4Filename).deleteOnExit();
+            if (deleteMP4) {
+                if (!new File(mp4Filename).delete()) {
+                    new File(mp4Filename).deleteOnExit();
+                }
             }
+                
             File jpgFile = new File(jpgFilename);
             if (jpgFile.exists() && !jpgFile.delete()) {
                 jpgFile.deleteOnExit();
