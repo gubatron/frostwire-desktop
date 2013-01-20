@@ -1016,7 +1016,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         private static final long serialVersionUID = 2994040746359495494L;
         private final ArrayList<File> demuxedFiles;
-        private final Object demuxingLock = new Object();
         
         private boolean isDemuxing = false;
         
@@ -1029,6 +1028,17 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         public boolean isDemuxing() {
             return isDemuxing;
         }
+        
+        private List<File> getSelectedFiles() {
+            int[] rows = TABLE.getSelectedRows();
+            List<File> files = new ArrayList<File>(rows.length);
+            for (int i = 0; i < rows.length; i++) {
+                int index = rows[i]; // current index to add
+                File file = DATA_MODEL.getFile(index);
+                files.add(file);
+            }
+            return files;
+        }
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1039,75 +1049,85 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 return;
             }
             
+            //get selected files before we switch to audio and loose the selection
+            final List<File> selectedFiles = getSelectedFiles();
+            
+            selectAudio();
+            
             String status =I18n.tr("Extracting audio from " + videoCount + " selected videos...");
             if (videoCount == 1) {
                 status = I18n.tr("Extracting audio from selected video...");
             }
-            
             LibraryMediator.instance().getLibrarySearch().pushStatus(status);
+
             
             SwingWorker demuxWorker = new SwingWorker<Void, Void>() {
 
                 @Override
                 protected Void doInBackground() throws Exception {
                     isDemuxing = true;
-                    
-                    synchronized(demuxingLock) {
-                        demuxSelectedFiles();
-                    }
-                    
+                    demuxFiles(selectedFiles);
                     isDemuxing = false;
                     return null;
                 }
                 
                 @Override
                 protected void done() {
-                    addNewFilesToTableAndSwitchToAudio();
-                    super.done();
+                    LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Done extracting audio."));
                 }
                 
             };
             demuxWorker.execute();
         }
 
-        /**
-         * Makes sure the Library will be showing the audio tab, and adds the newly converted files
-         * to the DATA MODEL.
-         */
-        private void addNewFilesToTableAndSwitchToAudio() {
-            //this must be done only in the event dispatch thread.
-            GUIMediator.safeInvokeAndWait(new Runnable() {
+        private void selectAudio() {
+            final LibraryExplorer explorer = LibraryMediator.instance().getLibraryExplorer();
+            explorer.enqueueRunnable(new Runnable() {
                 @Override
                 public void run() {
-                    LibraryExplorer explorer = LibraryMediator.instance().getLibraryExplorer();
-                    
-                    for (File f : demuxedFiles) {
-                        add(f,0);
-                        System.out.println("Added file " + f.getAbsolutePath());
-                    }
-                    
                     explorer.selectAudio();
-                    explorer.refreshSelection(false);
-                    
-                    LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Done extracting audio."));
                 }
             });
+            explorer.executePendingRunnables();
         }
 
-        private void demuxSelectedFiles() {
+        private void demuxFiles(final List<File> files) {
             demuxedFiles.clear();
-            int[] rows = TABLE.getSelectedRows();
-            for (int i = 0; i < rows.length; i++) {
-                int index = rows[i]; // current index to add
-                File file = DATA_MODEL.getFile(index);
+            for (final File file : files) {
+
                 try {
                     System.out.println("Demuxing file " + file.getAbsolutePath());
                     TbCm.demuxMP4Audio(file.getAbsolutePath(), null, false);
-                    demuxedFiles.add(file);
+                    final File demuxed = new File(file.getAbsolutePath().replace(".mp4", ".m4a"));
+                    demuxedFiles.add(demuxed);
+                    updateDemuxingStatus(files, demuxed);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+        }
+
+        private void updateDemuxingStatus(final List<File> files, final File demuxed) {
+            GUIMediator.safeInvokeAndWait(new Runnable() {
+                @Override
+                public void run() {
+                    LibraryExplorer explorer = LibraryMediator.instance().getLibraryExplorer();
+                    explorer.enqueueRunnable(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            System.out.println("Adding " + demuxed);
+                            add(demuxed, 0);
+                            LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Finished") + " " + demuxedFiles.size() + " " + I18n.tr("out  of ") + files.size() + ". Extracting audio...");
+                            System.out.println("Finished " + demuxedFiles.size() + " " + I18n.tr("out  of ") + files.size() + ". Extracting audio...");
+                        }
+                        
+                    });
+                    explorer.executePendingRunnables();                            
+                }
+
+            });
         }
     }
 
