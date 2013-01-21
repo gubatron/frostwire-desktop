@@ -117,6 +117,14 @@ public class MediaSource {
 		if (this instanceof DeviceMediaSource) {
             
 			FileDescriptor fd = ((DeviceMediaSource) this).getFileDescriptor();
+			
+			//ugly patch while this method gets fixed or turned into an abstract method.
+			//nothing to initialize at this point, initializeDisplayText() will be called
+			//again by child class later.
+			if (fd == null) {
+			    return;
+			}
+			
             String artistName = fd.artist;
             String songTitle = fd.title;
 
