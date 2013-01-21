@@ -727,13 +727,32 @@ public class TbCm extends PluginForDecrypt {
     }
     
     private static final Logger LOG = JDLogger.getLogger();
-
+    
     private static boolean demuxMP4Audio(final DownloadLink dl) {
         final String filename = dl.getFileOutput();
+        return demuxMP4Audio(filename, (String) dl.getProperty("videolink",null),true);
+    }
+
+    /**
+     * 
+     * @param filename - The absolute filepath you want to extract audio from.
+     * @param youTubeVideoLink - YouTube URL for the video (optional)
+     * @return
+     */
+    public static boolean demuxMP4Audio(final String filename, final String youTubeVideoLink, final boolean deleteMP4) {
         try {
-            String mp4Filename = filename.replace(".m4a", ".mp4");
-            final String jpgFilename = filename.replace(".m4a", ".jpg");
-            downloadThumbnail(dl, jpgFilename);
+            String mp4Filename =  null;
+            String jpegFname = null;
+            if (filename.toLowerCase().endsWith(".mp4")) {
+                mp4Filename = filename;//.replace(".mp4", ".m4a");
+                jpegFname = filename.replace(".mp4", ".jpg");
+            } else if (filename.toLowerCase().endsWith(".m4a")) {
+                mp4Filename = filename.replace(".m4a", ".mp4");
+                jpegFname = filename.replace(".m4a", ".jpg");
+            }
+
+            final String jpgFilename = jpegFname;
+            downloadThumbnail(youTubeVideoLink, jpgFilename);
             new File(filename).renameTo(new File(mp4Filename));
             FileInputStream fis = new FileInputStream(mp4Filename);
             FileChannel inFC = fis.getChannel();
@@ -783,20 +802,31 @@ public class TbCm extends PluginForDecrypt {
                 };
 
                 protected Box createUdta(Movie movie) {
-                    String videoLink = (String) dl.getProperty("videolink", "YouTube.com");
+                    //String videoLink = (String) dl.getProperty("videolink", "YouTube.com");
+                    String vidLink = (youTubeVideoLink != null) ? youTubeVideoLink : "YouTube.com";
                     
-                    return addUserDataBox(FilenameUtils.getBaseName(filename), videoLink, jpgFilename);
+                    return addUserDataBox(FilenameUtils.getBaseName(filename), vidLink, jpgFilename);
                 };
             }.build(outMovie);
-            String audioFilename = filename;
+            String audioFilename = null;
+            
+            if (filename.toLowerCase().endsWith(".m4a")) {
+                audioFilename = filename;
+            } else if (filename.toLowerCase().endsWith(".mp4")){
+                audioFilename = filename.toLowerCase().replace(".mp4", ".m4a");
+            }
+            
             FileOutputStream fos = new FileOutputStream(audioFilename);
             out.getBox(fos.getChannel());
             
             closeQuietly(fos);
 
-            if (!new File(mp4Filename).delete()) {
-                new File(mp4Filename).deleteOnExit();
+            if (deleteMP4) {
+                if (!new File(mp4Filename).delete()) {
+                    new File(mp4Filename).deleteOnExit();
+                }
             }
+                
             File jpgFile = new File(jpgFilename);
             if (jpgFile.exists() && !jpgFile.delete()) {
                 jpgFile.deleteOnExit();
@@ -910,8 +940,12 @@ public class TbCm extends PluginForDecrypt {
     }
 
     private static void downloadThumbnail(DownloadLink dl, String jpgFilename) {
+        String videoLink = (String) dl.getProperty("videolink", null);
+        downloadThumbnail(videoLink, jpgFilename);
+    }
+    
+    private static void downloadThumbnail(String videoLink, String jpgFilename) {
         try {
-            String videoLink = (String) dl.getProperty("videolink", null);
             //http://www.youtube.com/watch?v=[id]
             //http://i.ytimg.com/vi/[id]/hqdefault.jpg
             String id = videoLink.replace("http://www.youtube.com/watch?v=", "");
@@ -919,7 +953,7 @@ public class TbCm extends PluginForDecrypt {
             simpleHTTP(url, jpgFilename);
             
         } catch (Throwable e) {
-            TbCm.LOG.info("Unable to get youtube thumbnail - " + dl.getFileOutput());
+            TbCm.LOG.info("Unable to get youtube thumbnail - ");// + dl.getFileOutput());
         }
     }
     

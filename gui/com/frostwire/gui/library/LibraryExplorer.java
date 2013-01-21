@@ -155,7 +155,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         else if (directoryHolder instanceof TorrentDirectoryHolder) {
             LibraryMediator.instance().updateTableFiles(directoryHolder);
         }
-        //FINISHED
+        //SAVED FILES FOLDER
         else if (directoryHolder instanceof SavedFilesDirectoryHolder) {
             if (clearCache) {
                 ((SavedFilesDirectoryHolder) directoryHolder).clearCache();
