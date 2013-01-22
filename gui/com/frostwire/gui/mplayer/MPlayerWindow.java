@@ -199,9 +199,9 @@ public class MPlayerWindow extends JFrame {
 		MediaSource source = MediaPlayer.instance().getCurrentMedia();
 		
 		if (source != null) {
-			setTitle("Frostwire Media Player -  " + source.getTitleText());
+			setTitle("FrostWire Media Player -  " + source.getTitleText());
 		} else {
-			setTitle("Frostwire Media Player");
+			setTitle("FrostWire Media Player");
 		}
 	}
 
