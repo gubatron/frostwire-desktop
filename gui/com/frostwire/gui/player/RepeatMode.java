@@ -24,7 +24,8 @@ public enum RepeatMode {
     	ALL(2);
     
     private final int value;
-    
+    private static final RepeatMode[] vals = RepeatMode.values();
+	
     private RepeatMode(int value) {
     	this.value = value;
     }
@@ -37,8 +38,6 @@ public enum RepeatMode {
      * get next value sequentially in this enumeration
      */
     public RepeatMode getNextState() {
-    	RepeatMode[] vals = RepeatMode.values();
-    	
     	return ( vals[ ((getValue() + 1) % vals.length) ] );
     }
 }
