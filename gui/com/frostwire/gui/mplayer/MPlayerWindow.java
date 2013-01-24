@@ -75,6 +75,8 @@ public class MPlayerWindow extends JFrame {
     private Point2D prevMousePosition = null;
     private boolean handleVideoResize = true;
     
+    private int visibleCounterFlag = 0;
+    
 	protected MPlayerWindow() {
 		initializeUI();	
         
@@ -167,13 +169,13 @@ public class MPlayerWindow extends JFrame {
         overlayControls.addMouseListener(new MPlayerMouseAdapter() );
         overlayControls.addMouseMotionListener(new MPlayerMouseMotionAdapter());
         overlayControls.addWindowListener(new WindowAdapter() {
-            private int invoked = 0;
+            
             @Override
             public void windowDeactivated(WindowEvent e) {
-                if (invoked > 1) {
+                if (visibleCounterFlag > 0) {
                     hideOverlay(false);
                 }
-                invoked++;
+                visibleCounterFlag++;
             }
         });
         
@@ -220,6 +222,11 @@ public class MPlayerWindow extends JFrame {
 	 */
 	@Override
 	public void setVisible( boolean visible ) {
+	    
+	    visibleCounterFlag = 0;
+	    if (isVisible() && visible) {
+	        visibleCounterFlag = 1;
+	    }
 		
 		if ( visible != isVisible() ) {
 		
@@ -497,9 +504,9 @@ public class MPlayerWindow extends JFrame {
 		
 		@Override
 		public void windowActivated(WindowEvent e) {
-			if (e.getOppositeWindow() != overlayControls) {
-				showOverlay(false);
-			}            
+            if (e.getOppositeWindow() != overlayControls) {
+                showOverlay(false);
+            }
 		}	
 	}
 }
