@@ -129,21 +129,6 @@ public final class FrostWireUtils {
         return new File(root, "FrostWire");
     }
     
-    public static Tagged<String> getArg(Map<String, String> args, String name, String action) {
-        String res = args.get(name);
-        if (res == null || res.equals("")) {
-            //String detail = "Invalid '" + name + "' while " + action;                                                                       
-            return new Tagged<String>("missing.callback.parameter", false);
-        }
-        String result = res;
-        try {
-            result = URLDecoder.decode(res);
-        } catch (IOException e) {
-            // no the end of the world                                                                                                        
-        }
-        return new Tagged<String>(result, true);
-    }
-    
     public static interface IndexedMapFunction<T> {
     	public void map(int i, T obj);
     }
