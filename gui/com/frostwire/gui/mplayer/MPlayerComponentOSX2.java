@@ -83,8 +83,14 @@ public class MPlayerComponentOSX2 extends Canvas implements MPlayerComponent, Me
     @Override
     public void addNotify() {
         super.addNotify();
-        view = createNSView();
-        sendMsg(JMPlayer_addNotify);
+
+        com.apple.concurrent.Dispatch.getInstance().getBlockingMainQueueExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                view = createNSView();
+                sendMsg(JMPlayer_addNotify);
+            }
+        });
     }
 
     @Override
@@ -275,8 +281,13 @@ public class MPlayerComponentOSX2 extends Canvas implements MPlayerComponent, Me
         sendMsg(messageID, null);
     }
 
-    private void sendMsg(int messageID, Object message) {
-        awtMessage(view, messageID, message);
+    private void sendMsg(final int messageID, final Object message) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                awtMessage(view, messageID, message);
+            }
+        });
     }
 
     private native long createNSView();

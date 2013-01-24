@@ -166,6 +166,16 @@ public class MPlayerWindow extends JFrame {
         overlayControls.setIsFullscreen(isFullscreen);
         overlayControls.addMouseListener(new MPlayerMouseAdapter() );
         overlayControls.addMouseMotionListener(new MPlayerMouseMotionAdapter());
+        overlayControls.addWindowListener(new WindowAdapter() {
+            private boolean invoked = false;
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+                if (invoked) {
+                    hideOverlay(false);
+                }
+                invoked = true;
+            }
+        });
         
         // initialize animation alpha thread
         animateAlphaThread = new AlphaAnimationThread(overlayControls);
@@ -468,7 +478,7 @@ public class MPlayerWindow extends JFrame {
 	}
 	
 	private class MPlayerWindowAdapter extends WindowAdapter {
-
+	    
 		@Override
 		public void windowClosing(WindowEvent e) {
 			player.stop();
@@ -476,18 +486,20 @@ public class MPlayerWindow extends JFrame {
 		
 		@Override
 		public void windowDeactivated(WindowEvent e) {
-			if (e.getOppositeWindow() == overlayControls) {
-				requestFocus();
-			} else {
-				hideOverlay(false);
-			}
+            if (e.getOppositeWindow() != null) {
+                if (e.getOppositeWindow() == overlayControls) {
+                    requestFocus();
+                } else {
+                    hideOverlay(false);
+                }
+            }
 		}
 		
 		@Override
 		public void windowActivated(WindowEvent e) {
 			if (e.getOppositeWindow() != overlayControls) {
 				showOverlay(false);
-			}
+			}            
 		}	
 	}
 }
