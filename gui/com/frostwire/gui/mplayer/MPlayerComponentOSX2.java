@@ -282,7 +282,7 @@ public class MPlayerComponentOSX2 extends Canvas implements MPlayerComponent, Me
     }
 
     private void sendMsg(final int messageID, final Object message) {
-        SwingUtilities.invokeLater(new Runnable() {
+        com.apple.concurrent.Dispatch.getInstance().getNonBlockingMainQueueExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 awtMessage(view, messageID, message);

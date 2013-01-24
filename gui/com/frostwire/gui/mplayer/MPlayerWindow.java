@@ -167,13 +167,13 @@ public class MPlayerWindow extends JFrame {
         overlayControls.addMouseListener(new MPlayerMouseAdapter() );
         overlayControls.addMouseMotionListener(new MPlayerMouseMotionAdapter());
         overlayControls.addWindowListener(new WindowAdapter() {
-            private boolean invoked = false;
+            private int invoked = 0;
             @Override
             public void windowDeactivated(WindowEvent e) {
-                if (invoked) {
+                if (invoked > 1) {
                     hideOverlay(false);
                 }
-                invoked = true;
+                invoked++;
             }
         });
         
