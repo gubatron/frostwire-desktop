@@ -34,7 +34,6 @@ import com.frostwire.gui.filters.SearchFilterFactory;
 import com.frostwire.gui.filters.SearchFilterFactoryImpl;
 import com.frostwire.websearch.youtube.YouTubeSearchResult;
 import com.limegroup.gnutella.GUID;
-import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SearchSettings;
@@ -205,15 +204,6 @@ public final class SearchMediator {
     }
 
     /**
-     * Triggers a search given the text in the search field.  For testing
-     * purposes returns the 16-byte GUID of the search or null if the search
-     * didn't happen because it was greedy, etc.  
-     */
-    public static byte[] triggerSearch(String query) {
-        return triggerSearch(SearchInformation.createKeywordSearch(query, null, MediaType.getAnyTypeMediaType()));
-    }
-
-    /**
      * Validates the given search information.
      */
     private static boolean validate(SearchInformation info) {
@@ -276,10 +266,10 @@ public final class SearchMediator {
         List<SearchEngine> searchEngines = SearchEngine.getSearchEngines();
 
         for (final SearchEngine searchEngine : searchEngines) {
+            
             if (searchEngine.isEnabled()) {
                 Thread t = new Thread(new Runnable() {
                     public void run() {
-
                         final SearchResultMediator rp = getResultPanelForGUID(new GUID(guid));
                         if (rp != null && !rp.isStopped()) {
                             rp.incrementSearchCount();
@@ -300,13 +290,13 @@ public final class SearchMediator {
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         } finally {
-                                            SearchResultMediator trp = getResultPanelForGUID(new GUID(guid));
-                                            if (trp != null) {
-                                                trp.decrementSearchCount();
-                                            }
+                                            decrementSearchResultPanelCount(guid);
                                         }
                                     }
+
                                 });
+                            } else {
+                                decrementSearchResultPanelCount(guid);
                             }
                         }
                     }
@@ -319,6 +309,18 @@ public final class SearchMediator {
         //start local search.
         doLocalSearch(guid, query, info);
     }
+    
+    private static void decrementSearchResultPanelCount(final byte[] guid) {
+        GUIMediator.safeInvokeAndWait(new Runnable() {
+            public void run() {
+                SearchResultMediator trp = getResultPanelForGUID(new GUID(guid));
+                if (trp != null) {
+                    trp.decrementSearchCount();
+                }
+            }
+        });
+    }
+
 
     public static void doLocalSearch(final byte[] guid, final String query, final SearchInformation info) {
         
@@ -344,13 +346,12 @@ public final class SearchMediator {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 } finally {
-                                    SearchResultMediator trp = getResultPanelForGUID(new GUID(guid));
-                                    if (trp != null) {
-                                        trp.decrementSearchCount();
-                                    }
+                                    decrementSearchResultPanelCount(guid);
                                 }
                             }
                         });
+                    } else {
+                        decrementSearchResultPanelCount(guid);
                     }
                 }
 

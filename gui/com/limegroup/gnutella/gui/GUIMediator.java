@@ -1650,19 +1650,6 @@ public final class GUIMediator {
     }
 
     /**
-     * Trigger a search based on a string.
-     * 
-     * @param query
-     *            the query <tt>String</tt>
-     * @return the GUID of the query sent to the network. Used mainly for
-     *         testing
-     */
-    public byte[] triggerSearch(String query) {
-        getMainFrame().setSelectedTab(GUIMediator.Tabs.SEARCH);
-        return SearchMediator.triggerSearch(query);
-    }
-
-    /**
      * Notification that the button state has changed.
      */
     public void buttonViewChanged() {

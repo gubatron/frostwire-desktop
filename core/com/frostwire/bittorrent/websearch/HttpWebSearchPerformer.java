@@ -37,20 +37,23 @@ public abstract class HttpWebSearchPerformer implements WebSearchPerformer {
             e.printStackTrace();
             return result;
         }
+        
+        System.out.println("fetching ...");
         byte[] htmlBytes = fetcher.fetch();
 
         if (htmlBytes == null) {
+            System.out.println("HttpWebSearchPerformer must have timed out, no results.");
             return result;
         }
 
         String html = StringUtils.getUTF8String(htmlBytes);
-
+        
         String regex = getRegex();
         
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(html);
         
-        //System.out.println(html);
+        System.out.println(html);
         
         int max = getMaxResults();
         
@@ -58,13 +61,18 @@ public abstract class HttpWebSearchPerformer implements WebSearchPerformer {
         
         while (matcher.find() && i < max) {
             try {
+                
                 WebSearchResult sr = getNextSearchResult(matcher);
+
+                
                 if (sr != null) {
+                    System.out.println("Got a result! " + sr.getDisplayName());
                     result.add(sr);
                     i++;
                 }
             } catch (Exception e) {
                 // do nothing
+                e.printStackTrace();
             }
         }
         

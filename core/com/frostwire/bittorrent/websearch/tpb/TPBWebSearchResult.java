@@ -25,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.util.HtmlManipulator;
 
 /**
  * 
@@ -35,6 +36,7 @@ import com.frostwire.bittorrent.websearch.WebSearchResult;
 public class TPBWebSearchResult implements WebSearchResult {
 
     private String fileName;
+    private String displayName;
     private String torrentDetailsURI;
     private String torrentURI;
     private String infoHash;
@@ -77,6 +79,7 @@ public class TPBWebSearchResult implements WebSearchResult {
          */
         torrentDetailsURI = matcher.group(2);
         fileName = matcher.group(3);
+        displayName = HtmlManipulator.replaceHtmlEntities(fileName);
         torrentURI = matcher.group(4); //let's assign the magnet to this for now.
         infoHash = torrentURI.substring(20, 60);
         creationTime = parseCreationTime(matcher.group(5));
@@ -188,6 +191,6 @@ public class TPBWebSearchResult implements WebSearchResult {
 
     @Override
     public String getDisplayName() {
-        return fileName;
+        return displayName;
     }
 }
