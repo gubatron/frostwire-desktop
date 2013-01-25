@@ -294,7 +294,7 @@ public class MPlayerComponentOSX2 extends Canvas implements MPlayerComponent, Me
 
     protected String getImagesPath() {
         String imagesPath;
-        String resourcesFolder = new File(FrostWireUtils.getFrostWireJarPath()).getParentFile().getParent() + File.separator + "Resources";
+        String resourcesFolder = new File(FrostWireUtils.getFrostWireJarPath()).getParentFile().getParent() + File.separator + "Contents/Resources/";
         boolean isRelease = !FrostWireUtils.getFrostWireJarPath().contains("frostwire-desktop");
 
         imagesPath = (isRelease) ? resourcesFolder : "components/resources/src/main/resources/org/limewire/gui/images/";
