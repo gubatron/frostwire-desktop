@@ -92,6 +92,10 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         	AWTUtilities.setWindowOpaque(this, false);
         }
         
+		if (OSUtils.isLinux()) {
+			setType(Type.POPUP);
+		}
+        
         // osx specific (won't harm windows/linux)
         getRootPane().putClientProperty("apple.awt.draggableWindowBackground", Boolean.FALSE);
         
