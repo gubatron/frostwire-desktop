@@ -21,6 +21,7 @@ package com.frostwire.gui.mplayer;
 import java.awt.Canvas;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.io.File;
 
 import javax.swing.SwingUtilities;
 
@@ -29,6 +30,7 @@ import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerListener;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.mplayer.MediaPlaybackState;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * @author aldenml
@@ -87,7 +89,7 @@ public class MPlayerComponentOSX2 extends Canvas implements MPlayerComponent, Me
         com.apple.concurrent.Dispatch.getInstance().getBlockingMainQueueExecutor().execute(new Runnable() {
             @Override
             public void run() {
-                view = createNSView();
+                view = createNSView(getImagesPath());
                 sendMsg(JMPlayer_addNotify);
             }
         });
@@ -290,7 +292,17 @@ public class MPlayerComponentOSX2 extends Canvas implements MPlayerComponent, Me
         });
     }
 
-    private native long createNSView();
+    protected String getImagesPath() {
+        String imagesPath;
+        String resourcesFolder = new File(FrostWireUtils.getFrostWireJarPath()).getParentFile().getParent() + File.separator + "Resources";
+        boolean isRelease = !FrostWireUtils.getFrostWireJarPath().contains("frostwire-desktop");
+
+        imagesPath = (isRelease) ? resourcesFolder : "components/resources/src/main/resources/org/limewire/gui/images/";
+
+        return imagesPath;
+    }
+
+    private native long createNSView(String imagesPath);
 
     private native void awtMessage(long view, int messageID, Object message);
 }
