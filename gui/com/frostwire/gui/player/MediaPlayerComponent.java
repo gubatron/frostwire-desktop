@@ -695,21 +695,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     }
 
     private void next() {
-        MediaSource currentMedia = PLAYER.getCurrentMedia();
-
-        if (currentMedia != null) {
-            MediaSource nextSong = null;
-
-            if (PLAYER.isShuffle()) {
-                nextSong = PLAYER.getNextRandomSong(currentMedia);
-            } else {
-                nextSong = PLAYER.getNextMedia(currentMedia);
-            }
-
-            if (nextSong != null) {
-                PLAYER.asyncLoadMedia(nextSong, true, true);
-            }
-        }
+        PLAYER.playNextMedia();
     }
 
     /**
