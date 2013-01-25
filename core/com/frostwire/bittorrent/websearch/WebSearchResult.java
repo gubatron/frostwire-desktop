@@ -42,5 +42,7 @@ public interface WebSearchResult {
 
     public String getDetailsUrl();
 
+    /** Returns a display name that has replaced all HTML entities, or weird encodings into human readable text.
+     * See HtmlManipulator.replaceHtmlEntities(String s) */
     public String getDisplayName();
 }

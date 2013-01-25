@@ -26,6 +26,7 @@ import java.util.regex.Matcher;
 import org.limewire.util.FilenameUtils;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.util.HtmlManipulator;
 
 /**
  * 
@@ -36,6 +37,7 @@ import com.frostwire.bittorrent.websearch.WebSearchResult;
 public class MonovaWebSearchResult implements WebSearchResult {
 
     private String fileName;
+    private String displayName;
     private String torrentDetailsURI;
     private String torrentURI;
     private String infoHash;
@@ -68,6 +70,7 @@ public class MonovaWebSearchResult implements WebSearchResult {
         this.torrentDetailsURI = torrentDetailsUrl;
         torrentURI = matcher.group(1);
         fileName = FilenameUtils.getName(torrentURI);
+        displayName = HtmlManipulator.replaceHtmlEntities(fileName);
         infoHash = matcher.group(2).split("&")[0];
         creationTime = parseCreationTime(torrentURI);
         size = parseSize(matcher.group(4));
@@ -161,6 +164,6 @@ public class MonovaWebSearchResult implements WebSearchResult {
 
     @Override
     public String getDisplayName() {
-        return fileName;
+        return displayName;
     }
 }
