@@ -368,8 +368,8 @@ public class BTDownloadImpl implements BTDownload {
     private void updateName(DownloadManager downloadManager) {
         if (TorrentUtil.getNoSkippedFileInfoSet(downloadManager).size() == 1) {
             try {
-                byte[] temp = TorrentUtil.getNoSkippedFileInfoSet(downloadManager).toArray(new DiskManagerFileInfo[0])[0].getTorrentFile().getPathComponents()[0];
-                _displayName = StringUtils.getUTF8String(temp);
+                byte[][] temp = TorrentUtil.getNoSkippedFileInfoSet(downloadManager).toArray(new DiskManagerFileInfo[0])[0].getTorrentFile().getPathComponents();
+                _displayName = StringUtils.getUTF8String(temp[temp.length - 1]);
             } catch (Throwable e) {
                 _displayName = TorrentUtil.getNoSkippedFileInfoSet(downloadManager).toArray(new DiskManagerFileInfo[0])[0].getFile(false).getName();
             }
