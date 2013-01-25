@@ -173,10 +173,12 @@ public class MPlayerWindow extends JFrame {
 
             @Override
             public void windowDeactivated(WindowEvent e) {
-                if (visibleCounterFlag > 0) {
-                    hideOverlay(false);
+                if (!OSUtils.isWindows()) {
+                    if (visibleCounterFlag > 0) {
+                        hideOverlay(false);
+                    }
+                    visibleCounterFlag++;
                 }
-                visibleCounterFlag++;
             }
         });
 
@@ -490,7 +492,7 @@ public class MPlayerWindow extends JFrame {
 
         @Override
         public void windowDeactivated(WindowEvent e) {
-            if (e.getOppositeWindow() != null) {
+            if (OSUtils.isWindows()) {
                 if (e.getOppositeWindow() == overlayControls) {
                     requestFocus();
                 } else {
