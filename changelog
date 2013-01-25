@@ -1,3 +1,7 @@
+frostwire (5.5.3) stable; urgency=high
+  * Bug fix: smart search engine wasn't notifying when it was done if there were no results.
+ -- FrostWire Team <contact@frostwire.com>  Thu, 24 Jan 2013 19:17:11 -0500
+	
 frostwire (5.5.2) stable; urgency=high
   * Upgrade: Now 'Movies' or 'My Videos' folder is included by default on new
     installs since we now have a built-in video player.
