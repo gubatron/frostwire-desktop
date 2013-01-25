@@ -10,6 +10,7 @@ import org.gudy.azureus2.core3.download.DownloadManagerStats;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
+import org.limewire.util.StringUtils;
 
 public class BTDownloadImpl implements BTDownload {
 
@@ -364,11 +365,16 @@ public class BTDownloadImpl implements BTDownload {
 
 	}
 
-	private void updateName(DownloadManager downloadManager) {
-		if (TorrentUtil.getNoSkippedFileInfoSet(downloadManager).size() == 1) {
-			_displayName = TorrentUtil.getNoSkippedFileInfoSet(downloadManager).toArray(new DiskManagerFileInfo[0])[0].getFile(false).getName();
-		} else {
-			_displayName = _downloadManager.getDisplayName();
-		}
-	}
+    private void updateName(DownloadManager downloadManager) {
+        if (TorrentUtil.getNoSkippedFileInfoSet(downloadManager).size() == 1) {
+            try {
+                byte[] temp = TorrentUtil.getNoSkippedFileInfoSet(downloadManager).toArray(new DiskManagerFileInfo[0])[0].getTorrentFile().getPathComponents()[0];
+                _displayName = StringUtils.getUTF8String(temp);
+            } catch (Throwable e) {
+                _displayName = TorrentUtil.getNoSkippedFileInfoSet(downloadManager).toArray(new DiskManagerFileInfo[0])[0].getFile(false).getName();
+            }
+        } else {
+            _displayName = _downloadManager.getDisplayName();
+        }
+    }
 }

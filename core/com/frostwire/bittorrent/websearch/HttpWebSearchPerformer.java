@@ -23,7 +23,7 @@ public abstract class HttpWebSearchPerformer implements WebSearchPerformer {
 
     public List<WebSearchResult> search(String keywords) {
         List<WebSearchResult> result = new ArrayList<WebSearchResult>();
-        
+
         try {
             keywords = URLEncoder.encode(keywords, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -37,57 +37,56 @@ public abstract class HttpWebSearchPerformer implements WebSearchPerformer {
             e.printStackTrace();
             return result;
         }
-        
-        System.out.println("fetching ...");
+
+        //System.out.println("fetching ...");
         byte[] htmlBytes = fetcher.fetch();
 
         if (htmlBytes == null) {
-            System.out.println("HttpWebSearchPerformer must have timed out, no results.");
+            //System.out.println("HttpWebSearchPerformer must have timed out, no results.");
             return result;
         }
 
         String html = StringUtils.getUTF8String(htmlBytes);
-        
+
         String regex = getRegex();
-        
+
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(html);
-        
-        System.out.println(html);
-        
+
+        //System.out.println(html);
+
         int max = getMaxResults();
-        
+
         int i = 0;
-        
+
         while (matcher.find() && i < max) {
             try {
-                
+
                 WebSearchResult sr = getNextSearchResult(matcher);
 
-                
                 if (sr != null) {
-                    System.out.println("Got a result! " + sr.getDisplayName());
+                    //System.out.println("Got a result! " + sr.getDisplayName());
                     result.add(sr);
                     i++;
                 }
             } catch (Exception e) {
                 // do nothing
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
-        
+
         return result;
     }
 
     /** Returns the URI of the search engine search command */
-	protected abstract URI getURI(String keywords) throws URISyntaxException;
-	
-	/** This method should return an implementation of WebSearchResult using a matcher that is able to find all the torrent fields*/
+    protected abstract URI getURI(String keywords) throws URISyntaxException;
+
+    /** This method should return an implementation of WebSearchResult using a matcher that is able to find all the torrent fields*/
     protected abstract WebSearchResult getNextSearchResult(Matcher matcher);
 
     /** This function must return the regex necessary for a pattern matcher to find the necessary fields of a SearchResult*/
     protected abstract String getRegex();
-    
+
     protected int getMaxResults() {
         return Integer.MAX_VALUE;
     }
