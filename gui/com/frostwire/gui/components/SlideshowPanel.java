@@ -186,7 +186,14 @@ public class SlideshowPanel extends JPanel {
 
                     Slide slide = _slides.get(actualSlideIndex);
                     if (slide.url != null) {
-                        GUIMediator.openURL(slide.url);
+                        if (slide.method == Slide.SLIDE_DOWNLOAD_METHOD_HTTP) {
+                            //TODO: Starts an HTTP transfer
+                        } else if (slide.method == Slide.SLIDE_DOWNLOAD_METHOD_INSTALL_POKKI) {
+                            //TODO: Starts a Pokki Download.
+                        } else {
+                        }
+                            GUIMediator.openURL(slide.url);
+                        }
                     }
                     if (slide.torrent != null) {
                         if (slide.torrent.toLowerCase().startsWith("http")) {
