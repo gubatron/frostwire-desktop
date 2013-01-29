@@ -21,20 +21,10 @@ package com.frostwire.gui.bittorrent;
 import java.io.File;
 import java.util.Date;
 
-import jd.controlling.IOEQ;
-import jd.controlling.downloadcontroller.DownloadController;
-import jd.controlling.downloadcontroller.DownloadWatchDog;
-import jd.plugins.DownloadLink;
-import jd.plugins.FilePackage;
-import jd.plugins.LinkStatus;
-
 import org.gudy.azureus2.core3.download.DownloadManager;
-import org.limewire.util.FilenameUtils;
-import org.limewire.util.StringUtils;
 
 import com.frostwire.gui.components.Slide;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.search.SoundcloudSearchResult;
 
 /**
  * @author gubatron
@@ -81,12 +71,20 @@ public class HttpDownload implements BTDownload {
 
     @Override
     public long getSize(boolean update) {
+<<<<<<< HEAD
         return size
+=======
+        return size;
+>>>>>>> 5.5.3-pokki
     }
 
     @Override
     public String getDisplayName() {
+<<<<<<< HEAD
         return (StringUtils.isNullOrEmpty(title, true) ? FilenameUtils.getName(saveLocation) : title) + ".mp3";
+=======
+        return title;
+>>>>>>> 5.5.3-pokki
     }
 
     @Override
@@ -96,41 +94,76 @@ public class HttpDownload implements BTDownload {
 
     @Override
     public boolean isPausable() {
+<<<<<<< HEAD
         return link.getLinkStatus().hasStatus(LinkStatus.DOWNLOADINTERFACE_IN_PROGRESS);
+=======
+        return false;
+>>>>>>> 5.5.3-pokki
     }
 
     @Override
     public boolean isCompleted() {
+<<<<<<< HEAD
         return link.getLinkStatus().hasStatus(LinkStatus.FINISHED);
+=======
+        //TODO
+        return false;
+>>>>>>> 5.5.3-pokki
     }
 
     @Override
     public int getState() {
+<<<<<<< HEAD
         if (link.getLinkStatus().hasStatus(LinkStatus.DOWNLOADINTERFACE_IN_PROGRESS)) {
             return DownloadManager.STATE_DOWNLOADING;
         }
 
         return DownloadManager.STATE_STOPPED;
+=======
+        //TODO
+        //if (link.getLinkStatus().hasStatus(LinkStatus.DOWNLOADINTERFACE_IN_PROGRESS)) {
+            //return DownloadManager.STATE_DOWNLOADING;
+        //}
+
+        //return DownloadManager.STATE_STOPPED;
+        return 0;
+>>>>>>> 5.5.3-pokki
     }
 
     @Override
     public void remove() {
+<<<<<<< HEAD
         pause();
         if (deleteDataWhenRemove) {
             link.deleteFile(true, true);
+=======
+        //TODO
+        pause();
+        if (deleteDataWhenRemove) {
+            //link.deleteFile(true, true);
+>>>>>>> 5.5.3-pokki
         }
     }
 
     @Override
     public void pause() {
+<<<<<<< HEAD
         DownloadController.getInstance().removePackage(filePackage);
         link.abort();
+=======
+        
+>>>>>>> 5.5.3-pokki
     }
 
     @Override
     public File getSaveLocation() {
+<<<<<<< HEAD
         DownloadLink dl = filePackage.getChildren().get(0);
         return new File(dl.getFileOutput());
+=======
+        //TODO
+        return null;
+>>>>>>> 5.5.3-pokki
     }
 
     @Override
@@ -140,14 +173,29 @@ public class HttpDownload implements BTDownload {
 
     @Override
     public int getProgress() {
+<<<<<<< HEAD
         if (link.getDownloadSize() == 0) {
             return 0;
         }
         return (int) ((link.getDownloadCurrent() * 100) / link.getDownloadSize());
+=======
+        //TODO
+        //if (link.getDownloadSize() == 0) {
+        //    return 0;
+        // }
+        //return (int) ((link.getDownloadCurrent() * 100) / link.getDownloadSize());
+        return 0;
+>>>>>>> 5.5.3-pokki
     }
 
     @Override
     public String getStateString() {
+<<<<<<< HEAD
+=======
+        //TODO
+        return null;
+        /**
+>>>>>>> 5.5.3-pokki
         if (link.getLinkStatus().hasStatus(LinkStatus.DOWNLOADINTERFACE_IN_PROGRESS)) {
             started = true;
             return STATE_DOWNLOADING;
@@ -162,11 +210,21 @@ public class HttpDownload implements BTDownload {
             return STATE_WAITING;
         }
         return STATE_STOPPED;
+<<<<<<< HEAD
+=======
+        */
+>>>>>>> 5.5.3-pokki
     }
 
     @Override
     public long getBytesReceived() {
+<<<<<<< HEAD
         return link.getDownloadCurrent();
+=======
+        //TODO
+        //return link.getDownloadCurrent();
+        return 0;
+>>>>>>> 5.5.3-pokki
     }
 
     @Override
@@ -176,7 +234,13 @@ public class HttpDownload implements BTDownload {
 
     @Override
     public double getDownloadSpeed() {
+<<<<<<< HEAD
         return link.getDownloadSpeed() / 1024;
+=======
+        //TODO
+        return 0;
+        //return link.getDownloadSpeed() / 1024;
+>>>>>>> 5.5.3-pokki
     }
 
     @Override
@@ -250,6 +314,7 @@ public class HttpDownload implements BTDownload {
 
     @Override
     public Date getDateCreated() {
+<<<<<<< HEAD
         return dateCreated;
     }
 
@@ -279,3 +344,15 @@ public class HttpDownload implements BTDownload {
         return dl.getFileOutput();
     }
 }
+=======
+        //TODO
+        return null;
+        //return dateCreated;
+    }
+
+    private void start() {
+        //TODO
+        //Download code here
+    }
+}
+>>>>>>> 5.5.3-pokki
