@@ -52,8 +52,8 @@ import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.AzureusStarter;
-import com.frostwire.HttpClient;
-import com.frostwire.HttpClient.HttpRangeException;
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClient.HttpRangeException;
 import com.frostwire.HttpFetcher;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;

@@ -62,6 +62,8 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.limewire.util.FileUtils;
 
+import com.frostwire.util.UserAgentGenerator;
+
 /**
  * A Blocking HttpClient.
  * Use fetch() to retrieve the byte[]

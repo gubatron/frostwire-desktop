@@ -19,7 +19,7 @@ import org.limewire.util.Stopwatch;
 import org.limewire.util.SystemUtils;
 
 import com.frostwire.AzureusStarter;
-import com.frostwire.UserAgentGenerator;
+import com.frostwire.util.UserAgentGenerator;
 import com.limegroup.gnutella.ExternalControl;
 import com.limegroup.gnutella.LimeCoreGlue;
 import com.limegroup.gnutella.LimeCoreGlue.InstallFailedException;

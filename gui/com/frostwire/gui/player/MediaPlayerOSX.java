@@ -26,19 +26,22 @@ public class MediaPlayerOSX extends MediaPlayer {
 
 	@Override
 	protected String getPlayerPath() {
-		
 		String playerPath;
 		String macOSFolder = new File(FrostWireUtils.getFrostWireJarPath()).getParentFile().getParent() + File.separator + "MacOS";
 		boolean isRelease = !FrostWireUtils.getFrostWireJarPath().contains("frostwire-desktop");
-
-        playerPath = (isRelease) ? macOSFolder + File.separator + "fwplayer_osx" : "lib/native/fwplayer_osx";
-        
+		playerPath = (isRelease) ? macOSFolder + File.separator + "fwplayer_osx" : getNonReleasePlayerPath();
 		return playerPath;
 	}
 	
 	@Override
     protected float getVolumeGainFactor() {
-    	return 30.0f;
+    	    return 30.0f;
     }
 	
+	private String getNonReleasePlayerPath() {
+	    String frostWireJarPath = FrostWireUtils.getFrostWireJarPath();
+	    String pathPreffix = frostWireJarPath.substring(0,frostWireJarPath.indexOf("frostwire-desktop"));
+	    System.out.println("Non Release Path: " + pathPreffix + "frostwire-desktop/lib/native/fwplayer_osx");
+	    return pathPreffix + "frostwire-desktop/lib/native/fwplayer_osx";
+	}
 }
