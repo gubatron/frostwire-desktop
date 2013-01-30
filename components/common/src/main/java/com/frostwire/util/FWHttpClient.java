@@ -27,7 +27,6 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-
 /**
  * A pure java based HTTP client with resume capabilities.
  * @author gubatron
@@ -38,6 +37,7 @@ final class FWHttpClient implements HttpClient {
 
     private static final int DEFAULT_TIMEOUT = 10000;
     private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();
+    private HttpClientListener listener;
 
     public String get(String url) {
         return get(url, DEFAULT_TIMEOUT, DEFAULT_USER_AGENT);
@@ -101,19 +101,27 @@ final class FWHttpClient implements HttpClient {
         long expectedFileSize = Long.parseLong(conn.getHeaderField("Content-Length"));
 
         if (rangeStart > 0 && rangeStart > expectedFileSize) {
-            throw new HttpRangeOutOfBoundsException(rangeStart, expectedFileSize);
+            HttpRangeOutOfBoundsException httpRangeOutOfBoundsException = new HttpRangeOutOfBoundsException(rangeStart, expectedFileSize);
+            listener.onError(this, httpRangeOutOfBoundsException);
+            throw httpRangeOutOfBoundsException;
         }
 
         if (rangeStart > 0 && !conn.getHeaderField("Accept-Ranges").equals("bytes")) {
-            throw new RangeNotSupportedException("Server does not support bytes range request");
+            RangeNotSupportedException rangeNotSupportedException = new RangeNotSupportedException("Server does not support bytes range request");
+            listener.onError(this, rangeNotSupportedException);
+            throw rangeNotSupportedException;
         }
 
         try {
-
-            byte[] b = new byte[1024];
+            byte[] b = new byte[4096];
             int n = 0;
             while ((n = in.read(b, 0, b.length)) != -1) {
                 out.write(b, 0, n);
+                try {
+                    listener.onData(this, b, 0, n);
+                } catch (Exception e) {
+                    /** just protecting the transfer from stupid code on the listener */
+                }
             }
         } finally {
             try {
@@ -161,7 +169,7 @@ final class FWHttpClient implements HttpClient {
     }
 
     public static final class HttpRangeOutOfBoundsException extends HttpRangeException {
-        
+
         private static final long serialVersionUID = -335661829606230147L;
 
         public HttpRangeOutOfBoundsException(int rangeStart, long expectedFileSize) {
@@ -170,4 +178,19 @@ final class FWHttpClient implements HttpClient {
 
     }
 
+    @Override
+    public void setListener(HttpClientListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public HttpClientListener getListener() {
+        return listener;
+    }
+
+    @Override
+    public void cancel() {
+
+        listener.onCancel(this);
+    }
 }

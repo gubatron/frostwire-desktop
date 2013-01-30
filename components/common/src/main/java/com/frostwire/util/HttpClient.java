@@ -49,6 +49,8 @@ public interface HttpClient {
         public void onData(HttpClient client, byte[] buffer, int offset, int length);
         
         public void onComplete(HttpClient client);
+        
+        public void onCancel(HttpClient client);
     }
 
     public static class HttpRangeException extends IOException {
