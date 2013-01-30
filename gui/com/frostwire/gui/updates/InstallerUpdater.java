@@ -53,7 +53,9 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.AzureusStarter;
 import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.HttpClient.HttpRangeException;
+import com.frostwire.util.HttpClientType;
 import com.frostwire.HttpFetcher;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -127,7 +129,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
         }
         try {
             //new HttpFetcher(new URI(_updateMessage.getInstallerUrl())).save(installerFileLocation);
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClient = HttpClientFactory.newInstance(HttpClientType.PureJava);
             try {
                 httpClient.save(_updateMessage.getInstallerUrl(), installerFileLocation, true);
             } catch (HttpRangeException e) {
