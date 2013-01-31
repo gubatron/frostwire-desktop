@@ -27,7 +27,7 @@ public class MediaPlayerOSX extends MediaPlayer {
 	@Override
 	protected String getPlayerPath() {
 		String playerPath;
-		String macOSFolder = new File(FrostWireUtils.getFrostWireJarPath()).getParentFile().getParent() + File.separator + "MacOS";
+		String macOSFolder = new File(FrostWireUtils.getFrostWireJarPath()).getParentFile().getParent() + File.separator + "/Contents/MacOS";
 		boolean isRelease = !FrostWireUtils.getFrostWireJarPath().contains("frostwire-desktop");
 		playerPath = (isRelease) ? macOSFolder + File.separator + "fwplayer_osx" : getNonReleasePlayerPath();
 		return playerPath;

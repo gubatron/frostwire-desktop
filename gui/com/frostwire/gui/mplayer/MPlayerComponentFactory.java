@@ -50,7 +50,7 @@ public final class MPlayerComponentFactory {
             if (IS_OS_WINDOWS) {
                 return new MPlayerComponentJava();
             } else if (IS_OS_MAC) {
-                return new MPlayerComponentOSX();
+                return new MPlayerComponentOSX2();
             } else if (IS_OS_LINUX) {
             	return new MPlayerComponentJava();
             }

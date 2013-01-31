@@ -22,13 +22,19 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsDevice.WindowTranslucency;
+import java.awt.GraphicsEnvironment;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,10 +49,10 @@ import javax.swing.event.ChangeListener;
 
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerListener;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.sun.awt.AWTUtilities;
@@ -91,6 +97,25 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
         	AWTUtilities.setWindowOpaque(this, false);
         }
+        
+        if (OSUtils.isMacOSX()) {
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            GraphicsDevice gd = ge.getDefaultScreenDevice();
+            final boolean perpixelTransparentSupported = gd.isWindowTranslucencySupported(WindowTranslucency.PERPIXEL_TRANSPARENT);
+            if (perpixelTransparentSupported) {
+                addComponentListener(new ComponentAdapter() {
+                    @Override
+                    public void componentResized(ComponentEvent e) {
+                        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 15, 15));
+                    }
+                });
+            }
+            setOpacity(0.90f);
+        }
+        
+		if (OSUtils.isLinux()) {
+			setType(Type.POPUP);
+		}
         
         // osx specific (won't harm windows/linux)
         getRootPane().putClientProperty("apple.awt.draggableWindowBackground", Boolean.FALSE);
