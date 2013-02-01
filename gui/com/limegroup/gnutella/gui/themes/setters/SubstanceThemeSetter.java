@@ -26,6 +26,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.FontUIResource;
@@ -45,6 +46,8 @@ import org.pushingpixels.substance.internal.ui.SubstancePopupMenuUI;
 import org.pushingpixels.substance.internal.ui.SubstanceRadioButtonMenuItemUI;
 import org.pushingpixels.substance.internal.ui.SubstanceTreeUI;
 import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
+
+import sun.swing.SwingUtilities2;
 
 import com.frostwire.gui.components.RangeSlider;
 import com.limegroup.gnutella.gui.themes.SkinComboBoxUI;
@@ -109,8 +112,9 @@ public class SubstanceThemeSetter implements ThemeSetter {
             fixLinuxOSFont();
         }
 
-        SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getScaledFontPolicy(scaledFontPolicyFactor));
-
+        //SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getScaledFontPolicy(scaledFontPolicyFactor));
+        fixAAFontSettings();
+        
         //reduceFont("Label.font");
         //reduceFont("Table.font");
         //ResourceManager.setFontSizes(-1);
@@ -327,5 +331,12 @@ public class SubstanceThemeSetter implements ThemeSetter {
         } catch (Throwable e) {
             LOG.error("Error fixing font", e);
         }
+    }
+    
+    private void fixAAFontSettings() {
+        UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+        boolean lafCond = SwingUtilities2.isLocalDisplay();
+        Object aaTextInfo = SwingUtilities2.AATextInfo.getAATextInfo(lafCond);
+        defaults.put(SwingUtilities2.AA_TEXT_PROPERTY_KEY, aaTextInfo);
     }
 }

@@ -37,8 +37,8 @@
 	<property name="compile.deprecation"	value="true"/>
 	<property name="compile.optimize"		value="true"/>
 
-	<property name="compile.source"			value="1.6"/>
-	<property name="compile.target"			value="1.6"/>
+	<property name="compile.source"			value="1.7"/>
+	<property name="compile.target"			value="1.7"/>
     
     <macrodef name="do.setup-properties" description="Sets up common properties every macro uses.">
     	<attribute name="component"/>
@@ -177,8 +177,8 @@
 				   deprecation  ="${compile.deprecation}"
 	 	           optimize     ="${compile.optimize}"
 				   encoding     ="@{encoding}"
-		           source		="1.6"
-	  	           target       ="1.6"
+		           source		="${compile.source}"
+	  	           target       ="${compile.source}"
 	 	           sourcepath   =""
 			       excludes     ="@{excludes}"
 			       includeAntRuntime = "false"
