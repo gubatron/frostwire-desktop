@@ -24,6 +24,9 @@ import java.util.Date;
 import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.frostwire.gui.components.Slide;
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.HttpClientType;
 import com.limegroup.gnutella.gui.I18n;
 
 /**
@@ -49,17 +52,18 @@ public class HttpDownload implements BTDownload {
     private final String url;
     private final String title;
     private final long size;
+    private final String md5; //optional
     
     /** Create an HttpDownload out of a promotional Slide */
     public HttpDownload(Slide slide) {
-        this(slide.url, slide.title, slide.size);
+        this(slide.url, slide.title, slide.size, slide.md5);
     }
     
-    public HttpDownload(String theURL, String theTitle, long fileSize) {
+    public HttpDownload(String theURL, String theTitle, long fileSize, String md5hash) {
         url = theURL;
         title = theTitle;
         size = fileSize;
-        
+        md5 = md5hash;
         started = false;
         start();
     }
@@ -261,6 +265,8 @@ public class HttpDownload implements BTDownload {
     }
 
     private void start() {
-        //TODO
+        HttpClient httpClient = HttpClientFactory.newInstance(HttpClientType.PureJava);
+        //start the download
+        //
     }
 }

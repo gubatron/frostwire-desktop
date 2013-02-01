@@ -86,5 +86,8 @@ public class Slide {
 	 * decide what to do with this Slide onClick.
 	 */
 	public int method;
+
+	/** Optional MD5 hash */
+    public String md5;
 	
 }
