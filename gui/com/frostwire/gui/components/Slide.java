@@ -12,18 +12,30 @@ public class Slide {
     /** Download via HTTP */
     public static final int  SLIDE_DOWNLOAD_METHOD_HTTP = 1;
 
-    /** Download and install pokki with available parameters.*/
-    public static final int  SLIDE_DOWNLOAD_METHOD_INSTALL_POKKI = 2;
-    
     public Slide() {
         
     }
     
 	public Slide(String imgSrc, String clickURL, long durationMilli) {
-		this(imgSrc, clickURL, durationMilli, null, null, null, null, -1, SLIDE_DOWNLOAD_METHOD_OPEN_URL);
+		
 	}
 	
-	public Slide(String imgSrc, String clickURL, long durationInMilliseconds, String torrentURL, String lang, String OS, String theTitle, long theSize, int downloadMethod) {
+	public Slide(String imgSrc, 
+	             String clickURL, 
+	             long durationInMilliseconds, 
+	             String torrentURL, 
+	             String lang, 
+	             String OS, 
+	             String theTitle, 
+	             long theSize, 
+	             int downloadMethod, 
+	             String md5hash,
+	             String saveAs,
+	             boolean executeWhenDone,
+	             String executionParameters,
+	             boolean unzipWhenDone, 
+	             boolean unzipAndDeleteWhenDone,
+	             String excludeTheseVersions) {
 		imageSrc = imgSrc;
 		url = clickURL;
 		duration = durationInMilliseconds;
@@ -33,6 +45,13 @@ public class Slide {
 	    title = theTitle;
 	    size = theSize;
 		method = downloadMethod;
+		md5 = md5hash;
+		saveFileAs = saveAs;
+		execute = executeWhenDone;
+		executeParameters = executionParameters;
+		unzip = unzipWhenDone;
+		unzipAndDelete = unzipAndDeleteWhenDone;
+		excludedVersions = excludeTheseVersions;
 	}
 		
 	/**
@@ -65,7 +84,7 @@ public class Slide {
 	public String language;
 	
 	/**
-	 * os (optional filter) = Can be given in the forms of:
+	 * os (optional filter) = Can be given in the forms of commq separated:
 	 * windows
 	 * mac
 	 * linux
@@ -89,5 +108,22 @@ public class Slide {
 
 	/** Optional MD5 hash */
     public String md5;
-	
+
+    /** If != null, rename file to this file name. */
+    public String saveFileAs;
+
+    /** If true, try executing the finished file download. */
+    public boolean execute;
+
+    /** If != null && execute, pass these parameters to the finished downloaded file. */
+    public String executeParameters;
+
+    /** Unzip the file when finished downloading */
+    public boolean unzip;
+
+    /** Delete the .zip file you downloaded after it's unzipped */
+    public boolean unzipAndDelete;
+
+    /** Comma separated list of versions that should not use this */
+    public String excludedVersions;
 }

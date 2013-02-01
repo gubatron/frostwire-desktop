@@ -187,9 +187,7 @@ public class SlideshowPanel extends JPanel {
                     Slide slide = _slides.get(actualSlideIndex);
                     if (slide.url != null) {
                         if (slide.method == Slide.SLIDE_DOWNLOAD_METHOD_HTTP) {
-                            //TODO: Starts an HTTP transfer
-                        } else if (slide.method == Slide.SLIDE_DOWNLOAD_METHOD_INSTALL_POKKI) {
-                            //TODO: Starts a Pokki Download.
+                            //TODO: Starts an HTTP Download
                         } else {
                             GUIMediator.openURL(slide.url);
                         }
@@ -406,13 +404,13 @@ public class SlideshowPanel extends JPanel {
 
     private boolean isMessageEligibleForMyOs(String os) {
         if (os == null)
-            return true;
+            return true;       
 
-        boolean im_mac_msg_for_me = os.equals("mac") && OSUtils.isMacOSX();
+        boolean im_mac_msg_for_me = os.contains("mac") && OSUtils.isMacOSX();
 
-        boolean im_windows_msg_for_me = os.equals("windows") && OSUtils.isWindows();
+        boolean im_windows_msg_for_me = os.contains("windows") && OSUtils.isWindows();
 
-        boolean im_linux_msg_for_me = os.equals("linux") && OSUtils.isLinux();
+        boolean im_linux_msg_for_me = os.contains("linux") && OSUtils.isLinux();
 
         return im_mac_msg_for_me || im_windows_msg_for_me || im_linux_msg_for_me;
     }
