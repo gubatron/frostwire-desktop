@@ -40,19 +40,22 @@ public class HttpDownload implements BTDownload {
     private static final String STATE_ERROR = I18n.tr("Error");
     private static final String STATE_STOPPED = I18n.tr("Stopped");
     private static final String STATE_WAITING = I18n.tr("Waiting");
+    private static final String STATE_CHECKING = I18n.tr("Checking");
     private static final String STATE_FINISHED = I18n.tr("Finished");
-
-
-    private boolean deleteDataWhenRemove;
-
-    private boolean started;
-
-    private boolean finished;
 
     private final String url;
     private final String title;
     private final long size;
     private final String md5; //optional
+    
+    /** If false it should delete any temporary data and start from the beginning. */
+    private boolean resume;
+    private boolean deleteDataWhenRemove;
+    
+
+    private boolean started;
+    private boolean finished;
+
     
     /** Create an HttpDownload out of a promotional Slide */
     public HttpDownload(Slide slide) {
