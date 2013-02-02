@@ -59,7 +59,7 @@ public class SearchEnginesSettings extends LimeProps {
 
     public static final IntSetting TPB_WEBSEARCHPERFORMER_MAX_RESULTS = FACTORY.createIntSetting("TPB_WEBSEARCHPERFORMER_MAX", 20);
 
-    public static final IntSetting YOUTUBE_WEBSEARCHPERFORMER_MAX_RESULTS = FACTORY.createIntSetting("YOUTUBE_WEBSEARCHPERFORMER_MAX_RESULTS", 5);
+    public static final IntSetting YOUTUBE_WEBSEARCHPERFORMER_MAX_RESULTS = FACTORY.createIntSetting("YOUTUBE_WEBSEARCHPERFORMER_MAX_RESULTS", 15);
     
     public static final IntSetting SOUNDCLOUD_WEBSEARCHPERFORMER_MAX_RESULTS = FACTORY.createIntSetting("SOUNDCLOUD_WEBSEARCHPERFORMER_MAX_RESULTS", 20);
 }
