@@ -11,6 +11,10 @@ public class Slide {
 
     /** Download via HTTP */
     public static final int  SLIDE_DOWNLOAD_METHOD_HTTP = 1;
+    
+    public Slide() {
+        
+    }
 
 	/**
 	 * 
