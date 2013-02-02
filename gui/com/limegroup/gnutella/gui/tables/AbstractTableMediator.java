@@ -507,8 +507,9 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         else {
             if (index >= 0 && index <= DATA_MODEL.getRowCount()) {
                 addedAt = DATA_MODEL.add(o, index);
-            } else
+            } else {
                 addedAt = DATA_MODEL.add(o);
+            }
         }
 
         // if it was added...
