@@ -791,6 +791,11 @@ public final class GUIMediator {
         getBTDownloadMediator().openTorrentURI(uri, partialDownload, null);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
+    
+    public final void openHttpURI(String uri, String title, String saveFileAs) {
+        getBTDownloadMediator().openHttpURI(uri, title, saveFileAs);
+        setWindow(GUIMediator.Tabs.SEARCH);
+    }
 
     /**
      * Determines whether or not the PlaylistMediator is being used this

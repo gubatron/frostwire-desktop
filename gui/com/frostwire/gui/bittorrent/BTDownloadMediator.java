@@ -982,4 +982,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
         return d.getUpload();
     }
+
+    public void openHttpURI(String uri, String title, String saveFileAs) {
+        // TODO Auto-generated method stub
+    }
 }

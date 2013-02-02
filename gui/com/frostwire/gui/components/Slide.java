@@ -12,18 +12,36 @@ public class Slide {
     /** Download via HTTP */
     public static final int  SLIDE_DOWNLOAD_METHOD_HTTP = 1;
 
-    public Slide() {
-        
-    }
-    
-	public Slide(String imgSrc, String clickURL, long durationMilli) {
-		
-	}
-	
+	/**
+	 * 
+	 * @param imgSrc - slide overlay image url
+	 * @param clickURL - url where to take user on click (optional)
+	 * @param durationInMilliseconds - for how long to show the overlay before autoswitching
+	 * @param torrentURL - .torrent file (optional)
+	 * @param httpDownloadURL - an http url where to download the file from (check downloadMethod on how to procede)
+	 * @param lang - language code in case you want to filter slides by language
+	 * @param OS - comma separated os names (windows,mac,linux,android)
+	 * @param theTitle - the title of this download (useful for download manager and human presentation)
+	 * @param theSize - size in bytes of this download
+	 * @param downloadMethod - what to do with the slide.
+	 * @param md5hash - optional, string with md5 hash of the finished http download
+	 * @param saveAs - optional, name of the file if downloaded via http
+	 * @param executeWhenDone - should the finished http download be executed
+	 * @param executionParameters - parameters to pass to executable download
+	 * @param unzipWhenDone - should the http download be unzipped
+	 * @param unzipAndDeleteWhenDone - should the http download be unzipped and should we clean up the .zip
+	 * @param excludeTheseVersions - comma separated versions that are not supposed to see this slide.
+     * @param audioPreviewURL - HTTP URL of audio file so user can preview before download.
+     * @param videoPreviewURL - HTTP URL of video file (youtube maybe) so user can preview promo.
+	 * @param facebookURL - optional, related Facebook page url
+	 * @param twitterURL - optional, related Twitter page url
+	 * @param gPlusURL - optional, related Google Plus page url
+	 */
 	public Slide(String imgSrc, 
 	             String clickURL, 
 	             long durationInMilliseconds, 
 	             String torrentURL, 
+	             String httpDownloadUrl,
 	             String lang, 
 	             String OS, 
 	             String theTitle, 
@@ -35,11 +53,17 @@ public class Slide {
 	             String executionParameters,
 	             boolean unzipWhenDone, 
 	             boolean unzipAndDeleteWhenDone,
-	             String excludeTheseVersions) {
+	             String excludeTheseVersions,
+	             String audioPreviewURL,
+	             String videoPreviewURL,
+	             String facebookURL,
+	             String twitterURL,
+	             String gPlusURL) {
 		imageSrc = imgSrc;
 		url = clickURL;
 		duration = durationInMilliseconds;
 		torrent = torrentURL;
+		httpDownloadURL = httpDownloadUrl;
 	    language = lang;
 	    os = OS;
 	    title = theTitle;
@@ -52,9 +76,18 @@ public class Slide {
 		unzip = unzipWhenDone;
 		unzipAndDelete = unzipAndDeleteWhenDone;
 		excludedVersions = excludeTheseVersions;
+		audioURL = audioPreviewURL;
+		videoURL = videoPreviewURL;
+		facebook = facebookURL;
+		twitter = twitterURL;
+		gplus = gPlusURL;
 	}
 		
-	/**
+	public Slide(String imageSrc, String clickURL, int durationInMilli) {
+        this(imageSrc,clickURL,durationInMilli,null,null,null,null,null,0,SLIDE_DOWNLOAD_METHOD_OPEN_URL,null,null,false,null,false,false,null,null,null,null,null,null);
+    }
+
+    /**
 	 * http address where to go if user clicks on this slide
 	 */
 	public String url;
@@ -63,6 +96,11 @@ public class Slide {
 	 * url of torrent file that should be opened if user clicks on this slide
 	 */
 	public String torrent;
+	
+	/**
+	 * 
+	 */
+	public String httpDownloadURL;
 	
 	/**
 	 * url of image that will be displayed on this slide
@@ -88,6 +126,7 @@ public class Slide {
 	 * windows
 	 * mac
 	 * linux
+	 * android
 	 */
 	public String os;
 	
@@ -126,4 +165,21 @@ public class Slide {
 
     /** Comma separated list of versions that should not use this */
     public String excludedVersions;
+    
+    /** audio file url so user can play preview/promotional audio for promo. */
+    public String audioURL;
+
+    /** video file url so frostwire player can be opened, could be a youtube url, player
+     * should default to high quality playback */
+    public String videoURL;
+
+    /** Facebook page associated with slide */
+    public String facebook;
+
+    /** Twitter page associated with slide */
+    public String twitter;
+
+    /** Google Plus page associated with slide */
+    public String gplus;
+
 }
