@@ -18,6 +18,8 @@
 
 package com.limegroup.gnutella.gui.themes;
 
+import java.awt.Graphics;
+
 import javax.swing.JComponent;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -58,5 +60,17 @@ public class SkinProgressBarUI extends SubstanceProgressBarUI {
             displayedValue = currValue;
             progressBar.repaint();
         }
+    }
+    
+    @Override
+    public void paintDeterminate(Graphics g, JComponent c) {
+
+    	// fix inner substance issue related to java 7
+    	int barRectHeight = progressBar.getHeight() - 2 * margin;
+    	if (barRectHeight <= 0) {
+    		return;
+    	}
+
+    	super.paintDeterminate(g, c);
     }
 }
