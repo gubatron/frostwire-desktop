@@ -1,5 +1,7 @@
 frostwire (5.5.3) stable; urgency=high
   * New Feature: extract audio (.m4a) from (.mp4) videos on right click.
+  * Upgrade: Default save folder for cloud downloads is updated without restarting.
+  * Bug fix: if default save folder is changed it's now part of library scanned folders.
   * Bug fix: smart search engine wasn't notifying when it was done if there were no results.
  -- FrostWire Team <contact@frostwire.com>  Thu, 24 Jan 2013 21:46:06 -0500
 	
