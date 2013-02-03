@@ -163,4 +163,9 @@ public final class OptionsPaneManager {
 		MAIN_PANEL.add(pane.getContainer(), pane.getName());
 		OPTIONS_PANE_LIST.add(pane);
 	}
+
+    public void reinitPane(String paneKey) {
+        OptionsPane optionsPane = panesByKey.get(paneKey);
+        optionsPane.initOptions();
+    }
 }

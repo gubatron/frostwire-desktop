@@ -203,6 +203,10 @@ public final class OptionsMediator implements ThemeObserver {
         _constructor = new OptionsConstructor(_treeManager, 
                                               _paneManager);
     }
+    
+    public void reinitPane(String paneKey) {
+        _paneManager.reinitPane(paneKey);
+    }
 }
 
 

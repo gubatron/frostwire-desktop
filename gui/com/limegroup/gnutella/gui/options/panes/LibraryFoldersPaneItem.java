@@ -155,6 +155,7 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
         	        if (f.equals(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue())) {
         	            LibrarySettings.DIRECTORIES_TO_INCLUDE.add(f);
         	        } else {
+        	            System.out.println("Not including " + f.getAbsolutePath());
         	            LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.add(f);
         	        }
 	        }
@@ -177,6 +178,10 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
 	    initialCopy.addAll(LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
 	    
 	    for (File folderToUnshare : initialCopy) {
+	        if (SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().equals(folderToUnshare)) {
+	            continue;
+	        }
+	        System.out.println("Deleting from share table: " + folderToUnshare.getAbsolutePath());
 	        Librarian.instance().deleteFolderFilesFromShareTable(folderToUnshare.getAbsolutePath());
 	    }
 	    
