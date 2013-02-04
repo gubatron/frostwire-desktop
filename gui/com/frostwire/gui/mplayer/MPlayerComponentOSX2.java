@@ -293,13 +293,20 @@ public class MPlayerComponentOSX2 extends Canvas implements MPlayerComponent, Me
     }
 
     protected String getImagesPath() {
-        String imagesPath;
-        String resourcesFolder = new File(FrostWireUtils.getFrostWireJarPath()).getParentFile().getParent() + File.separator + "Contents/Resources/";
         boolean isRelease = !FrostWireUtils.getFrostWireJarPath().contains("frostwire-desktop");
+        return (isRelease) ? getReleaseImagesPath() : "components/resources/src/main/resources/org/limewire/gui/images/";
+    }
 
-        imagesPath = (isRelease) ? resourcesFolder : "components/resources/src/main/resources/org/limewire/gui/images/";
+    private String getReleaseImagesPath() {
+        String javaHome = System.getProperty("java.home");
+        File f = new File(javaHome).getAbsoluteFile();
+        f = f.getParentFile(); // Contents
+        f = f.getParentFile(); // jre
+        f = f.getParentFile(); // PlugIns
+        f = f.getParentFile(); // Contents
+        f = new File(f, "Resources");
 
-        return imagesPath;
+        return f.getAbsolutePath() + File.separator;
     }
 
     private native long createNSView(String imagesPath);
