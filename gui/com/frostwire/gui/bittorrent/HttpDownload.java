@@ -25,6 +25,7 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.frostwire.gui.components.Slide;
 import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.HttpClientType;
 import com.limegroup.gnutella.gui.I18n;
@@ -34,7 +35,7 @@ import com.limegroup.gnutella.gui.I18n;
  * @author aldenml
  *
  */
-public class HttpDownload implements BTDownload {
+public class HttpDownload implements BTDownload, HttpClientListener {
 
     private static final String STATE_DOWNLOADING = I18n.tr("Downloading");
     private static final String STATE_ERROR = I18n.tr("Error");
@@ -49,25 +50,36 @@ public class HttpDownload implements BTDownload {
     private final String md5; //optional
     
     /** If false it should delete any temporary data and start from the beginning. */
-    private boolean resume;
-    private boolean deleteDataWhenRemove;
-    
+    private final boolean resume;
+    private final boolean deleteDataWhenCancelled;
 
+    private long downloadedBytes;
     private boolean started;
     private boolean finished;
 
     
     /** Create an HttpDownload out of a promotional Slide */
     public HttpDownload(Slide slide) {
-        this(slide.url, slide.title, slide.size, slide.md5);
+        this(slide.url, slide.title, slide.size, slide.md5, true, true);
     }
     
-    public HttpDownload(String theURL, String theTitle, long fileSize, String md5hash) {
+    public HttpDownload(String theURL, 
+                        String theTitle, 
+                        long fileSize, 
+                        String md5hash, 
+                        boolean shouldResume,
+                        boolean deleteFileWhenTransferCancelled) {
         url = theURL;
         title = theTitle;
         size = fileSize;
         md5 = md5hash;
+        resume = shouldResume;
+        deleteDataWhenCancelled = deleteFileWhenTransferCancelled;
+        
+        downloadedBytes = 0;
         started = false;
+        finished = false;
+        
         start();
     }
 
@@ -121,7 +133,7 @@ public class HttpDownload implements BTDownload {
     public void remove() {
         //TODO
         pause();
-        if (deleteDataWhenRemove) {
+        if (deleteDataWhenCancelled) {
             //link.deleteFile(true, true);
         }
     }
@@ -223,17 +235,8 @@ public class HttpDownload implements BTDownload {
     }
 
     @Override
-    public void setDeleteTorrentWhenRemove(boolean deleteTorrentWhenRemove) {
-    }
-
-    @Override
-    public boolean isDeleteDataWhenRemove() {
-        return deleteDataWhenRemove;
-    }
-
-    @Override
-    public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove) {
-        this.deleteDataWhenRemove = deleteDataWhenRemove;
+    public boolean isDeleteDataWhenCancelled() {
+        return deleteDataWhenCancelled;
     }
 
     @Override
@@ -268,8 +271,36 @@ public class HttpDownload implements BTDownload {
     }
 
     private void start() {
+        if (started) {
+            //can't start what's already been started.
+            return;
+        }
+        
         HttpClient httpClient = HttpClientFactory.newInstance(HttpClientType.PureJava);
-        //start the download
+        httpClient.setListener(this);
+        httpClient.save(url, file, resume)
+    }
+
+    @Override
+    public void onError(HttpClient client, Exception e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void onData(HttpClient client, byte[] buffer, int offset, int length) {
         //
+    }
+
+    @Override
+    public void onComplete(HttpClient client) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void onCancel(HttpClient client) {
+        // TODO Auto-generated method stub
+        
     }
 }
