@@ -74,7 +74,11 @@ public interface BTDownload {
     
     public boolean isDeleteTorrentWhenRemove();
     
-    public boolean isDeleteDataWhenCancelled();
+    public void setDeleteTorrentWhenRemove(boolean deleteTorrentWhenRemove);
+    
+    public boolean isDeleteDataWhenRemove();
+    
+    public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove);
     
     public String getHash();
 
