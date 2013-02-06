@@ -19,66 +19,95 @@
 package com.frostwire.gui.bittorrent;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.limewire.util.FilenameUtils;
 
-import com.frostwire.gui.components.Slide;
+import com.frostwire.util.DigestUtils;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.HttpClientType;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * @author gubatron
  * @author aldenml
  *
  */
-public class HttpDownload implements BTDownload, HttpClientListener {
+public class HttpDownload implements BTDownload {
+    
+    /** TODO: Make this configurable */
+    private static final Executor HTTP_THREAD_POOL = Executors.newFixedThreadPool(6); 
 
     private static final String STATE_DOWNLOADING = I18n.tr("Downloading");
     private static final String STATE_ERROR = I18n.tr("Error");
-    private static final String STATE_STOPPED = I18n.tr("Stopped");
+    private static final String STATE_ERROR_MD5 = I18n.tr("Error - corrupted file");
+    private static final String STATE_ERROR_MOVING_INCOMPLETE = I18n.tr("Error - can't save");
+    private static final String STATE_PAUSING = I18n.tr("Pausing");
+    private static final String STATE_PAUSED = I18n.tr("Paused");
+    private static final String STATE_CANCELING = I18n.tr("Canceling");
+    private static final String STATE_CANCELED = I18n.tr("Canceled");
     private static final String STATE_WAITING = I18n.tr("Waiting");
     private static final String STATE_CHECKING = I18n.tr("Checking");
     private static final String STATE_FINISHED = I18n.tr("Finished");
+    
+    private static final int SPEED_AVERAGE_CALCULATION_INTERVAL_MILLISECONDS = 1000;
 
     private final String url;
     private final String title;
-    private final long size;
+    private final String saveAs;
+    private final File completeFile;
+    private final File incompleteFile;
     private final String md5; //optional
+    private final HttpClient httpClient;
+    private final HttpClientListener httpClientListener;
+    private final Date dateCreated;
     
     /** If false it should delete any temporary data and start from the beginning. */
     private final boolean resume;
     private final boolean deleteDataWhenCancelled;
 
-    private long downloadedBytes;
-    private boolean started;
-    private boolean finished;
+    private long size;
+    private long bytesReceived;
+    private String state;
+    private long averageSpeed; // in bytes
 
-    
-    /** Create an HttpDownload out of a promotional Slide */
-    public HttpDownload(Slide slide) {
-        this(slide.url, slide.title, slide.size, slide.md5, true, true);
-    }
-    
+    // variables to keep the download rate of file transfer
+    private long speedMarkTimestamp;
+    private long totalReceivedSinceLastSpeedStamp;
+       
     public HttpDownload(String theURL, 
-                        String theTitle, 
+                        String theTitle,
+                        String saveFileAs,
                         long fileSize, 
                         String md5hash, 
                         boolean shouldResume,
                         boolean deleteFileWhenTransferCancelled) {
         url = theURL;
         title = theTitle;
+        saveAs = saveFileAs;
+        
+        completeFile = buildFile(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), saveAs);
+        incompleteFile = buildIncompleteFile(completeFile);
+
         size = fileSize;
         md5 = md5hash;
         resume = shouldResume;
         deleteDataWhenCancelled = deleteFileWhenTransferCancelled;
         
-        downloadedBytes = 0;
-        started = false;
-        finished = false;
+        bytesReceived = 0;
+        dateCreated = new Date();
+
+        httpClientListener = new HttpDownloadListenerImpl();
+        
+        httpClient = HttpClientFactory.newInstance(HttpClientType.PureJava);
+        httpClient.setListener(httpClientListener);
         
         start();
     }
@@ -100,53 +129,48 @@ public class HttpDownload implements BTDownload, HttpClientListener {
 
     @Override
     public boolean isResumable() {
-        //TODO: This is up to the http client to tell
-        //might be based on knowing what the expected file size is or not.
-        //this also depends on the state of the transfer (finished, cancelled)
-        return true;
+        return size > 0;
     }
 
     @Override
     public boolean isPausable() {
-        //TODO
-        return true;
+        return size > 0;
     }
 
     @Override
     public boolean isCompleted() {
-        //TODO
-        return false;
+        return isComplete();
     }
 
     @Override
     public int getState() {
-        //TODO
-        //if (link.getLinkStatus().hasStatus(LinkStatus.DOWNLOADINTERFACE_IN_PROGRESS)) {
-            //return DownloadManager.STATE_DOWNLOADING;
-        //}
+        if (state == STATE_DOWNLOADING) {
+            return DownloadManager.STATE_DOWNLOADING;
+        }
 
-        //return DownloadManager.STATE_STOPPED;
-        return 0;
+        return DownloadManager.STATE_STOPPED;
     }
 
     @Override
     public void remove() {
-        //TODO
-        pause();
-        if (deleteDataWhenCancelled) {
-            //link.deleteFile(true, true);
-        }
+        state = STATE_CANCELING;
+        httpClient.cancel();
+    }
+
+    private void cleanup() {
+        cleanupIncomplete();
+        cleanupComplete();
     }
 
     @Override
     public void pause() {
-        //TODO tells http client to stop, don't remove.
+        state = STATE_PAUSING;
+        httpClient.cancel();
     }
 
     @Override
     public File getSaveLocation() {
-        //TODO
-        return null;
+        return completeFile;
     }
 
     @Override
@@ -156,41 +180,23 @@ public class HttpDownload implements BTDownload, HttpClientListener {
 
     @Override
     public int getProgress() {
-        //TODO
-        //if (link.getDownloadSize() == 0) {
-        //    return 0;
-        // }
-        //return (int) ((link.getDownloadCurrent() * 100) / link.getDownloadSize());
-        return 0;
+        if (size <= 0) {
+            return -1;
+        }
+        
+        int progress =  (int) ((bytesReceived * 100) / size);
+        
+        return Math.min(100,progress);
     }
 
     @Override
     public String getStateString() {
-        //TODO
-        return null;
-        /**
-        if (link.getLinkStatus().hasStatus(LinkStatus.DOWNLOADINTERFACE_IN_PROGRESS)) {
-            started = true;
-            return STATE_DOWNLOADING;
-        } else if (link.getLinkStatus().isFailed()) {
-            return STATE_ERROR;
-        } else if (link.getLinkStatus().hasStatus(LinkStatus.FINISHED)) {
-            finished = true;
-            return STATE_FINISHED;
-        }
-
-        if (!started) {
-            return STATE_WAITING;
-        }
-        return STATE_STOPPED;
-        */
+        return state;
     }
 
     @Override
     public long getBytesReceived() {
-        //TODO, should be returned by the http client, don't search for this on the file system.
-        //return link.getDownloadCurrent();
-        return 0;
+        return bytesReceived;
     }
 
     @Override
@@ -200,8 +206,7 @@ public class HttpDownload implements BTDownload, HttpClientListener {
 
     @Override
     public double getDownloadSpeed() {
-        //TODO
-        return 0;
+        return averageSpeed / 1000;
     }
 
     @Override
@@ -211,7 +216,12 @@ public class HttpDownload implements BTDownload, HttpClientListener {
 
     @Override
     public long getETA() {
-        return 0;
+        if (size > 0) {
+            long speed = averageSpeed;
+            return speed > 0 ? (size - getBytesReceived()) / speed : -1;
+        } else {
+            return -1;
+        }
     }
 
     @Override
@@ -235,13 +245,13 @@ public class HttpDownload implements BTDownload, HttpClientListener {
     }
 
     @Override
-    public boolean isDeleteDataWhenCancelled() {
+    public boolean isDeleteDataWhenRemove() {
         return deleteDataWhenCancelled;
     }
 
     @Override
     public String getHash() {
-        return null;
+        return md5;
     }
 
     @Override
@@ -266,41 +276,176 @@ public class HttpDownload implements BTDownload, HttpClientListener {
 
     @Override
     public Date getDateCreated() {
-        //TODO
-        return null;
+        return dateCreated;
     }
 
     private void start() {
-        if (started) {
-            //can't start what's already been started.
-            return;
+        state = STATE_WAITING;
+        
+        HTTP_THREAD_POOL.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (resume) {
+                        if (incompleteFile.exists()) {
+                            bytesReceived = incompleteFile.length();
+                        }
+                    }
+                    
+                    httpClient.save(url, incompleteFile, resume);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    httpClientListener.onError(httpClient, e);
+                }
+            }
+        });
+    }
+
+    private void cleanupFile(File f) {
+        if (f.exists()) {
+            boolean delete = f.delete();
+            if (!delete) {
+                f.deleteOnExit();
+            }
+        }
+    }
+    
+    private void cleanupIncomplete() {
+        cleanupFile(incompleteFile);
+    }
+    
+    private void cleanupComplete() {
+        cleanupFile(completeFile);
+    }
+
+    private boolean checkMD5() {
+        boolean result = false;
+        if (md5 == null) {
+            result = true;
+        } else {
+            try {
+                state = STATE_CHECKING;
+                result = DigestUtils.checkMD5(incompleteFile, md5);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         
-        HttpClient httpClient = HttpClientFactory.newInstance(HttpClientType.PureJava);
-        httpClient.setListener(this);
-        httpClient.save(url, file, resume)
+        return result;
+    }
+    
+    /** files are saved with (1), (2),... if there's one with the same name already. */
+    private static File buildFile(File savePath, String name) {
+        String baseName = FilenameUtils.getBaseName(name);
+        String ext = FilenameUtils.getExtension(name);
+
+        File f = new File(savePath, name);
+        int i = 1;
+        while (f.exists() && i < Integer.MAX_VALUE) {
+            f = new File(savePath, baseName + " (" + i + ")." + ext);
+            i++;
+        }
+        return f;
     }
 
-    @Override
-    public void onError(HttpClient client, Exception e) {
-        // TODO Auto-generated method stub
+    private static File getIncompleteFolder() {
+        File incompleteFolder = new File(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getParentFile(),"Incomplete");
+        if (!incompleteFolder.exists()) {
+            incompleteFolder.mkdirs();
+        }
+        return incompleteFolder;
+    }
+    
+    
+    private static File buildIncompleteFile(File file) {
+        String prefix = FilenameUtils.removeExtension(file.getAbsolutePath());
+        String ext = FilenameUtils.getExtension(file.getAbsolutePath());
+        return new File(getIncompleteFolder(),prefix + ".incomplete." + ext);
+    }
+    
+    public boolean isComplete() {
+        if (bytesReceived > 0) {
+            return bytesReceived == size || state == STATE_FINISHED;
+        } else {
+            return false;
+        }
+    }
+    
+    private void updateAverageDownloadSpeed() {
+        long now = System.currentTimeMillis();
         
+        if (isComplete()) {
+            averageSpeed = 0;
+            speedMarkTimestamp = now;
+            totalReceivedSinceLastSpeedStamp = 0;
+        } else if (now - speedMarkTimestamp > SPEED_AVERAGE_CALCULATION_INTERVAL_MILLISECONDS) {
+            averageSpeed = ((bytesReceived - totalReceivedSinceLastSpeedStamp) * 1000) / (now - speedMarkTimestamp);
+            speedMarkTimestamp = now;
+            totalReceivedSinceLastSpeedStamp = bytesReceived;
+        }
+    }
+    
+    private final class HttpDownloadListenerImpl implements HttpClientListener {
+        @Override
+        public void onError(HttpClient client, Exception e) {
+            state = STATE_ERROR;
+            cleanup();
+        }
+
+        @Override
+        public void onData(HttpClient client, byte[] buffer, int offset, int length) {
+            bytesReceived += length;
+            updateAverageDownloadSpeed();
+            state = STATE_DOWNLOADING;
+        }
+
+        @Override
+        public void onComplete(HttpClient client) {
+            if (!checkMD5()) {
+                state = STATE_ERROR_MD5;
+                cleanupIncomplete();
+            } else {
+                boolean renameTo = incompleteFile.renameTo(completeFile);
+                if (!renameTo) {
+                    state = STATE_ERROR_MOVING_INCOMPLETE;
+                } else {
+                    state = STATE_FINISHED;
+                    cleanupIncomplete();
+                    HttpDownload.this.onComplete();
+                }
+            }        
+        }
+
+        @Override
+        public void onCancel(HttpClient client) {
+            if (state == STATE_CANCELING) {
+                if (deleteDataWhenCancelled) {
+                    cleanup();
+                }
+                state = STATE_CANCELED;
+            } else if (state == STATE_PAUSING) {
+                state = STATE_PAUSED;
+            }
+        }
+
+        @Override
+        public void onContentLength(long contentLength) {
+            size = contentLength;
+        }       
+    }
+    
+    /** Meant to be overwritten by children classes that want to do something special
+     * after the download is completed. */
+    protected void onComplete() {
+
     }
 
     @Override
-    public void onData(HttpClient client, byte[] buffer, int offset, int length) {
-        //
+    public void setDeleteTorrentWhenRemove(boolean deleteTorrentWhenRemove) {
     }
 
     @Override
-    public void onComplete(HttpClient client) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove) {
 
-    @Override
-    public void onCancel(HttpClient client) {
-        // TODO Auto-generated method stub
-        
     }
 }

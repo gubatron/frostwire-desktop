@@ -351,8 +351,16 @@ public class ProgressBarRenderer extends LimeJProgressBar implements TableCellRe
                     regInsets.bottom, regInsets.right));
         }
 
-        setValue(Math.min(100, getBarStatus(value)));
-        setString(getDescription(value));
+        int barStatus = getBarStatus(value);
+        if (barStatus == -1) {
+            setIndeterminate(true);
+            setString("");
+        } else {
+            setIndeterminate(false);
+            setValue(Math.min(100, barStatus));
+            setString(getDescription(value));
+        }
+        
         this.setOpaque(false);
         this.setEnabled(table.isEnabled());
         return this;

@@ -27,6 +27,9 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * A pure java based HTTP client with resume capabilities.
  * @author gubatron
@@ -35,9 +38,13 @@ import java.net.URLConnection;
  */
 final class FWHttpClient implements HttpClient {
 
+    private static final Log LOG = LogFactory.getLog(FWHttpClient.class);
+
     private static final int DEFAULT_TIMEOUT = 10000;
     private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();
     private HttpClientListener listener;
+
+    private boolean cancel;
 
     public String get(String url) {
         return get(url, DEFAULT_TIMEOUT, DEFAULT_USER_AGENT);
@@ -85,7 +92,16 @@ final class FWHttpClient implements HttpClient {
         }
     }
 
+    private String buildRange(int rangeStart, int rangeLength) {
+        String prefix = "bytes=" + rangeStart + "-";
+        return prefix + ((rangeLength > -1) ? (rangeStart + rangeLength) : "");
+    }
+
     private void get(String url, OutputStream out, int timeout, String userAgent, int rangeStart) throws IOException {
+        get(url, out, timeout, userAgent, rangeStart, -1);
+    }
+
+    private void get(String url, OutputStream out, int timeout, String userAgent, int rangeStart, int rangeLength) throws IOException {
         URL u = new URL(url);
         URLConnection conn = u.openConnection();
         conn.setConnectTimeout(timeout);
@@ -93,12 +109,16 @@ final class FWHttpClient implements HttpClient {
         conn.setRequestProperty("User-Agent", userAgent);
 
         if (rangeStart > 0) {
-            conn.setRequestProperty("Range", "bytes=" + rangeStart + "-");
+            conn.setRequestProperty("Range", buildRange(rangeStart, rangeLength));
         }
 
         InputStream in = conn.getInputStream();
 
-        long expectedFileSize = Long.parseLong(conn.getHeaderField("Content-Length"));
+        long expectedFileSize = getContentLength(conn);
+
+        if (expectedFileSize > -1) {
+            onContentLength(expectedFileSize);
+        }
 
         if (rangeStart > 0 && rangeStart > expectedFileSize) {
             HttpRangeOutOfBoundsException httpRangeOutOfBoundsException = new HttpRangeOutOfBoundsException(rangeStart, expectedFileSize);
@@ -115,24 +135,88 @@ final class FWHttpClient implements HttpClient {
         try {
             byte[] b = new byte[4096];
             int n = 0;
-            while ((n = in.read(b, 0, b.length)) != -1) {
-                out.write(b, 0, n);
-                try {
-                    listener.onData(this, b, 0, n);
-                } catch (Exception e) {
-                    /** just protecting the transfer from stupid code on the listener */
+            while (!cancel && (n = in.read(b, 0, b.length)) != -1) {
+                if (!cancel) {
+                    out.write(b, 0, n);
+                    onData(b, 0, n);
                 }
             }
-        } finally {
-            try {
-                out.close();
-            } catch (Throwable e) {
-                // ignore   
+            
+            closeQuietly(out);
+            
+            if (cancel) {
+                onCancel();
+            } else {
+                onComplete();
             }
+        } catch (Exception e) {
+            onError(e);
+        } finally {
+            closeQuietly(in);
+        }
+    }
+
+    private void onCancel() {
+        if (getListener() != null) {
             try {
-                in.close();
-            } catch (Throwable e) {
-                // ignore   
+                getListener().onCancel(this);
+            } catch (Exception e) {
+                LOG.warn(e.getMessage(), e);
+            }
+        }
+    }
+
+    private void onContentLength(long contentLength) {
+        if (getListener() != null) {
+            try {
+                getListener().onContentLength(contentLength);
+            } catch (Exception e) {
+                LOG.warn(e.getMessage(), e);
+            }
+        }
+    }
+
+    private long getContentLength(URLConnection conn) {
+        long length = -1;
+        String headerValue = conn.getHeaderField("Content-Length");
+
+        if (headerValue != null) {
+            try {
+                length = Long.parseLong(headerValue);
+            } catch (NumberFormatException e) {
+                LOG.warn(e.getMessage(), e);
+            }
+        }
+
+        return length;
+    }
+
+    private void onData(byte[] b, int i, int n) {
+        if (getListener() != null) {
+            try {
+                getListener().onData(this, b, 0, n);
+            } catch (Exception e) {
+                LOG.warn(e.getMessage(), e);
+            }
+        }
+    }
+
+    protected void onError(Exception e) {
+        if (getListener() != null) {
+            try {
+                getListener().onError(this, e);
+            } catch (Exception e2) {
+                LOG.warn(e2.getMessage(), e2);
+            }
+        }
+    }
+
+    protected void onComplete() {
+        if (getListener() != null) {
+            try {
+                getListener().onComplete(this);
+            } catch (Exception e) {
+                LOG.warn(e.getMessage(), e);
             }
         }
     }
@@ -190,7 +274,6 @@ final class FWHttpClient implements HttpClient {
 
     @Override
     public void cancel() {
-
-        listener.onCancel(this);
+        cancel = true;
     }
 }

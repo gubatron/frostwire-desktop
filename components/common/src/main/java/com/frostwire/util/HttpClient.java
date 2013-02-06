@@ -51,6 +51,8 @@ public interface HttpClient {
         public void onComplete(HttpClient client);
         
         public void onCancel(HttpClient client);
+
+        public void onContentLength(long contentLength);
     }
 
     public static class HttpRangeException extends IOException {
