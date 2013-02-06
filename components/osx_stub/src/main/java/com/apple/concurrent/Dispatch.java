@@ -33,4 +33,8 @@ public class Dispatch {
     public Executor getBlockingMainQueueExecutor() {
         return null;
     }
+    
+    public Executor getNonBlockingMainQueueExecutor() {
+        return null;
+    }
 }
