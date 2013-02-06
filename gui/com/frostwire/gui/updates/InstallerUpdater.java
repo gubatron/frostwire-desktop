@@ -18,20 +18,16 @@
 
 package com.frostwire.gui.updates;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.security.MessageDigest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,11 +48,12 @@ import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.AzureusStarter;
-import com.frostwire.util.HttpClient;
-import com.frostwire.util.HttpClientFactory;
-import com.frostwire.util.HttpClient.HttpRangeException;
-import com.frostwire.util.HttpClientType;
 import com.frostwire.HttpFetcher;
+import com.frostwire.util.DigestUtils;
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClient.HttpRangeException;
+import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.HttpClientType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.UpdateSettings;
@@ -312,7 +309,8 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
         _executableFile = f;
 
         try {
-            return checkMD5(f, _updateMessage.getRemoteMD5());
+            lastMD5 = DigestUtils.getMD5(f);
+            return DigestUtils.compareMD5(lastMD5, _updateMessage.getRemoteMD5());
         } catch (Throwable e) {
             LOG.error("Error checking update MD5", e);
             return false;
@@ -509,61 +507,6 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
     public static final String getLastMD5() {
         return lastMD5;
-    }
-
-    /**
-     * Returns true if the MD5 of the file corresponds to the given MD5 string.
-     * It works with lowercase or uppercase, you don't need to worry about that.
-     * 
-     * @param f
-     * @param expectedMD5
-     * @return
-     * @throws Exception
-     */
-    public final static boolean checkMD5(File f, String expectedMD5) throws Exception {
-        if (expectedMD5 == null) {
-            throw new Exception("Expected MD5 is null");
-        }
-
-        if (expectedMD5.length() != 32) {
-            throw new Exception("Invalid Expected MD5, not 32 chars long");
-        }
-
-        String md5 = getMD5(f).trim();
-
-        lastMD5 = md5;
-
-        return md5.equalsIgnoreCase(expectedMD5.trim());
-    }
-
-    public final static String getMD5(File f) throws Exception {
-        MessageDigest m = MessageDigest.getInstance("MD5");
-
-        //We read the file in buffers so we don't
-        //eat all the memory in case we have a huge plugin.
-        byte[] buf = new byte[65536];
-        int num_read;
-
-        InputStream in = new BufferedInputStream(new FileInputStream(f));
-
-        while ((num_read = in.read(buf)) != -1) {
-            m.update(buf, 0, num_read);
-        }
-
-        in.close();
-
-        String result = new BigInteger(1, m.digest()).toString(16);
-
-        //pad with zeros if until it's 32 chars long.
-        if (result.length() < 32) {
-            int paddingSize = 32 - result.length();
-            for (int i = 0; i < paddingSize; i++) {
-                result = "0" + result;
-            }
-        }
-
-        System.out.println("MD5: " + result);
-        return result;
     }
 
     public final static void downloadTorrentFile(String torrentURL, File saveLocation) throws IOException, URISyntaxException {
