@@ -27,6 +27,9 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -37,6 +40,15 @@ import org.apache.commons.logging.LogFactory;
  *
  */
 final class FWHttpClient implements HttpClient {
+
+    static {
+        sun.net.www.protocol.https.HttpsURLConnectionImpl.setDefaultHostnameVerifier(new HostnameVerifier() {
+            @Override
+            public boolean verify(String arg0, SSLSession arg1) {
+                return true;
+            }
+        });
+    }
 
     private static final Log LOG = LogFactory.getLog(FWHttpClient.class);
 
@@ -104,6 +116,7 @@ final class FWHttpClient implements HttpClient {
     private void get(String url, OutputStream out, int timeout, String userAgent, int rangeStart, int rangeLength) throws IOException {
         URL u = new URL(url);
         URLConnection conn = u.openConnection();
+
         conn.setConnectTimeout(timeout);
         conn.setReadTimeout(timeout);
         conn.setRequestProperty("User-Agent", userAgent);
@@ -141,9 +154,9 @@ final class FWHttpClient implements HttpClient {
                     onData(b, 0, n);
                 }
             }
-            
+
             closeQuietly(out);
-            
+
             if (cancel) {
                 onCancel();
             } else {

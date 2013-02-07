@@ -185,13 +185,19 @@ public class SlideshowPanel extends JPanel {
                     }
 
                     Slide slide = _slides.get(actualSlideIndex);
-                    if (slide.url != null) {
+                    
+                    slide = getMockSlide();
+                    
+                    if (slide.httpDownloadURL != null) {
                         if (slide.method == Slide.SLIDE_DOWNLOAD_METHOD_HTTP) {
-                            //TODO: Starts an HTTP Download
-                        } else {
-                            GUIMediator.openURL(slide.url);
+                            GUIMediator.instance().openSlide(slide);
                         }
                     }
+                    
+                    if (slide.url != null) {
+                        GUIMediator.openURL(slide.url);
+                    }
+                    
                     if (slide.torrent != null) {
                         if (slide.torrent.toLowerCase().startsWith("http")) {
                             GUIMediator.instance().openTorrentURI(slide.torrent, false);
@@ -209,6 +215,32 @@ public class SlideshowPanel extends JPanel {
             _controlsContainer.add(new SlideshowPanelControls(this), BorderLayout.PAGE_END);
         }
 
+    }
+
+    protected Slide getMockSlide() {
+        
+        return new Slide("http://static.frostwire.com/images/overlays/overlay_android_interface.jpg", 
+                "http://www.bing.com", 
+                15000, 
+                null, 
+                "http://ia600604.us.archive.org/10/items/1959LaHuelgaDelFrigorificoLisandroDeLaTorre/1959.Huelga_Mataderos-Inedito.mov", 
+                "en", 
+                "windows,mac", 
+                "(1959) La Huelga del Frigorifico Lisandro De La Torre", 
+                795043968, 
+                Slide.SLIDE_DOWNLOAD_METHOD_HTTP, 
+                null, 
+                "1959.Huelga_Mataderos-Inedito.mov", 
+                true, 
+                null, 
+                false, 
+                false, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null);
     }
 
     private void startAnimation() {

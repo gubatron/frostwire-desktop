@@ -107,6 +107,10 @@ public final class Launcher {
 	 * @throws IOException if the url cannot be loaded do to an IO problem
 	 */
 	public static int openURL(String url) throws IOException {	   
+	    if (url == null) {
+	        return -1;
+	    }
+	    
 		if(OSUtils.isWindows()) {
 			return openURLWindows(url);
 		}	   

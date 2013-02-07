@@ -43,6 +43,7 @@ import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.TipsClient;
 import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleAudioFileAction;
+import com.frostwire.gui.components.Slide;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.player.MediaPlayer;
@@ -983,7 +984,13 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         return d.getUpload();
     }
 
-    public void openHttpURI(String uri, String title, String saveFileAs) {
-        // TODO Auto-generated method stub
+    public void openSlide(final Slide slide) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+           @Override
+            public void run() {
+               SlideDownload downloader = new SlideDownload(slide);
+               add(downloader);
+            } 
+        });
     }
 }

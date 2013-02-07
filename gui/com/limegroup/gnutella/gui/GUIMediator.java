@@ -68,6 +68,7 @@ import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.HideExitDialog;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.components.Slide;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
@@ -792,11 +793,6 @@ public final class GUIMediator {
         setWindow(GUIMediator.Tabs.SEARCH);
     }
     
-    public final void openHttpURI(String uri, String title, String saveFileAs) {
-        getBTDownloadMediator().openHttpURI(uri, title, saveFileAs);
-        setWindow(GUIMediator.Tabs.SEARCH);
-    }
-
     /**
      * Determines whether or not the PlaylistMediator is being used this
      * session.
@@ -1858,6 +1854,11 @@ public final class GUIMediator {
 
     public void openYouTubeItem(FilePackage filePackage) {
         getBTDownloadMediator().openYouTubeItem(filePackage);
+        setWindow(GUIMediator.Tabs.SEARCH);
+    }
+
+    public void openSlide(Slide slide) {
+        getBTDownloadMediator().openSlide(slide);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 }

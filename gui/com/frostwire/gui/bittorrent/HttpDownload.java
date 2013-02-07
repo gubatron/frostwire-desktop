@@ -358,7 +358,7 @@ public class HttpDownload implements BTDownload {
     
     
     private static File buildIncompleteFile(File file) {
-        String prefix = FilenameUtils.removeExtension(file.getAbsolutePath());
+        String prefix = FilenameUtils.getBaseName(file.getName());
         String ext = FilenameUtils.getExtension(file.getAbsolutePath());
         return new File(getIncompleteFolder(),prefix + ".incomplete." + ext);
     }
@@ -384,6 +384,7 @@ public class HttpDownload implements BTDownload {
             totalReceivedSinceLastSpeedStamp = bytesReceived;
         }
     }
+    
     
     private final class HttpDownloadListenerImpl implements HttpClientListener {
         @Override
