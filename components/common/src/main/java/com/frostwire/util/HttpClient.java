@@ -43,6 +43,8 @@ public interface HttpClient {
     public void save(String url, File file, boolean resume, int timeout, String userAgent) throws IOException;
 
     public void cancel();
+    
+    public boolean isCanceled();
 
     public interface HttpClientListener {
         public void onError(HttpClient client, Exception e);
@@ -97,4 +99,5 @@ public interface HttpClient {
             return responseCode;
         }
     }
+
 }

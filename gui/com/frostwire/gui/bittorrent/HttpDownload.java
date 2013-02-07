@@ -157,8 +157,10 @@ public class HttpDownload implements BTDownload {
 
     @Override
     public void remove() {
-        state = STATE_CANCELING;
-        httpClient.cancel();
+        if (state != STATE_FINISHED) {
+            state = STATE_CANCELING;
+            httpClient.cancel();
+        }
     }
 
     private void cleanup() {
@@ -350,6 +352,11 @@ public class HttpDownload implements BTDownload {
             @Override
             public void onProgress(int progressPercentage) {
                 md5CheckingProgress = progressPercentage;
+            }
+
+            @Override
+            public boolean stopDigesting() {
+                return httpClient.isCanceled();
             }
         });
     }

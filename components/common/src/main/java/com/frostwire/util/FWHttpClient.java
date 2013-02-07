@@ -59,7 +59,7 @@ final class FWHttpClient implements HttpClient {
     private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();
     private HttpClientListener listener;
 
-    private boolean cancel;
+    private boolean canceled;
 
     public String get(String url) {
         return get(url, DEFAULT_TIMEOUT, DEFAULT_USER_AGENT);
@@ -117,7 +117,7 @@ final class FWHttpClient implements HttpClient {
     }
 
     private void get(String url, OutputStream out, int timeout, String userAgent, int rangeStart, int rangeLength) throws IOException {
-        cancel = false;
+        canceled = false;
         URL u = new URL(url);
         URLConnection conn = (java.net.URLConnection) u.openConnection();
 
@@ -153,8 +153,8 @@ final class FWHttpClient implements HttpClient {
         try {
             byte[] b = new byte[4096];
             int n = 0;
-            while (!cancel && (n = in.read(b, 0, b.length)) != -1) {
-                if (!cancel) {
+            while (!canceled && (n = in.read(b, 0, b.length)) != -1) {
+                if (!canceled) {
                     out.write(b, 0, n);
                     onData(b, 0, n);
                 }
@@ -162,7 +162,7 @@ final class FWHttpClient implements HttpClient {
 
             closeQuietly(out);
 
-            if (cancel) {
+            if (canceled) {
                 onCancel();
             } else {
                 onComplete();
@@ -183,7 +183,6 @@ final class FWHttpClient implements HttpClient {
     }
 
     private void checkRangeSupport(int rangeStart, URLConnection conn, long expectedFileSize) throws HttpRangeOutOfBoundsException, RangeNotSupportedException {
-        int responseCode = getResponseCode(conn);
         
         if (rangeStart > 0 && rangeStart > expectedFileSize) {
             HttpRangeOutOfBoundsException httpRangeOutOfBoundsException = new HttpRangeOutOfBoundsException(rangeStart, expectedFileSize);
@@ -298,6 +297,11 @@ final class FWHttpClient implements HttpClient {
 
     @Override
     public void cancel() {
-        cancel = true;
+        canceled = true;
+    }
+    
+    @Override
+    public boolean isCanceled() {
+        return canceled;
     }
 }

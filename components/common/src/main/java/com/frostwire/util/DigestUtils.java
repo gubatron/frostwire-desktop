@@ -26,7 +26,7 @@ public class DigestUtils {
             return false;
         }
 
-        String md5 = getMD5(f, listener).trim();
+        String md5 = getMD5(f, listener);
         return compareMD5(md5, expectedMD5);
     }
 
@@ -65,7 +65,8 @@ public class DigestUtils {
 
             long total_read = 0;
             long file_size = f.length();
-            while ((num_read = in.read(buf)) != -1) {
+            boolean stopped = false;
+            while (!stopped && (num_read = in.read(buf)) != -1) {
                 total_read += num_read;
                 m.update(buf, 0, num_read);
 
@@ -75,22 +76,32 @@ public class DigestUtils {
                         listener.onProgress(progressPercentage);
                     } catch (Exception e) {
                     }
+                    
+                    if (listener.stopDigesting()) {
+                        stopped = true;
+                    }
                 }
             }
 
+            
             in.close();
 
-            String result = new BigInteger(1, m.digest()).toString(16);
-
-            //pad with zeros if until it's 32 chars long.
-            if (result.length() < 32) {
-                int paddingSize = 32 - result.length();
-                for (int i = 0; i < paddingSize; i++) {
-                    result = "0" + result;
+            if (!stopped) {
+                String result = new BigInteger(1, m.digest()).toString(16);
+    
+                //pad with zeros if until it's 32 chars long.
+                if (result.length() < 32) {
+                    int paddingSize = 32 - result.length();
+                    for (int i = 0; i < paddingSize; i++) {
+                        result = "0" + result;
+                    }
                 }
+                return result;
+            } else {
+                return null;
             }
 
-            return result;
+
         } catch (Exception e) {
             return null;
         }
@@ -98,5 +109,7 @@ public class DigestUtils {
 
     public interface DigestProgressListener {
         public void onProgress(int progressPercentage);
+
+        public boolean stopDigesting();
     }
 }
