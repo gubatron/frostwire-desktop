@@ -220,7 +220,7 @@ public class SlideshowPanel extends JPanel {
     protected Slide getMockSlide() {
         
         return new Slide("http://static.frostwire.com/images/overlays/overlay_android_interface.jpg", 
-                "http://www.bing.com", 
+                null,//"http://www.bing.com", 
                 15000, 
                 null, 
                 "http://ia600604.us.archive.org/10/items/1959LaHuelgaDelFrigorificoLisandroDeLaTorre/1959.Huelga_Mataderos-Inedito.mov", 
@@ -229,7 +229,7 @@ public class SlideshowPanel extends JPanel {
                 "(1959) La Huelga del Frigorifico Lisandro De La Torre", 
                 795043968, 
                 Slide.SLIDE_DOWNLOAD_METHOD_HTTP, 
-                null, 
+                "4ffc73a7ad8b3aaeecc7bbe1d9245f04", 
                 "1959.Huelga_Mataderos-Inedito.mov", 
                 true, 
                 null, 

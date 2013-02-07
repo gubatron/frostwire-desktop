@@ -19,7 +19,8 @@ package com.frostwire.util;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.util.List;
+import java.util.Map;
 
 /**
  * A pure java based HTTP client with resume capabilities.
@@ -30,9 +31,9 @@ import java.io.IOException;
 public interface HttpClient {
 
     public void setListener(HttpClientListener listener);
-    
+
     public HttpClientListener getListener();
-    
+
     public String get(String url);
 
     public String get(String url, int timeout, String userAgent);
@@ -40,19 +41,21 @@ public interface HttpClient {
     public void save(String url, File file, boolean resume) throws IOException;
 
     public void save(String url, File file, boolean resume, int timeout, String userAgent) throws IOException;
-    
+
     public void cancel();
-    
+
     public interface HttpClientListener {
         public void onError(HttpClient client, Exception e);
-        
+
         public void onData(HttpClient client, byte[] buffer, int offset, int length);
-        
+
         public void onComplete(HttpClient client);
-        
+
         public void onCancel(HttpClient client);
 
         public void onContentLength(long contentLength);
+
+        public void onHeaders(HttpClient httpClient, Map<String, List<String>> headerFields);
     }
 
     public static class HttpRangeException extends IOException {
@@ -74,12 +77,24 @@ public interface HttpClient {
     }
 
     public static final class HttpRangeOutOfBoundsException extends HttpRangeException {
-        
+
         private static final long serialVersionUID = -335661829606230147L;
 
         public HttpRangeOutOfBoundsException(int rangeStart, long expectedFileSize) {
             super("HttpRange Out of Bounds error: start=" + rangeStart + " expected file size=" + expectedFileSize);
         }
 
+    }
+
+    public static final class ResponseCodeNotSupportedException extends IOException {
+        private final int responseCode;
+
+        public ResponseCodeNotSupportedException(int code) {
+            responseCode = code;
+        }
+
+        public int getResponseCode() {
+            return responseCode;
+        }
     }
 }

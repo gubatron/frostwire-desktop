@@ -24,8 +24,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
@@ -114,8 +117,11 @@ final class FWHttpClient implements HttpClient {
     }
 
     private void get(String url, OutputStream out, int timeout, String userAgent, int rangeStart, int rangeLength) throws IOException {
+        cancel = false;
         URL u = new URL(url);
-        URLConnection conn = u.openConnection();
+        URLConnection conn = (java.net.URLConnection) u.openConnection();
+
+        System.out.println(conn.getClass());
 
         conn.setConnectTimeout(timeout);
         conn.setReadTimeout(timeout);
@@ -126,6 +132,15 @@ final class FWHttpClient implements HttpClient {
         }
 
         InputStream in = conn.getInputStream();
+        
+        int httpResponseCode = getResponseCode(conn);
+        
+        if (httpResponseCode != HttpURLConnection.HTTP_OK &&
+            httpResponseCode != HttpURLConnection.HTTP_PARTIAL) {
+            throw new ResponseCodeNotSupportedException(httpResponseCode);
+        }
+
+        onHeaders(conn.getHeaderFields());
 
         long expectedFileSize = getContentLength(conn);
 
@@ -133,17 +148,7 @@ final class FWHttpClient implements HttpClient {
             onContentLength(expectedFileSize);
         }
 
-        if (rangeStart > 0 && rangeStart > expectedFileSize) {
-            HttpRangeOutOfBoundsException httpRangeOutOfBoundsException = new HttpRangeOutOfBoundsException(rangeStart, expectedFileSize);
-            listener.onError(this, httpRangeOutOfBoundsException);
-            throw httpRangeOutOfBoundsException;
-        }
-
-        if (rangeStart > 0 && !conn.getHeaderField("Accept-Ranges").equals("bytes")) {
-            RangeNotSupportedException rangeNotSupportedException = new RangeNotSupportedException("Server does not support bytes range request");
-            listener.onError(this, rangeNotSupportedException);
-            throw rangeNotSupportedException;
-        }
+        checkRangeSupport(rangeStart, conn, expectedFileSize);
 
         try {
             byte[] b = new byte[4096];
@@ -166,6 +171,43 @@ final class FWHttpClient implements HttpClient {
             onError(e);
         } finally {
             closeQuietly(in);
+        }
+    }
+
+    private int getResponseCode(URLConnection conn) {
+           try {
+            return ((HttpURLConnection) conn).getResponseCode();
+        } catch (IOException e) {
+            return -1;
+        }
+    }
+
+    private void checkRangeSupport(int rangeStart, URLConnection conn, long expectedFileSize) throws HttpRangeOutOfBoundsException, RangeNotSupportedException {
+        int responseCode = getResponseCode(conn);
+        
+        if (rangeStart > 0 && rangeStart > expectedFileSize) {
+            HttpRangeOutOfBoundsException httpRangeOutOfBoundsException = new HttpRangeOutOfBoundsException(rangeStart, expectedFileSize);
+            onError(httpRangeOutOfBoundsException);
+            throw httpRangeOutOfBoundsException;
+        }
+
+        boolean hasContentRange = conn.getHeaderField("Content-Range") != null;
+        boolean hasAcceptRanges = conn.getHeaderField("Accept-Ranges") != null && conn.getHeaderField("Accept-Ranges").equals("bytes");
+        
+        if (rangeStart > 0 && !hasContentRange && !hasAcceptRanges) {
+            RangeNotSupportedException rangeNotSupportedException = new RangeNotSupportedException("Server does not support bytes range request");
+            onError(rangeNotSupportedException);
+            throw rangeNotSupportedException;
+        }
+    }
+
+    private void onHeaders(Map<String, List<String>> headerFields) {
+        if (getListener() != null) {
+            try {
+                getListener().onHeaders(this, headerFields);
+            } catch (Exception e) {
+                LOG.warn(e.getMessage(), e);
+            }
         }
     }
 
@@ -242,37 +284,6 @@ final class FWHttpClient implements HttpClient {
         } catch (IOException ioe) {
             // ignore
         }
-    }
-
-    public static class HttpRangeException extends IOException {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 1891038288667531894L;
-
-        public HttpRangeException(String message) {
-            super(message);
-        }
-    }
-
-    public static final class RangeNotSupportedException extends HttpRangeException {
-
-        private static final long serialVersionUID = -3356618211960630147L;
-
-        public RangeNotSupportedException(String message) {
-            super(message);
-        }
-    }
-
-    public static final class HttpRangeOutOfBoundsException extends HttpRangeException {
-
-        private static final long serialVersionUID = -335661829606230147L;
-
-        public HttpRangeOutOfBoundsException(int rangeStart, long expectedFileSize) {
-            super("HttpRange Out of Bounds error: start=" + rangeStart + " expected file size=" + expectedFileSize);
-        }
-
     }
 
     @Override
