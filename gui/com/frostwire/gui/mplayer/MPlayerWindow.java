@@ -386,6 +386,13 @@ public class MPlayerWindow extends JFrame {
                 return false;
             }
 
+            // limit keyboard processing for only when the MPlayerWindow is the focused window
+            Window focusWindow = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusedWindow();
+            if (focusWindow != MPlayerWindow.this &&
+                focusWindow != overlayControls) {
+                return false;
+            }
+            
             if (e.getID() == KeyEvent.KEY_PRESSED) {
                 switch (e.getKeyCode()) {
                 case KeyEvent.VK_P:
