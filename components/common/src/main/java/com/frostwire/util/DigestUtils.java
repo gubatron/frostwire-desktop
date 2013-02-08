@@ -1,9 +1,12 @@
 package com.frostwire.util;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 
@@ -53,29 +56,39 @@ public class DigestUtils {
     public final static String getMD5(File f) {
         return getMD5(f, null);
     }
-
+    
     public final static String getMD5(File f, DigestProgressListener listener) {
+    	try {
+			return getMD5(new FileInputStream(f), f.length(), listener);
+		} catch (FileNotFoundException e) {
+			return null;
+		}
+    }
+
+    public final static String getMD5(InputStream is, long streamLength, DigestProgressListener listener) {
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
 
             byte[] buf = new byte[4096];
             int num_read;
 
-            InputStream in = new BufferedInputStream(new FileInputStream(f));
+            InputStream in = new BufferedInputStream(is);
 
             long total_read = 0;
-            long file_size = f.length();
+            
             boolean stopped = false;
             while (!stopped && (num_read = in.read(buf)) != -1) {
                 total_read += num_read;
                 m.update(buf, 0, num_read);
 
                 if (listener != null) {
-                    int progressPercentage = (int) (total_read * 100 / file_size);
-                    try {
-                        listener.onProgress(progressPercentage);
-                    } catch (Exception e) {
-                    }
+                	if (streamLength > 0) {
+	                    int progressPercentage = (int) (total_read * 100 / streamLength);
+	                    try {
+	                        listener.onProgress(progressPercentage);
+	                    } catch (Exception e) {
+	                    }
+                	}
                     
                     if (listener.stopDigesting()) {
                         stopped = true;
@@ -105,6 +118,16 @@ public class DigestUtils {
         } catch (Exception e) {
             return null;
         }
+    }
+    
+    public final static String getMD5(String s) {
+		try {
+			byte[] bytes = s.getBytes("UTF-8");
+			ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+			return getMD5(bais,bytes.length,null);
+		} catch (UnsupportedEncodingException e) {
+			return null;
+		}
     }
 
     public interface DigestProgressListener {

@@ -310,6 +310,7 @@ public class HttpDownload implements BTDownload {
                         saveFile = expectedFile;
                         bytesReceived = expectedFile.length();
                         state = STATE_FINISHED;
+                        onComplete();
                         return;
                     }
 
