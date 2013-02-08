@@ -20,6 +20,7 @@ package com.frostwire.gui.bittorrent;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -477,7 +478,19 @@ public class HttpDownload implements BTDownload {
             } else {
                 isResumable = false;
             }
-            System.out.println("onHeaders ->  isResumable " + isResumable);
+            
+            //try figuring out file size from HTTP headers depending on the response.
+            if (size < 0) {
+                String responseCodeStr = headerFields.get(null).get(0);
+                
+                if (responseCodeStr.contains(String.valueOf(HttpURLConnection.HTTP_OK))) {
+                    if (headerFields.containsKey("Content-Length")) {
+                        try {
+                            size = Long.valueOf(headerFields.get("Content-Length").get(0));
+                        } catch (Exception e) {}
+                    }
+                } 
+            } 
         }
     }
 
