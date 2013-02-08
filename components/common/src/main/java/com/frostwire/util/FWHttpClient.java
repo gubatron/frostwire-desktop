@@ -132,23 +132,16 @@ final class FWHttpClient implements HttpClient {
         }
 
         InputStream in = conn.getInputStream();
-        
+
         int httpResponseCode = getResponseCode(conn);
-        
-        if (httpResponseCode != HttpURLConnection.HTTP_OK &&
-            httpResponseCode != HttpURLConnection.HTTP_PARTIAL) {
+
+        if (httpResponseCode != HttpURLConnection.HTTP_OK && httpResponseCode != HttpURLConnection.HTTP_PARTIAL) {
             throw new ResponseCodeNotSupportedException(httpResponseCode);
         }
 
         onHeaders(conn.getHeaderFields());
 
-        long expectedFileSize = getContentLength(conn);
-
-        if (expectedFileSize > -1) {
-            onContentLength(expectedFileSize);
-        }
-
-        checkRangeSupport(rangeStart, conn, expectedFileSize);
+        checkRangeSupport(rangeStart, conn);
 
         try {
             byte[] b = new byte[4096];
@@ -175,24 +168,18 @@ final class FWHttpClient implements HttpClient {
     }
 
     private int getResponseCode(URLConnection conn) {
-           try {
+        try {
             return ((HttpURLConnection) conn).getResponseCode();
         } catch (IOException e) {
             return -1;
         }
     }
 
-    private void checkRangeSupport(int rangeStart, URLConnection conn, long expectedFileSize) throws HttpRangeOutOfBoundsException, RangeNotSupportedException {
-        
-        if (rangeStart > 0 && rangeStart > expectedFileSize) {
-            HttpRangeOutOfBoundsException httpRangeOutOfBoundsException = new HttpRangeOutOfBoundsException(rangeStart, expectedFileSize);
-            onError(httpRangeOutOfBoundsException);
-            throw httpRangeOutOfBoundsException;
-        }
+    private void checkRangeSupport(int rangeStart, URLConnection conn) throws HttpRangeOutOfBoundsException, RangeNotSupportedException {
 
         boolean hasContentRange = conn.getHeaderField("Content-Range") != null;
         boolean hasAcceptRanges = conn.getHeaderField("Accept-Ranges") != null && conn.getHeaderField("Accept-Ranges").equals("bytes");
-        
+
         if (rangeStart > 0 && !hasContentRange && !hasAcceptRanges) {
             RangeNotSupportedException rangeNotSupportedException = new RangeNotSupportedException("Server does not support bytes range request");
             onError(rangeNotSupportedException);
@@ -218,31 +205,6 @@ final class FWHttpClient implements HttpClient {
                 LOG.warn(e.getMessage(), e);
             }
         }
-    }
-
-    private void onContentLength(long contentLength) {
-        if (getListener() != null) {
-            try {
-                getListener().onContentLength(contentLength);
-            } catch (Exception e) {
-                LOG.warn(e.getMessage(), e);
-            }
-        }
-    }
-
-    private long getContentLength(URLConnection conn) {
-        long length = -1;
-        String headerValue = conn.getHeaderField("Content-Length");
-
-        if (headerValue != null) {
-            try {
-                length = Long.parseLong(headerValue);
-            } catch (NumberFormatException e) {
-                LOG.warn(e.getMessage(), e);
-            }
-        }
-
-        return length;
     }
 
     private void onData(byte[] b, int i, int n) {
@@ -299,7 +261,7 @@ final class FWHttpClient implements HttpClient {
     public void cancel() {
         canceled = true;
     }
-    
+
     @Override
     public boolean isCanceled() {
         return canceled;

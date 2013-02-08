@@ -55,8 +55,6 @@ public interface HttpClient {
 
         public void onCancel(HttpClient client);
 
-        public void onContentLength(long contentLength);
-
         public void onHeaders(HttpClient httpClient, Map<String, List<String>> headerFields);
     }
 

@@ -426,9 +426,11 @@ public class HttpDownload implements BTDownload {
 
         @Override
         public void onData(HttpClient client, byte[] buffer, int offset, int length) {
-            bytesReceived += length;
-            updateAverageDownloadSpeed();
-            state = STATE_DOWNLOADING;
+            if (state != STATE_PAUSING && state != STATE_CANCELING) {
+                bytesReceived += length;
+                updateAverageDownloadSpeed();
+                state = STATE_DOWNLOADING;
+            }
         }
 
         @Override
@@ -462,11 +464,6 @@ public class HttpDownload implements BTDownload {
             } else {
                 state = STATE_CANCELED;
             }
-        }
-
-        @Override
-        public void onContentLength(long contentLength) {
-            size = contentLength;
         }
 
         @Override
