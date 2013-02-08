@@ -266,9 +266,9 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     }
 
     private ImageIcon getCurrentLoopButtonImage() {
-    	if (PLAYER.getRepeatMode() == RepeatMode.All) {
+    	if (PLAYER.getRepeatMode() == RepeatMode.ALL) {
     		return GUIMediator.getThemeImage("loop_on");
-    	} else if (PLAYER.getRepeatMode() == RepeatMode.Song) {
+    	} else if (PLAYER.getRepeatMode() == RepeatMode.SONG) {
     		return GUIMediator.getThemeImage("loop_on");
     	} else { // RepeatMode.None
     		return GUIMediator.getThemeImage("loop_off");
@@ -620,21 +620,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     }
 
     private void next() {
-        MediaSource currentMedia = PLAYER.getCurrentMedia();
-
-        if (currentMedia != null) {
-            MediaSource nextSong = null;
-
-            if (PLAYER.isShuffle()) {
-                nextSong = PLAYER.getNextRandomSong(currentMedia);
-            } else {
-                nextSong = PLAYER.getNextMedia(currentMedia);
-            }
-
-            if (nextSong != null) {
-                PLAYER.asyncLoadMedia(nextSong, true, true);
-            }
-        }
+        PLAYER.playNextMedia();
     }
 
     /**

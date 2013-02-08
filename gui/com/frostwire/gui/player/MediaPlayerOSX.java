@@ -24,7 +24,6 @@ import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class MediaPlayerOSX extends MediaPlayer {
 
-
     @Override
     protected String getPlayerPath() {
         boolean isRelease = !FrostWireUtils.getFrostWireJarPath().contains("frostwire-desktop");
