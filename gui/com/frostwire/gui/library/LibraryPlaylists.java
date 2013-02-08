@@ -294,12 +294,13 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         }
 
         Playlist playlist = cell.getPlaylist();
-        playlist.refresh();
-
-        LibraryMediator.instance().updateTableItems(playlist);
-
-        String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");
-        LibraryMediator.instance().getLibrarySearch().setStatus(status);
+        
+        if (playlist != null) {
+            playlist.refresh();
+            LibraryMediator.instance().updateTableItems(playlist);
+            String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");
+            LibraryMediator.instance().getLibrarySearch().setStatus(status);
+        }
 
         executePendingRunnables();
     }
