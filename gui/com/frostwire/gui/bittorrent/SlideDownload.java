@@ -84,7 +84,8 @@ public class SlideDownload extends HttpDownload {
     private String getCertificateURL(String url) {
         String urlMD5 = DigestUtils.getMD5(url);
         if (urlMD5 != null) {
-        	return "http://certs.frostwire.com/"+urlMD5;
+        	//return "http://certs.frostwire.com/"+urlMD5;
+        	return "http://s3.amazonaws.com/certs.frostwire.com/"+urlMD5;
         } else {
         	return null;
         }
