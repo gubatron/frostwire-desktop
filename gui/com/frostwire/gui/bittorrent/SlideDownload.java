@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.appwork.utils.encoding.Base64;
 import org.limewire.util.IOUtils;
 import org.limewire.util.SystemUtils;
 
@@ -73,8 +74,10 @@ public class SlideDownload extends HttpDownload {
     	HttpClient httpClient = HttpClientFactory.newInstance(HttpClientType.PureJava);
     	
     	try {
-    		String certificateInBase64 = httpClient.get(certificateURL);   		
-    		return SystemUtils.verifyExecutableSignature(saveLocation.getAbsolutePath(), certificateInBase64.getBytes());
+    		String certificateInBase64 = httpClient.get(certificateURL);
+    		certificateInBase64 = certificateInBase64.replace("-----BEGIN CERTIFICATE-----\r\n","").replace("-----END CERTIFICATE-----\r\n", "");
+    		byte[] decodedCertificate = Base64.decode(certificateInBase64);
+    		return SystemUtils.verifyExecutableSignature(saveLocation.getAbsolutePath(), decodedCertificate);
     	} catch (Exception e) {
     		LOG.error("Could not verify executable signature:\n" + e.getMessage(), e);
     		return false;
