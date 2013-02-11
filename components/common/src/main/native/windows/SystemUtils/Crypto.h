@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 	// Functions in Crypto.cpp
-	JNIEXPORT jboolean JNICALL Java_org_limewire_util_SystemUtils_verifyExecutableSignature(JNIEnv *e, jclass c, jstring path, jbyteArray cert);
+	JNIEXPORT jboolean JNICALL Java_org_limewire_util_SystemUtils_verifyExecutableSignatureNative(JNIEnv *e, jclass c, jstring path, jbyteArray cert);
 #ifdef __cplusplus
 }
 #endif

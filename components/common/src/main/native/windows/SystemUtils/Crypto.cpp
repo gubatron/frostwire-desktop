@@ -18,9 +18,18 @@
 
 BOOL VerifyEmbeddedSignature(LPCSTR pwszSourceFile);
 
-JNIEXPORT jboolean JNICALL Java_org_limewire_util_SystemUtils_verifyExecutableSignature(JNIEnv *e, jclass c, jstring path, jbyteArray cert) {
+JNIEXPORT jboolean JNICALL Java_org_limewire_util_SystemUtils_verifyExecutableSignatureNative(JNIEnv *e, jclass c, jstring path, jbyteArray cert) {
 	BOOL result = FALSE;
-	LPCTSTR execPath = GetJavaString(e, path);
+	LPCTSTR execPath = e->GetStringUTFChars(path, NULL);
+	WCHAR unicodeExecPath[MAX_PATH];
+
+	ZeroMemory(unicodeExecPath,MAX_PATH*sizeof(WCHAR));
+
+	if (mbstowcs(unicodeExecPath, execPath, MAX_PATH) == -1) {
+		e->ReleaseStringUTFChars(path,execPath);
+		return FALSE; 
+    }
+
 	jbyte* bufferPtr = e->GetByteArrayElements(cert, NULL);
 	jsize certLength = e->GetArrayLength(cert);
 
@@ -32,6 +41,12 @@ JNIEXPORT jboolean JNICALL Java_org_limewire_util_SystemUtils_verifyExecutableSi
 		(BYTE*) bufferPtr,
 		certLength);
 
+	if (expectedCertContext == NULL) {
+		e->ReleaseStringUTFChars(path,execPath);
+		e->ReleaseByteArrayElements(cert,bufferPtr,0);
+		return FALSE;
+	}
+
 	HCERTSTORE hStore = NULL;
 	CERT_INFO CertInfo;
 	DWORD dwEncoding, dwContentType, dwFormatType;
@@ -40,7 +55,7 @@ JNIEXPORT jboolean JNICALL Java_org_limewire_util_SystemUtils_verifyExecutableSi
 
 	// Get message handle and store handle from the signed file.
 	fResult = CryptQueryObject(CERT_QUERY_OBJECT_FILE,
-		execPath,
+		unicodeExecPath,
 		CERT_QUERY_CONTENT_FLAG_PKCS7_SIGNED_EMBED,
 		CERT_QUERY_FORMAT_FLAG_BINARY,
 		0,
@@ -58,6 +73,9 @@ JNIEXPORT jboolean JNICALL Java_org_limewire_util_SystemUtils_verifyExecutableSi
 			CERT_FIND_SUBJECT_CERT,
 			expectedCertContext->pCertInfo,//(PVOID)&CertInfo,
 			NULL);
+	} else {
+	    _tprintf(_T("CryptQueryObject failed with %x\n"), GetLastError());
+		executableCertContext = NULL;
 	}
 
 	result = executableCertContext != NULL;
@@ -69,6 +87,7 @@ JNIEXPORT jboolean JNICALL Java_org_limewire_util_SystemUtils_verifyExecutableSi
 	if (hStore != NULL) { CertCloseStore(hStore, 0); }
 	if (hMsg != NULL) { CryptMsgClose(hMsg); }
 
+	e->ReleaseStringUTFChars(path,execPath);
 	e->ReleaseByteArrayElements(cert,bufferPtr,0);
 
 	return result;
