@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  */
 public class FadeSlideTransition {
 
-    private SlideshowPanel _panel;
+    private ImageSlideshowPanel _panel;
     private BufferedImage _imageStart;
     private BufferedImage _imageEnd;
 
@@ -21,7 +21,7 @@ public class FadeSlideTransition {
 
     private boolean _running;
 
-    public FadeSlideTransition(SlideshowPanel panel, BufferedImage imageStart, BufferedImage imageEnd) {
+    public FadeSlideTransition(ImageSlideshowPanel panel, BufferedImage imageStart, BufferedImage imageEnd) {
         _panel = panel;
         _imageStart = imageStart;
         _imageEnd = imageEnd;

@@ -43,6 +43,7 @@ import javax.swing.plaf.TabbedPaneUI;
 
 import com.frostwire.gui.components.Slide;
 import com.frostwire.gui.components.SlideshowPanel;
+import com.frostwire.gui.components.slides.MultimediaSlideshowPanel;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -138,21 +139,20 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         promoSlides = null;
 
         if (!UpdateManagerSettings.SHOW_PROMOTION_OVERLAYS.getValue()) {
-            Slide s1 = new Slide("http://static.frostwire.com/images/overlays/default_now_on_android.png", "http://www.frostwire.com/?from=defaultSlide", 240000);
-            Slide s2 = new Slide("http://static.frostwire.com/images/overlays/frostclick_default_overlay.jpg", "http://www.frostclick.com/?from=defaultSlide", 240000);
-            promoSlides = new SlideshowPanel(Arrays.asList(s1, s2), false);
+            promoSlides = new MultimediaSlideshowPanel(getDefaultSlides());
         } else {
-            promoSlides = new SlideshowPanel(UpdateManagerSettings.OVERLAY_SLIDESHOW_JSON_URL.getValue());
+            promoSlides = new MultimediaSlideshowPanel(UpdateManagerSettings.OVERLAY_SLIDESHOW_JSON_URL.getValue());
         }
 
         if (promoSlides != null) {
-            promoSlides.setBackground(Color.WHITE);
+            JPanel p = (JPanel) promoSlides;
+            p.setBackground(Color.WHITE);
             Dimension promoDimensions = new Dimension(717, 380);
-            promoSlides.setPreferredSize(promoDimensions);
-            promoSlides.setSize(promoDimensions);
-            promoSlides.setMaximumSize(promoDimensions);
+            p.setPreferredSize(promoDimensions);
+            p.setSize(promoDimensions);
+            p.setMaximumSize(promoDimensions);
 
-            DUMMY = new SearchResultMediator(promoSlides);
+            DUMMY = new SearchResultMediator(p);
 
             mainScreen = new JPanel(new BorderLayout());
             promoSlides.setupContainerAndControls(mainScreen, true);
@@ -172,6 +172,19 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         CancelSearchIconProxy.updateTheme();
     }
 
+    private List<Slide> getDefaultSlides() {
+        Slide s1 = new Slide("http://static.frostwire.com/images/overlays/default_now_on_android.png", 
+                "http://www.frostwire.com/?from=defaultSlide", 
+                240000,
+                null,null,null,null,null,0,Slide.SLIDE_DOWNLOAD_METHOD_OPEN_URL,null,null,null,null,null,null,null,null,null,0);
+        Slide s2 = new Slide("http://static.frostwire.com/images/overlays/frostclick_default_overlay.jpg", 
+                "http://www.frostclick.com/?from=defaultSlide", 
+                240000,
+                null,null,null,null,null,0,Slide.SLIDE_DOWNLOAD_METHOD_OPEN_URL,null,null,null,null,null,null,null,null,null,0);
+
+        return Arrays.asList(s1, s2);
+    }
+
     /**
      * Sets the listener for what searches are currently displaying.
      */
@@ -185,10 +198,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
     void updateResults() {
         for (int i = 0; i < entries.size(); i++)
             entries.get(i).refresh();
-    }
-
-    public SlideshowPanel getSlideshowPanel() {
-        return promoSlides;
     }
 
     /** 

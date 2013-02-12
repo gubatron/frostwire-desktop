@@ -14,7 +14,7 @@ import com.frostwire.gui.components.SlideshowPanel.SlideshowListener;
 public class SlideshowPanelControls extends JPanel implements SlideshowListener {
 
 	private static final long serialVersionUID = 7167253192165957777L;
-	private SlideshowPanel _thePanel;
+	private final SlideshowPanel _thePanel;
 
 	private ButtonGroup _buttonGroup;
 	private List<JRadioButton> _buttons;
@@ -23,7 +23,7 @@ public class SlideshowPanelControls extends JPanel implements SlideshowListener 
 	
 	public SlideshowPanelControls(SlideshowPanel panel) {
 		_thePanel = panel;
-		_thePanel.addListener(this);
+		_thePanel.setListener(this);
 		
 		buildButtons();
 		autoSelectCurrentSlideButton();

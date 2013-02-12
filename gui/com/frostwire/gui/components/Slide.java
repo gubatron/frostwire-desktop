@@ -1,16 +1,42 @@
-package com.frostwire.gui.components;
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
+package com.frostwire.gui.components;
 
 public class Slide {
 
     /** Just Open The URL */
-    public static final int SLIDE_DOWNLOAD_METHOD_OPEN_URL = -1;
+    public static final int SLIDE_DOWNLOAD_METHOD_OPEN_URL = 0;
 
     /** Download using the torrent URL */
-    public static final int SLIDE_DOWNLOAD_METHOD_TORRENT = 0;
+    public static final int SLIDE_DOWNLOAD_METHOD_TORRENT = 1;
 
     /** Download via HTTP */
-    public static final int  SLIDE_DOWNLOAD_METHOD_HTTP = 1;
+    public static final int  SLIDE_DOWNLOAD_METHOD_HTTP = 2;
+    
+    public static final int POST_DOWNLOAD_UNZIP = 1;
+    public static final int POST_DOWNLOAD_DELETE_ZIP_FILE = 1 << 1;
+    public static final int POST_DOWNLOAD_EXECUTE = 1 << 2;
+    public static final int PREVIEW_AUDIO_USING_FWPLAYER = 1 << 3;
+    public static final int PREVIEW_VIDEO_USING_FWPLAYER = 1 << 4;
+    public static final int SHOW_AUDIO_PREVIEW_BUTTON = 1 << 5;
+    public static final int SHOW_VIDEO_PREVIEW_BUTTON = 1 << 6;
+    public static final int OPEN_CLICK_URL_ON_DOWNLOAD = 1 << 7;
     
     public Slide() {
         
@@ -30,19 +56,17 @@ public class Slide {
 	 * @param downloadMethod - what to do with the slide.
 	 * @param md5hash - optional, string with md5 hash of the finished http download
 	 * @param saveAs - optional, name of the file if downloaded via http
-	 * @param executeWhenDone - should the finished http download be executed
 	 * @param executionParameters - parameters to pass to executable download
-	 * @param unzipWhenDone - should the http download be unzipped
-	 * @param unzipAndDeleteWhenDone - should the http download be unzipped and should we clean up the .zip
-	 * @param excludeTheseVersions - comma separated versions that are not supposed to see this slide.
+	 * @param includeTheseVersions - comma separated versions that are not supposed to see this slide.
      * @param audioPreviewURL - HTTP URL of audio file so user can preview before download.
      * @param videoPreviewURL - HTTP URL of video file (youtube maybe) so user can preview promo.
 	 * @param facebookURL - optional, related Facebook page url
 	 * @param twitterURL - optional, related Twitter page url
 	 * @param gPlusURL - optional, related Google Plus page url
+	 * @param flags - these determine how the slide will behave
 	 */
 	public Slide(String imgSrc, 
-	             String clickURL, 
+	             String clickUrl, 
 	             long durationInMilliseconds, 
 	             String torrentURL, 
 	             String httpDownloadUrl,
@@ -50,21 +74,19 @@ public class Slide {
 	             String OS, 
 	             String theTitle, 
 	             long theSize, 
-	             int downloadMethod, 
+	             int downloadMethod,
 	             String md5hash,
 	             String saveAs,
-	             boolean executeWhenDone,
 	             String executionParameters,
-	             boolean unzipWhenDone, 
-	             boolean unzipAndDeleteWhenDone,
-	             String excludeTheseVersions,
+	             String includeTheseVersions,
 	             String audioPreviewURL,
 	             String videoPreviewURL,
 	             String facebookURL,
 	             String twitterURL,
-	             String gPlusURL) {
+	             String gPlusURL,
+	             int slideFlags) {
 		imageSrc = imgSrc;
-		url = clickURL;
+		clickURL = clickUrl;
 		duration = durationInMilliseconds;
 		torrent = torrentURL;
 		httpDownloadURL = httpDownloadUrl;
@@ -75,26 +97,20 @@ public class Slide {
 		method = downloadMethod;
 		md5 = md5hash;
 		saveFileAs = saveAs;
-		execute = executeWhenDone;
 		executeParameters = executionParameters;
-		unzip = unzipWhenDone;
-		unzipAndDelete = unzipAndDeleteWhenDone;
-		excludedVersions = excludeTheseVersions;
+		includedVersions = includeTheseVersions;
 		audioURL = audioPreviewURL;
 		videoURL = videoPreviewURL;
 		facebook = facebookURL;
 		twitter = twitterURL;
 		gplus = gPlusURL;
+		flags = slideFlags;
 	}
 		
-	public Slide(String imageSrc, String clickURL, int durationInMilli) {
-        this(imageSrc,clickURL,durationInMilli,null,null,null,null,null,0,SLIDE_DOWNLOAD_METHOD_OPEN_URL,null,null,false,null,false,false,null,null,null,null,null,null);
-    }
-
     /**
 	 * http address where to go if user clicks on this slide
 	 */
-	public String url;
+	public String clickURL;
 	
 	/**
 	 * url of torrent file that should be opened if user clicks on this slide
@@ -155,20 +171,11 @@ public class Slide {
     /** If != null, rename file to this file name. */
     public String saveFileAs;
 
-    /** If true, try executing the finished file download. */
-    public boolean execute;
-
     /** If != null && execute, pass these parameters to the finished downloaded file. */
     public String executeParameters;
 
-    /** Unzip the file when finished downloading */
-    public boolean unzip;
-
-    /** Delete the .zip file you downloaded after it's unzipped */
-    public boolean unzipAndDelete;
-
     /** Comma separated list of versions that should not use this */
-    public String excludedVersions;
+    public String includedVersions;
     
     /** audio file url so user can play preview/promotional audio for promo. */
     public String audioURL;
@@ -185,5 +192,11 @@ public class Slide {
 
     /** Google Plus page associated with slide */
     public String gplus;
-
+    
+    /** Use these flags to determine how the slide will behave. */
+    public int flags;
+    
+    public boolean hasFlag(int flag) {
+        return (flags & flag) == flag;
+    }
 }
