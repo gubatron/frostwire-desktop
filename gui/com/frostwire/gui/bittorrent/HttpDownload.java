@@ -82,7 +82,7 @@ public class HttpDownload implements BTDownload {
 
     private long size;
     private long bytesReceived;
-    private String state;
+    protected String state;
     private long averageSpeed; // in bytes
 
     // variables to keep the download rate of file transfer
