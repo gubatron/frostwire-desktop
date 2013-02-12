@@ -1,11 +1,6 @@
 #include "stdafx.h"
 #include "SystemUtilities.h"
 #include "Crypto.h"
-
-//#include <tchar.h>
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <windows.h>
 #include <atlbase.h>
 #include <Softpub.h>
 #include <wincrypt.h>
