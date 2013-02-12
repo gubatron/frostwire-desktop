@@ -19,8 +19,11 @@ import com.frostwire.util.DigestUtils;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.HttpClientType;
+import com.limegroup.gnutella.gui.I18n;
 
 public class SlideDownload extends HttpDownload {
+	
+	private static final String STATE_ERROR_INVALID_SIGNATURE = I18n.tr("Error: Corrupted download");
 
 	private static final Log LOG = LogFactory.getLog(SlideDownload.class);
     private final Slide slide;
@@ -36,6 +39,8 @@ public class SlideDownload extends HttpDownload {
         if (slide.execute) {
             if (verifySignature(getSaveLocation(), slide.httpDownloadURL)) {
                 executeSlide(slide);
+            } else {
+            	state = STATE_ERROR_INVALID_SIGNATURE;
             }
         }
     }
@@ -56,8 +61,8 @@ public class SlideDownload extends HttpDownload {
             //consume all output to avoid deadlock in some verisons of windows
             br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
-            String line = null;
-            while ((line = br.readLine()) != null) {
+            
+            while (br.readLine() != null) {
             }
             
         } catch (IOException e) {
