@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import javax.swing.JPanel;
 
+import net.miginfocom.swing.MigLayout;
+
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconButton;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
@@ -26,32 +28,34 @@ public class SlideControlsOverlay extends JPanel {
 
     private void setupUI() {
         setOpaque(false);
-        setLayout(new FlowLayout());
+        setLayout(new MigLayout("",
+                                "[grow][][][][grow]", //columns
+                                "[grow][center][grow]")); //rows
         setBackground(new Color(0, 0, 0));
         setupButtons();
     }
 
     private void setupButtons() {
         Slide slide = controller.getSlide();
-        if (slide.hasFlag(Slide.SLIDE_DOWNLOAD_METHOD_HTTP) || slide.hasFlag(Slide.SLIDE_DOWNLOAD_METHOD_TORRENT)) {
+        if (slide.method == Slide.SLIDE_DOWNLOAD_METHOD_HTTP || slide.method == Slide.SLIDE_DOWNLOAD_METHOD_TORRENT) {
 
             if (slide.hasFlag(Slide.POST_DOWNLOAD_EXECUTE)) {
                 //add install button
-                add(new IconButton(new InstallAction(controller)));
+                add(new IconButton(new InstallAction(controller)),"cell 1 1");// "cell column row width height"
             } else {
                 //add download button
-                add(new IconButton(new DownloadAction(controller)));
+                add(new IconButton(new DownloadAction(controller)),"cell 1 1");
             }
         }
 
         if (slide.hasFlag(Slide.SHOW_VIDEO_PREVIEW_BUTTON)) {
             //add video preview button
-            add(new IconButton(new PreviewVideoAction(controller)));
+            add(new IconButton(new PreviewVideoAction(controller)),"cell 2 1");
         }
 
         if (slide.hasFlag(Slide.SHOW_AUDIO_PREVIEW_BUTTON)) {
             //add audio preview button
-            add(new IconButton(new PreviewAudioAction(controller)));
+            add(new IconButton(new PreviewAudioAction(controller)),"cell 3 1");
         }
     }
 

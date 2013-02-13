@@ -48,7 +48,6 @@ class SlidePanel extends JPanel {
     
     private final SlidePanelController controller;
     private SlideControlsOverlay overlayControls;    
-    private SlideControlsPanel bottomControls;
     
     public SlidePanel(Slide slide, int index) {
         this.index = index;
