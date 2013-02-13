@@ -63,19 +63,17 @@ class SlidePanel extends JPanel {
     private void setupImageArea() {
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setMinimumSize(new Dimension(717,380));
-        layeredPane.setMaximumSize(new Dimension(717,380));
         layeredPane.setPreferredSize(new Dimension(717,380));
+        //layeredPane.setMaximumSize(new Dimension(717,380));
         
         layeredPane.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                System.out.println("mouse in");
                 overlayControls.setVisible(true);
             }
             
             @Override
             public void mouseExited(MouseEvent e) {
-                System.out.println("mouse out");
                 if (!imageLabel.getBounds().contains(e.getPoint())) {
                     overlayControls.setVisible(false);    
                 }
@@ -87,7 +85,21 @@ class SlidePanel extends JPanel {
         overlayControls = new SlideControlsOverlay(controller);
         overlayControls.setVisible(false);
         
-        layeredPane.add(overlayControls,new Integer(1));
+        if (controller.getSlide().method != Slide.SLIDE_DOWNLOAD_METHOD_OPEN_URL) {
+            layeredPane.add(overlayControls,new Integer(1));
+        } else {
+            imageLabel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    System.out.println(e);
+                    System.out.println(controller.getSlide().method);
+                    if (controller.getSlide().method == Slide.SLIDE_DOWNLOAD_METHOD_OPEN_URL) {
+                        controller.downloadSlide();
+                    }
+                }
+            });
+        }
+        
         layeredPane.add(imageLabel,new Integer(0)); 
         
         add(layeredPane, BorderLayout.CENTER);

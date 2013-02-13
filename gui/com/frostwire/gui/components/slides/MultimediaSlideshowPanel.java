@@ -110,8 +110,6 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
     private void setup(List<Slide> slides) {
         this.slides = filter(slides);
 
-        Collections.reverse(slides);
-
         int i = 0;
         for (Slide s : slides) {
             add(new SlidePanel(s, i), String.valueOf(i));
