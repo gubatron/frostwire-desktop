@@ -161,7 +161,7 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult i
         String streamUrl = filePackage.getChildren().get(0).getDownloadURL();
         MediaType mediaType = MediaType.getMediaTypeForExtension(FilenameUtils.getExtension(filename));
         boolean showPlayerWindow = mediaType.equals(MediaType.getVideoMediaType());
-        GUIMediator.instance().launchAudio(new StreamMediaSource(streamUrl, "YouTube: " + sr.getDisplayName(), sr.getDetailsUrl(), showPlayerWindow));
+        GUIMediator.instance().launchMedia(new StreamMediaSource(streamUrl, "YouTube: " + sr.getDisplayName(), sr.getDetailsUrl(), showPlayerWindow));
     }
 
     private String readFilename(FilePackage filePackage) {

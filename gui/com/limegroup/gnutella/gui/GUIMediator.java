@@ -1602,13 +1602,13 @@ public final class GUIMediator {
     }
 
     /**
-     * Launches the specified audio song in the player.
+     * Launches the specified audio/video in the player.
      * 
      * @param song
      *            - song to play now
      * 
      */
-    public void launchAudio(MediaSource song) {
+    public void launchMedia(MediaSource song) {
 
         if (MediaPlayer.instance().getCurrentMedia() != null)
             try {

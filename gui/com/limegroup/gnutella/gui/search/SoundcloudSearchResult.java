@@ -134,7 +134,7 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
 
     @Override
     public void play() {
-        GUIMediator.instance().launchAudio(new StreamMediaSource(sr.getStreamUrl(), "Soundcloud: " + sr.getDisplayName(), sr.getDetailsUrl(), false));
+        GUIMediator.instance().launchMedia(new StreamMediaSource(sr.getStreamUrl(), "Soundcloud: " + sr.getDisplayName(), sr.getDetailsUrl(), false));
     }
 
     @Override

@@ -616,7 +616,7 @@ public final class GUIUtils {
                         public void run(){
                             GUIMediator.safeInvokeAndWait(new Runnable() {
                                 public void run() {
-                                    GUIMediator.instance().launchAudio(new MediaSource(file));
+                                    GUIMediator.instance().launchMedia(new MediaSource(file));
                                 }
                             });
                         }
@@ -627,7 +627,7 @@ public final class GUIUtils {
                         public void run(){
                             GUIMediator.safeInvokeAndWait(new Runnable() {
                                 public void run() {
-                                    GUIMediator.instance().launchAudio(new MediaSource(file));
+                                    GUIMediator.instance().launchMedia(new MediaSource(file));
                                 }
                             });
                         }
@@ -661,7 +661,7 @@ public final class GUIUtils {
     public static boolean launchAndEnqueueFile(File file, boolean audioLaunched) {        
     	if (MediaPlayer.isPlayableFile(file) && GUIMediator.isPlaylistVisible()) {
     		GUIMediator.instance().attemptStopAudio();
-			GUIMediator.instance().launchAudio(new MediaSource(file));    		
+			GUIMediator.instance().launchMedia(new MediaSource(file));    		
 			return true;
     	}
     	else {
