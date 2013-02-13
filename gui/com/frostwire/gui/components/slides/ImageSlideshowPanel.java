@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.components;
+package com.frostwire.gui.components.slides;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -41,11 +41,6 @@ import org.limewire.util.OSUtils;
 import com.frostwire.HttpFetcher;
 import com.frostwire.ImageCache;
 import com.frostwire.ImageCache.OnLoadedListener;
-import com.frostwire.gui.components.slides.FadeSlideTransition;
-import com.frostwire.gui.components.slides.Slide;
-import com.frostwire.gui.components.slides.SlideList;
-import com.frostwire.gui.components.slides.SlideshowPanel;
-import com.frostwire.gui.components.slides.SlideshowPanelControls;
 import com.frostwire.JsonEngine;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -65,12 +60,10 @@ public class ImageSlideshowPanel extends JPanel implements SlideshowPanel {
     private boolean _randomStart;
     private int _currentSlideIndex;
     private BufferedImage _currentImage;
-    private BufferedImage _lastImage;
     private BufferedImage _masterImage1;
     private BufferedImage _masterImage2;
     private boolean masterFlag;
     private boolean _loadingNextImage;
-    private FadeSlideTransition _transition;
     private long _transitionTime;
     private boolean _started;
 
@@ -151,14 +144,8 @@ public class ImageSlideshowPanel extends JPanel implements SlideshowPanel {
             startAnimation();
         }
 
-        if (_transition != null) {
-            _transition.paint(g);
-            if (!_transition.isRunning()) {
-                _transition = null;
-            }
-        }
 
-        if (_transition == null && _currentImage != null) {
+        if (_currentImage != null) {
             g.drawImage(_currentImage, 0, 0, null);
         }
     }
@@ -295,7 +282,6 @@ public class ImageSlideshowPanel extends JPanel implements SlideshowPanel {
                         _currentImage = image;
                         _loadingNextImage = false;
                         if (_currentImage != null) {
-                            _lastImage = _currentImage;
                             _lastTimeSlideLoaded = System.currentTimeMillis();
                             repaint();
                         }
@@ -312,12 +298,6 @@ public class ImageSlideshowPanel extends JPanel implements SlideshowPanel {
                     ImageCache.instance().getImage(new URL(slide.imageSrc), new OnLoadedListener() {
                         public void onLoaded(URL url, BufferedImage image, boolean fromCache, boolean fail) {
                             _currentImage = prepareImage(image);
-
-                            if (_transition != null) {
-                                _transition.stop();
-                            }
-
-                            _transition = null;
                             repaint();
                         }
                     });
@@ -339,14 +319,8 @@ public class ImageSlideshowPanel extends JPanel implements SlideshowPanel {
                 ImageCache.instance().getImage(new URL(slide.imageSrc), new OnLoadedListener() {
                     public void onLoaded(URL url, BufferedImage image, boolean fromCache, boolean fail) {
                         _currentImage = prepareImage(image);
-                        if (_lastImage != null && _currentImage != null) {
-                            _transition = new FadeSlideTransition(ImageSlideshowPanel.this, _lastImage, _currentImage);
-                            _transitionTime = _transition.getEstimatedDuration();
-                            _transition.start();
-                        }
                         _loadingNextImage = false;
                         if (_currentImage != null) {
-                            _lastImage = _currentImage;
                             _lastTimeSlideLoaded = System.currentTimeMillis();
                             repaint();
                         }
@@ -468,12 +442,6 @@ public class ImageSlideshowPanel extends JPanel implements SlideshowPanel {
         }
     }
 
-    public void onTransitionStarted() {
-        if (listener != null) {
-            listener.onSlideChanged();
-        }
-    }
-
     public int getNumSlides() {
         if (_slides == null) {
             return -1;
@@ -507,9 +475,10 @@ public class ImageSlideshowPanel extends JPanel implements SlideshowPanel {
         _lastTimeSlideLoaded = 0;
     }
 
+    
     public void setListener(SlideshowListener l) {
         listener = l;
-    }
+    }    
 
     public void setupContainerAndControls(JPanel container, boolean useControls) {
         _controlsContainer = container;

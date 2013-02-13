@@ -15,10 +15,8 @@ public interface SlideshowPanel {
     public void setVisible(boolean visible);
     
     public void setupContainerAndControls(JPanel container, boolean useControls);
-    
+
     public interface SlideshowListener {
         public void onSlideChanged();
     }
-
-    
 }

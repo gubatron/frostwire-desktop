@@ -217,5 +217,4 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
         this.container = container;
         this.useControls = useControls;
     }
-
 }
