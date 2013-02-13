@@ -242,9 +242,9 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         this.currentPlaylist = currentPlaylist;
         
         if (playlistFilesView != null ) {
-        	this.playlistFilesView = playlistFilesView.toArray( new MediaSource[playlistFilesView.size()] );
+            this.playlistFilesView = playlistFilesView.toArray( new MediaSource[playlistFilesView.size()] );
         } else {
-        	this.playlistFilesView = null;
+            this.playlistFilesView = null;
         }
         
         notifyOpened(source);
@@ -324,7 +324,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     }
 
     public void loadMedia(MediaSource source, boolean play, boolean playNextSong) {
-        loadMedia(source, play, playNextSong, currentPlaylist, Arrays.asList( playlistFilesView ) );
+        loadMedia(source, play, playNextSong, currentPlaylist, (playlistFilesView != null) ? Arrays.asList( playlistFilesView ) : null );
     }
 
     public void asyncLoadMedia(final MediaSource source, final boolean play, final boolean playNextSong) {
