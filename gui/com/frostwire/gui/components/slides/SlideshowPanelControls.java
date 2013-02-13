@@ -1,4 +1,4 @@
-package com.frostwire.gui.components;
+package com.frostwire.gui.components.slides;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -9,7 +9,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import com.frostwire.gui.components.SlideshowPanel.SlideshowListener;
+import com.frostwire.gui.components.slides.SlideshowPanel.SlideshowListener;
+
 
 public class SlideshowPanelControls extends JPanel implements SlideshowListener {
 

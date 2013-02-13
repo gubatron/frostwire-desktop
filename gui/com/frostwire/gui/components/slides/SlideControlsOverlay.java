@@ -10,7 +10,6 @@ import java.awt.Graphics2D;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import com.frostwire.gui.components.Slide;
 
 public class SlideControlsOverlay extends JPanel {
     private SlidePanelController controller;

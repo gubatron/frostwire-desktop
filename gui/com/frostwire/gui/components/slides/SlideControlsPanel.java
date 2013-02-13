@@ -20,7 +20,6 @@ package com.frostwire.gui.components.slides;
 
 import javax.swing.JPanel;
 
-import com.frostwire.gui.components.Slide;
 
 /**
  * Bottom controls

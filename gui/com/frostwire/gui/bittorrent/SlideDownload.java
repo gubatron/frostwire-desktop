@@ -32,7 +32,7 @@ import org.appwork.utils.encoding.Base64;
 import org.limewire.util.IOUtils;
 import org.limewire.util.SystemUtils;
 
-import com.frostwire.gui.components.Slide;
+import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.util.DigestUtils;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;

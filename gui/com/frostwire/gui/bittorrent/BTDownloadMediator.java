@@ -43,7 +43,7 @@ import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.TipsClient;
 import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleAudioFileAction;
-import com.frostwire.gui.components.Slide;
+import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.player.MediaPlayer;

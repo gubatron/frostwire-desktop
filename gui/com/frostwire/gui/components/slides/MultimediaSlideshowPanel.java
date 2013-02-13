@@ -33,10 +33,6 @@ import org.apache.commons.logging.LogFactory;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.JsonEngine;
-import com.frostwire.gui.components.Slide;
-import com.frostwire.gui.components.SlideList;
-import com.frostwire.gui.components.SlideshowPanel;
-import com.frostwire.gui.components.SlideshowPanelControls;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.HttpClientType;

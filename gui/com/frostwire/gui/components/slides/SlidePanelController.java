@@ -1,6 +1,5 @@
 package com.frostwire.gui.components.slides;
 
-import com.frostwire.gui.components.Slide;
 
 public class SlidePanelController {
     private Slide slide;

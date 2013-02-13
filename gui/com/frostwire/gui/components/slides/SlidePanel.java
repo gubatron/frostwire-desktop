@@ -33,7 +33,6 @@ import javax.swing.JPanel;
 
 import com.frostwire.ImageCache;
 import com.frostwire.ImageCache.OnLoadedListener;
-import com.frostwire.gui.components.Slide;
 import com.limegroup.gnutella.gui.GUIMediator;
 
 /**

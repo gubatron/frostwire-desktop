@@ -68,7 +68,7 @@ import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.HideExitDialog;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
-import com.frostwire.gui.components.Slide;
+import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;

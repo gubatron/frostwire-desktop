@@ -1,8 +1,10 @@
-package com.frostwire.gui.components;
+package com.frostwire.gui.components.slides;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+
+import com.frostwire.gui.components.ImageSlideshowPanel;
 
 /**
  * TODO: Make this an Interface Implementation
