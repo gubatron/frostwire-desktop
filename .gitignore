@@ -38,3 +38,6 @@ tags
 components/resources/dist/lw-resources.jar
 lib/jars/fwtips.jar
 OCSetupHlp.dll
+components/*/dist/
+components/*/build/
+lib/jars-src/dist/
