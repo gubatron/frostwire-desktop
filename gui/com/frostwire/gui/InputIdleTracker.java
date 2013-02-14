@@ -4,6 +4,7 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.PointerInfo;
 import java.awt.event.KeyEvent;
 
 /**
@@ -45,11 +46,14 @@ public final class InputIdleTracker {
     }
     
     public void trackMouse() {
-        Point location = MouseInfo.getPointerInfo().getLocation();
-
-        if (location != null && !location.equals(lastLocation)) {
-            lastLocation = location;
-            lastTimeMillis = System.currentTimeMillis();
+        PointerInfo pointerInfo = MouseInfo.getPointerInfo();
+        if (pointerInfo != null) {
+            Point location = pointerInfo.getLocation();
+    
+            if (location != null && !location.equals(lastLocation)) {
+                lastLocation = location;
+                lastTimeMillis = System.currentTimeMillis();
+            }
         }
     }
 }
