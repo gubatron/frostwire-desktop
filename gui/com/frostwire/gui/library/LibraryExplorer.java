@@ -410,6 +410,11 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             if (file == null || !file.isDirectory() || !file.exists()) {
                 return;
             }
+            
+            //avoids npe if for some reason the directory holder is not selected.
+            if (getSelectedDirectoryHolder() == null) {
+                selectMediaTypeSavedFilesDirectoryHolderbyType(_mtsfdh.getMediaType());
+            }
 
             List<File> directories = new ArrayList<File>();
             final List<File> files = new ArrayList<File>();
@@ -449,11 +454,11 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             }
         }
     }
-
-    public void selectAudio() {
+    
+    public void selectMediaTypeSavedFilesDirectoryHolderbyType(MediaType mediaType) {
         LibraryNode selectedValue = (LibraryNode) tree.getLastSelectedPathComponent();
         if (selectedValue != null && selectedValue instanceof DirectoryHolderNode && ((DirectoryHolderNode) selectedValue).getDirectoryHolder() instanceof MediaTypeSavedFilesDirectoryHolder
-                && ((MediaTypeSavedFilesDirectoryHolder) ((DirectoryHolderNode) selectedValue).getDirectoryHolder()).getMediaType().equals(MediaType.getAudioMediaType())) {
+                && ((MediaTypeSavedFilesDirectoryHolder) ((DirectoryHolderNode) selectedValue).getDirectoryHolder()).getMediaType().equals(mediaType)) {
             // already selected
             try {
                 treeSelectionListener.valueChanged(null);
@@ -468,13 +473,17 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             LibraryNode node = (LibraryNode) e.nextElement();
             if (node instanceof DirectoryHolderNode) {
                 DirectoryHolder holder = ((DirectoryHolderNode) node).getDirectoryHolder();
-                if (holder instanceof MediaTypeSavedFilesDirectoryHolder && ((MediaTypeSavedFilesDirectoryHolder) holder).getMediaType().equals(MediaType.getAudioMediaType())) {
+                if (holder instanceof MediaTypeSavedFilesDirectoryHolder && ((MediaTypeSavedFilesDirectoryHolder) holder).getMediaType().equals(mediaType)) {
                     tree.setSelectionPath(new TreePath(node.getPath()));
                     tree.scrollPathToVisible(new TreePath(node.getPath()));
                     return;
                 }
             }
         }
+    }
+
+    public void selectAudio() {
+        selectMediaTypeSavedFilesDirectoryHolderbyType(MediaType.getAudioMediaType());
     }
 
     public void selectStarred() {
