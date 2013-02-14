@@ -24,6 +24,7 @@ public class IconButton extends JButton {
     
     private String message;
     private String iconName;
+    private String rollOverIconName;
     private boolean horizontalText;
     
 	/**
@@ -101,6 +102,7 @@ public class IconButton extends JButton {
 	
     private void setButtonFromAction(Action action) {
 		iconName = (String)action.getValue(LimeAction.ICON_NAME);
+		rollOverIconName = (String)action.getValue(LimeAction.ICON_NAME_ROLLOVER);
 		message = (String)action.getValue(LimeAction.SHORT_NAME);
 		// fall back on Action.NAME
 		if (message == null) {
@@ -157,9 +159,13 @@ public class IconButton extends JButton {
             setOpaque(true);
         } else {
             setIcon(icon);
-            Icon rollover = IconManager.instance().getRolloverIconForButton(iconName);
+            
+            Icon rollover = IconManager.instance().getIconForButton(rollOverIconName);
+            if (rollover == null) {
+                rollover = IconManager.instance().getRolloverIconForButton(iconName);
+            }
             setRolloverIcon(rollover);
-
+            
             if (!horizontalText) {
                 setVerticalTextPosition(SwingConstants.BOTTOM);
                 setHorizontalTextPosition(SwingConstants.CENTER);

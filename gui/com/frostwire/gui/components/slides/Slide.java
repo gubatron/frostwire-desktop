@@ -37,6 +37,7 @@ public class Slide {
     public static final int SHOW_AUDIO_PREVIEW_BUTTON = 1 << 5;
     public static final int SHOW_VIDEO_PREVIEW_BUTTON = 1 << 6;
     public static final int OPEN_CLICK_URL_ON_DOWNLOAD = 1 << 7;
+    public static final int SHOW_PREVIEW_BUTTONS_ON_THE_LEFT = 1 << 8;
     
     public Slide() {
         
@@ -72,7 +73,8 @@ public class Slide {
 	             String httpDownloadUrl,
 	             String lang, 
 	             String OS, 
-	             String theTitle, 
+	             String theTitle,
+	             String theAuthor,
 	             long theSize, 
 	             int downloadMethod,
 	             String md5hash,
@@ -93,6 +95,7 @@ public class Slide {
 	    language = lang;
 	    os = OS;
 	    title = theTitle;
+	    author = theAuthor;
 	    size = theSize;
 		method = downloadMethod;
 		md5 = md5hash;
@@ -154,6 +157,11 @@ public class Slide {
 	 * The Download title.
 	 */
 	public String title;
+	
+	/**
+	 * Content creator name
+	 */
+	public String author;
 	
 	/**
 	 * Download size in bytes.

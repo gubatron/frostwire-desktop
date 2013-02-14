@@ -41,26 +41,39 @@ class SlideControlsOverlay extends JPanel {
     }
 
     private void setupButtons() {
-        Slide slide = controller.getSlide();
-        if (slide.method == Slide.SLIDE_DOWNLOAD_METHOD_HTTP || slide.method == Slide.SLIDE_DOWNLOAD_METHOD_TORRENT) {
+        final Slide slide = controller.getSlide();
 
-            if (slide.hasFlag(Slide.POST_DOWNLOAD_EXECUTE)) {
-                //add install button
-                add(new IconButton(new InstallAction(controller)), "cell 1 1");// "cell column row width height"
-            } else {
-                //add download button
-                add(new IconButton(new DownloadAction(controller)), "cell 1 1");
-            }
+        if (slide.hasFlag(Slide.SHOW_PREVIEW_BUTTONS_ON_THE_LEFT)) {
+            addPreviewButtons(slide, "cell 1 1","cell 2 1");
+            addDownloadInstallButton(slide,"cell 3 1");
+        } else {
+            addDownloadInstallButton(slide,"cell 1 1");
+            addPreviewButtons(slide, "cell 2 1","cell 3 1");
         }
+    }
 
+    private void addPreviewButtons(final Slide slide, String constraintVideoPreview, String constraintAudioPreview) {
         if (slide.hasFlag(Slide.SHOW_VIDEO_PREVIEW_BUTTON)) {
             //add video preview button
-            add(new IconButton(new PreviewVideoAction(controller)), "cell 2 1");
+            add(new IconButton(new PreviewVideoAction(controller)),constraintVideoPreview);
         }
-
+      
         if (slide.hasFlag(Slide.SHOW_AUDIO_PREVIEW_BUTTON)) {
             //add audio preview button
-            add(new IconButton(new PreviewAudioAction(controller)), "cell 3 1");
+            add(new IconButton(new PreviewAudioAction(controller)), constraintAudioPreview);
+        }
+    }
+
+    private void addDownloadInstallButton(final Slide slide, String constraints) {
+        if (slide.method == Slide.SLIDE_DOWNLOAD_METHOD_HTTP || slide.method == Slide.SLIDE_DOWNLOAD_METHOD_TORRENT) {
+      
+            if (slide.hasFlag(Slide.POST_DOWNLOAD_EXECUTE)) {
+                //add install button
+                add(new IconButton(new InstallAction(controller)), constraints);// "cell column row width height"
+            } else {
+                //add download button
+                add(new IconButton(new DownloadAction(controller)), constraints);
+            }
         }
     }
 
@@ -89,6 +102,7 @@ class SlideControlsOverlay extends JPanel {
             putValue(LimeAction.SHORT_NAME, I18n.tr("Install"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Install") + " " + controller.getSlide().title);
             putValue(LimeAction.ICON_NAME, "SLIDE_CONTROLS_OVERLAY_DOWNLOAD");
+            putValue(LimeAction.ICON_NAME_ROLLOVER, "SLIDE_CONTROLS_OVERLAY_DOWNLOAD_ROLLOVER");
         }
 
         @Override
@@ -107,7 +121,7 @@ class SlideControlsOverlay extends JPanel {
             putValue(LimeAction.SHORT_NAME, I18n.tr("Download"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Download") + " " + controller.getSlide().title);
             putValue(LimeAction.ICON_NAME, "SLIDE_CONTROLS_OVERLAY_DOWNLOAD");
-
+            putValue(LimeAction.ICON_NAME_ROLLOVER, "SLIDE_CONTROLS_OVERLAY_DOWNLOAD_ROLLOVER");
         }
 
         @Override
@@ -126,7 +140,7 @@ class SlideControlsOverlay extends JPanel {
             putValue(LimeAction.SHORT_NAME, I18n.tr("Video Preview"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Play Video preview of") + " " + controller.getSlide().title);
             putValue(LimeAction.ICON_NAME, "SLIDE_CONTROLS_OVERLAY_PREVIEW");
-
+            putValue(LimeAction.ICON_NAME_ROLLOVER,"SLIDE_CONTROLS_OVERLAY_PREVIEW_ROLLOVER");
         }
 
         @Override
@@ -145,7 +159,7 @@ class SlideControlsOverlay extends JPanel {
             putValue(LimeAction.SHORT_NAME, I18n.tr("Audio Preview"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Play Audio preview of") + " " + controller.getSlide().title);
             putValue(LimeAction.ICON_NAME, "SLIDE_CONTROLS_OVERLAY_PREVIEW");
-
+            putValue(LimeAction.ICON_NAME_ROLLOVER, "SLIDE_CONTROLS_OVERLAY_PREVIEW_ROLLOVER");
         }
 
         @Override

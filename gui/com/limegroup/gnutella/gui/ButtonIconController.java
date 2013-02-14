@@ -46,6 +46,10 @@ public class ButtonIconController {
      * Retrieves the icon for the specified button name.
      */
     public Icon getIconForButton(String buttonName) {
+        if (buttonName == null) {
+            return null;
+        }
+        
         String fileName = BUTTON_NAMES.getProperty(buttonName);
         if(fileName == null)
             return null;

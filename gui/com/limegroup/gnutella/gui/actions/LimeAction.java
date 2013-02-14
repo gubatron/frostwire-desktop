@@ -18,6 +18,12 @@ public interface LimeAction extends Action {
 	 */
 	final static String ICON_NAME = "LimeIconName";
 	
+	/**
+	 * Name of the icon to be used when rolling over the mouse if you don't want to use
+	 * the default brightening effect.
+	 */
+	final static String ICON_NAME_ROLLOVER = "RollOverFrostIconName";
+	
 	 /**
      *  Type of Object
      *  for color objects, specify the color code as well.  Spaces are represented by underscores.
