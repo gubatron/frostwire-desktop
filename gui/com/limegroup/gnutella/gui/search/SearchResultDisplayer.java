@@ -176,11 +176,11 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         Slide s1 = new Slide("http://static.frostwire.com/images/overlays/default_now_on_android.png", 
                 "http://www.frostwire.com/?from=defaultSlide", 
                 240000,
-                null,null,null,null,null,null,0,Slide.SLIDE_DOWNLOAD_METHOD_OPEN_URL,null,null,null,null,null,null,null,null,null,0);
+                null,null,null,null,null,null,0,Slide.SLIDE_DOWNLOAD_METHOD_OPEN_URL,null,null,null,null,null,null,null,null,null,null,null,0);
         Slide s2 = new Slide("http://static.frostwire.com/images/overlays/frostclick_default_overlay.jpg", 
                 "http://www.frostclick.com/?from=defaultSlide", 
                 240000,
-                null,null,null,null,null,null,0,Slide.SLIDE_DOWNLOAD_METHOD_OPEN_URL,null,null,null,null,null,null,null,null,null,0);
+                null,null,null,null,null,null,0,Slide.SLIDE_DOWNLOAD_METHOD_OPEN_URL,null,null,null,null,null,null,null,null,null,null,null,0);
 
         return Arrays.asList(s1, s2);
     }

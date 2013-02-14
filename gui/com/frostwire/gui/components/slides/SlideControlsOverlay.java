@@ -5,12 +5,16 @@ import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
+
+import org.pushingpixels.substance.internal.ui.SubstanceButtonUI;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconButton;
@@ -55,12 +59,12 @@ class SlideControlsOverlay extends JPanel {
     private void addPreviewButtons(final Slide slide, String constraintVideoPreview, String constraintAudioPreview) {
         if (slide.hasFlag(Slide.SHOW_VIDEO_PREVIEW_BUTTON)) {
             //add video preview button
-            add(new IconButton(new PreviewVideoAction(controller)),constraintVideoPreview);
+            add(new OverlayIconButton(new PreviewVideoAction(controller)),constraintVideoPreview);
         }
       
         if (slide.hasFlag(Slide.SHOW_AUDIO_PREVIEW_BUTTON)) {
             //add audio preview button
-            add(new IconButton(new PreviewAudioAction(controller)), constraintAudioPreview);
+            add(new OverlayIconButton(new PreviewAudioAction(controller)), constraintAudioPreview);
         }
     }
 
@@ -69,10 +73,10 @@ class SlideControlsOverlay extends JPanel {
       
             if (slide.hasFlag(Slide.POST_DOWNLOAD_EXECUTE)) {
                 //add install button
-                add(new IconButton(new InstallAction(controller)), constraints);// "cell column row width height"
+                add(new OverlayIconButton(new InstallAction(controller)), constraints);// "cell column row width height"
             } else {
                 //add download button
-                add(new IconButton(new DownloadAction(controller)), constraints);
+                add(new OverlayIconButton(new DownloadAction(controller)), constraints);
             }
         }
     }
@@ -165,6 +169,19 @@ class SlideControlsOverlay extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             controller.previewAudio();
+        }
+    }
+    
+    private static final class OverlayIconButton extends IconButton {
+
+        public OverlayIconButton(Action action) {
+            super(action);
+            setOpaque(false);
+            setUI(new SubstanceButtonUI(this) {
+                protected void paintButtonText(Graphics g, AbstractButton button, Rectangle textRect, String text) {
+
+                };
+            });
         }
     }
 }
