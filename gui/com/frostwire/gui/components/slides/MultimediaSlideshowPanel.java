@@ -24,6 +24,8 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Pattern;
 
 import javax.swing.JPanel;
@@ -55,6 +57,8 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
 
     private JPanel container;
     private boolean useControls;
+
+    private Timer timer;
 
     public MultimediaSlideshowPanel(List<Slide> slides) {
         setupUI();
@@ -88,8 +92,12 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
 
     @Override
     public void switchToSlide(int slideIndex) {
-        if (slideIndex >=0 && slideIndex < getNumSlides()) {
-            layout.show(this,String.valueOf(slideIndex));    
+        if (slideIndex >= 0 && slideIndex < getNumSlides()) {
+            layout.show(this, String.valueOf(slideIndex));
+        }
+        
+        if (timer != null) {
+            timer.cancel();
         }
     }
 
@@ -115,10 +123,16 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
             add(new SlidePanel(s, i), String.valueOf(i));
             i++;
         }
-        
+
         if (container != null && useControls) {
             container.add(new SlideshowPanelControls(this), BorderLayout.PAGE_END);
         }
+
+        if (slides != null && !slides.isEmpty()) {
+            timer = new Timer("SlideShow Timer");
+            timer.schedule(new SlideSwitcher(), slides.get(0).duration);
+        }
+
     }
 
     private void load(final String url) {
@@ -200,9 +214,7 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
         List<Slide> result = new ArrayList<Slide>(slides.size());
 
         for (Slide slide : slides) {
-            if (isMessageEligibleForMyLang(slide.language) && 
-                isMessageEligibleForMyOs(slide.os) && 
-                isMessageEligibleForMyVersion(slide.includedVersions)) {
+            if (isMessageEligibleForMyLang(slide.language) && isMessageEligibleForMyOs(slide.os) && isMessageEligibleForMyVersion(slide.includedVersions)) {
                 result.add(slide);
             }
         }
@@ -214,5 +226,18 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
     public void setupContainerAndControls(JPanel container, boolean useControls) {
         this.container = container;
         this.useControls = useControls;
+    }
+    
+    class SlideSwitcher extends TimerTask {
+
+        @Override
+        public void run() {
+            layout.next(MultimediaSlideshowPanel.this);
+            if (listener != null) {
+                listener.onSlideChanged();
+            }
+            
+            timer.schedule(new SlideSwitcher(), MultimediaSlideshowPanel.this.slides.get(getCurrentSlideIndex()).duration);
+        }
     }
 }
