@@ -1,9 +1,9 @@
 package com.frostwire.gui.components.slides;
 
 import java.awt.AlphaComposite;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Composite;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.plaf.ColorUIResource;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -27,10 +28,10 @@ class SlideControlsOverlay extends JPanel {
     private static final float BACKGROUND_ALPHA = 0.7f;
     private static final Color TEXT_FOREGROUND = new Color(255, 255, 255);
     private static final int TEXT_FONT_SIZE_DELTA = 3;
-    
+
     private final SlidePanelController controller;
     private final Composite overlayComposite;
-    
+
     public SlideControlsOverlay(SlidePanelController controller) {
         this.controller = controller;
         this.overlayComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, BACKGROUND_ALPHA);
@@ -41,19 +42,20 @@ class SlideControlsOverlay extends JPanel {
     private void setupUI() {
         setOpaque(false);
         setLayout(new MigLayout("", "[grow][][][][grow]", //columns
-                "[grow][center][grow]")); //rows
+                "[grow][center][grow][bottom]")); //rows
         setBackground(BACKGROUND);
-        
+
         setupTitle();
         setupButtons();
+        setupBottom();
     }
-    
+
     private void setupTitle() {
         JLabel labelTitle = new JLabel(controller.getSlide().title);
         labelTitle.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
         labelTitle.setForeground(TEXT_FOREGROUND);
         labelTitle.setFont(getFont().deriveFont(getFont().getSize2D() + TEXT_FONT_SIZE_DELTA));
-        add(labelTitle, "span 5, top");
+        add(labelTitle, "cell 0 0, span 5, top");
     }
 
     private void setupButtons() {
@@ -65,6 +67,21 @@ class SlideControlsOverlay extends JPanel {
         } else {
             addDownloadInstallButton(slide, "cell 1 1");
             addPreviewButtons(slide, "cell 2 1", "cell 3 1");
+        }
+    }
+
+    private void setupBottom() {
+        Slide slide = controller.getSlide();
+
+        JLabel labelAuthor = new JLabel(slide.author + " " + I18n.tr("on"));
+        labelAuthor.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
+        labelAuthor.setForeground(TEXT_FOREGROUND);
+        labelAuthor.setFont(getFont().deriveFont(getFont().getSize2D() + TEXT_FONT_SIZE_DELTA));
+
+        add(labelAuthor, "cell 1 3, span 3, aligny baseline");
+
+        if (slide.facebook != null) {
+            add(new OverlayIconButton(new SocialAction("Facebook", slide.facebook)), "cell 1 3");
         }
     }
 
@@ -191,6 +208,26 @@ class SlideControlsOverlay extends JPanel {
             putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
             setForeground(TEXT_FOREGROUND);
             setFont(getFont().deriveFont(getFont().getSize2D() + TEXT_FONT_SIZE_DELTA));
+        }
+    }
+
+    private static final class SocialAction extends AbstractAction {
+
+        private final String url;
+
+        public SocialAction(String network, String url) {
+            this.url = url;
+
+            putValue(Action.SHORT_DESCRIPTION, network);
+
+            String code = network.toUpperCase();
+
+            putValue(LimeAction.ICON_NAME, "SLIDE_CONTROLS_OVERLAY_" + code);
+            putValue(LimeAction.ICON_NAME_ROLLOVER, "SLIDE_CONTROLS_OVERLAY_" + code + "_ROLLOVER");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
         }
     }
 }
