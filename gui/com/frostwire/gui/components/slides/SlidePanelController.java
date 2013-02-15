@@ -78,26 +78,34 @@ public class SlidePanelController {
     public void previewVideo() {
         final String mediaURL = slide.videoURL;
         if (mediaURL != null && mediaURL.contains("youtube.com")) {
-            new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        if (cachedVideoStreamURL == null) {
-                            cachedVideoStreamURL = new YouTubeStreamURLExtractor(mediaURL).getYoutubeStreamURL();
+            if (slide.hasFlag(Slide.PREVIEW_VIDEO_USING_BROWSER)) {
+                GUIMediator.openURL(slide.videoURL);
+            } else {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            if (cachedVideoStreamURL == null) {
+                                cachedVideoStreamURL = new YouTubeStreamURLExtractor(mediaURL).getYoutubeStreamURL();
+                            }
+                            previewMedia(cachedVideoStreamURL, true, Slide.PREVIEW_VIDEO_USING_FWPLAYER);
+                        } catch (Exception e) {
+                            LOG.error("Could not extract/play youtube stream.", e);
                         }
-                        previewMedia(cachedVideoStreamURL, true, Slide.PREVIEW_VIDEO_USING_FWPLAYER);
-                    } catch (Exception e) {
-                        LOG.error("Could not extract/play youtube stream.", e);
                     }
-                }
-            }.start();
+                }.start();
+            }
         } else {
             previewMedia(mediaURL, true, Slide.PREVIEW_VIDEO_USING_FWPLAYER);
         }
     }
 
     public void previewAudio() {
-        previewMedia(slide.audioURL, false, Slide.PREVIEW_AUDIO_USING_FWPLAYER);
+        if (slide.hasFlag(Slide.PREVIEW_AUDIO_USING_BROWSER)) {
+            GUIMediator.openURL(slide.audioURL);   
+        } else {
+            previewMedia(slide.audioURL, false, Slide.PREVIEW_AUDIO_USING_FWPLAYER);
+        }
     }
 
     private void previewMedia(String mediaURL, boolean showMediaPlayer, int flagUsingFWPlayerForMediaType) {

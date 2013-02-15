@@ -33,11 +33,13 @@ public class Slide {
     public static final int POST_DOWNLOAD_DELETE_ZIP_FILE = 1 << 1;
     public static final int POST_DOWNLOAD_EXECUTE = 1 << 2;
     public static final int PREVIEW_AUDIO_USING_FWPLAYER = 1 << 3;
-    public static final int PREVIEW_VIDEO_USING_FWPLAYER = 1 << 4;
-    public static final int SHOW_AUDIO_PREVIEW_BUTTON = 1 << 5;
-    public static final int SHOW_VIDEO_PREVIEW_BUTTON = 1 << 6;
-    public static final int OPEN_CLICK_URL_ON_DOWNLOAD = 1 << 7;
-    public static final int SHOW_PREVIEW_BUTTONS_ON_THE_LEFT = 1 << 8;
+    public static final int PREVIEW_AUDIO_USING_BROWSER = 1 << 4;
+    public static final int PREVIEW_VIDEO_USING_FWPLAYER = 1 << 5;
+    public static final int PREVIEW_VIDEO_USING_BROWSER = 1 << 6;
+    public static final int SHOW_AUDIO_PREVIEW_BUTTON = 1 << 7;
+    public static final int SHOW_VIDEO_PREVIEW_BUTTON = 1 << 8;
+    public static final int OPEN_CLICK_URL_ON_DOWNLOAD = 1 << 9;
+    public static final int SHOW_PREVIEW_BUTTONS_ON_THE_LEFT = 1 << 10;
     
     public Slide() {
         

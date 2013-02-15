@@ -43,7 +43,7 @@ class SlideControlsOverlay extends JPanel {
 
     private void setupUI() {
         setOpaque(false);
-        setLayout(new MigLayout("", "[grow][][][][grow]", //columns
+        setLayout(new MigLayout("", "[grow][center][grow]", //columns
                 "[grow][center][grow][bottom]")); //rows
         setBackground(BACKGROUND);
 
@@ -58,7 +58,7 @@ class SlideControlsOverlay extends JPanel {
             labelTitle.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
             labelTitle.setForeground(TEXT_FOREGROUND);
             labelTitle.setFont(deriveFont(true,TITLE_TEXT_FONT_SIZE_DELTA));
-            add(labelTitle, "cell 0 0, span 5, top");
+            add(labelTitle, "cell 0 0, span 3, top");
         }
     }
 
@@ -66,11 +66,11 @@ class SlideControlsOverlay extends JPanel {
         final Slide slide = controller.getSlide();
 
         if (slide.hasFlag(Slide.SHOW_PREVIEW_BUTTONS_ON_THE_LEFT)) {
-            addPreviewButtons(slide, "cell 1 1", "cell 2 1");
-            addDownloadInstallButton(slide, "cell 3 1");
+            addPreviewButtons(slide, "cell 1 1", "cell 1 1");
+            addDownloadInstallButton(slide, "cell 1 1");
         } else {
             addDownloadInstallButton(slide, "cell 1 1");
-            addPreviewButtons(slide, "cell 2 1", "cell 3 1");
+            addPreviewButtons(slide, "cell 1 1", "cell 1 1");
         }
     }
 
@@ -82,7 +82,7 @@ class SlideControlsOverlay extends JPanel {
         labelAuthor.setForeground(TEXT_FOREGROUND);
         labelAuthor.setFont(deriveFont(false,BASE_TEXT_FONT_SIZE_DELTA));
 
-        add(labelAuthor, "cell 1 3, span 3, aligny baseline");
+        add(labelAuthor, "cell 1 3, aligny baseline");
 
         if (slide.facebook != null) {
             add(new OverlayIconButton(new SocialAction("Facebook", slide.facebook)), "cell 1 3");
@@ -103,8 +103,6 @@ class SlideControlsOverlay extends JPanel {
         if (slide.instagram != null) {
             add(new OverlayIconButton(new SocialAction("Instagram", slide.instagram)), "cell 1 3");
         }
-
-    
     }
 
     private Font deriveFont(boolean isBold, int fontSizeDelta) {
