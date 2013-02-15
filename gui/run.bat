@@ -1,6 +1,7 @@
 @echo off
-SETLOCAL ENABLEDELAYEDEXPANSION 
-SET PATH=%PATH%;..\lib\native\windows
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET LIBPATH=..\lib\native
+SET PATH=%PATH%;%LIBPATH%
 SET CLASSPATH=.;..\core
 
 REM Get all common jars.
@@ -25,4 +26,4 @@ FOR /D %%c IN (..\components\*) DO (
   )
 )
 
-java -Xms32m -Xmx128m -Ddebug=1 -Djava.net.preferIPV6Addresses=false -ea -Djava.net.preferIPv4stack=true -Dcom.sun.management.jmxremote.port=9595 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=127.0.0.1 -XX:-UseSplitVerifier com.limegroup.gnutella.gui.Main
+java -Xms32m -Xmx128m -Ddebug=1 -Djava.net.preferIPV6Addresses=false -ea -Djava.net.preferIPv4stack=true -Dcom.sun.management.jmxremote.port=9595 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=127.0.0.1 -Djava.library.path=%LIBPATH% com.limegroup.gnutella.gui.Main
