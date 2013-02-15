@@ -19,8 +19,6 @@ import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.FloatSetting;
 import org.limewire.setting.IntSetting;
 
-import com.frostwire.gui.player.RepeatMode;
-
 /**
  * Settings for Music Player
  */
@@ -29,7 +27,7 @@ public class PlayerSettings extends LimeProps {
     private PlayerSettings() {
     }
 
-    public static IntSetting LOOP_PLAYLIST = FACTORY.createIntSetting("LOOP_PLAYLIST", RepeatMode.NONE.getValue());
+    public static IntSetting LOOP_PLAYLIST = FACTORY.createIntSetting("LOOP_PLAYLIST", 0);//RepeatMode.NONE == 0
 
     public static BooleanSetting SHUFFLE_PLAYLIST = FACTORY.createBooleanSetting("SHUFFLE_PLAYLIST", false);
 
