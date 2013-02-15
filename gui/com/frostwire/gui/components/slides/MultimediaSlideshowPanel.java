@@ -22,7 +22,6 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -54,6 +53,7 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
     private SlideshowListener listener;
     private CardLayout layout;
     private List<Slide> slides;
+    private List<Slide> fallbackSlides;
 
     private JPanel container;
     private boolean useControls;
@@ -65,13 +65,15 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
         setup(slides);
     }
 
-    public MultimediaSlideshowPanel(final String url) {
+    public MultimediaSlideshowPanel(final String url, List<Slide> defaultSlides) {
+        fallbackSlides = defaultSlides;
         setupUI();
         new Thread(new Runnable() {
             public void run() {
                 load(url);
             }
         }).start();
+
     }
 
     @Override
@@ -115,24 +117,31 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
         setLayout(layout);
     }
 
-    private void setup(List<Slide> slides) {
+    private void setup(final List<Slide> slides) {
         this.slides = filter(slides);
 
-        int i = 0;
-        for (Slide s : slides) {
-            add(new SlidePanel(s, i), String.valueOf(i));
-            i++;
-        }
-
-        if (container != null && useControls) {
-            container.add(new SlideshowPanelControls(this), BorderLayout.PAGE_END);
-        }
-
-        if (slides != null && !slides.isEmpty()) {
-            timer = new Timer("SlideShow Timer");
-            timer.schedule(new SlideSwitcher(), slides.get(0).duration);
-        }
-
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                try {
+                    int i = 0;
+                    for (Slide s : slides) {
+                        add(new SlidePanel(s, i), String.valueOf(i));
+                        i++;
+                    }
+    
+                    if (container != null && useControls) {
+                        container.add(new SlideshowPanelControls(MultimediaSlideshowPanel.this), BorderLayout.PAGE_END);
+                    }
+    
+                    if (slides != null && !slides.isEmpty()) {
+                        timer = new Timer("SlideShow Timer");
+                        timer.schedule(new SlideSwitcher(), slides.get(0).duration);
+                    }
+                } catch (Exception e) {
+                    LOG.error(e.getMessage(),e);
+                }
+            }
+        });
     }
 
     private void load(final String url) {
@@ -142,22 +151,20 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
 
             if (jsonString != null) {
                 final SlideList slideList = new JsonEngine().toObject(jsonString, SlideList.class);
-                GUIMediator.safeInvokeLater(new Runnable() {
-                    public void run() {
-                        try {
-                            setup(slideList.slides);
-                        } catch (Exception e) {
-                            LOG.info("Failed load of Slide Show:" + url, e);
-                            slides = Collections.emptyList();
-                            // nothing happens
-                        }
-                    }
-                });
+                try {
+                    setup(slideList.slides);
+                } catch (Exception e) {
+                    LOG.info("Failed load of Slide Show:" + url, e);
+                    setup(fallbackSlides);
+                    // nothing happens
+                }
 
+            } else {
+                setup(fallbackSlides);
             }
         } catch (Exception e) {
             LOG.info("Failed load of Slide Show:" + url, e);
-            slides = Collections.emptyList();
+            setup(fallbackSlides);
             // nothing happens
         }
     }
@@ -228,16 +235,34 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
         this.useControls = useControls;
     }
     
+    private SlidePanel getCurrentSlidePanel() {
+        Component[] components = getComponents();
+        for (Component c : components) {
+            if (c.isVisible() && c instanceof SlidePanel) {
+                return ((SlidePanel) c);
+            }
+        }
+        return null;
+    }
+    
     class SlideSwitcher extends TimerTask {
 
         @Override
         public void run() {
-            layout.next(MultimediaSlideshowPanel.this);
-            if (listener != null) {
-                listener.onSlideChanged();
+            SlidePanel currentSlidePanel = getCurrentSlidePanel();
+            if (currentSlidePanel == null || !currentSlidePanel.isOverlayVisible() ) {
+            
+                layout.next(MultimediaSlideshowPanel.this);
+    
+                if (listener != null) {
+                    listener.onSlideChanged();
+                }
+
             }
             
-            timer.schedule(new SlideSwitcher(), MultimediaSlideshowPanel.this.slides.get(getCurrentSlideIndex()).duration);
+            if (currentSlidePanel != null) {
+                timer.schedule(new SlideSwitcher(), currentSlidePanel.getSlide().duration);
+            }
         }
     }
 }

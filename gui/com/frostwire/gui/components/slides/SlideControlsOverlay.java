@@ -3,6 +3,7 @@ package com.frostwire.gui.components.slides;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -26,7 +27,8 @@ class SlideControlsOverlay extends JPanel {
     private static final Color BACKGROUND = new Color(45, 52, 58); // 2d343a
     private static final float BACKGROUND_ALPHA = 0.7f;
     private static final Color TEXT_FOREGROUND = new Color(255, 255, 255);
-    private static final int TEXT_FONT_SIZE_DELTA = 3;
+    private static final int BASE_TEXT_FONT_SIZE_DELTA = 3;
+    private static final int TITLE_TEXT_FONT_SIZE_DELTA = BASE_TEXT_FONT_SIZE_DELTA + 3;
     private static final int SOCIAL_BAR_HEIGHT = 55;
 
     private final SlidePanelController controller;
@@ -51,11 +53,13 @@ class SlideControlsOverlay extends JPanel {
     }
 
     private void setupTitle() {
-        JLabel labelTitle = new JLabel(controller.getSlide().title);
-        labelTitle.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
-        labelTitle.setForeground(TEXT_FOREGROUND);
-        labelTitle.setFont(getFont().deriveFont(getFont().getSize2D() + TEXT_FONT_SIZE_DELTA));
-        add(labelTitle, "cell 0 0, span 5, top");
+        if (controller.getSlide().title != null) {
+            JLabel labelTitle = new JLabel(controller.getSlide().title);
+            labelTitle.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
+            labelTitle.setForeground(TEXT_FOREGROUND);
+            labelTitle.setFont(deriveFont(true,TITLE_TEXT_FONT_SIZE_DELTA));
+            add(labelTitle, "cell 0 0, span 5, top");
+        }
     }
 
     private void setupButtons() {
@@ -76,7 +80,7 @@ class SlideControlsOverlay extends JPanel {
         JLabel labelAuthor = new JLabel(slide.author + " " + I18n.tr("on"));
         labelAuthor.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
         labelAuthor.setForeground(TEXT_FOREGROUND);
-        labelAuthor.setFont(getFont().deriveFont(getFont().getSize2D() + TEXT_FONT_SIZE_DELTA));
+        labelAuthor.setFont(deriveFont(false,BASE_TEXT_FONT_SIZE_DELTA));
 
         add(labelAuthor, "cell 1 3, span 3, aligny baseline");
 
@@ -89,7 +93,7 @@ class SlideControlsOverlay extends JPanel {
         }
 
         if (slide.gplus != null) {
-            add(new OverlayIconButton(new SocialAction("Google Plus", slide.gplus, "gplus")), "cell 1 3");
+            add(new OverlayIconButton(new SocialAction("Google Plus", slide.gplus, "GPLUS")), "cell 1 3");
         }
 
         if (slide.youtube != null) {
@@ -101,6 +105,14 @@ class SlideControlsOverlay extends JPanel {
         }
 
     
+    }
+
+    private Font deriveFont(boolean isBold, int fontSizeDelta) {
+        Font font = getFont();
+        if (isBold) {
+            font = font.deriveFont(Font.BOLD);
+        }
+        return font.deriveFont(font.getSize2D() + fontSizeDelta);
     }
 
     private void addPreviewButtons(final Slide slide, String constraintVideoPreview, String constraintAudioPreview) {
@@ -231,7 +243,7 @@ class SlideControlsOverlay extends JPanel {
             super(action);
             putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
             setForeground(TEXT_FOREGROUND);
-            setFont(getFont().deriveFont(getFont().getSize2D() + TEXT_FONT_SIZE_DELTA));
+            setFont(getFont().deriveFont(getFont().getSize2D() + BASE_TEXT_FONT_SIZE_DELTA));
         }
     }
 

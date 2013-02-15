@@ -91,8 +91,8 @@ class SlidePanel extends JPanel {
             imageLabel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    System.out.println(e);
-                    System.out.println(controller.getSlide().method);
+                    //System.out.println(e);
+                    //System.out.println(controller.getSlide().method);
                     if (controller.getSlide().method == Slide.SLIDE_DOWNLOAD_METHOD_OPEN_URL) {
                         controller.downloadSlide();
                     }
@@ -124,5 +124,13 @@ class SlidePanel extends JPanel {
 
     public int getIndex() {
         return index;
+    }
+    
+    public boolean isOverlayVisible() {
+        return overlayControls.isVisible();
+    }
+
+    public Slide getSlide() {
+        return controller.getSlide();
     }
 }
