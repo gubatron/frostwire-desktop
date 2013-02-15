@@ -1,7 +1,6 @@
 package com.frostwire.gui.components.slides;
 
 import java.awt.AlphaComposite;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Graphics;
@@ -11,12 +10,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.plaf.ColorUIResource;
 
 import net.miginfocom.swing.MigLayout;
 
 import org.pushingpixels.substance.internal.utils.SubstanceTextUtilities;
 
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconButton;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
@@ -28,6 +27,7 @@ class SlideControlsOverlay extends JPanel {
     private static final float BACKGROUND_ALPHA = 0.7f;
     private static final Color TEXT_FOREGROUND = new Color(255, 255, 255);
     private static final int TEXT_FONT_SIZE_DELTA = 3;
+    private static final int SOCIAL_BAR_HEIGHT = 55;
 
     private final SlidePanelController controller;
     private final Composite overlayComposite;
@@ -47,7 +47,7 @@ class SlideControlsOverlay extends JPanel {
 
         setupTitle();
         setupButtons();
-        setupBottom();
+        setupSocialBar();
     }
 
     private void setupTitle() {
@@ -70,7 +70,7 @@ class SlideControlsOverlay extends JPanel {
         }
     }
 
-    private void setupBottom() {
+    private void setupSocialBar() {
         Slide slide = controller.getSlide();
 
         JLabel labelAuthor = new JLabel(slide.author + " " + I18n.tr("on"));
@@ -83,6 +83,24 @@ class SlideControlsOverlay extends JPanel {
         if (slide.facebook != null) {
             add(new OverlayIconButton(new SocialAction("Facebook", slide.facebook)), "cell 1 3");
         }
+
+        if (slide.twitter != null) {
+            add(new OverlayIconButton(new SocialAction("Twitter", slide.twitter)), "cell 1 3");
+        }
+
+        if (slide.gplus != null) {
+            add(new OverlayIconButton(new SocialAction("Google Plus", slide.gplus, "gplus")), "cell 1 3");
+        }
+
+        if (slide.youtube != null) {
+            add(new OverlayIconButton(new SocialAction("YouTube", slide.youtube)), "cell 1 3");
+        }
+
+        if (slide.instagram != null) {
+            add(new OverlayIconButton(new SocialAction("Instagram", slide.instagram)), "cell 1 3");
+        }
+
+    
     }
 
     private void addPreviewButtons(final Slide slide, String constraintVideoPreview, String constraintAudioPreview) {
@@ -121,7 +139,13 @@ class SlideControlsOverlay extends JPanel {
         g2d.setColor(background);
         g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.setComposite(c);
-
+        
+        
+        g2d.setColor(Color.BLACK);
+        g2d.fillRect(0, getHeight()-SOCIAL_BAR_HEIGHT, getWidth(), SOCIAL_BAR_HEIGHT);
+        
+        g2d.setColor(background);
+        
         super.paint(g);
     }
 
@@ -215,19 +239,22 @@ class SlideControlsOverlay extends JPanel {
 
         private final String url;
 
-        public SocialAction(String network, String url) {
+        public SocialAction(String networkName, String url) {
+            this(networkName, url, networkName.toUpperCase());
+        }
+        
+        public SocialAction(String networkName, String url, String imageName) {
             this.url = url;
 
-            putValue(Action.SHORT_DESCRIPTION, network);
+            putValue(Action.SHORT_DESCRIPTION, networkName);
 
-            String code = network.toUpperCase();
-
-            putValue(LimeAction.ICON_NAME, "SLIDE_CONTROLS_OVERLAY_" + code);
-            putValue(LimeAction.ICON_NAME_ROLLOVER, "SLIDE_CONTROLS_OVERLAY_" + code + "_ROLLOVER");
+            putValue(LimeAction.ICON_NAME, "SLIDE_CONTROLS_OVERLAY_" + imageName);
+            putValue(LimeAction.ICON_NAME_ROLLOVER, "SLIDE_CONTROLS_OVERLAY_" + imageName + "_ROLLOVER");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            GUIMediator.openURL(url);
         }
     }
 }
