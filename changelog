@@ -1,9 +1,15 @@
 frostwire (5.5.4) stable; urgency=high
   * New Feature: extract audio (.m4a) from (.mp4) videos on right click.
+  * New Core Feature: HTTP resumeable large transfer support.
   * Upgrade: Default save folder for cloud downloads is updated without restarting.
+  * Upgrade: 'Repeat song' playback mode now available.
+  * Upgrade: Enriched promotion display, now with audio and video previews and
+    shortcuts to content creator's social media channels/streams.
+  * Upgrade: binary compatibility improved for Windows releases.
   * Bug fix: if default save folder is changed it's now part of library scanned folders.
   * Bug fix: smart search engine wasn't notifying when it was done if there were no results.
- -- FrostWire Team <contact@frostwire.com>  Wed, 06 Feb 2013 21:46:06 -0500
+  * Bug fix: several crashes and errors fixed.
+ -- FrostWire Team <contact@frostwire.com>  Sat, 16 Feb 2013 15:38:57 -0500
 
 frostwire (5.5.3) stable; urgency=high
   * Bug fix: freeze on Windows XP. (Windows release only)
