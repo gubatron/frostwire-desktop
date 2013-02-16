@@ -19,25 +19,23 @@
 package com.frostwire.gui.player;
 
 public enum RepeatMode {
-    	NONE(0), 
-    	SONG(1), 
-    	ALL(2);
-    
+    NONE(0), ALL(1), SONG(2);
+
     private final int value;
     private static final RepeatMode[] vals = RepeatMode.values();
-	
+
     private RepeatMode(int value) {
-    	this.value = value;
+        this.value = value;
     }
-    
+
     public int getValue() {
-    	return value;
+        return value;
     }
-    
+
     /*
      * get next value sequentially in this enumeration
      */
     public RepeatMode getNextState() {
-    	return ( vals[ ((getValue() + 1) % vals.length) ] );
+        return (vals[((getValue() + 1) % vals.length)]);
     }
 }
