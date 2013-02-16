@@ -1,7 +1,6 @@
 package com.limegroup.gnutella.gui;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -199,7 +198,8 @@ public class NativeFileIconController implements FileIconController {
         File file = null;
 		try {
 			file = File.createTempFile("dummy","."+ext);
-		} catch (IOException e1) {
+		} catch (Exception e1) {
+		    return null;
 		}
 
 		Icon iconCandidate = null;
