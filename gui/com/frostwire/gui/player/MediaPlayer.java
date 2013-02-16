@@ -232,6 +232,10 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      * Loads a MediaSource into the player to play next
      */
     public void loadMedia(MediaSource source, boolean play, boolean playNextSong, Playlist currentPlaylist, List<MediaSource> playlistFilesView) {
+        if (source == null) {
+            return;
+        }
+        
         if (PlayerSettings.USE_OS_DEFAULT_PLAYER.getValue()) {
             playInOS(source);
             return;
@@ -474,7 +478,9 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     }
 
     public static boolean isPlayableFile(MediaSource mediaSource) {
-        if (mediaSource.getFile() != null) {
+        if (mediaSource == null) {
+            return false;
+        } else if (mediaSource.getFile() != null) {
             return mediaSource.getFile().exists() && isPlayableFile(mediaSource.getFile());
         } else if (mediaSource.getPlaylistItem() != null) {
             return new File(mediaSource.getPlaylistItem().getFilePath()).exists() && isPlayableFile(mediaSource.getPlaylistItem().getFilePath());
@@ -702,15 +708,17 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         while ((songFile = findRandomMediaFile(currentMedia)) == null && count-- > 0)
             ;
 
-        if (count > 0) {
-            lastRandomFiles.add(songFile);
-            if (lastRandomFiles.size() > 3) {
-                lastRandomFiles.poll();
+        if (songFile != null) {
+            if (count > 0) {
+                lastRandomFiles.add(songFile);
+                if (lastRandomFiles.size() > 3) {
+                    lastRandomFiles.poll();
+                }
+            } else {
+                songFile = currentMedia;
+                lastRandomFiles.clear();
+                lastRandomFiles.add(songFile);
             }
-        } else {
-            songFile = currentMedia;
-            lastRandomFiles.clear();
-            lastRandomFiles.add(songFile);
         }
 
         return songFile;
@@ -811,11 +819,13 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             return null;
         }
         int n = playlistFilesView.length;
+        
         if (n == 0) {
             return null;
         } else if (n == 1) {
             return playlistFilesView[0];
         }
+        
         int index = new Random(System.currentTimeMillis()).nextInt(n);
 
         for (int i = index; i < n; i++) {

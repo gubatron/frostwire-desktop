@@ -500,7 +500,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
     private void playMedia() {
         LibraryPlaylistsTableDataLine line = DATA_MODEL.get(TABLE.getSelectedRow());
-        if (line == null) {
+        if (line == null || line.getPlayListItem() == null) {
             return;
         }
 

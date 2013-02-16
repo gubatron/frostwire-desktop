@@ -681,7 +681,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
     public void handleActionKey() {
         LibraryFilesTableDataLine line = DATA_MODEL.get(TABLE.getSelectedRow());
-        if (line == null) {
+        if (line == null || line.getFile() == null) {
             return;
         }
         if (getMediaType().equals(MediaType.getAudioMediaType()) && MediaPlayer.isPlayableFile(line.getFile())) {

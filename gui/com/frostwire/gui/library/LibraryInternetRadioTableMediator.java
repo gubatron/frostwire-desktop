@@ -398,7 +398,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
     private void playSong() {
         LibraryInternetRadioTableDataLine line = DATA_MODEL.get(TABLE.getSelectedRow());
-        if (line == null) {
+        if (line == null || line.getInitializeObject() == null || line.getInitializeObject().getUrl() == null) {
             return;
         }
 
