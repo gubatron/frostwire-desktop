@@ -47,13 +47,13 @@ import com.coremedia.iso.boxes.Box;
 import com.coremedia.iso.boxes.ContainerBox;
 import com.coremedia.iso.boxes.apple.AppleDataBox;
 import com.frostwire.jpeg.JPEGImageIO;
-import com.frostwire.mp3.ID3v2;
-import com.frostwire.mp3.Mp3File;
 import com.googlecode.mp4parser.AbstractBox;
 import com.googlecode.mp4parser.util.Path;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
+import com.mpatric.mp3agic.ID3v2;
+import com.mpatric.mp3agic.Mp3File;
 
 /**
  * @author gubatron

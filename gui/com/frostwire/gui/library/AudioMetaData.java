@@ -25,8 +25,8 @@ import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.gui.mplayer.MPlayer;
-import com.frostwire.mp3.ID3v2;
-import com.frostwire.mp3.Mp3File;
+import com.mpatric.mp3agic.ID3v2;
+import com.mpatric.mp3agic.Mp3File;
 
 /**
  * 

@@ -37,10 +37,10 @@ import jd.plugins.PluginException;
 import jd.plugins.PluginForHost;
 import jd.utils.locale.JDL;
 
-import com.frostwire.mp3.ID3Wrapper;
-import com.frostwire.mp3.ID3v1Tag;
-import com.frostwire.mp3.ID3v23Tag;
-import com.frostwire.mp3.Mp3File;
+import com.mpatric.mp3agic.ID3Wrapper;
+import com.mpatric.mp3agic.ID3v1Tag;
+import com.mpatric.mp3agic.ID3v23Tag;
+import com.mpatric.mp3agic.Mp3File;
 
 @HostPlugin(revision = "$Revision$", interfaceVersion = 2, names = { "soundcloud.com" }, urls = { "https://(www\\.)?soundclouddecrypted\\.com/[a-z\\-_0-9]+/[a-z\\-_0-9]+" }, flags = { 0 })
 public class SoundcloudCom extends PluginForHost {
