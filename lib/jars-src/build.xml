@@ -28,6 +28,7 @@
 		<ant dir="fwtips" />
 		<ant dir="mp4parser" />
 		<ant dir="mp3agic" />
+		<ant dir="jaudiotagger" />
 
 		<antcall target="copyjars" />
 
@@ -58,6 +59,7 @@
 		<ant dir="fwtips" target="clean" />
 		<ant dir="mp4parser" target="clean" />
 		<ant dir="mp3agic" target="clean" />
+		<ant dir="jaudiotagger" target="clean" />
 
 		<mkdir dir="dist" />
 
@@ -87,6 +89,7 @@
 		<copy file="dist/fwtips.jar" todir="../jars/" />
 		<copy file="dist/mp4parser.jar" todir="../jars/" />
 		<copy file="dist/mp3agic.jar" todir="../jars/" />
+		<copy file="dist/jaudiotagger.jar" todir="../jars/" />
 
 	</target>
 

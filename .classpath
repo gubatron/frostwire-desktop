@@ -39,5 +39,6 @@
 	<classpathentry kind="lib" path="lib/jars/fwtips.jar" sourcepath="/frostwire-tips/src/java"/>
 	<classpathentry kind="lib" path="lib/jars/mp4parser.jar" sourcepath="lib/jars-src/mp4parser"/>
 	<classpathentry kind="lib" path="lib/jars/mp3agic.jar" sourcepath="lib/jars-src/mp3agic"/>
+	<classpathentry kind="lib" path="lib/jars/jaudiotagger.jar" sourcepath="lib/jars-src/jaudiotagger"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
