@@ -38,5 +38,6 @@
 	<classpathentry kind="lib" path="lib/jars/metadata-extractor-2.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/jars/cling-kernel.jar"/>
 	<classpathentry kind="lib" path="lib/jars/fwtips.jar" sourcepath="/frostwire-tips/src/java"/>
+	<classpathentry kind="lib" path="lib/jars/mp4parser.jar" sourcepath="lib/jars-src/mp4parser"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

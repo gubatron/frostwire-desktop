@@ -26,6 +26,7 @@
   	<ant dir="metadata-extractor-2.6.2-src"/>
   	<ant dir="cling-kernel"/>
   	<ant dir="fwtips"/>
+  	<ant dir="mp4parser"/>
     
     <antcall target="copyjars"/>
     
@@ -54,6 +55,7 @@
   	<ant dir="metadata-extractor-2.6.2-src" target="clean"/>
   	<ant dir="cling-kernel" target="clean"/>
   	<ant dir="fwtips" target="clean"/>
+  	<ant dir="mp4parser" target="clean"/>
     
     <mkdir dir="dist"/>
     
@@ -81,6 +83,7 @@
   	<copy file="dist/metadata-extractor-2.6.2.jar" todir="../jars/"/>
     <copy file="dist/cling-kernel.jar" todir="../jars/"/>
   	<copy file="dist/fwtips.jar" todir="../jars/"/>
+  	<copy file="dist/mp4parser.jar" todir="../jars/"/>
     
   </target>
 

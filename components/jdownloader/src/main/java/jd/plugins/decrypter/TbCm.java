@@ -28,6 +28,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,6 +36,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
@@ -66,26 +68,31 @@ import jd.utils.locale.JDL;
 
 import org.limewire.util.FilenameUtils;
 
-import com.frostwire.mp4.DefaultMp4Builder;
-import com.frostwire.mp4.IsoFile;
-import com.frostwire.mp4.Movie;
-import com.frostwire.mp4.MovieCreator;
-import com.frostwire.mp4.Track;
-import com.frostwire.mp4.boxes.Box;
-import com.frostwire.mp4.boxes.FileTypeBox;
-import com.frostwire.mp4.boxes.HandlerBox;
-import com.frostwire.mp4.boxes.MetaBox;
-import com.frostwire.mp4.boxes.MovieBox;
-import com.frostwire.mp4.boxes.TrackBox;
-import com.frostwire.mp4.boxes.UserDataBox;
-import com.frostwire.mp4.boxes.apple.AppleAlbumArtistBox;
-import com.frostwire.mp4.boxes.apple.AppleAlbumBox;
-import com.frostwire.mp4.boxes.apple.AppleArtistBox;
-import com.frostwire.mp4.boxes.apple.AppleCoverBox;
-import com.frostwire.mp4.boxes.apple.AppleItemListBox;
-import com.frostwire.mp4.boxes.apple.AppleMediaTypeBox;
-import com.frostwire.mp4.boxes.apple.AppleTrackTitleBox;
-import com.frostwire.mp4.boxes.mp4.objectdescriptors.BitWriterBuffer;
+import com.coremedia.iso.BoxParser;
+import com.coremedia.iso.IsoFile;
+import com.coremedia.iso.PropertyBoxParserImpl;
+import com.coremedia.iso.boxes.Box;
+import com.coremedia.iso.boxes.ContainerBox;
+import com.coremedia.iso.boxes.FileTypeBox;
+import com.coremedia.iso.boxes.HandlerBox;
+import com.coremedia.iso.boxes.MetaBox;
+import com.coremedia.iso.boxes.MovieBox;
+import com.coremedia.iso.boxes.TrackBox;
+import com.coremedia.iso.boxes.UserDataBox;
+import com.coremedia.iso.boxes.apple.AppleAlbumArtistBox;
+import com.coremedia.iso.boxes.apple.AppleAlbumBox;
+import com.coremedia.iso.boxes.apple.AppleArtistBox;
+import com.coremedia.iso.boxes.apple.AppleCoverBox;
+import com.coremedia.iso.boxes.apple.AppleItemListBox;
+import com.coremedia.iso.boxes.apple.AppleMediaTypeBox;
+import com.coremedia.iso.boxes.apple.AppleTrackTitleBox;
+import com.googlecode.mp4parser.AbstractBox;
+import com.googlecode.mp4parser.authoring.Movie;
+import com.googlecode.mp4parser.authoring.Mp4TrackImpl;
+import com.googlecode.mp4parser.authoring.Track;
+import com.googlecode.mp4parser.authoring.builder.DefaultMp4Builder;
+import com.googlecode.mp4parser.authoring.container.mp4.MovieCreator;
+import com.googlecode.mp4parser.boxes.mp4.objectdescriptors.BitWriterBuffer;
 
 import de.savemytube.flv.FLV;
 
@@ -756,7 +763,7 @@ public class TbCm extends PluginForDecrypt {
             new File(filename).renameTo(new File(mp4Filename));
             FileInputStream fis = new FileInputStream(mp4Filename);
             FileChannel inFC = fis.getChannel();
-            Movie inVideo = MovieCreator.build(inFC);
+            Movie inVideo = buildMovie(inFC);
 
             Track audioTrack = null;
 
@@ -786,14 +793,14 @@ public class TbCm extends PluginForDecrypt {
                     return new FileTypeBox("M4A ", 0, minorBrands);
                 };
                 
-                protected MovieBox createMovieBox(Movie movie) {
-                    MovieBox moov = super.createMovieBox(movie);
+                protected MovieBox createMovieBox(Movie movie, Map<Track, int[]> chunks) {
+                    MovieBox moov = super.createMovieBox(movie, chunks);
                     moov.getMovieHeaderBox().setVersion(0);
                     return moov;
                 };
                 
-                protected TrackBox createTrackBox(Track track, Movie movie) {
-                    TrackBox trak = super.createTrackBox(track, movie);
+                protected TrackBox createTrackBox(Track track, Movie movie, Map<Track, int[]> chunks) {
+                    TrackBox trak = super.createTrackBox(track, movie, chunks);
                     
                     trak.getTrackHeaderBox().setVersion(0);
                     trak.getTrackHeaderBox().setVolume(1.0f);
@@ -839,6 +846,28 @@ public class TbCm extends PluginForDecrypt {
             TbCm.LOG.info("Error demuxing MP4 audio - " + filename);
             return false;
         }
+    }
+    
+    public static Movie buildMovie(ReadableByteChannel channel) throws IOException {
+        BoxParser parser = new PropertyBoxParserImpl() {
+            @Override
+            public Box parseBox(ReadableByteChannel byteChannel, ContainerBox parent) throws IOException {
+                Box box = super.parseBox(byteChannel, parent);
+
+                if (box instanceof AbstractBox) {
+                    ((AbstractBox) box).parseDetails();
+                }
+
+                return box;
+            }
+        };
+        IsoFile isoFile = new IsoFile(channel, parser);
+        Movie m = new Movie();
+        List<TrackBox> trackBoxes = isoFile.getMovieBox().getBoxes(TrackBox.class);
+        for (TrackBox trackBox : trackBoxes) {
+            m.addTrack(new Mp4TrackImpl(trackBox));
+        }
+        return m;
     }
     
     private static void extractAAC(Track audioTrack) throws Throwable {
