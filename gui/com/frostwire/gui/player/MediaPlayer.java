@@ -344,13 +344,16 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         setVolume(volume);
 
         String filename = "";
-        if (currentMedia.getFile() != null) {
-            filename = currentMedia.getFile().getAbsolutePath();
-        } else if (currentMedia.getURL() != null) {
-            filename = currentMedia.getURL().toString();
-        } else if (currentMedia.getPlaylistItem() != null) {
-            filename = currentMedia.getPlaylistItem().getFilePath();
+        if (currentMedia != null) {
+	        if (currentMedia.getFile() != null) {
+	            filename = currentMedia.getFile().getAbsolutePath();
+	        } else if (currentMedia.getURL() != null) {
+	            filename = currentMedia.getURL().toString();
+	        } else if (currentMedia.getPlaylistItem() != null) {
+	            filename = currentMedia.getPlaylistItem().getFilePath();
+	        }
         }
+        
         return filename;
     }
 
