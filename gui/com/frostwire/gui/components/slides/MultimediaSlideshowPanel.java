@@ -43,7 +43,9 @@ import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Contains all the SlideshowPanels.
+ * 
  * @author gubatron
+ * @author aldenml
  *
  */
 public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
@@ -97,7 +99,7 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
         if (slideIndex >= 0 && slideIndex < getNumSlides()) {
             layout.show(this, String.valueOf(slideIndex));
         }
-        
+
         if (timer != null) {
             timer.cancel();
         }
@@ -128,17 +130,17 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
                         add(new SlidePanel(s, i), String.valueOf(i));
                         i++;
                     }
-    
+
                     if (container != null && useControls) {
                         container.add(new SlideshowPanelControls(MultimediaSlideshowPanel.this), BorderLayout.PAGE_END);
                     }
-    
+
                     if (slides != null && !slides.isEmpty()) {
                         timer = new Timer("SlideShow Timer");
                         timer.schedule(new SlideSwitcher(), slides.get(0).duration);
                     }
                 } catch (Exception e) {
-                    LOG.error(e.getMessage(),e);
+                    LOG.error(e.getMessage(), e);
                 }
             }
         });
@@ -234,7 +236,7 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
         this.container = container;
         this.useControls = useControls;
     }
-    
+
     private SlidePanel getCurrentSlidePanel() {
         Component[] components = getComponents();
         for (Component c : components) {
@@ -244,22 +246,22 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
         }
         return null;
     }
-    
+
     class SlideSwitcher extends TimerTask {
 
         @Override
         public void run() {
             SlidePanel currentSlidePanel = getCurrentSlidePanel();
-            if (currentSlidePanel == null || !currentSlidePanel.isOverlayVisible() ) {
-            
+            if (currentSlidePanel == null || !currentSlidePanel.isOverlayVisible()) {
+
                 layout.next(MultimediaSlideshowPanel.this);
-    
+
                 if (listener != null) {
                     listener.onSlideChanged();
                 }
 
             }
-            
+
             if (currentSlidePanel != null) {
                 timer.schedule(new SlideSwitcher(), currentSlidePanel.getSlide().duration);
             }
