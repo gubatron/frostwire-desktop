@@ -24,6 +24,8 @@ import java.util.Map;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
+import com.frostwire.gui.library.tags.TagsData;
+import com.frostwire.gui.library.tags.TagsReader;
 import com.frostwire.gui.mplayer.MPlayer;
 import com.mpatric.mp3agic.ID3v2;
 import com.mpatric.mp3agic.Mp3File;
@@ -47,10 +49,14 @@ public class AudioMetaData {
     private String year;
 
     public AudioMetaData(File file) {
-        readUsingMPlayer(file);
         if (file.getName().endsWith("mp3")) {
-            readUsingMP3Tags(file);
+            readUsingTagsReader(file);
+        } else {
+            readUsingMPlayer(file);
         }
+        //        if (file.getName().endsWith("mp3")) {
+        //            readUsingMP3Tags(file);
+        //        }
 
         sanitizeData(file);
     }
@@ -143,6 +149,21 @@ public class AudioMetaData {
         } catch (Exception e) {
             // ignore
         }
+    }
+
+    private void readUsingTagsReader(File file) {
+        TagsReader reader = new TagsReader(file);
+        TagsData data = reader.parse();
+
+        durationInSecs = data.getDuration();
+        bitrate = data.getBitrate();
+        title = data.getTitle();
+        artist = data.getArtist();
+        album = data.getAlbum();
+        comment = data.getComment();
+        genre = data.getGenre();
+        track = data.getTrack();
+        year = data.getYear();
     }
 
     private void sanitizeData(File file) {
