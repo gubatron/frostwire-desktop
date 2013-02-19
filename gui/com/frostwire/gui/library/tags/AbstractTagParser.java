@@ -35,6 +35,8 @@ abstract class AbstractTagParser implements TagsParser {
 
         if (genre == null) {
             genre = "";
+        } else {
+            genre = genre.replaceFirst("\\(.*\\)", "");
         }
 
         if (track == null) {

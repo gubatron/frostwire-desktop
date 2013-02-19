@@ -34,11 +34,7 @@ class MP3Parser extends JaudiotaggerParser {
     }
 
     protected String getGenre(AudioFile audioFile) {
-        String value = getValueSafe(super.getGenre(audioFile), audioFile, ID3v24Frames.FRAME_ID_GENRE);
-        if (value != null) {
-            value = value.replaceFirst("\\(.*\\)", "");
-        }
-        return value;
+        return getValueSafe(super.getGenre(audioFile), audioFile, ID3v24Frames.FRAME_ID_GENRE);
     }
 
     protected String getTrack(AudioFile audioFile) {

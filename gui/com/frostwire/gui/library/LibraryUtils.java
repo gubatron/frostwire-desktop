@@ -46,6 +46,8 @@ import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.library.LibraryPlaylistsTableTransferable.Item;
+import com.frostwire.gui.library.tags.TagsData;
+import com.frostwire.gui.library.tags.TagsReader;
 import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -82,8 +84,8 @@ public class LibraryUtils {
     private static void addPlaylistItem(Playlist playlist, File file, boolean starred, int index) {
         try {
             LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Importing") + " " + file.getName());
-            AudioMetaData mt = new AudioMetaData(file);
-            PlaylistItem item = playlist.newItem(file.getAbsolutePath(), file.getName(), file.length(), FileUtils.getFileExtension(file), mt.getTitle(), mt.getDurationInSecs(), mt.getArtist(), mt.getAlbum(), "",// TODO: cover art path
+            TagsData mt = new TagsReader(file).parse();
+            PlaylistItem item = playlist.newItem(file.getAbsolutePath(), file.getName(), file.length(), FileUtils.getFileExtension(file), mt.getTitle(), mt.getDuration(), mt.getArtist(), mt.getAlbum(), "",// TODO: cover art path
                     mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear(), starred);
 
             List<PlaylistItem> items = playlist.getItems();
@@ -598,7 +600,7 @@ public class LibraryUtils {
                         LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Refreshing") + " " + item.getTrackAlbum() + " - " + item.getTrackTitle());
                         File file = new File(item.getFilePath());
                         if (file.exists()) {
-                            AudioMetaData mt = new AudioMetaData(file);
+                            TagsData mt = new TagsReader(file).parse();
                             LibraryMediator.getLibrary().updatePlaylistItemProperties(item.getFilePath(), mt.getTitle(), mt.getArtist(), mt.getAlbum(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear());
                         }
                     } catch (Exception e) {

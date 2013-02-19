@@ -38,7 +38,8 @@ import com.frostwire.core.providers.ShareFilesDB.Columns;
 import com.frostwire.core.providers.UniversalStore;
 import com.frostwire.core.providers.UniversalStore.Documents.DocumentsColumns;
 import com.frostwire.database.Cursor;
-import com.frostwire.gui.library.AudioMetaData;
+import com.frostwire.gui.library.tags.TagsData;
+import com.frostwire.gui.library.tags.TagsReader;
 import com.frostwire.util.MimeDetector;
 import com.limegroup.gnutella.MediaType;
 
@@ -149,7 +150,7 @@ public class UniversalScanner {
         fillCommonValues(values, Constants.FILE_TYPE_AUDIO, filePath, file, mime, shared);
 
         try {
-            AudioMetaData mt = new AudioMetaData(file);
+            TagsData mt = new TagsReader(file).parse();
 
             values.put(Columns.TITLE, mt.getTitle());
             values.put(Columns.ARTIST, mt.getArtist());
