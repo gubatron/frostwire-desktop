@@ -22,10 +22,10 @@ import java.util.Map;
 import jd.PluginWrapper;
 import jd.config.ConfigContainer;
 import jd.config.ConfigEntry;
-//import jd.gui.UserIO;
 import jd.http.Browser;
 import jd.http.Cookie;
 import jd.http.Cookies;
+import jd.http.URLConnectionAdapter;
 import jd.nutils.encoding.Encoding;
 import jd.parser.Regex;
 import jd.parser.html.Form;
@@ -43,19 +43,37 @@ import jd.plugins.decrypter.TbCm.DestinationFormat;
 import jd.utils.JDUtilities;
 import jd.utils.locale.JDL;
 
-@HostPlugin(revision = "$Revision: 18484 $", interfaceVersion = 2, names = { "youtube.com" }, urls = { "httpJDYoutube://[\\w\\.\\-]*?youtube\\.com/(videoplayback\\?.+|get_video\\?.*?video_id=.+&.+(&fmt=\\d+)?)" }, flags = { 2 })
+@HostPlugin(revision = "$Revision: 19806 $", interfaceVersion = 2, names = { "youtube.com" }, urls = { "(httpJDYoutube://[\\w\\.\\-]*?youtube\\.com/(videoplayback\\?.+|get_video\\?.*?video_id=.+&.+(&fmt=\\d+)?))|(httpJDYoutube://video\\.google\\.com/timedtext\\?type=track&name=.*?\\&lang=[a-z]{2}\\&v=[a-z\\-_A-Z0-9]+)|(httpJDYoutube://img\\.youtube.com/vi/[a-z\\-_A-Z0-9]+/(hqdefault|mqdefault|default|maxresdefault).jpg)" }, flags = { 2 })
 public class Youtube extends PluginForHost {
 
-    private static Object                                    lock         = new Object();
-    private boolean                                          prem         = false;
-    private static final String                              IDASFILENAME = "ISASFILENAME";
-    private static final String                              ALLOW_MP3    = "ALLOW_MP3";
-    private static final String                              ALLOW_MP4    = "ALLOW_MP4";
-    private static final String                              ALLOW_WEBM   = "ALLOW_WEBM";
-    private static final String                              ALLOW_FLV    = "ALLOW_FLV";
-    private static final String                              ALLOW_3GP    = "ALLOW_3GP";
-    private static final String                              FAST_CHECK   = "FAST_CHECK2";
-    private static HashMap<Account, HashMap<String, String>> loginCookies = new HashMap<Account, HashMap<String, String>>();
+    private static Object       lock                    = new Object();
+    private boolean             prem                    = false;
+    private static final String ISVIDEOANDPLAYLIST      = "ISVIDEOANDPLAYLIST";
+    private static final String IDASFILENAME            = "ISASFILENAME";
+    private static final String IDINFILENAME            = "IDINFILENAME_V2";
+    private static final String USEUPLOADERINNAME       = "USEUPLOADERINNAME";
+    private static final String ALLOW_MP3               = "ALLOW_MP3_V2";
+    private static final String ALLOW_MP4               = "ALLOW_MP4_V2";
+    private static final String ALLOW_WEBM              = "ALLOW_WEBM_V2";
+    private static final String ALLOW_FLV               = "ALLOW_FLV_V2";
+    private static final String ALLOW_3GP               = "ALLOW_3GP_V2";
+    private static final String ALLOW_240P              = "ALLOW_240P_V2";
+    private static final String ALLOW_360P              = "ALLOW_360P_V2";
+    private static final String ALLOW_480P              = "ALLOW_480P_V2";
+    private static final String ALLOW_720P              = "ALLOW_720P_V2";
+    private static final String ALLOW_1080P             = "ALLOW_1080P_V2";
+    private static final String ALLOW_ORIGINAL          = "ALLOW_ORIGINAL_V2";
+    private static final String ALLOW_BEST              = "ALLOW_BEST2";
+    private static final String ALLOW_SUBTITLES         = "ALLOW_SUBTITLES_V2";
+    private static final String GROUP_FORMAT            = "GROUP_FORMAT";
+    private static final String ALLOW_THUMBNAIL_MAX     = "ALLOW_THUMBNAIL_MAX";
+    private static final String ALLOW_THUMBNAIL_HQ      = "ALLOW_THUMBNAIL_HQ";
+    private static final String ALLOW_THUMBNAIL_MQ      = "ALLOW_THUMBNAIL_MQ";
+    private static final String ALLOW_THUMBNAIL_DEFAULT = "ALLOW_THUMBNAIL_DEFAULT";
+    private static final String FAST_CHECK              = "FAST_CHECK2";
+    private static final String PROXY_ACTIVE            = "PROXY_ACTIVE";
+    private static final String PROXY_ADDRESS           = "PROXY_ADDRESS";
+    private static final String PROXY_PORT              = "PROXY_PORT";
 
     public static String unescape(final String s) {
         char ch;
@@ -158,12 +176,14 @@ public class Youtube extends PluginForHost {
     public void handleFree(final DownloadLink downloadLink) throws Exception {
         this.setBrowserExclusive();
         this.prem = false;
+
         /* we now have to get fresh links */
+
         downloadLink.setProperty("valid", false);
         this.requestFileInformation(downloadLink);
         this.br.setDebug(true);
         this.dl = jd.plugins.BrowserAdapter.openDownload(this.br, downloadLink, downloadLink.getDownloadURL(), true, 0);
-        if (!this.dl.getConnection().isContentDisposition() && !this.dl.getConnection().getContentType().startsWith("video")) {
+        if (!this.dl.getConnection().isContentDisposition() && !this.dl.getConnection().getContentType().startsWith("video") && !downloadLink.getBooleanProperty("subtitle", false) && !downloadLink.getBooleanProperty("thumbnail", false)) {
             downloadLink.setProperty("valid", false);
             this.dl.getConnection().disconnect();
             throw new PluginException(LinkStatus.ERROR_RETRY);
@@ -199,8 +219,9 @@ public class Youtube extends PluginForHost {
             try {
                 br.setDebug(true);
                 this.setBrowserExclusive();
-                if (refresh == false && loginCookies.containsKey(account)) {
-                    HashMap<String, String> cookies = loginCookies.get(account);
+                if (account.getProperty("cookies") != null) {
+                    @SuppressWarnings("unchecked")
+                    HashMap<String, String> cookies = (HashMap<String, String>) account.getProperty("cookies");
                     if (cookies != null) {
                         if (cookies.containsKey("LOGIN_INFO")) {
                             for (final Map.Entry<String, String> cookieEntry : cookies.entrySet()) {
@@ -208,10 +229,17 @@ public class Youtube extends PluginForHost {
                                 final String value = cookieEntry.getValue();
                                 br.setCookie("youtube.com", key, value);
                             }
-                            return;
+
+                            if (refresh == false)
+                                return;
+                            else {
+                                br.getPage("http://www.youtube.com");
+                                if (!br.containsHTML("<span class=\"yt-uix-button-content\">Sign In </span></button></div>")) { return; }
+                            }
                         }
                     }
                 }
+
                 br.setFollowRedirects(true);
                 br.getPage("http://www.youtube.com/");
                 /* first call to google */
@@ -255,19 +283,33 @@ public class Youtube extends PluginForHost {
                     account.setValid(false);
                     throw new PluginException(LinkStatus.ERROR_PREMIUM, PluginException.VALUE_ID_PREMIUM_DISABLE);
                 }
-                String setCookies[] = br.getRegex("DOMAIN_SETTINGS.*?uri: '(https.*?)'").getColumn(0);
-                String signIn = br.getRegex("CONTINUE_URL = '(http.*?)'").getMatch(0);
-                if (setCookies == null || signIn == null) {
-                    account.setValid(false);
-                    throw new PluginException(LinkStatus.ERROR_PREMIUM, PluginException.VALUE_ID_PREMIUM_DISABLE);
+
+                // 2-step verification
+                if (br.containsHTML("2-step verification")) {
+                    //String step = UserIO.getInstance().requestInputDialog(UserIO.NO_COUNTDOWN | UserIO.NO_ICON, JDL.L("plugins.hoster.youtube.2step.title", "2-Step verification required"), JDL.L("plugins.hoster.youtube.2step.message", "Youtube.com requires Google's 2-Step verification. Please input the code from your phone or the backup list."), "", null, null, null);
+                    Form stepform = br.getForm(0);
+                    //stepform.put("smsUserPin", step);
+                    stepform.remove("exp");
+                    stepform.remove("ltmpl");
+                    br.setFollowRedirects(true);
+                    br.submitForm(stepform);
+
+                    if (br.containsHTML("The code you entered didn&#39;t verify")) {
+                        account.setValid(false);
+                        throw new PluginException(LinkStatus.ERROR_PREMIUM, JDL.L("plugins.hoster.youtube.2step.failed", "2-Step verification code couldn't be verified!"));
+                    }
+
+                    stepform = br.getForm(0);
+                    stepform.remove("nojssubmit");
+                    br.submitForm(stepform);
+                    br.getPage("http://www.youtube.com/signin?action_handle_signin=true");
+                } else {
+                    br.setFollowRedirects(true);
+                    br.getPage(br.getRedirectLocation());
+
+                    String location = unescape(br.getRegex("location\\.replace\\(\"(.*?)\"").getMatch(0));
+                    br.getPage(location);
                 }
-                for (String page : setCookies) {
-                    br.cloneBrowser().getPage(unescape(page));
-                }
-                br.getPage(unescape(signIn));
-                if (br.getRedirectLocation() != null) br.getPage(br.getRedirectLocation());
-                br.getPage("http://www.youtube.com/index?hl=en");
-                if (br.getRedirectLocation() != null) br.getPage(br.getRedirectLocation());
                 if (br.getCookie("http://www.youtube.com", "LOGIN_INFO") == null) {
                     account.setValid(false);
                     throw new PluginException(LinkStatus.ERROR_PREMIUM, PluginException.VALUE_ID_PREMIUM_DISABLE);
@@ -277,9 +319,10 @@ public class Youtube extends PluginForHost {
                 for (final Cookie c : cYT.getCookies()) {
                     cookies.put(c.getKey(), c.getValue());
                 }
-                loginCookies.put(account, cookies);
+                // set login cookie of the account.
+                account.setProperty("cookies", cookies);
             } catch (PluginException e) {
-                loginCookies.remove(account);
+                account.setProperty("cookies", null);
                 throw e;
             }
         }
@@ -299,12 +342,29 @@ public class Youtube extends PluginForHost {
                 logger.severe("Video-Convert failed!");
             }
         }
+
+        if (downloadLink.getBooleanProperty("subtitle", false)) {
+            if (!TbCm.convertSubtitle(downloadLink)) {
+                logger.severe("Subtitle conversion failed!");
+            }
+        }
     }
 
     @Override
     public AvailableStatus requestFileInformation(final DownloadLink downloadLink) throws Exception {
-        // For streaming extension to tell her that these links can be streamed without account
-        System.out.println("Youtube: " + downloadLink);
+        // For streaming extension to tell her that these links can be streamed
+        // without account
+        // System.out.println("Youtube: " + downloadLink);
+
+        if (downloadLink.getBooleanProperty("subtitle", false) || downloadLink.getBooleanProperty("thumbnail", false)) {
+            URLConnectionAdapter urlConnection = br.openGetConnection(downloadLink.getDownloadURL());
+
+            if (urlConnection.getResponseCode() == 404) return AvailableStatus.FALSE;
+
+            String size = urlConnection.getHeaderField("Content-Length");
+            downloadLink.setDownloadSize(Long.parseLong(size));
+            return AvailableStatus.TRUE;
+        }
 
         downloadLink.setProperty("STREAMING", true);
         for (int i = 0; i < 4; i++) {
@@ -356,14 +416,39 @@ public class Youtube extends PluginForHost {
     }
 
     private void setConfigElements() {
-        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), FAST_CHECK, JDL.L("plugins.hoster.youtube.fast", "Fast LinkCheck?")).setDefaultValue(false));
-        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), IDASFILENAME, JDL.L("plugins.hoster.youtube.idasfilename", "Use Video-ID as filename?")).setDefaultValue(false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_COMBOBOX_INDEX, getPluginConfig(), ISVIDEOANDPLAYLIST, new String[] { JDL.L("plugins.host.youtube.isvideoandplaylist.video", "Only add video"), JDL.L("plugins.host.youtube.isvideoandplaylist.playlist", "Add playlist and video"), JDL.L("plugins.host.youtube.isvideoandplaylist.ask", "Ask everytime") }, JDL.L("plugins.host.youtube.isvideoandplaylist", "If a video also contains a playlist?")).setDefaultValue(2));
         getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_SEPARATOR));
-        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_WEBM, JDL.L("plugins.hoster.youtube.checkwebm", "Grab WEBM?")).setDefaultValue(true));
-        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_MP4, JDL.L("plugins.hoster.youtube.checkmp4", "Grab MP4?")).setDefaultValue(true));
-        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_MP3, JDL.L("plugins.hoster.youtube.checkmp3", "Grab MP3?")).setDefaultValue(true));
-        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_FLV, JDL.L("plugins.hoster.youtube.checkflv", "Grab FLV?")).setDefaultValue(true));
-        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_3GP, JDL.L("plugins.hoster.youtube.check3gp", "Grab 3GP?")).setDefaultValue(true));
-
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), FAST_CHECK, JDL.L("plugins.hoster.youtube.fast", "Fast LinkCheck?")).setDefaultValue(false));
+        ConfigEntry id = new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), IDASFILENAME, JDL.L("plugins.hoster.youtube.idasfilename", "Use Video-ID as filename?")).setDefaultValue(false);
+        getConfig().addEntry(id);
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), IDINFILENAME, JDL.L("plugins.hoster.youtube.idinfilename", "Use Video-ID additionally in filename?")).setDefaultValue(false).setEnabledCondidtion(id, false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), USEUPLOADERINNAME, JDL.L("plugins.hoster.youtube.useuploaderinname", "Use uploader name in filename?")).setDefaultValue(false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_SUBTITLES, JDL.L("plugins.hoster.youtube.grabsubtitles", "Grab subtitles?")).setDefaultValue(true));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), GROUP_FORMAT, JDL.L("plugins.hoster.youtube.groupbyformat", "Group by format?")).setDefaultValue(false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_SEPARATOR));
+        ConfigEntry hq = new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_BEST, JDL.L("plugins.hoster.youtube.checkbest", "Only grab best available resolution")).setDefaultValue(false);
+        getConfig().addEntry(hq);
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_SEPARATOR));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_WEBM, JDL.L("plugins.hoster.youtube.checkwebm", "Grab WEBM?")).setDefaultValue(true).setEnabledCondidtion(hq, false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_MP4, JDL.L("plugins.hoster.youtube.checkmp4", "Grab MP4?")).setDefaultValue(true).setEnabledCondidtion(hq, false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_MP3, JDL.L("plugins.hoster.youtube.checkmp3", "Grab MP3?")).setDefaultValue(true).setEnabledCondidtion(hq, false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_FLV, JDL.L("plugins.hoster.youtube.checkflv", "Grab FLV?")).setDefaultValue(true).setEnabledCondidtion(hq, false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_3GP, JDL.L("plugins.hoster.youtube.check3gp", "Grab 3GP?")).setDefaultValue(true).setEnabledCondidtion(hq, false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_SEPARATOR));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_240P, JDL.L("plugins.hoster.youtube.check240p", "Grab 240p?")).setDefaultValue(true).setEnabledCondidtion(hq, false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_360P, JDL.L("plugins.hoster.youtube.check360p", "Grab 360p?")).setDefaultValue(true).setEnabledCondidtion(hq, false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_480P, JDL.L("plugins.hoster.youtube.check480p", "Grab 480p?")).setDefaultValue(true).setEnabledCondidtion(hq, false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_720P, JDL.L("plugins.hoster.youtube.check720p", "Grab 720p?")).setDefaultValue(true).setEnabledCondidtion(hq, false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_1080P, JDL.L("plugins.hoster.youtube.check1080p", "Grab 1080p?")).setDefaultValue(true).setEnabledCondidtion(hq, false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_ORIGINAL, JDL.L("plugins.hoster.youtube.checkoriginal", "Grab Original?")).setDefaultValue(true).setEnabledCondidtion(hq, false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_SEPARATOR));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_THUMBNAIL_MAX, JDL.L("plugins.hoster.youtube.grabrhumbnailmax", "Grab max. resulution thumbnail?")).setDefaultValue(false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_THUMBNAIL_HQ, JDL.L("plugins.hoster.youtube.grabrhumbnailhq", "Grab HQ (480x360) thumbnail?")).setDefaultValue(false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_THUMBNAIL_MQ, JDL.L("plugins.hoster.youtube.grabrhumbnailmq", "Grab MQ (320x180) thumbnail?")).setDefaultValue(false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), ALLOW_THUMBNAIL_DEFAULT, JDL.L("plugins.hoster.youtube.grabrhumbnaildefault", "Grab default (120x90) thumbnail?")).setDefaultValue(false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_SEPARATOR));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_CHECKBOX, getPluginConfig(), PROXY_ACTIVE, JDL.L("plugins.hoster.youtube.proxyactive", "Use HTTP Proxy?")).setDefaultValue(false));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_TEXTFIELD, getPluginConfig(), PROXY_ADDRESS, JDL.L("plugins.hoster.youtube.proxyaddress", "Proxy Address")));
+        getConfig().addEntry(new ConfigEntry(ConfigContainer.TYPE_TEXTFIELD, getPluginConfig(), PROXY_PORT, JDL.L("plugins.hoster.youtube.proxyport", "Proxy Port")));
     }
 }
