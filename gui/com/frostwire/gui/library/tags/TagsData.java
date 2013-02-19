@@ -1,5 +1,6 @@
 package com.frostwire.gui.library.tags;
 
+
 public class TagsData {
 
     private final int duration;

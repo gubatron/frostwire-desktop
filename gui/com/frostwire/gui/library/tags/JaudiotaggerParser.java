@@ -38,10 +38,10 @@ class JaudiotaggerParser extends AbstractTagParser {
             String track = getTrack(audioFile);
             String year = getYear(audioFile);
 
-            data = new TagsData(duration, bitrate, title, artist, album, comment, genre, track, year);
+            data = sanitize(duration, bitrate, title, artist, album, comment, genre, track, year);
 
         } catch (Exception e) {
-            LOG.warn("Unable to parse file with Jaudiotagger: " + file, e);
+            LOG.warn("Unable to parse file using Jaudiotagger: " + file, e);
         }
 
         return data;

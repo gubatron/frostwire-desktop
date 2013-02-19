@@ -34,7 +34,11 @@ class MP3Parser extends JaudiotaggerParser {
     }
 
     protected String getGenre(AudioFile audioFile) {
-        return getValueSafe(super.getGenre(audioFile), audioFile, ID3v24Frames.FRAME_ID_GENRE);
+        String value = getValueSafe(super.getGenre(audioFile), audioFile, ID3v24Frames.FRAME_ID_GENRE);
+        if (value != null) {
+            value = value.replaceFirst("\\(.*\\)", "");
+        }
+        return value;
     }
 
     protected String getTrack(AudioFile audioFile) {
@@ -48,10 +52,10 @@ class MP3Parser extends JaudiotaggerParser {
     private String getValueSafe(String currentValue, AudioFile audioFile, String identifier) {
         String value = currentValue;
 
-        if (value == null || value.isEmpty()) {
+        if (value == null || value.length() == 0) {
             if (audioFile instanceof MP3File && ((MP3File) audioFile).hasID3v2Tag()) {
-                AbstractID3v2Tag v2tag = ((MP3File) audioFile).getID3v2Tag();
                 try {
+                    AbstractID3v2Tag v2tag = ((MP3File) audioFile).getID3v2Tag();
                     value = v2tag.getFirst(identifier);
                 } catch (Exception e) {
                     LOG.warn("Unable to get value for ID3v2 tag key: " + identifier, e);
