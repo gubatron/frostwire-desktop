@@ -37,10 +37,12 @@ import jd.plugins.PluginException;
 import jd.plugins.PluginForHost;
 import jd.utils.locale.JDL;
 
-import com.mpatric.mp3agic.ID3Wrapper;
-import com.mpatric.mp3agic.ID3v1Tag;
-import com.mpatric.mp3agic.ID3v23Tag;
-import com.mpatric.mp3agic.Mp3File;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.images.Artwork;
+import org.jaudiotagger.tag.images.ArtworkFactory;
 
 @HostPlugin(revision = "$Revision$", interfaceVersion = 2, names = { "soundcloud.com" }, urls = { "https://(www\\.)?soundclouddecrypted\\.com/[a-z\\-_0-9]+/[a-z\\-_0-9]+" }, flags = { 0 })
 public class SoundcloudCom extends PluginForHost {
@@ -90,13 +92,17 @@ public class SoundcloudCom extends PluginForHost {
         url = parameter.getStringProperty("directlink");
         if (url != null) {
             checkDirectLink(parameter, url);
-            if (url != null) return AvailableStatus.TRUE;
+            if (url != null)
+                return AvailableStatus.TRUE;
         }
         br.getPage("https://api.sndcdn.com/resolve?url=" + Encoding.urlEncode(parameter.getDownloadURL()) + "&_status_code_map%5B302%5D=200&_status_format=json&client_id=" + CLIENTID);
-        if (br.containsHTML("\"404 \\- Not Found\"")) throw new PluginException(LinkStatus.ERROR_FILE_NOT_FOUND);
+        if (br.containsHTML("\"404 \\- Not Found\""))
+            throw new PluginException(LinkStatus.ERROR_FILE_NOT_FOUND);
         AvailableStatus status = checkStatus(parameter, this.br.toString());
-        if (status.equals(AvailableStatus.FALSE)) throw new PluginException(LinkStatus.ERROR_FILE_NOT_FOUND);
-        if (url == null) throw new PluginException(LinkStatus.ERROR_PLUGIN_DEFECT);
+        if (status.equals(AvailableStatus.FALSE))
+            throw new PluginException(LinkStatus.ERROR_FILE_NOT_FOUND);
+        if (url == null)
+            throw new PluginException(LinkStatus.ERROR_PLUGIN_DEFECT);
         checkDirectLink(parameter, url);
         return AvailableStatus.TRUE;
     }
@@ -108,15 +114,19 @@ public class SoundcloudCom extends PluginForHost {
             return AvailableStatus.FALSE;
         }
         final String filesize = getXML("original-content-size", source);
-        if (filesize != null) parameter.setDownloadSize(Integer.parseInt(filesize));
+        if (filesize != null)
+            parameter.setDownloadSize(Integer.parseInt(filesize));
         final String description = getXML("description", source);
-        if (description != null) parameter.setComment(description);
+        if (description != null)
+            parameter.setComment(description);
         String username = getXML("username", source);
         filename = Encoding.htmlDecode(filename.trim());
         String type = getXML("original-format", source);
-        if (type == null) type = "mp3";
+        if (type == null)
+            type = "mp3";
         username = username.trim();
-        if (username != null && !filename.contains(username)) filename += " - " + username;
+        if (username != null && !filename.contains(username))
+            filename += " - " + username;
         filename += "." + type;
         url = getXML("download-url", source);
         if (url != null) {
@@ -194,8 +204,8 @@ public class SoundcloudCom extends PluginForHost {
 
             if (coverArtBytes != null && coverArtBytes.length > 0) {
                 if (setAlbumArt(coverArtBytes, mp3.getAbsolutePath(), temp.getAbsolutePath(), username, title, detailsUrl)) {
-                    mp3.delete();
-                    temp.renameTo(mp3);
+                    //mp3.delete();
+                    //temp.renameTo(mp3);
                 } else {
                     if (temp.exists()) {
                         temp.delete();
@@ -218,36 +228,36 @@ public class SoundcloudCom extends PluginForHost {
 
     private boolean setAlbumArt(byte[] imageBytes, String mp3Filename, String mp3outputFilename, String username, String title, String detailsUrl) {
         try {
-            Mp3File mp3 = new Mp3File(mp3Filename);
+            AudioFile f = AudioFileIO.read(new File(mp3Filename));
+            Tag tag = f.getTagOrCreateAndSetDefault();
 
-            ID3Wrapper newId3Wrapper = new ID3Wrapper(new ID3v1Tag(), new ID3v23Tag());
+            tag.setField(FieldKey.ALBUM, username + ": " + title + " via SoundCloud.com");
+            tag.setField(FieldKey.ARTIST, username);
+            tag.setField(FieldKey.TITLE, title);
+            tag.setField(FieldKey.URL_OFFICIAL_RELEASE_SITE, detailsUrl);
 
-            newId3Wrapper.setAlbum(username + ": " + title + " via SoundCloud.com");
-            newId3Wrapper.setArtist(username);
-            newId3Wrapper.setTitle(title);
-            newId3Wrapper.setAlbumImage(imageBytes, "image/jpg");
-            newId3Wrapper.setUrl(detailsUrl);
-            newId3Wrapper.getId3v2Tag().setPadding(true);
+            Artwork artwork = ArtworkFactory.getNew();
+            artwork.setBinaryData(imageBytes);
+            artwork.setMimeType("image/jpg");
+            
+            tag.addField(artwork);
 
-            mp3.setId3v1Tag(newId3Wrapper.getId3v1Tag());
-            mp3.setId3v2Tag(newId3Wrapper.getId3v2Tag());
-
-            mp3.save(mp3outputFilename);
+            f.commit();
 
             return true;
         } catch (Throwable e) {
             return false;
         }
     }
-    
+
     private String cleanupFilename(String filename) {
         filename = filename.replace("&#8482;", "TM");
-        
+
         // bug in jdownloader?
         if (filename.endsWith(".m4a")) {
             filename = filename.replace(".m4a", ".mp3");
         }
-        
+
         return filename;
     }
 

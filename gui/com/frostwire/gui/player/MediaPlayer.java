@@ -64,7 +64,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.settings.PlayerSettings;
-import com.mpatric.mp3agic.Mp3File;
 
 /**
  * An media player to play compressed and uncompressed media.
@@ -297,8 +296,9 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
 
     private long getDurationFromMP3(File f) {
         try {
-            Mp3File mp3 = new Mp3File(f.getAbsolutePath());
-            return mp3.getLengthInSeconds();
+            //MP3File mp3 = new MP3File(f.getAbsolutePath());
+            //return mp3.getAudioHeader().getTrackLength();
+            return -1;
         } catch (Throwable e) {
             return -1;
         }

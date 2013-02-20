@@ -1,5 +1,6 @@
 package com.frostwire.gui.library.tags;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class TagsReader {
@@ -21,6 +22,12 @@ public class TagsReader {
         }
 
         return data;
+    }
+
+    public BufferedImage getArtwork() {
+        TagsParser parser = new TagsParserFactory().getInstance(file);
+
+        return parser.getArtwork();
     }
 
     private boolean isEmpty(TagsData data) {

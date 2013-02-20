@@ -2,15 +2,9 @@ package com.frostwire.gui.library.tags;
 
 import java.io.File;
 
-class MP4Parser extends AbstractTagParser {
+class MP4Parser extends JaudiotaggerParser {
 
     public MP4Parser(File file) {
         super(file);
-    }
-
-    @Override
-    public TagsData parse() {
-        // TODO Auto-generated method stub
-        return null;
     }
 }

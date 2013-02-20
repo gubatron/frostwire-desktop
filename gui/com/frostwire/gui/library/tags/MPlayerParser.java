@@ -1,5 +1,6 @@
 package com.frostwire.gui.library.tags;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Map;
 
@@ -49,7 +50,12 @@ class MPlayerParser extends AbstractTagParser {
         return data;
     }
 
-    public int parseDuration(String durationInSecs) {
+    @Override
+    public BufferedImage getArtwork() {
+        return null;
+    }
+
+    private int parseDuration(String durationInSecs) {
         try {
             return (int) Float.parseFloat(durationInSecs);
         } catch (Exception e) {
