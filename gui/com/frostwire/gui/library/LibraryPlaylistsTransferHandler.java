@@ -17,6 +17,7 @@
  */
 package com.frostwire.gui.library;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.InvalidDnDOperationException;
@@ -51,8 +52,8 @@ class LibraryPlaylistsTransferHandler extends TransferHandler {
         
     	DropLocation location = support.getDropLocation();
         int index = list.locationToIndex(location.getDropPoint());
-
-    	if ( support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.PLAYLIST_ITEM) || 
+        
+        if ( support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.PLAYLIST_ITEM) || 
              support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.ITEM_ARRAY) ) {
             return true;
         } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
@@ -104,9 +105,10 @@ class LibraryPlaylistsTransferHandler extends TransferHandler {
         	
         	// handle PLAYLIST_ITEM drop
         	
-        	// handle case of dragging to last position
-            Rectangle rect = list.getUI().getCellBounds(list, index, index);
-            if (!rect.contains(location.getDropPoint())) {
+        	// adjust index to apply to insertion point, not to cell being hovered over
+        	Rectangle rect = list.getUI().getCellBounds(list, index, index);
+        	Point point = location.getDropPoint();
+            if (point.y - rect.y > rect.height / 2) {
                 index+=1;
             }
         	
