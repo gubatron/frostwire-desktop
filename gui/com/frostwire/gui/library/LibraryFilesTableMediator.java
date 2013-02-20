@@ -437,7 +437,12 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                             }
                         });
                     }
-                    LibraryMediator.instance().getLibrarySearch().addResults(fPartition.size());
+                    
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        public void run() {
+                            LibraryMediator.instance().getLibrarySearch().addResults(fPartition.size());
+                        }
+                    });
 
                 }
             });
