@@ -183,11 +183,12 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
             return true;
 
         String langinapp = ApplicationSettings.getLanguage().toLowerCase();
+        
+        if (langinapp.length() > 2) {
+            langinapp = langinapp.substring(0,2);
+        }
 
-        if (lang.length() == 2)
-            return langinapp.toLowerCase().startsWith(lang.toLowerCase());
-
-        return lang.equalsIgnoreCase(langinapp);
+        return lang.toLowerCase().contains(langinapp);
     }
 
     private boolean isMessageEligibleForMyOs(String os) {
