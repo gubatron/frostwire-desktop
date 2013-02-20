@@ -42,7 +42,7 @@ import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.TipsClient;
-import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleAudioFileAction;
+import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleMediaFileAction;
 import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.library.LibraryUtils;
@@ -117,7 +117,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     private Action sendToItunesAction;
 
-    private PlaySingleAudioFileAction playSingleAudioFileAction;
+    private PlaySingleMediaFileAction playSingleMediaFileAction;
 
     /**
      * Overriden to have different default values for tooltips.
@@ -155,7 +155,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         copyHashAction = BTDownloadActions.COPY_HASH_ACTION;
         shareTorrentAction = BTDownloadActions.SHARE_TORRENT_ACTION;
         sendToItunesAction = BTDownloadActions.SEND_TO_ITUNES_ACTION;
-        playSingleAudioFileAction = BTDownloadActions.PLAY_SINGLE_AUDIO_FILE_ACTION;
+        playSingleMediaFileAction = BTDownloadActions.PLAY_SINGLE_AUDIO_FILE_ACTION;
     }
 
     /**
@@ -535,11 +535,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         BTDownload[] selectedDownloaders = getSelectedDownloaders();
 
         if (selectedDownloaders.length == 1) {
-            playSingleAudioFileAction.setEnabled(selectionHasAudioFiles(selectedDownloaders[0]));
+            playSingleMediaFileAction.setEnabled(selectionHasMediaFiles(selectedDownloaders[0]));
         }
 
-        if (playSingleAudioFileAction.isEnabled()) {
-            playSingleAudioFileAction.actionPerformed(null);
+        if (playSingleMediaFileAction.isEnabled()) {
+            playSingleMediaFileAction.actionPerformed(null);
         }
 
         if (showInLibraryAction.isEnabled()) {
@@ -551,8 +551,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
         JPopupMenu menu = new SkinPopupMenu();
 
-        if (playSingleAudioFileAction.isEnabled()) {
-            menu.add(new SkinMenuItem(playSingleAudioFileAction));
+        if (playSingleMediaFileAction.isEnabled()) {
+            menu.add(new SkinMenuItem(playSingleMediaFileAction));
         }
 
         menu.add(new SkinMenuItem(resumeAction));
@@ -612,7 +612,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
         File saveLocation = dataLine.getInitializeObject().getSaveLocation();
 
-        boolean hasAudioFiles = selectionHasAudioFiles(dataLine.getInitializeObject());
+        boolean hasMediaFiles = selectionHasMediaFiles(dataLine.getInitializeObject());
         boolean hasMP4s = selectionHasMP4s(saveLocation);
 
         boolean isSingleFile = selectionIsSingleFile(saveLocation);
@@ -632,11 +632,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         copyMagnetAction.setEnabled(!isHttpTransfer(dataLine.getInitializeObject()));
         copyHashAction.setEnabled(!isHttpTransfer(dataLine.getInitializeObject()));
 
-        sendToItunesAction.setEnabled(isTransferFinished && (hasAudioFiles || hasMP4s));
+        sendToItunesAction.setEnabled(isTransferFinished && (hasMediaFiles || hasMP4s));
 
         shareTorrentAction.setEnabled(getSelectedDownloaders().length == 1 && dataLine.getInitializeObject().isPausable());
 
-        playSingleAudioFileAction.setEnabled(getSelectedDownloaders().length == 1 && hasAudioFiles && isSingleFile);
+        playSingleMediaFileAction.setEnabled(getSelectedDownloaders().length == 1 && hasMediaFiles && isSingleFile);
 
         removeYouTubeAction.setEnabled(isYouTubeTransfer(dataLine.getInitializeObject()));
         BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(!isHttpTransfer(dataLine.getInitializeObject()));
@@ -653,7 +653,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         return isSingleFile;
     }
 
-    private boolean selectionHasAudioFiles(BTDownload d) {
+    private boolean selectionHasMediaFiles(BTDownload d) {
         if (d instanceof SoundcloudTrackDownload) {
             return true;
         }
@@ -685,7 +685,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         copyHashAction.setEnabled(false);
         shareTorrentAction.setEnabled(false);
         sendToItunesAction.setEnabled(false);
-        playSingleAudioFileAction.setEnabled(false);
+        playSingleMediaFileAction.setEnabled(false);
 
         BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(false);
         BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION.setEnabled(false);
