@@ -1,11 +1,7 @@
 package com.frostwire.gui.library.tags;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-
-import javax.imageio.IIOException;
-import javax.imageio.ImageIO;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,8 +10,6 @@ import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.audio.mp3.MP3FileReader;
 import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.jaudiotagger.tag.id3.ID3v24Frames;
-
-import com.frostwire.jpeg.JPEGImageIO;
 
 class MP3Parser extends JaudiotaggerParser {
 
@@ -34,12 +28,8 @@ class MP3Parser extends JaudiotaggerParser {
                 MP3File mp3 = new MP3File(file.getAbsoluteFile());
                 if (mp3.hasID3v2Tag()) {
                     AbstractID3v2Tag tag = mp3.getID3v2Tag();
-                    byte[] imageBytes = tag.getFirstArtwork().getBinaryData();
-                    try {
-                        return ImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
-                    } catch (IIOException e) {
-                        return JPEGImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
-                    }
+                    byte[] data = tag.getFirstArtwork().getBinaryData();
+                    image = imageFromData(data);
                 }
             } catch (Throwable e) {
                 LOG.error("Unable to read cover art from mp3", e);
