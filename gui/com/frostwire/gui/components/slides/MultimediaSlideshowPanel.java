@@ -119,11 +119,12 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
         setLayout(layout);
     }
 
-    private void setup(final List<Slide> slides) {
+    private void setup(List<Slide> slides) {
         this.slides = filter(slides);
 
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
+                List<Slide> slides = MultimediaSlideshowPanel.this.slides;
                 try {
                     int i = 0;
                     for (Slide s : slides) {

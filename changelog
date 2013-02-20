@@ -1,15 +1,20 @@
 frostwire (5.5.4) stable; urgency=high
   * New Feature: extract audio (.m4a) from (.mp4) videos on right click.
   * New Core Feature: HTTP resumeable large transfer support.
-  * Upgrade: Default save folder for cloud downloads is updated without restarting.
+  * Upgrade: Default save folder for cloud downloads is updated without 
+    restarting.
   * Upgrade: 'Repeat song' playback mode now available.
   * Upgrade: Enriched promotion display, now with audio and video previews and
     shortcuts to content creator's social media channels/streams.
   * Upgrade: binary compatibility improved for Windows releases.
-  * Bug fix: if default save folder is changed it's now part of library scanned folders.
-  * Bug fix: smart search engine wasn't notifying when it was done if there were no results.
+  * Bug fix: if default save folder is changed it's now part of library scanned
+    folders.
+  * Bug fix: smart search engine wasn't notifying when it was done if there
+    were no results.
   * Bug fix: several crashes and errors fixed.
- -- FrostWire Team <contact@frostwire.com>  Sat, 16 Feb 2013 15:38:57 -0500
+  * Bug fix: partial download dialog for cloud downloads would sometimes appear
+    empty.
+ -- FrostWire Team <contact@frostwire.com>  Tue, 19 Feb 2013 17:38:57 -0500
 
 frostwire (5.5.3) stable; urgency=high
   * Bug fix: freeze on Windows XP. (Windows release only)
@@ -23,12 +28,12 @@ frostwire (5.5.2) stable; urgency=high
     disabled.
   * UI fix: Video Player Window Title now shows the file name being played.
   * UI fix: Library > "Finished Downloads" renamed to "Default Save Folder"
-  * UI fix: When browsing another device on the Wi-Fi network newest shared files
-    are shown at the top of the table.
-  * Bug fix: On first installation FrostWire wasn't able to add 'From Devices' folder
-    to the Library.
-  * Bug fix: When restoring default settings FrostWire was not restoring default
-    library folders.
+  * UI fix: When browsing another device on the Wi-Fi network newest shared
+    files are shown at the top of the table.
+  * Bug fix: On first installation FrostWire wasn't able to add 'From Devices'
+    folder to the Library.
+  * Bug fix: When restoring default settings FrostWire was not restoring 
+    default library folders.
   * Bug fix: Player remembers volume level from last song played.
   * Bug fix: Sends correct file sizes on HTTP headers for shared files that
     have changed in size after being shared.
@@ -63,7 +68,8 @@ frostwire (5.5.1) stable; urgency=high
     albums in the order they were meant to be heard by the content
     creators.
   * Enhancement: mime type guessing is faster when sharing files on Wi-Fi
-  * Bug fix: Library was getting confused with file extensions as part of file names.
+  * Bug fix: Library was getting confused with file extensions as part of file
+    names.
   * Bug fix: sharing/unsharing popup menu behavior while sharing on Wi-Fi
   * Bug fix: resizing issues on preview download dialogs.
   * Bug fix: filtering on torrent detail dialog was broken.

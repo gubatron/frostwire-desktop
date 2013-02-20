@@ -310,7 +310,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 		clearInactiveAction.setEnabled(anyClearable);
 		
 		if (OSUtils.isWindows() && UpdateManagerSettings.SHOW_FROSTWIRE_RECOMMENDATIONS.getValue()) {
-		    TipsClient.instance().call();
+		    try {
+		        TipsClient.instance().call();
+		    } catch (Exception e) {
+		        
+		    }
 		}
     }
 
