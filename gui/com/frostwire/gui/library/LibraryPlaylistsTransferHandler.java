@@ -121,9 +121,9 @@ class LibraryPlaylistsTransferHandler extends TransferHandler {
         	
         	} catch (Exception e) {
 				e.printStackTrace();
+				return false;
 			}
 			
-        	
         } else {
             
         	// handle ITEM_ARRAY or other drop
