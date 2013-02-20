@@ -166,6 +166,8 @@ public final class OptionsPaneManager {
 
     public void reinitPane(String paneKey) {
         OptionsPane optionsPane = panesByKey.get(paneKey);
-        optionsPane.initOptions();
+        if (optionsPane != null) {
+            optionsPane.initOptions();
+        }
     }
 }
