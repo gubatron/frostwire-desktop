@@ -1042,7 +1042,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            short videoCount = (short) TABLE.getSelectedRows().length;
+            final short videoCount = (short) TABLE.getSelectedRows().length;
             
             //can't happen, but just in case.
             if (videoCount < 1) {
@@ -1073,7 +1073,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 
                 @Override
                 protected void done() {
-                    LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Done extracting audio."));
+                    int failed = videoCount - demuxedFiles.size();
+                    String failedStr = (failed > 0) ? " (" + failed + " " + I18n.tr("failed")+")" : "";
+                    LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Done extracting audio.") + failedStr);
                 }
                 
             };
@@ -1097,10 +1099,14 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
                 try {
                     System.out.println("Demuxing file " + file.getAbsolutePath());
-                    TbCm.demuxMP4Audio(file.getAbsolutePath(), null, false);
-                    final File demuxed = new File(file.getAbsolutePath().replace(".mp4", ".m4a"));
-                    demuxedFiles.add(demuxed);
-                    updateDemuxingStatus(files, demuxed);
+                    
+                    if (TbCm.demuxMP4Audio(file.getAbsolutePath(), null, false)) {
+                        final File demuxed = new File(file.getAbsolutePath().replace(".mp4", ".m4a"));
+                        demuxedFiles.add(demuxed);
+                        updateDemuxingStatus(demuxed,files.size(),true);
+                    } else {
+                        updateDemuxingStatus(file,files.size(),false);
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -1108,7 +1114,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             }
         }
 
-        private void updateDemuxingStatus(final List<File> files, final File demuxed) {
+        private void updateDemuxingStatus(final File demuxed, final int totalDemuxed, final boolean demuxSuccess) {
             GUIMediator.safeInvokeAndWait(new Runnable() {
                 @Override
                 public void run() {
@@ -1117,16 +1123,19 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
                         @Override
                         public void run() {
-                            System.out.println("Adding " + demuxed);
-                            add(demuxed, 0);
-                            LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Finished") + " " + demuxedFiles.size() + " " + I18n.tr("out  of ") + files.size() + ". Extracting audio...");
-                            System.out.println("Finished " + demuxedFiles.size() + " " + I18n.tr("out  of ") + files.size() + ". Extracting audio...");
+                            if (demuxSuccess) {
+                                add(demuxed, 0);
+                                update(demuxed);
+                                LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Finished") + " " + demuxedFiles.size() + " " + I18n.tr("out  of ") + totalDemuxed + ". Extracting audio...");
+                                System.out.println("Finished " + demuxedFiles.size() + " " + I18n.tr("out  of ") + totalDemuxed + ". Extracting audio...");
+                            } else {
+                                LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Could not extract audio from") + " " + demuxed.getName());
+                            }
                         }
                         
                     });
                     explorer.executePendingRunnables();                            
                 }
-
             });
         }
     }

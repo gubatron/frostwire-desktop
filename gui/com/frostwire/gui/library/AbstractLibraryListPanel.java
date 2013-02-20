@@ -18,6 +18,8 @@
 package com.frostwire.gui.library;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -48,7 +50,7 @@ public abstract class AbstractLibraryListPanel extends JPanel implements Refresh
 	private List<Runnable> PENDING_RUNNABLES;
     
     public AbstractLibraryListPanel() {
-    	    PENDING_RUNNABLES = new ArrayList<Runnable>();
+    	    PENDING_RUNNABLES = Collections.synchronizedList(new ArrayList<Runnable>());
     }
     
     public void enqueueRunnable(Runnable r) {
@@ -57,14 +59,19 @@ public abstract class AbstractLibraryListPanel extends JPanel implements Refresh
     
     public void executePendingRunnables() {
         if (PENDING_RUNNABLES != null && PENDING_RUNNABLES.size() > 0) {
-            for (Runnable t : PENDING_RUNNABLES) {
-                try {
-                    t.run();
-                } catch (Exception e) {
-                    e.printStackTrace();
+            synchronized(PENDING_RUNNABLES) {
+                Iterator<Runnable> it = PENDING_RUNNABLES.iterator();
+                while (it.hasNext()) {
+                    try {
+                        Runnable r = it.next();
+                        r.run();
+                        it.remove();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-            PENDING_RUNNABLES.clear();
+            //PENDING_RUNNABLES.clear();
         }
     }
 
