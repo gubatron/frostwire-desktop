@@ -1,23 +1,22 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.protocol.sync;
 
 import org.fourthline.cling.UpnpService;
+import org.fourthline.cling.model.action.ActionCancelledException;
 import org.fourthline.cling.model.action.ActionException;
 import org.fourthline.cling.model.action.ActionInvocation;
 import org.fourthline.cling.model.message.StreamResponseMessage;
@@ -27,7 +26,8 @@ import org.fourthline.cling.model.message.control.OutgoingActionRequestMessage;
 import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.model.types.ErrorCode;
 import org.fourthline.cling.protocol.SendingSync;
-import org.fourthline.cling.transport.spi.UnsupportedDataException;
+import org.fourthline.cling.model.UnsupportedDataException;
+import org.fourthline.cling.transport.RouterException;
 import org.seamless.util.Exceptions;
 
 import java.net.URL;
@@ -59,11 +59,11 @@ public class SendingAction extends SendingSync<OutgoingActionRequestMessage, Inc
         this.actionInvocation = actionInvocation;
     }
 
-    protected IncomingActionResponseMessage executeSync() {
+    protected IncomingActionResponseMessage executeSync() throws RouterException {
         return invokeRemote(getInputMessage());
     }
 
-    protected IncomingActionResponseMessage invokeRemote(OutgoingActionRequestMessage requestMessage) {
+    protected IncomingActionResponseMessage invokeRemote(OutgoingActionRequestMessage requestMessage) throws RouterException {
         Device device = actionInvocation.getAction().getService().getDevice();
 
         log.fine("Sending outgoing action call '" + actionInvocation.getAction().getName() + "' to remote service of: " + device);
@@ -105,17 +105,29 @@ public class SendingAction extends SendingSync<OutgoingActionRequestMessage, Inc
         }
     }
 
-    protected StreamResponseMessage sendRemoteRequest(OutgoingActionRequestMessage requestMessage) throws ActionException {
+    protected StreamResponseMessage sendRemoteRequest(OutgoingActionRequestMessage requestMessage)
+        throws ActionException, RouterException {
+
         try {
             log.fine("Writing SOAP request body of: " + requestMessage);
             getUpnpService().getConfiguration().getSoapActionProcessor().writeBody(requestMessage, actionInvocation);
 
             log.fine("Sending SOAP body of message as stream to remote device");
             return getUpnpService().getRouter().send(requestMessage);
-
+        } catch (RouterException ex) {
+            Throwable cause = Exceptions.unwrap(ex);
+            if (cause instanceof InterruptedException) {
+                if (log.isLoggable(Level.FINE)) {
+                    log.fine("Sending action request message was interrupted: " + cause);
+                }
+                throw new ActionCancelledException((InterruptedException)cause);
+            }
+            throw ex;
         } catch (UnsupportedDataException ex) {
-            log.fine("Error writing SOAP body: " + ex);
-            log.log(Level.FINE, "Exception root cause: ", Exceptions.unwrap(ex));
+            if (log.isLoggable(Level.FINE)) {
+                log.fine("Error writing SOAP body: " + ex);
+                log.log(Level.FINE, "Exception root cause: ", Exceptions.unwrap(ex));
+            }
             throw new ActionException(ErrorCode.ACTION_FAILED, "Error writing request message. " + ex.getMessage());
         }
     }
@@ -128,7 +140,11 @@ public class SendingAction extends SendingSync<OutgoingActionRequestMessage, Inc
         } catch (UnsupportedDataException ex) {
             log.fine("Error reading SOAP body: " + ex);
             log.log(Level.FINE, "Exception root cause: ", Exceptions.unwrap(ex));
-            throw new ActionException(ErrorCode.ACTION_FAILED, "Error reading response message. " + ex.getMessage());
+            throw new ActionException(
+                ErrorCode.ACTION_FAILED,
+                "Error reading SOAP response message. " + ex.getMessage(),
+                false
+            );
         }
     }
 
@@ -140,7 +156,11 @@ public class SendingAction extends SendingSync<OutgoingActionRequestMessage, Inc
         } catch (UnsupportedDataException ex) {
             log.fine("Error reading SOAP body: " + ex);
             log.log(Level.FINE, "Exception root cause: ", Exceptions.unwrap(ex));
-            throw new ActionException(ErrorCode.ACTION_FAILED, "Error reading response failure message. " + ex.getMessage());
+            throw new ActionException(
+                ErrorCode.ACTION_FAILED,
+                "Error reading SOAP response failure message. " + ex.getMessage(),
+                false
+            );
         }
     }
 

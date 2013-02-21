@@ -1,24 +1,22 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.model.meta;
 
 import org.fourthline.cling.model.Namespace;
-import org.fourthline.cling.model.profile.ControlPointInfo;
+import org.fourthline.cling.model.profile.RemoteClientInfo;
 import org.fourthline.cling.model.resource.Resource;
 import org.fourthline.cling.model.Validatable;
 import org.fourthline.cling.model.ValidationError;
@@ -80,16 +78,24 @@ public abstract class Device<DI extends DeviceIdentity, D extends Device, S exte
         this.type = type;
         this.details = details;
 
-        boolean allNullIcons = true;
+        // We don't fail device validation if icons were invalid, only log a warning. To
+        // comply with mutability rules (can't set icons field in validate() method), we
+        // validate the icons here before we set the field value
+        List<Icon> validIcons = new ArrayList<Icon>();
         if (icons != null) {
             for (Icon icon : icons) {
                 if (icon != null) {
-                    allNullIcons = false;
-                    icon.setDevice(this);
+                    icon.setDevice(this); // Set before validate()!
+                    List<ValidationError> iconErrors = icon.validate();
+                    if(iconErrors.isEmpty()) {
+                        validIcons.add(icon);
+                    } else {
+                        log.warning("Discarding invalid '" + icon + "': " + iconErrors);
+                    }
                 }
             }
         }
-        this.icons = icons == null || allNullIcons ? new Icon[0] : icons;
+        this.icons = validIcons.toArray(new Icon[validIcons.size()]);
 
         boolean allNullServices = true;
         if (services != null) {
@@ -140,7 +146,7 @@ public abstract class Device<DI extends DeviceIdentity, D extends Device, S exte
         return details;
     }
 
-    public DeviceDetails getDetails(ControlPointInfo info) {
+    public DeviceDetails getDetails(RemoteClientInfo info) {
         return this.getDetails();
     }
 
@@ -381,13 +387,6 @@ public abstract class Device<DI extends DeviceIdentity, D extends Device, S exte
 
             if (getDetails() != null) {
                 errors.addAll(getDetails().validate());
-            }
-
-            if (hasIcons()) {
-                for (Icon icon : getIcons()) {
-                    if (icon != null)
-                        errors.addAll(icon.validate());
-                }
             }
 
             if (hasServices()) {

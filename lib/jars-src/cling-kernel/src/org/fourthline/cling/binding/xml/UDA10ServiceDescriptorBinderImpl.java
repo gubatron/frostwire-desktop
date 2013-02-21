@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.binding.xml;
@@ -37,12 +35,17 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import static org.fourthline.cling.binding.xml.Descriptor.Service.ATTRIBUTE;
@@ -55,7 +58,7 @@ import static org.fourthline.cling.model.XMLUtil.appendNewElementIfNotNull;
  *
  * @author Christian Bauer
  */
-public class UDA10ServiceDescriptorBinderImpl implements ServiceDescriptorBinder {
+public class UDA10ServiceDescriptorBinderImpl implements ServiceDescriptorBinder, ErrorHandler {
 
     private static Logger log = Logger.getLogger(ServiceDescriptorBinder.class.getName());
 
@@ -69,12 +72,14 @@ public class UDA10ServiceDescriptorBinderImpl implements ServiceDescriptorBinder
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            documentBuilder.setErrorHandler(this);
 
-            Document d = factory.newDocumentBuilder().parse(
-                    new InputSource(
-                            // TODO: UPNP VIOLATION: Virgin Media Superhub sends trailing spaces/newlines after last XML element, need to trim()
-                            new StringReader(descriptorXml.trim())
-                    )
+            Document d = documentBuilder.parse(
+                new InputSource(
+                    // TODO: UPNP VIOLATION: Virgin Media Superhub sends trailing spaces/newlines after last XML element, need to trim()
+                    new StringReader(descriptorXml.trim())
+                )
             );
 
             return describe(undescribedService, d);
@@ -236,7 +241,14 @@ public class UDA10ServiceDescriptorBinderImpl implements ServiceDescriptorBinder
             if (ELEMENT.name.equals(argumentNodeChild)) {
                 actionArgument.name = XMLUtil.getTextContent(argumentNodeChild);
             } else if (ELEMENT.direction.equals(argumentNodeChild)) {
-                actionArgument.direction = ActionArgument.Direction.valueOf(XMLUtil.getTextContent(argumentNodeChild).toUpperCase());
+                String directionString = XMLUtil.getTextContent(argumentNodeChild);
+                try {
+                    actionArgument.direction = ActionArgument.Direction.valueOf(directionString.toUpperCase(Locale.ENGLISH));
+                } catch (IllegalArgumentException ex) {
+                    // TODO: UPNP VIOLATION: Pelco SpectraIV-IP uses illegal value INOUT
+                    log.warning("UPnP specification violation: Invalid action argument direction, assuming 'IN': " + directionString);
+                    actionArgument.direction = ActionArgument.Direction.IN;
+                }
             } else if (ELEMENT.relatedStateVariable.equals(argumentNodeChild)) {
                 actionArgument.relatedStateVariable = XMLUtil.getTextContent(argumentNodeChild);
             } else if (ELEMENT.retval.equals(argumentNodeChild)) {
@@ -266,7 +278,7 @@ public class UDA10ServiceDescriptorBinderImpl implements ServiceDescriptorBinder
 
         stateVariable.eventDetails = new StateVariableEventDetails(
                 stateVariableElement.getAttribute("sendEvents") != null &&
-                        stateVariableElement.getAttribute(ATTRIBUTE.sendEvents.toString()).toUpperCase().equals("YES")
+                        stateVariableElement.getAttribute(ATTRIBUTE.sendEvents.toString()).toUpperCase(Locale.ENGLISH).equals("YES")
         );
 
         NodeList stateVariableChildren = stateVariableElement.getChildNodes();
@@ -411,9 +423,11 @@ public class UDA10ServiceDescriptorBinderImpl implements ServiceDescriptorBinder
         Element actionArgumentElement = appendNewElement(descriptor, actionElement, ELEMENT.argument);
 
         appendNewElementIfNotNull(descriptor, actionArgumentElement, ELEMENT.name, actionArgument.getName());
-        appendNewElementIfNotNull(descriptor, actionArgumentElement, ELEMENT.direction, actionArgument.getDirection().toString().toLowerCase());
+        appendNewElementIfNotNull(descriptor, actionArgumentElement, ELEMENT.direction, actionArgument.getDirection().toString().toLowerCase(Locale.ENGLISH));
         if (actionArgument.isReturnValue()) {
-            appendNewElement(descriptor, actionArgumentElement, ELEMENT.retval);
+            // TODO: UPNP VIOLATION: WMP12 will discard RenderingControl service if it contains <retval> tags
+            log.warning("UPnP specification violation: Not producing <retval> element to be compatible with WMP12: " + actionArgument);
+            // appendNewElement(descriptor, actionArgumentElement, ELEMENT.retval);
         }
         appendNewElementIfNotNull(descriptor, actionArgumentElement, ELEMENT.relatedStateVariable, actionArgument.getRelatedStateVariableName());
     }
@@ -466,7 +480,7 @@ public class UDA10ServiceDescriptorBinderImpl implements ServiceDescriptorBinder
             appendNewElementIfNotNull(
                     descriptor, allowedValueRangeElement, ELEMENT.maximum, stateVariable.getTypeDetails().getAllowedValueRange().getMaximum()
             );
-            if (stateVariable.getTypeDetails().getAllowedValueRange().getStep() > 1l) {
+            if (stateVariable.getTypeDetails().getAllowedValueRange().getStep() >= 1l) {
                 appendNewElementIfNotNull(
                         descriptor, allowedValueRangeElement, ELEMENT.step, stateVariable.getTypeDetails().getAllowedValueRange().getStep()
                 );
@@ -475,5 +489,16 @@ public class UDA10ServiceDescriptorBinderImpl implements ServiceDescriptorBinder
 
     }
 
+    public void warning(SAXParseException e) throws SAXException {
+        log.warning(e.toString());
+    }
+
+    public void error(SAXParseException e) throws SAXException {
+        throw e;
+    }
+
+    public void fatalError(SAXParseException e) throws SAXException {
+        throw e;
+    }
 }
 

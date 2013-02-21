@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.controlpoint;
@@ -29,13 +27,15 @@ import org.fourthline.cling.registry.Registry;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 /**
  * Default implementation.
  * <p>
  * This implementation uses the executor returned by
- * {@link org.fourthline.cling.UpnpServiceConfiguration#getSyncProtocolExecutor()}.
+ * {@link org.fourthline.cling.UpnpServiceConfiguration#getSyncProtocolExecutorService()}.
  * </p>
  *
  * @author Christian Bauer
@@ -100,15 +100,16 @@ public class ControlPointImpl implements ControlPoint {
         execute(executeAction.getCallback());
     }
 
-    public void execute(ActionCallback callback) {
+    public Future execute(ActionCallback callback) {
         log.fine("Invoking action in background: " + callback);
         callback.setControlPoint(this);
-        getConfiguration().getSyncProtocolExecutor().execute(callback);
+        ExecutorService executor = getConfiguration().getSyncProtocolExecutorService();
+        return executor.submit(callback);
     }
 
     public void execute(SubscriptionCallback callback) {
         log.fine("Invoking subscription in background: " + callback);
         callback.setControlPoint(this);
-        getConfiguration().getSyncProtocolExecutor().execute(callback);
+        getConfiguration().getSyncProtocolExecutorService().execute(callback);
     }
 }

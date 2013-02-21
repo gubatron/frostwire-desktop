@@ -1,22 +1,22 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.binding.annotations;
 
+import org.fourthline.cling.binding.AllowedValueProvider;
+import org.fourthline.cling.binding.AllowedValueRangeProvider;
 import org.fourthline.cling.binding.LocalServiceBindingException;
 import org.fourthline.cling.model.ModelUtil;
 import org.fourthline.cling.model.meta.StateVariable;
@@ -79,7 +79,9 @@ public class AnnotationStateVariableBinder {
         String[] allowedValues = null;
         if (Datatype.Builtin.STRING.equals(datatype.getBuiltin())) {
 
-            if (getAnnotation().allowedValues().length > 0) {
+            if (getAnnotation().allowedValueProvider() != void.class) {
+                allowedValues = getAllowedValuesFromProvider();
+            } else if (getAnnotation().allowedValues().length > 0) {
                 allowedValues = getAnnotation().allowedValues();
             } else if (getAnnotation().allowedValuesEnum() != void.class) {
                 allowedValues = getAllowedValues(getAnnotation().allowedValuesEnum());
@@ -109,10 +111,19 @@ public class AnnotationStateVariableBinder {
 
         // Allowed value range
         StateVariableAllowedValueRange allowedValueRange = null;
-        if (Datatype.Builtin.isNumeric(datatype.getBuiltin()) &&
-                getAnnotation().allowedValueMinimum() > 0 || getAnnotation().allowedValueMaximum() > 0) {
+        if (Datatype.Builtin.isNumeric(datatype.getBuiltin())) {
 
-            allowedValueRange = getAllowedValueRange();
+            if (getAnnotation().allowedValueRangeProvider() != void.class) {
+                allowedValueRange = getAllowedRangeFromProvider();
+            } else if (getAnnotation().allowedValueMinimum() > 0 || getAnnotation().allowedValueMaximum() > 0) {
+                allowedValueRange = getAllowedValueRange(
+                    getAnnotation().allowedValueMinimum(),
+                    getAnnotation().allowedValueMaximum(),
+                    getAnnotation().allowedValueStep()
+                );
+            } else {
+                log.finer("Not restricting allowed value range (of numeric typed state var): " + getName());
+            }
 
             // Check if the default value is an allowed value
             if (defaultValue != null && allowedValueRange != null) {
@@ -122,13 +133,13 @@ public class AnnotationStateVariableBinder {
                     v = Long.valueOf(defaultValue);
                 } catch (Exception ex) {
                     throw new LocalServiceBindingException(
-                            "Default value '" + defaultValue + "' is not numeric (for range checking) of: " + getName()
+                        "Default value '" + defaultValue + "' is not numeric (for range checking) of: " + getName()
                     );
                 }
 
                 if (!allowedValueRange.isInRange(v)) {
                     throw new LocalServiceBindingException(
-                            "Default value '" + defaultValue + "' is not in allowed range of: " + getName()
+                        "Default value '" + defaultValue + "' is not in allowed range of: " + getName()
                     );
                 }
             }
@@ -253,19 +264,52 @@ public class AnnotationStateVariableBinder {
         return allowedValueStrings;
     }
 
-    protected StateVariableAllowedValueRange getAllowedValueRange() throws LocalServiceBindingException {
-
-        if (getAnnotation().allowedValueMaximum() < getAnnotation().allowedValueMinimum()) {
+    protected StateVariableAllowedValueRange getAllowedValueRange(long min,
+                                                                  long max,
+                                                                  long step) throws LocalServiceBindingException {
+        if (max < min) {
             throw new LocalServiceBindingException(
                     "Allowed value range maximum is smaller than minimum: " + getName()
             );
         }
 
-        return new StateVariableAllowedValueRange(
-                getAnnotation().allowedValueMinimum(),
-                getAnnotation().allowedValueMaximum(),
-                getAnnotation().allowedValueStep()
-        );
+        return new StateVariableAllowedValueRange(min, max, step);
+    }
+
+    protected String[] getAllowedValuesFromProvider() throws LocalServiceBindingException {
+        Class provider = getAnnotation().allowedValueProvider();
+        if (!AllowedValueProvider.class.isAssignableFrom(provider))
+            throw new LocalServiceBindingException(
+                "Allowed value provider is not of type " + AllowedValueProvider.class + ": " + getName()
+            );
+        try {
+            return ((Class<? extends AllowedValueProvider>) provider).newInstance().getValues();
+        } catch (Exception ex) {
+            throw new LocalServiceBindingException(
+                "Allowed value provider can't be instantiated: " + getName(), ex
+            );
+        }
+    }
+
+    protected StateVariableAllowedValueRange getAllowedRangeFromProvider() throws  LocalServiceBindingException {
+        Class provider = getAnnotation().allowedValueRangeProvider();
+        if (!AllowedValueRangeProvider.class.isAssignableFrom(provider))
+            throw new LocalServiceBindingException(
+                "Allowed value range provider is not of type " + AllowedValueRangeProvider.class + ": " + getName()
+            );
+        try {
+            AllowedValueRangeProvider providerInstance =
+                ((Class<? extends AllowedValueRangeProvider>) provider).newInstance();
+            return getAllowedValueRange(
+                providerInstance.getMinimum(),
+                providerInstance.getMaximum(),
+                providerInstance.getStep()
+            );
+        } catch (Exception ex) {
+            throw new LocalServiceBindingException(
+                "Allowed value range provider can't be instantiated: " + getName(), ex
+            );
+        }
     }
 
 

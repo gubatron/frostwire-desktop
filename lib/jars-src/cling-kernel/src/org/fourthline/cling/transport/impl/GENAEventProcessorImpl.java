@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.transport.impl;
@@ -25,13 +23,17 @@ import org.fourthline.cling.model.message.gena.OutgoingEventRequestMessage;
 import org.fourthline.cling.model.meta.StateVariable;
 import org.fourthline.cling.model.state.StateVariableValue;
 import org.fourthline.cling.transport.spi.GENAEventProcessor;
-import org.fourthline.cling.transport.spi.UnsupportedDataException;
+import org.fourthline.cling.model.UnsupportedDataException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.FactoryConfigurationError;
 
@@ -44,7 +46,7 @@ import java.util.logging.Logger;
  *
  * @author Christian Bauer
  */
-public class GENAEventProcessorImpl implements GENAEventProcessor {
+public class GENAEventProcessorImpl implements GENAEventProcessor, ErrorHandler {
 
     private static Logger log = Logger.getLogger(GENAEventProcessor.class.getName());
 
@@ -69,7 +71,7 @@ public class GENAEventProcessorImpl implements GENAEventProcessor {
             if (log.isLoggable(Level.FINER)) {
                 log.finer("===================================== GENA BODY BEGIN ============================================");
                 log.finer(requestMessage.getBody().toString());
-                log.finer("-===================================== GENA BODY END ============================================");
+                log.finer("====================================== GENA BODY END =============================================");
             }
 
         } catch (Exception ex) {
@@ -86,20 +88,16 @@ public class GENAEventProcessorImpl implements GENAEventProcessor {
             log.finer("-===================================== GENA BODY END ============================================");
         }
 
-        if (requestMessage.getBody() == null || !requestMessage.getBodyType().equals(UpnpMessage.BodyType.STRING)) {
-            throw new UnsupportedDataException("Can't transform null or non-string body of: " + requestMessage);
-        }
-
+        String body = getMessageBody(requestMessage);
         try {
 
             DocumentBuilderFactory factory = createDocumentBuilderFactory();
             factory.setNamespaceAware(true);
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            documentBuilder.setErrorHandler(this);
 
-            // TODO: UPNP VIOLATION: Netgear 834DG DSL Router sends trailing spaces/newlines after last XML element, need to trim()
-            Document d = factory.newDocumentBuilder().parse(
-                    new InputSource(
-                            new StringReader(requestMessage.getBodyString().trim())
-                    )
+            Document d = documentBuilder.parse(
+                new InputSource(new StringReader(body))
             );
 
             Element propertysetElement = readPropertysetElement(d);
@@ -107,9 +105,8 @@ public class GENAEventProcessorImpl implements GENAEventProcessor {
             readProperties(propertysetElement, requestMessage);
 
         } catch (Exception ex) {
-            throw new UnsupportedDataException("Can't transform message payload: " + ex.getMessage(), ex);
+            throw new UnsupportedDataException("Can't transform message payload: " + ex.getMessage(), ex, body);
         }
-
     }
 
     /* ##################################################################################################### */
@@ -184,6 +181,14 @@ public class GENAEventProcessorImpl implements GENAEventProcessor {
 
     /* ##################################################################################################### */
 
+    protected String getMessageBody(UpnpMessage message) throws UnsupportedDataException {
+        if (!message.isBodyNonEmptyString())
+            throw new UnsupportedDataException(
+                "Can't transform null or non-string/zero-length body of: " + message
+            );
+        return message.getBodyString().trim();
+    }
+
     protected String toString(Document d) throws Exception {
         // Just to be safe, no newline at the end
         String output = XMLUtil.documentToString(d);
@@ -198,6 +203,18 @@ public class GENAEventProcessorImpl implements GENAEventProcessor {
         return node.getPrefix() != null
                 ? node.getNodeName().substring(node.getPrefix().length() + 1)
                 : node.getNodeName();
+    }
+
+    public void warning(SAXParseException e) throws SAXException {
+        log.warning(e.toString());
+    }
+
+    public void error(SAXParseException e) throws SAXException {
+        throw e;
+    }
+
+    public void fatalError(SAXParseException e) throws SAXException {
+        throw e;
     }
 }
 

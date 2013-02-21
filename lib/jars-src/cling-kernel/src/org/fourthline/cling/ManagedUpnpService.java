@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling;
@@ -30,11 +28,10 @@ import org.fourthline.cling.registry.event.LocalDeviceDiscovery;
 import org.fourthline.cling.registry.event.Phase;
 import org.fourthline.cling.registry.event.RegistryShutdown;
 import org.fourthline.cling.registry.event.RemoteDeviceDiscovery;
+import org.fourthline.cling.transport.DisableRouter;
+import org.fourthline.cling.transport.EnableRouter;
 import org.fourthline.cling.transport.Router;
-import org.fourthline.cling.transport.TransportStart;
-import org.fourthline.cling.transport.TransportStop;
 
-import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
@@ -89,13 +86,10 @@ public class ManagedUpnpService implements UpnpService {
     Instance<ControlPoint> controlPointInstance;
 
     @Inject
-    Event<TransportStart> transportStartEvent;
+    Event<EnableRouter> enableRouterEvent;
 
     @Inject
-    Event<TransportStop> transportStopEvent;
-
-    @Inject
-    Event<Shutdown> shutdownEvent;
+    Event<DisableRouter> disableRouterEvent;
 
     @Override
     public UpnpServiceConfiguration getConfiguration() {
@@ -122,12 +116,6 @@ public class ManagedUpnpService implements UpnpService {
         return routerInstance.get();
     }
 
-    @Override
-    @PreDestroy // Listen to application context shutdown
-    public void shutdown() {
-        shutdownEvent.fire(new Shutdown());
-    }
-
     public void start(@Observes Start start) {
         log.info(">>> Starting managed UPnP service...");
 
@@ -135,9 +123,14 @@ public class ManagedUpnpService implements UpnpService {
 
         getRegistry().addListener(registryListenerAdapter);
 
-        transportStartEvent.fire(new TransportStart());
+        enableRouterEvent.fire(new EnableRouter());
 
         log.info("<<< Managed UPnP service started successfully");
+    }
+
+    @Override
+    public void shutdown() {
+        shutdown(null);
     }
 
     public void shutdown(@Observes Shutdown shutdown) {
@@ -148,7 +141,8 @@ public class ManagedUpnpService implements UpnpService {
 
         // First stop the registry and announce BYEBYE on the transport
         getRegistry().shutdown();
-        transportStopEvent.fire(new TransportStop());
+
+        disableRouterEvent.fire(new DisableRouter());
 
         getConfiguration().shutdown();
 

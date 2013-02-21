@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.binding.xml;
@@ -25,6 +23,7 @@ import java.net.URI;
 import java.net.URL;
 import java.util.logging.Logger;
 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.fourthline.cling.binding.staging.MutableDevice;
@@ -42,7 +41,7 @@ import org.fourthline.cling.model.meta.LocalService;
 import org.fourthline.cling.model.meta.RemoteDevice;
 import org.fourthline.cling.model.meta.RemoteService;
 import org.fourthline.cling.model.meta.Service;
-import org.fourthline.cling.model.profile.ControlPointInfo;
+import org.fourthline.cling.model.profile.RemoteClientInfo;
 import org.fourthline.cling.model.types.DLNACaps;
 import org.fourthline.cling.model.types.DLNADoc;
 import org.fourthline.cling.model.types.InvalidValueException;
@@ -54,14 +53,17 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
  * Implementation based on JAXP DOM.
  *
  * @author Christian Bauer
  */
-public class UDA10DeviceDescriptorBinderImpl implements DeviceDescriptorBinder {
+public class UDA10DeviceDescriptorBinderImpl implements DeviceDescriptorBinder, ErrorHandler {
 
     private static Logger log = Logger.getLogger(DeviceDescriptorBinder.class.getName());
 
@@ -83,8 +85,10 @@ public class UDA10DeviceDescriptorBinderImpl implements DeviceDescriptorBinder {
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
+            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+            documentBuilder.setErrorHandler(this);
 
-            Document d = factory.newDocumentBuilder().parse(
+            Document d = documentBuilder.parse(
                     new InputSource(
                             // TODO: UPNP VIOLATION: Virgin Media Superhub sends trailing spaces/newlines after last XML element, need to trim()
                             new StringReader(descriptorXml.trim())
@@ -147,8 +151,11 @@ public class UDA10DeviceDescriptorBinderImpl implements DeviceDescriptorBinder {
                 hydrateSpecVersion(descriptor, rootChild);
             } else if (ELEMENT.URLBase.equals(rootChild)) {
                 try {
-                    // We hope it's  RFC 2396 and RFC 2732 compliant
-                    descriptor.baseURL = new URL(XMLUtil.getTextContent(rootChild));
+                    String urlString = XMLUtil.getTextContent(rootChild);
+                    if (urlString != null && urlString.length() > 0) {
+                        // We hope it's  RFC 2396 and RFC 2732 compliant
+                        descriptor.baseURL = new URL(urlString);
+                    }
                 } catch (Exception ex) {
                     throw new DescriptorBindingException("Invalid URLBase: " + ex.getMessage());
                 }
@@ -178,9 +185,19 @@ public class UDA10DeviceDescriptorBinderImpl implements DeviceDescriptorBinder {
                 continue;
 
             if (ELEMENT.major.equals(specVersionChild)) {
-                descriptor.udaVersion.major = Integer.valueOf(XMLUtil.getTextContent(specVersionChild));
+                String version = XMLUtil.getTextContent(specVersionChild).trim();
+                if (!version.equals("1")) {
+                    log.warning("Unsupported UDA major version, ignoring: " + version);
+                    version = "1";
+                }
+                descriptor.udaVersion.major = Integer.valueOf(version);
             } else if (ELEMENT.minor.equals(specVersionChild)) {
-                descriptor.udaVersion.minor = Integer.valueOf(XMLUtil.getTextContent(specVersionChild));
+                String version = XMLUtil.getTextContent(specVersionChild).trim();
+                if (!version.equals("0")) {
+                    log.warning("Unsupported UDA minor version, ignoring: " + version);
+                    version = "0";
+                }
+                descriptor.udaVersion.minor = Integer.valueOf(version);
             }
 
         }
@@ -267,7 +284,13 @@ public class UDA10DeviceDescriptorBinderImpl implements DeviceDescriptorBinder {
                     } else if (ELEMENT.height.equals(iconChild)) {
                         icon.height = (Integer.valueOf(XMLUtil.getTextContent(iconChild)));
                     } else if (ELEMENT.depth.equals(iconChild)) {
-                        icon.depth = (Integer.valueOf(XMLUtil.getTextContent(iconChild)));
+                        String depth = XMLUtil.getTextContent(iconChild);
+                        try {
+                            icon.depth = (Integer.valueOf(depth));
+                       	} catch(NumberFormatException ex) {
+                       		log.warning("Invalid icon depth '" + depth + "', using 16 as default: " + ex);
+                       		icon.depth = 16;
+                       	}
                     } else if (ELEMENT.url.equals(iconChild)) {
                         icon.uri = parseURI(XMLUtil.getTextContent(iconChild));
                     } else if (ELEMENT.mimetype.equals(iconChild)) {
@@ -340,7 +363,7 @@ public class UDA10DeviceDescriptorBinderImpl implements DeviceDescriptorBinder {
 
     }
 
-    public String generate(Device deviceModel, ControlPointInfo info, Namespace namespace) throws DescriptorBindingException {
+    public String generate(Device deviceModel, RemoteClientInfo info, Namespace namespace) throws DescriptorBindingException {
         try {
             log.fine("Generating XML descriptor from device model: " + deviceModel);
 
@@ -351,7 +374,7 @@ public class UDA10DeviceDescriptorBinderImpl implements DeviceDescriptorBinder {
         }
     }
 
-    public Document buildDOM(Device deviceModel, ControlPointInfo info, Namespace namespace) throws DescriptorBindingException {
+    public Document buildDOM(Device deviceModel, RemoteClientInfo info, Namespace namespace) throws DescriptorBindingException {
 
         try {
             log.fine("Generating DOM from device model: " + deviceModel);
@@ -369,7 +392,7 @@ public class UDA10DeviceDescriptorBinderImpl implements DeviceDescriptorBinder {
         }
     }
 
-    protected void generateRoot(Namespace namespace, Device deviceModel, Document descriptor, ControlPointInfo info) {
+    protected void generateRoot(Namespace namespace, Device deviceModel, Document descriptor, RemoteClientInfo info) {
 
         Element rootElement = descriptor.createElementNS(Descriptor.Device.NAMESPACE_URI, ELEMENT.root.toString());
         descriptor.appendChild(rootElement);
@@ -391,7 +414,7 @@ public class UDA10DeviceDescriptorBinderImpl implements DeviceDescriptorBinder {
         appendNewElementIfNotNull(descriptor, specVersionElement, ELEMENT.minor, deviceModel.getVersion().getMinor());
     }
 
-    protected void generateDevice(Namespace namespace, Device deviceModel, Document descriptor, Element rootElement, ControlPointInfo info) {
+    protected void generateDevice(Namespace namespace, Device deviceModel, Document descriptor, Element rootElement, RemoteClientInfo info) {
 
         Element deviceElement = appendNewElement(descriptor, rootElement, ELEMENT.device);
 
@@ -456,6 +479,16 @@ public class UDA10DeviceDescriptorBinderImpl implements DeviceDescriptorBinder {
                 descriptor, deviceElement, Descriptor.Device.DLNA_PREFIX + ":" + ELEMENT.X_DLNACAP,
                 deviceModelDetails.getDlnaCaps(), Descriptor.Device.DLNA_NAMESPACE_URI
         );
+        
+        appendNewElementIfNotNull(
+                descriptor, deviceElement, Descriptor.Device.SEC_PREFIX + ":" + ELEMENT.ProductCap,
+                deviceModelDetails.getSecProductCaps(), Descriptor.Device.SEC_NAMESPACE_URI
+        );
+        
+        appendNewElementIfNotNull(
+                descriptor, deviceElement, Descriptor.Device.SEC_PREFIX + ":" + ELEMENT.X_ProductCap,
+                deviceModelDetails.getSecProductCaps(), Descriptor.Device.SEC_NAMESPACE_URI
+        );
 
         generateIconList(namespace, deviceModel, descriptor, deviceElement);
         generateServiceList(namespace, deviceModel, descriptor, deviceElement);
@@ -506,7 +539,7 @@ public class UDA10DeviceDescriptorBinderImpl implements DeviceDescriptorBinder {
         }
     }
 
-    protected void generateDeviceList(Namespace namespace, Device deviceModel, Document descriptor, Element deviceElement, ControlPointInfo info) {
+    protected void generateDeviceList(Namespace namespace, Device deviceModel, Document descriptor, Element deviceElement, RemoteClientInfo info) {
         if (!deviceModel.hasEmbeddedDevices()) return;
 
         Element deviceListElement = appendNewElement(descriptor, deviceElement, ELEMENT.deviceList);
@@ -516,6 +549,18 @@ public class UDA10DeviceDescriptorBinderImpl implements DeviceDescriptorBinder {
         }
     }
 
+    public void warning(SAXParseException e) throws SAXException {
+        log.warning(e.toString());
+    }
+
+    public void error(SAXParseException e) throws SAXException {
+        throw e;
+    }
+
+    public void fatalError(SAXParseException e) throws SAXException {
+        throw e;
+    }
+
     static protected URI parseURI(String uri) {
 
         // TODO: UPNP VIOLATION: Netgear DG834 uses a non-URI: 'www.netgear.com'
@@ -523,9 +568,29 @@ public class UDA10DeviceDescriptorBinderImpl implements DeviceDescriptorBinder {
              uri = "http://" + uri;
         }
 
+        // TODO: UPNP VIOLATION: Plutinosoft uses unencoded relative URIs
+        // /var/mobile/Applications/71367E68-F30F-460B-A2D2-331509441D13/Windows Media Player Streamer.app/Icon-ps3.jpg
+        if (uri.contains(" ")) {
+            // We don't want to split/encode individual parts of the URI, too much work
+            // TODO: But we probably should do this? Because browsers do it, everyone
+            // seems to think that spaces in URLs are somehow OK...
+            uri = uri.replaceAll(" ", "%20");
+        }
+
         try {
             return URI.create(uri);
-        } catch (IllegalArgumentException ex) {
+        } catch (Throwable ex) {
+            /*
+        	catch Throwable because on Android 2.2, parsing some invalid URI like "http://..."  gives:
+        	        	java.lang.NullPointerException
+        	        	 	at java.net.URI$Helper.isValidDomainName(URI.java:631)
+        	        	 	at java.net.URI$Helper.isValidHost(URI.java:595)
+        	        	 	at java.net.URI$Helper.parseAuthority(URI.java:544)
+        	        	 	at java.net.URI$Helper.parseURI(URI.java:404)
+        	        	 	at java.net.URI$Helper.access$100(URI.java:302)
+        	        	 	at java.net.URI.<init>(URI.java:87)
+        	        		at java.net.URI.create(URI.java:968)
+            */
             log.fine("Illegal URI, trying with ./ prefix: " + Exceptions.unwrap(ex));
             // Ignore
         }

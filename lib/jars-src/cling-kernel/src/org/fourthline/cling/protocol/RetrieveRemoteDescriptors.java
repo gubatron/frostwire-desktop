@@ -1,21 +1,28 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.protocol;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.fourthline.cling.UpnpService;
 import org.fourthline.cling.binding.xml.DescriptorBindingException;
@@ -25,21 +32,16 @@ import org.fourthline.cling.model.ValidationError;
 import org.fourthline.cling.model.ValidationException;
 import org.fourthline.cling.model.message.StreamRequestMessage;
 import org.fourthline.cling.model.message.StreamResponseMessage;
+import org.fourthline.cling.model.message.UpnpHeaders;
 import org.fourthline.cling.model.message.UpnpRequest;
 import org.fourthline.cling.model.meta.Icon;
 import org.fourthline.cling.model.meta.RemoteDevice;
 import org.fourthline.cling.model.meta.RemoteService;
 import org.fourthline.cling.model.types.ServiceType;
+import org.fourthline.cling.model.types.UDN;
 import org.fourthline.cling.registry.RegistrationException;
+import org.fourthline.cling.transport.RouterException;
 import org.seamless.util.Exceptions;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.logging.Logger;
 
 /**
  * Retrieves all remote device XML descriptors, parses them, creates an immutable device and service metadata graph.
@@ -69,6 +71,7 @@ public class RetrieveRemoteDescriptors implements Runnable {
     private RemoteDevice rd;
 
     private static final Set<URL> activeRetrievals = new CopyOnWriteArraySet();
+    protected List<UDN> errorsAlreadyLogged = new ArrayList<UDN>();
 
     public RetrieveRemoteDescriptors(UpnpService upnpService, RemoteDevice rd) {
         this.upnpService = upnpService;
@@ -92,7 +95,7 @@ public class RetrieveRemoteDescriptors implements Runnable {
             return;
         }
 
-        // Exit if it has been discovered already, could be have been waiting in the executor queue too long
+        // Exit if it has been discovered already, could be we have been waiting in the executor queue too long
         if (getUpnpService().getRegistry().getRemoteDevice(rd.getIdentity().getUdn(), true) != null) {
             log.finer("Exiting early, already discovered: " + deviceURL);
             return;
@@ -101,44 +104,60 @@ public class RetrieveRemoteDescriptors implements Runnable {
         try {
             activeRetrievals.add(deviceURL);
             describe();
+        } catch (RouterException ex) {
+            log.log(Level.WARNING,
+                "Descriptor retrieval failed: " + deviceURL,
+                ex
+            );
         } finally {
             activeRetrievals.remove(deviceURL);
         }
     }
 
-    protected void describe() {
+    protected void describe() throws RouterException {
 
         // All of the following is a very expensive and time consuming procedure, thanks to the
         // braindead design of UPnP. Several GET requests, several descriptors, several XML parsing
         // steps - all of this could be done with one and it wouldn't make a difference. So every
         // call of this method has to be really necessary and rare.
-    	
+
     	if(getUpnpService().getRouter() == null) {
     		log.warning("Router not yet initialized");
     		return ;
     	}
-    	
+
     	StreamRequestMessage deviceDescRetrievalMsg;
     	StreamResponseMessage deviceDescMsg;
 
     	try {
-    		
+
     		deviceDescRetrievalMsg =
                 new StreamRequestMessage(UpnpRequest.Method.GET, rd.getIdentity().getDescriptorURL());
 
+            // Extra headers
+            UpnpHeaders headers =
+                getUpnpService().getConfiguration().getDescriptorRetrievalHeaders(rd.getIdentity());
+            if (headers != null)
+                deviceDescRetrievalMsg.getHeaders().putAll(headers);
+
     		log.fine("Sending device descriptor retrieval message: " + deviceDescRetrievalMsg);
             deviceDescMsg = getUpnpService().getRouter().send(deviceDescRetrievalMsg);
-            
-    	} catch(IllegalArgumentException e) {
-    		// UpnpRequest constructor can throw IllegalArgumentException on invalid URI
-    		// IllegalArgumentException can also be thrown by Appache HttpClient on blank URI in send()
-            log.warning("Device descriptor retrieval failed: " + e.getMessage());
-            return ;
-    	}
 
+    	} catch(IllegalArgumentException ex) {
+    		// UpnpRequest constructor can throw IllegalArgumentException on invalid URI
+    		// IllegalArgumentException can also be thrown by Apache HttpClient on blank URI in send()
+            log.warning(
+                "Device descriptor retrieval failed: "
+                + rd.getIdentity().getDescriptorURL()
+                + ", possibly invalid URL: " + ex);
+            return ;
+        }
 
         if (deviceDescMsg == null) {
-            log.warning("Device descriptor retrieval failed, no response: " + rd.getIdentity().getDescriptorURL());
+            log.warning(
+                "Device descriptor retrieval failed, no response for descriptor URL of: "
+                + rd.getIdentity().getDescriptorURL()
+            );
             return;
         }
 
@@ -161,7 +180,7 @@ public class RetrieveRemoteDescriptors implements Runnable {
         describe(deviceDescMsg.getBodyString());
     }
 
-    protected void describe(String descriptorXML) {
+    protected void describe(String descriptorXML) throws RouterException {
 
         boolean notifiedStart = false;
         RemoteDevice describedDevice = null;
@@ -181,7 +200,10 @@ public class RetrieveRemoteDescriptors implements Runnable {
             log.fine("Hydrating described device's services: " + describedDevice);
             RemoteDevice hydratedDevice = describeServices(describedDevice);
             if (hydratedDevice == null) {
-                log.warning("Device service description failed: " + rd);
+            	if(!errorsAlreadyLogged.contains(rd.getIdentity().getUdn())) {
+            		errorsAlreadyLogged.add(rd.getIdentity().getUdn());
+            		log.warning("Device service description failed: " + rd);
+            	}
                 if (notifiedStart)
                     getUpnpService().getRegistry().notifyDiscoveryFailure(
                             describedDevice,
@@ -198,12 +220,16 @@ public class RetrieveRemoteDescriptors implements Runnable {
             getUpnpService().getRegistry().addDevice(hydratedDevice);
 
         } catch (ValidationException ex) {
-            log.warning("Could not validate device model: " + rd);
-            for (ValidationError validationError : ex.getErrors()) {
-                log.warning(validationError.toString());
-            }
-            if (describedDevice != null && notifiedStart)
-                getUpnpService().getRegistry().notifyDiscoveryFailure(describedDevice, ex);
+    		// Avoid error log spam each time device is discovered, errors are logged once per device.
+        	if(!errorsAlreadyLogged.contains(rd.getIdentity().getUdn())) {
+        		errorsAlreadyLogged.add(rd.getIdentity().getUdn());
+        		log.warning("Could not validate device model: " + rd);
+        		for (ValidationError validationError : ex.getErrors()) {
+        			log.warning(validationError.toString());
+        		}
+                if (describedDevice != null && notifiedStart)
+                    getUpnpService().getRegistry().notifyDiscoveryFailure(describedDevice, ex);
+        	}
 
         } catch (DescriptorBindingException ex) {
             log.warning("Could not hydrate device or its services from descriptor: " + rd);
@@ -220,7 +246,7 @@ public class RetrieveRemoteDescriptors implements Runnable {
     }
 
     protected RemoteDevice describeServices(RemoteDevice currentDevice)
-            throws DescriptorBindingException, ValidationException {
+            throws RouterException, DescriptorBindingException, ValidationException {
 
         List<RemoteService> describedServices = new ArrayList();
         if (currentDevice.hasServices()) {
@@ -265,7 +291,7 @@ public class RetrieveRemoteDescriptors implements Runnable {
     }
 
     protected RemoteService describeService(RemoteService service)
-            throws DescriptorBindingException, ValidationException {
+            throws RouterException, DescriptorBindingException, ValidationException {
 
     	URL descriptorURL;
     	try {
@@ -274,14 +300,20 @@ public class RetrieveRemoteDescriptors implements Runnable {
     		log.warning("Could not normalize service descriptor URL: " + service.getDescriptorURI());
     		return null;
     	}
-    	
+
         StreamRequestMessage serviceDescRetrievalMsg = new StreamRequestMessage(UpnpRequest.Method.GET, descriptorURL);
+
+        // Extra headers
+        UpnpHeaders headers =
+            getUpnpService().getConfiguration().getDescriptorRetrievalHeaders(service.getDevice().getIdentity());
+        if (headers != null)
+            serviceDescRetrievalMsg.getHeaders().putAll(headers);
 
         log.fine("Sending service descriptor retrieval message: " + serviceDescRetrievalMsg);
         StreamResponseMessage serviceDescMsg = getUpnpService().getRouter().send(serviceDescRetrievalMsg);
 
         if (serviceDescMsg == null) {
-            log.warning("Could not retrieve service descriptor: " + service);
+            log.warning("Could not retrieve service descriptor, no response: " + service);
             return null;
         }
 
@@ -321,7 +353,7 @@ public class RetrieveRemoteDescriptors implements Runnable {
         for (RemoteService discoveredService : services) {
             for (ServiceType exclusiveType : exclusiveTypes) {
                 if (discoveredService.getServiceType().implementsVersion(exclusiveType)) {
-                    log.fine("Including exlusive service: " + discoveredService);
+                    log.fine("Including exclusive service: " + discoveredService);
                     exclusiveServices.add(discoveredService);
                 } else {
                     log.fine("Excluding unwanted service: " + exclusiveType);

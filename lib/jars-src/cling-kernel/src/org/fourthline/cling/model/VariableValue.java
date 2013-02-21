@@ -1,21 +1,21 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.model;
+
+import java.util.logging.Logger;
 
 import org.fourthline.cling.model.types.Datatype;
 import org.fourthline.cling.model.types.InvalidValueException;
@@ -26,6 +26,8 @@ import org.fourthline.cling.model.types.InvalidValueException;
  * @author Christian Bauer
  */
 public class VariableValue {
+
+    final private static Logger log = Logger.getLogger(VariableValue.class.getName());
 
     final private Datatype datatype;
     final private Object value;
@@ -72,10 +74,8 @@ public class VariableValue {
 
         if (!getDatatype().isValid(getValue()))
             throw new InvalidValueException("Invalid value for " + getDatatype() +": " + getValue());
-        if (!isValidXMLString(toString()))
-            throw new InvalidValueException(
-                    "Invalid characters in string value (XML 1.0, section 2.2) produced by " + getDatatype() +""
-            );
+        
+        logInvalidXML(toString());
     }
 
     public Datatype getDatatype() {
@@ -86,7 +86,8 @@ public class VariableValue {
         return value;
     }
 
-    protected boolean isValidXMLString(String s) {
+    protected void logInvalidXML(String s) {
+        // Just display warnings. PS3 Media server sends null char in DIDL-Lite
         // http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char
         int cp;
         int i = 0;
@@ -96,11 +97,10 @@ public class VariableValue {
                     (cp >= 0x20 && cp <= 0xD7FF) ||
                     (cp >= 0xE000 && cp <= 0xFFFD) ||
                     (cp >= 0x10000 && cp <= 0x10FFFF))) {
-                return false;
+           		log.warning("Found invalid XML char code: " + cp);
             }
             i += Character.charCount(cp);
         }
-        return true;
     }
 
     @Override

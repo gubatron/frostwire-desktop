@@ -1,24 +1,22 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.model.gena;
 
-import org.fourthline.cling.model.Constants;
 import org.fourthline.cling.model.ServiceManager;
+import org.fourthline.cling.model.UserConstants;
 import org.fourthline.cling.model.message.header.SubscriptionIdHeader;
 import org.fourthline.cling.model.meta.LocalService;
 import org.fourthline.cling.model.meta.StateVariable;
@@ -80,7 +78,7 @@ public abstract class LocalGENASubscription extends GENASubscription<LocalServic
         long currentTime = new Date().getTime();
         this.currentValues.clear();
 
-        Collection<StateVariableValue> values = getService().getManager().readEventedStateVariableValues(true);
+        Collection<StateVariableValue> values = getService().getManager().getCurrentState();
 
         log.finer("Got evented state variable values: " + values.size());
 
@@ -144,7 +142,6 @@ public abstract class LocalGENASubscription extends GENASubscription<LocalServic
         Collection<StateVariableValue> newValues = (Collection) e.getNewValue();
         Set<String> excludedVariables = moderateStateVariables(currentTime, newValues);
 
-        // Map<String, StateVariableValue> oldValues = currentValues;
         currentValues.clear();
         for (StateVariableValue newValue : newValues) {
             String name = newValue.getStateVariable().getName();
@@ -236,10 +233,14 @@ public abstract class LocalGENASubscription extends GENASubscription<LocalServic
         this.currentSequence.increment(true);
     }
 
+    /**
+     * @param requestedDurationSeconds If <code>null</code> defaults to
+     *                                 {@link org.fourthline.cling.model.UserConstants#DEFAULT_SUBSCRIPTION_DURATION_SECONDS}
+     */
     synchronized public void setSubscriptionDuration(Integer requestedDurationSeconds) {
         this.requestedDurationSeconds =
                 requestedDurationSeconds == null
-                        ? Constants.DEFAULT_SUBSCRIPTION_DURATION_SECONDS
+                        ? UserConstants.DEFAULT_SUBSCRIPTION_DURATION_SECONDS
                         : requestedDurationSeconds;
 
         setActualSubscriptionDurationSeconds(this.requestedDurationSeconds);
