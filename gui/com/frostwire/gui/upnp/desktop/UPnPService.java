@@ -18,16 +18,16 @@
 
 package com.frostwire.gui.upnp.desktop;
 
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.fourthline.cling.DefaultUpnpServiceConfiguration;
+import org.fourthline.cling.DefaultUpnpServiceConfiguration.ClingThreadFactory;
 import org.fourthline.cling.UpnpService;
 import org.fourthline.cling.UpnpServiceImpl;
-import org.fourthline.cling.DefaultUpnpServiceConfiguration.ClingThreadFactory;
 import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.model.meta.LocalDevice;
 import org.limewire.concurrent.ThreadPoolExecutor;
@@ -91,7 +91,7 @@ public class UPnPService implements Runnable {
 
             service = new UpnpServiceImpl(new DefaultUpnpServiceConfiguration() {
                 @Override
-                protected Executor createDefaultExecutor() {
+                protected ExecutorService createDefaultExecutorService() {
                     // TODO Auto-generated method stub
                     return UPnPService.this.createFrostWireExecutor();
                 }
@@ -129,7 +129,7 @@ public class UPnPService implements Runnable {
         }
     }
 
-    protected Executor createFrostWireExecutor() {
+    protected ExecutorService createFrostWireExecutor() {
         return new ThreadPoolExecutor(0,32,30,TimeUnit.SECONDS,new SynchronousQueue<Runnable>(),new ClingThreadFactory());
     }
 

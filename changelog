@@ -14,6 +14,8 @@ frostwire (5.5.4) stable; urgency=high
   * Bug fix: several crashes and errors fixed.
   * Bug fix: partial download dialog for cloud downloads would sometimes appear
     empty.
+  * Bug fix: out of memory error by UPnP-cling creating an infinite number
+    of threads.
  -- FrostWire Team <contact@frostwire.com>  Tue, 19 Feb 2013 17:38:57 -0500
 
 frostwire (5.5.3) stable; urgency=high
