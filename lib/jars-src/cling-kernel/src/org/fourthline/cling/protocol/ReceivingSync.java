@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.protocol;
@@ -20,6 +18,10 @@ package org.fourthline.cling.protocol;
 import org.fourthline.cling.UpnpService;
 import org.fourthline.cling.model.message.StreamRequestMessage;
 import org.fourthline.cling.model.message.StreamResponseMessage;
+import org.fourthline.cling.model.profile.RemoteClientInfo;
+import org.fourthline.cling.transport.RouterException;
+
+import java.util.logging.Logger;
 
 /**
  * Supertype for all synchronously executing protocols, handling reception of UPnP messages and return a response.
@@ -43,21 +45,30 @@ import org.fourthline.cling.model.message.StreamResponseMessage;
  */
 public abstract class ReceivingSync<IN extends StreamRequestMessage, OUT extends StreamResponseMessage> extends ReceivingAsync<IN> {
 
+    final private static Logger log = Logger.getLogger(UpnpService.class.getName());
+
+    final protected RemoteClientInfo remoteClientInfo;
     protected OUT outputMessage;
 
     protected ReceivingSync(UpnpService upnpService, IN inputMessage) {
         super(upnpService, inputMessage);
+        this.remoteClientInfo = new RemoteClientInfo(inputMessage);
     }
 
     public OUT getOutputMessage() {
         return outputMessage;
     }
 
-    final protected void execute() {
+    final protected void execute() throws RouterException {
         outputMessage = executeSync();
+
+        if (outputMessage != null && getRemoteClientInfo().getExtraResponseHeaders().size() > 0) {
+            log.fine("Setting extra headers on response message: " + getRemoteClientInfo().getExtraResponseHeaders().size());
+            outputMessage.getHeaders().putAll(getRemoteClientInfo().getExtraResponseHeaders());
+        }
     }
 
-    protected abstract OUT executeSync();
+    protected abstract OUT executeSync() throws RouterException;
 
     /**
      * Called by the client of this protocol after the returned response has been successfully delivered.
@@ -77,6 +88,10 @@ public abstract class ReceivingSync<IN extends StreamRequestMessage, OUT extends
      * @param t The reason why the response wasn't delivered.
      */
     public void responseException(Throwable t) {
+    }
+
+    public RemoteClientInfo getRemoteClientInfo() {
+        return remoteClientInfo;
     }
 
     @Override

@@ -1,23 +1,23 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.protocol;
 
 import org.fourthline.cling.UpnpService;
+import org.fourthline.cling.model.Namespace;
+import org.fourthline.cling.model.NetworkAddress;
 import org.fourthline.cling.model.action.ActionInvocation;
 import org.fourthline.cling.model.gena.LocalGENASubscription;
 import org.fourthline.cling.model.gena.RemoteGENASubscription;
@@ -47,10 +47,13 @@ import org.fourthline.cling.protocol.sync.SendingEvent;
 import org.fourthline.cling.protocol.sync.SendingRenewal;
 import org.fourthline.cling.protocol.sync.SendingSubscribe;
 import org.fourthline.cling.protocol.sync.SendingUnsubscribe;
+import org.fourthline.cling.transport.RouterException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.net.URI;
 import java.net.URL;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -88,19 +91,31 @@ public class ProtocolFactoryImpl implements ProtocolFactory {
             switch (incomingRequest.getOperation().getMethod()) {
                 case NOTIFY:
                     return isByeBye(incomingRequest) || isSupportedServiceAdvertisement(incomingRequest)
-                            ? new ReceivingNotification(getUpnpService(), incomingRequest) : null;
+                        ? createReceivingNotification(incomingRequest) : null;
                 case MSEARCH:
-                    return new ReceivingSearch(getUpnpService(), incomingRequest);
+                    return createReceivingSearch(incomingRequest);
             }
 
         } else if (message.getOperation() instanceof UpnpResponse) {
             IncomingDatagramMessage<UpnpResponse> incomingResponse = message;
 
             return isSupportedServiceAdvertisement(incomingResponse)
-                    ? new ReceivingSearchResponse(getUpnpService(), incomingResponse) : null;
+                ? createReceivingSearchResponse(incomingResponse) : null;
         }
 
         throw new ProtocolCreationException("Protocol for incoming datagram message not found: " + message);
+    }
+
+    protected ReceivingAsync createReceivingNotification(IncomingDatagramMessage<UpnpRequest> incomingRequest) {
+        return new ReceivingNotification(getUpnpService(), incomingRequest);
+    }
+
+    protected ReceivingAsync createReceivingSearch(IncomingDatagramMessage<UpnpRequest> incomingRequest) {
+        return new ReceivingSearch(getUpnpService(), incomingRequest);
+    }
+
+    protected ReceivingAsync createReceivingSearchResponse(IncomingDatagramMessage<UpnpResponse> incomingResponse) {
+        return new ReceivingSearchResponse(getUpnpService(), incomingResponse);
     }
 
     // DO NOT USE THE PARSED/TYPED MSG HEADERS! THIS WOULD DEFEAT THE PURPOSE OF THIS OPTIMIZATION!
@@ -136,27 +151,42 @@ public class ProtocolFactoryImpl implements ProtocolFactory {
 
         if (message.getOperation().getMethod().equals(UpnpRequest.Method.GET)) {
 
-            return new ReceivingRetrieval(getUpnpService(), message);
+            return createReceivingRetrieval(message);
 
         } else if (getUpnpService().getConfiguration().getNamespace().isControlPath(message.getUri())) {
 
             if (message.getOperation().getMethod().equals(UpnpRequest.Method.POST))
-                return new ReceivingAction(getUpnpService(), message);
+                return createReceivingAction(message);
 
         } else if (getUpnpService().getConfiguration().getNamespace().isEventSubscriptionPath(message.getUri())) {
 
             if (message.getOperation().getMethod().equals(UpnpRequest.Method.SUBSCRIBE)) {
-
-                return new ReceivingSubscribe(getUpnpService(), message);
-
+                return createReceivingSubscribe(message);
             } else if (message.getOperation().getMethod().equals(UpnpRequest.Method.UNSUBSCRIBE)) {
-                return new ReceivingUnsubscribe(getUpnpService(), message);
+                return createReceivingUnsubscribe(message);
             }
 
         } else if (getUpnpService().getConfiguration().getNamespace().isEventCallbackPath(message.getUri())) {
 
             if (message.getOperation().getMethod().equals(UpnpRequest.Method.NOTIFY))
-                return new ReceivingEvent(getUpnpService(), message);
+                return createReceivingEvent(message);
+
+        } else {
+
+            // TODO: UPNP VIOLATION: Onkyo devices send event messages with trailing garbage characters
+            // dev/1234/svc/upnp-org/MyService/event/callback192%2e168%2e10%2e38
+            if (message.getUri().getPath().contains(Namespace.EVENTS + Namespace.CALLBACK_FILE)) {
+                log.warning("Fixing trailing garbage in event message path: " + message.getUri().getPath());
+                String invalid = message.getUri().toString();
+                message.setUri(
+                    URI.create(invalid.substring(
+                        0, invalid.indexOf(Namespace.CALLBACK_FILE) + Namespace.CALLBACK_FILE.length()
+                    ))
+                );
+                if (getUpnpService().getConfiguration().getNamespace().isEventCallbackPath(message.getUri())
+                    && message.getOperation().getMethod().equals(UpnpRequest.Method.NOTIFY))
+                    return createReceivingEvent(message);
+            }
 
         }
 
@@ -179,8 +209,19 @@ public class ProtocolFactoryImpl implements ProtocolFactory {
         return new SendingAction(getUpnpService(), actionInvocation, controlURL);
     }
 
-    public SendingSubscribe createSendingSubscribe(RemoteGENASubscription subscription) {
-        return new SendingSubscribe(getUpnpService(), subscription);
+    public SendingSubscribe createSendingSubscribe(RemoteGENASubscription subscription) throws ProtocolCreationException {
+        try {
+            List<NetworkAddress> activeStreamServers =
+                getUpnpService().getRouter().getActiveStreamServers(
+                    subscription.getService().getDevice().getIdentity().getDiscoveredOnLocalAddress()
+                );
+            return new SendingSubscribe(getUpnpService(), subscription, activeStreamServers);
+        } catch (RouterException ex) {
+            throw new ProtocolCreationException(
+                "Failed to obtain local stream servers (for event callback URL creation) from router",
+                ex
+            );
+        }
     }
 
     public SendingRenewal createSendingRenewal(RemoteGENASubscription subscription) {
@@ -193,5 +234,25 @@ public class ProtocolFactoryImpl implements ProtocolFactory {
 
     public SendingEvent createSendingEvent(LocalGENASubscription subscription) {
         return new SendingEvent(getUpnpService(), subscription);
+    }
+
+    protected ReceivingRetrieval createReceivingRetrieval(StreamRequestMessage message) {
+        return new ReceivingRetrieval(getUpnpService(), message);
+    }
+
+    protected ReceivingAction createReceivingAction(StreamRequestMessage message) {
+        return new ReceivingAction(getUpnpService(), message);
+    }
+
+    protected ReceivingSubscribe createReceivingSubscribe(StreamRequestMessage message) {
+        return new ReceivingSubscribe(getUpnpService(), message);
+    }
+
+    protected ReceivingUnsubscribe createReceivingUnsubscribe(StreamRequestMessage message) {
+        return new ReceivingUnsubscribe(getUpnpService(), message);
+    }
+
+    protected ReceivingEvent createReceivingEvent(StreamRequestMessage message) {
+        return new ReceivingEvent(getUpnpService(), message);
     }
 }

@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.protocol.sync;
@@ -28,8 +26,11 @@ import org.fourthline.cling.model.message.gena.OutgoingSubscribeResponseMessage;
 import org.fourthline.cling.model.meta.LocalService;
 import org.fourthline.cling.model.resource.ServiceEventSubscriptionResource;
 import org.fourthline.cling.protocol.ReceivingSync;
+import org.fourthline.cling.transport.RouterException;
 import org.seamless.util.Exceptions;
 
+import java.net.URL;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -62,7 +63,7 @@ public class ReceivingSubscribe extends ReceivingSync<StreamRequestMessage, Outg
         super(upnpService, inputMessage);
     }
 
-    protected OutgoingSubscribeResponseMessage executeSync() {
+    protected OutgoingSubscribeResponseMessage executeSync() throws RouterException {
 
         ServiceEventSubscriptionResource resource =
                 getUpnpService().getRegistry().getResource(
@@ -121,8 +122,10 @@ public class ReceivingSubscribe extends ReceivingSync<StreamRequestMessage, Outg
 
     protected OutgoingSubscribeResponseMessage processNewSubscription(LocalService service,
                                                                       IncomingSubscribeRequestMessage requestMessage) {
+        List<URL> callbackURLs = requestMessage.getCallbackURLs();
+
         // Error conditions UDA 1.0 section 4.1.1 and 4.1.2
-        if (requestMessage.getCallbackURLs() == null) {
+        if (callbackURLs == null || callbackURLs.size() == 0) {
             log.fine("Missing or invalid Callback URLs in subscribe request: " + getInputMessage());
             return new OutgoingSubscribeResponseMessage(UpnpResponse.Status.PRECONDITION_FAILED);
         }
@@ -132,10 +135,15 @@ public class ReceivingSubscribe extends ReceivingSync<StreamRequestMessage, Outg
             return new OutgoingSubscribeResponseMessage(UpnpResponse.Status.PRECONDITION_FAILED);
         }
 
-        Integer timeoutSeconds = requestMessage.getRequestedTimeoutSeconds();
-
+        Integer timeoutSeconds; 
+        if(getUpnpService().getConfiguration().isReceivedSubscriptionTimeoutIgnored()) {
+        	timeoutSeconds = null; // Use default value
+        } else {
+        	timeoutSeconds = requestMessage.getRequestedTimeoutSeconds();
+        }
+        
         try {
-            subscription = new LocalGENASubscription(service, timeoutSeconds, requestMessage.getCallbackURLs()) {
+            subscription = new LocalGENASubscription(service, timeoutSeconds, callbackURLs) {
                 public void established() {
                 }
 
@@ -144,7 +152,7 @@ public class ReceivingSubscribe extends ReceivingSync<StreamRequestMessage, Outg
 
                 public void eventReceived() {
                     // The only thing we are interested in, sending an event when the state changes
-                    getUpnpService().getConfiguration().getSyncProtocolExecutor().execute(
+                    getUpnpService().getConfiguration().getSyncProtocolExecutorService().execute(
                             getUpnpService().getProtocolFactory().createSendingEvent(this)
                     );
                 }

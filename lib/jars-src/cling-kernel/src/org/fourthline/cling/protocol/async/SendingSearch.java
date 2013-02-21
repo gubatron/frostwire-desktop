@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.protocol.async;
@@ -23,13 +21,14 @@ import org.fourthline.cling.model.message.header.MXHeader;
 import org.fourthline.cling.model.message.header.STAllHeader;
 import org.fourthline.cling.model.message.header.UpnpHeader;
 import org.fourthline.cling.protocol.SendingAsync;
+import org.fourthline.cling.transport.RouterException;
 
 import java.util.logging.Logger;
 
 /**
  * Sending search request messages using the supplied search type.
  * <p>
- * Sends all search messages twice, waits 0 to 100
+ * Sends all search messages 5 times, waits 0 to 500
  * milliseconds between each sending procedure.
  * </p>
  *
@@ -79,33 +78,41 @@ public class SendingSearch extends SendingAsync {
         return mxSeconds;
     }
 
-    protected void execute() {
+    protected void execute() throws RouterException {
 
         log.fine("Executing search for target: " + searchTarget.getString() + " with MX seconds: " + getMxSeconds());
 
         OutgoingSearchRequest msg = new OutgoingSearchRequest(searchTarget, getMxSeconds());
+        prepareOutgoingSearchRequest(msg);
 
         for (int i = 0; i < getBulkRepeat(); i++) {
             try {
 
                 getUpnpService().getRouter().send(msg);
 
-                // UDA 1.0 is silent about this but UDA 1.1 recomments "a few hundred milliseconds"
-                log.finer("Sleeping "+ getBulkIntervalMilliseconds()+" milliseconds");
+                // UDA 1.0 is silent about this but UDA 1.1 recommends "a few hundred milliseconds"
+                log.finer("Sleeping " + getBulkIntervalMilliseconds() + " milliseconds");
                 Thread.sleep(getBulkIntervalMilliseconds());
 
             } catch (InterruptedException ex) {
-                log.warning("Search sending thread was interrupted: " + ex);
+                // Interruption means we stop sending search messages, e.g. on shutdown of thread pool
+                break;
             }
         }
     }
 
     public int getBulkRepeat() {
-        return 2; // UDA 1.0 says "repeat more than once", so we do it twice
+        return 5; // UDA 1.0 says "repeat more than once"
     }
 
     public int getBulkIntervalMilliseconds() {
-        return 100; // That should be plenty on an ethernet LAN
+        return 500; // That should be plenty on an ethernet LAN
+    }
+
+    /**
+     * Override this to edit the outgoing message, e.g. by adding headers.
+     */
+    protected void prepareOutgoingSearchRequest(OutgoingSearchRequest message) {
     }
 
 }

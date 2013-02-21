@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.binding.xml;
@@ -22,6 +20,7 @@ import org.fourthline.cling.binding.staging.MutableIcon;
 import org.fourthline.cling.binding.staging.MutableService;
 import org.fourthline.cling.binding.staging.MutableUDAVersion;
 import org.fourthline.cling.model.ValidationException;
+import org.fourthline.cling.model.XMLUtil;
 import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.model.types.DLNACaps;
 import org.fourthline.cling.model.types.DLNADoc;
@@ -111,8 +110,11 @@ public class UDA10DeviceDescriptorBinderSAXImpl extends UDA10DeviceDescriptorBin
             switch (element) {
                 case URLBase:
                     try {
-                        // We hope it's  RFC 2396 and RFC 2732 compliant
-                        getInstance().baseURL = new URL(getCharacters());
+                        String urlString = getCharacters();
+                        if (urlString != null && urlString.length() > 0) {
+                            // We hope it's  RFC 2396 and RFC 2732 compliant
+                            getInstance().baseURL = new URL(urlString);
+                        }
                     } catch (Exception ex) {
                         throw new SAXException("Invalid URLBase: " + ex.toString());
                     }
@@ -133,10 +135,20 @@ public class UDA10DeviceDescriptorBinderSAXImpl extends UDA10DeviceDescriptorBin
         public void endElement(ELEMENT element) throws SAXException {
             switch (element) {
                 case major:
-                    getInstance().major = Integer.valueOf(getCharacters());
+                    String majorVersion = getCharacters().trim();
+                    if (!majorVersion.equals("1")) {
+                        log.warning("Unsupported UDA major version, ignoring: " + majorVersion);
+                        majorVersion = "1";
+                    }
+                    getInstance().major = Integer.valueOf(majorVersion);
                     break;
                 case minor:
-                    getInstance().minor = Integer.valueOf(getCharacters());
+                    String minorVersion = getCharacters().trim();
+                    if (!minorVersion.equals("0")) {
+                        log.warning("Unsupported UDA minor version, ignoring: " + minorVersion);
+                        minorVersion = "0";
+                    }
+                    getInstance().minor = Integer.valueOf(minorVersion);
                     break;
             }
         }
@@ -277,7 +289,12 @@ public class UDA10DeviceDescriptorBinderSAXImpl extends UDA10DeviceDescriptorBin
                     getInstance().height = Integer.valueOf(getCharacters());
                     break;
                 case depth:
-                    getInstance().depth = Integer.valueOf(getCharacters());
+                	try {
+                		getInstance().depth = Integer.valueOf(getCharacters());
+                	} catch(NumberFormatException ex) {
+                		log.warning("Invalid icon depth '" + getCharacters() + "', using 16 as default: " + ex);
+                		getInstance().depth = 16;
+                	}
                     break;
                 case url:
                     getInstance().uri = parseURI(getCharacters());

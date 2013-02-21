@@ -1,24 +1,23 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.model.types;
 
 import org.fourthline.cling.model.Constants;
 
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,13 +25,17 @@ import java.util.regex.Pattern;
  * Represents a device type, for example <code>urn:my-domain-namespace:device:MyDevice:1</code>.
  * <p>
  * Although decimal versions are accepted and parsed, the version used for
- * comparison is only the integer withou the fraction.
+ * comparison is only the integer without the fraction.
  * </p>
  *
  * @author Christian Bauer
  */
 public class DeviceType {
-    
+
+    final private static Logger log = Logger.getLogger(DeviceType.class.getName());
+
+    public static final String UNKNOWN = "UNKNOWN";
+
     public static final Pattern PATTERN =
             Pattern.compile("urn:(" + Constants.REGEX_NAMESPACE + "):device:(" + Constants.REGEX_TYPE + "):([0-9]+).*");
 
@@ -87,16 +90,38 @@ public class DeviceType {
             // Ignore
         }
 
+        if (deviceType != null)
+            return deviceType;
+
         // Now try a generic DeviceType parse
-        if (deviceType == null) {
-            Matcher matcher = PATTERN.matcher(s);
-            if (matcher.matches()) {
-                return new DeviceType(matcher.group(1), matcher.group(2), Integer.valueOf(matcher.group(3)));
-            } else {
-                throw new InvalidValueException("Can't parse device type string (namespace/type/version): " + s);
-            }
+        Matcher matcher = PATTERN.matcher(s);
+        if (matcher.matches()) {
+            return new DeviceType(matcher.group(1), matcher.group(2), Integer.valueOf(matcher.group(3)));
         }
-        return deviceType;
+
+        // TODO: UPNP VIOLATION: Escient doesn't provide any device type token
+        // urn:schemas-upnp-org:device::1
+        matcher = Pattern.compile("urn:(" + Constants.REGEX_NAMESPACE + "):device::([0-9]+).*").matcher(s);
+        if (matcher.matches() && matcher.groupCount() >= 2) {
+            log.warning("UPnP specification violation, no device type token, defaulting to " + UNKNOWN + ": " + s);
+            return new DeviceType(matcher.group(1), UNKNOWN, Integer.valueOf(matcher.group(2)));
+        }
+
+        // TODO: UPNP VIOLATION: EyeTV Netstream uses colons in device type token
+        // urn:schemas-microsoft-com:service:pbda:tuner:1
+        matcher = Pattern.compile("urn:(" + Constants.REGEX_NAMESPACE + "):device:(.+?):([0-9]+).*").matcher(s);
+        if (matcher.matches() && matcher.groupCount() >= 3) {
+            String cleanToken = matcher.group(2).replaceAll("[^a-zA-Z_0-9\\-]", "-");
+            log.warning(
+                "UPnP specification violation, replacing invalid device type token '"
+                + matcher.group(2)
+                + "' with: "
+                + cleanToken
+            );
+            return new DeviceType(matcher.group(1), cleanToken, Integer.valueOf(matcher.group(3)));
+        }
+
+        throw new InvalidValueException("Can't parse device type string (namespace/type/version): " + s);
     }
 
     public boolean implementsVersion(DeviceType that) {

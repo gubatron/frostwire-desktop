@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling;
@@ -25,9 +23,12 @@ import org.fourthline.cling.registry.Registry;
 import org.fourthline.cling.registry.RegistryImpl;
 import org.fourthline.cling.registry.RegistryListener;
 import org.fourthline.cling.transport.Router;
+import org.fourthline.cling.transport.RouterException;
 import org.fourthline.cling.transport.RouterImpl;
+import org.seamless.util.Exceptions;
 
 import javax.enterprise.inject.Alternative;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -82,6 +83,12 @@ public class UpnpServiceImpl implements UpnpService {
 
         this.router = createRouter(protocolFactory, registry);
 
+        try {
+            this.router.enable();
+        } catch (RouterException ex) {
+            throw new RuntimeException("Enabling network router failed: " + ex, ex);
+        }
+
         this.controlPoint = createControlPoint(protocolFactory, registry);
 
         log.info("<<< UPnP service started successfully");
@@ -124,15 +131,47 @@ public class UpnpServiceImpl implements UpnpService {
     }
 
     synchronized public void shutdown() {
-        // Well, since java.util.logging has its own shutdown hook, this
-        // might actually make it into the log or not...
-        log.info(">>> Shutting down UPnP service...");
+        shutdown(false);
+    }
 
+    protected void shutdown(boolean separateThread) {
+        Runnable shutdown = new Runnable() {
+            @Override
+            public void run() {
+                log.info(">>> Shutting down UPnP service...");
+                shutdownRegistry();
+                shutdownRouter();
+                shutdownConfiguration();
+                log.info("<<< UPnP service shutdown completed");
+            }
+        };
+        if (separateThread) {
+            // This is not a daemon thread, it has to complete!
+            new Thread(shutdown).start();
+        } else {
+            shutdown.run();
+        }
+    }
+
+    protected void shutdownRegistry() {
         getRegistry().shutdown();
-        getRouter().shutdown();
-        getConfiguration().shutdown();
+    }
 
-        log.info("<<< UPnP service shutdown completed");
+    protected void shutdownRouter() {
+        try {
+            getRouter().shutdown();
+        } catch (RouterException ex) {
+            Throwable cause = Exceptions.unwrap(ex);
+            if (cause instanceof InterruptedException) {
+                log.log(Level.INFO, "Router shutdown was interrupted: " + ex, cause);
+            } else {
+                throw new RuntimeException("Router error on shutdown: " + ex, ex);
+            }
+        }
+    }
+
+    protected void shutdownConfiguration() {
+        getConfiguration().shutdown();
     }
 
 }

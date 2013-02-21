@@ -1,29 +1,27 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.model.gena;
 
-import org.fourthline.cling.model.Constants;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.fourthline.cling.model.UserConstants;
 import org.fourthline.cling.model.meta.Service;
 import org.fourthline.cling.model.state.StateVariableValue;
 import org.fourthline.cling.model.types.UnsignedIntegerFourBytes;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * An established subscription, with identifer, expiration duration, sequence handling, and state variable values.
@@ -39,13 +37,13 @@ public abstract class GENASubscription<S extends Service> {
 
     protected S service;
     protected String subscriptionId;
-    protected int requestedDurationSeconds = Constants.DEFAULT_SUBSCRIPTION_DURATION_SECONDS;
+    protected int requestedDurationSeconds = UserConstants.DEFAULT_SUBSCRIPTION_DURATION_SECONDS;
     protected int actualDurationSeconds;
     protected UnsignedIntegerFourBytes currentSequence;
     protected Map<String, StateVariableValue<S>> currentValues = new LinkedHashMap();
 
     /**
-     * Defaults to {@link org.fourthline.cling.model.Constants#DEFAULT_SUBSCRIPTION_DURATION_SECONDS}.
+     * Defaults to {@link org.fourthline.cling.model.UserConstants#DEFAULT_SUBSCRIPTION_DURATION_SECONDS}.
      */
     protected GENASubscription(S  service) {
         this.service = service;

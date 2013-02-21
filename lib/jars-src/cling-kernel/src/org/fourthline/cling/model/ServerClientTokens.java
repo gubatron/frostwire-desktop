@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.model;
@@ -20,7 +18,7 @@ package org.fourthline.cling.model;
 /**
  * The agent string of the UPnP stack in network messages, either as a server or client.
  * <p>
- * Tries to detect the operating system name and version, defaults to {@link Constants}
+ * Tries to detect the operating system name and version, defaults to {@link UserConstants}
  * for product name and version.
  * </p>
  *
@@ -36,8 +34,8 @@ public class ServerClientTokens {
 
     private String osName  =  System.getProperty("os.name").replaceAll("[^a-zA-Z0-9\\.\\-_]", "");
     private String osVersion = System.getProperty("os.version").replaceAll("[^a-zA-Z0-9\\.\\-_]", "");
-    private String productName = Constants.PRODUCT_TOKEN_NAME;
-    private String productVersion = Constants.PRODUCT_TOKEN_VERSION;
+    private String productName = UserConstants.PRODUCT_TOKEN_NAME;
+    private String productVersion = UserConstants.PRODUCT_TOKEN_VERSION;
 
     public ServerClientTokens() {
     }
@@ -45,6 +43,11 @@ public class ServerClientTokens {
     public ServerClientTokens(int majorVersion, int minorVersion) {
         this.majorVersion = majorVersion;
         this.minorVersion = minorVersion;
+    }
+
+    public ServerClientTokens(String productName, String productVersion) {
+        this.productName = productName;
+        this.productVersion = productVersion;
     }
 
     public ServerClientTokens(int majorVersion, int minorVersion, String osName, String osVersion, String productName, String productVersion) {

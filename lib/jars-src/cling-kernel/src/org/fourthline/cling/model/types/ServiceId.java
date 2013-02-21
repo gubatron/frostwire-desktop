@@ -1,36 +1,43 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.model.types;
 
 import org.fourthline.cling.model.Constants;
 
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 /**
- * Represents a service identifer, for example <code>urn:my-domain-namespace:serviceId:MyService123</code>
+ * Represents a service identifier, for example <code>urn:my-domain-namespace:serviceId:MyService123</code>
  *
  * @author Christian Bauer
  */
 public class ServiceId {
 
+    final private static Logger log = Logger.getLogger(ServiceId.class.getName());
+
+    public static final String UNKNOWN = "UNKNOWN";
+
     public static final Pattern PATTERN =
-            Pattern.compile("urn:(" + Constants.REGEX_NAMESPACE + "):serviceId:(" + Constants.REGEX_ID+ ")");
+        Pattern.compile("urn:(" + Constants.REGEX_NAMESPACE + "):serviceId:(" + Constants.REGEX_ID + ")");
+
+    // Note: 'service' vs. 'serviceId'
+    public static final Pattern BROKEN_PATTERN =
+               Pattern.compile("urn:(" + Constants.REGEX_NAMESPACE + "):service:(" + Constants.REGEX_ID+ ")");
 
     private String namespace;
     private String id;
@@ -66,16 +73,36 @@ public class ServiceId {
             // Ignore
         }
 
+        if (serviceId != null)
+            return serviceId;
+
         // Now try a generic ServiceId parse
-        if (serviceId == null) {
-            Matcher matcher = ServiceId.PATTERN.matcher(s);
-            if (matcher.matches()) {
-                return new ServiceId(matcher.group(1), matcher.group(2));
-            } else {
-                throw new InvalidValueException("Can't parse Service ID string (namespace/id): " + s);
-            }
+        Matcher matcher = ServiceId.PATTERN.matcher(s);
+        if (matcher.matches() && matcher.groupCount() >= 2) {
+            return new ServiceId(matcher.group(1), matcher.group(2));
         }
-        return serviceId;
+
+        matcher = ServiceId.BROKEN_PATTERN.matcher(s);
+        if (matcher.matches() && matcher.groupCount() >= 2) {
+            return new ServiceId(matcher.group(1), matcher.group(2));
+        }
+
+        // TODO: UPNP VIOLATION: Kodak Media Server doesn't provide any service ID token
+        // urn:upnp-org:serviceId:
+        matcher = Pattern.compile("urn:(" + Constants.REGEX_NAMESPACE + "):serviceId:").matcher(s);
+        if (matcher.matches() && matcher.groupCount() >= 1) {
+            log.warning("UPnP specification violation, no service ID token, defaulting to " + UNKNOWN + ": " + s);
+            return new ServiceId(matcher.group(1), UNKNOWN);
+        }
+
+        // TODO: UPNP VIOLATION: PS Audio Bridge has invalid service IDs
+        String tokens[] = s.split("[:]");
+        if (tokens.length == 4) {
+            log.warning("UPnP specification violation, trying a simple colon-split of: " + s);
+            return new ServiceId(tokens[1], tokens[3]);
+        }
+
+        throw new InvalidValueException("Can't parse service ID string (namespace/id): " + s);
     }
 
     @Override
