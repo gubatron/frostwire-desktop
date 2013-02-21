@@ -32,6 +32,7 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.FilenameUtils;
 
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * @author gubatron
@@ -59,10 +60,11 @@ public class YouTubeItemDownload implements BTDownload {
 
     public YouTubeItemDownload(FilePackage filePackage) {
         this.filePackage = filePackage;
+        this.filePackage.setDownloadDirectory(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath());
+        
         this.link = filePackage.getChildren().get(0);
         this.dateCreated = new Date();
         this.saveLocation = readSaveLocation(filePackage);
-
         this.started = false;
         start();
     }

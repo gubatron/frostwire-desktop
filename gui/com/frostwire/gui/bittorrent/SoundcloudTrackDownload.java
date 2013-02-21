@@ -34,6 +34,7 @@ import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.SoundcloudSearchResult;
+import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * @author gubatron
@@ -62,6 +63,8 @@ public class SoundcloudTrackDownload implements BTDownload {
 
     public SoundcloudTrackDownload(FilePackage filePackage, String title, SoundcloudSearchResult sr) {
         this.filePackage = filePackage;
+        this.filePackage.setDownloadDirectory(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath());
+        
         this.title = title;
         this.link = filePackage.getChildren().get(0);
         this.dateCreated = new Date();

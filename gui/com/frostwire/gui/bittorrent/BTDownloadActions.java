@@ -62,7 +62,7 @@ final class BTDownloadActions {
     static final SendBTDownloaderAudioFilesToiTunes SEND_TO_ITUNES_ACTION = new SendBTDownloaderAudioFilesToiTunes();
     static final ToggleSeedsVisibilityAction TOGGLE_SEEDS_VISIBILITY_ACTION = new ToggleSeedsVisibilityAction();
     static final ShareTorrentAction SHARE_TORRENT_ACTION = new ShareTorrentAction();
-    static final PlaySingleAudioFileAction PLAY_SINGLE_AUDIO_FILE_ACTION = new PlaySingleAudioFileAction();
+    static final PlaySingleMediaFileAction PLAY_SINGLE_AUDIO_FILE_ACTION = new PlaySingleMediaFileAction();
 
     private static class SendBTDownloaderAudioFilesToiTunes extends AbstractAction {
 
@@ -466,13 +466,13 @@ final class BTDownloadActions {
         }
     }
     
-    static final class PlaySingleAudioFileAction extends AbstractAction {
+    static final class PlaySingleMediaFileAction extends AbstractAction {
         
         private static final long serialVersionUID = -3628469680044329612L;
 
-        public PlaySingleAudioFileAction() {
-            super(I18n.tr("Play audio file"));
-            putValue(Action.LONG_DESCRIPTION,I18n.tr("Play Audio file"));
+        public PlaySingleMediaFileAction() {
+            super(I18n.tr("Play file"));
+            putValue(Action.LONG_DESCRIPTION,I18n.tr("Play media file"));
         }
         
         @Override
@@ -480,7 +480,7 @@ final class BTDownloadActions {
             File file = BTDownloadMediator.instance().getSelectedDownloaders()[0].getSaveLocation();
             
             if (MediaPlayer.isPlayableFile(file)) {
-            	MediaPlayer.instance().loadMedia(new MediaSource(file),true,false);
+            	    MediaPlayer.instance().loadMedia(new MediaSource(file),true,false);
             }
         }
     }
