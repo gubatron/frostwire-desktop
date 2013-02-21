@@ -18,13 +18,19 @@
 
 package com.frostwire.gui.upnp.desktop;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.fourthline.cling.DefaultUpnpServiceConfiguration;
 import org.fourthline.cling.UpnpService;
 import org.fourthline.cling.UpnpServiceImpl;
+import org.fourthline.cling.DefaultUpnpServiceConfiguration.ClingThreadFactory;
 import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.model.meta.LocalDevice;
+import org.limewire.concurrent.ThreadPoolExecutor;
 
 import com.frostwire.gui.upnp.UPnPFWDevice;
 import com.frostwire.gui.upnp.UPnPManager;
@@ -83,7 +89,13 @@ public class UPnPService implements Runnable {
             // azureus core.
             System.setProperty(HACK_STREAM_HANDLER_SYSTEM_PROPERTY, "alreadyWorkedAroundTheEvilJDK");
 
-            service = new UpnpServiceImpl();
+            service = new UpnpServiceImpl(new DefaultUpnpServiceConfiguration() {
+                @Override
+                protected Executor createDefaultExecutor() {
+                    // TODO Auto-generated method stub
+                    return UPnPService.this.createFrostWireExecutor();
+                }
+            });
 
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 @Override
@@ -115,6 +127,10 @@ public class UPnPService implements Runnable {
         } catch (Throwable e) {
             LOG.log(Level.WARNING, "Exception occured with the UPnP framework", e);
         }
+    }
+
+    protected Executor createFrostWireExecutor() {
+        return new ThreadPoolExecutor(0,32,1,TimeUnit.SECONDS,new SynchronousQueue<Runnable>(),new ClingThreadFactory());
     }
 
     private static LocalDevice createLocalDevice() {
