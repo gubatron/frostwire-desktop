@@ -130,7 +130,7 @@ public class UPnPService implements Runnable {
     }
 
     protected Executor createFrostWireExecutor() {
-        return new ThreadPoolExecutor(0,32,1,TimeUnit.SECONDS,new SynchronousQueue<Runnable>(),new ClingThreadFactory());
+        return new ThreadPoolExecutor(0,32,30,TimeUnit.SECONDS,new SynchronousQueue<Runnable>(),new ClingThreadFactory());
     }
 
     private static LocalDevice createLocalDevice() {
