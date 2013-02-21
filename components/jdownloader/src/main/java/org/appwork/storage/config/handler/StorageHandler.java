@@ -42,8 +42,6 @@ import org.appwork.utils.Application;
 import org.appwork.utils.logging.Log;
 import org.appwork.utils.reflection.Clazz;
 
-import com.limegroup.gnutella.settings.SharingSettings;
-
 /**
  * @author thomas
  * @param <T>
@@ -515,11 +513,11 @@ public class StorageHandler<T extends ConfigInterface> implements InvocationHand
             if (handler != null) {
                 if (handler.isGetter(m)) {
                     //FROSTWIRE HACK, since this will not update the default download folder once it's been set.
-                    if (m.getName().equals("getDefaultDownloadFolder")) {
-                        return SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath();
-                    } else {
+                    //if (m.getName().equals("getDefaultDownloadFolder")) {
+                    //    return SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath();
+                    //} else {
                         return handler.getValue();
-                    }
+                    //}
                 } else {
                     ((KeyHandler<Object>) handler).setValue(parameter[0]);
 

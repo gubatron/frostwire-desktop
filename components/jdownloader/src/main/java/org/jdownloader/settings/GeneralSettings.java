@@ -25,7 +25,6 @@ public interface GeneralSettings extends ConfigInterface {
         @Override
         public String getDefaultValue() {
             /* convert old value */
-            System.out.println("DefaultDownloadFolder: getDefaultValue()! ");
             String old = JDUtilities.getConfiguration().getStringProperty("DOWNLOAD_DIRECTORY", null);
             if (!StringUtils.isEmpty(old)) {
                 File file = new File(old);
