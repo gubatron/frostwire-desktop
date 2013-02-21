@@ -16,7 +16,7 @@ frostwire (5.5.4) stable; urgency=high
     empty.
   * Bug fix: out of memory error by UPnP-cling creating an infinite number
     of threads.
- -- FrostWire Team <contact@frostwire.com>  Tue, 19 Feb 2013 17:38:57 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 21 Feb 2013 14:38:57 -0500
 
 frostwire (5.5.3) stable; urgency=high
   * Bug fix: freeze on Windows XP. (Windows release only)
