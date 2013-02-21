@@ -1,11 +1,7 @@
 package com.frostwire.gui.library.tags;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-
-import javax.imageio.IIOException;
-import javax.imageio.ImageIO;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,8 +12,6 @@ import org.jaudiotagger.audio.generic.AudioFileReader;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.images.Artwork;
-
-import com.frostwire.jpeg.JPEGImageIO;
 
 class JaudiotaggerParser extends AbstractTagParser {
 
@@ -57,7 +51,7 @@ class JaudiotaggerParser extends AbstractTagParser {
             data = sanitize(duration, bitrate, title, artist, album, comment, genre, track, year);
 
         } catch (Exception e) {
-            LOG.warn("Unable to parse file using Jaudiotagger: " + file, e);
+            LOG.warn("Unable to parse file using Jaudiotagger: " + file);
         }
 
         return data;
@@ -69,15 +63,16 @@ class JaudiotaggerParser extends AbstractTagParser {
 
         try {
             AudioFile audioFile = fileReader != null ? fileReader.read(file) : AudioFileIO.read(file);
-
-            Artwork artwork = audioFile.getTag().getFirstArtwork();
-
-            byte[] imageData = artwork.getBinaryData();
-
-            data = imageFromData(imageData);
-
+            Tag tag = audioFile.getTag();
+            if (tag != null) {
+                Artwork artwork = audioFile.getTag().getFirstArtwork();
+                if (artwork != null) {
+                    byte[] imageData = artwork.getBinaryData();
+                    data = imageFromData(imageData);
+                }
+            }
         } catch (Exception e) {
-            LOG.warn("Unable to read artwork of file using Jaudiotagger: " + file, e);
+            LOG.warn("Unable to read artwork of file using Jaudiotagger: " + file);
         }
 
         return data;
@@ -111,28 +106,13 @@ class JaudiotaggerParser extends AbstractTagParser {
         return getValueSafe(audioFile.getTag(), FieldKey.YEAR);
     }
 
-    protected BufferedImage imageFromData(byte[] data) {
-        BufferedImage image = null;
-        try {
-            try {
-                image = ImageIO.read(new ByteArrayInputStream(data, 0, data.length));
-            } catch (IIOException e) {
-                image = JPEGImageIO.read(new ByteArrayInputStream(data, 0, data.length));
-            }
-        } catch (Throwable e) {
-            LOG.error("Unable to create artwork image from bytes", e);
-        }
-
-        return image;
-    }
-
     private String getValueSafe(Tag tag, FieldKey id) {
         String value = null;
 
         try {
             value = tag.getFirst(id);
         } catch (Exception e) {
-            LOG.warn("Unable to get value for key: " + id, e);
+            //LOG.warn("Unable to get value for key: " + id);
         }
 
         return value;

@@ -28,14 +28,16 @@ class FlacParser extends JaudiotaggerParser {
             try {
                 AudioFile audioFile = AudioFileIO.read(file);
                 FlacTag tag = (FlacTag) audioFile.getTag();
-                List<MetadataBlockDataPicture> images = tag.getImages();
-                if (images != null && !images.isEmpty()) {
-                    MetadataBlockDataPicture picture = images.get(0);
-                    byte[] data = picture.getImageData();
-                    image = imageFromData(data);
+                if (tag != null) {
+                    List<MetadataBlockDataPicture> images = tag.getImages();
+                    if (images != null && !images.isEmpty()) {
+                        MetadataBlockDataPicture picture = images.get(0);
+                        byte[] data = picture.getImageData();
+                        image = imageFromData(data);
+                    }
                 }
             } catch (Throwable e) {
-                LOG.error("Unable to read cover art from flac", e);
+                LOG.error("Unable to read cover art from flac");
             }
         }
 

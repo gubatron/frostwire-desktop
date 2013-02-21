@@ -1,10 +1,21 @@
 package com.frostwire.gui.library.tags;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 
+import javax.imageio.IIOException;
+import javax.imageio.ImageIO;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.limewire.util.FilenameUtils;
 
+import com.frostwire.jpeg.JPEGImageIO;
+
 abstract class AbstractTagParser implements TagsParser {
+
+    private static final Log LOG = LogFactory.getLog(AbstractTagParser.class);
 
     protected final File file;
 
@@ -54,5 +65,20 @@ abstract class AbstractTagParser implements TagsParser {
         }
 
         return new TagsData(duration, bitrate, title, artist, album, comment, genre, track, year);
+    }
+
+    protected static BufferedImage imageFromData(byte[] data) {
+        BufferedImage image = null;
+        try {
+            try {
+                image = ImageIO.read(new ByteArrayInputStream(data, 0, data.length));
+            } catch (IIOException e) {
+                image = JPEGImageIO.read(new ByteArrayInputStream(data, 0, data.length));
+            }
+        } catch (Throwable e) {
+            LOG.error("Unable to create artwork image from bytes");
+        }
+
+        return image;
     }
 }

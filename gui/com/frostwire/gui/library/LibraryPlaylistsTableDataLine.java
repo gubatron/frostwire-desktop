@@ -124,6 +124,8 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
 
     private boolean exists;
 
+    private String bitrate;
+
     /**
      * Sets up the dataline for use with the playlist.
      */
@@ -131,6 +133,11 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
         super.initialize(item);
         sizeHolder = new SizeHolder(item.getFileSize());
         exists = new File(item.getFilePath()).exists();
+
+        bitrate = initializer.getTrackBitrate();
+        if (bitrate != null && bitrate.length() > 0 && !bitrate.endsWith(" kbps")) {
+            bitrate = bitrate + " kbps";
+        }
     }
 
     /**
@@ -142,27 +149,27 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
         case STARRED_IDX:
             return new PlaylistItemStar(this, playing, exists);
         case ALBUM_IDX:
-            return new PlaylistItemProperty(initializer.getTrackAlbum(), playing, exists,idx);
+            return new PlaylistItemProperty(initializer.getTrackAlbum(), playing, exists, idx);
         case ARTIST_IDX:
-            return new PlaylistItemProperty(initializer.getTrackArtist(), playing, exists,idx);
+            return new PlaylistItemProperty(initializer.getTrackArtist(), playing, exists, idx);
         case BITRATE_IDX:
-            return new PlaylistItemProperty(initializer.getTrackBitrate(), playing, exists,idx);
+            return new PlaylistItemProperty(bitrate, playing, exists, idx);
         case COMMENT_IDX:
-            return new PlaylistItemProperty(initializer.getTrackComment(), playing, exists,idx);
+            return new PlaylistItemProperty(initializer.getTrackComment(), playing, exists, idx);
         case GENRE_IDX:
-            return new PlaylistItemProperty(initializer.getTrackGenre(), playing, exists,idx);
+            return new PlaylistItemProperty(initializer.getTrackGenre(), playing, exists, idx);
         case LENGTH_IDX:
-            return new PlaylistItemProperty(LibraryUtils.getSecondsInDDHHMMSS((int) initializer.getTrackDurationInSecs()), playing, exists,idx);
+            return new PlaylistItemProperty(LibraryUtils.getSecondsInDDHHMMSS((int) initializer.getTrackDurationInSecs()), playing, exists, idx);
         case SIZE_IDX:
-            return new PlaylistItemProperty(sizeHolder.toString(), playing, exists,idx);
+            return new PlaylistItemProperty(sizeHolder.toString(), playing, exists, idx);
         case TITLE_IDX:
-            return new LibraryNameHolder(this,initializer.getTrackTitle(),playing,exists,idx);
+            return new LibraryNameHolder(this, initializer.getTrackTitle(), playing, exists, idx);
         case TRACK_IDX:
-            return new PlaylistItemProperty(initializer.getTrackNumber(), playing, exists,idx);
+            return new PlaylistItemProperty(initializer.getTrackNumber(), playing, exists, idx);
         case TYPE_IDX:
-            return new PlaylistItemProperty(initializer.getFileExtension(), playing, exists,idx);
+            return new PlaylistItemProperty(initializer.getFileExtension(), playing, exists, idx);
         case YEAR_IDX:
-            return new PlaylistItemProperty(initializer.getTrackYear(), playing, exists,idx);
+            return new PlaylistItemProperty(initializer.getTrackYear(), playing, exists, idx);
         }
         return null;
     }
@@ -240,9 +247,9 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
         if (!StringUtils.isNullOrEmpty(initializer.getTrackNumber(), true)) {
             list.add(I18n.tr("Track") + ": " + initializer.getTrackNumber());
         }
-        
+
         list.add(I18n.tr("Duration") + ": " + LibraryUtils.getSecondsInDDHHMMSS((int) initializer.getTrackDurationInSecs()));
-        
+
         if (!StringUtils.isNullOrEmpty(initializer.getTrackArtist(), true)) {
             list.add(I18n.tr("Artist") + ": " + initializer.getTrackArtist());
         }

@@ -10,6 +10,7 @@ import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.audio.mp3.MP3FileReader;
 import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.jaudiotagger.tag.id3.ID3v24Frames;
+import org.jaudiotagger.tag.images.Artwork;
 
 class MP3Parser extends JaudiotaggerParser {
 
@@ -28,11 +29,14 @@ class MP3Parser extends JaudiotaggerParser {
                 MP3File mp3 = new MP3File(file.getAbsoluteFile());
                 if (mp3.hasID3v2Tag()) {
                     AbstractID3v2Tag tag = mp3.getID3v2Tag();
-                    byte[] data = tag.getFirstArtwork().getBinaryData();
-                    image = imageFromData(data);
+                    Artwork artwork = tag.getFirstArtwork();
+                    if (artwork != null) {
+                        byte[] data = artwork.getBinaryData();
+                        image = imageFromData(data);
+                    }
                 }
             } catch (Throwable e) {
-                LOG.error("Unable to read cover art from mp3", e);
+                LOG.error("Unable to read cover art from mp3");
             }
         }
 
@@ -76,7 +80,7 @@ class MP3Parser extends JaudiotaggerParser {
                     AbstractID3v2Tag v2tag = ((MP3File) audioFile).getID3v2Tag();
                     value = v2tag.getFirst(identifier);
                 } catch (Exception e) {
-                    LOG.warn("Unable to get value for ID3v2 tag key: " + identifier, e);
+                    LOG.warn("Unable to get value for ID3v2 tag key: " + identifier);
                 }
             }
         }

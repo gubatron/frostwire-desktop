@@ -53,6 +53,7 @@ import com.coremedia.iso.boxes.ContainerBox;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.library.LibraryMediator;
+import com.frostwire.gui.library.tags.TagsReader;
 import com.frostwire.gui.mplayer.MPlayer;
 import com.frostwire.mplayer.IcyInfoListener;
 import com.frostwire.mplayer.MediaPlaybackState;
@@ -296,9 +297,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
 
     private long getDurationFromMP3(File f) {
         try {
-            //MP3File mp3 = new MP3File(f.getAbsolutePath());
-            //return mp3.getAudioHeader().getTrackLength();
-            return -1;
+            return new TagsReader(f).parse().getDuration();
         } catch (Throwable e) {
             return -1;
         }

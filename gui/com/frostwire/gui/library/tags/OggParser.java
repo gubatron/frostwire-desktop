@@ -26,10 +26,14 @@ class OggParser extends JaudiotaggerParser {
             try {
                 AudioFile audioFile = AudioFileIO.read(file);
                 VorbisCommentTag tag = (VorbisCommentTag) audioFile.getTag();
-                byte[] data = tag.getArtworkBinaryData();
-                image = imageFromData(data);
+                if (tag != null) {
+                    byte[] data = tag.getArtworkBinaryData();
+                    if (data != null) {
+                        image = imageFromData(data);
+                    }
+                }
             } catch (Throwable e) {
-                LOG.error("Unable to read cover art from flac", e);
+                LOG.error("Unable to read cover art from ogg");
             }
         }
 
