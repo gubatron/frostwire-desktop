@@ -68,7 +68,6 @@ public class TorrentSaveFolderPaneItem extends AbstractPaneItem {
         //jDownloader save folder
         GeneralSettings jDownloaderSettings = JsonConfig.create(GeneralSettings.class);
         jDownloaderSettings.setDefaultDownloadFolder(newSaveFolder.getAbsolutePath());
-        //JDUtilities.getConfiguration().setProperty("DOWNLOAD_DIRECTORY", SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath());
     }
 
     @Override
