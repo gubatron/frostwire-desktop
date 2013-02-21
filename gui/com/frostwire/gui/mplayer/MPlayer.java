@@ -115,7 +115,7 @@ public class MPlayer extends BaseMediaPlayer {
 	private static final String ANS_ASPECT = "ANS_ASPECT=";
 
 	private static final String ID_VIDEO_ASPECT = "ID_VIDEO_ASPECT=";
-	
+
 	private static final String ID_AUDIO_ID = "ID_AUDIO_ID=";
 	private static final String ID_SUBTITLE_ID = "ID_SUBTITLE_ID=";
 
@@ -390,10 +390,8 @@ public class MPlayer extends BaseMediaPlayer {
 					.getString("azemp.failed.d3dbad"));
 			reportNewState(MediaPlaybackState.Failed);
 		} else if (line.startsWith(ID_EXIT)) {
+
 			reportNewState(MediaPlaybackState.Closed);
-			if (current_instance != null) {
-				current_instance.onExited();
-			}
 		} else if (line.startsWith(ICY_INFO)) {
 		    String data = line.substring(ICY_INFO.length()).trim();
 		    reportIcyInfo(data);

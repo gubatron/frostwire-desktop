@@ -55,11 +55,10 @@ import com.limegroup.gnutella.gui.MPlayerMediator;
 public class 
 MPlayerInstance 
 {
-	private static final boolean LOG	= false;
+	private static final boolean LOG	= true;
 			
 	private static File BINARY_PATH;
-    private boolean isStopping = false;
-    
+
 	public static void
 	initialise(
 		File		binary_path )
@@ -682,25 +681,6 @@ MPlayerInstance
 		}
 	}
 	
-	public void onExited() {
-		
-		if (isStopping ) {
-			command_sem.release();
-			
-			if ( mPlayerProcess != null ){
-				
-				mPlayerProcess.destroy();
-			}
-						
-			killProcesses( true );
-			
-			stop_sem.reserve();
-			
-			isStopping = false;
-			stopped = true;
-		}
-	}
-	
 	protected void doSetVolume(int volume) 
 	{
 		synchronized( this ){
@@ -883,8 +863,20 @@ MPlayerInstance
 			
 			sendCommand("quit 0");
 			
-			isStopping = true;
+			stopped = true;
+			
 		}
+		
+		command_sem.release();
+		
+		if ( mPlayerProcess != null ){
+			
+			mPlayerProcess.destroy();
+		}
+					
+		killProcesses( true );
+		
+		stop_sem.reserve();
 	}
 	
 	private static void
