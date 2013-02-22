@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,16 +45,21 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
+import com.coremedia.iso.BoxParser;
+import com.coremedia.iso.IsoFile;
+import com.coremedia.iso.PropertyBoxParserImpl;
+import com.coremedia.iso.boxes.Box;
+import com.coremedia.iso.boxes.ContainerBox;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.library.LibraryMediator;
+import com.frostwire.gui.library.tags.TagsReader;
 import com.frostwire.gui.mplayer.MPlayer;
-import com.frostwire.mp3.Mp3File;
-import com.frostwire.mp4.IsoFile;
 import com.frostwire.mplayer.IcyInfoListener;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.mplayer.PositionListener;
 import com.frostwire.mplayer.StateListener;
+import com.googlecode.mp4parser.AbstractBox;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.MPlayerMediator;
@@ -291,8 +297,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
 
     private long getDurationFromMP3(File f) {
         try {
-            Mp3File mp3 = new Mp3File(f.getAbsolutePath());
-            return mp3.getLengthInSeconds();
+            return new TagsReader(f).parse().getDuration();
         } catch (Throwable e) {
             return -1;
         }
@@ -303,7 +308,19 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         try {
             fis = new FileInputStream(f);
             FileChannel inFC = fis.getChannel();
-            IsoFile isoFile = new IsoFile(inFC);
+            BoxParser parser = new PropertyBoxParserImpl() {
+                @Override
+                public Box parseBox(ReadableByteChannel byteChannel, ContainerBox parent) throws IOException {
+                    Box box = super.parseBox(byteChannel, parent);
+
+                    if (box instanceof AbstractBox) {
+                        ((AbstractBox) box).parseDetails();
+                    }
+
+                    return box;
+                }
+            };
+            IsoFile isoFile = new IsoFile(inFC, parser);
 
             return isoFile.getMovieBox().getMovieHeaderBox().getDuration() / isoFile.getMovieBox().getMovieHeaderBox().getTimescale();
         } catch (Throwable e) {

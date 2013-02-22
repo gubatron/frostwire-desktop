@@ -10,7 +10,6 @@
 	<classpathentry kind="src" path="components/osx_stub/src/main/java"/>
 	<classpathentry kind="src" path="components/azureus/src/main/java"/>
 	<classpathentry kind="src" path="components/alexandria/src/main/java"/>
-	<classpathentry kind="src" path="components/medialib/src/main/java"/>
 	<classpathentry kind="src" path="components/jdownloader/src/main/java"/>
 	<classpathentry excluding="build.xml" kind="src" path="core">
 		<attributes>
@@ -38,5 +37,7 @@
 	<classpathentry kind="lib" path="lib/jars/metadata-extractor-2.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/jars/cling-kernel.jar" sourcepath="lib/jars-src/cling-kernel"/>
 	<classpathentry kind="lib" path="lib/jars/fwtips.jar" sourcepath="/frostwire-tips/src/java"/>
+	<classpathentry kind="lib" path="lib/jars/mp4parser.jar" sourcepath="lib/jars-src/mp4parser"/>
+	<classpathentry kind="lib" path="lib/jars/jaudiotagger.jar" sourcepath="lib/jars-src/jaudiotagger"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

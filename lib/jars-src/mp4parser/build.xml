@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="mp4parser" default="main" basedir=".">
+
+	<property name="jars" value="../dist/" />
+
+	<path id="default.classpath">
+		<fileset dir="${jars}" includes="*.jar" excludes="mp4parser.jar" />
+	</path>
+
+	<target name="main">
+		<mkdir dir="bin" />
+
+		<!-- build -->
+		<javac srcdir="isoparser/src/main/java" destdir="bin" fork="true" includeantruntime="false">
+			<classpath refid="default.classpath" />
+			<include name="isoparser/src/main/resources/**" />
+		</javac>
+
+		<!-- jar -->
+		<jar jarfile="../dist/mp4parser.jar">
+			<fileset dir="bin" />
+		</jar>
+
+	</target>
+
+	<target name="clean">
+
+		<delete dir="bin" />
+
+	</target>
+
+</project>

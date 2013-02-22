@@ -1,3 +1,21 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.frostwire.gui.components.slides;
 
 import java.awt.event.ItemEvent;
@@ -11,96 +29,101 @@ import javax.swing.JRadioButton;
 
 import com.frostwire.gui.components.slides.SlideshowPanel.SlideshowListener;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+class SlideshowPanelControls extends JPanel implements SlideshowListener {
 
-public class SlideshowPanelControls extends JPanel implements SlideshowListener {
+    private static final long serialVersionUID = 7167253192165957777L;
+    private final SlideshowPanel _thePanel;
 
-	private static final long serialVersionUID = 7167253192165957777L;
-	private final SlideshowPanel _thePanel;
+    private ButtonGroup _buttonGroup;
+    private List<JRadioButton> _buttons;
 
-	private ButtonGroup _buttonGroup;
-	private List<JRadioButton> _buttons;
-	
-	private ItemListener _selectionAdapter;
-	
-	public SlideshowPanelControls(SlideshowPanel panel) {
-		_thePanel = panel;
-		_thePanel.setListener(this);
-		
-		buildButtons();
-		autoSelectCurrentSlideButton();
-		buildItemListener();
-		attachListeners();
-	}
+    private ItemListener _selectionAdapter;
 
-	public void autoSelectCurrentSlideButton() {
-		int currentSlideIndex = _thePanel.getCurrentSlideIndex();
-		if (currentSlideIndex!=-1) {
-			_buttons.get(currentSlideIndex).setSelected(true);
-		} else {
-			_buttons.get(0).setSelected(true);
-		}
-	}
+    public SlideshowPanelControls(SlideshowPanel panel) {
+        _thePanel = panel;
+        _thePanel.setListener(this);
 
-	private void buildItemListener() {
-		_selectionAdapter = new ItemListener() {
-			
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (((JRadioButton)e.getItemSelectable()).isSelected()) {				
-					onRadioButtonClicked(e);				
-				}
-			}
-		};
-	}
+        buildButtons();
+        autoSelectCurrentSlideButton();
+        buildItemListener();
+        attachListeners();
+    }
 
-	protected void onRadioButtonClicked(ItemEvent e) {
-		int selectedIndex = _buttons.indexOf(e.getSource());
-		_thePanel.switchToSlide(selectedIndex);
-	}
+    public void autoSelectCurrentSlideButton() {
+        int currentSlideIndex = _thePanel.getCurrentSlideIndex();
+        if (currentSlideIndex != -1) {
+            _buttons.get(currentSlideIndex).setSelected(true);
+        } else {
+            _buttons.get(0).setSelected(true);
+        }
+    }
 
-	private void buildButtons() {
-		int numSlides = _thePanel.getNumSlides();
+    private void buildItemListener() {
+        _selectionAdapter = new ItemListener() {
 
-		_buttonGroup = new ButtonGroup();
-		_buttons = new ArrayList<JRadioButton>(numSlides);
-		
-		for (int i=0; i < numSlides; i++) {
-			JRadioButton radio = new JRadioButton();
-			
-			//add to the list
-			_buttons.add(radio);
-			
-			//add to the button group
-			_buttonGroup.add(radio);
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (((JRadioButton) e.getItemSelectable()).isSelected()) {
+                    onRadioButtonClicked(e);
+                }
+            }
+        };
+    }
 
-			//add to the panel
-			add(radio);
-		}
-	}
-	
-	private void attachListeners() {
-		for (int i=0; i < _buttons.size(); i++) {
-			_buttons.get(i).addItemListener(_selectionAdapter);
-		}
-	}
+    protected void onRadioButtonClicked(ItemEvent e) {
+        int selectedIndex = _buttons.indexOf(e.getSource());
+        _thePanel.switchToSlide(selectedIndex);
+    }
 
-	@Override
-	public void onSlideChanged() {
-		int currentSlideIndex = _thePanel.getCurrentSlideIndex();
-		JRadioButton button = _buttons.get(currentSlideIndex);
-		
-		ItemListener[] itemListeners = button.getItemListeners();
+    private void buildButtons() {
+        int numSlides = _thePanel.getNumSlides();
 
-		for (ItemListener listener : itemListeners) {
-			button.removeItemListener(listener);
-		}
-		
-		button.setSelected(true);
-		
-		for (ItemListener listener : itemListeners) {
-			button.addItemListener(listener);
-		}
-		
-	}
+        _buttonGroup = new ButtonGroup();
+        _buttons = new ArrayList<JRadioButton>(numSlides);
+
+        for (int i = 0; i < numSlides; i++) {
+            JRadioButton radio = new JRadioButton();
+
+            //add to the list
+            _buttons.add(radio);
+
+            //add to the button group
+            _buttonGroup.add(radio);
+
+            //add to the panel
+            add(radio);
+        }
+    }
+
+    private void attachListeners() {
+        for (int i = 0; i < _buttons.size(); i++) {
+            _buttons.get(i).addItemListener(_selectionAdapter);
+        }
+    }
+
+    @Override
+    public void onSlideChanged() {
+        int currentSlideIndex = _thePanel.getCurrentSlideIndex();
+        JRadioButton button = _buttons.get(currentSlideIndex);
+
+        ItemListener[] itemListeners = button.getItemListeners();
+
+        for (ItemListener listener : itemListeners) {
+            button.removeItemListener(listener);
+        }
+
+        button.setSelected(true);
+
+        for (ItemListener listener : itemListeners) {
+            button.addItemListener(listener);
+        }
+
+    }
 
 }

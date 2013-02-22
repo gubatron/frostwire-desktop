@@ -1,0 +1,16 @@
+http://www.jthink.net/jaudiotagger/
+http://java.net/projects/jaudiotagger
+http://java.net/projects/jaudiotagger/sources/svn/show
+
+Jaudiotagger
+It is the Audio Tagging library used by Jaikoz for tagging
+data in Audio files. It currently fully supports Mp3, Mp4 (Mp4 audio, M4a and M4p audio)
+Ogg Vorbis, Flac and Wma, there is limited support for Wav and Real formats. 
+
+rev 1111
+svn co https://svn.java.net/svn/jaudiotagger~svn/trunk jaudiotagger
+
+Cleanup jars.
+Cleanup of test files
+rm -rf testdata
+rm -rf testtagdata

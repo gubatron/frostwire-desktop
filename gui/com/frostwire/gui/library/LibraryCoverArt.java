@@ -26,24 +26,14 @@ import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.nio.channels.FileChannel;
 
-import javax.imageio.IIOException;
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.frostwire.jpeg.JPEGImageIO;
-import com.frostwire.mp3.ID3v2;
-import com.frostwire.mp3.Mp3File;
-import com.frostwire.mp4.IsoFile;
-import com.frostwire.mp4.Path;
-import com.frostwire.mp4.boxes.apple.AppleDataBox;
+import com.frostwire.gui.library.tags.TagsReader;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
@@ -125,13 +115,7 @@ public final class LibraryCoverArt extends JPanel implements ThemeObserver {
         if (file == null) {
             return defaultCoverArt;
         }
-        String path = file.getAbsolutePath();
-        Image image = null;
-        if (path.toLowerCase().endsWith(".mp3")) {
-            image = retrieveImageFromMP3(path);
-        } else if (path.toLowerCase().endsWith(".m4a")) {
-            image = retrieveImageFromM4A(path);
-        }
+        Image image = new TagsReader(file).getArtwork();
 
         return image;
     }
@@ -154,62 +138,6 @@ public final class LibraryCoverArt extends JPanel implements ThemeObserver {
 
         repaint();
         getToolkit().sync();
-    }
-
-    private Image retrieveImageFromMP3(String filename) {
-        try {
-            Mp3File mp3 = new Mp3File(filename);
-            if (mp3.hasId3v2Tag()) {
-                ID3v2 tag = mp3.getId3v2Tag();
-                byte[] imageBytes = tag.getAlbumImage();
-                try {
-                    return ImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
-                } catch (IIOException e) {
-                    return JPEGImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
-                }
-            }
-        } catch (Throwable e) {
-            //LOG.error("Unable to read cover art from mp3");
-        }
-
-        return null;
-    }
-
-    private Image retrieveImageFromM4A(String filename) {
-        try {
-            FileInputStream fis = new FileInputStream(filename);
-            try {
-                FileChannel inFC = fis.getChannel();
-                IsoFile iso = new IsoFile(inFC);
-
-                Path p = new Path(iso);
-
-                AppleDataBox data = (AppleDataBox) p.getPath("/moov/udta/meta/ilst/covr/data");
-                if (data != null) {
-                    if ((data.getFlags() & 0x1) == 0x1) { // jpg
-                        byte[] imageBytes = data.getData();
-                        try {
-                            return ImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
-                        } catch (IIOException e) {
-                            return JPEGImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
-                        }
-                    } else if ((data.getFlags() & 0x2) == 0x2) { // png
-                        byte[] imageBytes = data.getData();
-                        try {
-                            return ImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
-                        } catch (IIOException e) {
-                            return null;
-                        }
-                    }
-                }
-            } finally {
-                fis.close();
-            }
-        } catch (Throwable e) {
-            //LOG.error("Unable to read cover art from m4a");
-        }
-
-        return null;
     }
 
     @Override
