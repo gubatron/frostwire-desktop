@@ -47,7 +47,7 @@ final class FWHttpClient implements HttpClient {
     static {
         sun.net.www.protocol.https.HttpsURLConnectionImpl.setDefaultHostnameVerifier(new HostnameVerifier() {
             @Override
-            public boolean verify(String arg0, SSLSession arg1) {
+            public boolean verify(String hostname, SSLSession session) {
                 return true;
             }
         });
@@ -76,7 +76,7 @@ final class FWHttpClient implements HttpClient {
 
             result = new String(baos.toByteArray(), "UTF-8");
         } catch (Throwable e) {
-            // ignore
+            LOG.warn("Error getting string from http body response: " + e.getMessage());
         } finally {
             closeQuietly(baos);
         }
@@ -119,9 +119,7 @@ final class FWHttpClient implements HttpClient {
     private void get(String url, OutputStream out, int timeout, String userAgent, int rangeStart, int rangeLength) throws IOException {
         canceled = false;
         URL u = new URL(url);
-        URLConnection conn = (java.net.URLConnection) u.openConnection();
-
-        System.out.println(conn.getClass());
+        URLConnection conn = u.openConnection();
 
         conn.setConnectTimeout(timeout);
         conn.setReadTimeout(timeout);
@@ -164,6 +162,7 @@ final class FWHttpClient implements HttpClient {
             onError(e);
         } finally {
             closeQuietly(in);
+            closeQuietly(conn);
         }
     }
 
@@ -244,6 +243,16 @@ final class FWHttpClient implements HttpClient {
             }
         } catch (IOException ioe) {
             // ignore
+        }
+    }
+
+    private void closeQuietly(URLConnection conn) {
+        if (conn instanceof HttpURLConnection) {
+            try {
+                ((HttpURLConnection) conn).disconnect();
+            } catch (Throwable e) {
+                LOG.debug("Error closing http connection", e);
+            }
         }
     }
 
