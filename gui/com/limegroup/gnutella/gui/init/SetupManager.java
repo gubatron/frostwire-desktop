@@ -313,7 +313,7 @@ public class SetupManager {
         
         // hack to deal with paint issues, need to refactor the whole dialog/window creation
         if (OSUtils.isLinux()) {
-        	dialog.setSize(dialog.getWidth() + 10, dialog.getHeight() + 10);
+        	dialog.setSize(dialog.getWidth() + 10, dialog.getHeight() + 60);
         }
 
         SplashWindow.instance().setVisible(false);
