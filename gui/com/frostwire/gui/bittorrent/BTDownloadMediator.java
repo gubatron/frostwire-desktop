@@ -309,13 +309,13 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         
 		clearInactiveAction.setEnabled(anyClearable);
 		
-		if (OSUtils.isWindows() && UpdateManagerSettings.SHOW_FROSTWIRE_RECOMMENDATIONS.getValue()) {
-		    try {
-		        TipsClient.instance().call();
-		    } catch (Exception e) {
-		        
-		    }
-		}
+        try {
+            if (OSUtils.isWindows() && UpdateManagerSettings.SHOW_FROSTWIRE_RECOMMENDATIONS.getValue()) {
+                TipsClient.instance().call();
+            }
+        } catch (Throwable e) {
+            LOG.debug("Error using tips framework: " + e.getMessage());
+        }
     }
 
     public int getActiveDownloads() {
