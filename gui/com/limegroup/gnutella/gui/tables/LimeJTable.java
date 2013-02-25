@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.tables;
 
 import java.awt.Color;
@@ -54,8 +69,6 @@ public class LimeJTable extends JTable implements JSortTable {
      * 
      */
     private static final long serialVersionUID = 8592998839457123312L;
-
-    private static final int DEFAULT_ROW_HEIGHT = 16;
     
     /**
      * The columns that are currently hidden.
@@ -691,25 +704,13 @@ public class LimeJTable extends JTable implements JSortTable {
         else
             return -1;
     }
-    
-    /**
-     * Updates the row height appropriately
-     */
-    private void updateRowHeight() {
-        int increment = ThemeSettings.FONT_SIZE_INCREMENT.getValue();
-        if (increment != 0) {
-            FontMetrics fm = getFontMetrics(getFont());
-            setRowHeight(Math.max(fm.getHeight() + 1, DEFAULT_ROW_HEIGHT));
-        }
-    }
-    
+        
     /**
      * Overridden to update the table row size if necessary.
      */
     @Override
     public void updateUI() {
         super.updateUI();
-        updateRowHeight();
     }
     
     /**

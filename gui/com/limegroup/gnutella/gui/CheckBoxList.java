@@ -544,18 +544,6 @@ public class CheckBoxList<E> extends BoxPanel {
         this.add(scrollPane);
         
         this.updateUI();
-    }    
-    
-    
-    /**
-     * Updates the row height appropriately
-     */
-    private void updateRowHeight() {
-        int increment = ThemeSettings.FONT_SIZE_INCREMENT.getValue();
-        if (increment != 0) {
-            FontMetrics fm = getFontMetrics(getFont());
-            this.checkBoxList.setRowHeight(Math.max(fm.getHeight() + 5, DEFAULT_ROW_HEIGHT+2));
-        }
     }
     
     @Override
@@ -565,8 +553,6 @@ public class CheckBoxList<E> extends BoxPanel {
         if (this.checkBoxList == null) {
             return;
         }
-        
-        this.updateRowHeight();
         
         this.setBackground(UIManager.getColor("List.textBackground"));
         this.checkBoxList.setBackground(UIManager.getColor("List.background"));

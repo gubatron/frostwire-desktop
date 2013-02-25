@@ -42,7 +42,6 @@ final class FileMenu extends AbstractMenu {
 	 */
 	private JMenuItem createMenuItem(Action action) {
 		JMenuItem menuItem = new JMenuItem(action);
-		menuItem.setFont(AbstractMenu.FONT);
 		return menuItem;
 	}
 }

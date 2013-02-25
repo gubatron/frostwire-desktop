@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui;
 
 import java.awt.GraphicsConfiguration;
@@ -16,14 +31,12 @@ import javax.swing.MenuSelectionManager;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 
-
 /**
  * A JFrame that uses LimeWire's icon.
  */
 public class LimeJFrame extends JFrame {
 
-    
-	/**
+    /**
      * 
      */
     private static final long serialVersionUID = -8237193535978264490L;
@@ -33,21 +46,21 @@ public class LimeJFrame extends JFrame {
         initialize();
     }
 
-    public LimeJFrame(GraphicsConfiguration arg0) {
-        super(arg0);
+    public LimeJFrame(GraphicsConfiguration gc) {
+        super(gc);
         initialize();
     }
 
-    public LimeJFrame(String arg0, GraphicsConfiguration arg1) {
-        super(arg0, arg1);
+    public LimeJFrame(String title, GraphicsConfiguration gc) {
+        super(title, gc);
         initialize();
     }
 
-    public LimeJFrame(String arg0) throws HeadlessException {
-        super(arg0);
+    public LimeJFrame(String title) throws HeadlessException {
+        super(title);
         initialize();
     }
-    
+
     private void initialize() {
         ImageIcon limeIcon = GUIMediator.getThemeImage(GUIConstants.FROSTWIRE_64x64_ICON);
         setIconImage(limeIcon.getImage());
@@ -58,13 +71,13 @@ public class LimeJFrame extends JFrame {
 
     // Overrides addNotify() to change to a platform specific icon right afterwards.
     @Override
-	public void addNotify() {
-		super.addNotify();
+    public void addNotify() {
+        super.addNotify();
 
-		// Replace the Swing icon with a prettier platform-specific one
-		SystemUtils.setWindowIcon(this, GUIConstants.FROSTWIRE_EXE_FILE);
-	}
-    
+        // Replace the Swing icon with a prettier platform-specific one
+        SystemUtils.setWindowIcon(this, GUIConstants.FROSTWIRE_EXE_FILE);
+    }
+
     private void setupPopupHide() {
         addWindowListener(new WindowAdapter() {
             public void windowDeactivated(WindowEvent e) {
@@ -74,7 +87,7 @@ public class LimeJFrame extends JFrame {
             }
         });
     }
-    
+
     private static List<JPopupMenu> getPopups() {
         MenuSelectionManager msm = MenuSelectionManager.defaultManager();
         MenuElement[] p = msm.getSelectedPath();

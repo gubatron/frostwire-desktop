@@ -91,8 +91,6 @@ public final class MenuMediator {
     private MenuMediator() {
         GUIMediator.setSplashScreenString(I18n.tr("Loading Menus..."));
 
-        MENU_BAR.setFont(AbstractMenu.FONT);
-
         addMenu(FILE_MENU);
         addMenu(VIEW_MENU);
         addMenu(TOOLS_MENU);

@@ -1,6 +1,20 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.themes;
 
-import java.awt.Font;
 import java.awt.Window;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -9,14 +23,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.InsetsUIResource;
 
 import org.limewire.util.FileUtils;
@@ -238,71 +249,5 @@ public class ThemeMediator {
         UIManager.put("ProgressBarUI", "com.limegroup.gnutella.gui.themes.SkinProgressBarUI");
         
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
-    }
-    
-    public static void setFontSizeDelta(float delta) {
-        if (delta == 0f) {
-            return;
-        }
-        
-        Map<Font, Font> newFontByOldFont = new HashMap<Font, Font>();
-        String[] fontKeys = new String[] {
-                "Button.font",
-                "CheckBox.font",
-                "ComboBox.font",
-                "DesktopIcon.font",
-                "Label.font",
-                "List.font",
-                "ProgressBar.font",
-                "RadioButton.font",
-                "Slider.font",
-                "Spinner.font",
-                "TabbedPane.font",
-                "TitledBorder.font",
-                "ToggleButton.font",
-                "CheckBoxMenuItem.font",
-                "Menu.font",
-                "MenuBar.font",
-                "MenuItem.font",
-                "PopupMenu.font",
-                "RadioButtonMenuItem.font",
-                "ToolBar.font",
-                "ToolTip.font",
-                "EditorPane.font",
-                "FormattedTextField.font",
-                "PasswordField.font",
-                "Table.font",
-                "TableHeader.font",
-                "TextArea.font",
-                "TextField.font",
-                "TextPane.font",
-                "Tree.font",
-                "InternalFrame.titleFont",
-        };
-        List<Object> props = new ArrayList<Object>(fontKeys.length * 2);
-        for (String fontKey : fontKeys) {
-            Font font = UIManager.getFont(fontKey);
-            Font newFont = newFontByOldFont.get(font);
-            if (newFont == null) {
-                if (font == null) {
-                    continue;
-                }
-                newFont = new FontUIResource(font.deriveFont(font.getSize() + delta));
-                newFontByOldFont.put(font, newFont);
-            }
-            props.add(fontKey);
-            props.add(newFont);
-        }
-        UIManager.getDefaults().putDefaults(props.toArray());
-    }
-    
-    public static void resetFontSizes() {
-        //get the current delta, and bring it towards 0.
-        while (ThemeSettings.FONT_SIZE_INCREMENT.getValue() != 0) {
-            int newDelta = ThemeSettings.FONT_SIZE_INCREMENT.getValue() > 0 ? -1 : 1;
-            ThemeSettings.FONT_SIZE_INCREMENT.setValue(ThemeSettings.FONT_SIZE_INCREMENT.getValue()+newDelta);
-            ThemeMediator.setFontSizeDelta(newDelta);            
-            ThemeMediator.updateComponentHierarchy();
-        }
     }
 }
