@@ -475,12 +475,17 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
 
         Enumeration<?> e = root.depthFirstEnumeration();
         while (e.hasMoreElements()) {
-            LibraryNode node = (LibraryNode) e.nextElement();
+            final LibraryNode node = (LibraryNode) e.nextElement();
             if (node instanceof DirectoryHolderNode) {
                 DirectoryHolder holder = ((DirectoryHolderNode) node).getDirectoryHolder();
                 if (holder instanceof MediaTypeSavedFilesDirectoryHolder && ((MediaTypeSavedFilesDirectoryHolder) holder).getMediaType().equals(mediaType)) {
-                    tree.setSelectionPath(new TreePath(node.getPath()));
-                    tree.scrollPathToVisible(new TreePath(node.getPath()));
+                    GUIMediator.safeInvokeAndWait(new Runnable() {
+                        @Override
+                        public void run() {
+                            tree.setSelectionPath(new TreePath(node.getPath()));
+                            tree.scrollPathToVisible(new TreePath(node.getPath()));
+                        }
+                    });
                     return;
                 }
             }
