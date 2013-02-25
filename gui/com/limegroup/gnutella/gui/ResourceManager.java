@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui;
 
 import java.awt.Font;
@@ -21,7 +36,6 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
@@ -301,9 +315,6 @@ public final class ResourceManager {
         String bMetal = System.getProperty("apple.awt.brushMetalLook");
         BRUSHED_METAL = bMetal != null && bMetal.equalsIgnoreCase("true");
 
-        ThemeMediator.setFontSizeDelta(ThemeSettings.FONT_SIZE_INCREMENT.getValue());
-        //themeChanged();
-        //ResourceManager.setFontSizes(ThemeSettings.FONT_SIZE_INCREMENT.getValue());
         try {
             validateLocaleAndFonts(Locale.getDefault());
         } catch (NullPointerException npe) {

@@ -169,12 +169,14 @@ public class SetupManager {
 
         //THIS HAS TO GO LAST
         IntentWindow intentWindow = new IntentWindow(this);
-        if (!intentWindow.isConfirmedWillNot())
+        if (!intentWindow.isConfirmedWillNot()) {
             windows.add(intentWindow);
+        }
 
         // Nothing to install?.. Begone.
-        if (windows.size() == 0)
+        if (windows.size() == 0) {
             return;
+        }
 
         // If the INSTALLED value is set, that means that a previous
         // installer has already been run.
@@ -197,13 +199,15 @@ public class SetupManager {
         for (SetupWindow current : windows) {
             _setupWindowHolder.add(current);
 
-            if (prior == null)
+            if (prior == null) {
                 current.setPrevious(current);
-            else
+            } else {
                 current.setPrevious(prior);
+            }
 
-            if (prior != null)
+            if (prior != null) {
                 prior.setNext(current);
+            }
 
             prior = current;
 
@@ -230,7 +234,6 @@ public class SetupManager {
         prior.setNext(prior);
 
         // Actually display the setup dialog.
-        ThemeMediator.resetFontSizes();
         createDialog(windows.get(0));
     }
 

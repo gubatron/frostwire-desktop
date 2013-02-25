@@ -81,7 +81,6 @@ import com.limegroup.gnutella.gui.options.panes.WiFiSharingPaneItem;
 import com.limegroup.gnutella.gui.options.panes.iTunesPreferencePaneItem;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.gui.themes.SkinCustomUI;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.UISettings;
 
 /**
@@ -440,25 +439,10 @@ public final class OptionsConstructor {
     public static class DialogSizeSettingUpdater {
 
         public static void install(JDialog dialog, IntSetting widthSetting, IntSetting heightSetting) {
-            int increment = ThemeSettings.FONT_SIZE_INCREMENT.getValue();
-            int width = widthSetting.isDefault() ? getWidthForFontIncrement(widthSetting, dialog, increment) : widthSetting.getValue();
-            int height = heightSetting.isDefault() ? getHeightForFontIncrement(heightSetting, dialog, increment) : heightSetting.getValue();
+            int width = widthSetting.getValue();
+            int height = heightSetting.getValue();
             dialog.setSize(width, height);
             dialog.addComponentListener(new SizeChangeListener(widthSetting, heightSetting));
-        }
-
-        private static int getWidthForFontIncrement(IntSetting widthSetting, Component component, int increment) {
-            if (increment > 0) {
-                return widthSetting.getValue() + 20 * increment + 4 * increment ^ 2;
-            }
-            return widthSetting.getValue();
-        }
-
-        private static int getHeightForFontIncrement(IntSetting heightSetting, Component component, int increment) {
-            if (increment > 0) {
-                return heightSetting.getValue() + 10 * increment + 18 * increment ^ 2;
-            }
-            return heightSetting.getValue();
         }
 
         private static class SizeChangeListener extends ComponentAdapter {
@@ -473,9 +457,8 @@ public final class OptionsConstructor {
 
             @Override
             public void componentResized(ComponentEvent e) {
-                int increment = ThemeSettings.FONT_SIZE_INCREMENT.getValue();
                 Component c = e.getComponent();
-                if (c.getWidth() != getWidthForFontIncrement(widthSetting, c, increment) || c.getHeight() != getHeightForFontIncrement(heightSetting, c, increment)) {
+                if (c.getWidth() != widthSetting.getValue() || c.getHeight() != heightSetting.getValue()) {
                     widthSetting.setValue(c.getWidth());
                     heightSetting.setValue(c.getHeight());
                 }
