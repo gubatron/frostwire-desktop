@@ -116,8 +116,9 @@ public class SetupManager {
 
     private SaveStatus shouldShowSaveDirectoryWindow() {
         // If it's not setup, definitely show it!
-        if (!InstallSettings.SAVE_DIRECTORY.getValue())
+        if (!InstallSettings.SAVE_DIRECTORY.getValue()) {
             return SaveStatus.NEEDS;
+        }
 
         // Otherwise, if it has been setup, it might need
         // additional tweaking because defaults have changed,
@@ -133,7 +134,6 @@ public class SetupManager {
             //                return SaveStatus.MIGRATE;
         }
 
-        //if (true) {
         if (!InstallSettings.LAST_FROSTWIRE_VERSION_WIZARD_INVOKED.getValue().equals(FrostWireUtils.getFrostWireVersion())) {
             performAdditionalResets();
             return SaveStatus.NEEDS;
@@ -155,11 +155,13 @@ public class SetupManager {
         windows = new LinkedList<SetupWindow>();
 
         SaveStatus saveDirectoryStatus = shouldShowSaveDirectoryWindow();
-        if (saveDirectoryStatus != SaveStatus.NO)
+        if (saveDirectoryStatus != SaveStatus.NO) {
             windows.add(new BitTorrentSettingsWindow(this));
+        }
 
-        if (!InstallSettings.SPEED.getValue() || !InstallSettings.START_STARTUP.getValue() && GUIUtils.shouldShowStartOnStartupWindow()) //FTA removed in FrostWire  ||             !InstallSettings.FILTER_OPTION.getValue() 
+        if (!InstallSettings.SPEED.getValue() || !InstallSettings.START_STARTUP.getValue() && GUIUtils.shouldShowStartOnStartupWindow()) {
             windows.add(new MiscWindow(this));
+        }
 
         if (shouldShowAssociationsWindow()) {
             windows.add(new AssociationsWindow(this));
@@ -413,7 +415,6 @@ public class SetupManager {
         InstallSettings.SPEED.setValue(true);
         InstallSettings.SCAN_FILES.setValue(true);
         InstallSettings.LANGUAGE_CHOICE.setValue(true);
-        InstallSettings.FILTER_OPTION.setValue(true);
         InstallSettings.EXTENSION_OPTION.setValue(true);
 
         if (GUIUtils.shouldShowStartOnStartupWindow())

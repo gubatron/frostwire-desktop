@@ -25,13 +25,13 @@ import javax.swing.JPanel;
  * serves as a proxy for the underlying SetupWindow object that
  * that handles the actual drawing.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class SetupWindowHolder extends JPanel {
 
     /**
      * 
      */
     private static final long serialVersionUID = -5012114565385150258L;
+
     /**
      * The <tt>CardLayout</tt> instance for the setup windows.
      */
@@ -61,5 +61,4 @@ final class SetupWindowHolder extends JPanel {
     void show(String key) {
         CARD_LAYOUT.show(this, key);
     }
-
 }
