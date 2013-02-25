@@ -111,7 +111,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         DeviceNode node = findNode(device);
         if (node != null) {
             model.removeNodeFromParent(node);
-            
+
             // clear if necessary, pending refactor
             Device d = getSelectedDeviceFiles();
             DirectoryHolder dh = getSelectedDirectoryHolder();
@@ -203,7 +203,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         root.add(devicesNode);
 
         model = new DefaultTreeModel(root);
-        
+
     }
 
     private void setupTree() {
@@ -215,8 +215,8 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         tree.setCellRenderer(new NodeRenderer());
         tree.setDragEnabled(true);
         tree.setTransferHandler(new LibraryFilesTransferHandler(tree));
-        ((BasicTreeUI)tree.getUI()).setExpandedIcon(null);
-        ((BasicTreeUI)tree.getUI()).setCollapsedIcon(null);
+        ((BasicTreeUI) tree.getUI()).setExpandedIcon(null);
+        ((BasicTreeUI) tree.getUI()).setCollapsedIcon(null);
 
         SkinPopupMenu popup = new SkinPopupMenu();
         popup.add(new SkinMenuItem(refreshAction));
@@ -232,10 +232,10 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
                 }
             }
         });
-        
+
         treeSelectionListener = new LibraryExplorerTreeSelectionListener();
         tree.addTreeSelectionListener(treeSelectionListener);
-        
+
         ToolTipManager.sharedInstance().registerComponent(tree);
     }
 
@@ -320,7 +320,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         LibraryNode node = (LibraryNode) tree.getLastSelectedPathComponent();
         return node != null && node instanceof DirectoryHolderNode ? ((DirectoryHolderNode) node).getDirectoryHolder() : null;
     }
-    
+
     public Device getSelectedDeviceFiles() {
         LibraryNode node = (LibraryNode) tree.getLastSelectedPathComponent();
         return node != null && node instanceof DeviceFileTypeTreeNode ? ((DeviceFileTypeTreeNode) node).getDevice() : null;
@@ -410,7 +410,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             if (file == null || !file.isDirectory() || !file.exists()) {
                 return;
             }
-            
+
             //avoids npe if for some reason the directory holder is not selected.
             if (getSelectedDirectoryHolder() == null) {
                 selectMediaTypeSavedFilesDirectoryHolderbyType(_mtsfdh.getMediaType());
@@ -454,7 +454,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             }
         }
     }
-    
+
     public void selectMediaTypeSavedFilesDirectoryHolderbyType(MediaType mediaType) {
         LibraryNode selectedValue = (LibraryNode) tree.getLastSelectedPathComponent();
         if (selectedValue != null && selectedValue instanceof DirectoryHolderNode && ((DirectoryHolderNode) selectedValue).getDirectoryHolder() instanceof MediaTypeSavedFilesDirectoryHolder
@@ -494,12 +494,18 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
 
             Enumeration<?> e = root.depthFirstEnumeration();
             while (e.hasMoreElements()) {
-                LibraryNode node = (LibraryNode) e.nextElement();
+                final LibraryNode node = (LibraryNode) e.nextElement();
                 if (node instanceof DirectoryHolderNode) {
                     DirectoryHolder holder = ((DirectoryHolderNode) node).getDirectoryHolder();
                     if (holder instanceof StarredDirectoryHolder) {
-                        tree.setSelectionPath(new TreePath(node.getPath()));
-                        tree.scrollPathToVisible(new TreePath(node.getPath()));
+                        GUIMediator.safeInvokeAndWait(new Runnable() {
+                            @Override
+                            public void run() {
+                                tree.setSelectionPath(new TreePath(node.getPath()));
+                                tree.scrollPathToVisible(new TreePath(node.getPath()));
+                            }
+                        });
+
                         return;
                     }
                 }
@@ -508,7 +514,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             executePendingRunnables();
         }
     }
-    
+
     public void selectFinishedDownloads() {
         try {
             if (selectionListenerForSameItem(StarredDirectoryHolder.class)) {
@@ -655,13 +661,13 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
     public void selectDeviceFileType(Device device, byte fileType) {
         try {
             Object selectedNode = null;
-            
+
             if (tree.getSelectionPath() == null) {
                 tree.setSelectionRow(0);
             }
 
             selectedNode = tree.getSelectionPath().getLastPathComponent();
-            
+
             Enumeration<?> e = root.depthFirstEnumeration();
             while (e.hasMoreElements()) {
                 final LibraryNode node = (LibraryNode) e.nextElement();
@@ -670,7 +676,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
                     byte ft = ((DeviceFileTypeTreeNode) node).getFileType();
                     if (dev.equals(device) && ft == fileType) {
                         tree.setSelectionPath(new TreePath(node.getPath()));
-                        
+
                         enqueueRunnable(new Runnable() {
                             public void run() {
                                 GUIMediator.safeInvokeLater(new Runnable() {
@@ -680,7 +686,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
                                 });
                             }
                         });
-                        
+
                         if (selectedNode != null && selectedNode.equals(node)) {
                             executePendingRunnables();
                         }
