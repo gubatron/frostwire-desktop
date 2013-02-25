@@ -310,6 +310,11 @@ public class SetupManager {
             ((JComponent) container).setPreferredSize(new Dimension(SetupWindow.SETUP_WIDTH, SetupWindow.SETUP_HEIGHT));
         }
         dialog.pack();
+        
+        // hack to deal with paint issues, need to refactor the whole dialog/window creation
+        if (OSUtils.isLinux()) {
+        	dialog.setSize(dialog.getWidth() + 10, dialog.getHeight() + 10);
+        }
 
         SplashWindow.instance().setVisible(false);
         dialogFrame.showDialog();
