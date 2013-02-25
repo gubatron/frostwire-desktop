@@ -498,20 +498,24 @@ public class LibrarySearch extends JPanel {
         }
 
         public void run() {
-            if (canceled) {
-                return;
-            }
-
-            GUIMediator.safeInvokeAndWait(new Runnable() {
-                public void run() {
-                    LibraryPlaylistsTableMediator.instance().clearTable();
-                    setStatus("");
-                    statusLabel.setText("");
-                    resultsCount = 0;
+            try {
+                if (canceled) {
+                    return;
                 }
-            });
 
-            search();
+                GUIMediator.safeInvokeAndWait(new Runnable() {
+                    public void run() {
+                        LibraryPlaylistsTableMediator.instance().clearTable();
+                        setStatus("");
+                        statusLabel.setText("");
+                        resultsCount = 0;
+                    }
+                });
+
+                search();
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
         }
 
         private void search() {
