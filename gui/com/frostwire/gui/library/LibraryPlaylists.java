@@ -38,7 +38,6 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultListModel;
-import javax.swing.DropMode;
 import javax.swing.Icon;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -209,7 +208,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
             }
         });
 
-        _list = new LibraryIconList(_model);
+        _list = new LibraryIconList(sortedModel);
         _list.setFixedCellHeight(TableSettings.DEFAULT_TABLE_ROW_HEIGHT.getValue());
         _list.setCellRenderer(new LibraryPlaylistsCellRenderer());
         _list.addMouseListener(new DefaultMouseListener(_listMouseObserver));
@@ -219,8 +218,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         _list.setPrototypeCellValue(new LibraryPlaylistsListCell("test", "", GUIMediator.getThemeImage("playlist"), null, null));
         _list.setVisibleRowCount(-1);
         _list.setDragEnabled(true);
-        _list.setDropMode(DropMode.ON_OR_INSERT);
-        _list.setTransferHandler(new LibraryPlaylistsTransferHandler(_list, this));
+        _list.setTransferHandler(new LibraryPlaylistsTransferHandler(_list));
         ToolTipManager.sharedInstance().registerComponent(_list);
 
         _list.addKeyListener(new KeyAdapter() {
@@ -367,33 +365,6 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         }
     }
 
-    public void movePlaylistToNewIndex(int originalIndex, int destinationIndex) {
-    	
-    	if (originalIndex == destinationIndex) {
-    		return; // nothing to do
-    	}
-    	
-    	LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _model.get(originalIndex);
-    	Playlist playlist = cell.getPlaylist();
-    	
-    	LibraryPlaylistsListCell newCell = new LibraryPlaylistsListCell(null, null, GUIMediator.getThemeImage("playlist"), playlist, _selectedPlaylistAction);
-
-    	int modifiedOriginalIndex = originalIndex;
-        if (originalIndex > destinationIndex) {
-        	modifiedOriginalIndex++;
-        }
-        
-        if (destinationIndex >= _model.size()) {
-        	_model.addElement(newCell);
-        } else {
-        	_model.add(destinationIndex, newCell);
-        }
-        
-        _list.setSelectedValue(newCell, true);
-
-    	_model.remove(modifiedOriginalIndex);
-    }
-    
     private void renameSelectedItem(int index) {
         if (!_textName.isVisible() || _textName.getText().trim().length() == 0) {
             return;
