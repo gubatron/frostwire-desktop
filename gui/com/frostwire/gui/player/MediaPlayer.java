@@ -258,7 +258,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         }
         
         notifyOpened(source);
-        if (play) {
+        if (play && currentMedia != null) {
             durationInSeconds = -1;
 
             if (currentMedia.getFile() != null) {
