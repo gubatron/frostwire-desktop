@@ -605,20 +605,25 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
      * Cleans the caches of all directory holders and refreshes the current selection.
      */
     public void clearDirectoryHolderCaches() {
-        Enumeration<?> e = root.depthFirstEnumeration();
-        while (e.hasMoreElements()) {
-            LibraryNode node = (LibraryNode) e.nextElement();
-            if (node instanceof DirectoryHolderNode) {
-                DirectoryHolder holder = ((DirectoryHolderNode) node).getDirectoryHolder();
-                if (holder instanceof MediaTypeSavedFilesDirectoryHolder) {
-                    ((MediaTypeSavedFilesDirectoryHolder) holder).clearCache();
-                } else if (holder instanceof SavedFilesDirectoryHolder) {
-                    ((SavedFilesDirectoryHolder) holder).clearCache();
+        try {
+            Enumeration<?> e = root.depthFirstEnumeration();
+            while (e.hasMoreElements()) {
+                LibraryNode node = (LibraryNode) e.nextElement();
+                if (node instanceof DirectoryHolderNode) {
+                    DirectoryHolder holder = ((DirectoryHolderNode) node).getDirectoryHolder();
+                    if (holder instanceof MediaTypeSavedFilesDirectoryHolder) {
+                        ((MediaTypeSavedFilesDirectoryHolder) holder).clearCache();
+                    } else if (holder instanceof SavedFilesDirectoryHolder) {
+                        ((SavedFilesDirectoryHolder) holder).clearCache();
+                    }
                 }
             }
-        }
 
-        refreshSelection();
+            refreshSelection();
+        } catch (Throwable e) {
+            // very strange error reported java.lang.LinkageError: javax/swing/tree/TreeNode
+            e.printStackTrace();
+        }
     }
 
     private class RefreshAction extends AbstractAction {
