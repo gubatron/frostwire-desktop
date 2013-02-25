@@ -34,11 +34,8 @@ final class WelcomeWindow extends SetupWindow {
      * Creates the window and its components
      */
     WelcomeWindow(SetupManager manager, boolean partial) {
-        super(
-                manager,
-                I18n.tr("Welcome"),
-                partial ? I18n.tr("Welcome to the FrostWire setup wizard. FrostWire has recently added new features that require your configuration. FrostWire will guide you through a series of steps to configure these new features.")
-                        : I18n.tr("Welcome to the FrostWire setup wizard. FrostWire will guide you through a series of steps to configure FrostWire for optimum performance."));
+        super(manager, I18n.tr("Welcome"), partial ? I18n.tr("Welcome to the FrostWire setup wizard. FrostWire has recently added new features that require your configuration. FrostWire will guide you through a series of steps to configure these new features.") : I18n
+                .tr("Welcome to the FrostWire setup wizard. FrostWire will guide you through a series of steps to configure FrostWire for optimum performance."));
     }
 
     public Icon getIcon() {

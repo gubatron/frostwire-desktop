@@ -16,7 +16,7 @@ public class ApplySettingsException extends Exception {
      * as its error detail message.
      */
     public ApplySettingsException() {
-		super();
+        super();
     }
 
     /**
@@ -28,6 +28,6 @@ public class ApplySettingsException extends Exception {
      * @param   s   the detail message.
      */
     public ApplySettingsException(String s) {
-		super(s);
+        super(s);
     }
 }

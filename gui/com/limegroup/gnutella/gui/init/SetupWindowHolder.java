@@ -13,38 +13,38 @@ import javax.swing.JPanel;
 //2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class SetupWindowHolder extends JPanel {
 
-	/**
+    /**
      * 
      */
     private static final long serialVersionUID = -5012114565385150258L;
     /**
-	 * The <tt>CardLayout</tt> instance for the setup windows.
-	 */
-	private final CardLayout CARD_LAYOUT = new CardLayout();
+     * The <tt>CardLayout</tt> instance for the setup windows.
+     */
+    private final CardLayout CARD_LAYOUT = new CardLayout();
 
-	/**
-	 * Sets the <tt>CardLayout</tt> for the setup windows.
-	 */
-	SetupWindowHolder() {
-		setLayout(CARD_LAYOUT);	   
-	}
+    /**
+     * Sets the <tt>CardLayout</tt> for the setup windows.
+     */
+    SetupWindowHolder() {
+        setLayout(CARD_LAYOUT);
+    }
 
-	/**
-	 * Adds the speficied window to the CardLayout based on its title.
-	 *
-	 * @param window the <tt>SetupWindow</tt> to add
-	 */
-	void add(SetupWindow window) {
-		add(window, window.getKey());
-	}
+    /**
+     * Adds the speficied window to the CardLayout based on its title.
+     *
+     * @param window the <tt>SetupWindow</tt> to add
+     */
+    void add(SetupWindow window) {
+        add(window, window.getKey());
+    }
 
-	/**
-	 * Shows the window speficied by its title.
-	 * 
-	 * @param key the unique key of the <tt>Component</tt> to show
-	 */
-	void show(String key) {
-		CARD_LAYOUT.show(this, key);
-	}
-	
+    /**
+     * Shows the window speficied by its title.
+     * 
+     * @param key the unique key of the <tt>Component</tt> to show
+     */
+    void show(String key) {
+        CARD_LAYOUT.show(this, key);
+    }
+
 }
