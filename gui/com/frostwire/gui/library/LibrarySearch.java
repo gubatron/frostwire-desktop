@@ -269,67 +269,72 @@ public class LibrarySearch extends JPanel {
         }
 
         public void run() {
-            if (canceled) {
-                return;
-            }
-            // special case for Finished Downloads
-            if (_query.equals(".") && directoryHolder instanceof SavedFilesDirectoryHolder) {
-                GUIMediator.safeInvokeLater(new Runnable() {
+            try {
+                if (canceled) {
+                    return;
+                }
+                // special case for Finished Downloads
+                if (_query.equals(".") && directoryHolder instanceof SavedFilesDirectoryHolder) {
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        public void run() {
+                            LibraryMediator.instance().updateTableFiles(directoryHolder);
+                            setStatus("");
+                            resultsCount = 0;
+                        }
+                    });
+                    return;
+                }
+
+                GUIMediator.safeInvokeAndWait(new Runnable() {
                     public void run() {
-                        LibraryMediator.instance().updateTableFiles(directoryHolder);
-                        setStatus("");
+                        LibraryFilesTableMediator.instance().clearTable();
+                        statusLabel.setText("");
                         resultsCount = 0;
                     }
                 });
-                return;
-            }
 
-            GUIMediator.safeInvokeAndWait(new Runnable() {
-                public void run() {
-                    LibraryFilesTableMediator.instance().clearTable();
-                    statusLabel.setText("");
-                    resultsCount = 0;
+                if (directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
+                    List<File> cache = new ArrayList<File>(((MediaTypeSavedFilesDirectoryHolder) directoryHolder).getCache());
+                    if (cache.size() > 0) {
+                        search(cache);
+                        return;
+                    }
+                } else if (directoryHolder instanceof SavedFilesDirectoryHolder) {
+                    List<File> cache = new ArrayList<File>(((SavedFilesDirectoryHolder) directoryHolder).getCache());
+                    if (cache.size() > 0) {
+                        search(cache);
+                        return;
+                    }
                 }
-            });
 
-            if (directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
-                List<File> cache = new ArrayList<File>(((MediaTypeSavedFilesDirectoryHolder) directoryHolder).getCache());
-                if (cache.size() > 0) {
-                    search(cache);
+                Set<File> ignore = TorrentUtil.getIgnorableFiles();
+
+                if (directoryHolder instanceof TorrentDirectoryHolder) {
+                    search(((TorrentDirectoryHolder) directoryHolder).getDirectory(), ignore, LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
                     return;
                 }
-            } else if (directoryHolder instanceof SavedFilesDirectoryHolder) {
-                List<File> cache = new ArrayList<File>(((SavedFilesDirectoryHolder) directoryHolder).getCache());
-                if (cache.size() > 0) {
-                    search(cache);
+
+                if (directoryHolder instanceof SavedFilesDirectoryHolder) {
+                    search(((SavedFilesDirectoryHolder) directoryHolder).getDirectory(), ignore, LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
                     return;
                 }
-            }
 
-            Set<File> ignore = TorrentUtil.getIgnorableFiles();
+                Set<File> directories = new HashSet<File>(LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue());
+                directories.removeAll(LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
+                for (File dir : directories) {
+                    if (dir == null) {
+                        continue;
+                    }
 
-            if (directoryHolder instanceof TorrentDirectoryHolder) {
-                search(((TorrentDirectoryHolder) directoryHolder).getDirectory(), ignore, LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
-                return;
-            }
-
-            if (directoryHolder instanceof SavedFilesDirectoryHolder) {
-                search(((SavedFilesDirectoryHolder) directoryHolder).getDirectory(), ignore, LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
-                return;
-            }
-
-            Set<File> directories = new HashSet<File>(LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue());
-            directories.removeAll(LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
-            for (File dir : directories) {
-                if (dir == null) {
-                    continue;
+                    if (dir.equals(LibrarySettings.USER_MUSIC_FOLDER) && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder && !((MediaTypeSavedFilesDirectoryHolder) directoryHolder).getMediaType().equals(MediaType.getAudioMediaType())) {
+                        continue;
+                    } else {
+                        search(dir, new HashSet<File>(), LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
+                    }
                 }
-
-                if (dir.equals(LibrarySettings.USER_MUSIC_FOLDER) && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder && !((MediaTypeSavedFilesDirectoryHolder) directoryHolder).getMediaType().equals(MediaType.getAudioMediaType())) {
-                    continue;
-                } else {
-                    search(dir, new HashSet<File>(), LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
-                }
+            } catch (Throwable e) {
+                // just until we refactor this
+                e.printStackTrace();
             }
         }
 
@@ -493,20 +498,24 @@ public class LibrarySearch extends JPanel {
         }
 
         public void run() {
-            if (canceled) {
-                return;
-            }
-
-            GUIMediator.safeInvokeAndWait(new Runnable() {
-                public void run() {
-                    LibraryPlaylistsTableMediator.instance().clearTable();
-                    setStatus("");
-                    statusLabel.setText("");
-                    resultsCount = 0;
+            try {
+                if (canceled) {
+                    return;
                 }
-            });
 
-            search();
+                GUIMediator.safeInvokeAndWait(new Runnable() {
+                    public void run() {
+                        LibraryPlaylistsTableMediator.instance().clearTable();
+                        setStatus("");
+                        statusLabel.setText("");
+                        resultsCount = 0;
+                    }
+                });
+
+                search();
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
         }
 
         private void search() {
