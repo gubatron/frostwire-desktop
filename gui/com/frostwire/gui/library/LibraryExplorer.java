@@ -366,43 +366,48 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         }
 
         public void run() {
-            GUIMediator.safeInvokeLater(new Runnable() {
-                public void run() {
-                    LibraryMediator.instance().clearLibraryTable();
-                }
-            });
-
-            final List<File> cache = new ArrayList<File>(_mtsfdh.getCache());
-            if (cache.size() == 0) {
-
-                File torrentDataDirFile = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
-
-                Set<File> ignore = TorrentUtil.getIgnorableFiles();
-
-                Set<File> directories = new HashSet<File>(LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue());
-                directories.removeAll(LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
-
-                for (File dir : directories) {
-                    if (dir == null) {
-                        continue;
-                    }
-                    if (dir.equals(torrentDataDirFile)) {
-                        search(dir, ignore, LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
-                    } else if (dir.equals(LibrarySettings.USER_MUSIC_FOLDER) && !_mtsfdh.getMediaType().equals(MediaType.getAudioMediaType())) {
-                        continue;
-                    } else {
-                        search(dir, new HashSet<File>(), LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
-                    }
-                }
-            } else {
+            try {
                 GUIMediator.safeInvokeLater(new Runnable() {
                     public void run() {
-                        LibraryMediator.instance().addFilesToLibraryTable(cache);
+                        LibraryMediator.instance().clearLibraryTable();
                     }
                 });
-            }
 
-            LibraryExplorer.this.executePendingRunnables();
+                final List<File> cache = new ArrayList<File>(_mtsfdh.getCache());
+                if (cache.size() == 0) {
+
+                    File torrentDataDirFile = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
+
+                    Set<File> ignore = TorrentUtil.getIgnorableFiles();
+
+                    Set<File> directories = new HashSet<File>(LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue());
+                    directories.removeAll(LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
+
+                    for (File dir : directories) {
+                        if (dir == null) {
+                            continue;
+                        }
+                        if (dir.equals(torrentDataDirFile)) {
+                            search(dir, ignore, LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
+                        } else if (dir.equals(LibrarySettings.USER_MUSIC_FOLDER) && !_mtsfdh.getMediaType().equals(MediaType.getAudioMediaType())) {
+                            continue;
+                        } else {
+                            search(dir, new HashSet<File>(), LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
+                        }
+                    }
+                } else {
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        public void run() {
+                            LibraryMediator.instance().addFilesToLibraryTable(cache);
+                        }
+                    });
+                }
+
+                LibraryExplorer.this.executePendingRunnables();
+            } catch (Throwable e) {
+                // not happy with this, just until time to refactor
+                e.printStackTrace();
+            }
         }
 
         private void search(File file, Set<File> ignore, Set<File> exludedSubFolders) {
