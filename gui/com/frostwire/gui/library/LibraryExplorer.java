@@ -461,34 +461,39 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
     }
 
     public void selectMediaTypeSavedFilesDirectoryHolderbyType(MediaType mediaType) {
-        LibraryNode selectedValue = (LibraryNode) tree.getLastSelectedPathComponent();
-        if (selectedValue != null && selectedValue instanceof DirectoryHolderNode && ((DirectoryHolderNode) selectedValue).getDirectoryHolder() instanceof MediaTypeSavedFilesDirectoryHolder
-                && ((MediaTypeSavedFilesDirectoryHolder) ((DirectoryHolderNode) selectedValue).getDirectoryHolder()).getMediaType().equals(mediaType)) {
-            // already selected
-            try {
-                treeSelectionListener.valueChanged(null);
-            } catch (Exception e) {
-                System.out.println();
+        try {
+            LibraryNode selectedValue = (LibraryNode) tree.getLastSelectedPathComponent();
+            if (selectedValue != null && selectedValue instanceof DirectoryHolderNode && ((DirectoryHolderNode) selectedValue).getDirectoryHolder() instanceof MediaTypeSavedFilesDirectoryHolder
+                    && ((MediaTypeSavedFilesDirectoryHolder) ((DirectoryHolderNode) selectedValue).getDirectoryHolder()).getMediaType().equals(mediaType)) {
+                // already selected
+                try {
+                    treeSelectionListener.valueChanged(null);
+                } catch (Exception e) {
+                    System.out.println();
+                }
+                return;
             }
-            return;
-        }
 
-        Enumeration<?> e = root.depthFirstEnumeration();
-        while (e.hasMoreElements()) {
-            final LibraryNode node = (LibraryNode) e.nextElement();
-            if (node instanceof DirectoryHolderNode) {
-                DirectoryHolder holder = ((DirectoryHolderNode) node).getDirectoryHolder();
-                if (holder instanceof MediaTypeSavedFilesDirectoryHolder && ((MediaTypeSavedFilesDirectoryHolder) holder).getMediaType().equals(mediaType)) {
-                    GUIMediator.safeInvokeAndWait(new Runnable() {
-                        @Override
-                        public void run() {
-                            tree.setSelectionPath(new TreePath(node.getPath()));
-                            tree.scrollPathToVisible(new TreePath(node.getPath()));
-                        }
-                    });
-                    return;
+            Enumeration<?> e = root.depthFirstEnumeration();
+            while (e.hasMoreElements()) {
+                final LibraryNode node = (LibraryNode) e.nextElement();
+                if (node instanceof DirectoryHolderNode) {
+                    DirectoryHolder holder = ((DirectoryHolderNode) node).getDirectoryHolder();
+                    if (holder instanceof MediaTypeSavedFilesDirectoryHolder && ((MediaTypeSavedFilesDirectoryHolder) holder).getMediaType().equals(mediaType)) {
+                        GUIMediator.safeInvokeAndWait(new Runnable() {
+                            @Override
+                            public void run() {
+                                tree.setSelectionPath(new TreePath(node.getPath()));
+                                tree.scrollPathToVisible(new TreePath(node.getPath()));
+                            }
+                        });
+                        return;
+                    }
                 }
             }
+        } catch (Throwable e) {
+            // study this method
+            e.printStackTrace();
         }
     }
 
