@@ -18,11 +18,15 @@ public class LibraryDatabase {
     public static final int OBJECT_INVALID_ID = -2;
     public static final int STARRED_PLAYLIST_ID = -3;
 
-    public static final int LIBRARY_DATABASE_VERSION = 3;
+    public static final int LIBRARY_VERSION_PLAYLIST_SORT_INDEXES = 4; // indicates db version when playlist sort indexes were added
+    public static final int LIBRARY_DATABASE_VERSION = 4;
 
+    private boolean isVersionUpdated;
+    
     private final File _databaseFile;
     private final String _name;
-
+    private int _databaseVersion;
+    
     private Connection _connection;
 
     private boolean _closed;
@@ -138,9 +142,14 @@ public class LibraryDatabase {
         if (oldVersion == 2 && newVersion == 3) {
             setupLuceneIndex(connection);
         }
+        
+        if (newVersion == 4) {
+            setupPlaylistIndexes(connection);
+        }
 
         update(connection, "UPDATE Library SET version = ?", LIBRARY_DATABASE_VERSION);
-
+        _databaseVersion = LIBRARY_DATABASE_VERSION;
+        
         return connection;
     }
 
@@ -173,7 +182,7 @@ public class LibraryDatabase {
 
         //update(connection, "DROP TABLE PlaylistItems IF EXISTS CASCADE");
         update(connection,
-                "CREATE TABLE PlaylistItems (playlistItemId INTEGER IDENTITY, filePath VARCHAR(10000), fileName VARCHAR(500), fileSize BIGINT, fileExtension VARCHAR(10), trackTitle VARCHAR(500), trackDurationInSecs REAL, trackArtist VARCHAR(500), trackAlbum VARCHAR(500), coverArtPath VARCHAR(10000), trackBitrate VARCHAR(10), trackComment VARCHAR(500), trackGenre VARCHAR(20), trackNumber VARCHAR(6), trackYear VARCHAR(6), playlistId INTEGER, starred BOOLEAN)");
+                "CREATE TABLE PlaylistItems (playlistItemId INTEGER IDENTITY, filePath VARCHAR(10000), fileName VARCHAR(500), fileSize BIGINT, fileExtension VARCHAR(10), trackTitle VARCHAR(500), trackDurationInSecs REAL, trackArtist VARCHAR(500), trackAlbum VARCHAR(500), coverArtPath VARCHAR(10000), trackBitrate VARCHAR(10), trackComment VARCHAR(500), trackGenre VARCHAR(20), trackNumber VARCHAR(6), trackYear VARCHAR(6), playlistId INTEGER, starred BOOLEAN, sortIndex INTEGER)");
         update(connection, "CREATE INDEX idx_PlaylistItems_filePath ON PlaylistItems (filePath)");
         update(connection, "CREATE INDEX idx_PlaylistItems_starred ON PlaylistItems (starred)");
 
@@ -192,9 +201,10 @@ public class LibraryDatabase {
         if (connection == null) {
             return createDatabase(path, name);
         } else {
-            int databaseVersion = getDatabaseVersion(connection);
-            if (databaseVersion < LIBRARY_DATABASE_VERSION) {
-                return onUpdateDatabase(connection, databaseVersion, LIBRARY_DATABASE_VERSION);
+            _databaseVersion = getDatabaseVersion(connection);
+            if (_databaseVersion != LIBRARY_DATABASE_VERSION) {
+                isVersionUpdated = true;
+                return onUpdateDatabase(connection, _databaseVersion, LIBRARY_DATABASE_VERSION);
             } else {
                 return connection;
             }
@@ -327,5 +337,19 @@ public class LibraryDatabase {
 
         update(connection, "CALL FTL_CREATE_INDEX('PUBLIC', 'PLAYLISTITEMS', 'FILEPATH, TRACKTITLE, TRACKARTIST, TRACKALBUM, TRACKGENRE, TRACKYEAR')");
         update(connection, "CALL FTL_CREATE_INDEX('PUBLIC', 'INTERNETRADIOSTATIONS', 'NAME, DESCRIPTION, GENRE')");
+    }
+    
+    private void setupPlaylistIndexes(final Connection connection) {
+        
+        // add new column
+        update(connection, "ALTER TABLE PlaylistItems ADD sortIndex INTEGER");
+    }
+
+    public boolean isVersionUpdated() {
+        return isVersionUpdated;
+    }
+
+    public int getDatabaseVersion() {
+        return _databaseVersion;
     }
 }
