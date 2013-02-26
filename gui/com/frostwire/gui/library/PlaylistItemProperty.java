@@ -61,11 +61,29 @@ class PlaylistItemProperty implements Comparable<PlaylistItemProperty> {
     		return compareByBitrate(o);
     	} else if (columnIndex == LibraryPlaylistsTableDataLine.TRACK_IDX) {
     	    return compareByTrack(o);
+    	} else if (columnIndex == LibraryPlaylistsTableDataLine.SORT_INDEX_IDX) {
+    	    return compareBySortIndex(o);
     	}
     	
         return value.compareTo(o.value);
     }
 
+    private int compareBySortIndex(PlaylistItemProperty o) {
+        if (StringUtils.isNullOrEmpty(value) && !StringUtils.isNullOrEmpty(o.value)) {
+            return 1;
+        } else if (!StringUtils.isNullOrEmpty(value) && StringUtils.isNullOrEmpty(o.value)) {
+            return -1;
+        } else if (StringUtils.isNullOrEmpty(value) && StringUtils.isNullOrEmpty(o.value)) {
+            return 0;
+        }
+        
+        try {
+            return Integer.valueOf(value).compareTo(Integer.valueOf(o.value));
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+    
     private int compareByBitrate(PlaylistItemProperty o) {
         if (StringUtils.isNullOrEmpty(value) && !StringUtils.isNullOrEmpty(o.value)) {
         	return 1;
