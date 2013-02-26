@@ -123,7 +123,7 @@ public class Library extends Entity<LibraryDB> {
             
             for(int i=0; i < items.size(); i++) {
                 PlaylistItem item = items.get(i);
-                item.setSortIndex(i);
+                item.setSortIndex(i+1); // set initial sort index (1-based)
                 item.save();
             }
         }

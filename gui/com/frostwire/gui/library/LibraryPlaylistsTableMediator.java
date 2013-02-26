@@ -142,7 +142,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         super.setupConstants();
         MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryPlaylistsTableModel();
-        DATA_MODEL.sort(LibraryPlaylistsTableDataLine.TRACK_IDX);
+        DATA_MODEL.sort(LibraryPlaylistsTableDataLine.SORT_INDEX_IDX);
 
         TABLE = new LimeJTable(DATA_MODEL) {
 

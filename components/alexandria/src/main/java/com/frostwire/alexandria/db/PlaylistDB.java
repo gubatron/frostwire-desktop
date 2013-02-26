@@ -60,7 +60,7 @@ public class PlaylistDB extends ObjectDB<Playlist> {
 
     public List<PlaylistItem> getPlaylistItems(Playlist playlist) {
         String query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred, sortIndex "
-                + "FROM PlaylistItems WHERE playlistId = ?";
+                + "FROM PlaylistItems WHERE playlistId = ? ORDER BY sortIndex ASC";
 
         List<List<Object>> result = db.query(query, playlist.getId());
 

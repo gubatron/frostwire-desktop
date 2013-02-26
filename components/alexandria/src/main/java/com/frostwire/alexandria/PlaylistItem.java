@@ -51,7 +51,7 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
         this.trackNumber = trackNumber;
         this.trackYear = trackYear;
         this.starred = starred;
-        this.sortIndex = playlist.getItems().size(); // set sortIndex to the last position by default
+        this.sortIndex = playlist.getItems().size() + 1; // set sortIndex to the last position (1-based) by default
     }
 
     public Playlist getPlaylist() {
