@@ -36,7 +36,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
      * sort index column
      */
     static final int SORT_INDEX_IDX = 0;
-    private static final LimeTableColumn SORT_INDEX_COLUMN = new LimeTableColumn(SORT_INDEX_IDX, "PLAYLIST_TABLE_SORT_INDEX", I18n.tr("Index"), 20, true, false, false, PlaylistItemProperty.class);
+    private static final LimeTableColumn SORT_INDEX_COLUMN = new LimeTableColumn(SORT_INDEX_IDX, "PLAYLIST_TABLE_SORT_INDEX", I18n.tr("Index"), 30, true, false, false, PlaylistItemProperty.class);
 
     
     /**
