@@ -22,6 +22,7 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     private String trackNumber;
     private String trackYear;
     private boolean starred;
+    private int sortIndex;
 
     public PlaylistItem(Playlist playlist) {
         super(new PlaylistItemDB(playlist != null ? playlist.db.getDatabase() : null));
@@ -50,6 +51,7 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
         this.trackNumber = trackNumber;
         this.trackYear = trackYear;
         this.starred = starred;
+        this.sortIndex = playlist.getItems().size(); // set sortIndex to the last position by default
     }
 
     public Playlist getPlaylist() {
@@ -57,6 +59,7 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     }
     
     public void setPlaylist(Playlist playlist) {
+        // PLAYLIST_TODO: if you change the playlist, how do we figure out what the sort index should be?
         this.playlist = playlist;
         setDB(new PlaylistItemDB(playlist != null ? playlist.db.getDatabase() : null));
     }
@@ -214,5 +217,13 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     @Override
     public String toString() {
         return "(" + id + ", title:" + trackTitle + ", number:" + trackNumber + ")";
+    }
+
+    public int getSortIndex() {
+        return sortIndex;
+    }
+
+    public void setSortIndex(int sortIndex) {
+        this.sortIndex = sortIndex;
     }
 }

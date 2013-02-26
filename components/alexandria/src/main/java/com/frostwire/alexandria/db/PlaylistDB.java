@@ -28,6 +28,7 @@ public class PlaylistDB extends ObjectDB<Playlist> {
         obj.setId(id);
         obj.setName(name);
         obj.setDescription(description);
+        obj.refresh();
     }
 
     public void save(Playlist obj) {
@@ -57,8 +58,8 @@ public class PlaylistDB extends ObjectDB<Playlist> {
         db.update("DELETE FROM Playlists WHERE playlistId = ?", obj.getId());
     }
 
-    public List<PlaylistItem> getLibraryItems(Playlist playlist) {
-        String query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred "
+    public List<PlaylistItem> getPlaylistItems(Playlist playlist) {
+        String query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred, sortIndex "
                 + "FROM PlaylistItems WHERE playlistId = ?";
 
         List<List<Object>> result = db.query(query, playlist.getId());

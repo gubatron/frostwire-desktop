@@ -17,6 +17,7 @@ public class Library extends Entity<LibraryDB> {
     public Library(File libraryFile) {
         super(new LibraryDB(new LibraryDatabase(libraryFile)));
         db.fill(this);
+        migrateData();
     }
 
     public int getId() {
@@ -103,5 +104,28 @@ public class Library extends Entity<LibraryDB> {
 
     public void restoreDefaultRadioStations() {
         db.restoreDefaultRadioStations(this);
+    }
+    
+    private void migrateData() {
+        if (db.isVersionUpdated()) {
+            if ( db.getDatabaseVersion() == LibraryDatabase.LIBRARY_VERSION_PLAYLIST_SORT_INDEXES) {
+                setInitialPlaylistItemSortIndexes();
+            }   
+        }
+    }
+    
+    private void setInitialPlaylistItemSortIndexes() {
+        
+        List<Playlist> playlists = db.getPlaylists(this);
+        
+        for( Playlist playlist : playlists ) {
+            List<PlaylistItem> items = playlist.getItems();
+            
+            for(int i=0; i < items.size(); i++) {
+                PlaylistItem item = items.get(i);
+                item.setSortIndex(i);
+                item.save();
+            }
+        }
     }
 }

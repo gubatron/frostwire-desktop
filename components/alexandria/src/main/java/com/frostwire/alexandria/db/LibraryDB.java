@@ -43,6 +43,14 @@ public class LibraryDB extends ObjectDB<Library> {
         // nothing
     }
 
+    public boolean isVersionUpdated() {
+        return db.isVersionUpdated();
+    }
+    
+    public int getDatabaseVersion() {
+        return db.getDatabaseVersion();
+    }
+    
     public List<Playlist> getPlaylists(Library library) {
         List<List<Object>> result = db.query("SELECT playlistId, name, description FROM Playlists");
 

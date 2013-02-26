@@ -90,12 +90,15 @@ public class LibraryUtils {
 
             List<PlaylistItem> items = playlist.getItems();
             if (index != -1 && index < items.size()) {
+                //PLAYLIST_TODO: when addPlaylistItem is called, update sort indexes of entire playlist as well...
                 items.add(index, item);
                 item.save();
             } else {
+                //PLAYLIST_TODO: when addPlaylistItem is called, update sort indexes of entire playlist as well...
                 items.add(item);
                 item.save();
                 if (isPlaylistSelected(playlist)) {
+                    //PLAYLIST_TODO: clean up sorted/unsorted
                     LibraryPlaylistsTableMediator.instance().addUnsorted(item);
                 }
             }

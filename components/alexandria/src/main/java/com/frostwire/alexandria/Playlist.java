@@ -92,7 +92,7 @@ public class Playlist extends Entity<PlaylistDB> {
     public synchronized void refresh() {
         if (db != null) {
             _items.clear();
-            _items.addAll(db.getLibraryItems(this));
+            _items.addAll(db.getPlaylistItems(this));
         }
     }
 
