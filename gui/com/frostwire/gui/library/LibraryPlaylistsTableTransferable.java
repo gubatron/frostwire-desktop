@@ -33,11 +33,27 @@ import com.limegroup.gnutella.gui.dnd.FileTransferable;
 public class LibraryPlaylistsTableTransferable implements Transferable {
 
     public static final DataFlavor ITEM_ARRAY = new DataFlavor(LibraryPlaylistsTableTransferable.Item[].class, "LibraryPlaylistTransferable.Item Array");
+    public static final DataFlavor PLAYLIST_ITEM_ARRAY = new DataFlavor(LibraryPlaylistsTableTransferable.Item[].class, "LibraryPlaylistTransferable.PlaylistItemArray");
 
     private final List<LibraryPlaylistsTableTransferable.Item> items;
     
+    private final int playlistID;
     private final FileTransferable fileTransferable;
-
+    private final int[] selectedIndexes;
+    
+    public LibraryPlaylistsTableTransferable(List<PlaylistItem> playlistItems, int playlistID, int[] selectedIndexes) {
+        items = LibraryUtils.convertToItems(playlistItems);
+        
+        List<File> files = new ArrayList<File>(items.size());
+        for (PlaylistItem item : playlistItems) {
+            files.add(new File(item.getFilePath()));
+        }
+        fileTransferable = new FileTransferable(files);
+        this.playlistID = playlistID;
+        
+        this.selectedIndexes = selectedIndexes;
+    }
+    
     public LibraryPlaylistsTableTransferable(List<PlaylistItem> playlistItems) {
         items = LibraryUtils.convertToItems(playlistItems);
         
@@ -46,6 +62,8 @@ public class LibraryPlaylistsTableTransferable implements Transferable {
             files.add(new File(item.getFilePath()));
         }
         fileTransferable = new FileTransferable(files);
+        this.selectedIndexes = null;
+        this.playlistID = -1;
     }
 
     @Override
@@ -53,20 +71,42 @@ public class LibraryPlaylistsTableTransferable implements Transferable {
         List<DataFlavor> list = new ArrayList<DataFlavor>();
         list.addAll(Arrays.asList(fileTransferable.getTransferDataFlavors()));
         list.add(ITEM_ARRAY);
+        if (selectedIndexes != null) {
+            list.add(PLAYLIST_ITEM_ARRAY);
+        }
         return list.toArray(new DataFlavor[0]);
     }
 
     @Override
     public boolean isDataFlavorSupported(DataFlavor flavor) {
-        return flavor.equals(ITEM_ARRAY) || fileTransferable.isDataFlavorSupported(flavor);
+        if (flavor.equals(PLAYLIST_ITEM_ARRAY)) {
+            return (selectedIndexes != null);
+        } else {
+            return flavor.equals(ITEM_ARRAY) || fileTransferable.isDataFlavorSupported(flavor);
+        }
     }
 
     @Override
     public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
-        if (flavor.equals(ITEM_ARRAY) ) {
+        if (flavor.equals(PLAYLIST_ITEM_ARRAY) ) {
+            return new PlaylistItemContainer(playlistID, selectedIndexes);
+        } else if (flavor.equals(ITEM_ARRAY) ) {
             return items.toArray(new Item[0]);
         } else {
             return fileTransferable.getTransferData(flavor);
+        }
+    }
+    
+    public static final class PlaylistItemContainer implements Serializable {
+        
+        private static final long serialVersionUID = 473769989120053185L;
+        public int playlistID;
+        public int[] selectedIndexes;
+        public FileTransferable fileTransferable;
+        
+        public PlaylistItemContainer(int playlistID, int[] selectedIndexes) {
+            this.playlistID = playlistID;
+            this.selectedIndexes = selectedIndexes;
         }
     }
     

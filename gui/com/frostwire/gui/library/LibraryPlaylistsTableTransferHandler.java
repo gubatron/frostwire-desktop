@@ -33,6 +33,7 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
+import com.frostwire.gui.library.LibraryPlaylistsTableTransferable.PlaylistItemContainer;
 import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
@@ -61,25 +62,35 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
             return fallbackTransferHandler.importData(support);
         }
 
+        JTable.DropLocation dl = (JTable.DropLocation) support.getDropLocation();
+        int index = dl.getRow();
+        
         try {
-            JTable.DropLocation dl = (JTable.DropLocation) support.getDropLocation();
-            int index = dl.getRow();
-            int max = mediator.getTable().getModel().getRowCount();
-            if (index < 0 || index > max)
-               index = max;
             
-            Transferable transferable = support.getTransferable();
-            if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
-                if (mediator.getCurrentPlaylist() != null) {
-                    importPlaylistItemArrayData(transferable, index);
-                }
+            if (support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.PLAYLIST_ITEM_ARRAY)) {
+                
+                // TODO: handle actual reording of sort indexes for this playlist
+                
             } else {
-                if (mediator.getCurrentPlaylist() != null) {
-                    File[] files = DNDUtils.getFiles(support.getTransferable());
-                    if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
-                        LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), files[0], index);
-                    } else {
-                        LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), files, index);
+                
+                
+                int max = mediator.getTable().getModel().getRowCount();
+                if (index < 0 || index > max)
+                   index = max;
+                
+                Transferable transferable = support.getTransferable();
+                if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
+                    if (mediator.getCurrentPlaylist() != null) {
+                        importPlaylistItemArrayData(transferable, index);
+                    }
+                } else {
+                    if (mediator.getCurrentPlaylist() != null) {
+                        File[] files = DNDUtils.getFiles(support.getTransferable());
+                        if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
+                            LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), files[0], index);
+                        } else {
+                            LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), files, index);
+                        }
                     }
                 }
             }
@@ -102,7 +113,9 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
         for (int i = 0; i < lines.size(); i++) {
             playlistItems.add(lines.get(i).getInitializeObject());
         }
-        return new LibraryPlaylistsTableTransferable(playlistItems);
+        
+        int[] selectedIndexes = mediator.getSelectedIndexes();
+        return new LibraryPlaylistsTableTransferable(playlistItems, mediator.getCurrentPlaylist().getId(), selectedIndexes);
     }
 
     private boolean canImport(TransferSupport support, boolean fallback) {
@@ -114,7 +127,21 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
             return false;
         }
 
-        if (support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
+        if (support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.PLAYLIST_ITEM_ARRAY)) {
+            
+            Transferable transferable = support.getTransferable();
+            PlaylistItemContainer container;
+            
+            try {
+                container = (PlaylistItemContainer) transferable.getTransferData(LibraryPlaylistsTableTransferable.PLAYLIST_ITEM_ARRAY);
+                if (mediator.getCurrentPlaylist().getId() == container.playlistID) {
+                    return true; // only allow playlist item D&D when you are dragging files within the same playlist
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
+        } else if (support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
             return true;
         } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
         	if (OSUtils.isMacOSX()) {
