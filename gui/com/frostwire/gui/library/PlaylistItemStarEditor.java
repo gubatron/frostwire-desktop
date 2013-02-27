@@ -59,13 +59,13 @@ public class PlaylistItemStarEditor extends AbstractCellEditor implements TableC
     }
 
     public Component getTableCellEditorComponent(final JTable table, final Object value, boolean isSelected, int row, int column) {
-        final LibraryPlaylistsTableDataLine line = ((PlaylistItemStar) value).getLine();
+        final LibraryPlaylistsTableDataLine line = ((PlaylistItemProperty<?>) value).getLine();
 
         final JLabel component = (JLabel) new PlaylistItemStarRenderer().getTableCellRendererComponent(table, value, isSelected, true, row, column);
         component.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (!((PlaylistItemStar) value).exists()){
+                if (!((PlaylistItemProperty<?>) value).exists()){
                     return;
                 }
                 PlaylistItem playlistItem = line.getInitializeObject();
@@ -81,7 +81,7 @@ public class PlaylistItemStarEditor extends AbstractCellEditor implements TableC
             }
         });
 
-        if (!((PlaylistItemStar) value).exists()) {
+        if (!((PlaylistItemStarProperty) value).exists()) {
             component.setIcon(exclamation);
         } else if (line.getInitializeObject().isStarred()) {
             component.setIcon(starOn);

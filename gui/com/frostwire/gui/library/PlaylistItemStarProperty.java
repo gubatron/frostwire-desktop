@@ -26,37 +26,20 @@ package com.frostwire.gui.library;
  * @author aldenml
  * 
  */
-class PlaylistItemStar implements Comparable<PlaylistItemStar> {
+class PlaylistItemStarProperty extends PlaylistItemProperty<PlaylistItemStarProperty> {
 
-    /**
-     * The current line to display in the table
-     */
-    private final LibraryPlaylistsTableDataLine line;
-    private boolean isPlaying;
-    private boolean exists;
-
-    public PlaylistItemStar(LibraryPlaylistsTableDataLine line, boolean isPlaying, boolean exists) {
-        this.line = line;
-        this.isPlaying = isPlaying;
-        this.exists = exists;
+    public PlaylistItemStarProperty(LibraryPlaylistsTableDataLine line, boolean isPlaying, boolean exists) {
+        super(line, isPlaying, exists);
     }
-
-    public boolean isPlaying() {
-        return isPlaying;
-    }
-
-    public boolean exists() {
-        return exists;
-    }
-
-    /**
-     * @return the current dataline
-     */
-    public LibraryPlaylistsTableDataLine getLine() {
-        return line;
-    }
-
-    public int compareTo(PlaylistItemStar o) {
+    
+    @Override
+    public int compareTo(PlaylistItemStarProperty o) {
         return Boolean.valueOf(line.getInitializeObject().isStarred()).compareTo(o.line.getInitializeObject().isStarred());
+    }
+
+    @Override
+    public String getStringValue() {
+        // nothing to do
+        return "";
     }
 }

@@ -311,8 +311,10 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     @Override
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
-        TABLE.setDefaultRenderer(PlaylistItemProperty.class, new PlaylistItemPropertyRenderer());
-        TABLE.setDefaultRenderer(PlaylistItemStar.class, new PlaylistItemStarRenderer());
+        TABLE.setDefaultRenderer(PlaylistItemBitRateProperty.class, new PlaylistItemPropertyRenderer());
+        TABLE.setDefaultRenderer(PlaylistItemTrackProperty.class, new PlaylistItemPropertyRenderer());
+        TABLE.setDefaultRenderer(PlaylistItemStringProperty.class, new PlaylistItemPropertyRenderer());
+        TABLE.setDefaultRenderer(PlaylistItemStarProperty.class, new PlaylistItemStarRenderer());
         TABLE.setDefaultRenderer(LibraryNameHolder.class, new LibraryNameHolderRenderer());
     }
 
