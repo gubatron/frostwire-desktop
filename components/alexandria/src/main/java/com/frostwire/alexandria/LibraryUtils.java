@@ -11,65 +11,69 @@ public final class LibraryUtils {
         s = s.replace("AND", " ").replace("OR", " ").replace("NOT", " ");
         StringBuilder buff = new StringBuilder(2 * length);
         for (int i = 0; i < length; i++) {
-            char c = s.charAt(i);
-            switch (c) {
-            case '+':
-                buff.append("\\+");
-                break;
-            case '-':
-                buff.append("\\-");
-                break;
-            case '&':
-                buff.append("\\&");
-                break; // actually it's &&
-            case '|':
-                buff.append("\\r");
-                break; // actually it's ||
-            case '!':
-                buff.append("\\!");
-                break;
-            case '(':
-                buff.append("\\(");
-                break;
-            case ')':
-                buff.append("\\)");
-                break;
-            case '{':
-                buff.append("\\{");
-                break;
-            case '}':
-                buff.append("\\}");
-                break;
-            case '[':
-                buff.append("\\[");
-                break;
-            case ']':
-                buff.append("\\]");
-                break;
-            case '^':
-                buff.append("\\^");
-                break;
-            case '\"':
-                buff.append("\\\"");
-                break;
-            case '~':
-                buff.append("\\~");
-                break;
-            case '*':
-                buff.append("\\*");
-                break;
-            case '?':
-                buff.append("\\?");
-                break;
-            case ':':
-                buff.append("\\:");
-                break;
-            case '\\':
-                buff.append("\\\\");
-                break;
-            default:
-                buff.append(c);
-                break;
+            try {
+                char c = s.charAt(i);
+                switch (c) {
+                case '+':
+                    buff.append("\\+");
+                    break;
+                case '-':
+                    buff.append("\\-");
+                    break;
+                case '&':
+                    buff.append("\\&");
+                    break; // actually it's &&
+                case '|':
+                    buff.append("\\r");
+                    break; // actually it's ||
+                case '!':
+                    buff.append("\\!");
+                    break;
+                case '(':
+                    buff.append("\\(");
+                    break;
+                case ')':
+                    buff.append("\\)");
+                    break;
+                case '{':
+                    buff.append("\\{");
+                    break;
+                case '}':
+                    buff.append("\\}");
+                    break;
+                case '[':
+                    buff.append("\\[");
+                    break;
+                case ']':
+                    buff.append("\\]");
+                    break;
+                case '^':
+                    buff.append("\\^");
+                    break;
+                case '\"':
+                    buff.append("\\\"");
+                    break;
+                case '~':
+                    buff.append("\\~");
+                    break;
+                case '*':
+                    buff.append("\\*");
+                    break;
+                case '?':
+                    buff.append("\\?");
+                    break;
+                case ':':
+                    buff.append("\\:");
+                    break;
+                case '\\':
+                    buff.append("\\\\");
+                    break;
+                default:
+                    buff.append(c);
+                    break;
+                }
+            } catch (Throwable e) {
+                break; // this could happens due to a bad encoding of characters in String.
             }
         }
         return buff.toString().replaceAll("\\s+", " ");
