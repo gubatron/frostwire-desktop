@@ -107,18 +107,23 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         refreshDeviceNode(device);
     }
 
-    public void handleDeviceStale(Device device) {
-        DeviceNode node = findNode(device);
-        if (node != null) {
-            model.removeNodeFromParent(node);
+    public void handleDeviceStale(final Device device) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            @Override
+            public void run() {
+                DeviceNode node = findNode(device);
+                if (node != null) {
+                    model.removeNodeFromParent(node);
 
-            // clear if necessary, pending refactor
-            Device d = getSelectedDeviceFiles();
-            DirectoryHolder dh = getSelectedDirectoryHolder();
-            if (d == null && dh == null) {
-                LibraryMediator.instance().clearLibraryTable();
+                    // clear if necessary, pending refactor
+                    Device d = getSelectedDeviceFiles();
+                    DirectoryHolder dh = getSelectedDirectoryHolder();
+                    if (d == null && dh == null) {
+                        LibraryMediator.instance().clearLibraryTable();
+                    }
+                }
             }
-        }
+        });
     }
 
     public void refreshSelection(boolean clearCache) {
