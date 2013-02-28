@@ -74,8 +74,7 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
                 
                 try {
                     container = (PlaylistItemContainer) transferable.getTransferData(LibraryPlaylistsTableTransferable.PLAYLIST_ITEM_ARRAY);
-                    //LibraryUtils.movePlaylistItemsToIndex(mediator.getCurrentPlaylist(), container.selectedIndexes, index);
-                    
+                    LibraryUtils.movePlaylistItemsToIndex(mediator.getCurrentPlaylist(), container.selectedIndexes, index);
                     
                 } catch (Exception e) {
                     return false;

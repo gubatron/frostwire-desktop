@@ -783,16 +783,35 @@ public class LibraryUtils {
     public static void movePlaylistItemsToIndex(Playlist playlist, int[] selectedIndexes, int index) {
         
         List<PlaylistItem> items = playlist.getItems();
-        int currentTargetIndex = index;
+        int targetIndex = index;
         
-        // iterate through each source index one by one
+        // first, order items in list correctly
         for (int i=0; i < selectedIndexes.length; i++) {
-        
             int sourceIndex = selectedIndexes[i];
             
-            items.get(sourceIndex-1).setSortIndex(currentTargetIndex);
-            items.get(sourceIndex-1).save();
-            
+            if (sourceIndex != targetIndex) {
+                items.add( targetIndex, items.get(sourceIndex));
+                items.remove( sourceIndex < targetIndex ? sourceIndex : sourceIndex+1);
+                
+                // adjust remaining selected indexes if insertion point is greater than their location
+                for (int j=i+1; j < selectedIndexes.length; j++) {
+                    if (targetIndex > selectedIndexes[j]) {
+                        selectedIndexes[j]--;
+                    }
+                }
+                
+                // update insertion point
+                if (sourceIndex > targetIndex) {
+                    targetIndex++;
+                }
+            }
+        }
+        
+        // second, generate new indexes based list order
+        for (int i=0; i < items.size(); i++) {
+            PlaylistItem item = items.get(i);
+            item.setSortIndex(i + 1); // set index (1-based)
+            item.save();
         }
         
         // initiate UI refresh
