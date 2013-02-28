@@ -48,6 +48,7 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
 
     public LibraryPlaylistsTableTransferHandler(LibraryPlaylistsTableMediator mediator) {
         this.mediator = mediator;
+        
         this.fallbackTransferHandler = new MulticastTransferHandler(DNDUtils.DEFAULT_TRANSFER_HANDLERS);
     }
 
@@ -80,7 +81,6 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
                     return false;
                 }
             } else {
-                
                 
                 int max = mediator.getTable().getModel().getRowCount();
                 if (index < 0 || index > max)
@@ -142,11 +142,16 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
             
             try {
                 container = (PlaylistItemContainer) transferable.getTransferData(LibraryPlaylistsTableTransferable.PLAYLIST_ITEM_ARRAY);
-                if (mediator.getCurrentPlaylist().getId() == container.playlistID) {
-                    return true; // only allow playlist item D&D when you are dragging files within the same playlist
+                if ( mediator.getCurrentPlaylist().getId() == container.playlistID &&
+                     mediator.getDataModel().getSortColumn() == LibraryPlaylistsTableDataLine.SORT_INDEX_IDX &&
+                     mediator.getDataModel().isSortAscending() ) {
+                    
+                    // only allow playlist item D&D when you are dragging files 
+                    // within the same playlist and sorting ascending by the correct column
+                    return true; 
                 }
             } catch (Exception e) {
-                return false;
+                // continue on with false return below
             }
             
         } else if (support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {

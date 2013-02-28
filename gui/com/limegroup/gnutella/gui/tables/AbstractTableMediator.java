@@ -462,6 +462,10 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
 
         return tablePane;
     }
+    
+    public T getDataModel() {
+        return DATA_MODEL;
+    }
 
     public void updateTheme() {
         //        Color tableColor = SkinHandler.getTableBackgroundColor();
