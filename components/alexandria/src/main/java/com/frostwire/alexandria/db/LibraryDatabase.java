@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.frostwire.alexandria.Playlist;
+import com.frostwire.alexandria.PlaylistItem;
+
 public class LibraryDatabase {
 
     public static final int OBJECT_NOT_SAVED_ID = -1;
@@ -20,12 +23,9 @@ public class LibraryDatabase {
 
     public static final int LIBRARY_VERSION_PLAYLIST_SORT_INDEXES = 4; // indicates db version when playlist sort indexes were added
     public static final int LIBRARY_DATABASE_VERSION = 4;
-
-    private boolean isVersionUpdated;
     
     private final File _databaseFile;
     private final String _name;
-    private int _databaseVersion;
     
     private Connection _connection;
 
@@ -132,7 +132,7 @@ public class LibraryDatabase {
         }
     }
 
-    protected Connection onUpdateDatabase(Connection connection, int oldVersion, int newVersion) {
+    protected void onUpdateDatabase(Connection connection, int oldVersion, int newVersion) {
 
         if (oldVersion == 1 && newVersion > 2) {
             setupInternetRadioStationsTable(connection);
@@ -148,9 +148,6 @@ public class LibraryDatabase {
         }
 
         update(connection, "UPDATE Library SET version = ?", LIBRARY_DATABASE_VERSION);
-        _databaseVersion = LIBRARY_DATABASE_VERSION;
-        
-        return connection;
     }
 
     private Connection openConnection(File path, String name, boolean createIfNotExists) {
@@ -199,16 +196,15 @@ public class LibraryDatabase {
     private Connection openOrCreateDatabase(File path, String name) {
         Connection connection = openConnection(path, name, false);
         if (connection == null) {
-            return createDatabase(path, name);
+            connection = createDatabase(path, name);
         } else {
-            _databaseVersion = getDatabaseVersion(connection);
-            if (_databaseVersion != LIBRARY_DATABASE_VERSION) {
-                isVersionUpdated = true;
-                return onUpdateDatabase(connection, _databaseVersion, LIBRARY_DATABASE_VERSION);
-            } else {
-                return connection;
+            int version = getDatabaseVersion(connection);
+            if (version < LIBRARY_DATABASE_VERSION) {
+                onUpdateDatabase(connection, version, LIBRARY_DATABASE_VERSION);
             }
         }
+        
+        return connection;
     }
 
     private List<List<Object>> convertResultSetToList(ResultSet resultSet) throws SQLException {
@@ -343,13 +339,18 @@ public class LibraryDatabase {
         
         // add new column
         update(connection, "ALTER TABLE PlaylistItems ADD sortIndex INTEGER");
-    }
-
-    public boolean isVersionUpdated() {
-        return isVersionUpdated;
-    }
-
-    public int getDatabaseVersion() {
-        return _databaseVersion;
+        
+        // set initial playlist indexes
+        List<Playlist> playlists = PlaylistDB.getPlaylists(this);
+        
+        for( Playlist playlist : playlists ) {
+            List<PlaylistItem> items = playlist.getItems();
+            
+            for(int i=0; i < items.size(); i++) {
+                PlaylistItem item = items.get(i);
+                item.setSortIndex(i+1); // set initial sort index (1-based)
+                item.save();
+            }
+        }
     }
 }

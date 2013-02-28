@@ -5,19 +5,21 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import com.frostwire.alexandria.db.InternetRadioStationDB;
 import com.frostwire.alexandria.db.LibraryDB;
 import com.frostwire.alexandria.db.LibraryDatabase;
+import com.frostwire.alexandria.db.LibraryDatabaseEntity;
+import com.frostwire.alexandria.db.PlaylistDB;
 
-public class Library extends Entity<LibraryDB> {
+public class Library extends LibraryDatabaseEntity {
 
     private int _id;
     private String _name;
     private int _version;
 
     public Library(File libraryFile) {
-        super(new LibraryDB(new LibraryDatabase(libraryFile)));
-        db.fill(this);
-        migrateData();
+        super(new LibraryDatabase(libraryFile));
+        LibraryDB.fill(db, this);
     }
 
     public int getId() {
@@ -45,12 +47,12 @@ public class Library extends Entity<LibraryDB> {
     }
 
     public void close() {
-        db.getDatabase().close();
+        db.close();
     }
 
     public List<Playlist> getPlaylists() {
         // perform name sort here. It is no the best place
-        List<Playlist> list = db.getPlaylists(this);
+        List<Playlist> list = PlaylistDB.getPlaylists(db);
         Collections.sort(list, new Comparator<Playlist>() {
             @Override
             public int compare(Playlist o1, Playlist o2) {
@@ -62,23 +64,23 @@ public class Library extends Entity<LibraryDB> {
     }
 
     public Playlist getPlaylist(String name) {
-        return db.getPlaylist(this, name);
+        return PlaylistDB.getPlaylist(db, name);
     }
 
     public List<InternetRadioStation> getInternetRadioStations() {
-        return db.getInternetRadioStations(this);
+        return InternetRadioStationDB.getInternetRadioStations(db);
     }
 
     public Playlist newPlaylist(String name, String description) {
-        return new Playlist(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description);
+        return new Playlist(db, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description);
     }
 
     public InternetRadioStation newInternetRadioStation(String name, String description, String url, String bitrate, String type, String website, String genre, String pls, boolean bookmarked) {
-        return new InternetRadioStation(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description, url, bitrate, type, website, genre, pls, bookmarked);
+        return new InternetRadioStation(db, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description, url, bitrate, type, website, genre, pls, bookmarked);
     }
 
     public void dump() {
-        db.getDatabase().dump();
+        db.dump();
     }
 
     @Override
@@ -91,41 +93,18 @@ public class Library extends Entity<LibraryDB> {
     }
 
     public Playlist getStarredPlaylist() {
-        return db.getStarredPlaylist(this);
+        return PlaylistDB.getStarredPlaylist(db);
     }
 
     public void updatePlaylistItemProperties(String filePath, String title, String artist, String album, String comment, String genre, String track, String year) {
-        db.updatePlaylistItemProperties(filePath, title, artist, album, comment, genre, track, year);
+        PlaylistDB.updatePlaylistItemProperties(db, filePath, title, artist, album, comment, genre, track, year);
     }
 
     public long getTotalRadioStations() {
-        return db.getTotalRadioStations(this);
+        return InternetRadioStationDB.getTotalRadioStations(db);
     }
 
     public void restoreDefaultRadioStations() {
-        db.restoreDefaultRadioStations(this);
-    }
-    
-    private void migrateData() {
-        if (db.isVersionUpdated()) {
-            if ( db.getDatabaseVersion() == LibraryDatabase.LIBRARY_VERSION_PLAYLIST_SORT_INDEXES) {
-                setInitialPlaylistItemSortIndexes();
-            }   
-        }
-    }
-    
-    private void setInitialPlaylistItemSortIndexes() {
-        
-        List<Playlist> playlists = db.getPlaylists(this);
-        
-        for( Playlist playlist : playlists ) {
-            List<PlaylistItem> items = playlist.getItems();
-            
-            for(int i=0; i < items.size(); i++) {
-                PlaylistItem item = items.get(i);
-                item.setSortIndex(i+1); // set initial sort index (1-based)
-                item.save();
-            }
-        }
+        InternetRadioStationDB.restoreDefaultRadioStations(db);
     }
 }

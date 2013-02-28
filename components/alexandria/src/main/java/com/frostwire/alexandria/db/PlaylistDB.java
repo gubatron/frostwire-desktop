@@ -1,18 +1,18 @@
 package com.frostwire.alexandria.db;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 
-public class PlaylistDB extends ObjectDB<Playlist> {
+public class PlaylistDB {
 
-    public PlaylistDB(LibraryDatabase db) {
-        super(db);
-    }
+    private PlaylistDB() { } // don't allow explicit constructions
 
-    public void fill(Playlist obj) {
+    public static void fill(LibraryDatabase db, Playlist obj) {
         List<List<Object>> result = db.query("SELECT playlistId, name, description FROM Playlists WHERE playlistId = ?", obj.getId());
         if (result.size() > 0) {
             List<Object> row = result.get(0);
@@ -20,18 +20,18 @@ public class PlaylistDB extends ObjectDB<Playlist> {
         }
     }
 
-    public void fill(List<Object> row, Playlist obj) {
+    public static void fill(List<Object> row, Playlist p) {
         int id = (Integer) row.get(0);
         String name = (String) row.get(1);
         String description = (String) row.get(2);
 
-        obj.setId(id);
-        obj.setName(name);
-        obj.setDescription(description);
-        obj.refresh();
+        p.setId(id);
+        p.setName(name);
+        p.setDescription(description);
+        p.refresh();
     }
 
-    public void save(Playlist obj) {
+    public static void save(LibraryDatabase db, Playlist obj) {
         if (obj.getId() == LibraryDatabase.OBJECT_INVALID_ID) {
             return;
         }
@@ -53,29 +53,74 @@ public class PlaylistDB extends ObjectDB<Playlist> {
         }
     }
 
-    public void delete(Playlist obj) {
+    public static void delete(LibraryDatabase db, Playlist obj) {
         db.update("DELETE FROM PlaylistItems WHERE playlistId = ?", obj.getId());
         db.update("DELETE FROM Playlists WHERE playlistId = ?", obj.getId());
     }
 
-    public List<PlaylistItem> getPlaylistItems(Playlist playlist) {
-        String query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred, sortIndex "
-                + "FROM PlaylistItems WHERE playlistId = ? ORDER BY sortIndex ASC";
+    public static List<Playlist> getPlaylists(LibraryDatabase db) {
+        List<List<Object>> result = db.query("SELECT playlistId, name, description FROM Playlists");
 
-        List<List<Object>> result = db.query(query, playlist.getId());
+        List<Playlist> playlists = new ArrayList<Playlist>(result.size());
+
+        for (List<Object> row : result) {
+            Playlist playlist = new Playlist(db);
+            PlaylistDB.fill(row, playlist);
+            playlists.add(playlist);
+        }
+
+        return playlists;
+    }
+
+    public static Playlist getPlaylist(LibraryDatabase db, String name) {
+        List<List<Object>> result = db.query("SELECT playlistId, name, description FROM Playlists WHERE name = ?", name);
+        Playlist playlist = null;
+        if (result.size() > 0) {
+            List<Object> row = result.get(0);
+            playlist = new Playlist(db);
+            PlaylistDB.fill(row, playlist);
+        }
+        return playlist;
+    }
+    
+    public static Playlist getStarredPlaylist(LibraryDatabase db) {
+        String query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred " + "FROM PlaylistItems WHERE starred = ?";
+
+        List<List<Object>> result = db.query(query, true);
+
+        Playlist playlist = new Playlist(db, LibraryDatabase.STARRED_PLAYLIST_ID, "starred", "starred");
 
         List<PlaylistItem> items = new ArrayList<PlaylistItem>(result.size());
+        Set<String> paths = new HashSet<String>();
 
         for (List<Object> row : result) {
             PlaylistItem item = new PlaylistItem(playlist);
-            item.getDB().fill(row, item);
-            items.add(item);
+            PlaylistItemDB.fill(row, item);
+            if (!paths.contains(item.getFilePath())) {
+                items.add(item);
+                paths.add(item.getFilePath());
+            }
         }
 
-        return items;
+        playlist.getItems().addAll(items);
+
+        return playlist;
     }
 
-    private Object[] createPlaylistUpdateStatement(Playlist obj) {
+    public static void updatePlaylistItemProperties(LibraryDatabase db, String filePath, String title, String artist, String album, String comment, String genre, String track, String year) {
+        Object[] sqlAndValues = createPlaylistItemPropertiesUpdate(filePath, title, artist, album, comment, genre, track, year);
+        db.update((String) sqlAndValues[0], (Object[]) sqlAndValues[1]);
+    }
+
+    private static Object[] createPlaylistItemPropertiesUpdate(String filePath, String title, String artist, String album, String comment, String genre, String track, String year) {
+        String sql = "UPDATE PlaylistItems SET trackTitle = LEFT(?, 500), trackArtist = LEFT(?, 500), trackAlbum = LEFT(?, 500), trackComment = LEFT(?, 500), trackGenre = LEFT(?, 20), trackNumber = LEFT(?, 6), trackYear = LEFT(?, 6) WHERE filePath = LEFT(?, 10000)";
+
+        Object[] values = new Object[] { title, artist, album, comment, genre, track, year, filePath };
+
+        return new Object[] { sql, values };
+    }
+    
+    private static Object[] createPlaylistUpdateStatement(Playlist obj) {
         String sql = "UPDATE Playlists SET name = LEFT(?, 500), description = LEFT(?, 10000) WHERE playlistId = ?";
         Object[] values = new Object[] { obj.getName(), obj.getDescription(), obj.getId() };
         return new Object[] { sql, values };

@@ -1,9 +1,10 @@
 package com.frostwire.alexandria;
 
 import com.frostwire.alexandria.db.LibraryDatabase;
+import com.frostwire.alexandria.db.LibraryDatabaseEntity;
 import com.frostwire.alexandria.db.PlaylistItemDB;
 
-public class PlaylistItem extends Entity<PlaylistItemDB> {
+public class PlaylistItem extends LibraryDatabaseEntity {
 
     private Playlist playlist;
     private int id;
@@ -23,9 +24,9 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     private String trackYear;
     private boolean starred;
     private int sortIndex;
-
+    
     public PlaylistItem(Playlist playlist) {
-        super(new PlaylistItemDB(playlist != null ? playlist.db.getDatabase() : null));
+        super(playlist.getLibraryDatabase());
         this.playlist = playlist;
         this.id = LibraryDatabase.OBJECT_INVALID_ID;
     }
@@ -33,7 +34,7 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     public PlaylistItem(Playlist playlist, int id, String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, float trackDurationInSecs,
             String trackArtist, String trackAlbum, String coverArtPath, String trackBitrate, String trackComment,
             String trackGenre, String trackNumber, String trackYear, boolean starred) {
-        super(playlist != null ? new PlaylistItemDB(playlist.db.getDatabase()) : null);
+        super(playlist.getLibraryDatabase());
         this.playlist = playlist;
         this.id = id;
         this.filePath = filePath;
@@ -61,7 +62,7 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     public void setPlaylist(Playlist playlist) {
         // PLAYLIST_TODO: if you change the playlist, how do we figure out what the sort index should be?
         this.playlist = playlist;
-        setDB(new PlaylistItemDB(playlist != null ? playlist.db.getDatabase() : null));
+        setLibraryDatabase(playlist.getLibraryDatabase());
     }
 
     public int getId() {
@@ -194,13 +195,13 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
 
     public void save() {
         if (db != null) {
-            db.save(this);
+            PlaylistItemDB.save(db, this);
         }
     }
 
     public void delete() {
         if (db != null) {
-            db.delete(this);
+            PlaylistItemDB.delete(db, this);
         }
     }
     

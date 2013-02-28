@@ -4,11 +4,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.frostwire.alexandria.db.LibraryDatabase;
+import com.frostwire.alexandria.db.LibraryDatabaseEntity;
 import com.frostwire.alexandria.db.PlaylistDB;
+import com.frostwire.alexandria.db.PlaylistItemDB;
 
-public class Playlist extends Entity<PlaylistDB> {
-
-    private final Library _library;
+public class Playlist extends LibraryDatabaseEntity {
 
     private int _id;
     private String _name;
@@ -17,18 +17,17 @@ public class Playlist extends Entity<PlaylistDB> {
     private boolean deleted;
 
     private List<PlaylistItem> _items;
-
-    public Playlist(Library library) {
-        super(new PlaylistDB(library.db.getDatabase()));
-        _library = library;
+    
+    public Playlist(LibraryDatabase libraryDB) {
+        super(libraryDB);
         _id = LibraryDatabase.OBJECT_INVALID_ID;
         _items = new LinkedList<PlaylistItem>();
+        
         this.deleted = false;
     }
 
-    public Playlist(Library library, int id, String name, String description) {
-        super(new PlaylistDB(library.db.getDatabase()));
-        _library = library;
+    public Playlist(LibraryDatabase libraryDB, int id, String name, String description) {
+        super(libraryDB);
         _id = id;
         _name = name;
         _description = description;
@@ -38,10 +37,6 @@ public class Playlist extends Entity<PlaylistDB> {
     
     public boolean isStarred() {
     	return _id == LibraryDatabase.STARRED_PLAYLIST_ID;
-    }
-
-    public Library getLibrary() {
-        return _library;
     }
 
     public int getId() {
@@ -78,13 +73,13 @@ public class Playlist extends Entity<PlaylistDB> {
 
     public synchronized void save() {
         if (db != null) {
-            db.save(this);
+            PlaylistDB.save(db, this);
         }
     }
 
     public synchronized void delete() {
         if (db != null) {
-            db.delete(this);
+            PlaylistDB.delete(db, this);
             deleted = true;
         }
     }
@@ -92,7 +87,7 @@ public class Playlist extends Entity<PlaylistDB> {
     public synchronized void refresh() {
         if (db != null) {
             _items.clear();
-            _items.addAll(db.getPlaylistItems(this));
+            _items.addAll(PlaylistItemDB.getPlaylistItems(db, this));
         }
     }
 
