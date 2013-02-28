@@ -102,7 +102,6 @@ public class LibraryPlaylistsTableTransferable implements Transferable {
         private static final long serialVersionUID = 473769989120053185L;
         public int playlistID;
         public int[] selectedIndexes;
-        public FileTransferable fileTransferable;
         
         public PlaylistItemContainer(int playlistID, int[] selectedIndexes) {
             this.playlistID = playlistID;

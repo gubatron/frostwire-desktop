@@ -779,4 +779,27 @@ public class LibraryUtils {
     private static String clean(String str) {
         return str.trim().replace("\"", "\\\"");
     }
+
+    public static void movePlaylistItemsToIndex(Playlist playlist, int[] selectedIndexes, int index) {
+        
+        List<PlaylistItem> items = playlist.getItems();
+        int currentTargetIndex = index;
+        
+        // iterate through each source index one by one
+        for (int i=0; i < selectedIndexes.length; i++) {
+        
+            int sourceIndex = selectedIndexes[i];
+            
+            items.get(sourceIndex-1).setSortIndex(currentTargetIndex);
+            items.get(sourceIndex-1).save();
+            
+        }
+        
+        // initiate UI refresh
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+            }
+        });
+    }
 }

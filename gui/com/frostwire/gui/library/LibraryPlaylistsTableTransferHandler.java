@@ -69,8 +69,17 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
             
             if (support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.PLAYLIST_ITEM_ARRAY)) {
                 
-                // TODO: handle actual reording of sort indexes for this playlist
+                Transferable transferable = support.getTransferable();
+                PlaylistItemContainer container;
                 
+                try {
+                    container = (PlaylistItemContainer) transferable.getTransferData(LibraryPlaylistsTableTransferable.PLAYLIST_ITEM_ARRAY);
+                    //LibraryUtils.movePlaylistItemsToIndex(mediator.getCurrentPlaylist(), container.selectedIndexes, index);
+                    
+                    
+                } catch (Exception e) {
+                    return false;
+                }
             } else {
                 
                 
@@ -138,7 +147,7 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
                     return true; // only allow playlist item D&D when you are dragging files within the same playlist
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                return false;
             }
             
         } else if (support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
