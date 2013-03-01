@@ -42,7 +42,7 @@ public final class FrostWireUtils {
 	/** 
 	 * Constant for the current version of FrostWire.
 	 */
-	private static final String FROSTWIRE_VERSION = "5.5.4";
+	private static final String FROSTWIRE_VERSION = "5.5.5";
 
     /** Whether or not a temporary directory is in use. */
     private static boolean temporaryDirectoryInUse;
