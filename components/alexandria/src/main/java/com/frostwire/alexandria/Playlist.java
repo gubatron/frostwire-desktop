@@ -1,5 +1,6 @@
 package com.frostwire.alexandria;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,8 +22,7 @@ public class Playlist extends LibraryDatabaseEntity {
     public Playlist(LibraryDatabase libraryDB) {
         super(libraryDB);
         _id = LibraryDatabase.OBJECT_INVALID_ID;
-        _items = new LinkedList<PlaylistItem>();
-        
+        _items = Collections.synchronizedList(new LinkedList<PlaylistItem>());
         this.deleted = false;
     }
 

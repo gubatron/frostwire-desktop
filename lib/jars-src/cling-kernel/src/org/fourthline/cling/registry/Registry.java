@@ -1,24 +1,23 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.registry;
 
 import org.fourthline.cling.UpnpService;
 import org.fourthline.cling.UpnpServiceConfiguration;
+import org.fourthline.cling.model.DiscoveryOptions;
 import org.fourthline.cling.model.resource.Resource;
 import org.fourthline.cling.model.ServiceReference;
 import org.fourthline.cling.model.meta.Device;
@@ -41,7 +40,7 @@ import java.util.Collection;
  * <p>
  * A running UPnP stack has one <code>Registry</code>. Any discovered device is added
  * to this registry, as well as any exposed local device. The registry then maintains
- * these devices continously (see {@link RegistryMaintainer}) and when needed refreshes
+ * these devices continuously (see {@link RegistryMaintainer}) and when needed refreshes
  * their announcements on the network or removes them when they have expired. The registry
  * also keeps track of GENA event subscriptions.
  * </p>
@@ -55,9 +54,6 @@ import java.util.Collection;
  * GENA subscriptions.
  * <p>
  * An implementation has to be thread-safe.
- * </p>
- * <p>
- * TODO: Unify all "items" the registry is keeping track of, this API should be narrowed.
  * </p>
  *
  * @author Christian Bauer
@@ -193,6 +189,29 @@ public interface Registry {
      * @throws RegistrationException If a conflict with an already registered device was detected.
      */
     public void addDevice(LocalDevice localDevice) throws RegistrationException;
+
+    /**
+     * Call this method to add your local device metadata.
+     *
+     * @param localDevice The device to add and maintain.
+     * @param options Immediately effective when this device is registered.
+     * @throws RegistrationException If a conflict with an already registered device was detected.
+     */
+    public void addDevice(LocalDevice localDevice, DiscoveryOptions options) throws RegistrationException;
+
+    /**
+     * Change the active {@link DiscoveryOptions} for the given (local device) UDN.
+     *
+     * @param options Set to <code>null</code> to disable any options.
+     */
+    public void setDiscoveryOptions(UDN udn, DiscoveryOptions options);
+
+    /**
+     * Get the currently active {@link DiscoveryOptions} for the given (local device) UDN.
+     *
+     * @return <code>null</code> if there are no active discovery options for the given UDN.
+     */
+    public DiscoveryOptions getDiscoveryOptions(UDN udn);
 
     /**
      * Called internally by the UPnP discovery protocol.
@@ -390,7 +409,7 @@ public interface Registry {
     public void removeRemoteSubscription(RemoteGENASubscription subscription);
 
     /**
-     * Called internally by the UPnP stack, during GENA protocol excution.
+     * Called internally by the UPnP stack, during GENA protocol execution.
      * <p>
      * When subscribing with a remote host, the remote host might send the
      * initial event message faster than the response for the subscription
@@ -407,5 +426,14 @@ public interface Registry {
     public void unlockRemoteSubscriptions();
 
     // #################################################################################################
+
+    /**
+     * Manually trigger advertisement messages for all local devices.
+     * <p>
+     * No messages will be send for devices with disabled advertisements, see
+     * {@link DiscoveryOptions}!
+     * </p>
+     */
+    public void advertiseLocalDevices();
 
 }

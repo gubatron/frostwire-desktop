@@ -1,21 +1,31 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.model;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.fourthline.cling.model.meta.LocalService;
 import org.fourthline.cling.model.meta.StateVariable;
@@ -23,16 +33,6 @@ import org.fourthline.cling.model.state.StateVariableAccessor;
 import org.fourthline.cling.model.state.StateVariableValue;
 import org.seamless.util.Exceptions;
 import org.seamless.util.Reflections;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Logger;
 
 /**
  * Default implementation, creates and manages a single instance of a plain Java bean.
@@ -74,7 +74,8 @@ public class DefaultServiceManager<T> implements ServiceManager<T> {
     protected void lock() {
         try {
             if (lock.tryLock(getLockTimeoutMillis(), TimeUnit.MILLISECONDS)) {
-                log.fine("Acquired lock");
+                if (log.isLoggable(Level.FINEST))
+                    log.finest("Acquired lock");
             } else {
                 throw new RuntimeException("Failed to acquire lock in milliseconds: " + getLockTimeoutMillis());
             }
@@ -84,7 +85,8 @@ public class DefaultServiceManager<T> implements ServiceManager<T> {
     }
 
     protected void unlock() {
-        log.fine("Releasing lock");
+        if (log.isLoggable(Level.FINEST))
+            log.finest("Releasing lock");
         lock.unlock();
     }
 
@@ -130,31 +132,50 @@ public class DefaultServiceManager<T> implements ServiceManager<T> {
     }
 
     @Override
-    public Collection<StateVariableValue> readEventedStateVariableValues(boolean isNewSubscription) throws Exception {
+    public Collection<StateVariableValue> getCurrentState() throws Exception {
         lock();
         try {
-            Collection<StateVariableValue> values;
-            if (isNewSubscription) {
-                values = readInitialEventedStateVariableValues();
-                if (values != null) {
-                    log.fine("Obtained initial state variable values for event, skipping individual state variable accessors");
-                    return values;
-                }
+            Collection<StateVariableValue> values = readInitialEventedStateVariableValues();
+            if (values != null) {
+                log.fine("Obtained initial state variable values for event, skipping individual state variable accessors");
+                return values;
             }
-
             values = new ArrayList();
             for (StateVariable stateVariable : getService().getStateVariables()) {
                 if (stateVariable.getEventDetails().isSendEvents()) {
-
                     StateVariableAccessor accessor = getService().getAccessor(stateVariable);
                     if (accessor == null)
                         throw new IllegalStateException("No accessor for evented state variable");
-
                     values.add(accessor.read(stateVariable, getImplementation()));
                 }
             }
             return values;
+        } finally {
+            unlock();
+        }
+    }
 
+    protected Collection<StateVariableValue> getCurrentState(String[] variableNames) throws Exception {
+        lock();
+        try {
+            Collection<StateVariableValue> values = new ArrayList<StateVariableValue>();
+            for (String variableName : variableNames) {
+                variableName = variableName.trim();
+
+                StateVariable stateVariable = getService().getStateVariable(variableName);
+                if (stateVariable == null || !stateVariable.getEventDetails().isSendEvents()) {
+                    log.fine("Ignoring unknown or non-evented state variable: " + variableName);
+                    continue;
+                }
+
+                StateVariableAccessor accessor = getService().getAccessor(stateVariable);
+                if (accessor == null) {
+                    log.warning("Ignoring evented state variable without accessor: " + variableName);
+                    continue;
+                }
+                values.add(accessor.read(stateVariable, getImplementation()));
+            }
+            return values;
         } finally {
             unlock();
         }
@@ -191,7 +212,7 @@ public class DefaultServiceManager<T> implements ServiceManager<T> {
     protected PropertyChangeSupport createPropertyChangeSupport(T serviceImpl) throws Exception {
         Method m;
         if ((m = Reflections.getGetterMethod(serviceImpl.getClass(), "propertyChangeSupport")) != null &&
-                PropertyChangeSupport.class.isAssignableFrom(m.getReturnType())) {
+            PropertyChangeSupport.class.isAssignableFrom(m.getReturnType())) {
             log.fine("Service implementation instance offers PropertyChangeSupport, using that: " + serviceImpl.getClass().getName());
             return (PropertyChangeSupport) m.invoke(serviceImpl);
         }
@@ -220,25 +241,27 @@ public class DefaultServiceManager<T> implements ServiceManager<T> {
             // Prevent recursion
             if (e.getPropertyName().equals(EVENTED_STATE_VARIABLES)) return;
 
-            // Is it an evented state variable?
-            final StateVariable sv = getService().getStateVariable(e.getPropertyName());
-            if (sv == null || !sv.getEventDetails().isSendEvents()) {
-                return;
-            }
+            String[] variableNames = ModelUtil.fromCommaSeparatedList(e.getPropertyName());
+            log.fine("Changed variable names: " + Arrays.toString(variableNames));
 
             try {
-                log.fine("Evented state variable value changed, reading state of service: " + sv);
-                Collection<StateVariableValue> currentValues = readEventedStateVariableValues(false);
+                Collection<StateVariableValue> currentValues = getCurrentState(variableNames);
 
-                getPropertyChangeSupport().firePropertyChange(
+                if (!currentValues.isEmpty()) {
+                    getPropertyChangeSupport().firePropertyChange(
                         EVENTED_STATE_VARIABLES,
                         null,
                         currentValues
-                );
+                    );
+                }
 
             } catch (Exception ex) {
                 // TODO: Is it OK to only log this error? It means we keep running although we couldn't send events?
-                log.severe("Error reading state of service after state variable update event: " + Exceptions.unwrap(ex));
+                log.log(
+                    Level.SEVERE,
+                    "Error reading state of service after state variable update event: " + Exceptions.unwrap(ex),
+                    ex
+                );
             }
         }
     }

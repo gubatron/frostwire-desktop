@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.protocol.sync;
@@ -30,12 +28,12 @@ import org.fourthline.cling.model.message.header.UpnpHeader;
 import org.fourthline.cling.model.meta.Icon;
 import org.fourthline.cling.model.meta.LocalDevice;
 import org.fourthline.cling.model.meta.LocalService;
-import org.fourthline.cling.model.profile.ControlPointInfo;
 import org.fourthline.cling.model.resource.DeviceDescriptorResource;
 import org.fourthline.cling.model.resource.IconResource;
 import org.fourthline.cling.model.resource.Resource;
 import org.fourthline.cling.model.resource.ServiceDescriptorResource;
 import org.fourthline.cling.protocol.ReceivingSync;
+import org.fourthline.cling.transport.RouterException;
 import org.seamless.util.Exceptions;
 
 import java.net.URI;
@@ -63,7 +61,7 @@ public class ReceivingRetrieval extends ReceivingSync<StreamRequestMessage, Stre
         super(upnpService, inputMessage);
     }
 
-    protected StreamResponseMessage executeSync() {
+    protected StreamResponseMessage executeSync() throws RouterException {
 
         if (!getInputMessage().hasHostHeader()) {
             log.fine("Ignoring message, missing HOST header: " + getInputMessage());
@@ -75,8 +73,11 @@ public class ReceivingRetrieval extends ReceivingSync<StreamRequestMessage, Stre
         Resource foundResource = getUpnpService().getRegistry().getResource(requestedURI);
 
         if (foundResource == null) {
-            log.fine("No local resource found: " + getInputMessage());
-            return null;
+            foundResource = onResourceNotFound(requestedURI);
+            if (foundResource == null) {
+                log.fine("No local resource found: " + getInputMessage());
+                return null;
+            }
         }
 
         return createResponse(requestedURI, foundResource);
@@ -97,7 +98,7 @@ public class ReceivingRetrieval extends ReceivingSync<StreamRequestMessage, Stre
                         getUpnpService().getConfiguration().getDeviceDescriptorBinderUDA10();
                 String deviceDescriptor = deviceDescriptorBinder.generate(
                         device,
-                        createControlPointInfo(),
+                        getRemoteClientInfo(),
                         getUpnpService().getConfiguration().getNamespace()
                 );
                 response = new StreamResponseMessage(
@@ -141,8 +142,13 @@ public class ReceivingRetrieval extends ReceivingSync<StreamRequestMessage, Stre
         return response;
     }
 
-    protected ControlPointInfo createControlPointInfo() {
-        return new ControlPointInfo(getInputMessage().getHeaders());
+    /**
+     * Called if the {@link org.fourthline.cling.registry.Registry} had no result.
+     *
+     * @param requestedURIPath The requested URI path
+     * @return <code>null</code> or your own {@link Resource}
+     */
+    protected Resource onResourceNotFound(URI requestedURIPath) {
+        return null;
     }
-
 }

@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.binding.annotations;
@@ -47,6 +45,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 /**
@@ -244,26 +243,36 @@ public class AnnotationLocalServiceBinder implements LocalServiceBinder {
         for (Method method : Reflections.getMethods(clazz, UpnpAction.class)) {
             AnnotationActionBinder actionBinder =
                     new AnnotationActionBinder(method, stateVariables, stringConvertibleTypes);
-            actionBinder.appendAction(map);
+            Action action = actionBinder.appendAction(map);
+            if(isActionExcluded(action)) {
+            	map.remove(action);
+            }
         }
 
         return map;
     }
 
+    /**
+     * Override this method to exclude action/methods after they have been discovered.
+     */
+    protected  boolean isActionExcluded(Action action) {
+    	return false;
+    }
+    
     // TODO: I don't like the exceptions much, user has no idea what to do
 
     static String toUpnpStateVariableName(String javaName) {
         if (javaName.length() < 1) {
             throw new IllegalArgumentException("Variable name must be at least 1 character long");
         }
-        return javaName.substring(0, 1).toUpperCase() + javaName.substring(1);
+        return javaName.substring(0, 1).toUpperCase(Locale.ENGLISH) + javaName.substring(1);
     }
 
     static String toJavaStateVariableName(String upnpName) {
         if (upnpName.length() < 1) {
             throw new IllegalArgumentException("Variable name must be at least 1 character long");
         }
-        return upnpName.substring(0, 1).toLowerCase() + upnpName.substring(1);
+        return upnpName.substring(0, 1).toLowerCase(Locale.ENGLISH) + upnpName.substring(1);
     }
 
 
@@ -271,14 +280,14 @@ public class AnnotationLocalServiceBinder implements LocalServiceBinder {
         if (javaName.length() < 1) {
             throw new IllegalArgumentException("Action name must be at least 1 character long");
         }
-        return javaName.substring(0, 1).toUpperCase() + javaName.substring(1);
+        return javaName.substring(0, 1).toUpperCase(Locale.ENGLISH) + javaName.substring(1);
     }
 
     static String toJavaActionName(String upnpName) {
         if (upnpName.length() < 1) {
             throw new IllegalArgumentException("Variable name must be at least 1 character long");
         }
-        return upnpName.substring(0, 1).toLowerCase() + upnpName.substring(1);
+        return upnpName.substring(0, 1).toLowerCase(Locale.ENGLISH) + upnpName.substring(1);
     }
 
 }

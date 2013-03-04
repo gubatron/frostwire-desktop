@@ -3,7 +3,8 @@ package com.limegroup.gnutella.gui.options.panes;
 import java.io.File;
 import java.io.IOException;
 
-import jd.utils.JDUtilities;
+import org.appwork.storage.config.JsonConfig;
+import org.jdownloader.settings.GeneralSettings;
 
 import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -65,7 +66,8 @@ public class TorrentSaveFolderPaneItem extends AbstractPaneItem {
         SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(newSaveFolder);
 
         //jDownloader save folder
-        JDUtilities.getConfiguration().setProperty("DOWNLOAD_DIRECTORY", SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath());
+        GeneralSettings jDownloaderSettings = JsonConfig.create(GeneralSettings.class);
+        jDownloaderSettings.setDefaultDownloadFolder(newSaveFolder.getAbsolutePath());
     }
 
     @Override

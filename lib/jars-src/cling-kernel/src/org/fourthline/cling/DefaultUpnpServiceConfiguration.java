@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling;
@@ -23,6 +21,9 @@ import org.fourthline.cling.binding.xml.UDA10DeviceDescriptorBinderImpl;
 import org.fourthline.cling.binding.xml.UDA10ServiceDescriptorBinderImpl;
 import org.fourthline.cling.model.ModelUtil;
 import org.fourthline.cling.model.Namespace;
+import org.fourthline.cling.model.message.UpnpHeaders;
+import org.fourthline.cling.model.meta.RemoteDeviceIdentity;
+import org.fourthline.cling.model.meta.RemoteService;
 import org.fourthline.cling.model.types.ServiceType;
 import org.fourthline.cling.transport.impl.DatagramIOConfigurationImpl;
 import org.fourthline.cling.transport.impl.DatagramIOImpl;
@@ -48,6 +49,7 @@ import org.seamless.util.Exceptions;
 
 import javax.enterprise.inject.Alternative;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
@@ -88,7 +90,7 @@ public class DefaultUpnpServiceConfiguration implements UpnpServiceConfiguration
 
     final private int streamListenPort;
 
-    final private Executor defaultExecutor;
+    final private ExecutorService defaultExecutorService;
 
     final private DatagramProcessor datagramProcessor;
     final private SOAPActionProcessor soapActionProcessor;
@@ -121,7 +123,7 @@ public class DefaultUpnpServiceConfiguration implements UpnpServiceConfiguration
 
         this.streamListenPort = streamListenPort;
 
-        defaultExecutor = createDefaultExecutor();
+        defaultExecutorService = createDefaultExecutorService();
 
         datagramProcessor = createDatagramProcessor();
         soapActionProcessor = createSOAPActionProcessor();
@@ -146,7 +148,11 @@ public class DefaultUpnpServiceConfiguration implements UpnpServiceConfiguration
     }
 
     public StreamClient createStreamClient() {
-        return new StreamClientImpl(new StreamClientConfigurationImpl());
+        return new StreamClientImpl(
+            new StreamClientConfigurationImpl(
+                getSyncProtocolExecutorService()
+            )
+        );
     }
 
     public MulticastReceiver createMulticastReceiver(NetworkAddressFactory networkAddressFactory) {
@@ -171,15 +177,15 @@ public class DefaultUpnpServiceConfiguration implements UpnpServiceConfiguration
     }
 
     public Executor getMulticastReceiverExecutor() {
-        return getDefaultExecutor();
+        return getDefaultExecutorService();
     }
 
     public Executor getDatagramIOExecutor() {
-        return getDefaultExecutor();
+        return getDefaultExecutorService();
     }
 
-    public Executor getStreamServerExecutor() {
-        return getDefaultExecutor();
+    public ExecutorService getStreamServerExecutorService() {
+        return getDefaultExecutorService();
     }
 
     public DeviceDescriptorBinder getDeviceDescriptorBinderUDA10() {
@@ -194,8 +200,33 @@ public class DefaultUpnpServiceConfiguration implements UpnpServiceConfiguration
         return new ServiceType[0];
     }
 
+    /**
+     * @return Defaults to <code>false</code>.
+     */
+	public boolean isReceivedSubscriptionTimeoutIgnored() {
+		return false;
+	}
+
+    public UpnpHeaders getDescriptorRetrievalHeaders(RemoteDeviceIdentity identity) {
+        return null;
+    }
+
+    public UpnpHeaders getEventSubscriptionHeaders(RemoteService service) {
+        return null;
+    }
+
+    /**
+     * @return Defaults to 1000 milliseconds.
+     */
     public int getRegistryMaintenanceIntervalMillis() {
         return 1000;
+    }
+
+    /**
+     * @return Defaults to zero, disabling ALIVE flooding.
+     */
+    public int getAliveIntervalMillis() {
+    	return 0;
     }
 
     public Integer getRemoteDeviceMaxAgeSeconds() {
@@ -203,11 +234,11 @@ public class DefaultUpnpServiceConfiguration implements UpnpServiceConfiguration
     }
 
     public Executor getAsyncProtocolExecutor() {
-        return getDefaultExecutor();
+        return getDefaultExecutorService();
     }
 
-    public Executor getSyncProtocolExecutor() {
-        return getDefaultExecutor();
+    public ExecutorService getSyncProtocolExecutorService() {
+        return getDefaultExecutorService();
     }
 
     public Namespace getNamespace() {
@@ -215,11 +246,11 @@ public class DefaultUpnpServiceConfiguration implements UpnpServiceConfiguration
     }
 
     public Executor getRegistryMaintainerExecutor() {
-        return getDefaultExecutor();
+        return getDefaultExecutorService();
     }
 
     public Executor getRegistryListenerExecutor() {
-        return getDefaultExecutor();
+        return getDefaultExecutorService();
     }
 
     public NetworkAddressFactory createNetworkAddressFactory() {
@@ -227,10 +258,8 @@ public class DefaultUpnpServiceConfiguration implements UpnpServiceConfiguration
     }
 
     public void shutdown() {
-        if (getDefaultExecutor() instanceof ThreadPoolExecutor) {
-            log.fine("Shutting down thread pool");
-            ((ThreadPoolExecutor) getDefaultExecutor()).shutdown();
-        }
+        log.fine("Shutting down default executor service");
+        getDefaultExecutorService().shutdownNow();
     }
 
     protected NetworkAddressFactory createNetworkAddressFactory(int streamListenPort) {
@@ -261,11 +290,11 @@ public class DefaultUpnpServiceConfiguration implements UpnpServiceConfiguration
         return new Namespace();
     }
 
-    protected Executor getDefaultExecutor() {
-        return defaultExecutor;
+    protected ExecutorService getDefaultExecutorService() {
+        return defaultExecutorService;
     }
 
-    protected Executor createDefaultExecutor() {
+    protected ExecutorService createDefaultExecutorService() {
         return new ClingExecutor();
     }
 
@@ -301,9 +330,16 @@ public class DefaultUpnpServiceConfiguration implements UpnpServiceConfiguration
         protected void afterExecute(Runnable runnable, Throwable throwable) {
             super.afterExecute(runnable, throwable);
             if (throwable != null) {
+                Throwable cause = Exceptions.unwrap(throwable);
+                if (cause instanceof InterruptedException) {
+                    // Ignore this, might happen when we shutdownNow() the executor. We can't
+                    // log at this point as the logging system might be stopped already (e.g.
+                    // if it's a CDI component).
+                    return;
+                }
                 // Log only
                 log.warning("Thread terminated " + runnable + " abruptly with exception: " + throwable);
-                log.warning("Root cause: " + Exceptions.unwrap(throwable));
+                log.warning("Root cause: " + cause);
             }
         }
     }
@@ -334,4 +370,5 @@ public class DefaultUpnpServiceConfiguration implements UpnpServiceConfiguration
             return t;
         }
     }
+
 }

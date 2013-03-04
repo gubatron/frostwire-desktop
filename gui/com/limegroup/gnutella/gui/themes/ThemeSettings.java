@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.themes;
 
 import java.awt.Color;
@@ -5,7 +20,6 @@ import java.io.File;
 
 import org.limewire.setting.ColorSetting;
 import org.limewire.setting.FileSetting;
-import org.limewire.setting.IntSetting;
 import org.limewire.util.CommonUtils;
 
 import com.limegroup.gnutella.settings.LimeProps;
@@ -186,13 +200,6 @@ public final class ThemeSettings extends LimeProps {
 	public static final FileSetting THEME_DIR =
 		FACTORY.createFileSetting("THEME_DIR", THEME_DEFAULT_DIR);
     
-    /**
-     * Setting for the value all fonts should be incremented by.
-     * 
-     * Can be 0 and negative.
-     */
-    public static final IntSetting FONT_SIZE_INCREMENT = 
-        FACTORY.createIntSetting("FONT_SIZE_INCREMENT", 0);
     
     public static final ColorSetting DEFAULT_TABLE_EVEN_ROW_COLOR = FACTORY.createColorSetting("DEFAULT_TABLE_EVEN_ROW_COLOR", new Color(255, 255, 255));
     public static final ColorSetting DEFAULT_TABLE_ODD_ROW_COLOR = FACTORY.createColorSetting("DEFAULT_TABLE_ODD_ROW_COLOR", new Color(0xf2fafe));

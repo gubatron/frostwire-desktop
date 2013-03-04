@@ -19,8 +19,6 @@
 package com.frostwire.bittorrent.websearch.soundcloud;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,11 +28,11 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.util.StringUtils;
 
-import com.frostwire.HttpFetcher;
 import com.frostwire.bittorrent.websearch.WebSearchPerformer;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.JsonUtils;
 import com.limegroup.gnutella.settings.SearchEnginesSettings;
 
@@ -70,20 +68,9 @@ public class SoundcloudSearchPerformer implements WebSearchPerformer {
     private List<WebSearchResult> searchPage(int page, String keywords) {
         List<WebSearchResult> result = new ArrayList<WebSearchResult>();
 
-        HttpFetcher fetcher = null;
-        try {
-            fetcher = new HttpFetcher(getURI(page, keywords), HTTP_TIMEOUT);
-        } catch (URISyntaxException e) {
-            LOG.error("Can't create uri", e);
-            return result;
-        }
-        byte[] htmlBytes = fetcher.fetch();
+        HttpClient httpClient = HttpClientFactory.newDefaultInstance();
 
-        if (htmlBytes == null) {
-            return result;
-        }
-
-        String html = StringUtils.getUTF8String(htmlBytes);
+        String html = httpClient.get(getUrl(page, keywords));
 
         String regex = getRegex();
 
@@ -122,8 +109,8 @@ public class SoundcloudSearchPerformer implements WebSearchPerformer {
         return "http://i1.sndcdn.com/artworks-" + str.substring(0, str.indexOf("-crop.")) + "-t300x300.jpg";
     }
 
-    public URI getURI(int page, String encodedKeywords) throws URISyntaxException {
-        return new URI("http://soundcloud.com/tracks/search?page=" + page + "&q[fulltext]=" + encodedKeywords + "&q[downloadable]=true&advanced=1");
+    private String getUrl(int page, String encodedKeywords) {
+        return "http://soundcloud.com/tracks/search?page=" + page + "&q[fulltext]=" + encodedKeywords + "&q[downloadable]=true&advanced=1";
     }
 
     public String getRegex() {

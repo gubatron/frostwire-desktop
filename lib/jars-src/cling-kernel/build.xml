@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="mrjadapter" default="main" basedir=".">
+<project name="cling" default="main" basedir=".">
 
 	<property name="jars" value="../dist/"/>
 
@@ -11,7 +11,7 @@
 		<mkdir dir="bin" />
 
 		<!-- build -->
-		<javac srcdir="src" destdir="bin" fork="true" target="1.6">
+		<javac srcdir="src" destdir="bin" fork="true" includeantruntime="false">
 			<classpath refid="default.classpath"/>
 		</javac>
 

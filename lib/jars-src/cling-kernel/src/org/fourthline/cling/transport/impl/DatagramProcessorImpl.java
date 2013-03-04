@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.transport.impl;
@@ -27,13 +25,14 @@ import org.fourthline.cling.model.message.UpnpOperation;
 import org.fourthline.cling.model.message.UpnpRequest;
 import org.fourthline.cling.model.message.UpnpResponse;
 import org.fourthline.cling.transport.spi.DatagramProcessor;
-import org.fourthline.cling.transport.spi.UnsupportedDataException;
+import org.fourthline.cling.model.UnsupportedDataException;
 import org.seamless.http.Headers;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.util.Locale;
 
 /**
  * Default implementation.
@@ -64,7 +63,7 @@ public class DatagramProcessorImpl implements DatagramProcessor {
             }
 
         } catch (Exception ex) {
-            throw new UnsupportedDataException("Could not parse headers: " + ex, ex);
+            throw new UnsupportedDataException("Could not parse headers: " + ex, ex, datagram.getData());
         }
     }
 
@@ -113,7 +112,9 @@ public class DatagramProcessorImpl implements DatagramProcessor {
             return new DatagramPacket(data, data.length, message.getDestinationAddress(), message.getDestinationPort());
 
         } catch (UnsupportedEncodingException ex) {
-            throw new UnsupportedDataException("Can't convert message content to US-ASCII: " + ex.getMessage(), ex);
+            throw new UnsupportedDataException(
+                "Can't convert message content to US-ASCII: " + ex.getMessage(), ex, messageData
+            );
         }
     }
 
@@ -129,7 +130,7 @@ public class DatagramProcessorImpl implements DatagramProcessor {
         // Assemble message
         IncomingDatagramMessage requestMessage;
         UpnpRequest upnpRequest = new UpnpRequest(UpnpRequest.Method.getByHttpName(requestMethod));
-        upnpRequest.setHttpMinorVersion(httpProtocol.toUpperCase().equals("HTTP/1.1") ? 1 : 0);
+        upnpRequest.setHttpMinorVersion(httpProtocol.toUpperCase(Locale.ENGLISH).equals("HTTP/1.1") ? 1 : 0);
         requestMessage = new IncomingDatagramMessage(upnpRequest, datagram.getAddress(), datagram.getPort(), receivedOnAddress);
 
         requestMessage.setHeaders(headers);
@@ -150,7 +151,7 @@ public class DatagramProcessorImpl implements DatagramProcessor {
         // Assemble the message
         IncomingDatagramMessage responseMessage;
         UpnpResponse upnpResponse = new UpnpResponse(statusCode, statusMessage);
-        upnpResponse.setHttpMinorVersion(httpProtocol.toUpperCase().equals("HTTP/1.1") ? 1 : 0);
+        upnpResponse.setHttpMinorVersion(httpProtocol.toUpperCase(Locale.ENGLISH).equals("HTTP/1.1") ? 1 : 0);
         responseMessage = new IncomingDatagramMessage(upnpResponse, datagram.getAddress(), datagram.getPort(), receivedOnAddress);
 
         responseMessage.setHeaders(headers);

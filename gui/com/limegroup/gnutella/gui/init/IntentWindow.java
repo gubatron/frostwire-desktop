@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.init;
 
 import java.awt.BorderLayout;
@@ -16,7 +31,7 @@ import org.limewire.util.CommonUtils;
 
 /** State Your Intent. */
 final class IntentWindow extends SetupWindow {
-    
+
     /**
      * 
      */
@@ -24,65 +39,63 @@ final class IntentWindow extends SetupWindow {
     private boolean setWillNot = false;
     private Properties properties;
 
-	IntentWindow(SetupManager manager) {
-		super(manager, 
-			  I18nMarker.marktr("State Your Intent"), 
-			  I18nMarker.marktr("One more thing..."));
+    IntentWindow(SetupManager manager) {
+        super(manager, I18nMarker.marktr("State Your Intent"), I18nMarker.marktr("One more thing..."));
     }
-	
-	private boolean isCurrentVersionChecked() {
-	    if(properties == null) {
-	        properties = new Properties();
-	        try {
-	            properties.load(new FileInputStream(getPropertiesFile()));
-	        } catch(IOException iox) {
-	        	System.out.println("Could not load properties from property file.");
-	        	return false;
-	        }
-	    }
-	    
-	    String exists = properties.getProperty("willnot");
-	    return exists != null && exists.equals("true");
-	}
-	
-	boolean isConfirmedWillNot() {
-	    return isCurrentVersionChecked() || setWillNot;
-	}
-    
+
+    private boolean isCurrentVersionChecked() {
+        if (properties == null) {
+            properties = new Properties();
+            try {
+                properties.load(new FileInputStream(getPropertiesFile()));
+            } catch (IOException iox) {
+                System.out.println("Could not load properties from property file.");
+                return false;
+            }
+        }
+
+        String exists = properties.getProperty("willnot");
+        return exists != null && exists.equals("true");
+    }
+
+    boolean isConfirmedWillNot() {
+        return isCurrentVersionChecked() || setWillNot;
+    }
+
     @Override
     protected void createWindow() {
         super.createWindow();
-        
+
         JPanel innerPanel = new JPanel(new BorderLayout());
         final IntentPanel intentPanel = new IntentPanel();
-        innerPanel.add(intentPanel, BorderLayout.CENTER);        
+        innerPanel.add(intentPanel, BorderLayout.CENTER);
         setSetupComponent(innerPanel);
-        
+
         setNext(null);
         intentPanel.addButtonListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(intentPanel.hasSelection()) {
+                if (intentPanel.hasSelection()) {
                     setNext(IntentWindow.this);
                     setWillNot = intentPanel.isWillNot();
                     _manager.enableActions(getAppropriateActions());
                 }
             }
         });
-	}
+    }
 
-	@Override
+    @Override
     public void applySettings(boolean loadCoreComponents) {
-	    if(setWillNot) {
-	        properties.put("willnot", "true");
-	        try {
-	            properties.store(new FileOutputStream(getPropertiesFile()), "Started & Ran Versions");
-	        } catch(IOException ignored) {
-	        	System.out.println(ignored);
-	        }
-	    }	    
-	}
-	
-	private File getPropertiesFile() {
-	    return new File(CommonUtils.getUserSettingsDir(), "intent.props");
-	}
+        if (setWillNot) {
+            properties.put("willnot", "true");
+            try {
+                properties.store(new FileOutputStream(getPropertiesFile()), "Started & Ran Versions");
+            } catch (IOException ignored) {
+                System.out.println(ignored);
+            }
+        }
+    }
+
+    private File getPropertiesFile() {
+        return new File(CommonUtils.getUserSettingsDir(), "intent.props");
+    }
 }

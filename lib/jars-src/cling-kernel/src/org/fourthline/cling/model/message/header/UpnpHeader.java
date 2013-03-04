@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.model.message.header;
@@ -21,6 +19,7 @@ import org.seamless.util.Exceptions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -85,7 +84,8 @@ public abstract class UpnpHeader<T> {
         CONTENT_RANGE("CONTENT-RANGE", ContentRangeHeader.class),
         PRAGMA("PRAGMA", PragmaHeader.class),
         
-        EXT_IFACE_MAC("X-CLING-IFACE-MAC", InterfaceMacHeader.class);
+        EXT_IFACE_MAC("X-CLING-IFACE-MAC", InterfaceMacHeader.class),
+        EXT_AV_CLIENT_INFO("X-AV-CLIENT-INFO", AVClientInfoHeader.class);
 
         private static Map<String, Type> byName = new HashMap<String, Type>() {{
             for (Type t : Type.values()) {
@@ -123,7 +123,7 @@ public abstract class UpnpHeader<T> {
          */
         public static Type getByHttpName(String httpName) {
             if (httpName == null) return null;
-        	return byName.get(httpName.toUpperCase());
+        	return byName.get(httpName.toUpperCase(Locale.ENGLISH));
         }
     }
 

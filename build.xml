@@ -72,7 +72,7 @@
 	    <fileset dir="${limewire.home}/gui" includes="net/**/*" excludes="org/**/*.java"/>
 	    <manifest>
 	      <attribute name="Main-Class" value="com.limegroup.gnutella.gui.Main" />
-	      <attribute name="Class-Path" value=". ${classpath} lw-alexandria.jar lw-azureus.jar lw-common.jar lw-resources.jar lw-setting.jar lw-jdownloader.jar"/>
+	      <attribute name="Class-Path" value=". ${classpath} lw-alexandria.jar lw-azureus.jar lw-common.jar lw-resources.jar lw-setting.jar lw-jdownloader.jar fwtips.jar h2-1.3.164.jar cling-kernel.jar gson-1.4.jar"/>
 	    </manifest>
 	  </jar>
 	</target>

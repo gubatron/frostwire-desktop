@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling;
@@ -20,6 +18,9 @@ package org.fourthline.cling;
 import org.fourthline.cling.binding.xml.DeviceDescriptorBinder;
 import org.fourthline.cling.binding.xml.ServiceDescriptorBinder;
 import org.fourthline.cling.model.Namespace;
+import org.fourthline.cling.model.message.UpnpHeaders;
+import org.fourthline.cling.model.meta.RemoteDeviceIdentity;
+import org.fourthline.cling.model.meta.RemoteService;
 import org.fourthline.cling.model.types.ServiceType;
 import org.fourthline.cling.transport.spi.DatagramIO;
 import org.fourthline.cling.transport.spi.DatagramProcessor;
@@ -31,6 +32,7 @@ import org.fourthline.cling.transport.spi.StreamClient;
 import org.fourthline.cling.transport.spi.StreamServer;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Shared configuration data of the UPnP stack..
@@ -104,7 +106,7 @@ public interface UpnpServiceConfiguration {
     /**
      * @return The executor which runs the listening background threads for HTTP requests.
      */
-    public Executor getStreamServerExecutor();
+    public ExecutorService getStreamServerExecutorService();
 
     /**
      * @return The shared implementation of {@link org.fourthline.cling.binding.xml.DeviceDescriptorBinder} for the UPnP 1.0 Device Architecture..
@@ -141,6 +143,39 @@ public interface UpnpServiceConfiguration {
      * @return The time in milliseconds to wait between each registry maintenance operation.
      */
     public int getRegistryMaintenanceIntervalMillis();
+    
+    /**
+     * Optional setting for flooding alive NOTIFY messages for local devices.
+     * <p>
+     * Use this to advertise local devices at the specified interval, independent of its
+     * {@link org.fourthline.cling.model.meta.DeviceIdentity#maxAgeSeconds} value. Note
+     * that this will increase network traffic.
+     * </p>
+     * <p>
+     * Some control points (XBMC and other Platinum UPnP SDK based devices, OPPO-93) seem
+     * to not properly receive SSDP M-SEARCH replies sent by Cling, but will handle NOTIFY
+     * alive messages just fine.
+     * </p>
+     *
+     * @return The time in milliseconds for ALIVE message intervals, set to <code>0</code> to disable
+     */
+    public int getAliveIntervalMillis();
+
+    /**
+     * Ignore the received event subscription timeout from remote control points.
+     * <p>
+     * Some control points have trouble renewing subscriptions properly; enabling this option
+     * in conjunction with a high value for
+     * {@link org.fourthline.cling.model.UserConstants#DEFAULT_SUBSCRIPTION_DURATION_SECONDS}
+     * ensures that your devices will not disappear on such control points.
+     * </p>
+     *
+     * @return <code>true</code> if the timeout in incoming event subscriptions should be ignored
+     *         and the default value ({@link org.fourthline.cling.model.UserConstants#DEFAULT_SUBSCRIPTION_DURATION_SECONDS})
+     *         should be used instead.
+     *
+     */
+    public boolean isReceivedSubscriptionTimeoutIgnored();
 
     /**
      * Returns the time in seconds a remote device will be registered until it is expired.
@@ -163,14 +198,40 @@ public interface UpnpServiceConfiguration {
     public Integer getRemoteDeviceMaxAgeSeconds();
 
     /**
+     * Optional extra headers for device descriptor retrieval HTTP requests.
+     * <p>
+     * Some devices might require extra headers to recognize your control point, use this
+     * method to set these headers. They will be used for every descriptor (XML) retrieval
+     * HTTP request by Cling. See {@link org.fourthline.cling.model.profile.ClientInfo} for
+     * action request messages.
+     * </p>
+     *
+     * @param identity The (so far) discovered identity of the remote device.
+     * @return <code>null</code> or extra HTTP headers.
+     */
+    public UpnpHeaders getDescriptorRetrievalHeaders(RemoteDeviceIdentity identity);
+
+    /**
+     * Optional extra headers for event subscription (almost HTTP) messages.
+     * <p>
+     * Some devices might require extra headers to recognize your control point, use this
+     * method to set these headers for GENA subscriptions. Note that the headers will
+     * not be applied to actual event messages, only subscribe, unsubscribe, and renewal.
+     * </p>
+     *
+     * @return <code>null</code> or extra HTTP headers.
+     */
+    public UpnpHeaders getEventSubscriptionHeaders(RemoteService service);
+
+    /**
      * @return The executor which runs the processing of asynchronous aspects of the UPnP stack (discovery).
      */
     public Executor getAsyncProtocolExecutor();
 
     /**
-     * @return The executor which runs the processing of synchronous aspects of the UPnP stack (description, control, GENA).
+     * @return The executor service which runs the processing of synchronous aspects of the UPnP stack (description, control, GENA).
      */
-    public Executor getSyncProtocolExecutor();
+    public ExecutorService getSyncProtocolExecutorService();
 
     /**
      * @return An instance of {@link org.fourthline.cling.model.Namespace} for this UPnP stack.
@@ -178,7 +239,7 @@ public interface UpnpServiceConfiguration {
     public Namespace getNamespace();
 
     /**
-     * @return The executor which runs the background thread for maintainting the registry.
+     * @return The executor which runs the background thread for maintaining the registry.
      */
     public Executor getRegistryMaintainerExecutor();
 

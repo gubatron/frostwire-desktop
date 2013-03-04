@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.transport.impl;
@@ -20,7 +18,8 @@ package org.fourthline.cling.transport.impl;
 import org.fourthline.cling.model.Constants;
 import org.fourthline.cling.transport.spi.InitializationException;
 import org.fourthline.cling.transport.spi.NetworkAddressFactory;
-import org.seamless.util.OS;
+import org.fourthline.cling.transport.spi.NoNetworkException;
+import org.seamless.util.Iterators;
 
 import java.net.Inet4Address;
 import java.net.Inet6Address;
@@ -36,14 +35,15 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
+import java.util.Locale;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Default implementation of network interface and address configuration/discovery.
  * <p
- * This implementation has been tested on Windows XP, Windows Vista, Mac OS X 10.6,
+ * This implementation has been tested on Windows XP, Windows Vista, Mac OS X 10.8,
  * and whatever kernel ships in Ubuntu 9.04. This implementation does not support IPv6.
  * </p>
  *
@@ -56,11 +56,11 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
 
     private static Logger log = Logger.getLogger(NetworkAddressFactoryImpl.class.getName());
 
-    protected Set<String> useInterfaces = new HashSet();
-    protected Set<String> useAddresses = new HashSet();
+    final protected Set<String> useInterfaces = new HashSet<String>();
+    final protected Set<String> useAddresses = new HashSet<String>();
 
-    protected List<NetworkInterface> networkInterfaces = new ArrayList();
-    protected List<InetAddress> bindAddresses = new ArrayList();
+    final protected List<NetworkInterface> networkInterfaces = new ArrayList<NetworkInterface>();
+    final protected List<InetAddress> bindAddresses = new ArrayList<InetAddress>();
 
     protected int streamListenPort;
 
@@ -72,6 +72,8 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
     }
 
     public NetworkAddressFactoryImpl(int streamListenPort) throws InitializationException {
+    	
+    	System.setProperty("java.net.preferIPv4Stack", "true");
 
         String useInterfacesString = System.getProperty(SYSTEM_PROPERTY_NET_IFACES);
         if (useInterfacesString != null) {
@@ -85,21 +87,42 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
             useAddresses.addAll(Arrays.asList(useAddressesStrings));
         }
 
-        // TODO: Linux issue: http://mail.openjdk.java.net/pipermail/net-dev/2008-December/000497.html
-        if (OS.checkForLinux()) {
-            Properties props = System.getProperties();
-            props.setProperty("java.net.preferIPv6Stack", "true");
-            System.setProperties(props);
-        }
-
         discoverNetworkInterfaces();
         discoverBindAddresses();
 
-        if (networkInterfaces.size() == 0 || bindAddresses.size() == 0) {
-            throw new InitializationException("Could not discover any bindable network interfaces and/or addresses");
+        if ((networkInterfaces.size() == 0 || bindAddresses.size() == 0)) {
+            log.warning("No usable network interface or addresses found");
+        	if(requiresNetworkInterface()) {
+        		throw new NoNetworkException(
+                    "Could not discover any usable network interfaces and/or addresses"
+                );
+        	}
         }
 
         this.streamListenPort = streamListenPort;
+    }
+
+    /**
+     * @return <code>true</code> (the default) if a <code>MissingNetworkInterfaceException</code> should be thrown
+     */
+    protected boolean requiresNetworkInterface() {
+    	return true;
+    }
+
+    public void logInterfaceInformation() {
+        synchronized (networkInterfaces) {
+            if(networkInterfaces.isEmpty()) {
+                log.info("No network interface to display!");
+                return ;
+            }
+            for(NetworkInterface networkInterface : networkInterfaces) {
+                try {
+                    logInterfaceInformation(networkInterface);
+                } catch (SocketException ex) {
+                    log.log(Level.WARNING, "Exception while logging network interface information", ex);
+                }
+            }
+        }
     }
 
     public InetAddress getMulticastGroup() {
@@ -118,12 +141,30 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
         return streamListenPort;
     }
 
-    public NetworkInterface[] getNetworkInterfaces() {
-        return networkInterfaces.toArray(new NetworkInterface[networkInterfaces.size()]);
+    public Iterator<NetworkInterface> getNetworkInterfaces() {
+        return new Iterators.Synchronized<NetworkInterface>(networkInterfaces) {
+            @Override
+            protected void synchronizedRemove(int index) {
+                synchronized (networkInterfaces) {
+                    networkInterfaces.remove(index);
+                }
+            }
+        };
     }
 
-    public InetAddress[] getBindAddresses() {
-        return bindAddresses.toArray(new InetAddress[bindAddresses.size()]);
+    public Iterator<InetAddress> getBindAddresses() {
+        return new Iterators.Synchronized<InetAddress>(bindAddresses) {
+            @Override
+            protected void synchronizedRemove(int index) {
+                synchronized (bindAddresses) {
+                    bindAddresses.remove(index);
+                }
+            }
+        };
+    }
+
+    public boolean hasUsableNetwork() {
+        return networkInterfaces.size() > 0 && bindAddresses.size() > 0;
     }
 
     public byte[] getHardwareAddress(InetAddress inetAddress) {
@@ -131,16 +172,39 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
             NetworkInterface iface = NetworkInterface.getByInetAddress(inetAddress);
             return iface != null ? iface.getHardwareAddress() : null;
         } catch (Throwable ex) {
-        	// seen on Win32: java.lang.Error: IP Helper Library GetIpAddrTable function failed
+            log.log(Level.WARNING, "Cannot get hardware address for: " + inetAddress, ex);
+        	// On Win32: java.lang.Error: IP Helper Library GetIpAddrTable function failed
+
+            // On Android 4.0.3 NullPointerException with inetAddress != null
+
+            // On Android "SocketException: No such device or address" when
+            // switching networks (mobile -> WiFi)
         	return null;
         }
     }
 
     public InetAddress getBroadcastAddress(InetAddress inetAddress) {
-        for (NetworkInterface iface : networkInterfaces) {
-            for (InterfaceAddress interfaceAddress : getInterfaceAddresses(iface)) {
-                if (interfaceAddress != null && interfaceAddress.getAddress().equals(inetAddress)) {
-                    return interfaceAddress.getBroadcast();
+        synchronized (networkInterfaces) {
+            for (NetworkInterface iface : networkInterfaces) {
+                for (InterfaceAddress interfaceAddress : getInterfaceAddresses(iface)) {
+                    if (interfaceAddress != null && interfaceAddress.getAddress().equals(inetAddress)) {
+                        return interfaceAddress.getBroadcast();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public Short getAddressNetworkPrefixLength(InetAddress inetAddress) {
+        synchronized (networkInterfaces) {
+            for (NetworkInterface iface : networkInterfaces) {
+                for (InterfaceAddress interfaceAddress : getInterfaceAddresses(iface)) {
+                    if (interfaceAddress != null && interfaceAddress.getAddress().equals(inetAddress)) {
+                        short prefix = interfaceAddress.getNetworkPrefixLength();
+                        if(prefix > 0 && prefix < 32) return prefix; // some network cards return -1
+                        return null;
+                    }
                 }
             }
         }
@@ -181,25 +245,27 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
     }
 
     protected InetAddress getBindAddressInSubnetOf(InetAddress inetAddress) {
+        synchronized (networkInterfaces) {
+            for (NetworkInterface iface : networkInterfaces) {
+                for (InterfaceAddress ifaceAddress : getInterfaceAddresses(iface)) {
 
-        for (NetworkInterface iface : networkInterfaces) {
-            for (InterfaceAddress ifaceAddress : getInterfaceAddresses(iface)) {
+                    synchronized (bindAddresses) {
+                        if (ifaceAddress == null || !bindAddresses.contains(ifaceAddress.getAddress())) {
+                            continue;
+                        }
+                    }
 
-                if (!bindAddresses.contains(ifaceAddress.getAddress())) {
-                    continue;
+                    if (isInSubnet(
+                            inetAddress.getAddress(),
+                            ifaceAddress.getAddress().getAddress(),
+                            ifaceAddress.getNetworkPrefixLength())
+                            ) {
+                        return ifaceAddress.getAddress();
+                    }
                 }
 
-                if (isInSubnet(
-                        inetAddress.getAddress(),
-                        ifaceAddress.getAddress().getAddress(),
-                        ifaceAddress.getNetworkPrefixLength())
-                        ) {
-                    return ifaceAddress.getAddress();
-                }
             }
-
         }
-
         return null;
     }
 
@@ -236,7 +302,9 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
                 log.finer("Analyzing network interface: " + iface.getDisplayName());
                 if (isUsableNetworkInterface(iface)) {
                     log.fine("Discovered usable network interface: " + iface.getDisplayName());
-                    networkInterfaces.add(iface);
+                    synchronized (networkInterfaces) {
+                        networkInterfaces.add(iface);
+                    }
                 } else {
                     log.finer("Ignoring non-usable network interface: " + iface.getDisplayName());
                 }
@@ -261,9 +329,8 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
      * <li>have no bound IP addresses</li>
      * <li>named "vmnet*" (OS X VMWare does not properly stop interfaces when it quits)</li>
      * <li>named "vnic*" (OS X Parallels interfaces should be ignored as well)</li>
-     * <li>named "*virtual*"</li>
+     * <li>named "*virtual*" (VirtualBox interfaces, for example</li>
      * <li>named "ppp*"</li>
-     * <li>not supporting multicast</li>
      * </ul>
      *
      * @param iface The interface to validate.
@@ -281,24 +348,24 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
             return false;
         }
 
-        if (iface.getName().toLowerCase().startsWith("vmnet") ||
-        		(iface.getDisplayName() != null &&  iface.getDisplayName().toLowerCase().contains("vmnet"))) {
+        if (iface.getName().toLowerCase(Locale.ENGLISH).startsWith("vmnet") ||
+        		(iface.getDisplayName() != null &&  iface.getDisplayName().toLowerCase(Locale.ENGLISH).contains("vmnet"))) {
             log.finer("Skipping network interface (VMWare): " + iface.getDisplayName());
             return false;
         }
 
-        if (iface.getName().toLowerCase().startsWith("vnic")) {
+        if (iface.getName().toLowerCase(Locale.ENGLISH).startsWith("vnic")) {
             log.finer("Skipping network interface (Parallels): " + iface.getDisplayName());
             return false;
         }
 
-        if (iface.getName().toLowerCase().startsWith("ppp")) {
-            log.finer("Skipping network interface (PPP): " + iface.getDisplayName());
+        if (iface.getName().toLowerCase(Locale.ENGLISH).contains("virtual")) {
+            log.finer("Skipping network interface (named '*virtual*'): " + iface.getDisplayName());
             return false;
         }
 
-        if (!iface.supportsMulticast()) {
-            log.finer("Skipping network interface (no multicast support): " + iface.getDisplayName());
+        if (iface.getName().toLowerCase(Locale.ENGLISH).startsWith("ppp")) {
+            log.finer("Skipping network interface (PPP): " + iface.getDisplayName());
             return false;
         }
 
@@ -312,36 +379,43 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
             return false;
         }
 
+        if (!iface.supportsMulticast())
+            log.warning("Network interface may not be multicast capable: "  + iface.getDisplayName());
+
         return true;
     }
 
     protected void discoverBindAddresses() throws InitializationException {
         try {
 
-            Iterator<NetworkInterface> it = networkInterfaces.iterator();
-            while (it.hasNext()) {
-                NetworkInterface networkInterface = it.next();
+            synchronized (networkInterfaces) {
+                Iterator<NetworkInterface> it = networkInterfaces.iterator();
+                while (it.hasNext()) {
+                    NetworkInterface networkInterface = it.next();
 
-                log.finer("Discovering addresses of interface: " + networkInterface.getDisplayName());
-                int usableAddresses = 0;
-                for (InetAddress inetAddress : getInetAddresses(networkInterface)) {
-                    if (inetAddress == null) {
-                        log.warning("Network has a null address: " + networkInterface.getDisplayName());
-                        continue;
+                    log.finer("Discovering addresses of interface: " + networkInterface.getDisplayName());
+                    int usableAddresses = 0;
+                    for (InetAddress inetAddress : getInetAddresses(networkInterface)) {
+                        if (inetAddress == null) {
+                            log.warning("Network has a null address: " + networkInterface.getDisplayName());
+                            continue;
+                        }
+
+                        if (isUsableAddress(networkInterface, inetAddress)) {
+                            log.fine("Discovered usable network interface address: " + inetAddress.getHostAddress());
+                            usableAddresses++;
+                            synchronized (bindAddresses) {
+                                bindAddresses.add(inetAddress);
+                            }
+                        } else {
+                            log.finer("Ignoring non-usable network interface address: " + inetAddress.getHostAddress());
+                        }
                     }
 
-                    if (isUsableAddress(networkInterface, inetAddress)) {
-                        log.fine("Discovered usable network interface address: " + inetAddress.getHostAddress());
-                        usableAddresses++;
-                        bindAddresses.add(inetAddress);
-                    } else {
-                        log.finer("Ignoring non-usable network interface address: " + inetAddress.getHostAddress());
+                    if (usableAddresses == 0) {
+                        log.finer("Network interface has no usable addresses, removing: " + networkInterface.getDisplayName());
+                        it.remove();
                     }
-                }
-
-                if (usableAddresses == 0) {
-                    log.finer("Network interface has no usable addresses, removing: " + networkInterface.getDisplayName());
-                    it.remove();
                 }
             }
 
@@ -377,11 +451,6 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
             log.finer("Skipping loopback address: " + address);
             return false;
         }
-        
-        if (address.isLinkLocalAddress()) {
-        	log.finer("Skipping link-local address: " + address);
-        	return false;
-        }
 
         if (useAddresses.size() > 0 && !useAddresses.contains(address.getHostAddress())) {
             log.finer("Skipping unwanted address: " + address);
@@ -391,44 +460,48 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
         return true;
     }
 
-    static void displayInterfaceInformation(NetworkInterface netint) throws SocketException {
-        System.out.printf("Parent Info:%s\n", netint.getParent());
-        System.out.printf("Display name: %s\n", netint.getDisplayName());
-        System.out.printf("Name: %s\n", netint.getName());
+    protected void logInterfaceInformation(NetworkInterface networkInterface) throws SocketException {
+        log.info("---------------------------------------------------------------------------------");
+        log.info(String.format("Interface display name: %s", networkInterface.getDisplayName()));
+        if (networkInterface.getParent() != null)
+            log.info(String.format("Parent Info: %s", networkInterface.getParent()));
+        log.info(String.format("Name: %s", networkInterface.getName()));
 
-        Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
+        Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
 
         for (InetAddress inetAddress : Collections.list(inetAddresses)) {
-            System.out.printf("InetAddress: %s\n", inetAddress);
+            log.info(String.format("InetAddress: %s", inetAddress));
         }
 
-        List<InterfaceAddress> ias = netint.getInterfaceAddresses();
+        List<InterfaceAddress> interfaceAddresses = networkInterface.getInterfaceAddresses();
 
-        Iterator<InterfaceAddress> iias = ias.iterator();
-        while (iias.hasNext()) {
-            InterfaceAddress ia = iias.next();
-
-            System.out.println(" Interface Address");
-            System.out.println("  Address: " + ia.getAddress());
-            System.out.println("  Broadcast: " + ia.getBroadcast());
-            System.out.println("  Prefix length: " + ia.getNetworkPrefixLength());
+        for (InterfaceAddress interfaceAddress : interfaceAddresses) {
+            if (interfaceAddress == null) {
+                log.warning("Skipping null InterfaceAddress!");
+                continue;
+            }
+            log.info(" Interface Address");
+            log.info("  Address: " + interfaceAddress.getAddress());
+            log.info("  Broadcast: " + interfaceAddress.getBroadcast());
+            log.info("  Prefix length: " + interfaceAddress.getNetworkPrefixLength());
         }
 
-        Enumeration<NetworkInterface> subIfs = netint.getSubInterfaces();
+        Enumeration<NetworkInterface> subIfs = networkInterface.getSubInterfaces();
 
         for (NetworkInterface subIf : Collections.list(subIfs)) {
-            System.out.printf("\tSub Interface Display name: %s\n", subIf.getDisplayName());
-            System.out.printf("\tSub Interface Name: %s\n", subIf.getName());
+            if (subIf == null) {
+                log.warning("Skipping null NetworkInterface sub-interface");
+                continue;
+            }
+            log.info(String.format("\tSub Interface Display name: %s", subIf.getDisplayName()));
+            log.info(String.format("\tSub Interface Name: %s", subIf.getName()));
         }
-        System.out.printf("Up? %s\n", netint.isUp());
-        System.out.printf("Loopback? %s\n", netint.isLoopback());
-        System.out.printf("PointToPoint? %s\n", netint.isPointToPoint());
-        System.out.printf("Supports multicast? %s\n", netint.supportsMulticast());
-        System.out.printf("Virtual? %s\n", netint.isVirtual());
-        System.out.printf("Hardware address: %s\n", Arrays.toString(netint.getHardwareAddress()));
-        System.out.printf("MTU: %s\n", netint.getMTU());
-        System.out.printf("\n");
-
+        log.info(String.format("Up? %s", networkInterface.isUp()));
+        log.info(String.format("Loopback? %s", networkInterface.isLoopback()));
+        log.info(String.format("PointToPoint? %s", networkInterface.isPointToPoint()));
+        log.info(String.format("Supports multicast? %s", networkInterface.supportsMulticast()));
+        log.info(String.format("Virtual? %s", networkInterface.isVirtual()));
+        log.info(String.format("Hardware address: %s", Arrays.toString(networkInterface.getHardwareAddress())));
+        log.info(String.format("MTU: %s", networkInterface.getMTU()));
     }
-
 }

@@ -15,7 +15,6 @@
 
 package com.limegroup.gnutella.gui.menu;
 
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 
 import javax.swing.Action;
@@ -25,24 +24,17 @@ import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
-import javax.swing.plaf.FontUIResource;
 
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.actions.ToggleSettingAction;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 /**
  * Provides a skeletal implementation of the <tt>Menu</tt> interface to 
  * minimize the necessary work in classes that extend <tt>AbstractMenu</tt>.
  */
 abstract class AbstractMenu implements Menu {
-
-    /**
-     * The font menus should use.
-     */
-    static final Font FONT = new FontUIResource(new Font("Dialog", Font.PLAIN, 11 + ThemeSettings.FONT_SIZE_INCREMENT.getValue()));
 
     /**
      * Constant handle to the <tt>JMenu</tt> instance for this 
@@ -61,7 +53,6 @@ abstract class AbstractMenu implements Menu {
     protected AbstractMenu(String name) {
         // using an action here to get the mnemonic parsed
         MENU = new JMenu(new MenuAction(name));
-        MENU.setFont(FONT);
         MENU.addMenuListener(new RefreshMenuListener());
     }
 
@@ -76,7 +67,6 @@ abstract class AbstractMenu implements Menu {
 
     protected JMenuItem addMenuItem(Action action) {
         JMenuItem item = new JMenuItem(action);
-        item.setFont(FONT);
         MENU.add(item);
         return item;
     }
@@ -88,7 +78,6 @@ abstract class AbstractMenu implements Menu {
         } else {
             item = new JCheckBoxMenuItem(action);
         }
-        item.setFont(FONT);
         item.setSelected(selected);
         MENU.add(item);
 

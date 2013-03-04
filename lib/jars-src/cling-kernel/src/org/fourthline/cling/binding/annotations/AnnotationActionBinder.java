@@ -1,18 +1,16 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.binding.annotations;
@@ -26,6 +24,7 @@ import org.fourthline.cling.model.meta.Action;
 import org.fourthline.cling.model.meta.ActionArgument;
 import org.fourthline.cling.model.meta.LocalService;
 import org.fourthline.cling.model.meta.StateVariable;
+import org.fourthline.cling.model.profile.RemoteClientInfo;
 import org.fourthline.cling.model.state.GetterStateVariableAccessor;
 import org.fourthline.cling.model.state.StateVariableAccessor;
 import org.fourthline.cling.model.types.Datatype;
@@ -75,7 +74,7 @@ public class AnnotationActionBinder {
         return stringConvertibleTypes;
     }
 
-    public void appendAction(Map<Action, ActionExecutor> actions) throws LocalServiceBindingException {
+    public Action appendAction(Map<Action, ActionExecutor> actions) throws LocalServiceBindingException {
 
         String name;
         if (getAnnotation().name().length() != 0) {
@@ -97,6 +96,7 @@ public class AnnotationActionBinder {
         ActionExecutor executor = createExecutor(outputArguments);
 
         actions.put(action, executor);
+        return action;
     }
 
     protected ActionExecutor createExecutor(Map<ActionArgument<LocalService>, StateVariableAccessor> outputArguments) {
@@ -148,8 +148,9 @@ public class AnnotationActionBinder {
             }
         }
         // A method can't have any parameters that are not annotated with @UpnpInputArgument - we wouldn't know what
-        // value to pass when we invoke it later on...
-        if (annotatedParams < getMethod().getParameterTypes().length) {
+        // value to pass when we invoke it later on... unless the last parameter is of type RemoteClientInfo
+        if (annotatedParams < getMethod().getParameterTypes().length
+            && !RemoteClientInfo.class.isAssignableFrom(method.getParameterTypes()[method.getParameterTypes().length-1])) {
             throw new LocalServiceBindingException("Method has parameters that are not input arguments: " + getMethod().getName());
         }
 

@@ -1,24 +1,23 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.model.message.control;
 
 import java.util.logging.Logger;
 import org.fourthline.cling.model.action.ActionInvocation;
+import org.fourthline.cling.model.action.RemoteActionInvocation;
 import org.fourthline.cling.model.meta.Action;
 import org.fourthline.cling.model.meta.QueryStateVariableAction;
 import org.fourthline.cling.model.message.StreamRequestMessage;
@@ -26,6 +25,7 @@ import org.fourthline.cling.model.message.UpnpRequest;
 import org.fourthline.cling.model.message.header.ContentTypeHeader;
 import org.fourthline.cling.model.message.header.SoapActionHeader;
 import org.fourthline.cling.model.message.header.UpnpHeader;
+import org.fourthline.cling.model.message.header.UserAgentHeader;
 import org.fourthline.cling.model.types.SoapActionType;
 
 import java.net.URL;
@@ -41,6 +41,20 @@ public class OutgoingActionRequestMessage extends StreamRequestMessage implement
 
     public OutgoingActionRequestMessage(ActionInvocation actionInvocation, URL controlURL) {
         this(actionInvocation.getAction(), new UpnpRequest(UpnpRequest.Method.POST, controlURL));
+
+        // For proxy remote invocations, pass through the user agent header
+        if (actionInvocation instanceof RemoteActionInvocation) {
+            RemoteActionInvocation remoteActionInvocation = (RemoteActionInvocation) actionInvocation;
+            if (remoteActionInvocation.getRemoteClientInfo() != null
+                && remoteActionInvocation.getRemoteClientInfo().getRequestUserAgent() != null) {
+                getHeaders().add(
+                    UpnpHeader.Type.USER_AGENT,
+                    new UserAgentHeader(remoteActionInvocation.getRemoteClientInfo().getRequestUserAgent())
+                );
+            }
+        } else if (actionInvocation.getClientInfo() != null) {
+            getHeaders().putAll(actionInvocation.getClientInfo().getRequestHeaders());
+        }
     }
 
     public OutgoingActionRequestMessage(Action action, UpnpRequest operation) {
@@ -74,7 +88,7 @@ public class OutgoingActionRequestMessage extends StreamRequestMessage implement
         if (getOperation().getMethod().equals(UpnpRequest.Method.POST)) {
 
             getHeaders().add(UpnpHeader.Type.SOAPACTION, soapActionHeader);
-            log.fine("Added SOAP action header: " + getHeaders().getFirstHeader(UpnpHeader.Type.SOAPACTION).getString());
+            log.fine("Added SOAP action header: " + soapActionHeader);
 
         /* TODO: Finish the M-POST crap (or not)
         } else if (getOperation().getMethod().equals(UpnpRequest.Method.MPOST)) {

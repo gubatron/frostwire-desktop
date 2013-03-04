@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.init;
 
 import java.awt.Color;
@@ -44,7 +59,7 @@ final class MiscWindow extends SetupWindow {
     /**
      * The chat Community nickname field.
      */
-    private JTextField _ircNickField; 
+    private JTextField _ircNickField;
 
     /*
      * System Startup
@@ -55,11 +70,7 @@ final class MiscWindow extends SetupWindow {
      * Creates the window and its components.
      */
     MiscWindow(SetupManager manager) {
-        super(
-                manager,
-                I18nMarker.marktr("Miscellaneous Settings"),
-                I18nMarker
-                        .marktr("Below, are several options that affect the functionality of FrostWire."));
+        super(manager, I18nMarker.marktr("Miscellaneous Settings"), I18nMarker.marktr("Below, are several options that affect the functionality of FrostWire."));
     }
 
     protected void createWindow() {
@@ -67,40 +78,37 @@ final class MiscWindow extends SetupWindow {
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
 
-
-
-	//System.out.println("*******STARTUP DEBUG: initializing verification System Startup...");
+        //System.out.println("*******STARTUP DEBUG: initializing verification System Startup...");
         // System Startup
         if (GUIUtils.shouldShowStartOnStartupWindow()) {
             GridBagConstraints gbc = new GridBagConstraints();
             JPanel startupPanel = new JPanel(new GridBagLayout());
-            
+
             startupPanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
             startupPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("System Startup")));
-            
+
             _startup = new JCheckBox(I18n.tr("Start Automatically"));
             _startup.setSelected(StartupSettings.RUN_ON_STARTUP.getValue());
             System.out.println("********START UP AUTOMAGICALLY?: ******" + StartupSettings.RUN_ON_STARTUP.getValue());
-            
-            JLabel desc = new JLabel(
-                  "<html>" + I18n.tr("Would you like FrostWire to start when you log into your computer? This will cause FrostWire to start faster when you use it later.") + "</html>");
+
+            JLabel desc = new JLabel("<html>" + I18n.tr("Would you like FrostWire to start when you log into your computer? This will cause FrostWire to start faster when you use it later.") + "</html>");
             //desc.setOpaque(false);
             desc.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 5));
             desc.setForeground(Color.black);
             desc.setFont(desc.getFont().deriveFont(Font.PLAIN));
-            
+
             gbc.anchor = GridBagConstraints.NORTHWEST;
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.gridwidth = GridBagConstraints.REMAINDER;
             gbc.weightx = 1.0;
-            
+
             startupPanel.add(desc, gbc);
             startupPanel.add(_startup, gbc);
-            
+
             gbc.insets = new Insets(0, 0, 10, 0);
             mainPanel.add(startupPanel, gbc);
         }
-        
+
         // Content Filtering
         /** No content filtering for FrostWire
         {
@@ -146,25 +154,22 @@ final class MiscWindow extends SetupWindow {
         // Chat Community
         {
 
-            JPanel chatCommunityPanel = new JPanel(new GridLayout(2,0));
-            
+            JPanel chatCommunityPanel = new JPanel(new GridLayout(2, 0));
+
             chatCommunityPanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
             chatCommunityPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Chat Community")));
-            
+
             //create multiline to describe why the chat needs a nick (descChat)
-            JLabel descChat = new JLabel(
-                    "<html>" + I18n.tr("FrostWire's Community Chat Tab requires you to have a nickname to communicate with others in the chatrooms.") + "</html>");
+            JLabel descChat = new JLabel("<html>" + I18n.tr("FrostWire's Community Chat Tab requires you to have a nickname to communicate with others in the chatrooms.") + "</html>");
             //descChat.setOpaque(false);
             descChat.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 5));
             descChat.setForeground(Color.black);
             descChat.setFont(descChat.getFont().deriveFont(Font.PLAIN));
 
-            _ircNickField = new SizedTextField(new Dimension(100,SizedTextField.STANDARD_HEIGHT));
-            
-    	    LabeledComponent textField = 
-    	        new LabeledComponent( I18n.tr("Type your chat nickname here (any name):"), 
-    	        		_ircNickField, LabeledComponent.RIGHT_GLUE, LabeledComponent.LEFT);
-    	    textField.getBoxPanelComponent().setBorder(new javax.swing.border.EmptyBorder(0,10,5,5));
+            _ircNickField = new SizedTextField(new Dimension(100, SizedTextField.STANDARD_HEIGHT));
+
+            LabeledComponent textField = new LabeledComponent(I18n.tr("Type your chat nickname here (any name):"), _ircNickField, LabeledComponent.RIGHT_GLUE, LabeledComponent.LEFT);
+            textField.getBoxPanelComponent().setBorder(new javax.swing.border.EmptyBorder(0, 10, 5, 5));
 
             //time to add the components
 
@@ -211,10 +216,10 @@ final class MiscWindow extends SetupWindow {
 
         // Community Settings
         {
-        	ChatSettings.CHAT_IRC_NICK.setValue(_ircNickField.getText());
-        	//the chat could be loaded by now with the default nickname, the user won't be allowed to login
-        	//if this happens, so we try to reinitialize the IRCApplication.
-        	ChatMediator.instance().reloadConfiguration();
+            ChatSettings.CHAT_IRC_NICK.setValue(_ircNickField.getText());
+            //the chat could be loaded by now with the default nickname, the user won't be allowed to login
+            //if this happens, so we try to reinitialize the IRCApplication.
+            ChatMediator.instance().reloadConfiguration();
         }
     }
 }

@@ -1,28 +1,26 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.protocol.sync;
 
 import org.fourthline.cling.UpnpService;
+import org.fourthline.cling.model.action.ActionCancelledException;
 import org.fourthline.cling.model.action.ActionException;
-import org.fourthline.cling.model.action.ActionInvocation;
+import org.fourthline.cling.model.action.RemoteActionInvocation;
 import org.fourthline.cling.model.message.StreamRequestMessage;
 import org.fourthline.cling.model.message.StreamResponseMessage;
-import org.fourthline.cling.model.message.UpnpHeaders;
 import org.fourthline.cling.model.message.UpnpResponse;
 import org.fourthline.cling.model.message.control.IncomingActionRequestMessage;
 import org.fourthline.cling.model.message.control.OutgoingActionResponseMessage;
@@ -31,7 +29,8 @@ import org.fourthline.cling.model.message.header.UpnpHeader;
 import org.fourthline.cling.model.resource.ServiceControlResource;
 import org.fourthline.cling.model.types.ErrorCode;
 import org.fourthline.cling.protocol.ReceivingSync;
-import org.fourthline.cling.transport.spi.UnsupportedDataException;
+import org.fourthline.cling.model.UnsupportedDataException;
+import org.fourthline.cling.transport.RouterException;
 import org.seamless.util.Exceptions;
 
 import java.util.logging.Level;
@@ -44,20 +43,6 @@ import java.util.logging.Logger;
  * by the registered {@link org.fourthline.cling.model.meta.LocalService#getExecutor(org.fourthline.cling.model.meta.Action)}
  * method.
  * </p>
- * <p>
- * This class offers two shortcut thread-local variables, which providers of UPnP services might
- * find useful in some situations. You can access these methods statically from within your
- * service implementation:
- * </p>
- * <ul>
- * <li>The {@link #getRequestMessage()} static method offers access to the original action request
- * message, including all received HTTP headers, etc.
- * </li>
- * <li>
- * The {@link #getExtraResponseHeaders()} static method offers modifiable HTTP headers which will
- * be added to the action response after the invocation, and returned to the client.
- * </li>
- * </ul>
  *
  * @author Christian Bauer
  */
@@ -65,14 +50,11 @@ public class ReceivingAction extends ReceivingSync<StreamRequestMessage, StreamR
 
     final private static Logger log = Logger.getLogger(ReceivingAction.class.getName());
 
-    final protected static ThreadLocal<IncomingActionRequestMessage> requestThreadLocal = new ThreadLocal();
-    final protected static ThreadLocal<UpnpHeaders> extraResponseHeadersThreadLocal = new ThreadLocal();
-
     public ReceivingAction(UpnpService upnpService, StreamRequestMessage inputMessage) {
         super(upnpService, inputMessage);
     }
 
-    protected StreamResponseMessage executeSync() {
+    protected StreamResponseMessage executeSync() throws RouterException{
 
         ContentTypeHeader contentTypeHeader =
                 getInputMessage().getHeaders().getFirstHeader(UpnpHeader.Type.CONTENT_TYPE, ContentTypeHeader.class);
@@ -102,7 +84,7 @@ public class ReceivingAction extends ReceivingSync<StreamRequestMessage, StreamR
 
         log.fine("Found local action resource matching relative request URI: " + getInputMessage().getUri());
 
-        ActionInvocation invocation;
+        RemoteActionInvocation invocation;
         OutgoingActionResponseMessage responseMessage = null;
 
         try {
@@ -111,12 +93,8 @@ public class ReceivingAction extends ReceivingSync<StreamRequestMessage, StreamR
             IncomingActionRequestMessage requestMessage =
                     new IncomingActionRequestMessage(getInputMessage(), resource.getModel());
 
-            // Preserve message in a TL
-            requestThreadLocal.set(requestMessage);
-            extraResponseHeadersThreadLocal.set(new UpnpHeaders());
-
             log.finer("Created incoming action request message: " + requestMessage);
-            invocation = new ActionInvocation(requestMessage.getAction());
+            invocation = new RemoteActionInvocation(requestMessage.getAction(), getRemoteClientInfo());
 
             // Throws UnsupportedDataException if the body can't be read
             log.fine("Reading body of request message");
@@ -129,40 +107,40 @@ public class ReceivingAction extends ReceivingSync<StreamRequestMessage, StreamR
                 responseMessage =
                         new OutgoingActionResponseMessage(invocation.getAction());
             } else {
-                responseMessage =
-                        new OutgoingActionResponseMessage(UpnpResponse.Status.INTERNAL_SERVER_ERROR, invocation.getAction());
 
+                if (invocation.getFailure() instanceof ActionCancelledException) {
+                    log.fine("Action execution was cancelled, returning 404 to client");
+                    // A 404 status is appropriate for this situation: The resource is gone/not available and it's
+                    // a temporary condition. Most likely the cancellation happened because the client connection
+                    // has been dropped, so it doesn't really matter what we return here anyway.
+                    return null;
+                } else {
+                    responseMessage =
+                            new OutgoingActionResponseMessage(
+                                UpnpResponse.Status.INTERNAL_SERVER_ERROR,
+                                invocation.getAction()
+                            );
+                }
             }
 
         } catch (ActionException ex) {
             log.finer("Error executing local action: " + ex);
 
-            invocation = new ActionInvocation(ex);
+            invocation = new RemoteActionInvocation(ex, getRemoteClientInfo());
             responseMessage = new OutgoingActionResponseMessage(UpnpResponse.Status.INTERNAL_SERVER_ERROR);
 
         } catch (UnsupportedDataException ex) {
-            if (log.isLoggable(Level.FINER)) {
-                log.log(Level.FINER, "Error reading action request XML body: " + ex.toString(), Exceptions.unwrap(ex));
-            }
+        	log.log(Level.WARNING, "Error reading action request XML body: " + ex.toString(), Exceptions.unwrap(ex));
 
             invocation =
-                    new ActionInvocation(
-                            Exceptions.unwrap(ex) instanceof ActionException
-                                    ? (ActionException)Exceptions.unwrap(ex)
-                                    : new ActionException(ErrorCode.ACTION_FAILED, ex.getMessage())
+                    new RemoteActionInvocation(
+                        Exceptions.unwrap(ex) instanceof ActionException
+                                ? (ActionException)Exceptions.unwrap(ex)
+                                : new ActionException(ErrorCode.ACTION_FAILED, ex.getMessage()),
+                        getRemoteClientInfo()
                     );
             responseMessage = new OutgoingActionResponseMessage(UpnpResponse.Status.INTERNAL_SERVER_ERROR);
 
-        } finally {
-
-            if (responseMessage != null && extraResponseHeadersThreadLocal.get() != null) {
-                log.fine("Merging extra headers into action response message: " + extraResponseHeadersThreadLocal.get().size());
-                responseMessage.getHeaders().putAll(extraResponseHeadersThreadLocal.get());
-            }
-
-            // Always clean the TL
-            requestThreadLocal.set(null);
-            extraResponseHeadersThreadLocal.set(null);
         }
 
         try {
@@ -180,11 +158,4 @@ public class ReceivingAction extends ReceivingSync<StreamRequestMessage, StreamR
         }
     }
 
-    public static IncomingActionRequestMessage getRequestMessage() {
-        return requestThreadLocal.get();
-    }
-
-    public static UpnpHeaders getExtraResponseHeaders() {
-        return extraResponseHeadersThreadLocal.get();
-    }
 }

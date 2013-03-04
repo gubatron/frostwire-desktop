@@ -1,23 +1,22 @@
 /*
- * Copyright (C) 2011 4th Line GmbH, Switzerland
+ * Copyright (C) 2013 4th Line GmbH, Switzerland
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2 of
- * the License, or (at your option) any later version.
+ * The contents of this file are subject to the terms of either the GNU
+ * Lesser General Public License Version 2 or later ("LGPL") or the
+ * Common Development and Distribution License Version 1 or later
+ * ("CDDL") (collectively, the "License"). You may not use this file
+ * except in compliance with the License. See LICENSE.txt for more
+ * information.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package org.fourthline.cling.controlpoint;
 
-import org.fourthline.cling.model.Constants;
+import org.fourthline.cling.model.UnsupportedDataException;
+import org.fourthline.cling.model.UserConstants;
 import org.fourthline.cling.model.gena.CancelReason;
 import org.fourthline.cling.model.gena.GENASubscription;
 import org.fourthline.cling.model.gena.LocalGENASubscription;
@@ -26,6 +25,8 @@ import org.fourthline.cling.model.message.UpnpResponse;
 import org.fourthline.cling.model.meta.LocalService;
 import org.fourthline.cling.model.meta.RemoteService;
 import org.fourthline.cling.model.meta.Service;
+import org.fourthline.cling.protocol.ProtocolCreationException;
+import org.fourthline.cling.protocol.sync.SendingSubscribe;
 import org.seamless.util.Exceptions;
 
 import java.util.Collections;
@@ -83,7 +84,7 @@ public abstract class SubscriptionCallback implements Runnable {
 
     protected SubscriptionCallback(Service service) {
         this.service = service;
-        this.requestedDurationSeconds = Constants.DEFAULT_SUBSCRIPTION_DURATION_SECONDS;
+        this.requestedDurationSeconds = UserConstants.DEFAULT_SUBSCRIPTION_DURATION_SECONDS;
     }
 
     protected SubscriptionCallback(Service service, int requestedDurationSeconds) {
@@ -228,11 +229,22 @@ public abstract class SubscriptionCallback implements Runnable {
                             SubscriptionCallback.this.eventsMissed(this, numberOfMissedEvents);
                         }
                     }
+
+					public void invalidMessage(UnsupportedDataException ex) {
+						synchronized (SubscriptionCallback.this) {
+							SubscriptionCallback.this.invalidMessage(this, ex);
+						}
+					}
                 };
 
-        getControlPoint().getProtocolFactory()
-                . createSendingSubscribe(remoteSubscription)
-                .run();
+        SendingSubscribe protocol;
+        try {
+            protocol = getControlPoint().getProtocolFactory().createSendingSubscribe(remoteSubscription);
+        } catch (ProtocolCreationException ex) {
+            failed(subscription, null, ex);
+            return;
+        }
+        protocol.run();
     }
 
     synchronized public void end() {
@@ -252,7 +264,7 @@ public abstract class SubscriptionCallback implements Runnable {
 
     private void endRemoteSubscription(RemoteGENASubscription subscription) {
         log.fine("Ending remote subscription: " + subscription);
-        getControlPoint().getConfiguration().getSyncProtocolExecutor().execute(
+        getControlPoint().getConfiguration().getSyncProtocolExecutorService().execute(
                 getControlPoint().getProtocolFactory().createSendingUnsubscribe(subscription)
         );
     }
@@ -267,7 +279,8 @@ public abstract class SubscriptionCallback implements Runnable {
      *
      * @param subscription   The failed subscription object, not very useful at this point.
      * @param responseStatus For a remote subscription, if a response was received at all, this is it, otherwise <tt>null</tt>.
-     * @param exception      For a local subscription, any exception that caused the failure, otherwise <tt>null</tt>.
+     * @param exception      For a local subscription and failed creation of a remote subscription protocol (before
+     *                       sending the subscribe request), any exception that caused the failure, otherwise <tt>null</tt>.
      * @param defaultMsg     A user-friendly error message.
      * @see #createDefaultFailureMessage
      */
@@ -328,6 +341,30 @@ public abstract class SubscriptionCallback implements Runnable {
         return message;
     }
 
+    /**
+     * Called when a received event message could not be parsed successfully.
+     * <p>
+     * This typically indicates a broken device which is not UPnP compliant. You can
+     * react to this failure in any way you like, for example, you could terminate
+     * the subscription or simply create an error report/log.
+     * </p>
+     * <p>
+     * The default implementation will log the exception at <code>INFO</code> level, and
+     * the invalid XML at <code>FINE</code> level.
+     * </p>
+     *
+     * @param remoteGENASubscription The established subscription.
+     * @param ex Call {@link org.fourthline.cling.model.UnsupportedDataException#getData()} to access the invalid XML.
+     */
+	protected void invalidMessage(RemoteGENASubscription remoteGENASubscription,
+                                  UnsupportedDataException ex) {
+        log.info("Invalid event message received, causing: " + ex);
+        if (log.isLoggable(Level.FINE)) {
+            log.fine("------------------------------------------------------------------------------");
+            log.fine(ex.getData().toString());
+            log.fine("------------------------------------------------------------------------------");
+        }
+    }
 
     @Override
     public String toString() {

@@ -140,7 +140,7 @@ public class LibraryMediator {
         httpServerManager = new HttpServerManager();
         httpServerManager.start(Constants.EXTERNAL_CONTROL_LISTENING_PORT);
         ((DesktopUPnPManager) UPnPManager.instance()).start();
-        
+
         clerk = new DeviceDiscoveryClerk();
     }
 
@@ -207,9 +207,15 @@ public class LibraryMediator {
         return MAIN_PANEL;
     }
 
-    public void showView(String key) {
-        rememberScrollbarsOnMediators(key);
-        _tablesViewLayout.show(_tablesPanel, key);
+    public void showView(final String key) {
+        GUIMediator.safeInvokeAndWait(new Runnable() {
+
+            @Override
+            public void run() {
+                rememberScrollbarsOnMediators(key);
+                _tablesViewLayout.show(_tablesPanel, key);
+            }
+        });
 
         if (key.equals(FILES_TABLE_KEY)) {
             currentMediator = LibraryFilesTableMediator.instance();
