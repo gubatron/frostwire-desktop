@@ -60,7 +60,6 @@ public class PlaylistItem extends LibraryDatabaseEntity {
     }
     
     public void setPlaylist(Playlist playlist) {
-        // PLAYLIST_TODO: if you change the playlist, how do we figure out what the sort index should be?
         this.playlist = playlist;
         setLibraryDatabase(playlist.getLibraryDatabase());
     }
