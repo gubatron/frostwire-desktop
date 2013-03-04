@@ -90,17 +90,26 @@ public class LibraryUtils {
 
             List<PlaylistItem> items = playlist.getItems();
             if (index != -1 && index < items.size()) {
-                //PLAYLIST_TODO: when addPlaylistItem is called, update sort indexes of entire playlist as well...
+                
+                // insert item
                 items.add(index, item);
-                item.save();
-            } else {
-                //PLAYLIST_TODO: when addPlaylistItem is called, update sort indexes of entire playlist as well...
-                items.add(item);
-                item.save();
-                if (isPlaylistSelected(playlist)) {
-                    //PLAYLIST_TODO: clean up sorted/unsorted
-                    LibraryPlaylistsTableMediator.instance().addUnsorted(item);
+                
+                // update all sort indexes from insertion point onwards
+                for (int i=index; i < items.size(); i++) {
+                    PlaylistItem cur_item = items.get(i);
+                    cur_item.setSortIndex(i + 1); //set index 1-based
+                    cur_item.save();
                 }
+                
+            } else {
+                items.add(item);
+                item.setSortIndex(items.size()); // set sort index to 1-based size
+                item.save();
+            }
+            
+            if (isPlaylistSelected(playlist)) {
+                // refresh UI
+                LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
             }
         } finally {
             LibraryMediator.instance().getLibrarySearch().revertStatus();
@@ -472,14 +481,27 @@ public class LibraryUtils {
                     }
                 }
             }
+            
+            // reupdate sort indexes now that the ordering in the list is correct
+            items = playlist.getItems();
+            for(int i=0; i<items.size(); i++) {
+                PlaylistItem item = items.get(i);
+                item.setSortIndex(i+1); // set index 1-based
+                item.save();
+            }
+            
         } else {
             for (int i = 0; i < playlistItems.length && !playlist.isDeleted(); i++) {
+                
                 playlistItems[i].setPlaylist(playlist);
                 items.add(playlistItems[i]);
+                playlistItems[i].setSortIndex(items.size()); // set sort index to be at the end (1-based)
+                
                 if (starred) {
                     playlistItems[i].setStarred(starred);
-                    playlistItems[i].save();
                 }
+
+                playlistItems[i].save();
             }
         }
     }
