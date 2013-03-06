@@ -15,31 +15,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
-public abstract class PlaylistItemProperty<T> implements Comparable<T> {
+class PlaylistItemStringProperty extends PlaylistItemProperty<PlaylistItemStringProperty> {
+    
+    protected final String stringValue;
+    
+    public PlaylistItemStringProperty(LibraryPlaylistsTableDataLine line, String stringValue, boolean playing, boolean exists) {
+        super(line, playing, exists);
+        this.stringValue = stringValue;
+    }
 
-    protected final boolean playing;
-    protected final boolean exists;
-    protected final LibraryPlaylistsTableDataLine line;
-    
-    public PlaylistItemProperty(LibraryPlaylistsTableDataLine line, boolean playing, boolean exists) {
-        this.playing = playing;
-        this.exists = exists;
-        this.line = line;
+    @Override
+    public int compareTo(PlaylistItemStringProperty o) {
+        return stringValue.compareTo(o.stringValue);
     }
     
-    abstract public String getStringValue();
-    
-    public boolean isPlaying() {
-        return playing;
-    }
-    
-    public boolean exists() {
-        return exists;
-    }
-    
-    public LibraryPlaylistsTableDataLine getLine() {
-        return line;
+    @Override
+    public String getStringValue() {
+        return stringValue;
     }
 }

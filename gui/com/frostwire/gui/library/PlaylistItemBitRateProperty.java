@@ -17,29 +17,12 @@
  */
 package com.frostwire.gui.library;
 
-public abstract class PlaylistItemProperty<T> implements Comparable<T> {
+public class PlaylistItemBitRateProperty extends PlaylistItemIntProperty {
 
-    protected final boolean playing;
-    protected final boolean exists;
-    protected final LibraryPlaylistsTableDataLine line;
-    
-    public PlaylistItemProperty(LibraryPlaylistsTableDataLine line, boolean playing, boolean exists) {
-        this.playing = playing;
-        this.exists = exists;
-        this.line = line;
-    }
-    
-    abstract public String getStringValue();
-    
-    public boolean isPlaying() {
-        return playing;
-    }
-    
-    public boolean exists() {
-        return exists;
-    }
-    
-    public LibraryPlaylistsTableDataLine getLine() {
-        return line;
+    public PlaylistItemBitRateProperty(LibraryPlaylistsTableDataLine line, String stringValue, boolean playing, boolean exists) {
+        // using Integer.MAX_VALUE to put entries with no bitrate at the bottom of the list
+        super(line, stringValue, stringValue.toLowerCase().replace("kbps", "").trim().length() > 0 ? 
+                           Integer.valueOf( stringValue.toLowerCase().replace("kbps", "").trim() ) :
+                           Integer.MAX_VALUE, playing, exists);
     }
 }

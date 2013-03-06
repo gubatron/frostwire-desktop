@@ -53,6 +53,7 @@ import com.frostwire.gui.player.MediaPlayerAdapter;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.ScreenSaverDisabler;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.LimeJFrame;
 
@@ -75,11 +76,14 @@ public class MPlayerWindow extends JFrame {
     private Point2D prevMousePosition = null;
     private boolean handleVideoResize = true;
 
+    private ScreenSaverDisabler screenSaverDisabler;
     private int visibleCounterFlag = 0;
 
     protected MPlayerWindow() {
         initializeUI();
 
+        screenSaverDisabler = new ScreenSaverDisabler();
+        
         player = MediaPlayer.instance();
         player.addMediaPlayerListener(new MediaPlayerAdapter() {
             @Override
@@ -251,6 +255,12 @@ public class MPlayerWindow extends JFrame {
             // make sure window is on top of visible windows & has focus
             toFront();
             requestFocus();
+            
+            // disable screen saver
+            screenSaverDisabler.start();
+        } else {
+            // enable screen saver
+            screenSaverDisabler.stop();
         }
     }
 

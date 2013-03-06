@@ -1,9 +1,10 @@
 package com.frostwire.alexandria;
 
 import com.frostwire.alexandria.db.LibraryDatabase;
+import com.frostwire.alexandria.db.LibraryDatabaseEntity;
 import com.frostwire.alexandria.db.PlaylistItemDB;
 
-public class PlaylistItem extends Entity<PlaylistItemDB> {
+public class PlaylistItem extends LibraryDatabaseEntity {
 
     private Playlist playlist;
     private int id;
@@ -22,9 +23,10 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     private String trackNumber;
     private String trackYear;
     private boolean starred;
-
+    private int sortIndex;
+    
     public PlaylistItem(Playlist playlist) {
-        super(new PlaylistItemDB(playlist != null ? playlist.db.getDatabase() : null));
+        super(playlist.getLibraryDatabase());
         this.playlist = playlist;
         this.id = LibraryDatabase.OBJECT_INVALID_ID;
     }
@@ -32,7 +34,7 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     public PlaylistItem(Playlist playlist, int id, String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, float trackDurationInSecs,
             String trackArtist, String trackAlbum, String coverArtPath, String trackBitrate, String trackComment,
             String trackGenre, String trackNumber, String trackYear, boolean starred) {
-        super(playlist != null ? new PlaylistItemDB(playlist.db.getDatabase()) : null);
+        super(playlist.getLibraryDatabase());
         this.playlist = playlist;
         this.id = id;
         this.filePath = filePath;
@@ -50,6 +52,7 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
         this.trackNumber = trackNumber;
         this.trackYear = trackYear;
         this.starred = starred;
+        this.sortIndex = playlist.getItems().size() + 1; // set sortIndex to the last position (1-based) by default
     }
 
     public Playlist getPlaylist() {
@@ -58,7 +61,7 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     
     public void setPlaylist(Playlist playlist) {
         this.playlist = playlist;
-        setDB(new PlaylistItemDB(playlist != null ? playlist.db.getDatabase() : null));
+        setLibraryDatabase(playlist.getLibraryDatabase());
     }
 
     public int getId() {
@@ -191,13 +194,13 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
 
     public void save() {
         if (db != null) {
-            db.save(this);
+            PlaylistItemDB.save(db, this);
         }
     }
 
     public void delete() {
         if (db != null) {
-            db.delete(this);
+            PlaylistItemDB.delete(db, this);
         }
     }
     
@@ -214,5 +217,13 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     @Override
     public String toString() {
         return "(" + id + ", title:" + trackTitle + ", number:" + trackNumber + ")";
+    }
+
+    public int getSortIndex() {
+        return sortIndex;
+    }
+
+    public void setSortIndex(int sortIndex) {
+        this.sortIndex = sortIndex;
     }
 }

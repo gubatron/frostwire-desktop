@@ -15,31 +15,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
-public abstract class PlaylistItemProperty<T> implements Comparable<T> {
-
-    protected final boolean playing;
-    protected final boolean exists;
-    protected final LibraryPlaylistsTableDataLine line;
+public class PlaylistItemTrackProperty extends PlaylistItemIntProperty {
     
-    public PlaylistItemProperty(LibraryPlaylistsTableDataLine line, boolean playing, boolean exists) {
-        this.playing = playing;
-        this.exists = exists;
-        this.line = line;
-    }
-    
-    abstract public String getStringValue();
-    
-    public boolean isPlaying() {
-        return playing;
-    }
-    
-    public boolean exists() {
-        return exists;
-    }
-    
-    public LibraryPlaylistsTableDataLine getLine() {
-        return line;
+    public PlaylistItemTrackProperty(LibraryPlaylistsTableDataLine line, String stringValue, boolean playing, boolean exists) {
+        // using Integer.MAX_VALUE to put entries with no track number at the bottom of the list
+        super(line, stringValue, stringValue.toLowerCase().trim().replaceFirst("^0+(?!$)", "").length() > 0 ?
+                           Integer.valueOf(stringValue.toLowerCase().trim().replaceFirst("^0+(?!$)", "")) :
+                           Integer.MAX_VALUE, playing, exists);
     }
 }

@@ -12,17 +12,21 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.frostwire.alexandria.Playlist;
+import com.frostwire.alexandria.PlaylistItem;
+
 public class LibraryDatabase {
 
     public static final int OBJECT_NOT_SAVED_ID = -1;
     public static final int OBJECT_INVALID_ID = -2;
     public static final int STARRED_PLAYLIST_ID = -3;
 
-    public static final int LIBRARY_DATABASE_VERSION = 3;
-
+    public static final int LIBRARY_VERSION_PLAYLIST_SORT_INDEXES = 4; // indicates db version when playlist sort indexes were added
+    public static final int LIBRARY_DATABASE_VERSION = 4;
+    
     private final File _databaseFile;
     private final String _name;
-
+    
     private Connection _connection;
 
     private boolean _closed;
@@ -128,7 +132,7 @@ public class LibraryDatabase {
         }
     }
 
-    protected Connection onUpdateDatabase(Connection connection, int oldVersion, int newVersion) {
+    protected void onUpdateDatabase(Connection connection, int oldVersion, int newVersion) {
 
         if (oldVersion == 1 && newVersion > 2) {
             setupInternetRadioStationsTable(connection);
@@ -138,10 +142,12 @@ public class LibraryDatabase {
         if (oldVersion == 2 && newVersion == 3) {
             setupLuceneIndex(connection);
         }
+        
+        if (newVersion == 4) {
+            setupPlaylistIndexes(connection);
+        }
 
         update(connection, "UPDATE Library SET version = ?", LIBRARY_DATABASE_VERSION);
-
-        return connection;
     }
 
     private Connection openConnection(File path, String name, boolean createIfNotExists) {
@@ -173,7 +179,7 @@ public class LibraryDatabase {
 
         //update(connection, "DROP TABLE PlaylistItems IF EXISTS CASCADE");
         update(connection,
-                "CREATE TABLE PlaylistItems (playlistItemId INTEGER IDENTITY, filePath VARCHAR(10000), fileName VARCHAR(500), fileSize BIGINT, fileExtension VARCHAR(10), trackTitle VARCHAR(500), trackDurationInSecs REAL, trackArtist VARCHAR(500), trackAlbum VARCHAR(500), coverArtPath VARCHAR(10000), trackBitrate VARCHAR(10), trackComment VARCHAR(500), trackGenre VARCHAR(20), trackNumber VARCHAR(6), trackYear VARCHAR(6), playlistId INTEGER, starred BOOLEAN)");
+                "CREATE TABLE PlaylistItems (playlistItemId INTEGER IDENTITY, filePath VARCHAR(10000), fileName VARCHAR(500), fileSize BIGINT, fileExtension VARCHAR(10), trackTitle VARCHAR(500), trackDurationInSecs REAL, trackArtist VARCHAR(500), trackAlbum VARCHAR(500), coverArtPath VARCHAR(10000), trackBitrate VARCHAR(10), trackComment VARCHAR(500), trackGenre VARCHAR(20), trackNumber VARCHAR(6), trackYear VARCHAR(6), playlistId INTEGER, starred BOOLEAN, sortIndex INTEGER)");
         update(connection, "CREATE INDEX idx_PlaylistItems_filePath ON PlaylistItems (filePath)");
         update(connection, "CREATE INDEX idx_PlaylistItems_starred ON PlaylistItems (starred)");
 
@@ -190,15 +196,15 @@ public class LibraryDatabase {
     private Connection openOrCreateDatabase(File path, String name) {
         Connection connection = openConnection(path, name, false);
         if (connection == null) {
-            return createDatabase(path, name);
+            connection = createDatabase(path, name);
         } else {
-            int databaseVersion = getDatabaseVersion(connection);
-            if (databaseVersion < LIBRARY_DATABASE_VERSION) {
-                return onUpdateDatabase(connection, databaseVersion, LIBRARY_DATABASE_VERSION);
-            } else {
-                return connection;
+            int version = getDatabaseVersion(connection);
+            if (version < LIBRARY_DATABASE_VERSION) {
+                onUpdateDatabase(connection, version, LIBRARY_DATABASE_VERSION);
             }
         }
+        
+        return connection;
     }
 
     private List<List<Object>> convertResultSetToList(ResultSet resultSet) throws SQLException {
@@ -327,5 +333,24 @@ public class LibraryDatabase {
 
         update(connection, "CALL FTL_CREATE_INDEX('PUBLIC', 'PLAYLISTITEMS', 'FILEPATH, TRACKTITLE, TRACKARTIST, TRACKALBUM, TRACKGENRE, TRACKYEAR')");
         update(connection, "CALL FTL_CREATE_INDEX('PUBLIC', 'INTERNETRADIOSTATIONS', 'NAME, DESCRIPTION, GENRE')");
+    }
+    
+    private void setupPlaylistIndexes(final Connection connection) {
+        
+        // add new column
+        update(connection, "ALTER TABLE PlaylistItems ADD sortIndex INTEGER");
+        
+        // set initial playlist indexes
+        List<Playlist> playlists = PlaylistDB.getPlaylists(this);
+        
+        for( Playlist playlist : playlists ) {
+            List<PlaylistItem> items = playlist.getItems();
+            
+            for(int i=0; i < items.size(); i++) {
+                PlaylistItem item = items.get(i);
+                item.setSortIndex(i+1); // set initial sort index (1-based)
+                item.save();
+            }
+        }
     }
 }

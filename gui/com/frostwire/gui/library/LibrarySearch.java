@@ -42,6 +42,8 @@ import org.limewire.util.StringUtils;
 import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.alexandria.db.InternetRadioStationDB;
+import com.frostwire.alexandria.db.PlaylistItemDB;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.components.SearchField;
 import com.frostwire.gui.components.searchfield.JXSearchField.SearchMode;
@@ -539,12 +541,12 @@ public class LibrarySearch extends JPanel {
                 //Full text search
                 if (!playlist.isStarred()) {
                     sql = "SELECT T.playlistItemId, T.filePath, T.fileName, T.fileSize, T.fileExtension, T.trackTitle, T.trackDurationInSecs, T.trackArtist, T.trackAlbum, T.coverArtPath, T.trackBitrate, T.trackComment, T.trackGenre, T.trackNumber, T.trackYear, T.starred FROM FTL_SEARCH_DATA(?, 0, 0) FT, PLAYLISTITEMS T WHERE FT.TABLE='PLAYLISTITEMS' AND T.playlistItemId = FT.KEYS[0] AND T.playlistId = ?";
-                    rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql, luceneQuery, playlist.getId());
+                    rows = LibraryMediator.getLibrary().getLibraryDatabase().query(sql, luceneQuery, playlist.getId());
                 }
                 //Starred playlist search
                 else {
                     sql = "SELECT T.playlistItemId, T.filePath, T.fileName, T.fileSize, T.fileExtension, T.trackTitle, T.trackDurationInSecs, T.trackArtist, T.trackAlbum, T.coverArtPath, T.trackBitrate, T.trackComment, T.trackGenre, T.trackNumber, T.trackYear, T.starred FROM FTL_SEARCH_DATA(?, 0, 0) FT, PLAYLISTITEMS T WHERE FT.TABLE='PLAYLISTITEMS' AND T.playlistItemId = FT.KEYS[0] AND T.starred = TRUE";
-                    rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql, luceneQuery);
+                    rows = LibraryMediator.getLibrary().getLibraryDatabase().query(sql, luceneQuery);
                 }
 
             }
@@ -565,7 +567,7 @@ public class LibrarySearch extends JPanel {
                 /////
 
                 PlaylistItem item = new PlaylistItem(null);
-                item.getDB().fill(row, item);
+                PlaylistItemDB.fill(row, item);
                 results.add(item);
 
                 if (results.size() > 100) {
@@ -632,7 +634,7 @@ public class LibrarySearch extends JPanel {
                 String luceneQuery = com.frostwire.alexandria.LibraryUtils.wildcardLuceneQuery(query);
                 //Full text search
                 sql = "SELECT T.internetRadioStationId, T.name, T.description, T.url, T.bitrate, T.type, T.website, T.genre, T.pls, T.bookmarked FROM FTL_SEARCH_DATA(?, 0, 0) FT, INTERNETRADIOSTATIONS T WHERE FT.TABLE='INTERNETRADIOSTATIONS' AND T.internetRadioStationId = FT.KEYS[0]";
-                rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql, luceneQuery);
+                rows = LibraryMediator.getLibrary().getLibraryDatabase().query(sql, luceneQuery);
             }
 
             final List<InternetRadioStation> results = new ArrayList<InternetRadioStation>();
@@ -650,8 +652,8 @@ public class LibrarySearch extends JPanel {
                 //                }
                 /////
 
-                InternetRadioStation item = new InternetRadioStation(LibraryMediator.getLibrary());
-                item.getDB().fill(row, item);
+                InternetRadioStation item = new InternetRadioStation(LibraryMediator.getLibrary().getLibraryDatabase());
+                InternetRadioStationDB.fill(row, item);
                 results.add(item);
 
                 if (results.size() > 100) {

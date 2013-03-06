@@ -2,10 +2,9 @@ package com.frostwire.alexandria;
 
 import com.frostwire.alexandria.db.InternetRadioStationDB;
 import com.frostwire.alexandria.db.LibraryDatabase;
+import com.frostwire.alexandria.db.LibraryDatabaseEntity;
 
-public class InternetRadioStation extends Entity<InternetRadioStationDB> {
-
-    private final Library library;
+public class InternetRadioStation extends LibraryDatabaseEntity {
 
     private int id;
     private String name;
@@ -20,16 +19,14 @@ public class InternetRadioStation extends Entity<InternetRadioStationDB> {
 
     private boolean deleted;
 
-    public InternetRadioStation(Library library) {
-        super(new InternetRadioStationDB(library.db.getDatabase()));
-        this.library = library;
+    public InternetRadioStation(LibraryDatabase db) {
+        super(db);
         this.id = LibraryDatabase.OBJECT_INVALID_ID;
         this.deleted = false;
     }
 
-    public InternetRadioStation(Library library, int id, String name, String description, String url, String bitrate, String type, String website, String genre, String pls, boolean bookmarked) {
-        super(new InternetRadioStationDB(library.db.getDatabase()));
-        this.library = library;
+    public InternetRadioStation(LibraryDatabase db, int id, String name, String description, String url, String bitrate, String type, String website, String genre, String pls, boolean bookmarked) {
+        super(db);
         this.id = id;
         this.name = name;
         this.description = description;
@@ -41,10 +38,6 @@ public class InternetRadioStation extends Entity<InternetRadioStationDB> {
         this.pls = pls;
         this.bookmarked = bookmarked;
         this.deleted = false;
-    }
-
-    public Library getLibrary() {
-        return library;
     }
 
     public int getId() {
@@ -133,13 +126,13 @@ public class InternetRadioStation extends Entity<InternetRadioStationDB> {
 
     public void save() {
         if (db != null) {
-            db.save(this);
+            InternetRadioStationDB.save(db, this);
         }
     }
 
     public void delete() {
         if (db != null) {
-            db.delete(this);
+            InternetRadioStationDB.delete(db, this);
             deleted = true;
         }
     }

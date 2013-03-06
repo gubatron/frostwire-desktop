@@ -76,6 +76,14 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         }
         return lines;
     }
+    
+    public int[] getSelectedIndexes() {
+        if(TABLE != null) {
+            return TABLE.getSelectedRows();
+        } else {
+            return null;
+        }
+    }
 
     public I getItemAt(int row) {
         try {

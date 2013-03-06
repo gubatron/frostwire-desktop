@@ -90,14 +90,26 @@ public class LibraryUtils {
 
             List<PlaylistItem> items = playlist.getItems();
             if (index != -1 && index < items.size()) {
+                
+                // insert item
                 items.add(index, item);
-                item.save();
+                
+                // update all sort indexes from insertion point onwards
+                for (int i=index; i < items.size(); i++) {
+                    PlaylistItem cur_item = items.get(i);
+                    cur_item.setSortIndex(i + 1); //set index 1-based
+                    cur_item.save();
+                }
+                
             } else {
                 items.add(item);
+                item.setSortIndex(items.size()); // set sort index to 1-based size
                 item.save();
-                if (isPlaylistSelected(playlist)) {
-                    LibraryPlaylistsTableMediator.instance().addUnsorted(item);
-                }
+            }
+            
+            if (isPlaylistSelected(playlist)) {
+                // refresh UI
+                LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
             }
         } finally {
             LibraryMediator.instance().getLibrarySearch().revertStatus();
@@ -469,14 +481,27 @@ public class LibraryUtils {
                     }
                 }
             }
+            
+            // reupdate sort indexes now that the ordering in the list is correct
+            items = playlist.getItems();
+            for(int i=0; i<items.size(); i++) {
+                PlaylistItem item = items.get(i);
+                item.setSortIndex(i+1); // set index 1-based
+                item.save();
+            }
+            
         } else {
             for (int i = 0; i < playlistItems.length && !playlist.isDeleted(); i++) {
+                
                 playlistItems[i].setPlaylist(playlist);
                 items.add(playlistItems[i]);
+                playlistItems[i].setSortIndex(items.size()); // set sort index to be at the end (1-based)
+                
                 if (starred) {
                     playlistItems[i].setStarred(starred);
-                    playlistItems[i].save();
                 }
+
+                playlistItems[i].save();
             }
         }
     }
@@ -775,5 +800,47 @@ public class LibraryUtils {
 
     private static String clean(String str) {
         return str.trim().replace("\"", "\\\"");
+    }
+
+    public static void movePlaylistItemsToIndex(Playlist playlist, int[] selectedIndexes, int index) {
+        
+        List<PlaylistItem> items = playlist.getItems();
+        int targetIndex = index;
+        
+        // first, order items in list correctly
+        for (int i=0; i < selectedIndexes.length; i++) {
+            int sourceIndex = selectedIndexes[i];
+            
+            if (sourceIndex != targetIndex) {
+                items.add( targetIndex, items.get(sourceIndex));
+                items.remove( sourceIndex < targetIndex ? sourceIndex : sourceIndex+1);
+                
+                // adjust remaining selected indexes if insertion point is greater than their location
+                for (int j=i+1; j < selectedIndexes.length; j++) {
+                    if (targetIndex > selectedIndexes[j]) {
+                        selectedIndexes[j]--;
+                    }
+                }
+                
+                // update insertion point
+                if (sourceIndex > targetIndex) {
+                    targetIndex++;
+                }
+            }
+        }
+        
+        // second, generate new indexes based list order
+        for (int i=0; i < items.size(); i++) {
+            PlaylistItem item = items.get(i);
+            item.setSortIndex(i + 1); // set index (1-based)
+            item.save();
+        }
+        
+        // initiate UI refresh
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+            }
+        });
     }
 }

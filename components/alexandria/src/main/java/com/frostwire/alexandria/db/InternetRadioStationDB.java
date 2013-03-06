@@ -1,16 +1,15 @@
 package com.frostwire.alexandria.db;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.frostwire.alexandria.InternetRadioStation;
 
-public class InternetRadioStationDB extends ObjectDB<InternetRadioStation> {
+public class InternetRadioStationDB {
 
-    public InternetRadioStationDB(LibraryDatabase db) {
-        super(db);
-    }
+    private InternetRadioStationDB() {} // don't allow instantiation of this class
 
-    public void fill(InternetRadioStation obj) {
+    public static void fill(LibraryDatabase db, InternetRadioStation obj) {
         List<List<Object>> result = db.query("SELECT internetRadioStationId, name, description, url, bitrate, type, website, genre, pls, bookmarked FROM InternetRadioStations WHERE internetRadioStationId = ?", obj.getId());
         if (result.size() > 0) {
             List<Object> row = result.get(0);
@@ -18,7 +17,7 @@ public class InternetRadioStationDB extends ObjectDB<InternetRadioStation> {
         }
     }
 
-    public void fill(List<Object> row, InternetRadioStation obj) {
+    public static void fill(List<Object> row, InternetRadioStation obj) {
         int id = (Integer) row.get(0);
         String name = (String) row.get(1);
         String description = (String) row.get(2);
@@ -42,7 +41,7 @@ public class InternetRadioStationDB extends ObjectDB<InternetRadioStation> {
         obj.setBookmarked(bookmarked);
     }
 
-    public void save(InternetRadioStation obj) {
+    public static void save(LibraryDatabase db, InternetRadioStation obj) {
         if (obj.getId() == LibraryDatabase.OBJECT_INVALID_ID) {
             return;
         }
@@ -57,17 +56,54 @@ public class InternetRadioStationDB extends ObjectDB<InternetRadioStation> {
         }
     }
 
-    public void delete(InternetRadioStation obj) {
+    public static void delete(LibraryDatabase db, InternetRadioStation obj) {
         db.update("DELETE FROM InternetRadioStations WHERE internetRadioStationId = ?", obj.getId());
     }
+    
+    public static List<InternetRadioStation> getInternetRadioStations(LibraryDatabase db) {
+        List<List<Object>> result = db.query("SELECT internetRadioStationId, name, description, url, bitrate, type, website, genre, pls, bookmarked FROM InternetRadioStations");
 
-    Object[] createInternetRadioStationInsertStatement(InternetRadioStation obj) {
+        List<InternetRadioStation> internetRadioStations = new ArrayList<InternetRadioStation>(result.size());
+
+        for (List<Object> row : result) {
+            InternetRadioStation internetRadioStation = new InternetRadioStation(db);
+            InternetRadioStationDB.fill(row, internetRadioStation);
+            internetRadioStations.add(internetRadioStation);
+        }
+
+        return internetRadioStations;
+    }
+
+    
+
+    public static long getTotalRadioStations(LibraryDatabase db) {
+        List<List<Object>> query = db.query("SELECT COUNT(*) FROM InternetRadioStations");
+        return query.size() > 0 ? (Long) query.get(0).get(0) : 0;
+    }
+
+    public static void restoreDefaultRadioStations(LibraryDatabase db) {
+        List<InternetRadioStation> internetRadioStations = getInternetRadioStations(db);
+        
+        InternetRadioStationsData data = new InternetRadioStationsData();
+        
+        for (InternetRadioStation station : internetRadioStations) {
+            data.add(station.getName(), station.getDescription(), station.getUrl(), station.getBitrate(), station.getType(), station.getWebsite(), station.getGenre(), station.getPls());
+        }
+        
+        db.update("DELETE FROM InternetRadioStations");
+
+        for (List<Object> row : data.getData()) {
+            db.update("INSERT INTO InternetRadioStations (name, description, url, bitrate, type, website, genre, pls, bookmarked) VALUES (LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100), LEFT(?, 100), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100000), false)", row.toArray());
+        }
+    }
+
+    private static Object[] createInternetRadioStationInsertStatement(InternetRadioStation obj) {
         String sql = "INSERT INTO InternetRadioStations (name, description, url, bitrate, type, website, genre, pls, bookmarked) VALUES (LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100), LEFT(?, 100), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100000), ?)";
         Object[] values = new Object[] { obj.getName(), obj.getDescription(), obj.getUrl(), obj.getBitrate(), obj.getType(), obj.getWebsite(), obj.getGenre(), obj.getPls(), obj.isBookmarked() };
         return new Object[] { sql, values };
     }
 
-    private Object[] createInternetRadioStationUpdateStatement(InternetRadioStation obj) {
+    private static Object[] createInternetRadioStationUpdateStatement(InternetRadioStation obj) {
         String sql = "UPDATE InternetRadioStations SET name = LEFT(?, 500), description = LEFT(?, 10000), url = LEFT(?, 10000), bitrate = LEFT(?, 100), type = LEFT(?, 100), website = LEFT(?, 10000), genre = LEFT(?, 10000), pls = LEFT(?, 100000), bookmarked = ? WHERE internetRadioStationId = ?";
         Object[] values = new Object[] { obj.getName(), obj.getDescription(), obj.getUrl(), obj.getBitrate(), obj.getType(), obj.getWebsite(), obj.getGenre(), obj.getPls(), obj.isBookmarked(), obj.getId() };
         return new Object[] { sql, values };

@@ -57,8 +57,8 @@ class PlaylistItemStarRenderer extends SubstanceDefaultTableCellRenderer {
     }
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        final LibraryPlaylistsTableDataLine line = ((PlaylistItemStar) value).getLine();
-        final PlaylistItemStar cell = (PlaylistItemStar) value;
+        final LibraryPlaylistsTableDataLine line = ((PlaylistItemProperty<?>) value).getLine();
+        final PlaylistItemProperty<?> cell = (PlaylistItemProperty<?>) value;
 
         setIcon(cell.isPlaying(), line.getPlayListItem().isStarred(), cell.exists());
 
