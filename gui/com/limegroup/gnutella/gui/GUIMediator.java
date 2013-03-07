@@ -955,6 +955,10 @@ public final class GUIMediator {
      * Shutdown the program cleanly.
      */
     public static void shutdown() {
+        
+        // hide video player if visible
+        MPlayerMediator.instance().showPlayerWindow(false);
+        
         Finalizer.shutdown();
     }
 

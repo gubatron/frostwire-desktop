@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
 import org.apache.commons.logging.Log;
@@ -43,15 +44,6 @@ import org.apache.commons.logging.LogFactory;
  *
  */
 final class FWHttpClient implements HttpClient {
-
-    static {
-        sun.net.www.protocol.https.HttpsURLConnectionImpl.setDefaultHostnameVerifier(new HostnameVerifier() {
-            @Override
-            public boolean verify(String hostname, SSLSession session) {
-                return true;
-            }
-        });
-    }
 
     private static final Log LOG = LogFactory.getLog(FWHttpClient.class);
 
@@ -125,6 +117,10 @@ final class FWHttpClient implements HttpClient {
         conn.setReadTimeout(timeout);
         conn.setRequestProperty("User-Agent", userAgent);
 
+        if (conn instanceof HttpsURLConnection) {
+            setHostnameVerifier((HttpsURLConnection) conn);
+        }
+
         if (rangeStart > 0) {
             conn.setRequestProperty("Range", buildRange(rangeStart, rangeLength));
         }
@@ -164,6 +160,15 @@ final class FWHttpClient implements HttpClient {
             closeQuietly(in);
             closeQuietly(conn);
         }
+    }
+
+    private void setHostnameVerifier(HttpsURLConnection conn) {
+        conn.setHostnameVerifier(new HostnameVerifier() {
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        });
     }
 
     private int getResponseCode(URLConnection conn) {

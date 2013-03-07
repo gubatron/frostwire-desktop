@@ -524,5 +524,16 @@ public class MPlayerWindow extends JFrame {
                 showOverlay(false);
             }
         }
+        
+        @Override
+        public void windowIconified(WindowEvent e) {
+            hideOverlay(false);
+        }
+        
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+            showOverlay(false);
+            
+        }
     }
 }
