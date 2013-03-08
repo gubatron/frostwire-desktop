@@ -266,11 +266,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
                 }
 
                 // set component visibility as appropriate
-                if (MPlayerOverlayControls.this.isVisible() == false && alpha != 0.0) {
-                    MPlayerOverlayControls.this.setVisible(true);
-                } else if (MPlayerOverlayControls.this.isVisible() && alpha == 0.0) {
-                    MPlayerOverlayControls.this.setVisible(false);
-                } 
+                MPlayerOverlayControls.this.setVisible(alpha != 0.0);
             }
         });
     }
@@ -414,4 +410,6 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         }
     
     }
+
+
 }
