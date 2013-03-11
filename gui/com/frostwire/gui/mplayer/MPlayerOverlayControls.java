@@ -128,6 +128,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         });
         
         this.addMouseListener(new OverlayControlsMouseAdapter());
+        this.addMouseMotionListener(new OverlayControlsMouseAdapter());
     }
 
     protected void setupUI(Dimension initialSize) {
