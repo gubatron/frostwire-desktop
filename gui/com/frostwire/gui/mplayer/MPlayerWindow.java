@@ -45,6 +45,7 @@ import java.awt.geom.Point2D;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.Timer;
 
 import org.limewire.util.OSUtils;
@@ -65,17 +66,8 @@ public class MPlayerWindow extends JFrame {
     protected MPlayerComponent mplayerComponent;
     protected Component videoCanvas;
     private boolean isFullscreen = false;
-
-    private AlphaAnimationThread animateAlphaThread;
-
-    private Timer hideTimer;
-    private static final int HIDE_DELAY = 3000;
-
     private MediaPlayer player;
-
-    private Point2D prevMousePosition = null;
     private boolean handleVideoResize = true;
-
     private ScreenSaverDisabler screenSaverDisabler;
     private int visibleCounterFlag = 0;
 
@@ -116,7 +108,6 @@ public class MPlayerWindow extends JFrame {
         } else {
             return null;
         }
-
     }
 
     public MediaPlayer getMediaPlayer() {
@@ -127,24 +118,20 @@ public class MPlayerWindow extends JFrame {
 
         Dimension d = new Dimension(800, 600);
 
-        // initialize auto-hide timer
-        hideTimer = new Timer(HIDE_DELAY, new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                MPlayerWindow.this.onHideTimerExpired();
-            }
-        });
-        hideTimer.setRepeats(false);
-
         // initialize window
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setPlayerWindowTitle();
         setBackground(new Color(0, 0, 0));
+        setVisible(false);
         initWindowIcon();
 
         // initialize events
-        addMouseMotionListener(new MPlayerMouseMotionAdapter());
         addComponentListener(new MPlayerComponentHandler());
-        addWindowListener(new MPlayerWindowAdapter());
+        addWindowListener(new WindowAdapter(){
+            @Override public void windowClosing(WindowEvent e) {
+                player.stop();
+            }
+        });
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new MPlayerKeyEventDispatcher());
 
         // initialize content pane & video canvas
@@ -153,44 +140,20 @@ public class MPlayerWindow extends JFrame {
         pane.setLayout(null);
         pane.setSize(d);
         pane.setPreferredSize(d);
-
+        
         mplayerComponent = MPlayerComponentFactory.instance().createPlayerComponent();
         videoCanvas = mplayerComponent.getComponent();
         videoCanvas.setBackground(Color.black);
         videoCanvas.setSize(d);
         videoCanvas.setPreferredSize(d);
-        videoCanvas.addMouseMotionListener(new MPlayerMouseMotionAdapter());
-        videoCanvas.addMouseListener(new MPlayerMouseAdapter());
         pane.add(videoCanvas);
 
         // adjust frame size
         pack();
 
         // initialize overlay controls
-        overlayControls = new MPlayerOverlayControls(hideTimer);
-        overlayControls.setVisible(false);
-        overlayControls.setAlwaysOnTop(true);
+        overlayControls = new MPlayerOverlayControls(this);
         overlayControls.setIsFullscreen(isFullscreen);
-        overlayControls.addMouseListener(new MPlayerMouseAdapter());
-        overlayControls.addMouseMotionListener(new MPlayerMouseMotionAdapter());
-        overlayControls.addWindowListener(new WindowAdapter() {
-
-            @Override
-            public void windowDeactivated(WindowEvent e) {
-                if (!OSUtils.isWindows()) {
-                    if (visibleCounterFlag > 0) {
-                        hideOverlay(false);
-                    }
-                    visibleCounterFlag++;
-                }
-            }
-        });
-
-        // initialize animation alpha thread
-        animateAlphaThread = new AlphaAnimationThread(overlayControls);
-        animateAlphaThread.setDaemon(true);
-        animateAlphaThread.start();
-
     }
 
     /**
@@ -238,29 +201,19 @@ public class MPlayerWindow extends JFrame {
         if (visible != isVisible()) {
 
             super.setVisible(visible);
-            overlayControls.setVisible(visible);
 
             if (visible) {
-
+                
+                // make sure window is on top of visible windows & has focus
+                requestFocus();
                 centerOnScreen();
-                positionOverlayControls();
-                showOverlay(false);
+                
+                // disable screen saver
+                screenSaverDisabler.start();
             } else {
-
-                hideOverlay(false);
+                // enable screen saver
+                screenSaverDisabler.stop();
             }
-        }
-
-        if (visible) {
-            // make sure window is on top of visible windows & has focus
-            toFront();
-            requestFocus();
-            
-            // disable screen saver
-            screenSaverDisabler.start();
-        } else {
-            // enable screen saver
-            screenSaverDisabler.stop();
         }
     }
 
@@ -268,8 +221,6 @@ public class MPlayerWindow extends JFrame {
         if (isVisible()) {
             isFullscreen = !isFullscreen;
             overlayControls.setIsFullscreen(isFullscreen);
-
-            positionOverlayControls();
         }
     }
 
@@ -283,26 +234,30 @@ public class MPlayerWindow extends JFrame {
 
     private void resizeCanvas() {
 
-        Dimension videoSize = MediaPlayer.instance().getCurrentVideoSize();
-        Dimension contentSize = getContentPane().getSize();
-        if (contentSize == null || videoSize == null) {
-            return; // can not resize until videoSize is available
+        if (isVisible()) {
+            Dimension videoSize = MediaPlayer.instance().getCurrentVideoSize();
+            Dimension contentSize = getContentPane().getSize();
+            Point origPos = getContentPane().getLocationOnScreen();
+            if (contentSize == null || videoSize == null) {
+                return; // can not resize until videoSize is available
+            }
+    
+            Dimension canvasSize = new Dimension(contentSize);
+            float targetAspectRatio = (float) videoSize.width / (float) videoSize.height;
+    
+            if (canvasSize.width / targetAspectRatio < contentSize.height) {
+                canvasSize.height = (int) (canvasSize.width / targetAspectRatio);
+            } else {
+                canvasSize.width = (int) (canvasSize.height * targetAspectRatio);
+            }
+    
+            Point tl = new Point();
+            tl.x = (int) ((float) (contentSize.width - canvasSize.width) / 2.0f);
+            tl.y = (int) ((float) (contentSize.height - canvasSize.height) / 2.0f);
+    
+            videoCanvas.setBounds(tl.x, tl.y, canvasSize.width, canvasSize.height);
+            overlayControls.setBounds(origPos.x, origPos.y, contentSize.width, contentSize.height);
         }
-
-        Dimension canvasSize = new Dimension(contentSize);
-        float targetAspectRatio = (float) videoSize.width / (float) videoSize.height;
-
-        if (canvasSize.width / targetAspectRatio < contentSize.height) {
-            canvasSize.height = (int) (canvasSize.width / targetAspectRatio);
-        } else {
-            canvasSize.width = (int) (canvasSize.height * targetAspectRatio);
-        }
-
-        Point tl = new Point();
-        tl.x = (int) ((float) (contentSize.width - canvasSize.width) / 2.0f);
-        tl.y = (int) ((float) (contentSize.height - canvasSize.height) / 2.0f);
-
-        videoCanvas.setBounds(tl.x, tl.y, canvasSize.width, canvasSize.height);
     }
 
     /**
@@ -317,74 +272,10 @@ public class MPlayerWindow extends JFrame {
         setLocation(pos);
     }
 
-    /**
-     * positions the overlay control centered horizontally and 80% down vertically
-     */
-    private void positionOverlayControls() {
-
-        if (isVisible()) {
-            Dimension controlsSize = overlayControls.getSize();
-            Dimension windowSize = getSize();
-            Point windowPos = getLocationOnScreen();
-
-            Point controlPos = new Point();
-            controlPos.x = (int) ((windowSize.width - controlsSize.width) * 0.5 + windowPos.x);
-            controlPos.y = (int) ((windowSize.height - controlsSize.height) - 20 + windowPos.y);
-
-            overlayControls.setLocation(controlPos);
-        }
-    }
-
-    private void onHideTimerExpired() {
-        animateAlphaThread.animateToTransparent();
-    }
-
-    @Override
-    public void dispose() {
-        animateAlphaThread.setDisposed();
-        super.dispose();
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g.create();
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.0f));
-
-        super.paint(g2);
-
-        g2.dispose();
-    }
-
-    private void showOverlay(boolean animate) {
-        if (animate) {
-            animateAlphaThread.animateToOpaque();
-        } else {
-            overlayControls.setVisible(true);
-        }
-
-        hideTimer.restart();
-    }
-
-    private void hideOverlay(boolean animate) {
-        if (animate) {
-            animateAlphaThread.animateToTransparent();
-        } else {
-            overlayControls.setVisible(false);
-        }
-
-        hideTimer.stop();
-    }
-
     private class MPlayerComponentHandler extends ComponentAdapter {
         @Override
         public void componentResized(ComponentEvent e) {
             resizeCanvas();
-            positionOverlayControls();
-        }
-
-        @Override
-        public void componentMoved(ComponentEvent e) {
-            positionOverlayControls();
         }
     }
 
@@ -454,86 +345,6 @@ public class MPlayerWindow extends JFrame {
             }
 
             return false;
-        }
-    }
-
-    private class MPlayerMouseAdapter extends MouseAdapter {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            if (e.getClickCount() == 2) {
-                MPlayerUIEventHandler.instance().onToggleFullscreenPressed();
-            } else {
-                showOverlay(false);
-            }
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            showOverlay(false);
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            showOverlay(false);
-        }
-    }
-
-    private class MPlayerMouseMotionAdapter extends MouseMotionAdapter {
-        @Override
-        public void mouseMoved(MouseEvent e) {
-
-            if (MPlayerWindow.this.isActive()) {
-                Point2D currMousePosition = e.getPoint();
-
-                if (prevMousePosition == null) {
-                    prevMousePosition = currMousePosition;
-                }
-
-                double distance = currMousePosition.distance(prevMousePosition);
-
-                if (distance > 10) {
-                    showOverlay(true);
-                }
-
-                prevMousePosition = currMousePosition;
-            }
-        }
-    }
-
-    private class MPlayerWindowAdapter extends WindowAdapter {
-
-        @Override
-        public void windowClosing(WindowEvent e) {
-            player.stop();
-        }
-
-        @Override
-        public void windowDeactivated(WindowEvent e) {
-            if (OSUtils.isWindows()) {
-                if (e.getOppositeWindow() == overlayControls) {
-                    requestFocus();
-                } else {
-                    hideOverlay(false);
-                }
-            }
-        }
-
-        @Override
-        public void windowActivated(WindowEvent e) {
-            if (e.getOppositeWindow() != overlayControls) {
-                showOverlay(false);
-            }
-        }
-        
-        @Override
-        public void windowIconified(WindowEvent e) {
-            hideOverlay(false);
-        }
-        
-        @Override
-        public void windowDeiconified(WindowEvent e) {
-            showOverlay(false);
-            
         }
     }
 }

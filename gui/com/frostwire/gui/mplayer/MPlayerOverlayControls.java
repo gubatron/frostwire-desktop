@@ -20,6 +20,7 @@ package com.frostwire.gui.mplayer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
@@ -27,14 +28,16 @@ import java.awt.GraphicsDevice.WindowTranslucency;
 import java.awt.GraphicsEnvironment;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.geom.Point2D;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.ImageIcon;
@@ -70,31 +73,81 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 
     private double durationInSeconds = 0.0;
     private double currentTimeInSeconds = 0.0;
+    private static final int HIDE_DELAY = 3000;
 
     private Timer hideTimer;
+    private AlphaAnimationThread animateAlphaThread;
+    private boolean isOverlayVisible;
+    private Container controlsContainer;
+    private MPlayerWindow playerWindow;
+    private Point2D prevMousePosition = null;
+    public MPlayerOverlayControls(MPlayerWindow playerWindow) {
 
-    public MPlayerOverlayControls(Timer hideTimer) {
-
-        this.hideTimer = hideTimer;
-
+        this.playerWindow = playerWindow;
         player = MediaPlayer.instance();
-        player.addMediaPlayerListener(this);
 
-        setupUI();
+        Dimension initialSize = this.playerWindow.getSize();
+        setupUI(initialSize);
+        
+        player.addMediaPlayerListener(this);
+        
+        // initialize animation alpha thread
+        animateAlphaThread = new AlphaAnimationThread(this);
+        animateAlphaThread.setDaemon(true);
+        animateAlphaThread.start();
+        
+        // initialize auto-hide timer
+        hideTimer = new Timer(HIDE_DELAY, new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                MPlayerOverlayControls.this.onHideTimerExpired();
+            }
+        });
+        hideTimer.setRepeats(false);
+        
+        this.playerWindow.addComponentListener( new ComponentAdapter() {
+            @Override public void componentResized(ComponentEvent e) {
+                MPlayerOverlayControls.this.updateCurrentPositionAndSize();
+            }
+            @Override public void componentMoved(ComponentEvent e) {
+                MPlayerOverlayControls.this.updateCurrentPositionAndSize();
+            }
+            @Override public void componentShown(ComponentEvent e) {
+                MPlayerOverlayControls.this.updateCurrentPositionAndSize();
+                MPlayerOverlayControls.this.showOverlay(false);
+            }
+            @Override public void componentHidden(ComponentEvent e) {
+                MPlayerOverlayControls.this.hideOverlay(false);
+            }
+        });
+        
+        this.playerWindow.addWindowListener( new WindowAdapter() {
+            @Override public void windowIconified(WindowEvent e) {
+                hideOverlay(false);
+            }
+            
+            @Override public void windowDeiconified(WindowEvent e) {
+                showOverlay(false);
+            }
+        });
+        
+        this.addMouseListener(new OverlayControlsMouseAdapter());
     }
 
-    protected void setupUI() {
+    protected void setupUI(Dimension initialSize) {
 
-        Container panel = getContentPane();
+        Container contentPanel = getContentPane();
 
         ImageIcon bkgndImage = GUIMediator.getThemeImage(OSUtils.isLinux() ? "fc_background_linux" : "fc_background");
-        Dimension winSize = new Dimension(bkgndImage.getIconWidth(), bkgndImage.getIconHeight());
+        Dimension bkgndSize = new Dimension(bkgndImage.getIconWidth(), bkgndImage.getIconHeight());
 
-        setPreferredSize(winSize);
-        setSize(winSize);
+        setPreferredSize(initialSize);
+        setSize(initialSize);
         setUndecorated(true);
-        setBackground(new Color(0, 0, 0, 0));
-
+        setBackground(new Color(0,0,0,0));
+        setVisible(true);
+        setAlwaysOnTop(true);
+        setAlpha(0.0f);
+        
         if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
             AWTUtilities.setWindowOpaque(this, false);
         }
@@ -121,14 +174,18 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         // osx specific (won't harm windows/linux)
         getRootPane().putClientProperty("apple.awt.draggableWindowBackground", Boolean.FALSE);
 
-        panel.setLayout(null);
-        panel.setBounds(0, 0, winSize.width, winSize.height);
+        contentPanel.setLayout(null);
+        contentPanel.setBounds(0, 0, initialSize.width, initialSize.height);
 
+        controlsContainer = new Container();
+        controlsContainer.setBounds(0, 0, bkgndSize.width, bkgndSize.height);
+        controlsContainer.setVisible(true);
+        
         // background image
         // ------------------
         JLabel bkgnd = new JLabel(bkgndImage);
         bkgnd.setOpaque(false);
-        bkgnd.setSize(bkgndImage.getIconWidth(), bkgndImage.getIconHeight());
+        bkgnd.setSize(bkgndSize.width, bkgndSize.height);
 
         // play button
         // ------------
@@ -143,7 +200,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         OverlayControlsMouseAdapter overlayControlsMouseAdapter = new OverlayControlsMouseAdapter();
         
         playButton.addMouseListener(overlayControlsMouseAdapter);
-        panel.add(playButton);
+        controlsContainer.add(playButton);
 
         // pause button
         // --------------
@@ -156,7 +213,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         });
         pauseButton.addMouseListener(overlayControlsMouseAdapter);
         pauseButton.addMouseMotionListener(overlayControlsMouseAdapter);
-        panel.add(pauseButton);
+        controlsContainer.add(pauseButton);
 
         // fast forward button
         // --------------------
@@ -170,7 +227,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         });
         fastForwardButton.addMouseListener(overlayControlsMouseAdapter);
         fastForwardButton.addMouseMotionListener(overlayControlsMouseAdapter);
-        panel.add(fastForwardButton);
+        controlsContainer.add(fastForwardButton);
 
         // rewind button
         // --------------
@@ -184,7 +241,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         });
         rewindButton.addMouseListener(overlayControlsMouseAdapter);
         rewindButton.addMouseMotionListener(overlayControlsMouseAdapter);
-        panel.add(rewindButton);
+        controlsContainer.add(rewindButton);
 
         // full screen exit button
         // ------------------------
@@ -197,7 +254,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         });
         fullscreenExitButton.addMouseListener(overlayControlsMouseAdapter);
         fullscreenExitButton.addMouseMotionListener(overlayControlsMouseAdapter);
-        panel.add(fullscreenExitButton);
+        controlsContainer.add(fullscreenExitButton);
 
         // full screen enter button
         // ------------------------
@@ -209,7 +266,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         });
         fullscreenEnterButton.addMouseListener(overlayControlsMouseAdapter);
         fullscreenEnterButton.addMouseMotionListener(overlayControlsMouseAdapter);
-        panel.add(fullscreenEnterButton);
+        controlsContainer.add(fullscreenEnterButton);
 
         // volume slider
         // --------------
@@ -240,7 +297,7 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         volMaxLabel.setSize(volMaxIcon.getIconWidth(), volMaxIcon.getIconHeight());
         volumePanel.add(volMaxLabel, BorderLayout.EAST);
 
-        panel.add(volumePanel);
+        controlsContainer.add(volumePanel);
 
         // progress slider
         // ----------------
@@ -249,9 +306,39 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         progressSlider.setLocation(20, 70);
         progressSlider.addMouseListener(overlayControlsMouseAdapter);
         progressSlider.addMouseMotionListener(overlayControlsMouseAdapter);
-        panel.add(progressSlider);
+        controlsContainer.add(progressSlider);
 
-        panel.add(bkgnd);
+        controlsContainer.add(bkgnd);
+        
+        contentPanel.add(controlsContainer);
+
+    }
+
+    private void updateCurrentPositionAndSize() {
+        if (playerWindow.isVisible()) {
+            Dimension size = playerWindow.getContentPane().getSize();
+            Point loc = playerWindow.getContentPane().getLocationOnScreen();
+            MPlayerOverlayControls.this.setBounds(loc.x, loc.y, size.width, size.height);
+        }
+    }
+    
+    public void setBounds(int xScreen, int yScreen, int width, int height) {
+        super.setBounds(xScreen, yScreen, width, height);
+        positionControlsContainer();
+    }
+    
+    private void positionControlsContainer() {
+        
+        if (controlsContainer != null) {
+            Dimension controlsSize = controlsContainer.getSize();
+            Dimension windowSize = getSize();
+            
+            Point controlPos = new Point();
+            controlPos.x = (int) ((windowSize.width - controlsSize.width) * 0.5);
+            controlPos.y = (int) ((windowSize.height - controlsSize.height) * 0.9);
+    
+            controlsContainer.setLocation(controlPos);
+        }
     }
 
     @Override
@@ -264,9 +351,8 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
                 if (!OSUtils.isLinux()) {
                     AWTUtilities.setWindowOpacity(MPlayerOverlayControls.this, alpha);
                 }
-
-                // set component visibility as appropriate
-                MPlayerOverlayControls.this.setVisible(alpha != 0.0);
+                
+                isOverlayVisible = (alpha != 0);
             }
         });
     }
@@ -295,7 +381,39 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         fullscreenExitButton.setVisible(fullscreen);
         fullscreenEnterButton.setVisible(!fullscreen);
     }
+    
+    private void showOverlay(boolean animate) {
+        
+        if (!isOverlayVisible) {
+            if (animate) {
+                animateAlphaThread.animateToOpaque();
+            } else {
+                setAlpha(1.0f);
+            }
+            toFront();
+        }
+        
+        hideTimer.restart();
+    }
 
+    private void hideOverlay(boolean animate) {
+        
+        if(isOverlayVisible) {
+            if (animate) {
+                animateAlphaThread.animateToTransparent();
+            } else {
+                setAlpha(0.0f);
+            }
+        }
+
+        hideTimer.stop();
+    }
+
+
+    private void onHideTimerExpired() {
+        hideOverlay(true);
+    }
+    
     public void onPlayPressed() {
         MPlayerUIEventHandler.instance().onPlayPressed();
     }
@@ -387,6 +505,14 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
     @Override
     public void icyInfo(MediaPlayer mediaPlayer, String data) {
     }
+    
+
+    @Override
+    public void dispose() {
+        animateAlphaThread.setDisposed();
+        super.dispose();
+    }
+
 
     /*
      * overrides for mouse input processing of client controls
@@ -395,21 +521,40 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
     private class OverlayControlsMouseAdapter extends MouseAdapter {
 
         @Override
-        public void mousePressed(MouseEvent arg0) {
+        public void mousePressed(MouseEvent e) {
             hideTimer.stop();
         }
 
         @Override
-        public void mouseReleased(MouseEvent arg0) {
+        public void mouseReleased(MouseEvent e) {
             hideTimer.restart();
         }
 
         @Override
-        public void mouseMoved(MouseEvent arg0) {
-            hideTimer.restart();
+        public void mouseMoved(MouseEvent e) {
+            showOverlay(true);
+        }
+        
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (e.getClickCount() == 2 ) {
+                
+                // touch point screen location
+                Point loc = e.getLocationOnScreen();
+                
+                // screen location of controlsContainer
+                Rectangle rect = controlsContainer.getBounds();
+                Point containerLoc = controlsContainer.getLocationOnScreen();
+                rect.x = containerLoc.x;
+                rect.y = containerLoc.y;
+                
+                // only go fullscreen when clicked outside bounds
+                if (!rect.contains(loc)) {
+                    MPlayerUIEventHandler.instance().onToggleFullscreenPressed();
+                }
+            }
         }
     
     }
-
 
 }
