@@ -109,11 +109,13 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
                 MPlayerOverlayControls.this.updateCurrentPositionAndSize();
             }
             @Override public void componentShown(ComponentEvent e) {
+                MPlayerOverlayControls.this.setVisible(true);
                 MPlayerOverlayControls.this.updateCurrentPositionAndSize();
                 MPlayerOverlayControls.this.showOverlay(false);
             }
             @Override public void componentHidden(ComponentEvent e) {
                 MPlayerOverlayControls.this.hideOverlay(false);
+                MPlayerOverlayControls.this.setVisible(false);
             }
         });
         
