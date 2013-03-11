@@ -18,36 +18,24 @@
 
 package com.frostwire.gui.mplayer;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.Point2D;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-import javax.swing.Timer;
-
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.player.MediaPlayerAdapter;
@@ -69,8 +57,7 @@ public class MPlayerWindow extends JFrame {
     private MediaPlayer player;
     private boolean handleVideoResize = true;
     private ScreenSaverDisabler screenSaverDisabler;
-    private int visibleCounterFlag = 0;
-
+    
     protected MPlayerWindow() {
         initializeUI();
 
@@ -192,11 +179,6 @@ public class MPlayerWindow extends JFrame {
      */
     @Override
     public void setVisible(boolean visible) {
-
-        visibleCounterFlag = 0;
-        if (isVisible() && visible) {
-            visibleCounterFlag = 1;
-        }
 
         if (visible != isVisible()) {
 

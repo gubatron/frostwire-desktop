@@ -20,7 +20,6 @@ package com.frostwire.gui.mplayer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
@@ -37,7 +36,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.Point2D;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.ImageIcon;
@@ -80,7 +78,6 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
     private boolean isOverlayVisible;
     private Container controlsContainer;
     private MPlayerWindow playerWindow;
-    private Point2D prevMousePosition = null;
     public MPlayerOverlayControls(MPlayerWindow playerWindow) {
 
         this.playerWindow = playerWindow;
@@ -528,6 +525,11 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         @Override
         public void mouseReleased(MouseEvent e) {
             hideTimer.restart();
+        }
+        
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            showOverlay(true);
         }
 
         @Override
