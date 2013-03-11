@@ -185,11 +185,7 @@ public class MPlayerWindow extends JFrame {
             super.setVisible(visible);
 
             if (visible) {
-                
-                // make sure window is on top of visible windows & has focus
-                requestFocus();
                 centerOnScreen();
-                
                 // disable screen saver
                 screenSaverDisabler.start();
             } else {
