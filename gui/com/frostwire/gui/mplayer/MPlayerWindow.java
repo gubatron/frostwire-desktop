@@ -237,7 +237,15 @@ public class MPlayerWindow extends JFrame {
             overlayControls.setBounds(origPos.x, origPos.y, contentSize.width, contentSize.height);
         }
     }
-
+/*
+    @Override
+    public void paint(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.0f));
+        super.paint(g2);
+        g2.dispose();
+    }
+  */  
     /**
      * centers the window in the current screen
      */
