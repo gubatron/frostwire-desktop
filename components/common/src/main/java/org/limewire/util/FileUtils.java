@@ -29,9 +29,11 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.commons.logging.Log;
@@ -404,6 +406,41 @@ public class FileUtils {
 
         return retArray;
     }
+    
+    /** Given a folder path it'll return all the files contained within it and it's subfolders
+     * as a flat set of Files.
+     * 
+     * Non-recursive implementation, up to 20% faster in tests than recursive implementation. :)
+     * 
+     * @author gubatron
+     * @param folder
+     * @param extensions If you only need certain files filtered by their extensions, use this string array (without the "."). or set to null if you want all files. e.g. ["txt","jpg"] if you only want text files and jpegs.
+     * 
+     * @return The set of files.
+     */
+    public static Collection<File> getAllFolderFiles(File folder, String[] extensions) {
+        Set<File> results = new HashSet<File>();
+        Stack<File> subFolders = new Stack<File>();
+        File currentFolder = folder;
+        while (currentFolder != null && currentFolder.isDirectory() && currentFolder.canRead()) {
+            File[] fs = currentFolder.listFiles();
+            for (File f : fs) {
+                if (!f.isDirectory()) {
+                    if (extensions == null || FilenameUtils.isExtension(f.getName(), extensions)) {
+                        results.add(f);
+                    }
+                } else {
+                    subFolders.push(f);
+                }
+            }
+            if (!subFolders.isEmpty()) {
+                currentFolder = subFolders.pop();
+            } else {
+                currentFolder = null;
+            }
+        }
+        return results;
+    }    
 
     /**
      * Deletes the given file or directory, moving it to the trash can or 
