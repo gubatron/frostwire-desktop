@@ -18,10 +18,13 @@
 
 package com.frostwire.gui.mplayer;
 
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsDevice.WindowTranslucency;
 import java.awt.GraphicsEnvironment;
@@ -40,6 +43,7 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -159,24 +163,10 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         setVisible(true);
         setAlwaysOnTop(true);
         setAlpha(0.0f);
+        setOpacity(0.0f);
         
         if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
             AWTUtilities.setWindowOpaque(this, false);
-        }
-
-        if (OSUtils.isMacOSX()) {
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            GraphicsDevice gd = ge.getDefaultScreenDevice();
-            final boolean perpixelTransparentSupported = gd.isWindowTranslucencySupported(WindowTranslucency.PERPIXEL_TRANSPARENT);
-            if (perpixelTransparentSupported) {
-                addComponentListener(new ComponentAdapter() {
-                    @Override
-                    public void componentResized(ComponentEvent e) {
-                        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 15, 15));
-                    }
-                });
-            }
-            setOpacity(0.90f);
         }
 
         if (OSUtils.isLinux()) {
@@ -188,10 +178,12 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 
         contentPanel.setLayout(null);
         contentPanel.setBounds(0, 0, initialSize.width, initialSize.height);
-
+        contentPanel.setBackground(new Color(0,0,0,0));
+        
         controlsContainer = new Container();
         controlsContainer.setBounds(0, 0, bkgndSize.width, bkgndSize.height);
         controlsContainer.setVisible(true);
+        controlsContainer.setBackground(new Color(0,0,0,0));
         
         // background image
         // ------------------
@@ -420,8 +412,26 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 
         hideTimer.stop();
     }
-
-
+    
+    @Override
+    public void paint(Graphics g) {
+        
+        // clear background
+        Graphics gg = g.create();
+        try {
+            if (gg instanceof Graphics2D) {
+                gg.setColor(getBackground());
+                ((Graphics2D)gg).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC, 0.0f));
+                gg.fillRect(0, 0, getWidth(), getHeight());
+            }
+        } finally {
+            gg.dispose();
+        }
+        
+        // paint sub components
+        super.paintComponents(g);
+    }
+    
     private void onHideTimerExpired() {
         hideOverlay(true);
     }
