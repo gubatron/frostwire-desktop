@@ -3,7 +3,6 @@ frostwire-common
 
 common components and libraries shared across frostwire clients.
 Test change.
-Web change.
 
 #Setup
 git remote add common https://github.com/frostwire/frostwire-common.git
