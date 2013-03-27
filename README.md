@@ -2,10 +2,13 @@ frostwire-common
 ================
 
 common components and libraries shared across frostwire clients.
-Test change.
-Test outside.
 
 #Setup
-git remote add common https://github.com/frostwire/frostwire-common.git
-git fetch common
-git subtree add --prefix=common --squash -m "Added frostwire-common as a subtree" common/master
+git subtree add --prefix=common --squash -m "Added frostwire-common as a subtree" https://github.com/frostwire/frostwire-common.git master
+
+#Push
+git subtree split --prefix=common --rejoin --branch common-backport
+git push https://github.com/frostwire/frostwire-common.git common-backport:master
+
+#Pull
+git subtree pull --prefix=common -m "Merged frostwire-common changes" https://github.com/frostwire/frostwire-common.git master
