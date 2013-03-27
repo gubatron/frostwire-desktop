@@ -11,6 +11,9 @@
 	<classpathentry kind="src" path="components/azureus/src/main/java"/>
 	<classpathentry kind="src" path="components/alexandria/src/main/java"/>
 	<classpathentry kind="src" path="components/jdownloader/src/main/java"/>
+	<classpathentry kind="src" path="common/components/json"/>
+	<classpathentry kind="src" path="common/components/common"/>
+	<classpathentry kind="src" path="common/components/core"/>
 	<classpathentry excluding="build.xml" kind="src" path="core">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire-desktop/lib/native"/>
@@ -39,5 +42,7 @@
 	<classpathentry kind="lib" path="lib/jars/fwtips.jar" sourcepath="/frostwire-tips/src/java"/>
 	<classpathentry kind="lib" path="lib/jars/mp4parser.jar" sourcepath="lib/jars-src/mp4parser"/>
 	<classpathentry kind="lib" path="lib/jars/jaudiotagger.jar" sourcepath="lib/jars-src/jaudiotagger"/>
+	<classpathentry kind="lib" path="common/jars/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="common/jars/slf4j-api-1.7.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
