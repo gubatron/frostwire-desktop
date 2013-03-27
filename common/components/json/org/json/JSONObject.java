@@ -121,7 +121,7 @@ public class JSONObject {
      * @throws NullPointerException if any of the map's keys are null.
      */
     /* (accept a raw type for API compatibility) */
-    public JSONObject(Map copyFrom) {
+    public JSONObject(Map<?, ?> copyFrom) {
         this();
         Map<?, ?> contentsTyped = (Map<?, ?>) copyFrom;
         for (Map.Entry<?, ?> entry : contentsTyped.entrySet()) {
@@ -616,7 +616,7 @@ public class JSONObject {
      * undefined. The order of the keys is undefined.
      */
     /* Return a raw type for API compatibility */
-    public Iterator keys() {
+    public Iterator<?> keys() {
         return nameValuePairs.keySet().iterator();
     }
 

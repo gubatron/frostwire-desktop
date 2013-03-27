@@ -64,7 +64,7 @@ public class JSONArray {
      *     inconsistent state.
      */
     /* Accept a raw type for API compatibility */
-    public JSONArray(Collection copyFrom) {
+    public JSONArray(Collection<?> copyFrom) {
         this();
         Collection<?> copyFromTyped = (Collection<?>) copyFrom;
         values.addAll(copyFromTyped);
