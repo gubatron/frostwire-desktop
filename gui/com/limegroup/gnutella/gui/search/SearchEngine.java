@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,17 +25,17 @@ import java.util.Map;
 
 import org.limewire.setting.BooleanSetting;
 
-import com.frostwire.bittorrent.websearch.WebSearchPerformer;
-import com.frostwire.bittorrent.websearch.clearbits.ClearBitsWebSearchPerformer;
-import com.frostwire.bittorrent.websearch.extratorrent.ExtratorrentWebSearchPerformer;
-import com.frostwire.bittorrent.websearch.isohunt.ISOHuntWebSearchPerformer;
-import com.frostwire.bittorrent.websearch.kat.KATWebSearchPerformer;
-import com.frostwire.bittorrent.websearch.mininova.MininovaWebSearchPerformer;
-import com.frostwire.bittorrent.websearch.monova.MonovaWebSearchPerformer;
-import com.frostwire.bittorrent.websearch.soundcloud.SoundcloudSearchPerformer;
-import com.frostwire.bittorrent.websearch.tpb.TPBWebSearchPerformer;
-import com.frostwire.bittorrent.websearch.vertor.VertorWebSearchPerformer;
-import com.frostwire.websearch.youtube.YouTubeSearchPerformer;
+import com.frostwire.search.SearchPerformer;
+import com.frostwire.search.clearbits.ClearBitsSearchPerformer;
+import com.frostwire.search.extratorrent.ExtratorrentSearchPerformer;
+import com.frostwire.search.isohunt.ISOHuntSearchPerformer;
+import com.frostwire.search.kat.KATSearchPerformer;
+import com.frostwire.search.mininova.MininovaSearchPerformer;
+import com.frostwire.search.monova.MonovaSearchPerformer;
+import com.frostwire.search.soundcloud.SoundcloudSearchPerformer;
+import com.frostwire.search.tbp.TPBSearchPerformer;
+import com.frostwire.search.vertor.VertorSearchPerformer;
+import com.frostwire.search.youtube2.YouTubeSearchPerformer;
 import com.limegroup.gnutella.settings.SearchEnginesSettings;
 
 /**
@@ -43,13 +43,14 @@ import com.limegroup.gnutella.settings.SearchEnginesSettings;
  * @author aldenml
  *
  */
-public final class SearchEngine {
+public abstract class SearchEngine {
+
+    private static final int DEFAULT_TIMEOUT = 5000;
 
     public String redirectUrl = null;
 
     private final int _id;
     private final String _name;
-    private final WebSearchPerformer _performer;
     private final BooleanSetting _setting;
 
     public static final int CLEARBITS_ID = 0;
@@ -63,21 +64,79 @@ public final class SearchEngine {
     public static final int YOUTUBE_ID = 9;
     public static final int SOUNDCLOUD_ID = 10;
 
-    public static final SearchEngine CLEARBITS = new SearchEngine(CLEARBITS_ID, "ClearBits", new ClearBitsWebSearchPerformer(), SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED);
-    public static final SearchEngine MININOVA = new SearchEngine(MININOVA_ID, "Mininova", new MininovaWebSearchPerformer(), SearchEnginesSettings.MININOVA_SEARCH_ENABLED);
-    public static final SearchEngine ISOHUNT = new SearchEngine(ISOHUNT_ID, "ISOHunt", new ISOHuntWebSearchPerformer(), SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED);
-    public static final SearchEngine KAT = new SearchEngine(KAT_ID, "KAT", new KATWebSearchPerformer(), SearchEnginesSettings.KAT_SEARCH_ENABLED);
-    public static final SearchEngine EXTRATORRENT = new SearchEngine(EXTRATORRENT_ID, "Extratorrent", new ExtratorrentWebSearchPerformer(), SearchEnginesSettings.EXTRATORRENT_SEARCH_ENABLED);
-    public static final SearchEngine VERTOR = new SearchEngine(VERTOR_ID, "Vertor", new VertorWebSearchPerformer(), SearchEnginesSettings.VERTOR_SEARCH_ENABLED);
-    public static final SearchEngine TPB = new SearchEngine(TPB_ID, "TPB", new TPBWebSearchPerformer(), SearchEnginesSettings.TPB_SEARCH_ENABLED);
-    public static final SearchEngine MONOVA = new SearchEngine(MONOVA_ID, "Monova", new MonovaWebSearchPerformer(), SearchEnginesSettings.MONOVA_SEARCH_ENABLED);
-    public static final SearchEngine YOUTUBE = new SearchEngine(YOUTUBE_ID, "YouTube", new YouTubeSearchPerformer(), SearchEnginesSettings.YOUTUBE_SEARCH_ENABLED);
-    public static final SearchEngine SOUNDCLOUD = new SearchEngine(SOUNDCLOUD_ID, "Soundcloud", new SoundcloudSearchPerformer(), SearchEnginesSettings.SOUNDCLOUD_SEARCH_ENABLED);
+    public static final SearchEngine CLEARBITS = new SearchEngine(CLEARBITS_ID, "ClearBits", SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            return new ClearBitsSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
 
-    private SearchEngine(int id, String name, WebSearchPerformer performer, BooleanSetting setting) {
+    public static final SearchEngine MININOVA = new SearchEngine(MININOVA_ID, "Mininova", SearchEnginesSettings.MININOVA_SEARCH_ENABLED) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            return new MininovaSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
+
+    public static final SearchEngine ISOHUNT = new SearchEngine(ISOHUNT_ID, "ISOHunt", SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            return new ISOHuntSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
+
+    public static final SearchEngine KAT = new SearchEngine(KAT_ID, "KAT", SearchEnginesSettings.KAT_SEARCH_ENABLED) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            return new KATSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
+
+    public static final SearchEngine EXTRATORRENT = new SearchEngine(EXTRATORRENT_ID, "Extratorrent", SearchEnginesSettings.EXTRATORRENT_SEARCH_ENABLED) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            return new ExtratorrentSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
+
+    public static final SearchEngine VERTOR = new SearchEngine(VERTOR_ID, "Vertor", SearchEnginesSettings.VERTOR_SEARCH_ENABLED) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            return new VertorSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
+
+    public static final SearchEngine TPB = new SearchEngine(TPB_ID, "TPB", SearchEnginesSettings.TPB_SEARCH_ENABLED) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            return new TPBSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
+
+    public static final SearchEngine MONOVA = new SearchEngine(MONOVA_ID, "Monova", SearchEnginesSettings.MONOVA_SEARCH_ENABLED) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            return new MonovaSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
+
+    public static final SearchEngine YOUTUBE = new SearchEngine(YOUTUBE_ID, "YouTube", SearchEnginesSettings.YOUTUBE_SEARCH_ENABLED) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            return new YouTubeSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
+
+    public static final SearchEngine SOUNDCLOUD = new SearchEngine(SOUNDCLOUD_ID, "Soundcloud", SearchEnginesSettings.SOUNDCLOUD_SEARCH_ENABLED) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            return new SoundcloudSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
+
+    private SearchEngine(int id, String name, BooleanSetting setting) {
         _id = id;
         _name = name;
-        _performer = performer;
         _setting = setting;
     }
 
@@ -101,34 +160,32 @@ public final class SearchEngine {
     public static List<SearchEngine> getSearchEngines() {
         return Arrays.asList(ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, VERTOR, TPB, MONOVA, SOUNDCLOUD);
     }
-    
-    public WebSearchPerformer getPerformer() {
-        return _performer;
+
+    public abstract SearchPerformer getPerformer(long token, String keywords);
+
+    public static SearchEngine getSearchEngineById(int searchEngineID) {
+        List<SearchEngine> searchEngines = getSearchEngines();
+
+        for (SearchEngine engine : searchEngines) {
+            if (engine.getId() == searchEngineID) {
+                return engine;
+            }
+        }
+
+        return null;
     }
 
-	public static SearchEngine getSearchEngineById(int searchEngineID) {
-		List<SearchEngine> searchEngines = getSearchEngines();
-		
-		for (SearchEngine engine : searchEngines) {
-			if (engine.getId()==searchEngineID) {
-				return engine;
-			}
-		}
-		
-		return null;
-	}
-	
-	public static Map<Integer, SearchEngine> getSearchEngineMap() {
-		HashMap<Integer,SearchEngine> m = new HashMap<Integer, SearchEngine>();
-		List<SearchEngine> searchEngines = getSearchEngines();
-		
-		for (SearchEngine engine : searchEngines) {
-			m.put(engine.getId(), engine);
-		}
-		return m;
-	}
+    public static Map<Integer, SearchEngine> getSearchEngineMap() {
+        HashMap<Integer, SearchEngine> m = new HashMap<Integer, SearchEngine>();
+        List<SearchEngine> searchEngines = getSearchEngines();
 
-	public BooleanSetting getEnabledSetting() {
-		return _setting;
-	}
+        for (SearchEngine engine : searchEngines) {
+            m.put(engine.getId(), engine);
+        }
+        return m;
+    }
+
+    public BooleanSetting getEnabledSetting() {
+        return _setting;
+    }
 }
