@@ -20,13 +20,14 @@ package com.frostwire.search.soundcloud;
 
 import com.frostwire.search.AbstractFileSearchResult;
 import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.StreamableSearchResult;
 
 /**
  * @author gubatron
  * @author aldenml
  *
  */
-public class SoundcloudSearchResult extends AbstractFileSearchResult implements CrawlableSearchResult {
+public class SoundcloudSearchResult extends AbstractFileSearchResult implements StreamableSearchResult, CrawlableSearchResult {
 
     private final SoundcloudItem item;
     private final String trackUrl;

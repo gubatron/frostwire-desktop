@@ -52,4 +52,9 @@ public abstract class AbstractCrawledSearchResult extends AbstractSearchResult i
     public License getLicense() {
         return sr.getLicense();
     }
+
+    @Override
+    public long getCreationTime() {
+        return sr.getCreationTime();
+    }
 }
