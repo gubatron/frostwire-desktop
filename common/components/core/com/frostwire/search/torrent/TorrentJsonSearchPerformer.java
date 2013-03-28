@@ -40,10 +40,12 @@ public abstract class TorrentJsonSearchPerformer<T, R extends TorrentSearchResul
 
         List<T> items = parseJson(page);
 
-        for (T item : items) {
-            if (!isStopped()) {
-                SearchResult sr = fromItem(item);
-                result.add(sr);
+        if (items != null) {
+            for (T item : items) {
+                if (!isStopped()) {
+                    SearchResult sr = fromItem(item);
+                    result.add(sr);
+                }
             }
         }
 
