@@ -157,14 +157,14 @@ public abstract class SearchEngine {
         return _id == ((SearchEngine) obj)._id;
     }
 
-    public static List<SearchEngine> getSearchEngines() {
+    public static List<SearchEngine> getEngines() {
         return Arrays.asList(ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, VERTOR, TPB, MONOVA, SOUNDCLOUD);
     }
 
     public abstract SearchPerformer getPerformer(long token, String keywords);
 
     public static SearchEngine getSearchEngineById(int searchEngineID) {
-        List<SearchEngine> searchEngines = getSearchEngines();
+        List<SearchEngine> searchEngines = getEngines();
 
         for (SearchEngine engine : searchEngines) {
             if (engine.getId() == searchEngineID) {
@@ -177,7 +177,7 @@ public abstract class SearchEngine {
 
     public static Map<Integer, SearchEngine> getSearchEngineMap() {
         HashMap<Integer, SearchEngine> m = new HashMap<Integer, SearchEngine>();
-        List<SearchEngine> searchEngines = getSearchEngines();
+        List<SearchEngine> searchEngines = getEngines();
 
         for (SearchEngine engine : searchEngines) {
             m.put(engine.getId(), engine);

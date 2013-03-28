@@ -434,7 +434,7 @@ public final class UpdateMessageReader implements ContentHandler {
 					&& atts.getValue("torrentDetailsUrl").length() > 0) {
 				String torrentDetailsUrl = atts.getValue("torrentDetailsUrl");
 				
-				List<SearchEngine> searchEngines = SearchEngine.getSearchEngines();
+				List<SearchEngine> searchEngines = SearchEngine.getEngines();
 				for (SearchEngine searchEngine : searchEngines) {
 				    // not doing it for ClearBits on purpose.
 				    if (!searchEngine.equals(SearchEngine.CLEARBITS)) {

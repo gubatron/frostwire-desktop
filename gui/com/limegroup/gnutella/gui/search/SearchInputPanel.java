@@ -174,7 +174,7 @@ class SearchInputPanel extends JPanel {
 		controls.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Search Engines")));
         controls.setLayout(new GridBagLayout());
         controls.setAlignmentX(0.0f);
-        List<SearchEngine> searchEngines = SearchEngine.getSearchEngines();
+        List<SearchEngine> searchEngines = SearchEngine.getEngines();
         setupCheckboxes(searchEngines, controls);
         p.add(controls);
        
@@ -360,7 +360,7 @@ class SearchInputPanel extends JPanel {
             final SearchInformation info = SearchInformation.createTitledKeywordSearch(query, null, MediaType.getTorrentMediaType(), query);
 
             // If the search worked, store & clear it.
-            if (SearchMediator.triggerSearch(info) != null) {
+            if (SearchMediator.instance().triggerSearch(info) != null) {
                 if (info.isKeywordSearch()) {
                     
                         SEARCH_FIELD.addToDictionary();

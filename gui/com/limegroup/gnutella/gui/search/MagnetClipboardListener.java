@@ -170,7 +170,7 @@ public class MagnetClipboardListener extends WindowAdapter {
                         SearchInformation info = SearchInformation.createKeywordSearch(query, null, MediaType.getAnyTypeMediaType());
                         if (SearchMediator.validateInfo(info) == SearchMediator.QUERY_VALID) {
                             oneSearchStarted = true;
-                            SearchMediator.triggerSearch(info);
+                            SearchMediator.instance().triggerSearch(info);
                         }
                     }
                 }

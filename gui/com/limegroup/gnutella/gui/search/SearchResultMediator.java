@@ -98,7 +98,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
      *  May be a DummyGUID for the empty result list hack.
      */
     protected volatile GUID guid;
-    private final long token;
+    private long token;
 
     /**
      * The CompositeFilter for this ResultPanel.
@@ -569,7 +569,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         }
 
         SearchMediator.setTabDisplayCount(this);
-        SearchMediator.repeatSearch(this, SEARCH_INFO, clearTable);
+        SearchMediator.instance().repeatSearch(this, SEARCH_INFO, clearTable);
         setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, false);
         setButtonEnabled(SearchButtons.STOP_SEARCH_BUTTON_INDEX, !isStopped());
     }
@@ -594,6 +594,10 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
      */
     void setGUID(GUID guid) {
         this.guid = guid;
+    }
+    
+    void setToken(long token) {
+        this.token = token;
     }
 
     /** Returns the guid this is responsible for. */

@@ -38,7 +38,7 @@ public final class SearchDownloadTab extends AbstractTab {
      * @param downloadMediator the <tt>DownloadMediator</tt> instance for 
      *  obtaining the necessary ui components to add
      */
-    public SearchDownloadTab(SearchMediator searchMediator, BTDownloadMediator downloadMediator) {
+    public SearchDownloadTab(BTDownloadMediator downloadMediator) {
         super(I18n.tr("Search"), I18n.tr("Search and Download Files"), "search_tab");
 
         searchDownloadSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, SearchMediator.getResultComponent(), downloadMediator.getComponent());

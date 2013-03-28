@@ -57,7 +57,6 @@ import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
 import com.limegroup.gnutella.gui.menu.MenuMediator;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
-import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.themes.SkinCustomUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
@@ -73,12 +72,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * Handle to the <tt>JTabbedPane</tt> instance.
      */
     private JPanel TABBED_PANE;
-
-    /**
-     * Constant handle to the <tt>SearchMediator</tt> class that is
-     * responsible for displaying search results to the user.
-     */
-    private SearchMediator SEARCH_MEDIATOR;
 
     private BTDownloadMediator BT_DOWNLOAD_MEDIATOR;
 
@@ -297,9 +290,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     private void buildTabs() {
         TABBED_PANE.addMouseListener(com.frostwire.gui.tabs.TabRightClickAdapter.getInstance());
 
-        SEARCH_MEDIATOR = new SearchMediator();
-
-        TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getBTDownloadMediator()));
+        TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(getBTDownloadMediator()));
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryTab(getLibraryMediator()));
         TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(getChatMediator()));
 

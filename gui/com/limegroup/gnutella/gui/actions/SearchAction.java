@@ -73,7 +73,7 @@ public class SearchAction extends AbstractAction {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		SearchMediator.triggerSearch(info);
+		SearchMediator.instance().triggerSearch(info);
 		GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
 	}
 }

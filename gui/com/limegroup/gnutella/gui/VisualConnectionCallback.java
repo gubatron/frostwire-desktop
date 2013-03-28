@@ -206,7 +206,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
 						if (SearchMediator.validateInfo(info) 
 							== SearchMediator.QUERY_VALID) {
 							oneSearchStarted = true;
-							SearchMediator.triggerSearch(info);
+							SearchMediator.instance().triggerSearch(info);
 						}
 					}
 					else {
