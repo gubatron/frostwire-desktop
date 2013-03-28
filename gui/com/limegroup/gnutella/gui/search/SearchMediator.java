@@ -196,7 +196,8 @@ public final class SearchMediator {
 
         // generate a guid for the search.
         final byte[] guid = newQueryGUID();
-        addResultTab(new GUID(guid), info);
+        long token = System.nanoTime();
+        addResultTab(new GUID(guid), token, info);
 
         doSearch(guid, info);
 
@@ -388,8 +389,8 @@ public final class SearchMediator {
      * Adds a single result tab for the specified GUID, type,
      * standard query string, and XML query string.
      */
-    private static SearchResultMediator addResultTab(GUID guid, SearchInformation info) {
-        return getSearchResultDisplayer().addResultTab(guid, info);
+    private static SearchResultMediator addResultTab(GUID guid, long token, SearchInformation info) {
+        return getSearchResultDisplayer().addResultTab(guid, token, info);
     }
 
     /**

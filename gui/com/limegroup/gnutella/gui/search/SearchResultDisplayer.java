@@ -206,8 +206,8 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      *  to the tabbed pane.  This is used both for normal searching 
      *  and browsing.  Returns the ResultPanel added.
      */
-    SearchResultMediator addResultTab(GUID guid, SearchInformation info) {
-        SearchResultMediator panel = new SearchResultMediator(guid, info);
+    SearchResultMediator addResultTab(GUID guid, long token, SearchInformation info) {
+        SearchResultMediator panel = new SearchResultMediator(guid, token, info);
         return addResultPanelInternal(panel, info.getTitle());
     }
 

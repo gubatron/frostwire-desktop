@@ -98,6 +98,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
      *  May be a DummyGUID for the empty result list hack.
      */
     protected volatile GUID guid;
+    private final long token;
 
     /**
      * The CompositeFilter for this ResultPanel.
@@ -140,6 +141,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         SEARCH_INFO = SearchInformation.createKeywordSearch("", null, MediaType.getAnyTypeMediaType());
         FILTER = null;
         this.guid = STOPPED_GUID;
+        this.token = 0;
         setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, false);
         // disable dnd for overlay panel
         TABLE.setDragEnabled(false);
@@ -149,27 +151,16 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     }
 
     /**
-     * Constructor for creating a search panel with a given title.
-     * This should be used for "pre-stopped" searches.
-     */
-    SearchResultMediator(String title, String id) {
-        super(id);
-
-        this.SEARCH_INFO = SearchInformation.createKeywordSearch(title, null, MediaType.getAnyTypeMediaType());
-
-        this.guid = STOPPED_GUID;
-    }
-
-    /**
      * Constructs a new ResultPanel for search results.
      *
      * @param guid the guid of the query.  Used to match results.
      * @param info the info of the search
      */
-    SearchResultMediator(GUID guid, SearchInformation info) {
+    SearchResultMediator(GUID guid, long token, SearchInformation info) {
         super(SEARCH_TABLE);
         SEARCH_INFO = info;
         this.guid = guid;
+        this.token = token;
         setupRealTable();
         resetFilters();
     }
