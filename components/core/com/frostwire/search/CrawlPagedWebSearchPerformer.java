@@ -76,7 +76,10 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
 
                 try {
                     if (data != null) {
-                        onResults(this, crawlResult(obj, data));
+                        List<? extends SearchResult> results = crawlResult(obj, data);
+                        if (results != null) {
+                            onResults(this, results);
+                        }
                     }
                 } catch (Throwable e) {
                     LOG.warn("Error creating crawled results from downloaded data: " + e.getMessage());

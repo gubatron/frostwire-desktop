@@ -25,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.frostwire.search.AbstractFileSearchResult;
+import com.frostwire.search.CrawlableSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.util.HtmlManipulator;
 
@@ -34,7 +35,7 @@ import com.frostwire.util.HtmlManipulator;
  * @author aldenml
  *
  */
-public class TPBSearchResult extends AbstractFileSearchResult implements TorrentSearchResult {
+public class TPBSearchResult extends AbstractFileSearchResult implements TorrentSearchResult, CrawlableSearchResult {
 
     private final static long[] BYTE_MULTIPLIERS = new long[] { 1, 2 << 9, 2 << 19, 2 << 29, 2 << 39, 2 << 49 };
 
@@ -134,6 +135,11 @@ public class TPBSearchResult extends AbstractFileSearchResult implements Torrent
     @Override
     public String getDisplayName() {
         return displayName;
+    }
+
+    @Override
+    public boolean isComplete() {
+        return true;
     }
 
     private long parseSize(String group) {
