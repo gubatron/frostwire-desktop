@@ -71,7 +71,7 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.QueryUtils;
 
-public class SearchResultMediator extends AbstractTableMediator<TableRowFilteredModel, SearchResultDataLine, SearchResult> {
+public class SearchResultMediator extends AbstractTableMediator<TableRowFilteredModel, SearchResultDataLine, UISearchResult> {
 
     protected static final String SEARCH_TABLE = "SEARCH_TABLE";
 
@@ -255,7 +255,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     final SearchResultDataLine[] lines = getAllSelectedLines();
                     if (lines.length == 1) {
-                        SearchResult searchResult = lines[0].getSearchResult();
+                        UISearchResult searchResult = lines[0].getSearchResult();
                         searchResult.showDetails(true);
                     }
                 }

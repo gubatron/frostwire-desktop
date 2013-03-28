@@ -28,10 +28,10 @@ import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
  */
 public final class SearchResultNameHolder implements Comparable<SearchResultNameHolder> {
 
-    private final SearchResult sr;
+    private final UISearchResult sr;
     private final String html;
 
-    public SearchResultNameHolder(final SearchResult sr) {
+    public SearchResultNameHolder(final UISearchResult sr) {
         this.sr = sr;
         this.html = "<html><div width=\"1000000px\">" + simpleHighlighter(sr.getQuery(), sr.getDisplayName()) + "</div></html>";
     }
@@ -40,7 +40,7 @@ public final class SearchResultNameHolder implements Comparable<SearchResultName
         return AbstractTableMediator.compare(sr.getDisplayName(), o.sr.getDisplayName());
     }
 
-    public SearchResult getSearchResult() {
+    public UISearchResult getSearchResult() {
         return sr;
     }
 

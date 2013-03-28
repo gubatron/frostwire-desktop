@@ -24,6 +24,6 @@ package com.limegroup.gnutella.gui.search;
  * @author aldenml
  *
  */
-public interface BittorrentSearchResult extends SearchResult {
+public interface BittorrentSearchResult extends UISearchResult {
 
 }

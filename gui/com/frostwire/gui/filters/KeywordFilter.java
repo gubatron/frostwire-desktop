@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.limegroup.gnutella.gui.search.SearchResult;
+import com.limegroup.gnutella.gui.search.UISearchResult;
 
 /** 
  * A spam filter that removes certain "bad" keywords. 
@@ -114,7 +114,7 @@ public class KeywordFilter implements SearchFilter {
         disallow("teenfuns");
     }
 
-    public boolean allow(SearchResult m) {
+    public boolean allow(UISearchResult m) {
         return !matches(m.getDisplayName());
     }
 

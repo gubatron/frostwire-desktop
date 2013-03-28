@@ -24,7 +24,7 @@ import com.limegroup.gnutella.SpeedConstants;
  * A single SearchResult. These are returned in the {@link SearchInputPanel} and
  * are used to create {@link SearchResultDataLine}s to show search results. *
  */
-public interface SearchResult {
+public interface UISearchResult {
 
     /**
      * @return the file name

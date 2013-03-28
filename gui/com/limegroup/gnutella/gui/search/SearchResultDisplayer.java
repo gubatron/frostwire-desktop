@@ -344,7 +344,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      *           line and already in rp
      * @modifies this
      */
-    void addQueryResult(byte[] replyGUID, SearchResult line, SearchResultMediator rp) {
+    void addQueryResult(byte[] replyGUID, UISearchResult line, SearchResultMediator rp) {
         if (rp.isStopped()) {
             return;
         }

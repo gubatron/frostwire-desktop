@@ -36,7 +36,7 @@ import com.limegroup.gnutella.gui.tables.SizeHolder;
 /** 
  * A single line of a search result.
  */
-public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
+public final class SearchResultDataLine extends AbstractDataLine<UISearchResult> {
     /**
      * The SearchTableColumns.
      */
@@ -45,12 +45,12 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
     /**
      * The SearchResult that created this particular line.
      */
-    private SearchResult RESULT;
+    private UISearchResult RESULT;
 
     /**
      * The list of other SearchResults that match this line.
      */
-    private List<SearchResult> _otherResults;
+    private List<UISearchResult> _otherResults;
 
     /**
      * The media type of this document.
@@ -82,7 +82,7 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
     /**
      * Initializes this line with the specified search result.
      */
-    public void initialize(SearchResult sr) {
+    public void initialize(UISearchResult sr) {
         super.initialize(sr);
 
         RESULT = sr;
@@ -137,7 +137,7 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
     /**
      * Gets the other results for this line.
      */
-    List<SearchResult> getOtherResults() {
+    List<UISearchResult> getOtherResults() {
         if (_otherResults == null) {
             return Collections.emptyList();
         } else {
@@ -278,12 +278,12 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
     }
 
     /**
-     * Returns <code>true</code> if <code>this</code> {@link SearchResult}
+     * Returns <code>true</code> if <code>this</code> {@link UISearchResult}
      * is the same kind as <code>line</code>'s, e.g. one from gnutella and
      * one from gnutella. Currently we compare classes.
      * 
      * @param line line to which we compare
-     * @return <code>true</code> if <code>this</code> {@link SearchResult}
+     * @return <code>true</code> if <code>this</code> {@link UISearchResult}
      *         is the same kind as <code>line</code>'s, e.g. one from
      *         gnutella and one from gnutella
      */
@@ -296,7 +296,7 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> {
      * 
      * @return the underlying search result
      */
-    public final SearchResult getSearchResult() {
+    public final UISearchResult getSearchResult() {
         return RESULT;
     }
 

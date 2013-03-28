@@ -17,7 +17,7 @@
  */
 package com.frostwire.gui.filters;
 
-import com.limegroup.gnutella.gui.search.SearchResult;
+import com.limegroup.gnutella.gui.search.UISearchResult;
 
 public class CompositeFilter implements SearchFilter {
 
@@ -27,7 +27,7 @@ public class CompositeFilter implements SearchFilter {
         _delegates = filters;
     }
 
-    public boolean allow(SearchResult m) {
+    public boolean allow(UISearchResult m) {
         for (int i = 0; i < _delegates.length; i++) {
             if (!_delegates[i].allow(m))
                 return false;

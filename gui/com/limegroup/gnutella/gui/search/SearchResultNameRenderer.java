@@ -70,7 +70,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
     private JLabel labelPartialDownload;
     private JLabel labelDownload;
 
-    private SearchResult sr;
+    private UISearchResult sr;
 
     public SearchResultNameRenderer() {
         setupUI();
@@ -313,7 +313,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
       labelPlay.setIcon((isStreamableSourceBeingPlayed(sr)) ? GUIMediator.getThemeImage("speaker") : GUIMediator.getThemeImage("search_result_play_over"));
     }
 
-    private boolean isStreamableSourceBeingPlayed(SearchResult sr) {
+    private boolean isStreamableSourceBeingPlayed(UISearchResult sr) {
         if (!(sr instanceof StreamableSearchResult)) {
             return false;
         }

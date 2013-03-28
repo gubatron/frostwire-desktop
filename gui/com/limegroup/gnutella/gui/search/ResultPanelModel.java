@@ -30,7 +30,7 @@ import com.limegroup.gnutella.settings.SearchSettings;
  * that the new lines are added as extra information to the existing lines,
  * instead of as brand new lines.
  */
-class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchResult> {
+class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearchResult> {
     
     /**
      * 
@@ -123,7 +123,7 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchRe
     /**
      * Override default so new ones get added to the end
      */
-    public int add(SearchResult o) {
+    public int add(UISearchResult o) {
         return add(o, getRowCount());
     }
     

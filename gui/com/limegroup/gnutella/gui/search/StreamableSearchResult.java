@@ -24,7 +24,7 @@ package com.limegroup.gnutella.gui.search;
  * @author aldenml
  *
  */
-public interface StreamableSearchResult extends SearchResult {
+public interface StreamableSearchResult extends UISearchResult {
 
     public void play();
     
