@@ -32,14 +32,14 @@ import com.frostwire.search.SearchResult;
  * @author aldenml
  *
  */
-public class TPBWebSearchPerformer extends PagedWebSearchPerformer {
+public class TPBSearchPerformer extends PagedWebSearchPerformer {
 
     private static final int MAX_RESULTS = 20;
 
     private static final String REGEX = "(?is)<td class=\"vertTh\">.*?<a href=\"[^\"]*?\" title=\"More from this category\">(.*?)</a>.*?</td>.*?<a href=\"([^\"]*?)\" class=\"detLink\" title=\"Details for ([^\"]*?)\">.*?</a>.*?<a href=\\\"(magnet:\\?xt=urn:btih:.*?)\\\" title=\\\"Download this torrent using magnet\\\">.*?</a>.*?<font class=\"detDesc\">Uploaded ([^,]*?), Size (.*?), ULed.*?<td align=\"right\">(.*?)</td>\\s*<td align=\"right\">(.*?)</td>";
     private static final Pattern PATTERN = Pattern.compile(REGEX);
 
-    public TPBWebSearchPerformer(long token, String keywords, int timeout) {
+    public TPBSearchPerformer(long token, String keywords, int timeout) {
         super(token, keywords, timeout, 1);
     }
 
@@ -60,7 +60,7 @@ public class TPBWebSearchPerformer extends PagedWebSearchPerformer {
 
         while (matcher.find() && i < max && !isStopped()) {
             try {
-                SearchResult sr = new TPBWebSearchResult(matcher);
+                SearchResult sr = new TPBSearchResult(matcher);
                 if (sr != null) {
                     result.add(sr);
                     i++;

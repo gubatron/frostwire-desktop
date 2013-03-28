@@ -34,7 +34,7 @@ import com.frostwire.util.HtmlManipulator;
  * @author aldenml
  *
  */
-public class TPBWebSearchResult extends AbstractFileSearchResult implements TorrentSearchResult {
+public class TPBSearchResult extends AbstractFileSearchResult implements TorrentSearchResult {
 
     private final static long[] BYTE_MULTIPLIERS = new long[] { 1, 2 << 9, 2 << 19, 2 << 29, 2 << 39, 2 << 49 };
 
@@ -66,7 +66,7 @@ public class TPBWebSearchResult extends AbstractFileSearchResult implements Torr
     private final long creationTime;
     private final int seeds;
 
-    public TPBWebSearchResult(Matcher matcher) {
+    public TPBSearchResult(Matcher matcher) {
         /*
          * Matcher groups cheatsheet
          * 1 -> Category (useless)
