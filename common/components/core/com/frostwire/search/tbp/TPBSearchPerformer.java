@@ -18,12 +18,11 @@
 
 package com.frostwire.search.tbp;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.frostwire.search.PagedWebSearchPerformer;
+import com.frostwire.search.RegexSearchPerformer;
 import com.frostwire.search.SearchResult;
 
 /**
@@ -32,7 +31,7 @@ import com.frostwire.search.SearchResult;
  * @author aldenml
  *
  */
-public class TPBSearchPerformer extends PagedWebSearchPerformer {
+public class TPBSearchPerformer extends RegexSearchPerformer<TPBSearchResult> {
 
     private static final int MAX_RESULTS = 20;
 
@@ -40,7 +39,7 @@ public class TPBSearchPerformer extends PagedWebSearchPerformer {
     private static final Pattern PATTERN = Pattern.compile(REGEX);
 
     public TPBSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1);
+        super(token, keywords, timeout, 1, MAX_RESULTS, MAX_RESULTS);
     }
 
     @Override
@@ -49,27 +48,22 @@ public class TPBSearchPerformer extends PagedWebSearchPerformer {
     }
 
     @Override
-    protected List<? extends SearchResult> searchPage(String page) {
-        List<SearchResult> result = new LinkedList<SearchResult>();
+    protected Pattern getPattern() {
+        return PATTERN;
+    }
 
-        Matcher matcher = PATTERN.matcher(page);
+    @Override
+    protected TPBSearchResult fromMatcher(Matcher matcher) {
+        return new TPBSearchResult(matcher);
+    }
 
-        int max = MAX_RESULTS;
+    @Override
+    protected String getCrawlUrl(TPBSearchResult sr) {
+        return sr.getDetailsUrl();
+    }
 
-        int i = 0;
-
-        while (matcher.find() && i < max && !isStopped()) {
-            try {
-                SearchResult sr = new TPBSearchResult(matcher);
-                if (sr != null) {
-                    result.add(sr);
-                    i++;
-                }
-            } catch (Throwable e) {
-                // do nothing
-            }
-        }
-
-        return result;
+    @Override
+    protected List<? extends SearchResult> crawlResult(TPBSearchResult sr, byte[] data) throws Exception {
+        return null;
     }
 }

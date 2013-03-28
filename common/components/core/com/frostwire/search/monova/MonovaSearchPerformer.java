@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.frostwire.search.CrawlPagedWebSearchPerformer;
+import com.frostwire.search.RegexSearchPerformer;
 import com.frostwire.search.SearchResult;
 
 /**
@@ -32,12 +32,12 @@ import com.frostwire.search.SearchResult;
  * @author aldenml
  *
  */
-public class MonovaSearchPerformer extends CrawlPagedWebSearchPerformer<MonovaTempSearchResult> {
+public class MonovaSearchPerformer extends RegexSearchPerformer<MonovaTempSearchResult> {
 
     private static final int MAX_RESULTS = 10;
 
     public MonovaSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1, MAX_RESULTS);
+        super(token, keywords, timeout, 1, MAX_RESULTS, MAX_RESULTS);
     }
 
     private static final String REGEX = "(?is)<a href=\"http://www.mnova.eu/torrent/([0-9]*)/";
@@ -49,32 +49,6 @@ public class MonovaSearchPerformer extends CrawlPagedWebSearchPerformer<MonovaTe
     @Override
     protected String getUrl(int page, String encodedKeywords) {
         return "http://www.mnova.eu/search.php?sort=5&term=" + encodedKeywords;
-    }
-
-    @Override
-    protected List<? extends SearchResult> searchPage(String page) {
-        List<SearchResult> result = new LinkedList<SearchResult>();
-
-        Matcher matcher = PATTERN.matcher(page);
-
-        int max = MAX_RESULTS;
-
-        int i = 0;
-
-        while (matcher.find() && i < max && !isStopped()) {
-            try {
-                String itemId = matcher.group(1);
-                SearchResult sr = new MonovaTempSearchResult(itemId);
-                if (sr != null) {
-                    result.add(sr);
-                    i++;
-                }
-            } catch (Throwable e) {
-                // do nothing
-            }
-        }
-
-        return result;
     }
 
     @Override
@@ -95,5 +69,16 @@ public class MonovaSearchPerformer extends CrawlPagedWebSearchPerformer<MonovaTe
         }
 
         return list;
+    }
+
+    @Override
+    protected Pattern getPattern() {
+        return PATTERN;
+    }
+
+    @Override
+    protected MonovaTempSearchResult fromMatcher(Matcher matcher) {
+        String itemId = matcher.group(1);
+        return new MonovaTempSearchResult(itemId);
     }
 }

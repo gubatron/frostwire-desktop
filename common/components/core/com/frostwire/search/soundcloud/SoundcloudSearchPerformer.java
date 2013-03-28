@@ -19,13 +19,12 @@
 package com.frostwire.search.soundcloud;
 
 import java.text.SimpleDateFormat;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.frostwire.search.PagedWebSearchPerformer;
+import com.frostwire.search.RegexSearchPerformer;
 import com.frostwire.search.SearchResult;
 import com.frostwire.util.JsonUtils;
 
@@ -34,7 +33,7 @@ import com.frostwire.util.JsonUtils;
  * @author aldenml
  *
  */
-public class SoundcloudSearchPerformer extends PagedWebSearchPerformer {
+public class SoundcloudSearchPerformer extends RegexSearchPerformer<SoundcloudSearchResult> {
 
     private static final int MAX_RESULTS = 16;
 
@@ -44,7 +43,7 @@ public class SoundcloudSearchPerformer extends PagedWebSearchPerformer {
     private static final Pattern PATTERN = Pattern.compile(REGEX);
 
     public SoundcloudSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, MAX_RESULTS / 4);
+        super(token, keywords, timeout, MAX_RESULTS / 4, 0, MAX_RESULTS);
     }
 
     @Override
@@ -53,35 +52,30 @@ public class SoundcloudSearchPerformer extends PagedWebSearchPerformer {
     }
 
     @Override
-    protected List<? extends SearchResult> searchPage(String page) {
-        List<SearchResult> result = new LinkedList<SearchResult>();
+    protected Pattern getPattern() {
+        return PATTERN;
+    }
 
-        Matcher matcher = PATTERN.matcher(page);
-
-        int max = MAX_RESULTS;
-
-        int i = 0;
-
-        while (matcher.find() && i < max && !isStopped()) {
-            try {
-                SoundcloudItem item = JsonUtils.toObject(matcher.group(3), SoundcloudItem.class);
-                try {
-                    item.thumbnailUrl = buildThumbnailUrl(matcher.group(1));
-                    item.date = new SimpleDateFormat(DATE_FORMAT, Locale.US).parse(matcher.group(2)).getTime();
-                } catch (Throwable e) {
-                    item.date = -1;
-                }
-                SearchResult sr = new SoundcloudSearchResult(item);
-                if (sr != null) {
-                    result.add(sr);
-                    i++;
-                }
-            } catch (Throwable e) {
-                // do nothing
-            }
+    @Override
+    protected SoundcloudSearchResult fromMatcher(Matcher matcher) {
+        SoundcloudItem item = JsonUtils.toObject(matcher.group(3), SoundcloudItem.class);
+        try {
+            item.thumbnailUrl = buildThumbnailUrl(matcher.group(1));
+            item.date = new SimpleDateFormat(DATE_FORMAT, Locale.US).parse(matcher.group(2)).getTime();
+        } catch (Throwable e) {
+            item.date = -1;
         }
+        return new SoundcloudSearchResult(item);
+    }
 
-        return result;
+    @Override
+    protected String getCrawlUrl(SoundcloudSearchResult sr) {
+        return sr.getDetailsUrl();
+    }
+
+    @Override
+    protected List<? extends SearchResult> crawlResult(SoundcloudSearchResult sr, byte[] data) throws Exception {
+        return null;
     }
 
     private String buildThumbnailUrl(String str) {
