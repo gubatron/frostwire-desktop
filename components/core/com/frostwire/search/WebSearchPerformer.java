@@ -17,13 +17,12 @@
 
 package com.frostwire.search;
 
-import java.net.URLEncoder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.URLUtils;
 import com.frostwire.util.UserAgentGenerator;
 
 /**
@@ -46,7 +45,7 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     public WebSearchPerformer(long token, String keywords, int timeout) {
         super(token);
         this.keywords = keywords;
-        this.encodedKeywords = encodeKeywords(keywords);
+        this.encodedKeywords = URLUtils.encode(keywords);
         this.timeout = timeout;
         this.client = HttpClientFactory.newDefaultInstance();
     }
@@ -69,15 +68,10 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     }
 
     protected byte[] fetchBytes(String url, String referrer, int timeout) {
-        return client.getBytes(url, timeout, DEFAULT_USER_AGENT, referrer);
-    }
-
-    private String encodeKeywords(String keywords) {
-        try {
-            return URLEncoder.encode(keywords, "UTF-8");
-        } catch (Throwable e) {
-            LOG.warn("Error encoding keywords:" + keywords + ", e: " + e.getMessage());
-            return keywords; // this situation should be impossible.
+        if (url.startsWith("htt")) { // http(s)
+            return client.getBytes(url, timeout, DEFAULT_USER_AGENT, referrer);
+        } else {
+            return null;
         }
     }
 }
