@@ -90,6 +90,11 @@ public class YouTubeSearchResult extends AbstractFileSearchResult implements Cra
         return videoUrl;
     }
 
+    @Override
+    public boolean isComplete() {
+        return true;
+    }
+
     private long readCreationTime(YouTubeEntry entry) {
         try {
             return DATE_FORMAT.parse(entry.published.title.replace("000Z", "")).getTime();
@@ -110,10 +115,5 @@ public class YouTubeSearchResult extends AbstractFileSearchResult implements Cra
         url = url.replace("https://", "http://").replace("&feature=youtube_gdata", "");
 
         return url;
-    }
-
-    @Override
-    public boolean isComplete() {
-        return true;
     }
 }

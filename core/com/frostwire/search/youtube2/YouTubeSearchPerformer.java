@@ -18,8 +18,19 @@
 
 package com.frostwire.search.youtube2;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import jd.controlling.linkcollector.LinkCollector;
+import jd.controlling.linkcrawler.CrawledLink;
+import jd.controlling.linkcrawler.CrawledPackage;
+import jd.controlling.linkcrawler.LinkCrawler;
+import jd.controlling.linkcrawler.PackageInfo;
+import jd.plugins.DownloadLink;
+import jd.plugins.FilePackage;
+
+import org.jdownloader.controlling.filter.LinkFilterController;
 
 import com.frostwire.search.CrawlPagedWebSearchPerformer;
 import com.frostwire.search.SearchResult;
@@ -46,8 +57,35 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
 
     @Override
     protected List<? extends SearchResult> crawlResult(YouTubeSearchResult sr, byte[] data) throws Exception {
-        // TODO Auto-generated method stub
-        return null;
+        List<YouTubeCrawledSearchResult> list = new LinkedList<YouTubeCrawledSearchResult>();
+
+        LinkCollector collector = LinkCollector.getInstance();
+        LinkCrawler crawler = new LinkCrawler();
+        crawler.setFilter(LinkFilterController.getInstance());
+        crawler.crawl(sr.getDetailsUrl());
+        crawler.waitForCrawling();
+
+        final List<FilePackage> packages = new ArrayList<FilePackage>();
+
+        for (CrawledLink link : crawler.getCrawledLinks()) {
+            CrawledPackage parent = PackageInfo.createCrawledPackage(link);
+            parent.setControlledBy(collector);
+            link.setParentNode(parent);
+            ArrayList<CrawledLink> links = new ArrayList<CrawledLink>();
+            links.add(link);
+            packages.add(createFilePackage(parent, links));
+        }
+
+        for (FilePackage p : packages) {
+            //no youtube mp3
+            if (p.getChildren().get(0).getFileOutput().endsWith(".mp3")) {
+                continue;
+            }
+
+            list.add(new YouTubeCrawledSearchResult(sr, p));
+        }
+
+        return list;
     }
 
     @Override
@@ -74,5 +112,45 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
 
     private String fixJson(String json) {
         return json.replace("\"$t\"", "\"title\"").replace("\"yt$userId\"", "\"ytuserId\"");
+    }
+
+    private FilePackage createFilePackage(final CrawledPackage pkg, ArrayList<CrawledLink> plinks) {
+        FilePackage ret = FilePackage.getInstance();
+        /* set values */
+        ret.setName(pkg.getName());
+        ret.setDownloadDirectory(pkg.getDownloadFolder());
+        ret.setCreated(pkg.getCreated());
+        ret.setExpanded(pkg.isExpanded());
+        ret.setComment(pkg.getComment());
+        synchronized (pkg) {
+            /* add Children from CrawledPackage to FilePackage */
+            ArrayList<DownloadLink> links = new ArrayList<DownloadLink>(pkg.getChildren().size());
+            List<CrawledLink> pkgLinks = pkg.getChildren();
+            if (plinks != null && plinks.size() > 0)
+                pkgLinks = new ArrayList<CrawledLink>(plinks);
+            for (CrawledLink link : pkgLinks) {
+                /* extract DownloadLink from CrawledLink */
+                DownloadLink dl = link.getDownloadLink();
+                if (dl != null) {
+                    /*
+                     * change filename if it is different than original
+                     * downloadlink
+                     */
+                    if (link.isNameSet())
+                        dl.forceFileName(link.getName());
+                    /* set correct enabled/disabled state */
+                    //dl.setEnabled(link.isEnabled());
+                    /* remove reference to crawledLink */
+                    dl.setNodeChangeListener(null);
+                    dl.setCreated(link.getCreated());
+                    links.add(dl);
+                    /* set correct Parent node */
+                    dl.setParentNode(ret);
+                }
+            }
+            /* add all children to FilePackage */
+            ret.getChildren().addAll(links);
+        }
+        return ret;
     }
 }
