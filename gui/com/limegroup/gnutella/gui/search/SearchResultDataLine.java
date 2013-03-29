@@ -57,11 +57,6 @@ public final class SearchResultDataLine extends AbstractDataLine<UISearchResult>
      */
     private NamedMediaType _mediaType;
 
-    /**
-     * The speed of this line.
-     */
-    private ResultSpeed _speed = null;
-
     private ActionListener _torrentDetailsAction;
 
     /**
@@ -87,7 +82,6 @@ public final class SearchResultDataLine extends AbstractDataLine<UISearchResult>
 
         RESULT = sr;
         _mediaType = NamedMediaType.getFromExtension(getExtension());
-        _speed = new ResultSpeed(sr.getSpeed(), sr.isMeasuredSpeed());
         _torrentDetailsAction = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 RESULT.showDetails(true);
@@ -110,13 +104,6 @@ public final class SearchResultDataLine extends AbstractDataLine<UISearchResult>
 
     public String toString() {
         return getFilename() + " (" + getSeeds() + ")";
-    };
-
-    /**
-     * Gets the speed of this line.
-     */
-    ResultSpeed getSpeed() {
-        return _speed;
     }
 
     private boolean isDownloading() {
@@ -194,7 +181,7 @@ public final class SearchResultDataLine extends AbstractDataLine<UISearchResult>
      * "a".
      */
     public String getFilename() {
-        return RESULT.getFileName();
+        return RESULT.getFilename();
     }
 
     public String getDisplayName() {

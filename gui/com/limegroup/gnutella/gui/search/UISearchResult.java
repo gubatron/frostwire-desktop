@@ -18,7 +18,6 @@ package com.limegroup.gnutella.gui.search;
 import javax.swing.JPopupMenu;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.limegroup.gnutella.SpeedConstants;
 
 /**
  * A single SearchResult. These are returned in the {@link SearchInputPanel} and
@@ -29,7 +28,7 @@ public interface UISearchResult {
     /**
      * @return the file name
      */
-    String getFileName();
+    String getFilename();
     
     /**
      * Gets the size of this SearchResult.
@@ -42,37 +41,6 @@ public interface UISearchResult {
     long getCreationTime();
     
     public String getSource();
-    
-    /**
-     * @return the connection speed of this result or
-     *         {@link SpeedConstants#THIRD_PARTY_SPEED_INT} for a
-     *         {@link ThirdPartySearchResult}
-     */
-    int getSpeed();
-    
-    /**
-     * @return <code>true</code> if this speed is messaured.
-     */
-    boolean isMeasuredSpeed();
-    
-    /**
-     * @return the quality of the search result as one of
-     * <ul>
-     *  <li>{@link QualityRenderer#SPAM_FILE_QUALITY}</li>   
-     *  <li>{@link QualityRenderer#SAVED_FILE_QUALITY}</li>
-     *  <li>{@link QualityRenderer#DOWNLOADING_FILE_QUALITY}</li>
-     *  <li>{@link QualityRenderer#INCOMPLETE_FILE_QUALITY}</li>   
-     *  <li>{@link QualityRenderer#SECURE_QUALITY}</li>   
-     *  <li>{@link QualityRenderer#THIRD_PARTY_RESULT_QUALITY}</li>   
-     *  <li>{@link QualityRenderer#MULTICAST_QUALITY}</li>   
-     *  <li>{@link QualityRenderer#EXCELLENT_QUALITY}</li>   
-     *  <li>{@link QualityRenderer#GOOD_QUALITY}</li>   
-     *  <li>{@link QualityRenderer#FAIR_QUALITY}</li>   
-     *  <li>{@link QualityRenderer#POOR_QUALITY}</li>
-     *  <li>{@link QualityRenderer#THIRD_PARTY_RESULT_QUALITY}</li>
-     * </ul>
-     */
-    int getQuality();
     
     /**
      * Returns the extension of this result.

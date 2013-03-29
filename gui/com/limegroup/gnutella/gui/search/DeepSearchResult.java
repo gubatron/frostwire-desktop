@@ -60,7 +60,7 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
     }
 
     @Override
-    public String getFileName() {
+    public String getFilename() {
         String fName = new File(_torrentFile.getRelativePath()).getName();
         if (fName.startsWith("/")) {
             return fName.substring(1);
@@ -83,12 +83,6 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
         return _torrentFile.getRelativePath().substring(0, _torrentFile.getRelativePath().lastIndexOf("."));
     }
 
-    @Override
-    public int getQuality() {
-        //TODO: Delete this method
-        return 0;
-    }
-
     public String getHash() {
         return _item.getHash();
     }
@@ -103,18 +97,8 @@ public class DeepSearchResult extends AbstractSearchResult implements Bittorrent
     }
 
     @Override
-    public int getSpeed() {
-        return Integer.MAX_VALUE - 2;
-    }
-
-    @Override
     public String getSource() {
         return _item.getSource();
-    }
-
-    @Override
-    public boolean isMeasuredSpeed() {
-        return false;
     }
 
     @Override

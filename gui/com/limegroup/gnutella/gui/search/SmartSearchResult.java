@@ -63,7 +63,7 @@ public class SmartSearchResult extends AbstractSearchResult implements Bittorren
     }
 
     @Override
-    public String getFileName() {
+    public String getFilename() {
         if (file.relativePath.startsWith("/")) {
             file.relativePath = file.relativePath.substring(1);
         }
@@ -95,11 +95,6 @@ public class SmartSearchResult extends AbstractSearchResult implements Bittorren
         }
     }
 
-    @Override
-    public int getQuality() {
-        return 0;
-    }
-
     public String getHash() {
         return _item.getHash();
     }
@@ -114,18 +109,8 @@ public class SmartSearchResult extends AbstractSearchResult implements Bittorren
     }
 
     @Override
-    public int getSpeed() {
-        return Integer.MAX_VALUE - 2;
-    }
-
-    @Override
     public String getSource() {
         return _item.getSource();
-    }
-
-    @Override
-    public boolean isMeasuredSpeed() {
-        return false;
     }
 
     @Override

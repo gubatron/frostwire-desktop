@@ -496,7 +496,7 @@ public class LocalSearchEngine {
 
                     boolean foundMatch = true;
 
-                    String keywords = stringSanitize(result.getFileName() + " " + fs[i].getRelativePath()).toLowerCase();
+                    String keywords = stringSanitize(result.getFilename() + " " + fs[i].getRelativePath()).toLowerCase();
 
                     for (String token : tokens) {
                         if (!keywords.contains(token)) {

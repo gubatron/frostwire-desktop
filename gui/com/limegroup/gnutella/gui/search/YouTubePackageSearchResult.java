@@ -46,7 +46,7 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
     }
 
     @Override
-    public String getFileName() {
+    public String getFilename() {
         return sr.getFileName();
     }
 
@@ -68,21 +68,6 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
     @Override
     public String getSource() {
         return sr.getSource();
-    }
-
-    @Override
-    public int getSpeed() {
-        return Integer.MAX_VALUE - 2;
-    }
-
-    @Override
-    public boolean isMeasuredSpeed() {
-        return false;
-    }
-
-    @Override
-    public int getQuality() {
-        return 0;
     }
 
     @Override

@@ -55,13 +55,8 @@ public class SearchEngineSearchResult extends AbstractSearchResult implements Bi
     }
 
     @Override
-    public String getFileName() {
+    public String getFilename() {
         return _item.getFileName();
-    }
-
-    @Override
-    public int getQuality() {
-        return 0;
     }
 
     public String getHash() {
@@ -78,18 +73,8 @@ public class SearchEngineSearchResult extends AbstractSearchResult implements Bi
     }
 
     @Override
-    public int getSpeed() {
-        return Integer.MAX_VALUE - 2;
-    }
-
-    @Override
     public String getSource() {
         return _item.getSource();
-    }
-
-    @Override
-    public boolean isMeasuredSpeed() {
-        return false;
     }
 
     @Override

@@ -34,7 +34,7 @@ public abstract class AbstractSearchResult implements UISearchResult {
 
     @Override
     public String getExtension() {
-        String fullname = getFileName();
+        String fullname = getFilename();
         if (fullname == null) {
             throw new NullPointerException("getFileName() can't return a null result");
         }
