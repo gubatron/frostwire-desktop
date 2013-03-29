@@ -34,6 +34,8 @@ import org.jdownloader.controlling.filter.LinkFilterController;
 
 import com.frostwire.search.CrawlPagedWebSearchPerformer;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.youtube.YouTubeEntry;
+import com.frostwire.search.youtube.YouTubeResponse;
 import com.frostwire.util.JsonUtils;
 
 /**

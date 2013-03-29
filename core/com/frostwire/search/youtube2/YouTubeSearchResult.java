@@ -25,6 +25,8 @@ import org.limewire.util.FilenameUtils;
 
 import com.frostwire.search.AbstractFileSearchResult;
 import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.youtube.YouTubeEntry;
+import com.frostwire.search.youtube.YouTubeEntryLink;
 
 /**
  * @author gubatron
