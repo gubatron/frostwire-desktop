@@ -245,7 +245,7 @@ public class LocalSearchEngine {
         return results;
     }
 
-    public List<DeepSearchResult> deepSearch(byte[] guid, String query) {
+    public List<DeepSearchResult> deepSearch(long guid, String query) {
         SearchResultMediator rp = null;
 
         // Let's wait for enough search results from different search engines.
@@ -257,7 +257,7 @@ public class LocalSearchEngine {
         boolean scanYouTube = true;
 
         for (int i = tries; i > 0; i--) {
-            if ((rp = SearchMediator.getResultPanelForGUID(new GUID(guid))) == null) {
+            if ((rp = SearchMediator.getResultPanelForGUID(guid)) == null) {
                 return null;
             }
 
@@ -286,7 +286,7 @@ public class LocalSearchEngine {
         }
     }
 
-    private void scanAvailableResults(byte[] guid, String query, SearchResultMediator rp, boolean scanYouTube) {
+    private void scanAvailableResults(long guid, String query, SearchResultMediator rp, boolean scanYouTube) {
 
         int foundTorrents = 0;
 
@@ -363,11 +363,11 @@ public class LocalSearchEngine {
      * @param webSearchResult
      * @param searchEngine
      */
-    private void scanDotTorrent(int order, WebSearchResult webSearchResult, byte[] guid, String query, SearchEngine searchEngine) {
+    private void scanDotTorrent(int order, WebSearchResult webSearchResult, long guid, String query, SearchEngine searchEngine) {
         if (!torrentHasBeenIndexed(webSearchResult.getHash())) {
             // download the torrent
 
-            SearchResultMediator rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
+            SearchResultMediator rp = SearchMediator.getResultPanelForGUID(guid);
             if (rp != null) {
                 rp.incrementSearchCount();
             }
@@ -421,14 +421,14 @@ public class LocalSearchEngine {
 
         private final AtomicBoolean finished = new AtomicBoolean(false);
 
-        private final byte[] guid;
+        private final long guid;
         private final String query;
         private final Set<String> tokens;
         private final SearchEngine searchEngine;
         private final WebSearchResult webSearchResult;
         private final CountDownLatch finishSignal;
 
-        public LocalSearchTorrentDownloaderListener(byte[] guid, String query, WebSearchResult webSearchResult, SearchEngine searchEngine, CountDownLatch finishSignal) {
+        public LocalSearchTorrentDownloaderListener(long guid, String query, WebSearchResult webSearchResult, SearchEngine searchEngine, CountDownLatch finishSignal) {
             this.guid = guid;
             this.query = query;
             this.tokens = new HashSet<String>(Arrays.asList(query.toLowerCase().split(" ")));
@@ -464,7 +464,7 @@ public class LocalSearchEngine {
             case TorrentDownloader.STATE_ERROR:
             case TorrentDownloader.STATE_DUPLICATE:
             case TorrentDownloader.STATE_CANCELLED:
-                SearchResultMediator rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
+                SearchResultMediator rp = SearchMediator.getResultPanelForGUID(guid);
                 if (rp != null) {
                     rp.decrementSearchCount();
                 }
@@ -479,7 +479,7 @@ public class LocalSearchEngine {
                 return;
             }
 
-            final SearchResultMediator rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
+            final SearchResultMediator rp = SearchMediator.getResultPanelForGUID(guid);
 
             // user closed the tab.
             if (rp == null || rp.isStopped()) {
@@ -549,12 +549,12 @@ public class LocalSearchEngine {
     private class DownloadTorrentTask implements DeepTask {
 
         private final int order;
-        private final byte[] guid;
+        private final long guid;
         private final String query;
         private final SearchEngine searchEngine;
         private final WebSearchResult webSearchResult;
 
-        public DownloadTorrentTask(int order, byte[] guid, String query, WebSearchResult webSearchResult, SearchEngine searchEngine) {
+        public DownloadTorrentTask(int order, long guid, String query, WebSearchResult webSearchResult, SearchEngine searchEngine) {
             this.order = order;
             this.guid = guid;
             this.query = query;
@@ -575,7 +575,7 @@ public class LocalSearchEngine {
         @Override
         public void run() {
 
-            SearchResultMediator rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
+            SearchResultMediator rp = SearchMediator.getResultPanelForGUID(guid);
 
             // user closed the tab.
             if (rp == null || rp.isStopped()) {
@@ -599,12 +599,12 @@ public class LocalSearchEngine {
     private class CrawlYouTubePackage implements DeepTask {
 
         private final int order;
-        private final byte[] guid;
+        private final long guid;
         private final String query;
         private final SearchEngine searchEngine;
         private final YouTubeSearchResult webSearchResult;
 
-        public CrawlYouTubePackage(int order, byte[] guid, String query, YouTubeSearchResult webSearchResult, SearchEngine searchEngine) {
+        public CrawlYouTubePackage(int order, long guid, String query, YouTubeSearchResult webSearchResult, SearchEngine searchEngine) {
             this.order = order;
             this.guid = guid;
             this.query = query;
@@ -625,7 +625,7 @@ public class LocalSearchEngine {
         @Override
         public void run() {
             try {
-                SearchResultMediator rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
+                SearchResultMediator rp = SearchMediator.getResultPanelForGUID(guid);
 
                 // user closed the tab.
                 if (rp == null || rp.isStopped()) {
@@ -715,7 +715,7 @@ public class LocalSearchEngine {
                 return;
             }
 
-            final SearchResultMediator rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
+            final SearchResultMediator rp = SearchMediator.getResultPanelForGUID(guid);
 
             // user closed the tab.
             if (rp == null || rp.isStopped()) {

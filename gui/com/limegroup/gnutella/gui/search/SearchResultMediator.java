@@ -587,8 +587,8 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     }
 
     /** Returns true if this is responsible for results with the given GUID */
-    boolean matches(GUID otherGuid) {
-        return this.guid.equals(otherGuid);
+    boolean matches(long token) {
+        return this.token == token;
     }
 
     /**

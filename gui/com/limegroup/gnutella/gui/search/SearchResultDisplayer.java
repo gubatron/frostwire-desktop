@@ -344,13 +344,13 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      *           line and already in rp
      * @modifies this
      */
-    void addQueryResult(byte[] replyGUID, UISearchResult line, SearchResultMediator rp) {
+    void addQueryResult(long token, UISearchResult line, SearchResultMediator rp) {
         if (rp.isStopped()) {
             return;
         }
 
         //Actually add the line.   Must obtain rp's monitor first.
-        if (!rp.matches(new GUID(replyGUID)))//GUID of rp!=replyGuid
+        if (!rp.matches(token))//GUID of rp!=replyGuid
             throw new IllegalArgumentException("guids don't match");
 
         rp.add(line);
@@ -440,10 +440,10 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      * @return the ResultPanel that matches the specified GUID, or null
      *  if none match.
      */
-    SearchResultMediator getResultPanelForGUID(GUID rguid) {
+    SearchResultMediator getResultPanelForGUID(long token) {
         for (int i = 0; i < entries.size(); i++) {
             SearchResultMediator rp = entries.get(i);
-            if (rp.matches(rguid)) //order matters: rp may be a dummy guid.
+            if (rp.matches(token)) //order matters: rp may be a dummy guid.
                 return rp;
         }
         return null;
@@ -461,24 +461,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
     List<SearchResultMediator> getResultPanels() {
         return new ArrayList<SearchResultMediator>(entries);
-    }
-
-    /**
-     * Returns the index in the list of search panels that corresponds
-     * to the specified guid, or -1 if the specified guid does not
-     * exist.
-     *
-     * @param rguid the guid to search for
-     * @return the index of the specified guid, or -1 if it does not
-     *  exist.
-     */
-    int getIndexForGUID(GUID rguid) {
-        for (int i = 0; i < entries.size(); i++) {
-            SearchResultMediator rp = entries.get(i);
-            if (rp.matches(rguid)) //order matters: rp may be a dummy guid.
-                return i;
-        }
-        return -1;
     }
 
     /**

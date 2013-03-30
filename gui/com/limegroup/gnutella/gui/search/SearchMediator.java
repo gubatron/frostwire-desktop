@@ -42,6 +42,8 @@ import com.frostwire.search.SearchManagerImpl;
 import com.frostwire.search.SearchManagerListener;
 import com.frostwire.search.SearchPerformer;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.torrent.TorrentSearchResult;
+import com.frostwire.search.youtube2.YouTubeSearchResult;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -309,7 +311,7 @@ public final class SearchMediator {
      * 
      * 
      */
-    private static void doSearch(final byte[] guid, final SearchInformation info) {
+    private static void doSearch(final long guid, final SearchInformation info) {
         final String query = info.getQuery();
 
         List<SearchEngine> searchEngines = SearchEngine.getEngines();
@@ -318,7 +320,7 @@ public final class SearchMediator {
             if (searchEngine.isEnabled()) {
                 Thread t = new Thread(new Runnable() {
                     public void run() {
-                        final SearchResultMediator rp = getResultPanelForGUID(new GUID(guid));
+                        final SearchResultMediator rp = getResultPanelForGUID(guid);
                         if (rp != null && !rp.isStopped()) {
                             rp.incrementSearchCount();
                             List<WebSearchResult> webResults = null;//searchEngine.getPerformer().search(query);
@@ -358,10 +360,10 @@ public final class SearchMediator {
         doLocalSearch(guid, query, info);
     }
 
-    private static void decrementSearchResultPanelCount(final byte[] guid) {
+    private static void decrementSearchResultPanelCount(final long guid) {
         GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
-                SearchResultMediator trp = getResultPanelForGUID(new GUID(guid));
+                SearchResultMediator trp = getResultPanelForGUID(guid);
                 if (trp != null) {
                     trp.decrementSearchCount();
                 }
@@ -369,12 +371,12 @@ public final class SearchMediator {
         });
     }
 
-    public static void doLocalSearch(final byte[] guid, final String query, final SearchInformation info) {
+    public static void doLocalSearch(final long guid, final String query, final SearchInformation info) {
 
         Thread t = new Thread(new Runnable() {
             public void run() {
 
-                final SearchResultMediator rp = getResultPanelForGUID(new GUID(guid));
+                final SearchResultMediator rp = getResultPanelForGUID(guid);
                 if (rp != null && !rp.isStopped()) {
                     rp.incrementSearchCount();
                     final List<SmartSearchResult> localResults = LocalSearchEngine.instance().search(query);
@@ -426,6 +428,30 @@ public final class SearchMediator {
             //            }
 
             result.add(sr);
+        }
+
+        return result;
+    }
+
+    private static List<UISearchResult> normalizeWebResults2(List<? extends SearchResult> results, SearchEngine engine, String query) {
+
+        List<UISearchResult> result = new ArrayList<UISearchResult>();
+
+        for (SearchResult sr : results) {
+
+            UISearchResult ui = null;
+
+            if (sr instanceof YouTubeSearchResult) {
+                ui = new YouTubePackageSearchResult((YouTubeSearchResult) sr, engine, query);
+            } else if (sr instanceof com.frostwire.search.soundcloud.SoundcloudSearchResult) {
+                ui = new SoundcloudSearchResult((com.frostwire.search.soundcloud.SoundcloudSearchResult) sr, engine, query);
+            } else if (sr instanceof TorrentSearchResult) {
+                ui = new SearchEngineSearchResult((TorrentSearchResult) sr, engine, query);
+            }
+
+            if (ui != null) {
+                result.add(ui);
+            }
         }
 
         return result;
@@ -528,8 +554,8 @@ public final class SearchMediator {
      * @return the <tt>ResultPanel</tt> that matches the GUID, or null
      *  if none match.
      */
-    static SearchResultMediator getResultPanelForGUID(GUID rguid) {
-        return getSearchResultDisplayer().getResultPanelForGUID(rguid);
+    static SearchResultMediator getResultPanelForGUID(long token) {
+        return getSearchResultDisplayer().getResultPanelForGUID(token);
     }
 
     /**
@@ -592,6 +618,35 @@ public final class SearchMediator {
                 //                if (!filtered.isEmpty()) {
                 //                    listener.onResults(performer, filtered);
                 //                }
+                final long token = performer.getToken();
+                final SearchResultMediator rp = getResultPanelForGUID(token);
+                if (rp != null && !rp.isStopped()) {
+                    rp.incrementSearchCount();
+                    
+                    if (results != null && results.size() > 0) {
+                        final List<UISearchResult> uiResults = normalizeWebResults2(results, SearchEngine.CLEARBITS, "");
+
+                        GUIMediator.safeInvokeAndWait(new Runnable() {
+                            public void run() {
+                                try {
+                                    SearchFilter filter = getSearchFilterFactory().createFilter();
+                                    for (UISearchResult sr : uiResults) {
+                                        if (filter.allow(sr)) {
+                                            getSearchResultDisplayer().addQueryResult(token, sr, rp);
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                } finally {
+                                    decrementSearchResultPanelCount(token);
+                                }
+                            }
+
+                        });
+                    } else {
+                        decrementSearchResultPanelCount(token);
+                    }
+                }
             }
         }
 
