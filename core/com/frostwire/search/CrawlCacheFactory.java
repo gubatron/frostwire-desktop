@@ -26,37 +26,6 @@ package com.frostwire.search;
 public final class CrawlCacheFactory {
 
     public static CrawlCache newInstance() {
-        return new CrawlCache() {
-            
-            @Override
-            public long size() {
-                // TODO Auto-generated method stub
-                return 0;
-            }
-            
-            @Override
-            public void remove(String key) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void put(String key, byte[] data) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public byte[] get(String key) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-            
-            @Override
-            public void clear() {
-                // TODO Auto-generated method stub
-                
-            }
-        };
+        return new DatabaseCrawlCache();
     }
 }

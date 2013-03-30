@@ -189,7 +189,7 @@ public class Cursor {
         }
         return false;
     }
-    
+
     public byte getByte(int columnIndex) {
         try {
             return rs.getByte(columnIndex);
@@ -198,7 +198,7 @@ public class Cursor {
         }
         return 0;
     }
-    
+
     public boolean getBoolean(int columnIndex) {
         try {
             return rs.getBoolean(columnIndex);
@@ -206,5 +206,14 @@ public class Cursor {
             LOG.log(Level.WARNING, "Error reading typed result set value", e);
         }
         return false;
+    }
+
+    public byte[] getBytes(int columnIndex) {
+        try {
+            return rs.getBytes(columnIndex);
+        } catch (SQLException e) {
+            LOG.log(Level.WARNING, "Error reading typed result set value", e);
+        }
+        return null;
     }
 }
