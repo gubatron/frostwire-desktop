@@ -47,11 +47,6 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
      */
     private final Map<String, Integer> _indexes = new HashMap<String, Integer>();
 
-    /**
-     * The number of sources for this search.
-     */
-    private int _numSources;
-
     private int _numResults;
 
     /**
@@ -109,12 +104,10 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
      * @param row  the index of the row to remove.
      */
     public void remove(int row) {
-        SearchResultDataLine tl = get(row);
         String sha1 = getHash(row);
         if (sha1 != null)
             _indexes.remove(sha1);
         super.remove(row);
-        _numSources -= tl.getSeeds();
         _numResults -= 1;
         remapIndexes(row);
     }
@@ -145,7 +138,6 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
      * Maintains the indexes HashMap & MetadataModel.
      */
     public int add(SearchResultDataLine tl, int row) {
-        _numSources += tl.getSeeds();
         _numResults += 1;
         String sha1 = tl.getHash();
         if (sha1 != null)
@@ -166,13 +158,6 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
             return super.getRow(tl);
     }
 
-    /**
-     * Returns the number of sources found for this search.
-     */
-    int getTotalSources() {
-        return _numSources;
-    }
-
     /** 
      * Overrides the default sort to maintain the indexes HashMap,
      * according to the current sort column and order.
@@ -181,14 +166,6 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
         super.doResort();
         _indexes.clear(); // it's easier & quicker to just clear & re-input
         remapIndexes(0);
-    }
-
-    /**
-     * Overrides the default clear to erase the indexes HashMap,
-     * Metadata and Grouper.
-     */
-    public void clear() {
-        simpleClear();
     }
 
     /**
@@ -202,7 +179,6 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
      * Calls super.clear to erase the stored lines.
      */
     protected void simpleClear() {
-        _numSources = 0;
         _numResults = 0;
         _indexes.clear();
         super.clear();

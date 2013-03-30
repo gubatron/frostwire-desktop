@@ -517,22 +517,8 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         return true;
     }
 
-    /**
-     * Returns the total number of sources found for this search.
-     */
-    int totalSources() {
-        return ((ResultPanelModel) DATA_MODEL).getTotalSources();
-    }
-
     int totalResults() {
         return ((ResultPanelModel) DATA_MODEL).getTotalResults();
-    }
-
-    /**
-     * Returns the total number of filtered source found for this search.
-     */
-    int filteredSources() {
-        return DATA_MODEL.getFilteredSources();
     }
 
     int filteredResults() {
@@ -564,10 +550,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     void resetFilters() {
         FILTER.reset();
         DATA_MODEL.setJunkFilter(null);
-    }
-
-    public List<SearchResultDataLine> getAllData() {
-        return ((TableRowFilteredModel) DATA_MODEL).getAllData();
     }
 
     /** Returns true if this is responsible for results with the given GUID */

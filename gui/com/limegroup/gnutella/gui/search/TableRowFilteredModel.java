@@ -50,11 +50,6 @@ public class TableRowFilteredModel extends ResultPanelModel {
      */
     protected final List<SearchResultDataLine> HIDDEN;
 
-    /**
-     * The number of sources in the hidden list.
-     */
-    private int _numSources;
-
     private int _numResults;
 
     /**
@@ -63,12 +58,12 @@ public class TableRowFilteredModel extends ResultPanelModel {
     public TableRowFilteredModel(TableLineFilter<SearchResultDataLine> f) {
         super();
 
-        if (f == null)
+        if (f == null) {
             throw new NullPointerException("null filter");
+        }
 
         FILTER = f;
         HIDDEN = new ArrayList<SearchResultDataLine>();
-        _numSources = 0;
         _numResults = 0;
     }
 
@@ -79,20 +74,6 @@ public class TableRowFilteredModel extends ResultPanelModel {
      */
     public boolean isSorted() {
         return super.isSorted() || SearchSettings.moveJunkToBottom();
-    }
-
-    /**
-     * Gets the amount of filtered sources.
-     */
-    public int getFilteredSources() {
-        return super.getTotalSources();
-    }
-
-    /**
-     * Gets the total amount of sources.
-     */
-    public int getTotalSources() {
-        return getFilteredSources() + _numSources;
     }
 
     /**
@@ -107,11 +88,9 @@ public class TableRowFilteredModel extends ResultPanelModel {
                 return super.add(tl, row);
             } else {
                 HIDDEN.add(tl);
-                _numSources += tl.getSeeds();
                 _numResults += 1;
             }
         } else {
-            _numSources += tl.getSeeds();
             _numResults += 1;
         }
         return -1;
@@ -121,7 +100,6 @@ public class TableRowFilteredModel extends ResultPanelModel {
      * Intercepts to clear the hidden map.
      */
     protected void simpleClear() {
-        _numSources = 0;
         _numResults = 0;
         HIDDEN.clear();
         super.simpleClear();
@@ -209,11 +187,5 @@ public class TableRowFilteredModel extends ResultPanelModel {
 
     public int getTotalResults() {
         return getFilteredResults() + _numResults;
-    }
-
-    public List<SearchResultDataLine> getAllData() {
-        List<SearchResultDataLine> results = new ArrayList<SearchResultDataLine>(HIDDEN);
-        results.addAll(_list);
-        return results;
     }
 }

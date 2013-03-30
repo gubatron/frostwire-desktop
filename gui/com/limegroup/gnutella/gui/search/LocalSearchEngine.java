@@ -288,57 +288,6 @@ public class LocalSearchEngine {
         }
     }
 
-    private void scanAvailableResults(long guid, String query, SearchResultMediator rp, boolean scanYouTube) {
-
-        int foundTorrents = 0;
-
-        List<SearchResultDataLine> allData = rp.getAllData();
-        sortAndStripNonTorrents(allData);
-
-        int order = 0;
-
-        for (int i = 0; i < allData.size(); i++) {
-
-            SearchResultDataLine line = allData.get(i);
-            
-//            if (!line.getInitializeObject().allowDeepSearch()) {
-//                continue;
-//            }
-
-            if (line.getInitializeObject() instanceof TorrentUISearchResult) {
-                if (foundTorrents >= MAXIMUM_TORRENTS_TO_SCAN) {
-                    if (!scanYouTube) {
-                        return;
-                    }
-                    continue;
-                }
-                
-                foundTorrents++;
-
-                /*
-                WebSearchResult webSearchResult = line.getSearchResult().getSearchResult();
-
-                if (!SearchSettings.SMART_SEARCH_ENABLED.getValue() || !KNOWN_INFO_HASHES.contains(webSearchResult.getHash())) {
-                    KNOWN_INFO_HASHES.add(webSearchResult.getHash());
-                    SearchEngine searchEngine = line.getSearchEngine();
-                    scanDotTorrent(order++, webSearchResult, guid, query, searchEngine);
-                }
-                */
-            } else if (line.getInitializeObject() instanceof YouTubeUISearchResult) {
-                if (!scanYouTube) {
-                    continue;
-                }
-                /*
-                WebSearchResult webSearchResult = line.getSearchResult().getWebSearchResult();
-                SearchEngine searchEngine = line.getSearchEngine();
-
-                CrawlYouTubePackage task = new CrawlYouTubePackage(order++, guid, query, (YouTubeSearchResult) webSearchResult, searchEngine);
-                CRAWL_YOUTUBE_LINKS_EXECUTOR.execute(task);
-                */
-            }
-        }
-    }
-
     /**
      * Remove all results that are not torrents and sort them by seed (desc. order)
      * @param allData
