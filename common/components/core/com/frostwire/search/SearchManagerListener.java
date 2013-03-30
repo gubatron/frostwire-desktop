@@ -29,5 +29,5 @@ public interface SearchManagerListener {
 
     public void onResults(SearchPerformer performer, List<? extends SearchResult> results);
 
-    public void onFinished();
+    public void onFinished(long token);
 }

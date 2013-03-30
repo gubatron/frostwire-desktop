@@ -646,7 +646,7 @@ public final class SearchMediator {
         }
 
         @Override
-        public void onFinished() {
+        public void onFinished(long token) {
             SearchMediator.this.onFinished();
         }
     }
