@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.Color;
@@ -88,12 +103,10 @@ final class SchemaBox extends JPanel {
     /**
      * The ditherer for highlighted buttons.
      */
-    private final Ditherer DITHERER = new Ditherer(20,
-            ThemeMediator.CURRENT_THEME.getCustomUI().getFilterTitleTopColor(),
-            ThemeMediator.CURRENT_THEME.getCustomUI().getFilterTitleColor());
-    
+    private final Ditherer DITHERER = new Ditherer(20, ThemeMediator.CURRENT_THEME.getCustomUI().getFilterTitleTopColor(), ThemeMediator.CURRENT_THEME.getCustomUI().getFilterTitleColor());
+
     private Set<AbstractButton> buttons = new HashSet<AbstractButton>();
-    
+
     private AbstractButton lastSelectedButton;
 
     /**
@@ -110,7 +123,7 @@ final class SchemaBox extends JPanel {
         addSchemas(allSchemas);
 
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel("<html><b>"+SELECT_TYPE+"</b></html>"));
+        panel.add(new JLabel("<html><b>" + SELECT_TYPE + "</b></html>"));
         add(panel);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -118,7 +131,7 @@ final class SchemaBox extends JPanel {
         p.add(SCHEMAS);
         p.add(Box.createHorizontalStrut(1));
         add(p);
-        
+
         Dimension d = getPreferredSize();
         d.height += 10;
         setPreferredSize(d);
@@ -224,7 +237,7 @@ final class SchemaBox extends JPanel {
         Icon disabledIcon = null;
         Icon rolloverIcon = null;
         final AbstractButton button = new JRadioButton(type.getName());
-        
+
         button.putClientProperty(MEDIA, type);
         button.putClientProperty(SELECTED, icon);
         if (icon != null) {
@@ -246,14 +259,14 @@ final class SchemaBox extends JPanel {
             button.setToolTipText(toolTip);
         }
 
-        DitherPanel panel = new DitherPanel(DITHERER,null);
+        DitherPanel panel = new DitherPanel(DITHERER, null);
         panel.setDithering(false);
         panel.setLayout(new FlowLayout(FlowLayout.LEFT, 7, 1));
         panel.add(button);
         panel.addMouseListener(CLICK_FORWARDER);
         panel.setBorder(buttonBorder);
         SCHEMAS.add(panel);
-        
+
         if (SearchSettings.LAST_MEDIA_TYPE_USED.getValue().contains(type.getMediaType().getMimeType())) {
             button.setSelected(true);
             lastSelectedButton = button;
@@ -261,9 +274,9 @@ final class SchemaBox extends JPanel {
 
         if (SearchSettings.LAST_MEDIA_TYPE_USED.getValue().isEmpty() && type.getMediaType().equals(MediaType.getAudioMediaType())) {
             button.setSelected(true);
-            
+
         }
-        
+
         buttons.add(button);
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -271,7 +284,6 @@ final class SchemaBox extends JPanel {
             }
         });
     }
-
 
     /**
      * Iterates through all the elements in the group
@@ -286,13 +298,10 @@ final class SchemaBox extends JPanel {
         //        }
         return null;
     }
-    
+
     private Color getBorderColor(JPanel panel) {
-        SubstanceColorScheme baseBorderScheme = SubstanceColorSchemeUtilities
-                .getColorScheme(panel,
-                        ColorSchemeAssociationKind.BORDER,
-                        ComponentState.ENABLED);
-        
+        SubstanceColorScheme baseBorderScheme = SubstanceColorSchemeUtilities.getColorScheme(panel, ColorSchemeAssociationKind.BORDER, ComponentState.ENABLED);
+
         return baseBorderScheme.getLineColor();
     }
 
@@ -309,9 +318,9 @@ final class SchemaBox extends JPanel {
                 parent.setDithering(true);
             } else {
                 button.setIcon((Icon) button.getClientProperty(DESELECTED));
-                parent.setDithering(false);                
+                parent.setDithering(false);
             }
-            
+
             parent.repaint();
         }
     }
@@ -321,24 +330,23 @@ final class SchemaBox extends JPanel {
         if (color != null)
             c.setBackground(color);
     }
-    
+
     protected void onFileTypeChanged(AbstractButton button) {
-        NamedMediaType type = (NamedMediaType) button.getClientProperty(MEDIA); 
-        
+        NamedMediaType type = (NamedMediaType) button.getClientProperty(MEDIA);
+
         String mimeType = type.getMediaType().getMimeType();
         SearchSettings.LAST_MEDIA_TYPE_USED.setValue(mimeType);
-        
+
         if (lastSelectedButton != null) {
             lastSelectedButton.setSelected(false);
         }
-        
+
         lastSelectedButton = button;
         lastSelectedButton.setSelected(true);
-        
+
         updateSearchResults(new MediaTypeFilter());
     }
-    
-    
+
     private void updateSearchResults(TableLineFilter<SearchResultDataLine> filter) {
         List<SearchResultMediator> resultPanels = SearchMediator.getSearchResultDisplayer().getResultPanels();
         for (SearchResultMediator resultPanel : resultPanels) {
@@ -394,7 +402,7 @@ final class SchemaBox extends JPanel {
     public void setFilterFor(SearchResultMediator rp) {
         rp.filterChanged(new MediaTypeFilter(), 2);
     }
-    
+
     public void panelReset(SearchResultMediator rp) {
         rp.filterChanged(new MediaTypeFilter(), 2);
     }

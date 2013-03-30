@@ -29,7 +29,7 @@ import com.limegroup.gnutella.settings.SearchSettings;
  * @author Sumeet Thadani, Sam Berlin
  */
 public class TableRowFilteredModel extends ResultPanelModel {
-    
+
     /**
      * 
      */
@@ -39,22 +39,22 @@ public class TableRowFilteredModel extends ResultPanelModel {
      * The filter to use in this row filter.
      */
     private final TableLineFilter<SearchResultDataLine> FILTER;
-    
+
     /**
      * The Junk Filter
      */
     private TableLineFilter<SearchResultDataLine> junkFilter = AllowFilter.instance();
-    
+
     /**
      * A list of all filtered results.
      */
     protected final List<SearchResultDataLine> HIDDEN;
-    
+
     /**
      * The number of sources in the hidden list.
      */
     private int _numSources;
-    
+
     private int _numResults;
 
     /**
@@ -63,7 +63,7 @@ public class TableRowFilteredModel extends ResultPanelModel {
     public TableRowFilteredModel(TableLineFilter<SearchResultDataLine> f) {
         super();
 
-        if(f == null)
+        if (f == null)
             throw new NullPointerException("null filter");
 
         FILTER = f;
@@ -71,7 +71,7 @@ public class TableRowFilteredModel extends ResultPanelModel {
         _numSources = 0;
         _numResults = 0;
     }
-    
+
     /**
      * Returns true if Table is sorted which means either
      * it is really sorted OR 'move junk to bottom' is
@@ -81,29 +81,28 @@ public class TableRowFilteredModel extends ResultPanelModel {
         return super.isSorted() || SearchSettings.moveJunkToBottom();
     }
 
-
     /**
      * Gets the amount of filtered sources.
      */
     public int getFilteredSources() {
         return super.getTotalSources();
     }
-    
+
     /**
      * Gets the total amount of sources.
      */
     public int getTotalSources() {
         return getFilteredSources() + _numSources;
     }
-    
+
     /**
      * Determines whether or not this line should be added.
      */
     public int add(SearchResultDataLine tl, int row) {
         boolean isNotJunk = junkFilter.allow(tl);
         boolean allow = allow(tl);
-             
-        if(isNotJunk || !SearchSettings.hideJunk()) {
+
+        if (isNotJunk || !SearchSettings.hideJunk()) {
             if (allow) {
                 return super.add(tl, row);
             } else {
@@ -117,7 +116,7 @@ public class TableRowFilteredModel extends ResultPanelModel {
         }
         return -1;
     }
-    
+
     /**
      * Intercepts to clear the hidden map.
      */
@@ -127,7 +126,7 @@ public class TableRowFilteredModel extends ResultPanelModel {
         HIDDEN.clear();
         super.simpleClear();
     }
-    
+
     /**
      * Notification that the filters have changed.
      */
@@ -135,7 +134,7 @@ public class TableRowFilteredModel extends ResultPanelModel {
         rebuild();
         fireTableDataChanged();
     }
-	
+
     /**
      * Sets the Junk Filter. Pass null as argument to disable the filter
      */
@@ -146,60 +145,60 @@ public class TableRowFilteredModel extends ResultPanelModel {
             this.junkFilter = AllowFilter.instance();
         }
     }
-    
+
     /**
      * Determines whether or not the specified line is allowed by the filter.
      */
     private boolean allow(SearchResultDataLine line) {
         return FILTER.allow(line);
     }
-    
+
     /**
      * Rebuilds the internal map to denote a new filter.
      */
-    private void rebuild(){
+    private void rebuild() {
         List<SearchResultDataLine> existing = new ArrayList<SearchResultDataLine>(_list);
         List<SearchResultDataLine> hidden = new ArrayList<SearchResultDataLine>(HIDDEN);
         simpleClear();
-        
+
         // For stuff in _list, we can just re-add the DataLines as-is.
-        if(isSorted()) {
-            for(int i = 0; i < existing.size(); i++) {
+        if (isSorted()) {
+            for (int i = 0; i < existing.size(); i++) {
                 addSorted(existing.get(i));
             }
         } else {
-            for(int i = 0; i < existing.size(); i++) {
+            for (int i = 0; i < existing.size(); i++) {
                 add(existing.get(i));
             }
         }
-        
+
         // Merge the hidden TableLines
         Map<String, SearchResultDataLine> mergeMap = new HashMap<String, SearchResultDataLine>();
-        for(int i = 0; i < hidden.size(); i++) {
+        for (int i = 0; i < hidden.size(); i++) {
             SearchResultDataLine tl = hidden.get(i);
             //SearchResult sr = tl.getInitializeObject();
             //String urn = sr.getHash();
-            
-            if(isSorted()) {
+
+            if (isSorted()) {
                 addSorted(tl);
             } else {
                 add(tl);
             }
-            
-//            TableLine tableLine = mergeMap.get(urn);
-//            if (tableLine == null) {
-//                mergeMap.put(urn, tl); // re-use TableLines
-//            } else {
-//                tableLine.addNewResult(sr, METADATA);
-//            }
+
+            //            TableLine tableLine = mergeMap.get(urn);
+            //            if (tableLine == null) {
+            //                mergeMap.put(urn, tl); // re-use TableLines
+            //            } else {
+            //                tableLine.addNewResult(sr, METADATA);
+            //            }
         }
-        
+
         // And add them
-        if(isSorted()) {
-            for(SearchResultDataLine line : mergeMap.values())
+        if (isSorted()) {
+            for (SearchResultDataLine line : mergeMap.values())
                 addSorted(line);
         } else {
-            for(SearchResultDataLine line : mergeMap.values())
+            for (SearchResultDataLine line : mergeMap.values())
                 add(line);
         }
     }
@@ -207,15 +206,14 @@ public class TableRowFilteredModel extends ResultPanelModel {
     public int getFilteredResults() {
         return super.getTotalResults();
     }
-    
-   public int getTotalResults() {
+
+    public int getTotalResults() {
         return getFilteredResults() + _numResults;
     }
-   
-	public List<SearchResultDataLine> getAllData() {
-		List<SearchResultDataLine> results = new ArrayList<SearchResultDataLine>(HIDDEN);
-		results.addAll(_list);
-		return results;
-	}
 
+    public List<SearchResultDataLine> getAllData() {
+        List<SearchResultDataLine> results = new ArrayList<SearchResultDataLine>(HIDDEN);
+        results.addAll(_list);
+        return results;
+    }
 }
