@@ -673,7 +673,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
                 if (e.isConsumed())
                     return;
                 e.consume();
-                SearchMediator.panelSelected(SearchResultMediator.this);
             }
 
             public void mousePressed(MouseEvent e) {

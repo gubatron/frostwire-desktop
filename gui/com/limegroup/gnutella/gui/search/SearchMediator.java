@@ -145,32 +145,10 @@ public final class SearchMediator {
     }
 
     /**
-     * Rebuilds the INPUT_MANAGER's panel.
-     */
-    public static void rebuildInputPanel() {
-        getSearchInputManager().rebuild();
-    }
-
-    /**
-     * Informs the INPUT_MANAGER that we want to display the searching
-     * window.
-     */
-    public static void showSearchInput() {
-        getSearchInputManager().goToSearch();
-    }
-
-    /**
      * Requests the search focus in the INPUT_MANAGER.
      */
     public static void requestSearchFocus() {
         getSearchInputManager().requestSearchFocus();
-    }
-
-    /**
-     * Updates all current results.
-     */
-    public static void updateResults() {
-        getSearchResultDisplayer().updateResults();
     }
 
     /** 
@@ -536,39 +514,11 @@ public final class SearchMediator {
     }
 
     /**
-     * @modifies tabbed pane, entries
-     * @effects removes the currently selected result window (if any)
-     *  from this
-     */
-    static void killSearch() {
-        getSearchResultDisplayer().killSearch();
-    }
-
-    /**
-     * Notification that a given ResultPanel has been selected
-     */
-    static void panelSelected(SearchResultMediator panel) {
-        //getSearchInputManager().setFiltersFor(panel);
-    }
-
-    /**
      * Notification that a search has been killed.
      */
     static void searchKilled(SearchResultMediator panel) {
         getSearchInputManager().panelRemoved(panel);
-        SearchResultMediator rp = getSearchResultDisplayer().getSelectedResultPanel();
-        if (rp != null) {
-            // getSearchInputManager().setFiltersFor(rp);
-        }
-
         panel.cleanup();
-    }
-
-    /**
-     * Checks to see if the spinning lime should be stopped.
-     */
-    static void checkToStopLime() {
-        getSearchResultDisplayer().checkToStopLime();
     }
 
     /**
