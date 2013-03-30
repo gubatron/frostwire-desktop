@@ -24,7 +24,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JPopupMenu;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.websearch.youtube.YouTubeSearchResult;
+import com.frostwire.search.SearchResult;
+import com.frostwire.search.youtube2.YouTubeSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -47,7 +48,7 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
 
     @Override
     public String getFilename() {
-        return sr.getFileName();
+        return sr.getFilename();
     }
 
     @Override
@@ -72,7 +73,7 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
 
     @Override
     public void download(boolean partial) {
-        GUIMediator.instance().openYouTubeVideoUrl(sr.getTorrentURI());
+        GUIMediator.instance().openYouTubeVideoUrl(sr.getDetailsUrl());
         showDetails(false);
     }
 
@@ -94,17 +95,17 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
 
     @Override
     public String getHash() {
-        return sr.getHash();
+        return null;
     }
 
     @Override
     public String getTorrentURI() {
-        return sr.getTorrentURI();
+        return null;
     }
 
     @Override
     public int getSeeds() {
-        return sr.getSeeds();
+        return -1;
     }
 
     @Override
@@ -113,12 +114,18 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
     }
 
     @Override
-    public WebSearchResult getWebSearchResult() {
+    public SearchResult getSearchResult() {
         return sr;
     }
 
     @Override
     public boolean allowDeepSearch() {
         return true;
+    }
+
+    @Override
+    public void play() {
+        // TODO Auto-generated method stub
+        
     }
 }

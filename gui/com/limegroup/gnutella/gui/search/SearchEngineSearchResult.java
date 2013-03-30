@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPopupMenu;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.search.SearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -120,5 +121,17 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
     @Override
     public boolean allowDeepSearch() {
         return true;
+    }
+
+    @Override
+    public SearchResult getSearchResult() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void play() {
+        // TODO Auto-generated method stub
+        
     }
 }

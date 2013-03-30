@@ -28,9 +28,9 @@ import jd.plugins.FilePackage;
 
 import org.limewire.util.FilenameUtils;
 
-import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.player.StreamMediaSource;
-import com.frostwire.websearch.youtube.YouTubeSearchResult;
+import com.frostwire.search.SearchResult;
+import com.frostwire.search.youtube2.YouTubeSearchResult;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
@@ -40,7 +40,7 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
  * @author aldenml
  *
  */
-public final class YouTubePackageItemSearchResult extends AbstractSearchResult implements StreamableSearchResult {
+public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
 
     private static final String AAC_LOW_QUALITY = "(AAC)";
     static final String AAC_HIGH_QUALITY = "(AAC-High Quality)";
@@ -118,17 +118,17 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult i
 
     @Override
     public String getHash() {
-        return sr.getHash();
+        return null;
     }
 
     @Override
     public String getTorrentURI() {
-        return sr.getTorrentURI();
+        return null;
     }
 
     @Override
     public int getSeeds() {
-        return sr.getSeeds();
+        return -1;
     }
 
     @Override
@@ -137,7 +137,7 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult i
     }
 
     @Override
-    public WebSearchResult getWebSearchResult() {
+    public SearchResult getSearchResult() {
         return sr;
     }
 
@@ -156,11 +156,5 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult i
         }
 
         return dl.getName();
-    }
-
-    @Override
-    public String getStreamUrl() {
-        String streamUrl = filePackage.getChildren().get(0).getDownloadURL();
-        return streamUrl;
     }
 }

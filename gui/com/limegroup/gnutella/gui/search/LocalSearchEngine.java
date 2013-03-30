@@ -313,22 +313,26 @@ public class LocalSearchEngine {
                 
                 foundTorrents++;
 
-                WebSearchResult webSearchResult = line.getSearchResult().getWebSearchResult();
+                /*
+                WebSearchResult webSearchResult = line.getSearchResult().getSearchResult();
 
                 if (!SearchSettings.SMART_SEARCH_ENABLED.getValue() || !KNOWN_INFO_HASHES.contains(webSearchResult.getHash())) {
                     KNOWN_INFO_HASHES.add(webSearchResult.getHash());
                     SearchEngine searchEngine = line.getSearchEngine();
                     scanDotTorrent(order++, webSearchResult, guid, query, searchEngine);
                 }
+                */
             } else if (line.getInitializeObject() instanceof YouTubePackageSearchResult) {
                 if (!scanYouTube) {
                     continue;
                 }
+                /*
                 WebSearchResult webSearchResult = line.getSearchResult().getWebSearchResult();
                 SearchEngine searchEngine = line.getSearchEngine();
 
                 CrawlYouTubePackage task = new CrawlYouTubePackage(order++, guid, query, (YouTubeSearchResult) webSearchResult, searchEngine);
                 CRAWL_YOUTUBE_LINKS_EXECUTOR.execute(task);
+                */
             }
         }
     }
@@ -724,6 +728,7 @@ public class LocalSearchEngine {
 
             for (FilePackage p : packages) {
                 try {
+                    /*
                     final YouTubePackageItemSearchResult result = new YouTubePackageItemSearchResult(webSearchResult, p, searchEngine, query);
 
                     //youtube mp3 filter
@@ -739,6 +744,7 @@ public class LocalSearchEngine {
                             SearchMediator.getSearchResultDisplayer().addQueryResult(guid, result, rp);
                         }
                     });
+                    */
                 } catch (Throwable e) {
                     LOG.error("Error analysing youtube package", e);
                 }

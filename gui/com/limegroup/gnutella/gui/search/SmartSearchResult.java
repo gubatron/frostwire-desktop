@@ -25,6 +25,7 @@ import java.io.File;
 import javax.swing.JPopupMenu;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.search.SearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.search.db.TorrentDBPojo;
 import com.limegroup.gnutella.gui.search.db.TorrentFileDBPojo;
@@ -200,5 +201,17 @@ public class SmartSearchResult extends AbstractSearchResult {
         public String getDisplayName() {
             return null;
         }
+    }
+
+    @Override
+    public SearchResult getSearchResult() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void play() {
+        // TODO Auto-generated method stub
+        
     }
 }

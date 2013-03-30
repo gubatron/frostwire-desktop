@@ -26,6 +26,7 @@ import javax.swing.JPopupMenu;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.bittorrent.websearch.soundcloud.SoundcloudTrackSearchResult;
 import com.frostwire.gui.player.StreamMediaSource;
+import com.frostwire.search.SearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -34,12 +35,12 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
  * @author aldenml
  *
  */
-public final class SoundcloudSearchResult extends AbstractSearchResult implements StreamableSearchResult {
+public final class SoundcloudSearchResult extends AbstractSearchResult {
 
-    private final SoundcloudTrackSearchResult sr;
+    private final com.frostwire.search.soundcloud.SoundcloudSearchResult sr;
     private final SearchEngine searchEngine;
 
-    public SoundcloudSearchResult(SoundcloudTrackSearchResult sr, SearchEngine searchEngine, String query) {
+    public SoundcloudSearchResult(com.frostwire.search.soundcloud.SoundcloudSearchResult sr, SearchEngine searchEngine, String query) {
         super(query);
         this.sr = sr;
         this.searchEngine = searchEngine;
@@ -47,7 +48,7 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
 
     @Override
     public String getFilename() {
-        return sr.getFileName();
+        return sr.getFilename();
     }
 
     @Override
@@ -72,7 +73,7 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
 
     @Override
     public void download(boolean partial) {
-        GUIMediator.instance().openSoundcloudTrackUrl(sr.getTorrentURI(), sr.getDisplayName(), this);
+        GUIMediator.instance().openSoundcloudTrackUrl(sr.getDetailsUrl(), sr.getDisplayName(), this);
         showDetails(false);
     }
 
@@ -94,17 +95,17 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
 
     @Override
     public String getHash() {
-        return sr.getHash();
+        return null;
     }
 
     @Override
     public String getTorrentURI() {
-        return sr.getTorrentURI();
+        return null;
     }
 
     @Override
     public int getSeeds() {
-        return sr.getSeeds();
+        return -1;
     }
 
     @Override
@@ -113,18 +114,13 @@ public final class SoundcloudSearchResult extends AbstractSearchResult implement
     }
 
     @Override
-    public WebSearchResult getWebSearchResult() {
+    public SearchResult getSearchResult() {
         return sr;
     }
 
     @Override
     public void play() {
         GUIMediator.instance().launchMedia(new StreamMediaSource(sr.getStreamUrl(), "Soundcloud: " + sr.getDisplayName(), sr.getDetailsUrl(), false));
-    }
-
-    @Override
-    public String getStreamUrl() {
-        return sr.getStreamUrl();
     }
 
     public String getThumbnailUrl() {

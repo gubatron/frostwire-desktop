@@ -27,6 +27,7 @@ import javax.swing.JPopupMenu;
 import org.gudy.azureus2.core3.torrent.TOTorrentFile;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.search.SearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -135,5 +136,17 @@ public class DeepSearchResult extends AbstractSearchResult {
 
     public WebSearchResult getWebSearchResult() {
         return _item;
+    }
+
+    @Override
+    public SearchResult getSearchResult() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void play() {
+        // TODO Auto-generated method stub
+        
     }
 }

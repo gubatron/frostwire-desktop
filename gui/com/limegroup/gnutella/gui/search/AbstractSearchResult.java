@@ -48,10 +48,10 @@ public abstract class AbstractSearchResult implements UISearchResult {
     @Override
     public void showDetails(boolean now) {
         if (now) {
-            GUIMediator.openURL(getWebSearchResult().getDetailsUrl());
+            GUIMediator.openURL(getSearchResult().getDetailsUrl());
         } else {
             if (SearchSettings.SHOW_DETAIL_PAGE_AFTER_DOWNLOAD_START.getValue()) {
-                GUIMediator.openURL(getWebSearchResult().getDetailsUrl(), SearchSettings.SHOW_DETAILS_DELAY);
+                GUIMediator.openURL(getSearchResult().getDetailsUrl(), SearchSettings.SHOW_DETAILS_DELAY);
             }
         }
     }
