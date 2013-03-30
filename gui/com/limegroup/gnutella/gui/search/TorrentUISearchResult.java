@@ -69,10 +69,6 @@ public class TorrentUISearchResult extends AbstractUISearchResult {
         return sr.getHash();
     }
 
-    public String getTorrentURI() {
-        return sr.getTorrentUrl();
-    }
-
     @Override
     public long getSize() {
         return sr.getSize();
@@ -117,11 +113,6 @@ public class TorrentUISearchResult extends AbstractUISearchResult {
     @Override
     public String getDisplayName() {
         return sr.getDisplayName();
-    }
-
-    @Override
-    public boolean allowDeepSearch() {
-        return true;
     }
 
     @Override

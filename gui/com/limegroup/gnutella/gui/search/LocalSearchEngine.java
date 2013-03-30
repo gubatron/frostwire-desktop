@@ -301,9 +301,9 @@ public class LocalSearchEngine {
 
             SearchResultDataLine line = allData.get(i);
             
-            if (!line.getInitializeObject().allowDeepSearch()) {
-                continue;
-            }
+//            if (!line.getInitializeObject().allowDeepSearch()) {
+//                continue;
+//            }
 
             if (line.getInitializeObject() instanceof TorrentUISearchResult) {
                 if (foundTorrents >= MAXIMUM_TORRENTS_TO_SCAN) {

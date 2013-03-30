@@ -98,11 +98,6 @@ public final class SoundcloudUISearchResult extends AbstractUISearchResult {
     }
 
     @Override
-    public String getTorrentURI() {
-        return null;
-    }
-
-    @Override
     public int getSeeds() {
         return -1;
     }

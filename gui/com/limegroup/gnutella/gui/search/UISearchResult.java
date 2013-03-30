@@ -54,8 +54,6 @@ public interface UISearchResult {
     
     public String getHash();
 
-    public String getTorrentURI();
-
     public int getSeeds();
     
     public SearchEngine getSearchEngine();
@@ -65,8 +63,6 @@ public interface UISearchResult {
     public void showDetails(boolean now);
     
     public String getDisplayName();
-    
-    public boolean allowDeepSearch();
     
     public String getQuery();
     

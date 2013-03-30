@@ -104,11 +104,6 @@ public final class YouTubeUISearchResult extends AbstractUISearchResult {
     }
 
     @Override
-    public String getTorrentURI() {
-        return null;
-    }
-
-    @Override
     public int getSeeds() {
         return -1;
     }
@@ -121,11 +116,6 @@ public final class YouTubeUISearchResult extends AbstractUISearchResult {
     @Override
     public SearchResult getSearchResult() {
         return sr;
-    }
-
-    @Override
-    public boolean allowDeepSearch() {
-        return true;
     }
 
     @Override

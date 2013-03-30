@@ -57,11 +57,6 @@ public abstract class AbstractUISearchResult implements UISearchResult {
     }
 
     @Override
-    public boolean allowDeepSearch() {
-        return false;
-    }
-
-    @Override
     public String getQuery() {
         return query;
     }
