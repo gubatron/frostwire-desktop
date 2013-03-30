@@ -37,13 +37,13 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
  * @author aldenml
  *
  */
-public class SearchEngineSearchResult extends AbstractSearchResult {
+public class TorrentUISearchResult extends AbstractUISearchResult {
 
     private TorrentSearchResult sr;
     private SearchEngine _searchEngine;
     private final String extension;
 
-    public SearchEngineSearchResult(TorrentSearchResult sr, SearchEngine searchEngine, String query) {
+    public TorrentUISearchResult(TorrentSearchResult sr, SearchEngine searchEngine, String query) {
         super(query);
         this.sr = sr;
         _searchEngine = searchEngine;

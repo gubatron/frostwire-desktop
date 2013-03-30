@@ -23,10 +23,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPopupMenu;
 
-import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.bittorrent.websearch.soundcloud.SoundcloudTrackSearchResult;
 import com.frostwire.gui.player.StreamMediaSource;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -35,12 +34,12 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
  * @author aldenml
  *
  */
-public final class SoundcloudSearchResult extends AbstractSearchResult {
+public final class SoundcloudUISearchResult extends AbstractUISearchResult {
 
-    private final com.frostwire.search.soundcloud.SoundcloudSearchResult sr;
+    private final SoundcloudSearchResult sr;
     private final SearchEngine searchEngine;
 
-    public SoundcloudSearchResult(com.frostwire.search.soundcloud.SoundcloudSearchResult sr, SearchEngine searchEngine, String query) {
+    public SoundcloudUISearchResult(SoundcloudSearchResult sr, SearchEngine searchEngine, String query) {
         super(query);
         this.sr = sr;
         this.searchEngine = searchEngine;

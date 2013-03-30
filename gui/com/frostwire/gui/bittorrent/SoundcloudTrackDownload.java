@@ -33,7 +33,7 @@ import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.search.SoundcloudSearchResult;
+import com.limegroup.gnutella.gui.search.SoundcloudUISearchResult;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
@@ -61,7 +61,7 @@ public class SoundcloudTrackDownload implements BTDownload {
 
     private boolean finished;
 
-    public SoundcloudTrackDownload(FilePackage filePackage, String title, SoundcloudSearchResult sr) {
+    public SoundcloudTrackDownload(FilePackage filePackage, String title, SoundcloudUISearchResult sr) {
         this.filePackage = filePackage;
         this.filePackage.setDownloadDirectory(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath());
         

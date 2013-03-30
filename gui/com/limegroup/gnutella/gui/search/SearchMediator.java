@@ -444,11 +444,11 @@ public final class SearchMediator {
             UISearchResult ui = null;
 
             if (sr instanceof YouTubeCrawledSearchResult) {
-                ui = new YouTubePackageSearchResult((YouTubeCrawledSearchResult) sr, engine, query);
+                ui = new YouTubeUISearchResult((YouTubeCrawledSearchResult) sr, engine, query);
             } else if (sr instanceof com.frostwire.search.soundcloud.SoundcloudSearchResult) {
-                ui = new SoundcloudSearchResult((com.frostwire.search.soundcloud.SoundcloudSearchResult) sr, engine, query);
+                ui = new SoundcloudUISearchResult((com.frostwire.search.soundcloud.SoundcloudSearchResult) sr, engine, query);
             } else if (sr instanceof TorrentSearchResult) {
-                ui = new SearchEngineSearchResult((TorrentSearchResult) sr, engine, query);
+                ui = new TorrentUISearchResult((TorrentSearchResult) sr, engine, query);
             }
 
             if (ui != null) {

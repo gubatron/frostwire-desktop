@@ -39,7 +39,7 @@ import org.jdownloader.controlling.filter.LinkFilterController;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.search.SoundcloudSearchResult;
+import com.limegroup.gnutella.gui.search.SoundcloudUISearchResult;
 
 /**
  * @author gubatron
@@ -59,12 +59,12 @@ public class SoundcloudTrackUrlDownload implements BTDownload {
     private final String title;
     private final Date dateCreated;
     
-    private final SoundcloudSearchResult sr;
+    private final SoundcloudUISearchResult sr;
 
     private String _state;
     private int progress;
 
-    public SoundcloudTrackUrlDownload(String trackUrl, String title, SoundcloudSearchResult sr) {
+    public SoundcloudTrackUrlDownload(String trackUrl, String title, SoundcloudUISearchResult sr) {
         if (!trackUrl.startsWith("http://")) {
             trackUrl = "http://" + trackUrl;
         }

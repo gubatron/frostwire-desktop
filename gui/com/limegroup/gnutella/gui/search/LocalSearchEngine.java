@@ -305,7 +305,7 @@ public class LocalSearchEngine {
                 continue;
             }
 
-            if (line.getInitializeObject() instanceof SearchEngineSearchResult) {
+            if (line.getInitializeObject() instanceof TorrentUISearchResult) {
                 if (foundTorrents >= MAXIMUM_TORRENTS_TO_SCAN) {
                     if (!scanYouTube) {
                         return;
@@ -324,7 +324,7 @@ public class LocalSearchEngine {
                     scanDotTorrent(order++, webSearchResult, guid, query, searchEngine);
                 }
                 */
-            } else if (line.getInitializeObject() instanceof YouTubePackageSearchResult) {
+            } else if (line.getInitializeObject() instanceof YouTubeUISearchResult) {
                 if (!scanYouTube) {
                     continue;
                 }

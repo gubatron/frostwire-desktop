@@ -40,12 +40,12 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
  * @author aldenml
  *
  */
-public final class YouTubePackageSearchResult extends AbstractSearchResult {
+public final class YouTubeUISearchResult extends AbstractUISearchResult {
 
     private final YouTubeCrawledSearchResult sr;
     private final SearchEngine searchEngine;
 
-    public YouTubePackageSearchResult(YouTubeCrawledSearchResult sr, SearchEngine searchEngine, String query) {
+    public YouTubeUISearchResult(YouTubeCrawledSearchResult sr, SearchEngine searchEngine, String query) {
         super(query);
         this.sr = sr;
         this.searchEngine = searchEngine;

@@ -24,11 +24,11 @@ import com.limegroup.gnutella.settings.SearchSettings;
  * 
  * (A collection of RemoteFileDesc, HostData, and Set of alternate locations.)
  */
-public abstract class AbstractSearchResult implements UISearchResult {
+public abstract class AbstractUISearchResult implements UISearchResult {
 
     private String query;
 
-    public AbstractSearchResult(String query) {
+    public AbstractUISearchResult(String query) {
         this.query = query;
     }
 
