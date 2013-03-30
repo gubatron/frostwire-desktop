@@ -66,17 +66,6 @@ public final class ContentValues /*implements Parcelable*/ {
         mValues = new HashMap<String, Object>(from.mValues);
     }
 
-    /**
-     * Creates a set of values copied from the given HashMap. This is used
-     * by the Parcel unmarshalling code.
-     *
-     * @param values the values to start with
-     * {@hide}
-     */
-    private ContentValues(HashMap<String, Object> values) {
-        mValues = values;
-    }
-
     @Override
     public boolean equals(Object object) {
         if (!(object instanceof ContentValues)) {

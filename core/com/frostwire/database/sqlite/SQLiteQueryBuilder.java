@@ -22,7 +22,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import com.frostwire.core.providers.BaseColumns;
 import com.frostwire.database.Cursor;
 import com.frostwire.text.TextUtils;
 
@@ -600,9 +599,9 @@ public class SQLiteQueryBuilder
                 Entry<String, String> entry = entryIter.next();
 
                 // Don't include the _count column when people ask for no projection.
-                if (entry.getKey().equals(BaseColumns._COUNT)) {
-                    continue;
-                }
+//                if (entry.getKey().equals(BaseColumns._COUNT)) {
+//                    continue;
+//                }
                 projection[i++] = entry.getValue();
             }
             return projection;
