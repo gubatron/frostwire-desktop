@@ -29,15 +29,10 @@ import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Descriptor;
 import com.drew.metadata.exif.ExifIFD0Directory;
-import com.frostwire.content.ContentResolver;
 import com.frostwire.content.ContentValues;
-import com.frostwire.content.Context;
 import com.frostwire.core.Constants;
 import com.frostwire.core.providers.ShareFilesDB;
 import com.frostwire.core.providers.ShareFilesDB.Columns;
-import com.frostwire.core.providers.UniversalStore;
-import com.frostwire.core.providers.UniversalStore.Documents.DocumentsColumns;
-import com.frostwire.database.Cursor;
 import com.frostwire.gui.library.tags.TagsData;
 import com.frostwire.gui.library.tags.TagsReader;
 import com.frostwire.util.MimeDetector;
@@ -52,10 +47,7 @@ public class UniversalScanner {
 
     private static final Logger LOG = Logger.getLogger(UniversalScanner.class.getName());
 
-    private final Context context;
-
-    public UniversalScanner(Context context) {
-        this.context = context;
+    public UniversalScanner() {
     }
 
     public void scan(String filePath) {
@@ -196,26 +188,6 @@ public class UniversalScanner {
         ShareFilesDB db = ShareFilesDB.intance();
 
         db.insert(values);
-    }
-
-    private boolean documentExists(String filePath, long size) {
-        boolean result = false;
-
-        Cursor c = null;
-
-        try {
-            ContentResolver cr = context.getContentResolver();
-            c = cr.query(UniversalStore.Documents.Media.CONTENT_URI, new String[] { DocumentsColumns._ID }, DocumentsColumns.DATA + "=?" + " AND " + DocumentsColumns.SIZE + "=?", new String[] { filePath, String.valueOf(size) }, null);
-            result = c != null && c.getCount() != 0;
-        } catch (Throwable e) {
-            LOG.log(Level.WARNING, "Error detecting if file exists: " + filePath, e);
-        } finally {
-            if (c != null) {
-                c.close();
-            }
-        }
-
-        return result;
     }
 
     private static String getMimeType(String filePath) {

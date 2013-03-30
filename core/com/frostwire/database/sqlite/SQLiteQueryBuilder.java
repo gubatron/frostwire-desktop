@@ -32,7 +32,6 @@ import com.frostwire.text.TextUtils;
  */
 public class SQLiteQueryBuilder
 {
-    private static final String TAG = "SQLiteQueryBuilder";
     private static final Pattern sLimitPattern =
             Pattern.compile("\\s*\\d+\\s*(,\\s*\\d+\\s*)?");
 

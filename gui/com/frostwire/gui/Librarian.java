@@ -30,15 +30,11 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.frostwire.content.ContentResolver;
-import com.frostwire.content.Context;
 import com.frostwire.core.ConfigurationManager;
 import com.frostwire.core.Constants;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.core.providers.ShareFilesDB;
 import com.frostwire.core.providers.ShareFilesDB.Columns;
-import com.frostwire.core.providers.TableFetcher;
-import com.frostwire.core.providers.TableFetchers;
 import com.frostwire.database.Cursor;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.library.Finger;
@@ -57,8 +53,6 @@ public final class Librarian {
     public static final int FILE_STATE_SHARING = 1;
     public static final int FILE_STATE_SHARED = 2;
 
-    private final Context context;
-
     //private final Set<String> pathSharedSet;
     private final Set<String> pathSharingSet;
     private final ExecutorService shareFileExec;
@@ -70,7 +64,6 @@ public final class Librarian {
     }
 
     private Librarian() {
-        this.context = new Context();
         //this.pathSharedSet = Collections.synchronizedSet(new HashSet<String>());
         this.pathSharingSet = Collections.synchronizedSet(new HashSet<String>());
         this.shareFileExec = Executors.newSingleThreadExecutor();
@@ -247,10 +240,6 @@ public final class Librarian {
         return result;
     }
 
-    public List<FileDescriptor> getFiles(byte fileType, int offset, int pageSize, boolean sharedOnly) {
-        return getFiles(offset, pageSize, TableFetchers.getFetcher(fileType), sharedOnly);
-    }
-
     public void scan(File file) {
         scan(file, TorrentUtil.getIgnorableFiles());
     }
@@ -279,59 +268,8 @@ public final class Librarian {
                 }
             }
         } else if (file.isFile()) {
-            new UniversalScanner(context).scan(file.getAbsolutePath());
+            new UniversalScanner().scan(file.getAbsolutePath());
         }
-    }
-
-    private List<FileDescriptor> getFiles(int offset, int pageSize, TableFetcher fetcher, boolean sharedOnly) {
-        return getFiles(offset, pageSize, fetcher, null, null, sharedOnly);
-    }
-
-    private List<FileDescriptor> getFiles(int offset, int pageSize, TableFetcher fetcher, String where, String[] whereArgs, boolean sharedOnly) {
-        List<FileDescriptor> result = new ArrayList<FileDescriptor>();
-
-        Cursor c = null;
-        //Set<Integer> sharedIds = getSharedFiles(fetcher.getFileType());
-
-        try {
-
-            ContentResolver cr = context.getContentResolver();
-
-            String[] columns = fetcher.getColumns();
-            String sort = fetcher.getSortByExpression();
-
-            c = cr.query(fetcher.getContentUri(), columns, where, whereArgs, sort);
-
-            if (c == null || !c.moveToPosition(offset)) {
-                return result;
-            }
-
-            fetcher.prepare(c);
-
-            int count = 1;
-
-            do {
-                FileDescriptor fd = fetcher.fetch(c);
-
-                fd.shared = true;//sharedIds.contains(fd.id);
-
-                if (sharedOnly && !fd.shared) {
-                    continue;
-                }
-
-                result.add(fd);
-
-            } while (c.moveToNext() && count++ < pageSize);
-
-        } catch (Throwable e) {
-            LOG.log(Level.WARNING, "General failure getting files", e);
-        } finally {
-            if (c != null) {
-                c.close();
-            }
-        }
-
-        return result;
     }
 
     public void shareFile(final String filePath, final boolean share) {
@@ -351,7 +289,7 @@ public final class Librarian {
                 deleteFromShareTable(filePath);
 
                 if (share) {
-                    new UniversalScanner(context).scan(filePath);
+                    new UniversalScanner().scan(filePath);
                     //pathSharedSet.add(filePath);
                 }
 
