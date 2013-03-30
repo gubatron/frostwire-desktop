@@ -161,7 +161,7 @@ public final class SearchMediator {
 
         stopSearch(rp.getToken());
 
-        long token = System.nanoTime();
+        long token = newSearchToken();
 
         rp.setToken(token);
         updateSearchIcon(token, true);
@@ -182,12 +182,16 @@ public final class SearchMediator {
             return 0;
         }
 
-        long token = System.nanoTime();
+        long token = newSearchToken();
         addResultTab(token, info);
 
         performSearch(token, info.getQuery());
 
         return token;
+    }
+
+    private long newSearchToken() {
+        return Math.abs(System.nanoTime());
     }
 
     /**
