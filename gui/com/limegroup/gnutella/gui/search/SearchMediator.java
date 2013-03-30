@@ -458,16 +458,6 @@ public final class SearchMediator {
         rp.refresh();
     }
 
-    public static boolean hasTorrentDownloads(SearchResultDataLine[] lines) {
-        //        for (SearchResultDataLine line : lines) {
-        //            SearchResult initializeObject = line.getInitializeObject();
-        //            if (initializeObject instanceof BittorrentSearchResult) {
-        //                return true;
-        //            }
-        //        }
-        return false;
-    }
-
     /**
      * Downloads the selected files in the currently displayed
      * <tt>ResultPanel</tt> if there is one.
@@ -477,10 +467,11 @@ public final class SearchMediator {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
 
-                if (!AzureusStarter.isAzureusCoreStarted() && hasTorrentDownloads(lines)) {
-                    GUIMediator.showMessage(I18n.tr("Please try this download in a few seconds, FrostWire is still warming up."));
-                    return;
-                }
+                // hasTorrentDownloads always returns false? the comment
+                //                if (!AzureusStarter.isAzureusCoreStarted() && hasTorrentDownloads(lines)) {
+                //                    GUIMediator.showMessage(I18n.tr("Please try this download in a few seconds, FrostWire is still warming up."));
+                //                    return;
+                //                }
 
                 SearchMediator.downloadAll(lines, rp.getSearchInformation());
                 rp.refresh();
