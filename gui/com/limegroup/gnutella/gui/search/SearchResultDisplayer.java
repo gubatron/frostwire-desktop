@@ -44,7 +44,6 @@ import javax.swing.plaf.TabbedPaneUI;
 import com.frostwire.gui.components.slides.MultimediaSlideshowPanel;
 import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.gui.components.slides.SlideshowPanel;
-import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -173,14 +172,10 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
     }
 
     private List<Slide> getDefaultSlides() {
-        Slide s1 = new Slide("http://static.frostwire.com/images/overlays/default_now_on_android.png", 
-                "http://www.frostwire.com/?from=defaultSlide", 
-                240000,
-                null,null,null,null,null,null,0,Slide.SLIDE_DOWNLOAD_METHOD_OPEN_URL,null,null,null,null,null,null,null,null,null,null,null,Slide.OPEN_CLICK_URL_ON_DOWNLOAD);
-        Slide s2 = new Slide("http://static.frostwire.com/images/overlays/frostclick_default_overlay.jpg", 
-                "http://www.frostclick.com/?from=defaultSlide", 
-                240000,
-                null,null,null,null,null,null,0,Slide.SLIDE_DOWNLOAD_METHOD_OPEN_URL,null,null,null,null,null,null,null,null,null,null,null,Slide.OPEN_CLICK_URL_ON_DOWNLOAD);
+        Slide s1 = new Slide("http://static.frostwire.com/images/overlays/default_now_on_android.png", "http://www.frostwire.com/?from=defaultSlide", 240000, null, null, null, null, null, null, 0, Slide.SLIDE_DOWNLOAD_METHOD_OPEN_URL, null, null, null, null, null, null, null, null, null, null,
+                null, Slide.OPEN_CLICK_URL_ON_DOWNLOAD);
+        Slide s2 = new Slide("http://static.frostwire.com/images/overlays/frostclick_default_overlay.jpg", "http://www.frostclick.com/?from=defaultSlide", 240000, null, null, null, null, null, null, 0, Slide.SLIDE_DOWNLOAD_METHOD_OPEN_URL, null, null, null, null, null, null, null, null, null, null,
+                null, Slide.OPEN_CLICK_URL_ON_DOWNLOAD);
 
         return Arrays.asList(s1, s2);
     }
@@ -206,8 +201,8 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      *  to the tabbed pane.  This is used both for normal searching 
      *  and browsing.  Returns the ResultPanel added.
      */
-    SearchResultMediator addResultTab(GUID guid, long token, SearchInformation info) {
-        SearchResultMediator panel = new SearchResultMediator(guid, token, info);
+    SearchResultMediator addResultTab(long token, SearchInformation info) {
+        SearchResultMediator panel = new SearchResultMediator(token, info);
         return addResultPanelInternal(panel, info.getTitle());
     }
 
@@ -634,11 +629,11 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
     private String titleOf(SearchResultMediator rp) {
         int current = rp.filteredResults();
         int total = rp.totalResults();
-        
+
         if (current < total)
-            return rp.getTitle() + " (" + current + " " + I18n.tr("results") +")";
+            return rp.getTitle() + " (" + current + " " + I18n.tr("results") + ")";
         else
-            return rp.getTitle() + " (" + total + " " + I18n.tr("results")  +")";
+            return rp.getTitle() + " (" + total + " " + I18n.tr("results") + ")";
     }
 
     /**

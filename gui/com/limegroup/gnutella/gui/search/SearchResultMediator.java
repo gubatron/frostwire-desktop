@@ -49,7 +49,6 @@ import org.limewire.i18n.I18nMarker;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.search.torrent.TorrentSearchResult;
-import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIConstants;
@@ -76,9 +75,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
     protected static final String SEARCH_TABLE = "SEARCH_TABLE";
 
-    /** Flag that a search has been stopped with a random GUID */
-    protected static final GUID STOPPED_GUID = new GUID(GUID.makeGuid());
-
     private static final DateRenderer DATE_RENDERER = new DateRenderer();
     private static final PercentageRenderer PERCENTAGE_RENDERER = new PercentageRenderer();
     private static final SearchResultNameRenderer SEARCH_RESULT_NAME_RENDERER = new SearchResultNameRenderer();
@@ -94,10 +90,8 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     private final SearchInformation SEARCH_INFO;
 
     /**
-     * The GUID of the last search. (Use this to match up results.)
-     *  May be a DummyGUID for the empty result list hack.
+     * The search token of the last search. (Use this to match up results.)
      */
-    protected volatile GUID guid;
     private long token;
 
     /**
@@ -140,7 +134,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
         SEARCH_INFO = SearchInformation.createKeywordSearch("", null, MediaType.getAnyTypeMediaType());
         FILTER = null;
-        this.guid = STOPPED_GUID;
         this.token = 0;
         setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, false);
         // disable dnd for overlay panel
@@ -156,10 +149,9 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
      * @param guid the guid of the query.  Used to match results.
      * @param info the info of the search
      */
-    SearchResultMediator(GUID guid, long token, SearchInformation info) {
+    SearchResultMediator(long token, SearchInformation info) {
         super(SEARCH_TABLE);
         SEARCH_INFO = info;
-        this.guid = guid;
         this.token = token;
         setupRealTable();
         resetFilters();
@@ -304,7 +296,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
         STOP_SEARCH_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                guid = STOPPED_GUID;
+                token = 0;
                 SearchMediator.getSearchResultDisplayer().updateSearchIcon(SearchResultMediator.this, false);
                 setButtonEnabled(SearchButtons.STOP_SEARCH_BUTTON_INDEX, !isStopped());
             }
@@ -459,10 +451,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
      * Determines whether or not this panel is stopped.
      */
     boolean isStopped() {
-        if (guid == null || STOPPED_GUID == null) {
-            return false;
-        }
-        return guid.equals(STOPPED_GUID);
+        return token == 0;
     }
 
     /**
@@ -589,21 +578,13 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         return this.token == token;
     }
 
-    /**
-     * @modifies this
-     * @effects sets this' guid.  This is needed for browse host functionality.
-     */
-    void setGUID(GUID guid) {
-        this.guid = guid;
-    }
-
     void setToken(long token) {
         this.token = token;
     }
 
-    /** Returns the guid this is responsible for. */
-    byte[] getGUID() {
-        return guid.bytes();
+    /** Returns the search token this is responsible for. */
+    long getToken() {
+        return token;
     }
 
     /** Returns the media type this is responsible for. */

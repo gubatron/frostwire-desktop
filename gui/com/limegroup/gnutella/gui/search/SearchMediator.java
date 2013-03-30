@@ -44,8 +44,6 @@ import com.frostwire.search.SearchPerformer;
 import com.frostwire.search.SearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube2.YouTubeCrawledSearchResult;
-import com.frostwire.search.youtube2.YouTubeSearchResult;
-import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SearchSettings;
@@ -157,30 +155,20 @@ public final class SearchMediator {
     /** 
      * Repeats the given search.
      */
-    byte[] repeatSearch(SearchResultMediator rp, SearchInformation info, boolean clearingResults) {
-        if (!validate(info))
-            return null;
+    void repeatSearch(SearchResultMediator rp, SearchInformation info, boolean clearingResults) {
+        if (!validate(info)) {
+            return;
+        }
 
-        // 1. Update panel with new GUID
-        byte[] guidBytes = newQueryGUID();
-        final GUID newGuid = new GUID(guidBytes);
         long token = System.nanoTime();
 
-        rp.setGUID(newGuid);
         rp.setToken(token);
         if (clearingResults) {
             getSearchInputManager().panelReset(rp);
         }
 
         GUIMediator.instance().setSearching(true);
-        //doSearch(guidBytes, info);
         performSearch(token, info.getQuery());
-
-        return guidBytes;
-    }
-
-    private static byte[] newQueryGUID() {
-        return GUID.makeGuid();
     }
 
     /**
@@ -189,19 +177,17 @@ public final class SearchMediator {
      * Returns the GUID of the search if a search was initiated,
      * otherwise returns null.
      */
-    public byte[] triggerSearch(final SearchInformation info) {
-        if (!validate(info))
-            return null;
+    public long triggerSearch(final SearchInformation info) {
+        if (!validate(info)) {
+            return 0;
+        }
 
-        // generate a guid for the search.
-        final byte[] guid = newQueryGUID();
         long token = System.nanoTime();
-        addResultTab(new GUID(guid), token, info);
+        addResultTab(token, info);
 
-        //doSearch(guid, info);
         performSearch(token, info.getQuery());
 
-        return guid;
+        return token;
     }
 
     /**
@@ -463,15 +449,15 @@ public final class SearchMediator {
      * Adds a single result tab for the specified GUID, type,
      * standard query string, and XML query string.
      */
-    private static SearchResultMediator addResultTab(GUID guid, long token, SearchInformation info) {
-        return getSearchResultDisplayer().addResultTab(guid, token, info);
+    private static SearchResultMediator addResultTab(long token, SearchInformation info) {
+        return getSearchResultDisplayer().addResultTab(token, info);
     }
 
     /**
      * Downloads all the selected table lines from the given result panel.
      */
     public static void downloadFromPanel(SearchResultMediator rp, SearchResultDataLine[] lines) {
-        downloadAll(lines, new GUID(rp.getGUID()), rp.getSearchInformation());
+        downloadAll(lines, rp.getSearchInformation());
         rp.refresh();
     }
 
@@ -499,7 +485,7 @@ public final class SearchMediator {
                     return;
                 }
 
-                SearchMediator.downloadAll(lines, new GUID(rp.getGUID()), rp.getSearchInformation());
+                SearchMediator.downloadAll(lines, rp.getSearchInformation());
                 rp.refresh();
             }
         });
@@ -508,9 +494,9 @@ public final class SearchMediator {
     /**
      * Downloads all the selected lines.
      */
-    private static void downloadAll(SearchResultDataLine[] lines, GUID guid, SearchInformation searchInfo) {
+    private static void downloadAll(SearchResultDataLine[] lines, SearchInformation searchInfo) {
         for (int i = 0; i < lines.length; i++)
-            downloadLine(lines[i], guid, null, null, false, searchInfo);
+            downloadLine(lines[i], null, null, false, searchInfo);
     }
 
     /**
@@ -523,9 +509,10 @@ public final class SearchMediator {
      * <code>null</code>
      * @param searchInfo The query used to find the file being downloaded.
      */
-    private static void downloadLine(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
-        if (line == null)
+    private static void downloadLine(SearchResultDataLine line, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
+        if (line == null) {
             throw new NullPointerException("Tried to download null line");
+        }
 
         line.getSearchResult().download(false);
     }
@@ -624,7 +611,7 @@ public final class SearchMediator {
                 final SearchResultMediator rp = getResultPanelForGUID(token);
                 if (rp != null && !rp.isStopped()) {
                     rp.incrementSearchCount();
-                    
+
                     if (results != null && results.size() > 0) {
                         final List<UISearchResult> uiResults = normalizeWebResults2(results, SearchEngine.CLEARBITS, "");
 
