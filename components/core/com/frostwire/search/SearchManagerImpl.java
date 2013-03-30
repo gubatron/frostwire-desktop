@@ -133,7 +133,6 @@ public class SearchManagerImpl implements SearchManager {
                 SearchTask task = it.next();
                 if (token == 0 || task.performer.getToken() == token) {
                     task.stop();
-                    it.remove();
                 }
             }
         }
@@ -155,13 +154,17 @@ public class SearchManagerImpl implements SearchManager {
 
     private void checkIfFinished(SearchPerformer performer) {
         SearchTask pendingTask = null;
+
         synchronized (tasks) {
             Iterator<SearchTask> it = tasks.iterator();
-
             while (it.hasNext() && pendingTask == null) {
                 SearchTask task = it.next();
-                if (task.getToken() == performer.getToken()) {
+                if (task.getToken() == performer.getToken() && !task.performer.isStopped()) {
                     pendingTask = task;
+                }
+
+                if (task.performer.isStopped()) {
+                    it.remove();
                 }
             }
         }
@@ -236,8 +239,9 @@ public class SearchManagerImpl implements SearchManager {
             } catch (Throwable e) {
                 LOG.warn("Error performing search: " + performer + ", e=" + e.getMessage());
             } finally {
-                manager.tasks.remove(this);
-                manager.checkIfFinished(performer);
+                if (manager.tasks.remove(this)) {
+                    manager.checkIfFinished(performer);
+                }
             }
         }
     }
@@ -258,10 +262,11 @@ public class SearchManagerImpl implements SearchManager {
                     performer.crawl(sr);
                 }
             } catch (Throwable e) {
-                LOG.warn("Error performing crawling of: " + sr);
+                LOG.warn("Error performing crawling of: " + sr + ", e=" + e.getMessage());
             } finally {
-                manager.tasks.remove(this);
-                manager.checkIfFinished(performer);
+                if (manager.tasks.remove(this)) {
+                    manager.checkIfFinished(performer);
+                }
             }
         }
     }
