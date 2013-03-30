@@ -38,6 +38,7 @@ import org.limewire.util.StringUtils;
 import com.frostwire.gui.filters.SearchFilter;
 import com.frostwire.gui.filters.SearchFilterFactory;
 import com.frostwire.gui.filters.SearchFilterFactoryImpl;
+import com.frostwire.search.CrawlPagedWebSearchPerformer;
 import com.frostwire.search.CrawledSearchResult;
 import com.frostwire.search.FileSearchResult;
 import com.frostwire.search.SearchManager;
@@ -472,7 +473,11 @@ public final class SearchMediator {
     }
 
     void stopSearch(long token) {
-        instance().manager.stop(token);
+        manager.stop(token);
+    }
+
+    public void shutdown() {
+        manager.stop();
     }
 
     /**
@@ -579,5 +584,13 @@ public final class SearchMediator {
             System.out.println("Finished: " + token);
             SearchMediator.this.onFinished(token);
         }
+    }
+
+    public void clearCache() {
+        CrawlPagedWebSearchPerformer.getCache().clear();
+    }
+
+    public long getTotalTorrents() {
+        return CrawlPagedWebSearchPerformer.getCache().size();
     }
 }

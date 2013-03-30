@@ -95,7 +95,7 @@ public class DatabaseCrawlCache implements CrawlCache {
     }
 
     @Override
-    public void clear() {
+    public synchronized void clear() {
         try {
             db.delete("", new String[] {});
         } catch (Throwable e) {
