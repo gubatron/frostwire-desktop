@@ -76,10 +76,6 @@ public final class SearchMediator {
      * Query xml is too long.
      */
     public static final int QUERY_XML_TOO_LONG = 4;
-    /**
-     * Query contains invalid characters.
-     */
-    public static final int QUERY_INVALID_CHARACTERS = 5;
 
     static final String DOWNLOAD_STRING = I18n.tr("Download");
 
@@ -155,7 +151,7 @@ public final class SearchMediator {
     /** 
      * Repeats the given search.
      */
-    void repeatSearch(SearchResultMediator rp, SearchInformation info, boolean clearingResults) {
+    void repeatSearch(SearchResultMediator rp, SearchInformation info) {
         if (!validate(info)) {
             return;
         }
@@ -163,9 +159,7 @@ public final class SearchMediator {
         long token = System.nanoTime();
 
         rp.setToken(token);
-        if (clearingResults) {
-            getSearchInputManager().panelReset(rp);
-        }
+        getSearchInputManager().panelReset(rp);
 
         GUIMediator.instance().setSearching(true);
         performSearch(token, info.getQuery());

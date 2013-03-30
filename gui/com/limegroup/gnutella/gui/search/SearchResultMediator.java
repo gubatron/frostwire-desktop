@@ -552,14 +552,12 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         return FILTER != null;
     }
 
-    void repeatSearch(boolean clearTable) {
-        if (clearTable) {
-            clearTable();
-            resetFilters();
-        }
+    void repeatSearch() {
+        clearTable();
+        resetFilters();
 
         SearchMediator.setTabDisplayCount(this);
-        SearchMediator.instance().repeatSearch(this, SEARCH_INFO, clearTable);
+        SearchMediator.instance().repeatSearch(this, SEARCH_INFO);
         setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, false);
         setButtonEnabled(SearchButtons.STOP_SEARCH_BUTTON_INDEX, !isStopped());
     }
@@ -834,7 +832,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         }
 
         public void actionPerformed(ActionEvent e) {
-            repeatSearch(true);
+            repeatSearch();
         }
     }
 
