@@ -53,24 +53,26 @@ public final class SearchResultNameHolder implements Comparable<SearchResultName
     }
 
     private String simpleHighlighter(String query, String str) {
-        for (String token : query.split("\\s+")) {
-            StringBuilder sb = new StringBuilder(2 * str.length());
-            for (int i = 0; i < str.length();) {
-                if (i + token.length() <= str.length()) {
-                    String s = str.substring(i, token.length() + i);
-                    if (s.equalsIgnoreCase(token)) {
-                        sb.append("<b>" + s + "</b>");
-                        i += s.length();
+        if (!query.isEmpty()) {
+            for (String token : query.split("\\s+")) {
+                StringBuilder sb = new StringBuilder(2 * str.length());
+                for (int i = 0; i < str.length();) {
+                    if (i + token.length() <= str.length()) {
+                        String s = str.substring(i, token.length() + i);
+                        if (s.equalsIgnoreCase(token)) {
+                            sb.append("<b>" + s + "</b>");
+                            i += s.length();
+                        } else {
+                            sb.append(str.charAt(i));
+                            i++;
+                        }
                     } else {
                         sb.append(str.charAt(i));
                         i++;
                     }
-                } else {
-                    sb.append(str.charAt(i));
-                    i++;
                 }
+                str = sb.toString();
             }
-            str = sb.toString();
         }
         return str;
     }

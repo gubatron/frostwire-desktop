@@ -23,6 +23,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPopupMenu;
 
+import org.apache.commons.io.FilenameUtils;
+
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.search.SearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
@@ -37,51 +39,53 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
  */
 public class SearchEngineSearchResult extends AbstractSearchResult {
 
-    private TorrentSearchResult _item;
+    private TorrentSearchResult sr;
     private SearchEngine _searchEngine;
+    private final String extension;
 
-    public SearchEngineSearchResult(TorrentSearchResult item, SearchEngine searchEngine, String query) {
+    public SearchEngineSearchResult(TorrentSearchResult sr, SearchEngine searchEngine, String query) {
         super(query);
-        _item = item;
+        this.sr = sr;
         _searchEngine = searchEngine;
+        this.extension = FilenameUtils.getExtension(sr.getFilename());
     }
 
     @Override
     public long getCreationTime() {
-        return _item.getCreationTime();
+        return sr.getCreationTime();
     }
 
     @Override
     public String getExtension() {
-        return "torrent";
+        return extension;
     }
 
     @Override
     public String getFilename() {
-        return _item.getFilename();
+        return sr.getFilename();
     }
 
     public String getHash() {
-        return _item.getHash();
+        return sr.getHash();
     }
 
     public String getTorrentURI() {
-        return _item.getTorrentUrl();
+        return sr.getTorrentUrl();
     }
 
     @Override
     public long getSize() {
-        return _item.getSize();
+        return sr.getSize();
     }
 
     @Override
     public String getSource() {
-        return _item.getSource();
+        return sr.getSource();
     }
 
     @Override
     public void download(boolean partial) {
-        GUIMediator.instance().openTorrentSearchResult(_item, partial);
+        GUIMediator.instance().openTorrentSearchResult(sr, partial);
         showDetails(false);
     }
 
@@ -103,7 +107,7 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
     }
 
     public int getSeeds() {
-        return _item.getSeeds();
+        return sr.getSeeds();
     }
 
     public SearchEngine getSearchEngine() {
@@ -112,7 +116,7 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
     
     @Override
     public String getDisplayName() {
-        return _item.getDisplayName();
+        return sr.getDisplayName();
     }
 
     @Override
@@ -122,7 +126,7 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
 
     @Override
     public SearchResult getSearchResult() {
-        return _item;
+        return sr;
     }
 
     @Override
