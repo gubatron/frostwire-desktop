@@ -65,7 +65,7 @@ public final class SearchResultDataLine extends AbstractDataLine<UISearchResult>
     private Date addedOn;
 
     private SearchResultNameHolder name;
-    private Object seeds;
+    private String seeds;
     private Icon icon;
     private SizeHolder size;
     private ActionIconAndNameHolder source;
@@ -89,7 +89,7 @@ public final class SearchResultDataLine extends AbstractDataLine<UISearchResult>
         };
         addedOn = sr.getCreationTime() > 0 ? new Date(sr.getCreationTime()) : null;
         name = new SearchResultNameHolder(sr);
-        seeds = RESULT.getSeeds() <= 0 ? "" : RESULT.getSeeds();
+        seeds = RESULT.getSeeds() <= 0 || !(RESULT.getSearchResult() instanceof TorrentUISearchResult) ? "" : String.valueOf(RESULT.getSeeds());
         icon = getIcon();
         size = new SizeHolder(getSize());
         source = new ActionIconAndNameHolder(null, _torrentDetailsAction, "<html><a href=\"#\">" + RESULT.getSource() + "</a></html>");

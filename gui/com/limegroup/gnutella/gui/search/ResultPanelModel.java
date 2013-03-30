@@ -31,57 +31,57 @@ import com.limegroup.gnutella.settings.SearchSettings;
  * instead of as brand new lines.
  */
 class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearchResult> {
-    
+
     /**
      * 
      */
     private static final long serialVersionUID = -2382156313320196261L;
-    
+
     /**
      * The columns.
      */
     protected final SearchTableColumns COLUMNS = new SearchTableColumns();
-    
+
     /**
      * HashMap for quick access to indexes based on SHA1 info.
      */
     private final Map<String, Integer> _indexes = new HashMap<String, Integer>();
-    
+
     /**
      * The number of sources for this search.
      */
     private int _numSources;
-    
+
     private int _numResults;
-    
+
     /**
      * Constructs a new ResultPanelModel with the given MetadataModel.
      */
     ResultPanelModel() {
         super(SearchResultDataLine.class);
     }
-    
+
     /**
      * Gets the columns used by this model.
      */
     SearchTableColumns getColumns() {
         return COLUMNS;
     }
-    
+
     /**
      * Creates a new TableLine.
      */
     public SearchResultDataLine createDataLine() {
         return new SearchResultDataLine(COLUMNS);
     }
-    
+
     /**
      * Gets the column at the specified index.
      */
     public LimeTableColumn getTableColumn(int idx) {
         return COLUMNS.getColumn(idx);
     }
-    
+
     /**
      * Overrides default compare to move spam results to the bottom,
      * or to change the 'count' compare to use different values for
@@ -95,15 +95,14 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
         //super.compare() will only sort Comparables and Strings.
         //since the Type column returns an Icon, we compare by hand using the file extension.
         if (_activeColumn == SearchTableColumns.TYPE_IDX) {
-        	return AbstractTableMediator.compare(ta.getExtension(), tb.getExtension()) * _ascending;
-        }  else if (!isSorted() || _activeColumn != SearchTableColumns.COUNT_IDX) {
+            return AbstractTableMediator.compare(ta.getExtension(), tb.getExtension()) * _ascending;
+        } else if (!isSorted() || _activeColumn != SearchTableColumns.COUNT_IDX) {
             return super.compare(ta, tb);
-        }
-        else {
+        } else {
             return compareCount(ta, tb, false);
         }
     }
-    
+
     /** 
      * Overrides the default remove to remove the index from the hashmap.
      *
@@ -112,76 +111,68 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
     public void remove(int row) {
         SearchResultDataLine tl = get(row);
         String sha1 = getHash(row);
-        if(sha1 != null)
+        if (sha1 != null)
             _indexes.remove(sha1);
         super.remove(row);
         _numSources -= tl.getSeeds();
         _numResults -= 1;
         remapIndexes(row);
     }
-    
+
     /**
      * Override default so new ones get added to the end
      */
     public int add(UISearchResult o) {
         return add(o, getRowCount());
     }
-    
+
     /**
      * Override to fix compile error on OSX.
      */
     public int add(SearchResultDataLine dl) {
         return super.add(dl);
-	}
-	
-	/**
-	 * Override to not iterate through each result.
-	 */
-	public Object refresh() {
+    }
+
+    /**
+     * Override to not iterate through each result.
+     */
+    public Object refresh() {
         fireTableRowsUpdated(0, getRowCount());
         return null;
-    }
-    
-    /**
-     * Does a slow refresh, forcing the underlying results to have
-     * 'update' called on them.
-     */
-    public void slowRefresh() {
-        super.refresh();
     }
 
     /**
      * Maintains the indexes HashMap & MetadataModel.
-     */    
+     */
     public int add(SearchResultDataLine tl, int row) {
         _numSources += tl.getSeeds();
         _numResults += 1;
         String sha1 = tl.getHash();
-        if(sha1 != null)
+        if (sha1 != null)
             _indexes.put(sha1, new Integer(row));
         int addedAt = super.add(tl, row);
         remapIndexes(addedAt + 1);
         return addedAt;
     }
-    
+
     /**
      * Gets the row this DataLine is at.
      */
     public int getRow(SearchResultDataLine tl) {
         String sha1 = tl.getHash();
-        if(sha1 != null)
+        if (sha1 != null)
             return fastMatch(sha1);
         else
             return super.getRow(tl);
     }
-    
+
     /**
      * Returns the number of sources found for this search.
      */
     int getTotalSources() {
         return _numSources;
     }
-    
+
     /** 
      * Overrides the default sort to maintain the indexes HashMap,
      * according to the current sort column and order.
@@ -191,7 +182,7 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
         _indexes.clear(); // it's easier & quicker to just clear & re-input
         remapIndexes(0);
     }
-    
+
     /**
      * Overrides the default clear to erase the indexes HashMap,
      * Metadata and Grouper.
@@ -199,12 +190,13 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
     public void clear() {
         simpleClear();
     }
-    
+
     /**
      * Does nothing -- lines need no cleanup.
      */
-    protected void cleanup() {}
-    
+    protected void cleanup() {
+    }
+
     /**
      * Simple clear -- clears the number of sources & cached SHA1 indexes.
      * Calls super.clear to erase the stored lines.
@@ -215,7 +207,7 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
         _indexes.clear();
         super.clear();
     }
-    
+
     /**
      * Remaps the indexes, starting at 'start' and going to the end of
      * the list.  This is needed for when rows are added to the middle of
@@ -223,8 +215,8 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
      */
     private void remapIndexes(int start) {
         remapIndexes(start, getRowCount());
-    }        
-    
+    }
+
     /**
      * Remaps the indexes, starting at 'start' and going to 'end'.
      * This is useful for when we move a row from end to start or vice versa.
@@ -232,20 +224,20 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
     private void remapIndexes(int start, int end) {
         for (int i = start; i < end; i++) {
             String sha1 = getHash(i);
-            if(sha1 != null)
+            if (sha1 != null)
                 _indexes.put(sha1, new Integer(i));
         }
     }
-    
+
     /**
      * Gets the SHA1 URN for a row.
      */
     private String getHash(int idx) {
-        if(idx >= getRowCount())
+        if (idx >= getRowCount())
             return null;
         return get(idx).getHash();
     }
-    
+
     /** Compares the spam difference between the two rows. */
     private int compareSpam(SearchResultDataLine a, SearchResultDataLine b) {
         if (SearchSettings.moveJunkToBottom()) {
@@ -257,48 +249,32 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
                 return -1;
             }
         }
-        
+
         return 0;
     }
-    
+
     /**
      * Compares the count between two rows.
      */
     private int compareCount(SearchResultDataLine a, SearchResultDataLine b, boolean spamCompare) {
-        if(spamCompare) {
+        if (spamCompare) {
             int spamRet = compareSpam(a, b);
-            if(spamRet != 0)
+            if (spamRet != 0)
                 return spamRet;
         }
-        
-        int c1 = a.getSeeds();// + ((a.getDisplayName().indexOf(YouTubePackageItemSearchResult.AAC_HIGH_QUALITY) == 0) ? 1000 : 0);
-        int c2 = b.getSeeds();// + ((b.getDisplayName().indexOf(YouTubePackageItemSearchResult.AAC_HIGH_QUALITY) == 0) ? 1000 : 0);
-        
-        int aSeId = a.getSearchEngine().getId();
-        int bSeId = b.getSearchEngine().getId();
-        
-        if (aSeId == SearchEngine.YOUTUBE_ID) {
-            c1 += 1000;
-        }
-        if (bSeId == SearchEngine.YOUTUBE_ID) {
-            c2 += 1000;
-        }
-        if (aSeId == SearchEngine.SOUNDCLOUD_ID) {
-            c1 += 200;
-        }
-        if (bSeId == SearchEngine.SOUNDCLOUD_ID) {
-            c2 += 200;
-        }
-        
+
+        int c1 = a.getSeeds();
+        int c2 = b.getSeeds();
+
         return (c1 - c2) * _ascending;
     }
-    
+
     /**
      * Fast match -- lookup in the table.
      */
     private int fastMatch(String sha1) {
         Integer idx = _indexes.get(sha1);
-        if(idx == null)
+        if (idx == null)
             return -1;
         else
             return idx.intValue();
@@ -307,10 +283,9 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
     public int getTotalResults() {
         return _numResults;
     }
-    
+
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return columnIndex == SearchTableColumns.NAME_IDX || columnIndex == SearchTableColumns.SOURCE_IDX;
     }
 }
-

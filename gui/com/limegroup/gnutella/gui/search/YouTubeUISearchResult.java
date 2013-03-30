@@ -36,10 +36,13 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
 public final class YouTubeUISearchResult extends AbstractUISearchResult {
 
     private final YouTubeCrawledSearchResult sr;
+    private final int seeds;
 
     public YouTubeUISearchResult(YouTubeCrawledSearchResult sr, SearchEngine se, String query) {
         super(sr, se, query);
         this.sr = sr;
+
+        seeds = sr.getDisplayName().indexOf(YouTubeCrawledSearchResult.AAC_HIGH_QUALITY) == 0 ? 2000 : 1000;
     }
 
     @Override
@@ -71,6 +74,6 @@ public final class YouTubeUISearchResult extends AbstractUISearchResult {
 
     @Override
     public int getSeeds() {
-        return -1;
+        return seeds;
     }
 }

@@ -34,8 +34,8 @@ import com.frostwire.search.StreamableSearchResult;
  */
 public final class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult implements HttpSearchResult, StreamableSearchResult {
 
-    private static final String AAC_LOW_QUALITY = "(AAC)";
-    private static final String AAC_HIGH_QUALITY = "(AAC-High Quality)";
+    public static final String AAC_LOW_QUALITY = "(AAC)";
+    public static final String AAC_HIGH_QUALITY = "(AAC-High Quality)";
 
     private final String filename;
     private final String displayName;

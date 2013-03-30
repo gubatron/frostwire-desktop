@@ -70,7 +70,7 @@ public final class SoundcloudUISearchResult extends AbstractUISearchResult {
 
     @Override
     public int getSeeds() {
-        return -1;
+        return 200;
     }
 
     public String getThumbnailUrl() {
