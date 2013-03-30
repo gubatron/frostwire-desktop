@@ -25,6 +25,7 @@ import javax.swing.JPopupMenu;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -36,10 +37,10 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
  */
 public class SearchEngineSearchResult extends AbstractSearchResult {
 
-    private WebSearchResult _item;
+    private TorrentSearchResult _item;
     private SearchEngine _searchEngine;
 
-    public SearchEngineSearchResult(WebSearchResult item, SearchEngine searchEngine, String query) {
+    public SearchEngineSearchResult(TorrentSearchResult item, SearchEngine searchEngine, String query) {
         super(query);
         _item = item;
         _searchEngine = searchEngine;
@@ -57,7 +58,7 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
 
     @Override
     public String getFilename() {
-        return _item.getFileName();
+        return _item.getFilename();
     }
 
     public String getHash() {
@@ -65,7 +66,7 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
     }
 
     public String getTorrentURI() {
-        return _item.getTorrentURI();
+        return _item.getTorrentUrl();
     }
 
     @Override
@@ -108,10 +109,6 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
     public SearchEngine getSearchEngine() {
         return _searchEngine;
     }
-
-    public WebSearchResult getWebSearchResult() {
-        return _item;
-    }
     
     @Override
     public String getDisplayName() {
@@ -125,8 +122,7 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
 
     @Override
     public SearchResult getSearchResult() {
-        // TODO Auto-generated method stub
-        return null;
+        return _item;
     }
 
     @Override

@@ -48,6 +48,8 @@ import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.transfers.PeerHttpUpload;
+import com.frostwire.search.SearchResult;
+import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
@@ -692,10 +694,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         removeYouTubeAction.setEnabled(false);
     }
 
-    public void openTorrentSearchResult(final WebSearchResult webSearchResult, final boolean partialDownload, final ActionListener postPartialDownloadAction) {
+    public void openTorrentSearchResult(final TorrentSearchResult sr, final boolean partialDownload, final ActionListener postPartialDownloadAction) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(webSearchResult.getTorrentURI(), webSearchResult.getDetailsUrl(), webSearchResult.getDisplayName(), webSearchResult.getHash(), webSearchResult.getSize(), partialDownload, postPartialDownloadAction);
+                BTDownload downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), sr.getDetailsUrl(), sr.getDisplayName(), sr.getHash(), sr.getSize(), partialDownload, postPartialDownloadAction);
                 add(downloader);
             }
         });

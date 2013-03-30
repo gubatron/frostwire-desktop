@@ -48,6 +48,7 @@ import org.limewire.i18n.I18nMarker;
 
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.filters.TableLineFilter;
+import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -296,7 +297,9 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
             public void actionPerformed(ActionEvent e) {
                 SearchResultDataLine[] lines = getAllSelectedLines();
                 if (lines.length == 1 && lines[0] != null) {
-                    GUIMediator.instance().openTorrentSearchResult(lines[0].getInitializeObject().getWebSearchResult(), true);
+                    if (lines[0].getInitializeObject().getSearchResult() instanceof TorrentSearchResult) {
+                        GUIMediator.instance().openTorrentSearchResult((TorrentSearchResult) lines[0].getInitializeObject().getSearchResult(), true);
+                    }
                 }
             }
         };
@@ -595,7 +598,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     void setGUID(GUID guid) {
         this.guid = guid;
     }
-    
+
     void setToken(long token) {
         this.token = token;
     }

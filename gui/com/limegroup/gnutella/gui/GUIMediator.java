@@ -74,6 +74,7 @@ import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.tabs.Tab;
+import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
@@ -769,12 +770,12 @@ public final class GUIMediator {
         return getBTDownloadMediator().getActiveDownloads();
     }
     
-    public final void openTorrentSearchResult(WebSearchResult webSearchResult, boolean partialDownload) {
-        openTorrentSearchResult(webSearchResult, partialDownload, null);
+    public final void openTorrentSearchResult(TorrentSearchResult sr, boolean partialDownload) {
+        openTorrentSearchResult(sr, partialDownload, null);
     }
 
-    public final void openTorrentSearchResult(WebSearchResult webSearchResult, boolean partialDownload, ActionListener postPartialDownloadAction) {
-        getBTDownloadMediator().openTorrentSearchResult(webSearchResult, partialDownload, postPartialDownloadAction);
+    public final void openTorrentSearchResult(TorrentSearchResult sr, boolean partialDownload, ActionListener postPartialDownloadAction) {
+        getBTDownloadMediator().openTorrentSearchResult(sr, partialDownload, postPartialDownloadAction);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
