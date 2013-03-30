@@ -296,8 +296,8 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
         STOP_SEARCH_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                token = 0;
-                SearchMediator.getSearchResultDisplayer().updateSearchIcon(SearchResultMediator.this, false);
+                SearchMediator.instance().stopSearch(token);
+                updateSearchIcon(false);
                 setButtonEnabled(SearchButtons.STOP_SEARCH_BUTTON_INDEX, !isStopped());
             }
         };

@@ -468,25 +468,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
     /**
      * @modifies tabbed pane, entries
-     * @effects removes the currently selected result window (if any)
-     *  from this
-     */
-    void killSearch() {
-        int i = tabbedPane.getSelectedIndex();
-
-        if (i >= entries.size()) {
-            resetTabbedPane();
-            i = tabbedPane.getSelectedIndex();
-        }
-
-        if (i == -1) //nothing selected?!
-            return;
-
-        killSearchAtIndex(i);
-    }
-
-    /**
-     * @modifies tabbed pane, entries
      * @effects removes the window at i from this
      */
     void killSearchAtIndex(int i) {

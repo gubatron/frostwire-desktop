@@ -156,9 +156,12 @@ public final class SearchMediator {
             return;
         }
 
+        stopSearch(rp.getToken());
+
         long token = System.nanoTime();
 
         rp.setToken(token);
+        updateSearchIcon(token, true);
         getSearchInputManager().panelReset(rp);
 
         GUIMediator.instance().setSearching(true);
@@ -526,8 +529,13 @@ public final class SearchMediator {
      * Notification that a search has been killed.
      */
     static void searchKilled(SearchResultMediator panel) {
+        instance().stopSearch(panel.getToken());
         getSearchInputManager().panelRemoved(panel);
         panel.cleanup();
+    }
+
+    void stopSearch(long token) {
+        instance().manager.stop(token);
     }
 
     /**
@@ -583,7 +591,9 @@ public final class SearchMediator {
     }
 
     private void onFinished(long token) {
+        SearchResultMediator rp = getResultPanelForGUID(token);
         updateSearchIcon(token, false);
+        rp.setToken(0); // to identify that the search is stopped (needs refactor)
         //        searchFinished = true;
         //        currentSearchTokens = null;
         //        if (listener != null) {
@@ -596,7 +606,7 @@ public final class SearchMediator {
         @Override
         public void onResults(SearchPerformer performer, List<? extends SearchResult> results) {
             if (!performer.isStopped()) {
-                System.out.println("Received results: " + results.size());
+                System.out.println("Received results: " + performer.getToken() + " \t- " + results.size());
                 //                @SuppressWarnings("unchecked")
                 //                List<SearchResult> filtered = filter(performer, (List<SearchResult>) results);
                 //                if (!filtered.isEmpty()) {
@@ -631,6 +641,7 @@ public final class SearchMediator {
 
         @Override
         public void onFinished(long token) {
+            System.out.println("Finished: " + token);
             SearchMediator.this.onFinished(token);
         }
     }
