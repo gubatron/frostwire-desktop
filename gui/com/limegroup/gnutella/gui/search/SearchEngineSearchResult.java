@@ -33,7 +33,7 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
  * @author aldenml
  *
  */
-public class SearchEngineSearchResult extends AbstractSearchResult implements BittorrentSearchResult {
+public class SearchEngineSearchResult extends AbstractSearchResult {
 
     private WebSearchResult _item;
     private SearchEngine _searchEngine;
