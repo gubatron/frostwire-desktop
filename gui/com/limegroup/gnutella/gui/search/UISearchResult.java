@@ -17,7 +17,6 @@ package com.limegroup.gnutella.gui.search;
 
 import javax.swing.JPopupMenu;
 
-import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.search.SearchResult;
 
 /**
@@ -61,6 +60,8 @@ public interface UISearchResult {
     public SearchResult getSearchResult();
     
     public void showDetails(boolean now);
+    
+    public String getDetailsUrl();
     
     public String getDisplayName();
     

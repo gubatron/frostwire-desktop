@@ -1,4 +1,7 @@
 /*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -15,34 +18,79 @@
 
 package com.limegroup.gnutella.gui.search;
 
+import org.apache.commons.io.FilenameUtils;
+
+import com.frostwire.gui.player.StreamMediaSource;
+import com.frostwire.search.FileSearchResult;
+import com.frostwire.search.SearchResult;
+import com.frostwire.search.StreamableSearchResult;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /**
- * A single SearchResult. These are returned in the {@link SearchInputPanel} and
- * are used to create {@link SearchResultDataLine}s to show search results.
  * 
- * (A collection of RemoteFileDesc, HostData, and Set of alternate locations.)
+ * @author gubatron
+ * @author aldenml
+ *
  */
 public abstract class AbstractUISearchResult implements UISearchResult {
 
-    private String query;
+    private final FileSearchResult sr;
+    private final SearchEngine se;
+    private final String query;
+    private final String extension;
 
-    public AbstractUISearchResult(String query) {
+    public AbstractUISearchResult(FileSearchResult sr, SearchEngine se, String query) {
+        this.sr = sr;
+        this.se = se;
         this.query = query;
+        this.extension = FilenameUtils.getExtension(sr.getFilename());
+    }
+
+    @Override
+    public long getCreationTime() {
+        return sr.getCreationTime();
+    }
+
+    @Override
+    public String getFilename() {
+        return sr.getFilename();
+    }
+
+    @Override
+    public long getSize() {
+        return sr.getSize();
+    }
+
+    @Override
+    public String getSource() {
+        return sr.getSource();
+    }
+
+    @Override
+    public SearchEngine getSearchEngine() {
+        return se;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return sr.getDisplayName();
+    }
+
+    @Override
+    public SearchResult getSearchResult() {
+        return sr;
     }
 
     @Override
     public String getExtension() {
-        String fullname = getFilename();
-        if (fullname == null) {
-            throw new NullPointerException("getFileName() can't return a null result");
-        }
-        int i = fullname.lastIndexOf(".");
-        if (i < 0) {
-            return "";
-        }
-        return fullname.substring(i + 1);
+        return extension;
+    }
+
+    @Override
+    public String getDetailsUrl() {
+        return sr.getDetailsUrl();
     }
 
     @Override
@@ -59,5 +107,16 @@ public abstract class AbstractUISearchResult implements UISearchResult {
     @Override
     public String getQuery() {
         return query;
+    }
+
+    @Override
+    public void play() {
+        if (sr instanceof StreamableSearchResult) {
+            StreamableSearchResult ssr = (StreamableSearchResult) sr;
+            String streamUrl = ssr.getStreamUrl();
+            MediaType mediaType = MediaType.getMediaTypeForExtension(extension);
+            boolean showPlayerWindow = mediaType.equals(MediaType.getVideoMediaType());
+            GUIMediator.instance().launchMedia(new StreamMediaSource(streamUrl, sr.getSource() + ": " + sr.getDisplayName(), sr.getDetailsUrl(), showPlayerWindow));
+        }
     }
 }

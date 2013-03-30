@@ -23,8 +23,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPopupMenu;
 
-import com.frostwire.gui.player.StreamMediaSource;
-import com.frostwire.search.SearchResult;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
@@ -37,37 +35,10 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
 public final class SoundcloudUISearchResult extends AbstractUISearchResult {
 
     private final SoundcloudSearchResult sr;
-    private final SearchEngine searchEngine;
 
-    public SoundcloudUISearchResult(SoundcloudSearchResult sr, SearchEngine searchEngine, String query) {
-        super(query);
+    public SoundcloudUISearchResult(SoundcloudSearchResult sr, SearchEngine se, String query) {
+        super(sr, se, query);
         this.sr = sr;
-        this.searchEngine = searchEngine;
-    }
-
-    @Override
-    public String getFilename() {
-        return sr.getFilename();
-    }
-
-    @Override
-    public String getDisplayName() {
-        return sr.getDisplayName();
-    }
-
-    @Override
-    public long getSize() {
-        return sr.getSize();
-    }
-
-    @Override
-    public long getCreationTime() {
-        return sr.getCreationTime();
-    }
-
-    @Override
-    public String getSource() {
-        return sr.getSource();
     }
 
     @Override
@@ -102,30 +73,11 @@ public final class SoundcloudUISearchResult extends AbstractUISearchResult {
         return -1;
     }
 
-    @Override
-    public SearchEngine getSearchEngine() {
-        return searchEngine;
-    }
-
-    @Override
-    public SearchResult getSearchResult() {
-        return sr;
-    }
-
-    @Override
-    public void play() {
-        GUIMediator.instance().launchMedia(new StreamMediaSource(sr.getStreamUrl(), "Soundcloud: " + sr.getDisplayName(), sr.getDetailsUrl(), false));
-    }
-
     public String getThumbnailUrl() {
         return sr.getThumbnailUrl();
     }
 
     public String getUsername() {
         return sr.getUsername();
-    }
-
-    public String getDetailsUrl() {
-        return sr.getDetailsUrl();
     }
 }

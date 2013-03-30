@@ -23,14 +23,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPopupMenu;
 
-import org.apache.commons.io.FilenameUtils;
-
-import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.gui.player.StreamMediaSource;
-import com.frostwire.search.SearchResult;
 import com.frostwire.search.youtube2.YouTubeCrawledSearchResult;
-import com.frostwire.search.youtube2.YouTubeSearchResult;
-import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -43,37 +36,10 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
 public final class YouTubeUISearchResult extends AbstractUISearchResult {
 
     private final YouTubeCrawledSearchResult sr;
-    private final SearchEngine searchEngine;
 
-    public YouTubeUISearchResult(YouTubeCrawledSearchResult sr, SearchEngine searchEngine, String query) {
-        super(query);
+    public YouTubeUISearchResult(YouTubeCrawledSearchResult sr, SearchEngine se, String query) {
+        super(sr, se, query);
         this.sr = sr;
-        this.searchEngine = searchEngine;
-    }
-
-    @Override
-    public String getFilename() {
-        return sr.getFilename();
-    }
-
-    @Override
-    public String getDisplayName() {
-        return sr.getDisplayName();
-    }
-
-    @Override
-    public long getSize() {
-        return sr.getSize();
-    }
-
-    @Override
-    public long getCreationTime() {
-        return sr.getCreationTime();
-    }
-
-    @Override
-    public String getSource() {
-        return sr.getSource();
     }
 
     @Override
@@ -106,23 +72,5 @@ public final class YouTubeUISearchResult extends AbstractUISearchResult {
     @Override
     public int getSeeds() {
         return -1;
-    }
-
-    @Override
-    public SearchEngine getSearchEngine() {
-        return searchEngine;
-    }
-
-    @Override
-    public SearchResult getSearchResult() {
-        return sr;
-    }
-
-    @Override
-    public void play() {
-        String streamUrl = sr.getStreamUrl();
-        MediaType mediaType = MediaType.getMediaTypeForExtension(FilenameUtils.getExtension(getFilename()));
-        boolean showPlayerWindow = mediaType.equals(MediaType.getVideoMediaType());
-        GUIMediator.instance().launchMedia(new StreamMediaSource(streamUrl, "YouTube: " + sr.getDisplayName(), sr.getDetailsUrl(), showPlayerWindow));
     }
 }

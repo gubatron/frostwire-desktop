@@ -23,10 +23,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPopupMenu;
 
-import org.apache.commons.io.FilenameUtils;
-
-import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.search.SearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
@@ -40,43 +36,15 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
 public class TorrentUISearchResult extends AbstractUISearchResult {
 
     private TorrentSearchResult sr;
-    private SearchEngine _searchEngine;
-    private final String extension;
 
-    public TorrentUISearchResult(TorrentSearchResult sr, SearchEngine searchEngine, String query) {
-        super(query);
+    public TorrentUISearchResult(TorrentSearchResult sr, SearchEngine se, String query) {
+        super(sr, se, query);
         this.sr = sr;
-        _searchEngine = searchEngine;
-        this.extension = FilenameUtils.getExtension(sr.getFilename());
     }
 
     @Override
-    public long getCreationTime() {
-        return sr.getCreationTime();
-    }
-
-    @Override
-    public String getExtension() {
-        return extension;
-    }
-
-    @Override
-    public String getFilename() {
-        return sr.getFilename();
-    }
-
     public String getHash() {
         return sr.getHash();
-    }
-
-    @Override
-    public long getSize() {
-        return sr.getSize();
-    }
-
-    @Override
-    public String getSource() {
-        return sr.getSource();
     }
 
     @Override
@@ -102,27 +70,8 @@ public class TorrentUISearchResult extends AbstractUISearchResult {
         return popupMenu;
     }
 
+    @Override
     public int getSeeds() {
         return sr.getSeeds();
-    }
-
-    public SearchEngine getSearchEngine() {
-        return _searchEngine;
-    }
-    
-    @Override
-    public String getDisplayName() {
-        return sr.getDisplayName();
-    }
-
-    @Override
-    public SearchResult getSearchResult() {
-        return sr;
-    }
-
-    @Override
-    public void play() {
-        // TODO Auto-generated method stub
-        
     }
 }
