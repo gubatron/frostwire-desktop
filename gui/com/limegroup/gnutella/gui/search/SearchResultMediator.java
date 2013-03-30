@@ -783,7 +783,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         }
     }
 
-    public void updateSearchIcon(boolean active) {
+    void updateSearchIcon(boolean active) {
         SearchMediator.getSearchResultDisplayer().updateSearchIcon(this, active);
     }
 }

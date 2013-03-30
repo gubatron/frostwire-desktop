@@ -201,18 +201,8 @@ public final class SearchMediator {
             GUIMediator.showMessage(I18n.tr("Your search is too long. Please make your search smaller and try again."));
             return false;
         case QUERY_VALID:
+            return true;
         default:
-            /**
-            boolean searchingTorrents = info.getMediaType().equals(MediaType.getTorrentMediaType());
-            boolean gnutellaStarted = GuiCoreMediator.getLifecycleManager().isStarted();
-            boolean azureusStarted = AzureusStarter.isAzureusCoreStarted();
-
-            if ((searchingTorrents && !azureusStarted) || (!searchingTorrents && !gnutellaStarted)) {
-                GUIMediator.showMessage(I18n.tr("Please wait, FrostWire must finish loading before a search can be started."));
-                return false;
-            }
-            */
-
             return true;
         }
     }
@@ -229,8 +219,6 @@ public final class SearchMediator {
 
         if (query.length() == 0) {
             return QUERY_EMPTY;
-            /*} else if (query.length() <= 2 && !(query.length() == 2 && ((Character.isDigit(query.charAt(0)) && Character.isLetter(query.charAt(1))) || (Character.isLetter(query.charAt(0)) && Character.isDigit(query.charAt(1)))))) {
-                return QUERY_TOO_SHORT;*/
         } else if (query.length() > SearchSettings.MAX_QUERY_LENGTH.getValue()) {
             return QUERY_TOO_LONG;
         } else {
@@ -240,7 +228,6 @@ public final class SearchMediator {
 
     private void performSearch(final long token, String query) {
         if (StringUtils.isNullOrEmpty(query, true)) {
-            //onFinished();
             return;
         }
 
@@ -289,61 +276,6 @@ public final class SearchMediator {
         return norm;
     }
 
-    /**
-     * Does the actual search.
-     * 
-     * 
-     * 
-     */
-    private static void doSearch(final long guid, final SearchInformation info) {
-        final String query = info.getQuery();
-
-        List<SearchEngine> searchEngines = SearchEngine.getEngines();
-
-        for (final SearchEngine searchEngine : searchEngines) {
-            if (searchEngine.isEnabled()) {
-                Thread t = new Thread(new Runnable() {
-                    public void run() {
-                        final SearchResultMediator rp = getResultPanelForGUID(guid);
-                        if (rp != null && !rp.isStopped()) {
-                            //rp.incrementSearchCount();
-                            List<WebSearchResult> webResults = null;//searchEngine.getPerformer().search(query);
-
-                            if (webResults != null && webResults.size() > 0) {
-                                final List<SearchResult> results = normalizeWebResults(webResults, searchEngine, info);
-
-                                GUIMediator.safeInvokeAndWait(new Runnable() {
-                                    public void run() {
-                                        try {
-                                            SearchFilter filter = getSearchFilterFactory().createFilter();
-                                            for (SearchResult sr : results) {
-                                                //                                                if (filter.allow(sr)) {
-                                                //                                                    getSearchResultDisplayer().addQueryResult(guid, sr, rp);
-                                                //                                                }
-                                            }
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        } finally {
-                                            //decrementSearchResultPanelCount(guid);
-                                        }
-                                    }
-
-                                });
-                            } else {
-                                //decrementSearchResultPanelCount(guid);
-                            }
-                        }
-                    }
-                });
-                t.setDaemon(true);
-                t.start();
-            }
-        }
-
-        //start local search.
-        doLocalSearch(guid, query, info);
-    }
-
     private static void updateSearchIcon(final long token, final boolean active) {
         GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
@@ -355,70 +287,7 @@ public final class SearchMediator {
         });
     }
 
-    public static void doLocalSearch(final long guid, final String query, final SearchInformation info) {
-
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-
-                final SearchResultMediator rp = getResultPanelForGUID(guid);
-                if (rp != null && !rp.isStopped()) {
-                    //rp.incrementSearchCount();
-                    /*
-                    final List<SmartSearchResult> localResults = LocalSearchEngine.instance().search(query);
-
-                    final SearchFilter filter = getSearchFilterFactory().createFilter();
-
-                    if (localResults.size() > 0) {
-                        GUIMediator.safeInvokeLater(new Runnable() {
-                            public void run() {
-                                try {
-                                    //                                    for (SearchResult sr : localResults) {
-                                    //                                        if (filter.allow(sr)) {
-                                    //                                            getSearchResultDisplayer().addQueryResult(guid, sr, rp);
-                                    //                                        }
-                                    //                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                } finally {
-                                    decrementSearchResultPanelCount(guid);
-                                }
-                            }
-                        });
-                    } else {
-                        decrementSearchResultPanelCount(guid);
-                    }*/
-                }
-
-                //LocalSearchEngine.instance().deepSearch(guid, query);
-            }
-        });
-        t.setDaemon(true);
-        t.start();
-    }
-
-    private static List<SearchResult> normalizeWebResults(List<WebSearchResult> webResults, SearchEngine engine, SearchInformation info) {
-
-        List<SearchResult> result = new ArrayList<SearchResult>();
-
-        for (WebSearchResult webResult : webResults) {
-
-            SearchResult sr = null;
-
-            //            if (webResult instanceof YouTubeSearchResult) {
-            //                sr = new YouTubePackageSearchResult((YouTubeSearchResult) webResult, engine, info.getQuery());
-            //            } else if (webResult instanceof SoundcloudTrackSearchResult) {
-            //                sr = new SoundcloudSearchResult((SoundcloudTrackSearchResult) webResult, engine, info.getQuery());
-            //            } else {
-            //                sr = new SearchEngineSearchResult(webResult, engine, info.getQuery());
-            //            }
-
-            result.add(sr);
-        }
-
-        return result;
-    }
-
-    private static List<UISearchResult> normalizeWebResults2(List<? extends SearchResult> results, SearchEngine engine, String query) {
+    private static List<UISearchResult> normalizeWebResults(List<? extends SearchResult> results, SearchEngine engine, String query) {
 
         List<UISearchResult> result = new ArrayList<UISearchResult>();
 
@@ -483,8 +352,9 @@ public final class SearchMediator {
      * Downloads all the selected lines.
      */
     private static void downloadAll(SearchResultDataLine[] lines, SearchInformation searchInfo) {
-        for (int i = 0; i < lines.length; i++)
+        for (int i = 0; i < lines.length; i++) {
             downloadLine(lines[i], null, null, false, searchInfo);
+        }
     }
 
     /**
@@ -585,11 +455,6 @@ public final class SearchMediator {
         SearchResultMediator rp = getResultPanelForGUID(token);
         updateSearchIcon(token, false);
         rp.setToken(0); // to identify that the search is stopped (needs refactor)
-        //        searchFinished = true;
-        //        currentSearchTokens = null;
-        //        if (listener != null) {
-        //            listener.onFinished();
-        //        }
     }
 
     private final class ManagerListener implements SearchManagerListener {
@@ -608,7 +473,7 @@ public final class SearchMediator {
                 if (rp != null && !rp.isStopped()) {
 
                     if (results != null && results.size() > 0) {
-                        final List<UISearchResult> uiResults = normalizeWebResults2(results, SearchEngine.CLEARBITS, "");
+                        final List<UISearchResult> uiResults = normalizeWebResults(results, SearchEngine.CLEARBITS, "");
 
                         GUIMediator.safeInvokeAndWait(new Runnable() {
                             public void run() {
