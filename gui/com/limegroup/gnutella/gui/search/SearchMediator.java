@@ -19,7 +19,10 @@ import java.io.File;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -32,11 +35,11 @@ import javax.swing.event.ChangeListener;
 import org.limewire.util.I18NConvert;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.AzureusStarter;
-import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.filters.SearchFilter;
 import com.frostwire.gui.filters.SearchFilterFactory;
 import com.frostwire.gui.filters.SearchFilterFactoryImpl;
+import com.frostwire.search.CrawledSearchResult;
+import com.frostwire.search.FileSearchResult;
 import com.frostwire.search.SearchManager;
 import com.frostwire.search.SearchManagerImpl;
 import com.frostwire.search.SearchManagerListener;
@@ -241,8 +244,69 @@ public final class SearchMediator {
         }
     }
 
+    private List<SearchResult> filter(SearchPerformer performer, List<SearchResult> results, List<String> searchTokens) {
+        List<SearchResult> list;
+
+        if (searchTokens == null || searchTokens.isEmpty()) {
+            list = Collections.emptyList();
+        } else {
+            list = filter(results, searchTokens);
+        }
+
+        return list;
+    }
+
+    private List<SearchResult> filter(List<? extends SearchResult> results, List<String> searchTokens) {
+        List<SearchResult> list = new LinkedList<SearchResult>();
+
+        try {
+            for (SearchResult sr : results) {
+                if (filter(new LinkedList<String>(searchTokens), sr)) {
+                    list.add(sr);
+                }
+            }
+        } catch (Throwable e) {
+            // possible NPE due to cancel search or some inner error in search results, ignore it and cleanup list
+            list.clear();
+        }
+
+        return list;
+    }
+
+    private boolean filter(List<String> tokens, SearchResult sr) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(sr.getDisplayName());
+        if (sr instanceof CrawledSearchResult) {
+            sb.append(((CrawledSearchResult) sr).getParent().getDisplayName());
+        }
+
+        if (sr instanceof FileSearchResult) {
+            sb.append(((FileSearchResult) sr).getFilename());
+        }
+
+        String str = sanitize(sb.toString());
+        str = normalize(str);
+
+        Iterator<String> it = tokens.iterator();
+        while (it.hasNext()) {
+            String token = it.next();
+            if (str.contains(token)) {
+                it.remove();
+            }
+        }
+
+        return tokens.isEmpty();
+    }
+
+    private static String stripHtml(String str) {
+        str = str.replaceAll("\\<.*?>", "");
+        str = str.replaceAll("\\&.*?\\;", "");
+        return str;
+    }
+
     private String sanitize(String str) {
-        //str = Html.fromHtml(str).toString();
+        str = stripHtml(str);
         str = str.replaceAll("\\.torrent|www\\.|\\.com|\\.net|[\\\\\\/%_;\\-\\.\\(\\)\\[\\]\\n\\rÐ&~{}\\*@\\^'=!,¡|#ÀÁ]", " ");
         str = StringUtils.removeDoubleSpaces(str);
 
@@ -287,7 +351,7 @@ public final class SearchMediator {
         });
     }
 
-    private static List<UISearchResult> normalizeWebResults(List<? extends SearchResult> results, SearchEngine engine, String query) {
+    private static List<UISearchResult> convertResults(List<? extends SearchResult> results, SearchEngine engine, String query) {
 
         List<UISearchResult> result = new ArrayList<UISearchResult>();
 
@@ -316,7 +380,8 @@ public final class SearchMediator {
      * standard query string, and XML query string.
      */
     private static SearchResultMediator addResultTab(long token, SearchInformation info) {
-        return getSearchResultDisplayer().addResultTab(token, info);
+        List<String> searchTokens = instance().tokenize(info.getQuery());
+        return getSearchResultDisplayer().addResultTab(token, searchTokens, info);
     }
 
     /**
@@ -463,34 +528,37 @@ public final class SearchMediator {
         public void onResults(SearchPerformer performer, List<? extends SearchResult> results) {
             if (!performer.isStopped()) {
                 System.out.println("Received results: " + performer.getToken() + " \t- " + results.size());
-                //                @SuppressWarnings("unchecked")
-                //                List<SearchResult> filtered = filter(performer, (List<SearchResult>) results);
-                //                if (!filtered.isEmpty()) {
-                //                    listener.onResults(performer, filtered);
-                //                }
+
                 final long token = performer.getToken();
                 final SearchResultMediator rp = getResultPanelForGUID(token);
-                if (rp != null && !rp.isStopped()) {
 
-                    if (results != null && results.size() > 0) {
-                        final List<UISearchResult> uiResults = normalizeWebResults(results, SearchEngine.CLEARBITS, "");
+                @SuppressWarnings("unchecked")
+                List<SearchResult> filtered = filter(performer, (List<SearchResult>) results, rp.getSearchTokens());
 
-                        GUIMediator.safeInvokeAndWait(new Runnable() {
-                            public void run() {
-                                try {
-                                    SearchFilter filter = getSearchFilterFactory().createFilter();
-                                    for (UISearchResult sr : uiResults) {
-                                        if (filter.allow(sr)) {
-                                            getSearchResultDisplayer().addQueryResult(token, sr, rp);
-                                        }
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                if (rp != null && !rp.isStopped() && filtered != null && !filtered.isEmpty()) {
 
-                        });
+                    SearchEngine se = SearchEngine.getSearchEngineByName(filtered.get(0).getSource());
+                    if (se == null) {
+                        return;
                     }
+
+                    final List<UISearchResult> uiResults = convertResults(filtered, se, rp.getQuery());
+
+                    GUIMediator.safeInvokeAndWait(new Runnable() {
+                        public void run() {
+                            try {
+                                SearchFilter filter = getSearchFilterFactory().createFilter();
+                                for (UISearchResult sr : uiResults) {
+                                    if (filter.allow(sr)) {
+                                        getSearchResultDisplayer().addQueryResult(token, sr, rp);
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    });
                 }
             }
         }

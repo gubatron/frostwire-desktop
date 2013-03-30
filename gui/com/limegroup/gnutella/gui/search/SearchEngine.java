@@ -19,9 +19,7 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.limewire.setting.BooleanSetting;
 
@@ -163,26 +161,16 @@ public abstract class SearchEngine {
 
     public abstract SearchPerformer getPerformer(long token, String keywords);
 
-    public static SearchEngine getSearchEngineById(int searchEngineID) {
+    public static SearchEngine getSearchEngineByName(String name) {
         List<SearchEngine> searchEngines = getEngines();
 
         for (SearchEngine engine : searchEngines) {
-            if (engine.getId() == searchEngineID) {
+            if (name.startsWith(engine.getName())) {
                 return engine;
             }
         }
 
         return null;
-    }
-
-    public static Map<Integer, SearchEngine> getSearchEngineMap() {
-        HashMap<Integer, SearchEngine> m = new HashMap<Integer, SearchEngine>();
-        List<SearchEngine> searchEngines = getEngines();
-
-        for (SearchEngine engine : searchEngines) {
-            m.put(engine.getId(), engine);
-        }
-        return m;
     }
 
     public BooleanSetting getEnabledSetting() {

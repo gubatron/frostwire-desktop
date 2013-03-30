@@ -89,6 +89,8 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
      */
     private long token;
 
+    private final List<String> searchTokens;
+
     /**
      * The CompositeFilter for this ResultPanel.
      */
@@ -130,6 +132,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         SEARCH_INFO = SearchInformation.createKeywordSearch("", null, MediaType.getAnyTypeMediaType());
         FILTER = null;
         this.token = 0;
+        this.searchTokens = null;
         setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, false);
         // disable dnd for overlay panel
         TABLE.setDragEnabled(false);
@@ -144,10 +147,11 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
      * @param guid the guid of the query.  Used to match results.
      * @param info the info of the search
      */
-    SearchResultMediator(long token, SearchInformation info) {
+    SearchResultMediator(long token, List<String> searchTokens, SearchInformation info) {
         super(SEARCH_TABLE);
         SEARCH_INFO = info;
         this.token = token;
+        this.searchTokens = searchTokens;
         setupRealTable();
         resetFilters();
     }
@@ -785,5 +789,10 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
     void updateSearchIcon(boolean active) {
         SearchMediator.getSearchResultDisplayer().updateSearchIcon(this, active);
+        setButtonEnabled(SearchButtons.STOP_SEARCH_BUTTON_INDEX, active);
+    }
+
+    List<String> getSearchTokens() {
+        return searchTokens;
     }
 }
