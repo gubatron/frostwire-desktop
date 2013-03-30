@@ -261,7 +261,14 @@ public final class SearchMediator {
 
         try {
             for (SearchResult sr : results) {
-                if (filter(new LinkedList<String>(searchTokens), sr)) {
+                if (sr instanceof CrawledSearchResult) {
+                    // special case for youtube
+                    if (sr instanceof YouTubeCrawledSearchResult) {
+                        list.add(sr);
+                    } else if (filter(new LinkedList<String>(searchTokens), sr)) {
+                        list.add(sr);
+                    }
+                } else {
                     list.add(sr);
                 }
             }
