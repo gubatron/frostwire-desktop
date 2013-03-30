@@ -771,54 +771,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         tc.setCellEditor(new ActionIconAndNameEditor());
     }
 
-    public class WarningBorder extends AbstractBorder {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 1031178095074065273L;
-        private Color lineColor;
-        private int offset;
-
-        public WarningBorder(Color lineColor, int offset) {
-            this.lineColor = lineColor;
-            this.offset = offset;
-        }
-
-        @Override
-        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-            Color oldColor = g.getColor();
-
-            g.setColor(lineColor);
-
-            // top
-            g.drawLine(x, y, x + width - 1 - offset, y);
-            // left
-            g.drawLine(x, y, x, y + height);
-            // right
-            g.drawLine(x + width - 1 - offset, y, x + width - 1 - offset, y + height);
-
-            if (offset > 0) {
-                g.setColor(c.getParent().getBackground());
-                for (int i = 0; i < offset; i++) {
-                    g.drawLine(x + width - 1 - i, y, x + width - 1 - i, y + height);
-                }
-            }
-
-            g.setColor(oldColor);
-        }
-
-        @Override
-        public Insets getBorderInsets(Component c) {
-            return new Insets(1, 1, 0, 1 + offset);
-        }
-
-        @Override
-        public boolean isBorderOpaque() {
-            return false;
-        }
-    }
-
     private final class RepeatSearchAction extends AbstractAction {
 
         /**
