@@ -31,20 +31,26 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
 
     private final SoundcloudItem item;
     private final String trackUrl;
+    private final String filename;
+    private final long duration;
+    private final String source;
 
     public SoundcloudSearchResult(SoundcloudItem item) {
         this.item = item;
-        trackUrl = "http://soundcloud.com" + item.uri;
+        this.trackUrl = "http://soundcloud.com" + item.uri;
+        this.filename = item.name + ".mp3";
+        this.duration = Math.round((item.duration * 128f) / 8f);
+        this.source = buildSource(item);
     }
 
     @Override
     public String getFilename() {
-        return item.name + ".mp3";
+        return filename;
     }
 
     @Override
     public long getSize() {
-        return Math.round((item.duration * 128f) / 8f);
+        return duration;
     }
 
     @Override
@@ -54,15 +60,7 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
 
     @Override
     public String getSource() {
-        if (item.user != null && item.user.username != null) {
-            return "Soundcloud - " + item.user.username;
-        } else {
-            return "Soundcloud";
-        }
-    }
-
-    public int getRank() {
-        return 10000;
+        return source;
     }
 
     @Override
@@ -94,5 +92,13 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
     @Override
     public boolean isComplete() {
         return true;
+    }
+
+    private String buildSource(SoundcloudItem item2) {
+        if (item.user != null && item.user.username != null) {
+            return "Soundcloud - " + item.user.username;
+        } else {
+            return "Soundcloud";
+        }
     }
 }
