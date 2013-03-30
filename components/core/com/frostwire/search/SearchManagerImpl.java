@@ -63,6 +63,10 @@ public class SearchManagerImpl implements SearchManager {
     @Override
     public void perform(SearchPerformer performer) {
         if (performer != null) {
+            if (performer.getToken() < 0) {
+                throw new IllegalArgumentException("Search token id mut be >= 0");
+            }
+
             performer.registerListener(new PerformerResultListener(this));
 
             SearchTask task = new PerformTask(this, performer, getOrder(performer.getToken()));
@@ -76,7 +80,7 @@ public class SearchManagerImpl implements SearchManager {
 
     @Override
     public void stop() {
-        stopTasks(0);
+        stopTasks(-1L);
     }
 
     @Override
@@ -132,7 +136,7 @@ public class SearchManagerImpl implements SearchManager {
             Iterator<SearchTask> it = tasks.iterator();
             while (it.hasNext()) {
                 SearchTask task = it.next();
-                if (token == 0 || task.getToken() == token) {
+                if (token == -1L || task.getToken() == token) {
                     task.stop();
                 }
             }
@@ -169,6 +173,7 @@ public class SearchManagerImpl implements SearchManager {
                 }
             }
         }
+
         if (pendingTask == null) {
             onFinished(performer.getToken());
         }
