@@ -303,7 +303,7 @@ public final class SearchMediator {
                     public void run() {
                         final SearchResultMediator rp = getResultPanelForGUID(guid);
                         if (rp != null && !rp.isStopped()) {
-                            rp.incrementSearchCount();
+                            //rp.incrementSearchCount();
                             List<WebSearchResult> webResults = null;//searchEngine.getPerformer().search(query);
 
                             if (webResults != null && webResults.size() > 0) {
@@ -321,13 +321,13 @@ public final class SearchMediator {
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         } finally {
-                                            decrementSearchResultPanelCount(guid);
+                                            //decrementSearchResultPanelCount(guid);
                                         }
                                     }
 
                                 });
                             } else {
-                                decrementSearchResultPanelCount(guid);
+                                //decrementSearchResultPanelCount(guid);
                             }
                         }
                     }
@@ -341,12 +341,12 @@ public final class SearchMediator {
         doLocalSearch(guid, query, info);
     }
 
-    private static void decrementSearchResultPanelCount(final long guid) {
+    private static void updateSearchIcon(final long token, final boolean active) {
         GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
-                SearchResultMediator trp = getResultPanelForGUID(guid);
+                SearchResultMediator trp = getResultPanelForGUID(token);
                 if (trp != null) {
-                    trp.decrementSearchCount();
+                    trp.updateSearchIcon(active);
                 }
             }
         });
@@ -359,7 +359,7 @@ public final class SearchMediator {
 
                 final SearchResultMediator rp = getResultPanelForGUID(guid);
                 if (rp != null && !rp.isStopped()) {
-                    rp.incrementSearchCount();
+                    //rp.incrementSearchCount();
                     /*
                     final List<SmartSearchResult> localResults = LocalSearchEngine.instance().search(query);
 
@@ -582,7 +582,8 @@ public final class SearchMediator {
         return SEARCH_FILTER_FACTORY;
     }
 
-    private void onFinished() {
+    private void onFinished(long token) {
+        updateSearchIcon(token, false);
         //        searchFinished = true;
         //        currentSearchTokens = null;
         //        if (listener != null) {
@@ -604,7 +605,6 @@ public final class SearchMediator {
                 final long token = performer.getToken();
                 final SearchResultMediator rp = getResultPanelForGUID(token);
                 if (rp != null && !rp.isStopped()) {
-                    rp.incrementSearchCount();
 
                     if (results != null && results.size() > 0) {
                         final List<UISearchResult> uiResults = normalizeWebResults2(results, SearchEngine.CLEARBITS, "");
@@ -620,14 +620,10 @@ public final class SearchMediator {
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                } finally {
-                                    decrementSearchResultPanelCount(token);
                                 }
                             }
 
                         });
-                    } else {
-                        decrementSearchResultPanelCount(token);
                     }
                 }
             }
@@ -635,7 +631,7 @@ public final class SearchMediator {
 
         @Override
         public void onFinished(long token) {
-            SearchMediator.this.onFinished();
+            SearchMediator.this.onFinished(token);
         }
     }
 }

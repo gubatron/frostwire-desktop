@@ -836,11 +836,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         }
     }
 
-    public void incrementSearchCount() {
-        SearchMediator.getSearchResultDisplayer().updateSearchIcon(this, searchCount.incrementAndGet() > 0);
-    }
-
-    public void decrementSearchCount() {
-        SearchMediator.getSearchResultDisplayer().updateSearchIcon(this, searchCount.decrementAndGet() > 0);
+    public void updateSearchIcon(boolean active) {
+        SearchMediator.getSearchResultDisplayer().updateSearchIcon(this, active);
     }
 }

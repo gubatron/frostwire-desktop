@@ -371,7 +371,7 @@ public class LocalSearchEngine {
 
             SearchResultMediator rp = SearchMediator.getResultPanelForGUID(guid);
             if (rp != null) {
-                rp.incrementSearchCount();
+                //rp.incrementSearchCount();
             }
 
             DownloadTorrentTask task = new DownloadTorrentTask(order, guid, query, webSearchResult, searchEngine);
@@ -468,7 +468,7 @@ public class LocalSearchEngine {
             case TorrentDownloader.STATE_CANCELLED:
                 SearchResultMediator rp = SearchMediator.getResultPanelForGUID(guid);
                 if (rp != null) {
-                    rp.decrementSearchCount();
+                    //rp.decrementSearchCount();
                 }
                 finishSignal.countDown();
                 break;
@@ -488,7 +488,7 @@ public class LocalSearchEngine {
                 return;
             }
 
-            rp.decrementSearchCount();
+            //rp.decrementSearchCount();
 
             SearchFilter filter = SearchMediator.getSearchFilterFactory().createFilter();
 
@@ -726,7 +726,7 @@ public class LocalSearchEngine {
                 return;
             }
 
-            rp.decrementSearchCount();
+            //rp.decrementSearchCount();
 
             SearchFilter filter = SearchMediator.getSearchFilterFactory().createFilter();
 
