@@ -170,6 +170,7 @@ public class LocalSearchEngine {
      * Perform a simple Database Search, immediate results should be available
      * if there are matches.
      */
+    /*
     public List<SmartSearchResult> search(String query) {
         if (!SearchSettings.SMART_SEARCH_ENABLED.getValue()) {
             System.out.println("Skipping local search, smart search disabled.");
@@ -243,8 +244,9 @@ public class LocalSearchEngine {
         System.out.println("Ended up with " + results.size() + " results");
 
         return results;
-    }
+    }*/
 
+    /*
     public List<DeepSearchResult> deepSearch(long guid, String query) {
         SearchResultMediator rp = null;
 
@@ -277,7 +279,7 @@ public class LocalSearchEngine {
         }
 
         return null;
-    }
+    }*/
 
     public void sleep() {
         try {
@@ -493,6 +495,7 @@ public class LocalSearchEngine {
             TOTorrentFile[] fs = theTorrent.getFiles();
             for (int i = 0; i < fs.length; i++) {
                 try {
+                    /*
                     final DeepSearchResult result = new DeepSearchResult(fs[i], webSearchResult, searchEngine, query);
 
                     if (!filter.allow(result))
@@ -516,6 +519,7 @@ public class LocalSearchEngine {
                             }
                         });
                     }
+                    */
                 } catch (Throwable e) {
                     LOG.error("Error analysing torrent file", e);
                 }

@@ -43,6 +43,7 @@ import com.frostwire.search.SearchManagerListener;
 import com.frostwire.search.SearchPerformer;
 import com.frostwire.search.SearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
+import com.frostwire.search.youtube2.YouTubeCrawledSearchResult;
 import com.frostwire.search.youtube2.YouTubeSearchResult;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -379,6 +380,7 @@ public final class SearchMediator {
                 final SearchResultMediator rp = getResultPanelForGUID(guid);
                 if (rp != null && !rp.isStopped()) {
                     rp.incrementSearchCount();
+                    /*
                     final List<SmartSearchResult> localResults = LocalSearchEngine.instance().search(query);
 
                     final SearchFilter filter = getSearchFilterFactory().createFilter();
@@ -401,10 +403,10 @@ public final class SearchMediator {
                         });
                     } else {
                         decrementSearchResultPanelCount(guid);
-                    }
+                    }*/
                 }
 
-                LocalSearchEngine.instance().deepSearch(guid, query);
+                //LocalSearchEngine.instance().deepSearch(guid, query);
             }
         });
         t.setDaemon(true);
@@ -441,8 +443,8 @@ public final class SearchMediator {
 
             UISearchResult ui = null;
 
-            if (sr instanceof YouTubeSearchResult) {
-                ui = new YouTubePackageSearchResult((YouTubeSearchResult) sr, engine, query);
+            if (sr instanceof YouTubeCrawledSearchResult) {
+                ui = new YouTubePackageSearchResult((YouTubeCrawledSearchResult) sr, engine, query);
             } else if (sr instanceof com.frostwire.search.soundcloud.SoundcloudSearchResult) {
                 ui = new SoundcloudSearchResult((com.frostwire.search.soundcloud.SoundcloudSearchResult) sr, engine, query);
             } else if (sr instanceof TorrentSearchResult) {

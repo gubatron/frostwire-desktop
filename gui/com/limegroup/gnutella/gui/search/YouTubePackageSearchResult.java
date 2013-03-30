@@ -23,9 +23,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPopupMenu;
 
+import org.apache.commons.io.FilenameUtils;
+
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.gui.player.StreamMediaSource;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.youtube2.YouTubeCrawledSearchResult;
 import com.frostwire.search.youtube2.YouTubeSearchResult;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -37,10 +42,10 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
  */
 public final class YouTubePackageSearchResult extends AbstractSearchResult {
 
-    private final YouTubeSearchResult sr;
+    private final YouTubeCrawledSearchResult sr;
     private final SearchEngine searchEngine;
 
-    public YouTubePackageSearchResult(YouTubeSearchResult sr, SearchEngine searchEngine, String query) {
+    public YouTubePackageSearchResult(YouTubeCrawledSearchResult sr, SearchEngine searchEngine, String query) {
         super(query);
         this.sr = sr;
         this.searchEngine = searchEngine;
@@ -125,7 +130,9 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
 
     @Override
     public void play() {
-        // TODO Auto-generated method stub
-        
+        String streamUrl = sr.getStreamUrl();
+        MediaType mediaType = MediaType.getMediaTypeForExtension(FilenameUtils.getExtension(getFilename()));
+        boolean showPlayerWindow = mediaType.equals(MediaType.getVideoMediaType());
+        GUIMediator.instance().launchMedia(new StreamMediaSource(streamUrl, "YouTube: " + sr.getDisplayName(), sr.getDetailsUrl(), showPlayerWindow));
     }
 }

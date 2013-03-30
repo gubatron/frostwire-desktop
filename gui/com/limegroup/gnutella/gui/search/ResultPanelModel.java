@@ -271,8 +271,8 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
                 return spamRet;
         }
         
-        int c1 = a.getSeeds() + ((a.getDisplayName().indexOf(YouTubePackageItemSearchResult.AAC_HIGH_QUALITY) == 0) ? 1000 : 0);
-        int c2 = b.getSeeds() + ((b.getDisplayName().indexOf(YouTubePackageItemSearchResult.AAC_HIGH_QUALITY) == 0) ? 1000 : 0);
+        int c1 = a.getSeeds();// + ((a.getDisplayName().indexOf(YouTubePackageItemSearchResult.AAC_HIGH_QUALITY) == 0) ? 1000 : 0);
+        int c2 = b.getSeeds();// + ((b.getDisplayName().indexOf(YouTubePackageItemSearchResult.AAC_HIGH_QUALITY) == 0) ? 1000 : 0);
         
         int aSeId = a.getSearchEngine().getId();
         int bSeId = b.getSearchEngine().getId();
