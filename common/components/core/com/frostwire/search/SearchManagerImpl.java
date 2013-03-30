@@ -22,7 +22,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.PriorityBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -46,7 +47,7 @@ public class SearchManagerImpl implements SearchManager {
     private SearchManagerListener listener;
 
     public SearchManagerImpl(int nThreads) {
-        this.executor = Executors.newFixedThreadPool(nThreads);
+        this.executor = newFixedThreadPool(nThreads);
         this.tasks = Collections.synchronizedList(new LinkedList<SearchTask>());
     }
 
@@ -64,7 +65,7 @@ public class SearchManagerImpl implements SearchManager {
         if (performer != null) {
             performer.registerListener(new PerformerResultListener(this));
 
-            SearchTask task = new PerformTask(this, performer);
+            SearchTask task = new PerformTask(this, performer, getOrder(performer.getToken()));
 
             tasks.add(task);
             executor.execute(task);
@@ -131,7 +132,7 @@ public class SearchManagerImpl implements SearchManager {
             Iterator<SearchTask> it = tasks.iterator();
             while (it.hasNext()) {
                 SearchTask task = it.next();
-                if (token == 0 || task.performer.getToken() == token) {
+                if (token == 0 || task.getToken() == token) {
                     task.stop();
                 }
             }
@@ -141,7 +142,7 @@ public class SearchManagerImpl implements SearchManager {
     private void crawl(SearchPerformer performer, CrawlableSearchResult sr) {
         if (performer != null && !performer.isStopped()) {
             try {
-                SearchTask task = new CrawlTask(this, performer, sr);
+                SearchTask task = new CrawlTask(this, performer, sr, getOrder(performer.getToken()));
                 tasks.add(task);
                 executor.execute(task);
             } catch (Throwable e) {
@@ -159,11 +160,11 @@ public class SearchManagerImpl implements SearchManager {
             Iterator<SearchTask> it = tasks.iterator();
             while (it.hasNext() && pendingTask == null) {
                 SearchTask task = it.next();
-                if (task.getToken() == performer.getToken() && !task.performer.isStopped()) {
+                if (task.getToken() == performer.getToken() && !task.isStopped()) {
                     pendingTask = task;
                 }
 
-                if (task.performer.isStopped()) {
+                if (task.isStopped()) {
                     it.remove();
                 }
             }
@@ -171,6 +172,24 @@ public class SearchManagerImpl implements SearchManager {
         if (pendingTask == null) {
             onFinished(performer.getToken());
         }
+    }
+
+    private int getOrder(long token) {
+        int order = 0;
+        synchronized (tasks) {
+            Iterator<SearchTask> it = tasks.iterator();
+            while (it.hasNext()) {
+                SearchTask task = it.next();
+                if (task.getToken() == token) {
+                    order = order + 1;
+                }
+            }
+        }
+        return order;
+    }
+
+    private static ExecutorService newFixedThreadPool(int nThreads) {
+        return new ThreadPoolExecutor(nThreads, nThreads, 0L, TimeUnit.MILLISECONDS, new PriorityBlockingQueue<Runnable>());
     }
 
     private static final class PerformerResultListener implements SearchListener {
@@ -205,35 +224,46 @@ public class SearchManagerImpl implements SearchManager {
         }
     }
 
-    private static abstract class SearchTask implements Runnable {
+    private static abstract class SearchTask implements Runnable, Comparable<SearchTask> {
 
         protected final SearchManagerImpl manager;
         protected final SearchPerformer performer;
+        private final int order;
 
-        public SearchTask(SearchManagerImpl manager, SearchPerformer performer) {
+        public SearchTask(SearchManagerImpl manager, SearchPerformer performer, int order) {
             this.manager = manager;
             this.performer = performer;
+            this.order = order;
         }
 
         public long getToken() {
             return performer.getToken();
         }
 
+        public boolean isStopped() {
+            return performer.isStopped();
+        }
+
         public void stop() {
             performer.stop();
+        }
+
+        @Override
+        public int compareTo(SearchTask o) {
+            return order - o.order;
         }
     }
 
     private static final class PerformTask extends SearchTask {
 
-        public PerformTask(SearchManagerImpl manager, SearchPerformer performer) {
-            super(manager, performer);
+        public PerformTask(SearchManagerImpl manager, SearchPerformer performer, int order) {
+            super(manager, performer, order);
         }
 
         @Override
         public void run() {
             try {
-                if (!performer.isStopped()) {
+                if (!isStopped()) {
                     performer.perform();
                 }
             } catch (Throwable e) {
@@ -250,15 +280,15 @@ public class SearchManagerImpl implements SearchManager {
 
         private final CrawlableSearchResult sr;
 
-        public CrawlTask(SearchManagerImpl manager, SearchPerformer performer, CrawlableSearchResult sr) {
-            super(manager, performer);
+        public CrawlTask(SearchManagerImpl manager, SearchPerformer performer, CrawlableSearchResult sr, int order) {
+            super(manager, performer, order);
             this.sr = sr;
         }
 
         @Override
         public void run() {
             try {
-                if (!performer.isStopped()) {
+                if (!isStopped()) {
                     performer.crawl(sr);
                 }
             } catch (Throwable e) {
