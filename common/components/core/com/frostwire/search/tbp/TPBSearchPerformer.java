@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.frostwire.search.RegexSearchPerformer;
+import com.frostwire.search.CrawlRegexSearchPerformer;
 import com.frostwire.search.SearchResult;
 
 /**
@@ -31,7 +31,7 @@ import com.frostwire.search.SearchResult;
  * @author aldenml
  *
  */
-public class TPBSearchPerformer extends RegexSearchPerformer<TPBSearchResult> {
+public class TPBSearchPerformer extends CrawlRegexSearchPerformer<TPBSearchResult> {
 
     private static final int MAX_RESULTS = 20;
 
@@ -43,18 +43,18 @@ public class TPBSearchPerformer extends RegexSearchPerformer<TPBSearchResult> {
     }
 
     @Override
-    protected String getUrl(int page, String encodedKeywords) {
-        return "http://thepiratebay.se/search/" + encodedKeywords + "/0/7/0";
-    }
-
-    @Override
-    protected Pattern getPattern() {
+    public Pattern getPattern() {
         return PATTERN;
     }
 
     @Override
-    protected TPBSearchResult fromMatcher(Matcher matcher) {
+    public TPBSearchResult fromMatcher(Matcher matcher) {
         return new TPBSearchResult(matcher);
+    }
+
+    @Override
+    protected String getUrl(int page, String encodedKeywords) {
+        return "http://thepiratebay.se/search/" + encodedKeywords + "/0/7/0";
     }
 
     @Override

@@ -19,7 +19,6 @@
 package com.frostwire.search.soundcloud;
 
 import com.frostwire.search.AbstractFileSearchResult;
-import com.frostwire.search.CrawlableSearchResult;
 import com.frostwire.search.StreamableSearchResult;
 
 /**
@@ -27,7 +26,7 @@ import com.frostwire.search.StreamableSearchResult;
  * @author aldenml
  *
  */
-public class SoundcloudSearchResult extends AbstractFileSearchResult implements StreamableSearchResult, CrawlableSearchResult {
+public class SoundcloudSearchResult extends AbstractFileSearchResult implements StreamableSearchResult {
 
     private final SoundcloudItem item;
     private final String trackUrl;
@@ -87,11 +86,6 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
 
     public String getUsername() {
         return item.user.username;
-    }
-
-    @Override
-    public boolean isComplete() {
-        return true;
     }
 
     private String buildSource(SoundcloudItem item2) {

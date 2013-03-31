@@ -53,6 +53,7 @@ import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorde
 
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.CrawledSearchResult;
 import com.frostwire.search.StreamableSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
@@ -280,7 +281,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
 
     private void labelPartialDownload_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
-            if (sr.getSearchResult() instanceof CrawlableSearchResult) {
+            if (sr.getSearchResult() instanceof CrawledSearchResult) {
                 sr.download(true);
             }
         }
@@ -298,7 +299,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         labelText.setText(value.getHtml());
 
         boolean showButtons = state.equals(ComponentState.ROLLOVER_SELECTED) || state.equals(ComponentState.ROLLOVER_UNSELECTED);
-        labelPlay.setVisible(showButtons && (sr instanceof StreamableSearchResult));
+        labelPlay.setVisible(showButtons && (sr.getSearchResult() instanceof StreamableSearchResult));
         labelPartialDownload.setVisible(showButtons && sr.getSearchResult() instanceof CrawlableSearchResult);
         labelDownload.setVisible(showButtons);
         

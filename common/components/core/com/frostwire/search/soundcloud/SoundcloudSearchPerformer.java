@@ -19,13 +19,11 @@
 package com.frostwire.search.soundcloud;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.frostwire.search.RegexSearchPerformer;
-import com.frostwire.search.SearchResult;
+import com.frostwire.search.PagedRegexSearchPerformer;
 import com.frostwire.util.JsonUtils;
 
 /**
@@ -33,7 +31,7 @@ import com.frostwire.util.JsonUtils;
  * @author aldenml
  *
  */
-public class SoundcloudSearchPerformer extends RegexSearchPerformer<SoundcloudSearchResult> {
+public class SoundcloudSearchPerformer extends PagedRegexSearchPerformer<SoundcloudSearchResult> {
 
     private static final int MAX_RESULTS = 16;
 
@@ -43,21 +41,16 @@ public class SoundcloudSearchPerformer extends RegexSearchPerformer<SoundcloudSe
     private static final Pattern PATTERN = Pattern.compile(REGEX);
 
     public SoundcloudSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, MAX_RESULTS / 4, 0, MAX_RESULTS);
+        super(token, keywords, timeout, MAX_RESULTS / 4, MAX_RESULTS);
     }
 
     @Override
-    protected String getUrl(int page, String encodedKeywords) {
-        return "http://soundcloud.com/tracks/search?page=" + page + "&q[fulltext]=" + encodedKeywords + "&q[downloadable]=true&advanced=1";
-    }
-
-    @Override
-    protected Pattern getPattern() {
+    public Pattern getPattern() {
         return PATTERN;
     }
 
     @Override
-    protected SoundcloudSearchResult fromMatcher(Matcher matcher) {
+    public SoundcloudSearchResult fromMatcher(Matcher matcher) {
         SoundcloudItem item = JsonUtils.toObject(matcher.group(3), SoundcloudItem.class);
         try {
             item.thumbnailUrl = buildThumbnailUrl(matcher.group(1));
@@ -69,13 +62,8 @@ public class SoundcloudSearchPerformer extends RegexSearchPerformer<SoundcloudSe
     }
 
     @Override
-    protected String getCrawlUrl(SoundcloudSearchResult sr) {
-        return sr.getDetailsUrl();
-    }
-
-    @Override
-    protected List<? extends SearchResult> crawlResult(SoundcloudSearchResult sr, byte[] data) throws Exception {
-        return null;
+    protected String getUrl(int page, String encodedKeywords) {
+        return "http://soundcloud.com/tracks/search?page=" + page + "&q[fulltext]=" + encodedKeywords + "&q[downloadable]=true&advanced=1";
     }
 
     private String buildThumbnailUrl(String str) {

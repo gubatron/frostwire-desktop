@@ -47,7 +47,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 
 import jd.plugins.FilePackage;
@@ -70,9 +69,9 @@ import com.frostwire.gui.HideExitDialog;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.gui.library.LibraryMediator;
-import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.tabs.Tab;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.MediaType;
@@ -1135,34 +1134,6 @@ public final class GUIMediator {
 
     public static final DialogOption showYesNoTitledMessage(final String message, final String title, final DialogOption defaultOption) {
         return MessageService.instance().showYesNoMessage(message, title, defaultOption);
-    }
-
-    /**
-     * Acts as a proxy for the <tt>MessageService</tt> class. Displays a
-     * locale-specific message to the user. Below a non-selectable list is
-     * shown. This is in the form of a yes or no or cancel question.
-     * <p>
-     * 
-     * The <tt>messageKey</tt> parameter must be the key for a locale- specific
-     * message <tt>String</tt> and not a hard-coded value.
-     * 
-     * @param message
-     *            the locale-specific message to display
-     * @param listModel
-     *            the array of object to be displayed in the list
-     * @param messageType
-     *            either {@link JOptionPane#YES_NO_OPTION},
-     *            {@link JOptionPane#YES_NO_CANCEL_OPTION} or
-     *            {@link JOptionPane#OK_CANCEL_OPTION}.
-     * @param listRenderer
-     *            optional list cell rendere, can be <code>null</code>
-     * 
-     * @return an integer indicating a yes or a no or cancel response from the
-     *         user, see
-     *         {@link JOptionPane#showConfirmDialog(Component, Object, String, int)}
-     */
-    public static final int showConfirmListMessage(final String message, final Object[] listModel, int messageType, final ListCellRenderer listRenderer) {
-        return MessageService.instance().showConfirmListMessage(message, listModel, messageType, listRenderer);
     }
 
     /**

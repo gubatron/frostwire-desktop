@@ -37,6 +37,7 @@ public final class YouTubeCrawledSearchResult extends AbstractCrawledSearchResul
     public static final String AAC_LOW_QUALITY = "(AAC)";
     public static final String AAC_HIGH_QUALITY = "(AAC-High Quality)";
 
+    private final FilePackage filePackage;
     private final String filename;
     private final String displayName;
     private final long size;
@@ -45,10 +46,16 @@ public final class YouTubeCrawledSearchResult extends AbstractCrawledSearchResul
     public YouTubeCrawledSearchResult(YouTubeSearchResult sr, FilePackage filePackage) {
         super(sr);
 
+        this.filePackage = filePackage;
+
         this.filename = readFilename(filePackage);
         this.displayName = buildDisplayName(this.filename);
         this.size = filePackage.getChildren().get(0).getLongProperty("size", -1);
         this.streamUrl = filePackage.getChildren().get(0).getDownloadURL();
+    }
+
+    public FilePackage getFilePackage() {
+        return filePackage;
     }
 
     @Override
