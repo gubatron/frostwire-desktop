@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPopupMenu;
 
+import com.frostwire.search.torrent.TorrentCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
@@ -49,7 +50,11 @@ public class TorrentUISearchResult extends AbstractUISearchResult {
 
     @Override
     public void download(boolean partial) {
-        GUIMediator.instance().openTorrentSearchResult(sr, partial);
+        if (sr instanceof TorrentCrawledSearchResult) {
+            GUIMediator.instance().openTorrentSearchResult(sr, ((TorrentCrawledSearchResult) sr).getRelativePath());
+        } else {
+            GUIMediator.instance().openTorrentSearchResult(sr, partial);
+        }
         showDetails(false);
     }
 

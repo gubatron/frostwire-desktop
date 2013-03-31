@@ -53,7 +53,6 @@ import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorde
 
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.search.CrawlableSearchResult;
-import com.frostwire.search.CrawledSearchResult;
 import com.frostwire.search.StreamableSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
@@ -281,7 +280,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
 
     private void labelPartialDownload_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
-            if (sr.getSearchResult() instanceof CrawledSearchResult) {
+            if (sr.getSearchResult() instanceof CrawlableSearchResult) {
                 sr.download(true);
             }
         }
