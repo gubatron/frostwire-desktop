@@ -1824,4 +1824,9 @@ public final class GUIMediator {
         getBTDownloadMediator().openSlide(slide);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
+
+    public void openHttp(final String httpUrl, final String title, final String saveFileAs, final long fileSize) {
+        getBTDownloadMediator().openHttp(httpUrl, title, saveFileAs, fileSize);
+        setWindow(GUIMediator.Tabs.SEARCH);
+    }
 }

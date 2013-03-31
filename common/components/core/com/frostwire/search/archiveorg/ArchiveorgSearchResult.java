@@ -18,6 +18,10 @@
 
 package com.frostwire.search.archiveorg;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import com.frostwire.licences.License;
 import com.frostwire.search.AbstractSearchResult;
 import com.frostwire.search.CrawlableSearchResult;
@@ -32,11 +36,13 @@ public class ArchiveorgSearchResult extends AbstractSearchResult implements Craw
     private final ArchiveorgItem item;
     private final String detailsUrl;
     private final License licence;
+    private final long creationTime;
 
     public ArchiveorgSearchResult(ArchiveorgItem item) {
         this.item = item;
         this.detailsUrl = "http://archive.org/details/" + item.identifier;
         this.licence = License.creativeCommonsByUrl(item.licenseurl);
+        this.creationTime = parsePublicDate(item.publicdate);
     }
 
     public ArchiveorgItem getItem() {
@@ -64,7 +70,24 @@ public class ArchiveorgSearchResult extends AbstractSearchResult implements Craw
     }
 
     @Override
+    public long getCreationTime() {
+        return creationTime;
+    }
+
+    @Override
     public boolean isComplete() {
         return false;
+    }
+
+    private long parsePublicDate(String publicdate) {
+        // 2009-12-02T15:41:50Z
+        //"yyyy-MM-dd'T'HH:mm:ss'Z'"
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+        long result = -1;
+        try {
+            result = date.parse(publicdate).getTime();
+        } catch (ParseException e) {
+        }
+        return result;
     }
 }

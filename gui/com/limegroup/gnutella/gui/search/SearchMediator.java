@@ -46,6 +46,7 @@ import com.frostwire.search.SearchManagerImpl;
 import com.frostwire.search.SearchManagerListener;
 import com.frostwire.search.SearchPerformer;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.archiveorg.ArchiveorgCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube2.YouTubeCrawledSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -96,6 +97,8 @@ public final class SearchMediator {
     static final String YOUTUBE_DETAILS_STRING = I18n.tr("View in YouTube");
 
     static final String SOUNDCLOUD_DETAILS_STRING = I18n.tr("View in Soundcloud");
+
+    static final String ARCHIVEORG_DETAILS_STRING = I18n.tr("View in Archive.org");
 
     private static final int SEARCH_MANAGER_NUM_THREADS = 6;
 
@@ -267,7 +270,7 @@ public final class SearchMediator {
         try {
             for (SearchResult sr : results) {
                 if (sr instanceof CrawledSearchResult) {
-                    // special case for youtube
+                    // special case for youtube and archiveorg
                     if (sr instanceof YouTubeCrawledSearchResult) {
                         list.add(sr);
                     } else if (filter(new LinkedList<String>(searchTokens), sr)) {
@@ -377,6 +380,8 @@ public final class SearchMediator {
                 ui = new SoundcloudUISearchResult((com.frostwire.search.soundcloud.SoundcloudSearchResult) sr, engine, query);
             } else if (sr instanceof TorrentSearchResult) {
                 ui = new TorrentUISearchResult((TorrentSearchResult) sr, engine, query);
+            } else if (sr instanceof ArchiveorgCrawledSearchResult) {
+                ui = new ArchiveorgUISearchResult((ArchiveorgCrawledSearchResult) sr, engine, query);
             }
 
             if (ui != null) {
