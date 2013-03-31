@@ -34,8 +34,10 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
 
     private static final int DEFAULT_NUM_CRAWLS = 6;
     private static final int DEFAULT_CRAWL_TIMEOUT = 10000; // 10 seconds
+    private static final int DEFAULT_MAGNET_DOWNLOAD_TIMEOUT = 4000; // 4 seconds
 
     private static final CrawlCache cache = CrawlCacheFactory.newInstance();
+    private static final MagnetDownloader magnetDownloader = MagnetDownloaderFactory.newInstance();
 
     private int numCrawls;
 
@@ -62,28 +64,38 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
 
                 String url = getCrawlUrl(obj);
 
-                byte[] data = cacheGet(url);
+                if (url != null) {
+                    byte[] data = cacheGet(url);
 
-                if (data == null) { // not a big deal about synchronization here
-                    LOG.debug("Downloading data for: " + url);
-                    data = fetchBytes(url, sr.getDetailsUrl(), DEFAULT_CRAWL_TIMEOUT);
-                    if (data != null) {
-                        cachePut(url, data);
-                    } else {
-                        LOG.warn("Failed to download data: " + url);
-                    }
-                }
+                    if (data == null) { // not a big deal about synchronization here
+                        LOG.debug("Downloading data for: " + url);
 
-                try {
-                    if (data != null) {
-                        List<? extends SearchResult> results = crawlResult(obj, data);
-                        if (results != null) {
-                            onResults(this, results);
+                        if (url.startsWith("magnet")) {
+                            data = fetchMagnet(url);
+                        } else {
+                            data = fetchBytes(url, sr.getDetailsUrl(), DEFAULT_CRAWL_TIMEOUT);
+                        }
+
+                        if (data != null) {
+                            cachePut(url, data);
+                        } else {
+                            LOG.warn("Failed to download data: " + url);
                         }
                     }
-                } catch (Throwable e) {
-                    LOG.warn("Error creating crawled results from downloaded data: " + e.getMessage());
-                    cacheRemove(url); // invalidating cache data
+
+                    try {
+                        if (data != null) {
+                            List<? extends SearchResult> results = crawlResult(obj, data);
+                            if (results != null) {
+                                onResults(this, results);
+                            }
+                        }
+                    } catch (Throwable e) {
+                        LOG.warn("Error creating crawled results from downloaded data: " + e.getMessage());
+                        cacheRemove(url); // invalidating cache data
+                    }
+                } else {
+                    LOG.warn("Crawl url for sr=" + sr.getDetailsUrl() + " is null, review your logic");
                 }
             }
         }
@@ -92,6 +104,10 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
     protected abstract String getCrawlUrl(T sr);
 
     protected abstract List<? extends SearchResult> crawlResult(T sr, byte[] data) throws Exception;
+
+    protected byte[] fetchMagnet(String magnet) {
+        return magnetDownloader.download(magnet, DEFAULT_MAGNET_DOWNLOAD_TIMEOUT);
+    }
 
     private byte[] cacheGet(String key) {
         synchronized (cache) {

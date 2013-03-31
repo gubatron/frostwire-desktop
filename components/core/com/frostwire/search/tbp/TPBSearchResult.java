@@ -24,9 +24,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FilenameUtils;
+
 import com.frostwire.search.AbstractFileSearchResult;
-import com.frostwire.search.CrawlableSearchResult;
-import com.frostwire.search.torrent.TorrentSearchResult;
+import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
 import com.frostwire.util.HtmlManipulator;
 
 /**
@@ -35,7 +36,7 @@ import com.frostwire.util.HtmlManipulator;
  * @author aldenml
  *
  */
-public class TPBSearchResult extends AbstractFileSearchResult implements TorrentSearchResult, CrawlableSearchResult {
+public class TPBSearchResult extends AbstractFileSearchResult implements TorrentCrawlableSearchResult {
 
     private final static long[] BYTE_MULTIPLIERS = new long[] { 1, 2 << 9, 2 << 19, 2 << 29, 2 << 39, 2 << 49 };
 
@@ -83,8 +84,8 @@ public class TPBSearchResult extends AbstractFileSearchResult implements Torrent
 
         String temp = HtmlManipulator.replaceHtmlEntities(matcher.group(3));
         temp = HtmlManipulator.replaceHtmlEntities(temp); // because of input
-        this.filename = getValidFileName(temp);
-        this.displayName = filename;
+        this.filename = buildFilename(temp);
+        this.displayName = FilenameUtils.getBaseName(filename);
         this.torrentUrl = matcher.group(4); //let's assign the magnet to this for now.
         this.infoHash = torrentUrl.substring(20, 60);
         this.creationTime = parseCreationTime(matcher.group(5));
@@ -204,7 +205,7 @@ public class TPBSearchResult extends AbstractFileSearchResult implements Torrent
         return instance.getTimeInMillis();
     }
 
-    private String getValidFileName(String filename) {
-        return filename.replaceAll("[\\\\/:*?\"<>|\\[\\]]+", "_");
+    private String buildFilename(String filename) {
+        return filename.replaceAll("[\\\\/:*?\"<>|\\[\\]]+", "_") + ".torrent";
     }
 }

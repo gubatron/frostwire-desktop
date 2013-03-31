@@ -18,9 +18,7 @@
 
 package com.frostwire.search;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
 
 /**
  * 
@@ -39,26 +37,6 @@ public abstract class PagedRegexSearchPerformer<T extends SearchResult> extends 
 
     @Override
     protected final List<? extends SearchResult> searchPage(String page) {
-        return PagedRegexSearchPerformer.searchPageHelper(this, page, regexMaxResults);
-    }
-
-    static List<? extends SearchResult> searchPageHelper(RegexSearchPerformer<?> performer, String page, int regexMaxResults) {
-        List<SearchResult> result = new LinkedList<SearchResult>();
-
-        Matcher matcher = performer.getPattern().matcher(page);
-
-        int max = regexMaxResults;
-
-        int i = 0;
-
-        while (matcher.find() && i < max && !performer.isStopped()) {
-            SearchResult sr = performer.fromMatcher(matcher);
-            if (sr != null) {
-                result.add(sr);
-                i++;
-            }
-        }
-
-        return result;
+        return PerformersHelper.searchPageHelper(this, page, regexMaxResults);
     }
 }
