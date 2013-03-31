@@ -70,10 +70,6 @@ final class SearchInputManager implements ThemeObserver {
         getComponent().add(MAIN_PANEL, c);
     }
 
-    void rebuild() {
-        updateTheme();
-    }
-
     void goToSearch() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

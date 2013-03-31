@@ -104,6 +104,13 @@ public class TableRowFilteredModel extends ResultPanelModel {
         HIDDEN.clear();
         super.simpleClear();
     }
+    
+    @Override
+    public void clear() {
+        _numResults = 0;
+        HIDDEN.clear();
+        super.clear();
+    }
 
     /**
      * Notification that the filters have changed.
