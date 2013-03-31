@@ -543,7 +543,7 @@ public final class SearchMediator {
         @Override
         public void onResults(SearchPerformer performer, List<? extends SearchResult> results) {
             if (!performer.isStopped()) {
-                System.out.println("Received results: " + performer.getToken() + " \t- " + results.size());
+                //System.out.println("Received results: " + performer.getToken() + " \t- " + results.size());
 
                 final long token = performer.getToken();
                 final SearchResultMediator rp = getResultPanelForGUID(token);
@@ -581,7 +581,7 @@ public final class SearchMediator {
 
         @Override
         public void onFinished(long token) {
-            System.out.println("Finished: " + token);
+            //System.out.println("Finished: " + token);
             SearchMediator.this.onFinished(token);
         }
     }
