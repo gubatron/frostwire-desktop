@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.frostwire.search.RegexSearchPerformer;
+import com.frostwire.search.CrawlRegexSearchPerformer;
 import com.frostwire.search.SearchResult;
 
 /**
@@ -32,7 +32,7 @@ import com.frostwire.search.SearchResult;
  * @author aldenml
  *
  */
-public class MonovaSearchPerformer extends RegexSearchPerformer<MonovaTempSearchResult> {
+public class MonovaSearchPerformer extends CrawlRegexSearchPerformer<MonovaTempSearchResult> {
 
     private static final int MAX_RESULTS = 10;
 
@@ -45,6 +45,17 @@ public class MonovaSearchPerformer extends RegexSearchPerformer<MonovaTempSearch
 
     private static final String HTML_REGEX = "(?is).*<div id=\"downloadbox\"><h2><a href=\"(.*)\" rel=\"nofollow\"><img src=\"http://www.mnova.eu/images/download.png\".*<a href=\"magnet:\\?xt=urn:btih:(.*)\"><b>Magnet</b></a>.*<font color=\"[A-Za-z]*\">(.*)</font> seeds,.*<strong>Total size:</strong>(.*)<br /><strong>Pieces:.*";
     private static final Pattern HTML_PATTERN = Pattern.compile(HTML_REGEX);
+
+    @Override
+    public Pattern getPattern() {
+        return PATTERN;
+    }
+
+    @Override
+    public MonovaTempSearchResult fromMatcher(Matcher matcher) {
+        String itemId = matcher.group(1);
+        return new MonovaTempSearchResult(itemId);
+    }
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
@@ -69,16 +80,5 @@ public class MonovaSearchPerformer extends RegexSearchPerformer<MonovaTempSearch
         }
 
         return list;
-    }
-
-    @Override
-    protected Pattern getPattern() {
-        return PATTERN;
-    }
-
-    @Override
-    protected MonovaTempSearchResult fromMatcher(Matcher matcher) {
-        String itemId = matcher.group(1);
-        return new MonovaTempSearchResult(itemId);
     }
 }

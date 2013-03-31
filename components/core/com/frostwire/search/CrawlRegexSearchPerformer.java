@@ -18,8 +18,7 @@
 
 package com.frostwire.search;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.List;
 
 /**
  * 
@@ -27,9 +26,17 @@ import java.util.regex.Pattern;
  * @author aldenml
  *
  */
-public interface RegexSearchPerformer<T extends SearchResult> extends SearchPerformer {
+public abstract class CrawlRegexSearchPerformer<T extends CrawlableSearchResult> extends CrawlPagedWebSearchPerformer<T> implements RegexSearchPerformer<T> {
 
-    public Pattern getPattern();
+    private final int regexMaxResults;
 
-    public T fromMatcher(Matcher matcher);
+    public CrawlRegexSearchPerformer(long token, String keywords, int timeout, int pages, int numCrawls, int regexMaxResults) {
+        super(token, keywords, timeout, pages, numCrawls);
+        this.regexMaxResults = regexMaxResults;
+    }
+
+    @Override
+    protected final List<? extends SearchResult> searchPage(String page) {
+        return PagedRegexSearchPerformer.searchPageHelper(this, page, regexMaxResults);
+    }
 }
