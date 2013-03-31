@@ -39,7 +39,6 @@ import org.limewire.util.OSUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
-import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.TipsClient;
 import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleMediaFileAction;
@@ -48,7 +47,6 @@ import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.transfers.PeerHttpUpload;
-import com.frostwire.search.SearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
