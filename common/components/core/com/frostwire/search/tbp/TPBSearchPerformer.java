@@ -23,6 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.frostwire.search.CrawlRegexSearchPerformer;
+import com.frostwire.search.PerformersHelper;
 import com.frostwire.search.SearchResult;
 
 /**
@@ -59,11 +60,11 @@ public class TPBSearchPerformer extends CrawlRegexSearchPerformer<TPBSearchResul
 
     @Override
     protected String getCrawlUrl(TPBSearchResult sr) {
-        return sr.getDetailsUrl();
+        return sr.getTorrentUrl();
     }
 
     @Override
     protected List<? extends SearchResult> crawlResult(TPBSearchResult sr, byte[] data) throws Exception {
-        return null;
+        return PerformersHelper.crawlTorrent(this, sr, data);
     }
 }
