@@ -12,6 +12,8 @@
 	<classpathentry kind="src" path="components/alexandria/src/main/java"/>
 	<classpathentry kind="src" path="components/jdownloader/src/main/java"/>
 	<classpathentry kind="src" path="common/components/json"/>
+	<classpathentry kind="src" path="common/components/xml"/>
+	<classpathentry kind="src" path="common/components/cling"/>
 	<classpathentry kind="src" path="common/components/common"/>
 	<classpathentry kind="src" path="common/components/core"/>
 	<classpathentry excluding="build.xml" kind="src" path="core">
