@@ -14,15 +14,25 @@
  */
 package org.seamless.util;
 
-import java.net.*;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.BitSet;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * @author Christian Bauer
  */
 public class URIUtil {
+    
+    private final static Map<AbsoluteURIKey, URL> lruCache = SimpleLruCache.create(255);
 
     /**
      * Guarantees that the returned URI is absolute, no matter what the argument is.
@@ -306,4 +316,63 @@ public class URIUtil {
         return encoded.toString();
     }
 
+    /**
+     * Use this method if you intend to cache created URLs.
+     * Useful on Android enviroments where the creation of URI and URL objects is CPU expensive.
+     * This method is thread safe and backed by a SimpleLruCache of 255 URL objects.
+     * 
+     * @param address
+     * @param localStreamPort
+     * @param relativeOrNot
+     * @return
+     * @throws IllegalArgumentException
+     */
+    public static URL fetchAbsoluteURL(InetAddress address, int localStreamPort, URI relativeOrNot) throws IllegalArgumentException {
+        AbsoluteURIKey key = new AbsoluteURIKey(address, localStreamPort, relativeOrNot);
+        URL result = lruCache.get(key);
+        if (result == null) {
+            result = createAbsoluteURL(address, localStreamPort, relativeOrNot);
+            lruCache.put(key, result);
+            System.out.println("URLUtil.lruCache ["+lruCache.size()+" elems] put " + result.toString());
+        }
+        
+        return result;
+    }
+
+
+    /**
+     * This class is used by the fetchAbsoluteURL method as a key for searching pre-cached URLs
+     * in the simple lru cache.
+     * @author gubatron
+     *
+     */
+    private final static class AbsoluteURIKey {
+        
+        private final InetAddress address;
+        private final int localStreamPort;
+        private final URI relativeOrNot;
+
+        public AbsoluteURIKey(InetAddress address, int localStreamPort, URI relativeOrNot) {
+            this.address = address;
+            this.localStreamPort = localStreamPort;
+            this.relativeOrNot = relativeOrNot;
+        }
+        
+        @Override
+        public boolean equals(Object o) {
+            if (!(o instanceof AbsoluteURIKey)) {
+                return false;
+            }
+            AbsoluteURIKey b = (AbsoluteURIKey) o;
+            
+            return localStreamPort == b.localStreamPort &&
+                   address.equals(b.address) &&
+                   relativeOrNot.equals(b.relativeOrNot);
+        }
+        
+        @Override
+        public int hashCode() {
+            return 31 * address.hashCode() + 113 * relativeOrNot.hashCode() + 227 * localStreamPort;
+        }
+    }
 }

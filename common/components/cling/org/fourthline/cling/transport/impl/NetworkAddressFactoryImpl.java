@@ -32,9 +32,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -63,17 +65,23 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
     final protected List<InetAddress> bindAddresses = new ArrayList<InetAddress>();
 
     protected int streamListenPort;
+    
+    private Map<InetAddress,byte[]> cachedHardwareAddresses;
 
     /**
      * Defaults to an ephemeral port.
      */
     public NetworkAddressFactoryImpl() throws InitializationException {
-        this(DEFAULT_TCP_HTTP_LISTEN_PORT);
+        this(DEFAULT_TCP_HTTP_LISTEN_PORT, false);
+    }
+    
+    public NetworkAddressFactoryImpl(int streamListenPort) throws InitializationException {
+        this(streamListenPort, false);
     }
 
-    public NetworkAddressFactoryImpl(int streamListenPort) throws InitializationException {
+    public NetworkAddressFactoryImpl(int streamListenPort, boolean cacheHardwareAddresses) throws InitializationException {
     	
-    	System.setProperty("java.net.preferIPv4Stack", "true");
+        System.setProperty("java.net.preferIPv4Stack", "true");
 
         String useInterfacesString = System.getProperty(SYSTEM_PROPERTY_NET_IFACES);
         if (useInterfacesString != null) {
@@ -100,6 +108,10 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
         }
 
         this.streamListenPort = streamListenPort;
+        
+        if (cacheHardwareAddresses) {
+            cachedHardwareAddresses = new HashMap<InetAddress, byte[]>();
+        }
     }
 
     /**
@@ -168,19 +180,36 @@ public class NetworkAddressFactoryImpl implements NetworkAddressFactory {
     }
 
     public byte[] getHardwareAddress(InetAddress inetAddress) {
+        byte[] address = null;
+        
+        //try to fetch from pre cached addresses if available
+        if (cachedHardwareAddresses != null) {
+            if (cachedHardwareAddresses.containsKey(inetAddress)) {
+                address = cachedHardwareAddresses.get(inetAddress);
+            }
+        }
+        
         try {
-            NetworkInterface iface = NetworkInterface.getByInetAddress(inetAddress);
-            return iface != null ? iface.getHardwareAddress() : null;
+            if (address == null) {
+                NetworkInterface iface = NetworkInterface.getByInetAddress(inetAddress);
+                address = iface != null ? iface.getHardwareAddress() : null;
+                
+                //cache it if there's a cache
+                if (cachedHardwareAddresses != null && address != null) {
+                    cachedHardwareAddresses.put(inetAddress, address);
+                }
+            }
         } catch (Throwable ex) {
             log.log(Level.WARNING, "Cannot get hardware address for: " + inetAddress, ex);
-        	// On Win32: java.lang.Error: IP Helper Library GetIpAddrTable function failed
+            // On Win32: java.lang.Error: IP Helper Library GetIpAddrTable function failed
 
             // On Android 4.0.3 NullPointerException with inetAddress != null
 
             // On Android "SocketException: No such device or address" when
             // switching networks (mobile -> WiFi)
-        	return null;
         }
+        
+        return address;
     }
 
     public InetAddress getBroadcastAddress(InetAddress inetAddress) {
