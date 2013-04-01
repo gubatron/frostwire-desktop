@@ -32,6 +32,7 @@ public class TorrentCrawledSearchResult extends AbstractCrawledSearchResult impl
 
     private final TorrentCrawlableSearchResult sr;
     private final TOTorrentFile file;
+    private final String relativePath;
     private final String displayName;
     private final String filename;
 
@@ -39,8 +40,13 @@ public class TorrentCrawledSearchResult extends AbstractCrawledSearchResult impl
         super(sr);
         this.sr = sr;
         this.file = file;
-        this.filename = file.getRelativePath();
-        this.displayName = FilenameUtils.getName(this.filename);
+        this.relativePath = file.getRelativePath();
+        this.filename = FilenameUtils.getName(this.relativePath);
+        this.displayName = FilenameUtils.getBaseName(this.filename);
+    }
+
+    public String getRelativePath() {
+        return relativePath;
     }
 
     @Override
