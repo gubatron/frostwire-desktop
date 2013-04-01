@@ -38,6 +38,7 @@ import org.limewire.util.StringUtils;
 import com.frostwire.gui.filters.SearchFilter;
 import com.frostwire.gui.filters.SearchFilterFactory;
 import com.frostwire.gui.filters.SearchFilterFactoryImpl;
+import com.frostwire.search.CrawlPagedWebSearchPerformer;
 import com.frostwire.search.CrawledSearchResult;
 import com.frostwire.search.FileSearchResult;
 import com.frostwire.search.SearchManager;
@@ -45,6 +46,7 @@ import com.frostwire.search.SearchManagerImpl;
 import com.frostwire.search.SearchManagerListener;
 import com.frostwire.search.SearchPerformer;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.archiveorg.ArchiveorgCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube2.YouTubeCrawledSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -95,6 +97,8 @@ public final class SearchMediator {
     static final String YOUTUBE_DETAILS_STRING = I18n.tr("View in YouTube");
 
     static final String SOUNDCLOUD_DETAILS_STRING = I18n.tr("View in Soundcloud");
+
+    static final String ARCHIVEORG_DETAILS_STRING = I18n.tr("View in Archive.org");
 
     private static final int SEARCH_MANAGER_NUM_THREADS = 6;
 
@@ -266,7 +270,7 @@ public final class SearchMediator {
         try {
             for (SearchResult sr : results) {
                 if (sr instanceof CrawledSearchResult) {
-                    // special case for youtube
+                    // special case for youtube and archiveorg
                     if (sr instanceof YouTubeCrawledSearchResult) {
                         list.add(sr);
                     } else if (filter(new LinkedList<String>(searchTokens), sr)) {
@@ -376,6 +380,8 @@ public final class SearchMediator {
                 ui = new SoundcloudUISearchResult((com.frostwire.search.soundcloud.SoundcloudSearchResult) sr, engine, query);
             } else if (sr instanceof TorrentSearchResult) {
                 ui = new TorrentUISearchResult((TorrentSearchResult) sr, engine, query);
+            } else if (sr instanceof ArchiveorgCrawledSearchResult) {
+                ui = new ArchiveorgUISearchResult((ArchiveorgCrawledSearchResult) sr, engine, query);
             }
 
             if (ui != null) {
@@ -472,7 +478,11 @@ public final class SearchMediator {
     }
 
     void stopSearch(long token) {
-        instance().manager.stop(token);
+        manager.stop(token);
+    }
+
+    public void shutdown() {
+        manager.stop();
     }
 
     /**
@@ -538,7 +548,7 @@ public final class SearchMediator {
         @Override
         public void onResults(SearchPerformer performer, List<? extends SearchResult> results) {
             if (!performer.isStopped()) {
-                System.out.println("Received results: " + performer.getToken() + " \t- " + results.size());
+                //System.out.println("Received results: " + performer.getToken() + " \t- " + results.size());
 
                 final long token = performer.getToken();
                 final SearchResultMediator rp = getResultPanelForGUID(token);
@@ -576,8 +586,16 @@ public final class SearchMediator {
 
         @Override
         public void onFinished(long token) {
-            System.out.println("Finished: " + token);
+            //System.out.println("Finished: " + token);
             SearchMediator.this.onFinished(token);
         }
+    }
+
+    public void clearCache() {
+        CrawlPagedWebSearchPerformer.getCache().clear();
+    }
+
+    public long getTotalTorrents() {
+        return CrawlPagedWebSearchPerformer.getCache().size();
     }
 }

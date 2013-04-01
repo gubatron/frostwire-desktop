@@ -39,7 +39,6 @@ import org.limewire.util.OSUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
-import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.TipsClient;
 import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleMediaFileAction;
@@ -48,7 +47,6 @@ import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.transfers.PeerHttpUpload;
-import com.frostwire.search.SearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -297,20 +295,20 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             exploreAction.setEnabled(completed);
             showInLibraryAction.setEnabled(completed);
         }
-        
+
         int n = DATA_MODEL.getRowCount();
         boolean anyClearable = false;
-		for (int i=n-1; i >= 0; i--) {
-			BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
-			BTDownload initializeObject = btDownloadDataLine.getInitializeObject();
-			if (isClearable(initializeObject)) {
-				anyClearable = true;
-				break;
-			}
-		}
-        
-		clearInactiveAction.setEnabled(anyClearable);
-		
+        for (int i = n - 1; i >= 0; i--) {
+            BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
+            BTDownload initializeObject = btDownloadDataLine.getInitializeObject();
+            if (isClearable(initializeObject)) {
+                anyClearable = true;
+                break;
+            }
+        }
+
+        clearInactiveAction.setEnabled(anyClearable);
+
         try {
             if (OSUtils.isWindows() && UpdateManagerSettings.SHOW_FROSTWIRE_RECOMMENDATIONS.getValue()) {
                 TipsClient.instance().call();
@@ -355,9 +353,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     private int getCloudDownloadsBandwidth() {
         return DownloadWatchDog.getInstance().getDownloadSpeedManager().getSpeed();
     }
-    
+
     public double getDownloadsBandwidth() {
-        return (getBandwidth(true) + getCloudDownloadsBandwidth())/1000;
+        return (getBandwidth(true) + getCloudDownloadsBandwidth()) / 1000;
     }
 
     public double getUploadsBandwidth() {
@@ -815,7 +813,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public BTDownload[] getSelectedDownloaders() {
-    	int[] sel = TABLE.getSelectedRows();
+        int[] sel = TABLE.getSelectedRows();
         ArrayList<BTDownload> downloaders = new ArrayList<BTDownload>(sel.length);
         for (int i = 0; i < sel.length; i++) {
             BTDownloadDataLine line = DATA_MODEL.get(sel[i]);
@@ -824,7 +822,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
         return downloaders.toArray(new BTDownload[0]);
     }
-    
+
     public List<BTDownload> getDownloads() {
         int count = TABLE.getRowCount();
         List<BTDownload> downloads = new ArrayList<BTDownload>(count);
@@ -862,19 +860,19 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         int state = initializeObject.getState();
         return state != DownloadManager.STATE_SEEDING && state != DownloadManager.STATE_CHECKING && initializeObject.isCompleted();
     }
-    
-	public void removeCompleted() {
-		int n = DATA_MODEL.getRowCount();
-		for (int i=n-1; i >= 0; i--) {
-			BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
-			BTDownload initializeObject = btDownloadDataLine.getInitializeObject();
-			
-			if (isClearable(initializeObject)) {
-			    DATA_MODEL.remove(i);
-			}			
-		}		
-	}
-	
+
+    public void removeCompleted() {
+        int n = DATA_MODEL.getRowCount();
+        for (int i = n - 1; i >= 0; i--) {
+            BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
+            BTDownload initializeObject = btDownloadDataLine.getInitializeObject();
+
+            if (isClearable(initializeObject)) {
+                DATA_MODEL.remove(i);
+            }
+        }
+    }
+
     public void stopCompleted() {
         int n = DATA_MODEL.getRowCount();
         for (int i = n - 1; i >= 0; i--) {
@@ -884,9 +882,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                 initializeObject.pause();
             }
         }
-        
+
     }
-    
+
     public boolean isDownloading(String hash) {
         return DATA_MODEL.isDownloading(hash);
     }
@@ -992,11 +990,21 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     public void openSlide(final Slide slide) {
         GUIMediator.safeInvokeLater(new Runnable() {
-           @Override
+            @Override
             public void run() {
-               SlideDownload downloader = new SlideDownload(slide);
-               add(downloader);
-            } 
+                SlideDownload downloader = new SlideDownload(slide);
+                add(downloader);
+            }
+        });
+    }
+
+    public void openHttp(final String httpUrl, final String title, final String saveFileAs, final long fileSize) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            @Override
+            public void run() {
+                HttpDownload downloader = new HttpDownload(httpUrl, title, saveFileAs, fileSize, null, false, true);
+                add(downloader);
+            }
         });
     }
 }

@@ -298,7 +298,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         labelText.setText(value.getHtml());
 
         boolean showButtons = state.equals(ComponentState.ROLLOVER_SELECTED) || state.equals(ComponentState.ROLLOVER_UNSELECTED);
-        labelPlay.setVisible(showButtons && (sr instanceof StreamableSearchResult));
+        labelPlay.setVisible(showButtons && (sr.getSearchResult() instanceof StreamableSearchResult));
         labelPartialDownload.setVisible(showButtons && sr.getSearchResult() instanceof CrawlableSearchResult);
         labelDownload.setVisible(showButtons);
         

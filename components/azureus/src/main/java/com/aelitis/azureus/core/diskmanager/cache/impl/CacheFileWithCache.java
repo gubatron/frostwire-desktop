@@ -73,7 +73,8 @@ CacheFileWithCache
 				if (offset1 + length1 <= offset2 || offset2 + length2 <= offset1 ||  length1 == 0 || length2 == 0)
 				{				
 				}else{
-					Debug.out( "Overlapping cache entries - " + o1.getString() + "/" + o2.getString());
+					//Debug.out( "Overlapping cache entries - " + o1.getString() + "/" + o2.getString());
+				    // aldenml: commented without any signal of something broken
 				}
 		   	
 				return( offset1 - offset2 < 0?-1:1 );

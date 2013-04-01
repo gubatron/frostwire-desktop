@@ -47,7 +47,11 @@ public final class YouTubeUISearchResult extends AbstractUISearchResult {
 
     @Override
     public void download(boolean partial) {
-        GUIMediator.instance().openYouTubeVideoUrl(sr.getDetailsUrl());
+        if (partial) {
+            GUIMediator.instance().openYouTubeVideoUrl(sr.getDetailsUrl());
+        } else {
+            GUIMediator.instance().openYouTubeItem(sr.getFilePackage());
+        }
         showDetails(false);
     }
 

@@ -47,7 +47,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 
 import jd.plugins.FilePackage;
@@ -64,15 +63,14 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.limewire.util.VersionUtils;
 
-import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.HideExitDialog;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.gui.library.LibraryMediator;
-import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.tabs.Tab;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.MediaType;
@@ -131,13 +129,12 @@ public final class GUIMediator {
     private boolean _remoteDownloadsAllowed;
 
     public static enum Tabs {
-        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library")),
-                CHAT(I18n.tr("C&hat"));
+        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library")), CHAT(I18n.tr("C&hat"));
 
         private Action navAction;
 
         private String name;
-        
+
         public boolean navigatedTo;
 
         private final PropertyChangeSupport propertyChangeSupport;
@@ -307,19 +304,19 @@ public final class GUIMediator {
      * Media Player Mediator
      */
     private MPlayerMediator MPLAYER_MEDIATOR;
-    
+
     /**
      * Constant handle to the <tt>DownloadView</tt> class that is responsible
      * for displaying the status of the network and connectivity to the user.
      */
     private StatusLine STATUS_LINE;
 
-	private long _lastConnectivityCheckTimestamp;
+    private long _lastConnectivityCheckTimestamp;
 
-	/** How long until you check the internet connection status in milliseconds. */
-	private long _internetConnectivityInterval = 5000;
+    /** How long until you check the internet connection status in milliseconds. */
+    private long _internetConnectivityInterval = 5000;
 
-	private boolean _wasInternetReachable;
+    private boolean _wasInternetReachable;
 
     /**
      * Flag for whether or not the app has ever been made visible during this
@@ -339,10 +336,9 @@ public final class GUIMediator {
     private GUIMediator() {
         MAIN_FRAME = new MainFrame(getAppFrame());
         OPTIONS_MEDIATOR = MAIN_FRAME.getOptionsMediator();
-        
+
         _remoteDownloadsAllowed = true;
-        
-        
+
     }
 
     /**
@@ -564,12 +560,12 @@ public final class GUIMediator {
     public final MainFrame getMainFrame() {
         return MAIN_FRAME;
     }
-    
+
     public final MPlayerMediator getMPlayerMediator() {
-    	if (MPLAYER_MEDIATOR == null) {
-    		MPLAYER_MEDIATOR = MPlayerMediator.instance();
-    	}
-    	return MPLAYER_MEDIATOR;
+        if (MPLAYER_MEDIATOR == null) {
+            MPLAYER_MEDIATOR = MPlayerMediator.instance();
+        }
+        return MPLAYER_MEDIATOR;
     }
 
     /**
@@ -728,11 +724,10 @@ public final class GUIMediator {
             tab.navigatedTo = true;
         }
     }
-    
+
     public GUIMediator.Tabs getSelectedTab() {
         return getMainFrame().getSelectedTab();
     }
-
 
     /**
      * Sets the connected/disconnected visual status of the client.
@@ -769,7 +764,7 @@ public final class GUIMediator {
     public final int getCurrentDownloads() {
         return getBTDownloadMediator().getActiveDownloads();
     }
-    
+
     public final void openTorrentSearchResult(TorrentSearchResult sr, boolean partialDownload) {
         openTorrentSearchResult(sr, partialDownload, null);
     }
@@ -793,20 +788,20 @@ public final class GUIMediator {
         getBTDownloadMediator().openTorrentURI(uri, partialDownload, null);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
-    
+
     /**
      * Determines whether or not the PlaylistMediator is being used this
      * session.
      */
     public static boolean isPlaylistVisible() {
-//        // If we are not constructed yet, then make our best guess as
-//        // to visibility. It is actually VERY VERY important that this
-//        // returns the same thing throughout the entire course of the program,
-//        // otherwise exceptions can pop up.
-//        if (!isConstructed())
-//            return PlayerSettings.PLAYER_ENABLED.getValue();
-//        else
-//            return getPlayList() != null && PlayerSettings.PLAYER_ENABLED.getValue();
+        //        // If we are not constructed yet, then make our best guess as
+        //        // to visibility. It is actually VERY VERY important that this
+        //        // returns the same thing throughout the entire course of the program,
+        //        // otherwise exceptions can pop up.
+        //        if (!isConstructed())
+        //            return PlayerSettings.PLAYER_ENABLED.getValue();
+        //        else
+        //            return getPlayList() != null && PlayerSettings.PLAYER_ENABLED.getValue();
         return true;
     }
 
@@ -939,7 +934,7 @@ public final class GUIMediator {
                     GUIMediator.showTrayIcon();
                     hideView();
                 }
-            } 
+            }
         } else if (OSUtils.isMacOSX() && fromFrame) {
             // If on OSX, don't close in response to clicking on the 'X'
             // as that's not normal behavior. This can only be done on Java14
@@ -956,10 +951,10 @@ public final class GUIMediator {
      * Shutdown the program cleanly.
      */
     public static void shutdown() {
-        
+
         // hide video player if visible
         MPlayerMediator.instance().showPlayerWindow(false);
-        
+
         Finalizer.shutdown();
     }
 
@@ -1026,7 +1021,7 @@ public final class GUIMediator {
     public Tab getTab(Tabs tabs) {
         return MAIN_FRAME.getTab(tabs);
     }
-    
+
     /**
      * Serves as a single point of access for any icons used in the program.
      * 
@@ -1135,34 +1130,6 @@ public final class GUIMediator {
 
     public static final DialogOption showYesNoTitledMessage(final String message, final String title, final DialogOption defaultOption) {
         return MessageService.instance().showYesNoMessage(message, title, defaultOption);
-    }
-
-    /**
-     * Acts as a proxy for the <tt>MessageService</tt> class. Displays a
-     * locale-specific message to the user. Below a non-selectable list is
-     * shown. This is in the form of a yes or no or cancel question.
-     * <p>
-     * 
-     * The <tt>messageKey</tt> parameter must be the key for a locale- specific
-     * message <tt>String</tt> and not a hard-coded value.
-     * 
-     * @param message
-     *            the locale-specific message to display
-     * @param listModel
-     *            the array of object to be displayed in the list
-     * @param messageType
-     *            either {@link JOptionPane#YES_NO_OPTION},
-     *            {@link JOptionPane#YES_NO_CANCEL_OPTION} or
-     *            {@link JOptionPane#OK_CANCEL_OPTION}.
-     * @param listRenderer
-     *            optional list cell rendere, can be <code>null</code>
-     * 
-     * @return an integer indicating a yes or a no or cancel response from the
-     *         user, see
-     *         {@link JOptionPane#showConfirmDialog(Component, Object, String, int)}
-     */
-    public static final int showConfirmListMessage(final String message, final Object[] listModel, int messageType, final ListCellRenderer listRenderer) {
-        return MessageService.instance().showConfirmListMessage(message, listModel, messageType, listRenderer);
     }
 
     /**
@@ -1435,8 +1402,7 @@ public final class GUIMediator {
         } catch (SecurityException se) {
             showError(I18n.tr("FrostWire will not launch the specified file for security reasons."));
         } catch (LaunchException e) {
-            GUIMediator
-                    .showError(I18n.tr("FrostWire could not launch the specified file.\n\nExecuted command: {0}.", StringUtils.explode(e.getCommand(), " ")));
+            GUIMediator.showError(I18n.tr("FrostWire could not launch the specified file.\n\nExecuted command: {0}.", StringUtils.explode(e.getCommand(), " ")));
         } catch (IOException e) {
             showError(I18n.tr("FrostWire could not launch the specified file."));
         }
@@ -1461,8 +1427,7 @@ public final class GUIMediator {
         } catch (SecurityException e) {
             showError(I18n.tr("FrostWire will not launch the specified file for security reasons."));
         } catch (LaunchException e) {
-            GUIMediator
-                    .showError(I18n.tr("FrostWire could not launch the specified file.\n\nExecuted command: {0}.", StringUtils.explode(e.getCommand(), " ")));
+            GUIMediator.showError(I18n.tr("FrostWire could not launch the specified file.\n\nExecuted command: {0}.", StringUtils.explode(e.getCommand(), " ")));
         } catch (IOException e) {
             showError(I18n.tr("FrostWire could not launch the specified file."));
         }
@@ -1506,8 +1471,7 @@ public final class GUIMediator {
      * Notifies the user that LimeWire is disconnected
      */
     public static void disconnected() {
-        showDisposableMessage(
-                DISCONNECTED_MESSAGE,
+        showDisposableMessage(DISCONNECTED_MESSAGE,
                 I18n.tr("Your machine does not appear to have an active Internet connection or a firewall is blocking FrostWire from accessing the internet. FrostWire will automatically keep trying to connect you to the network unless you select \"Disconnect\" from the File menu."),
                 QuestionsHandler.NO_INTERNET_RETRYING, JOptionPane.ERROR_MESSAGE);
     }
@@ -1617,7 +1581,7 @@ public final class GUIMediator {
 
         if (MediaPlayer.instance().getCurrentMedia() != null)
             try {
-            	MediaPlayer.instance().stop();
+                MediaPlayer.instance().stop();
                 // it needs to pause for a bit, otherwise it'll play the same song.
                 // must be a sync bug somewhere, but this fixes it
                 Thread.sleep(1000);
@@ -1627,10 +1591,10 @@ public final class GUIMediator {
 
         //MediaPlayer.instance().loadSong(song);
         boolean playNextSong = !song.getClass().equals(InternetRadioAudioSource.class);
-        if ( song.getFile() != null && MediaType.getVideoMediaType().matches(song.getFile().getAbsolutePath()) ) {
-        	    playNextSong = false;
+        if (song.getFile() != null && MediaType.getVideoMediaType().matches(song.getFile().getAbsolutePath())) {
+            playNextSong = false;
         }
-		
+
         MediaPlayer.instance().asyncLoadMedia(song, true, playNextSong);
     }
 
@@ -1639,7 +1603,7 @@ public final class GUIMediator {
      * 
      */
     public boolean attemptStopAudio() {
-    	MediaPlayer mediaPlayer = MediaPlayer.instance();
+        MediaPlayer mediaPlayer = MediaPlayer.instance();
         mediaPlayer.stop();
         return true;
     }
@@ -1787,46 +1751,41 @@ public final class GUIMediator {
             e.printStackTrace();
         }
     }
-    
-    
-    
+
     private boolean isInternetReachable() {
-    	
-    	long now = System.currentTimeMillis();
-    	
-    	if (now - _lastConnectivityCheckTimestamp < _internetConnectivityInterval) {
-    		return _wasInternetReachable;
-    	}
-    	
-    	_lastConnectivityCheckTimestamp = now;
-    	
-    	
-    	
-    	try {
-	    	Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-	    	
-	    	if (interfaces == null) {
-	    		_wasInternetReachable = false;
-	    		return false;
-	    	}
 
-	    	while (interfaces.hasMoreElements()) {
-	    	  NetworkInterface iface = interfaces.nextElement();
-	    	  //System.out.println(iface);
-	    	  if (iface.isUp() && !iface.isLoopback()) {
-	    		  _wasInternetReachable = true;
-	    	    return true;
-	    	  }
-	    	}
-    	} catch (Exception e) {
-    		_wasInternetReachable = false;
-    		return false;
-    	}
-    	
-    	_wasInternetReachable = false;    	
-    	return false;
+        long now = System.currentTimeMillis();
+
+        if (now - _lastConnectivityCheckTimestamp < _internetConnectivityInterval) {
+            return _wasInternetReachable;
+        }
+
+        _lastConnectivityCheckTimestamp = now;
+
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+
+            if (interfaces == null) {
+                _wasInternetReachable = false;
+                return false;
+            }
+
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface iface = interfaces.nextElement();
+                //System.out.println(iface);
+                if (iface.isUp() && !iface.isLoopback()) {
+                    _wasInternetReachable = true;
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            _wasInternetReachable = false;
+            return false;
+        }
+
+        _wasInternetReachable = false;
+        return false;
     }
-
 
     public boolean isRemoteDownloadsAllowed() {
         return _remoteDownloadsAllowed;
@@ -1836,23 +1795,22 @@ public final class GUIMediator {
         _remoteDownloadsAllowed = remoteDownloadsAllowed;
     }
 
-	public void openTorrentSearchResult(WebSearchResult item,
-			String relativePath) {
-        getBTDownloadMediator().openTorrentURI(item.getTorrentURI(), item.getDetailsUrl(), relativePath, item.getHash(), null);
+    public void openTorrentSearchResult(TorrentSearchResult sr, String relativePath) {
+        getBTDownloadMediator().openTorrentURI(sr.getTorrentUrl(), sr.getDetailsUrl(), relativePath, sr.getHash(), null);
         setWindow(GUIMediator.Tabs.SEARCH);
-	}
-	
-	public void openYouTubeVideoUrl(String videoUrl) {
-	    getBTDownloadMediator().openYouTubeVideoUrl(videoUrl);
+    }
+
+    public void openYouTubeVideoUrl(String videoUrl) {
+        getBTDownloadMediator().openYouTubeVideoUrl(videoUrl);
         setWindow(GUIMediator.Tabs.SEARCH);
-	}
-	
-	public void openSoundcloudTrackUrl(String trackUrl, String title) {
+    }
+
+    public void openSoundcloudTrackUrl(String trackUrl, String title) {
         getBTDownloadMediator().openSoundcloudTrackUrl(trackUrl, title, null);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
-	
-	public void openSoundcloudTrackUrl(String trackUrl, String title, SoundcloudUISearchResult sr) {
+
+    public void openSoundcloudTrackUrl(String trackUrl, String title, SoundcloudUISearchResult sr) {
         getBTDownloadMediator().openSoundcloudTrackUrl(trackUrl, title, sr);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
@@ -1864,6 +1822,11 @@ public final class GUIMediator {
 
     public void openSlide(Slide slide) {
         getBTDownloadMediator().openSlide(slide);
+        setWindow(GUIMediator.Tabs.SEARCH);
+    }
+
+    public void openHttp(final String httpUrl, final String title, final String saveFileAs, final long fileSize) {
+        getBTDownloadMediator().openHttp(httpUrl, title, saveFileAs, fileSize);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 }

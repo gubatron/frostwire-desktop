@@ -24,6 +24,7 @@ import java.util.List;
 import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.search.SearchPerformer;
+import com.frostwire.search.archiveorg.ArchiveorgSearchPerformer;
 import com.frostwire.search.clearbits.ClearBitsSearchPerformer;
 import com.frostwire.search.extratorrent.ExtratorrentSearchPerformer;
 import com.frostwire.search.isohunt.ISOHuntSearchPerformer;
@@ -61,6 +62,7 @@ public abstract class SearchEngine {
     public static final int MONOVA_ID = 7;
     public static final int YOUTUBE_ID = 9;
     public static final int SOUNDCLOUD_ID = 10;
+    public static final int ARCHIVEORG_ID = 10;
 
     public static final SearchEngine CLEARBITS = new SearchEngine(CLEARBITS_ID, "ClearBits", SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED) {
         @Override
@@ -132,6 +134,13 @@ public abstract class SearchEngine {
         }
     };
 
+    public static final SearchEngine ARCHIVEORG = new SearchEngine(ARCHIVEORG_ID, "Archive.org", SearchEnginesSettings.ARCHIVEORG_SEARCH_ENABLED) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            return new ArchiveorgSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
+
     private SearchEngine(int id, String name, BooleanSetting setting) {
         _id = id;
         _name = name;
@@ -156,7 +165,7 @@ public abstract class SearchEngine {
     }
 
     public static List<SearchEngine> getEngines() {
-        return Arrays.asList(ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, VERTOR, TPB, MONOVA, SOUNDCLOUD);
+        return Arrays.asList(ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, VERTOR, TPB, MONOVA, SOUNDCLOUD, ARCHIVEORG);
     }
 
     public abstract SearchPerformer getPerformer(long token, String keywords);

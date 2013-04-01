@@ -19,7 +19,6 @@
 package com.limegroup.gnutella.settings;
 
 import org.limewire.setting.BooleanSetting;
-import org.limewire.setting.IntSetting;
 
 /**
  * @author gubatron
@@ -49,17 +48,6 @@ public class SearchEnginesSettings extends LimeProps {
     public static final BooleanSetting YOUTUBE_SEARCH_ENABLED = FACTORY.createBooleanSetting("YOUTUBE_SEARCH_ENABLED", true);
     
     public static final BooleanSetting SOUNDCLOUD_SEARCH_ENABLED = FACTORY.createBooleanSetting("SOUNDCLOUD_SEARCH_ENABLED", true);
-
-    //	public static final BooleanSetting FROSTCLICK_SEARCH_ENABLED =
-    //		FACTORY.createBooleanSetting("FROSTCLICK_SEARCH_ENABLED", true);
-
-    public static final IntSetting MONOVA_WEBSEARCHPERFORMER_MAX_RESULTS = FACTORY.createIntSetting("MONOVA_WEBSEARCHPERFORMER_MAX", 10);
-
-    public static final IntSetting KAT_WEBSEARCHPERFORMER_MAX_RESULTS = FACTORY.createIntSetting("KAT_WEBSEARCHPERFORMER_MAX", 10);
-
-    public static final IntSetting TPB_WEBSEARCHPERFORMER_MAX_RESULTS = FACTORY.createIntSetting("TPB_WEBSEARCHPERFORMER_MAX", 20);
-
-    public static final IntSetting YOUTUBE_WEBSEARCHPERFORMER_MAX_RESULTS = FACTORY.createIntSetting("YOUTUBE_WEBSEARCHPERFORMER_MAX_RESULTS", 15);
     
-    public static final IntSetting SOUNDCLOUD_WEBSEARCHPERFORMER_MAX_RESULTS = FACTORY.createIntSetting("SOUNDCLOUD_WEBSEARCHPERFORMER_MAX_RESULTS", 20);
+    public static final BooleanSetting ARCHIVEORG_SEARCH_ENABLED = FACTORY.createBooleanSetting("ARCHIVEORG_SEARCH_ENABLED", true);
 }

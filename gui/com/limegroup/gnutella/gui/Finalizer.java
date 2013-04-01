@@ -3,7 +3,7 @@ package com.limegroup.gnutella.gui;
 import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.bugs.BugManager;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
-import com.limegroup.gnutella.gui.search.LocalSearchEngine;
+import com.limegroup.gnutella.gui.search.SearchMediator;
 
 /**
  * This class provides the "shutdown" method that should be
@@ -16,37 +16,38 @@ final class Finalizer {
 
     /** Stores whether a shutdown operation has been
      * initiated.
-     */    
+     */
     private static boolean _shutdownImminent;
-    
+
     /** Indicates whether file uploads are complete.
-     */    
+     */
     private static boolean _uploadsComplete;
-    
+
     /** Indicates whether file downloads are complete.
-     */    
-    private static boolean _downloadsComplete;    
-    
+     */
+    private static boolean _downloadsComplete;
+
     /**
      * An update command to execute upon shutdown, if any.
      */
     private static volatile String _updateCommand;
 
-	/**
-	 * Suppress the default constructor to ensure that this class can never
-	 * be constructed.
-	 */
-	private Finalizer() {}
-    
+    /**
+     * Suppress the default constructor to ensure that this class can never
+     * be constructed.
+     */
+    private Finalizer() {
+    }
+
     /** Indicates whether the application is waiting to
      * shutdown.
      * @return true if the application is waiting to
      * shutdown, false otherwise
-     */    
+     */
     static boolean isShutdownImminent() {
         return _shutdownImminent;
     }
-    
+
     /**
      * Exits the virtual machine, making calls to save
      * any necessary settings and to perform any
@@ -54,24 +55,24 @@ final class Finalizer {
      * @param toExecute a string to try to execute after shutting down.
      */
     static void shutdown() {
-    	LocalSearchEngine.instance().shutdown();
-    	
-    	MediaPlayer.instance().stop();
-    	
-    	// TODO: This line of code must be refactored in a better workflow of
-    	// LifecycleManager -> ActivityCallback
-    	//LibraryMediator.instance().getLibrary().close();
-    	
+        SearchMediator.instance().shutdown();
+
+        MediaPlayer.instance().stop();
+
+        // TODO: This line of code must be refactored in a better workflow of
+        // LifecycleManager -> ActivityCallback
+        //LibraryMediator.instance().getLibrary().close();
+
         GUIMediator.applyWindowSettings();
-        
+
         GUIMediator.setAppVisible(false);
         ShutdownWindow window = new ShutdownWindow();
         GUIUtils.centerOnScreen(window);
         window.setVisible(true);
-        
+
         // remove any user notification icons
         NotifyUserProxy.instance().hideTrayIcon();
-        
+
         // Do shutdown stuff in another thread.
         // We don't want to lockup the event thread
         // (which this was called on).
@@ -80,9 +81,9 @@ final class Finalizer {
             public void run() {
                 try {
                     BugManager.instance().shutdown();
-                    GuiCoreMediator.getLifecycleManager().shutdown(toExecute);                    
+                    GuiCoreMediator.getLifecycleManager().shutdown(toExecute);
                     System.exit(0);
-                } catch(Throwable t) {
+                } catch (Throwable t) {
                     t.printStackTrace();
                     System.exit(0);
                 }
@@ -90,37 +91,37 @@ final class Finalizer {
         };
         shutdown.start();
     }
-    
+
     static void flagUpdate(String toExecute) {
         _updateCommand = toExecute;
     }
-    
+
     /** Notifies the <tt>Finalizer</tt> that all
      * downloads have been completed.
-     */    
+     */
     static void setDownloadsComplete() {
         _downloadsComplete = true;
         checkForShutdown();
     }
-    
+
     /** Notifies the <tt>Finalizer</tt> that all uploads
      * have been completed.
-     */    
+     */
     static void setUploadsComplete() {
         _uploadsComplete = true;
         checkForShutdown();
     }
-    
+
     /** Attempts to shutdown the application.  This
      * method does nothing if all file transfers are
      * not yet complete.
-     */    
+     */
     private static void checkForShutdown() {
-        if(_shutdownImminent && _uploadsComplete && _downloadsComplete) {
+        if (_shutdownImminent && _uploadsComplete && _downloadsComplete) {
             GUIMediator.shutdown();
         }
     }
-    
+
     /**
      * Adds the specified <tt>Finalizable</tt> instance to the list of
      * classes to notify prior to shutdown.
@@ -135,5 +136,5 @@ final class Finalizer {
         };
         GuiCoreMediator.getLifecycleManager().addShutdownItem(t);
     }
-    
+
 }
