@@ -34,12 +34,14 @@ import java.net.URL;
  */
 public class Location {
 
-    protected NetworkAddress networkAddress;
-    protected URI path;
+    protected final NetworkAddress networkAddress;
+    protected final URI path;
+    protected final URL url;
 
     public Location(NetworkAddress networkAddress, URI path) {
         this.networkAddress = networkAddress;
         this.path = path;
+        this.url = URIUtil.fetchAbsoluteURL(networkAddress.getAddress(), networkAddress.getPort(), path);
     }
 
     public NetworkAddress getNetworkAddress() {
@@ -74,7 +76,7 @@ public class Location {
      * @return An HTTP URL with the address, port, and path of this location.
      */
     public URL getURL() {
-        return URIUtil.createAbsoluteURL(networkAddress.getAddress(), networkAddress.getPort(), path);
+        return url;
     }
 
 }
