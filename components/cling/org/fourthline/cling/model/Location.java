@@ -34,10 +34,10 @@ import java.net.URL;
 public class Location {
 
     protected final NetworkAddress networkAddress;
-    protected final URI path;
+    protected final String path;
     protected final URL url;
 
-    public Location(NetworkAddress networkAddress, URI path) {
+    public Location(NetworkAddress networkAddress, String path) {
         this.networkAddress = networkAddress;
         this.path = path;
         this.url = createAbsoluteURL(networkAddress.getAddress(), networkAddress.getPort(), path);
@@ -47,7 +47,7 @@ public class Location {
         return networkAddress;
     }
 
-    public URI getPath() {
+    public String getPath() {
         return path;
     }
 
@@ -79,10 +79,10 @@ public class Location {
     }
 
     // creating this method for performance reasons
-    private static URL createAbsoluteURL(InetAddress address, int localStreamPort, URI path) {
+    private static URL createAbsoluteURL(InetAddress address, int localStreamPort, String path) {
         try {
             // this constructor handle both IPv6 and IPv4.
-            return new URL("http", address.getHostAddress(), localStreamPort, path.getPath());
+            return new URL("http", address.getHostAddress(), localStreamPort, path);
         } catch (Exception ex) {
             throw new IllegalArgumentException("Address, port, and URI can not be converted to URL", ex);
         }

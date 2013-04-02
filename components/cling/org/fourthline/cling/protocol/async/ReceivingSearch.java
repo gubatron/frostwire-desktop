@@ -333,7 +333,7 @@ public class ReceivingSearch extends ReceivingAsync<IncomingSearchRequest> {
     protected Location getDescriptorLocation(NetworkAddress activeStreamServer, LocalDevice device) {
         return new Location(
                 activeStreamServer,
-                getUpnpService().getConfiguration().getNamespace().getDescriptorPath(device)
+                getUpnpService().getConfiguration().getNamespace().getDescriptorUriPath(device)
         );
     }
 
