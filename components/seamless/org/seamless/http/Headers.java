@@ -49,8 +49,9 @@ public class Headers implements Map<String, List<String>> {
     }
 
     public Headers(ByteArrayInputStream inputStream) {
+        StringBuilder sb = new StringBuilder(128);
         Headers headers = new Headers();
-        String line = readLine(inputStream);
+        String line = readLine(sb, inputStream);
         String lastHeader = null;
         if (line.length() != 0) {
             do {
@@ -66,7 +67,8 @@ public class Headers implements Map<String, List<String>> {
                     lastHeader = header[0];
                 }
 
-                line = readLine(inputStream);
+                sb.delete(0, sb.length());
+                line = readLine(sb, inputStream);
             } while (line.length() != 0);
         }
         putAll(headers);
@@ -168,9 +170,12 @@ public class Headers implements Map<String, List<String>> {
         }
         return new String(b);
     }
-
+    
     public static String readLine(ByteArrayInputStream is) {
-        StringBuilder sb = new StringBuilder(64);
+        return readLine(new StringBuilder(128), is);
+    }
+
+    public static String readLine(StringBuilder sb, ByteArrayInputStream is) {
         int nextByte;
         while((nextByte = is.read()) != -1) {
             char nextChar = (char) nextByte;
@@ -245,17 +250,16 @@ public class Headers implements Map<String, List<String>> {
 
     @Override
     public String toString() {
-        StringBuilder headerString = new StringBuilder();
+        StringBuilder headerString = new StringBuilder(512);
         for (Entry<String, List<String>> headerEntry : entrySet()) {
-            StringBuilder headerLine = new StringBuilder();
 
-            headerLine.append(headerEntry.getKey()).append(": ");
+            headerString.append(headerEntry.getKey()).append(": ");
 
             for (String v : headerEntry.getValue()) {
-                headerLine.append(v).append(",");
+                headerString.append(v).append(",");
             }
-            headerLine.delete(headerLine.length()-1, headerLine.length());
-            headerString.append(headerLine).append("\r\n");
+            headerString.delete(headerString.length()-1, headerString.length());
+            headerString.append("\r\n");
         }
         return headerString.toString();
     }

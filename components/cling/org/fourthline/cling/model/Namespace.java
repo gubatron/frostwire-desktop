@@ -140,7 +140,7 @@ public class Namespace {
     }
     
     public String getDescriptorUriPath(Device device) {
-        return getDevicePath(device.getRoot()) + DESCRIPTOR_FILE;
+        return decodedPath + getDevicePath(device.getRoot()) + DESCRIPTOR_FILE;
     }
 
     public URI getDescriptorPath(Service service) {
@@ -164,7 +164,7 @@ public class Namespace {
     }
     
     public String getEventCallbackUriPath(Service service) {
-        return getServicePath(service) + EVENTS + CALLBACK_FILE;
+        return decodedPath + getServicePath(service) + EVENTS + CALLBACK_FILE;
     }
 
     public URI prefixIfRelative(Device device, URI uri) {
