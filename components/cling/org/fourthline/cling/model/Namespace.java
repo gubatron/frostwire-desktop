@@ -89,50 +89,11 @@ public class Namespace {
     }
 
     public URI getPath(Device device) {
-        if (device.getIdentity().getUdn() == null) {
-            throw new IllegalStateException("Can't generate local URI prefix without UDN");
-        }
-        StringBuilder s = new StringBuilder();
-        s.append(DEVICE).append("/");
-
-        s.append(URIUtil.encodePathSegment(device.getIdentity().getUdn().getIdentifierString()));
-
-        /*
-        We no longer need the hierarchical URIs, in fact, they are impossible to parse
-        with typical URI template support in various REST engines.
-        if (device.isRoot()) {
-            s.append(device.getIdentity().getUdn().getIdentifierString());
-        } else {
-            List<Device> devices = new ArrayList();
-            Device temp = device;
-            while (temp != null) {
-                devices.add(temp);
-                temp = temp.getParentDevice();
-            }
-            Collections.reverse(devices);
-            for (Device d : devices) {
-                if (d == device) continue;
-                s.append(d.getIdentity().getUdn().getIdentifierString());
-                s.append(EMBEDDED);
-                s.append("/");
-            }
-            s.append(device.getIdentity().getUdn().getIdentifierString());
-        }
-        */
-        return URI.create(getBasePath().toString() + s.toString());
+        return appendPathToBaseURI(getDevicePath(device));
     }
 
     public URI getPath(Service service) {
-        if (service.getServiceId() == null) {
-            throw new IllegalStateException("Can't generate local URI prefix without service ID");
-        }
-        StringBuilder s = new StringBuilder();
-        s.append(SERVICE);
-        s.append("/");
-        s.append(service.getServiceId().getNamespace());
-        s.append("/");
-        s.append(service.getServiceId().getId());
-        return URI.create(getPath(service.getDevice()).toString() + s.toString());
+        return appendPathToBaseURI(getServicePath(service));
     }
 
     public URI getDescriptorPath(Device device) {
