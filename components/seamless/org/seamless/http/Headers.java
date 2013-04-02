@@ -40,6 +40,7 @@ public class Headers implements Map<String, List<String>> {
     final static byte LF = 10;
 
     final Map<String, List<String>> map = new HashMap<String, List<String>>(32);
+    private boolean normalizeHeaders = true;
 
     public Headers() {
     }
@@ -49,7 +50,7 @@ public class Headers implements Map<String, List<String>> {
     }
 
     public Headers(ByteArrayInputStream inputStream) {
-        StringBuilder sb = new StringBuilder(128);
+        StringBuilder sb = new StringBuilder(256);
         Headers headers = new Headers();
         String line = readLine(sb, inputStream);
         String lastHeader = null;
@@ -72,6 +73,10 @@ public class Headers implements Map<String, List<String>> {
             } while (line.length() != 0);
         }
         putAll(headers);
+    }
+
+    public Headers(boolean normalizeHeaders) {
+        this.normalizeHeaders = normalizeHeaders;
     }
 
     public int size() {
@@ -155,24 +160,31 @@ public class Headers implements Map<String, List<String>> {
     }
 
     private String normalize(String key) {
-        if (key == null) return null;
-        if (key.length() == 0) return key;
-        char[] b;
-        String s;
-        b = key.toCharArray();
-        if (b[0] >= 'a' && b[0] <= 'z') {
-            b[0] = (char) (b[0] - ('a' - 'A'));
-        }
-        for (int i = 1; i < key.length(); i++) {
-            if (b[i] >= 'A' && b[i] <= 'Z') {
-                b[i] = (char) (b[i] + ('a' - 'A'));
+        String result=key;
+        
+        if (normalizeHeaders) {
+            if (key == null) return null;
+            if (key.length() == 0) return key;
+            char[] b;
+            b = key.toCharArray();
+            final int caseDiff = 'a' - 'A';//android optimization
+            
+            if (b[0] >= 'a' && b[0] <= 'z') {
+                b[0] = (char) (b[0] - caseDiff);
             }
-        }
-        return new String(b);
+            int length = key.length();//android optimization
+            for (int i = 1; i < length;  i++) {
+                if (b[i] >= 'A' && b[i] <= 'Z') {
+                    b[i] = (char) (b[i] + caseDiff);
+                }
+            }
+            result = new String(b);
+        } 
+        return result;
     }
     
     public static String readLine(ByteArrayInputStream is) {
-        return readLine(new StringBuilder(128), is);
+        return readLine(new StringBuilder(256), is);
     }
 
     public static String readLine(StringBuilder sb, ByteArrayInputStream is) {
