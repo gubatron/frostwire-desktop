@@ -170,7 +170,7 @@ public class Headers implements Map<String, List<String>> {
     }
 
     public static String readLine(ByteArrayInputStream is) {
-        StringBuilder sb = new StringBuilder(128);
+        StringBuilder sb = new StringBuilder(64);
         int nextByte;
         while((nextByte = is.read()) != -1) {
             char nextChar = (char) nextByte;
