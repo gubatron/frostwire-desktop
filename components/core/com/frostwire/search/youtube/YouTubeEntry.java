@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.search.youtube2;
+package com.frostwire.search.youtube;
+
+import java.util.List;
 
 /**
  * 
@@ -24,7 +26,10 @@ package com.frostwire.search.youtube2;
  * @author aldenml
  *
  */
-public class YouTubeEntryTitle {
+public class YouTubeEntry {
 
-    public String title;
+    public YouTubeEntryTitleDate published;
+    public YouTubeEntryTitle title;
+    public List<YouTubeEntryLink> link;
+    public List<YouTubeAuthor> author;
 }
