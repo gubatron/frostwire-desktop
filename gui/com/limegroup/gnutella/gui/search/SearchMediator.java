@@ -275,7 +275,7 @@ public final class SearchMediator {
         try {
             for (SearchResult sr : results) {
                 if (sr instanceof CrawledSearchResult) {
-                    // special case for youtube and archiveorg
+                    // special case for youtube
                     if (sr instanceof YouTubeCrawledSearchResult) {
                         list.add(sr);
                     } else if (filter(new LinkedList<String>(searchTokens), sr)) {

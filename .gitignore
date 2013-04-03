@@ -41,3 +41,4 @@ OCSetupHlp.dll
 components/*/dist/
 components/*/build/
 lib/jars-src/dist/
+/bin
