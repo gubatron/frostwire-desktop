@@ -31,14 +31,29 @@ import com.frostwire.search.StreamableSearchResult;
  */
 public final class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult implements HttpSearchResult, StreamableSearchResult {
 
-    public static final String AAC_LOW_QUALITY = "(AAC)";
-    public static final String AAC_HIGH_QUALITY = "(AAC-High Quality)";
-
     private final YouTubeDownloadLink dl;
     private final String filename;
     private final String displayName;
     private final long size;
     private final String streamUrl;
+    private final MediaQuality mediaQuality;
+    
+    public enum MediaQuality {
+        LOW_QUALITY("Low Quality"),
+        HIGH_QUALITY("High Quality"),
+        UNKNOWN("");
+        
+        private final String name;
+        
+        MediaQuality(String str) {
+            name = str;
+        }
+        
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
 
     public YouTubeCrawledSearchResult(YouTubeSearchResult sr, YouTubeDownloadLink dl) {
         super(sr);
@@ -46,9 +61,10 @@ public final class YouTubeCrawledSearchResult extends AbstractCrawledSearchResul
         this.dl = dl;
 
         this.filename = dl.getFilename();
-        this.displayName = buildDisplayName(this.filename);
+        this.displayName = FilenameUtils.getBaseName(this.filename);
         this.size = dl.getSize();
         this.streamUrl = dl.getDownloadUrl();
+        this.mediaQuality = buildQuality(dl);
     }
 
     public YouTubeDownloadLink getYouTubeDownloadLink() {
@@ -79,15 +95,19 @@ public final class YouTubeCrawledSearchResult extends AbstractCrawledSearchResul
     public String getDownloadUrl() {
         return streamUrl;
     }
+    
+    public MediaQuality getMediaQuality() {
+        return mediaQuality;
+    }
 
-    private String buildDisplayName(String filename2) {
-        String fname = FilenameUtils.getBaseName(filename);
-        String result = fname;
+    private MediaQuality buildQuality(YouTubeDownloadLink dl) {
+        MediaQuality result = MediaQuality.UNKNOWN;
         if (dl.getITag() == 22 || dl.getITag() == 37) {
-            result = AAC_HIGH_QUALITY + " " + fname;            
+            result = MediaQuality.HIGH_QUALITY;            
         } else if (dl.getITag() == 18) {
-            result = AAC_LOW_QUALITY + " " + fname;
+            result = MediaQuality.LOW_QUALITY;
         }
         return result;
     }
+    
 }
