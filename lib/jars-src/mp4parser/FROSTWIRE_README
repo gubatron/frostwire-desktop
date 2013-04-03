@@ -11,3 +11,4 @@ Deleted empy file ./isoparser/src/main/java/com/coremedia/iso/boxes/ObjectDescri
 Cleanup of mp4 files, find . | grep "\.mp4$" | xargs rm
 Removed test, rm -rf isoparser/src/test/
 Remove examples resources, rm -rf examples/src/main/resources/
+Remove RequiresParseDetailAspect.java

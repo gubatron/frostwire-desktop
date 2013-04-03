@@ -19,7 +19,6 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -27,7 +26,6 @@ import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.model.meta.Icon;
 import org.fourthline.cling.model.meta.Service;
 import org.fourthline.cling.model.resource.Resource;
-import org.seamless.util.SimpleLruCache;
 import org.seamless.util.URIUtil;
 
 /**
@@ -69,9 +67,7 @@ public class Namespace {
     public static final String CALLBACK_FILE = "/cb";
 
     final protected URI basePath;
-    
-    private static final Map<Object,URI> uriCache = SimpleLruCache.create(512);
-            
+
     public Namespace() {
         this.basePath = URI.create("");
     }
@@ -89,57 +85,37 @@ public class Namespace {
     }
 
     public URI getPath(Device device) {
-        return getPath(device, true);
-    }
-    
-    public URI getPath(Device device, boolean useCache) {
         if (device.getIdentity().getUdn() == null) {
             throw new IllegalStateException("Can't generate local URI prefix without UDN");
         }
-        
-        URI result = null;
-        
-        if (useCache && uriCache.containsKey(device)) {
-            result  = uriCache.get(device);
-            System.out.println("Namespace.getPath - LruCache hit!");
-        } else {
-        
-            StringBuilder s = new StringBuilder();
-            s.append(DEVICE).append("/");
-    
-            s.append(URIUtil.encodePathSegment(device.getIdentity().getUdn().getIdentifierString()));
-    
-            /*
-            We no longer need the hierarchical URIs, in fact, they are impossible to parse
-            with typical URI template support in various REST engines.
-            if (device.isRoot()) {
-                s.append(device.getIdentity().getUdn().getIdentifierString());
-            } else {
-                List<Device> devices = new ArrayList();
-                Device temp = device;
-                while (temp != null) {
-                    devices.add(temp);
-                    temp = temp.getParentDevice();
-                }
-                Collections.reverse(devices);
-                for (Device d : devices) {
-                    if (d == device) continue;
-                    s.append(d.getIdentity().getUdn().getIdentifierString());
-                    s.append(EMBEDDED);
-                    s.append("/");
-                }
-                s.append(device.getIdentity().getUdn().getIdentifierString());
-            }
-            */
+        StringBuilder s = new StringBuilder();
+        s.append(DEVICE).append("/");
 
-            result = URI.create(getBasePath().toString() + s.toString());
-            
-            if (useCache) {
-                uriCache.put(device, result);
+        s.append(URIUtil.encodePathSegment(device.getIdentity().getUdn().getIdentifierString()));
+
+        /*
+        We no longer need the hierarchical URIs, in fact, they are impossible to parse
+        with typical URI template support in various REST engines.
+        if (device.isRoot()) {
+            s.append(device.getIdentity().getUdn().getIdentifierString());
+        } else {
+            List<Device> devices = new ArrayList();
+            Device temp = device;
+            while (temp != null) {
+                devices.add(temp);
+                temp = temp.getParentDevice();
             }
+            Collections.reverse(devices);
+            for (Device d : devices) {
+                if (d == device) continue;
+                s.append(d.getIdentity().getUdn().getIdentifierString());
+                s.append(EMBEDDED);
+                s.append("/");
+            }
+            s.append(device.getIdentity().getUdn().getIdentifierString());
         }
-        
-        return result;
+        */
+        return URI.create(getBasePath().toString() + s.toString());
     }
 
     public URI getPath(Service service) {
