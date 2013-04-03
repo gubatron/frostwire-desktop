@@ -21,7 +21,7 @@ package com.frostwire.search.kat;
 import java.util.Iterator;
 import java.util.List;
 
-import org.limewire.util.StringUtils;
+import com.frostwire.util.StringUtils;
 
 /**
  * 
