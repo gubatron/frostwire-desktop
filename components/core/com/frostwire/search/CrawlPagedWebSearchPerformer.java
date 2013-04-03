@@ -36,8 +36,8 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
     private static final int DEFAULT_CRAWL_TIMEOUT = 10000; // 10 seconds
     private static final int DEFAULT_MAGNET_DOWNLOAD_TIMEOUT = 4000; // 4 seconds
 
-    private static final CrawlCache cache = CrawlCacheFactory.newInstance();
-    private static final MagnetDownloader magnetDownloader = MagnetDownloaderFactory.newInstance();
+    private static CrawlCache cache = null;
+    private static MagnetDownloader magnetDownloader = null;
 
     private int numCrawls;
 
@@ -52,6 +52,18 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
 
     public static CrawlCache getCache() {
         return cache;
+    }
+
+    public static void setCache(CrawlCache cache) {
+        CrawlPagedWebSearchPerformer.cache = cache;
+    }
+
+    public static MagnetDownloader getMagnetDownloader() {
+        return magnetDownloader;
+    }
+
+    public static void setMagnetDownloader(MagnetDownloader magnetDownloader) {
+        CrawlPagedWebSearchPerformer.magnetDownloader = magnetDownloader;
     }
 
     @Override
@@ -106,24 +118,37 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
     protected abstract List<? extends SearchResult> crawlResult(T sr, byte[] data) throws Exception;
 
     protected byte[] fetchMagnet(String magnet) {
-        return magnetDownloader.download(magnet, DEFAULT_MAGNET_DOWNLOAD_TIMEOUT);
+        if (magnetDownloader != null) {
+            return magnetDownloader.download(magnet, DEFAULT_MAGNET_DOWNLOAD_TIMEOUT);
+        } else {
+            LOG.warn("Magnet downloader not set, download not supported: " + magnet);
+            return null;
+        }
     }
 
     private byte[] cacheGet(String key) {
-        synchronized (cache) {
-            return cache.get(key);
+        if (cache != null) {
+            synchronized (cache) {
+                return cache.get(key);
+            }
+        } else {
+            return null;
         }
     }
 
     private void cachePut(String key, byte[] data) {
-        synchronized (cache) {
-            cache.put(key, data);
+        if (cache != null) {
+            synchronized (cache) {
+                cache.put(key, data);
+            }
         }
     }
 
     private void cacheRemove(String key) {
-        synchronized (cache) {
-            cache.remove(key);
+        if (cache != null) {
+            synchronized (cache) {
+                cache.remove(key);
+            }
         }
     }
 
