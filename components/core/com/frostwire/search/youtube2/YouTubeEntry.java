@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.search.youtube;
+package com.frostwire.search.youtube2;
+
+import java.util.List;
 
 /**
  * 
@@ -24,9 +26,10 @@ package com.frostwire.search.youtube;
  * @author aldenml
  *
  */
-public class YouTubeEntryLink {
+public class YouTubeEntry {
 
-    public String rel;
-    public String type;
-    public String href;
+    public YouTubeEntryTitleDate published;
+    public YouTubeEntryTitle title;
+    public List<YouTubeEntryLink> link;
+    public List<YouTubeAuthor> author;
 }
