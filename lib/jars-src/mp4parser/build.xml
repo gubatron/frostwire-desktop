@@ -11,14 +11,14 @@
 		<mkdir dir="bin" />
 
 		<!-- build -->
-		<javac srcdir="isoparser/src/main/java" destdir="bin" fork="true" includeantruntime="false">
+		<javac srcdir="isoparser/src/main/java" destdir="bin" fork="true" includeantruntime="false" source="1.6" target="1.6">
 			<classpath refid="default.classpath" />
-			<include name="isoparser/src/main/resources/**" />
 		</javac>
 
 		<!-- jar -->
 		<jar jarfile="../dist/mp4parser.jar">
 			<fileset dir="bin" />
+            <fileset dir="isoparser/src/main/resources" />
 		</jar>
 
 	</target>
