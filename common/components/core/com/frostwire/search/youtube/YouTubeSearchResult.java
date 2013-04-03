@@ -20,30 +20,34 @@ package com.frostwire.search.youtube;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
+
+import org.apache.commons.io.FilenameUtils;
 
 import com.frostwire.search.AbstractFileSearchResult;
+import com.frostwire.search.CrawlableSearchResult;
 
 /**
  * @author gubatron
  * @author aldenml
  *
  */
-public class YouTubeSearchResult extends AbstractFileSearchResult {
+public class YouTubeSearchResult extends AbstractFileSearchResult implements CrawlableSearchResult {
 
     //2010-07-15T16:02:42
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     private final YouTubeEntry entry;
-    private final ResultType rt;
 
+    private final String filename;
+    private final String displayName;
     private final long creationTime;
     private final String videoUrl;
 
-    public YouTubeSearchResult(YouTubeEntry entry, ResultType rt) {
+    public YouTubeSearchResult(YouTubeEntry entry) {
         this.entry = entry;
-        this.rt = rt;
 
+        this.filename = entry.title.title + ".youtube";
+        this.displayName = FilenameUtils.getBaseName(filename);
         this.creationTime = readCreationTime(entry);
         this.videoUrl = readVideoUrl(entry);
     }
@@ -53,13 +57,13 @@ public class YouTubeSearchResult extends AbstractFileSearchResult {
     }
 
     @Override
-    public String getDisplayName() {
-        return entry.title.title;
+    public String getFilename() {
+        return filename;
     }
 
     @Override
-    public String getFilename() {
-        return getDisplayName() + (rt.equals(ResultType.VIDEO) ? ".mp4" : ".m4a");
+    public String getDisplayName() {
+        return displayName;
     }
 
     @Override
@@ -81,24 +85,16 @@ public class YouTubeSearchResult extends AbstractFileSearchResult {
         }
     }
 
-    public int getRank() {
-        return 20000;
-    }
-
     @Override
     public String getDetailsUrl() {
         return videoUrl;
     }
 
-    public ResultType getResultType() {
-        return rt;
-    }
-
     @Override
-    public String toString() {
-        return getDetailsUrl();
+    public boolean isComplete() {
+        return true;
     }
-
+    
     private long readCreationTime(YouTubeEntry entry) {
         try {
             return DATE_FORMAT.parse(entry.published.title.replace("000Z", "")).getTime();
@@ -119,9 +115,5 @@ public class YouTubeSearchResult extends AbstractFileSearchResult {
         url = url.replace("https://", "http://").replace("&feature=youtube_gdata", "");
 
         return url;
-    }
-
-    public static enum ResultType {
-        VIDEO, AUDIO
     }
 }
