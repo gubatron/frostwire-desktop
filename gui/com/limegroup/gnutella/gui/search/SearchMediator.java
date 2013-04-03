@@ -40,12 +40,14 @@ import com.frostwire.gui.filters.SearchFilterFactory;
 import com.frostwire.gui.filters.SearchFilterFactoryImpl;
 import com.frostwire.search.CrawlPagedWebSearchPerformer;
 import com.frostwire.search.CrawledSearchResult;
+import com.frostwire.search.DatabaseCrawlCache;
 import com.frostwire.search.FileSearchResult;
 import com.frostwire.search.SearchManager;
 import com.frostwire.search.SearchManagerImpl;
 import com.frostwire.search.SearchManagerListener;
 import com.frostwire.search.SearchPerformer;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.VuzeMagnetDownloader;
 import com.frostwire.search.archiveorg.ArchiveorgCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube2.YouTubeCrawledSearchResult;
@@ -143,7 +145,10 @@ public final class SearchMediator {
                     getSearchInputManager().setFiltersFor(panel);
             }
         });
-
+        
+        CrawlPagedWebSearchPerformer.setCache(new DatabaseCrawlCache());
+        CrawlPagedWebSearchPerformer.setMagnetDownloader(new VuzeMagnetDownloader());
+        
         this.manager = new SearchManagerImpl(SEARCH_MANAGER_NUM_THREADS);
         this.manager.registerListener(new ManagerListener());
     }
