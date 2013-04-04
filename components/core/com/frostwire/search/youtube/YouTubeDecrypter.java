@@ -1,3 +1,19 @@
+//    jDownloader - Downloadmanager
+//    Copyright (C) 2009  JD-Team support@jdownloader.org
+//
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package com.frostwire.search.youtube;
 
 import java.io.IOException;
@@ -11,6 +27,9 @@ import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jd.http.Browser;
 import jd.http.Request;
 import jd.nutils.encoding.Encoding;
@@ -19,10 +38,13 @@ import jd.parser.html.Form;
 import jd.parser.html.Form.MethodType;
 import android.util.Log;
 
-import com.frostwire.android.util.FileUtils;
+import com.frostwire.search.CrawlPagedWebSearchPerformer;
+import com.frostwire.util.FileUtils;
 
-public class YouTubeDecrypter {
-    private static final String TAG = "FW.YouTubeDecrypter";
+public final class YouTubeDecrypter {
+    
+    private static final Logger LOG = LoggerFactory.getLogger(YouTubeDecrypter.class);
+    
     private Browser br = new Browser();
     
     HashMap<DestinationFormat, ArrayList<Info>> possibleconverts    = null;
@@ -169,8 +191,8 @@ public class YouTubeDecrypter {
                 if (br.containsHTML(UNSUPPORTEDRTMP)) error = "RTMP video download isn't supported yet!";
                 if ((LinksFound == null || LinksFound.isEmpty()) && error != null) {
                     error = Encoding.urlDecode(error, false);
-                    Log.i(TAG,"Video unavailable: " + url);
-                    Log.i(TAG,"Reason: " + error.trim());
+                    LOG.info("Video unavailable: " + url);
+                    LOG.info("Reason: " + error.trim());
                     continue;
                 }
                 if (LinksFound == null || LinksFound.isEmpty()) {
@@ -178,7 +200,7 @@ public class YouTubeDecrypter {
                         if (verifyAge || this.br.getURL().toLowerCase().indexOf("youtube.com/get_video_info?") != -1 && !prem) { 
                             throw new IOException("Can't download this video with FrostWire, age verification required from youtube."); 
                         }
-                        Log.i(TAG,"Video unavailable: " + url);
+                        LOG.info("Video unavailable: " + url);
                         continue;
                     } else {
                         continue;
@@ -335,7 +357,7 @@ public class YouTubeDecrypter {
                
             } catch (final IOException e) {
                 this.br.getHttpConnection().disconnect();
-                Log.e(TAG, "Exception occurred", e);
+                LOG.warn("Exception occurred", e);
                 // return null;
             }
         }
@@ -405,7 +427,7 @@ public class YouTubeDecrypter {
         if (forms != null) {
             for (Form form : forms) {
                 if (form.getAction() != null && form.getAction().contains("verify_age")) {
-                    Log.i(TAG,"Verify Age");
+                    LOG.info("Verify Age");
                     br.submitForm(form);
                     break;
                 }

@@ -107,7 +107,14 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
                         cacheRemove(url); // invalidating cache data
                     }
                 } else {
-                    LOG.warn("Crawl url for sr=" + sr.getDetailsUrl() + " is null, review your logic");
+                    try {
+                        List<? extends SearchResult> results = crawlResult(obj, null);
+                        if (results != null) {
+                            onResults(this, results);
+                        }
+                    } catch (Throwable e) {
+                        LOG.warn("Error creating crawled results from search result alone: " + obj.getDetailsUrl() + ", e=" + e.getMessage());
+                    }
                 }
             }
         }

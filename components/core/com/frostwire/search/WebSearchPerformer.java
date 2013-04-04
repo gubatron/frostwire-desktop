@@ -50,11 +50,11 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         this.client = HttpClientFactory.newDefaultInstance();
     }
 
-    public String getKeywords() {
+    public final String getKeywords() {
         return keywords;
     }
 
-    public String getEncodedKeywords() {
+    public final String getEncodedKeywords() {
         return encodedKeywords;
     }
 
@@ -63,11 +63,11 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         LOG.warn("Review your logic, calling deep search without implementation for: " + sr);
     }
 
-    protected String fetch(String url) {
+    protected final String fetch(String url) {
         return client.get(url, timeout);
     }
 
-    protected byte[] fetchBytes(String url, String referrer, int timeout) {
+    protected final byte[] fetchBytes(String url, String referrer, int timeout) {
         if (url.startsWith("htt")) { // http(s)
             return client.getBytes(url, timeout, DEFAULT_USER_AGENT, referrer);
         } else {
