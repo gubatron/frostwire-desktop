@@ -14,6 +14,7 @@
 	<classpathentry kind="src" path="common/components/json"/>
 	<classpathentry kind="src" path="common/components/xml"/>
 	<classpathentry kind="src" path="common/components/javax"/>
+	<classpathentry kind="src" path="common/components/apache"/>
 	<classpathentry kind="src" path="common/components/seamless"/>
 	<classpathentry kind="src" path="common/components/cling"/>
 	<classpathentry kind="src" path="common/components/common"/>
@@ -28,7 +29,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire-desktop/lib/native"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="common/components/apache"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jars/commons-logging.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/gettext-commons.jar" sourcepath="lib/jars-src"/>
