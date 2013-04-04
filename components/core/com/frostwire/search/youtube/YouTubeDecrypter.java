@@ -27,18 +27,16 @@ import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jd.http.Browser;
 import jd.http.Request;
 import jd.nutils.encoding.Encoding;
 import jd.parser.Regex;
 import jd.parser.html.Form;
 import jd.parser.html.Form.MethodType;
-import android.util.Log;
 
-import com.frostwire.search.CrawlPagedWebSearchPerformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.frostwire.util.FileUtils;
 
 public final class YouTubeDecrypter {
