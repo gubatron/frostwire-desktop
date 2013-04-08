@@ -36,6 +36,14 @@
 	    	includeantruntime = "false"
 	    >
 			<classpath refid="build.limewire.core.classpath"/>
+            <src path="${limewire.home}/common/components/json"/>
+            <src path="${limewire.home}/common/components/xml"/>
+            <src path="${limewire.home}/common/components/javax"/>
+            <src path="${limewire.home}/common/components/apache"/>
+            <src path="${limewire.home}/common/components/seamless"/>
+            <src path="${limewire.home}/common/components/cling"/>
+            <src path="${limewire.home}/common/components/common"/>
+            <src path="${limewire.home}/common/components/core"/>
 	   	</javac>
 	</target>
     
