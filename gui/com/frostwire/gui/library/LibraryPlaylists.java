@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,8 +85,6 @@ import com.limegroup.gnutella.settings.QuestionsHandler;
  *
  */
 public class LibraryPlaylists extends AbstractLibraryListPanel {
-
-    private static final long serialVersionUID = 6317109161466445259L;
 
     private DefaultListModel _model;
     private int _selectedIndexToRename;
@@ -592,11 +590,6 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     }
 
     private class LibraryPlaylistsCellRenderer extends SubstanceDefaultListCellRenderer {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -2047182373734965968L;
 
         @Override
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {

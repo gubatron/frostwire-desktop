@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.Dimension;
@@ -32,9 +33,13 @@ import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.GUIMediator;
 
-public class LibraryIconList extends JList {
-
-    private static final long serialVersionUID = 6951236485310381795L;
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public class LibraryIconList extends JList<Object> {
 
     private Image speaker;
     private Image loading;
@@ -43,7 +48,7 @@ public class LibraryIconList extends JList {
         loadIcons();
     }
 
-    public LibraryIconList(ListModel dataModel) {
+    public LibraryIconList(ListModel<Object> dataModel) {
         super(dataModel);
         loadIcons();
     }

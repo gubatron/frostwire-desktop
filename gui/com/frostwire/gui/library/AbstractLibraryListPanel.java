@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.util.ArrayList;
@@ -42,12 +43,12 @@ import com.limegroup.gnutella.gui.RefreshListener;
  * Use enqueueRunnable on your implementations of the {@link AbstractLibraryListPanel}
  * 
  * @author gubatron
+ * @author aldenml
  *
  */
 public abstract class AbstractLibraryListPanel extends JPanel implements RefreshListener {
-	private static final long serialVersionUID = 2600384627889697339L;
-
-	private List<Runnable> PENDING_RUNNABLES;
+	
+    private List<Runnable> PENDING_RUNNABLES;
     
     public AbstractLibraryListPanel() {
     	    PENDING_RUNNABLES = Collections.synchronizedList(new ArrayList<Runnable>());
@@ -71,7 +72,6 @@ public abstract class AbstractLibraryListPanel extends JPanel implements Refresh
                     }
                 }
             }
-            //PENDING_RUNNABLES.clear();
         }
     }
 

@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,8 +31,6 @@ import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.FontUIResource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.lafwidget.utils.LookUtils;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
@@ -46,6 +44,8 @@ import org.pushingpixels.substance.internal.ui.SubstancePopupMenuUI;
 import org.pushingpixels.substance.internal.ui.SubstanceRadioButtonMenuItemUI;
 import org.pushingpixels.substance.internal.ui.SubstanceTreeUI;
 import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import sun.swing.SwingUtilities2;
 
@@ -71,15 +71,11 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  */
 public class SubstanceThemeSetter implements ThemeSetter {
 
-    private static final Log LOG = LogFactory.getLog(SubstanceThemeSetter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SubstanceThemeSetter.class);
 
     private final String _name;
     private final String _skinClassName;
     private final SkinCustomUI customUI;
-
-    private final float LINUX_SCALED_FONT_POLICY_FACTOR = 0.87f;
-    private final float WINDOWS_SCALED_FONT_POLICY_FACTOR = 0.92f;
-    private final float MAC_SCALED_FONT_POLICY_FACTOR = 0.87f;
 
     private SubstanceThemeSetter(String name, String skinClassName, SkinCustomUI customUI) {
         _name = name;
@@ -99,26 +95,13 @@ public class SubstanceThemeSetter implements ThemeSetter {
         SubstanceLookAndFeel.setSkin(_skinClassName);
         ThemeMediator.applyCommonSkinUI();
 
-        float scaledFontPolicyFactor = WINDOWS_SCALED_FONT_POLICY_FACTOR;
-        if (OSUtils.isMacOSX()) {
-            scaledFontPolicyFactor = MAC_SCALED_FONT_POLICY_FACTOR;
-        } else if (OSUtils.isLinux()) {
-            scaledFontPolicyFactor = LINUX_SCALED_FONT_POLICY_FACTOR;
-        }
-
         if (LookUtils.IS_OS_WINDOWS) {
             fixWindowsOSFont();
         } else if (LookUtils.IS_OS_LINUX) {
             fixLinuxOSFont();
         }
 
-        //SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getScaledFontPolicy(scaledFontPolicyFactor));
         fixAAFontSettings();
-        
-        //reduceFont("Label.font");
-        //reduceFont("Table.font");
-        //ResourceManager.setFontSizes(-1);
-        //ResourceManager.setFontSizes(0);
 
         UIManager.put("Tree.leafIcon", UIManager.getIcon("Tree.closedIcon"));
 
@@ -170,14 +153,6 @@ public class SubstanceThemeSetter implements ThemeSetter {
     public static final SubstanceThemeSetter RAVEN = new SubstanceThemeSetter("Raven", "org.pushingpixels.substance.api.skin.RavenSkin");
     public static final SubstanceThemeSetter SAHARA = new SubstanceThemeSetter("Sahara", "org.pushingpixels.substance.api.skin.SaharaSkin");
     public static final SubstanceThemeSetter TWILIGHT = new SubstanceThemeSetter("Twilight", "org.pushingpixels.substance.api.skin.TwilightSkin");
-
-    //    // from Substance extras
-    //    public static final SubstanceThemeSetter FIELD_OF_WHEAT = new SubstanceThemeSetter("Field Of Wheat", "org.pushingpixels.substance.skinpack.FieldOfWheatSkin");
-    //    public static final SubstanceThemeSetter FINDING_NEMO = new SubstanceThemeSetter("Finding Nemo", "org.pushingpixels.substance.skinpack.FindingNemoSkin");
-    //    public static final SubstanceThemeSetter GREEN_MAGIC = new SubstanceThemeSetter("Green Magic", "org.pushingpixels.substance.skinpack.GreenMagicSkin");
-    //    public static final SubstanceThemeSetter MAGMA = new SubstanceThemeSetter("Magma", "org.pushingpixels.substance.skinpack.MagmaSkin");
-    //    public static final SubstanceThemeSetter MANGO = new SubstanceThemeSetter("Mango", "org.pushingpixels.substance.skinpack.MangoSkin");
-    //    public static final SubstanceThemeSetter STREETLIGHTS = new SubstanceThemeSetter("Streetlights", "org.pushingpixels.substance.skinpack.StreetlightsSkin");
 
     public SkinCustomUI getCustomUI() {
         return customUI;
