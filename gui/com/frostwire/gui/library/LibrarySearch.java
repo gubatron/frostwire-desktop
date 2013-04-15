@@ -540,7 +540,7 @@ public class LibrarySearch extends JPanel {
                 String luceneQuery = com.frostwire.alexandria.LibraryUtils.wildcardLuceneQuery(query);
                 //Full text search
                 if (!playlist.isStarred()) {
-                    sql = "SELECT T.playlistItemId, T.filePath, T.fileName, T.fileSize, T.fileExtension, T.trackTitle, T.trackDurationInSecs, T.trackArtist, T.trackAlbum, T.coverArtPath, T.trackBitrate, T.trackComment, T.trackGenre, T.trackNumber, T.trackYear, T.starred FROM FTL_SEARCH_DATA(?, 0, 0) FT, PLAYLISTITEMS T WHERE FT.TABLE='PLAYLISTITEMS' AND T.playlistItemId = FT.KEYS[0] AND T.playlistId = ?";
+                    sql = "SELECT T.playlistItemId, T.filePath, T.fileName, T.fileSize, T.fileExtension, T.trackTitle, T.trackDurationInSecs, T.trackArtist, T.trackAlbum, T.coverArtPath, T.trackBitrate, T.trackComment, T.trackGenre, T.trackNumber, T.trackYear, T.starred, T.sortIndex FROM FTL_SEARCH_DATA(?, 0, 0) FT, PLAYLISTITEMS T WHERE FT.TABLE='PLAYLISTITEMS' AND T.playlistItemId = FT.KEYS[0] AND T.playlistId = ?";
                     rows = LibraryMediator.getLibrary().getLibraryDatabase().query(sql, luceneQuery, playlist.getId());
                 }
                 //Starred playlist search
@@ -566,7 +566,7 @@ public class LibrarySearch extends JPanel {
                 }
                 /////
 
-                PlaylistItem item = new PlaylistItem(null);
+                PlaylistItem item = new PlaylistItem(currentPlaylist);
                 PlaylistItemDB.fill(row, item);
                 results.add(item);
 
