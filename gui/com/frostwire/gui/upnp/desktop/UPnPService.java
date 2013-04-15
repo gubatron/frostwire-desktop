@@ -20,14 +20,9 @@ package com.frostwire.gui.upnp.desktop;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.fourthline.cling.DefaultUpnpServiceConfiguration;
-import org.fourthline.cling.DefaultUpnpServiceConfiguration.ClingThreadFactory;
 import org.fourthline.cling.UpnpService;
 import org.fourthline.cling.UpnpServiceImpl;
 import org.fourthline.cling.model.NetworkAddress;
@@ -40,7 +35,6 @@ import org.fourthline.cling.protocol.ProtocolFactory;
 import org.fourthline.cling.protocol.ProtocolFactoryImpl;
 import org.fourthline.cling.protocol.ReceivingAsync;
 import org.fourthline.cling.protocol.async.ReceivingSearch;
-import org.limewire.concurrent.ThreadPoolExecutor;
 
 import com.frostwire.gui.upnp.UPnPFWDevice;
 import com.frostwire.gui.upnp.UPnPManager;
@@ -99,12 +93,7 @@ public class UPnPService implements Runnable {
             // azureus core.
             System.setProperty(HACK_STREAM_HANDLER_SYSTEM_PROPERTY, "alreadyWorkedAroundTheEvilJDK");
 
-            service = new UpnpServiceImpl(new DefaultUpnpServiceConfiguration() {
-                @Override
-                protected ExecutorService createDefaultExecutorService() {
-                    return UPnPService.this.createFrostWireExecutor();
-                }
-            }) {
+            service = new UpnpServiceImpl(new DesktopUpnpServiceConfiguration()) {
                 @Override
                 protected ProtocolFactory createProtocolFactory() {
 
@@ -157,20 +146,6 @@ public class UPnPService implements Runnable {
         } catch (Throwable e) {
             LOG.log(Level.WARNING, "Exception occured with the UPnP framework", e);
         }
-    }
-
-    protected ExecutorService createFrostWireExecutor() {
-        return new ThreadPoolExecutor(0, 32, 30, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(), new ClingThreadFactory()) {
-            @Override
-            public void execute(Runnable command) {
-                try {
-                    super.execute(command);
-                } catch (Throwable e) {
-                    //gubatron: we're catching a RejectedExecutionException until we figure out a solution.
-                    //we're probably being too aggresive submitting tasks in the first place.
-                }
-            }
-        };
     }
 
     private static LocalDevice createLocalDevice() {
