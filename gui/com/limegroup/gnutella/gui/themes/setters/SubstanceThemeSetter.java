@@ -198,7 +198,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
 
     public ComponentUI createComboBoxUI(JComponent comp) {
         SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
-        return new SkinComboBoxUI((JComboBox) comp);
+        return new SkinComboBoxUI((JComboBox<?>) comp);
     }
 
     public ComponentUI createTreeUI(JComponent comp) {
@@ -307,7 +307,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
             LOG.error("Error fixing font", e);
         }
     }
-    
+
     private void fixAAFontSettings() {
         UIDefaults defaults = UIManager.getLookAndFeelDefaults();
         boolean lafCond = SwingUtilities2.isLocalDisplay();
