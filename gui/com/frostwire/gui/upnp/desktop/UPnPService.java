@@ -18,6 +18,8 @@
 
 package com.frostwire.gui.upnp.desktop;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
@@ -28,8 +30,16 @@ import org.fourthline.cling.DefaultUpnpServiceConfiguration;
 import org.fourthline.cling.DefaultUpnpServiceConfiguration.ClingThreadFactory;
 import org.fourthline.cling.UpnpService;
 import org.fourthline.cling.UpnpServiceImpl;
+import org.fourthline.cling.model.NetworkAddress;
+import org.fourthline.cling.model.message.IncomingDatagramMessage;
+import org.fourthline.cling.model.message.UpnpRequest;
+import org.fourthline.cling.model.message.discovery.OutgoingSearchResponse;
 import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.model.meta.LocalDevice;
+import org.fourthline.cling.protocol.ProtocolFactory;
+import org.fourthline.cling.protocol.ProtocolFactoryImpl;
+import org.fourthline.cling.protocol.ReceivingAsync;
+import org.fourthline.cling.protocol.async.ReceivingSearch;
 import org.limewire.concurrent.ThreadPoolExecutor;
 
 import com.frostwire.gui.upnp.UPnPFWDevice;
@@ -92,10 +102,30 @@ public class UPnPService implements Runnable {
             service = new UpnpServiceImpl(new DefaultUpnpServiceConfiguration() {
                 @Override
                 protected ExecutorService createDefaultExecutorService() {
-                    // TODO Auto-generated method stub
                     return UPnPService.this.createFrostWireExecutor();
                 }
-            });
+            }) {
+                @Override
+                protected ProtocolFactory createProtocolFactory() {
+
+                    return new ProtocolFactoryImpl(this) {
+                        @Override
+                        protected ReceivingAsync createReceivingSearch(IncomingDatagramMessage<UpnpRequest> incomingRequest) {
+                            return new ReceivingSearch(getUpnpService(), incomingRequest) {
+                                @Override
+                                protected List<OutgoingSearchResponse> createServiceTypeMessages(LocalDevice device, NetworkAddress activeStreamServer) {
+                                    List<OutgoingSearchResponse> result = Collections.emptyList();
+                                    try {
+                                        result = super.createServiceTypeMessages(device, activeStreamServer);
+                                    } catch (Throwable e) {
+                                    }
+                                    return result;
+                                }
+                            };
+                        }
+                    };
+                }
+            };
 
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 @Override
