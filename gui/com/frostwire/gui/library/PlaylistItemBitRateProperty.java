@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,36 @@
  */
 package com.frostwire.gui.library;
 
-public class PlaylistItemBitRateProperty extends PlaylistItemIntProperty {
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public final class PlaylistItemBitRateProperty extends PlaylistItemIntProperty {
 
     public PlaylistItemBitRateProperty(LibraryPlaylistsTableDataLine line, String stringValue, boolean playing, boolean exists) {
+        super(line, getStringValue(stringValue), getIntValue(stringValue), playing, exists);
+    }
+
+    private static String getStringValue(String stringValue) {
+        return stringValue.replace("~", "").trim();
+    }
+
+    private static int getIntValue(String stringValue) {
         // using Integer.MAX_VALUE to put entries with no bitrate at the bottom of the list
-        super(line, stringValue, stringValue.toLowerCase().replace("kbps", "").trim().length() > 0 ? 
-                           Integer.valueOf( stringValue.toLowerCase().replace("kbps", "").trim() ) :
-                           Integer.MAX_VALUE, playing, exists);
+        String s = stringValue.toLowerCase().replace("kbps", "").replace("~", "").trim();
+
+        int value = Integer.MAX_VALUE;
+
+        if (s.length() > 0) {
+            try {
+                value = Integer.valueOf(s);
+            } catch (NumberFormatException e) {
+                // ignore
+            }
+        }
+
+        return value;
     }
 }
