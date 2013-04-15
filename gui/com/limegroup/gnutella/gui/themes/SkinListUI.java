@@ -34,6 +34,7 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -555,6 +556,11 @@ public class SkinListUI extends BasicListUI implements
     protected void paintCell(Graphics g, int row, Rectangle rowBounds,
             ListCellRenderer cellRenderer, ListModel dataModel,
             ListSelectionModel selModel, int leadIndex) {
+        
+        // this line does not belong here, I couldn't find the right place,
+        // however, it seems to do the trick
+        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        
         Object value = dataModel.getElementAt(row);
         boolean cellHasFocus = list.hasFocus() && (row == leadIndex);
         boolean isSelected = selModel.isSelectedIndex(row);
