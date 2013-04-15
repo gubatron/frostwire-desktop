@@ -714,7 +714,7 @@ public class LibraryUtils {
         if (conn.getContentEncoding() != null) {
             d = new BufferedReader(new InputStreamReader(is, conn.getContentEncoding()));
         } else {
-            d = new BufferedReader(new InputStreamReader(is));
+            d = new BufferedReader(new InputStreamReader(is, "UTF-8"));
         }
 
         String pls = "";
