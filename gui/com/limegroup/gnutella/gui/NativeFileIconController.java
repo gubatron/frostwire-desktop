@@ -179,48 +179,53 @@ public class NativeFileIconController implements FileIconController {
      * TODO: Implement better.
      */
     public Icon getIconForExtension(String ext) {
-    	if (ext == null) {
-    		return null;
-    	}
-    	
-        ext = ext.trim().toLowerCase();
-        Icon icon = EXTENSIONS.get(ext);
-        // If we already had a cached icon..
-        if(icon != null) {
-            // So long as it wasn't the NULL marker,
-            // return that icon.
-            if(icon != NULL)
-                return icon;
-            else 
+        try {
+            if (ext == null) {
                 return null;
+            }
+
+            ext = ext.trim().toLowerCase();
+            Icon icon = EXTENSIONS.get(ext);
+            // If we already had a cached icon..
+            if (icon != null) {
+                // So long as it wasn't the NULL marker,
+                // return that icon.
+                if (icon != NULL)
+                    return icon;
+                else
+                    return null;
+            }
+
+            File file = null;
+            try {
+                file = File.createTempFile("dummy", "." + ext);
+            } catch (Exception e1) {
+                return null;
+            }
+
+            Icon iconCandidate = null;
+
+            try {
+                iconCandidate = getNativeFileView().getIcon(file);
+            } catch (Exception e) {
+                file.delete();
+                return null;
+            }
+
+            if (iconCandidate != null) {
+                icon = iconCandidate;
+            }
+
+            file.delete();
+
+            EXTENSIONS.put(ext, icon);
+
+            return icon;
+        } catch (Throwable e) {
+            // due to a NPE reported in BugManager
+            // ignore
+            return null;
         }
-
-        File file = null;
-		try {
-			file = File.createTempFile("dummy","."+ext);
-		} catch (Exception e1) {
-		    return null;
-		}
-
-		Icon iconCandidate = null;
-		
-		try {
-			iconCandidate = getNativeFileView().getIcon(file);
-		} catch (Exception e ) {
-			file.delete();
-			return null;
-		}
-			
-			
-		if (iconCandidate != null) {
-			icon = iconCandidate;
-		}
-		
-		file.delete();
-
-        EXTENSIONS.put(ext, icon);
-        
-        return icon;
     }
     
     
