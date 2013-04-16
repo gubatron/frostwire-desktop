@@ -238,48 +238,52 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      * Loads a MediaSource into the player to play next
      */
     public void loadMedia(MediaSource source, boolean play, boolean playNextSong, Playlist currentPlaylist, List<MediaSource> playlistFilesView) {
-        if (source == null) {
-            return;
-        }
-        
-        if (PlayerSettings.USE_OS_DEFAULT_PLAYER.getValue()) {
-            playInOS(source);
-            return;
-        }
-
-        currentMedia = source;
-        this.playNextMedia = playNextSong;
-        this.currentPlaylist = currentPlaylist;
-        
-        if (playlistFilesView != null ) {
-            this.playlistFilesView = playlistFilesView.toArray( new MediaSource[playlistFilesView.size()] );
-        } else {
-            this.playlistFilesView = null;
-        }
-        
-        notifyOpened(source);
-        if (play && currentMedia != null) {
-            durationInSeconds = -1;
-
-            if (currentMedia.getFile() != null) {
-                LibraryMediator.instance().getLibraryCoverArt().setFile(currentMedia.getFile());
-                calculateDurationInSecs(currentMedia.getFile());
-                playMedia();
-            } else if (currentMedia.getPlaylistItem() != null &&
-                       currentMedia.getPlaylistItem().getFilePath() != null) {
-                LibraryMediator.instance().getLibraryCoverArt().setFile(new File(currentMedia.getPlaylistItem().getFilePath()));
-                playMedia();
-                durationInSeconds = (long) currentMedia.getPlaylistItem().getTrackDurationInSecs();
-            } else if (currentMedia instanceof InternetRadioAudioSource) {
-                LibraryMediator.instance().getLibraryCoverArt().setDefault();
-                playMedia(false);
-            } else if (currentMedia instanceof StreamMediaSource) {
-                LibraryMediator.instance().getLibraryCoverArt().setDefault();
-                playMedia(((StreamMediaSource) currentMedia).showPlayerWindow());
-            } else if (currentMedia instanceof DeviceMediaSource) {
-                LibraryMediator.instance().getLibraryCoverArt().setDefault();
-                playMedia(((DeviceMediaSource) currentMedia).showPlayerWindow());
+        try {
+            if (source == null) {
+                return;
             }
+
+            if (PlayerSettings.USE_OS_DEFAULT_PLAYER.getValue()) {
+                playInOS(source);
+                return;
+            }
+
+            currentMedia = source;
+            this.playNextMedia = playNextSong;
+            this.currentPlaylist = currentPlaylist;
+
+            if (playlistFilesView != null) {
+                this.playlistFilesView = playlistFilesView.toArray(new MediaSource[playlistFilesView.size()]);
+            } else {
+                this.playlistFilesView = null;
+            }
+
+            notifyOpened(source);
+            if (play && currentMedia != null) {
+                durationInSeconds = -1;
+
+                if (currentMedia.getFile() != null) {
+                    LibraryMediator.instance().getLibraryCoverArt().setFile(currentMedia.getFile());
+                    calculateDurationInSecs(currentMedia.getFile());
+                    playMedia();
+                } else if (currentMedia.getPlaylistItem() != null && currentMedia.getPlaylistItem().getFilePath() != null) {
+                    LibraryMediator.instance().getLibraryCoverArt().setFile(new File(currentMedia.getPlaylistItem().getFilePath()));
+                    playMedia();
+                    durationInSeconds = (long) currentMedia.getPlaylistItem().getTrackDurationInSecs();
+                } else if (currentMedia instanceof InternetRadioAudioSource) {
+                    LibraryMediator.instance().getLibraryCoverArt().setDefault();
+                    playMedia(false);
+                } else if (currentMedia instanceof StreamMediaSource) {
+                    LibraryMediator.instance().getLibraryCoverArt().setDefault();
+                    playMedia(((StreamMediaSource) currentMedia).showPlayerWindow());
+                } else if (currentMedia instanceof DeviceMediaSource) {
+                    LibraryMediator.instance().getLibraryCoverArt().setDefault();
+                    playMedia(((DeviceMediaSource) currentMedia).showPlayerWindow());
+                }
+            }
+        } catch (Throwable e) {
+            // NPE from bug report
+            e.printStackTrace();
         }
     }
 
@@ -346,7 +350,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     }
 
     public void loadMedia(MediaSource source, boolean play, boolean playNextSong) {
-        loadMedia(source, play, playNextSong, currentPlaylist, (playlistFilesView != null) ? Arrays.asList( playlistFilesView ) : null );
+        loadMedia(source, play, playNextSong, currentPlaylist, (playlistFilesView != null) ? Arrays.asList(playlistFilesView) : null);
     }
 
     public void asyncLoadMedia(final MediaSource source, final boolean play, final boolean playNextSong) {
@@ -411,7 +415,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             if (mplayerMediator != null) {
                 mplayerMediator.showPlayerWindow(isVideoFile);
             }
-            
+
             mplayer.open(filename, getAdjustedVolume());
         }
 
@@ -462,15 +466,15 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     public void setVolume(double fGain) {
 
         volume = Math.max(Math.min(fGain, 1.0), 0.0);
-        mplayer.setVolume( getAdjustedVolume() );
+        mplayer.setVolume(getAdjustedVolume());
         PlayerSettings.PLAYER_VOLUME.setValue((float) volume);
         notifyVolumeChanged();
     }
-    
+
     private int getAdjustedVolume() {
-    	return (int) (volume * getVolumeGainFactor());
+        return (int) (volume * getVolumeGainFactor());
     }
-    
+
     public double getVolume() {
         return volume;
     }
@@ -656,7 +660,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
 
         if (media != null) {
             //System.out.println(song.getFile());
-            asyncLoadMedia(media, true, true, currentPlaylist, Arrays.asList( playlistFilesView ));
+            asyncLoadMedia(media, true, true, currentPlaylist, Arrays.asList(playlistFilesView));
         }
     }
 
@@ -721,7 +725,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     }
 
     public synchronized void setPlaylistFilesView(List<MediaSource> playlistFilesView) {
-        this.playlistFilesView = playlistFilesView.toArray( new MediaSource[ playlistFilesView.size() ] );
+        this.playlistFilesView = playlistFilesView.toArray(new MediaSource[playlistFilesView.size()]);
     }
 
     public MediaSource getNextRandomSong(MediaSource currentMedia) {
@@ -759,7 +763,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         if (n == 1) {
             return playlistFilesView[0];
         }
-        
+
         for (int i = 0; i < n; i++) {
             try {
                 MediaSource f1 = playlistFilesView[i];
@@ -785,9 +789,9 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         }
 
         int n = playlistFilesView.length;
-//        if (n == 1) {
-//            return playlistFilesView.get(0);
-//        }
+        //        if (n == 1) {
+        //            return playlistFilesView.get(0);
+        //        }
 
         //PlaylistFilesView should probably have a HashTable<AudioSource,Integer>
         //Where the integer is the index of the AudioSource on playlistFilesView.
@@ -845,13 +849,13 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             return null;
         }
         int n = playlistFilesView.length;
-        
+
         if (n == 0) {
             return null;
         } else if (n == 1) {
             return playlistFilesView[0];
         }
-        
+
         int index = new Random(System.currentTimeMillis()).nextInt(n);
 
         for (int i = index; i < n; i++) {
