@@ -94,7 +94,11 @@ public class SkinFileChooserUI extends BaseFileChooserUI {
             if (icon != null)
                 return icon;
 
-            icon = getDefaultIcon(f);
+            try {
+                icon = getDefaultIcon(f);
+            } catch (NullPointerException e) {
+                // ignore, not critical and only under special conditions (OS fragmentation)
+            }
             // System.out.println("System : " + f.getAbsolutePath() + " --> "
             // + icon);
             if (icon == null) {
