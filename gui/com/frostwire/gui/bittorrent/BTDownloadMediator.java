@@ -359,7 +359,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public double getUploadsBandwidth() {
-        return getBandwidth(false) / 1000;
+        return getBandwidth(false) / 1000 + PeerHttpUpload.getUploadsBandwidth();
     }
 
     /**

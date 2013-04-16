@@ -20,6 +20,7 @@ package com.frostwire.gui.transfers;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.frostwire.core.FileDescriptor;
@@ -37,6 +38,13 @@ public class PeerHttpUpload implements UploadTransfer {
     private static final int STATUS_CANCELLED = 3;
 
     private static final int SPEED_AVERAGE_CALCULATION_INTERVAL_MILLISECONDS = 1000;
+
+    /*
+     * Quick and not so elegant solution to count upload speed.
+     * The reason for this is that we need a huge refactor to handle
+     * "transfers" in a generic way
+     */
+    private static final List<PeerHttpUpload> uploads = Collections.synchronizedList(new LinkedList<PeerHttpUpload>());
 
     //private final TransferManager manager;
     private final FileDescriptor fd;
@@ -56,6 +64,8 @@ public class PeerHttpUpload implements UploadTransfer {
         this.dateCreated = new Date();
 
         status = STATUS_UPLOADING;
+
+        uploads.add(this);
     }
 
     public FileDescriptor getFD() {
@@ -119,7 +129,7 @@ public class PeerHttpUpload implements UploadTransfer {
         if (status != STATUS_COMPLETE) {
             status = STATUS_CANCELLED;
         }
-        //manager.remove(this);
+        uploads.remove(this);
     }
 
     public void addBytesSent(int n) {
@@ -162,6 +172,27 @@ public class PeerHttpUpload implements UploadTransfer {
             averageSpeed = ((bytesSent - totalSentSinceLastSpeedStamp) * 1000) / (now - speedMarkTimestamp);
             speedMarkTimestamp = now;
             totalSentSinceLastSpeedStamp = bytesSent;
+        }
+    }
+
+    public static long getUploadsBandwidth() {
+        try {
+            if (uploads.size() == 0) {
+                return 0;
+            }
+
+            long bandwidth = 0;
+
+            synchronized (uploads) {
+                for (PeerHttpUpload u : uploads) {
+                    bandwidth += u.getUploadSpeed();
+                }
+            }
+
+            return bandwidth;
+        } catch (Throwable e) {
+            // just in case, synchronization and collections errors, remove it in the future
+            return 0;
         }
     }
 }
