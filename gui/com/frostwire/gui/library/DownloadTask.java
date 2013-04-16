@@ -19,9 +19,13 @@ package com.frostwire.gui.library;
 
 import java.io.Closeable;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 
 import org.limewire.util.FilenameUtils;
 
@@ -82,17 +86,17 @@ public class DownloadTask extends DeviceTask {
                 URL url = new URL(device.getDownloadURL(currentFD));
 
                 InputStream is = null;
-                FileOutputStream fos = null;
+                OutputStream fos = null;
 
                 try {
                     is = url.openStream();
-                    
 
-                    File file = buildFile(savePath, FilenameUtils.getName(currentFD.filePath));
-                    File incompleteFile = buildIncompleteFile(file);
+                    String filename = FilenameUtils.getName(currentFD.filePath);
+                    File file = buildFile(savePath, filename);
+                    Path incompleteFile = buildIncompleteFile(file).toPath();
                     lastFile = file.getAbsoluteFile();
 
-                    fos = new FileOutputStream(incompleteFile);
+                    fos = Files.newOutputStream(incompleteFile, StandardOpenOption.CREATE);// new FileOutputStream(incompleteFile);
 
                     byte[] buffer = new byte[4 * 1024];
                     int n = 0;
@@ -101,7 +105,7 @@ public class DownloadTask extends DeviceTask {
                         if (!isRunning()) {
                             return;
                         }
-                        
+
                         fos.write(buffer, 0, n);
                         fos.flush();
                         totalWritten += n;
@@ -115,12 +119,12 @@ public class DownloadTask extends DeviceTask {
                                 }
                             });
                         }
-                        
+
                         //System.out.println("Progress: " + getProgress() + " Total Written: " + totalWritten + " Total Bytes: " + totalBytes);
                     }
 
                     close(fos);
-                    incompleteFile.renameTo(file);
+                    Files.move(incompleteFile, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 } finally {
                     close(is);
                     close(fos);
@@ -131,7 +135,7 @@ public class DownloadTask extends DeviceTask {
         } catch (Throwable e) {
             e.printStackTrace();
             onError(e);
-            
+
             GUIMediator.safeInvokeLater(new Runnable() {
                 public void run() {
                     LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Wi-Fi download error. Please try again."));
