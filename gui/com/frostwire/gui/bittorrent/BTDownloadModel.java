@@ -53,8 +53,15 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
 
         for (int i = 0; i < size; i++) {
             BTDownload downloader = get(i).getInitializeObject();
-            if (downloader.isCompleted() && downloader.getState() == DownloadManager.STATE_SEEDING) {
-                count++;
+            // special case for peer uploads, needs refactor
+            if (downloader instanceof BTPeerHttpUpload) {
+                if (downloader.getState() == DownloadManager.STATE_SEEDING) {
+                    count++;
+                }
+            } else {
+                if (downloader.isCompleted() && downloader.getState() == DownloadManager.STATE_SEEDING) {
+                    count++;
+                }
             }
         }
         return count;
@@ -69,22 +76,22 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
      * set the CLEAR_BUTTON as appropriate.
      */
     public Object refresh() {
-    	try {
+        try {
             int size = getRowCount();
 
-	        for (int i = 0; i < size; i++) {
-		            BTDownloadDataLine ud = get(i);
-		            ud.update();
-	        }
+            for (int i = 0; i < size; i++) {
+                BTDownloadDataLine ud = get(i);
+                ud.update();
+            }
 
-	        fireTableRowsUpdated(0, size);
-    	} catch (Exception e) {
-    		System.out.println("ATENTION: Send the following output to the FrostWire Development team.");
-    		System.out.println("===============================START COPY & PASTE=======================================");
-    		e.printStackTrace();
-    		System.out.println("===============================END COPY & PASTE=======================================");
-    		return Boolean.FALSE;
-    	}
+            fireTableRowsUpdated(0, size);
+        } catch (Exception e) {
+            System.out.println("ATENTION: Send the following output to the FrostWire Development team.");
+            System.out.println("===============================START COPY & PASTE=======================================");
+            e.printStackTrace();
+            System.out.println("===============================END COPY & PASTE=======================================");
+            return Boolean.FALSE;
+        }
 
         return Boolean.TRUE;
     }
@@ -94,7 +101,7 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
         _hashDownloads.add(downloader.getHash());
         return super.add(downloader);
     }
-    
+
     @Override
     public int add(BTDownload downloader, int row) {
         _hashDownloads.add(downloader.getHash());
@@ -113,9 +120,9 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
 
         super.remove(i);
     }
-    
+
     public BTDownloadDataLine getDataline(int i) {
-    	return get(i);
+        return get(i);
     }
 
     public boolean isDownloading(String hash) {

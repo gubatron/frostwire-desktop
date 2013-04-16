@@ -1,3 +1,17 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.limegroup.gnutella.gui.options.panes;
 
 import java.io.IOException;
@@ -15,7 +29,6 @@ import com.limegroup.gnutella.settings.StatusBarSettings;
  * This class defines the panel in the options window that allows the user
  * to change whether the firewall indicator is shown in the status bar.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class StatusBarBandwidthPaneItem extends AbstractPaneItem {
 
     public final static String TITLE = I18n.tr("Bandwidth Indicator");
