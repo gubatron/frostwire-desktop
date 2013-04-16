@@ -45,6 +45,8 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import org.limewire.util.FileUtils;
+
 import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.TorrentUtil;
@@ -429,7 +431,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             List<File> directories = new ArrayList<File>();
             final List<File> files = new ArrayList<File>();
 
-            for (File child : file.listFiles()) {
+            for (File child : FileUtils.listFiles(file)) {// file.listFiles()) {
 
                 DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
                 if (!_mtsfdh.equals(directoryHolder)) {

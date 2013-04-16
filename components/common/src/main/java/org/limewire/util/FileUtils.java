@@ -28,9 +28,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
@@ -812,5 +816,20 @@ public class FileUtils {
     public static String getValidFileName(String fileName) {
         String newFileName = fileName.replaceAll("[\\\\/:*?\"<>|\\[\\]]+", "_");
         return newFileName;
+    }
+    
+    public static File[] listFiles(File directoryFile) {
+        List<File> files = new LinkedList<>();
+        try {
+            try (DirectoryStream<Path> dir = Files.newDirectoryStream(directoryFile.toPath())) {
+                for (Path child : dir) {
+                    files.add(child.toFile());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return files.toArray(new File[0]);
     }
 }
