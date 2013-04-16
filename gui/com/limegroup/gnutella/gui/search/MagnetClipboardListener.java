@@ -181,35 +181,41 @@ public class MagnetClipboardListener extends WindowAdapter {
     }
 
     public static String extractStringContentFromClipboard(Object requestor) {
-        Transferable data = null;
         try {
-            //check if there's anything in the clipboard
-            data = CLIPBOARD.getContents(requestor);
-        } catch (IllegalStateException isx) {
-            //we can't use the clipboard, give up.
-            return null;
+            Transferable data = null;
+            try {
+                //check if there's anything in the clipboard
+                data = CLIPBOARD.getContents(requestor);
+            } catch (IllegalStateException isx) {
+                //we can't use the clipboard, give up.
+                return null;
+            }
+
+            //is there anything in the clipboard?
+            if (data == null)
+                return null;
+
+            //then, check if the data in the clipboard is text
+            if (!data.isDataFlavorSupported(DataFlavor.stringFlavor))
+                return null;
+
+            //next, extract the content into a string
+            String contents = null;
+
+            try {
+                contents = (String) data.getTransferData(DataFlavor.stringFlavor);
+            } catch (IOException iox) {
+                LOG.info("problem occured while trying to parse clipboard, do nothing", iox);
+            } catch (UnsupportedFlavorException ufx) {
+                LOG.error("UnsupportedFlavor??", ufx);
+            }
+
+            return contents;
+        } catch (Throwable e) {
+            // X11 related error reported from bug manager
         }
 
-        //is there anything in the clipboard?
-        if (data == null)
-            return null;
-
-        //then, check if the data in the clipboard is text
-        if (!data.isDataFlavorSupported(DataFlavor.stringFlavor))
-            return null;
-
-        //next, extract the content into a string
-        String contents = null;
-
-        try {
-            contents = (String) data.getTransferData(DataFlavor.stringFlavor);
-        } catch (IOException iox) {
-            LOG.info("problem occured while trying to parse clipboard, do nothing", iox);
-        } catch (UnsupportedFlavorException ufx) {
-            LOG.error("UnsupportedFlavor??", ufx);
-        }
-
-        return contents;
+        return "";
     }
 
     /**
