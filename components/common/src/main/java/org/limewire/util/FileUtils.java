@@ -820,11 +820,9 @@ public class FileUtils {
     
     public static File[] listFiles(File directoryFile) {
         List<File> files = new LinkedList<>();
-        try {
-            try (DirectoryStream<Path> dir = Files.newDirectoryStream(directoryFile.toPath())) {
-                for (Path child : dir) {
-                    files.add(child.toFile());
-                }
+        try (DirectoryStream<Path> dir = Files.newDirectoryStream(directoryFile.toPath())) {
+            for (Path child : dir) {
+                files.add(child.toFile());
             }
         } catch (IOException e) {
             e.printStackTrace();

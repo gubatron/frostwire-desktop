@@ -25,6 +25,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.File;
 import java.io.FileFilter;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -37,6 +38,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.limewire.util.FileUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.InternetRadioStation;
@@ -359,7 +361,7 @@ public class LibrarySearch extends JPanel {
             final List<File> results = new ArrayList<File>();
             SearchFileFilter searchFilter = new SearchFileFilter(_query);
 
-            for (File child : haystackDir.listFiles(searchFilter)) {
+            for (File child : FileUtils.listFiles(haystackDir)) { //haystackDir.listFiles(searchFilter)) {
                 if (canceled) {
                     return;
                 }
@@ -453,7 +455,7 @@ public class LibrarySearch extends JPanel {
         private final String[] _tokens;
 
         public SearchFileFilter(String query) {
-            _tokens = StringUtils.removeDoubleSpaces(query).toLowerCase(Locale.US).split(" ");
+            _tokens = StringUtils.removeDoubleSpaces(normalize(query)).split(" ");
         }
 
         public boolean accept(File pathname) {
@@ -471,15 +473,23 @@ public class LibrarySearch extends JPanel {
                 return true;
             }
 
-            String name = pathname.getAbsolutePath();
+            String name = normalize(pathname.getAbsolutePath());
 
             for (String token : _tokens) {
-                if (!name.toLowerCase(Locale.US).contains(token)) {
+                if (!name.contains(token)) {
                     return false;
                 }
             }
 
             return true;
+        }
+        
+        private String normalize(String token) {
+            String norm = Normalizer.normalize(token, Normalizer.Form.NFKD);
+            norm = norm.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+            norm = norm.toLowerCase(Locale.US);
+
+            return norm;
         }
     }
 
