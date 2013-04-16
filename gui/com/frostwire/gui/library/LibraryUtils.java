@@ -539,22 +539,26 @@ public class LibraryUtils {
     }
 
     private static boolean directoryContainsExtension(File directory, int depth, Set<File> ignore, String... extensionWithoutDot) {
-        if (directory == null || !directory.isDirectory()) {
-            return false;
-        }
+        try {
+            if (directory == null || !directory.isDirectory()) {
+                return false;
+            }
 
-        for (File childFile : directory.listFiles()) {
-            if (!childFile.isDirectory()) {
-                if (FilenameUtils.hasExtension(childFile.getAbsolutePath(), extensionWithoutDot) && !ignore.contains(childFile)) {
-                    return true;
-                }
-            } else {
-                if (depth > 0) {
-                    if (directoryContainsExtension(childFile, depth - 1, ignore, extensionWithoutDot)) {
+            for (File childFile : directory.listFiles()) {
+                if (!childFile.isDirectory()) {
+                    if (FilenameUtils.hasExtension(childFile.getAbsolutePath(), extensionWithoutDot) && !ignore.contains(childFile)) {
                         return true;
+                    }
+                } else {
+                    if (depth > 0) {
+                        if (directoryContainsExtension(childFile, depth - 1, ignore, extensionWithoutDot)) {
+                            return true;
+                        }
                     }
                 }
             }
+        } catch (NullPointerException e) {
+            // NPE reported in bug manager, ignore until refactor
         }
 
         return false;
