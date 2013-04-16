@@ -130,55 +130,6 @@ public class RadioImportTool {
         return dataLine;
     }
 
-    private static String processStreamUrl(String streamUrl) throws Exception {
-        URL url = new URL(streamUrl);
-        System.out.print(" - " + streamUrl);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestProperty("User-Agent", "Java");
-        conn.setConnectTimeout(4000);
-        InputStream is = conn.getInputStream();
-        BufferedReader d = null;
-        if (conn.getContentEncoding() != null) {
-            d = new BufferedReader(new InputStreamReader(is, conn.getContentEncoding()));
-        } else {
-            d = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-        }
-
-        String name = null;
-        String genre = null;
-        String website = null;
-        String type = null;
-        String br = null;
-
-        String strLine;
-        int i = 0;
-        while ((strLine = d.readLine()) != null && i < 10) {
-            if (strLine.startsWith("icy-name:")) {
-                name = clean(strLine.split(":")[1]);
-            } else if (strLine.startsWith("icy-genre:")) {
-                genre = clean(strLine.split(":")[1]);
-            } else if (strLine.startsWith("icy-url:")) {
-                website = strLine.split("icy-url:")[1].trim();
-            } else if (strLine.startsWith("content-type:")) {
-                String contentType = strLine.split(":")[1].trim();
-                if (contentType.equals("audio/aacp")) {
-                    type = "AAC+";
-                } else if (contentType.equals("audio/mpeg")) {
-                    type = "MP3";
-                } else if (contentType.equals("audio/aac")) {
-                    type = "AAC";
-                }
-            } else if (strLine.startsWith("icy-br:")) {
-                br = strLine.split(":")[1].trim() + " kbps";
-            }
-            i++;
-        }
-
-        is.close();
-
-        return "        add(data, \"" + name + "\", \"" + name + "\", \"" + streamUrl + "\", \"" + br + "\", \"" + type + "\", \"" + website + "\", \"" + genre + "\", ";
-    }
-
     private static String clean(String str) {
         return str.trim().replace("\"", "\\\"");
     }

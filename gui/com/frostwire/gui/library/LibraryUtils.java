@@ -40,9 +40,11 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
+import com.frostwire.alexandria.IcyInputStream;
 import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.alexandria.IcyInputStream.Track;
 import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.library.LibraryPlaylistsTableTransferable.Item;
@@ -750,50 +752,23 @@ public class LibraryUtils {
     }
 
     private static String[] processStreamUrl(String streamUrl) throws Exception {
-        URL url = new URL(streamUrl);
-        System.out.print(" - " + streamUrl);
-        URLConnection conn = url.openConnection();
-        conn.setConnectTimeout(10000);
-        conn.setRequestProperty("User-Agent", "Java");
-        InputStream is = conn.getInputStream();
-        BufferedReader d = null;
-        if (conn.getContentEncoding() != null) {
-            d = new BufferedReader(new InputStreamReader(is, conn.getContentEncoding()));
-        } else {
-            d = new BufferedReader(new InputStreamReader(is));
+        Track t = new Track();
+        IcyInputStream.create(streamUrl, t);
+
+        String name = clean(t.name);
+        String genre = clean(t.genre);
+        String website = clean(t.url);
+        String type = "";
+        String br = t.bitrate != null ? t.bitrate.trim() + " kbps" : "";
+
+        String contentType = t.contentType;
+        if (contentType.equals("audio/aacp")) {
+            type = "AAC+";
+        } else if (contentType.equals("audio/mpeg")) {
+            type = "MP3";
+        } else if (contentType.equals("audio/aac")) {
+            type = "AAC";
         }
-
-        String name = null;
-        String genre = null;
-        String website = null;
-        String type = null;
-        String br = null;
-
-        String strLine;
-        int i = 0;
-        while ((strLine = d.readLine()) != null && i < 10) {
-            if (strLine.startsWith("icy-name:")) {
-                name = clean(strLine.split(":")[1]);
-            } else if (strLine.startsWith("icy-genre:")) {
-                genre = clean(strLine.split(":")[1]);
-            } else if (strLine.startsWith("icy-url:")) {
-                website = strLine.split("icy-url:")[1].trim();
-            } else if (strLine.startsWith("content-type:")) {
-                String contentType = strLine.split(":")[1].trim();
-                if (contentType.equals("audio/aacp")) {
-                    type = "AAC+";
-                } else if (contentType.equals("audio/mpeg")) {
-                    type = "MP3";
-                } else if (contentType.equals("audio/aac")) {
-                    type = "AAC";
-                }
-            } else if (strLine.startsWith("icy-br:")) {
-                br = strLine.split(":")[1].trim() + " kbps";
-            }
-            i++;
-        }
-
-        is.close();
 
         return new String[] { name, streamUrl, br, type, website, genre };
     }
