@@ -8,7 +8,7 @@ import java.util.Set;
 public final class InternetRadioStationsData {
 
     private List<List<Object>> data;
-    private Set<String> nameSet;
+    public Set<String> nameSet;
 
     public InternetRadioStationsData() {
         data = new LinkedList<List<Object>>();
