@@ -63,16 +63,14 @@
 	  <!-- build FrostWire's main jar -->
 	  <delete file="${limewire.home}/dist/frostwire.jar"/>
 	  <jar jarfile="${limewire.home}/dist/frostwire.jar" compress="true" level="9">
-	    <fileset dir="${build.limewire.gui.classes}" includes="com/frostwire/**/*.class"/>
-            <fileset dir="${build.limewire.core.classes}" includes="com/frostwire/**/*.class"/>
-	    <fileset dir="${build.limewire.gui.classes}" includes="com/limegroup/**/*.class"/>
-	    <fileset dir="${build.limewire.core.classes}" includes="com/limegroup/**/*.class"/>
+	    <fileset dir="${build.limewire.gui.classes}" includes="**/*.class" excludes="**/*.java"/>
+        <fileset dir="${build.limewire.core.classes}" includes="**/*.class" excludes="irc/**/*.java"/>
 	    <fileset dir="${limewire.home}/gui" includes="irc/**/*" excludes="irc/**/*.java"/>
 	    <fileset dir="${limewire.home}/gui" includes="org/**/*" excludes="org/**/*.java"/>
 	    <fileset dir="${limewire.home}/gui" includes="net/**/*" excludes="org/**/*.java"/>
 	    <manifest>
 	      <attribute name="Main-Class" value="com.limegroup.gnutella.gui.Main" />
-	      <attribute name="Class-Path" value=". ${classpath} lw-alexandria.jar lw-azureus.jar lw-common.jar lw-resources.jar lw-setting.jar lw-jdownloader.jar fwtips.jar h2-1.3.164.jar cling-kernel.jar gson-1.4.jar"/>
+	      <attribute name="Class-Path" value=". ${classpath} lw-alexandria.jar lw-azureus.jar lw-common.jar lw-resources.jar lw-setting.jar lw-jdownloader.jar fwtips.jar h2-1.3.164.jar gson-1.4.jar"/>
 	    </manifest>
 	  </jar>
 	</target>
