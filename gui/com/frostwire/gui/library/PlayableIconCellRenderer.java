@@ -28,6 +28,7 @@ import javax.swing.SwingConstants;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 
 /**
  * 
@@ -54,6 +55,9 @@ class PlayableIconCellRenderer extends SubstanceDefaultTableCellRenderer {
         component.setIcon(cell.isPlaying() ? speaker : cell.getIcon());
         component.setHorizontalTextPosition(JLabel.CENTER);
         component.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        ThemeMediator.fixLabelFont(this);
+        
         return component;
     }
 }
