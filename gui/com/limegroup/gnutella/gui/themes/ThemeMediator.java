@@ -15,7 +15,6 @@
 
 package com.limegroup.gnutella.gui.themes;
 
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Window;
 import java.io.BufferedReader;
@@ -28,6 +27,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -46,7 +46,7 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  */
 public class ThemeMediator {
 
-    static Font DIALOG_FONT = new Font(Font.DIALOG, Font.PLAIN, 12);
+    public static final Font DIALOG_FONT = new Font(Font.DIALOG, Font.PLAIN, 12);
 
     public static ThemeSetter DEFAULT_THEME;
 
@@ -277,23 +277,18 @@ public class ThemeMediator {
         return fontName;
     }
 
-    public static Font fixLabelFont(Component c) {
-        Font oldFont = null;
-        if (c instanceof JLabel) {
-            JLabel label = (JLabel) c;
-            oldFont = ThemeMediator.fixLabelFont(label, label.getText());
-        }
-        return oldFont;
+    public static Font fixLabelFont(JLabel label) {
+        return ThemeMediator.fixComponentFont(label, label.getText());
     }
 
-    static Font fixLabelFont(JLabel label, Object msg) {
+    public static Font fixComponentFont(JComponent c, Object msg) {
         Font oldFont = null;
 
-        if (OSUtils.isWindows()) {
-            Font currentFont = label.getFont();
+        if (c != null && OSUtils.isWindows()) {
+            Font currentFont = c.getFont();
             if (currentFont != null && !canDisplayMessage(currentFont, msg)) {
                 oldFont = currentFont;
-                label.setFont(ThemeMediator.DIALOG_FONT);
+                c.setFont(ThemeMediator.DIALOG_FONT);
             }
         }
 

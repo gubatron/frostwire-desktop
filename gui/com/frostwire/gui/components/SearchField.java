@@ -61,6 +61,7 @@ import com.frostwire.gui.components.searchfield.JXSearchField;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.UISettings;
 
 public class SearchField extends JXSearchField {
@@ -690,6 +691,7 @@ public class SearchField extends JXSearchField {
             enableEvents(AWTEvent.MOUSE_EVENT_MASK);
             setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             setFocusable(false);
+            setFont(ThemeMediator.DIALOG_FONT);
         }
 
         /**

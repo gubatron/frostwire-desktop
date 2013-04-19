@@ -56,6 +56,7 @@ import com.frostwire.search.CrawlableSearchResult;
 import com.frostwire.search.StreamableSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 
 /**
  * 
@@ -164,7 +165,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
             this.setBorder(new EmptyBorder(regInsets.top, regInsets.left, regInsets.bottom, regInsets.right));
         }
 
-        this.setData((SearchResultNameHolder) value, currState);
+        this.setData((SearchResultNameHolder) value, currState, table);
         this.setOpaque(false);
         this.setEnabled(table.isEnabled());
         return this;
@@ -292,34 +293,37 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         }
     }
 
-    private void setData(SearchResultNameHolder value, ComponentState state) {
+    private void setData(SearchResultNameHolder value, ComponentState state, JTable table) {
         this.sr = value.getSearchResult();
 
         labelText.setText(value.getHtml());
+
+        labelText.setFont(table.getFont());
+        ThemeMediator.fixLabelFont(labelText);
 
         boolean showButtons = state.equals(ComponentState.ROLLOVER_SELECTED) || state.equals(ComponentState.ROLLOVER_UNSELECTED);
         labelPlay.setVisible(showButtons && (sr.getSearchResult() instanceof StreamableSearchResult));
         labelPartialDownload.setVisible(showButtons && sr.getSearchResult() instanceof CrawlableSearchResult);
         labelDownload.setVisible(showButtons);
-        
+
         if (showButtons) {
             updatePlayButtons();
         }
-        
+
         if (isStreamableSourceBeingPlayed(sr)) {
             labelPlay.setVisible(true);
         }
     }
 
     public void updatePlayButtons() {
-      labelPlay.setIcon((isStreamableSourceBeingPlayed(sr)) ? GUIMediator.getThemeImage("speaker") : GUIMediator.getThemeImage("search_result_play_over"));
+        labelPlay.setIcon((isStreamableSourceBeingPlayed(sr)) ? GUIMediator.getThemeImage("speaker") : GUIMediator.getThemeImage("search_result_play_over"));
     }
 
     private boolean isStreamableSourceBeingPlayed(UISearchResult sr) {
         if (!(sr instanceof StreamableSearchResult)) {
             return false;
         }
-        
+
         StreamableSearchResult ssr = (StreamableSearchResult) sr;
         return MediaPlayer.instance().isThisBeingPlayed(ssr.getStreamUrl());
     }

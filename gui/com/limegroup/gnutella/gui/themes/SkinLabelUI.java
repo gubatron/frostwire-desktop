@@ -44,7 +44,9 @@ public class SkinLabelUI extends SubstanceLabelUI {
     public void installUI(JComponent c) {
         super.installUI(c);
 
-        oldFont = ThemeMediator.fixLabelFont(c);
+        if (c instanceof JLabel) {
+            oldFont = ThemeMediator.fixLabelFont((JLabel) c);
+        }
     }
 
     @Override

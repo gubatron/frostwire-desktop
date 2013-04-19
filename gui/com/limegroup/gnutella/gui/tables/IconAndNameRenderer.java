@@ -3,6 +3,7 @@ package com.limegroup.gnutella.gui.tables;
 import java.awt.Component;
 
 import javax.swing.Icon;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
@@ -53,7 +54,7 @@ public final class IconAndNameRenderer extends SubstanceDefaultTableCellRenderer
         setIcon(icon);
         Component comp = super.getTableCellRendererComponent(table, name, isSelected, hasFocus, row, column);
 
-        ThemeMediator.fixLabelFont(comp);
+        ThemeMediator.fixLabelFont((JLabel) comp);
 
         return comp;
     }

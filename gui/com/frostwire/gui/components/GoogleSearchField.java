@@ -18,6 +18,7 @@
 
 package com.frostwire.gui.components;
 
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.net.URI;
@@ -40,6 +41,7 @@ import org.limewire.util.StringUtils;
 import com.frostwire.HttpFetcher;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /**
@@ -110,7 +112,9 @@ public class GoogleSearchField extends SearchField {
         entryScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         entryPanel.add(entryScrollPane, c);
         
-        entryList.setFont(getFont());
+        Font origFont = getFont();
+        Font newFont = ThemeMediator.DIALOG_FONT.deriveFont(origFont.getSize2D());
+        entryList.setFont(newFont);
 
         return entryPanel;
     }

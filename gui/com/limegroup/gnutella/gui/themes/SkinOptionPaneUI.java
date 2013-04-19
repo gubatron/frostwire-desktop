@@ -44,7 +44,7 @@ public class SkinOptionPaneUI extends SubstanceOptionPaneUI {
         super.addMessageComponents(container, cons, msg, maxll, internallyCreated);
 
         if (msg instanceof JLabel) {
-            ThemeMediator.fixLabelFont((JLabel) msg, getMessage());
+            ThemeMediator.fixComponentFont((JLabel) msg, getMessage());
         }
     }
 }
