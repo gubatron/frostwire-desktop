@@ -28,7 +28,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -53,13 +52,16 @@ import org.pushingpixels.substance.internal.utils.SubstanceColorSchemeUtilities;
 import org.pushingpixels.substance.internal.utils.SubstanceStripingUtils;
 import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.DeviceMediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaSource;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 /**
@@ -72,7 +74,7 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
 
     private static final long serialVersionUID = -1624943333769190212L;
 
-    private static final Logger LOG = Logger.getLogger(LibraryNameHolderRenderer.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(LibraryNameHolderRenderer.class);
 
     private JLabel labelText;
     private JLabel labelPlay;
@@ -173,6 +175,7 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
         this.setData((LibraryNameHolder) value, currState, table, row, column);
         this.setOpaque(false);
         this.setEnabled(table.isEnabled());
+
         return this;
     }
 
@@ -322,12 +325,16 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
         try {
             libraryNameHolder = value;
             labelText.setText(value.toString());
+            
+            labelText.setFont(table.getFont());
+            ThemeMediator.fixLabelFont(labelText);
+
             boolean showButtons = state.equals(ComponentState.ROLLOVER_SELECTED) || state.equals(ComponentState.ROLLOVER_UNSELECTED);
             labelPlay.setVisible(showButtons && !isSourceBeingPlayed() && isPlayableDataLine());
             labelDownload.setVisible(showButtons && isDownloadableFromOtherDevice());
             setFontColor(libraryNameHolder.isPlaying(), table, row, column);
         } catch (Throwable e) {
-            LOG.warning("Error puting data in name holder renderer");
+            LOG.warn("Error puting data in name holder renderer");
         }
     }
 
