@@ -1,5 +1,6 @@
 frostwire (5.5.6) stable; urgency=high
   * New Feature: playlist songs can be re-ordered with drag and drop.
+  * New Feature: all songs in a playlist can now be copied to a folder.
   * Bug fix: screen saver no longer kicks in during video playback.
 
  -- FrostWire Team <contact@frostwire.com>  Mon, 04 Mar 2013 14:44:00 -0500

@@ -31,6 +31,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -494,21 +495,19 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
                 int total = playlistItems.size();
                 String targetName = selFolder.getName();
 
-                Path newDir = selFolder.toPath();
-
                 for (PlaylistItem item : playlistItems) {
                     File f = new File(item.getFilePath());
                     if (f.isFile() && f.exists() && f.canRead()) {
                         try {
                             Path source = f.toPath();
-                            Files.copy(source, newDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+                            Path target = FileSystems.getDefault().getPath(selFolder.getAbsolutePath(), f.getName());
+                            Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
                             n++;
                             
                             //invoked on UI thread later
                             String status = String.format("Copied %d of %d to %s",n,total,targetName);
                             LibraryMediator.instance().getLibrarySearch().pushStatus(status);
                         } catch (IOException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }

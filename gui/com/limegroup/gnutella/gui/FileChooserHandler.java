@@ -696,6 +696,7 @@ public final class FileChooserHandler {
 					.tr(titleKey), FileDialog.SAVE);
 			dialog.setDirectory(suggestedFile.getParent());
 			dialog.setFile(suggestedFile.getName());
+
 			if (filter != null) {
 				FilenameFilter f = new FilenameFilter() {
 					public boolean accept(File dir, String name) {
@@ -708,13 +709,16 @@ public final class FileChooserHandler {
 			dialog.setVisible(true);
 			String dir = dialog.getDirectory();
 			setLastInputDirectory(new File(dir));
-			String file = dialog.getFile();
-			if (dir != null && file != null) {
-				File f = new File(dir, file);
-				if (filter != null && !filter.accept(f))
+
+            System.setProperty("apple.awt.fileDialogForDirectories", "false");
+			if (dir != null) {
+				File f = new File(dir);
+				if (filter != null && !filter.accept(f)) {
 					return null;
-				else
+				}
+				else {
 					return f;
+				}
 			} else {
 				return null;
 			}
