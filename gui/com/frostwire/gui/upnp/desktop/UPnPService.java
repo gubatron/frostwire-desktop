@@ -137,7 +137,7 @@ public class UPnPService implements Runnable {
             }
 
             while (running) {
-                Thread.sleep(5000);
+                Thread.sleep(10000);
 
                 if (LibrarySettings.LIBRARY_WIFI_SHARING_ENABLED.getValue()) {
                     this.service.getControlPoint().search();
