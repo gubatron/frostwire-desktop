@@ -24,9 +24,8 @@ import java.util.logging.Logger;
 
 import com.frostwire.gui.Librarian;
 import com.frostwire.gui.library.Finger;
-import com.frostwire.httpserver.Code;
-import com.frostwire.httpserver.HttpExchange;
 import com.frostwire.util.JsonUtils;
+import com.sun.net.httpserver.HttpExchange;
 
 /**
  * @author gubatron

@@ -34,8 +34,7 @@ import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.Librarian;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.transfers.PeerHttpUpload;
-import com.frostwire.httpserver.Code;
-import com.frostwire.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 
 /**
  * @author gubatron

@@ -20,8 +20,8 @@ package com.frostwire.gui.httpserver;
 
 import java.io.IOException;
 
-import com.frostwire.httpserver.HttpHandler;
 import com.limegroup.gnutella.settings.LibrarySettings;
+import com.sun.net.httpserver.HttpHandler;
 
 /**
  * @author gubatron
