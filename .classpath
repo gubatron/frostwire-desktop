@@ -46,6 +46,7 @@
 	<classpathentry kind="lib" path="lib/jars/fwtips.jar" sourcepath="/frostwire-tips/src/java"/>
 	<classpathentry kind="lib" path="lib/jars/mp4parser.jar" sourcepath="lib/jars-src/mp4parser"/>
 	<classpathentry kind="lib" path="lib/jars/jaudiotagger.jar" sourcepath="lib/jars-src/jaudiotagger"/>
-	<classpathentry kind="lib" path="common/jars/slf4j-api-1.7.5.jar"/>
+	<classpathentry kind="lib" path="lib/jars/slf4j-api-1.7.5.jar"/>
+	<classpathentry kind="lib" path="lib/jars/slf4j-jdk14-1.7.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
