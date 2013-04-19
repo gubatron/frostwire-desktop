@@ -35,6 +35,7 @@ import org.limewire.util.FileUtils;
 import com.limegroup.gnutella.gui.TipOfTheDayMediator;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.themes.setters.SubstanceThemeSetter;
+import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /**
  * Class that mediates between themes and FrostWire.
@@ -239,7 +240,34 @@ public class ThemeMediator {
         UIManager.put("FileChooserUI", "com.limegroup.gnutella.gui.themes.SkinFileChooserUI");
         UIManager.put("TabbedPaneUI", "com.limegroup.gnutella.gui.themes.SkinTabbedPaneUI");
         UIManager.put("ProgressBarUI", "com.limegroup.gnutella.gui.themes.SkinProgressBarUI");
+        UIManager.put("OptionPaneUI", "com.limegroup.gnutella.gui.themes.SkinOptionPaneUI");
         
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
+    }
+    
+    public static String getRecommendedFontName() {
+        String fontName = null;
+
+        String language = ApplicationSettings.getLanguage();
+        if (language != null) {
+            if (language.startsWith("ja")) {
+                //Meiryo for Japanese
+                fontName = "Meiryo";
+            } else if (language.startsWith("ko")) {
+                //Malgun Gothic for Korean
+                fontName = "Malgun Gothic";
+            } else if (language.startsWith("zh")) {
+                //Microsoft JhengHei for Chinese (Traditional)
+                //Microsoft YaHei for Chinese (Simplified)
+                fontName = "Microsoft JhengHei";
+            } else if (language.startsWith("he")) {
+                //Gisha for Hebrew
+                fontName = "Gisha";
+            } else if (language.startsWith("th")) {
+                //Leelawadee for Thai
+                fontName = "Leelawadee";
+            }
+        }
+        return fontName;
     }
 }

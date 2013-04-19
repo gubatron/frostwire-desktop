@@ -62,7 +62,6 @@ import com.limegroup.gnutella.gui.themes.SkinTextAreaUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
 import com.limegroup.gnutella.gui.themes.fueled.FueledCustomUI;
-import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /**
  * 
@@ -241,28 +240,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
             Method method = Toolkit.class.getDeclaredMethod("setDesktopProperty", String.class, Object.class);
             method.setAccessible(true);
 
-            String fontName = null;
-
-            String language = ApplicationSettings.getLanguage();
-            if (language != null) {
-                if (language.startsWith("ja")) {
-                    //Meiryo for Japanese
-                    fontName = "Meiryo";
-                } else if (language.startsWith("ko")) {
-                    //Malgun Gothic for Korean
-                    fontName = "Malgun Gothic";
-                } else if (language.startsWith("zh")) {
-                    //Microsoft JhengHei for Chinese (Traditional)
-                    //Microsoft YaHei for Chinese (Simplified)
-                    fontName = "Microsoft JhengHei";
-                } else if (language.startsWith("he")) {
-                    //Gisha for Hebrew
-                    fontName = "Gisha";
-                } else if (language.startsWith("th")) {
-                    //Leelawadee for Thai
-                    fontName = "Leelawadee";
-                }
-            }
+            String fontName = ThemeMediator.getRecommendedFontName();
 
             if (fontName != null) {
                 Font font = new Font(fontName, Font.PLAIN, 12);
@@ -281,28 +259,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
             Method method = Toolkit.class.getDeclaredMethod("setDesktopProperty", String.class, Object.class);
             method.setAccessible(true);
 
-            String fontName = null;
-
-            String language = ApplicationSettings.getLanguage();
-            if (language != null) {
-                if (language.startsWith("ja")) {
-                    //Meiryo for Japanese
-                    fontName = "Meiryo";
-                } else if (language.startsWith("ko")) {
-                    //Malgun Gothic for Korean
-                    fontName = "Malgun Gothic";
-                } else if (language.startsWith("zh")) {
-                    //Microsoft JhengHei for Chinese (Traditional)
-                    //Microsoft YaHei for Chinese (Simplified)
-                    fontName = "Microsoft JhengHei";
-                } else if (language.startsWith("he")) {
-                    //Gisha for Hebrew
-                    fontName = "Gisha";
-                } else if (language.startsWith("th")) {
-                    //Leelawadee for Thai
-                    fontName = "Leelawadee";
-                }
-            }
+            String fontName = ThemeMediator.getRecommendedFontName();
 
             if (fontName != null) {
                 // linux is hardcoded to Dialog
