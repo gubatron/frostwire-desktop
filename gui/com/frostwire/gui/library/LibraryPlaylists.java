@@ -31,6 +31,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -108,6 +111,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     private Action renameAction = new StartRenamingPlaylistAction();
     private Action importToPlaylistAction = new ImportToPlaylistAction();
     private Action importToNewPlaylistAction = new ImportToNewPlaylistAction();
+    private Action copyPlaylistFilesAction = new CopyPlaylistFilesAction();
     private Action exportPlaylistAction = new ExportPlaylistAction();
     private Action exportToiTunesAction = new ExportToiTunesAction();
 
@@ -161,6 +165,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         _popup.addSeparator();
         _popup.add(new SkinMenuItem(importToPlaylistAction));
         _popup.add(new SkinMenuItem(importToNewPlaylistAction));
+        _popup.add(new SkinMenuItem(copyPlaylistFilesAction));
         _popup.add(new SkinMenuItem(exportPlaylistAction));
 
         if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
@@ -462,6 +467,67 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         });
     }
 
+    private void copyPlaylistFilesToFolder(Playlist playlist) {
+        if (playlist == null || playlist.getItems().isEmpty()) {
+            return;
+        }
+        
+        File suggestedDirectory = FileChooserHandler.getLastInputDirectory();
+        if (suggestedDirectory.equals(CommonUtils.getCurrentDirectory())) {
+            suggestedDirectory = new File(CommonUtils.getUserHomeDir(), "Desktop");
+        }
+        
+        final File selFolder = FileChooserHandler.getSaveAsDir(GUIMediator.getAppFrame(), I18nMarker.marktr("Where do you want the playlist files copied to?"), suggestedDirectory);
+        
+        if (selFolder == null) {
+            return;
+        }
+
+        //let's make a copy of the list in case the playlist will be modified during the copying.
+        final List<PlaylistItem> playlistItems = new ArrayList<>(playlist.getItems());
+        
+        BackgroundExecutorService.schedule(new Thread("Library-copy-playlist-files") {
+            @Override
+            public void run() {
+
+                int n=0;
+                int total = playlistItems.size();
+                String targetName = selFolder.getName();
+
+                Path newDir = selFolder.toPath();
+
+                for (PlaylistItem item : playlistItems) {
+                    File f = new File(item.getFilePath());
+                    if (f.isFile() && f.exists() && f.canRead()) {
+                        try {
+                            Path source = f.toPath();
+                            Files.copy(source, newDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+                            n++;
+                            
+                            //invoked on UI thread later
+                            String status = String.format("Copied %d of %d to %s",n,total,targetName);
+                            LibraryMediator.instance().getLibrarySearch().pushStatus(status);
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                
+                GUIMediator.launchExplorer(selFolder);
+                
+                //and clear the output
+                try {
+                    Thread.sleep(2000);
+                    LibraryMediator.instance().getLibrarySearch().pushStatus("");
+                } catch (InterruptedException e) {
+                }
+
+                
+            }
+        });
+    }
+    
     /**
      * Saves a playlist.
      */
@@ -485,8 +551,9 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         File selFile = FileChooserHandler.getSaveAsFile(GUIMediator.getAppFrame(), I18nMarker.marktr("Save Playlist As"), suggested, new PlaylistListFileFilter());
 
         // didn't select a file?  nothing we can do.
-        if (selFile == null)
+        if (selFile == null) {
             return;
+        }
 
         // if the file already exists and not the one just opened, ask if it should be
         //  overwritten. 
@@ -816,6 +883,18 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         }
     }
 
+    private final class CopyPlaylistFilesAction extends AbstractAction {
+        public CopyPlaylistFilesAction() {
+            putValue(Action.NAME, I18n.tr("Copy playlist files to a folder"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Copy all the files referenced by this playlist to a single destination folder."));
+            putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
+        }
+        
+        public void actionPerformed(ActionEvent e) {
+            copyPlaylistFilesToFolder(getSelectedPlaylist());
+        }
+    }
+    
     private final class ExportPlaylistAction extends AbstractAction {
 
         private static final long serialVersionUID = 6149822357662730490L;
