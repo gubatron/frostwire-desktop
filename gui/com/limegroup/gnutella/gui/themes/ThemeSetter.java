@@ -42,4 +42,6 @@ public interface ThemeSetter {
     public ComponentUI createProgressBarUI(JComponent comp);
     
     public ComponentUI createOptionPaneUI(JComponent comp);
+
+    public ComponentUI createLabelUI(JComponent comp);
 }

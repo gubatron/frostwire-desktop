@@ -52,6 +52,7 @@ import sun.swing.SwingUtilities2;
 import com.frostwire.gui.components.RangeSlider;
 import com.limegroup.gnutella.gui.themes.SkinComboBoxUI;
 import com.limegroup.gnutella.gui.themes.SkinCustomUI;
+import com.limegroup.gnutella.gui.themes.SkinLabelUI;
 import com.limegroup.gnutella.gui.themes.SkinListUI;
 import com.limegroup.gnutella.gui.themes.SkinOptionPaneUI;
 import com.limegroup.gnutella.gui.themes.SkinProgressBarUI;
@@ -229,6 +230,12 @@ public class SubstanceThemeSetter implements ThemeSetter {
     public ComponentUI createOptionPaneUI(JComponent comp) {
         SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinOptionPaneUI();
+    }
+    
+    @Override
+    public ComponentUI createLabelUI(JComponent comp) {
+        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        return new SkinLabelUI();
     }
 
     // windows font policy http://msdn.microsoft.com/en-us/library/windows/desktop/aa511282.aspx

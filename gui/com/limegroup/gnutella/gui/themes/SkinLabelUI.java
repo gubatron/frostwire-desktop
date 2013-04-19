@@ -18,14 +18,13 @@
 
 package com.limegroup.gnutella.gui.themes;
 
-import java.awt.Container;
-import java.awt.GridBagConstraints;
+import java.awt.Font;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.plaf.ComponentUI;
 
-import org.pushingpixels.substance.internal.ui.SubstanceOptionPaneUI;
+import org.pushingpixels.substance.internal.ui.SubstanceLabelUI;
 
 /**
  * 
@@ -33,18 +32,27 @@ import org.pushingpixels.substance.internal.ui.SubstanceOptionPaneUI;
  * @author aldenml
  *
  */
-public class SkinOptionPaneUI extends SubstanceOptionPaneUI {
+public class SkinLabelUI extends SubstanceLabelUI {
 
     public static ComponentUI createUI(JComponent comp) {
-        return ThemeMediator.CURRENT_THEME.createOptionPaneUI(comp);
+        return ThemeMediator.CURRENT_THEME.createLabelUI(comp);
+    }
+
+    private Font oldFont;
+
+    @Override
+    public void installUI(JComponent c) {
+        super.installUI(c);
+
+        oldFont = ThemeMediator.fixLabelFont(c);
     }
 
     @Override
-    protected void addMessageComponents(Container container, GridBagConstraints cons, Object msg, int maxll, boolean internallyCreated) {
-        super.addMessageComponents(container, cons, msg, maxll, internallyCreated);
+    public void uninstallUI(JComponent c) {
+        super.uninstallUI(c);
 
-        if (msg instanceof JLabel) {
-            ThemeMediator.fixLabelFont((JLabel) msg, getMessage());
+        if (oldFont != null && c instanceof JLabel) {
+            c.setFont(oldFont);
         }
     }
 }

@@ -15,6 +15,8 @@
 
 package com.limegroup.gnutella.gui.themes;
 
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.Window;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,11 +28,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.plaf.InsetsUIResource;
 
 import org.limewire.util.FileUtils;
+import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.TipOfTheDayMediator;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
@@ -41,29 +45,31 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  * Class that mediates between themes and FrostWire.
  */
 public class ThemeMediator {
-    
+
+    static Font DIALOG_FONT = new Font(Font.DIALOG, Font.PLAIN, 12);
+
     public static ThemeSetter DEFAULT_THEME;
-    
+
     public static ThemeSetter CURRENT_THEME;
-    
+
     private static List<ThemeSetter> THEMES;
-    
+
     static {
         loadThemes();
     }
-    
+
     /**
      * <tt>List</tt> of <tt>ThemeObserver</tt> classes to notify of
      * ui components of theme changes.
      */
     private static final List<ThemeObserver> THEME_OBSERVERS = new LinkedList<ThemeObserver>();
-    
+
     public static void updateComponentHierarchy() {
         //SwingUtilities.updateComponentTreeUI(GUIMediator.getMainOptionsComponent());
         TipOfTheDayMediator.instance().updateComponentTreeUI();
         NotifyUserProxy.instance().updateUI();
         updateThemeObservers();
-        
+
         for (Window window : Window.getWindows()) {
             SwingUtilities.updateComponentTreeUI(window);
         }
@@ -78,7 +84,7 @@ public class ThemeMediator {
      *  list
      */
     public static void addThemeObserver(ThemeObserver observer) {
-	    THEME_OBSERVERS.add(observer);
+        THEME_OBSERVERS.add(observer);
     }
 
     /**
@@ -97,28 +103,28 @@ public class ThemeMediator {
      * Updates all theme observers.
      */
     public static void updateThemeObservers() {
-        for(ThemeObserver curObserver : THEME_OBSERVERS) {
-    	    curObserver.updateTheme();
+        for (ThemeObserver curObserver : THEME_OBSERVERS) {
+            curObserver.updateTheme();
         }
 
         //GUIMediator.getMainOptionsComponent().validate();
         //GUIMediator.getAppFrame().validate();
     }
-    
+
     public static void changeTheme(final ThemeSetter theme) {
         try {
-            
+
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
 
                     try {
-                        
+
                         theme.apply();
-                        
+
                         CURRENT_THEME = theme;
-                        
+
                         saveCurrentTheme(theme);
-                        
+
                         updateComponentHierarchy();
 
                     } catch (Exception e) {
@@ -132,17 +138,17 @@ public class ThemeMediator {
     }
 
     public static List<ThemeSetter> loadThemes() {
-        
+
         if (THEMES != null) {
             return THEMES;
         }
-        
+
         List<ThemeSetter> themes = new ArrayList<ThemeSetter>();
-        
+
         // from FrostWire
         themes.add(SubstanceThemeSetter.SEA_GLASS);
         themes.add(SubstanceThemeSetter.FUELED);
-        
+
         // from Substance
         themes.add(SubstanceThemeSetter.AUTUMN);
         themes.add(SubstanceThemeSetter.BUSINESS_BLACK_STEEL);
@@ -171,23 +177,23 @@ public class ThemeMediator {
         themes.add(SubstanceThemeSetter.RAVEN);
         themes.add(SubstanceThemeSetter.SAHARA);
         themes.add(SubstanceThemeSetter.TWILIGHT);
-        
+
         DEFAULT_THEME = SubstanceThemeSetter.FUELED;
         THEMES = themes;
         CURRENT_THEME = loadCurrentTheme();
-        
+
         return THEMES;
     }
-    
+
     private static ThemeSetter loadCurrentTheme() {
         ThemeSetter currentTheme = DEFAULT_THEME;
-        
+
         BufferedReader input = null;
-        
+
         try {
-            
+
             File skinsFile = ThemeSettings.SKINS_FILE;
-            
+
             if (skinsFile.exists()) {
                 input = new BufferedReader(new FileReader(skinsFile));
                 String name = input.readLine();
@@ -201,28 +207,27 @@ public class ThemeMediator {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             FileUtils.close(input);
         }
-        
+
         return currentTheme;
     }
-    
+
     private static void saveCurrentTheme(ThemeSetter theme) throws IOException {
         File skinsFile = ThemeSettings.SKINS_FILE;
-        
+
         BufferedWriter output = new BufferedWriter(new FileWriter(skinsFile));
-        
+
         try {
-            
+
             output.write(theme.getName());
-            
+
         } finally {
             FileUtils.close(output);
         }
     }
-    
+
     public static void applyCommonSkinUI() {
         UIManager.put("PopupMenuUI", "com.limegroup.gnutella.gui.themes.SkinPopupMenuUI");
         UIManager.put("MenuItemUI", "com.limegroup.gnutella.gui.themes.SkinMenuItemUI");
@@ -241,10 +246,11 @@ public class ThemeMediator {
         UIManager.put("TabbedPaneUI", "com.limegroup.gnutella.gui.themes.SkinTabbedPaneUI");
         UIManager.put("ProgressBarUI", "com.limegroup.gnutella.gui.themes.SkinProgressBarUI");
         UIManager.put("OptionPaneUI", "com.limegroup.gnutella.gui.themes.SkinOptionPaneUI");
-        
+        UIManager.put("LabelUI", "com.limegroup.gnutella.gui.themes.SkinLabelUI");
+
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
     }
-    
+
     public static String getRecommendedFontName() {
         String fontName = null;
 
@@ -269,5 +275,39 @@ public class ThemeMediator {
             }
         }
         return fontName;
+    }
+
+    public static Font fixLabelFont(Component c) {
+        Font oldFont = null;
+        if (c instanceof JLabel) {
+            JLabel label = (JLabel) c;
+            oldFont = ThemeMediator.fixLabelFont(label, label.getText());
+        }
+        return oldFont;
+    }
+
+    static Font fixLabelFont(JLabel label, Object msg) {
+        Font oldFont = null;
+
+        if (OSUtils.isWindows()) {
+            Font currentFont = label.getFont();
+            if (currentFont != null && !canDisplayMessage(currentFont, msg)) {
+                oldFont = currentFont;
+                label.setFont(ThemeMediator.DIALOG_FONT);
+            }
+        }
+
+        return oldFont;
+    }
+
+    private static boolean canDisplayMessage(Font f, Object msg) {
+        boolean result = true;
+
+        if (msg instanceof String) {
+            String s = (String) msg;
+            result = f.canDisplayUpTo(s) == -1;
+        }
+
+        return result;
     }
 }
