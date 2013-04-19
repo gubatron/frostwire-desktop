@@ -52,7 +52,9 @@ import sun.swing.SwingUtilities2;
 import com.frostwire.gui.components.RangeSlider;
 import com.limegroup.gnutella.gui.themes.SkinComboBoxUI;
 import com.limegroup.gnutella.gui.themes.SkinCustomUI;
+import com.limegroup.gnutella.gui.themes.SkinLabelUI;
 import com.limegroup.gnutella.gui.themes.SkinListUI;
+import com.limegroup.gnutella.gui.themes.SkinOptionPaneUI;
 import com.limegroup.gnutella.gui.themes.SkinProgressBarUI;
 import com.limegroup.gnutella.gui.themes.SkinRangeSliderUI;
 import com.limegroup.gnutella.gui.themes.SkinTabbedPaneUI;
@@ -61,7 +63,6 @@ import com.limegroup.gnutella.gui.themes.SkinTextAreaUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
 import com.limegroup.gnutella.gui.themes.fueled.FueledCustomUI;
-import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /**
  * 
@@ -224,6 +225,18 @@ public class SubstanceThemeSetter implements ThemeSetter {
         SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinProgressBarUI();
     }
+    
+    @Override
+    public ComponentUI createOptionPaneUI(JComponent comp) {
+        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        return new SkinOptionPaneUI();
+    }
+    
+    @Override
+    public ComponentUI createLabelUI(JComponent comp) {
+        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        return new SkinLabelUI();
+    }
 
     // windows font policy http://msdn.microsoft.com/en-us/library/windows/desktop/aa511282.aspx
     // table of languages http://msdn.microsoft.com/en-us/library/ee825488(v=cs.20).aspx
@@ -234,28 +247,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
             Method method = Toolkit.class.getDeclaredMethod("setDesktopProperty", String.class, Object.class);
             method.setAccessible(true);
 
-            String fontName = null;
-
-            String language = ApplicationSettings.getLanguage();
-            if (language != null) {
-                if (language.startsWith("ja")) {
-                    //Meiryo for Japanese
-                    fontName = "Meiryo";
-                } else if (language.startsWith("ko")) {
-                    //Malgun Gothic for Korean
-                    fontName = "Malgun Gothic";
-                } else if (language.startsWith("zh")) {
-                    //Microsoft JhengHei for Chinese (Traditional)
-                    //Microsoft YaHei for Chinese (Simplified)
-                    fontName = "Microsoft JhengHei";
-                } else if (language.startsWith("he")) {
-                    //Gisha for Hebrew
-                    fontName = "Gisha";
-                } else if (language.startsWith("th")) {
-                    //Leelawadee for Thai
-                    fontName = "Leelawadee";
-                }
-            }
+            String fontName = ThemeMediator.getRecommendedFontName();
 
             if (fontName != null) {
                 Font font = new Font(fontName, Font.PLAIN, 12);
@@ -274,28 +266,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
             Method method = Toolkit.class.getDeclaredMethod("setDesktopProperty", String.class, Object.class);
             method.setAccessible(true);
 
-            String fontName = null;
-
-            String language = ApplicationSettings.getLanguage();
-            if (language != null) {
-                if (language.startsWith("ja")) {
-                    //Meiryo for Japanese
-                    fontName = "Meiryo";
-                } else if (language.startsWith("ko")) {
-                    //Malgun Gothic for Korean
-                    fontName = "Malgun Gothic";
-                } else if (language.startsWith("zh")) {
-                    //Microsoft JhengHei for Chinese (Traditional)
-                    //Microsoft YaHei for Chinese (Simplified)
-                    fontName = "Microsoft JhengHei";
-                } else if (language.startsWith("he")) {
-                    //Gisha for Hebrew
-                    fontName = "Gisha";
-                } else if (language.startsWith("th")) {
-                    //Leelawadee for Thai
-                    fontName = "Leelawadee";
-                }
-            }
+            String fontName = ThemeMediator.getRecommendedFontName();
 
             if (fontName != null) {
                 // linux is hardcoded to Dialog

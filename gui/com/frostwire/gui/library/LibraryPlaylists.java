@@ -79,6 +79,7 @@ import com.limegroup.gnutella.gui.tables.MouseObserver;
 import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 
@@ -614,6 +615,10 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
             if (icon != null) {
                 setIcon(icon);
             }
+            
+            this.setFont(list.getFont());
+            ThemeMediator.fixLabelFont(this);
+            
             return this;
         }
     }
