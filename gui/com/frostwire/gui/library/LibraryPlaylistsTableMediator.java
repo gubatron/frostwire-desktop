@@ -104,6 +104,8 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
     private Action refreshID3TagsAction = new RefreshID3TagsAction();
 
+    private Action COPY_PLAYLIST_FILES_TO_FOLDER_ACTION = new LibraryPlaylists.CopyPlaylistFilesAction();
+
     /**
      * instance, for singleton access
      */
@@ -210,7 +212,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         menu.add(new SkinMenuItem(SEND_TO_ITUNES_ACTION));
 
         menu.addSeparator();
-        menu.add(new SkinMenuItem(new LibraryPlaylists.CopyPlaylistFilesAction(LibraryMediator.instance().getLibraryPlaylists())));
+        menu.add(new SkinMenuItem(COPY_PLAYLIST_FILES_TO_FOLDER_ACTION ));
 
         menu.addSeparator();
         menu.add(new SkinMenuItem(DELETE_ACTION));

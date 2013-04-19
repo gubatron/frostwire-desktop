@@ -112,10 +112,10 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     private Action renameAction = new StartRenamingPlaylistAction();
     private Action importToPlaylistAction = new ImportToPlaylistAction();
     private Action importToNewPlaylistAction = new ImportToNewPlaylistAction();
-    private Action copyPlaylistFilesAction = new CopyPlaylistFilesAction(LibraryPlaylists.this);
+    private Action copyPlaylistFilesAction = new CopyPlaylistFilesAction();
     private Action exportPlaylistAction = new ExportPlaylistAction();
     private Action exportToiTunesAction = new ExportToiTunesAction();
-
+    
     private List<Playlist> importingPlaylists;
 
     public LibraryPlaylists() {
@@ -167,9 +167,10 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         _popup.addSeparator();
         _popup.add(new SkinMenuItem(importToPlaylistAction));
         _popup.add(new SkinMenuItem(importToNewPlaylistAction));
-        _popup.add(new SkinMenuItem(exportPlaylistAction));
         _popup.addSeparator();
         _popup.add(new SkinMenuItem(copyPlaylistFilesAction));
+        _popup.add(new SkinMenuItem(exportPlaylistAction));
+        _popup.addSeparator();
 
         if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
             _popup.add(new SkinMenuItem(exportToiTunesAction));
@@ -829,17 +830,14 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
     public final static class CopyPlaylistFilesAction extends AbstractAction {
         
-        private final LibraryPlaylists playlists;
-        
-        public CopyPlaylistFilesAction(LibraryPlaylists playlists) {
-            this.playlists = playlists;
+        public CopyPlaylistFilesAction() { 
             putValue(Action.NAME, I18n.tr("Copy files to folder"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Copy all playlist files to a folder of your choosing"));
             putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
         }
         
         public void actionPerformed(ActionEvent e) {
-            copyPlaylistFilesToFolder(playlists.getSelectedPlaylist());
+            copyPlaylistFilesToFolder(LibraryMediator.instance().getSelectedPlaylist());
         }
         private void copyPlaylistFilesToFolder(Playlist playlist) {
             if (playlist == null || playlist.getItems().isEmpty()) {
