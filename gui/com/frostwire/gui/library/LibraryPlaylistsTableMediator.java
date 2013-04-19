@@ -105,7 +105,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     private Action refreshID3TagsAction = new RefreshID3TagsAction();
 
     /**
-     * instance, for singelton access
+     * instance, for singleton access
      */
     private static LibraryPlaylistsTableMediator INSTANCE;
 
@@ -208,6 +208,9 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         menu.add(new SkinMenuItem(SEND_TO_FRIEND_ACTION));
 
         menu.add(new SkinMenuItem(SEND_TO_ITUNES_ACTION));
+
+        menu.addSeparator();
+        menu.add(new SkinMenuItem(new LibraryPlaylists.CopyPlaylistFilesAction(LibraryMediator.instance().getLibraryPlaylists())));
 
         menu.addSeparator();
         menu.add(new SkinMenuItem(DELETE_ACTION));

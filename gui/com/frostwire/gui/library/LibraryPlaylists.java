@@ -112,7 +112,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     private Action renameAction = new StartRenamingPlaylistAction();
     private Action importToPlaylistAction = new ImportToPlaylistAction();
     private Action importToNewPlaylistAction = new ImportToNewPlaylistAction();
-    private Action copyPlaylistFilesAction = new CopyPlaylistFilesAction();
+    private Action copyPlaylistFilesAction = new CopyPlaylistFilesAction(LibraryPlaylists.this);
     private Action exportPlaylistAction = new ExportPlaylistAction();
     private Action exportToiTunesAction = new ExportToiTunesAction();
 
@@ -161,13 +161,15 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         _popup.add(new SkinMenuItem(refreshAction));
         _popup.add(new SkinMenuItem(refreshID3TagsAction));
         _popup.add(new SkinMenuItem(renameAction));
+        _popup.addSeparator();
         _popup.add(new SkinMenuItem(deleteAction));
         _popup.add(new SkinMenuItem(cleanupPlaylistAction));
         _popup.addSeparator();
         _popup.add(new SkinMenuItem(importToPlaylistAction));
         _popup.add(new SkinMenuItem(importToNewPlaylistAction));
-        _popup.add(new SkinMenuItem(copyPlaylistFilesAction));
         _popup.add(new SkinMenuItem(exportPlaylistAction));
+        _popup.addSeparator();
+        _popup.add(new SkinMenuItem(copyPlaylistFilesAction));
 
         if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
             _popup.add(new SkinMenuItem(exportToiTunesAction));
@@ -468,64 +470,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         });
     }
 
-    private void copyPlaylistFilesToFolder(Playlist playlist) {
-        if (playlist == null || playlist.getItems().isEmpty()) {
-            return;
-        }
-        
-        File suggestedDirectory = FileChooserHandler.getLastInputDirectory();
-        if (suggestedDirectory.equals(CommonUtils.getCurrentDirectory())) {
-            suggestedDirectory = new File(CommonUtils.getUserHomeDir(), "Desktop");
-        }
-        
-        final File selFolder = FileChooserHandler.getSaveAsDir(GUIMediator.getAppFrame(), I18nMarker.marktr("Where do you want the playlist files copied to?"), suggestedDirectory);
-        
-        if (selFolder == null) {
-            return;
-        }
 
-        //let's make a copy of the list in case the playlist will be modified during the copying.
-        final List<PlaylistItem> playlistItems = new ArrayList<>(playlist.getItems());
-        
-        BackgroundExecutorService.schedule(new Thread("Library-copy-playlist-files") {
-            @Override
-            public void run() {
-
-                int n=0;
-                int total = playlistItems.size();
-                String targetName = selFolder.getName();
-
-                for (PlaylistItem item : playlistItems) {
-                    File f = new File(item.getFilePath());
-                    if (f.isFile() && f.exists() && f.canRead()) {
-                        try {
-                            Path source = f.toPath();
-                            Path target = FileSystems.getDefault().getPath(selFolder.getAbsolutePath(), f.getName());
-                            Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
-                            n++;
-                            
-                            //invoked on UI thread later
-                            String status = String.format("Copied %d of %d to %s",n,total,targetName);
-                            LibraryMediator.instance().getLibrarySearch().pushStatus(status);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                
-                GUIMediator.launchExplorer(selFolder);
-                
-                //and clear the output
-                try {
-                    Thread.sleep(2000);
-                    LibraryMediator.instance().getLibrarySearch().pushStatus("");
-                } catch (InterruptedException e) {
-                }
-
-                
-            }
-        });
-    }
     
     /**
      * Saves a playlist.
@@ -882,15 +827,77 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         }
     }
 
-    private final class CopyPlaylistFilesAction extends AbstractAction {
-        public CopyPlaylistFilesAction() {
-            putValue(Action.NAME, I18n.tr("Copy playlist files to a folder"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Copy all the files referenced by this playlist to a single destination folder."));
+    public final static class CopyPlaylistFilesAction extends AbstractAction {
+        
+        private final LibraryPlaylists playlists;
+        
+        public CopyPlaylistFilesAction(LibraryPlaylists playlists) {
+            this.playlists = playlists;
+            putValue(Action.NAME, I18n.tr("Copy files to folder"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Copy all playlist files to a folder of your choosing"));
             putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
         }
         
         public void actionPerformed(ActionEvent e) {
-            copyPlaylistFilesToFolder(getSelectedPlaylist());
+            copyPlaylistFilesToFolder(playlists.getSelectedPlaylist());
+        }
+        private void copyPlaylistFilesToFolder(Playlist playlist) {
+            if (playlist == null || playlist.getItems().isEmpty()) {
+                return;
+            }
+            
+            File suggestedDirectory = FileChooserHandler.getLastInputDirectory();
+            if (suggestedDirectory.equals(CommonUtils.getCurrentDirectory())) {
+                suggestedDirectory = new File(CommonUtils.getUserHomeDir(), "Desktop");
+            }
+            
+            final File selFolder = FileChooserHandler.getSaveAsDir(GUIMediator.getAppFrame(), I18nMarker.marktr("Where do you want the playlist files copied to?"), suggestedDirectory);
+            
+            if (selFolder == null) {
+                return;
+            }
+
+            //let's make a copy of the list in case the playlist will be modified during the copying.
+            final List<PlaylistItem> playlistItems = new ArrayList<>(playlist.getItems());
+            
+            BackgroundExecutorService.schedule(new Thread("Library-copy-playlist-files") {
+                @Override
+                public void run() {
+
+                    int n=0;
+                    int total = playlistItems.size();
+                    String targetName = selFolder.getName();
+
+                    for (PlaylistItem item : playlistItems) {
+                        File f = new File(item.getFilePath());
+                        if (f.isFile() && f.exists() && f.canRead()) {
+                            try {
+                                Path source = f.toPath();
+                                Path target = FileSystems.getDefault().getPath(selFolder.getAbsolutePath(), f.getName());
+                                Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+                                n++;
+                                
+                                //invoked on UI thread later
+                                String status = String.format("Copied %d of %d to %s",n,total,targetName);
+                                LibraryMediator.instance().getLibrarySearch().pushStatus(status);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    
+                    GUIMediator.launchExplorer(selFolder);
+                    
+                    //and clear the output
+                    try {
+                        Thread.sleep(2000);
+                        LibraryMediator.instance().getLibrarySearch().pushStatus("");
+                    } catch (InterruptedException e) {
+                    }
+
+                    
+                }
+            });
         }
     }
     
