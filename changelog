@@ -1,9 +1,34 @@
 frostwire (5.5.6) stable; urgency=high
+  * New Feature: Includes search results from archive.org, which indexes 
+    millions of public domain and creative commons works from all over the 
+    internet.
   * New Feature: playlist songs can be re-ordered with drag and drop.
-  * New Feature: all songs in a playlist can now be copied to a folder.
-  * Bug fix: screen saver no longer kicks in during video playback.
+  * New Feature: all songs in a playlist can now be exported to a folder.
+  * Upgrade: Improved Unicode support for Chinese characters.
+  * Upgrade: mplayer update for unicode character file playback support.
+  * Upgrade: Search architecture upgrade for much faster search results.
+  * Upgrade: Considerably faster mp3,mp4 parsing in the library, creating
+    playlists is now faster than ever.
+  * Upgrade: New more explicit Wi-Fi sharing icons.
+  * Upgrade: Updated radio station database.
+  * Upgrade: up to 20% faster listing of files in the Library.
+  * Upgrade: Video player upgrades for better experience.
+  * Bug fix: screen-saver no longer kicks in during video playback.
+  * Bug fix: UPnP Wi-Fi sharing discovery consumes 84% less CPU on
+    congested local networks. Fixing reported slowdowns and reducing
+    considerable power consumption for laptop users.
+  * Bug fix: X11 related error fix.
+  * Bug fix: Number of files being shared includes the number of torrents
+    being seeded.
+  * Bug fix: Library search issues related to unicode characters.
+  * Bug fix: Multiple null pointer exceptions and crashes fixed.
+  * Bug fix: Fixed rendering issue related to wrong parsing of bitrate 
+    string data.
+  * Upgrade: (Developers) ant compilation scripts cleanup.
+  * Upgrade: (Developers) use of 'frostwire-commons' repository to share
+    common code between FrostWire for Android and Desktop projects.
 
- -- FrostWire Team <contact@frostwire.com>  Mon, 04 Mar 2013 14:44:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Mon, 22 Apr 2013 05:58:00 -0500
 
 frostwire (5.5.5) stable; urgency=high
   * Bug fix: Null pointer exceptions in Media Player.
