@@ -36,6 +36,7 @@ import javax.swing.UIManager;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
 import org.limewire.util.LCS;
+import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.HttpFetcher;
@@ -113,7 +114,10 @@ public class GoogleSearchField extends SearchField {
         entryPanel.add(entryScrollPane, c);
         
         Font origFont = getFont();
-        Font newFont = ThemeMediator.DIALOG_FONT.deriveFont(origFont.getSize2D());
+        Font newFont = origFont;
+        if (OSUtils.isWindows()) {
+            newFont = ThemeMediator.DIALOG_FONT.deriveFont(origFont.getSize2D());
+        }
         entryList.setFont(newFont);
 
         return entryPanel;

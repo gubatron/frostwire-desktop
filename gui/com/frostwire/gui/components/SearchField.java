@@ -691,7 +691,9 @@ public class SearchField extends JXSearchField {
             enableEvents(AWTEvent.MOUSE_EVENT_MASK);
             setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             setFocusable(false);
-            setFont(ThemeMediator.DIALOG_FONT);
+            if (OSUtils.isWindows()) {
+                setFont(ThemeMediator.DIALOG_FONT);
+            }
         }
 
         /**
