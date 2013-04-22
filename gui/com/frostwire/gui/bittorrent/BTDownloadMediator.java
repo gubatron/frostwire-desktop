@@ -311,7 +311,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
         try {
             if (OSUtils.isWindows() && UpdateManagerSettings.SHOW_FROSTWIRE_RECOMMENDATIONS.getValue()) {
-                TipsClient.instance().call();
+                //TipsClient.instance().call();
             }
         } catch (Throwable e) {
             LOG.debug("Error using tips framework: " + e.getMessage());
