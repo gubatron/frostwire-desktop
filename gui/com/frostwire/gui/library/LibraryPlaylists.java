@@ -836,7 +836,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     public final static class CopyPlaylistFilesAction extends AbstractAction {
         
         public CopyPlaylistFilesAction() { 
-            putValue(Action.NAME, I18n.tr("Copy files to folder"));
+            putValue(Action.NAME, I18n.tr("Export playlist files to folder"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Copy all playlist files to a folder of your choosing"));
             putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
         }
