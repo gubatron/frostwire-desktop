@@ -36,15 +36,13 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.LookAndFeel;
-import javax.swing.UIManager;
 
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.player.MediaPlayerAdapter;
-import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaPlayerAdapter;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.ScreenSaverDisabler;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.LimeJFrame;
@@ -89,7 +87,7 @@ public class MPlayerWindow extends JFrame {
     }
 
     public static MPlayerWindow createMPlayerWindow() {
-        LookAndFeel previousLookAndFeel = disableLookAndFeel();
+
         MPlayerWindow result = null;
         if (OSUtils.isWindows()) {
             result = new MPlayerWindowWin32();
@@ -98,29 +96,10 @@ public class MPlayerWindow extends JFrame {
         } else if (OSUtils.isMacOSX()) {
             result = new MPlayerWindowOSX();
         }
-        restoreLookAndFeel(previousLookAndFeel);
         
         return result;
     }
     
-    private static void restoreLookAndFeel(LookAndFeel previousLookAndFeel) {
-        try {
-            UIManager.setLookAndFeel(previousLookAndFeel);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static LookAndFeel disableLookAndFeel() {
-        LookAndFeel previousLookAndFeel = UIManager.getLookAndFeel();;
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return previousLookAndFeel;
-    }
-
 
     public MediaPlayer getMediaPlayer() {
         return player;

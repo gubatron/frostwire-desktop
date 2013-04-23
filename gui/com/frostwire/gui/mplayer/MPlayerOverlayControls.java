@@ -44,6 +44,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.basic.BasicRootPaneUI;
 
 import org.limewire.util.OSUtils;
 
@@ -79,12 +80,10 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
     private MPlayerWindow playerWindow;
     
     public MPlayerOverlayControls(MPlayerWindow playerWindow) {
-
+        getRootPane().setUI(new BasicRootPaneUI());
         this.playerWindow = playerWindow;
         player = MediaPlayer.instance();
-
         setupUI();
-        
         player.addMediaPlayerListener(this);
         
         // initialize animation alpha thread
@@ -178,6 +177,8 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         contentPanel.setLayout(null);
         contentPanel.setBounds(0, 0, bkgndSize.width, bkgndSize.height);
         contentPanel.setBackground(TRANSPARENT);
+        
+        getRootPane().setBackground(TRANSPARENT);
         
         controlsContainer = new Container();
         controlsContainer.setBounds(0, 0, bkgndSize.width, bkgndSize.height);
