@@ -536,4 +536,8 @@ public class MPlayerWindow extends JFrame {
             
         }
     }
+
+    public void showOverlayControls() {
+        showOverlay(true);
+    }
 }

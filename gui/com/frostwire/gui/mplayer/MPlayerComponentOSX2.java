@@ -30,6 +30,7 @@ import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerListener;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.mplayer.MediaPlaybackState;
+import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
@@ -209,6 +210,24 @@ public class MPlayerComponentOSX2 extends Canvas implements MPlayerComponent, Me
             @Override
             public void run() {
                 MPlayerUIEventHandler.instance().onProgressSlideEnd();
+            }
+        });
+    }
+    
+    public void onMouseMoved() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MPlayerMediator.instance().getMPlayerWindow().showOverlayControls();
+            }
+        });
+    }
+    
+    public void onMouseDoubleClick() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MPlayerMediator.instance().getMPlayerWindow().toggleFullScreen();
             }
         });
     }
