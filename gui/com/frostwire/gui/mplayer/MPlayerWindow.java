@@ -60,7 +60,6 @@ public class MPlayerWindow extends JFrame {
     private MediaPlayer player;
     private boolean handleVideoResize = true;
     private ScreenSaverDisabler screenSaverDisabler;
-    private static final LookAndFeel previousLookAndFeel = UIManager.getLookAndFeel();;
     
     protected MPlayerWindow() {
         initializeUI();
@@ -90,7 +89,7 @@ public class MPlayerWindow extends JFrame {
     }
 
     public static MPlayerWindow createMPlayerWindow() {
-        disableLookAndFeel();
+        LookAndFeel previousLookAndFeel = disableLookAndFeel();
         MPlayerWindow result = null;
         if (OSUtils.isWindows()) {
             result = new MPlayerWindowWin32();
@@ -99,12 +98,12 @@ public class MPlayerWindow extends JFrame {
         } else if (OSUtils.isMacOSX()) {
             result = new MPlayerWindowOSX();
         }
-        restoreLookAndFeel();
+        restoreLookAndFeel(previousLookAndFeel);
         
         return result;
     }
     
-    private static void restoreLookAndFeel() {
+    private static void restoreLookAndFeel(LookAndFeel previousLookAndFeel) {
         try {
             UIManager.setLookAndFeel(previousLookAndFeel);
         } catch (Exception e) {
@@ -112,12 +111,14 @@ public class MPlayerWindow extends JFrame {
         }
     }
 
-    private static void disableLookAndFeel() {
+    private static LookAndFeel disableLookAndFeel() {
+        LookAndFeel previousLookAndFeel = UIManager.getLookAndFeel();;
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return previousLookAndFeel;
     }
 
 
