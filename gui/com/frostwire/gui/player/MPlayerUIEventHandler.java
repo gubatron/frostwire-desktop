@@ -21,99 +21,99 @@ package com.frostwire.gui.player;
 import java.util.LinkedList;
 
 public class MPlayerUIEventHandler {
-	
-	private static MPlayerUIEventHandler instance = null;
-	
-	public static MPlayerUIEventHandler instance() {
-		if ( instance == null ) {
-			instance = new MPlayerUIEventHandler();
-		}
-		return instance;
-	}
-	
-	private MPlayerUIEventHandler() {
-		
-	}
-	
-	private LinkedList<MPlayerUIEventListener> listeners = new LinkedList<MPlayerUIEventListener>();
-	
-	public void addListener( MPlayerUIEventListener listener) {
-		listeners.add(listener);
-	}
-	
-	public void removeListener( MPlayerUIEventListener listener) {
-		listeners.remove(listener);
-	}
-	
+
+    private static MPlayerUIEventHandler instance = null;
+
+    public static MPlayerUIEventHandler instance() {
+        if (instance == null) {
+            instance = new MPlayerUIEventHandler();
+        }
+        return instance;
+    }
+
+    private MPlayerUIEventHandler() {
+
+    }
+
+    private LinkedList<MPlayerUIEventListener> listeners = new LinkedList<MPlayerUIEventListener>();
+
+    public void addListener(MPlayerUIEventListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(MPlayerUIEventListener listener) {
+        listeners.remove(listener);
+    }
+
     public void onVolumeChanged(float volume) {
-        for ( MPlayerUIEventListener listener : listeners ) {
-        	listener.onUIVolumeChanged(volume);
+        for (MPlayerUIEventListener listener : listeners) {
+            listener.onUIVolumeChanged(volume);
         }
     }
-    
+
     public void onVolumeIncremented() {
-        for ( MPlayerUIEventListener listener : listeners ) {
-        	listener.onUIVolumeIncremented();
+        for (MPlayerUIEventListener listener : listeners) {
+            listener.onUIVolumeIncremented();
         }
     }
 
     public void onVolumeDecremented() {
-        for ( MPlayerUIEventListener listener : listeners ) {
-        	listener.onUIVolumeDecremented();
+        for (MPlayerUIEventListener listener : listeners) {
+            listener.onUIVolumeDecremented();
         }
     }
-    
+
     public void onSeekToTime(float seconds) {
-        for ( MPlayerUIEventListener listener : listeners ) {
-        	listener.onUISeekToTime(seconds);
+        for (MPlayerUIEventListener listener : listeners) {
+            listener.onUISeekToTime(seconds);
         }
     }
-    
+
     public void onTogglePlayPausePressed() {
-    	for ( MPlayerUIEventListener listener : listeners ) {
-        	listener.onUITogglePlayPausePressed();
+        for (MPlayerUIEventListener listener : listeners) {
+            listener.onUITogglePlayPausePressed();
         }
     }
-    
+
     public void onPlayPressed() {
-        for ( MPlayerUIEventListener listener : listeners ) {
-        	listener.onUIPlayPressed();
+        for (MPlayerUIEventListener listener : listeners) {
+            listener.onUIPlayPressed();
         }
     }
-    
+
     public void onPausePressed() {
-        for ( MPlayerUIEventListener listener : listeners ) {
-        	listener.onUIPausePressed();
+        for (MPlayerUIEventListener listener : listeners) {
+            listener.onUIPausePressed();
         }
     }
-    
+
     public void onFastForwardPressed() {
-        for ( MPlayerUIEventListener listener : listeners ) {
-        	listener.onUIFastForwardPressed();
+        for (MPlayerUIEventListener listener : listeners) {
+            listener.onUIFastForwardPressed();
         }
     }
-    
+
     public void onRewindPressed() {
-        for ( MPlayerUIEventListener listener : listeners ) {
-        	listener.onUIRewindPressed();
+        for (MPlayerUIEventListener listener : listeners) {
+            listener.onUIRewindPressed();
         }
     }
-    
+
     public void onToggleFullscreenPressed() {
-        for ( MPlayerUIEventListener listener : listeners ) {
-        	listener.onUIToggleFullscreenPressed();
+        for (MPlayerUIEventListener listener : listeners) {
+            listener.onUIToggleFullscreenPressed();
         }
     }
 
-	public void onProgressSlideStart() {
-		for ( MPlayerUIEventListener listener : listeners ) {
-        	listener.onUIProgressSlideStart();
+    public void onProgressSlideStart() {
+        for (MPlayerUIEventListener listener : listeners) {
+            listener.onUIProgressSlideStart();
         }
-	}
+    }
 
-	public void onProgressSlideEnd() {
-		for ( MPlayerUIEventListener listener : listeners ) {
-        	listener.onUIProgressSlideEnd();
+    public void onProgressSlideEnd() {
+        for (MPlayerUIEventListener listener : listeners) {
+            listener.onUIProgressSlideEnd();
         }
-	}
+    }
 }
