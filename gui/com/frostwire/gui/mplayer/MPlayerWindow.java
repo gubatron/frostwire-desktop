@@ -36,6 +36,9 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
+
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.player.MediaPlayerAdapter;
@@ -57,6 +60,7 @@ public class MPlayerWindow extends JFrame {
     private MediaPlayer player;
     private boolean handleVideoResize = true;
     private ScreenSaverDisabler screenSaverDisabler;
+    private static final LookAndFeel previousLookAndFeel = UIManager.getLookAndFeel();;
     
     protected MPlayerWindow() {
         initializeUI();
@@ -86,16 +90,36 @@ public class MPlayerWindow extends JFrame {
     }
 
     public static MPlayerWindow createMPlayerWindow() {
+        disableLookAndFeel();
+        MPlayerWindow result = null;
         if (OSUtils.isWindows()) {
-            return new MPlayerWindowWin32();
+            result = new MPlayerWindowWin32();
         } else if (OSUtils.isLinux()) {
-            return new MPlayerWindowLinux();
+            result = new MPlayerWindowLinux();
         } else if (OSUtils.isMacOSX()) {
-            return new MPlayerWindowOSX();
-        } else {
-            return null;
+            result = new MPlayerWindowOSX();
+        }
+        restoreLookAndFeel();
+        
+        return result;
+    }
+    
+    private static void restoreLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(previousLookAndFeel);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
+    private static void disableLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public MediaPlayer getMediaPlayer() {
         return player;
@@ -235,6 +259,7 @@ public class MPlayerWindow extends JFrame {
     
             videoCanvas.setBounds(tl.x, tl.y, canvasSize.width, canvasSize.height);
             overlayControls.setBounds(origPos.x, origPos.y, contentSize.width, contentSize.height);
+            overlayControls.setAlpha(0);
         }
     }
 /*

@@ -18,16 +18,10 @@
 
 package com.frostwire.gui.mplayer;
 
-import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsDevice.WindowTranslucency;
-import java.awt.GraphicsEnvironment;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -39,17 +33,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -61,9 +55,12 @@ import com.frostwire.gui.player.MediaPlayerListener;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.sun.awt.AWTUtilities;
 
 public class MPlayerOverlayControls extends JDialog implements ProgressSliderListener, AlphaTarget, MediaPlayerListener {
+
+    private static final Color TRANSPARENT = new Color(0,0,0,0);
 
     private static final long serialVersionUID = -6148347816829785754L;
 
@@ -82,13 +79,13 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
     private boolean isOverlayVisible;
     private Container controlsContainer;
     private MPlayerWindow playerWindow;
+    
     public MPlayerOverlayControls(MPlayerWindow playerWindow) {
 
         this.playerWindow = playerWindow;
         player = MediaPlayer.instance();
 
-        Dimension initialSize = this.playerWindow.getSize();
-        setupUI(initialSize);
+        setupUI();
         
         player.addMediaPlayerListener(this);
         
@@ -149,25 +146,28 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         this.addMouseMotionListener(new OverlayControlsMouseAdapter());
     }
 
-    protected void setupUI(Dimension initialSize) {
 
+    protected void setupUI() {
         Container contentPanel = getContentPane();
 
         ImageIcon bkgndImage = GUIMediator.getThemeImage(OSUtils.isLinux() ? "fc_background_linux" : "fc_background");
         Dimension bkgndSize = new Dimension(bkgndImage.getIconWidth(), bkgndImage.getIconHeight());
 
-        setPreferredSize(initialSize);
-        setSize(initialSize);
         setUndecorated(true);
-        setBackground(new Color(0,0,0,0));
-        setVisible(true);
-        setAlwaysOnTop(true);
-        setAlpha(0.0f);
-        setOpacity(0.0f);
         
         if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
             AWTUtilities.setWindowOpaque(this, false);
         }
+
+        setPreferredSize(bkgndSize);
+        setSize(bkgndSize);
+        setMinimumSize(bkgndSize);
+        setMaximumSize(bkgndSize);
+        
+        setVisible(true);
+        setAlwaysOnTop(true);
+        setAlpha(0.0f);
+        setOpacity(0.0f);
 
         if (OSUtils.isLinux()) {
             setType(Type.POPUP);
@@ -175,22 +175,17 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
 
         // osx specific (won't harm windows/linux)
         getRootPane().putClientProperty("apple.awt.draggableWindowBackground", Boolean.FALSE);
+        getRootPane().putClientProperty("Window.alpha", new Float(0.25));
 
         contentPanel.setLayout(null);
-        contentPanel.setBounds(0, 0, initialSize.width, initialSize.height);
-        contentPanel.setBackground(new Color(0,0,0,0));
+        contentPanel.setBounds(0, 0, bkgndSize.width, bkgndSize.height);
+        contentPanel.setBackground(TRANSPARENT);
         
         controlsContainer = new Container();
         controlsContainer.setBounds(0, 0, bkgndSize.width, bkgndSize.height);
         controlsContainer.setVisible(true);
-        controlsContainer.setBackground(new Color(0,0,0,0));
+        controlsContainer.setBackground(TRANSPARENT);
         
-        // background image
-        // ------------------
-        JLabel bkgnd = new JLabel(bkgndImage);
-        bkgnd.setOpaque(false);
-        bkgnd.setSize(bkgndSize.width, bkgndSize.height);
-
         // play button
         // ------------
         Point playButtonPos = new Point(236, 13);
@@ -312,6 +307,12 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         progressSlider.addMouseMotionListener(overlayControlsMouseAdapter);
         controlsContainer.add(progressSlider);
 
+
+        // background image
+        // ------------------
+        JLabel bkgnd = new JLabel(bkgndImage);
+        bkgnd.setOpaque(false);
+        bkgnd.setSize(bkgndSize.width, bkgndSize.height);
         controlsContainer.add(bkgnd);
         
         contentPanel.add(controlsContainer);
@@ -413,24 +414,28 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         hideTimer.stop();
     }
     
+    /**
     @Override
     public void paint(Graphics g) {
         
         // clear background
-        Graphics gg = g.create();
+
+        Graphics2D g2d = (Graphics2D) g;
         try {
-            if (gg instanceof Graphics2D) {
-                gg.setColor(getBackground());
-                ((Graphics2D)gg).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC, 0.0f));
-                gg.fillRect(0, 0, getWidth(), getHeight());
-            }
+            g2d.setColor(TRANSPARENT);
+            g2d.setComposite(AlphaComposite.Clear);
+            //((Graphics2D)gg).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC, 0.0f));
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+            System.out.println("paint(): Filling TRANSPARENT " + getWidth() + "," + getHeight());
+
         } finally {
-            gg.dispose();
+            //g2d.dispose();
         }
         
         // paint sub components
         super.paintComponents(g);
     }
+    */
     
     private void onHideTimerExpired() {
         hideOverlay(true);
@@ -582,6 +587,10 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
             }
         }
     
+    }
+    
+    public static void main(String[] args) {
+        MPlayerMediator.instance().showPlayerWindow(true);
     }
 
 }
