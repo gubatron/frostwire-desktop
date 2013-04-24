@@ -60,9 +60,9 @@ public final class CrawlCacheDB {
 
     private final DatabaseHelper databaseHelper;
 
-    private static CrawlCacheDB instance = new CrawlCacheDB();
+    private final static CrawlCacheDB instance = new CrawlCacheDB();
 
-    public static CrawlCacheDB intance() {
+    public static CrawlCacheDB instance() {
         return instance;
     }
 

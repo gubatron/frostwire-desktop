@@ -37,7 +37,7 @@ public class DatabaseCrawlCache implements CrawlCache {
     private CrawlCacheDB db;
 
     public DatabaseCrawlCache() {
-        db = CrawlCacheDB.intance();
+        db = CrawlCacheDB.instance();
     }
 
     @Override

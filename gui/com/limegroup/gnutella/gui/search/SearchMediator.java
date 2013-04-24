@@ -34,6 +34,8 @@ import javax.swing.event.ChangeListener;
 
 import org.limewire.util.I18NConvert;
 import org.limewire.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frostwire.gui.filters.SearchFilter;
 import com.frostwire.gui.filters.SearchFilterFactory;
@@ -62,6 +64,8 @@ import com.limegroup.gnutella.settings.SearchSettings;
  * underlying classes.
  */
 public final class SearchMediator {
+    
+    public static final Logger LOG = LoggerFactory.getLogger(SearchMediator.class);
 
     /**
      * Query text is valid.
@@ -146,7 +150,12 @@ public final class SearchMediator {
             }
         });
         
-        CrawlPagedWebSearchPerformer.setCache(new DatabaseCrawlCache());
+        try {
+            CrawlPagedWebSearchPerformer.setCache(new DatabaseCrawlCache());
+        } catch (Throwable t) {
+            LOG.error("could not set database crawl cache", t);
+        }
+        
         CrawlPagedWebSearchPerformer.setMagnetDownloader(new VuzeMagnetDownloader());
         
         this.manager = new SearchManagerImpl(SEARCH_MANAGER_NUM_THREADS);
