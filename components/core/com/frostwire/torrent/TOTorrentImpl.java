@@ -917,7 +917,11 @@ class TOTorrentImpl implements TOTorrent {
             System.out.println("announce url = " + announce_url);
             System.out.println("announce group = " + announce_group.getAnnounceURLSets().length);
             System.out.println("creation date = " + creation_date);
-            System.out.println("creation by = " + created_by);
+            try {
+                System.out.println("creation by = " + (created_by != null ? new String(created_by, Constants.DEFAULT_ENCODING) : ""));
+            } catch (UnsupportedEncodingException e1) {
+                e1.printStackTrace();
+            }
             System.out.println("comment = " + comment);
             System.out.println("hash = " + ByteFormatter.nicePrint(hash));
             System.out.println("piece length = " + getPieceLength());

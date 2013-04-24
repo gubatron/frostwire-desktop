@@ -29,8 +29,6 @@ package com.frostwire.torrent;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -1158,31 +1156,6 @@ public final class TorrentUtils {
         }
 
         return (ByteFormatter.nicePrint(hash, tight));
-    }
-
-    /**
-     * Runs a file through a series of test to verify if it is a torrent.
-     * 
-     * @param filename File to test
-     * @return true - file is a valid torrent file
-     * 
-     * @throws FileNotFoundException
-     * @throws IOException
-     */
-    public static boolean isTorrentFile(String filename) throws FileNotFoundException, IOException {
-        File check = new File(filename);
-        if (!check.exists())
-            throw new FileNotFoundException("File " + filename + " not found.");
-        if (!check.canRead())
-            throw new IOException("File " + filename + " cannot be read.");
-        if (check.isDirectory())
-            throw new IOException("File " + filename + " is a directory.");
-        try {
-            TOTorrentFactory.deserialiseFromBEncodedFile(check);
-            return true;
-        } catch (Throwable e) {
-            return false;
-        }
     }
 
     private final static class UrlUtils {

@@ -100,10 +100,6 @@ final class SHA1Hasher {
         return sha1.digest();
     }
 
-    //  public HashWrapper getHash() {
-    //  	return new HashWrapper(sha1.digest());
-    //  }  
-
     /**
      * Resets the hash calculation.
      */

@@ -39,12 +39,6 @@ public class TOTorrentFactory {
 
     // deserialisation methods
 
-    public static TOTorrent deserialiseFromBEncodedFile(File file)
-
-    throws TOTorrentException {
-        return (new TOTorrentDeserialiseImpl(file));
-    }
-
     /**
      * WARNING - take care if you use this that the data you're creating the torrent from doesn't contain
      * unwanted attributes in it (e.g. "torrent filename"). You should almost definitely be using 

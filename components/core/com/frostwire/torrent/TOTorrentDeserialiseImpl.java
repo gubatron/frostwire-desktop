@@ -22,8 +22,6 @@
 package com.frostwire.torrent;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -36,54 +34,6 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 final class TOTorrentDeserialiseImpl extends TOTorrentImpl {
-
-    public TOTorrentDeserialiseImpl(File file) throws TOTorrentException {
-        if (!file.exists()) {
-            throw (new TOTorrentException("Torrent file '" + file.toString() + "' does not exist", TOTorrentException.RT_FILE_NOT_FOUND));
-
-        }
-
-        if (!file.isFile()) {
-
-            throw (new TOTorrentException("Torrent must be a file ('" + file.toString() + "')", TOTorrentException.RT_FILE_NOT_FOUND));
-        }
-
-        if (file.length() == 0) {
-
-            throw (new TOTorrentException("Torrent is zero length ('" + file.toString() + "')", TOTorrentException.RT_ZERO_LENGTH));
-
-        }
-        // parg: there used to be a check made that the torrent file wasn't larger than 1MB.
-        // However, this as been exceeded! (see bug 826617)
-        // As there is no technical reason for this limit I have removed it
-
-        FileInputStream fis = null;
-
-        try {
-
-            fis = new FileInputStream(file);
-
-            construct(fis);
-
-        } catch (Throwable e) {
-
-            throw (new TOTorrentException("Error reading torrent file '" + file.toString() + " - " + Debug.getNestedExceptionMessage(e), TOTorrentException.RT_READ_FAILS));
-
-        } finally {
-
-            if (fis != null) {
-
-                try {
-
-                    fis.close();
-
-                } catch (IOException e) {
-
-                    Debug.printStackTrace(e);
-                }
-            }
-        }
-    }
 
     public TOTorrentDeserialiseImpl(InputStream is) throws TOTorrentException {
         construct(is);
@@ -168,9 +118,7 @@ final class TOTorrentDeserialiseImpl extends TOTorrentImpl {
         construct(metaInfo.toByteArray());
     }
 
-    protected void construct(byte[] bytes)
-
-    throws TOTorrentException {
+    protected void construct(byte[] bytes) throws TOTorrentException {
         try {
             BDecoder decoder = new BDecoder();
 
