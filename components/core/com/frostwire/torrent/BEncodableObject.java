@@ -19,7 +19,6 @@
  */
 package com.frostwire.torrent;
 
-
 /**
  * Classes that implement this interface can be sent to a bencode
  * 
@@ -27,10 +26,9 @@ package com.frostwire.torrent;
  * @created Oct 24, 2009
  *
  */
-public interface BEncodableObject
-{
-	/**
-	 * @return Must return an object that is bencodable
-	 */
-	public Object toBencodeObject();
+public interface BEncodableObject {
+    /**
+     * @return Must return an object that is bencodable
+     */
+    public Object toBencodeObject();
 }

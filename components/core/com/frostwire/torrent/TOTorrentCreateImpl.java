@@ -400,7 +400,7 @@ public class TOTorrentCreateImpl extends TOTorrentImpl implements TOTorrentFileH
     protected void report(String resource_key, String additional_text) {
         if (progress_listeners.size() > 0) {
 
-            String prefix = MessageText.getString(resource_key);
+            String prefix = resource_key;
 
             for (int i = 0; i < progress_listeners.size(); i++) {
 

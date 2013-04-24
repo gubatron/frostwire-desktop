@@ -27,253 +27,221 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class
-LocaleUtil 
-{
-  
-  private static final String systemEncoding = System.getProperty("file.encoding");
-  
-  private static final String[] manual_charset = {
-	systemEncoding,	// must be first entry due to code below that gets the system decoder
-	"Big5","EUC-JP","EUC-KR","GB18030","GB2312","GBK","ISO-2022-JP","ISO-2022-KR",
-	"Shift_JIS","KOI8-R",
-	"TIS-620",	// added for bug #1008848 
-	Constants.DEFAULT_ENCODING,"windows-1251",Constants.BYTE_ENCODING 
-  };
-  
-	// the general ones *must* also be members of the above manual ones
-  	
-  protected static final String[] generalCharsets = {
-	Constants.BYTE_ENCODING, Constants.DEFAULT_ENCODING, systemEncoding
-  };
-  
-   private static LocaleUtil singleton = new LocaleUtil();
-  
-   public static LocaleUtil
-   getSingleton()
-   {
-   	return( singleton );
-   }
-   
-   private LocaleUtilDecoder[] 	all_decoders;
-   private LocaleUtilDecoder[]	general_decoders;
-   private LocaleUtilDecoder	system_decoder;
-   private LocaleUtilDecoder	fallback_decoder;
-     
-  
-  
-  private 
-  LocaleUtil() 
-  {
-	List	decoders 		= new ArrayList();
-  	List	decoder_names	= new ArrayList();
-  	
-	for (int i = 0; i < manual_charset.length; i++) {
-	   try {
-		 String	name = manual_charset[i];
-		 
-		 CharsetDecoder decoder = Charset.forName(name).newDecoder();
-		 
-		 if ( decoder != null ){
-		 	
-			 LocaleUtilDecoder	lu_decoder =  new LocaleUtilDecoderReal(decoders.size(),decoder);
-			 
-			 decoder_names.add( lu_decoder.getName());
-			
-			 if ( i == 0 ){
-			 	
-			 	system_decoder = lu_decoder;
-			 }
-			 
-			 decoders.add( lu_decoder );
-			 
-		 }else if ( i == 0 ){
-		 	
-		 	Debug.out( "System decoder failed to be found!!!!" );
-		 }
-		 
-	   }catch (Exception ignore) {
-	   }
-	 }
+public class LocaleUtil {
 
-	general_decoders = new LocaleUtilDecoder[generalCharsets.length];
-	
-	for (int i=0;i<general_decoders.length;i++){
-		
-		int	gi = decoder_names.indexOf( generalCharsets[i]);
-		
-		if ( gi != -1 ){
-		
-			general_decoders[i] = (LocaleUtilDecoder)decoders.get(gi);
-		}
-	}
+    private static final String systemEncoding = System.getProperty("file.encoding");
 
-	boolean show_all = false;//COConfigurationManager.getBooleanParameter("File.Decoder.ShowAll" );
+    private static final String[] manual_charset = { systemEncoding, // must be first entry due to code below that gets the system decoder
+            "Big5", "EUC-JP", "EUC-KR", "GB18030", "GB2312", "GBK", "ISO-2022-JP", "ISO-2022-KR", "Shift_JIS", "KOI8-R", "TIS-620", // added for bug #1008848 
+            Constants.DEFAULT_ENCODING, "windows-1251", Constants.BYTE_ENCODING };
 
-	if ( show_all ){
-		
-		Map m = Charset.availableCharsets();
-	  	
-		Iterator it = m.keySet().iterator();
-	
-		while(it.hasNext()){
-	  		
-			String	charset_name = (String)it.next();
-	  		
-			if ( !decoder_names.contains( charset_name)){
-	  		
-				try {
-				  CharsetDecoder decoder = Charset.forName(charset_name).newDecoder();
-				 
-				  if ( decoder != null ){
-				  	
-				  	LocaleUtilDecoder	lu_decoder = new LocaleUtilDecoderReal(decoders.size(),decoder);
-				  
-				  	decoders.add( lu_decoder);
-				  
-				  	decoder_names.add( lu_decoder.getName());
-				  }
-				 
-				} catch (Exception ignore) {
-				}
-			}
-		}
-	}
-    
-	fallback_decoder = new LocaleUtilDecoderFallback(decoders.size());
-	
-	decoders.add( fallback_decoder );
+    // the general ones *must* also be members of the above manual ones
 
-	all_decoders	= new LocaleUtilDecoder[ decoders.size()];
-	
-	decoders.toArray( all_decoders); 
-  }
-  
-  public String
-  getSystemEncoding()
-  {
-  	return( systemEncoding );
-  }
-  
-  public LocaleUtilDecoder[]
-  getDecoders()
-  {
-  	return( all_decoders );
-  }
- 
-    public LocaleUtilDecoder[]
-	getGeneralDecoders()
-	{
-	   	return( general_decoders );
-	}
-    
-  public LocaleUtilDecoder getFallBackDecoder() {
-  	return fallback_decoder;
-  }
-  
-  public LocaleUtilDecoder
-  getSystemDecoder()
-  {
-  	return( system_decoder );
-  }
-  
-  /**
-   * Determine which locales are candidates for handling the supplied type of 
-   * string
-   * 
-   * @param array String in an byte array 
-   * @return list of candidates.  Valid candidates have getDecoder() non-null
-   */
-  protected LocaleUtilDecoderCandidate[] 
-  getCandidates(
-	byte[] array ) 
-  {
-	LocaleUtilDecoderCandidate[] candidates = new LocaleUtilDecoderCandidate[all_decoders.length];
-    
-	boolean show_less_likely_conversions = false;//COConfigurationManager.getBooleanParameter("File.Decoder.ShowLax" );
+    protected static final String[] generalCharsets = { Constants.BYTE_ENCODING, Constants.DEFAULT_ENCODING, systemEncoding };
 
-	for (int i = 0; i < all_decoders.length; i++){
-    	
-	  candidates[i] = new LocaleUtilDecoderCandidate(i);
-      
-	  try{
-			LocaleUtilDecoder decoder = all_decoders[i];
-      	      	
-			String str = decoder.tryDecode( array, show_less_likely_conversions );
+    private static LocaleUtil singleton = new LocaleUtil();
 
-			if ( str != null ){
-				
-				candidates[i].setDetails( decoder, str );
-			}
-	  } catch (Exception ignore) {
-      	
-	  }
-	}
-    
-	/*
-	System.out.println( "getCandidates: = " + candidates.length );
-	
-	for (int i=0;i<candidates.length;i++){
-		
-		LocaleUtilDecoderCandidate	cand = candidates[i];
-		
-		if ( cand != null ){
-		
-			String	value = cand.getValue();
-			
-			if ( value != null ){
-			
-				System.out.println( cand.getDecoder().getName() + "/" + (value==null?-1:value.length()) + "/" + value );
-			}
-		}  
-	}
-	*/
-	
-	return candidates;
-  }
-    
-  /**
-   * Determine which decoders are candidates for handling the supplied type of
-   * string
-   * 
-   * @param array String in a byte array
-   * @return list of possibly valid decoders.  LocaleUtilDecoder
-   */
-  protected List
-  getCandidateDecoders(
-  	byte[]		array )
-  {
-  	LocaleUtilDecoderCandidate[] 	candidates = getCandidates( array );
-  	
-  	List	decoders = new ArrayList();
-  	
-  	for (int i=0;i<candidates.length;i++){
-  	
-  		LocaleUtilDecoder	d = candidates[i].getDecoder();
-  		
-  		if (d != null)
-  			decoders.add(d);
-  	}
-  	
-  	return decoders;
-  }
-  
-  /**
-   * 
-   * @param array
-   * @return List of LocaleUtilDecoderCandidate
-   */
-  protected List getCandidatesAsList(byte[] array) {
-		LocaleUtilDecoderCandidate[] candidates = getCandidates(array);
+    public static LocaleUtil getSingleton() {
+        return (singleton);
+    }
 
-		List candidatesList = new ArrayList();
+    private LocaleUtilDecoder[] all_decoders;
+    private LocaleUtilDecoder[] general_decoders;
+    private LocaleUtilDecoder system_decoder;
+    private LocaleUtilDecoder fallback_decoder;
 
-		for (int i = 0; i < candidates.length; i++) {
-			if (candidates[i].getDecoder() != null)
-				candidatesList.add(candidates[i]);
-		}
+    private LocaleUtil() {
+        List<LocaleUtilDecoder> decoders = new ArrayList<LocaleUtilDecoder>();
+        List<String> decoder_names = new ArrayList<String>();
 
-		return candidatesList;
-	}
-  
+        for (int i = 0; i < manual_charset.length; i++) {
+            try {
+                String name = manual_charset[i];
+
+                CharsetDecoder decoder = Charset.forName(name).newDecoder();
+
+                if (decoder != null) {
+
+                    LocaleUtilDecoder lu_decoder = new LocaleUtilDecoderReal(decoders.size(), decoder);
+
+                    decoder_names.add(lu_decoder.getName());
+
+                    if (i == 0) {
+
+                        system_decoder = lu_decoder;
+                    }
+
+                    decoders.add(lu_decoder);
+
+                } else if (i == 0) {
+
+                    Debug.out("System decoder failed to be found!!!!");
+                }
+
+            } catch (Exception ignore) {
+            }
+        }
+
+        general_decoders = new LocaleUtilDecoder[generalCharsets.length];
+
+        for (int i = 0; i < general_decoders.length; i++) {
+
+            int gi = decoder_names.indexOf(generalCharsets[i]);
+
+            if (gi != -1) {
+
+                general_decoders[i] = (LocaleUtilDecoder) decoders.get(gi);
+            }
+        }
+
+        boolean show_all = true;
+
+        if (show_all) {
+
+            Map<String, Charset> m = Charset.availableCharsets();
+
+            Iterator<String> it = m.keySet().iterator();
+
+            while (it.hasNext()) {
+
+                String charset_name = (String) it.next();
+
+                if (!decoder_names.contains(charset_name)) {
+
+                    try {
+                        CharsetDecoder decoder = Charset.forName(charset_name).newDecoder();
+
+                        if (decoder != null) {
+
+                            LocaleUtilDecoder lu_decoder = new LocaleUtilDecoderReal(decoders.size(), decoder);
+
+                            decoders.add(lu_decoder);
+
+                            decoder_names.add(lu_decoder.getName());
+                        }
+
+                    } catch (Exception ignore) {
+                    }
+                }
+            }
+        }
+
+        fallback_decoder = new LocaleUtilDecoderFallback(decoders.size());
+
+        decoders.add(fallback_decoder);
+
+        all_decoders = new LocaleUtilDecoder[decoders.size()];
+
+        decoders.toArray(all_decoders);
+    }
+
+    public String getSystemEncoding() {
+        return (systemEncoding);
+    }
+
+    public LocaleUtilDecoder[] getDecoders() {
+        return (all_decoders);
+    }
+
+    public LocaleUtilDecoder getFallBackDecoder() {
+        return fallback_decoder;
+    }
+
+    public LocaleUtilDecoder getSystemDecoder() {
+        return (system_decoder);
+    }
+
+    /**
+     * Determine which locales are candidates for handling the supplied type of 
+     * string
+     * 
+     * @param array String in an byte array 
+     * @return list of candidates.  Valid candidates have getDecoder() non-null
+     */
+    protected LocaleUtilDecoderCandidate[] getCandidates(byte[] array) {
+        LocaleUtilDecoderCandidate[] candidates = new LocaleUtilDecoderCandidate[all_decoders.length];
+
+        boolean show_less_likely_conversions = false;//COConfigurationManager.getBooleanParameter("File.Decoder.ShowLax" );
+
+        for (int i = 0; i < all_decoders.length; i++) {
+
+            candidates[i] = new LocaleUtilDecoderCandidate(i);
+
+            try {
+                LocaleUtilDecoder decoder = all_decoders[i];
+
+                String str = decoder.tryDecode(array, show_less_likely_conversions);
+
+                if (str != null) {
+
+                    candidates[i].setDetails(decoder, str);
+                }
+            } catch (Exception ignore) {
+
+            }
+        }
+
+        /*
+        System.out.println( "getCandidates: = " + candidates.length );
+        
+        for (int i=0;i<candidates.length;i++){
+        	
+        	LocaleUtilDecoderCandidate	cand = candidates[i];
+        	
+        	if ( cand != null ){
+        	
+        		String	value = cand.getValue();
+        		
+        		if ( value != null ){
+        		
+        			System.out.println( cand.getDecoder().getName() + "/" + (value==null?-1:value.length()) + "/" + value );
+        		}
+        	}  
+        }
+        */
+
+        return candidates;
+    }
+
+    /**
+     * Determine which decoders are candidates for handling the supplied type of
+     * string
+     * 
+     * @param array String in a byte array
+     * @return list of possibly valid decoders.  LocaleUtilDecoder
+     */
+    protected List<LocaleUtilDecoder> getCandidateDecoders(byte[] array) {
+        LocaleUtilDecoderCandidate[] candidates = getCandidates(array);
+
+        List<LocaleUtilDecoder> decoders = new ArrayList<LocaleUtilDecoder>();
+
+        for (int i = 0; i < candidates.length; i++) {
+
+            LocaleUtilDecoder d = candidates[i].getDecoder();
+
+            if (d != null)
+                decoders.add(d);
+        }
+
+        return decoders;
+    }
+
+    /**
+     * 
+     * @param array
+     * @return List of LocaleUtilDecoderCandidate
+     */
+    protected List<LocaleUtilDecoderCandidate> getCandidatesAsList(byte[] array) {
+        LocaleUtilDecoderCandidate[] candidates = getCandidates(array);
+
+        List<LocaleUtilDecoderCandidate> candidatesList = new ArrayList<LocaleUtilDecoderCandidate>();
+
+        for (int i = 0; i < candidates.length; i++) {
+            if (candidates[i].getDecoder() != null)
+                candidatesList.add(candidates[i]);
+        }
+
+        return candidatesList;
+    }
+
 }

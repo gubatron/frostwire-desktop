@@ -27,55 +27,36 @@ package com.frostwire.torrent;
  *
  */
 
-public class 
-LocaleUtilEncodingException 
-	extends Exception
-{
-	protected String[]		valid_charsets;
-	protected String[]		valid_names;
-	
-	protected boolean		abandoned;
-	
-	public
-	LocaleUtilEncodingException(
-		String[]		charsets,
-		String[]		names )
-	{
-		valid_charsets	= charsets;
-		valid_names		= names;
-	}
-	
-	public
-	LocaleUtilEncodingException(
-		Throwable	cause )
-	{
-		super( cause );
-	}	
-	
-	public
-	LocaleUtilEncodingException(
-		boolean		_abandoned )
-	{
-		super( "Locale selection abandoned" );
-		
-		abandoned	= _abandoned;
-	}
-	
-	public boolean
-	getAbandoned()
-	{
-		return( abandoned );
-	}
-	
-	public String[]
-	getValidCharsets()
-	{
-		return( valid_charsets );
-	}
-	
-	public String[]
-	getValidTorrentNames()
-	{
-		return( valid_names );
-	}
+public class LocaleUtilEncodingException extends Exception {
+    protected String[] valid_charsets;
+    protected String[] valid_names;
+
+    protected boolean abandoned;
+
+    public LocaleUtilEncodingException(String[] charsets, String[] names) {
+        valid_charsets = charsets;
+        valid_names = names;
+    }
+
+    public LocaleUtilEncodingException(Throwable cause) {
+        super(cause);
+    }
+
+    public LocaleUtilEncodingException(boolean _abandoned) {
+        super("Locale selection abandoned");
+
+        abandoned = _abandoned;
+    }
+
+    public boolean getAbandoned() {
+        return (abandoned);
+    }
+
+    public String[] getValidCharsets() {
+        return (valid_charsets);
+    }
+
+    public String[] getValidTorrentNames() {
+        return (valid_names);
+    }
 }

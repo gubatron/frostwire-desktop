@@ -29,8 +29,11 @@ import java.io.IOException;
  * @IOException will be used if the encountered problem is of external nature (mostly IOExceptiosn themselves)
  */
 public class BEncodingException extends IOException {
-	
-	public BEncodingException(){}
-	public BEncodingException(String message) {	super(message); }
-}
 
+    public BEncodingException() {
+    }
+
+    public BEncodingException(String message) {
+        super(message);
+    }
+}

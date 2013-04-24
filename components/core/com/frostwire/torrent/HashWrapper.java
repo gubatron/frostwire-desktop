@@ -26,60 +26,46 @@ import java.util.Arrays;
  * @author Olivier
  * 
  */
-public class 
-HashWrapper 
-	implements ByteArrayWrapper
-{
-  
-  private byte[] 	hash;
-  private int		hash_code;
-  
-  public HashWrapper(byte[] _hash) 
-  {
-  	this(_hash,0,_hash.length);
-  }
-  
-  public HashWrapper(byte[] _hash, int offset,int length) 
-  {
-	 hash = new byte[length];
-	 
-	 System.arraycopy(_hash,offset,hash,0,length);
+public class HashWrapper {
 
-	 for (int i = 0; i < length; i++) {
-	   
-	 	hash_code = 31*hash_code + hash[i];
-	 }
-   }
-  
-  public boolean equals(Object o) {
-    if(! (o instanceof HashWrapper))
-      return false;
-    
-    byte[] otherHash = ((HashWrapper)o).getHash();
-	return Arrays.equals(hash, otherHash);	
-  }
-  
-  public byte[] 
-  getHash() 
-  {
-    return( hash );
-  }
+    private byte[] hash;
+    private int hash_code;
 
-  public byte[]
-  getBytes()
-  {
-  	return( hash );
-  }
-  
-  /* (non-Javadoc)
-   * @see java.lang.Object#hashCode()
-   */
-  public int hashCode() 
-  {
-  	return( hash_code );
-  }
-  
-  public String toBase32String() {
-  	return Base32.encode(hash);
-  }
+    public HashWrapper(byte[] _hash) {
+        this(_hash, 0, _hash.length);
+    }
+
+    public HashWrapper(byte[] _hash, int offset, int length) {
+        hash = new byte[length];
+
+        System.arraycopy(_hash, offset, hash, 0, length);
+
+        for (int i = 0; i < length; i++) {
+
+            hash_code = 31 * hash_code + hash[i];
+        }
+    }
+
+    public boolean equals(Object o) {
+        if (!(o instanceof HashWrapper))
+            return false;
+
+        byte[] otherHash = ((HashWrapper) o).getHash();
+        return Arrays.equals(hash, otherHash);
+    }
+
+    public byte[] getHash() {
+        return (hash);
+    }
+
+    public byte[] getBytes() {
+        return (hash);
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() {
+        return (hash_code);
+    }
 }

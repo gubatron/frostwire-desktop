@@ -47,441 +47,392 @@ import java.util.Map;
  * @author TdC_VgA
  *
  */
-public class BDecoder 
-{
-	public static final int MAX_BYTE_ARRAY_SIZE	= 16*1024*1024;
-	private static final int MAX_MAP_KEY_SIZE		= 64*1024;
-	
-	private static final boolean TRACE	= false;
-	
-	private boolean recovery_mode;
-	private boolean	verify_map_order;
-	
-	private final static byte[]	PORTABLE_ROOT;
-	
-	static{
-		byte[]	portable = null;
-		
-		try{
-			String root = System.getProperty( "azureus.portable.root", "" );
-			
-			if ( root.length() > 0 ){
-				
-				portable = root.getBytes( "UTF-8" );
-			}
-		}catch( Throwable e ){
-			
-			e.printStackTrace();
-		}
-		
-		PORTABLE_ROOT = portable;
-	}
-	
-	public static Map
-	decode(
-		byte[]	data )
-
-		throws IOException
-	{
-		return( new BDecoder().decodeByteArray( data ));
-	}
-
-	public static Map
-	decode(
-		byte[]	data,
-		int		offset,
-		int		length )
-
-		throws IOException
-	{
-		return( new BDecoder().decodeByteArray( data, offset, length ));
-	}
-
-	public static Map
-	decode(
-		BufferedInputStream	is  )
-
-		throws IOException
-	{
-		return( new BDecoder().decodeStream( is ));
-	}
-
-
-	public 
-	BDecoder() 
-	{	
-	}
-
-	public Map<String, Object> 
-	decodeByteArray(
-		byte[] data) 
-
-		throws IOException 
-	{ 
-		return( decode(new BDecoderInputStreamArray(data),true));
-	}
-
-	public Map 
-	decodeByteArray(
-		byte[] 	data,
-		int		offset,
-		int		length )
-
-		throws IOException 
-	{ 
-		return( decode(new BDecoderInputStreamArray(data, offset, length ),true));
-	}
-	
-	public Map 
-	decodeByteArray(
-		byte[] 	data,
-		int		offset,
-		int		length,
-		boolean internKeys)
-
-		throws IOException 
-	{ 
-		return( decode(new BDecoderInputStreamArray(data, offset, length ),internKeys));
-	}
-	
-	// used externally 
-	public Map decodeByteBuffer(ByteBuffer buffer, boolean internKeys) throws IOException {
-		InputStream is = new BDecoderInputStreamArray(buffer);
-		Map result = decode(is,internKeys);
-		buffer.position(buffer.limit()-is.available());
-		return result;
-	}
-	
-	public Map 
-	decodeStream(
-		BufferedInputStream data )  
-
-		throws IOException 
-	{
-		return decodeStream(data, true);
-	}
-
-	public Map 
-	decodeStream(
-		BufferedInputStream data,
-		boolean internKeys)  
-
-		throws IOException 
-	{
-		Object	res = decodeInputStream(data, "", 0, internKeys);
-
-		if ( res == null ){
-
-			throw( new BEncodingException( "BDecoder: zero length file" ));
-
-		}else if ( !(res instanceof Map )){
-
-			throw( new BEncodingException( "BDecoder: top level isn't a Map" ));
-		}
-
-		return((Map)res );
-	}
-
-	private Map 
-	decode(
-		InputStream data, boolean internKeys ) 
-
-		throws IOException 
-	{
-		Object res = decodeInputStream(data, "", 0, internKeys);
-
-		if ( res == null ){
-
-			throw( new BEncodingException( "BDecoder: zero length file" ));
-
-		}else if ( !(res instanceof Map )){
-
-			throw( new BEncodingException( "BDecoder: top level isn't a Map" ));
-		}
-
-		return((Map)res );
-	}
-	
-	// reuseable objects for key decoding
-	private ByteBuffer keyBytesBuffer = ByteBuffer.allocate(32);
-	private CharBuffer keyCharsBuffer = CharBuffer.allocate(32);
-	private CharsetDecoder keyDecoder = Constants.BYTE_CHARSET.newDecoder();
-
-	private Object 
-	decodeInputStream(
-		InputStream dbis,
-		String		context,
-		int			nesting,
-		boolean internKeys) 
-
-		throws IOException 
-	{
-		if (nesting == 0 && !dbis.markSupported()) {
-
-			throw new IOException("InputStream must support the mark() method");
-		}
-
-			//set a mark
-		
-		dbis.mark(Integer.MAX_VALUE);
-
-			//read a byte
-		
-		int tempByte = dbis.read();
-
-			//decide what to do
-		
-		switch (tempByte) {
-		case 'd' :
-				//create a new dictionary object
-			
-			HashMap tempMap = new HashMap();
-
-			try{
-				byte[]	prev_key = null;
-				
-					//get the key   
-				
-				while (true) {
-					
-					dbis.mark(Integer.MAX_VALUE);
-
-					tempByte = dbis.read();
-					if(tempByte == 'e' || tempByte == -1)
-						break; // end of map
-
-					dbis.reset();
-					
-					// decode key strings manually so we can reuse the bytebuffer
-
-					int keyLength = (int)getPositiveNumberFromStream(dbis, ':');
-
-					if ( keyLength > MAX_MAP_KEY_SIZE ){
-						byte[] remaining = new byte[128];
-						getByteArrayFromStream(dbis, 128, remaining);
-						String msg = "dictionary key is too large, max=" + MAX_MAP_KEY_SIZE + ": value=" + new String(remaining);
-						System.err.println( msg );
-						throw( new IOException( msg ));
-					}
-					
-					if(keyLength < keyBytesBuffer.capacity())
-					{
-						keyBytesBuffer.position(0).limit(keyLength);
-						keyCharsBuffer.position(0).limit(keyLength);
-					} else {
-						keyBytesBuffer = ByteBuffer.allocate(keyLength);
-						keyCharsBuffer = CharBuffer.allocate(keyLength);
-					}
-					
-					getByteArrayFromStream(dbis, keyLength, keyBytesBuffer.array());						
-					
-					if ( verify_map_order ){
-						
-						byte[] current_key = new byte[keyLength];
-						
-						System.arraycopy( keyBytesBuffer.array(), 0, current_key, 0, keyLength );
-						
-						if ( prev_key != null ){
-							
-							int	len = Math.min( prev_key.length, keyLength );
-							
-							int	state = 0;
-							
-							for ( int i=0;i<len;i++){
-								
-								int	cb = current_key[i]&0x00ff;
-								int	pb = prev_key[i]&0x00ff;
-								
-								if ( cb > pb ){
-									state = 1;
-									break;
-								}else if ( cb < pb ){
-									state = 2;
-									break;
-								}
-							}
-							
-							if ( state == 0){
-								if ( prev_key.length > keyLength ){
-									
-									state = 2;
-								}
-							}
-							
-							if ( state == 2 ){
-								
-								// Debug.out( "Dictionary order incorrect: prev=" + new String( prev_key ) + ", current=" + new String( current_key ));
-								
-								if (!( tempMap instanceof HashMapEx )){
-									
-								    HashMapEx x = new HashMapEx( tempMap );
-									
-									x.setFlag( HashMapEx.FL_MAP_ORDER_INCORRECT, true );
-									
-									tempMap = x;
-								}
-							}
-						}
-						
-						prev_key = current_key;
-					}
-					
-					keyDecoder.reset();
-					keyDecoder.decode(keyBytesBuffer,keyCharsBuffer,true);
-					keyDecoder.flush(keyCharsBuffer);
-					String key = new String(keyCharsBuffer.array(),0,keyCharsBuffer.limit());
-					
-					// keys often repeat a lot - intern to save space
-//					if (internKeys)
-//						key = StringInterner.intern( key );
-					
-					
-
-					//decode value
-
-					Object value = decodeInputStream(dbis,key,nesting+1,internKeys);
-					
-					// value interning is too CPU-intensive, let's skip that for now
-					/*if(value instanceof byte[] && ((byte[])value).length < 17)
-					value = StringInterner.internBytes((byte[])value);*/
-
-					if ( TRACE ){
-						System.out.println( key + "->" + value + ";" );
-					}
-					
-						// recover from some borked encodings that I have seen whereby the value has
-						// not been encoded. This results in, for example, 
-						// 18:azureus_propertiesd0:e
-						// we only get null back here if decoding has hit an 'e' or end-of-file
-						// that is, there is no valid way for us to get a null 'value' here
-					
-					if ( value == null ){
-						
-						System.err.println( "Invalid encoding - value not serialsied for '" + key + "' - ignoring" );
-						
-						break;
-					}
-				
-					if ( tempMap.put( key, value) != null ){
-						
-						Debug.out( "BDecoder: key '" + key + "' already exists!" );
-					}
-				}
-
-				/*	
-	        if ( tempMap.size() < 8 ){
-
-	        	tempMap = new CompactMap( tempMap );
-	        }*/
-
-				dbis.mark(Integer.MAX_VALUE);
-				tempByte = dbis.read();
-				dbis.reset();
-				if ( nesting > 0 && tempByte == -1 ){
-
-					throw( new BEncodingException( "BDecoder: invalid input data, 'e' missing from end of dictionary"));
-				}
-			}catch( Throwable e ){
-
-				if ( !recovery_mode ){
-
-					if ( e instanceof IOException ){
-
-						throw((IOException)e);
-					}
-
-					throw( new IOException( Debug.getNestedExceptionMessage(e)));
-				}
-			}
-
-			//tempMap.compactify(-0.9f);
-
-				//return the map
-			
-			return tempMap;
-
-		case 'l' :
-				//create the list
-			
-			ArrayList tempList = new ArrayList();
-
-			try{
-					//create the key
-				
-				String context2 = PORTABLE_ROOT==null?context:(context+"[]");
-				
-				Object tempElement = null;
-				while ((tempElement = decodeInputStream(dbis, context2, nesting+1, internKeys)) != null) {
-						//add the element
-					tempList.add(tempElement);
-				}
-
-				tempList.trimToSize();
-				dbis.mark(Integer.MAX_VALUE);
-				tempByte = dbis.read();
-				dbis.reset();
-				if ( nesting > 0 && tempByte == -1 ){
-
-					throw( new BEncodingException( "BDecoder: invalid input data, 'e' missing from end of list"));
-				}
-			}catch( Throwable e ){
-
-				if ( !recovery_mode ){
-
-					if ( e instanceof IOException ){
-
-						throw((IOException)e);
-					}
-
-					throw( new IOException( Debug.getNestedExceptionMessage(e)));
-				}
-			}
-				//return the list
-			return tempList;
-
-		case 'e' :
-		case -1 :
-			return null;
-
-		case 'i' :
-			return Long.valueOf(getNumberFromStream(dbis, 'e'));
-
-		case '0' :
-		case '1' :
-		case '2' :
-		case '3' :
-		case '4' :
-		case '5' :
-		case '6' :
-		case '7' :
-		case '8' :
-		case '9' :
-				//move back one
-			dbis.reset();
-				//get the string
-			return getByteArrayFromStream(dbis, context );
-
-		default :{
-
-			int	rem_len = dbis.available();
-
-			if ( rem_len > 256 ){
-
-				rem_len	= 256;
-			}
-
-			byte[] rem_data = new byte[rem_len];
-
-			dbis.read( rem_data );
-
-			throw( new BEncodingException(
-					"BDecoder: unknown command '" + tempByte + ", remainder = " + new String( rem_data )));
-		}
-		}
-	}
-
-	/*
-  private long getNumberFromStream(InputStream dbis, char parseChar) throws IOException {
+public class BDecoder {
+    public static final int MAX_BYTE_ARRAY_SIZE = 16 * 1024 * 1024;
+    private static final int MAX_MAP_KEY_SIZE = 64 * 1024;
+
+    private static final boolean TRACE = false;
+
+    private boolean recovery_mode;
+    private boolean verify_map_order;
+
+    private final static byte[] PORTABLE_ROOT;
+
+    static {
+        byte[] portable = null;
+
+        try {
+            String root = System.getProperty("azureus.portable.root", "");
+
+            if (root.length() > 0) {
+
+                portable = root.getBytes("UTF-8");
+            }
+        } catch (Throwable e) {
+
+            e.printStackTrace();
+        }
+
+        PORTABLE_ROOT = portable;
+    }
+
+    public static Map decode(byte[] data)
+
+    throws IOException {
+        return (new BDecoder().decodeByteArray(data));
+    }
+
+    public static Map decode(byte[] data, int offset, int length)
+
+    throws IOException {
+        return (new BDecoder().decodeByteArray(data, offset, length));
+    }
+
+    public static Map decode(BufferedInputStream is)
+
+    throws IOException {
+        return (new BDecoder().decodeStream(is));
+    }
+
+    public BDecoder() {
+    }
+
+    public Map<String, Object> decodeByteArray(byte[] data)
+
+    throws IOException {
+        return (decode(new BDecoderInputStreamArray(data), true));
+    }
+
+    public Map decodeByteArray(byte[] data, int offset, int length)
+
+    throws IOException {
+        return (decode(new BDecoderInputStreamArray(data, offset, length), true));
+    }
+
+    public Map decodeByteArray(byte[] data, int offset, int length, boolean internKeys)
+
+    throws IOException {
+        return (decode(new BDecoderInputStreamArray(data, offset, length), internKeys));
+    }
+
+    // used externally 
+    public Map decodeByteBuffer(ByteBuffer buffer, boolean internKeys) throws IOException {
+        InputStream is = new BDecoderInputStreamArray(buffer);
+        Map result = decode(is, internKeys);
+        buffer.position(buffer.limit() - is.available());
+        return result;
+    }
+
+    public Map decodeStream(BufferedInputStream data)
+
+    throws IOException {
+        return decodeStream(data, true);
+    }
+
+    public Map decodeStream(BufferedInputStream data, boolean internKeys)
+
+    throws IOException {
+        Object res = decodeInputStream(data, "", 0, internKeys);
+
+        if (res == null) {
+
+            throw (new BEncodingException("BDecoder: zero length file"));
+
+        } else if (!(res instanceof Map)) {
+
+            throw (new BEncodingException("BDecoder: top level isn't a Map"));
+        }
+
+        return ((Map) res);
+    }
+
+    private Map decode(InputStream data, boolean internKeys)
+
+    throws IOException {
+        Object res = decodeInputStream(data, "", 0, internKeys);
+
+        if (res == null) {
+
+            throw (new BEncodingException("BDecoder: zero length file"));
+
+        } else if (!(res instanceof Map)) {
+
+            throw (new BEncodingException("BDecoder: top level isn't a Map"));
+        }
+
+        return ((Map) res);
+    }
+
+    // reuseable objects for key decoding
+    private ByteBuffer keyBytesBuffer = ByteBuffer.allocate(32);
+    private CharBuffer keyCharsBuffer = CharBuffer.allocate(32);
+    private CharsetDecoder keyDecoder = Constants.BYTE_CHARSET.newDecoder();
+
+    private Object decodeInputStream(InputStream dbis, String context, int nesting, boolean internKeys)
+
+    throws IOException {
+        if (nesting == 0 && !dbis.markSupported()) {
+
+            throw new IOException("InputStream must support the mark() method");
+        }
+
+        //set a mark
+
+        dbis.mark(Integer.MAX_VALUE);
+
+        //read a byte
+
+        int tempByte = dbis.read();
+
+        //decide what to do
+
+        switch (tempByte) {
+        case 'd':
+            //create a new dictionary object
+
+            HashMap tempMap = new HashMap();
+
+            try {
+                byte[] prev_key = null;
+
+                //get the key   
+
+                while (true) {
+
+                    dbis.mark(Integer.MAX_VALUE);
+
+                    tempByte = dbis.read();
+                    if (tempByte == 'e' || tempByte == -1)
+                        break; // end of map
+
+                    dbis.reset();
+
+                    // decode key strings manually so we can reuse the bytebuffer
+
+                    int keyLength = (int) getPositiveNumberFromStream(dbis, ':');
+
+                    if (keyLength > MAX_MAP_KEY_SIZE) {
+                        byte[] remaining = new byte[128];
+                        getByteArrayFromStream(dbis, 128, remaining);
+                        String msg = "dictionary key is too large, max=" + MAX_MAP_KEY_SIZE + ": value=" + new String(remaining);
+                        System.err.println(msg);
+                        throw (new IOException(msg));
+                    }
+
+                    if (keyLength < keyBytesBuffer.capacity()) {
+                        keyBytesBuffer.position(0).limit(keyLength);
+                        keyCharsBuffer.position(0).limit(keyLength);
+                    } else {
+                        keyBytesBuffer = ByteBuffer.allocate(keyLength);
+                        keyCharsBuffer = CharBuffer.allocate(keyLength);
+                    }
+
+                    getByteArrayFromStream(dbis, keyLength, keyBytesBuffer.array());
+
+                    if (verify_map_order) {
+
+                        byte[] current_key = new byte[keyLength];
+
+                        System.arraycopy(keyBytesBuffer.array(), 0, current_key, 0, keyLength);
+
+                        if (prev_key != null) {
+
+                            int len = Math.min(prev_key.length, keyLength);
+
+                            int state = 0;
+
+                            for (int i = 0; i < len; i++) {
+
+                                int cb = current_key[i] & 0x00ff;
+                                int pb = prev_key[i] & 0x00ff;
+
+                                if (cb > pb) {
+                                    state = 1;
+                                    break;
+                                } else if (cb < pb) {
+                                    state = 2;
+                                    break;
+                                }
+                            }
+
+                            if (state == 0) {
+                                if (prev_key.length > keyLength) {
+
+                                    state = 2;
+                                }
+                            }
+
+                            if (state == 2) {
+
+                                // Debug.out( "Dictionary order incorrect: prev=" + new String( prev_key ) + ", current=" + new String( current_key ));
+
+                                if (!(tempMap instanceof HashMapEx)) {
+
+                                    HashMapEx x = new HashMapEx(tempMap);
+
+                                    x.setFlag(HashMapEx.FL_MAP_ORDER_INCORRECT, true);
+
+                                    tempMap = x;
+                                }
+                            }
+                        }
+
+                        prev_key = current_key;
+                    }
+
+                    keyDecoder.reset();
+                    keyDecoder.decode(keyBytesBuffer, keyCharsBuffer, true);
+                    keyDecoder.flush(keyCharsBuffer);
+                    String key = new String(keyCharsBuffer.array(), 0, keyCharsBuffer.limit());
+
+                    // keys often repeat a lot - intern to save space
+                    //					if (internKeys)
+                    //						key = StringInterner.intern( key );
+
+                    //decode value
+
+                    Object value = decodeInputStream(dbis, key, nesting + 1, internKeys);
+
+                    // value interning is too CPU-intensive, let's skip that for now
+                    /*if(value instanceof byte[] && ((byte[])value).length < 17)
+                    value = StringInterner.internBytes((byte[])value);*/
+
+                    if (TRACE) {
+                        System.out.println(key + "->" + value + ";");
+                    }
+
+                    // recover from some borked encodings that I have seen whereby the value has
+                    // not been encoded. This results in, for example, 
+                    // 18:azureus_propertiesd0:e
+                    // we only get null back here if decoding has hit an 'e' or end-of-file
+                    // that is, there is no valid way for us to get a null 'value' here
+
+                    if (value == null) {
+
+                        System.err.println("Invalid encoding - value not serialsied for '" + key + "' - ignoring");
+
+                        break;
+                    }
+
+                    if (tempMap.put(key, value) != null) {
+
+                        Debug.out("BDecoder: key '" + key + "' already exists!");
+                    }
+                }
+
+                /*	
+                if ( tempMap.size() < 8 ){
+
+                tempMap = new CompactMap( tempMap );
+                }*/
+
+                dbis.mark(Integer.MAX_VALUE);
+                tempByte = dbis.read();
+                dbis.reset();
+                if (nesting > 0 && tempByte == -1) {
+
+                    throw (new BEncodingException("BDecoder: invalid input data, 'e' missing from end of dictionary"));
+                }
+            } catch (Throwable e) {
+
+                if (!recovery_mode) {
+
+                    if (e instanceof IOException) {
+
+                        throw ((IOException) e);
+                    }
+
+                    throw (new IOException(Debug.getNestedExceptionMessage(e)));
+                }
+            }
+
+            //tempMap.compactify(-0.9f);
+
+            //return the map
+
+            return tempMap;
+
+        case 'l':
+            //create the list
+
+            ArrayList tempList = new ArrayList();
+
+            try {
+                //create the key
+
+                String context2 = PORTABLE_ROOT == null ? context : (context + "[]");
+
+                Object tempElement = null;
+                while ((tempElement = decodeInputStream(dbis, context2, nesting + 1, internKeys)) != null) {
+                    //add the element
+                    tempList.add(tempElement);
+                }
+
+                tempList.trimToSize();
+                dbis.mark(Integer.MAX_VALUE);
+                tempByte = dbis.read();
+                dbis.reset();
+                if (nesting > 0 && tempByte == -1) {
+
+                    throw (new BEncodingException("BDecoder: invalid input data, 'e' missing from end of list"));
+                }
+            } catch (Throwable e) {
+
+                if (!recovery_mode) {
+
+                    if (e instanceof IOException) {
+
+                        throw ((IOException) e);
+                    }
+
+                    throw (new IOException(Debug.getNestedExceptionMessage(e)));
+                }
+            }
+            //return the list
+            return tempList;
+
+        case 'e':
+        case -1:
+            return null;
+
+        case 'i':
+            return Long.valueOf(getNumberFromStream(dbis, 'e'));
+
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+            //move back one
+            dbis.reset();
+            //get the string
+            return getByteArrayFromStream(dbis, context);
+
+        default: {
+
+            int rem_len = dbis.available();
+
+            if (rem_len > 256) {
+
+                rem_len = 256;
+            }
+
+            byte[] rem_data = new byte[rem_len];
+
+            dbis.read(rem_data);
+
+            throw (new BEncodingException("BDecoder: unknown command '" + tempByte + ", remainder = " + new String(rem_data)));
+        }
+        }
+    }
+
+    /*
+    private long getNumberFromStream(InputStream dbis, char parseChar) throws IOException {
     StringBuffer sb = new StringBuffer(3);
 
     int tempByte = dbis.read();
@@ -505,238 +456,222 @@ public class BDecoder
     }
 
     return Long.parseLong(str);
-  }
-	 */
+    }
+     */
 
-	/** only create the array once per decoder instance (no issues with recursion as it's only used in a leaf method)
-	 */
-	private final char[] numberChars = new char[32];
+    /** only create the array once per decoder instance (no issues with recursion as it's only used in a leaf method)
+     */
+    private final char[] numberChars = new char[32];
 
-	/**
-	 * @note will break (likely return a negative) if number >
-	 * {@link Integer#MAX_VALUE}.  This check is intentionally skipped to
-	 * increase performance
-	 */
-	private int
-	getPositiveNumberFromStream(
-			InputStream	dbis,
-			char	parseChar)
+    /**
+     * @note will break (likely return a negative) if number >
+     * {@link Integer#MAX_VALUE}.  This check is intentionally skipped to
+     * increase performance
+     */
+    private int getPositiveNumberFromStream(InputStream dbis, char parseChar)
 
-	throws IOException 
-	{
-		int tempByte = dbis.read();
-		if (tempByte < 0) {
-			return -1;
-		}
-		if (tempByte != parseChar) {
+    throws IOException {
+        int tempByte = dbis.read();
+        if (tempByte < 0) {
+            return -1;
+        }
+        if (tempByte != parseChar) {
 
-			int value = tempByte - '0';
-			
-			tempByte = dbis.read();
-			// optimized for single digit cases
-			if (tempByte == parseChar) {
-				return value;
-			}
-			if (tempByte < 0) {
-				return -1;
-			}
+            int value = tempByte - '0';
 
-			while (true) {
-				// Base10 shift left --> v*8 + v*2 = v*10
-				value = (value << 3) + (value << 1) + (tempByte - '0');
-				// For bounds check:
-				// if (value < 0) return something;
-				tempByte = dbis.read();
-				if (tempByte == parseChar) {
-					return value;
-				}
-				if (tempByte < 0) {
-					return -1;
-				}
-			}
-		} else {
-			return 0;
-		}
-	}
-	
-	private long 
-	getNumberFromStream(
-		InputStream 	dbis, 
-		char 					parseChar) 
+            tempByte = dbis.read();
+            // optimized for single digit cases
+            if (tempByte == parseChar) {
+                return value;
+            }
+            if (tempByte < 0) {
+                return -1;
+            }
 
-		throws IOException 
-	{
-		
+            while (true) {
+                // Base10 shift left --> v*8 + v*2 = v*10
+                value = (value << 3) + (value << 1) + (tempByte - '0');
+                // For bounds check:
+                // if (value < 0) return something;
+                tempByte = dbis.read();
+                if (tempByte == parseChar) {
+                    return value;
+                }
+                if (tempByte < 0) {
+                    return -1;
+                }
+            }
+        } else {
+            return 0;
+        }
+    }
 
-		int tempByte = dbis.read();
+    private long getNumberFromStream(InputStream dbis, char parseChar)
 
-		int pos = 0;
+    throws IOException {
 
-		while ((tempByte != parseChar) && (tempByte >= 0)) {
-			numberChars[pos++] = (char)tempByte;
-			if ( pos == numberChars.length ){
-				throw( new NumberFormatException( "Number too large: " + new String(numberChars,0,pos) + "..." ));
-			}
-			tempByte = dbis.read();
-		}
+        int tempByte = dbis.read();
 
-		//are we at the end of the stream?
+        int pos = 0;
 
-		if (tempByte < 0) {
+        while ((tempByte != parseChar) && (tempByte >= 0)) {
+            numberChars[pos++] = (char) tempByte;
+            if (pos == numberChars.length) {
+                throw (new NumberFormatException("Number too large: " + new String(numberChars, 0, pos) + "..."));
+            }
+            tempByte = dbis.read();
+        }
 
-			return -1;
+        //are we at the end of the stream?
 
-		}else if ( pos == 0 ){
-			// support some borked impls that sometimes don't bother encoding anything
+        if (tempByte < 0) {
 
-			return(0);
-		}
+            return -1;
 
-		try{
-			return( parseLong( numberChars, 0, pos ));
-			
-		}catch( NumberFormatException e ){
-			
-			String temp = new String( numberChars, 0, pos );
-			
-			try{
-				double d = Double.parseDouble( temp );
-				
-				long l = (long)d;
-				
-				Debug.out( "Invalid number '" + temp + "' - decoding as " + l + " and attempting recovery" );
-					
-				return( l );
-				
-			}catch( Throwable f ){
-			}
-			
-			throw( e );
-		}
-	}
+        } else if (pos == 0) {
+            // support some borked impls that sometimes don't bother encoding anything
 
-	// This is similar to Long.parseLong(String) source
-	// It is also used in projects external to azureus2/azureus3 hence it is public
-	public static long
-	parseLong(
-		char[]	chars,
-		int		start,
-		int		length )
-	{
-		if ( length > 0 ){
-			// Short Circuit: We don't support octal parsing, so if it 
-			// starts with 0, it's 0
-			if (chars[start] == '0') {
+            return (0);
+        }
 
-				return 0;
-			}
+        try {
+            return (parseLong(numberChars, 0, pos));
 
-			long result = 0;
+        } catch (NumberFormatException e) {
 
-			boolean negative = false;
+            String temp = new String(numberChars, 0, pos);
 
-			int 	i 	= start;
+            try {
+                double d = Double.parseDouble(temp);
 
-			long limit;
+                long l = (long) d;
 
-			if ( chars[i] == '-' ){
+                Debug.out("Invalid number '" + temp + "' - decoding as " + l + " and attempting recovery");
 
-				negative = true;
+                return (l);
 
-				limit = Long.MIN_VALUE;
+            } catch (Throwable f) {
+            }
 
-				i++;
+            throw (e);
+        }
+    }
 
-			}else{
-				// Short Circuit: If we are only processing one char,
-				// and it wasn't a '-', just return that digit instead
-				// of doing the negative junk
-				if (length == 1) {
-					int digit = chars[i] - '0';
+    // This is similar to Long.parseLong(String) source
+    // It is also used in projects external to azureus2/azureus3 hence it is public
+    public static long parseLong(char[] chars, int start, int length) {
+        if (length > 0) {
+            // Short Circuit: We don't support octal parsing, so if it 
+            // starts with 0, it's 0
+            if (chars[start] == '0') {
 
-					if ( digit < 0 || digit > 9 ){
+                return 0;
+            }
 
-						throw new NumberFormatException(new String(chars,start,length));
+            long result = 0;
 
-					}else{
+            boolean negative = false;
 
-						return digit;
-					}
-				}
+            int i = start;
 
-				limit = -Long.MAX_VALUE;
-			}
+            long limit;
 
-			int	max = start + length;
+            if (chars[i] == '-') {
 
-			if ( i < max ){
+                negative = true;
 
-				int digit = chars[i++] - '0';
+                limit = Long.MIN_VALUE;
 
-				if ( digit < 0 || digit > 9 ){
+                i++;
 
-					throw new NumberFormatException(new String(chars,start,length));
+            } else {
+                // Short Circuit: If we are only processing one char,
+                // and it wasn't a '-', just return that digit instead
+                // of doing the negative junk
+                if (length == 1) {
+                    int digit = chars[i] - '0';
 
-				}else{
+                    if (digit < 0 || digit > 9) {
 
-					result = -digit;
-				}
-			}
+                        throw new NumberFormatException(new String(chars, start, length));
 
-			long multmin = limit / 10;
+                    } else {
 
-			while ( i < max ){
+                        return digit;
+                    }
+                }
 
-				// Accumulating negatively avoids surprises near MAX_VALUE
+                limit = -Long.MAX_VALUE;
+            }
 
-				int digit = chars[i++] - '0';
+            int max = start + length;
 
-				if ( digit < 0 || digit > 9 ){
+            if (i < max) {
 
-					throw new NumberFormatException(new String(chars,start,length));
-				}
+                int digit = chars[i++] - '0';
 
-				if ( result < multmin ){
+                if (digit < 0 || digit > 9) {
 
-					throw new NumberFormatException(new String(chars,start,length));
-				}
+                    throw new NumberFormatException(new String(chars, start, length));
 
-				result *= 10;
+                } else {
 
-				if ( result < limit + digit ){
+                    result = -digit;
+                }
+            }
 
-					throw new NumberFormatException(new String(chars,start,length));
-				}
+            long multmin = limit / 10;
 
-				result -= digit;
-			}
+            while (i < max) {
 
-			if ( negative ){
+                // Accumulating negatively avoids surprises near MAX_VALUE
 
-				if ( i > start+1 ){
+                int digit = chars[i++] - '0';
 
-					return result;
+                if (digit < 0 || digit > 9) {
 
-				}else{	/* Only got "-" */
+                    throw new NumberFormatException(new String(chars, start, length));
+                }
 
-					throw new NumberFormatException(new String(chars,start,length));
-				}
-			}else{
+                if (result < multmin) {
 
-				return -result;
-			}  
-		}else{
+                    throw new NumberFormatException(new String(chars, start, length));
+                }
 
-			throw new NumberFormatException(new String(chars,start,length));
-		}
+                result *= 10;
 
-	}
+                if (result < limit + digit) {
 
+                    throw new NumberFormatException(new String(chars, start, length));
+                }
 
+                result -= digit;
+            }
 
-	// This one causes lots of "Query Information" calls to the filesystem
-	/*
-  private long getNumberFromStreamOld(InputStream dbis, char parseChar) throws IOException {
+            if (negative) {
+
+                if (i > start + 1) {
+
+                    return result;
+
+                } else { /* Only got "-" */
+
+                    throw new NumberFormatException(new String(chars, start, length));
+                }
+            } else {
+
+                return -result;
+            }
+        } else {
+
+            throw new NumberFormatException(new String(chars, start, length));
+        }
+
+    }
+
+    // This one causes lots of "Query Information" calls to the filesystem
+    /*
+    private long getNumberFromStreamOld(InputStream dbis, char parseChar) throws IOException {
     int length = 0;
 
     //place a mark
@@ -776,629 +711,539 @@ public class BDecoder
     String	str_value = new String(cb.array(),0,cb.limit());
 
     return Long.parseLong(str_value);
-  }
-	 */
-
-	private byte[] 
-	getByteArrayFromStream(
-		InputStream dbis,
-		String		context )
-		
-		throws IOException 
-	{
-		int length = (int) getPositiveNumberFromStream(dbis, ':');
-
-		if (length < 0) {
-			return null;
-		}
-
-		// note that torrent hashes can be big (consider a 55GB file with 2MB pieces
-		// this generates a pieces hash of 1/2 meg
-
-		if ( length > MAX_BYTE_ARRAY_SIZE ){
-
-			throw( new IOException( "Byte array length too large (" + length + ")"));
-		}
-		
-		byte[] tempArray = new byte[length];
-		
-		getByteArrayFromStream(dbis, length, tempArray);		
-		
-		if ( PORTABLE_ROOT != null && length >= PORTABLE_ROOT.length && tempArray[1] == ':' && tempArray[2] == '\\' && context != null ){
-			
-			boolean	mismatch = false;
-			
-			for ( int i=2;i<PORTABLE_ROOT.length;i++){
-				
-				if ( tempArray[i] != PORTABLE_ROOT[i] ){
-					
-					mismatch = true;
-					
-					break;
-				}
-			}
-			
-			if ( !mismatch ){
-								
-				context = context.toLowerCase( Locale.US );
-				
-					// always a chance a hash will match the root so we just pick on relevant looking
-					// entries...
-				
-				if ( 	context.contains( "file" ) || 
-						context.contains( "link" ) || 
-						context.contains( "dir" ) || 
-						context.contains( "folder" ) || 
-						context.contains( "path" ) || 
-						context.contains( "save" ) || 
-						context.contains( "torrent" )){
-					
-					tempArray[0] = PORTABLE_ROOT[0];
-	
-					/*
-					String	test = new String( tempArray, 0, tempArray.length > 80?80:tempArray.length );
-	
-					System.out.println( "mapped " + context + "->" + tempArray.length + ": " + test );
-					*/
-					
-				}else{
-												
-					String	test = new String( tempArray, 0, tempArray.length > 80?80:tempArray.length );
-							
-					System.out.println( "Portable: not mapping " + context + "->" + tempArray.length + ": " + test );
-				}
-			}
-		}
-		
-		return tempArray; 
-	}
-
-	private void getByteArrayFromStream(InputStream dbis, int length, byte[] targetArray) throws IOException {
-
-		int count = 0;
-		int len = 0;
-		//get the string
-		while (count != length && (len = dbis.read(targetArray, count, length - count)) > 0)
-			count += len;
-
-		if (count != length)
-			throw (new IOException("BDecoder::getByteArrayFromStream: truncated"));
-	}	
-
-	public void
-	setVerifyMapOrder(
-		boolean	b )
-	{
-		verify_map_order = b;
-	}
-	
-	public void
-	setRecoveryMode(
-		boolean	r )
-	{
-		recovery_mode	= r;
-	}
-
-	public static void
-	print(
-		Object		obj )
-	{
-		StringWriter 	sw = new StringWriter();
-		
-		PrintWriter		pw = new PrintWriter( sw );
-		
-		print( pw, obj );
-		
-		pw.flush();
-		
-		System.out.println( sw.toString());
-	}
-	
-	public static void
-	print(
-		PrintWriter	writer,
-		Object		obj )
-	{
-		print( writer, obj, "", false );
-	}
-
-	private static void
-	print(
-		PrintWriter	writer,
-		Object		obj,
-		String		indent,
-		boolean		skip_indent )
-	{
-		String	use_indent = skip_indent?"":indent;
-
-		if ( obj instanceof Long ){
-
-			writer.println( use_indent + obj );
-
-		}else if ( obj instanceof byte[]){
-
-			byte[]	b = (byte[])obj;
-
-			if ( b.length==20 ){
-				writer.println( use_indent + " { "+ ByteFormatter.nicePrint( b )+ " }" );
-			}else if ( b.length < 64 ){
-				writer.println( new String(b) + " [" + ByteFormatter.encodeString( b ) + "]" );
-			}else{
-				writer.println( "[byte array length " + b.length );
-			}
-
-		}else if ( obj instanceof String ){
-
-			writer.println( use_indent + obj );
-
-		}else if ( obj instanceof List ){
-
-			List	l = (List)obj;
-
-			writer.println( use_indent + "[" );
-
-			for (int i=0;i<l.size();i++){
-
-				writer.print( indent + "  (" + i + ") " );
-
-				print( writer, l.get(i), indent + "    ", true );
-			}
-
-			writer.println( indent + "]" );
-
-		}else{
-
-			Map	m = (Map)obj;
-
-			Iterator	it = m.keySet().iterator();
-
-			while( it.hasNext()){
-
-				String	key = (String)it.next();
-
-				if ( key.length() > 256 ){
-					writer.print( indent + key.substring(0,256) + "... = " );
-				}else{
-					writer.print( indent + key + " = " );
-				}
-
-				print( writer, m.get(key), indent + "  ", true );
-			}
-		}
-	}
-
-	/**
-	 * Converts any byte[] entries into UTF-8 strings.
-	 * REPLACES EXISTING MAP VALUES
-	 * 
-	 * @param map
-	 * @return
-	 */
-
-	public static Map
-	decodeStrings(
-		Map	map )
-	{
-		if (map == null ){
-
-			return( null );
-		}
-
-		Iterator it = map.entrySet().iterator();
-
-		while( it.hasNext()){
-
-			Map.Entry	entry = (Map.Entry)it.next();
-
-			Object	value = entry.getValue();
-
-			if ( value instanceof byte[]){
-
-				try{
-					entry.setValue( new String((byte[])value,"UTF-8" ));
-
-				}catch( Throwable e ){
-
-					System.err.println(e);
-				}
-			}else if ( value instanceof Map ){
-
-				decodeStrings((Map)value );
-			}else if ( value instanceof List ){
-
-				decodeStrings((List)value );
-			}
-		}
-
-		return( map );
-	}
-
-	/**
-	 * Decodes byte arrays into strings.  
-	 * REPLACES EXISTING LIST VALUES
-	 * 
-	 * @param list
-	 * @return the same list passed in
-	 */
-	public static List
-	decodeStrings(
-		List	list )
-	{
-		if ( list == null ){
-
-			return( null );
-		}
-
-		for (int i=0;i<list.size();i++){
-
-			Object value = list.get(i);
-
-			if ( value instanceof byte[]){
-
-				try{
-					String str = new String((byte[])value, "UTF-8" );
-
-					list.set( i, str );
-
-				}catch( Throwable e ){
-
-					System.err.println(e);
-				}
-			}else if ( value instanceof Map ){
-
-				decodeStrings((Map)value );
-
-			}else if ( value instanceof List ){
-
-				decodeStrings((List)value );		 
-			}
-		}
-
-		return( list );
-	}
-
-	private static void
-	print(
-		File		f,
-		File		output )
-	{
-		try{
-			BDecoder	decoder = new BDecoder();
-
-			decoder.setRecoveryMode( false );
-
-			PrintWriter	pw = new PrintWriter( new FileWriter( output ));
-
-			print( pw, decoder.decodeStream( new BufferedInputStream( new FileInputStream( f ))));
-
-			pw.flush();
-
-		}catch( Throwable e ){
-
-			e.printStackTrace();
-		}
-	}
-	
-   	// JSON
-    
-    private static Object
-    decodeFromJSONGeneric(
-    	Object		obj )
-    {
-    	if ( obj == null ){
-    		
-    		return( null );
-    		
-    	}else if ( obj instanceof Map ){
-    		
-    		return( decodeFromJSONObject((Map)obj));
-    		
-    	}else if ( obj instanceof List ){
-    		
-    		return( decodeFromJSONArray((List)obj));
-    		
-     	}else if ( obj instanceof String ){
-      		
-     		try{
-     			return(((String)obj).getBytes( "UTF-8" ));
-     			
-     		}catch( Throwable e ){
-     			
-     			return(((String)obj).getBytes());
-     		}
-      		
-     	}else if ( obj instanceof Long ){
-      		
-      		return( obj );
-      		
-      	}else if ( obj instanceof Boolean ){
-      		    		
-    		return( new Long(((Boolean)obj)?1:0 ));
-    		
-    	}else if ( obj instanceof Double ){
-    		
-    		return( String.valueOf((Double)obj));
-    		
-    	}else{
-    		
-    		System.err.println( "Unexpected JSON value type: " + obj.getClass());
-    		
-    		return( obj );
-    	}
     }
-    
-    public static List
-    decodeFromJSONArray(
-    	List		j_list )
-    {    	
-    	List	b_list = new ArrayList();
-    	
-    	for ( Object o: j_list ){
-    		
-    		b_list.add( decodeFromJSONGeneric( o ));
-    	}
-    	
-    	return( b_list );
+     */
+
+    private byte[] getByteArrayFromStream(InputStream dbis, String context)
+
+    throws IOException {
+        int length = (int) getPositiveNumberFromStream(dbis, ':');
+
+        if (length < 0) {
+            return null;
+        }
+
+        // note that torrent hashes can be big (consider a 55GB file with 2MB pieces
+        // this generates a pieces hash of 1/2 meg
+
+        if (length > MAX_BYTE_ARRAY_SIZE) {
+
+            throw (new IOException("Byte array length too large (" + length + ")"));
+        }
+
+        byte[] tempArray = new byte[length];
+
+        getByteArrayFromStream(dbis, length, tempArray);
+
+        if (PORTABLE_ROOT != null && length >= PORTABLE_ROOT.length && tempArray[1] == ':' && tempArray[2] == '\\' && context != null) {
+
+            boolean mismatch = false;
+
+            for (int i = 2; i < PORTABLE_ROOT.length; i++) {
+
+                if (tempArray[i] != PORTABLE_ROOT[i]) {
+
+                    mismatch = true;
+
+                    break;
+                }
+            }
+
+            if (!mismatch) {
+
+                context = context.toLowerCase(Locale.US);
+
+                // always a chance a hash will match the root so we just pick on relevant looking
+                // entries...
+
+                if (context.contains("file") || context.contains("link") || context.contains("dir") || context.contains("folder") || context.contains("path") || context.contains("save") || context.contains("torrent")) {
+
+                    tempArray[0] = PORTABLE_ROOT[0];
+
+                    /*
+                    String	test = new String( tempArray, 0, tempArray.length > 80?80:tempArray.length );
+                    
+                    System.out.println( "mapped " + context + "->" + tempArray.length + ": " + test );
+                    */
+
+                } else {
+
+                    String test = new String(tempArray, 0, tempArray.length > 80 ? 80 : tempArray.length);
+
+                    System.out.println("Portable: not mapping " + context + "->" + tempArray.length + ": " + test);
+                }
+            }
+        }
+
+        return tempArray;
     }
-    
-    
-    public static Map
-    decodeFromJSONObject(
-    	Map<Object,Object>		j_map )
-    {
-    	Map	b_map = new HashMap();
-    	
-    	for ( Map.Entry<Object,Object> entry: j_map.entrySet()){
-    		
-    		Object	key = entry.getKey();
-    		Object	val	= entry.getValue();
-    		
-    		b_map.put((String)key, decodeFromJSONGeneric( val ));
-    	}
-    	
-    	return( b_map );
+
+    private void getByteArrayFromStream(InputStream dbis, int length, byte[] targetArray) throws IOException {
+
+        int count = 0;
+        int len = 0;
+        //get the string
+        while (count != length && (len = dbis.read(targetArray, count, length - count)) > 0)
+            count += len;
+
+        if (count != length)
+            throw (new IOException("BDecoder::getByteArrayFromStream: truncated"));
     }
-    
-//    public static Map
-//    decodeFromJSON(
-//    	String	json )
-//    {
-//    	Map j_map = JSONUtils.decodeJSON(json);
-//    	    	
-//    	return( decodeFromJSONObject( j_map ));
-//    }
-	
-	
-/*
-	private interface
-	BDecoderInputStream
-	{
-		public int
-		read()
 
-			throws IOException;
+    public void setVerifyMapOrder(boolean b) {
+        verify_map_order = b;
+    }
 
-		public int
-		read(
-			byte[] buffer )
+    public void setRecoveryMode(boolean r) {
+        recovery_mode = r;
+    }
 
-			throws IOException;
+    public static void print(Object obj) {
+        StringWriter sw = new StringWriter();
 
-		public int
-		read(
-			byte[] 	buffer,
-			int		offset,
-			int		length )
+        PrintWriter pw = new PrintWriter(sw);
 
-			throws IOException;
+        print(pw, obj);
 
-		public int
-		available()
+        pw.flush();
 
-			throws IOException;
+        System.out.println(sw.toString());
+    }
 
-		public boolean
-		markSupported();
+    public static void print(PrintWriter writer, Object obj) {
+        print(writer, obj, "", false);
+    }
 
-		public void
-		mark(
-				int	limit );
+    private static void print(PrintWriter writer, Object obj, String indent, boolean skip_indent) {
+        String use_indent = skip_indent ? "" : indent;
 
-		public void
-		reset()
+        if (obj instanceof Long) {
 
-			throws IOException;
-	}
+            writer.println(use_indent + obj);
 
-	private class
-	BDecoderInputStreamStream
-	
-		implements BDecoderInputStream
-	{
-		final private BufferedInputStream		is;
+        } else if (obj instanceof byte[]) {
 
-		private
-		BDecoderInputStreamStream(
-			BufferedInputStream	_is )
-		{
-			is	= _is;
-		}
+            byte[] b = (byte[]) obj;
 
-		public int
-		read()
+            if (b.length == 20) {
+                writer.println(use_indent + " { " + ByteFormatter.nicePrint(b) + " }");
+            } else if (b.length < 64) {
+                writer.println(new String(b) + " [" + ByteFormatter.encodeString(b) + "]");
+            } else {
+                writer.println("[byte array length " + b.length);
+            }
 
-		throws IOException
-		{
-			return( is.read());
-		}
+        } else if (obj instanceof String) {
 
-		public int
-		read(
-			byte[] buffer )
+            writer.println(use_indent + obj);
 
-		throws IOException
-		{
-			return( is.read( buffer ));
-		}
+        } else if (obj instanceof List) {
 
-		public int
-		read(
-			byte[] 	buffer,
-			int		offset,
-			int		length )
+            List l = (List) obj;
 
-			throws IOException
-		{
-			return( is.read( buffer, offset, length ));  
-		}
+            writer.println(use_indent + "[");
 
-		public int
-		available()
+            for (int i = 0; i < l.size(); i++) {
 
-			throws IOException
-		{
-			return( is.available());
-		}
+                writer.print(indent + "  (" + i + ") ");
 
-		public boolean
-		markSupported()
-		{
-			return( is.markSupported());
-		}
+                print(writer, l.get(i), indent + "    ", true);
+            }
 
-		public void
-		mark(
-			int	limit )
-		{
-			is.mark( limit );
-		}
+            writer.println(indent + "]");
 
-		public void
-		reset()
+        } else {
 
-			throws IOException
-		{
-			is.reset();
-		}
-	}
-*/
-	private class
-	BDecoderInputStreamArray
-	
-		extends InputStream
-	{
-		final private byte[] bytes;
-		private int pos = 0;
-		private int markPos;
-		private int overPos;
+            Map m = (Map) obj;
 
-		
-		public BDecoderInputStreamArray(ByteBuffer buffer) {
-			bytes = buffer.array();
-			pos = buffer.arrayOffset() + buffer.position();
-			overPos = pos + buffer.remaining();
-		}
-		
-		
-		private
-		BDecoderInputStreamArray(
-			byte[]		_buffer )
-		{
-			bytes = _buffer;
-			overPos = bytes.length;
-		}
+            Iterator it = m.keySet().iterator();
 
-		private
-		BDecoderInputStreamArray(
-			byte[]		_buffer,
-			int			_offset,
-			int			_length )
-		{
-			if (_offset == 0) {
-				bytes = _buffer;
-				overPos = _length;
-			} else {
-				bytes = _buffer;
-				pos = _offset;
-				overPos = Math.min(_offset + _length, bytes.length);
-			}
-		}
-		
-		public int
-		read()
+            while (it.hasNext()) {
 
-			throws IOException
-		{
-			if (pos < overPos) {
-				return bytes[pos++] & 0xFF;
-			}
-			return -1;
-		}
+                String key = (String) it.next();
 
-		public int
-		read(
-			byte[] buffer )
+                if (key.length() > 256) {
+                    writer.print(indent + key.substring(0, 256) + "... = ");
+                } else {
+                    writer.print(indent + key + " = ");
+                }
 
-			throws IOException
-		{
-			return( read( buffer, 0, buffer.length ));
-		}
+                print(writer, m.get(key), indent + "  ", true);
+            }
+        }
+    }
 
-		public int
-		read(
-			byte[] 	b,
-			int		offset,
-			int		length )
+    /**
+     * Converts any byte[] entries into UTF-8 strings.
+     * REPLACES EXISTING MAP VALUES
+     * 
+     * @param map
+     * @return
+     */
 
-			throws IOException
-		{
-			
-			if (pos < overPos) {
-				int toRead = Math.min(length, overPos - pos);
-				System.arraycopy(bytes, pos, b, offset, toRead);
-				pos += toRead;
-				return toRead;
-			}
-			return -1;
+    public static Map<String, String> decodeStrings(Map map) {
+        if (map == null) {
 
-		}
+            return (null);
+        }
 
-		public int
-		available()
+        Iterator it = map.entrySet().iterator();
 
-			throws IOException
-		{
-			return overPos - pos;
-		}
+        while (it.hasNext()) {
 
-		public boolean
-		markSupported()
-		{
-			return( true );
-		}
+            Map.Entry entry = (Map.Entry) it.next();
 
-		public void
-		mark(
-			int	limit )
-		{
-			markPos = pos;
-		}
+            Object value = entry.getValue();
 
-		public void
-		reset()
+            if (value instanceof byte[]) {
 
-			throws IOException
-		{
-			pos = markPos;
-		}
-	}
+                try {
+                    entry.setValue(new String((byte[]) value, "UTF-8"));
 
+                } catch (Throwable e) {
 
-	public static void
-	main(
-			String[]	args )
-	{	  
-		print( 	new File( "C:\\Temp\\tables.config" ),
-				new File( "C:\\Temp\\tables.txt" ));
-	}
+                    System.err.println(e);
+                }
+            } else if (value instanceof Map) {
+
+                decodeStrings((Map) value);
+            } else if (value instanceof List) {
+
+                decodeStrings((List) value);
+            }
+        }
+
+        return (map);
+    }
+
+    /**
+     * Decodes byte arrays into strings.  
+     * REPLACES EXISTING LIST VALUES
+     * 
+     * @param list
+     * @return the same list passed in
+     */
+    public static List decodeStrings(List list) {
+        if (list == null) {
+
+            return (null);
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+
+            Object value = list.get(i);
+
+            if (value instanceof byte[]) {
+
+                try {
+                    String str = new String((byte[]) value, "UTF-8");
+
+                    list.set(i, str);
+
+                } catch (Throwable e) {
+
+                    System.err.println(e);
+                }
+            } else if (value instanceof Map) {
+
+                decodeStrings((Map) value);
+
+            } else if (value instanceof List) {
+
+                decodeStrings((List) value);
+            }
+        }
+
+        return (list);
+    }
+
+    private static void print(File f, File output) {
+        try {
+            BDecoder decoder = new BDecoder();
+
+            decoder.setRecoveryMode(false);
+
+            PrintWriter pw = new PrintWriter(new FileWriter(output));
+
+            print(pw, decoder.decodeStream(new BufferedInputStream(new FileInputStream(f))));
+
+            pw.flush();
+
+        } catch (Throwable e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    // JSON
+
+    private static Object decodeFromJSONGeneric(Object obj) {
+        if (obj == null) {
+
+            return (null);
+
+        } else if (obj instanceof Map) {
+
+            return (decodeFromJSONObject((Map) obj));
+
+        } else if (obj instanceof List) {
+
+            return (decodeFromJSONArray((List) obj));
+
+        } else if (obj instanceof String) {
+
+            try {
+                return (((String) obj).getBytes("UTF-8"));
+
+            } catch (Throwable e) {
+
+                return (((String) obj).getBytes());
+            }
+
+        } else if (obj instanceof Long) {
+
+            return (obj);
+
+        } else if (obj instanceof Boolean) {
+
+            return (new Long(((Boolean) obj) ? 1 : 0));
+
+        } else if (obj instanceof Double) {
+
+            return (String.valueOf((Double) obj));
+
+        } else {
+
+            System.err.println("Unexpected JSON value type: " + obj.getClass());
+
+            return (obj);
+        }
+    }
+
+    public static List decodeFromJSONArray(List j_list) {
+        List b_list = new ArrayList();
+
+        for (Object o : j_list) {
+
+            b_list.add(decodeFromJSONGeneric(o));
+        }
+
+        return (b_list);
+    }
+
+    public static Map decodeFromJSONObject(Map<Object, Object> j_map) {
+        Map b_map = new HashMap();
+
+        for (Map.Entry<Object, Object> entry : j_map.entrySet()) {
+
+            Object key = entry.getKey();
+            Object val = entry.getValue();
+
+            b_map.put((String) key, decodeFromJSONGeneric(val));
+        }
+
+        return (b_map);
+    }
+
+    //    public static Map
+    //    decodeFromJSON(
+    //    	String	json )
+    //    {
+    //    	Map j_map = JSONUtils.decodeJSON(json);
+    //    	    	
+    //    	return( decodeFromJSONObject( j_map ));
+    //    }
+
+    /*
+    	private interface
+    	BDecoderInputStream
+    	{
+    		public int
+    		read()
+
+    			throws IOException;
+
+    		public int
+    		read(
+    			byte[] buffer )
+
+    			throws IOException;
+
+    		public int
+    		read(
+    			byte[] 	buffer,
+    			int		offset,
+    			int		length )
+
+    			throws IOException;
+
+    		public int
+    		available()
+
+    			throws IOException;
+
+    		public boolean
+    		markSupported();
+
+    		public void
+    		mark(
+    				int	limit );
+
+    		public void
+    		reset()
+
+    			throws IOException;
+    	}
+
+    	private class
+    	BDecoderInputStreamStream
+    	
+    		implements BDecoderInputStream
+    	{
+    		final private BufferedInputStream		is;
+
+    		private
+    		BDecoderInputStreamStream(
+    			BufferedInputStream	_is )
+    		{
+    			is	= _is;
+    		}
+
+    		public int
+    		read()
+
+    		throws IOException
+    		{
+    			return( is.read());
+    		}
+
+    		public int
+    		read(
+    			byte[] buffer )
+
+    		throws IOException
+    		{
+    			return( is.read( buffer ));
+    		}
+
+    		public int
+    		read(
+    			byte[] 	buffer,
+    			int		offset,
+    			int		length )
+
+    			throws IOException
+    		{
+    			return( is.read( buffer, offset, length ));  
+    		}
+
+    		public int
+    		available()
+
+    			throws IOException
+    		{
+    			return( is.available());
+    		}
+
+    		public boolean
+    		markSupported()
+    		{
+    			return( is.markSupported());
+    		}
+
+    		public void
+    		mark(
+    			int	limit )
+    		{
+    			is.mark( limit );
+    		}
+
+    		public void
+    		reset()
+
+    			throws IOException
+    		{
+    			is.reset();
+    		}
+    	}
+    */
+    private class BDecoderInputStreamArray
+
+    extends InputStream {
+        final private byte[] bytes;
+        private int pos = 0;
+        private int markPos;
+        private int overPos;
+
+        public BDecoderInputStreamArray(ByteBuffer buffer) {
+            bytes = buffer.array();
+            pos = buffer.arrayOffset() + buffer.position();
+            overPos = pos + buffer.remaining();
+        }
+
+        private BDecoderInputStreamArray(byte[] _buffer) {
+            bytes = _buffer;
+            overPos = bytes.length;
+        }
+
+        private BDecoderInputStreamArray(byte[] _buffer, int _offset, int _length) {
+            if (_offset == 0) {
+                bytes = _buffer;
+                overPos = _length;
+            } else {
+                bytes = _buffer;
+                pos = _offset;
+                overPos = Math.min(_offset + _length, bytes.length);
+            }
+        }
+
+        public int read()
+
+        throws IOException {
+            if (pos < overPos) {
+                return bytes[pos++] & 0xFF;
+            }
+            return -1;
+        }
+
+        public int read(byte[] buffer)
+
+        throws IOException {
+            return (read(buffer, 0, buffer.length));
+        }
+
+        public int read(byte[] b, int offset, int length)
+
+        throws IOException {
+
+            if (pos < overPos) {
+                int toRead = Math.min(length, overPos - pos);
+                System.arraycopy(bytes, pos, b, offset, toRead);
+                pos += toRead;
+                return toRead;
+            }
+            return -1;
+
+        }
+
+        public int available()
+
+        throws IOException {
+            return overPos - pos;
+        }
+
+        public boolean markSupported() {
+            return (true);
+        }
+
+        public void mark(int limit) {
+            markPos = pos;
+        }
+
+        public void reset()
+
+        throws IOException {
+            pos = markPos;
+        }
+    }
 }

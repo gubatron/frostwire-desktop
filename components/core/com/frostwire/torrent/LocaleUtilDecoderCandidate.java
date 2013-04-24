@@ -25,7 +25,7 @@ package com.frostwire.torrent;
 
 public class 
 LocaleUtilDecoderCandidate 
-	implements Comparable 
+	implements Comparable<LocaleUtilDecoderCandidate> 
 {
 	private int					index;
 	private String 				value;
@@ -56,7 +56,7 @@ LocaleUtilDecoderCandidate
 	}
 	
 	public int 
-	compareTo(Object o) 
+	compareTo(LocaleUtilDecoderCandidate o) 
 	{
 	  LocaleUtilDecoderCandidate candidate = (LocaleUtilDecoderCandidate)o;
       

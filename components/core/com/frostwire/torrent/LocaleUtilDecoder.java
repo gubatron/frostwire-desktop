@@ -20,7 +20,6 @@
  *
  */
 
-
 package com.frostwire.torrent;
 
 /**
@@ -28,25 +27,15 @@ package com.frostwire.torrent;
  *
  */
 
-import java.io.*;
+import java.io.UnsupportedEncodingException;
 
-public interface 
-LocaleUtilDecoder
-{
-	public String
-	getName();
+public interface LocaleUtilDecoder {
 
-	public int
-	getIndex();
-	
-	public String
-	tryDecode(
-		byte[]		array,
-		boolean		lax );
-	
-	public String
-	decodeString(
-		byte[]		bytes )
-		
-		throws UnsupportedEncodingException;
+    public String getName();
+
+    public int getIndex();
+
+    public String tryDecode(byte[] array, boolean lax);
+
+    public String decodeString(byte[] bytes) throws UnsupportedEncodingException;
 }

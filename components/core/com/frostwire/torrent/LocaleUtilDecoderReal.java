@@ -34,152 +34,133 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 import java.util.Arrays;
 
+public class LocaleUtilDecoderReal implements LocaleUtilDecoder {
+    protected CharsetDecoder decoder;
+    protected int index;
 
-public class 
-LocaleUtilDecoderReal 
-	implements LocaleUtilDecoder
-{
-	protected CharsetDecoder	decoder;
-	protected int				index;
-	
-	protected
-	LocaleUtilDecoderReal(
-		int				_index,
-		CharsetDecoder	_decoder )
-	{
-		index		= _index;
-		decoder		= _decoder;
-	}
-	
-	public String
-	getName()
-	{
-		return( decoder.charset().name());
-	}
+    protected LocaleUtilDecoderReal(int _index, CharsetDecoder _decoder) {
+        index = _index;
+        decoder = _decoder;
+    }
 
-	public int
-	getIndex()
-	{
-		return( index );
-	}
-	
-	public String
-	tryDecode(
-		byte[]		array,
-		boolean		lax )
-	{
-		try{
-			ByteBuffer bb = ByteBuffer.wrap(array);
-				
-			CharBuffer cb = CharBuffer.allocate(array.length);
-				
-			CoderResult cr = decoder.decode(bb,cb, true);
-			
-			if ( !cr.isError() ){
-							
-				cb.flip();
-				
-				String	str = cb.toString();
-				
-					// lax means that as long as the conversion works we consider it usable
-					// as opposed to strict which requires reverse-conversion equivalence
-				
-				if ( lax ){
-										
-					return( str );
-				}
-				
-				byte[]	b2 = str.getBytes( getName() );
-				
-					// make sure the conversion is symetric (there are cases where it appears
-					// to work but in fact converting back to bytes leads to a different
-					// result
-					
-				/*
-				for (int k=0;k<str.length();k++){
-					System.out.print( Integer.toHexString(str.charAt(k)));
-				}
-				System.out.println("");
-				*/
-				
-				if ( Arrays.equals( array, b2 )){
-				
-					return( str );
-				}
-			}
-			
-			return( null );
-			
-		}catch( Throwable e ){
-		
-				// Throwable here as we can get "classdefnotfound" + others if the decoder
-				// isn't available
-			
-			return( null );
-		}
-	}
-	
-	public String
-	decodeString(
-		byte[]		bytes )
-		
-		throws UnsupportedEncodingException
-	{
-		if ( bytes == null ){
-			
-			return( null );
-		}
-		
-		try{
-			ByteBuffer bb = ByteBuffer.wrap(bytes);
-      		
-			CharBuffer cb = CharBuffer.allocate(bytes.length);
-	      		
-			CoderResult cr = decoder.decode(bb,cb, true);
-				
-			if ( !cr.isError() ){
-								
-				cb.flip();
-					
-				String	str = cb.toString();
-					
-				byte[]	b2 = str.getBytes(decoder.charset().name());
-					
-					// make sure the conversion is symetric (there are cases where it appears
-					// to work but in fact converting back to bytes leads to a different
-					// result
-						
-				/*
-				for (int k=0;k<str.length();k++){
-					System.out.print( Integer.toHexString(str.charAt(k)));
-				}
-				System.out.println("");
-				*/
-					
-				if ( Arrays.equals( bytes, b2 )){
-					
-					return( str );
-				}
-			}
-		}catch( Throwable e ){
-			
-			// Throwable here as we can get "classdefnotfound" + others if the decoder
-			// isn't available
-			
-			// ignore
-		}
-		
-		try{
-		
-				// no joy, default
-		
-			return( new String( bytes, Constants.DEFAULT_ENCODING ));
-			
-		}catch( UnsupportedEncodingException e ){
-			
-			Debug.printStackTrace( e );
-			
-			return( new String( bytes ));
-		}
-	}
+    public String getName() {
+        return (decoder.charset().name());
+    }
+
+    public int getIndex() {
+        return (index);
+    }
+
+    public String tryDecode(byte[] array, boolean lax) {
+        try {
+            ByteBuffer bb = ByteBuffer.wrap(array);
+
+            CharBuffer cb = CharBuffer.allocate(array.length);
+
+            CoderResult cr = decoder.decode(bb, cb, true);
+
+            if (!cr.isError()) {
+
+                cb.flip();
+
+                String str = cb.toString();
+
+                // lax means that as long as the conversion works we consider it usable
+                // as opposed to strict which requires reverse-conversion equivalence
+
+                if (lax) {
+
+                    return (str);
+                }
+
+                byte[] b2 = str.getBytes(getName());
+
+                // make sure the conversion is symetric (there are cases where it appears
+                // to work but in fact converting back to bytes leads to a different
+                // result
+
+                /*
+                for (int k=0;k<str.length();k++){
+                	System.out.print( Integer.toHexString(str.charAt(k)));
+                }
+                System.out.println("");
+                */
+
+                if (Arrays.equals(array, b2)) {
+
+                    return (str);
+                }
+            }
+
+            return (null);
+
+        } catch (Throwable e) {
+
+            // Throwable here as we can get "classdefnotfound" + others if the decoder
+            // isn't available
+
+            return (null);
+        }
+    }
+
+    public String decodeString(byte[] bytes)
+
+    throws UnsupportedEncodingException {
+        if (bytes == null) {
+
+            return (null);
+        }
+
+        try {
+            ByteBuffer bb = ByteBuffer.wrap(bytes);
+
+            CharBuffer cb = CharBuffer.allocate(bytes.length);
+
+            CoderResult cr = decoder.decode(bb, cb, true);
+
+            if (!cr.isError()) {
+
+                cb.flip();
+
+                String str = cb.toString();
+
+                byte[] b2 = str.getBytes(decoder.charset().name());
+
+                // make sure the conversion is symetric (there are cases where it appears
+                // to work but in fact converting back to bytes leads to a different
+                // result
+
+                /*
+                for (int k=0;k<str.length();k++){
+                	System.out.print( Integer.toHexString(str.charAt(k)));
+                }
+                System.out.println("");
+                */
+
+                if (Arrays.equals(bytes, b2)) {
+
+                    return (str);
+                }
+            }
+        } catch (Throwable e) {
+
+            // Throwable here as we can get "classdefnotfound" + others if the decoder
+            // isn't available
+
+            // ignore
+        }
+
+        try {
+
+            // no joy, default
+
+            return (new String(bytes, Constants.DEFAULT_ENCODING));
+
+        } catch (UnsupportedEncodingException e) {
+
+            Debug.printStackTrace(e);
+
+            return (new String(bytes));
+        }
+    }
 }
