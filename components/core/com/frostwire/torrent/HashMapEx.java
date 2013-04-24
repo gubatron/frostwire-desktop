@@ -18,47 +18,33 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 package com.frostwire.torrent;
 
 import java.util.AbstractMap;
+import java.util.HashMap;
 
+public class HashMapEx extends HashMap<String, Object> {
 
+    public static final byte FL_MAP_ORDER_INCORRECT = 0x01;
 
-public class
-LightHashMapEx<S,T> 
-	extends LightHashMap<S,T> implements Cloneable 
-{
-	public static final byte FL_MAP_ORDER_INCORRECT	= 0x01;
-	
-	private byte		flags;
-	
-	public
-	LightHashMapEx(
-		AbstractMap<S,T>	m )
-	{
-		super( m );
-	}
-	
-	public void
-	setFlag(
-		byte		flag,
-		boolean		set )
-	{
-		if ( set ){
-			
-			flags |= flag;
-			
-		}else{
-			
-			flags &= ~flag;
-		}
-	}
-	
-	public boolean
-	getFlag(
-		byte	flag )
-	{
-		return((flags&flag) != 0 );
-	}
+    private byte flags;
+
+    public HashMapEx(AbstractMap<String, Object> m) {
+        super(m);
+    }
+
+    public void setFlag(byte flag, boolean set) {
+        if (set) {
+
+            flags |= flag;
+
+        } else {
+
+            flags &= ~flag;
+        }
+    }
+
+    public boolean getFlag(byte flag) {
+        return ((flags & flag) != 0);
+    }
 }

@@ -112,7 +112,7 @@ public class BDecoder
 	{	
 	}
 
-	public Map 
+	public Map<String, Object> 
 	decodeByteArray(
 		byte[] data) 
 
@@ -235,7 +235,7 @@ public class BDecoder
 		case 'd' :
 				//create a new dictionary object
 			
-			LightHashMap tempMap = new LightHashMap();
+			HashMap tempMap = new HashMap();
 
 			try{
 				byte[]	prev_key = null;
@@ -312,11 +312,11 @@ public class BDecoder
 								
 								// Debug.out( "Dictionary order incorrect: prev=" + new String( prev_key ) + ", current=" + new String( current_key ));
 								
-								if (!( tempMap instanceof LightHashMapEx )){
+								if (!( tempMap instanceof HashMapEx )){
 									
-									LightHashMapEx x = new LightHashMapEx( tempMap );
+								    HashMapEx x = new HashMapEx( tempMap );
 									
-									x.setFlag( LightHashMapEx.FL_MAP_ORDER_INCORRECT, true );
+									x.setFlag( HashMapEx.FL_MAP_ORDER_INCORRECT, true );
 									
 									tempMap = x;
 								}
@@ -332,8 +332,8 @@ public class BDecoder
 					String key = new String(keyCharsBuffer.array(),0,keyCharsBuffer.limit());
 					
 					// keys often repeat a lot - intern to save space
-					if (internKeys)
-						key = StringInterner.intern( key );
+//					if (internKeys)
+//						key = StringInterner.intern( key );
 					
 					
 
@@ -394,7 +394,7 @@ public class BDecoder
 				}
 			}
 
-			tempMap.compactify(-0.9f);
+			//tempMap.compactify(-0.9f);
 
 				//return the map
 			

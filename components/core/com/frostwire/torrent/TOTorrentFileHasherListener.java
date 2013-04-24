@@ -21,10 +21,7 @@
 
 package com.frostwire.torrent;
 
-public interface 
-TOTorrentFileHasherListener 
-{
-	public void
-	pieceHashed(
-		int		piece_number );
+public interface TOTorrentFileHasherListener {
+    
+    public void pieceHashed(int piece_number);
 }

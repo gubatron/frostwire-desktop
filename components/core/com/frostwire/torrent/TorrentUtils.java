@@ -1026,19 +1026,17 @@ TorrentUtils
 		tls_map.putAll(m);
 	}
 	
-	public static URL
-	getDecentralisedEmptyURL()
-	{
-		try{
-			return( new URL( "dht://" ));
-			
-		}catch( Throwable e ){
-			
-			Debug.printStackTrace(e);
-			
-			return( null );
-		}
-	}
+    public static URL getDecentralisedEmptyURL() {
+        try {
+            return (new URL("dht://"));
+
+        } catch (Throwable e) {
+
+            Debug.printStackTrace(e);
+
+            return (null);
+        }
+    }
 	
 	public static URL
 	getDecentralisedURL(

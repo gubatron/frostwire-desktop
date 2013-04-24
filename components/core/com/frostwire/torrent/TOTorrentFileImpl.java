@@ -44,7 +44,7 @@ TOTorrentFileImpl
 	private final int		first_piece_number;
 	private final int		last_piece_number;
 	
-	private final Map		additional_properties = new LightHashMap(1);
+	private final Map		additional_properties = new HashMap(1);
 	
 	private final boolean	is_utf8;
 
@@ -170,8 +170,9 @@ TOTorrentFileImpl
 					throw (new TOTorrentException("Torrent file contains illegal '..' component", TOTorrentException.RT_DECODE_FAILS));
 	
 				// intern directories as they're likely to repeat
-				if(i < (pc.length - 1))
-					pc[i] = StringInterner.internBytes(pc[i]);
+//				if(i < (pc.length - 1)){
+//					//pc[i] = StringInterner.internBytes(pc[i]);
+//				}
 			}
 		}
 	}
@@ -321,7 +322,7 @@ TOTorrentFileImpl
 	 *
 	 * @since 4.1.0.5
 	 */
-	public Map serializeToMap() {
+	public Map<String, Object> serializeToMap() {
 		Map	file_map = new HashMap();
 
 		file_map.put( TOTorrentImpl.TK_LENGTH, new Long( getLength()));

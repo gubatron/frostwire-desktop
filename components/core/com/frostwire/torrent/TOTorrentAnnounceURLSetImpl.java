@@ -57,7 +57,8 @@ TOTorrentAnnounceURLSetImpl
 		
 		for (int i=0;i<urls.length;i++){
 		
-			urls[i]	= StringInterner.internURL(torrent.anonymityTransform( _urls[i] ));
+			//urls[i]	= StringInterner.internURL(torrent.anonymityTransform( _urls[i] ));
+		    urls[i]   = torrent.anonymityTransform( _urls[i] );
 		}
 	}
 }
