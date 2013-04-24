@@ -22,7 +22,7 @@
 package com.frostwire.torrent;
 
 import java.io.File;
-import java.net.URL;
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -85,14 +85,14 @@ public interface TOTorrent {
      * See below
      * @return
      */
-    public URL getAnnounceURL();
+    public URI getAnnounceURL();
 
     /**
      * 
      * @param url
      * @return true-changed; false-not changed
      */
-    public boolean setAnnounceURL(URL url);
+    public boolean setAnnounceURL(URI url);
 
     /**
      * When a group of sets of trackers is defined their URLs are accessed via this method

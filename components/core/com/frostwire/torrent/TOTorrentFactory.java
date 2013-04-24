@@ -23,7 +23,7 @@ package com.frostwire.torrent;
 
 import java.io.File;
 import java.io.InputStream;
-import java.net.URL;
+import java.net.URI;
 import java.util.Map;
 
 public class TOTorrentFactory {
@@ -72,25 +72,25 @@ public class TOTorrentFactory {
 
     // construction methods: fixed piece size
 
-    public static TOTorrentCreator createFromFileOrDirWithFixedPieceLength(File file, URL announce_url)
+    public static TOTorrentCreator createFromFileOrDirWithFixedPieceLength(File file, URI announce_url)
 
     throws TOTorrentException {
         return (createFromFileOrDirWithFixedPieceLength(file, announce_url, false, TO_DEFAULT_FIXED_PIECE_SIZE));
     }
 
-    public static TOTorrentCreator createFromFileOrDirWithFixedPieceLength(File file, URL announce_url, boolean add_hashes)
+    public static TOTorrentCreator createFromFileOrDirWithFixedPieceLength(File file, URI announce_url, boolean add_hashes)
 
     throws TOTorrentException {
         return (createFromFileOrDirWithFixedPieceLength(file, announce_url, add_hashes, TO_DEFAULT_FIXED_PIECE_SIZE));
     }
 
-    public static TOTorrentCreator createFromFileOrDirWithFixedPieceLength(File file, URL announce_url, long piece_length)
+    public static TOTorrentCreator createFromFileOrDirWithFixedPieceLength(File file, URI announce_url, long piece_length)
 
     throws TOTorrentException {
         return (createFromFileOrDirWithFixedPieceLength(file, announce_url, false, piece_length));
     }
 
-    public static TOTorrentCreator createFromFileOrDirWithFixedPieceLength(File file, URL announce_url, boolean add_hashes, long piece_length)
+    public static TOTorrentCreator createFromFileOrDirWithFixedPieceLength(File file, URI announce_url, boolean add_hashes, long piece_length)
 
     throws TOTorrentException {
         return (new TOTorrentCreatorImpl(file, announce_url, add_hashes, piece_length));
@@ -98,27 +98,27 @@ public class TOTorrentFactory {
 
     // construction methods: variable piece size	
 
-    public static TOTorrentCreator createFromFileOrDirWithComputedPieceLength(File file, URL announce_url)
+    public static TOTorrentCreator createFromFileOrDirWithComputedPieceLength(File file, URI announce_url)
 
     throws TOTorrentException {
         return (createFromFileOrDirWithComputedPieceLength(file, announce_url, false));
     }
 
-    public static TOTorrentCreator createFromFileOrDirWithComputedPieceLength(File file, URL announce_url, boolean add_hashes)
+    public static TOTorrentCreator createFromFileOrDirWithComputedPieceLength(File file, URI announce_url, boolean add_hashes)
 
     throws TOTorrentException {
         return (createFromFileOrDirWithComputedPieceLength(file, announce_url, add_hashes, TO_DEFAULT_VARIABLE_PIECE_SIZE_MIN, TO_DEFAULT_VARIABLE_PIECE_SIZE_MAX, TO_DEFAULT_VARIABLE_PIECE_NUM_LOWER, TO_DEFAULT_VARIABLE_PIECE_NUM_UPPER));
 
     }
 
-    public static TOTorrentCreator createFromFileOrDirWithComputedPieceLength(File file, URL announce_url, long piece_min_size, long piece_max_size, long piece_num_lower, long piece_num_upper)
+    public static TOTorrentCreator createFromFileOrDirWithComputedPieceLength(File file, URI announce_url, long piece_min_size, long piece_max_size, long piece_num_lower, long piece_num_upper)
 
     throws TOTorrentException {
         return (createFromFileOrDirWithComputedPieceLength(file, announce_url, false, piece_min_size, piece_max_size, piece_num_lower, piece_num_upper));
 
     }
 
-    public static TOTorrentCreator createFromFileOrDirWithComputedPieceLength(File file, URL announce_url, boolean add_hashes, long piece_min_size, long piece_max_size, long piece_num_lower, long piece_num_upper)
+    public static TOTorrentCreator createFromFileOrDirWithComputedPieceLength(File file, URI announce_url, boolean add_hashes, long piece_min_size, long piece_max_size, long piece_num_lower, long piece_num_upper)
 
     throws TOTorrentException {
         return new TOTorrentCreatorImpl(file, announce_url, add_hashes, 0, piece_min_size, piece_max_size, piece_num_lower, piece_num_upper, null);

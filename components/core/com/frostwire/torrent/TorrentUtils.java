@@ -33,7 +33,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -61,38 +62,6 @@ public final class TorrentUtils {
     public static final String TORRENT_AZ_PROP_INITIAL_LINKAGE2 = "initial_linkage2";
 
     private static final String MEM_ONLY_TORRENT_PATH = "?/\\!:mem_only:!\\/?";
-
-    public static TOTorrent readFromFile(File file)
-
-    throws TOTorrentException {
-        TOTorrent torrent;
-
-        try {
-            torrent = TOTorrentFactory.deserialiseFromBEncodedFile(file);
-
-        } catch (TOTorrentException e) {
-
-            // Debug.outNoStack( e.getMessage() );
-
-            File torrentBackup = new File(file.getParent(), file.getName() + ".bak");
-
-            if (torrentBackup.exists()) {
-
-                torrent = TOTorrentFactory.deserialiseFromBEncodedFile(torrentBackup);
-
-                // use the original torrent's file name so that when this gets saved
-                // it writes back to the original and backups are made as required
-                // - set below
-            } else {
-
-                throw e;
-            }
-        }
-
-        torrent.setAdditionalStringProperty("torrent filename", file.toString());
-
-        return (torrent);
-    }
 
     public static TOTorrent readFromBEncodedInputStream(InputStream is)
 
@@ -283,7 +252,7 @@ public final class TorrentUtils {
     }
 
     public static String announceGroupsToText(TOTorrent torrent) {
-        URL announce_url = torrent.getAnnounceURL();
+        URI announce_url = torrent.getAnnounceURL();
 
         String announce_url_str = announce_url == null ? "" : announce_url.toString().trim();
 
@@ -305,7 +274,7 @@ public final class TorrentUtils {
 
                 TOTorrentAnnounceURLSet set = sets[i];
 
-                URL[] urls = set.getAnnounceURLs();
+                URI[] urls = set.getAnnounceURLs();
 
                 if (urls.length > 0) {
 
@@ -435,7 +404,7 @@ public final class TorrentUtils {
 
                 TOTorrentAnnounceURLSet set = sets[i];
 
-                URL[] urls = set.getAnnounceURLs();
+                URI[] urls = set.getAnnounceURLs();
 
                 for (int j = 0; j < urls.length; j++) {
 
@@ -477,7 +446,7 @@ public final class TorrentUtils {
 
                 if (set.size() == 1) {
 
-                    torrent.setAnnounceURL(new URL((String) set.get(0)));
+                    torrent.setAnnounceURL(new URI((String) set.get(0)));
 
                     tg.setAnnounceURLSets(new TOTorrentAnnounceURLSet[0]);
 
@@ -491,11 +460,11 @@ public final class TorrentUtils {
 
                 List<String> set = groups.get(i);
 
-                URL[] urls = new URL[set.size()];
+                URI[] urls = new URI[set.size()];
 
                 for (int j = 0; j < set.size(); j++) {
 
-                    urls[j] = new URL((String) set.get(j));
+                    urls[j] = new URI((String) set.get(j));
                 }
 
                 if (urls.length > 0) {
@@ -514,10 +483,10 @@ public final class TorrentUtils {
 
                 // hmm, no valid urls at all
 
-                torrent.setAnnounceURL(new URL("http://no.valid.urls.defined/announce"));
+                torrent.setAnnounceURL(new URI("http://no.valid.urls.defined/announce"));
             }
 
-        } catch (MalformedURLException e) {
+        } catch (URISyntaxException e) {
 
             Debug.printStackTrace(e);
         }
@@ -526,19 +495,19 @@ public final class TorrentUtils {
     public static void announceGroupsInsertFirst(TOTorrent torrent, String first_url) {
         try {
 
-            announceGroupsInsertFirst(torrent, new URL(first_url));
+            announceGroupsInsertFirst(torrent, new URI(first_url));
 
-        } catch (MalformedURLException e) {
+        } catch (URISyntaxException e) {
 
             Debug.printStackTrace(e);
         }
     }
 
-    public static void announceGroupsInsertFirst(TOTorrent torrent, URL first_url) {
-        announceGroupsInsertFirst(torrent, new URL[] { first_url });
+    public static void announceGroupsInsertFirst(TOTorrent torrent, URI first_url) {
+        announceGroupsInsertFirst(torrent, new URI[] { first_url });
     }
 
-    public static void announceGroupsInsertFirst(TOTorrent torrent, URL[] first_urls) {
+    public static void announceGroupsInsertFirst(TOTorrent torrent, URI[] first_urls) {
         TOTorrentAnnounceURLGroup group = torrent.getAnnounceURLGroup();
 
         TOTorrentAnnounceURLSet[] sets = group.getAnnounceURLSets();
@@ -557,13 +526,13 @@ public final class TorrentUtils {
 
         } else {
 
-            TOTorrentAnnounceURLSet set2 = group.createAnnounceURLSet(new URL[] { torrent.getAnnounceURL() });
+            TOTorrentAnnounceURLSet set2 = group.createAnnounceURLSet(new URI[] { torrent.getAnnounceURL() });
 
             group.setAnnounceURLSets(new TOTorrentAnnounceURLSet[] { set1, set2 });
         }
     }
 
-    public static void announceGroupsInsertLast(TOTorrent torrent, URL[] first_urls) {
+    public static void announceGroupsInsertLast(TOTorrent torrent, URI[] first_urls) {
         TOTorrentAnnounceURLGroup group = torrent.getAnnounceURLGroup();
 
         TOTorrentAnnounceURLSet[] sets = group.getAnnounceURLSets();
@@ -582,7 +551,7 @@ public final class TorrentUtils {
 
         } else {
 
-            TOTorrentAnnounceURLSet set2 = group.createAnnounceURLSet(new URL[] { torrent.getAnnounceURL() });
+            TOTorrentAnnounceURLSet set2 = group.createAnnounceURLSet(new URI[] { torrent.getAnnounceURL() });
 
             group.setAnnounceURLSets(new TOTorrentAnnounceURLSet[] { set2, set1 });
         }
@@ -710,7 +679,7 @@ public final class TorrentUtils {
         return (true);
     }
 
-    public static boolean replaceAnnounceURL(TOTorrent torrent, URL old_url, URL new_url) {
+    public static boolean replaceAnnounceURL(TOTorrent torrent, URI old_url, URI new_url) {
         boolean found = false;
 
         String old_str = old_url.toString();
@@ -788,9 +757,9 @@ public final class TorrentUtils {
         }
     }
 
-    public static URL getDecentralisedEmptyURL() {
+    public static URI getDecentralisedEmptyURL() {
         try {
-            return (new URL("dht://"));
+            return (new URI("dht://"));
 
         } catch (Throwable e) {
 
@@ -800,9 +769,9 @@ public final class TorrentUtils {
         }
     }
 
-    public static URL getDecentralisedURL(byte[] hash) {
+    public static URI getDecentralisedURL(byte[] hash) {
         try {
-            return (new URL("dht://" + ByteFormatter.encodeString(hash) + ".dht/announce"));
+            return (new URI("dht://" + ByteFormatter.encodeString(hash) + ".dht/announce"));
 
         } catch (Throwable e) {
 
@@ -812,9 +781,9 @@ public final class TorrentUtils {
         }
     }
 
-    public static URL getDecentralisedURL(TOTorrent torrent) {
+    public static URI getDecentralisedURL(TOTorrent torrent) {
         try {
-            return (new URL("dht://" + ByteFormatter.encodeString(torrent.getHash()) + ".dht/announce"));
+            return (new URI("dht://" + ByteFormatter.encodeString(torrent.getHash()) + ".dht/announce"));
 
         } catch (Throwable e) {
 
@@ -837,13 +806,13 @@ public final class TorrentUtils {
         return (torrent.isDecentralised());
     }
 
-    public static boolean isDecentralised(URL url) {
+    public static boolean isDecentralised(URI url) {
         if (url == null) {
 
             return (false);
         }
 
-        return (url.getProtocol().equalsIgnoreCase("dht"));
+        return (url.getScheme().equalsIgnoreCase("dht"));
     }
 
     private static Map<String, Object> getAzureusProperties(TOTorrent torrent) {
@@ -1218,18 +1187,18 @@ public final class TorrentUtils {
 
     private final static class UrlUtils {
 
-        public static boolean containsPasskey(URL url) {
-            String url_str = url.toExternalForm();
+        public static boolean containsPasskey(URI url) {
+            String url_str = url.toString();
 
             return (url_str.matches(".*[0-9a-z]{20,40}.*"));
         }
 
-        public static URL setPort(URL u, int port) {
+        public static URI setPort(URI u, int port) {
             if (port == -1) {
-                port = u.getDefaultPort();
+                port = u.getPort();
             }
             StringBuffer result = new StringBuffer();
-            result.append(u.getProtocol());
+            result.append(u.getScheme());
             result.append(":");
             String authority = u.getAuthority();
             if (authority != null && authority.length() > 0) {
@@ -1261,25 +1230,25 @@ public final class TorrentUtils {
                 result.append('?');
                 result.append(u.getQuery());
             }
-            if (u.getRef() != null) {
-                result.append("#");
-                result.append(u.getRef());
-            }
+//            if (u.getRef() != null) {
+//                result.append("#");
+//                result.append(u.getRef());
+//            }
             try {
-                return (new URL(result.toString()));
+                return (new URI(result.toString()));
             } catch (Throwable e) {
                 Debug.out(e);
                 return (u);
             }
         }
 
-        public static URL setProtocol(URL u, String protocol) {
-            String str = u.toExternalForm();
+        public static URI setProtocol(URI u, String protocol) {
+            String str = u.toString();
 
             int pos = str.indexOf(":");
 
             try {
-                return (new URL(protocol + str.substring(pos)));
+                return (new URI(protocol + str.substring(pos)));
 
             } catch (Throwable e) {
 
@@ -1289,8 +1258,8 @@ public final class TorrentUtils {
             }
         }
 
-        public static String getCanonicalString(URL url) {
-            String protocol = url.getProtocol();
+        public static String getCanonicalString(URI url) {
+            String protocol = url.getScheme();
 
             if (!protocol.equals(protocol.toLowerCase(Locale.US))) {
 
@@ -1303,15 +1272,19 @@ public final class TorrentUtils {
 
             if (protocol.equals("http") || protocol.equals("https")) {
 
-                if (port == url.getDefaultPort()) {
+                try {
+                    if (port == url.toURL().getDefaultPort()) {
 
-                    url = UrlUtils.setPort(url, 0);
+                        url = UrlUtils.setPort(url, 0);
+                    }
+                } catch (MalformedURLException e) {
+                    url = UrlUtils.setPort(url, -1);
                 }
             } else {
 
                 if (port == -1) {
 
-                    url = UrlUtils.setPort(url, url.getDefaultPort());
+                    url = UrlUtils.setPort(url, -1);
                 }
             }
 

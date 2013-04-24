@@ -28,14 +28,14 @@ package com.frostwire.torrent;
  */
 
 import java.io.File;
-import java.net.URL;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
 final class TOTorrentCreatorImpl implements TOTorrentCreator {
 
     private final File torrent_base;
-    private final URL announce_url;
+    private final URI announce_url;
     private final boolean add_other_hashes;
     private final long piece_length;
     private final long piece_min_size;
@@ -48,11 +48,11 @@ final class TOTorrentCreatorImpl implements TOTorrentCreator {
         this(_torrent_base, null, false, 0);
     }
 
-    public TOTorrentCreatorImpl(File _torrent_base, URL _announce_url, boolean _add_other_hashes, long _piece_length) {
+    public TOTorrentCreatorImpl(File _torrent_base, URI _announce_url, boolean _add_other_hashes, long _piece_length) {
         this(_torrent_base, _announce_url, _add_other_hashes, _piece_length, 0, 0, 0, 0, null);
     }
 
-    public TOTorrentCreatorImpl(File _torrent_base, URL _announce_url, boolean _add_other_hashes, long piece_length, long _piece_min_size, long _piece_max_size, long _piece_num_lower, long _piece_num_upper, TOTorrentProgressListener listener) {
+    public TOTorrentCreatorImpl(File _torrent_base, URI _announce_url, boolean _add_other_hashes, long piece_length, long _piece_min_size, long _piece_max_size, long _piece_num_lower, long _piece_num_upper, TOTorrentProgressListener listener) {
         torrent_base = _torrent_base;
         announce_url = _announce_url;
         add_other_hashes = _add_other_hashes;

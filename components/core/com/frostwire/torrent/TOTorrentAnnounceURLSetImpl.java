@@ -21,24 +21,24 @@
 
 package com.frostwire.torrent;
 
-import java.net.URL;
+import java.net.URI;
 
 final class TOTorrentAnnounceURLSetImpl implements TOTorrentAnnounceURLSet {
     private TOTorrentImpl torrent;
-    private URL[] urls;
+    private URI[] urls;
 
-    protected TOTorrentAnnounceURLSetImpl(TOTorrentImpl _torrent, URL[] _urls) {
+    protected TOTorrentAnnounceURLSetImpl(TOTorrentImpl _torrent, URI[] _urls) {
         torrent = _torrent;
 
         setAnnounceURLs(_urls);
     }
 
-    public URL[] getAnnounceURLs() {
+    public URI[] getAnnounceURLs() {
         return (urls);
     }
 
-    public void setAnnounceURLs(URL[] _urls) {
-        urls = new URL[_urls.length];
+    public void setAnnounceURLs(URI[] _urls) {
+        urls = new URI[_urls.length];
 
         for (int i = 0; i < urls.length; i++) {
 

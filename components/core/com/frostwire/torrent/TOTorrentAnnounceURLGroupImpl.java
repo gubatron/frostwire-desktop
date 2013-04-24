@@ -21,7 +21,7 @@
 
 package com.frostwire.torrent;
 
-import java.net.URL;
+import java.net.URI;
 
 final class TOTorrentAnnounceURLGroupImpl implements TOTorrentAnnounceURLGroup {
 
@@ -56,7 +56,7 @@ final class TOTorrentAnnounceURLGroupImpl implements TOTorrentAnnounceURLGroup {
         torrent.fireChanged(TOTorrentListener.CT_ANNOUNCE_URLS);
     }
 
-    public TOTorrentAnnounceURLSet createAnnounceURLSet(URL[] urls) {
+    public TOTorrentAnnounceURLSet createAnnounceURLSet(URI[] urls) {
         return (new TOTorrentAnnounceURLSetImpl(torrent, urls));
     }
 

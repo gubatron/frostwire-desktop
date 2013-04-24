@@ -26,7 +26,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -73,7 +73,7 @@ class TOTorrentImpl implements TOTorrent {
     private byte[] torrent_name_utf8;
 
     private byte[] comment;
-    private URL announce_url;
+    private URI announce_url;
     private TOTorrentAnnounceURLGroupImpl announce_group = new TOTorrentAnnounceURLGroupImpl(this);
 
     private long piece_length;
@@ -107,7 +107,7 @@ class TOTorrentImpl implements TOTorrent {
      * Constructor for creation
      */
 
-    protected TOTorrentImpl(String _torrent_name, URL _announce_url, boolean _simple_torrent) throws TOTorrentException {
+    protected TOTorrentImpl(String _torrent_name, URI _announce_url, boolean _simple_torrent) throws TOTorrentException {
         try {
 
             torrent_name = _torrent_name.getBytes(Constants.DEFAULT_ENCODING);
@@ -278,7 +278,7 @@ class TOTorrentImpl implements TOTorrent {
 
                 TOTorrentAnnounceURLSet set = sets[i];
 
-                URL[] urls = set.getAnnounceURLs();
+                URI[] urls = set.getAnnounceURLs();
 
                 if (urls.length == 0) {
 
@@ -448,12 +448,12 @@ class TOTorrentImpl implements TOTorrent {
         }
     }
 
-    public URL getAnnounceURL() {
+    public URI getAnnounceURL() {
         return (announce_url);
     }
 
-    public boolean setAnnounceURL(URL url) {
-        URL newURL = anonymityTransform(url);
+    public boolean setAnnounceURL(URI url) {
+        URI newURL = anonymityTransform(url);
         String s0 = (newURL == null) ? "" : newURL.toString();
         String s1 = (announce_url == null) ? "" : announce_url.toString();
         if (s0.equals(s1))
@@ -627,7 +627,7 @@ class TOTorrentImpl implements TOTorrent {
         return (announce_group);
     }
 
-    protected void addTorrentAnnounceURLSet(URL[] urls) {
+    protected void addTorrentAnnounceURLSet(URI[] urls) {
         announce_group.addSet(new TOTorrentAnnounceURLSetImpl(this, urls));
     }
 
@@ -876,7 +876,7 @@ class TOTorrentImpl implements TOTorrent {
         }
     }
 
-    protected URL anonymityTransform(URL url) {
+    protected URI anonymityTransform(URI url) {
         /*
          * 	hmm, doing this is harder than it looks as we have issues hosting
          *  (both starting tracker instances and also short-cut loopback for seeding

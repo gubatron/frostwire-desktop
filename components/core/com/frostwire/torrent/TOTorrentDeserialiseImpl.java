@@ -26,8 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -222,34 +221,7 @@ final class TOTorrentDeserialiseImpl extends TOTorrentImpl {
 
                         announce_url = announce_url.replaceAll(" ", "");
 
-                        try {
-
-                            setAnnounceURL(new URL(announce_url));
-
-                        } catch (MalformedURLException e) {
-
-                            if (announce_url.indexOf("://") == -1) {
-
-                                announce_url = "http:/" + (announce_url.startsWith("/") ? "" : "/") + announce_url;
-
-                            } else if (announce_url.startsWith("utp:")) {
-
-                                // common typo for udp
-
-                                announce_url = "udp" + announce_url.substring(3);
-                            }
-
-                            try {
-
-                                setAnnounceURL(new URL(announce_url));
-
-                            } catch (MalformedURLException f) {
-
-                                Debug.out("Invalid announce url: " + announce_url);
-
-                                bad_announce = true;
-                            }
-                        }
+                        setAnnounceURL(new URI(announce_url));
                     }
 
                 } else if (key.equalsIgnoreCase(TK_ANNOUNCE_LIST)) {
@@ -295,7 +267,7 @@ final class TOTorrentDeserialiseImpl extends TOTorrentImpl {
 
                                 List<Object> set = (List<Object>) temp;
 
-                                Vector<URL> urls = new Vector<URL>();
+                                Vector<URI> urls = new Vector<URI>();
 
                                 for (int j = 0; j < set.size(); j++) {
 
@@ -305,47 +277,18 @@ final class TOTorrentDeserialiseImpl extends TOTorrentImpl {
 
                                     //check to see if the announce url is somewhere in the announce-list
 
-                                    try {
-                                        //urls.add(new URL(StringInterner.intern(url_str)));
-                                        urls.add(new URL(url_str));
+                                    //urls.add(new URL(StringInterner.intern(url_str)));
+                                    urls.add(new URI(url_str));
 
-                                        if (url_str.equalsIgnoreCase(announce_url)) {
+                                    if (url_str.equalsIgnoreCase(announce_url)) {
 
-                                            announce_url_found = true;
-                                        }
-
-                                    } catch (MalformedURLException e) {
-
-                                        if (url_str.indexOf("://") == -1) {
-
-                                            url_str = "http:/" + (url_str.startsWith("/") ? "" : "/") + url_str;
-
-                                        } else if (url_str.startsWith("utp:")) {
-
-                                            // common typo
-
-                                            url_str = "udp" + url_str.substring(3);
-                                        }
-
-                                        try {
-                                            //urls.add(new URL(StringInterner.intern(url_str)));
-                                            urls.add(new URL(url_str));
-
-                                            if (url_str.equalsIgnoreCase(announce_url)) {
-
-                                                announce_url_found = true;
-                                            }
-
-                                        } catch (MalformedURLException f) {
-
-                                            Debug.out("Invalid url: " + url_str, f);
-                                        }
+                                        announce_url_found = true;
                                     }
                                 }
 
                                 if (urls.size() > 0) {
 
-                                    URL[] url_array = new URL[urls.size()];
+                                    URI[] url_array = new URI[urls.size()];
 
                                     urls.copyInto(url_array);
 
@@ -362,10 +305,10 @@ final class TOTorrentDeserialiseImpl extends TOTorrentImpl {
 
                         if (!announce_url_found && announce_url != null && announce_url.length() > 0) {
                             try {
-                                Vector<URL> urls = new Vector<URL>();
+                                Vector<URI> urls = new Vector<URI>();
                                 //urls.add(new URL(StringInterner.intern(announce_url)));
-                                urls.add(new URL(announce_url));
-                                URL[] url_array = new URL[urls.size()];
+                                urls.add(new URI(announce_url));
+                                URI[] url_array = new URI[urls.size()];
                                 urls.copyInto(url_array);
                                 addTorrentAnnounceURLSet(url_array);
                             } catch (Exception e) {

@@ -21,7 +21,7 @@
 
 package com.frostwire.torrent;
 
-import java.net.URL;
+import java.net.URI;
 
 public interface TOTorrentAnnounceURLGroup {
     /**
@@ -46,5 +46,5 @@ public interface TOTorrentAnnounceURLGroup {
      * @return	the newly created set
      */
 
-    public TOTorrentAnnounceURLSet createAnnounceURLSet(URL[] urls);
+    public TOTorrentAnnounceURLSet createAnnounceURLSet(URI[] urls);
 }

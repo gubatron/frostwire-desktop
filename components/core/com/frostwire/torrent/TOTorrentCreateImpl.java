@@ -23,7 +23,7 @@ package com.frostwire.torrent;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -58,7 +58,7 @@ final class TOTorrentCreateImpl extends TOTorrentImpl implements TOTorrentFileHa
 
     private boolean cancelled;
 
-    protected TOTorrentCreateImpl(Map<String, File> _linkage_map, File _torrent_base, URL _announce_url, boolean _add_other_hashes, long _piece_length) throws TOTorrentException {
+    protected TOTorrentCreateImpl(Map<String, File> _linkage_map, File _torrent_base, URI _announce_url, boolean _add_other_hashes, long _piece_length) throws TOTorrentException {
         super(_torrent_base.getName(), _announce_url, _torrent_base.isFile());
 
         linkage_map = _linkage_map;
@@ -67,7 +67,7 @@ final class TOTorrentCreateImpl extends TOTorrentImpl implements TOTorrentFileHa
         add_other_hashes = _add_other_hashes;
     }
 
-    protected TOTorrentCreateImpl(Map<String, File> _linkage_map, File _torrent_base, URL _announce_url, boolean _add_other_hashes, long _piece_min_size, long _piece_max_size, long _piece_num_lower, long _piece_num_upper) throws TOTorrentException {
+    protected TOTorrentCreateImpl(Map<String, File> _linkage_map, File _torrent_base, URI _announce_url, boolean _add_other_hashes, long _piece_min_size, long _piece_max_size, long _piece_num_lower, long _piece_num_upper) throws TOTorrentException {
         super(_torrent_base.getName(), _announce_url, _torrent_base.isFile());
 
         linkage_map = _linkage_map;
