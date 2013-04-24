@@ -33,6 +33,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class is NOT thread safe.
@@ -139,7 +141,7 @@ public class TOTorrentImpl implements TOTorrent {
             if (!parent.isDirectory()) {
 
                 // Try to create a directory.
-                boolean dir_created = FileUtil.mkdirs(parent);
+                boolean dir_created = mkdirs(parent);
 
                 // Something strange going on...
                 if (!dir_created) {
@@ -1054,5 +1056,26 @@ public class TOTorrentImpl implements TOTorrent {
 
             //this_mon.exit();
         }
+    }
+
+    /**
+     * Makes Directories as long as the directory isn't directly in Volumes (OSX)
+     * @param f
+     * @return
+     */
+    private static boolean mkdirs(File f) {
+        if (Constants.isOSX) {
+            Pattern pat = Pattern.compile("^(/Volumes/[^/]+)");
+            Matcher matcher = pat.matcher(f.getParent());
+            if (matcher.find()) {
+                String sVolume = matcher.group();
+                File fVolume = new File(sVolume);
+                if (!fVolume.isDirectory()) {
+                    System.out.println(sVolume + " is not mounted or not available.");
+                    return false;
+                }
+            }
+        }
+        return f.mkdirs();
     }
 }

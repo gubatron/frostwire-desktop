@@ -212,7 +212,7 @@ public class TOTorrentFileImpl implements TOTorrentFile {
                         comp = "UnsupportedEncoding";
                     }
 
-                    comp = FileUtil.convertOSSpecificChars(comp, j != pathComponentsUTF8.length - 1);
+                    comp = convertOSSpecificChars(comp, j != pathComponentsUTF8.length - 1);
 
                     sRelativePath += (j == 0 ? "" : File.separator) + comp;
                 } catch (Exception ex) {
@@ -251,7 +251,7 @@ public class TOTorrentFileImpl implements TOTorrentFile {
                         }
                     }
 
-                    comp = FileUtil.convertOSSpecificChars(comp, j != components.length - 1);
+                    comp = convertOSSpecificChars(comp, j != components.length - 1);
 
                     sRelativePath += (j == 0 ? "" : File.separator) + comp;
                 } catch (Exception ex) {
@@ -325,5 +325,93 @@ public class TOTorrentFileImpl implements TOTorrentFile {
         }
 
         return file_map;
+    }
+
+    private static String convertOSSpecificChars(String file_name_in, boolean is_folder) {
+        // this rule originally from DiskManager
+
+        char[] chars = file_name_in.toCharArray();
+
+        for (int i = 0; i < chars.length; i++) {
+
+            if (chars[i] == '"') {
+
+                chars[i] = '\'';
+            }
+        }
+
+        if (!Constants.isOSX) {
+
+            if (Constants.isWindows) {
+
+                //  this rule originally from DiskManager
+
+                // The definitive list of characters permitted for Windows is defined here:
+                // http://support.microsoft.com/kb/q120138/
+                String not_allowed = "\\/:?*<>|";
+                for (int i = 0; i < chars.length; i++) {
+                    if (not_allowed.indexOf(chars[i]) != -1) {
+                        chars[i] = '_';
+                    }
+                }
+
+                // windows doesn't like trailing dots and whitespaces in folders, replace them
+
+                if (is_folder) {
+
+                    for (int i = chars.length - 1; i >= 0 && (chars[i] == '.' || chars[i] == ' '); chars[i] = '_', i--)
+                        ;
+                }
+            }
+
+            // '/' is valid in mac file names, replace with space
+            // so it seems are cr/lf
+
+            for (int i = 0; i < chars.length; i++) {
+
+                char c = chars[i];
+
+                if (c == '/' || c == '\r' || c == '\n') {
+
+                    chars[i] = ' ';
+                }
+            }
+        }
+
+        String file_name_out = new String(chars);
+
+        try {
+
+            // mac file names can end in space - fix this up by getting
+            // the canonical form which removes this on Windows
+
+            // however, for soem reason getCanonicalFile can generate high CPU usage on some user's systems
+            // in  java.io.Win32FileSystem.canonicalize
+            // so changing this to only be used on non-windows
+
+            if (Constants.isWindows) {
+
+                while (file_name_out.endsWith(" ")) {
+
+                    file_name_out = file_name_out.substring(0, file_name_out.length() - 1);
+                }
+
+            } else {
+
+                String str = new File(file_name_out).getCanonicalFile().toString();
+
+                int p = str.lastIndexOf(File.separator);
+
+                file_name_out = str.substring(p + 1);
+            }
+
+        } catch (Throwable e) {
+            // ho hum, carry on, it'll fail later
+            //e.printStackTrace();
+        }
+
+        //System.out.println( "convertOSSpecificChars: " + file_name_in + " ->" + file_name_out );
+
+        return (file_name_out);
     }
 }

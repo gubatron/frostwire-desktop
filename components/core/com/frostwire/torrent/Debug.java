@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.gudy.azureus2.core3.util.SystemTime;
 
-public class Debug {
+final class Debug {
 
     public static void printStackTrace(Throwable e) {
         e.printStackTrace();

@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  *
  */
 
-public class Constants {
+final class Constants {
     public static final String DEFAULT_ENCODING = "UTF-8";
     public static final String BYTE_ENCODING = "ISO-8859-1";
     public static final Charset BYTE_CHARSET = Charset.forName(Constants.BYTE_ENCODING);
