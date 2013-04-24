@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class LocaleUtil {
+final class LocaleUtil {
 
     private static final String systemEncoding = System.getProperty("file.encoding");
 

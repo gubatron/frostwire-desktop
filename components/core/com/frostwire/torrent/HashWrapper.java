@@ -26,7 +26,7 @@ import java.util.Arrays;
  * @author Olivier
  * 
  */
-public class HashWrapper {
+final class HashWrapper {
 
     private byte[] hash;
     private int hash_code;

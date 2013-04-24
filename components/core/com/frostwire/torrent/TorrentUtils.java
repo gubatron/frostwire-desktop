@@ -44,7 +44,7 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
-public class TorrentUtils {
+public final class TorrentUtils {
 
     public static final int TORRENT_FLAG_LOW_NOISE = 0x00000001;
     public static final int TORRENT_FLAG_METADATA_TORRENT = 0x00000002;
@@ -62,57 +62,13 @@ public class TorrentUtils {
 
     private static final String MEM_ONLY_TORRENT_PATH = "?/\\!:mem_only:!\\/?";
 
-    private static boolean bSaveTorrentBackup;
-
-    public static TOTorrent readFromFile(File file, boolean create_delegate)
-
-    throws TOTorrentException {
-        return (readFromFile(file, create_delegate, false));
-    }
-
-    /**
-     * If you set "create_delegate" to true then you must understand that this results
-     * is piece hashes being discarded and then re-read from the torrent file if needed
-     * Therefore, if you delete the original torrent file you're going to get errors
-     * if you access the pieces after this (and they've been discarded)
-     * @param file
-     * @param create_delegate
-     * @param force_initial_discard - use to get rid of pieces immediately
-     * @return
-     * @throws TOTorrentException
-     */
-
-    public static ExtendedTorrent readDelegateFromFile(File file, boolean force_initial_discard)
-
-    throws TOTorrentException {
-        return ((ExtendedTorrent) readFromFile(file, true, force_initial_discard));
-    }
-
-    public static TOTorrent readFromFile(File file, boolean create_delegate, boolean force_initial_discard)
+    public static TOTorrent readFromFile(File file)
 
     throws TOTorrentException {
         TOTorrent torrent;
 
         try {
             torrent = TOTorrentFactory.deserialiseFromBEncodedFile(file);
-
-            // make an immediate backup if requested and one doesn't exist 
-
-            if (bSaveTorrentBackup) {
-
-                File torrent_file_bak = new File(file.getParent(), file.getName() + ".bak");
-
-                if (!torrent_file_bak.exists()) {
-
-                    try {
-                        torrent.serialiseToBEncodedFile(torrent_file_bak);
-
-                    } catch (Throwable e) {
-
-                        Debug.printStackTrace(e);
-                    }
-                }
-            }
 
         } catch (TOTorrentException e) {
 
@@ -135,21 +91,7 @@ public class TorrentUtils {
 
         torrent.setAdditionalStringProperty("torrent filename", file.toString());
 
-        if (create_delegate) {
-
-            //torrentDelegate	res = new torrentDelegate( torrent, file );
-
-            //			if ( force_initial_discard ){
-            //				
-            //				res.discardPieces( SystemTime.getCurrentTime(), true );
-            //			}
-
-            return (null);
-
-        } else {
-
-            return (torrent);
-        }
+        return (torrent);
     }
 
     public static TOTorrent readFromBEncodedInputStream(InputStream is)
@@ -1210,14 +1152,6 @@ public class TorrentUtils {
         }
     }
 
-    public interface ExtendedTorrent extends TOTorrent {
-        public byte[][] peekPieces()
-
-        throws TOTorrentException;
-
-        public void setDiscardFluff(boolean discard);
-    }
-
     /**
      * A nice string of a Torrent's hash
      * 
@@ -1280,14 +1214,6 @@ public class TorrentUtils {
         } catch (Throwable e) {
             return false;
         }
-    }
-
-    public interface torrentAttributeListener {
-        public void attributeSet(TOTorrent torrent, String attribute, Object value);
-    }
-
-    public interface TorrentAnnounceURLChangeListener {
-        public void changed();
     }
 
     private final static class UrlUtils {

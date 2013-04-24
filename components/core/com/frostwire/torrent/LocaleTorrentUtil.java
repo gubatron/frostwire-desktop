@@ -33,8 +33,8 @@ import com.frostwire.torrent.TorrentUtils;
 
  * @note Moved from LocaleUtil to keep (cyclical) dependencies down.
  */
-public class LocaleTorrentUtil {
-    
+final class LocaleTorrentUtil {
+
     /**
      * Retrieves the encoding of the torrent if it can be determined.
      * <br>

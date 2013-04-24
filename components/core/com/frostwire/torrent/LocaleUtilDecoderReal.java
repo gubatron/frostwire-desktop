@@ -34,7 +34,7 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 import java.util.Arrays;
 
-public class LocaleUtilDecoderReal implements LocaleUtilDecoder {
+final class LocaleUtilDecoderReal implements LocaleUtilDecoder {
     protected CharsetDecoder decoder;
     protected int index;
 

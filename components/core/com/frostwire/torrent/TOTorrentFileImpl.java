@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-public class TOTorrentFileImpl implements TOTorrentFile {
+final class TOTorrentFileImpl implements TOTorrentFile {
     private final TOTorrent torrent;
     private final long file_length;
     private final byte[][] path_components;

@@ -27,7 +27,7 @@ package com.frostwire.torrent;
  *
  */
 
-public class LocaleUtilEncodingException extends Exception {
+final class LocaleUtilEncodingException extends Exception {
     protected String[] valid_charsets;
     protected String[] valid_names;
 

@@ -32,7 +32,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class TOTorrentCreatorImpl implements TOTorrentCreator {
+final class TOTorrentCreatorImpl implements TOTorrentCreator {
 
     private final File torrent_base;
     private final URL announce_url;

@@ -29,7 +29,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * SHA-1 hasher utility frontend.
  */
-public final class SHA1Hasher {
+final class SHA1Hasher {
 
     private final MessageDigest sha1;
 

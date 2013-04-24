@@ -22,87 +22,74 @@
 
 package com.frostwire.torrent;
 
+final class LocaleUtilDecoderCandidate implements Comparable<LocaleUtilDecoderCandidate> {
+    private int index;
+    private String value;
+    private LocaleUtilDecoder decoder;
 
-public class 
-LocaleUtilDecoderCandidate 
-	implements Comparable<LocaleUtilDecoderCandidate> 
-{
-	private int					index;
-	private String 				value;
-	private LocaleUtilDecoder	decoder;
+    protected LocaleUtilDecoderCandidate(int _index) {
+        index = _index;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public LocaleUtilDecoder getDecoder() {
+        return decoder;
+    }
+
+    public void setDetails(LocaleUtilDecoder _decoder, String _value) {
+        decoder = _decoder;
+        value = _value;
+    }
+
+    public int compareTo(LocaleUtilDecoderCandidate o) {
+        LocaleUtilDecoderCandidate candidate = (LocaleUtilDecoderCandidate) o;
+
+        int res;
+
+        if (value == null && candidate.value == null) {
+
+            res = 0;
+
+        } else if (value == null) {
+
+            res = 1;
+
+        } else if (candidate.value == null) {
+
+            res = -1;
+
+        } else {
+
+            res = value.length() - candidate.value.length();
+
+            if (res == 0) {
+
+                res = index - candidate.index;
+            }
+        }
+
+        if (decoder != null && candidate.getDecoder() != null) {
+
+            // System.out.println( "comp:" + decoder.getName() + "/" + candidate.getDecoder().getName() + " -> " + res );
+        }
+        return (res);
+    }
+
+    /* removed as this removed valid decoders that happen to decode to the same thing for the current
     
-	protected
-	LocaleUtilDecoderCandidate(
-		int	_index )
-	{
-		index	= _index;
-	}
-	
-	public String getValue() {
-	  return value;
-	}
-    
-	public LocaleUtilDecoder getDecoder() {
-	  return decoder;
-	}
-    
-	public void
-	setDetails(
-		LocaleUtilDecoder	_decoder,
-		String				_value )
-	{
-		decoder	= _decoder;
-		value	= _value;
-	}
-	
-	public int 
-	compareTo(LocaleUtilDecoderCandidate o) 
-	{
-	  LocaleUtilDecoderCandidate candidate = (LocaleUtilDecoderCandidate)o;
-      
-	  int	res;
-      
-	  if( value == null && candidate.value == null){
-      
-		res	= 0;
-        
-	  }else if ( value == null ){
-      	
-		res = 1;
-        
-	  }else if ( candidate.value == null ){
-      	
-		res = -1;
-      	
-	  }else{
-      
-		res = value.length() - candidate.value.length();
-        
-		if ( res == 0 ){
-        	
-			res = index - candidate.index;
-		}
-	  }
-      
-	  if ( decoder != null && candidate.getDecoder() != null ){
-	  	
-	  	// System.out.println( "comp:" + decoder.getName() + "/" + candidate.getDecoder().getName() + " -> " + res );
-	  }
-	  return( res );
-	}
-	
-	/* removed as this removed valid decoders that happen to decode to the same thing for the current
-	
-	public boolean equals(Object obj) {
-	  LocaleUtilDecoderCandidate other = (LocaleUtilDecoderCandidate) obj;
+    public boolean equals(Object obj) {
+      LocaleUtilDecoderCandidate other = (LocaleUtilDecoderCandidate) obj;
      
-	 if ( value == null && other.value == null ){
-		return( true );
-	 }else if ( value == null || other.value == null ){
-		return( false );
-	 }else{
-		return( value.equals( other.value ));
-	 }
-	}
-	*/
-  }
+     if ( value == null && other.value == null ){
+    	return( true );
+     }else if ( value == null || other.value == null ){
+    	return( false );
+     }else{
+    	return( value.equals( other.value ));
+     }
+    }
+    */
+}

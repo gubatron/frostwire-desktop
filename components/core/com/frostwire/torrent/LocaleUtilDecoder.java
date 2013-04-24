@@ -29,7 +29,7 @@ package com.frostwire.torrent;
 
 import java.io.UnsupportedEncodingException;
 
-public interface LocaleUtilDecoder {
+interface LocaleUtilDecoder {
 
     public String getName();
 

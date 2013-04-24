@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-public class TOTorrentDeserialiseImpl extends TOTorrentImpl {
+final class TOTorrentDeserialiseImpl extends TOTorrentImpl {
 
     public TOTorrentDeserialiseImpl(File file) throws TOTorrentException {
         if (!file.exists()) {

@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
  * This class is NOT thread safe.
  *
  */
-public class TOTorrentImpl implements TOTorrent {
+class TOTorrentImpl implements TOTorrent {
 
     protected static final String TK_ANNOUNCE = "announce";
     protected static final String TK_ANNOUNCE_LIST = "announce-list";

@@ -23,7 +23,7 @@ package com.frostwire.torrent;
 import java.util.AbstractMap;
 import java.util.HashMap;
 
-public class HashMapEx extends HashMap<String, Object> {
+final class HashMapEx extends HashMap<String, Object> {
 
     public static final byte FL_MAP_ORDER_INCORRECT = 0x01;
 

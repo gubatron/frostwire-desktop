@@ -23,7 +23,7 @@ package com.frostwire.torrent;
 
 import java.net.URL;
 
-public class TOTorrentAnnounceURLSetImpl implements TOTorrentAnnounceURLSet {
+final class TOTorrentAnnounceURLSetImpl implements TOTorrentAnnounceURLSet {
     private TOTorrentImpl torrent;
     private URL[] urls;
 

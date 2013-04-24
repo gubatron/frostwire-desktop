@@ -26,7 +26,7 @@ package com.frostwire.torrent;
  * @created Oct 24, 2009
  *
  */
-public interface BEncodableObject {
+interface BEncodableObject {
     /**
      * @return Must return an object that is bencodable
      */

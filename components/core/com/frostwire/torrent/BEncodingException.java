@@ -28,7 +28,7 @@ import java.io.IOException;
  * This is thrown when the BEncoder/BDecoder stumbles upon any internal error, such as malformed input
  * @IOException will be used if the encountered problem is of external nature (mostly IOExceptiosn themselves)
  */
-public class BEncodingException extends IOException {
+final class BEncodingException extends IOException {
 
     public BEncodingException() {
     }

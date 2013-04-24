@@ -30,7 +30,7 @@ import java.io.UnsupportedEncodingException;
  *
  */
 
-public class LocaleUtilDecoderFallback implements LocaleUtilDecoder {
+final class LocaleUtilDecoderFallback implements LocaleUtilDecoder {
     public static String NAME = "Fallback";
 
     private static volatile int max_ok_name_length = 64;

@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.zip.GZIPOutputStream;
 
-public class TOTorrentCreateImpl extends TOTorrentImpl implements TOTorrentFileHasherListener {
+final class TOTorrentCreateImpl extends TOTorrentImpl implements TOTorrentFileHasherListener {
 
     private File torrent_base;
     private long piece_length;
