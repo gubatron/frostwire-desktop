@@ -54,7 +54,7 @@ public class TOTorrentCreateImpl extends TOTorrentImpl implements TOTorrentFileH
     private Set<String> ignore_set = new HashSet<String>();
 
     private Map<String, File> linkage_map;
-    private Map<String, String> linked_tf_map = new HashMap<String, String>();
+    private Map<String, Object> linked_tf_map = new HashMap<String, Object>();
 
     private boolean cancelled;
 
@@ -128,7 +128,7 @@ public class TOTorrentCreateImpl extends TOTorrentImpl implements TOTorrentFileH
 
         setCreationDate(System.currentTimeMillis() / 1000);
 
-        setCreatedBy(Constants.AZUREUS_NAME + "/" + Constants.AZUREUS_VERSION);
+        setCreatedBy(Constants.APP_NAME + "/" + Constants.APP_VERSION);
 
         setPieceLength(_piece_length);
 

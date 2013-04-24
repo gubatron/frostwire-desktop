@@ -23,9 +23,6 @@
 package com.frostwire.torrent;
 
 import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -37,7 +34,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -56,39 +52,19 @@ public class BDecoder {
     private boolean recovery_mode;
     private boolean verify_map_order;
 
-    private final static byte[] PORTABLE_ROOT;
-
-    static {
-        byte[] portable = null;
-
-        try {
-            String root = System.getProperty("azureus.portable.root", "");
-
-            if (root.length() > 0) {
-
-                portable = root.getBytes("UTF-8");
-            }
-        } catch (Throwable e) {
-
-            e.printStackTrace();
-        }
-
-        PORTABLE_ROOT = portable;
-    }
-
-    public static Map decode(byte[] data)
+    public static Map<String, Object> decode(byte[] data)
 
     throws IOException {
         return (new BDecoder().decodeByteArray(data));
     }
 
-    public static Map decode(byte[] data, int offset, int length)
+    public static Map<String, Object> decode(byte[] data, int offset, int length)
 
     throws IOException {
         return (new BDecoder().decodeByteArray(data, offset, length));
     }
 
-    public static Map decode(BufferedInputStream is)
+    public static Map<String, Object> decode(BufferedInputStream is)
 
     throws IOException {
         return (new BDecoder().decodeStream(is));
@@ -103,33 +79,34 @@ public class BDecoder {
         return (decode(new BDecoderInputStreamArray(data), true));
     }
 
-    public Map decodeByteArray(byte[] data, int offset, int length)
+    public Map<String, Object> decodeByteArray(byte[] data, int offset, int length)
 
     throws IOException {
         return (decode(new BDecoderInputStreamArray(data, offset, length), true));
     }
 
-    public Map decodeByteArray(byte[] data, int offset, int length, boolean internKeys)
+    public Map<String, Object> decodeByteArray(byte[] data, int offset, int length, boolean internKeys)
 
     throws IOException {
         return (decode(new BDecoderInputStreamArray(data, offset, length), internKeys));
     }
 
     // used externally 
-    public Map decodeByteBuffer(ByteBuffer buffer, boolean internKeys) throws IOException {
+    public Map<String, Object> decodeByteBuffer(ByteBuffer buffer, boolean internKeys) throws IOException {
         InputStream is = new BDecoderInputStreamArray(buffer);
-        Map result = decode(is, internKeys);
+        Map<String, Object> result = decode(is, internKeys);
         buffer.position(buffer.limit() - is.available());
         return result;
     }
 
-    public Map decodeStream(BufferedInputStream data)
+    public Map<String, Object> decodeStream(BufferedInputStream data)
 
     throws IOException {
         return decodeStream(data, true);
     }
 
-    public Map decodeStream(BufferedInputStream data, boolean internKeys)
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> decodeStream(BufferedInputStream data, boolean internKeys)
 
     throws IOException {
         Object res = decodeInputStream(data, "", 0, internKeys);
@@ -143,10 +120,11 @@ public class BDecoder {
             throw (new BEncodingException("BDecoder: top level isn't a Map"));
         }
 
-        return ((Map) res);
+        return ((Map<String, Object>) res);
     }
 
-    private Map decode(InputStream data, boolean internKeys)
+    @SuppressWarnings("unchecked")
+    private Map<String, Object> decode(InputStream data, boolean internKeys)
 
     throws IOException {
         Object res = decodeInputStream(data, "", 0, internKeys);
@@ -160,7 +138,7 @@ public class BDecoder {
             throw (new BEncodingException("BDecoder: top level isn't a Map"));
         }
 
-        return ((Map) res);
+        return ((Map<String, Object>) res);
     }
 
     // reuseable objects for key decoding
@@ -190,7 +168,7 @@ public class BDecoder {
         case 'd':
             //create a new dictionary object
 
-            HashMap tempMap = new HashMap();
+            HashMap<String, Object> tempMap = new HashMap<String, Object>();
 
             try {
                 byte[] prev_key = null;
@@ -355,12 +333,12 @@ public class BDecoder {
         case 'l':
             //create the list
 
-            ArrayList tempList = new ArrayList();
+            ArrayList<Object> tempList = new ArrayList<Object>();
 
             try {
                 //create the key
 
-                String context2 = PORTABLE_ROOT == null ? context : (context + "[]");
+                String context2 = context;
 
                 Object tempElement = null;
                 while ((tempElement = decodeInputStream(dbis, context2, nesting + 1, internKeys)) != null) {
@@ -735,46 +713,6 @@ public class BDecoder {
 
         getByteArrayFromStream(dbis, length, tempArray);
 
-        if (PORTABLE_ROOT != null && length >= PORTABLE_ROOT.length && tempArray[1] == ':' && tempArray[2] == '\\' && context != null) {
-
-            boolean mismatch = false;
-
-            for (int i = 2; i < PORTABLE_ROOT.length; i++) {
-
-                if (tempArray[i] != PORTABLE_ROOT[i]) {
-
-                    mismatch = true;
-
-                    break;
-                }
-            }
-
-            if (!mismatch) {
-
-                context = context.toLowerCase(Locale.US);
-
-                // always a chance a hash will match the root so we just pick on relevant looking
-                // entries...
-
-                if (context.contains("file") || context.contains("link") || context.contains("dir") || context.contains("folder") || context.contains("path") || context.contains("save") || context.contains("torrent")) {
-
-                    tempArray[0] = PORTABLE_ROOT[0];
-
-                    /*
-                    String	test = new String( tempArray, 0, tempArray.length > 80?80:tempArray.length );
-                    
-                    System.out.println( "mapped " + context + "->" + tempArray.length + ": " + test );
-                    */
-
-                } else {
-
-                    String test = new String(tempArray, 0, tempArray.length > 80 ? 80 : tempArray.length);
-
-                    System.out.println("Portable: not mapping " + context + "->" + tempArray.length + ": " + test);
-                }
-            }
-        }
-
         return tempArray;
     }
 
@@ -839,7 +777,8 @@ public class BDecoder {
 
         } else if (obj instanceof List) {
 
-            List l = (List) obj;
+            @SuppressWarnings("unchecked")
+            List<Object> l = (List<Object>) obj;
 
             writer.println(use_indent + "[");
 
@@ -854,9 +793,10 @@ public class BDecoder {
 
         } else {
 
-            Map m = (Map) obj;
+            @SuppressWarnings("unchecked")
+            Map<String, Object> m = (Map<String, Object>) obj;
 
-            Iterator it = m.keySet().iterator();
+            Iterator<String> it = m.keySet().iterator();
 
             while (it.hasNext()) {
 
@@ -881,17 +821,18 @@ public class BDecoder {
      * @return
      */
 
-    public static Map<String, String> decodeStrings(Map map) {
+    @SuppressWarnings("unchecked")
+    public static Map<String, Object> decodeStrings(Map<String, Object> map) {
         if (map == null) {
 
             return (null);
         }
 
-        Iterator it = map.entrySet().iterator();
+        Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
 
         while (it.hasNext()) {
 
-            Map.Entry entry = (Map.Entry) it.next();
+            Map.Entry<String, Object> entry = (Map.Entry<String, Object>) it.next();
 
             Object value = entry.getValue();
 
@@ -906,10 +847,10 @@ public class BDecoder {
                 }
             } else if (value instanceof Map) {
 
-                decodeStrings((Map) value);
+                decodeStrings((Map<String, Object>) value);
             } else if (value instanceof List) {
 
-                decodeStrings((List) value);
+                decodeStrings((List<Object>) value);
             }
         }
 
@@ -923,7 +864,8 @@ public class BDecoder {
      * @param list
      * @return the same list passed in
      */
-    public static List decodeStrings(List list) {
+    @SuppressWarnings("unchecked")
+    public static List<Object> decodeStrings(List<Object> list) {
         if (list == null) {
 
             return (null);
@@ -946,230 +888,18 @@ public class BDecoder {
                 }
             } else if (value instanceof Map) {
 
-                decodeStrings((Map) value);
+                decodeStrings((Map<String, Object>) value);
 
             } else if (value instanceof List) {
 
-                decodeStrings((List) value);
+                decodeStrings((List<Object>) value);
             }
         }
 
         return (list);
     }
 
-    private static void print(File f, File output) {
-        try {
-            BDecoder decoder = new BDecoder();
-
-            decoder.setRecoveryMode(false);
-
-            PrintWriter pw = new PrintWriter(new FileWriter(output));
-
-            print(pw, decoder.decodeStream(new BufferedInputStream(new FileInputStream(f))));
-
-            pw.flush();
-
-        } catch (Throwable e) {
-
-            e.printStackTrace();
-        }
-    }
-
-    // JSON
-
-    private static Object decodeFromJSONGeneric(Object obj) {
-        if (obj == null) {
-
-            return (null);
-
-        } else if (obj instanceof Map) {
-
-            return (decodeFromJSONObject((Map) obj));
-
-        } else if (obj instanceof List) {
-
-            return (decodeFromJSONArray((List) obj));
-
-        } else if (obj instanceof String) {
-
-            try {
-                return (((String) obj).getBytes("UTF-8"));
-
-            } catch (Throwable e) {
-
-                return (((String) obj).getBytes());
-            }
-
-        } else if (obj instanceof Long) {
-
-            return (obj);
-
-        } else if (obj instanceof Boolean) {
-
-            return (new Long(((Boolean) obj) ? 1 : 0));
-
-        } else if (obj instanceof Double) {
-
-            return (String.valueOf((Double) obj));
-
-        } else {
-
-            System.err.println("Unexpected JSON value type: " + obj.getClass());
-
-            return (obj);
-        }
-    }
-
-    public static List decodeFromJSONArray(List j_list) {
-        List b_list = new ArrayList();
-
-        for (Object o : j_list) {
-
-            b_list.add(decodeFromJSONGeneric(o));
-        }
-
-        return (b_list);
-    }
-
-    public static Map decodeFromJSONObject(Map<Object, Object> j_map) {
-        Map b_map = new HashMap();
-
-        for (Map.Entry<Object, Object> entry : j_map.entrySet()) {
-
-            Object key = entry.getKey();
-            Object val = entry.getValue();
-
-            b_map.put((String) key, decodeFromJSONGeneric(val));
-        }
-
-        return (b_map);
-    }
-
-    //    public static Map
-    //    decodeFromJSON(
-    //    	String	json )
-    //    {
-    //    	Map j_map = JSONUtils.decodeJSON(json);
-    //    	    	
-    //    	return( decodeFromJSONObject( j_map ));
-    //    }
-
-    /*
-    	private interface
-    	BDecoderInputStream
-    	{
-    		public int
-    		read()
-
-    			throws IOException;
-
-    		public int
-    		read(
-    			byte[] buffer )
-
-    			throws IOException;
-
-    		public int
-    		read(
-    			byte[] 	buffer,
-    			int		offset,
-    			int		length )
-
-    			throws IOException;
-
-    		public int
-    		available()
-
-    			throws IOException;
-
-    		public boolean
-    		markSupported();
-
-    		public void
-    		mark(
-    				int	limit );
-
-    		public void
-    		reset()
-
-    			throws IOException;
-    	}
-
-    	private class
-    	BDecoderInputStreamStream
-    	
-    		implements BDecoderInputStream
-    	{
-    		final private BufferedInputStream		is;
-
-    		private
-    		BDecoderInputStreamStream(
-    			BufferedInputStream	_is )
-    		{
-    			is	= _is;
-    		}
-
-    		public int
-    		read()
-
-    		throws IOException
-    		{
-    			return( is.read());
-    		}
-
-    		public int
-    		read(
-    			byte[] buffer )
-
-    		throws IOException
-    		{
-    			return( is.read( buffer ));
-    		}
-
-    		public int
-    		read(
-    			byte[] 	buffer,
-    			int		offset,
-    			int		length )
-
-    			throws IOException
-    		{
-    			return( is.read( buffer, offset, length ));  
-    		}
-
-    		public int
-    		available()
-
-    			throws IOException
-    		{
-    			return( is.available());
-    		}
-
-    		public boolean
-    		markSupported()
-    		{
-    			return( is.markSupported());
-    		}
-
-    		public void
-    		mark(
-    			int	limit )
-    		{
-    			is.mark( limit );
-    		}
-
-    		public void
-    		reset()
-
-    			throws IOException
-    		{
-    			is.reset();
-    		}
-    	}
-    */
-    private class BDecoderInputStreamArray
-
-    extends InputStream {
+    private class BDecoderInputStreamArray extends InputStream {
         final private byte[] bytes;
         private int pos = 0;
         private int markPos;

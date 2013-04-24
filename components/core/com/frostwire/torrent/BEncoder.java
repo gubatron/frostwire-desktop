@@ -26,8 +26,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -45,15 +43,13 @@ public class BEncoder {
 
     private static final byte[] MINUS_1_BYTES = "-1".getBytes();
 
-    private static volatile int non_ascii_logs;
-
-    public static byte[] encode(Map object)
+    public static byte[] encode(Map<String, Object> object)
 
     throws IOException {
         return (encode(object, false));
     }
 
-    public static byte[] encode(Map object, boolean url_encode)
+    public static byte[] encode(Map<String, Object> object, boolean url_encode)
 
     throws IOException {
         BEncoder encoder = new BEncoder(url_encode);
@@ -132,9 +128,10 @@ public class BEncoder {
 
         } else if (object instanceof Map) {
 
-            Map tempMap = (Map) object;
+            @SuppressWarnings("unchecked")
+            Map<String, Object> tempMap = (Map<String, Object>) object;
 
-            SortedMap tempTree = null;
+            SortedMap<String, Object> tempTree = null;
 
             // unfortunately there are some occasions where we want to ensure that
             // the 'key' of the map is not mangled by assuming its UTF-8 encodable.
@@ -151,17 +148,17 @@ public class BEncoder {
             //are we sorted?
             if (tempMap instanceof TreeMap) {
 
-                tempTree = (TreeMap) tempMap;
+                tempTree = (TreeMap<String, Object>) tempMap;
 
             } else {
-                tempTree = new TreeMap(tempMap);
+                tempTree = new TreeMap<String, Object>(tempMap);
             }
 
-            Iterator it = tempTree.entrySet().iterator();
+            Iterator<Map.Entry<String, Object>> it = tempTree.entrySet().iterator();
 
             while (it.hasNext()) {
 
-                Map.Entry entry = (Map.Entry) it.next();
+                Map.Entry<String, Object> entry = (Map.Entry<String, Object>) it.next();
 
                 Object o_key = entry.getKey();
 
@@ -187,24 +184,6 @@ public class BEncoder {
                             // config issues as we cycle through decode/encode cycles with certain
                             // characters
 
-                            if (Constants.IS_CVS_VERSION) {
-                                char[] chars = key.toCharArray();
-
-                                for (char c : chars) {
-
-                                    if (c >= '\u0080') {
-
-                                        if (non_ascii_logs < 50) {
-
-                                            non_ascii_logs++;
-
-                                            Debug.out("Non-ASCII key: " + key);
-                                        }
-
-                                        break;
-                                    }
-                                }
-                            }
                             encodeObject(key); // Key goes in as UTF-8
                             if (!encodeObject(value))
                                 encodeObject("");
@@ -218,7 +197,8 @@ public class BEncoder {
 
         } else if (object instanceof List) {
 
-            List tempList = (List) object;
+            @SuppressWarnings("unchecked")
+            List<Object> tempList = (List<Object>) object;
 
             //write out the l
 
@@ -441,231 +421,6 @@ public class BEncoder {
             //System.out.println( "-> " + str + "," + current_buffer_pos );
 
             return (res);
-        }
-    }
-
-    private static Object normaliseObject(Object o) {
-        if (o instanceof Integer) {
-            o = new Long(((Integer) o).longValue());
-        } else if (o instanceof Boolean) {
-            o = new Long(((Boolean) o).booleanValue() ? 1 : 0);
-        } else if (o instanceof Float) {
-            o = String.valueOf((Float) o);
-        } else if (o instanceof Double) {
-            o = String.valueOf((Double) o);
-        } else if (o instanceof byte[]) {
-            try {
-                o = new String((byte[]) o, "UTF-8");
-            } catch (Throwable e) {
-            }
-        }
-
-        return (o);
-    }
-
-    public static boolean isEncodable(Object toCheck) {
-        if (toCheck instanceof Integer || toCheck instanceof Long || toCheck instanceof Boolean || toCheck instanceof Float || toCheck instanceof byte[] || toCheck instanceof String || toCheck instanceof BEncodableObject)
-            return true;
-        if (toCheck instanceof Map) {
-            for (Iterator it = ((Map) toCheck).keySet().iterator(); it.hasNext();) {
-                Map.Entry entry = (Map.Entry) it.next();
-                Object key = entry.getKey();
-                if (!(key instanceof String || key instanceof byte[]) || !isEncodable(entry.getValue()))
-                    return false;
-            }
-            return true;
-        }
-        if (toCheck instanceof List) {
-            for (Iterator it = ((List) toCheck).iterator(); it.hasNext();)
-                if (!isEncodable(it.next()))
-                    return false;
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean objectsAreIdentical(Object o1, Object o2) {
-        if (o1 == null && o2 == null) {
-
-            return (true);
-
-        } else if (o1 == null || o2 == null) {
-
-            return (false);
-        }
-
-        if (o1.getClass() != o2.getClass()) {
-
-            if ((o1 instanceof Map && o2 instanceof Map) || (o1 instanceof List && o2 instanceof List)) {
-
-                // things actually OK
-
-            } else {
-
-                o1 = normaliseObject(o1);
-                o2 = normaliseObject(o2);
-
-                if (o1.getClass() != o2.getClass()) {
-
-                    Debug.out("Failed to normalise classes " + o1.getClass() + "/" + o2.getClass());
-
-                    return (false);
-                }
-            }
-        }
-
-        if (o1 instanceof Long || o1 instanceof String) {
-
-            return (o1.equals(o2));
-
-        } else if (o1 instanceof byte[]) {
-
-            return (Arrays.equals((byte[]) o1, (byte[]) o2));
-
-        } else if (o1 instanceof List) {
-
-            return (listsAreIdentical((List) o1, (List) o2));
-
-        } else if (o1 instanceof Map) {
-
-            return (mapsAreIdentical((Map) o1, (Map) o2));
-
-        } else if (o1 instanceof Integer || o1 instanceof Boolean || o1 instanceof Float || o1 instanceof ByteBuffer) {
-
-            return (o1.equals(o2));
-
-        } else {
-
-            Debug.out("Invalid type: " + o1);
-
-            return (false);
-        }
-    }
-
-    public static boolean listsAreIdentical(List list1, List list2) {
-        if (list1 == null && list2 == null) {
-
-            return (true);
-
-        } else if (list1 == null || list2 == null) {
-
-            return (false);
-        }
-
-        if (list1.size() != list2.size()) {
-
-            return (false);
-        }
-
-        for (int i = 0; i < list1.size(); i++) {
-
-            if (!objectsAreIdentical(list1.get(i), list2.get(i))) {
-
-                return (false);
-            }
-        }
-
-        return (true);
-    }
-
-    public static boolean mapsAreIdentical(Map map1, Map map2) {
-        if (map1 == null && map2 == null) {
-
-            return (true);
-
-        } else if (map1 == null || map2 == null) {
-
-            return (false);
-        }
-
-        if (map1.size() != map2.size()) {
-
-            return (false);
-        }
-
-        Iterator it = map1.keySet().iterator();
-
-        while (it.hasNext()) {
-
-            Object key = it.next();
-
-            Object v1 = map1.get(key);
-            Object v2 = map2.get(key);
-
-            if (!objectsAreIdentical(v1, v2)) {
-
-                return (false);
-            }
-        }
-
-        return (true);
-    }
-
-    public static Map cloneMap(Map map) {
-        if (map == null) {
-
-            return (null);
-        }
-
-        Map res = new TreeMap();
-
-        Iterator it = map.entrySet().iterator();
-
-        while (it.hasNext()) {
-
-            Map.Entry entry = (Map.Entry) it.next();
-
-            Object key = entry.getKey();
-            Object value = entry.getValue();
-
-            // keys must be String (or very rarely byte[])
-
-            if (key instanceof byte[]) {
-
-                key = ((byte[]) key).clone();
-            }
-
-            res.put(key, clone(value));
-        }
-
-        return (res);
-    }
-
-    public static List cloneList(List list) {
-        if (list == null) {
-
-            return (null);
-        }
-
-        List res = new ArrayList(list.size());
-
-        Iterator it = list.iterator();
-
-        while (it.hasNext()) {
-
-            res.add(clone(it.next()));
-        }
-
-        return (res);
-    }
-
-    public static Object clone(Object obj) {
-        if (obj instanceof List) {
-
-            return (cloneList((List) obj));
-
-        } else if (obj instanceof Map) {
-
-            return (cloneMap((Map) obj));
-
-        } else if (obj instanceof byte[]) {
-
-            return (((byte[]) obj).clone());
-
-        } else {
-            // assume immutable - String,Long etc
-
-            return (obj);
         }
     }
 

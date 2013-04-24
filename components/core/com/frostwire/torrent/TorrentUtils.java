@@ -996,27 +996,27 @@ public class TorrentUtils {
 
             if (pp != null) {
 
-                Map<String, String> links;
+                Map<String, Object> links;
 
                 byte[] g_data = (byte[]) pp.get(TorrentUtils.TORRENT_AZ_PROP_INITIAL_LINKAGE2);
 
                 if (g_data == null) {
 
-                    links = (Map<String, String>) pp.get(TorrentUtils.TORRENT_AZ_PROP_INITIAL_LINKAGE);
+                    links = (Map<String, Object>) pp.get(TorrentUtils.TORRENT_AZ_PROP_INITIAL_LINKAGE);
 
                 } else {
 
-                    links = (Map<String, String>) BDecoder.decode(new BufferedInputStream(new GZIPInputStream(new ByteArrayInputStream(g_data))));
+                    links = (Map<String, Object>) BDecoder.decode(new BufferedInputStream(new GZIPInputStream(new ByteArrayInputStream(g_data))));
 
                 }
                 if (links != null) {//&& TorrentUtils.isCreatedTorrent( torrent )){
 
                     links = BDecoder.decodeStrings(links);
 
-                    for (Map.Entry<String, String> entry : links.entrySet()) {
+                    for (Map.Entry<String, Object> entry : links.entrySet()) {
 
                         int file_index = Integer.parseInt(entry.getKey());
-                        String file = entry.getValue();
+                        String file = (String) entry.getValue();
 
                         result.put(file_index, new File(file));
                     }
