@@ -29,15 +29,7 @@ package com.frostwire.torrent;
 
 public interface TOTorrentCreator {
 
-    public TOTorrent create()
-
-    throws TOTorrentException;
+    public TOTorrent create() throws TOTorrentException;
 
     public long getTorrentDataSizeFromFileOrDir();
-
-    public void cancel();
-
-    public void addListener(TOTorrentProgressListener listener);
-
-    public void removeListener(TOTorrentProgressListener listener);
 }

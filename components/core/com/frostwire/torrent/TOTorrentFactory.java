@@ -197,9 +197,9 @@ TOTorrentFactory
 	
 		throws TOTorrentException
 	{
-		return( new TOTorrentCreatorImpl(
-					file, announce_url, add_hashes, piece_min_size, piece_max_size,
-					piece_num_lower, piece_num_upper ));
+		return new TOTorrentCreatorImpl(
+					file, announce_url, add_hashes, 0, piece_min_size, piece_max_size,
+					piece_num_lower, piece_num_upper, null);
 
 	}
 	

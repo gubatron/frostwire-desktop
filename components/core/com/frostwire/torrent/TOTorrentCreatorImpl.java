@@ -29,56 +29,50 @@ package com.frostwire.torrent;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class TOTorrentCreatorImpl implements TOTorrentCreator {
+public final class TOTorrentCreatorImpl implements TOTorrentCreator {
 
-    private File torrent_base;
-    private URL announce_url;
-    private boolean add_other_hashes;
-    private long piece_length;
-    private long piece_min_size;
-    private long piece_max_size;
-    private long piece_num_lower;
-    private long piece_num_upper;
-
-    private Map<String, File> linkage_map = new HashMap<String, File>();
-    private TOTorrentCreateImpl torrent;
-
-    private List<TOTorrentProgressListener> listeners = new ArrayList<TOTorrentProgressListener>();
+    private final File torrent_base;
+    private final URL announce_url;
+    private final boolean add_other_hashes;
+    private final long piece_length;
+    private final long piece_min_size;
+    private final long piece_max_size;
+    private final long piece_num_lower;
+    private final long piece_num_upper;
+    private final TOTorrentProgressListener listener;
 
     public TOTorrentCreatorImpl(File _torrent_base) {
-        torrent_base = _torrent_base;
+        this(_torrent_base, null, false, 0);
     }
 
     public TOTorrentCreatorImpl(File _torrent_base, URL _announce_url, boolean _add_other_hashes, long _piece_length) {
-        torrent_base = _torrent_base;
-        announce_url = _announce_url;
-        add_other_hashes = _add_other_hashes;
-        piece_length = _piece_length;
+        this(_torrent_base, _announce_url, _add_other_hashes, _piece_length, 0, 0, 0, 0, null);
     }
 
-    public TOTorrentCreatorImpl(File _torrent_base, URL _announce_url, boolean _add_other_hashes, long _piece_min_size, long _piece_max_size, long _piece_num_lower, long _piece_num_upper) {
+    public TOTorrentCreatorImpl(File _torrent_base, URL _announce_url, boolean _add_other_hashes, long piece_length, long _piece_min_size, long _piece_max_size, long _piece_num_lower, long _piece_num_upper, TOTorrentProgressListener listener) {
         torrent_base = _torrent_base;
         announce_url = _announce_url;
         add_other_hashes = _add_other_hashes;
+        this.piece_length = piece_length;
         piece_min_size = _piece_min_size;
         piece_max_size = _piece_max_size;
         piece_num_lower = _piece_num_lower;
         piece_num_upper = _piece_num_upper;
+        this.listener = listener;
     }
 
     public TOTorrent create() throws TOTorrentException {
         if (announce_url == null) {
-            throw (new TOTorrentException("Skeleton creator", TOTorrentException.RT_WRITE_FAILS));
+            throw new TOTorrentException("Skeleton creator", TOTorrentException.RT_WRITE_FAILS);
         }
 
-        File base_to_use;
+        File base_to_use = torrent_base;
 
-        base_to_use = torrent_base;
+        Map<String, File> linkage_map = new HashMap<String, File>();
+        TOTorrentCreateImpl torrent;
 
         if (piece_length > 0) {
             torrent = new TOTorrentCreateImpl(linkage_map, base_to_use, announce_url, add_other_hashes, piece_length);
@@ -86,17 +80,15 @@ public class TOTorrentCreatorImpl implements TOTorrentCreator {
             torrent = new TOTorrentCreateImpl(linkage_map, base_to_use, announce_url, add_other_hashes, piece_min_size, piece_max_size, piece_num_lower, piece_num_upper);
         }
 
-        for (TOTorrentProgressListener l : listeners) {
-            torrent.addListener(l);
-        }
+        torrent.addListener(listener);
 
         torrent.create();
 
-        return (torrent);
+        return torrent;
     }
 
     public long getTorrentDataSizeFromFileOrDir() {
-        return (getTorrentDataSizeFromFileOrDir(torrent_base));
+        return getTorrentDataSizeFromFileOrDir(torrent_base);
     }
 
     private long getTorrentDataSizeFromFileOrDir(File file) {
@@ -119,39 +111,10 @@ public class TOTorrentCreatorImpl implements TOTorrentCreator {
             long length = 0;
 
             for (int i = 0; i < dir_files.length; i++) {
-
                 length += getTorrentDataSizeFromFileOrDir(dir_files[i]);
             }
 
             return (length);
-        }
-    }
-
-    public void cancel() {
-        if (torrent != null) {
-            torrent.cancel();
-        }
-    }
-
-    public void addListener(TOTorrentProgressListener listener) {
-        if (torrent == null) {
-
-            listeners.add(listener);
-
-        } else {
-
-            torrent.addListener(listener);
-        }
-    }
-
-    public void removeListener(TOTorrentProgressListener listener) {
-        if (torrent == null) {
-
-            listeners.remove(listener);
-
-        } else {
-
-            torrent.removeListener(listener);
         }
     }
 }
