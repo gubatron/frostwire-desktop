@@ -21,26 +21,18 @@
 
 package com.frostwire.torrent;
 
-public interface 
-TOTorrentFile 
-{
-	public TOTorrent
-	getTorrent();
-	
-	public long
-	getLength();
-		
-	public byte[][]
-	getPathComponents();
-	
-	public String getRelativePath();
-		
-	public int
-	getFirstPieceNumber();
-	
-	public int
-	getLastPieceNumber();
-	
-	public int
-	getNumberOfPieces();
+public interface TOTorrentFile {
+    public TOTorrent getTorrent();
+
+    public long getLength();
+
+    public byte[][] getPathComponents();
+
+    public String getRelativePath();
+
+    public int getFirstPieceNumber();
+
+    public int getLastPieceNumber();
+
+    public int getNumberOfPieces();
 }

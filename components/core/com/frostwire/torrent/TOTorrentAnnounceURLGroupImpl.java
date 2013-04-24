@@ -23,60 +23,41 @@ package com.frostwire.torrent;
 
 import java.net.URL;
 
-import com.frostwire.torrent.*;
+public class TOTorrentAnnounceURLGroupImpl implements TOTorrentAnnounceURLGroup {
 
-public class 
-TOTorrentAnnounceURLGroupImpl
-	implements TOTorrentAnnounceURLGroup 
-{
-	private TOTorrentImpl	torrent;
-	private TOTorrentAnnounceURLSet[]		sets;
-	
-	protected
-	TOTorrentAnnounceURLGroupImpl(
-		TOTorrentImpl	_torrent )
-	{
-		torrent	= _torrent;
-		
-		sets = new TOTorrentAnnounceURLSet[0];
-	}
+    private TOTorrentImpl torrent;
+    private TOTorrentAnnounceURLSet[] sets;
 
-	protected void
-	addSet(
-		TOTorrentAnnounceURLSet	set )
-	{
-		TOTorrentAnnounceURLSet[]	new_sets = new TOTorrentAnnounceURLSet[sets.length+1];
-		
-		System.arraycopy( sets, 0, new_sets, 0, sets.length );
-		
-		new_sets[new_sets.length-1] = set;
-		
-		sets = new_sets;
-		
-		torrent.fireChanged( TOTorrentListener.CT_ANNOUNCE_URLS );
-	}
-	
-	public TOTorrentAnnounceURLSet[]
-	getAnnounceURLSets()
-	{
-		return( sets );
-	}
-	
-	public void
-	setAnnounceURLSets(
-		TOTorrentAnnounceURLSet[]	_sets )
-	{
-		sets = _sets;	
-		
-		torrent.fireChanged( TOTorrentListener.CT_ANNOUNCE_URLS );
-	}
-		
-	
-	public TOTorrentAnnounceURLSet
-	createAnnounceURLSet(
-		URL[]	urls )
-	{
-		return( new TOTorrentAnnounceURLSetImpl( torrent, urls ));	
-	}
-	
+    protected TOTorrentAnnounceURLGroupImpl(TOTorrentImpl _torrent) {
+        torrent = _torrent;
+
+        sets = new TOTorrentAnnounceURLSet[0];
+    }
+
+    protected void addSet(TOTorrentAnnounceURLSet set) {
+        TOTorrentAnnounceURLSet[] new_sets = new TOTorrentAnnounceURLSet[sets.length + 1];
+
+        System.arraycopy(sets, 0, new_sets, 0, sets.length);
+
+        new_sets[new_sets.length - 1] = set;
+
+        sets = new_sets;
+
+        torrent.fireChanged(TOTorrentListener.CT_ANNOUNCE_URLS);
+    }
+
+    public TOTorrentAnnounceURLSet[] getAnnounceURLSets() {
+        return (sets);
+    }
+
+    public void setAnnounceURLSets(TOTorrentAnnounceURLSet[] _sets) {
+        sets = _sets;
+
+        torrent.fireChanged(TOTorrentListener.CT_ANNOUNCE_URLS);
+    }
+
+    public TOTorrentAnnounceURLSet createAnnounceURLSet(URL[] urls) {
+        return (new TOTorrentAnnounceURLSetImpl(torrent, urls));
+    }
+
 }

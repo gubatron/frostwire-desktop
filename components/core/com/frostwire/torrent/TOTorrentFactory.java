@@ -21,205 +21,115 @@
 
 package com.frostwire.torrent;
 
-
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Map;
 
-public class 
-TOTorrentFactory 
-{	
-	public static final long	TO_DEFAULT_FIXED_PIECE_SIZE = 256*1024;
-	
-	public static final long	TO_DEFAULT_VARIABLE_PIECE_SIZE_MIN = 32*1024;
-	public static final long	TO_DEFAULT_VARIABLE_PIECE_SIZE_MAX = 2*1024*1024;
-	
-	public static final long	TO_DEFAULT_VARIABLE_PIECE_NUM_LOWER = 1024;
-	public static final long	TO_DEFAULT_VARIABLE_PIECE_NUM_UPPER = 2048;
-	
-	
-	public static final long[]	STANDARD_PIECE_SIZES = { 32*1024, 48*1024, 64*1024, 96*1024, 
-														 128*1024, 192*1024, 256*1024, 384*1024,
-														 512*1024, 768*1024, 1024*1024,
-														 1536*1024, 2*1024*1024, 3*1024*1024, 4*1024*1024 };
-	
-		// deserialisation methods
-		
-	public static TOTorrent
-	deserialiseFromBEncodedFile(
-		File		file )
-		
-		throws TOTorrentException
-	{
-		return( new TOTorrentDeserialiseImpl( file ));
-	}
-	
-		/**
-		 * WARNING - take care if you use this that the data you're creating the torrent from doesn't contain
-		 * unwanted attributes in it (e.g. "torrent filename"). You should almost definitely be using 
-		 * TorrentUtils.deserialiseFromBEncodedInputStream
-		 * @param is
-		 * @return
-		 * @throws TOTorrentException
-		 */
-	
-	public static TOTorrent
-	deserialiseFromBEncodedInputStream(
-		InputStream		is )
-		
-		throws TOTorrentException
-	{
-		return( new TOTorrentDeserialiseImpl( is ));
-	}
-    
-    public static TOTorrent
-    deserialiseFromBEncodedByteArray(
-        byte[]      bytes )
-        
-        throws TOTorrentException
-    {
-        return( new TOTorrentDeserialiseImpl( bytes ));
+public class TOTorrentFactory {
+    public static final long TO_DEFAULT_FIXED_PIECE_SIZE = 256 * 1024;
+
+    public static final long TO_DEFAULT_VARIABLE_PIECE_SIZE_MIN = 32 * 1024;
+    public static final long TO_DEFAULT_VARIABLE_PIECE_SIZE_MAX = 2 * 1024 * 1024;
+
+    public static final long TO_DEFAULT_VARIABLE_PIECE_NUM_LOWER = 1024;
+    public static final long TO_DEFAULT_VARIABLE_PIECE_NUM_UPPER = 2048;
+
+    public static final long[] STANDARD_PIECE_SIZES = { 32 * 1024, 48 * 1024, 64 * 1024, 96 * 1024, 128 * 1024, 192 * 1024, 256 * 1024, 384 * 1024, 512 * 1024, 768 * 1024, 1024 * 1024, 1536 * 1024, 2 * 1024 * 1024, 3 * 1024 * 1024, 4 * 1024 * 1024 };
+
+    // deserialisation methods
+
+    public static TOTorrent deserialiseFromBEncodedFile(File file)
+
+    throws TOTorrentException {
+        return (new TOTorrentDeserialiseImpl(file));
     }
-	
-	public static TOTorrent
-	deserialiseFromMap(
-		Map			data )
-		
-		throws TOTorrentException
-	{
-		return( new TOTorrentDeserialiseImpl( data ));
-	}
 
-		// construction methods: fixed piece size
+    /**
+     * WARNING - take care if you use this that the data you're creating the torrent from doesn't contain
+     * unwanted attributes in it (e.g. "torrent filename"). You should almost definitely be using 
+     * TorrentUtils.deserialiseFromBEncodedInputStream
+     * @param is
+     * @return
+     * @throws TOTorrentException
+     */
 
-	public static TOTorrentCreator
-	createFromFileOrDirWithFixedPieceLength(
-		File						file,
-		URL							announce_url )
-	
-		throws TOTorrentException
-	{
-		return( createFromFileOrDirWithFixedPieceLength( file, announce_url, false, TO_DEFAULT_FIXED_PIECE_SIZE ));
-	}
-	
-	public static TOTorrentCreator
-	createFromFileOrDirWithFixedPieceLength(
-		File						file,
-		URL							announce_url,
-		boolean						add_hashes )
-	
-		throws TOTorrentException
-	{
-		return( createFromFileOrDirWithFixedPieceLength( file, announce_url, add_hashes, TO_DEFAULT_FIXED_PIECE_SIZE ));
-	}	
-	
-	public static TOTorrentCreator
-	createFromFileOrDirWithFixedPieceLength(
-		File						file,
-		URL							announce_url,
-		long						piece_length )
-		
-		throws TOTorrentException
-	{
-		return( createFromFileOrDirWithFixedPieceLength( file, announce_url, false, piece_length ));
-	}
-	
-	public static TOTorrentCreator
-	createFromFileOrDirWithFixedPieceLength(
-		File						file,
-		URL							announce_url,
-		boolean						add_hashes,
-		long						piece_length )
-	
-		throws TOTorrentException
-	{
-		return( new TOTorrentCreatorImpl( file, announce_url, add_hashes, piece_length ));
-	}
-	
-		// construction methods: variable piece size	
+    public static TOTorrent deserialiseFromBEncodedInputStream(InputStream is)
 
-	public static TOTorrentCreator
-	createFromFileOrDirWithComputedPieceLength(
-		File						file,
-		URL							announce_url )
-	
-		throws TOTorrentException
-	{
-		return( createFromFileOrDirWithComputedPieceLength( file, announce_url, false ));
-	}
-	
-	public static TOTorrentCreator
-	createFromFileOrDirWithComputedPieceLength(
-		File						file,
-		URL							announce_url,
-		boolean						add_hashes )
-	
-		throws TOTorrentException
-	{
-		return( createFromFileOrDirWithComputedPieceLength( 
-					file, 
-					announce_url,
-					add_hashes,
-					TO_DEFAULT_VARIABLE_PIECE_SIZE_MIN, 
-					TO_DEFAULT_VARIABLE_PIECE_SIZE_MAX,
-					TO_DEFAULT_VARIABLE_PIECE_NUM_LOWER,
-					TO_DEFAULT_VARIABLE_PIECE_NUM_UPPER ));
-					
-	}	
-	
-	public static TOTorrentCreator
-	createFromFileOrDirWithComputedPieceLength(
-		File						file,
-		URL							announce_url,
-		long						piece_min_size,
-		long						piece_max_size,
-		long						piece_num_lower,
-		long						piece_num_upper )
-			
-		throws TOTorrentException
-	{
-		return( createFromFileOrDirWithComputedPieceLength(
-						file, announce_url, false, piece_min_size, piece_max_size,
-						piece_num_lower, piece_num_upper ));
+    throws TOTorrentException {
+        return (new TOTorrentDeserialiseImpl(is));
+    }
 
-	}
-	
-	public static TOTorrentCreator
-	createFromFileOrDirWithComputedPieceLength(
-		File						file,
-		URL							announce_url,
-		boolean						add_hashes,
-		long						piece_min_size,
-		long						piece_max_size,
-		long						piece_num_lower,
-		long						piece_num_upper )
-	
-		throws TOTorrentException
-	{
-		return new TOTorrentCreatorImpl(
-					file, announce_url, add_hashes, 0, piece_min_size, piece_max_size,
-					piece_num_lower, piece_num_upper, null);
+    public static TOTorrent deserialiseFromBEncodedByteArray(byte[] bytes)
 
-	}
-	
-	public static long
-	getComputedPieceSize(
-		long 	data_size )
-	{
-		return( TOTorrentCreateImpl.getComputedPieceSize( 
-					data_size,
-					TO_DEFAULT_VARIABLE_PIECE_SIZE_MIN, 
-					TO_DEFAULT_VARIABLE_PIECE_SIZE_MAX,
-					TO_DEFAULT_VARIABLE_PIECE_NUM_LOWER,
-					TO_DEFAULT_VARIABLE_PIECE_NUM_UPPER	));
-	}
-	
-	public static long
-	getPieceCount(
-		long		total_size,
-		long		piece_size )
-	{
-		return( TOTorrentCreateImpl.getPieceCount( total_size, piece_size ));
-	}
+    throws TOTorrentException {
+        return (new TOTorrentDeserialiseImpl(bytes));
+    }
+
+    public static TOTorrent deserialiseFromMap(Map<String, Object> data) throws TOTorrentException {
+        return (new TOTorrentDeserialiseImpl(data));
+    }
+
+    // construction methods: fixed piece size
+
+    public static TOTorrentCreator createFromFileOrDirWithFixedPieceLength(File file, URL announce_url)
+
+    throws TOTorrentException {
+        return (createFromFileOrDirWithFixedPieceLength(file, announce_url, false, TO_DEFAULT_FIXED_PIECE_SIZE));
+    }
+
+    public static TOTorrentCreator createFromFileOrDirWithFixedPieceLength(File file, URL announce_url, boolean add_hashes)
+
+    throws TOTorrentException {
+        return (createFromFileOrDirWithFixedPieceLength(file, announce_url, add_hashes, TO_DEFAULT_FIXED_PIECE_SIZE));
+    }
+
+    public static TOTorrentCreator createFromFileOrDirWithFixedPieceLength(File file, URL announce_url, long piece_length)
+
+    throws TOTorrentException {
+        return (createFromFileOrDirWithFixedPieceLength(file, announce_url, false, piece_length));
+    }
+
+    public static TOTorrentCreator createFromFileOrDirWithFixedPieceLength(File file, URL announce_url, boolean add_hashes, long piece_length)
+
+    throws TOTorrentException {
+        return (new TOTorrentCreatorImpl(file, announce_url, add_hashes, piece_length));
+    }
+
+    // construction methods: variable piece size	
+
+    public static TOTorrentCreator createFromFileOrDirWithComputedPieceLength(File file, URL announce_url)
+
+    throws TOTorrentException {
+        return (createFromFileOrDirWithComputedPieceLength(file, announce_url, false));
+    }
+
+    public static TOTorrentCreator createFromFileOrDirWithComputedPieceLength(File file, URL announce_url, boolean add_hashes)
+
+    throws TOTorrentException {
+        return (createFromFileOrDirWithComputedPieceLength(file, announce_url, add_hashes, TO_DEFAULT_VARIABLE_PIECE_SIZE_MIN, TO_DEFAULT_VARIABLE_PIECE_SIZE_MAX, TO_DEFAULT_VARIABLE_PIECE_NUM_LOWER, TO_DEFAULT_VARIABLE_PIECE_NUM_UPPER));
+
+    }
+
+    public static TOTorrentCreator createFromFileOrDirWithComputedPieceLength(File file, URL announce_url, long piece_min_size, long piece_max_size, long piece_num_lower, long piece_num_upper)
+
+    throws TOTorrentException {
+        return (createFromFileOrDirWithComputedPieceLength(file, announce_url, false, piece_min_size, piece_max_size, piece_num_lower, piece_num_upper));
+
+    }
+
+    public static TOTorrentCreator createFromFileOrDirWithComputedPieceLength(File file, URL announce_url, boolean add_hashes, long piece_min_size, long piece_max_size, long piece_num_lower, long piece_num_upper)
+
+    throws TOTorrentException {
+        return new TOTorrentCreatorImpl(file, announce_url, add_hashes, 0, piece_min_size, piece_max_size, piece_num_lower, piece_num_upper, null);
+
+    }
+
+    public static long getComputedPieceSize(long data_size) {
+        return (TOTorrentCreateImpl.getComputedPieceSize(data_size, TO_DEFAULT_VARIABLE_PIECE_SIZE_MIN, TO_DEFAULT_VARIABLE_PIECE_SIZE_MAX, TO_DEFAULT_VARIABLE_PIECE_NUM_LOWER, TO_DEFAULT_VARIABLE_PIECE_NUM_UPPER));
+    }
+
+    public static long getPieceCount(long total_size, long piece_size) {
+        return (TOTorrentCreateImpl.getPieceCount(total_size, piece_size));
+    }
 }

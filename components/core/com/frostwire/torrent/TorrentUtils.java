@@ -40,6 +40,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
@@ -1682,5 +1683,124 @@ TorrentUtils
 		{
 			return( (is_tcp?"TCP" :"UDP ") + port );
 		}
+	}
+	
+	private final static class UrlUtils
+	{
+	    
+	    
+	    public static boolean 
+	    containsPasskey(
+	        URL     url )
+	    {
+	        String url_str = url.toExternalForm();
+	        
+	        return( url_str.matches(".*[0-9a-z]{20,40}.*"));
+	    }
+	    
+	    public static URL
+	    setPort(
+	        URL     u,
+	        int     port )
+	    {
+	        if ( port == -1 ){
+	            port = u.getDefaultPort();
+	        }
+	        StringBuffer result = new StringBuffer();
+	        result.append(u.getProtocol());
+	        result.append(":");
+	        String authority=u.getAuthority();
+	        if (authority != null && authority.length() > 0) {
+	            result.append("//");
+	            int pos = authority.indexOf( '@' );
+	            if ( pos != -1 ){
+	                result.append(authority.substring(0,pos+1));
+	                authority = authority.substring(pos+1);
+	            }
+	            pos = authority.lastIndexOf(':');
+	            if ( pos == -1 ){
+	                if ( port > 0 ){
+	                    result.append(authority + ":" + port );
+	                }else{
+	                    result.append(authority);
+	                }
+	            }else{
+	                if ( port > 0 ){
+	                    result.append(authority.substring(0,pos+1) + port );
+	                }else{
+	                    result.append(authority.substring(0,pos));
+	                }
+	            }
+	        }
+	        if (u.getPath() != null) {
+	            result.append(u.getPath());
+	        }
+	        if (u.getQuery() != null) {
+	            result.append('?');
+	            result.append(u.getQuery());
+	        }
+	        if (u.getRef() != null) {
+	            result.append("#");
+	            result.append(u.getRef());
+	        }
+	        try{
+	            return( new URL( result.toString()));
+	        }catch( Throwable e ){
+	            Debug.out(e);
+	            return(u);
+	        }
+	    }
+	    
+	    public static URL
+	    setProtocol(
+	        URL         u,
+	        String      protocol )
+	    {
+	        String str = u.toExternalForm();
+	        
+	        int pos = str.indexOf( ":" );
+	        
+	        try{
+	            return( new URL( protocol + str.substring( pos )));
+	            
+	        }catch( Throwable e ){
+	            
+	            Debug.out( e );
+	            
+	            return( u );
+	        }
+	    }
+	    
+	    public static String
+	    getCanonicalString(
+	        URL     url )
+	    {
+	        String protocol = url.getProtocol();
+	        
+	        if ( !protocol.equals( protocol.toLowerCase( Locale.US ))){
+	            
+	            protocol = protocol.toLowerCase( Locale.US );
+	            
+	            url = UrlUtils.setProtocol( url, protocol ); 
+	        }
+	        
+	        int port = url.getPort();
+	        
+	        if ( protocol.equals( "http" ) || protocol.equals( "https" )){
+	        
+	            if ( port == url.getDefaultPort()){
+	                
+	                url = UrlUtils.setPort( url, 0 );
+	            }
+	        }else{
+	            
+	            if ( port == -1 ){
+	                
+	                url = UrlUtils.setPort( url, url.getDefaultPort());
+	            }
+	        }
+	        
+	        return( url.toString());
+	    }
 	}
 }

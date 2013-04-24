@@ -18,16 +18,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 package com.frostwire.torrent;
 
-public interface 
-TOTorrentListener 
-{
-	public static final int CT_ANNOUNCE_URLS	= 1;
-	
-	public void
-	torrentChanged(
-		TOTorrent		torrent,
-		int				change_type );
+public interface TOTorrentListener {
+    public static final int CT_ANNOUNCE_URLS = 1;
+
+    public void torrentChanged(TOTorrent torrent, int change_type);
 }

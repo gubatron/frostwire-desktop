@@ -21,15 +21,8 @@
 
 package com.frostwire.torrent;
 
+public interface TOTorrentProgressListener {
+    public void reportProgress(int percent_complete);
 
-public interface 
-TOTorrentProgressListener 
-{
-	public void
-	reportProgress(
-		int		percent_complete );
-		
-	public void
-	reportCurrentTask(
-		String	task_description );
+    public void reportCurrentTask(String task_description);
 }

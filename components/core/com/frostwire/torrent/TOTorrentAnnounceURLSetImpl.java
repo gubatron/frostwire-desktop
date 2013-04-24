@@ -23,42 +23,27 @@ package com.frostwire.torrent;
 
 import java.net.URL;
 
-import com.frostwire.torrent.*;
+public class TOTorrentAnnounceURLSetImpl implements TOTorrentAnnounceURLSet {
+    private TOTorrentImpl torrent;
+    private URL[] urls;
 
-public class 
-TOTorrentAnnounceURLSetImpl 
-	implements TOTorrentAnnounceURLSet
-{
-	private TOTorrentImpl	torrent;
-	private URL[]			urls;
-	
-	protected
-	TOTorrentAnnounceURLSetImpl(
-		TOTorrentImpl	_torrent,
-		URL[]			_urls )
-	{
-		torrent	= _torrent;
-	
-		setAnnounceURLs( _urls );
-	}
-	
-	public URL[]
-	getAnnounceURLs()
-	{
-		return( urls );
-	}
-	
-	
-	public void
-	setAnnounceURLs(
-		URL[]	_urls )
-	{
-		urls	= new URL[_urls.length];
-		
-		for (int i=0;i<urls.length;i++){
-		
-			//urls[i]	= StringInterner.internURL(torrent.anonymityTransform( _urls[i] ));
-		    urls[i]   = torrent.anonymityTransform( _urls[i] );
-		}
-	}
+    protected TOTorrentAnnounceURLSetImpl(TOTorrentImpl _torrent, URL[] _urls) {
+        torrent = _torrent;
+
+        setAnnounceURLs(_urls);
+    }
+
+    public URL[] getAnnounceURLs() {
+        return (urls);
+    }
+
+    public void setAnnounceURLs(URL[] _urls) {
+        urls = new URL[_urls.length];
+
+        for (int i = 0; i < urls.length; i++) {
+
+            //urls[i]	= StringInterner.internURL(torrent.anonymityTransform( _urls[i] ));
+            urls[i] = torrent.anonymityTransform(_urls[i]);
+        }
+    }
 }

@@ -21,46 +21,32 @@
 
 package com.frostwire.torrent;
 
-public class 
-TOTorrentException
-	extends Exception
-{
-	public static final int		RT_FILE_NOT_FOUND			= 1;
-	public static final int		RT_ZERO_LENGTH				= 2;
-	public static final int		RT_TOO_BIG					= 3;
-	public static final int		RT_READ_FAILS				= 4;
-	public static final int		RT_WRITE_FAILS				= 5;
-	public static final int		RT_DECODE_FAILS				= 6;
-	public static final int		RT_UNSUPPORTED_ENCODING		= 7;
-	public static final int		RT_HASH_FAILS				= 8;
-	public static final int		RT_CANCELLED				= 9;
-	
-	protected int	reason;
-	
-	public
-	TOTorrentException(
-		String		_str,
-		int			_reason )
-	{
-		super( _str );
-		
-		reason	= _reason;
-	}
-	
-	public
-	TOTorrentException(
-		String		_str,
-		int			_reason,
-		Throwable cause )
-	{
-		this(_str, _reason);
-		
-		initCause(cause);
-	}
-	
-	public int
-	getReason()
-	{
-		return( reason );
-	}
+public class TOTorrentException extends Exception {
+    public static final int RT_FILE_NOT_FOUND = 1;
+    public static final int RT_ZERO_LENGTH = 2;
+    public static final int RT_TOO_BIG = 3;
+    public static final int RT_READ_FAILS = 4;
+    public static final int RT_WRITE_FAILS = 5;
+    public static final int RT_DECODE_FAILS = 6;
+    public static final int RT_UNSUPPORTED_ENCODING = 7;
+    public static final int RT_HASH_FAILS = 8;
+    public static final int RT_CANCELLED = 9;
+
+    protected int reason;
+
+    public TOTorrentException(String _str, int _reason) {
+        super(_str);
+
+        reason = _reason;
+    }
+
+    public TOTorrentException(String _str, int _reason, Throwable cause) {
+        this(_str, _reason);
+
+        initCause(cause);
+    }
+
+    public int getReason() {
+        return (reason);
+    }
 }

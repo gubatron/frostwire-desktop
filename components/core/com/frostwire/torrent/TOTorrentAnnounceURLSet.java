@@ -21,16 +21,10 @@
 
 package com.frostwire.torrent;
 
+import java.net.URL;
 
-import java.net.*;
+public interface TOTorrentAnnounceURLSet {
+    public URL[] getAnnounceURLs();
 
-public interface 
-TOTorrentAnnounceURLSet
-{
-	public URL[]
-	getAnnounceURLs();
-	
-	public void
-	setAnnounceURLs(
-		URL[]		urls );
+    public void setAnnounceURLs(URL[] urls);
 }

@@ -21,37 +21,30 @@
 
 package com.frostwire.torrent;
 
-import java.net.*;
+import java.net.URL;
 
-public interface 
-TOTorrentAnnounceURLGroup 
-{
-	 /**
-	  * Gets the current sets defined for this group, 0 length if none defined
-	  * @return
-	  */
-	 
-	public TOTorrentAnnounceURLSet[]
-	getAnnounceURLSets();
-	
-	 /**
-	  * Sets the group's URL sets to the supplied values.
-	  * @param sets
-	  */
-	public void
-	setAnnounceURLSets(
-		TOTorrentAnnounceURLSet[]	sets );
-		
-		/**
-		 * This method will create a new set. It is not added into the current set, this 
-		 * must be done by the caller inserting the newly created set into an array as
-		 * required and calling the above "set" method.
-		 *  
-		 * @param urls the URLs for the new set
-		 * @return	the newly created set
-		 */
-		
-	public TOTorrentAnnounceURLSet
-	createAnnounceURLSet(
-		URL[]	urls );
+public interface TOTorrentAnnounceURLGroup {
+    /**
+     * Gets the current sets defined for this group, 0 length if none defined
+     * @return
+     */
+
+    public TOTorrentAnnounceURLSet[] getAnnounceURLSets();
+
+    /**
+     * Sets the group's URL sets to the supplied values.
+     * @param sets
+     */
+    public void setAnnounceURLSets(TOTorrentAnnounceURLSet[] sets);
+
+    /**
+     * This method will create a new set. It is not added into the current set, this 
+     * must be done by the caller inserting the newly created set into an array as
+     * required and calling the above "set" method.
+     *  
+     * @param urls the URLs for the new set
+     * @return	the newly created set
+     */
+
+    public TOTorrentAnnounceURLSet createAnnounceURLSet(URL[] urls);
 }
