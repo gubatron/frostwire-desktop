@@ -38,20 +38,17 @@ import java.util.TreeMap;
  *
  * @author  TdC_VgA
  */
-public class BEncoder {
+final class BEncoder {
+
     private static final int BUFFER_DOUBLE_LIMIT = 256 * 1024;
 
     private static final byte[] MINUS_1_BYTES = "-1".getBytes();
 
-    public static byte[] encode(Map<String, Object> object)
-
-    throws IOException {
+    public static byte[] encode(Map<String, Object> object) throws IOException {
         return (encode(object, false));
     }
 
-    public static byte[] encode(Map<String, Object> object, boolean url_encode)
-
-    throws IOException {
+    public static byte[] encode(Map<String, Object> object, boolean url_encode) throws IOException {
         BEncoder encoder = new BEncoder(url_encode);
 
         encoder.encodeObject(object);
@@ -140,7 +137,7 @@ public class BEncoder {
             // to allow the constructor of the Map to indicate that the keys should
             // be extracted using a BYTE_ENCODING 
 
-            boolean byte_keys = object instanceof ByteEncodedKeyHashMap;
+            boolean byte_keys = false;//object instanceof ByteEncodedKeyHashMap;
 
             //write the d            
             writeChar('d');
