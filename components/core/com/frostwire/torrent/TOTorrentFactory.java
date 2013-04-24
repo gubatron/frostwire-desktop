@@ -90,15 +90,6 @@ TOTorrentFactory
 	{
 		return( new TOTorrentDeserialiseImpl( data ));
 	}
-	
-//	public static TOTorrent
-//	deserialiseFromXMLFile(
-//		File		file )
-//		
-//		throws TOTorrentException
-//	{
-//		return( new TOTorrentXMLDeserialiser().deserialise( file ));
-//	}
 
 		// construction methods: fixed piece size
 
@@ -211,20 +202,6 @@ TOTorrentFactory
 					piece_num_lower, piece_num_upper ));
 
 	}
-	
-	public static long
-	getTorrentDataSizeFromFileOrDir(
-		File			file_or_dir_or_desc,
-		boolean			is_layout_descriptor )
-	
-		throws TOTorrentException
-	{
-		TOTorrentCreatorImpl	creator = new TOTorrentCreatorImpl( file_or_dir_or_desc );
-		
-		creator.setFileIsLayoutDescriptor( is_layout_descriptor );
-		
-		return( creator.getTorrentDataSizeFromFileOrDir());
-	}	
 	
 	public static long
 	getComputedPieceSize(

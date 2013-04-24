@@ -22,14 +22,7 @@
 
 package com.frostwire.torrent;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,61 +33,6 @@ public class FileUtil {
 	
   public static final String DIR_SEP = System.getProperty("file.separator");
   
-  public static File getUserFile(String filename) {
-    return new File(System.getProperty("user.home"), filename);
-  }
-  
-  /**
-   * Deletes the given dir and all files/dirs underneath
-   */
-  public static boolean recursiveDelete(File f) {
-//    String defSaveDir = COConfigurationManager.getStringParameter("Default save path");
-//    String moveToDir = COConfigurationManager.getStringParameter("Completed Files Directory", "");
-//    
-//    try{
-//  	  moveToDir = new File(moveToDir).getCanonicalPath();
-//    }catch( Throwable e ){
-//    }
-//    try{
-//    	defSaveDir = new File(defSaveDir).getCanonicalPath();
-//    }catch( Throwable e ){
-//    }
-    
-    try {
-
-//      if (f.getCanonicalPath().equals(moveToDir)) {
-//        System.out.println("FileUtil::recursiveDelete:: not allowed to delete the MoveTo dir !");
-//        return( false );
-//      }
-//      if (f.getCanonicalPath().equals(defSaveDir)) {
-//        System.out.println("FileUtil::recursiveDelete:: not allowed to delete the default data dir !");
-//        return( false );
-//      }
-      
-      if (f.isDirectory()) {
-        File[] files = f.listFiles();
-        for (int i = 0; i < files.length; i++) {
-          if ( !recursiveDelete(files[i])){
-        	  
-        	  return( false );
-          }
-        }
-        if ( !f.delete()){
-        	
-        	return( false );
-        }
-      }
-      else {
-        if ( !f.delete()){
-        	
-        	return( false );
-        }
-      }
-    } catch (Exception ignore) {/*ignore*/}
-    
-    return( true );
-  }
-
   public static String
   convertOSSpecificChars(
   	String		file_name_in,
@@ -217,37 +155,4 @@ public class FileUtil {
 		}
 		return f.mkdirs();
 	}
-	
-	public static byte[]
-   	readFileAsByteArray(
-   		File		file )
-   	
-   		throws IOException
-   	{
-   		ByteArrayOutputStream	baos = new ByteArrayOutputStream((int)file.length());
-   		
-   		byte[]	buffer = new byte[32*1024];
-   		
-   		InputStream is = new FileInputStream( file );
-   		
-   		try{
-	   		while( true ){
-	   			
-	   			int	len = is.read( buffer );
-	   			
-	   			if ( len <= 0 ){
-	   				
-	   				break;
-	   			}
-	   			
-	   			baos.write( buffer, 0, len );
-	   		}
-	   		
-	   		return( baos.toByteArray());
-	   		
-   		}finally{
-   			
-   			is.close();
-   		}
-   	}
 }
