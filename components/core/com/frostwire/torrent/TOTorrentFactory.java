@@ -48,20 +48,16 @@ public class TOTorrentFactory {
      * @throws TOTorrentException
      */
 
-    public static TOTorrent deserialiseFromBEncodedInputStream(InputStream is)
-
-    throws TOTorrentException {
-        return (new TOTorrentDeserialiseImpl(is));
+    public static TOTorrent deserialiseFromBEncodedInputStream(InputStream is) throws TOTorrentException {
+        return new TOTorrentDeserialiseImpl(is);
     }
 
-    public static TOTorrent deserialiseFromBEncodedByteArray(byte[] bytes)
-
-    throws TOTorrentException {
-        return (new TOTorrentDeserialiseImpl(bytes));
+    public static TOTorrent deserialiseFromBEncodedByteArray(byte[] bytes) throws TOTorrentException {
+        return new TOTorrentDeserialiseImpl(bytes);
     }
 
     public static TOTorrent deserialiseFromMap(Map<String, Object> data) throws TOTorrentException {
-        return (new TOTorrentDeserialiseImpl(data));
+        return new TOTorrentDeserialiseImpl(data);
     }
 
     // construction methods: fixed piece size

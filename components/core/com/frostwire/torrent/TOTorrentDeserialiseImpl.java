@@ -93,12 +93,11 @@ final class TOTorrentDeserialiseImpl extends TOTorrentImpl {
             int nbRead;
 
             while ((nbRead = is.read(buf)) > 0) {
-
                 metaInfo.write(buf, 0, nbRead);
             }
-        } catch (Throwable e) {
 
-            throw (new TOTorrentException("Error reading torrent: " + Debug.getNestedExceptionMessage(e), TOTorrentException.RT_READ_FAILS));
+        } catch (Throwable e) {
+            throw new TOTorrentException("Error reading torrent: " + Debug.getNestedExceptionMessage(e), TOTorrentException.RT_READ_FAILS, e);
         }
 
         construct(metaInfo.toByteArray());
