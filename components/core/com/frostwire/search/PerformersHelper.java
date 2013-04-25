@@ -22,13 +22,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.torrent.TOTorrentException;
-import org.gudy.azureus2.core3.torrent.TOTorrentFile;
-import org.gudy.azureus2.core3.util.TorrentUtils;
-
 import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
 import com.frostwire.search.torrent.TorrentCrawledSearchResult;
+import com.frostwire.torrent.TOTorrent;
+import com.frostwire.torrent.TOTorrentException;
+import com.frostwire.torrent.TOTorrentFile;
+import com.frostwire.torrent.TorrentUtils;
 
 /**
  * 
