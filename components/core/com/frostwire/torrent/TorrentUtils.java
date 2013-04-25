@@ -59,8 +59,6 @@ public final class TorrentUtils {
     public static final String TORRENT_AZ_PROP_INITIAL_LINKAGE = "initial_linkage";
     public static final String TORRENT_AZ_PROP_INITIAL_LINKAGE2 = "initial_linkage2";
 
-    private static final String MEM_ONLY_TORRENT_PATH = "?/\\!:mem_only:!\\/?";
-
     public static TOTorrent readFromBEncodedInputStream(InputStream is)
 
     throws TOTorrentException {
@@ -71,47 +69,20 @@ public final class TorrentUtils {
 
         torrent.removeAdditionalProperties();
 
-        return (torrent);
+        return torrent;
     }
 
-    public static void setMemoryOnly(TOTorrent torrent, boolean mem_only) {
-        if (mem_only) {
-
-            torrent.setAdditionalStringProperty("torrent filename", MEM_ONLY_TORRENT_PATH);
-
-        } else {
-
-            String s = torrent.getAdditionalStringProperty("torrent filename");
-
-            if (s != null && s.equals(MEM_ONLY_TORRENT_PATH)) {
-
-                torrent.removeAdditionalProperty("torrent filename");
-            }
-        }
-    }
-
-    public static void writeToFile(final TOTorrent torrent)
-
-    throws TOTorrentException {
+    public static void writeToFile(final TOTorrent torrent) throws TOTorrentException {
         writeToFile(torrent, false);
     }
 
-    public static void writeToFile(TOTorrent torrent, boolean force_backup)
-
-    throws TOTorrentException {
+    public static void writeToFile(TOTorrent torrent, boolean force_backup) throws TOTorrentException {
         try {
-            //torrent.getMonitor().enter();
-
             String str = torrent.getAdditionalStringProperty("torrent filename");
 
             if (str == null) {
 
                 throw (new TOTorrentException("TorrentUtils::writeToFile: no 'torrent filename' attribute defined", TOTorrentException.RT_FILE_NOT_FOUND));
-            }
-
-            if (str.equals(MEM_ONLY_TORRENT_PATH)) {
-
-                return;
             }
 
             // save first to temporary file as serialisation may require state to be re-read from
@@ -159,23 +130,17 @@ public final class TorrentUtils {
         }
     }
 
-    public static void writeToFile(TOTorrent torrent, File file)
-
-    throws TOTorrentException {
+    public static void writeToFile(TOTorrent torrent, File file) throws TOTorrentException {
         writeToFile(torrent, file, false);
     }
 
-    public static void writeToFile(TOTorrent torrent, File file, boolean force_backup)
-
-    throws TOTorrentException {
+    public static void writeToFile(TOTorrent torrent, File file, boolean force_backup) throws TOTorrentException {
         torrent.setAdditionalStringProperty("torrent filename", file.toString());
 
         writeToFile(torrent, force_backup);
     }
 
-    public static String getTorrentFileName(TOTorrent torrent)
-
-    throws TOTorrentException {
+    public static String getTorrentFileName(TOTorrent torrent) throws TOTorrentException {
         String str = torrent.getAdditionalStringProperty("torrent filename");
 
         if (str == null) {
@@ -183,17 +148,10 @@ public final class TorrentUtils {
             throw (new TOTorrentException("TorrentUtils::getTorrentFileName: no 'torrent filename' attribute defined", TOTorrentException.RT_FILE_NOT_FOUND));
         }
 
-        if (str.equals(MEM_ONLY_TORRENT_PATH)) {
-
-            return (null);
-        }
-
-        return (str);
+        return str;
     }
 
-    public static void copyToFile(TOTorrent torrent, File file)
-
-    throws TOTorrentException {
+    public static void copyToFile(TOTorrent torrent, File file) throws TOTorrentException {
         torrent.serialiseToBEncodedFile(file);
     }
 
@@ -356,7 +314,7 @@ public final class TorrentUtils {
                     current_group = new ArrayList<String>();
                 }
             } else {
-                String lc_line = line.toLowerCase();
+                String lc_line = line.toLowerCase(Locale.US);
 
                 if (hits.contains(lc_line)) {
 
@@ -876,11 +834,10 @@ public final class TorrentUtils {
         Long flags = (Long) m.get(TORRENT_AZ_PROP_TORRENT_FLAGS);
 
         if (flags == null) {
-
-            flags = new Long(0);
+            flags = Long.valueOf(0);
         }
 
-        m.put(TORRENT_AZ_PROP_TORRENT_FLAGS, new Long(flags.intValue() | flag));
+        m.put(TORRENT_AZ_PROP_TORRENT_FLAGS, Long.valueOf(flags.intValue() | flag));
     }
 
     public static boolean getFlag(TOTorrent torrent, int flag) {
@@ -1042,7 +999,7 @@ public final class TorrentUtils {
     public static void setDHTBackupEnabled(TOTorrent torrent, boolean enabled) {
         Map<String, Object> m = getAzureusProperties(torrent);
 
-        m.put(TORRENT_AZ_PROP_DHT_BACKUP_ENABLE, new Long(enabled ? 1 : 0));
+        m.put(TORRENT_AZ_PROP_DHT_BACKUP_ENABLE, Long.valueOf(enabled ? 1 : 0));
     }
 
     public static boolean getDHTBackupEnabled(TOTorrent torrent) {
@@ -1078,7 +1035,7 @@ public final class TorrentUtils {
     public static void setDHTBackupRequested(TOTorrent torrent, boolean requested) {
         Map<String, Object> m = getAzureusProperties(torrent);
 
-        m.put(TORRENT_AZ_PROP_DHT_BACKUP_REQUESTED, new Long(requested ? 1 : 0));
+        m.put(TORRENT_AZ_PROP_DHT_BACKUP_REQUESTED, Long.valueOf(requested ? 1 : 0));
     }
 
     public static boolean isReallyPrivate(TOTorrent torrent) {
@@ -1203,10 +1160,10 @@ public final class TorrentUtils {
                 result.append('?');
                 result.append(u.getQuery());
             }
-//            if (u.getRef() != null) {
-//                result.append("#");
-//                result.append(u.getRef());
-//            }
+            //            if (u.getRef() != null) {
+            //                result.append("#");
+            //                result.append(u.getRef());
+            //            }
             try {
                 return (new URI(result.toString()));
             } catch (Throwable e) {
