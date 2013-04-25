@@ -43,11 +43,10 @@ import java.util.Map;
  * @author TdC_VgA
  *
  */
-class BDecoder {
-    public static final int MAX_BYTE_ARRAY_SIZE = 16 * 1024 * 1024;
-    private static final int MAX_MAP_KEY_SIZE = 64 * 1024;
+final class BDecoder {
 
-    private static final boolean TRACE = false;
+    private static final int MAX_BYTE_ARRAY_SIZE = 16 * 1024 * 1024;
+    private static final int MAX_MAP_KEY_SIZE = 64 * 1024;
 
     private boolean recovery_mode;
     private boolean verify_map_order;
@@ -73,43 +72,25 @@ class BDecoder {
     public BDecoder() {
     }
 
-    public Map<String, Object> decodeByteArray(byte[] data)
-
-    throws IOException {
-        return (decode(new BDecoderInputStreamArray(data), true));
+    public Map<String, Object> decodeByteArray(byte[] data) throws IOException {
+        return decode(new BDecoderInputStreamArray(data));
     }
 
-    public Map<String, Object> decodeByteArray(byte[] data, int offset, int length)
-
-    throws IOException {
-        return (decode(new BDecoderInputStreamArray(data, offset, length), true));
-    }
-
-    public Map<String, Object> decodeByteArray(byte[] data, int offset, int length, boolean internKeys)
-
-    throws IOException {
-        return (decode(new BDecoderInputStreamArray(data, offset, length), internKeys));
+    public Map<String, Object> decodeByteArray(byte[] data, int offset, int length) throws IOException {
+        return decode(new BDecoderInputStreamArray(data, offset, length));
     }
 
     // used externally 
-    public Map<String, Object> decodeByteBuffer(ByteBuffer buffer, boolean internKeys) throws IOException {
+    public Map<String, Object> decodeByteBuffer(ByteBuffer buffer) throws IOException {
         InputStream is = new BDecoderInputStreamArray(buffer);
-        Map<String, Object> result = decode(is, internKeys);
+        Map<String, Object> result = decode(is);
         buffer.position(buffer.limit() - is.available());
         return result;
     }
 
-    public Map<String, Object> decodeStream(BufferedInputStream data)
-
-    throws IOException {
-        return decodeStream(data, true);
-    }
-
     @SuppressWarnings("unchecked")
-    public Map<String, Object> decodeStream(BufferedInputStream data, boolean internKeys)
-
-    throws IOException {
-        Object res = decodeInputStream(data, "", 0, internKeys);
+    public Map<String, Object> decodeStream(BufferedInputStream data) throws IOException {
+        Object res = decodeInputStream(data, "", 0);
 
         if (res == null) {
 
@@ -120,14 +101,12 @@ class BDecoder {
             throw (new BEncodingException("BDecoder: top level isn't a Map"));
         }
 
-        return ((Map<String, Object>) res);
+        return (Map<String, Object>) res;
     }
 
     @SuppressWarnings("unchecked")
-    private Map<String, Object> decode(InputStream data, boolean internKeys)
-
-    throws IOException {
-        Object res = decodeInputStream(data, "", 0, internKeys);
+    private Map<String, Object> decode(InputStream data) throws IOException {
+        Object res = decodeInputStream(data, "", 0);
 
         if (res == null) {
 
@@ -146,11 +125,8 @@ class BDecoder {
     private CharBuffer keyCharsBuffer = CharBuffer.allocate(32);
     private CharsetDecoder keyDecoder = Constants.BYTE_CHARSET.newDecoder();
 
-    private Object decodeInputStream(InputStream dbis, String context, int nesting, boolean internKeys)
-
-    throws IOException {
+    private Object decodeInputStream(InputStream dbis, String context, int nesting) throws IOException {
         if (nesting == 0 && !dbis.markSupported()) {
-
             throw new IOException("InputStream must support the mark() method");
         }
 
@@ -269,15 +245,11 @@ class BDecoder {
 
                     //decode value
 
-                    Object value = decodeInputStream(dbis, key, nesting + 1, internKeys);
+                    Object value = decodeInputStream(dbis, key, nesting + 1);
 
                     // value interning is too CPU-intensive, let's skip that for now
                     /*if(value instanceof byte[] && ((byte[])value).length < 17)
                     value = StringInterner.internBytes((byte[])value);*/
-
-                    if (TRACE) {
-                        System.out.println(key + "->" + value + ";");
-                    }
 
                     // recover from some borked encodings that I have seen whereby the value has
                     // not been encoded. This results in, for example, 
@@ -341,7 +313,7 @@ class BDecoder {
                 String context2 = context;
 
                 Object tempElement = null;
-                while ((tempElement = decodeInputStream(dbis, context2, nesting + 1, internKeys)) != null) {
+                while ((tempElement = decodeInputStream(dbis, context2, nesting + 1)) != null) {
                     //add the element
                     tempList.add(tempElement);
                 }
@@ -409,34 +381,6 @@ class BDecoder {
         }
     }
 
-    /*
-    private long getNumberFromStream(InputStream dbis, char parseChar) throws IOException {
-    StringBuffer sb = new StringBuffer(3);
-
-    int tempByte = dbis.read();
-    while ((tempByte != parseChar) && (tempByte >= 0)) {
-    	sb.append((char)tempByte);
-      tempByte = dbis.read();
-    }
-
-    //are we at the end of the stream?
-    if (tempByte < 0) {
-      return -1;
-    }
-
-    String str = sb.toString();
-
-    	// support some borked impls that sometimes don't bother encoding anything
-
-    if ( str.length() == 0 ){
-
-    	return( 0 );
-    }
-
-    return Long.parseLong(str);
-    }
-     */
-
     /** only create the array once per decoder instance (no issues with recursion as it's only used in a leaf method)
      */
     private final char[] numberChars = new char[32];
@@ -446,9 +390,7 @@ class BDecoder {
      * {@link Integer#MAX_VALUE}.  This check is intentionally skipped to
      * increase performance
      */
-    private int getPositiveNumberFromStream(InputStream dbis, char parseChar)
-
-    throws IOException {
+    private int getPositiveNumberFromStream(InputStream dbis, char parseChar) throws IOException {
         int tempByte = dbis.read();
         if (tempByte < 0) {
             return -1;
@@ -484,9 +426,7 @@ class BDecoder {
         }
     }
 
-    private long getNumberFromStream(InputStream dbis, char parseChar)
-
-    throws IOException {
+    private long getNumberFromStream(InputStream dbis, char parseChar) throws IOException {
 
         int tempByte = dbis.read();
 
@@ -647,54 +587,7 @@ class BDecoder {
 
     }
 
-    // This one causes lots of "Query Information" calls to the filesystem
-    /*
-    private long getNumberFromStreamOld(InputStream dbis, char parseChar) throws IOException {
-    int length = 0;
-
-    //place a mark
-    dbis.mark(Integer.MAX_VALUE);
-
-    int tempByte = dbis.read();
-    while ((tempByte != parseChar) && (tempByte >= 0)) {
-      tempByte = dbis.read();
-      length++;
-    }
-
-    //are we at the end of the stream?
-    if (tempByte < 0) {
-      return -1;
-    }
-
-    //reset the mark
-    dbis.reset();
-
-    //get the length
-    byte[] tempArray = new byte[length];
-    int count = 0;
-    int len = 0;
-
-    //get the string
-    while (count != length && (len = dbis.read(tempArray, count, length - count)) > 0) {
-      count += len;
-    }
-
-    //jump ahead in the stream to compensate for the :
-    dbis.skip(1);
-
-    //return the value
-
-    CharBuffer	cb = Constants.DEFAULT_CHARSET.decode(ByteBuffer.wrap(tempArray));
-
-    String	str_value = new String(cb.array(),0,cb.limit());
-
-    return Long.parseLong(str_value);
-    }
-     */
-
-    private byte[] getByteArrayFromStream(InputStream dbis, String context)
-
-    throws IOException {
+    private byte[] getByteArrayFromStream(InputStream dbis, String context) throws IOException {
         int length = (int) getPositiveNumberFromStream(dbis, ':');
 
         if (length < 0) {
@@ -704,8 +597,8 @@ class BDecoder {
         // note that torrent hashes can be big (consider a 55GB file with 2MB pieces
         // this generates a pieces hash of 1/2 meg
 
+        // aldenml: Note for android, we need to refactor this to allow fine control of memory allocation
         if (length > MAX_BYTE_ARRAY_SIZE) {
-
             throw (new IOException("Byte array length too large (" + length + ")"));
         }
 

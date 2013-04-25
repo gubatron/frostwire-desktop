@@ -21,7 +21,7 @@
 package com.frostwire.torrent;
 
 import java.nio.charset.Charset;
-import java.util.regex.Pattern;
+import java.util.Locale;
 
 /**
  *  
@@ -38,29 +38,9 @@ final class Constants {
     public static final String APP_NAME = "FrostWire";
     public static final String APP_VERSION = "5.5.7";
 
-    public static final String OSName = System.getProperty("os.name");
+    private static final String OSName = System.getProperty("os.name");
 
-    public static final boolean isOSX = OSName.toLowerCase().startsWith("mac os");
-    public static final boolean isLinux = OSName.equalsIgnoreCase("Linux");
-    public static final boolean isSolaris = OSName.equalsIgnoreCase("SunOS");
-    public static final boolean isFreeBSD = OSName.equalsIgnoreCase("FreeBSD");
-    public static final boolean isWindowsXP = OSName.equalsIgnoreCase("Windows XP");
-    public static final boolean isWindows95 = OSName.equalsIgnoreCase("Windows 95");
-    public static final boolean isWindows98 = OSName.equalsIgnoreCase("Windows 98");
-    public static final boolean isWindows2000 = OSName.equalsIgnoreCase("Windows 2000");
-    public static final boolean isWindowsME = OSName.equalsIgnoreCase("Windows ME");
-    public static final boolean isWindows9598ME = isWindows95 || isWindows98 || isWindowsME;
+    public static final boolean isOSX = OSName.toLowerCase(Locale.US).startsWith("mac os");
 
-    public static final boolean isWindows = OSName.toLowerCase().startsWith("windows");
-    // If it isn't windows or osx, it's most likely an unix flavor
-    public static final boolean isUnix = !isWindows && !isOSX;
-
-    // Common Patterns
-    public static final Pattern PAT_SPLIT_COMMAWORDS = Pattern.compile("\\s*,\\s*");
-    public static final Pattern PAT_SPLIT_COMMA = Pattern.compile(",");
-    public static final Pattern PAT_SPLIT_DOT = Pattern.compile("\\.");
-    public static final Pattern PAT_SPLIT_SPACE = Pattern.compile(" ");
-    public static final Pattern PAT_SPLIT_SLASH_N = Pattern.compile("\n");
-
-    public static final String FILE_WILDCARD = isWindows ? "*.*" : "*";
+    public static final boolean isWindows = OSName.toLowerCase(Locale.US).startsWith("windows");
 }
