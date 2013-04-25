@@ -204,16 +204,16 @@ final class TOTorrentDeserialiseImpl extends TOTorrentImpl {
 
                                 for (int j = 0; j < set.size(); j++) {
 
-                                    String url_str = readStringFromMetaData((byte[]) set.get(j));
+                                    String urlStr = readStringFromMetaData((byte[]) set.get(j));
 
-                                    url_str = url_str.replaceAll(" ", "");
+                                    urlStr = cleanUrlStr(urlStr);
 
                                     //check to see if the announce url is somewhere in the announce-list
 
                                     //urls.add(new URL(StringInterner.intern(url_str)));
-                                    urls.add(new URI(url_str));
+                                    urls.add(new URI(urlStr));
 
-                                    if (url_str.equalsIgnoreCase(announce_url)) {
+                                    if (urlStr.equalsIgnoreCase(announce_url)) {
 
                                         announce_url_found = true;
                                     }
@@ -644,6 +644,11 @@ final class TOTorrentDeserialiseImpl extends TOTorrentImpl {
 
             System.out.println(indent + name + "{byte[], length " + value.length + "}");
         }
+    }
+
+    // this method fix common mistakes made by users while creating torrents in other clients
+    private String cleanUrlStr(String urlStr) {
+        return urlStr.replace(" ", "").replace("\t", "").replace("\n", "");
     }
 
 }

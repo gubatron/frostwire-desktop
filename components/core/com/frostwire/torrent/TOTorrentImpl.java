@@ -844,16 +844,15 @@ class TOTorrentImpl implements TOTorrent {
 
     protected String readStringFromMetaData(byte[] value) throws TOTorrentException {
         try {
-            if (value == null) {
 
-                return (null);
+            if (value == null) {
+                return null;
             }
 
-            return (new String(value, Constants.DEFAULT_ENCODING));
+            return new String(value, Constants.DEFAULT_ENCODING);
 
         } catch (UnsupportedEncodingException e) {
-
-            throw (new TOTorrentException("Unsupported encoding for '" + value + "'", TOTorrentException.RT_UNSUPPORTED_ENCODING));
+            throw new TOTorrentException("Unsupported encoding for '" + value + "'", TOTorrentException.RT_UNSUPPORTED_ENCODING);
         }
     }
 
