@@ -308,7 +308,7 @@ class TOTorrentImpl implements TOTorrent {
 
         if (creation_date != 0) {
 
-            root.put(TK_CREATION_DATE, new Long(creation_date));
+            root.put(TK_CREATION_DATE, Long.valueOf(creation_date));
         }
 
         if (created_by != null) {
@@ -320,7 +320,7 @@ class TOTorrentImpl implements TOTorrent {
 
         root.put(TK_INFO, info);
 
-        info.put(TK_PIECE_LENGTH, new Long(piece_length));
+        info.put(TK_PIECE_LENGTH, Long.valueOf(piece_length));
 
         if (pieces == null) {
 
@@ -352,7 +352,7 @@ class TOTorrentImpl implements TOTorrent {
 
             TOTorrentFile file = files[0];
 
-            info.put(TK_LENGTH, new Long(file.getLength()));
+            info.put(TK_LENGTH, Long.valueOf(file.getLength()));
 
         } else {
 
@@ -398,11 +398,11 @@ class TOTorrentImpl implements TOTorrent {
     }
 
     public byte[] getName() {
-        return (torrent_name);
+        return torrent_name;
     }
 
-    protected void setName(byte[] _name) {
-        torrent_name = _name;
+    protected void setName(byte[] name) {
+        torrent_name = name;
     }
 
     public String getUTF8Name() {
@@ -425,9 +425,7 @@ class TOTorrentImpl implements TOTorrent {
         return (comment);
     }
 
-    protected void setComment(byte[] _comment)
-
-    {
+    protected void setComment(byte[] _comment) {
         comment = _comment;
     }
 
@@ -597,13 +595,11 @@ class TOTorrentImpl implements TOTorrent {
     }
 
     protected byte[] getHashOverride() {
-        return (torrent_hash_override);
+        return torrent_hash_override;
     }
 
-    public void setPrivate(boolean _private_torrent)
-
-    throws TOTorrentException {
-        additional_info_properties.put(TK_PRIVATE, new Long(_private_torrent ? 1 : 0));
+    public void setPrivate(boolean _private_torrent) throws TOTorrentException {
+        additional_info_properties.put(TK_PRIVATE, Long.valueOf(_private_torrent ? 1 : 0));
 
         // update torrent hash
 
