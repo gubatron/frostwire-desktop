@@ -263,7 +263,6 @@ public class SetupManager {
 
         // set the layout of the content pane
         Container container = dialog.getContentPane();
-        ((JComponent) container).putClientProperty(SkinCustomUI.CLIENT_PROPERTY_LIGHT_NOISE, true);
         GUIUtils.addHideAction((JComponent) container);
         BoxLayout containerLayout = new BoxLayout(container, BoxLayout.Y_AXIS);
         container.setLayout(containerLayout);

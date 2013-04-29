@@ -56,7 +56,6 @@ final class SearchInputManager implements ThemeObserver {
 
         getMainPanel().removeAll();
         getMainPanel().add(SEARCH, BorderLayout.CENTER);
-        getMainPanel().putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_NOISE, true);
         
         getMainPanel().add(createTorrentActionsPanel(), BorderLayout.PAGE_END);
 
@@ -141,8 +140,7 @@ final class SearchInputManager implements ThemeObserver {
     private JPanel createTorrentActionsPanel() {
         
         JPanel buttons_container = new JPanel();
-        buttons_container.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_NOISE, true);
-
+        
         //OPEN TORRENT
         IconButton openTorrentButton = new IconButton("Open", "OPEN_TORRENT");
         openTorrentButton.setToolTipText(I18n.tr("Open a .torrent or Magnet link or YouTube video link"));

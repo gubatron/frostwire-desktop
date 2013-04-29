@@ -223,8 +223,7 @@ public final class OptionsConstructor {
         });
 
         PaddedPanel mainPanel = new PaddedPanel();
-        mainPanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_LIGHT_NOISE, true);
-
+        
         Box splitBox = new Box(BoxLayout.X_AXIS);
 
         BoxPanel treePanel = new BoxPanel(BoxLayout.Y_AXIS);

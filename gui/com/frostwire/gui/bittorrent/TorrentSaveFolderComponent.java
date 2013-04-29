@@ -32,8 +32,7 @@ public class TorrentSaveFolderComponent extends JPanel {
 		
 		setLayout(new GridBagLayout());
 		if (border) {
-		    this.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
-			setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Torrent Data Save Folder")));
+		    setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Torrent Data Save Folder")));
 		}
 		
 		GridBagConstraints gbc = new GridBagConstraints();

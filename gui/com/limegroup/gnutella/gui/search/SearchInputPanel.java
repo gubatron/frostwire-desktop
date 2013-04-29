@@ -170,7 +170,6 @@ class SearchInputPanel extends JPanel {
         p.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
 
         JPanel controls = new JPanel();
-        controls.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
         controls.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Search Engines")));
         controls.setLayout(new GridBagLayout());
         controls.setAlignmentX(0.0f);
@@ -181,7 +180,6 @@ class SearchInputPanel extends JPanel {
         p.add(Box.createVerticalStrut(15));
 
         _filterPanel = new SearchFilterPanel();
-        _filterPanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
         _filterPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Filter")));
         _filterPanel.setAlignmentX(0.0f);
         p.add(_filterPanel);

@@ -165,8 +165,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         new DropTarget(FRAME, new TransferHandlerDropTargetListener(DNDUtils.DEFAULT_TRANSFER_HANDLER));
 
         TABBED_PANE = new JPanel(new CardLayout());
-        TABBED_PANE.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_LIGHT_NOISE, true);
-
+        
         // Add a listener for saving the dimensions of the window &
         // position the search icon overlay correctly.
         FRAME.addComponentListener(new ComponentListener() {

@@ -53,7 +53,6 @@ public class IntentPanel extends JPanel {
         bg.add(mightUseButton);
         bg.add(willNotButton);
 
-        putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_NOISE, true);
         setBorder(BorderFactory.createLineBorder(ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder()));
 
         setBackground(GUIUtils.hexToColor("F7F7F7"));

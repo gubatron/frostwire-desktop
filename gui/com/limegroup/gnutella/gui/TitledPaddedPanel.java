@@ -92,8 +92,7 @@ public class TitledPaddedPanel extends JPanel {
         
         setBorder(outerBorder);
 
-        titlePanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
-
+        
         titlePanel.setBorder(_titledBorder);
         _mainPanel.setBorder(innerBorder);
         

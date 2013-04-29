@@ -119,7 +119,6 @@ abstract class SetupWindow extends JPanel {
         setLayout(new BorderLayout());
 
         JPanel jpTop = new JPanel();
-        jpTop.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_NOISE, true);
         jpTop.setLayout(new BorderLayout());
         jpTop.setBackground(Color.white);
         jpTop.setBorder(BorderFactory.createEtchedBorder());

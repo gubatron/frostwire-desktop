@@ -84,7 +84,6 @@ final class MiscWindow extends SetupWindow {
             GridBagConstraints gbc = new GridBagConstraints();
             JPanel startupPanel = new JPanel(new GridBagLayout());
 
-            startupPanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
             startupPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("System Startup")));
 
             _startup = new JCheckBox(I18n.tr("Start Automatically"));
@@ -156,7 +155,6 @@ final class MiscWindow extends SetupWindow {
 
             JPanel chatCommunityPanel = new JPanel(new GridLayout(2, 0));
 
-            chatCommunityPanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
             chatCommunityPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Chat Community")));
 
             //create multiline to describe why the chat needs a nick (descChat)

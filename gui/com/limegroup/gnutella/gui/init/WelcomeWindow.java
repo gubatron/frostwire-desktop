@@ -78,7 +78,6 @@ final class WelcomeWindow extends SetupWindow {
     private JComponent createPanel(String text1, String text2) {
 
         JPanel panel = new JPanel();
-        panel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_NOISE, true);
         panel.setBackground(GUIUtils.hexToColor("F7F7F7"));
         panel.setBorder(BorderFactory.createLineBorder(ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder()));
         //panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(GUIUtils.hexToColor("C8C8C8"), 1),
