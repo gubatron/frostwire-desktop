@@ -19,9 +19,9 @@
 package com.frostwire.search.torrent;
 
 import org.apache.commons.io.FilenameUtils;
-import org.gudy.azureus2.core3.torrent.TOTorrentFile;
 
 import com.frostwire.search.AbstractCrawledSearchResult;
+import com.frostwire.torrent.TOTorrentFile;
 
 /**
  * @author gubatron
@@ -31,17 +31,17 @@ import com.frostwire.search.AbstractCrawledSearchResult;
 public class TorrentCrawledSearchResult extends AbstractCrawledSearchResult implements TorrentSearchResult {
 
     private final TorrentCrawlableSearchResult sr;
-    private final TOTorrentFile file;
     private final String relativePath;
     private final String displayName;
     private final String filename;
+    private final long size;
 
     public TorrentCrawledSearchResult(TorrentCrawlableSearchResult sr, TOTorrentFile file) {
         super(sr);
         this.sr = sr;
-        this.file = file;
         this.relativePath = file.getRelativePath();
         this.filename = FilenameUtils.getName(this.relativePath);
+        this.size = file.getLength();
         this.displayName = FilenameUtils.getBaseName(this.filename);
     }
 
@@ -61,7 +61,7 @@ public class TorrentCrawledSearchResult extends AbstractCrawledSearchResult impl
 
     @Override
     public long getSize() {
-        return file.getLength();
+        return size;
     }
 
     @Override

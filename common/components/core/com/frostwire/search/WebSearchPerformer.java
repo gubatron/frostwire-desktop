@@ -63,8 +63,24 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         LOG.warn("Review your logic, calling deep search without implementation for: " + sr);
     }
 
-    protected final String fetch(String url) {
+    /**
+     * Allow to perform the HTTP operation using the same internal http client.
+     * 
+     * @param url
+     * @return the web page (html)
+     */
+    public final String fetch(String url) {
         return client.get(url, timeout);
+    }
+
+    /**
+     * Allow to perform the HTTP operation using the same internal http client.
+     * 
+     * @param url
+     * @return the raw bytes from the http connection
+     */
+    public final byte[] fetchBytes(String url) {
+        return fetchBytes(url, null, timeout);
     }
 
     protected final byte[] fetchBytes(String url, String referrer, int timeout) {
