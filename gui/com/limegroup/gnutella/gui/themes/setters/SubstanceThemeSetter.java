@@ -32,18 +32,6 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.FontUIResource;
 
 import org.limewire.util.OSUtils;
-import org.pushingpixels.lafwidget.utils.LookUtils;
-import org.pushingpixels.substance.api.SubstanceLookAndFeel;
-import org.pushingpixels.substance.api.fonts.SubstanceFontUtilities;
-import org.pushingpixels.substance.internal.ui.SubstanceCheckBoxMenuItemUI;
-import org.pushingpixels.substance.internal.ui.SubstanceMenuBarUI;
-import org.pushingpixels.substance.internal.ui.SubstanceMenuItemUI;
-import org.pushingpixels.substance.internal.ui.SubstanceMenuUI;
-import org.pushingpixels.substance.internal.ui.SubstancePopupMenuSeparatorUI;
-import org.pushingpixels.substance.internal.ui.SubstancePopupMenuUI;
-import org.pushingpixels.substance.internal.ui.SubstanceRadioButtonMenuItemUI;
-import org.pushingpixels.substance.internal.ui.SubstanceTreeUI;
-import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,14 +81,14 @@ public class SubstanceThemeSetter implements ThemeSetter {
     }
 
     public void apply() {
-        SubstanceLookAndFeel.setSkin(_skinClassName);
+        //SubstanceLookAndFeel.setSkin(_skinClassName);
         ThemeMediator.applyCommonSkinUI();
 
-        if (LookUtils.IS_OS_WINDOWS) {
-            fixWindowsOSFont();
-        } else if (LookUtils.IS_OS_LINUX) {
-            fixLinuxOSFont();
-        }
+//        if (LookUtils.IS_OS_WINDOWS) {
+//            fixWindowsOSFont();
+//        } else if (LookUtils.IS_OS_LINUX) {
+//            fixLinuxOSFont();
+//        }
 
         fixAAFontSettings();
 
@@ -158,83 +146,96 @@ public class SubstanceThemeSetter implements ThemeSetter {
     public SkinCustomUI getCustomUI() {
         return customUI;
     }
+    
+    private static ComponentUI createUI(String name, JComponent comp) {
+        try {
+            String className = (String) UIManager.get(name);
+            Class<?> clazz = Class.forName(className);
+            Method m = clazz.getDeclaredMethod("createUI", JComponent.class);
+            return (ComponentUI) m.invoke(null, comp);
+        } catch (Throwable e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
 
     public ComponentUI createCheckBoxMenuItemUI(JComponent comp) {
-        return SubstanceCheckBoxMenuItemUI.createUI(comp);
+        return createUI("CheckBoxMenuItemUI", comp);
     }
 
     public ComponentUI createMenuBarUI(JComponent comp) {
-        return SubstanceMenuBarUI.createUI(comp);
+        return createUI("MenuBarUI", comp);
     }
 
     public ComponentUI createMenuItemUI(JComponent comp) {
-        return SubstanceMenuItemUI.createUI(comp);
+        return createUI("MenuItemUI", comp);
     }
 
     public ComponentUI createMenuUI(JComponent comp) {
-        return SubstanceMenuUI.createUI(comp);
+        return createUI("MenuUI", comp);
     }
 
     public ComponentUI createPopupMenuSeparatorUI(JComponent comp) {
-        return SubstancePopupMenuSeparatorUI.createUI(comp);
+        return createUI("PopupMenuSeparatorUI", comp);
     }
 
     public ComponentUI createPopupMenuUI(JComponent comp) {
-        return SubstancePopupMenuUI.createUI(comp);
+        return createUI("PopupMenuUI", comp);
     }
 
     public ComponentUI createRadioButtonMenuItemUI(JComponent comp) {
-        return SubstanceRadioButtonMenuItemUI.createUI(comp);
+        return createUI("RadioButtonMenuItemUI", comp);
     }
 
     public ComponentUI createTextAreaUI(JComponent comp) {
-        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
-        return new SkinTextAreaUI(comp);
+        return new SkinTextAreaUI();
     }
 
     public ComponentUI createListUI(JComponent comp) {
-        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        //SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinListUI();
     }
 
     public ComponentUI createComboBoxUI(JComponent comp) {
-        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
-        return new SkinComboBoxUI((JComboBox<?>) comp);
+        //SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        return new SkinComboBoxUI();
     }
 
     public ComponentUI createTreeUI(JComponent comp) {
-        return SubstanceTreeUI.createUI(comp);
+        return createUI("TreeUI", comp);
     }
 
     public ComponentUI createTableUI(JComponent comp) {
-        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        //SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinTableUI();
     }
 
     public ComponentUI createTabbedPaneUI(JComponent comp) {
-        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        //SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinTabbedPaneUI((JTabbedPane) comp);
     }
 
     public ComponentUI createRangeSliderUI(JComponent comp) {
-        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        //SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinRangeSliderUI((RangeSlider) comp);
     }
 
     public ComponentUI createProgressBarUI(JComponent comp) {
-        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        //SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinProgressBarUI();
     }
     
     @Override
     public ComponentUI createOptionPaneUI(JComponent comp) {
-        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        //SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinOptionPaneUI();
     }
     
     @Override
     public ComponentUI createLabelUI(JComponent comp) {
-        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        //SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinLabelUI();
     }
 
@@ -252,7 +253,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
             if (fontName != null) {
                 Font font = new Font(fontName, Font.PLAIN, 12);
                 method.invoke(toolkit, "win.icon.font", font);
-                SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getDefaultFontPolicy());
+                //SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getDefaultFontPolicy());
             }
         } catch (Throwable e) {
             LOG.error("Error fixing font", e);
@@ -272,7 +273,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
                 // linux is hardcoded to Dialog
                 fontName = "Dialog";
                 method.invoke(toolkit, "gnome.Gtk/FontName", fontName);
-                SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getDefaultFontPolicy());
+                //SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getDefaultFontPolicy());
             }
         } catch (Throwable e) {
             LOG.error("Error fixing font", e);

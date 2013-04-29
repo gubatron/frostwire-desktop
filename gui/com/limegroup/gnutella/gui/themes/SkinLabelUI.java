@@ -23,8 +23,7 @@ import java.awt.Font;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.plaf.ComponentUI;
-
-import org.pushingpixels.substance.internal.ui.SubstanceLabelUI;
+import javax.swing.plaf.basic.BasicLabelUI;
 
 /**
  * 
@@ -32,7 +31,7 @@ import org.pushingpixels.substance.internal.ui.SubstanceLabelUI;
  * @author aldenml
  *
  */
-public class SkinLabelUI extends SubstanceLabelUI {
+public class SkinLabelUI extends BasicLabelUI {
 
     public static ComponentUI createUI(JComponent comp) {
         return ThemeMediator.CURRENT_THEME.createLabelUI(comp);

@@ -5,10 +5,9 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
-
-class DateRenderer extends SubstanceDefaultTableCellRenderer {
+class DateRenderer extends DefaultTableCellRenderer {
     
 	private static final long serialVersionUID = -5927935873435355689L;
 	private static final DateFormat FORMAT =

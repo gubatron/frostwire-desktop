@@ -25,17 +25,17 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 
 import org.limewire.util.OSUtils;
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
-public final class SortHeaderRenderer extends SubstanceDefaultTableCellRenderer
+public final class SortHeaderRenderer extends DefaultTableCellRenderer
 implements ThemeObserver {
     /**
      * 

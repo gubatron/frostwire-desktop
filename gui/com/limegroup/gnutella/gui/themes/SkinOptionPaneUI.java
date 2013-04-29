@@ -24,8 +24,7 @@ import java.awt.GridBagConstraints;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.plaf.ComponentUI;
-
-import org.pushingpixels.substance.internal.ui.SubstanceOptionPaneUI;
+import javax.swing.plaf.basic.BasicOptionPaneUI;
 
 /**
  * 
@@ -33,7 +32,7 @@ import org.pushingpixels.substance.internal.ui.SubstanceOptionPaneUI;
  * @author aldenml
  *
  */
-public class SkinOptionPaneUI extends SubstanceOptionPaneUI {
+public class SkinOptionPaneUI extends BasicOptionPaneUI {
 
     public static ComponentUI createUI(JComponent comp) {
         return ThemeMediator.CURRENT_THEME.createOptionPaneUI(comp);

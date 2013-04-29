@@ -27,11 +27,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import org.pushingpixels.substance.internal.utils.SubstanceTextUtilities;
-import org.pushingpixels.trident.Timeline;
-import org.pushingpixels.trident.Timeline.TimelineState;
-import org.pushingpixels.trident.callback.TimelineCallbackAdapter;
-
 import com.frostwire.gui.player.MediaPlayerComponent;
 import com.frostwire.gui.tabs.Tab;
 import com.frostwire.gui.updates.UpdateMediator;
@@ -282,7 +277,7 @@ public class ApplicationHeader extends JPanel implements ThemeObserver, RefreshL
         button.addMouseListener(CLICK_FORWARDER);
         button.setToolTipText(t.getToolTip());
         
-        button.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
+        //button.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
         button.setForeground(ThemeMediator.CURRENT_THEME.getCustomUI().getTabButtonForegroundColor());
         
         Dimension buttonDim = new Dimension(107,34);
@@ -407,34 +402,34 @@ public class ApplicationHeader extends JPanel implements ThemeObserver, RefreshL
         
         if (show) {
             //Animate the button.
-            final Timeline timeline = new Timeline(new IntermittentButton(updateButton,updateImageButtonOn,updateImageButtonOff));
-            
-            timeline.addCallback(new TimelineCallbackAdapter() {
-                private long lastChange = 0;
-                private boolean lastState = false;
-                
-                @Override
-                public void onTimelinePulse(float durationFraction, float timelinePosition) {
-                    int currentSecond = (int) (durationFraction*timeline.getDuration()/1000);
-                    if (currentSecond != lastChange) {
-                        lastChange = currentSecond;
-                        updateButton.setIcon((lastState) ? updateImageButtonOn : updateImageButtonOff);
-                        lastState = !lastState;
-                    }
-                }
-                
-                @Override
-                public void onTimelineStateChanged(TimelineState oldState,
-                        TimelineState newState, float durationFraction,
-                        float timelinePosition) {
-                    if (newState == TimelineState.DONE) {
-                        updateButton.setIcon(updateImageButtonOn);
-                    }
-                }
-            });
-            
-            timeline.setDuration(30000);
-            timeline.play();
+//            final Timeline timeline = new Timeline(new IntermittentButton(updateButton,updateImageButtonOn,updateImageButtonOff));
+//            
+//            timeline.addCallback(new TimelineCallbackAdapter() {
+//                private long lastChange = 0;
+//                private boolean lastState = false;
+//                
+//                @Override
+//                public void onTimelinePulse(float durationFraction, float timelinePosition) {
+//                    int currentSecond = (int) (durationFraction*timeline.getDuration()/1000);
+//                    if (currentSecond != lastChange) {
+//                        lastChange = currentSecond;
+//                        updateButton.setIcon((lastState) ? updateImageButtonOn : updateImageButtonOff);
+//                        lastState = !lastState;
+//                    }
+//                }
+//                
+//                @Override
+//                public void onTimelineStateChanged(TimelineState oldState,
+//                        TimelineState newState, float durationFraction,
+//                        float timelinePosition) {
+//                    if (newState == TimelineState.DONE) {
+//                        updateButton.setIcon(updateImageButtonOn);
+//                    }
+//                }
+//            });
+//            
+//            timeline.setDuration(30000);
+//            timeline.play();
         }
     }
 }

@@ -31,9 +31,6 @@ import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.TOTorrentFile;
 import org.gudy.azureus2.core3.util.UrlUtils;
-import org.pushingpixels.trident.Timeline;
-import org.pushingpixels.trident.Timeline.TimelineState;
-import org.pushingpixels.trident.callback.TimelineCallbackAdapter;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.HttpFetcher.HttpRequestInfo;
@@ -397,24 +394,24 @@ public class ShareTorrentDialog extends JDialog {
 		//Animate
 		int Y_DISPLACEMENT = 50;
 		
-		Timeline timeline = new Timeline(new TimelineJLabel(_feedbackLabel));
-
-		timeline.addCallback(new TimelineCallbackAdapter() {
-			
-			@Override
-			public void onTimelineStateChanged(TimelineState oldState,
-					TimelineState newState, float durationFraction,
-					float timelinePosition) {
-				if (newState == TimelineState.DONE) {
-					_feedbackLabel.setVisible(false);
-				}
-			}
-		});
-		
-		timeline.setDuration(800);
-		timeline.addPropertyToInterpolate("y", startY,(int) startY-Y_DISPLACEMENT);
-		timeline.addPropertyToInterpolate("color",Color.BLACK, _feedbackLabel.getBackground());
-		timeline.play();
+//		Timeline timeline = new Timeline(new TimelineJLabel(_feedbackLabel));
+//
+//		timeline.addCallback(new TimelineCallbackAdapter() {
+//			
+//			@Override
+//			public void onTimelineStateChanged(TimelineState oldState,
+//					TimelineState newState, float durationFraction,
+//					float timelinePosition) {
+//				if (newState == TimelineState.DONE) {
+//					_feedbackLabel.setVisible(false);
+//				}
+//			}
+//		});
+//		
+//		timeline.setDuration(800);
+//		timeline.addPropertyToInterpolate("y", startY,(int) startY-Y_DISPLACEMENT);
+//		timeline.addPropertyToInterpolate("color",Color.BLACK, _feedbackLabel.getBackground());
+//		timeline.play();
 		
 	}
 

@@ -24,9 +24,7 @@ import javax.swing.JComponent;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.ComponentUI;
-
-import org.pushingpixels.substance.internal.ui.SubstanceProgressBarUI;
-import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
+import javax.swing.plaf.basic.BasicProgressBarUI;
 
 /**
  * 
@@ -34,43 +32,43 @@ import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
  * @author aldenml
  *
  */
-public class SkinProgressBarUI extends SubstanceProgressBarUI {
+public class SkinProgressBarUI extends BasicProgressBarUI {
 
     public static ComponentUI createUI(JComponent comp) {
         return ThemeMediator.CURRENT_THEME.createProgressBarUI(comp);
     }
 
-    @Override
-    protected void installListeners() {
-        super.installListeners();
-
-        // fix to remove animation listener
-        this.progressBar.removeChangeListener(this.substanceValueChangeListener);
-
-        this.substanceValueChangeListener = new NoAnimatedSubstanceChangeListener();
-        this.progressBar.addChangeListener(this.substanceValueChangeListener);
-    }
-
-    private final class NoAnimatedSubstanceChangeListener implements ChangeListener {
-        public void stateChanged(ChangeEvent e) {
-            SubstanceCoreUtilities.testComponentStateChangeThreadingViolation(progressBar);
-
-            int currValue = progressBar.getValue();
-
-            displayedValue = currValue;
-            progressBar.repaint();
-        }
-    }
-    
-    @Override
-    public void paintDeterminate(Graphics g, JComponent c) {
-
-    	// fix inner substance issue related to java 7
-    	int barRectHeight = progressBar.getHeight() - 2 * margin;
-    	if (barRectHeight <= 0) {
-    		return;
-    	}
-
-    	super.paintDeterminate(g, c);
-    }
+//    @Override
+//    protected void installListeners() {
+//        super.installListeners();
+//
+//        // fix to remove animation listener
+//        this.progressBar.removeChangeListener(this.substanceValueChangeListener);
+//
+//        this.substanceValueChangeListener = new NoAnimatedSubstanceChangeListener();
+//        this.progressBar.addChangeListener(this.substanceValueChangeListener);
+//    }
+//
+//    private final class NoAnimatedSubstanceChangeListener implements ChangeListener {
+//        public void stateChanged(ChangeEvent e) {
+//            SubstanceCoreUtilities.testComponentStateChangeThreadingViolation(progressBar);
+//
+//            int currValue = progressBar.getValue();
+//
+//            displayedValue = currValue;
+//            progressBar.repaint();
+//        }
+//    }
+//    
+//    @Override
+//    public void paintDeterminate(Graphics g, JComponent c) {
+//
+//    	// fix inner substance issue related to java 7
+//    	int barRectHeight = progressBar.getHeight() - 2 * margin;
+//    	if (barRectHeight <= 0) {
+//    		return;
+//    	}
+//
+//    	super.paintDeterminate(g, c);
+//    }
 }

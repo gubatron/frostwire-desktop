@@ -5,15 +5,14 @@ import java.awt.Component;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 
 /**
  * Renders an icon along with a label.
  */
-public final class IconAndNameRenderer extends SubstanceDefaultTableCellRenderer {
+public final class IconAndNameRenderer extends DefaultTableCellRenderer {
 
     /**
      * 

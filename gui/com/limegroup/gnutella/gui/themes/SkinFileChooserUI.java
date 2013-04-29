@@ -42,8 +42,6 @@ import javax.swing.filechooser.FileView;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicFileChooserUI;
 
-import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
-
 /**
  * UI for file chooser in <b>Substance</b> look and feel. The
  * {@link BasicFileChooserUI} can't be used on its own (creates an empty
@@ -101,15 +99,15 @@ public class SkinFileChooserUI extends BaseFileChooserUI {
             }
             // System.out.println("System : " + f.getAbsolutePath() + " --> "
             // + icon);
-            if (icon == null) {
-                icon = super.getIcon(f);
-                if (icon == null) {
-                    icon = new ImageIcon(SubstanceCoreUtilities.getBlankImage(
-                            8, 8));
-                }
-                // System.out.println("Super : " + f.getAbsolutePath() + " --> "
-                // + icon);
-            }
+//            if (icon == null) {
+//                icon = super.getIcon(f);
+//                if (icon == null) {
+//                    icon = new ImageIcon(SubstanceCoreUtilities.getBlankImage(
+//                            8, 8));
+//                }
+//                // System.out.println("Super : " + f.getAbsolutePath() + " --> "
+//                // + icon);
+//            }
             cacheIcon(f, icon);
             return icon;
         }
@@ -156,9 +154,9 @@ public class SkinFileChooserUI extends BaseFileChooserUI {
                 if (fileSystemView != null) {
                     icon = fileSystemView.getSystemIcon(f);
 
-                    if (SubstanceCoreUtilities.useThemedDefaultIcon(null)) {
-                        icon = SubstanceCoreUtilities.getThemedIcon(fileChooser, icon);
-                    }
+//                    if (SubstanceCoreUtilities.useThemedDefaultIcon(null)) {
+//                        icon = SubstanceCoreUtilities.getThemedIcon(fileChooser, icon);
+//                    }
                 }
             }
 
@@ -167,7 +165,7 @@ public class SkinFileChooserUI extends BaseFileChooserUI {
     }
 
     public static ComponentUI createUI(JComponent comp) {
-    	SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+    //	SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinFileChooserUI((JFileChooser) comp);
     }
 

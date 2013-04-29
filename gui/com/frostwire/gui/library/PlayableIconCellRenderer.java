@@ -24,8 +24,7 @@ import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -36,7 +35,7 @@ import com.limegroup.gnutella.gui.themes.ThemeMediator;
  * @author aldenml
  *
  */
-class PlayableIconCellRenderer extends SubstanceDefaultTableCellRenderer {
+class PlayableIconCellRenderer extends DefaultTableCellRenderer {
 
     private static final long serialVersionUID = -6392689488563533358L;
 

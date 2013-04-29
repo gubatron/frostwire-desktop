@@ -42,11 +42,6 @@ import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
-import org.pushingpixels.substance.api.ColorSchemeAssociationKind;
-import org.pushingpixels.substance.api.ComponentState;
-import org.pushingpixels.substance.api.SubstanceColorScheme;
-import org.pushingpixels.substance.internal.utils.SubstanceColorSchemeUtilities;
-
 import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;

@@ -31,6 +31,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JList;
@@ -53,7 +54,6 @@ import org.limewire.collection.CollectionUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.Librarian;
@@ -1147,7 +1147,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
     /**
      * Sets an icon based on the filename extension.      */
-    private static class FileNameListCellRenderer extends SubstanceDefaultListCellRenderer {
+    private static class FileNameListCellRenderer extends DefaultListCellRenderer {
 
         /**
          * 

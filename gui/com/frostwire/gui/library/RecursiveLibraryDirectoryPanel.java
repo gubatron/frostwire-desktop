@@ -52,12 +52,12 @@ import javax.swing.JTree;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.metal.MetalIconFactory;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.limewire.util.FileUtils;
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTreeCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -576,13 +576,13 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
     /**
      * Check box tree cell renderer.
      */
-    private class FileTreeCellRenderer extends SubstanceDefaultTreeCellRenderer {
+    private class FileTreeCellRenderer extends DefaultTreeCellRenderer {
         
         private static final long serialVersionUID = -8299879264709364378L;
         
         private JCheckBox checkBox = configureCheckBox(new JCheckBox());
         
-        private SubstanceDefaultTreeCellRenderer labelRenderer = new SubstanceDefaultTreeCellRenderer();
+        private DefaultTreeCellRenderer labelRenderer = new DefaultTreeCellRenderer();
         
         @Override
         public Component getTreeCellRendererComponent(JTree tree, Object value,

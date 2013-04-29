@@ -21,12 +21,11 @@ import java.awt.Component;
 
 import javax.swing.Icon;
 import javax.swing.JTree;
-
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeCellRenderer;
 
 import com.limegroup.gnutella.gui.I18n;
 
-public class NodeRenderer extends SubstanceDefaultTreeCellRenderer {
+public class NodeRenderer extends DefaultTreeCellRenderer {
 
     private static final long serialVersionUID = -1834835893663476044L;
 

@@ -8,9 +8,8 @@ import java.util.Map;
 
 import javax.swing.JComponent;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
@@ -62,7 +61,7 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
  *
  * NOTE: This does not color selected or focused cells.
  */
-class ColorRenderer extends SubstanceDefaultTableCellRenderer implements ThemeObserver {
+class ColorRenderer extends DefaultTableCellRenderer implements ThemeObserver {
     
     /**
      * 

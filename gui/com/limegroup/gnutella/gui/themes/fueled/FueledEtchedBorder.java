@@ -9,9 +9,6 @@ import java.awt.RenderingHints;
 
 import javax.swing.border.Border;
 
-import org.pushingpixels.lafwidget.utils.RenderingUtils;
-import org.pushingpixels.substance.internal.utils.SubstanceSizeUtils;
-
 public class FueledEtchedBorder implements Border {
 
     private final Color color;
@@ -65,12 +62,12 @@ public class FueledEtchedBorder implements Border {
         // this is a fix for defect 248 - in order to paint the TitledBorder
         // text respecting the AA settings of the display, we have to
         // set rendering hints on the passed Graphics object.
-        RenderingUtils.installDesktopHints((Graphics2D) g, c);
+        ///RenderingUtils.installDesktopHints((Graphics2D) g, c);
     }
 
     @Override
     public Insets getBorderInsets(Component c) {
-        float borderStrokeWidth = SubstanceSizeUtils.getBorderStrokeWidth(SubstanceSizeUtils.getComponentFontSize(c));
+        float borderStrokeWidth = 2;//SubstanceSizeUtils.getBorderStrokeWidth(SubstanceSizeUtils.getComponentFontSize(c));
         int prefSize = (int) (Math.ceil(2.0 * borderStrokeWidth));
         return new Insets(prefSize, prefSize, prefSize, prefSize);
     }

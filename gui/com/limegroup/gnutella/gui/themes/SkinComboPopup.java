@@ -44,9 +44,6 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicComboPopup;
 
-import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
-import org.pushingpixels.substance.internal.utils.border.SubstanceBorder;
-
 /**
  * Combo popup implementation in <b>Substance</b> look-and-feel. This class is
  * <b>for internal use only</b>.
@@ -81,7 +78,7 @@ public class SkinComboPopup extends BasicComboPopup {
     @Override
     protected void configurePopup() {
         super.configurePopup();
-        setBorder(new SubstanceBorder(new Insets(0, 2, 2, 2)));
+        //setBorder(new SubstanceBorder(new Insets(0, 2, 2, 2)));
     }
 
     /**
@@ -133,77 +130,77 @@ public class SkinComboPopup extends BasicComboPopup {
      * @see javax.swing.plaf.basic.BasicComboPopup#computePopupBounds(int, int,
      * int, int)
      */
-    @Override
-    protected Rectangle computePopupBounds(int px, int py, int pw, int ph) {
-        int popupFlyoutOrientation = SubstanceCoreUtilities
-                .getPopupFlyoutOrientation(this.comboBox);
-        Insets insets = this.getInsets();
-        int dx = 0;
-        int dy = 0;
-        switch (popupFlyoutOrientation) {
-        case SwingConstants.NORTH:
-            dy = -ph - (int) this.comboBox.getSize().getHeight() - insets.top
-                    - insets.bottom;
-            break;
-        case SwingConstants.CENTER:
-            dy = -ph / 2 - (int) this.comboBox.getSize().getHeight() / 2
-                    - insets.top / 2 - insets.bottom / 2;
-            break;
-        case SwingConstants.EAST:
-            dx = pw + insets.left + insets.right;
-            dy = -(int) this.comboBox.getSize().getHeight();
-            break;
-        case SwingConstants.WEST:
-            dx = -pw - insets.left - insets.right;
-            dy = -(int) this.comboBox.getSize().getHeight();
-        }
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Rectangle screenBounds;
-
-        // Calculate the desktop dimensions relative to the combo box.
-        GraphicsConfiguration gc = this.comboBox.getGraphicsConfiguration();
-        Point p = new Point();
-        SwingUtilities.convertPointFromScreen(p, this.comboBox);
-        if (gc != null) {
-            Insets screenInsets = toolkit.getScreenInsets(gc);
-            screenBounds = gc.getBounds();
-            screenBounds.width -= (screenInsets.left + screenInsets.right);
-            screenBounds.height -= (screenInsets.top + screenInsets.bottom);
-            screenBounds.x += (p.x + screenInsets.left);
-            screenBounds.y += (p.y + screenInsets.top);
-        } else {
-            screenBounds = new Rectangle(p, toolkit.getScreenSize());
-        }
-
-        Rectangle rect = new Rectangle(px + dx, py + dy, pw, ph);
-        if ((py + ph > screenBounds.y + screenBounds.height)
-                && (ph < screenBounds.height)) {
-            rect.y = -rect.height - insets.top - insets.bottom;
-        }
-
-        // The following has been taken from JGoodies' Looks implementation
-        // for the popup prototype value
-        Object popupPrototypeDisplayValue = SubstanceCoreUtilities
-                .getComboPopupPrototypeDisplayValue(this.comboBox);
-        if (popupPrototypeDisplayValue != null) {
-            ListCellRenderer renderer = this.list.getCellRenderer();
-            Component c = renderer.getListCellRendererComponent(this.list,
-                    popupPrototypeDisplayValue, -1, true, true);
-            int npw = c.getPreferredSize().width;
-            boolean hasVerticalScrollBar = this.comboBox.getItemCount() > this.comboBox
-                    .getMaximumRowCount();
-            if (hasVerticalScrollBar) {
-                // Add the scrollbar width.
-                JScrollBar verticalBar = this.scroller.getVerticalScrollBar();
-                npw += verticalBar.getPreferredSize().width;
-            }
-
-            pw = Math.max(pw, npw);
-            rect.width = pw;
-        }
-
-        return rect;
-    }
+//    @Override
+//    protected Rectangle computePopupBounds(int px, int py, int pw, int ph) {
+//        int popupFlyoutOrientation = SubstanceCoreUtilities
+//                .getPopupFlyoutOrientation(this.comboBox);
+//        Insets insets = this.getInsets();
+//        int dx = 0;
+//        int dy = 0;
+//        switch (popupFlyoutOrientation) {
+//        case SwingConstants.NORTH:
+//            dy = -ph - (int) this.comboBox.getSize().getHeight() - insets.top
+//                    - insets.bottom;
+//            break;
+//        case SwingConstants.CENTER:
+//            dy = -ph / 2 - (int) this.comboBox.getSize().getHeight() / 2
+//                    - insets.top / 2 - insets.bottom / 2;
+//            break;
+//        case SwingConstants.EAST:
+//            dx = pw + insets.left + insets.right;
+//            dy = -(int) this.comboBox.getSize().getHeight();
+//            break;
+//        case SwingConstants.WEST:
+//            dx = -pw - insets.left - insets.right;
+//            dy = -(int) this.comboBox.getSize().getHeight();
+//        }
+//        Toolkit toolkit = Toolkit.getDefaultToolkit();
+//        Rectangle screenBounds;
+//
+//        // Calculate the desktop dimensions relative to the combo box.
+//        GraphicsConfiguration gc = this.comboBox.getGraphicsConfiguration();
+//        Point p = new Point();
+//        SwingUtilities.convertPointFromScreen(p, this.comboBox);
+//        if (gc != null) {
+//            Insets screenInsets = toolkit.getScreenInsets(gc);
+//            screenBounds = gc.getBounds();
+//            screenBounds.width -= (screenInsets.left + screenInsets.right);
+//            screenBounds.height -= (screenInsets.top + screenInsets.bottom);
+//            screenBounds.x += (p.x + screenInsets.left);
+//            screenBounds.y += (p.y + screenInsets.top);
+//        } else {
+//            screenBounds = new Rectangle(p, toolkit.getScreenSize());
+//        }
+//
+//        Rectangle rect = new Rectangle(px + dx, py + dy, pw, ph);
+//        if ((py + ph > screenBounds.y + screenBounds.height)
+//                && (ph < screenBounds.height)) {
+//            rect.y = -rect.height - insets.top - insets.bottom;
+//        }
+//
+//        // The following has been taken from JGoodies' Looks implementation
+//        // for the popup prototype value
+//        Object popupPrototypeDisplayValue = SubstanceCoreUtilities
+//                .getComboPopupPrototypeDisplayValue(this.comboBox);
+//        if (popupPrototypeDisplayValue != null) {
+//            ListCellRenderer renderer = this.list.getCellRenderer();
+//            Component c = renderer.getListCellRendererComponent(this.list,
+//                    popupPrototypeDisplayValue, -1, true, true);
+//            int npw = c.getPreferredSize().width;
+//            boolean hasVerticalScrollBar = this.comboBox.getItemCount() > this.comboBox
+//                    .getMaximumRowCount();
+//            if (hasVerticalScrollBar) {
+//                // Add the scrollbar width.
+//                JScrollBar verticalBar = this.scroller.getVerticalScrollBar();
+//                npw += verticalBar.getPreferredSize().width;
+//            }
+//
+//            pw = Math.max(pw, npw);
+//            rect.width = pw;
+//        }
+//
+//        return rect;
+//    }
 
     /*
      * (non-Javadoc)
@@ -222,14 +219,14 @@ public class SkinComboPopup extends BasicComboPopup {
      * (non-Javadoc)
      * 
      * @see javax.swing.plaf.basic.BasicComboPopup#hide()
-     */
-    @Override
-    public void hide() {
-        super.hide();
-        SkinListUI ui = (SkinListUI) this.list.getUI();
-        ui.resetRolloverIndex();
-        // this.list.putClientProperty(SubstanceListUI.ROLLED_OVER_INDEX, null);
-    }
+//     */
+//    @Override
+//    public void hide() {
+//        super.hide();
+//        SkinListUI ui = (SkinListUI) this.list.getUI();
+//        ui.resetRolloverIndex();
+//        // this.list.putClientProperty(SubstanceListUI.ROLLED_OVER_INDEX, null);
+//    }
 
     public JComboBox getCombobox() {
         return this.comboBox;

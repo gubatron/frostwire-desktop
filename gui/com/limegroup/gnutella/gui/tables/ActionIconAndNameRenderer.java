@@ -22,8 +22,7 @@ import java.awt.Component;
 
 import javax.swing.Icon;
 import javax.swing.JTable;
-
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  * Renders an icon along with a label.
@@ -31,7 +30,7 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRender
  * @author gubatron
  * @author aldenml
  */
-public final class ActionIconAndNameRenderer extends SubstanceDefaultTableCellRenderer {
+public final class ActionIconAndNameRenderer extends DefaultTableCellRenderer {
 
     /**
      * 

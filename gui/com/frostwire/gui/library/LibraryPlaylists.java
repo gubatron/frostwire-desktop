@@ -41,6 +41,7 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.JList;
@@ -58,7 +59,6 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
@@ -602,7 +602,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         }
     }
 
-    private class LibraryPlaylistsCellRenderer extends SubstanceDefaultListCellRenderer {
+    private class LibraryPlaylistsCellRenderer extends DefaultListCellRenderer {
 
         @Override
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {

@@ -25,8 +25,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 
@@ -37,7 +36,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
  *  @author gubatron
  *  @author aldenml
  */
-class PlaylistItemStarRenderer extends SubstanceDefaultTableCellRenderer {
+class PlaylistItemStarRenderer extends DefaultTableCellRenderer {
 
     private static final long serialVersionUID = 6800146830099830381L;
 

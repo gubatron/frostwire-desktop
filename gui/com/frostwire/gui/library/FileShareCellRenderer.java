@@ -24,8 +24,7 @@ import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import com.frostwire.gui.Librarian;
 
@@ -35,7 +34,7 @@ import com.frostwire.gui.Librarian;
  * @author aldenml
  *
  */
-class FileShareCellRenderer extends SubstanceDefaultTableCellRenderer {
+class FileShareCellRenderer extends DefaultTableCellRenderer {
 
     private static final long serialVersionUID = 6392689488563533358L;
 
