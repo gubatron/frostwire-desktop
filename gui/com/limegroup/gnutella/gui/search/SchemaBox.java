@@ -43,11 +43,11 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 import com.frostwire.gui.filters.TableLineFilter;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ImageManipulator;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /**

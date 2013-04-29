@@ -42,6 +42,8 @@ import org.limewire.setting.FileSetting;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.theme.SkinCustomUI;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FramedDialog;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -50,8 +52,6 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.Line;
 import com.limegroup.gnutella.gui.SplashWindow;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
-import com.limegroup.gnutella.gui.themes.SkinCustomUI;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.InstallSettings;

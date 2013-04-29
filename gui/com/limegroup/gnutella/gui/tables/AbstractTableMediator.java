@@ -50,10 +50,10 @@ import javax.swing.table.TableCellRenderer;
 
 import org.limewire.util.StringUtils;
 
+import com.frostwire.gui.theme.ThemeObserver;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.PaddedPanel;
-import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
 /**
  * The basics of a ComponentMediator for a Table.

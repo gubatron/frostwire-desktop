@@ -22,10 +22,10 @@ import javax.swing.JDialog;
 import org.limewire.setting.SettingsGroupManager;
 
 import com.frostwire.AzureusStarter;
+import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.gui.theme.ThemeObserver;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.LibrarySettings;
 
 /**

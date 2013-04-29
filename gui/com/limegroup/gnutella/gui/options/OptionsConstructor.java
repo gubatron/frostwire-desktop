@@ -38,6 +38,7 @@ import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.components.SearchField;
+import com.frostwire.gui.theme.SkinCustomUI;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -80,7 +81,6 @@ import com.limegroup.gnutella.gui.options.panes.VideoPlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.WiFiSharingPaneItem;
 import com.limegroup.gnutella.gui.options.panes.iTunesPreferencePaneItem;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
-import com.limegroup.gnutella.gui.themes.SkinCustomUI;
 import com.limegroup.gnutella.settings.UISettings;
 
 /**

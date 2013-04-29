@@ -8,9 +8,9 @@ import javax.swing.JComponent;
 import javax.swing.JSplitPane;
 
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.SearchMediator;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.UISettings;
 
 /**

@@ -6,8 +6,8 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
-import com.limegroup.gnutella.gui.themes.ThemeObserver;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
+import com.frostwire.gui.theme.ThemeObserver;
+import com.frostwire.gui.theme.ThemeSettings;
 
 /**
  * This class is really just a hack to make it easier to get the media player 

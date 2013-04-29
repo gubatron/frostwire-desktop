@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
+import com.frostwire.gui.theme.ThemeMediator;
 
 /**
  * Renders an icon along with a label.

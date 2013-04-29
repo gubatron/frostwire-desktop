@@ -30,9 +30,9 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import com.frostwire.gui.theme.SkinCustomUI;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.URLLabel;
-import com.limegroup.gnutella.gui.themes.SkinCustomUI;
 
 /**
  * This abstract class creates a <tt>JPanel</tt> that uses 

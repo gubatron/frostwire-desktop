@@ -38,6 +38,8 @@ import javax.swing.event.ChangeListener;
 
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
+import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.gui.theme.ThemeObserver;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -45,8 +47,6 @@ import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.limegroup.gnutella.gui.MediaButton;
 import com.limegroup.gnutella.gui.MediaSlider;
 import com.limegroup.gnutella.gui.RefreshListener;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
 /**
  * This class sets up JPanel with MediaPlayer on it, and takes care of GUI

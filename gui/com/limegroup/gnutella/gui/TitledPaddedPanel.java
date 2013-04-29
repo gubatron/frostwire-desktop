@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-import com.limegroup.gnutella.gui.themes.SkinCustomUI;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
+import com.frostwire.gui.theme.SkinCustomUI;
+import com.frostwire.gui.theme.ThemeMediator;
 
 /** 
  * This is a reusable class that creates a titled panel with the specified 

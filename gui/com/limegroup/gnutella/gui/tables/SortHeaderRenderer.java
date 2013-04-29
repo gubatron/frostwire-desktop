@@ -31,9 +31,9 @@ import javax.swing.table.TableCellRenderer;
 
 import org.limewire.util.OSUtils;
 
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeObserver;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
+import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.gui.theme.ThemeObserver;
+import com.frostwire.gui.theme.ThemeSettings;
 
 public final class SortHeaderRenderer extends DefaultTableCellRenderer
 implements ThemeObserver {

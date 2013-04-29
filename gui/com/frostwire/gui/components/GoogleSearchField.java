@@ -40,9 +40,9 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.HttpFetcher;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /**

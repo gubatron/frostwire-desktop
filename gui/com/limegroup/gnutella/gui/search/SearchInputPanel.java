@@ -34,13 +34,13 @@ import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.gui.components.GoogleSearchField;
 import com.frostwire.gui.filters.TableLineFilter;
+import com.frostwire.gui.theme.SkinCustomUI;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.actions.FileMenuActions;
-import com.limegroup.gnutella.gui.themes.SkinCustomUI;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 

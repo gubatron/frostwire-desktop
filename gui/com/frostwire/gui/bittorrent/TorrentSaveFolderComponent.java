@@ -14,11 +14,11 @@ import javax.swing.JTextField;
 
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.theme.SkinCustomUI;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.themes.SkinCustomUI;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class TorrentSaveFolderComponent extends JPanel {

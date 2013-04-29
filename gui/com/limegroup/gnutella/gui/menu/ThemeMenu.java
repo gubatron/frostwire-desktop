@@ -28,10 +28,10 @@ import javax.swing.ButtonGroup;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 
+import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.gui.theme.ThemeSetter;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeSetter;
 
 /**
  * The menu to be used for themes.

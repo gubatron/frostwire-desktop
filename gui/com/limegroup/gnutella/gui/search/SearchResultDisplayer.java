@@ -44,13 +44,13 @@ import javax.swing.plaf.TabbedPaneUI;
 import com.frostwire.gui.components.slides.MultimediaSlideshowPanel;
 import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.gui.components.slides.SlideshowPanel;
+import com.frostwire.gui.theme.SkinTabbedPane;
+import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.gui.theme.ThemeObserver;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.RefreshListener;
-import com.limegroup.gnutella.gui.themes.SkinTabbedPane;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.settings.UpdateManagerSettings;
 

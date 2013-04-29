@@ -36,8 +36,8 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.TableUI;
 import javax.swing.table.TableCellRenderer;
 
+import com.frostwire.gui.theme.SkinTableCellRenderer;
 import com.limegroup.gnutella.gui.LimeJProgressBar;
-import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
 
 /**
  * This class handles rendering a <tt>JProgressBar</tt> for improved

@@ -29,10 +29,10 @@ import javax.swing.JRadioButton;
 
 import com.frostwire.gui.player.MediaPlayerComponent;
 import com.frostwire.gui.tabs.Tab;
+import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.gui.theme.ThemeObserver;
 import com.frostwire.gui.updates.UpdateMediator;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
 public class ApplicationHeader extends JPanel implements ThemeObserver, RefreshListener {
 

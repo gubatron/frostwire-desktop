@@ -59,10 +59,10 @@ import javax.swing.tree.TreeSelectionModel;
 
 import org.limewire.util.FileUtils;
 
+import com.frostwire.gui.theme.ThemeSettings;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MultiLineLabel;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.trees.FileTreeModel;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.SharingSettings;

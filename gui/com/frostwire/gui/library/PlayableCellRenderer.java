@@ -25,7 +25,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.TableUI;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
+import com.frostwire.gui.theme.ThemeSettings;
 
 /**
  *  Creates both a renderer and an editor for cells in the playlist table that display the name

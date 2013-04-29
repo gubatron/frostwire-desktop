@@ -13,8 +13,8 @@ import javax.swing.JProgressBar;
 
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.theme.SkinHandler;
 import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
 
 /**
  * Displays a status update in various ways, depending on the

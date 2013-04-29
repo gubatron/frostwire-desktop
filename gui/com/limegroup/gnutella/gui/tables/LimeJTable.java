@@ -45,9 +45,9 @@ import javax.swing.text.Position;
 
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.theme.ThemeSettings;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.JMultilineToolTip;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.util.DataUtils;
 
 /**

@@ -58,10 +58,10 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.components.searchfield.JXSearchField;
+import com.frostwire.gui.theme.SkinMenuItem;
+import com.frostwire.gui.theme.SkinPopupMenu;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.themes.SkinMenuItem;
-import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.UISettings;
 
 public class SearchField extends JXSearchField {

@@ -39,11 +39,11 @@ import javax.swing.plaf.TableUI;
 import javax.swing.table.TableCellRenderer;
 
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.theme.SkinTableCellRenderer;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.search.CrawlableSearchResult;
 import com.frostwire.search.StreamableSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 
 /**
  * 

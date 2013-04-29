@@ -14,9 +14,9 @@ import javax.swing.JInternalFrame;
 
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.theme.ThemeSettings;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.ImageManipulator;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 /**
  * This class acts as a wrapper around the "kill" icon displayed in the

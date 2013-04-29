@@ -54,10 +54,10 @@ import javax.swing.event.ListDataListener;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 
+import com.frostwire.gui.theme.SkinHandler;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.search.Ditherer;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
 
 /**
  * An animated notification window that can display multiple notifications. The
