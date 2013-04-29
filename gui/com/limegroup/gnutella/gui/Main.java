@@ -13,14 +13,14 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import javax.imageio.ImageIO;
-import javax.swing.JMenuBar;
 import javax.swing.JPopupMenu;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.plaf.MenuBarUI;
 
 import org.limewire.util.OSUtils;
+
+import com.frostwire.gui.theme.ThemeMediator;
 
 /**
  * This class constructs an <tt>Initializer</tt> instance that constructs
@@ -73,17 +73,7 @@ public class Main {
             if (args == null || args.length == 0)
 				splash = showInitialSplash();
             
-            //ThemeMediator.changeTheme(ThemeMediator.CURRENT_THEME);
-            try {
-                for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                    if ("Nimbus".equals(info.getName())) {
-                        UIManager.setLookAndFeel(info.getClassName());
-                        break;
-                    }                    
-                }
-            } catch (Exception e) {
-                // If Nimbus is not available, you can set the GUI to another look and feel.
-            }
+            ThemeMediator.changeTheme(ThemeMediator.CURRENT_THEME);
             
             // load the GUI through reflection so that we don't reference classes here,
             // which would slow the speed of class-loading, causing the splash to be

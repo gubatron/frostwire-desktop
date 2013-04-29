@@ -157,11 +157,11 @@ public class SubstanceThemeSetter implements ThemeSetter {
     }
 
     public ComponentUI createMenuItemUI(JComponent comp) {
-        return createUI("MenuItemUI", comp);
+        return new SkinMenuItemUI();
     }
 
     public ComponentUI createMenuUI(JComponent comp) {
-        return createUI("MenuUI", comp);
+        return new SkinMenuUI();
     }
 
     public ComponentUI createPopupMenuSeparatorUI(JComponent comp) {
@@ -169,7 +169,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
     }
 
     public ComponentUI createPopupMenuUI(JComponent comp) {
-        return createUI("PopupMenuUI", comp);
+        return new SkinPopupMenuUI();
     }
 
     public ComponentUI createRadioButtonMenuItemUI(JComponent comp) {
@@ -191,7 +191,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
     }
 
     public ComponentUI createTreeUI(JComponent comp) {
-        return createUI("TreeUI", comp);
+        return new SkinTreeUI();
     }
 
     public ComponentUI createTableUI(JComponent comp) {

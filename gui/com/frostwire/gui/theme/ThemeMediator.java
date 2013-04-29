@@ -31,6 +31,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.plaf.InsetsUIResource;
 
 import org.limewire.util.FileUtils;
@@ -117,6 +118,17 @@ public class ThemeMediator {
                 public void run() {
 
                     try {
+                        
+                        try {
+                            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                                if ("Nimbus".equals(info.getName())) {
+                                    UIManager.setLookAndFeel(info.getClassName());
+                                    break;
+                                }                    
+                            }
+                        } catch (Exception e) {
+                            // If Nimbus is not available, you can set the GUI to another look and feel.
+                        }
 
                         theme.apply();
 
