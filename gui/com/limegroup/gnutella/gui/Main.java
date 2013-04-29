@@ -37,6 +37,8 @@ public class Main {
 	 * @param args the array of command line arguments
 	 */
 	public static void main(String args[]) {
+	    ThemeMediator.changeTheme();
+	    
 	    System.setProperty("sun.awt.noerasebackground", "true");
 
         ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);
@@ -73,7 +75,7 @@ public class Main {
             if (args == null || args.length == 0)
 				splash = showInitialSplash();
             
-            ThemeMediator.changeTheme();
+            
             
             // load the GUI through reflection so that we don't reference classes here,
             // which would slow the speed of class-loading, causing the splash to be

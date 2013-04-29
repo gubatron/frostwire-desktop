@@ -49,15 +49,14 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
 public class ThemeMediator {
 
     public static final Font DIALOG_FONT = new Font(Font.DIALOG, Font.PLAIN, 12);
-    
-    public static final Color LIGHT_BORDER_COLOR = new Color(0xCDD9DE);
-    
-    public static final Color DARK_BORDER_COLOR = new Color(0xA9BDC7);
-    
-    public static final Color LIGHT_FOREGROUND_COLOR = new Color(0xFFFFFF);
-    
-    public static final Color TAB_BUTTON_FOREGROUND_COLOR = new Color(0x6489a8);
 
+    public static final Color LIGHT_BORDER_COLOR = new Color(0xCDD9DE);
+
+    public static final Color DARK_BORDER_COLOR = new Color(0xA9BDC7);
+
+    public static final Color LIGHT_FOREGROUND_COLOR = new Color(0xFFFFFF);
+
+    public static final Color TAB_BUTTON_FOREGROUND_COLOR = new Color(0x6489a8);
 
     /**
      * <tt>List</tt> of <tt>ThemeObserver</tt> classes to notify of
@@ -119,18 +118,18 @@ public class ThemeMediator {
                 public void run() {
 
                     try {
-                        
+
                         try {
                             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                                 if ("Nimbus".equals(info.getName())) {
                                     UIManager.setLookAndFeel(info.getClassName());
                                     break;
-                                }                    
+                                }
                             }
                         } catch (Exception e) {
                             // If Nimbus is not available, you can set the GUI to another look and feel.
                         }
-                        
+
                         new SubstanceThemeSetter().apply();
 
                         updateComponentHierarchy();
@@ -144,8 +143,6 @@ public class ThemeMediator {
             e.printStackTrace();
         }
     }
-
-
 
     public static void applyCommonSkinUI() {
         UIManager.put("PopupMenuUI", "com.frostwire.gui.theme.SkinPopupMenuUI");
@@ -167,6 +164,8 @@ public class ThemeMediator {
         UIManager.put("LabelUI", "com.frostwire.gui.theme.SkinLabelUI");
 
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
+
+        UIManager.put("ProgressBar[Enabled+Indeterminate].foregroundPainter", new SkinProgressBarPainter(true, true));
     }
 
     public static String getRecommendedFontName() {
@@ -223,7 +222,7 @@ public class ThemeMediator {
 
         return result;
     }
-    
+
     public static TitledBorder createTitledBorder(String title) {
         return new FueledTitledBorder(title);
     }
