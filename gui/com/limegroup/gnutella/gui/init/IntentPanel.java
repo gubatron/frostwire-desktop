@@ -26,7 +26,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import com.frostwire.gui.theme.SkinCustomUI;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -53,7 +52,7 @@ public class IntentPanel extends JPanel {
         bg.add(mightUseButton);
         bg.add(willNotButton);
 
-        setBorder(BorderFactory.createLineBorder(ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder()));
+        setBorder(BorderFactory.createLineBorder(ThemeMediator.DARK_BORDER_COLOR));
 
         setBackground(GUIUtils.hexToColor("F7F7F7"));
         //setBorder(BorderFactory.createCompoundBorder(

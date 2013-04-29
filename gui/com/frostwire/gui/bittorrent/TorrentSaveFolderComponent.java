@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.theme.SkinCustomUI;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FileChooserHandler;
@@ -32,7 +31,7 @@ public class TorrentSaveFolderComponent extends JPanel {
 		
 		setLayout(new GridBagLayout());
 		if (border) {
-		    setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Torrent Data Save Folder")));
+		    setBorder(ThemeMediator.createTitledBorder(I18n.tr("Torrent Data Save Folder")));
 		}
 		
 		GridBagConstraints gbc = new GridBagConstraints();

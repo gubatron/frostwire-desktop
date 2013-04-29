@@ -61,8 +61,8 @@ public class RangeSlider extends JSlider {
         setExtent(newExtent);
     }
     
-    @Override
-    public String getUIClassID() {
-        return "RangeSliderUI";
-    }
+//    @Override
+//    public String getUIClassID() {
+//        return "RangeSliderUI";
+//    }
 }

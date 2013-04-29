@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-import com.frostwire.gui.theme.SkinCustomUI;
 import com.frostwire.gui.theme.ThemeMediator;
 
 /** 
@@ -81,7 +80,7 @@ public class TitledPaddedPanel extends JPanel {
 															 outerPad,
 															 outerPad,
 															 outerPad);
-        _titledBorder = ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(title); //BorderFactory.createTitledBorder(title);
+        _titledBorder = ThemeMediator.createTitledBorder(title); //BorderFactory.createTitledBorder(title);
 
         Border innerBorder = BorderFactory.createEmptyBorder((innerPad > 6) ? innerPad - 6 : 0,
 															 innerPad,

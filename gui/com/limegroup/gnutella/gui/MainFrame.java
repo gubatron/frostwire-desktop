@@ -51,7 +51,6 @@ import com.frostwire.gui.tabs.ChatTab;
 import com.frostwire.gui.tabs.LibraryTab;
 import com.frostwire.gui.tabs.SearchDownloadTab;
 import com.frostwire.gui.tabs.Tab;
-import com.frostwire.gui.theme.SkinCustomUI;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.gui.theme.ThemeObserver;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;

@@ -38,7 +38,6 @@ import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.components.SearchField;
-import com.frostwire.gui.theme.SkinCustomUI;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;

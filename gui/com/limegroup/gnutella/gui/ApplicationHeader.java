@@ -278,7 +278,7 @@ public class ApplicationHeader extends JPanel implements ThemeObserver, RefreshL
         button.setToolTipText(t.getToolTip());
         
         //button.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
-        button.setForeground(ThemeMediator.CURRENT_THEME.getCustomUI().getTabButtonForegroundColor());
+        button.setForeground(ThemeMediator.TAB_BUTTON_FOREGROUND_COLOR);
         
         Dimension buttonDim = new Dimension(107,34);
         button.setPreferredSize(buttonDim);

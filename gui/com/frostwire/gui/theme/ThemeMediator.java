@@ -33,6 +33,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.border.TitledBorder;
 import javax.swing.plaf.InsetsUIResource;
 
 import org.limewire.util.FileUtils;
@@ -49,17 +50,14 @@ public class ThemeMediator {
 
     public static final Font DIALOG_FONT = new Font(Font.DIALOG, Font.PLAIN, 12);
     
-    public static final Color LIGHT_BORDER = new Color(0xCDD9DE);
+    public static final Color LIGHT_BORDER_COLOR = new Color(0xCDD9DE);
+    
+    public static final Color DARK_BORDER_COLOR = new Color(0xA9BDC7);
+    
+    public static final Color LIGHT_FOREGROUND_COLOR = new Color(0xFFFFFF);
+    
+    public static final Color TAB_BUTTON_FOREGROUND_COLOR = new Color(0x6489a8);
 
-    public static ThemeSetter DEFAULT_THEME;
-
-    public static ThemeSetter CURRENT_THEME;
-
-    private static List<ThemeSetter> THEMES;
-
-    static {
-        loadThemes();
-    }
 
     /**
      * <tt>List</tt> of <tt>ThemeObserver</tt> classes to notify of
@@ -114,7 +112,7 @@ public class ThemeMediator {
         //GUIMediator.getAppFrame().validate();
     }
 
-    public static void changeTheme(final ThemeSetter theme) {
+    public static void changeTheme() {
         try {
 
             SwingUtilities.invokeLater(new Runnable() {
@@ -132,17 +130,13 @@ public class ThemeMediator {
                         } catch (Exception e) {
                             // If Nimbus is not available, you can set the GUI to another look and feel.
                         }
-
-                        theme.apply();
-
-                        CURRENT_THEME = theme;
-
-                        saveCurrentTheme(theme);
+                        
+                        new SubstanceThemeSetter().apply();
 
                         updateComponentHierarchy();
 
                     } catch (Exception e) {
-                        System.out.println("Theme '" + theme.getName() + "' failed to apply: " + e.getMessage());
+                        e.printStackTrace();
                     }
                 }
             });
@@ -151,68 +145,7 @@ public class ThemeMediator {
         }
     }
 
-    public static List<ThemeSetter> loadThemes() {
 
-        if (THEMES != null) {
-            return THEMES;
-        }
-
-        List<ThemeSetter> themes = new ArrayList<ThemeSetter>();
-
-        // from FrostWire
-        themes.add(SubstanceThemeSetter.SEA_GLASS);
-        themes.add(SubstanceThemeSetter.FUELED);
-
-
-        DEFAULT_THEME = SubstanceThemeSetter.FUELED;
-        THEMES = themes;
-        CURRENT_THEME = loadCurrentTheme();
-
-        return THEMES;
-    }
-
-    private static ThemeSetter loadCurrentTheme() {
-        ThemeSetter currentTheme = DEFAULT_THEME;
-
-        BufferedReader input = null;
-
-        try {
-
-            File skinsFile = ThemeSettings.SKINS_FILE;
-
-            if (skinsFile.exists()) {
-                input = new BufferedReader(new FileReader(skinsFile));
-                String name = input.readLine();
-                for (int i = 0; i < THEMES.size(); i++) {
-                    if (THEMES.get(i).getName().equals(name)) {
-                        currentTheme = THEMES.get(i);
-                        break;
-                    }
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            FileUtils.close(input);
-        }
-
-        return currentTheme;
-    }
-
-    private static void saveCurrentTheme(ThemeSetter theme) throws IOException {
-        File skinsFile = ThemeSettings.SKINS_FILE;
-
-        BufferedWriter output = new BufferedWriter(new FileWriter(skinsFile));
-
-        try {
-
-            output.write(theme.getName());
-
-        } finally {
-            FileUtils.close(output);
-        }
-    }
 
     public static void applyCommonSkinUI() {
         UIManager.put("PopupMenuUI", "com.frostwire.gui.theme.SkinPopupMenuUI");
@@ -225,9 +158,8 @@ public class ThemeMediator {
         //UIManager.put("TextAreaUI", "com.frostwire.gui.theme.SkinTextAreaUI");
         //UIManager.put("ListUI", "com.frostwire.gui.theme.SkinListUI");
         //UIManager.put("ComboBoxUI", "com.frostwire.gui.theme.SkinComboBoxUI");
-        //UIManager.put("TreeUI", "com.frostwire.gui.theme.SkinTreeUI");
         //UIManager.put("TableUI", "com.frostwire.gui.theme.SkinTableUI");
-        UIManager.put("RangeSliderUI", "com.frostwire.gui.theme.SkinRangeSliderUI");
+        //UIManager.put("RangeSliderUI", "com.frostwire.gui.theme.SkinRangeSliderUI");
         UIManager.put("FileChooserUI", "com.frostwire.gui.theme.SkinFileChooserUI");
         UIManager.put("TabbedPaneUI", "com.frostwire.gui.theme.SkinTabbedPaneUI");
         UIManager.put("ProgressBarUI", "com.frostwire.gui.theme.SkinProgressBarUI");
@@ -290,5 +222,9 @@ public class ThemeMediator {
         }
 
         return result;
+    }
+    
+    public static TitledBorder createTitledBorder(String title) {
+        return new FueledTitledBorder(title);
     }
 }

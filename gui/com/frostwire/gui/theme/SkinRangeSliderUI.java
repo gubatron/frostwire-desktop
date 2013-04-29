@@ -32,22 +32,28 @@ package com.frostwire.gui.theme;
 import javax.swing.JComponent;
 import javax.swing.JSlider;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicSliderUI;
+import javax.swing.plaf.synth.SynthSliderUI;
 
 /**
  * UI for sliders in <b>Substance</b> look and feel.
  * 
  * @author Kirill Grouchnikov
  */
-public class SkinRangeSliderUI extends BasicSliderUI  {
-    
+public class SkinRangeSliderUI extends SynthSliderUI {
+
     public SkinRangeSliderUI(JSlider b) {
         super(b);
         // TODO Auto-generated constructor stub
     }
 
     public static ComponentUI createUI(JComponent comp) {
-        return ThemeMediator.CURRENT_THEME.createRangeSliderUI(comp);
+        return new SkinRangeSliderUI((JSlider) comp);
     }
     
+    @Override
+    protected void installDefaults(JSlider slider) {
+        // TODO Auto-generated method stub
+        //super.installDefaults(slider);
+    }
+
 }

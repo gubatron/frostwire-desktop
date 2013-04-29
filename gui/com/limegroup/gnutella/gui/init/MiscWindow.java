@@ -33,7 +33,6 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.ChatMediator;
-import com.frostwire.gui.theme.SkinCustomUI;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -84,7 +83,7 @@ final class MiscWindow extends SetupWindow {
             GridBagConstraints gbc = new GridBagConstraints();
             JPanel startupPanel = new JPanel(new GridBagLayout());
 
-            startupPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("System Startup")));
+            startupPanel.setBorder(ThemeMediator.createTitledBorder(I18n.tr("System Startup")));
 
             _startup = new JCheckBox(I18n.tr("Start Automatically"));
             _startup.setSelected(StartupSettings.RUN_ON_STARTUP.getValue());
@@ -155,7 +154,7 @@ final class MiscWindow extends SetupWindow {
 
             JPanel chatCommunityPanel = new JPanel(new GridLayout(2, 0));
 
-            chatCommunityPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Chat Community")));
+            chatCommunityPanel.setBorder(ThemeMediator.createTitledBorder(I18n.tr("Chat Community")));
 
             //create multiline to describe why the chat needs a nick (descChat)
             JLabel descChat = new JLabel("<html>" + I18n.tr("FrostWire's Community Chat Tab requires you to have a nickname to communicate with others in the chatrooms.") + "</html>");

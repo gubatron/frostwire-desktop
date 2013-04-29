@@ -202,7 +202,7 @@ public class LibraryMediator {
     public JComponent getComponent() {
         if (MAIN_PANEL == null) {
             MAIN_PANEL = new JPanel(new BorderLayout());
-            MAIN_PANEL.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER));
+            MAIN_PANEL.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
         }
         return MAIN_PANEL;
     }

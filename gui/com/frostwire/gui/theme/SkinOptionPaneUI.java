@@ -24,7 +24,7 @@ import java.awt.GridBagConstraints;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicOptionPaneUI;
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 /**
  * 
@@ -32,10 +32,10 @@ import javax.swing.plaf.basic.BasicOptionPaneUI;
  * @author aldenml
  *
  */
-public class SkinOptionPaneUI extends BasicOptionPaneUI {
+public class SkinOptionPaneUI extends SynthOptionPaneUI {
 
     public static ComponentUI createUI(JComponent comp) {
-        return ThemeMediator.CURRENT_THEME.createOptionPaneUI(comp);
+        return new SkinOptionPaneUI();
     }
 
     @Override

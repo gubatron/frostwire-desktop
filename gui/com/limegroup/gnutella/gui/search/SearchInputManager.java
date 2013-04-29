@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
-import com.frostwire.gui.theme.SkinCustomUI;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.gui.theme.ThemeObserver;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -92,7 +91,7 @@ final class SearchInputManager implements ThemeObserver {
         if (COMPONENT_PANEL == null) {
             COMPONENT_PANEL = new JPanel(new GridBagLayout());
             
-            COMPONENT_PANEL.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder()));
+            COMPONENT_PANEL.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, ThemeMediator.DARK_BORDER_COLOR));
         }
         return COMPONENT_PANEL;
     }

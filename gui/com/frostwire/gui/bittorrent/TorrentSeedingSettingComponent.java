@@ -8,7 +8,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import com.frostwire.gui.theme.SkinCustomUI;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -42,7 +41,7 @@ public class TorrentSeedingSettingComponent extends JPanel {
 		setLayout(new GridBagLayout());
 		
 		if (_border) {
-		    setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Seeding Settings")));
+		    setBorder(ThemeMediator.createTitledBorder(I18n.tr("Seeding Settings")));
 		}
 
 		initRadioButtons();

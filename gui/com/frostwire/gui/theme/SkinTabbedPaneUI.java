@@ -9,34 +9,33 @@ import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
+import javax.swing.plaf.synth.SynthTabbedPaneUI;
 import javax.swing.text.View;
 
-public class SkinTabbedPaneUI extends BasicTabbedPaneUI {
-    
+public class SkinTabbedPaneUI extends SynthTabbedPaneUI {
+
     private final JTabbedPane tabbedPane;
-    
+
     public static ComponentUI createUI(JComponent comp) {
-        return ThemeMediator.CURRENT_THEME.createTabbedPaneUI(comp);
+        return new SkinTabbedPaneUI((JTabbedPane) comp);
     }
-    
+
     public SkinTabbedPaneUI(JTabbedPane tabbedPane) {
         this.tabbedPane = tabbedPane;
     }
-    
-//    @Override
-//    protected int getTabExtraWidth(int tabPlacement, int tabIndex) {
-//        int extraWidth = super.getTabExtraWidth(tabPlacement, tabIndex);
-//        if (tabbedPane instanceof SkinTabbedPane && ((SkinTabbedPane) tabbedPane).isExtraIconActiveAt(tabIndex)) {
-//            Icon extraIcon = ((SkinTabbedPane) tabbedPane).getExtraIcon();
-//            extraWidth += extraIcon != null ? extraIcon.getIconWidth() : 0;
-//        }        
-//        return extraWidth;
-//    }
-    
+
+    //    @Override
+    //    protected int getTabExtraWidth(int tabPlacement, int tabIndex) {
+    //        int extraWidth = super.getTabExtraWidth(tabPlacement, tabIndex);
+    //        if (tabbedPane instanceof SkinTabbedPane && ((SkinTabbedPane) tabbedPane).isExtraIconActiveAt(tabIndex)) {
+    //            Icon extraIcon = ((SkinTabbedPane) tabbedPane).getExtraIcon();
+    //            extraWidth += extraIcon != null ? extraIcon.getIconWidth() : 0;
+    //        }
+    //        return extraWidth;
+    //    }
+
     @Override
-    protected void layoutLabel(int tabPlacement, FontMetrics metrics, int tabIndex, String title, Icon icon, Rectangle tabRect, Rectangle iconRect,
-            Rectangle textRect, boolean isSelected) {
+    protected void layoutLabel(int tabPlacement, FontMetrics metrics, int tabIndex, String title, Icon icon, Rectangle tabRect, Rectangle iconRect, Rectangle textRect, boolean isSelected) {
         Icon extraIcon = null;
         if (tabbedPane instanceof SkinTabbedPane && ((SkinTabbedPane) tabbedPane).isExtraIconActiveAt(tabIndex)) {
             extraIcon = ((SkinTabbedPane) tabbedPane).getExtraIcon();
@@ -45,7 +44,7 @@ public class SkinTabbedPaneUI extends BasicTabbedPaneUI {
             super.layoutLabel(tabPlacement, metrics, tabIndex, title, icon, tabRect, iconRect, textRect, isSelected);
             return;
         }
-        
+
         textRect.x = textRect.y = iconRect.x = iconRect.y = 0;
 
         View v = getTextViewForTab(tabIndex);
@@ -53,16 +52,7 @@ public class SkinTabbedPaneUI extends BasicTabbedPaneUI {
             tabPane.putClientProperty("html", v);
         }
 
-        SwingUtilities.layoutCompoundLabel((JComponent) tabPane,
-                                           metrics, title, icon,
-                                           SwingUtilities.CENTER,
-                                           SwingUtilities.LEFT,
-                                           SwingUtilities.CENTER,
-                                           SwingUtilities.TRAILING,
-                                           tabRect,
-                                           iconRect,
-                                           textRect,
-                                           textIconGap);
+        SwingUtilities.layoutCompoundLabel((JComponent) tabPane, metrics, title, icon, SwingUtilities.CENTER, SwingUtilities.LEFT, SwingUtilities.CENTER, SwingUtilities.TRAILING, tabRect, iconRect, textRect, textIconGap);
 
         tabPane.putClientProperty("html", null);
 
@@ -73,7 +63,7 @@ public class SkinTabbedPaneUI extends BasicTabbedPaneUI {
         textRect.x += xNudge;
         textRect.y += yNudge;
     }
-    
+
     @Override
     protected void paintTab(Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex, Rectangle iconRect, Rectangle textRect) {
         super.paintTab(g, tabPlacement, rects, tabIndex, iconRect, textRect);
@@ -82,7 +72,7 @@ public class SkinTabbedPaneUI extends BasicTabbedPaneUI {
             extraIcon = ((SkinTabbedPane) tabbedPane).getExtraIcon();
         }
         if (extraIcon != null) {
-           extraIcon.paintIcon(tabPane, g, textRect.x + textRect.width + 4, textRect.y);
+            extraIcon.paintIcon(tabPane, g, textRect.x + textRect.width + 4, textRect.y);
         }
     }
 }

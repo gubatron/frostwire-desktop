@@ -46,7 +46,7 @@ public class FueledTitledBorder extends TitledBorder {
     @Override
     public Border getBorder() {
         if (BORDER == null) {
-            BORDER = new FueledEtchedBorder(SubstanceCustomUI.DARK_BORDER);
+            BORDER = new FueledEtchedBorder(ThemeMediator.DARK_BORDER_COLOR);
         }
         
         return BORDER;

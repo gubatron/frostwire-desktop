@@ -110,7 +110,7 @@ public final class ChatMediator implements ThemeObserver {
 	        
 	        
 	        Border margin = BorderFactory.createEmptyBorder(4, 4, 4, 4);
-	        Border line = BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER);
+	        Border line = BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR);
 	        Border border = BorderFactory.createCompoundBorder(line, margin);
 	        MAIN_PANEL.setBorder(border);
 	    }

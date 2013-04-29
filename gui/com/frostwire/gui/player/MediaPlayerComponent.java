@@ -211,10 +211,10 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         // set font for time labels.
         Font f = new Font(progressCurrentTime.getFont().getFontName(), Font.PLAIN, 10);
 
-        progressCurrentTime.setForeground(ThemeMediator.CURRENT_THEME.getCustomUI().getLightForegroundColor());
+        progressCurrentTime.setForeground(ThemeMediator.LIGHT_FOREGROUND_COLOR);
         progressCurrentTime.setFont(f);
 
-        progressSongLength.setForeground(ThemeMediator.CURRENT_THEME.getCustomUI().getLightForegroundColor());
+        progressSongLength.setForeground(ThemeMediator.LIGHT_FOREGROUND_COLOR);
         progressSongLength.setFont(f);
 
         Dimension timeLabelsDimension = new Dimension(45, 11);

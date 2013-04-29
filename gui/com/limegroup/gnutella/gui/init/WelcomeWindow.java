@@ -24,7 +24,6 @@ import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import com.frostwire.gui.theme.SkinCustomUI;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
@@ -79,7 +78,7 @@ final class WelcomeWindow extends SetupWindow {
 
         JPanel panel = new JPanel();
         panel.setBackground(GUIUtils.hexToColor("F7F7F7"));
-        panel.setBorder(BorderFactory.createLineBorder(ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder()));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeMediator.DARK_BORDER_COLOR));
         //panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(GUIUtils.hexToColor("C8C8C8"), 1),
         //        BorderFactory.createLineBorder(GUIUtils.hexToColor("FBFBFB"), 3)));
         panel.setLayout(new GridBagLayout());

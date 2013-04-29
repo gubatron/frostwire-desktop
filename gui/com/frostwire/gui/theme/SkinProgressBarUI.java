@@ -18,13 +18,9 @@
 
 package com.frostwire.gui.theme;
 
-import java.awt.Graphics;
-
 import javax.swing.JComponent;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicProgressBarUI;
+import javax.swing.plaf.synth.SynthProgressBarUI;
 
 /**
  * 
@@ -32,10 +28,10 @@ import javax.swing.plaf.basic.BasicProgressBarUI;
  * @author aldenml
  *
  */
-public class SkinProgressBarUI extends BasicProgressBarUI {
+public class SkinProgressBarUI extends SynthProgressBarUI {
 
     public static ComponentUI createUI(JComponent comp) {
-        return ThemeMediator.CURRENT_THEME.createProgressBarUI(comp);
+        return new SkinProgressBarUI();
     }
 
 //    @Override

@@ -42,8 +42,6 @@ import org.limewire.setting.FileSetting;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.theme.SkinCustomUI;
-import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FramedDialog;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -143,7 +141,7 @@ public class SetupManager {
     }
 
     private void performAdditionalResets() {
-        ThemeMediator.changeTheme(ThemeMediator.DEFAULT_THEME);
+        //ThemeMediator.changeTheme(ThemeMediator.DEFAULT_THEME);
     }
 
     /**

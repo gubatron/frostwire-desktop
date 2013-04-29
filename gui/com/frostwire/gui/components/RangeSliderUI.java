@@ -12,11 +12,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicSliderUI;
+import javax.swing.plaf.synth.SynthSliderUI;
 
 /**
  * Initial implementation from: https://github.com/ernieyu/Swing-range-slider
  */
-class RangeSliderUI extends BasicSliderUI {
+class RangeSliderUI extends SynthSliderUI {
 
     protected Rectangle upperThumbRect;
     protected boolean upperThumbSelected;

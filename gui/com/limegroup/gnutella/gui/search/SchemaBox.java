@@ -98,7 +98,7 @@ final class SchemaBox extends JPanel {
     /**
      * The ditherer for highlighted buttons.
      */
-    private final Ditherer DITHERER = new Ditherer(20, ThemeMediator.CURRENT_THEME.getCustomUI().getFilterTitleTopColor(), ThemeMediator.CURRENT_THEME.getCustomUI().getFilterTitleColor());
+    private final Ditherer DITHERER = new Ditherer(20, new Color(0xffffff), new Color(0xfdf899));
 
     private Set<AbstractButton> buttons = new HashSet<AbstractButton>();
 

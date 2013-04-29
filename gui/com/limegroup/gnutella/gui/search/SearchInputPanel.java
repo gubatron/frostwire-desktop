@@ -34,7 +34,6 @@ import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.gui.components.GoogleSearchField;
 import com.frostwire.gui.filters.TableLineFilter;
-import com.frostwire.gui.theme.SkinCustomUI;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -170,7 +169,7 @@ class SearchInputPanel extends JPanel {
         p.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
 
         JPanel controls = new JPanel();
-        controls.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Search Engines")));
+        controls.setBorder(ThemeMediator.createTitledBorder(I18n.tr("Search Engines")));
         controls.setLayout(new GridBagLayout());
         controls.setAlignmentX(0.0f);
         List<SearchEngine> searchEngines = SearchEngine.getEngines();
@@ -180,7 +179,7 @@ class SearchInputPanel extends JPanel {
         p.add(Box.createVerticalStrut(15));
 
         _filterPanel = new SearchFilterPanel();
-        _filterPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Filter")));
+        _filterPanel.setBorder(ThemeMediator.createTitledBorder(I18n.tr("Filter")));
         _filterPanel.setAlignmentX(0.0f);
         p.add(_filterPanel);
 

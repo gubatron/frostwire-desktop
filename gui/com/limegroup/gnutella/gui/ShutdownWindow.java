@@ -11,8 +11,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
-import com.frostwire.gui.theme.SkinCustomUI;
-
 class ShutdownWindow extends JDialog {
     
     /**
