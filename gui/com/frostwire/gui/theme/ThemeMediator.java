@@ -15,6 +15,7 @@
 
 package com.frostwire.gui.theme;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Window;
 import java.io.BufferedReader;
@@ -47,6 +48,8 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
 public class ThemeMediator {
 
     public static final Font DIALOG_FONT = new Font(Font.DIALOG, Font.PLAIN, 12);
+    
+    public static final Color LIGHT_BORDER = new Color(0xCDD9DE);
 
     public static ThemeSetter DEFAULT_THEME;
 
@@ -160,34 +163,6 @@ public class ThemeMediator {
         themes.add(SubstanceThemeSetter.SEA_GLASS);
         themes.add(SubstanceThemeSetter.FUELED);
 
-        // from Substance
-        themes.add(SubstanceThemeSetter.AUTUMN);
-        themes.add(SubstanceThemeSetter.BUSINESS_BLACK_STEEL);
-        themes.add(SubstanceThemeSetter.BUSINESS_BLUE_STEEL);
-        themes.add(SubstanceThemeSetter.BUSINESS);
-        themes.add(SubstanceThemeSetter.CHALLENGER_DEEP);
-        themes.add(SubstanceThemeSetter.CREME_COFFEE);
-        themes.add(SubstanceThemeSetter.CREME);
-        themes.add(SubstanceThemeSetter.DUST_COFFEE);
-        themes.add(SubstanceThemeSetter.DUST);
-        themes.add(SubstanceThemeSetter.EMERALD_DUSK);
-        themes.add(SubstanceThemeSetter.GEMINI);
-        themes.add(SubstanceThemeSetter.GRAPHITE_AQUA);
-        themes.add(SubstanceThemeSetter.GRAPHITE_GLASS);
-        themes.add(SubstanceThemeSetter.GRAPHITE);
-        themes.add(SubstanceThemeSetter.MAGELLAN);
-        themes.add(SubstanceThemeSetter.MARINER);
-        themes.add(SubstanceThemeSetter.MIST_AQUA);
-        themes.add(SubstanceThemeSetter.MIST_SILVER);
-        themes.add(SubstanceThemeSetter.MODERATE);
-        themes.add(SubstanceThemeSetter.NEBULA_BRICK_WALL);
-        themes.add(SubstanceThemeSetter.NEBULA);
-        themes.add(SubstanceThemeSetter.OFFICE_BLACK_2007);
-        themes.add(SubstanceThemeSetter.OFFICE_BLUE_2007);
-        themes.add(SubstanceThemeSetter.OFFICE_SILVER_2007);
-        themes.add(SubstanceThemeSetter.RAVEN);
-        themes.add(SubstanceThemeSetter.SAHARA);
-        themes.add(SubstanceThemeSetter.TWILIGHT);
 
         DEFAULT_THEME = SubstanceThemeSetter.FUELED;
         THEMES = themes;
@@ -247,11 +222,11 @@ public class ThemeMediator {
         UIManager.put("MenuBarUI", "com.frostwire.gui.theme.SkinMenuBarUI");
         UIManager.put("RadioButtonMenuItemUI", "com.frostwire.gui.theme.SkinRadioButtonMenuItemUI");
         UIManager.put("PopupMenuSeparatorUI", "com.frostwire.gui.theme.SkinPopupMenuSeparatorUI");
-        UIManager.put("TextAreaUI", "com.frostwire.gui.theme.SkinTextAreaUI");
-        UIManager.put("ListUI", "com.frostwire.gui.theme.SkinListUI");
-        UIManager.put("ComboBoxUI", "com.frostwire.gui.theme.SkinComboBoxUI");
-        UIManager.put("TreeUI", "com.frostwire.gui.theme.SkinTreeUI");
-        UIManager.put("TableUI", "com.frostwire.gui.theme.SkinTableUI");
+        //UIManager.put("TextAreaUI", "com.frostwire.gui.theme.SkinTextAreaUI");
+        //UIManager.put("ListUI", "com.frostwire.gui.theme.SkinListUI");
+        //UIManager.put("ComboBoxUI", "com.frostwire.gui.theme.SkinComboBoxUI");
+        //UIManager.put("TreeUI", "com.frostwire.gui.theme.SkinTreeUI");
+        //UIManager.put("TableUI", "com.frostwire.gui.theme.SkinTableUI");
         UIManager.put("RangeSliderUI", "com.frostwire.gui.theme.SkinRangeSliderUI");
         UIManager.put("FileChooserUI", "com.frostwire.gui.theme.SkinFileChooserUI");
         UIManager.put("TabbedPaneUI", "com.frostwire.gui.theme.SkinTabbedPaneUI");

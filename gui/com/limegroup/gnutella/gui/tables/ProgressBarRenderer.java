@@ -21,7 +21,6 @@ package com.limegroup.gnutella.gui.tables;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Insets;
 import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,13 +29,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.ColorUIResource;
-import javax.swing.plaf.TableUI;
 import javax.swing.table.TableCellRenderer;
 
-import com.frostwire.gui.theme.SkinTableCellRenderer;
 import com.limegroup.gnutella.gui.LimeJProgressBar;
 
 /**
@@ -47,7 +41,7 @@ import com.limegroup.gnutella.gui.LimeJProgressBar;
  * @author aldenml
  * 
  */
-public class ProgressBarRenderer extends LimeJProgressBar implements TableCellRenderer, SkinTableCellRenderer {
+public class ProgressBarRenderer extends LimeJProgressBar implements TableCellRenderer {
 
     /**
      * 

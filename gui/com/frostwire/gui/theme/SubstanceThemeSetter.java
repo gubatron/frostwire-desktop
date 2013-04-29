@@ -71,11 +71,11 @@ public class SubstanceThemeSetter implements ThemeSetter {
         //SubstanceLookAndFeel.setSkin(_skinClassName);
         ThemeMediator.applyCommonSkinUI();
 
-//        if (LookUtils.IS_OS_WINDOWS) {
-//            fixWindowsOSFont();
-//        } else if (LookUtils.IS_OS_LINUX) {
-//            fixLinuxOSFont();
-//        }
+        //        if (LookUtils.IS_OS_WINDOWS) {
+        //            fixWindowsOSFont();
+        //        } else if (LookUtils.IS_OS_LINUX) {
+        //            fixLinuxOSFont();
+        //        }
 
         fixAAFontSettings();
 
@@ -133,7 +133,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
     public SkinCustomUI getCustomUI() {
         return customUI;
     }
-    
+
     private static ComponentUI createUI(String name, JComponent comp) {
         try {
             String className = (String) UIManager.get(name);
@@ -144,7 +144,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+
         return null;
     }
 
@@ -177,26 +177,23 @@ public class SubstanceThemeSetter implements ThemeSetter {
     }
 
     public ComponentUI createTextAreaUI(JComponent comp) {
-        return new SkinTextAreaUI();
+        return createUI("TextAreaUI", comp);
     }
 
     public ComponentUI createListUI(JComponent comp) {
-        //SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
-        return new SkinListUI();
+        return createUI("SkinListUI", comp);
     }
 
     public ComponentUI createComboBoxUI(JComponent comp) {
-        //SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
-        return new SkinComboBoxUI();
+        return createUI("ComboBoxUI", comp);
     }
 
     public ComponentUI createTreeUI(JComponent comp) {
-        return new SkinTreeUI();
+        return createUI("TreeUI", comp);
     }
 
     public ComponentUI createTableUI(JComponent comp) {
-        //SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
-        return new SkinTableUI();
+        return createUI("TableUI", comp);
     }
 
     public ComponentUI createTabbedPaneUI(JComponent comp) {
@@ -213,13 +210,13 @@ public class SubstanceThemeSetter implements ThemeSetter {
         //SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinProgressBarUI();
     }
-    
+
     @Override
     public ComponentUI createOptionPaneUI(JComponent comp) {
         //SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinOptionPaneUI();
     }
-    
+
     @Override
     public ComponentUI createLabelUI(JComponent comp) {
         //SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);

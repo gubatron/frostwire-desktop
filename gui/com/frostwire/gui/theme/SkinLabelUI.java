@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ import java.awt.Font;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicLabelUI;
+import javax.swing.plaf.synth.SynthLabelUI;
 
 /**
  * 
@@ -31,10 +31,10 @@ import javax.swing.plaf.basic.BasicLabelUI;
  * @author aldenml
  *
  */
-public class SkinLabelUI extends BasicLabelUI {
+public class SkinLabelUI extends SynthLabelUI {
 
     public static ComponentUI createUI(JComponent comp) {
-        return ThemeMediator.CURRENT_THEME.createLabelUI(comp);
+        return new SkinLabelUI();
     }
 
     private Font oldFont;

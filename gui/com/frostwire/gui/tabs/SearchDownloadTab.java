@@ -42,7 +42,7 @@ public final class SearchDownloadTab extends AbstractTab {
         super(I18n.tr("Search"), I18n.tr("Search and Download Files"), "search_tab");
 
         searchDownloadSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, SearchMediator.getResultComponent(), downloadMediator.getComponent());
-        searchDownloadSplitPane.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.CURRENT_THEME.getCustomUI().getLightBorder()));
+        searchDownloadSplitPane.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER));
         searchDownloadSplitPane.setContinuousLayout(true);
         searchDownloadSplitPane.setResizeWeight(0.6);
         searchDownloadSplitPane.setDividerLocation(UISettings.UI_TRANSFERS_DIVIDER_LOCATION.getValue());

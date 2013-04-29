@@ -18,28 +18,21 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Map;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.TableUI;
 import javax.swing.table.TableCellRenderer;
 
 import com.frostwire.gui.player.MediaPlayer;
-import com.frostwire.gui.theme.SkinTableCellRenderer;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.search.CrawlableSearchResult;
 import com.frostwire.search.StreamableSearchResult;
@@ -51,7 +44,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
  * @author aldenml
  * 
  */
-public final class SearchResultNameRenderer extends JPanel implements TableCellRenderer, SkinTableCellRenderer {
+public final class SearchResultNameRenderer extends JPanel implements TableCellRenderer {
 
     private static final long serialVersionUID = -1624943333769190212L;
 

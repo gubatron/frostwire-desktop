@@ -27,11 +27,6 @@ public class SubstanceCustomUI implements SkinCustomUI {
         return DARK_BORDER;
     }
 
-    @Override
-    public Color getLightBorder() {
-        return LIGHT_BORDER;
-    }
-
     public TitledBorder createTitledBorder(String title) {
         return BorderFactory.createTitledBorder(title);
     }
