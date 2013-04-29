@@ -67,7 +67,11 @@ public class BuddySupport {
 	}
 
 	private static void addToComponentHierarchy(Component c, Position pos, JTextField textField) {
+	    try {
 		textField.add(c, pos.toString());
+	    } catch (Throwable e) {
+	        e.printStackTrace();
+	    }
 	}
 
 	public static List<Component> getLeft(JTextField textField) {

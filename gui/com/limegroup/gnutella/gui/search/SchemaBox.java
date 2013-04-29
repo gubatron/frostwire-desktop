@@ -300,9 +300,9 @@ final class SchemaBox extends JPanel {
     }
 
     private Color getBorderColor(JPanel panel) {
-        SubstanceColorScheme baseBorderScheme = SubstanceColorSchemeUtilities.getColorScheme(panel, ColorSchemeAssociationKind.BORDER, ComponentState.ENABLED);
+        //SubstanceColorScheme baseBorderScheme = SubstanceColorSchemeUtilities.getColorScheme(panel, ColorSchemeAssociationKind.BORDER, ComponentState.ENABLED);
 
-        return baseBorderScheme.getLineColor();
+        return Color.RED;// baseBorderScheme.getLineColor();
     }
 
     /**
