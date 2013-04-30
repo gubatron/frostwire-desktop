@@ -24,6 +24,7 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.ColorUIResource;
@@ -32,6 +33,7 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.theme.SkinScrollBarButtonPainter.State;
 import com.limegroup.gnutella.gui.TipOfTheDayMediator;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -112,7 +114,19 @@ public class ThemeMediator {
 
                     try {
 
-                        UIManager.setLookAndFeel(new NimbusLookAndFeel());
+                        UIManager.setLookAndFeel(new NimbusLookAndFeel() {
+                            @Override
+                            public UIDefaults getDefaults() {
+                                UIDefaults defaults = super.getDefaults();
+                                
+                                defaults.put("ScrollBar:\"ScrollBar.button\"[Disabled].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.Disabled));
+                                defaults.put("ScrollBar:\"ScrollBar.button\"[Enabled].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.Enabled));
+                                defaults.put("ScrollBar:\"ScrollBar.button\"[MouseOver].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.MouseOver));
+                                defaults.put("ScrollBar:\"ScrollBar.button\"[Pressed].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.Pressed));
+
+                                return defaults;
+                            }
+                        });
                         new SubstanceThemeSetter().apply();
 
                         //updateComponentHierarchy();
@@ -141,8 +155,15 @@ public class ThemeMediator {
         UIManager.put("LabelUI", "com.frostwire.gui.theme.SkinLabelUI");
         UIManager.put("ProgressBarUI", "com.frostwire.gui.theme.SkinProgressBarUI");
         UIManager.put("PanelUI", "com.frostwire.gui.theme.SkinPanelUI");
+        UIManager.put("ScrollBarUI", "com.frostwire.gui.theme.SkinScrollBarUI");
+        UIManager.put("ScrollPaneUI", "com.frostwire.gui.theme.SkinScrollPaneUI");
 
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
+
+//        UIManager.put("ScrollBar:\"ScrollBar.button\"[Disabled].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.Disabled));
+//        UIManager.put("ScrollBar:\"ScrollBar.button\"[Enabled].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.Enabled));
+//        UIManager.put("ScrollBar:\"ScrollBar.button\"[MouseOver].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.MouseOver));
+//        UIManager.put("ScrollBar:\"ScrollBar.button\"[Pressed].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.Pressed));
 
         //UIManager.put("TabbedPane.background", Color.red);// SkinColors.LIGHT_BACKGROUND_COLOR);
         //UIManager.put("nimbusBlueGrey", new ColorUIResource(SkinColors.LIGHT_BACKGROUND_COLOR));

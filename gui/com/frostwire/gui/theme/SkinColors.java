@@ -54,4 +54,9 @@ final class SkinColors {
     public static final Color[] PROGRESS_BAR_DISABLED_INDERTERMINATE_GRADIENT_COLORS = new Color[] { PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR1, PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR2 };
 
     public static final Color LIGHT_BACKGROUND_COLOR = new ColorUIResource(246, 246, 246);
+
+    public static final Color SCROLL_BUTTON_ARROW_DISABLED_COLOR = new ColorUIResource(Color.GRAY);
+    public static final Color SCROLL_BUTTON_ARROW_ENABLED_COLOR = new ColorUIResource(Color.BLACK);
+    public static final Color SCROLL_BUTTON_ARROW_MOUSEOVER_COLOR = new ColorUIResource(Color.BLACK);
+    public static final Color SCROLL_BUTTON_ARROW_PRESSED_COLOR = new ColorUIResource(Color.BLACK);
 }
