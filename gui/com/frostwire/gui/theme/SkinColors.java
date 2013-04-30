@@ -55,6 +55,7 @@ final class SkinColors {
 
     public static final Color LIGHT_BACKGROUND_COLOR = new ColorUIResource(246, 246, 246);
 
+    // scrollbar
     public static final Color SCROLL_BUTTON_ARROW_DISABLED_COLOR = new ColorUIResource(Color.GRAY);
     public static final Color SCROLL_BUTTON_ARROW_ENABLED_COLOR = new ColorUIResource(Color.BLACK);
     public static final Color SCROLL_BUTTON_ARROW_MOUSEOVER_COLOR = new ColorUIResource(Color.BLACK);
@@ -62,4 +63,8 @@ final class SkinColors {
 
     public static final Color SCROLL_TRACK_DISABLED_COLOR = new ColorUIResource(Color.GRAY.brighter());
     public static final Color SCROLL_TRACK_ENABLED_COLOR = new ColorUIResource(Color.GRAY.brighter());
+    
+    public static final Color SCROLL_THUMB_ENABLED_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter());
+    public static final Color SCROLL_THUMB_MOUSEOVER_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter().brighter());
+    public static final Color SCROLL_THUMB_PRESSED_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter().brighter().brighter());
 }
