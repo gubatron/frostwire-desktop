@@ -37,7 +37,6 @@ public final class SkinProgressBarPainter extends AbstractSkinPainter {
     private final boolean enabled;
     private final boolean indeterminate;
     private final int padding;
-    private final int paddingTwice;
 
     public SkinProgressBarPainter(boolean enabled, boolean indeterminate) {
         this.enabled = enabled;
@@ -48,8 +47,6 @@ public final class SkinProgressBarPainter extends AbstractSkinPainter {
         } else {
             this.padding = (Integer) UIManager.get("ProgressBar[Disabled+Indeterminate].progressPadding");
         }
-
-        this.paddingTwice = padding * 2;
     }
 
     @Override
@@ -62,15 +59,23 @@ public final class SkinProgressBarPainter extends AbstractSkinPainter {
     }
 
     private void paintBar(Graphics2D g, JComponent c, int width, int height) {
-        Shape s = shapeGenerator.createRectangle(padding, padding, width - paddingTwice, height - paddingTwice);
-        g.setPaint(getProgressBarPaint(s));
-        g.fill(s);
+        int x = padding;
+        int y = padding;
+        width = width - 2 * padding;
+        height = height - 2 * padding;
+        if (testValid(x, y, width, height)) {
+            Shape s = shapeGenerator.createRectangle(x, y, width, height);
+            g.setPaint(getProgressBarPaint(s));
+            g.fill(s);
+        }
     }
 
     private void paintIndeterminateBar(Graphics2D g, int width, int height) {
-        Shape s = shapeGenerator.createProgressBarIndeterminatePattern(0, 0, width, height);
-        g.setPaint(getProgressBarIndeterminatePaint(s));
-        g.fill(s);
+        if (testValid(0, 0, width, height)) {
+            Shape s = shapeGenerator.createProgressBarIndeterminatePattern(0, 0, width, height);
+            g.setPaint(getProgressBarIndeterminatePaint(s));
+            g.fill(s);
+        }
     }
 
     private Paint getProgressBarPaint(Shape s) {

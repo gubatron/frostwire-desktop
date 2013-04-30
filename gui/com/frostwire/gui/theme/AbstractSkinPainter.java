@@ -86,4 +86,8 @@ public abstract class AbstractSkinPainter extends AbstractRegionPainter {
 
         return new LinearGradientPaint(x1, y1, x2, y2, midpoints, colors);
     }
+
+    protected final boolean testValid(int x, int y, int w, int h) {
+        return x >= 0 && y >= 0 && (w - x) > 0 && (h - y) > 0;
+    }
 }
