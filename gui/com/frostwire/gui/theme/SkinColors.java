@@ -59,4 +59,7 @@ final class SkinColors {
     public static final Color SCROLL_BUTTON_ARROW_ENABLED_COLOR = new ColorUIResource(Color.BLACK);
     public static final Color SCROLL_BUTTON_ARROW_MOUSEOVER_COLOR = new ColorUIResource(Color.BLACK);
     public static final Color SCROLL_BUTTON_ARROW_PRESSED_COLOR = new ColorUIResource(Color.BLACK);
+
+    public static final Color SCROLL_TRACK_DISABLED_COLOR = new ColorUIResource(Color.GRAY.brighter());
+    public static final Color SCROLL_TRACK_ENABLED_COLOR = new ColorUIResource(Color.GRAY.brighter());
 }
