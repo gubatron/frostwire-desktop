@@ -29,7 +29,6 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 
-import org.jdesktop.swingx.JXCollapsiblePane;
 import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.gui.components.GoogleSearchField;
@@ -77,7 +76,7 @@ class SearchInputPanel extends JPanel {
      */
     private final ActionListener SEARCH_LISTENER = new SearchListener();
 
-    private JXCollapsiblePane SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
+    private JPanel SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
 
     private SearchFilterPanel _filterPanel;
 
@@ -144,7 +143,7 @@ class SearchInputPanel extends JPanel {
         add(SEARCH_FIELD);
         add(Box.createVerticalStrut(5));
         add(createSearchButtonPanel());
-        JXCollapsiblePane cp = createSearchOptionsPanel();
+        JPanel cp = createSearchOptionsPanel();
         JPanel p = new JPanel(new BorderLayout());
         p.add(cp, BorderLayout.PAGE_START);
         JScrollPane sp = new JScrollPane(p);
@@ -158,11 +157,11 @@ class SearchInputPanel extends JPanel {
         SEARCH_FIELD.setFont(newFont);
     }
 
-    private JXCollapsiblePane createSearchOptionsPanel() {
-        SEARCH_OPTIONS_COLLAPSIBLE_PANEL = new JXCollapsiblePane();
-        SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setCollapsed(ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.getValue());
+    private JPanel createSearchOptionsPanel() {
+        SEARCH_OPTIONS_COLLAPSIBLE_PANEL = new JPanel();
+        //SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setCollapsed(ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.getValue());
         SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setLayout(new BorderLayout());
-        SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setAnimated(true);
+        //SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setAnimated(true);
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
@@ -381,21 +380,21 @@ class SearchInputPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            SEARCH_OPTIONS_COLLAPSIBLE_PANEL.getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(event);
+            //SEARCH_OPTIONS_COLLAPSIBLE_PANEL.getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(event);
 
             JButton iconButton = (JButton) event.getSource();
 
             Icon iconForButton = null;
 
-            if (!SEARCH_OPTIONS_COLLAPSIBLE_PANEL.isCollapsed()) {
-                iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_LESS");
-                ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.setValue(false);
-                putValue(SHORT_DESCRIPTION, TOOLTIP_SHOWN);
-            } else {
-                iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE");
-                ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.setValue(true);
-                putValue(SHORT_DESCRIPTION, TOOLTIP_COLLAPSED);
-            }
+//            if (!SEARCH_OPTIONS_COLLAPSIBLE_PANEL.isCollapsed()) {
+//                iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_LESS");
+//                ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.setValue(false);
+//                putValue(SHORT_DESCRIPTION, TOOLTIP_SHOWN);
+//            } else {
+//                iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE");
+//                ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.setValue(true);
+//                putValue(SHORT_DESCRIPTION, TOOLTIP_COLLAPSED);
+//            }
 
             iconButton.setIcon(iconForButton);
             fixIconButton(iconButton);
