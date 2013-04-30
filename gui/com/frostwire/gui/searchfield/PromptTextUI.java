@@ -1,5 +1,6 @@
 package com.frostwire.gui.searchfield;
 
+import java.awt.Color;
 import java.awt.Component.BaselineResizeBehavior;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -14,7 +15,7 @@ import javax.accessibility.Accessible;
 import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.TextUI;
-import javax.swing.plaf.basic.BasicTextFieldUI;
+import javax.swing.plaf.synth.SynthTextFieldUI;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
 import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
@@ -59,6 +60,7 @@ public abstract class PromptTextUI extends TextUI  {
 	 * @param delegate
 	 */
 	public PromptTextUI(TextUI delegate) {
+	    System.out.println(delegate);
 		this.delegate = delegate;
 	}
 
@@ -104,7 +106,7 @@ public abstract class PromptTextUI extends TextUI  {
 	public JTextComponent getPromptComponent(JTextComponent txt) {
 		if (promptComponent == null) {
 			promptComponent = createPromptComponent();
-			promptComponent.setUI(new BasicTextFieldUI());
+			promptComponent.setUI(new SynthTextFieldUI());
 		}
 		if (txt.isFocusOwner() && PromptSupport.getFocusBehavior(txt) == FocusBehavior.HIDE_PROMPT) {
 			promptComponent.setText(null);
@@ -153,7 +155,7 @@ public abstract class PromptTextUI extends TextUI  {
 	 */
 	public Dimension getPreferredSize(JComponent c) {
 		JTextComponent txt = (JTextComponent) c;
-		if (shouldPaintPrompt(txt)) {
+		if (shouldPaintPrompt(txt)) {		    
 			return getPromptComponent(txt).getPreferredSize();
 		}
 		return delegate.getPreferredSize(c);
@@ -171,7 +173,9 @@ public abstract class PromptTextUI extends TextUI  {
 		if (shouldPaintPrompt(txt)) {
 			paintPromptComponent(g, txt);
 		} else {
-			delegate.paint(g, c);
+		    g.setColor(Color.WHITE);
+		    g.fillRect(0, 0, c.getWidth(), c.getHeight());
+		    delegate.paint(g, c);
 		}
 	}
 
@@ -327,22 +331,4 @@ public abstract class PromptTextUI extends TextUI  {
 			e.getComponent().repaint();
 		}
 	}
-	
-//    @Override
-//    public boolean isInside(MouseEvent me) {
-//        if (delegate instanceof TransitionAwareUI) {
-//            return ((TransitionAwareUI) delegate).isInside(me);
-//        } else {
-//            return false;
-//        }
-//    }
-//
-//    @Override
-//    public StateTransitionTracker getTransitionTracker() {
-//        if (delegate instanceof TransitionAwareUI) {
-//            return ((TransitionAwareUI) delegate).getTransitionTracker();
-//        } else {
-//            return null;
-//        }
-//    }
 }

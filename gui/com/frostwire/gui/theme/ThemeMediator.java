@@ -143,6 +143,8 @@ public class ThemeMediator {
 
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
 
+        UIManager.put("background", new ColorUIResource(SkinColors.LIGHT_BACKGROUND_COLOR));
+        //UIManager.put("nimbusBlueGrey", new ColorUIResource(SkinColors.LIGHT_BACKGROUND_COLOR));
         UIManager.put("Panel.background", new ColorUIResource(SkinColors.LIGHT_BACKGROUND_COLOR));
     }
 

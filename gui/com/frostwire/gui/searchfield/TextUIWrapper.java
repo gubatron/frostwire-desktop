@@ -147,8 +147,6 @@ public abstract class TextUIWrapper<UI extends TextUI> {
 				} else {
 					return new BuddyTextFieldUI(textUI);
 				}
-			} else if (textUI instanceof BasicTextAreaUI) {
-				//return new PromptTextAreaUI(textUI);
 			}
 			throw new IllegalArgumentException();
 		}

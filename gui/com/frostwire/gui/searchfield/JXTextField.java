@@ -18,7 +18,7 @@ import com.frostwire.gui.searchfield.PromptSupport.FocusBehavior;
  * @author Peter Weishapl <petw@gmx.net>
  * 
  */
-public class JXTextField extends JTextField {
+class JXTextField extends JTextField {
 	
     private static final long serialVersionUID = 7120788755640067659L;
 

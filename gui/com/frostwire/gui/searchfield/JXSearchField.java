@@ -123,7 +123,6 @@ public class JXSearchField extends JXTextField {
 
 	// ensure at least the default ui is registered
 	static {
-		//LookAndFeelAddons.contribute(new JXSearchFieldAddon());
 	    new JXSearchFieldAddon().addDefaults();
 	}
 

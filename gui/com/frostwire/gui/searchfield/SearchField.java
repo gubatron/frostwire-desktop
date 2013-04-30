@@ -554,7 +554,7 @@ public class SearchField extends JXSearchField {
 
         boolean different = false;
         Vector<String> v = new Vector<String>();
-        ListModel model = entryList.getModel();
+        ListModel<String> model = entryList.getModel();
         for (int i = 0; iter.hasNext(); i++) {
             String next = iter.next();
             v.add(next);
@@ -678,7 +678,7 @@ public class SearchField extends JXSearchField {
     /**
      * A list that's used to show auto-complete items.
      */
-    protected class AutoCompleteList extends JList {
+    protected class AutoCompleteList extends JList<String> {
         /**
          * 
          */

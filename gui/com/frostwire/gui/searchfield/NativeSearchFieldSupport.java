@@ -22,22 +22,7 @@ public class NativeSearchFieldSupport {
 	 * @return <code>true</code> if we run Leopard and the Mac Look And Feel.
 	 */
 	public static boolean isNativeSearchFieldSupported() {
-		try {
-			String versionString = System.getProperty("os.version");
-			// Mac versions have the format 10.x or 10.x.x
-			if (versionString.length() < 4) {
-				return false;
-			}
-			// only the part 10.x is important
-			versionString = versionString.substring(0, 4);
-
-			return false;//OS.isMacOSX() && Float.parseFloat(versionString) >= 10.5
-					//&& UIManager.getLookAndFeel().getName().equals("Mac OS X");
-		} catch (Exception e) {
-			// in case the os.version cannot be parsed, we are surely not
-			// running mac os x.
-			return false;
-		}
+		return false;
 	}
 
 	public static void setSearchField(JTextField txt, boolean isSearchField) {

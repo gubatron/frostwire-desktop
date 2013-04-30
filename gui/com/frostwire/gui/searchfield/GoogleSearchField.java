@@ -51,7 +51,7 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  * @author aldenml
  *
  */
-public class GoogleSearchField extends SearchField {
+public final class GoogleSearchField extends SearchField {
 
     private static final long serialVersionUID = -7677894485818144062L;
 

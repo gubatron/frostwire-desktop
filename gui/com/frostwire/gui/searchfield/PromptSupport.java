@@ -100,7 +100,7 @@ public class PromptSupport {
 			setForeground(promptForeground, textComponent);
 		}
 		if (promptBackground != null) {
-			setBackground(promptBackground, textComponent);
+		    setBackground(promptBackground, textComponent);
 		}
 	}
 
