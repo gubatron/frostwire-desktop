@@ -56,11 +56,11 @@ public class SubstanceThemeSetter {
         //SubstanceLookAndFeel.setSkin(_skinClassName);
         ThemeMediator.applyCommonSkinUI();
 
-        if (OSUtils.isWindows()) {
-            fixWindowsOSFont();
-        } else if (OSUtils.isLinux()) {
-            fixLinuxOSFont();
-        }
+//        if (OSUtils.isWindows()) {
+//            fixWindowsOSFont();
+//        } else if (OSUtils.isLinux()) {
+//            fixLinuxOSFont();
+//        }
 
         fixAAFontSettings();
 

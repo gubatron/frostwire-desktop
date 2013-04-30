@@ -17,6 +17,7 @@ package com.frostwire.gui.theme;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.Window;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,11 +28,13 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.InsetsUIResource;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.limewire.util.OSUtils;
 
+import com.apple.laf.AquaFonts;
 import com.limegroup.gnutella.gui.TipOfTheDayMediator;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -111,6 +114,8 @@ public class ThemeMediator {
                 public void run() {
 
                     try {
+                        JLabel l = new JLabel();
+                        System.out.println(l.getFont());
 
                         UIManager.setLookAndFeel(new NimbusLookAndFeel() {
                             @Override
@@ -118,6 +123,11 @@ public class ThemeMediator {
                                 UIDefaults defaults = super.getDefaults();
 
                                 defaults.put("control", SkinColors.LIGHT_BACKGROUND_COLOR);
+
+                                FontUIResource font = getControlFont();
+                                if (font != null) {
+                                    defaults.put("defaultFont", font);
+                                }
 
                                 defaults.put("Panel.background", SkinColors.LIGHT_BACKGROUND_COLOR);
 
@@ -187,14 +197,19 @@ public class ThemeMediator {
         UIManager.put("ScrollPaneUI", "com.frostwire.gui.theme.SkinScrollPaneUI");
 
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
+    }
 
-        //        UIManager.put("ScrollBar:\"ScrollBar.button\"[Disabled].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.Disabled));
-        //        UIManager.put("ScrollBar:\"ScrollBar.button\"[Enabled].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.Enabled));
-        //        UIManager.put("ScrollBar:\"ScrollBar.button\"[MouseOver].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.MouseOver));
-        //        UIManager.put("ScrollBar:\"ScrollBar.button\"[Pressed].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.Pressed));
+    private static FontUIResource getControlFont() {
+        FontUIResource font = null;
+        if (OSUtils.isWindows()) {
+            throw new RuntimeException("Need to fix");
+        } else if (OSUtils.isMacOSX()) {
+            font = AquaFonts.getControlTextFont();
+        } else if (OSUtils.isLinux()) {
+            throw new RuntimeException("Need to fix");
+        }
 
-        //UIManager.put("TabbedPane.background", Color.red);// SkinColors.LIGHT_BACKGROUND_COLOR);
-        //UIManager.put("nimbusBlueGrey", new ColorUIResource(SkinColors.LIGHT_BACKGROUND_COLOR));
+        return font;
     }
 
     public static String getRecommendedFontName() {
