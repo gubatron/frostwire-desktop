@@ -1,4 +1,4 @@
-package com.frostwire.gui.components.searchfield;
+package com.frostwire.gui.searchfield;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -7,8 +7,8 @@ import java.util.List;
 
 import javax.swing.JTextField;
 
-import com.frostwire.gui.components.searchfield.BuddySupport.Position;
-import com.frostwire.gui.components.searchfield.PromptSupport.FocusBehavior;
+import com.frostwire.gui.searchfield.BuddySupport.Position;
+import com.frostwire.gui.searchfield.PromptSupport.FocusBehavior;
 
 /**
  * {@link JTextField}, with integrated support for prompts and buddies.

@@ -1,4 +1,4 @@
-package com.frostwire.gui.components.searchfield;
+package com.frostwire.gui.searchfield;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -21,7 +21,7 @@ import javax.swing.plaf.TextUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.text.Document;
 
-import com.frostwire.gui.components.searchfield.JXSearchField.LayoutStyle;
+import com.frostwire.gui.searchfield.JXSearchField.LayoutStyle;
 
 /**
  * The default {@link JXSearchField} UI delegate.

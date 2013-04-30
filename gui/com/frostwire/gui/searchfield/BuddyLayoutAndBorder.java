@@ -1,4 +1,4 @@
-package com.frostwire.gui.components.searchfield;
+package com.frostwire.gui.searchfield;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -17,7 +17,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicBorders.MarginBorder;
 
-import com.frostwire.gui.components.searchfield.BuddySupport.Position;
+import com.frostwire.gui.searchfield.BuddySupport.Position;
 
 public class BuddyLayoutAndBorder extends CompoundBorder implements LayoutManager, Border, PropertyChangeListener, UIResource {
 	

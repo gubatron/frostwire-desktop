@@ -57,7 +57,7 @@ import org.limewire.collection.StringTrieSet;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.components.searchfield.JXSearchField;
+import com.frostwire.gui.searchfield.JXSearchField;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.theme.ThemeMediator;

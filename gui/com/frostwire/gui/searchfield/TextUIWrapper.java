@@ -1,4 +1,4 @@
-package com.frostwire.gui.components.searchfield;
+package com.frostwire.gui.searchfield;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

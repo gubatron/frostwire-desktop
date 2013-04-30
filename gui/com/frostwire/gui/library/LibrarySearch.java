@@ -48,7 +48,7 @@ import com.frostwire.alexandria.db.InternetRadioStationDB;
 import com.frostwire.alexandria.db.PlaylistItemDB;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.components.SearchField;
-import com.frostwire.gui.components.searchfield.JXSearchField.SearchMode;
+import com.frostwire.gui.searchfield.JXSearchField.SearchMode;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;

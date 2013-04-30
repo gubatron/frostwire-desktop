@@ -1,4 +1,4 @@
-package com.frostwire.gui.components.searchfield;
+package com.frostwire.gui.searchfield;
 
 import java.awt.Component.BaselineResizeBehavior;
 import java.awt.Dimension;
@@ -25,7 +25,7 @@ import javax.swing.text.Position;
 import javax.swing.text.Position.Bias;
 import javax.swing.text.View;
 
-import com.frostwire.gui.components.searchfield.PromptSupport.FocusBehavior;
+import com.frostwire.gui.searchfield.PromptSupport.FocusBehavior;
 
 /**
  * <p>
