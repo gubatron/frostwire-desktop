@@ -19,7 +19,6 @@
 package com.frostwire.gui.theme;
 
 import javax.swing.JComponent;
-import javax.swing.UIDefaults;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.synth.SynthPanelUI;
 
@@ -34,16 +33,5 @@ public final class SkinPanelUI extends SynthPanelUI {
     public static ComponentUI createUI(JComponent comp) {
         ThemeMediator.testComponentCreationThreadingViolation();
         return new SkinPanelUI();
-    }
-
-    @Override
-    public void installUI(JComponent c) {
-        super.installUI(c);
-
-        UIDefaults defaults = new UIDefaults();
-        defaults.put("Panel.background", SkinColors.LIGHT_BACKGROUND_COLOR);
-
-        c.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
-        c.putClientProperty("Nimbus.Overrides", defaults);
     }
 }

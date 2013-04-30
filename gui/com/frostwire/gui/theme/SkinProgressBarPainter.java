@@ -24,7 +24,6 @@ import java.awt.Paint;
 import java.awt.Shape;
 
 import javax.swing.JComponent;
-import javax.swing.UIManager;
 
 /**
  * 
@@ -34,27 +33,25 @@ import javax.swing.UIManager;
  */
 public final class SkinProgressBarPainter extends AbstractSkinPainter {
 
-    private final boolean enabled;
-    private final boolean indeterminate;
+    private final State state;
     private final int padding;
 
-    public SkinProgressBarPainter(boolean enabled, boolean indeterminate) {
-        this.enabled = enabled;
-        this.indeterminate = indeterminate;
-
-        if (enabled) {
-            this.padding = (Integer) UIManager.get("ProgressBar[Enabled+Indeterminate].progressPadding");
-        } else {
-            this.padding = (Integer) UIManager.get("ProgressBar[Disabled+Indeterminate].progressPadding");
-        }
+    public SkinProgressBarPainter(State state, int padding) {
+        this.state = state;
+        this.padding = padding;
     }
 
     @Override
     protected void doPaint(Graphics2D g, JComponent c, int width, int height, Object[] extendedCacheKeys) {
-        if (indeterminate) {
-            paintIndeterminateBar(g, width, height);
-        } else {
+        switch (state) {
+        case Enabled:
+        case Disabled:
             paintBar(g, c, width, height);
+            break;
+        case EnabledIndeterminate:
+        case DisabledIndeterminate:
+            paintIndeterminateBar(g, width, height);
+            break;
         }
     }
 
@@ -79,12 +76,16 @@ public final class SkinProgressBarPainter extends AbstractSkinPainter {
     }
 
     private Paint getProgressBarPaint(Shape s) {
-        Color[] colors = enabled ? SkinColors.PROGRESS_BAR_ENABLED_GRADIENT_COLORS : SkinColors.PROGRESS_BAR_DISABLED_GRADIENT_COLORS;
+        Color[] colors = state == State.Enabled ? SkinColors.PROGRESS_BAR_ENABLED_GRADIENT_COLORS : SkinColors.PROGRESS_BAR_DISABLED_GRADIENT_COLORS;
         return createVerticalGradient(s, colors);
     }
 
     private Paint getProgressBarIndeterminatePaint(Shape s) {
-        Color[] colors = enabled ? SkinColors.PROGRESS_BAR_ENABLED_INDERTERMINATE_GRADIENT_COLORS : SkinColors.PROGRESS_BAR_DISABLED_INDERTERMINATE_GRADIENT_COLORS;
+        Color[] colors = state == State.EnabledIndeterminate ? SkinColors.PROGRESS_BAR_ENABLED_INDERTERMINATE_GRADIENT_COLORS : SkinColors.PROGRESS_BAR_DISABLED_INDERTERMINATE_GRADIENT_COLORS;
         return createVerticalGradient(s, colors);
+    }
+
+    public static enum State {
+        Enabled, Disabled, EnabledIndeterminate, DisabledIndeterminate
     }
 }
