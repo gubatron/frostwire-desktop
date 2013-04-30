@@ -141,12 +141,6 @@ public class ThemeMediator {
         UIManager.put("ProgressBarUI", "com.frostwire.gui.theme.SkinProgressBarUI");
 
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
-
-        //UIManager.put("ProgressBar[Enabled].foregroundPainter", new SkinProgressBarPainter(true, false));
-        //UIManager.put("ProgressBar[Enabled+Finished].foregroundPainter", new SkinProgressBarPainter(true, false));
-        //UIManager.put("ProgressBar[Enabled+Indeterminate].foregroundPainter", new SkinProgressBarPainter(true, true));
-        //ColorUIResource colorResource = new ColorUIResource(Color.BLUE.darker().darker());
-        //UIManager.put("nimbusOrange",colorResource);
     }
 
     public static String getRecommendedFontName() {

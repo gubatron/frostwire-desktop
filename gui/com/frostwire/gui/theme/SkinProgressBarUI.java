@@ -29,7 +29,7 @@ import javax.swing.plaf.synth.SynthProgressBarUI;
  * @author aldenml
  *
  */
-public class SkinProgressBarUI extends SynthProgressBarUI {
+public final class SkinProgressBarUI extends SynthProgressBarUI {
 
     public static ComponentUI createUI(JComponent comp) {
         ThemeMediator.testComponentCreationThreadingViolation();
@@ -44,6 +44,9 @@ public class SkinProgressBarUI extends SynthProgressBarUI {
         defaults.put("ProgressBar[Enabled].foregroundPainter", new SkinProgressBarPainter(true, false));
         defaults.put("ProgressBar[Enabled+Finished].foregroundPainter", new SkinProgressBarPainter(true, false));
         defaults.put("ProgressBar[Enabled+Indeterminate].foregroundPainter", new SkinProgressBarPainter(true, true));
+        defaults.put("ProgressBar[Disabled].foregroundPainter", new SkinProgressBarPainter(false, false));
+        defaults.put("ProgressBar[Disabled+Finished].foregroundPainter", new SkinProgressBarPainter(false, false));
+        defaults.put("ProgressBar[Disabled+Indeterminate].foregroundPainter", new SkinProgressBarPainter(false, true));
 
         progressBar.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
         progressBar.putClientProperty("Nimbus.Overrides", defaults);

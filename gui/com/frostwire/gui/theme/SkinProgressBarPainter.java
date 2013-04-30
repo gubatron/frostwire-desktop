@@ -1,72 +1,85 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.frostwire.gui.theme;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.LinearGradientPaint;
 import java.awt.Paint;
+import java.awt.Shape;
 
 import javax.swing.JComponent;
-import javax.swing.JProgressBar;
-import javax.swing.Painter;
-import javax.swing.plaf.ColorUIResource;
-import javax.swing.plaf.nimbus.AbstractRegionPainter;
+import javax.swing.UIManager;
 
-public class SkinProgressBarPainter implements Painter<JProgressBar> {
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public final class SkinProgressBarPainter extends AbstractSkinPainter {
 
     private final boolean enabled;
     private final boolean indeterminate;
+    private final int padding;
+    private final int paddingTwice;
 
     public SkinProgressBarPainter(boolean enabled, boolean indeterminate) {
         this.enabled = enabled;
         this.indeterminate = indeterminate;
+
+        if (enabled) {
+            this.padding = (Integer) UIManager.get("ProgressBar[Enabled+Indeterminate].progressPadding");
+        } else {
+            this.padding = (Integer) UIManager.get("ProgressBar[Disabled+Indeterminate].progressPadding");
+        }
+
+        this.paddingTwice = padding * 2;
     }
 
     @Override
-    public void paint(Graphics2D g, JProgressBar object, int width, int height) {
+    protected void doPaint(Graphics2D g, JComponent c, int width, int height, Object[] extendedCacheKeys) {
         if (indeterminate) {
             paintIndeterminateBar(g, width, height);
         } else {
-            paintBar(g, width, height);
+            paintBar(g, c, width, height);
         }
+    }
+
+    private void paintBar(Graphics2D g, JComponent c, int width, int height) {
+        Shape s = shapeGenerator.createRectangle(padding, padding, width - paddingTwice, height - paddingTwice);
+        g.setPaint(getProgressBarPaint(s));
+        g.fill(s);
     }
 
     private void paintIndeterminateBar(Graphics2D g, int width, int height) {
-        if (enabled) {
-            g.setColor(Color.red);
-            //g.setPaint(createVerticalGradient(height, SkinColors.PROGRESS_BAR_ENABLED_INDETERMINATE_COLOR1, SkinColors.PROGRESS_BAR_ENABLED_INDETERMINATE_COLOR2));
-        } else {
-            g.setPaint(createVerticalGradient(height, SkinColors.PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR1, SkinColors.PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR2));
-        }
-        g.fillRect(0, 0, width / 2, height);
-
-        if (enabled) {
-            g.setColor(Color.gray);
-            //g.setPaint(createVerticalGradient(height, SkinColors.PROGRESS_BAR_ENABLED_INDETERMINATE_COLOR4, SkinColors.PROGRESS_BAR_ENABLED_INDETERMINATE_COLOR4));
-        } else {
-            g.setPaint(createVerticalGradient(height, SkinColors.PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR4, SkinColors.PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR4));
-        }
-        g.fillRect(width / 2, 0, width / 2, height);
+        Shape s = shapeGenerator.createProgressBarIndeterminatePattern(0, 0, width, height);
+        g.setPaint(getProgressBarIndeterminatePaint(s));
+        g.fill(s);
     }
 
-    private void paintBar(Graphics2D g, int width, int height) {
-        if (enabled) {
-            g.setColor(new ColorUIResource(Color.blue));
-            //g.setPaint(createVerticalGradient(height, SkinColors.PROGRESS_BAR_ENABLED_COLOR1, SkinColors.PROGRESS_BAR_ENABLED_INDETERMINATE_COLOR2));
-        } else {
-            g.setPaint(createVerticalGradient(height, SkinColors.PROGRESS_BAR_DISABLED_COLOR1, SkinColors.PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR2));
-        }
-        g.fillRect(0, 0, width, height);
+    private Paint getProgressBarPaint(Shape s) {
+        Color[] colors = enabled ? SkinColors.PROGRESS_BAR_ENABLED_GRADIENT_COLORS : SkinColors.PROGRESS_BAR_DISABLED_GRADIENT_COLORS;
+        return createVerticalGradient(s, colors);
     }
 
-    private Paint createVerticalGradient(int hight, Color top, Color bottom) {
-        return createGradient(0, 0, 0, hight, new float[] { 0f, 1f }, new Color[] { top, bottom });
-    }
-
-    private LinearGradientPaint createGradient(float x1, float y1, float x2, float y2, float[] midpoints, Color[] colors) {
-        if (x1 == x2 && y1 == y2) {
-            y2 += .00001f;
-        }
-
-        return new LinearGradientPaint(x1, y1, x2, y2, midpoints, colors);
+    private Paint getProgressBarIndeterminatePaint(Shape s) {
+        Color[] colors = enabled ? SkinColors.PROGRESS_BAR_ENABLED_INDERTERMINATE_GRADIENT_COLORS : SkinColors.PROGRESS_BAR_DISABLED_INDERTERMINATE_GRADIENT_COLORS;
+        return createVerticalGradient(s, colors);
     }
 }
