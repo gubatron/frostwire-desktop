@@ -19,6 +19,7 @@
 package com.frostwire.gui.theme;
 
 import javax.swing.JComponent;
+import javax.swing.UIDefaults;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.synth.SynthProgressBarUI;
 
@@ -31,40 +32,20 @@ import javax.swing.plaf.synth.SynthProgressBarUI;
 public class SkinProgressBarUI extends SynthProgressBarUI {
 
     public static ComponentUI createUI(JComponent comp) {
+        ThemeMediator.testComponentCreationThreadingViolation();
         return new SkinProgressBarUI();
     }
 
-//    @Override
-//    protected void installListeners() {
-//        super.installListeners();
-//
-//        // fix to remove animation listener
-//        this.progressBar.removeChangeListener(this.substanceValueChangeListener);
-//
-//        this.substanceValueChangeListener = new NoAnimatedSubstanceChangeListener();
-//        this.progressBar.addChangeListener(this.substanceValueChangeListener);
-//    }
-//
-//    private final class NoAnimatedSubstanceChangeListener implements ChangeListener {
-//        public void stateChanged(ChangeEvent e) {
-//            SubstanceCoreUtilities.testComponentStateChangeThreadingViolation(progressBar);
-//
-//            int currValue = progressBar.getValue();
-//
-//            displayedValue = currValue;
-//            progressBar.repaint();
-//        }
-//    }
-//    
-//    @Override
-//    public void paintDeterminate(Graphics g, JComponent c) {
-//
-//    	// fix inner substance issue related to java 7
-//    	int barRectHeight = progressBar.getHeight() - 2 * margin;
-//    	if (barRectHeight <= 0) {
-//    		return;
-//    	}
-//
-//    	super.paintDeterminate(g, c);
-//    }
+    @Override
+    protected void installDefaults() {
+        super.installDefaults();
+
+        UIDefaults defaults = new UIDefaults();
+        defaults.put("ProgressBar[Enabled].foregroundPainter", new SkinProgressBarPainter(true, false));
+        defaults.put("ProgressBar[Enabled+Finished].foregroundPainter", new SkinProgressBarPainter(true, false));
+        defaults.put("ProgressBar[Enabled+Indeterminate].foregroundPainter", new SkinProgressBarPainter(true, true));
+
+        progressBar.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
+        progressBar.putClientProperty("Nimbus.Overrides", defaults);
+    }
 }

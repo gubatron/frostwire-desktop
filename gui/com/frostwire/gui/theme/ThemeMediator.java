@@ -18,13 +18,6 @@ package com.frostwire.gui.theme;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Window;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,11 +25,10 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.InsetsUIResource;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.TipOfTheDayMediator;
@@ -114,25 +106,15 @@ public class ThemeMediator {
     public static void changeTheme() {
         try {
 
-            SwingUtilities.invokeLater(new Runnable() {
+            SwingUtilities.invokeAndWait(new Runnable() {
                 public void run() {
 
                     try {
 
-                        try {
-                            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                                if ("Nimbus".equals(info.getName())) {
-                                    UIManager.setLookAndFeel(info.getClassName());
-                                    break;
-                                }
-                            }
-                        } catch (Exception e) {
-                            // If Nimbus is not available, you can set the GUI to another look and feel.
-                        }
-
+                        UIManager.setLookAndFeel(new NimbusLookAndFeel());
                         new SubstanceThemeSetter().apply();
 
-                        updateComponentHierarchy();
+                        //updateComponentHierarchy();
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -152,20 +134,19 @@ public class ThemeMediator {
         UIManager.put("MenuBarUI", "com.frostwire.gui.theme.SkinMenuBarUI");
         UIManager.put("RadioButtonMenuItemUI", "com.frostwire.gui.theme.SkinRadioButtonMenuItemUI");
         UIManager.put("PopupMenuSeparatorUI", "com.frostwire.gui.theme.SkinPopupMenuSeparatorUI");
-        //UIManager.put("TextAreaUI", "com.frostwire.gui.theme.SkinTextAreaUI");
-        //UIManager.put("ListUI", "com.frostwire.gui.theme.SkinListUI");
-        //UIManager.put("ComboBoxUI", "com.frostwire.gui.theme.SkinComboBoxUI");
-        //UIManager.put("TableUI", "com.frostwire.gui.theme.SkinTableUI");
-        //UIManager.put("RangeSliderUI", "com.frostwire.gui.theme.SkinRangeSliderUI");
         UIManager.put("FileChooserUI", "com.frostwire.gui.theme.SkinFileChooserUI");
         UIManager.put("TabbedPaneUI", "com.frostwire.gui.theme.SkinTabbedPaneUI");
-        UIManager.put("ProgressBarUI", "com.frostwire.gui.theme.SkinProgressBarUI");
         UIManager.put("OptionPaneUI", "com.frostwire.gui.theme.SkinOptionPaneUI");
         UIManager.put("LabelUI", "com.frostwire.gui.theme.SkinLabelUI");
+        UIManager.put("ProgressBarUI", "com.frostwire.gui.theme.SkinProgressBarUI");
 
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
 
-        UIManager.put("ProgressBar[Enabled+Indeterminate].foregroundPainter", new SkinProgressBarPainter(true, true));
+        //UIManager.put("ProgressBar[Enabled].foregroundPainter", new SkinProgressBarPainter(true, false));
+        //UIManager.put("ProgressBar[Enabled+Finished].foregroundPainter", new SkinProgressBarPainter(true, false));
+        //UIManager.put("ProgressBar[Enabled+Indeterminate].foregroundPainter", new SkinProgressBarPainter(true, true));
+        //ColorUIResource colorResource = new ColorUIResource(Color.BLUE.darker().darker());
+        //UIManager.put("nimbusOrange",colorResource);
     }
 
     public static String getRecommendedFontName() {
@@ -225,5 +206,13 @@ public class ThemeMediator {
 
     public static TitledBorder createTitledBorder(String title) {
         return new FueledTitledBorder(title);
+    }
+
+    static void testComponentCreationThreadingViolation() {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            UiThreadingViolationException uiThreadingViolationError = new UiThreadingViolationException("Component creation must be done on Event Dispatch Thread");
+            uiThreadingViolationError.printStackTrace(System.err);
+            throw uiThreadingViolationError;
+        }
     }
 }

@@ -27,11 +27,12 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.table.TableCellRenderer;
 
-import com.limegroup.gnutella.gui.LimeJProgressBar;
+import com.frostwire.gui.theme.SkinProgressBarUI;
 
 /**
  * This class handles rendering a <tt>JProgressBar</tt> for improved
@@ -41,12 +42,8 @@ import com.limegroup.gnutella.gui.LimeJProgressBar;
  * @author aldenml
  * 
  */
-public class ProgressBarRenderer extends LimeJProgressBar implements TableCellRenderer {
+public class ProgressBarRenderer extends JProgressBar implements TableCellRenderer {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 4078901049982402262L;
 
     private Border _selectedBorder;
     private Border _unselectedBorder;
@@ -59,18 +56,20 @@ public class ProgressBarRenderer extends LimeJProgressBar implements TableCellRe
      * to use for rendering
      */
     public ProgressBarRenderer() {
+        setUI(SkinProgressBarUI.createUI(this));
         setStringPainted(true);
+        
 
-        Font font = getFont();
-        Font newFont;
-
-        if (font == null || font.getName() == null) {
-            newFont = new Font("Dialog", Font.BOLD, 9);
-        } else {
-            newFont = new Font(font.getName(), Font.BOLD, 9);
-        }
-
-        setFont(newFont);
+//        Font font = getFont();
+//        Font newFont;
+//
+//        if (font == null || font.getName() == null) {
+//            newFont = new Font("Dialog", Font.BOLD, 9);
+//        } else {
+//            newFont = new Font(font.getName(), Font.BOLD, 9);
+//        }
+//
+//        setFont(newFont);
     }
 
     /**
@@ -79,12 +78,12 @@ public class ProgressBarRenderer extends LimeJProgressBar implements TableCellRe
      *
      * @param c set the background color to this value
      */
-    public void setBackground(Color c) {
-        super.setBackground(c);
-        _unselectedBorder = getCachedOrNewBorder(c);
-        if (_unselectedBorder != null)
-            setBorder(_unselectedBorder);
-    }
+//    public void setBackground(Color c) {
+//        super.setBackground(c);
+//        _unselectedBorder = getCachedOrNewBorder(c);
+//        if (_unselectedBorder != null)
+//            setBorder(_unselectedBorder);
+//    }
 
     /**
      * Gets a new or old border for this color.
@@ -111,21 +110,21 @@ public class ProgressBarRenderer extends LimeJProgressBar implements TableCellRe
             setValue(Math.min(100, getBarStatus(value)));
             setString(getDescription(value));
 
-            Color uc = getBackgroundForRow(table, row);
-            if (_selectedBorder == null && _unselectedBorder == null) {
-                Color sc = table.getSelectionBackground();
-                _selectedBorder = BorderFactory.createMatteBorder(2, 5, 2, 5, sc);
-                _unselectedBorder = getCachedOrNewBorder(uc);
-            }
-            
-            _unselectedBorder = getCachedOrNewBorder(uc);
-
-            if (isSel) {
-                setBorder(_selectedBorder);
-                setBackground(table.getSelectionBackground());
-            } else {
-                setBorder(_unselectedBorder);
-            }
+//            Color uc = getBackgroundForRow(table, row);
+//            if (_selectedBorder == null && _unselectedBorder == null) {
+//                Color sc = table.getSelectionBackground();
+//                _selectedBorder = BorderFactory.createMatteBorder(2, 5, 2, 5, sc);
+//                _unselectedBorder = getCachedOrNewBorder(uc);
+//            }
+//            
+//            _unselectedBorder = getCachedOrNewBorder(uc);
+//
+//            if (isSel) {
+//                setBorder(_selectedBorder);
+//                setBackground(table.getSelectionBackground());
+//            } else {
+//                setBorder(_unselectedBorder);
+//            }
             return this;
         //}
     }
