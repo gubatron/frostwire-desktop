@@ -26,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.InsetsUIResource;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
@@ -141,6 +142,8 @@ public class ThemeMediator {
         UIManager.put("ProgressBarUI", "com.frostwire.gui.theme.SkinProgressBarUI");
 
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
+
+        UIManager.put("Panel.background", new ColorUIResource(SkinColors.LIGHT_BACKGROUND_COLOR));
     }
 
     public static String getRecommendedFontName() {
