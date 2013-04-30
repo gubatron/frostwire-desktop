@@ -21,7 +21,7 @@ package com.frostwire.gui.theme;
 import javax.swing.JComponent;
 import javax.swing.UIDefaults;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.synth.SynthProgressBarUI;
+import javax.swing.plaf.synth.SynthPanelUI;
 
 /**
  * 
@@ -29,26 +29,21 @@ import javax.swing.plaf.synth.SynthProgressBarUI;
  * @author aldenml
  *
  */
-public final class SkinProgressBarUI extends SynthProgressBarUI {
+public final class SkinPanelUI extends SynthPanelUI {
 
     public static ComponentUI createUI(JComponent comp) {
         ThemeMediator.testComponentCreationThreadingViolation();
-        return new SkinProgressBarUI();
+        return new SkinPanelUI();
     }
 
     @Override
-    public void installDefaults() {
-        super.installDefaults();
+    public void installUI(JComponent c) {
+        super.installUI(c);
 
         UIDefaults defaults = new UIDefaults();
-        defaults.put("ProgressBar[Enabled].foregroundPainter", new SkinProgressBarPainter(true, false));
-        defaults.put("ProgressBar[Enabled+Finished].foregroundPainter", new SkinProgressBarPainter(true, false));
-        defaults.put("ProgressBar[Enabled+Indeterminate].foregroundPainter", new SkinProgressBarPainter(true, true));
-        defaults.put("ProgressBar[Disabled].foregroundPainter", new SkinProgressBarPainter(false, false));
-        defaults.put("ProgressBar[Disabled+Finished].foregroundPainter", new SkinProgressBarPainter(false, false));
-        defaults.put("ProgressBar[Disabled+Indeterminate].foregroundPainter", new SkinProgressBarPainter(false, true));
+        defaults.put("Panel.background", SkinColors.LIGHT_BACKGROUND_COLOR);
 
-        progressBar.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
-        progressBar.putClientProperty("Nimbus.Overrides", defaults);
+        c.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
+        c.putClientProperty("Nimbus.Overrides", defaults);
     }
 }

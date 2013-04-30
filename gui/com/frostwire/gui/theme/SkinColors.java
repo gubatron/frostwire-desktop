@@ -20,6 +20,8 @@ package com.frostwire.gui.theme;
 
 import java.awt.Color;
 
+import javax.swing.plaf.ColorUIResource;
+
 /**
  * 
  * @author gubatron
@@ -51,5 +53,5 @@ final class SkinColors {
 
     public static final Color[] PROGRESS_BAR_DISABLED_INDERTERMINATE_GRADIENT_COLORS = new Color[] { PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR1, PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR2 };
 
-    public static final Color LIGHT_BACKGROUND_COLOR = new Color(246, 246, 246);
+    public static final Color LIGHT_BACKGROUND_COLOR = new ColorUIResource(246, 246, 246);
 }

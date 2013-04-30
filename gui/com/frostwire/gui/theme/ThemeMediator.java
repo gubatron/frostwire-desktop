@@ -140,12 +140,12 @@ public class ThemeMediator {
         UIManager.put("OptionPaneUI", "com.frostwire.gui.theme.SkinOptionPaneUI");
         UIManager.put("LabelUI", "com.frostwire.gui.theme.SkinLabelUI");
         UIManager.put("ProgressBarUI", "com.frostwire.gui.theme.SkinProgressBarUI");
+        UIManager.put("PanelUI", "com.frostwire.gui.theme.SkinPanelUI");
 
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
 
-        UIManager.put("background", new ColorUIResource(SkinColors.LIGHT_BACKGROUND_COLOR));
+        //UIManager.put("TabbedPane.background", Color.red);// SkinColors.LIGHT_BACKGROUND_COLOR);
         //UIManager.put("nimbusBlueGrey", new ColorUIResource(SkinColors.LIGHT_BACKGROUND_COLOR));
-        UIManager.put("Panel.background", new ColorUIResource(SkinColors.LIGHT_BACKGROUND_COLOR));
     }
 
     public static String getRecommendedFontName() {

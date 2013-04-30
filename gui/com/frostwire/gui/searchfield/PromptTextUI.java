@@ -60,7 +60,6 @@ public abstract class PromptTextUI extends TextUI  {
 	 * @param delegate
 	 */
 	public PromptTextUI(TextUI delegate) {
-	    System.out.println(delegate);
 		this.delegate = delegate;
 	}
 
