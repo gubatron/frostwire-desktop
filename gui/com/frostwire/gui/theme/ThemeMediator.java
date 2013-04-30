@@ -117,6 +117,8 @@ public class ThemeMediator {
                             public UIDefaults getDefaults() {
                                 UIDefaults defaults = super.getDefaults();
 
+                                defaults.put("control", SkinColors.LIGHT_BACKGROUND_COLOR);
+
                                 defaults.put("Panel.background", SkinColors.LIGHT_BACKGROUND_COLOR);
 
                                 // progressbar
@@ -142,6 +144,13 @@ public class ThemeMediator {
                                 defaults.put("ScrollBar:ScrollBarThumb[Enabled].backgroundPainter", new SkinScrollBarThumbPainter(SkinScrollBarThumbPainter.State.Enabled));
                                 defaults.put("ScrollBar:ScrollBarThumb[MouseOver].backgroundPainter", new SkinScrollBarThumbPainter(SkinScrollBarThumbPainter.State.MouseOver));
                                 defaults.put("ScrollBar:ScrollBarThumb[Pressed].backgroundPainter", new SkinScrollBarThumbPainter(SkinScrollBarThumbPainter.State.Pressed));
+
+                                // tableheader
+                                defaults.put("TableHeader.background", SkinColors.LIGHT_BACKGROUND_COLOR);
+
+                                defaults.put("TableHeader:\"TableHeader.renderer\"[Enabled].backgroundPainter", new SkinTableHeaderPainter(SkinTableHeaderPainter.State.Enabled));
+                                defaults.put("TableHeader:\"TableHeader.renderer\"[MouseOver].backgroundPainter", new SkinTableHeaderPainter(SkinTableHeaderPainter.State.MouseOver));
+                                defaults.put("TableHeader:\"TableHeader.renderer\"[Pressed].backgroundPainter", new SkinTableHeaderPainter(SkinTableHeaderPainter.State.Pressed));
 
                                 return defaults;
                             }

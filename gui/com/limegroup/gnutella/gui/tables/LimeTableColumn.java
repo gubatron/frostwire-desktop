@@ -44,7 +44,7 @@ public class LimeTableColumn extends TableColumn {
      * Variable for the HeaderRenderer for all components.
      */
     public static TableCellRenderer HEADER_RENDERER;
-        
+
     /**
      * Variable for an invisible HeaderRenderer.
      */
@@ -57,7 +57,7 @@ public class LimeTableColumn extends TableColumn {
     private final Icon icon;
     private final boolean visName;
     private final Class<?> clazz;
-    
+
     private boolean initialized = false;
 
     public String toString() {
@@ -67,8 +67,7 @@ public class LimeTableColumn extends TableColumn {
     /**
      * Creates a new column.
      */
-    public LimeTableColumn(int model, final String id, final String name,
-                    int width, boolean vis, Class<?> clazz) {
+    public LimeTableColumn(int model, final String id, final String name, int width, boolean vis, Class<?> clazz) {
         this(model, id, name, null, width, vis, clazz);
     }
 
@@ -76,8 +75,8 @@ public class LimeTableColumn extends TableColumn {
         this(model, id, name, null, width, vis, visName, clazz);
         setResizable(resizable);
         if (!resizable) {
-        	setMaxWidth(width);
-        	setMinWidth(width);
+            setMaxWidth(width);
+            setMinWidth(width);
         }
     }
 
@@ -85,19 +84,17 @@ public class LimeTableColumn extends TableColumn {
         this(model, id, name, null, width, vis, visName, clazz);
     }
 
-    
     /**
      * Creates a new column.
      */
-    public LimeTableColumn(int model, final String id, final String name,
-                    final Icon icon, int width, boolean vis, boolean visName, Class<?> clazz) {
+    public LimeTableColumn(int model, final String id, final String name, final Icon icon, int width, boolean vis, boolean visName, Class<?> clazz) {
         super(model);
         initialized = true;
 
         this.defaultVisibility = vis;
 
         this.defaultWidth = width;
-        if( defaultWidth != -1 )
+        if (defaultWidth != -1)
             super.setPreferredWidth(width);
 
         this.messageId = id;
@@ -111,9 +108,8 @@ public class LimeTableColumn extends TableColumn {
 
         setHeaderVisible(true);
     }
-    
-    public LimeTableColumn(int model, final String id, final String name,
-            final Icon icon, int width, boolean vis, Class<?> clazz) {
+
+    public LimeTableColumn(int model, final String id, final String name, final Icon icon, int width, boolean vis, Class<?> clazz) {
         this(model, id, name, icon, width, vis, true, clazz);
     }
 
@@ -124,7 +120,7 @@ public class LimeTableColumn extends TableColumn {
      * variables.
      */
     public LimeTableColumn setHeaderVisible(boolean vis) {
-        if(vis) {
+        if (vis) {
             super.setHeaderRenderer(getHeaderSortRenderer());
             if (visName) {
                 if (icon != null) {
@@ -171,14 +167,14 @@ public class LimeTableColumn extends TableColumn {
     public String getName() {
         return name;
     }
-    
+
     /**
      * Get the Icon.
      */
     public Icon getIcon() {
         return icon;
     }
-     
+
     /**
      * Gets the class of this column.
      */
@@ -192,7 +188,7 @@ public class LimeTableColumn extends TableColumn {
     public String getId() {
         return messageId;
     }
-    
+
     /**
      * The following methods are overridden to ensure that we never
      * accidentally change the default values.  This is absolutely
@@ -204,7 +200,8 @@ public class LimeTableColumn extends TableColumn {
      * Disallows changing of model number
      */
     public void setModelIndex(int idx) {
-        if(!initialized) return;
+        if (!initialized)
+            return;
         throw new IllegalStateException("cannot change model index");
     }
 
@@ -212,7 +209,8 @@ public class LimeTableColumn extends TableColumn {
      * Disallows changing of header value
      */
     public void setHeaderValue(Object val) {
-        if(!initialized) return;
+        if (!initialized)
+            return;
         throw new IllegalStateException("cannot change header value");
     }
 
@@ -220,17 +218,18 @@ public class LimeTableColumn extends TableColumn {
      * Disallows changing of identifier
      */
     public void setIdentifier(Object id) {
-        if(!initialized) return;
+        if (!initialized)
+            return;
         throw new IllegalStateException("cannot change id");
     }
-    
+
     private TableCellRenderer getHeaderSortRenderer() {
         if (HEADER_RENDERER == null) {
             HEADER_RENDERER = new SortHeaderRenderer();
         }
         return HEADER_RENDERER;
     }
-    
+
     private TableCellRenderer getInvisSortRenderer() {
         if (INVIS_RENDERER == null) {
             SortHeaderRenderer rnd = new SortHeaderRenderer();
@@ -240,5 +239,3 @@ public class LimeTableColumn extends TableColumn {
         return INVIS_RENDERER;
     }
 }
-
-        

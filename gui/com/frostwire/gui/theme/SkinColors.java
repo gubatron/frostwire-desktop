@@ -63,8 +63,12 @@ final class SkinColors {
 
     public static final Color SCROLL_TRACK_DISABLED_COLOR = new ColorUIResource(Color.GRAY.brighter());
     public static final Color SCROLL_TRACK_ENABLED_COLOR = new ColorUIResource(Color.GRAY.brighter());
-    
+
     public static final Color SCROLL_THUMB_ENABLED_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter());
     public static final Color SCROLL_THUMB_MOUSEOVER_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter().brighter());
     public static final Color SCROLL_THUMB_PRESSED_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter().brighter().brighter());
+
+    public static final Color TABLE_HEADER_ENABLED_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter());
+    public static final Color TABLE_HEADER_MOUSEOVER_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter().brighter());
+    public static final Color TABLE_HEADER_PRESSED_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter().brighter().brighter());
 }

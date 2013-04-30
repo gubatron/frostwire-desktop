@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.tables;
 
 import java.awt.event.MouseEvent;
@@ -12,22 +27,18 @@ import javax.swing.table.TableColumnModel;
 
 import com.limegroup.gnutella.settings.TablesHandlerSettings;
 
-
 /**
  * Handles column preferences through a settings file.
  *
  * This is the default implementation for ColumnPreferences.
  */
- public class DefaultColumnPreferenceHandler
-    implements ColumnPreferenceHandler,
-               TableColumnModelListener,
-               MouseListener {
+public class DefaultColumnPreferenceHandler implements ColumnPreferenceHandler, TableColumnModelListener, MouseListener {
 
     /**
      * The table that this is storing the column preferences for.
      */
     protected final LimeJTable table;
-    
+
     /**
      * The current SimpleColumnListener for callbacks.
      */
@@ -45,7 +56,7 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
         table = t;
         startListening();
     }
-    
+
     /**
      * Sets the SimpleColumnListener.  If one already was listening, it is
      * removed.
@@ -70,34 +81,34 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
         int max = tcm.getColumnCount();
 
         // move this column to where we want it.
-        if( order != current ) {
+        if (order != current) {
             stopListening();
 
             // make sure we don't try to put this after the end.
-            order = Math.min(order, max-1);
+            order = Math.min(order, max - 1);
             tcm.moveColumn(current, order);
 
             // traverse through and reset the saved order of columns.
-            for(current = order+1; current < max; current++) {
-                ltc = (LimeTableColumn)tcm.getColumn(current);
+            for (current = order + 1; current < max; current++) {
+                ltc = (LimeTableColumn) tcm.getColumn(current);
                 setOrder(ltc, current);
             }
 
             // traverse through the hidden columns and tell them to
             // move back up a notch if they're above us.
-            for(Iterator<LimeTableColumn> i = table.getHiddenColumns(); i.hasNext(); ) {
+            for (Iterator<LimeTableColumn> i = table.getHiddenColumns(); i.hasNext();) {
                 ltc = i.next();
                 current = getOrder(ltc);
-                if( current > order )
-                    setOrder(ltc, current+1);
+                if (current > order)
+                    setOrder(ltc, current + 1);
             }
 
             startListening();
         }
-        
-        if(listener != null)
+
+        if (listener != null)
             listener.columnAdded(addedColumn, table);
-        
+
         save();
     }
 
@@ -111,9 +122,9 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
     public void columnMarginChanged(ChangeEvent e) {
         // see if we can avoid the system call...
         // if this is null, it means we resized the app or a scrollbar appeared
-        if(table.getTableHeader().getResizingColumn() == null)
+        if (table.getTableHeader().getResizingColumn() == null)
             return;
-            
+
         marginChanged = true;
     }
 
@@ -123,7 +134,8 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
      * indexes may be the same -- if they are, we ignore the event.
      */
     public void columnMoved(TableColumnModelEvent e) {
-        if( e.getFromIndex() == e.getToIndex() ) return;
+        if (e.getFromIndex() == e.getToIndex())
+            return;
 
         LimeTableColumn from = getFromColumn(e);
         LimeTableColumn to = getToColumn(e);
@@ -144,8 +156,8 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
 
         //save the reordered columns
         TableColumnModel tcm = table.getColumnModel();
-        for(int i = 0; i < tcm.getColumnCount(); i++) {
-            ltc = (LimeTableColumn)tcm.getColumn(i);
+        for (int i = 0; i < tcm.getColumnCount(); i++) {
+            ltc = (LimeTableColumn) tcm.getColumn(i);
             setOrder(ltc, i);
         }
 
@@ -156,14 +168,14 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
         //decrease the order in hidden columns by one if they were
         //before the hidden column's order.
         int order = getOrder(ltc);
-        for(Iterator<LimeTableColumn> i = table.getHiddenColumns(); i.hasNext(); ) {
+        for (Iterator<LimeTableColumn> i = table.getHiddenColumns(); i.hasNext();) {
             ltc = i.next();
             int current = getOrder(ltc);
-            if( current > order )
-                setOrder(ltc, current-1);
+            if (current > order)
+                setOrder(ltc, current - 1);
         }
 
-        if(listener != null)
+        if (listener != null)
             listener.columnRemoved(removedColumn, table);
 
         save();
@@ -173,39 +185,45 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
      * From a column's selection changing.
      * Does nothing.
      */
-    public void columnSelectionChanged(ListSelectionEvent e) { }
+    public void columnSelectionChanged(ListSelectionEvent e) {
+    }
 
     /**
      * The mouse was clicked on the table header.
      */
-    public void mouseClicked(MouseEvent e) { }
+    public void mouseClicked(MouseEvent e) {
+    }
 
     /**
      * The mouse entered the table header.
      */
-    public void mouseEntered(MouseEvent e) { }
+    public void mouseEntered(MouseEvent e) {
+    }
 
     /**
      * The mouse exited the table header.
      */
-    public void mouseExited(MouseEvent e) { }
+    public void mouseExited(MouseEvent e) {
+    }
 
     /**
      * The mouse pressed the table header.
      */
-    public void mousePressed(MouseEvent e) { }
+    public void mousePressed(MouseEvent e) {
+    }
 
     /**
      * The mouse released from the table header.
      */
     public void mouseReleased(MouseEvent e) {
         // if the margins haven't changed, exit.
-        if (!marginChanged) return;
+        if (!marginChanged)
+            return;
 
         // iterate through and save the widths we wanted.
         TableColumnModel tcm = table.getColumnModel();
-        for(int i = 0; i < tcm.getColumnCount(); i++) {
-            LimeTableColumn ltc = (LimeTableColumn)tcm.getColumn(i);
+        for (int i = 0; i < tcm.getColumnCount(); i++) {
+            LimeTableColumn ltc = (LimeTableColumn) tcm.getColumn(i);
             setWidth(ltc, ltc.getWidth());
         }
 
@@ -223,61 +241,66 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
 
         // Traverse & change settings, and make everything visible
         // so we can traverse back through & set the order and width.
-        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>)table.getModel();
-        for(int i = 0; i < dlm.getColumnCount(); i++) {
+        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>) table.getModel();
+        for (int i = 0; i < dlm.getColumnCount(); i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
             setVisibility(ltc, ltc.getDefaultVisibility());
             setOrder(ltc, ltc.getDefaultOrder());
             setWidth(ltc, ltc.getDefaultWidth());
             try {
-                if(!table.isColumnVisible(ltc.getId())) {
+                if (!table.isColumnVisible(ltc.getId())) {
                     table.setColumnVisible(ltc.getId(), true);
-                    if(listener != null)
+                    if (listener != null)
                         listener.columnAdded(ltc, table);
                 }
-            } catch(LastColumnException impossible) {}
+            } catch (LastColumnException impossible) {
+            }
 
         }
 
         // traverse to set the order ...
         TableColumnModel tcm = table.getColumnModel();
-        for(int i = 0; i < dlm.getColumnCount(); i++) {
+        for (int i = 0; i < dlm.getColumnCount(); i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
             int order = getOrder(ltc);
             int current = tcm.getColumnIndex(ltc.getId());
-            if( current != order )
+            if (current != order)
                 tcm.moveColumn(current, order);
-            ltc.setPreferredWidth( ltc.getDefaultWidth() );
+            ltc.setPreferredWidth(ltc.getDefaultWidth());
         }
 
         // traverse to set the visibility ...
-        for(int i = 0; i < dlm.getColumnCount(); i++) {
+        for (int i = 0; i < dlm.getColumnCount(); i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
             boolean wantVis = getVisibility(ltc);
             try {
                 if (!wantVis) {
                     table.setColumnVisible(ltc.getId(), false);
-                    if(listener != null)
+                    if (listener != null)
                         listener.columnRemoved(ltc, table);
                 }
-            } catch(LastColumnException ignored) {}
+            } catch (LastColumnException ignored) {
+            }
         }
 
         startListening();
 
         save();
     }
-    
+
     /**
      * Determines whether the columns are already the default values.
      */
     public boolean isDefault() {
-        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>)table.getModel();
-        for(int i = 0; i < dlm.getColumnCount(); i++) {
+        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>) table.getModel();
+        for (int i = 0; i < dlm.getColumnCount(); i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
-            if( !isDefaultWidth(ltc) ) return false;
-            if( !isDefaultOrder(ltc) ) return false;
-            if( !isDefaultVisibility(ltc) ) return false;
+            if (!isDefaultWidth(ltc))
+                return false;
+            if (!isDefaultOrder(ltc))
+                return false;
+            if (!isDefaultVisibility(ltc))
+                return false;
         }
         return true;
     }
@@ -294,11 +317,11 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
         //traverse through each possible column and set its preferred
         //width.  this MUST use the DataLineModel to traverse, to ensure
         //that we set the future preferred width for any added columns.
-        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>)table.getModel();
-        for(int i = 0; i < dlm.getColumnCount(); i++) {
+        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>) table.getModel();
+        for (int i = 0; i < dlm.getColumnCount(); i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
             int width = getWidth(ltc);
-            if( width != -1 ) {
+            if (width != -1) {
                 ltc.setPreferredWidth(width);
             }
         }
@@ -318,25 +341,25 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
         //put it in the correct place.  this MUST use the DataLineModel
         //to traverse, so reordering doesn't confuse what we're looking at.
         TableColumnModel tcm = table.getColumnModel();
-        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>)table.getModel();
+        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>) table.getModel();
         int max = dlm.getColumnCount();
-        for(int i = 0; i < max; i++) {
+        for (int i = 0; i < max; i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
             int order = getOrder(ltc);
             if (table.isColumnVisible(ltc.getId())) {
                 int current = tcm.getColumnIndex(ltc.getId());
                 // can't go beyond boundary
-                if( order >= max ) {
+                if (order >= max) {
                     order = max - 1;
                     setOrder(ltc, order);
                     changed = true;
                 }
-                if ( current != order )
+                if (current != order)
                     tcm.moveColumn(current, order);
             }
         }
 
-        if(changed)
+        if (changed)
             TablesHandlerSettings.instance().save();
 
         startListening();
@@ -351,22 +374,22 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
 
         //traverse through each possible column, and set its
         //visibility appropriately
-        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>)table.getModel();
-        for(int i = 0; i < dlm.getColumnCount(); i++) {
+        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>) table.getModel();
+        for (int i = 0; i < dlm.getColumnCount(); i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
             boolean wantVis = getVisibility(ltc);
             // if we want to see it and we don't currently see it, show it.
             // if we don't want to see it and we currently see it, hide it.
             boolean isVis = table.isColumnVisible(ltc.getId());
             try {
-                if( wantVis && !isVis ) {
+                if (wantVis && !isVis) {
                     table.setColumnVisible(ltc.getId(), true);
-                    if(listener != null)
-                        listener.columnAdded(ltc, table);                    
-                } else if( !wantVis && isVis ) {
+                    if (listener != null)
+                        listener.columnAdded(ltc, table);
+                } else if (!wantVis && isVis) {
                     table.setColumnVisible(ltc.getId(), false);
-                    if(listener != null)
-                        listener.columnRemoved(ltc, table);                    
+                    if (listener != null)
+                        listener.columnRemoved(ltc, table);
                 }
             } catch (LastColumnException ee) {
                 // ignore it -- we can't show an error while starting up.
@@ -375,11 +398,10 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
 
         startListening();
     }
-    
+
     protected void save() {
         TablesHandlerSettings.instance().save();
     }
-
 
     protected void startListening() {
         table.getTableHeader().addMouseListener(this);
@@ -392,57 +414,46 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
     }
 
     protected LimeTableColumn getToColumn(TableColumnModelEvent e) {
-        return (LimeTableColumn)table.getColumnModel().getColumn(
-                                                        e.getToIndex());
+        return (LimeTableColumn) table.getColumnModel().getColumn(e.getToIndex());
     }
 
     protected LimeTableColumn getFromColumn(TableColumnModelEvent e) {
-        return (LimeTableColumn)table.getColumnModel().getColumn(
-                                                        e.getFromIndex());
+        return (LimeTableColumn) table.getColumnModel().getColumn(e.getFromIndex());
     }
 
     protected void setVisibility(LimeTableColumn col, boolean vis) {
-        TablesHandlerSettings.getVisibility(col.getId(), col.getDefaultVisibility()).
-            setValue(vis);
+        TablesHandlerSettings.getVisibility(col.getId(), col.getDefaultVisibility()).setValue(vis);
     }
 
     protected void setOrder(LimeTableColumn col, int order) {
-        TablesHandlerSettings.getOrder(col.getId(), col.getDefaultOrder()).
-            setValue(order);
+        TablesHandlerSettings.getOrder(col.getId(), col.getDefaultOrder()).setValue(order);
     }
 
     protected void setWidth(LimeTableColumn col, int width) {
-        TablesHandlerSettings.getWidth(col.getId(), col.getDefaultWidth()).
-        setValue(width);
+        TablesHandlerSettings.getWidth(col.getId(), col.getDefaultWidth()).setValue(width);
     }
 
     protected boolean getVisibility(LimeTableColumn col) {
-        return TablesHandlerSettings.getVisibility(
-            col.getId(), col.getDefaultVisibility()).getValue();
+        return TablesHandlerSettings.getVisibility(col.getId(), col.getDefaultVisibility()).getValue();
     }
 
     protected int getOrder(LimeTableColumn col) {
-        return TablesHandlerSettings.getOrder(col.getId(), col.getDefaultOrder()).
-            getValue();
+        return TablesHandlerSettings.getOrder(col.getId(), col.getDefaultOrder()).getValue();
     }
 
     protected int getWidth(LimeTableColumn col) {
-        return TablesHandlerSettings.getWidth(col.getId(), col.getDefaultWidth()).
-            getValue();
+        return TablesHandlerSettings.getWidth(col.getId(), col.getDefaultWidth()).getValue();
     }
-    
+
     protected boolean isDefaultVisibility(LimeTableColumn col) {
-        return TablesHandlerSettings.getVisibility(
-            col.getId(), col.getDefaultVisibility()).isDefault();
+        return TablesHandlerSettings.getVisibility(col.getId(), col.getDefaultVisibility()).isDefault();
     }
 
     protected boolean isDefaultOrder(LimeTableColumn col) {
-        return TablesHandlerSettings.getOrder(col.getId(), col.getDefaultOrder()).
-            isDefault();
+        return TablesHandlerSettings.getOrder(col.getId(), col.getDefaultOrder()).isDefault();
     }
 
     protected boolean isDefaultWidth(LimeTableColumn col) {
-        return TablesHandlerSettings.getWidth(col.getId(), col.getDefaultWidth()).
-            isDefault();
+        return TablesHandlerSettings.getWidth(col.getId(), col.getDefaultWidth()).isDefault();
     }
 }
