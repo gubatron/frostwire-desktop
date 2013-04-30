@@ -8,7 +8,6 @@ import java.awt.Rectangle;
 import java.awt.TextComponent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.MouseEvent;
 import java.lang.reflect.Method;
 
 import javax.accessibility.Accessible;

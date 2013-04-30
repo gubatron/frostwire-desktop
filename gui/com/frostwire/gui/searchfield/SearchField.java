@@ -13,7 +13,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.components;
+package com.frostwire.gui.searchfield;
 
 import java.awt.AWTEvent;
 import java.awt.Component;
@@ -57,7 +57,6 @@ import org.limewire.collection.StringTrieSet;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.searchfield.JXSearchField;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.theme.ThemeMediator;

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.components;
+package com.frostwire.gui.searchfield;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;

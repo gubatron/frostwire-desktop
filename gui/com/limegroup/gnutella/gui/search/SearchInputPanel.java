@@ -31,8 +31,8 @@ import javax.swing.text.BadLocationException;
 
 import org.limewire.setting.BooleanSetting;
 
-import com.frostwire.gui.components.GoogleSearchField;
 import com.frostwire.gui.filters.TableLineFilter;
+import com.frostwire.gui.searchfield.GoogleSearchField;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
