@@ -56,14 +56,20 @@ public final class SkinProgressBarPainter extends AbstractSkinPainter {
     }
 
     private void paintBar(Graphics2D g, JComponent c, int width, int height) {
-        int x = padding;
-        int y = padding;
-        width = width - 2 * padding;
-        height = height - 2 * padding;
+        int d = padding - 1;
+        int d2 = 2 * d;
+        int x = d;
+        int y = d;
+        width = width - d2;
+        height = height - d2;
+        
         if (testValid(x, y, width, height)) {
             Shape s = shapeGenerator.createRectangle(x, y, width, height);
             g.setPaint(getProgressBarPaint(s));
             g.fill(s);
+            
+            g.setPaint(getProgressBarBorderPaint());
+            g.draw(s);
         }
     }
 
@@ -78,6 +84,10 @@ public final class SkinProgressBarPainter extends AbstractSkinPainter {
     private Paint getProgressBarPaint(Shape s) {
         Color[] colors = state == State.Enabled ? SkinColors.PROGRESS_BAR_ENABLED_GRADIENT_COLORS : SkinColors.PROGRESS_BAR_DISABLED_GRADIENT_COLORS;
         return createVerticalGradient(s, colors);
+    }
+    
+    private Paint getProgressBarBorderPaint() {
+        return state == State.Enabled ? SkinColors.PROGRESS_BAR_ENABLED_BORDER_COLOR : SkinColors.PROGRESS_BAR_DISABLED_BORDER_COLOR;
     }
 
     private Paint getProgressBarIndeterminatePaint(Shape s) {

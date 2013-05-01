@@ -33,25 +33,28 @@ final class SkinColors {
     private SkinColors() {
     }
 
-    public static final Color PROGRESS_BAR_ENABLED_COLOR1 = Color.GRAY;
-    public static final Color PROGRESS_BAR_ENABLED_COLOR2 = Color.BLUE;
+    public static final Color PROGRESS_BAR_ENABLED_COLOR1 = new ColorUIResource(158, 200, 224);
+    public static final Color PROGRESS_BAR_ENABLED_COLOR2 = new ColorUIResource(124, 175, 204);
 
     public static final Color[] PROGRESS_BAR_ENABLED_GRADIENT_COLORS = new Color[] { PROGRESS_BAR_ENABLED_COLOR1, PROGRESS_BAR_ENABLED_COLOR2 };
 
-    public static final Color PROGRESS_BAR_DISABLED_COLOR1 = Color.GRAY;
-    public static final Color PROGRESS_BAR_DISABLED_COLOR2 = Color.BLUE;
+    public static final Color PROGRESS_BAR_DISABLED_COLOR1 = new ColorUIResource(210, 212, 214);
+    public static final Color PROGRESS_BAR_DISABLED_COLOR2 = new ColorUIResource(180, 180, 180);
 
     public static final Color[] PROGRESS_BAR_DISABLED_GRADIENT_COLORS = new Color[] { PROGRESS_BAR_DISABLED_COLOR1, PROGRESS_BAR_DISABLED_COLOR2 };
 
-    public static final Color PROGRESS_BAR_ENABLED_INDETERMINATE_COLOR1 = Color.GRAY;
-    public static final Color PROGRESS_BAR_ENABLED_INDETERMINATE_COLOR2 = Color.BLUE;
+    public static final Color PROGRESS_BAR_ENABLED_INDETERMINATE_COLOR1 = new ColorUIResource(158, 200, 224);
+    public static final Color PROGRESS_BAR_ENABLED_INDETERMINATE_COLOR2 = new ColorUIResource(124, 175, 204);
 
     public static final Color[] PROGRESS_BAR_ENABLED_INDERTERMINATE_GRADIENT_COLORS = new Color[] { PROGRESS_BAR_ENABLED_INDETERMINATE_COLOR1, PROGRESS_BAR_ENABLED_INDETERMINATE_COLOR2 };
 
-    public static final Color PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR1 = Color.GRAY;
-    public static final Color PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR2 = Color.BLUE;
+    public static final Color PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR1 = new ColorUIResource(210, 212, 214);
+    public static final Color PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR2 = new ColorUIResource(180, 180, 180);
 
     public static final Color[] PROGRESS_BAR_DISABLED_INDERTERMINATE_GRADIENT_COLORS = new Color[] { PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR1, PROGRESS_BAR_DISABLED_INDETERMINATE_COLOR2 };
+
+    public static final Color PROGRESS_BAR_ENABLED_BORDER_COLOR = new ColorUIResource(124, 175, 204);
+    public static final Color PROGRESS_BAR_DISABLED_BORDER_COLOR = new ColorUIResource(180, 180, 180);
 
     public static final Color LIGHT_BACKGROUND_COLOR = new ColorUIResource(246, 246, 246);
 
