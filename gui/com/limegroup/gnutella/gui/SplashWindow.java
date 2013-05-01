@@ -56,8 +56,9 @@ public final class SplashWindow {
         splashLabel = new JLabel();
         splashWindow = new JWindow();
         
+        glassPane.setProgressPreferredSize(new Dimension(400, 17));
         glassPane.add(Box.createVerticalGlue(), 0);
-        glassPane.add(Box.createVerticalStrut(5));
+        glassPane.add(Box.createVerticalStrut(6));
         //glassPane.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
         
         URL imageURL = null;

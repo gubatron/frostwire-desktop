@@ -61,7 +61,7 @@ public final class SkinProgressBarPainter extends AbstractSkinPainter {
         int x = d;
         int y = d;
         width = width - d2;
-        height = height - d2;
+        height = height - d2 - 1;
         
         if (testValid(x, y, width, height)) {
             Shape s = shapeGenerator.createRectangle(x, y, width, height);
