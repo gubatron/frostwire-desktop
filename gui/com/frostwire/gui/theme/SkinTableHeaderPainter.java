@@ -18,8 +18,10 @@
 
 package com.frostwire.gui.theme;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.geom.Path2D;
 
 import javax.swing.JComponent;
 
@@ -39,18 +41,34 @@ public final class SkinTableHeaderPainter extends AbstractSkinPainter {
 
     @Override
     protected void doPaint(Graphics2D g, JComponent c, int width, int height, Object[] extendedCacheKeys) {
-        g.setColor(getScrollBarButtonArrowColor());
-        g.fillRect(0, 0, width, height);
+        if (testValid(0, 0, width - 1, height - 1)) {
+            Shape s = shapeGenerator.createRectangle(0, 0, width, height);
+            g.setPaint(getTableHeaderPaint(s));
+            g.fill(s);
+
+            paintBorder(g, width, height);
+        }
     }
 
-    private Color getScrollBarButtonArrowColor() {
+    private void paintBorder(Graphics2D g, int width, int height) {
+        Path2D path = new Path2D.Double(Path2D.WIND_EVEN_ODD);
+        path.reset();
+        path.moveTo(0, height - 1);
+        path.lineTo(width - 1, height - 1);
+        path.lineTo(width - 1, 0);
+
+        g.setPaint(SkinColors.TABLE_HEADER_BORDER_COLOR);
+        g.draw(path);
+    }
+
+    private Paint getTableHeaderPaint(Shape s) {
         switch (state) {
         case Enabled:
-            return SkinColors.TABLE_HEADER_ENABLED_COLOR;
+            return createVerticalGradient(s, SkinColors.TABLE_HEADER_ENABLED_COLORS);
         case MouseOver:
-            return SkinColors.TABLE_HEADER_MOUSEOVER_COLOR;
+            return createVerticalGradient(s, SkinColors.TABLE_HEADER_PRESSED_COLORS); // not an error, neede to check deep in nimbus
         case Pressed:
-            return SkinColors.TABLE_HEADER_PRESSED_COLOR;
+            return createVerticalGradient(s, SkinColors.TABLE_HEADER_PRESSED_COLORS);
         default:
             throw new IllegalArgumentException("Not supported state");
         }

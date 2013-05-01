@@ -106,13 +106,29 @@ final class SkinColors {
 
     public static final Color SCROLL_THUMB_BORDER_COLOR = new ColorUIResource(201, 201, 201);
 
-    public static final Color TABLE_HEADER_ENABLED_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter());
-    public static final Color TABLE_HEADER_MOUSEOVER_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter().brighter());
-    public static final Color TABLE_HEADER_PRESSED_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter().brighter().brighter());
+    public static final Color TABLE_HEADER_ENABLED_COLOR1 = new ColorUIResource(240, 241, 242);
+    public static final Color TABLE_HEADER_ENABLED_COLOR2 = new ColorUIResource(234, 234, 234);
+
+    public static final Color[] TABLE_HEADER_ENABLED_COLORS = new Color[] { TABLE_HEADER_ENABLED_COLOR1, TABLE_HEADER_ENABLED_COLOR2 };
+
+    public static final Color TABLE_HEADER_MOUSEOVER_COLOR1 = new ColorUIResource(240, 241, 242);
+    public static final Color TABLE_HEADER_MOUSEOVER_COLOR2 = new ColorUIResource(234, 234, 234);
+
+    public static final Color[] TABLE_HEADER_MOUSEOVER_COLORS = new Color[] { TABLE_HEADER_MOUSEOVER_COLOR1, TABLE_HEADER_MOUSEOVER_COLOR2 };
+
+    public static final Color TABLE_HEADER_PRESSED_COLOR1 = new ColorUIResource(216, 216, 216);
+    public static final Color TABLE_HEADER_PRESSED_COLOR2 = new ColorUIResource(226, 226, 226);
+
+    public static final Color[] TABLE_HEADER_PRESSED_COLORS = new Color[] { TABLE_HEADER_PRESSED_COLOR1, TABLE_HEADER_PRESSED_COLOR2 };
+
+    public static final Color TABLE_HEADER_BORDER_COLOR = new ColorUIResource(201, 201, 201);
 
     public static final Color APPLICATION_HEADER_COLOR1 = new ColorUIResource(64, 113, 155);
     public static final Color APPLICATION_HEADER_COLOR2 = new ColorUIResource(49, 88, 120);
 
     public static final Color[] APPLICATION_HEADER_GRADIENT_COLORS = new Color[] { APPLICATION_HEADER_COLOR1, APPLICATION_HEADER_COLOR2 };
 
+    //rows table
+    // odd 242, 245, 247
+    // selected 223, 226, 229
 }
