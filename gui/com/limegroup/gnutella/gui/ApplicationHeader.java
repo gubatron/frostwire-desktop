@@ -26,11 +26,15 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.UIManager;
+import javax.swing.plaf.ComponentUI;
+
+import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.player.MediaPlayerComponent;
 import com.frostwire.gui.tabs.Tab;
+import com.frostwire.gui.theme.SkinApplicationHeaderUI;
 import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.gui.theme.ThemeObserver;
 import com.frostwire.gui.updates.UpdateMediator;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 
@@ -56,11 +60,6 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
      */
     private final ItemListener HIGHLIGHTER = new Highlighter();
 
-    private static final long serialVersionUID = 4800214468508213106L;
-
-    /** image used for the background */
-    private Image tile;
-
     /** Button background for selected button */
     private final Image headerButtonBackgroundSelected;
 
@@ -77,22 +76,23 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
     private JPanel eastPanel;
 
     public ApplicationHeader(Map<Tabs, Tab> tabs) {
-        setLayout(new BorderLayout());
-
-        tile = GUIMediator.getThemeImage("application_header_background").getImage();
+        setMinimumSize(new Dimension(300, 54));
+        setLayout(new MigLayout("", "[][][grow][]"));
 
         headerButtonBackgroundSelected = GUIMediator.getThemeImage("selected_header_button_background").getImage();
         headerButtonBackgroundUnselected = GUIMediator.getThemeImage("unselected_header_button_background").getImage();
 
         setSizes();
-        initBackground();
 
         addTabButtons(tabs);
-        addLogoPanel();
 
-        addEastPanel();
-        addUpdateButton();
-        addAudioPlayerComponent();
+        createUpdateButton();
+        add(updateButton, "growx");
+
+        logoPanel = new LogoPanel();
+        add(logoPanel, "dock east");
+
+        //addAudioPlayerComponent();
 
         GUIMediator.addRefreshListener(this);
 
@@ -102,18 +102,6 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
         eastPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         eastPanel.setOpaque(false);
         add(eastPanel, BorderLayout.LINE_END);
-    }
-
-    private void initBackground() {
-
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        //paint tiled background
-        for (int i = 0; i < getWidth(); i += 16) {
-            g.drawImage(tile, i, 0, null);
-        }
     }
 
     private void setSizes() {
@@ -147,7 +135,7 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
         eastPanel.add(mediaPanelFrame);
     }
 
-    private void addUpdateButton() {
+    private void createUpdateButton() {
         updateImageButtonOn = GUIMediator.getThemeImage("update_button_on");
         updateImageButtonOff = GUIMediator.getThemeImage("update_button_off");
 
@@ -169,12 +157,6 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
                 UpdateMediator.instance().showUpdateMessage();
             }
         });
-
-        eastPanel.add(updateButton);
-    }
-
-    private void addLogoPanel() {
-        add(logoPanel = new LogoPanel(), BorderLayout.CENTER);
     }
 
     public LogoPanel getLogoPanel() {
@@ -212,7 +194,7 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
             button.setSelected(t.equals(GUIMediator.Tabs.SEARCH));
         }
 
-        add(buttonContainer, BorderLayout.LINE_START);
+        add(buttonContainer, "");
     }
 
     /** Given a Tab mark that button as selected 
@@ -417,5 +399,19 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
             //            timeline.setDuration(30000);
             //            timeline.play();
         }
+    }
+
+    @Override
+    public void updateUI() {
+        ComponentUI ui = UIManager.getUI(this);
+        if (ui == null) {
+            ui = new SkinApplicationHeaderUI();
+        }
+        setUI(ui);
+    }
+
+    @Override
+    public String getUIClassID() {
+        return "ApplicationHeaderUI";
     }
 }

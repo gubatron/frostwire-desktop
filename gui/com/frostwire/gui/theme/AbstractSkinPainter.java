@@ -62,6 +62,24 @@ public abstract class AbstractSkinPainter extends AbstractRegionPainter {
 
         return createGradient(xCenter, yMin, xCenter, yMax, new float[] { 0f, 1f }, colors);
     }
+    
+    /**
+     * Creates a simple horizontal gradient using the shape for bounds and the
+     * colors for top and bottom colors.
+     *
+     * @param  s      the shape to use for bounds.
+     * @param  colors the colors to use for the gradient.
+     *
+     * @return the gradient.
+     */
+    protected Paint createHorizontalGradient(Shape s, Color[] colors) {
+        Rectangle2D bounds  = s.getBounds2D();
+        float       xMin    = (float) bounds.getMinX();
+        float       xMax    = (float) bounds.getMaxX();
+        float       yCenter = (float) bounds.getCenterY();
+
+        return createGradient(xMin, yCenter, xMax, yCenter, new float[] { 0f, 1f }, colors);
+    }
 
     /**
      * Given parameters for creating a LinearGradientPaint, this method will

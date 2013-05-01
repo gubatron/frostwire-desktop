@@ -18,7 +18,11 @@
 
 package com.frostwire.gui.theme;
 
+import java.awt.Dimension;
+
 import javax.swing.JComponent;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.synth.SynthScrollPaneUI;
 
@@ -33,5 +37,15 @@ public final class SkinScrollPaneUI extends SynthScrollPaneUI {
     public static ComponentUI createUI(JComponent comp) {
         ThemeMediator.testComponentCreationThreadingViolation();
         return new SkinScrollPaneUI();
+    }
+
+    @Override
+    protected void installDefaults(JScrollPane scrollpane) {
+        super.installDefaults(scrollpane);
+
+        JScrollBar scrollBar = scrollpane.getVerticalScrollBar();
+        if (scrollBar != null) {
+            scrollBar.setPreferredSize(new Dimension(18, 100));
+        }
     }
 }

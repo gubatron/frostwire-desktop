@@ -18,8 +18,9 @@
 
 package com.frostwire.gui.theme;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Paint;
+import java.awt.Shape;
 
 import javax.swing.JComponent;
 
@@ -39,18 +40,25 @@ public final class SkinScrollBarThumbPainter extends AbstractSkinPainter {
 
     @Override
     protected void doPaint(Graphics2D g, JComponent c, int width, int height, Object[] extendedCacheKeys) {
-        g.setColor(getScrollBarButtonArrowColor());
-        g.fillRect(0, 0, width, height);
+        if (testValid(0, 0, width - 2, height - 2)) {
+            Shape s1 = shapeGenerator.createRectangle(0, 0, width, height);
+            g.setColor(SkinColors.SCROLL_THUMB_BORDER_COLOR);
+            g.fill(s1);
+
+            Shape s2 = shapeGenerator.createRectangle(1, 1, width - 2, height - 1);
+            g.setPaint(getScrollBarThumbPaint(s2));
+            g.fill(s2);
+        }
     }
 
-    private Color getScrollBarButtonArrowColor() {
+    private Paint getScrollBarThumbPaint(Shape s) {
         switch (state) {
         case Enabled:
-            return SkinColors.SCROLL_THUMB_ENABLED_COLOR;
+            return createVerticalGradient(s, SkinColors.SCROLL_THUMB_ENABLED_COLORS);
         case MouseOver:
-            return SkinColors.SCROLL_THUMB_MOUSEOVER_COLOR;
+            return createVerticalGradient(s, SkinColors.SCROLL_THUMB_MOUSEOVER_COLORS);
         case Pressed:
-            return SkinColors.SCROLL_THUMB_PRESSED_COLOR;
+            return createVerticalGradient(s, SkinColors.SCROLL_THUMB_PRESSED_COLORS);
         default:
             throw new IllegalArgumentException("Not supported state");
         }

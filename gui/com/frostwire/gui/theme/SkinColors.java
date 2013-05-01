@@ -59,19 +59,60 @@ final class SkinColors {
     public static final Color LIGHT_BACKGROUND_COLOR = new ColorUIResource(246, 246, 246);
 
     // scrollbar
-    public static final Color SCROLL_BUTTON_ARROW_DISABLED_COLOR = new ColorUIResource(Color.GRAY);
-    public static final Color SCROLL_BUTTON_ARROW_ENABLED_COLOR = new ColorUIResource(Color.BLACK);
-    public static final Color SCROLL_BUTTON_ARROW_MOUSEOVER_COLOR = new ColorUIResource(Color.BLACK);
-    public static final Color SCROLL_BUTTON_ARROW_PRESSED_COLOR = new ColorUIResource(Color.BLACK);
+    public static final Color SCROLL_BUTTON_ARROW_DISABLED_COLOR = new ColorUIResource(199, 199, 199);
+    public static final Color SCROLL_BUTTON_ARROW_ENABLED_COLOR = new ColorUIResource(29, 49, 66);
 
-    public static final Color SCROLL_TRACK_DISABLED_COLOR = new ColorUIResource(Color.GRAY.brighter());
-    public static final Color SCROLL_TRACK_ENABLED_COLOR = new ColorUIResource(Color.GRAY.brighter());
+    public static final Color SCROLL_BUTTON_ARROW_BOX_DISABLED_COLOR1 = new ColorUIResource(245, 246, 246);
+    public static final Color SCROLL_BUTTON_ARROW_BOX_DISABLED_COLOR2 = new ColorUIResource(234, 236, 237);
 
-    public static final Color SCROLL_THUMB_ENABLED_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter());
-    public static final Color SCROLL_THUMB_MOUSEOVER_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter().brighter());
-    public static final Color SCROLL_THUMB_PRESSED_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter().brighter().brighter());
+    public static final Color[] SCROLL_BUTTON_ARROW_BOX_DISABLED_COLORS = new Color[] { SCROLL_BUTTON_ARROW_BOX_DISABLED_COLOR1, SCROLL_BUTTON_ARROW_BOX_DISABLED_COLOR2 };
+
+    public static final Color SCROLL_BUTTON_ARROW_BOX_ENABLED_COLOR1 = new ColorUIResource(245, 246, 246);
+    public static final Color SCROLL_BUTTON_ARROW_BOX_ENABLED_COLOR2 = new ColorUIResource(234, 236, 237);
+
+    public static final Color[] SCROLL_BUTTON_ARROW_BOX_ENABLED_COLORS = new Color[] { SCROLL_BUTTON_ARROW_BOX_ENABLED_COLOR1, SCROLL_BUTTON_ARROW_BOX_ENABLED_COLOR2 };
+
+    public static final Color SCROLL_BUTTON_ARROW_BOX_MOUSEOVER_COLOR = new ColorUIResource(166, 173, 179);
+    public static final Color SCROLL_BUTTON_ARROW_BOX_PRESSED_COLOR = new ColorUIResource(166, 173, 179);
+
+    public static final Color SCROLL_BUTTON_ARROW_BOX_BORDER_COLOR = new ColorUIResource(201, 201, 201);
+
+    public static final Color SCROLL_TRACK_DISABLED_COLOR1 = new ColorUIResource(234, 236, 237);
+    public static final Color SCROLL_TRACK_DISABLED_COLOR2 = new ColorUIResource(246, 247, 247);
+
+    public static final Color[] SCROLL_TRACK_DISABLED_COLORS = new Color[] { SCROLL_TRACK_DISABLED_COLOR1, SCROLL_TRACK_DISABLED_COLOR2 };
+
+    public static final Color SCROLL_TRACK_ENABLED_COLOR1 = new ColorUIResource(234, 236, 237);
+    public static final Color SCROLL_TRACK_ENABLED_COLOR2 = new ColorUIResource(246, 247, 247);
+
+    public static final Color[] SCROLL_TRACK_ENABLED_COLORS = new Color[] { SCROLL_TRACK_ENABLED_COLOR1, SCROLL_TRACK_ENABLED_COLOR2 };
+
+    public static final Color SCROLL_TRACK_BORDER_COLOR = new ColorUIResource(201, 201, 201);
+
+    public static final Color SCROLL_THUMB_ENABLED_COLOR1 = new ColorUIResource(214, 214, 214);
+    public static final Color SCROLL_THUMB_ENABLED_COLOR2 = new ColorUIResource(229, 229, 229);
+
+    public static final Color[] SCROLL_THUMB_ENABLED_COLORS = new Color[] { SCROLL_THUMB_ENABLED_COLOR1, SCROLL_THUMB_ENABLED_COLOR2 };
+
+    public static final Color SCROLL_THUMB_MOUSEOVER_COLOR1 = new ColorUIResource(207, 208, 207);
+    public static final Color SCROLL_THUMB_MOUSEOVER_COLOR2 = new ColorUIResource(221, 222, 221);
+
+    public static final Color[] SCROLL_THUMB_MOUSEOVER_COLORS = new Color[] { SCROLL_THUMB_MOUSEOVER_COLOR1, SCROLL_THUMB_MOUSEOVER_COLOR2 };
+
+    public static final Color SCROLL_THUMB_PRESSED_COLOR1 = new ColorUIResource(207, 208, 207);
+    public static final Color SCROLL_THUMB_PRESSED_COLOR2 = new ColorUIResource(221, 222, 221);
+
+    public static final Color[] SCROLL_THUMB_PRESSED_COLORS = new Color[] { SCROLL_THUMB_PRESSED_COLOR1, SCROLL_THUMB_PRESSED_COLOR1 };
+
+    public static final Color SCROLL_THUMB_BORDER_COLOR = new ColorUIResource(201, 201, 201);
 
     public static final Color TABLE_HEADER_ENABLED_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter());
     public static final Color TABLE_HEADER_MOUSEOVER_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter().brighter());
     public static final Color TABLE_HEADER_PRESSED_COLOR = new ColorUIResource(new Color(100, 100, 40).brighter().brighter().brighter());
+
+    public static final Color APPLICATION_HEADER_COLOR1 = new ColorUIResource(64, 113, 155);
+    public static final Color APPLICATION_HEADER_COLOR2 = new ColorUIResource(49, 88, 120);
+
+    public static final Color[] APPLICATION_HEADER_GRADIENT_COLORS = new Color[] { APPLICATION_HEADER_COLOR1, APPLICATION_HEADER_COLOR2 };
+
 }
