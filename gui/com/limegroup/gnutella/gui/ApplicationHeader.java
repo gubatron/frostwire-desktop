@@ -82,7 +82,8 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
         headerButtonBackgroundSelected = GUIMediator.getThemeImage("selected_header_button_background").getImage();
         headerButtonBackgroundUnselected = GUIMediator.getThemeImage("unselected_header_button_background").getImage();
 
-        setSizes();
+        JPanel searchInput = new JPanel();
+        add(searchInput);
 
         addTabButtons(tabs);
 
@@ -102,12 +103,6 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
         eastPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         eastPanel.setOpaque(false);
         add(eastPanel, BorderLayout.LINE_END);
-    }
-
-    private void setSizes() {
-        setMinimumSize(new Dimension(1, 54));
-        setPreferredSize(new Dimension(Integer.MAX_VALUE, 54));
-        setMaximumSize(new Dimension(Integer.MAX_VALUE, 54));
     }
 
     private void addAudioPlayerComponent() {

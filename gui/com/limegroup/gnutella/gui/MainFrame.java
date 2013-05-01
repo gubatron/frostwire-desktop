@@ -41,12 +41,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
+import net.miginfocom.swing.MigLayout;
+
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.library.LibraryMediator;
+import com.frostwire.gui.player.MediaPlayerComponent;
 import com.frostwire.gui.tabs.ChatTab;
 import com.frostwire.gui.tabs.LibraryTab;
 import com.frostwire.gui.tabs.SearchDownloadTab;
@@ -154,13 +157,13 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         //com.frostwire.gui.updates.UpdateManager.scheduleUpdateCheckTask(0,"http://update1.frostwire.com/example.php");
 
         FRAME = frame;
-        Dimension minFrameDimensions = null;
-        if (OSUtils.isMacOSX()) {
-            minFrameDimensions = new Dimension(875, 97);
-        } else {
-            minFrameDimensions = new Dimension(875, 134);
-        }
-        FRAME.setMinimumSize(minFrameDimensions);
+//        Dimension minFrameDimensions = null;
+//        if (OSUtils.isMacOSX()) {
+//            minFrameDimensions = new Dimension(875, 97);
+//        } else {
+//            minFrameDimensions = new Dimension(875, 134);
+//        }
+//        FRAME.setMinimumSize(minFrameDimensions);
         new DropTarget(FRAME, new TransferHandlerDropTargetListener(DNDUtils.DEFAULT_TRANSFER_HANDLER));
 
         TABBED_PANE = new JPanel(new CardLayout());
@@ -219,19 +222,21 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         JPanel contentPane = new JPanel();
 
         FRAME.setContentPane(contentPane);
-        contentPane.setLayout(new BorderLayout());
+        contentPane.setLayout(new MigLayout());
 
         buildTabs();
 
         APPLICATION_HEADER = new ApplicationHeader(TABS);
         LOGO_PANEL = APPLICATION_HEADER.getLogoPanel();
-        contentPane.add(APPLICATION_HEADER, BorderLayout.PAGE_START);
+        
+        JComponent player = new MediaPlayerComponent().getMediaPanel(true);
 
-        //ADD TABBED PANE
-        contentPane.add(TABBED_PANE, BorderLayout.CENTER);
-
-        //ADD STATUS LINE
-        contentPane.add(getStatusLine().getComponent(), BorderLayout.PAGE_END);
+        contentPane.add(APPLICATION_HEADER, "growx, dock north");
+        contentPane.add(TABBED_PANE, "wrap");
+        contentPane.add(player, "growx");
+        contentPane.add(getStatusLine().getComponent(), "dock south, shrink 0");
+        
+        setMinimalSize(FRAME, getStatusLine().getComponent(), APPLICATION_HEADER, TABBED_PANE, player, getStatusLine().getComponent());
 
         ThemeMediator.addThemeObserver(this);
         GUIMediator.addRefreshListener(this);
@@ -243,6 +248,25 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         PowerManager pm = new PowerManager();
         FRAME.addWindowListener(pm);
         GUIMediator.addRefreshListener(pm);
+    }
+    
+    private void setMinimalSize(JFrame frame, JComponent horizontal, JComponent... verticals) {
+        int width = 0;
+        int height = 0;
+
+        width = horizontal.getMinimumSize().width;
+
+        for (JComponent c : verticals) {
+            height += c.getMinimumSize().height;
+        }
+
+        // for some reason I can pack the frame
+        // this disallow me of getting the right size of the title bar
+        // and in general the insets's frame
+        // lets add some fixed value for now
+        height += 50;
+
+        frame.setMinimumSize(new Dimension(width, height));
     }
 
     public ApplicationHeader getApplicationHeader() {
