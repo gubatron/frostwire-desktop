@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui;
 
 import java.awt.Cursor;
@@ -11,95 +26,78 @@ import javax.swing.JLabel;
 /**
  * This class contains the logo and the searching icon for the application.
  */
-final class LogoPanel extends BoxPanel /* implements ThemeObserver */ {
-
-	/**
-     * 
-     */
-    private static final long serialVersionUID = 222666494852328516L;
+final class LogoPanel extends BoxPanel {
 
     /**
-	 * Icon for the when we're searching.
-	 */
-	private ImageIcon _searchingIcon;
+     * Icon for the when we're searching.
+     */
+    private final ImageIcon searchingIcon;
 
-	/**
-	 * Icon for not searching.
-	 */
-	private ImageIcon _notSearchingIcon;
+    /**
+     * Icon for not searching.
+     */
+    private final ImageIcon notSearchingIcon;
 
-	/**
-	 * Constant for the <tt>JLabel</tt> used for displaying the lime/spinning
-	 * lime search status indicator.
-	 */
-	private final JLabel ICON_LABEL = new JLabel();
+    /**
+     * Constant for the <tt>JLabel</tt> used for displaying the lime/spinning
+     * lime search status indicator.
+     */
+    private JLabel labelIcon;
 
-	private final JLabel LOGO_LABEL = new JLabel();
+    private JLabel labelLogo;
 
-	private boolean _searching;
+    /**
+     * Constructs a new panel containing the logo and the search icon.
+     */
+    LogoPanel() {
+        super(BoxPanel.X_AXIS);
 
-	/**
-	 * Constructs a new panel containing the logo and the search icon.
-	 */
-	LogoPanel() {
-		super(BoxPanel.X_AXIS);
-		updateTheme();
+        searchingIcon = GUIMediator.getThemeImage("searching");
+        notSearchingIcon = GUIMediator.getThemeImage("notsearching");
 
-		this.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent me) {
-				GUIMediator.openURL("http://www.frostwire.com");
-			}
+        setupUI();
+    }
 
-			public void mouseEntered(MouseEvent me){
-				setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-		});
+    private void setupUI() {
 
-	}
+        labelIcon = new JLabel();
+        labelIcon.setIcon(notSearchingIcon);
 
-	// inherit doc comment
-	public void updateTheme() {
-		_searchingIcon = GUIMediator.getThemeImage("searching");
-		_notSearchingIcon = GUIMediator.getThemeImage("notsearching");
-		
-		if(_searching) {
-			ICON_LABEL.setIcon(_searchingIcon);
-		} else {
-			ICON_LABEL.setIcon(_notSearchingIcon);
-		}
-		ImageIcon logoIcon = GUIMediator.getThemeImage("logo");
-		LOGO_LABEL.setIcon(logoIcon);
-		
-		
-		LOGO_LABEL.setSize(logoIcon.getIconWidth(),
-						   logoIcon.getIconHeight());
-		ICON_LABEL.setSize(_searchingIcon.getIconWidth(),
-						   _searchingIcon.getIconHeight());
-		
-		GUIUtils.setOpaque(false, this);
+        labelLogo = new JLabel();
+        ImageIcon logoIcon = GUIMediator.getThemeImage("logo");
+        labelLogo.setIcon(logoIcon);
 
-		buildPanel();
-	}
-	
-	private void buildPanel() {
-	    removeAll();
-	    add(Box.createHorizontalGlue());
-        add(ICON_LABEL);
-        add(LOGO_LABEL);
+        labelLogo.setSize(logoIcon.getIconWidth(), logoIcon.getIconHeight());
+        labelIcon.setSize(searchingIcon.getIconWidth(), searchingIcon.getIconHeight());
+
+        GUIUtils.setOpaque(false, this);
+
         add(Box.createHorizontalGlue());
-	}       
+        add(labelIcon);
+        add(labelLogo);
+        add(Box.createHorizontalGlue());
 
-	/**
-	 * Sets the searching or not searching status of the application.
-	 *
-	 * @param searching the searching status of the application
-	 */
-	void setSearching(boolean searching) {
-		_searching = searching;
-		if(searching) {
-			ICON_LABEL.setIcon(_searchingIcon);
-		} else {
-			ICON_LABEL.setIcon(_notSearchingIcon);
-		}
-	}
+        this.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                GUIMediator.openURL("http://www.frostwire.com");
+            }
+
+            public void mouseEntered(MouseEvent me) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+        });
+    }
+
+    /**
+     * Sets the searching or not searching status of the application.
+     *
+     * @param searching the searching status of the application
+     */
+    void setSearching(boolean searching) {
+        if (searching) {
+            labelIcon.setIcon(searchingIcon);
+        } else {
+            labelIcon.setIcon(notSearchingIcon);
+        }
+    }
 }
