@@ -17,7 +17,6 @@ package com.frostwire.gui.theme;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.Window;
 import java.util.LinkedList;
 import java.util.List;
@@ -176,6 +175,9 @@ public class ThemeMediator {
                                 defaults.put("Table[Enabled+Selected].textBackground", new Color(SkinColors.TABLE_SELECTED_BACKGROUND_ROW_COLOR.getRGB()));
                                 defaults.put("Table[Enabled+Selected].textForeground", SkinColors.TABLE_SELECTED_FOREGROUND_ROW_COLOR);
 
+                                // splitter
+                                defaults.put("SplitPane:SplitPaneDivider[Enabled].backgroundPainter", new SkinSplitPaneDividerBackgroundPainter(SkinSplitPaneDividerBackgroundPainter.State.Enabled));
+
                                 return defaults;
                             }
                         });
@@ -209,6 +211,7 @@ public class ThemeMediator {
         UIManager.put("PanelUI", "com.frostwire.gui.theme.SkinPanelUI");
         UIManager.put("ScrollBarUI", "com.frostwire.gui.theme.SkinScrollBarUI");
         UIManager.put("ScrollPaneUI", "com.frostwire.gui.theme.SkinScrollPaneUI");
+        UIManager.put("SplitPaneUI", "com.frostwire.gui.theme.SkinSplitPaneUI");
 
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
     }
