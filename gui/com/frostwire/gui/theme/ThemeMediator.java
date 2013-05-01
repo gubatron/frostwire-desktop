@@ -212,6 +212,7 @@ public class ThemeMediator {
         UIManager.put("ScrollBarUI", "com.frostwire.gui.theme.SkinScrollBarUI");
         UIManager.put("ScrollPaneUI", "com.frostwire.gui.theme.SkinScrollPaneUI");
         UIManager.put("SplitPaneUI", "com.frostwire.gui.theme.SkinSplitPaneUI");
+        UIManager.put("ApplicationHeaderUI", "com.frostwire.gui.theme.SkinApplicationHeaderUI");
 
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
     }
