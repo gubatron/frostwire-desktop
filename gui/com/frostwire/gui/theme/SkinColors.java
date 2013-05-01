@@ -128,7 +128,9 @@ final class SkinColors {
 
     public static final Color[] APPLICATION_HEADER_GRADIENT_COLORS = new Color[] { APPLICATION_HEADER_COLOR1, APPLICATION_HEADER_COLOR2 };
 
-    //rows table
-    // odd 242, 245, 247
-    // selected 223, 226, 229
+    public static final Color TABLE_ALTERNATE_ROW_COLOR = new ColorUIResource(242, 245, 247);
+    public static final Color TABLE_SELECTED_BACKGROUND_ROW_COLOR = new ColorUIResource(223, 226, 229);
+    public static final Color TABLE_SELECTED_FOREGROUND_ROW_COLOR = new ColorUIResource(Color.BLACK);
+
+    public static final Color TEXT_FONT_FREGROUND_COLOR = new ColorUIResource(55, 69, 82);
 }

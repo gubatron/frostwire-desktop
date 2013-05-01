@@ -124,6 +124,13 @@ public class ThemeMediator {
 
                                 defaults.put("control", SkinColors.LIGHT_BACKGROUND_COLOR);
 
+                                // font color
+                                defaults.put("text", SkinColors.TEXT_FONT_FREGROUND_COLOR);
+                                defaults.put("controlText", SkinColors.TEXT_FONT_FREGROUND_COLOR);
+                                defaults.put("infoText", SkinColors.TEXT_FONT_FREGROUND_COLOR);
+                                defaults.put("menuText", SkinColors.TEXT_FONT_FREGROUND_COLOR);
+                                defaults.put("textForeground", SkinColors.TEXT_FONT_FREGROUND_COLOR);
+
                                 FontUIResource font = getControlFont();
                                 if (font != null) {
                                     defaults.put("defaultFont", font);
@@ -144,7 +151,7 @@ public class ThemeMediator {
 
                                 // scrollbar
                                 defaults.put("ScrollBar:\"ScrollBar.button\".size", Integer.valueOf(18));
-                                
+
                                 defaults.put("ScrollBar:\"ScrollBar.button\"[Disabled].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.Disabled));
                                 defaults.put("ScrollBar:\"ScrollBar.button\"[Enabled].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.Enabled));
                                 defaults.put("ScrollBar:\"ScrollBar.button\"[MouseOver].foregroundPainter", new SkinScrollBarButtonPainter(SkinScrollBarButtonPainter.State.MouseOver));
@@ -163,6 +170,11 @@ public class ThemeMediator {
                                 defaults.put("TableHeader:\"TableHeader.renderer\"[Enabled].backgroundPainter", new SkinTableHeaderPainter(SkinTableHeaderPainter.State.Enabled));
                                 defaults.put("TableHeader:\"TableHeader.renderer\"[MouseOver].backgroundPainter", new SkinTableHeaderPainter(SkinTableHeaderPainter.State.MouseOver));
                                 defaults.put("TableHeader:\"TableHeader.renderer\"[Pressed].backgroundPainter", new SkinTableHeaderPainter(SkinTableHeaderPainter.State.Pressed));
+
+                                // table
+                                defaults.put("Table.alternateRowColor", new Color(SkinColors.TABLE_ALTERNATE_ROW_COLOR.getRGB()));
+                                defaults.put("Table[Enabled+Selected].textBackground", new Color(SkinColors.TABLE_SELECTED_BACKGROUND_ROW_COLOR.getRGB()));
+                                defaults.put("Table[Enabled+Selected].textForeground", SkinColors.TABLE_SELECTED_FOREGROUND_ROW_COLOR);
 
                                 return defaults;
                             }
