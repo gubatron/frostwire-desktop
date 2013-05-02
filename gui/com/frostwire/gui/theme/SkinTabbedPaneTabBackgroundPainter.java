@@ -18,9 +18,7 @@
 
 package com.frostwire.gui.theme;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.geom.Path2D;
 
@@ -43,11 +41,16 @@ public final class SkinTabbedPaneTabBackgroundPainter extends AbstractSkinPainte
     @Override
     protected void doPaint(Graphics2D g, JComponent c, int width, int height, Object[] extendedCacheKeys) {
         switch (state) {
+        case FocusedMouseOverSelected:
+        case FocusedPressedSelected:
+        case FocusedSelected:
+        case MouseOverSelected:
+        case PressedSelected:
         case Selected:
             paintSelectedTab(g, width, height);
             break;
-        case DisabledSelected:
-        case Disabled:
+        default:
+            paintDefaultTab(g, width, height);
             break;
         }
     }
@@ -62,19 +65,32 @@ public final class SkinTabbedPaneTabBackgroundPainter extends AbstractSkinPainte
         }
     }
 
+    private void paintDefaultTab(Graphics2D g, int width, int height) {
+        if (testValid(0, 0, width, height)) {
+            Shape s = shapeGenerator.createRectangle(0, 0, width - 4, height - 2);
+            g.setPaint(SkinColors.GENERAL_BORDER_COLOR);
+            g.fill(s);
+
+            paintBorder(g, width, height);
+        }
+    }
+
     private void paintBorder(Graphics2D g, int width, int height) {
         Path2D path = new Path2D.Double(Path2D.WIND_EVEN_ODD);
         path.reset();
-        path.moveTo(0, height);
+        int h = height - 2;
+        int w = width - 4;
+        path.moveTo(0, h);
         path.lineTo(0, 0);
-        path.lineTo(width, 0);
-        path.lineTo(width, height);
+        path.lineTo(w, 0);
+        path.lineTo(w, h);
+        path.lineTo(width, h);
 
         g.setPaint(SkinColors.GENERAL_BORDER_COLOR);
         g.draw(path);
     }
 
     public static enum State {
-        DisabledSelected, Disabled, EnableMouseOver, EnablePressed, Enable, Selected
+        DisabledSelected, Disabled, EnabledMouseOver, EnabledPressed, Enabled, FocusedMouseOverSelected, FocusedPressedSelected, FocusedSelected, MouseOverSelected, PressedSelected, Selected
     }
 }

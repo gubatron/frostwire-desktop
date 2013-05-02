@@ -176,6 +176,22 @@ public class ThemeMediator {
                                 defaults.put("SplitPane:SplitPaneDivider[Enabled].backgroundPainter", new SkinSplitPaneDividerBackgroundPainter(SkinSplitPaneDividerBackgroundPainter.State.Enabled));
 
                                 // tabbedpanetab
+                                defaults.put("TabbedPane:TabbedPaneTabArea.contentMargins", new InsetsUIResource(3, 4, 2, 4));
+                                defaults.put("TabbedPane:TabbedPaneTabArea[Disabled].backgroundPainter", new SkinTabbedPaneTabAreaBackgroundPainter(SkinTabbedPaneTabAreaBackgroundPainter.State.Disabled));
+                                defaults.put("TabbedPane:TabbedPaneTabArea[Enabled+MouseOver].backgroundPainter", new SkinTabbedPaneTabAreaBackgroundPainter(SkinTabbedPaneTabAreaBackgroundPainter.State.EnableMouseOver));
+                                defaults.put("TabbedPane:TabbedPaneTabArea[Enabled+Pressed].backgroundPainter", new SkinTabbedPaneTabAreaBackgroundPainter(SkinTabbedPaneTabAreaBackgroundPainter.State.EnablePressed));
+                                defaults.put("TabbedPane:TabbedPaneTabArea[Enabled].backgroundPainter", new SkinTabbedPaneTabAreaBackgroundPainter(SkinTabbedPaneTabAreaBackgroundPainter.State.Enable));
+                                
+                                defaults.put("TabbedPane:TabbedPaneTab[Disabled+Selected].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.DisabledSelected));
+                                defaults.put("TabbedPane:TabbedPaneTab[Disabled].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.Disabled));
+                                defaults.put("TabbedPane:TabbedPaneTab[Enabled+MouseOver].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.EnabledMouseOver));
+                                defaults.put("TabbedPane:TabbedPaneTab[Enabled+Pressed].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.EnabledPressed));
+                                defaults.put("TabbedPane:TabbedPaneTab[Enabled].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.Enabled));
+                                defaults.put("TabbedPane:TabbedPaneTab[Focused+MouseOver+Selected].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.FocusedMouseOverSelected));
+                                defaults.put("TabbedPane:TabbedPaneTab[Focused+Pressed+Selected].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.FocusedPressedSelected));
+                                defaults.put("TabbedPane:TabbedPaneTab[Focused+Selected].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.FocusedSelected));
+                                defaults.put("TabbedPane:TabbedPaneTab[MouseOver+Selected].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.MouseOverSelected));
+                                defaults.put("TabbedPane:TabbedPaneTab[Pressed+Selected].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.PressedSelected));
                                 defaults.put("TabbedPane:TabbedPaneTab[Selected].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.Selected));
 
                                 return defaults;
