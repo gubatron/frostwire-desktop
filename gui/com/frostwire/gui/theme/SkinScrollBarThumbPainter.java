@@ -58,6 +58,7 @@ public final class SkinScrollBarThumbPainter extends AbstractSkinPainter {
         case MouseOver:
             return createVerticalGradient(s, SkinColors.SCROLL_THUMB_MOUSEOVER_COLORS);
         case Pressed:
+            //gubatron: this one never happens
             return createVerticalGradient(s, SkinColors.SCROLL_THUMB_PRESSED_COLORS);
         default:
             throw new IllegalArgumentException("Not supported state");
