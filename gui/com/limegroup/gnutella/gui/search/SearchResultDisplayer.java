@@ -57,7 +57,7 @@ import com.limegroup.gnutella.settings.UpdateManagerSettings;
 /**
  * This class handles the display of search results.
  */
-public final class SearchResultDisplayer implements ThemeObserver, RefreshListener {
+public final class SearchResultDisplayer implements RefreshListener {
 
     /**
      * <tt>JPanel</tt> containing the primary components of the search result
@@ -132,7 +132,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         // for when the window is resized. 
         results.setPreferredSize(new Dimension(10000, 10000));
         results.setLayout(switcher);
-        results.setBackground(Color.WHITE);
+        //results.setBackground(Color.WHITE);
 
         //Add SlideShowPanel here.
         promoSlides = null;
@@ -145,7 +145,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
         if (promoSlides != null) {
             JPanel p = (JPanel) promoSlides;
-            p.setBackground(Color.WHITE);
+            //p.setBackground(Color.WHITE);
             Dimension promoDimensions = new Dimension(717, 380);
             p.setPreferredSize(promoDimensions);
             p.setSize(promoDimensions);
@@ -167,7 +167,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
         MAIN_PANEL.add(results);
 
-        ThemeMediator.addThemeObserver(this);
         CancelSearchIconProxy.updateTheme();
     }
 
@@ -562,18 +561,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      */
     JComponent getComponent() {
         return MAIN_PANEL;
-    }
-
-    // inherit doc comment
-    public void updateTheme() {
-        DUMMY.updateTheme();
-
-        CancelSearchIconProxy.updateTheme();
-        fixIcons();
-        for (Iterator<SearchResultMediator> i = entries.iterator(); i.hasNext();) {
-            SearchResultMediator curPanel = (SearchResultMediator) i.next();
-            curPanel.updateTheme();
-        }
     }
 
     /**

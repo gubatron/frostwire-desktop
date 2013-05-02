@@ -14,14 +14,12 @@ import javax.swing.text.View;
 
 public class SkinTabbedPaneUI extends SynthTabbedPaneUI {
 
-    private final JTabbedPane tabbedPane;
-
     public static ComponentUI createUI(JComponent comp) {
-        return new SkinTabbedPaneUI((JTabbedPane) comp);
+        ThemeMediator.testComponentCreationThreadingViolation();
+        return new SkinTabbedPaneUI();
     }
 
-    public SkinTabbedPaneUI(JTabbedPane tabbedPane) {
-        this.tabbedPane = tabbedPane;
+    public SkinTabbedPaneUI() {
     }
 
     //    @Override
@@ -34,6 +32,23 @@ public class SkinTabbedPaneUI extends SynthTabbedPaneUI {
     //        return extraWidth;
     //    }
 
+    @Override
+    protected int calculateTabWidth(int tabPlacement, int tabIndex, FontMetrics metrics) {
+        int tabWidth = super.calculateTabWidth(tabPlacement, tabIndex, metrics);
+
+        return tabWidth + getIconWidth(tabIndex);
+    }
+
+    private int getIconWidth(int tabIndex) {
+        int iconWidth = 0;
+        if (tabPane instanceof SkinTabbedPane && ((SkinTabbedPane) tabPane).isExtraIconActiveAt(tabIndex)) {
+            Icon extraIcon = ((SkinTabbedPane) tabPane).getExtraIcon();
+            iconWidth += extraIcon != null ? extraIcon.getIconWidth() : 0;
+        }
+        return iconWidth;
+    }
+
+    /*
     @Override
     protected void layoutLabel(int tabPlacement, FontMetrics metrics, int tabIndex, String title, Icon icon, Rectangle tabRect, Rectangle iconRect, Rectangle textRect, boolean isSelected) {
         Icon extraIcon = null;
@@ -62,8 +77,9 @@ public class SkinTabbedPaneUI extends SynthTabbedPaneUI {
         iconRect.y += yNudge;
         textRect.x += xNudge;
         textRect.y += yNudge;
-    }
+    }*/
 
+    /*
     @Override
     protected void paintTab(Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex, Rectangle iconRect, Rectangle textRect) {
         super.paintTab(g, tabPlacement, rects, tabIndex, iconRect, textRect);
@@ -74,5 +90,5 @@ public class SkinTabbedPaneUI extends SynthTabbedPaneUI {
         if (extraIcon != null) {
             extraIcon.paintIcon(tabPane, g, textRect.x + textRect.width + 4, textRect.y);
         }
-    }
+    }*/
 }

@@ -56,7 +56,9 @@ final class SkinColors {
     public static final Color PROGRESS_BAR_ENABLED_BORDER_COLOR = new ColorUIResource(124, 175, 204);
     public static final Color PROGRESS_BAR_DISABLED_BORDER_COLOR = new ColorUIResource(180, 180, 180);
 
+    // general colors
     public static final Color LIGHT_BACKGROUND_COLOR = new ColorUIResource(246, 246, 246);
+    public static final Color GENERAL_BORDER_COLOR = new ColorUIResource(201, 201, 201);
 
     // scrollbar
     public static final Color SCROLL_BUTTON_ARROW_DISABLED_COLOR = new ColorUIResource(199, 199, 199);
@@ -82,11 +84,10 @@ final class SkinColors {
 
     public static final Color[] SCROLL_TRACK_DISABLED_COLORS = new Color[] { SCROLL_TRACK_DISABLED_COLOR1, SCROLL_TRACK_DISABLED_COLOR2 };
 
-
     //COLOR1 = left side gradient, COLOR2 = right side gradient.
     public static final Color SCROLL_TRACK_ENABLED_COLOR1 = new ColorUIResource(200, 200, 200);
     public static final Color SCROLL_TRACK_ENABLED_COLOR2 = new ColorUIResource(248, 248, 248);
-    
+
     public static final Color[] SCROLL_TRACK_ENABLED_COLORS = new Color[] { SCROLL_TRACK_ENABLED_COLOR1, SCROLL_TRACK_ENABLED_COLOR2 };
 
     public static final Color SCROLL_TRACK_BORDER_COLOR = new ColorUIResource(201, 201, 201);
@@ -98,7 +99,7 @@ final class SkinColors {
 
     public static final Color SCROLL_THUMB_MOUSEOVER_COLOR1 = new ColorUIResource(174, 221, 247);
     public static final Color SCROLL_THUMB_MOUSEOVER_COLOR2 = new ColorUIResource(105, 148, 173);
-    
+
     public static final Color[] SCROLL_THUMB_MOUSEOVER_COLORS = new Color[] { SCROLL_THUMB_MOUSEOVER_COLOR1, SCROLL_THUMB_MOUSEOVER_COLOR2 };
 
     public static final Color SCROLL_THUMB_PRESSED_COLOR1 = new ColorUIResource(158, 200, 224);

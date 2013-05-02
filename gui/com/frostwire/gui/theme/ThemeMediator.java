@@ -175,6 +175,9 @@ public class ThemeMediator {
                                 // splitter
                                 defaults.put("SplitPane:SplitPaneDivider[Enabled].backgroundPainter", new SkinSplitPaneDividerBackgroundPainter(SkinSplitPaneDividerBackgroundPainter.State.Enabled));
 
+                                // tabbedpanetab
+                                defaults.put("TabbedPane:TabbedPaneTab[Selected].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.Selected));
+
                                 return defaults;
                             }
                         });
