@@ -89,9 +89,11 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
 
         createUpdateButton();
         add(updateButton, "growx");
+        
+        JComponent player = new MediaPlayerComponent().getMediaPanel(true);
 
         logoPanel = new LogoPanel();
-        add(logoPanel, "dock east");
+        add(player, "dock east");
 
         //addAudioPlayerComponent();
 

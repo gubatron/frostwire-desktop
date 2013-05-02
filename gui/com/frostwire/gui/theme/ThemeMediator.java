@@ -113,9 +113,6 @@ public class ThemeMediator {
                 public void run() {
 
                     try {
-                        JLabel l = new JLabel();
-                        System.out.println(l.getFont());
-
                         UIManager.setLookAndFeel(new NimbusLookAndFeel() {
                             @Override
                             public UIDefaults getDefaults() {

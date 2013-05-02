@@ -16,9 +16,9 @@
 package com.frostwire.gui.player;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,15 +26,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 
-import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JSeparator;
 import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
@@ -157,6 +160,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
      * @param showPlaybackModeControls
      */
     private JPanel constructMediaPanel(boolean showPlaybackModeControls) {
+        /*
         int tempHeight = 1;
         tempHeight += PLAY_BUTTON.getIcon().getIconHeight() + 2;
 
@@ -228,6 +232,81 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         buttonPanel.add(progressSongLength);
 
         return buttonPanel;
+        */
+        
+        int tempHeight = 1;
+
+        // create sliders
+        PROGRESS.setMinimumSize(progressBarDimension);
+        //PROGRESS.setMaximumSize(progressBarDimension);
+        PROGRESS.setPreferredSize(progressBarDimension);
+        PROGRESS.setMaximum(3600);
+        PROGRESS.setEnabled(false);
+
+        VOLUME.setMaximumSize(volumeSliderDimension);
+        VOLUME.setPreferredSize(volumeSliderDimension);
+        VOLUME.setMinimum(0);
+        VOLUME.setValue(50);
+        VOLUME.setMaximum(100);
+        VOLUME.setEnabled(true);
+        VOLUME.setOpaque(false);
+
+        // setup buttons
+        registerListeners();
+
+        // add everything
+        JPanel panel = new JPanel();
+        //panel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_GRADIENT_BACKGROUND, ThemeMediator.CURRENT_THEME.getCustomUI().getPlayerBackground());
+        panel.setLayout(new MigLayout("flowy", "[][][][][][grow][][]"));
+
+        tempHeight = 80;
+        panel.setMinimumSize(new Dimension(100, tempHeight));
+
+        panel.add(PREV_BUTTON, "wrap, span 1 2");
+
+        PLAY_PAUSE_CARD_LAYOUT = new CardLayout();
+        PLAY_PAUSE_BUTTON_CONTAINER = new JPanel(PLAY_PAUSE_CARD_LAYOUT);
+        PLAY_PAUSE_BUTTON_CONTAINER.setOpaque(false);
+
+        PLAY_PAUSE_BUTTON_CONTAINER.add(PLAY_BUTTON, "PLAY");
+        PLAY_PAUSE_BUTTON_CONTAINER.add(PAUSE_BUTTON, "PAUSE");
+        panel.add(PLAY_PAUSE_BUTTON_CONTAINER, "wrap, span 1 2");
+
+        panel.add(NEXT_BUTTON, "wrap, span 1 2");
+
+        panel.add(new JSeparator(SwingConstants.VERTICAL), "wrap, span 1 2, growy");
+
+        // set font for time labels.
+        Font f = new Font(progressCurrentTime.getFont().getFontName(), Font.PLAIN, 10);
+
+        //progressCurrentTime.setForeground(ThemeMediator.CURRENT_THEME.getCustomUI().getLightForegroundColor());
+        progressCurrentTime.setFont(f);
+
+        //progressSongLength.setForeground(ThemeMediator.CURRENT_THEME.getCustomUI().getLightForegroundColor());
+        progressSongLength.setFont(f);
+
+        Dimension timeLabelsDimension = new Dimension(45, 11);
+        progressCurrentTime.setMinimumSize(timeLabelsDimension);
+        progressCurrentTime.setPreferredSize(timeLabelsDimension);
+        progressSongLength.setPreferredSize(timeLabelsDimension);
+        progressSongLength.setMinimumSize(timeLabelsDimension);
+
+        panel.add(progressCurrentTime, "wrap, span 1 2, aligny bottom");
+        JLabel l = new JLabel("Test Test");
+        //l.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, true);
+        l.setForeground(Color.WHITE);
+        panel.add(l, "");
+        panel.add(PROGRESS, "wrap, growx");
+        panel.add(progressSongLength, "wrap, span 1 2, aligny bottom");
+
+        panel.add(new JSeparator(SwingConstants.VERTICAL), "wrap, span 1 2, growy");
+
+        initPlaylistPlaybackModeControls();
+        panel.add(SHUFFLE_BUTTON, "");
+        panel.add(VOLUME, "wrap, span 2 1");
+        panel.add(LOOP_BUTTON, "");
+
+        return panel;
     }
 
     public void initPlaylistPlaybackModeControls() {
