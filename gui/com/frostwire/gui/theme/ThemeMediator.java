@@ -195,6 +195,11 @@ public class ThemeMediator {
                                 defaults.put("TabbedPane:TabbedPaneTab[Pressed+Selected].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.PressedSelected));
                                 defaults.put("TabbedPane:TabbedPaneTab[Selected].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.Selected));
 
+                                // tree
+                                defaults.put("Tree.closedIcon", null);
+                                defaults.put("Tree.openIcon", null);
+                                defaults.put("Tree.leafIcon", null);
+
                                 return defaults;
                             }
                         });
@@ -231,6 +236,7 @@ public class ThemeMediator {
         UIManager.put("SplitPaneUI", "com.frostwire.gui.theme.SkinSplitPaneUI");
         UIManager.put("ApplicationHeaderUI", "com.frostwire.gui.theme.SkinApplicationHeaderUI");
         UIManager.put("MultilineToolTipUI", "com.frostwire.gui.theme.SkinMultilineToolTipUI");
+        UIManager.put("TreeUI", "com.frostwire.gui.theme.SkinTreeUI");
 
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
     }
