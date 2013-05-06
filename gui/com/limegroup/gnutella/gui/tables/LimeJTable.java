@@ -47,7 +47,7 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.theme.ThemeSettings;
 import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.JMultilineToolTip;
+import com.limegroup.gnutella.gui.MultilineToolTip;
 import com.limegroup.gnutella.util.DataUtils;
 
 /**
@@ -502,8 +502,8 @@ public class LimeJTable extends JTable implements JSortTable {
      *@return The JToolTip returned is actually a JMultilineToolTip
      */
     public JToolTip createToolTip() {
-        JMultilineToolTip ret = JMultilineToolTip.instance();
-        ret.setToolTipArray( tips );
+        MultilineToolTip ret = new MultilineToolTip();
+        ret.setTipArray( tips );
         tips = DataUtils.EMPTY_STRING_ARRAY;
         return ret;
     }

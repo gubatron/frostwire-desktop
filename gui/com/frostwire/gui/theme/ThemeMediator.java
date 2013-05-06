@@ -119,6 +119,7 @@ public class ThemeMediator {
                                 UIDefaults defaults = super.getDefaults();
 
                                 defaults.put("control", SkinColors.LIGHT_BACKGROUND_COLOR);
+                                //defaults.put("nimbusBase", new Color(SkinColors.GENERAL_BORDER_COLOR.getRGB()));
 
                                 // font color
                                 defaults.put("text", SkinColors.TEXT_FONT_FREGROUND_COLOR);
@@ -181,7 +182,7 @@ public class ThemeMediator {
                                 defaults.put("TabbedPane:TabbedPaneTabArea[Enabled+MouseOver].backgroundPainter", new SkinTabbedPaneTabAreaBackgroundPainter(SkinTabbedPaneTabAreaBackgroundPainter.State.EnableMouseOver));
                                 defaults.put("TabbedPane:TabbedPaneTabArea[Enabled+Pressed].backgroundPainter", new SkinTabbedPaneTabAreaBackgroundPainter(SkinTabbedPaneTabAreaBackgroundPainter.State.EnablePressed));
                                 defaults.put("TabbedPane:TabbedPaneTabArea[Enabled].backgroundPainter", new SkinTabbedPaneTabAreaBackgroundPainter(SkinTabbedPaneTabAreaBackgroundPainter.State.Enable));
-                                
+
                                 defaults.put("TabbedPane:TabbedPaneTab[Disabled+Selected].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.DisabledSelected));
                                 defaults.put("TabbedPane:TabbedPaneTab[Disabled].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.Disabled));
                                 defaults.put("TabbedPane:TabbedPaneTab[Enabled+MouseOver].backgroundPainter", new SkinTabbedPaneTabBackgroundPainter(SkinTabbedPaneTabBackgroundPainter.State.EnabledMouseOver));
@@ -229,6 +230,7 @@ public class ThemeMediator {
         UIManager.put("ScrollPaneUI", "com.frostwire.gui.theme.SkinScrollPaneUI");
         UIManager.put("SplitPaneUI", "com.frostwire.gui.theme.SkinSplitPaneUI");
         UIManager.put("ApplicationHeaderUI", "com.frostwire.gui.theme.SkinApplicationHeaderUI");
+        UIManager.put("MultilineToolTipUI", "com.frostwire.gui.theme.SkinMultilineToolTipUI");
 
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
     }
