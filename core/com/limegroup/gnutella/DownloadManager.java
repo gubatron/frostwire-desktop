@@ -43,11 +43,6 @@ public interface DownloadManager {
 
     public boolean acceptPushedSocket(String file, int index, byte[] clientGUID, Socket socket);
 
-    /**
-     * Determines if the given URN has an incomplete file.
-     */
-    public boolean isIncomplete(URN urn);
-
     public int downloadsInProgress();
 
     public int getNumIndividualDownloaders();
@@ -60,15 +55,6 @@ public interface DownloadManager {
     public int getNumWaitingDownloads();
 
     public boolean isGuidForQueryDownloading(GUID guid);
-
-
-    /**
-     * Returns <code>true</code> if there already is a download with the same urn. 
-     * @param urn may be <code>null</code>, then a check based on the fileName
-     * and the fileSize is performed
-     * @return
-     */
-    public boolean conflicts(URN urn, long fileSize, File... fileName);
 
     /**
      * Returns <code>true</code> if there already is a download that is or

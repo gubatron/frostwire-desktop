@@ -134,13 +134,6 @@ public class DownloadManagerImpl implements DownloadManager {
     }
 
     /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#isIncomplete(com.limegroup.gnutella.URN)
-     */
-    public boolean isIncomplete(URN urn) {
-        return false;//incompleteFileManager.getFileForUrn(urn) != null;
-    }
-
-    /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#downloadsInProgress()
      */
     public synchronized int downloadsInProgress() {
@@ -180,13 +173,6 @@ public class DownloadManagerImpl implements DownloadManager {
 
     private ActivityCallback callback(org.gudy.azureus2.core3.download.DownloadManager dm) {
         return activityCallback;
-    }
-
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#conflicts(com.limegroup.gnutella.URN, long, java.io.File)
-     */
-    public boolean conflicts(URN urn, long fileSize, File... fileName) {
-        return false;
     }
 
     /* (non-Javadoc)

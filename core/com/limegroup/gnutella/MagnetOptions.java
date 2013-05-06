@@ -1,6 +1,5 @@
 package com.limegroup.gnutella;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URI;
@@ -14,8 +13,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
-
-import org.limewire.util.FileUtils;
 
 import com.limegroup.gnutella.util.EncodingUtils;
 import com.limegroup.gnutella.util.URIUtils;
@@ -52,11 +49,7 @@ public class MagnetOptions implements Serializable {
 	
 	private transient String [] defaultURLs;
 	private transient String localizedErrorMessage;
-	private transient URN urn;
-	private transient String extractedFileName;
-	private transient List<URN> guidUrns;
-
-    /**
+	/**
      * Allows multiline parsing of magnet links.
      * @param magnets
      * @return array may be empty, but is never <code>null</code>
@@ -199,51 +192,6 @@ public class MagnetOptions implements Serializable {
 	}
 	
 	/**
-	 * Returns the sha1 urn of this magnet uri if it has one.
-	 * <p>
-	 * It looks in the exacty topics, the exact sources and then in the alternate
-	 * sources for it.
-	 * @return
-	 */
-	public URN getSHA1Urn() {
-		if (urn == null) {
-			urn = extractSHA1URNFromList(getExactTopics());
-			
-			if (urn == null)
-				urn = extractSHA1URNFromList(getXS());
-			
-			if (urn == null)
-				urn = extractSHA1URNFromList(getAS());
-			
-			if (urn == null)
-				urn = extractSHA1URNFromURLS(getDefaultURLs());
-			
-			if (urn == null)
-				urn = URN.INVALID;
-			
-		}
-		if (urn == URN.INVALID)
-			return null;
-		
-		return urn;
-	}
-	
-	private URN extractSHA1URNFromURLS(String[] defaultURLs) {
-		for (int i = 0; i < defaultURLs.length; i++) {
-			try {
-				URI uri = URIUtils.toURI(defaultURLs[i]);
-				String query = uri.getQuery();
-				if (query != null) {
-					return URN.createSHA1Urn(uri.getQuery());
-				}
-			} catch (URISyntaxException e) {
-			} catch (IOException e) {
-			}
-		}
-		return null;
-	}
-
-	/**
 	 * Returns true if there are enough pieces of information to start a
 	 * download from it.
 	 * <p>At any rate there has to be at least one default url or a sha1 and
@@ -259,11 +207,6 @@ public class MagnetOptions implements Serializable {
 
 		if (getDefaultURLs().length > 0) {
 			return true;
-		}
-		if (getSHA1Urn() != null) {
-			if (getQueryString() != null) {
-				return true;
-			}
 		}
 		return false;
 	}
@@ -316,15 +259,6 @@ public class MagnetOptions implements Serializable {
 			getExactTopics().isEmpty();
 	}
 	
-	private URN extractSHA1URNFromList(List<String> strings) {
-        for(String str : strings) {
-            try {
-                return URN.createSHA1Urn(str);
-            } catch (IOException ignored) {} 
-        }
-		return null;
-    }
-	
 	private List<String> getPotentialURLs() {
 		List<String> urls = new ArrayList<String>();
 		urls.addAll(getPotentialURLs(getExactTopics()));
@@ -332,23 +266,6 @@ public class MagnetOptions implements Serializable {
 		urls.addAll(getPotentialURLs(getAS()));
 		return urls;
 	}
-	
-	private List<String> getPotentialURNs() {
-        List<String> urls = new ArrayList<String>();
-        urls.addAll(getPotentialURNs(getExactTopics()));
-        urls.addAll(getPotentialURNs(getXS()));
-        urls.addAll(getPotentialURNs(getAS()));
-        return urls;
-    }
-	
-	private List<String> getPotentialURNs(List<String> strings) {
-        List<String> ret = new ArrayList<String>();
-        for(String str: strings) {
-            if(str.toLowerCase(Locale.US).startsWith(URN.Type.URN_NAMESPACE_ID))
-                ret.add(str);
-        }
-        return ret;
-    }
 	
 	private List<String> getPotentialURLs(List<String> strings) {
 		List<String> ret = new ArrayList<String>();
@@ -381,39 +298,6 @@ public class MagnetOptions implements Serializable {
 	}
 	
 	/**
-	 * Returns immutable list of all valid GUID urns than can be tried for downloading.
-	 * 
-	 * GUID urns denote possibly firewalled hosts in the network that can be looked up
-	 * as possible download sources for this magnet link.
-	 */
-    public List<URN> getGUIDUrns() {
-        if (guidUrns != null) {
-            return guidUrns;
-        }
-        List<URN> urns = null;
-        List<String> potentialUrns = getPotentialURNs();
-        for (String candidate : potentialUrns) {
-            try {
-                URN urn = URN.createGUIDUrn(candidate);
-                if (urns == null) {
-                    urns = new ArrayList<URN>(2);
-                }
-                urns.add(urn);
-            } catch (IOException ie) {
-                // ignore, just not a valid guid urn 
-            }
-        }
-        if (urns == null) {
-            urns = Collections.emptyList();
-        } else {
-            urns = Collections.unmodifiableList(urns);
-        }
-        // only set after list is full to avoid race condition where some other thread sees the partial list
-        guidUrns = urns;
-        return urns;
-    }
-	
-	/**
 	 * Returns the display name, i.e. filename or <code>null</code>.
 	 * @return
 	 */
@@ -423,63 +307,6 @@ public class MagnetOptions implements Serializable {
             return null;
         else
             return list.get(0);
-    }
-    
-    /**
-     * Returns a file name that can be used for saving for a downloadable magnet.
-     * <p>
-     * Guaranteed to return a non-null value
-     * @return 
-     */
-    public String getFileNameForSaving() {
-        if (extractedFileName != null) 
-            return extractedFileName;
-        
-    	String name = getRawNameForSaving();
-        
-        // remove any leading slashes or dots
-        while(name.startsWith(".") || name.startsWith("\\") || name.startsWith("/"))
-            name = name.substring(1);
-            
-        extractedFileName = name;
-        return extractedFileName;
-    }
-    
-    private String getRawNameForSaving() {
-        
-        String tempFileName = getDisplayName();
-        if (tempFileName != null && tempFileName.length() > 0) {
-            return tempFileName;
-        }
-        tempFileName = getKeywordTopic();
-        if (tempFileName != null && tempFileName.length() > 0) {
-            return tempFileName;
-        }
-        URN urn = getSHA1Urn();
-        if (urn != null) {
-            tempFileName = urn.toString();
-            return tempFileName;
-        }
-        String[] urls = getDefaultURLs();
-        if (urls.length > 0) {
-            try {
-                URI uri = URIUtils.toURI(urls[0]);
-                tempFileName = extractFileName(uri);
-                if (tempFileName != null && tempFileName.length() > 0) {
-                    return tempFileName;
-                }
-            } catch (URISyntaxException e) {
-            }
-        }
-        try {
-            File file = FileUtils.createTempFile("magnet", "");
-            file.deleteOnExit();
-            tempFileName = file.getName();
-            return tempFileName;
-        } catch (IOException ie) {
-        }
-        tempFileName = DOWNLOAD_PREFIX;
-        return tempFileName;
     }
     
     /**
