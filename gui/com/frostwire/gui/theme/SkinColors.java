@@ -59,6 +59,7 @@ final class SkinColors {
     // general colors
     public static final Color LIGHT_BACKGROUND_COLOR = new ColorUIResource(246, 246, 246);
     public static final Color GENERAL_BORDER_COLOR = new ColorUIResource(201, 201, 201);
+    public static final Color DARK_BOX_BACKGROUND_COLOR = new ColorUIResource(238, 241, 242);
 
     // scrollbar
     public static final Color SCROLL_BUTTON_ARROW_DISABLED_COLOR = new ColorUIResource(199, 199, 199);

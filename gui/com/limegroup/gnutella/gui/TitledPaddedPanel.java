@@ -23,11 +23,6 @@ import com.frostwire.gui.theme.ThemeMediator;
  */
 public class TitledPaddedPanel extends JPanel {	
 
-	/**
-     * 
-     */
-    private static final long serialVersionUID = -4497553505538520672L;
-
     /**
 	 * Constant for specifying an x axis orientation for the layout.
 	 */
@@ -80,7 +75,7 @@ public class TitledPaddedPanel extends JPanel {
 															 outerPad,
 															 outerPad,
 															 outerPad);
-        _titledBorder = ThemeMediator.createTitledBorder(title); //BorderFactory.createTitledBorder(title);
+        _titledBorder = ThemeMediator.createTitledBorder(title);
 
         Border innerBorder = BorderFactory.createEmptyBorder((innerPad > 6) ? innerPad - 6 : 0,
 															 innerPad,

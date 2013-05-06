@@ -310,7 +310,7 @@ public class ThemeMediator {
     }
 
     public static TitledBorder createTitledBorder(String title) {
-        return new FueledTitledBorder(title);
+        return new SkinTitledBorder(title);
     }
 
     static void testComponentCreationThreadingViolation() {

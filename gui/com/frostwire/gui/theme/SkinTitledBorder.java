@@ -1,3 +1,21 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.frostwire.gui.theme;
 
 import java.awt.Color;
@@ -16,16 +34,20 @@ import javax.swing.border.TitledBorder;
 
 import sun.swing.SwingUtilities2;
 
-public class FueledTitledBorder extends TitledBorder {
-
-    private static final long serialVersionUID = -5410815402361459520L;
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public final class SkinTitledBorder extends TitledBorder {
 
     private static Font TITLE_FONT;
     private static Border BORDER;
 
     private Point textLoc = new Point();
 
-    public FueledTitledBorder(String title) {
+    public SkinTitledBorder(String title) {
         super(title);
 
         setTitlePosition(BELOW_TOP);
@@ -46,7 +68,7 @@ public class FueledTitledBorder extends TitledBorder {
     @Override
     public Border getBorder() {
         if (BORDER == null) {
-            BORDER = new FueledEtchedBorder(ThemeMediator.DARK_BORDER_COLOR);
+            BORDER = new SkinEtchedBorder(SkinColors.GENERAL_BORDER_COLOR);
         }
         
         return BORDER;

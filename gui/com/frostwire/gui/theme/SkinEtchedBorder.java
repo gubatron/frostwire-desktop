@@ -1,3 +1,21 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.frostwire.gui.theme;
 
 import java.awt.Color;
@@ -9,13 +27,19 @@ import java.awt.RenderingHints;
 
 import javax.swing.border.Border;
 
-public class FueledEtchedBorder implements Border {
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public final class SkinEtchedBorder implements Border {
 
     private final Color color;
-    
+
     private final Color bottomShadeColor;
 
-    public FueledEtchedBorder(Color color) {
+    public SkinEtchedBorder(Color color) {
         this.color = color;
         this.bottomShadeColor = new Color(255, 255, 255, 150);
     }
@@ -33,7 +57,7 @@ public class FueledEtchedBorder implements Border {
         //g2d.drawRect(x, y, w - 1, h - 1);
         g2d.drawRoundRect(x, y, w - 1, h - 2, 16, 16);
         g2d.setColor(bottomShadeColor);
-        
+
         g2d.drawLine(x + 7, h - 1, w - 7, h - 1);
         /*
         g2d.translate(x, y);
@@ -56,7 +80,7 @@ public class FueledEtchedBorder implements Border {
         // g2d.drawLine(0, h - 1, w - 1, h - 1);
         g2d.draw(new Line2D.Float(w - delta - strokeWidth, h - delta - strokeWidth, w - delta - strokeWidth, delta));
         // g2d.drawLine(w - 1, h - 1, w - 1, 0);
-*/
+        */
         g2d.dispose();
 
         // this is a fix for defect 248 - in order to paint the TitledBorder
