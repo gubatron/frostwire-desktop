@@ -86,9 +86,9 @@ public final class SkinScrollBarButtonPainter extends AbstractSkinPainter {
         case Enabled:
             return createVerticalGradient(s, SkinColors.SCROLL_BUTTON_ARROW_BOX_ENABLED_COLORS);
         case MouseOver:
-            return SkinColors.SCROLL_BUTTON_ARROW_BOX_MOUSEOVER_COLOR;
+            return createVerticalGradient(s, SkinColors.SCROLL_BUTTON_ARROW_BOX_MOUSEOVER_COLORS);
         case Pressed:
-            return SkinColors.SCROLL_BUTTON_ARROW_BOX_PRESSED_COLOR;
+            return createVerticalGradient(s, SkinColors.SCROLL_BUTTON_ARROW_BOX_PRESSED_COLORS);
         default:
             throw new IllegalArgumentException("Not supported state");
         }
@@ -101,9 +101,9 @@ public final class SkinScrollBarButtonPainter extends AbstractSkinPainter {
         case Enabled:
             return SkinColors.SCROLL_BUTTON_ARROW_BOX_BORDER_COLOR;
         case MouseOver:
-            return SkinColors.SCROLL_BUTTON_ARROW_BOX_MOUSEOVER_COLOR;
+            return SkinColors.SCROLL_BUTTON_ARROW_BOX_BORDER_COLOR;
         case Pressed:
-            return SkinColors.SCROLL_BUTTON_ARROW_BOX_PRESSED_COLOR;
+            return SkinColors.SCROLL_BUTTON_ARROW_BOX_BORDER_COLOR;
         default:
             throw new IllegalArgumentException("Not supported state");
         }
