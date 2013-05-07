@@ -18,6 +18,8 @@
 
 package com.frostwire.gui.theme;
 
+import java.awt.Graphics;
+
 import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.synth.SynthPanelUI;
@@ -33,5 +35,31 @@ public final class SkinPanelUI extends SynthPanelUI {
     public static ComponentUI createUI(JComponent comp) {
         ThemeMediator.testComponentCreationThreadingViolation();
         return new SkinPanelUI();
+    }
+
+    @Override
+    public void installUI(JComponent c) {
+        super.installUI(c);
+
+        if (Boolean.TRUE.equals(c.getClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND))) {
+            c.setOpaque(true);
+        } else {
+            c.setBackground(SkinColors.TRANSPARENT_COLOR);
+            c.setOpaque(false);
+        }
+    }
+
+    @Override
+    public void update(Graphics g, JComponent c) {
+        if (c.isOpaque()) {
+            g.setColor(SkinColors.DARK_BOX_BACKGROUND_COLOR);
+            if (c.getBorder() instanceof SkinTitledBorder) {
+                g.fillRoundRect(0, 0, c.getWidth() - 1, c.getHeight() - 2, 14, 14);
+            } else {
+                g.fillRect(0, 0, c.getWidth(), c.getHeight());
+            }
+        } else {
+            super.update(g, c);
+        }
     }
 }

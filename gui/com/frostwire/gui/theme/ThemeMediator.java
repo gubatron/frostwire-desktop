@@ -53,6 +53,8 @@ public class ThemeMediator {
 
     public static final Color TAB_BUTTON_FOREGROUND_COLOR = new Color(0x6489a8);
 
+    public static final String SKIN_PROPERTY_DARK_BOX_BACKGROUND = "skin_property_dark_box_background";
+
     /**
      * <tt>List</tt> of <tt>ThemeObserver</tt> classes to notify of
      * ui components of theme changes.
@@ -237,6 +239,7 @@ public class ThemeMediator {
         UIManager.put("ApplicationHeaderUI", "com.frostwire.gui.theme.SkinApplicationHeaderUI");
         UIManager.put("MultilineToolTipUI", "com.frostwire.gui.theme.SkinMultilineToolTipUI");
         UIManager.put("TreeUI", "com.frostwire.gui.theme.SkinTreeUI");
+        UIManager.put("TextFieldUI", "com.frostwire.gui.theme.SkinTextFieldUI");
 
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
     }

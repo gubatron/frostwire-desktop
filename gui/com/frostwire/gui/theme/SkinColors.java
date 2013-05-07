@@ -144,4 +144,6 @@ final class SkinColors {
     public static final Color TABLE_SELECTED_FOREGROUND_ROW_COLOR = new ColorUIResource(Color.BLACK);
 
     public static final Color TEXT_FONT_FREGROUND_COLOR = new ColorUIResource(55, 69, 82);
+
+    public static final Color TRANSPARENT_COLOR = new ColorUIResource(new Color(255, 255, 255, 0));
 }
