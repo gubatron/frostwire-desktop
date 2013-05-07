@@ -171,6 +171,8 @@ public class ThemeMediator {
                                 defaults.put("TableHeader:\"TableHeader.renderer\"[Pressed].backgroundPainter", new SkinTableHeaderPainter(SkinTableHeaderPainter.State.Pressed));
 
                                 // table
+                                defaults.put("Table.cellNoFocusBorder", new InsetsUIResource(0, 0, 0, 0));
+                                defaults.put("Table.focusCellHighlightBorder", new InsetsUIResource(0, 0, 0, 0));
                                 defaults.put("Table.alternateRowColor", new Color(SkinColors.TABLE_ALTERNATE_ROW_COLOR.getRGB()));
                                 defaults.put("Table[Enabled+Selected].textBackground", new Color(SkinColors.TABLE_SELECTED_BACKGROUND_ROW_COLOR.getRGB()));
                                 defaults.put("Table[Enabled+Selected].textForeground", SkinColors.TABLE_SELECTED_FOREGROUND_ROW_COLOR);
@@ -201,6 +203,10 @@ public class ThemeMediator {
                                 defaults.put("Tree.closedIcon", null);
                                 defaults.put("Tree.openIcon", null);
                                 defaults.put("Tree.leafIcon", null);
+
+                                // list
+                                defaults.put("List.cellNoFocusBorder", new InsetsUIResource(0, 0, 0, 0));
+                                defaults.put("List.focusCellHighlightBorder", new InsetsUIResource(0, 0, 0, 0));
 
                                 return defaults;
                             }
