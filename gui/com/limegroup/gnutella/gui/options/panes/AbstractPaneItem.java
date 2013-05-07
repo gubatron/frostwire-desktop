@@ -81,12 +81,6 @@ public abstract class AbstractPaneItem implements PaneItem {
 			add(getVerticalSeparator());
 		}
 	}
-    
-    protected void addLabel(String labelText) {
-        JComponent label = new MultiLineLabel(labelText, LABEL_WIDTH, true /* resizable */);
-        GUIUtils.restrictSize(label, SizePolicy.RESTRICT_HEIGHT);
-        add(label);
-    }
 
 	/**
 	 * Implements the <tt>PaneItem</tt> interface. <p>

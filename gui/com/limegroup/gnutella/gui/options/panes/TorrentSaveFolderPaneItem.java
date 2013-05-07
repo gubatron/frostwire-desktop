@@ -37,7 +37,7 @@ import com.limegroup.gnutella.settings.SharingSettings;
  * @author aldenml
  *
  */
-public class TorrentSaveFolderPaneItem extends AbstractPaneItem {
+public final class TorrentSaveFolderPaneItem extends AbstractPaneItem {
 
 	public final static String TITLE = I18n.tr("Default Save Folder");
 	
