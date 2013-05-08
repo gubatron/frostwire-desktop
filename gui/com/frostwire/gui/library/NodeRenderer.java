@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.Icon;
@@ -25,13 +27,18 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 
 import com.limegroup.gnutella.gui.I18n;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class NodeRenderer extends DefaultTreeCellRenderer {
-
-    private static final long serialVersionUID = -1834835893663476044L;
 
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
         super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+        
         if (value instanceof DirectoryHolderNode) {
             DirectoryHolderNode node = (DirectoryHolderNode) value;
             DirectoryHolder dh = node.getDirectoryHolder();

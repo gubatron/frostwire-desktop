@@ -124,11 +124,11 @@ public class ThemeMediator {
                                 //defaults.put("nimbusBase", new Color(SkinColors.GENERAL_BORDER_COLOR.getRGB()));
 
                                 // font color
-                                defaults.put("text", SkinColors.TEXT_FONT_FREGROUND_COLOR);
-                                defaults.put("controlText", SkinColors.TEXT_FONT_FREGROUND_COLOR);
-                                defaults.put("infoText", SkinColors.TEXT_FONT_FREGROUND_COLOR);
-                                defaults.put("menuText", SkinColors.TEXT_FONT_FREGROUND_COLOR);
-                                defaults.put("textForeground", SkinColors.TEXT_FONT_FREGROUND_COLOR);
+                                defaults.put("text", SkinColors.TEXT_FONT_FOREGROUND_COLOR);
+                                defaults.put("controlText", SkinColors.TEXT_FONT_FOREGROUND_COLOR);
+                                defaults.put("infoText", SkinColors.TEXT_FONT_FOREGROUND_COLOR);
+                                defaults.put("menuText", SkinColors.TEXT_FONT_FOREGROUND_COLOR);
+                                defaults.put("textForeground", SkinColors.TEXT_FONT_FOREGROUND_COLOR);
 
                                 FontUIResource font = getControlFont();
                                 if (font != null) {
@@ -203,6 +203,10 @@ public class ThemeMediator {
                                 defaults.put("Tree.closedIcon", null);
                                 defaults.put("Tree.openIcon", null);
                                 defaults.put("Tree.leafIcon", null);
+                                defaults.put("Tree.selectionForeground", SkinColors.TEXT_FONT_FOREGROUND_COLOR);
+                                defaults.put("Tree:TreeCell[Enabled+Selected].textForeground", SkinColors.TEXT_FONT_FOREGROUND_COLOR);
+                                defaults.put("Tree:TreeCell[Focused+Selected].textForeground", SkinColors.TEXT_FONT_FOREGROUND_COLOR);
+                                //defaults.put("Tree.rendererFillBackground", Boolean.TRUE);
 
                                 // list
                                 defaults.put("List.cellNoFocusBorder", new InsetsUIResource(0, 0, 0, 0));

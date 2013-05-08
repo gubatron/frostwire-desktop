@@ -36,8 +36,6 @@ import com.limegroup.gnutella.settings.UISettings;
  */
 public class LibraryLeftPanel extends JPanel {
 
-    private static final long serialVersionUID = -2924157073406477820L;
-
     public static final int MIN_WIDTH = 155;
     public static final int MAX_WIDTH = 300;
 

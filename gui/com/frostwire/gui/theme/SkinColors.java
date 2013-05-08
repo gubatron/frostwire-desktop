@@ -134,16 +134,16 @@ final class SkinColors {
 
     public static final Color TABLE_HEADER_BORDER_COLOR = new ColorUIResource(201, 201, 201);
 
+    public static final Color TABLE_ALTERNATE_ROW_COLOR = new ColorUIResource(243, 245, 247);
+    public static final Color TABLE_SELECTED_BACKGROUND_ROW_COLOR = new ColorUIResource(213, 221, 225);
+    public static final Color TABLE_SELECTED_FOREGROUND_ROW_COLOR = new ColorUIResource(Color.BLACK);
+
     public static final Color APPLICATION_HEADER_COLOR1 = new ColorUIResource(64, 113, 155);
     public static final Color APPLICATION_HEADER_COLOR2 = new ColorUIResource(49, 88, 120);
 
     public static final Color[] APPLICATION_HEADER_GRADIENT_COLORS = new Color[] { APPLICATION_HEADER_COLOR1, APPLICATION_HEADER_COLOR2 };
 
-    public static final Color TABLE_ALTERNATE_ROW_COLOR = new ColorUIResource(243, 245, 247);
-    public static final Color TABLE_SELECTED_BACKGROUND_ROW_COLOR = new ColorUIResource(213, 221, 225);
-    public static final Color TABLE_SELECTED_FOREGROUND_ROW_COLOR = new ColorUIResource(Color.BLACK);
-
-    public static final Color TEXT_FONT_FREGROUND_COLOR = new ColorUIResource(55, 69, 82);
+    public static final Color TEXT_FONT_FOREGROUND_COLOR = new ColorUIResource(55, 69, 82);
 
     public static final Color TRANSPARENT_COLOR = new ColorUIResource(new Color(255, 255, 255, 0));
 }
