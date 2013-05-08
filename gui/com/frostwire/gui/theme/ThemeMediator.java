@@ -122,6 +122,7 @@ public class ThemeMediator {
 
                                 defaults.put("control", SkinColors.LIGHT_BACKGROUND_COLOR);
                                 //defaults.put("nimbusBase", new Color(SkinColors.GENERAL_BORDER_COLOR.getRGB()));
+                                defaults.put("nimbusSelection", SkinColors.TABLE_SELECTED_BACKGROUND_ROW_COLOR);
 
                                 // font color
                                 defaults.put("text", SkinColors.TEXT_FONT_FOREGROUND_COLOR);
@@ -211,6 +212,14 @@ public class ThemeMediator {
                                 // list
                                 defaults.put("List.cellNoFocusBorder", new InsetsUIResource(0, 0, 0, 0));
                                 defaults.put("List.focusCellHighlightBorder", new InsetsUIResource(0, 0, 0, 0));
+
+                                // popup
+                                defaults.put("PopupMenu[Disabled].backgroundPainter", new SkinPopupMenuBackgroundPainter(SkinPopupMenuBackgroundPainter.State.Disabled));
+                                defaults.put("PopupMenu[Enabled].backgroundPainter", new SkinPopupMenuBackgroundPainter(SkinPopupMenuBackgroundPainter.State.Enabled));
+
+                                // menuitem
+                                defaults.put("MenuItem[Enabled].textForeground", SkinColors.TEXT_FONT_FOREGROUND_COLOR);
+                                defaults.put("MenuItem[MouseOver].backgroundPainter", new SkinMenuItemBackgroundPainter(SkinMenuItemBackgroundPainter.State.MouseOver));
 
                                 return defaults;
                             }
