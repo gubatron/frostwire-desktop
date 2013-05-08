@@ -22,6 +22,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.CellRendererPane;
 import javax.swing.JComponent;
@@ -37,6 +39,8 @@ import javax.swing.tree.TreePath;
  */
 public final class SkinTreeUI extends SynthTreeUI {
 
+    private SkinMouseListener mouseListener;
+
     public static ComponentUI createUI(JComponent comp) {
         ThemeMediator.testComponentCreationThreadingViolation();
         return new SkinTreeUI();
@@ -45,6 +49,14 @@ public final class SkinTreeUI extends SynthTreeUI {
     @Override
     protected CellRendererPane createCellRendererPane() {
         return new SkinCellRendererPane();
+    }
+
+    @Override
+    protected MouseListener createMouseListener() {
+        if (mouseListener == null) {
+            mouseListener = new SkinMouseListener(super.createMouseListener());
+        }
+        return mouseListener;
     }
 
     private void paintRowBackground(Graphics g, int x, int y, int w, int h) {
@@ -67,8 +79,9 @@ public final class SkinTreeUI extends SynthTreeUI {
         }
     }
 
-    private class SkinCellRendererPane extends CellRendererPane {
+    private final class SkinCellRendererPane extends CellRendererPane {
 
+        // the following code is copied from the parent method
         @Override
         public void paintComponent(Graphics g, Component c, Container p, int x, int y, int w, int h, boolean shouldValidate) {
             if (c == null) {
@@ -110,6 +123,44 @@ public final class SkinTreeUI extends SynthTreeUI {
             }
 
             c.setBounds(-w, -h, 0, 0);
+        }
+    }
+
+    private final class SkinMouseListener implements MouseListener {
+
+        private final MouseListener delegate;
+
+        public SkinMouseListener(MouseListener delegate) {
+            this.delegate = delegate;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            delegate.mouseClicked(e);
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            TreePath path = getClosestPathForLocation(tree, e.getX(), e.getY());
+            if (path != null) {
+                tree.setSelectionPath(path);
+            }
+            delegate.mousePressed(e);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            delegate.mouseReleased(e);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            delegate.mouseEntered(e);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            delegate.mouseExited(e);
         }
     }
 }
