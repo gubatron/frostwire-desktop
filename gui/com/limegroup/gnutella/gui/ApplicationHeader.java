@@ -102,12 +102,10 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
         createUpdateButton();
         add(updateButton, "growx");
 
-        JComponent player = new MediaPlayerComponent().getMediaPanel(true);
+        JComponent player = new MediaPlayerComponent().getMediaPanel();
 
         logoPanel = new LogoPanel();
         add(player, "dock east");
-
-        //addAudioPlayerComponent();
 
         GUIMediator.addRefreshListener(this);
         
@@ -149,7 +147,7 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
         gridLayout.setHgap(8);
 
         JPanel buttonContainer = new JPanel(gridLayout);
-        buttonContainer.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 32));
+        //buttonContainer.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 32));
         buttonContainer.setOpaque(false);
         ButtonGroup group = new ButtonGroup();
 

@@ -19,19 +19,23 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.FlowLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
+import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
@@ -48,14 +52,13 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.limegroup.gnutella.gui.MediaButton;
-import com.limegroup.gnutella.gui.MediaSlider;
 import com.limegroup.gnutella.gui.RefreshListener;
 
 /**
  * This class sets up JPanel with MediaPlayer on it, and takes care of GUI
  * MediaPlayer events.
  */
-public final class MediaPlayerComponent implements MediaPlayerListener, RefreshListener, ThemeObserver {
+public final class MediaPlayerComponent implements MediaPlayerListener, RefreshListener {
 
     public static final String STREAMING_AUDIO = "Streaming Audio";
 
@@ -63,7 +66,6 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
      * Constant for the play button.
      */
     private final MediaButton PLAY_BUTTON = new MediaButton(I18n.tr("Play"), "play_up", "play_dn");
-
 
     /**
      * Constant for the pause button.
@@ -85,7 +87,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     /**
      * Constant for the volume control
      */
-    private final MediaSlider VOLUME = new MediaSlider("volume_labels");
+    private final JSlider VOLUME = new JSlider();
 
     /**
      * Constant for the progress bar
@@ -137,20 +139,14 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         PLAYER.addMediaPlayerListener(this);
 
         GUIMediator.addRefreshListener(this);
-        ThemeMediator.addThemeObserver(this);
-
-    }
-
-    public JPanel getMediaPanel() {
-        return getMediaPanel(false);
     }
 
     /**
      * Gets the media panel, constructing it if necessary.
      */
-    public JPanel getMediaPanel(boolean showPlaybackModeControls) {
+    public JPanel getMediaPanel() {
         if (myMediaPanel == null)
-            myMediaPanel = constructMediaPanel(showPlaybackModeControls);
+            myMediaPanel = constructMediaPanel();
         return myMediaPanel;
     }
 
@@ -159,82 +155,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
      * 
      * @param showPlaybackModeControls
      */
-    private JPanel constructMediaPanel(boolean showPlaybackModeControls) {
-        /*
-        int tempHeight = 1;
-        tempHeight += PLAY_BUTTON.getIcon().getIconHeight() + 2;
-
-        // create sliders
-        PROGRESS.setMinimumSize(progressBarDimension);
-        PROGRESS.setMaximumSize(progressBarDimension);
-        PROGRESS.setPreferredSize(progressBarDimension);
-        PROGRESS.setMaximum(3600);
-        PROGRESS.setEnabled(false);
-
-        VOLUME.setMaximumSize(volumeSliderDimension);
-        VOLUME.setPreferredSize(volumeSliderDimension);
-        VOLUME.setMinimum(0);
-        VOLUME.setValue(50);
-        VOLUME.setMaximum(100);
-        VOLUME.setEnabled(true);
-        VOLUME.setOpaque(false);
-
-        // setup buttons
-        registerListeners();
-
-        // add everything
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 1));
-        buttonPanel.setOpaque(false);
-
-        buttonPanel.setMinimumSize(new Dimension(300, tempHeight));
-        buttonPanel.setPreferredSize(new Dimension(300, tempHeight));
-        buttonPanel.setMaximumSize(new Dimension(300, tempHeight));
-
-        if (showPlaybackModeControls) {
-            initPlaylistPlaybackModeControls();
-            buttonPanel.add(SHUFFLE_BUTTON);
-            buttonPanel.add(LOOP_BUTTON);
-        }
-
-        buttonPanel.add(VOLUME);
-        buttonPanel.add(Box.createHorizontalStrut(10));
-        buttonPanel.add(PREV_BUTTON);
-
-        PLAY_PAUSE_CARD_LAYOUT = new CardLayout();
-        PLAY_PAUSE_BUTTON_CONTAINER = new JPanel(PLAY_PAUSE_CARD_LAYOUT);
-        PLAY_PAUSE_BUTTON_CONTAINER.setOpaque(false);
-
-        PLAY_PAUSE_BUTTON_CONTAINER.add(PLAY_BUTTON, "PLAY");
-        PLAY_PAUSE_BUTTON_CONTAINER.add(PAUSE_BUTTON, "PAUSE");
-        buttonPanel.add(PLAY_PAUSE_BUTTON_CONTAINER);
-
-        buttonPanel.add(NEXT_BUTTON);
-        buttonPanel.add(Box.createHorizontalStrut(10));
-
-        // set font for time labels.
-        Font f = new Font(progressCurrentTime.getFont().getFontName(), Font.PLAIN, 10);
-
-        progressCurrentTime.setForeground(ThemeMediator.LIGHT_FOREGROUND_COLOR);
-        progressCurrentTime.setFont(f);
-
-        progressSongLength.setForeground(ThemeMediator.LIGHT_FOREGROUND_COLOR);
-        progressSongLength.setFont(f);
-
-        Dimension timeLabelsDimension = new Dimension(45, 11);
-        progressCurrentTime.setMinimumSize(timeLabelsDimension);
-        progressCurrentTime.setPreferredSize(timeLabelsDimension);
-        progressSongLength.setPreferredSize(timeLabelsDimension);
-        progressSongLength.setMinimumSize(timeLabelsDimension);
-
-        buttonPanel.add(progressCurrentTime);
-        buttonPanel.add(PROGRESS);
-        buttonPanel.add(progressSongLength);
-
-        return buttonPanel;
-        */
-        
-        int tempHeight = 1;
+    private JPanel constructMediaPanel() {
 
         // create sliders
         PROGRESS.setMinimumSize(progressBarDimension);
@@ -243,8 +164,9 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         PROGRESS.setMaximum(3600);
         PROGRESS.setEnabled(false);
 
-        VOLUME.setMaximumSize(volumeSliderDimension);
-        VOLUME.setPreferredSize(volumeSliderDimension);
+        //VOLUME.setMaximumSize(volumeSliderDimension);
+        //VOLUME.setPreferredSize(volumeSliderDimension);
+        VOLUME.setBorder(BorderFactory.createLineBorder(Color.BLUE));
         VOLUME.setMinimum(0);
         VOLUME.setValue(50);
         VOLUME.setMaximum(100);
@@ -254,15 +176,24 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         // setup buttons
         registerListeners();
 
-        // add everything
         JPanel panel = new JPanel();
-        //panel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_GRADIENT_BACKGROUND, ThemeMediator.CURRENT_THEME.getCustomUI().getPlayerBackground());
-        panel.setLayout(new MigLayout("flowy", "[][][][][][grow][][]"));
+        panel.setBorder(BorderFactory.createLineBorder(Color.RED));
+        panel.setLayout(new MigLayout("insets 0"));
 
-        tempHeight = 80;
-        panel.setMinimumSize(new Dimension(100, tempHeight));
+        panel.add(createPanelOne(), "span 1 2");
+        panel.add(createPanelTwo(), "wrap");
+        panel.add(createProgressPanel());
 
-        panel.add(PREV_BUTTON, "wrap, span 1 2");
+        return panel;
+    }
+
+    private JPanel createPanelOne() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+
+        panel.add(new JSeparator(SwingConstants.VERTICAL));
+
+        panel.add(PREV_BUTTON);
 
         PLAY_PAUSE_CARD_LAYOUT = new CardLayout();
         PLAY_PAUSE_BUTTON_CONTAINER = new JPanel(PLAY_PAUSE_CARD_LAYOUT);
@@ -270,20 +201,36 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
         PLAY_PAUSE_BUTTON_CONTAINER.add(PLAY_BUTTON, "PLAY");
         PLAY_PAUSE_BUTTON_CONTAINER.add(PAUSE_BUTTON, "PAUSE");
-        panel.add(PLAY_PAUSE_BUTTON_CONTAINER, "wrap, span 1 2");
+        panel.add(PLAY_PAUSE_BUTTON_CONTAINER);
 
-        panel.add(NEXT_BUTTON, "wrap, span 1 2");
+        panel.add(NEXT_BUTTON);
 
-        panel.add(new JSeparator(SwingConstants.VERTICAL), "wrap, span 1 2, growy");
+        panel.add(new JSeparator(SwingConstants.VERTICAL));
 
-        // set font for time labels.
-        Font f = new Font(progressCurrentTime.getFont().getFontName(), Font.PLAIN, 10);
+        return panel;
+    }
 
-        //progressCurrentTime.setForeground(ThemeMediator.CURRENT_THEME.getCustomUI().getLightForegroundColor());
-        progressCurrentTime.setFont(f);
+    private JPanel createPanelTwo() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new MigLayout("insets 0"));
 
-        //progressSongLength.setForeground(ThemeMediator.CURRENT_THEME.getCustomUI().getLightForegroundColor());
-        progressSongLength.setFont(f);
+        JLabel l = new JLabel("Test Test");
+        l.setForeground(Color.WHITE);
+        panel.add(l);
+
+        initPlaylistPlaybackModeControls();
+        panel.add(LOOP_BUTTON);
+        LOOP_BUTTON.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        panel.add(SHUFFLE_BUTTON);
+
+        panel.add(VOLUME);
+
+        return panel;
+    }
+
+    private JPanel createProgressPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new MigLayout("insets 0"));
 
         Dimension timeLabelsDimension = new Dimension(45, 11);
         progressCurrentTime.setMinimumSize(timeLabelsDimension);
@@ -291,20 +238,9 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         progressSongLength.setPreferredSize(timeLabelsDimension);
         progressSongLength.setMinimumSize(timeLabelsDimension);
 
-        panel.add(progressCurrentTime, "wrap, span 1 2, aligny bottom");
-        JLabel l = new JLabel("Test Test");
-        //l.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, true);
-        l.setForeground(Color.WHITE);
-        panel.add(l, "");
-        panel.add(PROGRESS, "wrap, growx");
-        panel.add(progressSongLength, "wrap, span 1 2, aligny bottom");
-
-        panel.add(new JSeparator(SwingConstants.VERTICAL), "wrap, span 1 2, growy");
-
-        initPlaylistPlaybackModeControls();
-        panel.add(SHUFFLE_BUTTON, "");
-        panel.add(VOLUME, "wrap, span 2 1");
-        panel.add(LOOP_BUTTON, "");
+        panel.add(progressCurrentTime);
+        panel.add(PROGRESS);
+        panel.add(progressSongLength);
 
         return panel;
     }
@@ -318,14 +254,16 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         SHUFFLE_BUTTON.setSelectedIcon(GUIMediator.getThemeImage("shuffle_on"));
         SHUFFLE_BUTTON.setToolTipText(I18n.tr("Shuffle songs"));
         SHUFFLE_BUTTON.setSelected(PLAYER.isShuffle());
+        SHUFFLE_BUTTON.setMargin(new Insets(0, 0, 0, 0));
 
         LOOP_BUTTON = new JButton();
-        LOOP_BUTTON.setBorderPainted(false);
+        //LOOP_BUTTON.setBorderPainted(false);
         LOOP_BUTTON.setContentAreaFilled(false);
         LOOP_BUTTON.setBackground(null);
         LOOP_BUTTON.setIcon(getCurrentLoopButtonImage());
         LOOP_BUTTON.setToolTipText(I18n.tr("Repeat songs"));
-        
+        LOOP_BUTTON.setMargin(new Insets(0, 0, 0, 0));
+
         SHUFFLE_BUTTON.addActionListener(new ActionListener() {
 
             @Override
@@ -337,7 +275,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         LOOP_BUTTON.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PLAYER.setRepeatMode( PLAYER.getRepeatMode().getNextState());
+                PLAYER.setRepeatMode(PLAYER.getRepeatMode().getNextState());
                 LOOP_BUTTON.setIcon(getCurrentLoopButtonImage());
             }
         });
@@ -345,14 +283,15 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     }
 
     private ImageIcon getCurrentLoopButtonImage() {
-    	if (PLAYER.getRepeatMode() == RepeatMode.ALL) {
-    		return GUIMediator.getThemeImage("loop_all");
-    	} else if (PLAYER.getRepeatMode() == RepeatMode.SONG) {
-    		return GUIMediator.getThemeImage("loop_one");
-    	} else { // RepeatMode.None
-    		return GUIMediator.getThemeImage("loop_off");
-    	}
+        if (PLAYER.getRepeatMode() == RepeatMode.ALL) {
+            return GUIMediator.getThemeImage("loop_all");
+        } else if (PLAYER.getRepeatMode() == RepeatMode.SONG) {
+            return GUIMediator.getThemeImage("loop_one");
+        } else { // RepeatMode.None
+            return GUIMediator.getThemeImage("loop_off");
+        }
     }
+
     private void showPauseButton() {
         PLAY_PAUSE_CARD_LAYOUT.show(PLAY_PAUSE_BUTTON_CONTAINER, "PAUSE");
     }
@@ -384,14 +323,6 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
      */
     public void refresh() {
         PLAYER.refresh();
-    }
-
-    public void updateTheme() {
-        PLAY_BUTTON.updateTheme();
-        PAUSE_BUTTON.updateTheme();
-        NEXT_BUTTON.updateTheme();
-        PREV_BUTTON.updateTheme();
-        VOLUME.updateTheme();
     }
 
     /**
@@ -433,8 +364,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
      * Begins playing the loaded song
      */
     public void play() {
-    	
-    	
+
         if (PLAYER.getCurrentMedia() != null) {
             if (PLAYER.getState() == MediaPlaybackState.Paused || PLAYER.getState() == MediaPlaybackState.Playing) {
                 PLAYER.togglePause();
@@ -445,7 +375,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             }
         }
     }
-    
+
     /**
      * Toggles full screen view
      */
@@ -627,10 +557,6 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         }
         return res.toString();
     }
-
-    
-
-    
 
     // private String getName(String url) {
     // int ilast = url.lastIndexOf('/');

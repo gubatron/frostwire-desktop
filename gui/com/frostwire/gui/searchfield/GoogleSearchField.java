@@ -53,8 +53,6 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  */
 public final class GoogleSearchField extends SearchField {
 
-    private static final long serialVersionUID = -7677894485818144062L;
-
     private static final String SUGGESTIONS_URL = buildSuggestionsUrl();
     private static final int HTTP_QUERY_TIMEOUT = 1000;
 
