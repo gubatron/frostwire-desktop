@@ -362,7 +362,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      */
     private LibraryFilesTableMediator() {
         super("LIBRARY_FILES_TABLE");
-        ThemeMediator.addThemeObserver(this);
     }
 
     /**

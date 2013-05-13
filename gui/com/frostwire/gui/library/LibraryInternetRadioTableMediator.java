@@ -192,7 +192,6 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     private LibraryInternetRadioTableMediator() {
         super("LIBRARY_INTERNET_RADIO_TABLE");
         setMediaType(MediaType.getAudioMediaType());
-        ThemeMediator.addThemeObserver(this);
 
         LimeTableColumn genreColumn = LibraryInternetRadioTableDataLine.GENRE_COLUMN;
 

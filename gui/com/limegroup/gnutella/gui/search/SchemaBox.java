@@ -16,7 +16,6 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +28,8 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.AbstractButton;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -62,11 +63,6 @@ final class SchemaBox extends JPanel {
     private static final String DESELECTED = "DESELECTED_ICON";
 
     /**
-     * The panel containing the schemas.
-     */
-    private final JPanel SCHEMAS;
-
-    /**
      * The listener for changing the highlighting of buttons.
      */
     private final ItemListener HIGHLIGHTER = new Highlighter();
@@ -84,11 +80,10 @@ final class SchemaBox extends JPanel {
      * Constructs the SchemaBox.
      */
     SchemaBox() {
+        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         List<NamedMediaType> allSchemas = NamedMediaType.getAllNamedMediaTypes();
-        SCHEMAS = new JPanel();
-        SCHEMAS.setLayout(new FlowLayout());
         addSchemas(allSchemas);
-        add(SCHEMAS);
+        add(Box.createHorizontalGlue());
     }
 
     /**
@@ -161,7 +156,7 @@ final class SchemaBox extends JPanel {
             button.setToolTipText(toolTip);
         }
 
-        SCHEMAS.add(button);
+        add(button);
 
         if (SearchSettings.LAST_MEDIA_TYPE_USED.getValue().contains(type.getMediaType().getMimeType())) {
             button.setSelected(true);

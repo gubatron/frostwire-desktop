@@ -484,7 +484,6 @@ public final class SearchResultDisplayer implements RefreshListener {
 
         fixIcons();
         SearchMediator.searchKilled(killed);
-        ThemeMediator.removeThemeObserver(killed);
 
         if (entries.size() == 0) {
             try {

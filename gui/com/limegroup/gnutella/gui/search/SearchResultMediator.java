@@ -15,38 +15,51 @@
 
 package com.limegroup.gnutella.gui.search;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.OverlayLayout;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import org.limewire.i18n.I18nMarker;
+import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -187,7 +200,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     protected void setupConstants() {
 
         FILTER = new CompositeFilter(4);
-        MAIN_PANEL = new PaddedPanel();
+        MAIN_PANEL = new PaddedPanel(0);
 
         setupDataModel();
 
@@ -667,10 +680,112 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         }
     }
 
+    @Override
+    protected JComponent getScrolledTablePane() {
+        if (TABLE_PANE != null)
+            return TABLE_PANE;
+
+        JPanel tablePane = new JPanel();
+        tablePane.setLayout(new BoxLayout(tablePane, BoxLayout.LINE_AXIS));
+
+        SCROLL_PANE = new JScrollPane(TABLE);
+
+        tablePane.add(SCROLL_PANE);
+
+        tablePane.add(createSearchOptionsPanel());
+
+        TABLE_PANE = tablePane;
+
+        return tablePane;
+    }
+
     private Component createSchemaBox() {
         SchemaBox panel = new SchemaBox();
+        panel.setBorder(BorderFactory.createLineBorder(Color.RED));
+
+        // reusing schema box panel for more options button
+        // minor optimization to keep the layout as flat as possible
+        panel.add(new JButton(I18n.tr("Hide Options")));
 
         return panel;
+    }
+
+    private JComponent createSearchOptionsPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+
+        JPanel controls = new JPanel();
+        controls.setBorder(ThemeMediator.createTitledBorder(I18n.tr("Search Engines")));
+        controls.setLayout(new GridBagLayout());
+        controls.setAlignmentX(0.0f);
+        List<SearchEngine> searchEngines = SearchEngine.getEngines();
+        setupCheckboxes(searchEngines, controls);
+        panel.add(controls);
+
+        panel.add(Box.createVerticalStrut(15));
+
+        SearchFilterPanel _filterPanel = new SearchFilterPanel();
+        _filterPanel.setBorder(ThemeMediator.createTitledBorder(I18n.tr("Filter")));
+        _filterPanel.setAlignmentX(0.0f);
+        panel.add(_filterPanel);
+
+        JScrollPane sp = new JScrollPane(panel);
+        sp.setBorder(BorderFactory.createEmptyBorder());
+        Dimension d = new Dimension(100, 70000);
+        sp.setPreferredSize(d);
+        
+        return sp;
+    }
+
+    private void setupCheckboxes(List<SearchEngine> searchEngines, JPanel parent) {
+
+        final Map<JCheckBox, BooleanSetting> cBoxes = new HashMap<JCheckBox, BooleanSetting>();
+
+        ItemListener listener = new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                boolean allDeSelected = true;
+
+                for (JCheckBox cBox : cBoxes.keySet()) {
+                    if (cBox.isSelected()) {
+                        allDeSelected = false;
+                        break;
+                    }
+                }
+
+                if (allDeSelected) {
+                    ((JCheckBox) e.getItemSelectable()).setSelected(true);
+                }
+
+                for (JCheckBox cBox : cBoxes.keySet()) {
+                    cBoxes.get(cBox).setValue(cBox.isSelected());
+                }
+
+                updateSearchResults(new SearchEngineFilter());
+            }
+        };
+
+        for (SearchEngine se : searchEngines) {
+            JCheckBox cBox = new JCheckBox(se.getName());
+            cBox.setSelected(se.isEnabled());
+
+            GridBagConstraints c = new GridBagConstraints();
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.weightx = 1.0;
+            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.insets = new Insets(0, 10, 2, 10);
+            parent.add(cBox, c);
+
+            cBoxes.put(cBox, se.getEnabledSetting());
+            cBox.addItemListener(listener);
+        }
+
+    }
+
+    private void updateSearchResults(TableLineFilter<SearchResultDataLine> filter) {
+        List<SearchResultMediator> resultPanels = SearchMediator.getSearchResultDisplayer().getResultPanels();
+        for (SearchResultMediator resultPanel : resultPanels) {
+            resultPanel.filterChanged(filter, 0);
+        }
     }
 
     /**

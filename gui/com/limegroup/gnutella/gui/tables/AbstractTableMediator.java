@@ -29,7 +29,6 @@ import java.util.Date;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.CellEditor;
@@ -41,7 +40,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
-import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -50,7 +48,6 @@ import javax.swing.table.TableCellRenderer;
 
 import org.limewire.util.StringUtils;
 
-import com.frostwire.gui.theme.ThemeObserver;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.PaddedPanel;
@@ -73,7 +70,7 @@ import com.limegroup.gnutella.gui.PaddedPanel;
  *   Refreshing the DATA_MODEL from the RefreshListener's call.
  *   @author Sam Berlin
  */
-public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E extends DataLine<I>, I> implements ComponentMediator<I>, HeaderMouseObserver, ThemeObserver {
+public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E extends DataLine<I>, I> implements ComponentMediator<I>, HeaderMouseObserver {
 
     /**
      * The ID that uniquely defines this table.
@@ -450,12 +447,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         tablePane.setLayout(new BoxLayout(tablePane, BoxLayout.Y_AXIS));
 
         SCROLL_PANE = new JScrollPane(TABLE);
-        //Add the nice 3d bevel to the top-right corner
-        JPanel corner = new JPanel();
-        corner.setBackground(TABLE.getTableHeader().getBackground());
-        corner.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        SCROLL_PANE.setCorner(JScrollPane.UPPER_RIGHT_CORNER, corner);
-
+        
         tablePane.add(SCROLL_PANE);
 
         TABLE_PANE = tablePane;
@@ -465,19 +457,6 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
     
     public T getDataModel() {
         return DATA_MODEL;
-    }
-
-    public void updateTheme() {
-        //        Color tableColor = SkinHandler.getTableBackgroundColor();
-        //        
-        //        if (TABLE_PANE == null) {
-        //            return;
-        //        }
-        //
-        //        TABLE_PANE.setBackground(tableColor);
-        //        TABLE.setBackground(tableColor);
-        //        TABLE.setOpaque(true);
-        //        SCROLL_PANE.getViewport().setBackground(tableColor);
     }
 
     /**

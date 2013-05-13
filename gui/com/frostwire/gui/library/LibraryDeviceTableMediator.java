@@ -190,7 +190,6 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     private LibraryDeviceTableMediator() {
         super("LIBRARY_DEVICE_TABLE");
         setMediaType(MediaType.getAnyTypeMediaType());
-        ThemeMediator.addThemeObserver(this);
     }
 
     /**

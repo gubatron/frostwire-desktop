@@ -135,14 +135,14 @@ class SearchInputPanel extends JPanel {
         add(SEARCH_FIELD);
         add(Box.createVerticalStrut(5));
         add(createSearchButtonPanel());
-        JPanel cp = createSearchOptionsPanel();
-        JPanel p = new JPanel(new BorderLayout());
-        p.add(cp, BorderLayout.PAGE_START);
-        JScrollPane sp = new JScrollPane(p);
-        sp.setBorder(BorderFactory.createEmptyBorder());
-        Dimension d = new Dimension(100, 70000);
-        sp.setPreferredSize(d);
-        add(sp);
+        //JPanel cp = createSearchOptionsPanel();
+        //JPanel p = new JPanel(new BorderLayout());
+        //p.add(cp, BorderLayout.PAGE_START);
+//        JScrollPane sp = new JScrollPane(p);
+//        sp.setBorder(BorderFactory.createEmptyBorder());
+//        Dimension d = new Dimension(100, 70000);
+//        sp.setPreferredSize(d);
+//        add(sp);
 
         Font origFont = SEARCH_FIELD.getFont();
         Font newFont = origFont.deriveFont(origFont.getSize2D() + 2f);

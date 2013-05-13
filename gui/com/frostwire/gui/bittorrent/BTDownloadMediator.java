@@ -267,7 +267,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     private BTDownloadMediator() {
         super("DOWNLOAD_TABLE");
         GUIMediator.addRefreshListener(this);
-        ThemeMediator.addThemeObserver(this);
 
         restoreSorting();
     }
