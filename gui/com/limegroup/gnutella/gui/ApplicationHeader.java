@@ -1,9 +1,7 @@
 package com.limegroup.gnutella.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -26,17 +24,25 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
+import javax.swing.text.BadLocationException;
 
 import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.player.MediaPlayerComponent;
+import com.frostwire.gui.searchfield.GoogleSearchField;
 import com.frostwire.gui.tabs.Tab;
 import com.frostwire.gui.theme.SkinApplicationHeaderUI;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.gui.updates.UpdateMediator;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
+import com.limegroup.gnutella.gui.actions.FileMenuActions;
+import com.limegroup.gnutella.gui.search.SearchInformation;
+import com.limegroup.gnutella.gui.search.SearchMediator;
+import com.limegroup.gnutella.settings.SearchSettings;
 
 public class ApplicationHeader extends JPanel implements RefreshListener {
 
@@ -72,24 +78,30 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
     private ImageIcon updateImageButtonOn;
     private ImageIcon updateImageButtonOff;
 
-    /** Contains the Update Button and the Player */
-    private JPanel eastPanel;
+    private GoogleSearchField searchField;
 
     public ApplicationHeader(Map<Tabs, Tab> tabs) {
         setMinimumSize(new Dimension(300, 54));
-        setLayout(new MigLayout("", "[][][grow][]"));
+        setLayout(new MigLayout("", "[][][][grow][]"));
 
         headerButtonBackgroundSelected = GUIMediator.getThemeImage("selected_header_button_background").getImage();
         headerButtonBackgroundUnselected = GUIMediator.getThemeImage("unselected_header_button_background").getImage();
 
-        JPanel searchInput = new JPanel();
-        add(searchInput);
+        searchField = new GoogleSearchField();
+        searchField.addActionListener(new SearchListener());
+        searchField.setPrompt(I18n.tr("Search or enter URL"));
+        searchField.setMinimumSize(new Dimension(100, 27));
+        Font origFont = searchField.getFont();
+        Font newFont = origFont.deriveFont(origFont.getSize2D() + 2f);
+        searchField.setFont(newFont);
+        final ActionListener schemaListener = new SchemaListener();
+        add(searchField);
 
         addTabButtons(tabs);
 
         createUpdateButton();
         add(updateButton, "growx");
-        
+
         JComponent player = new MediaPlayerComponent().getMediaPanel(true);
 
         logoPanel = new LogoPanel();
@@ -98,38 +110,9 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
         //addAudioPlayerComponent();
 
         GUIMediator.addRefreshListener(this);
+        
+        schemaListener.actionPerformed(null);
 
-    }
-
-    private void addEastPanel() {
-        eastPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
-        eastPanel.setOpaque(false);
-        add(eastPanel, BorderLayout.LINE_END);
-    }
-
-    private void addAudioPlayerComponent() {
-        final JPanel mediaPanel = new MediaPlayerComponent().getMediaPanel(true);
-        mediaPanel.setMinimumSize(new Dimension(300, 45));
-        mediaPanel.setPreferredSize(new Dimension(300, 45));
-
-        mediaPanel.setBorder(BorderFactory.createEmptyBorder(2, 1, 6, 11));
-
-        final Image audioPlayerBackground = GUIMediator.getThemeImage("audio_player_background").getImage();
-
-        @SuppressWarnings("serial")
-        final JPanel mediaPanelFrame = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                g.drawImage(audioPlayerBackground, 0, (getHeight() - mediaPanel.getHeight()) / 2, null);
-                super.paintComponent(g);
-            }
-        };
-
-        //mediaPanelFrame.setBorder(BorderFactory.createEmptyBorder(4,1,6,11));
-        mediaPanelFrame.setOpaque(false);
-        mediaPanelFrame.add(mediaPanel);
-
-        eastPanel.add(mediaPanelFrame);
     }
 
     private void createUpdateButton() {
@@ -410,5 +393,70 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
     @Override
     public String getUIClassID() {
         return "ApplicationHeaderUI";
+    }
+    
+    public void requestSearchFocusImmediately() {
+        if (searchField != null) {
+            searchField.requestFocus();
+        }
+    }
+
+    public void requestSearchFocus() {
+        // Workaround for bug manifested on Java 1.3 where FocusEvents
+        // are improperly posted, causing BasicTabbedPaneUI to throw an
+        // ArrayIndexOutOfBoundsException.
+        // See:
+        // http://developer.java.sun.com/developer/bugParade/bugs/4523606.html
+        // http://developer.java.sun.com/developer/bugParade/bugs/4379600.html
+        // http://developer.java.sun.com/developer/bugParade/bugs/4128120.html
+        // for related problems.
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                requestSearchFocusImmediately();
+            }
+        });
+    }
+    
+    private class SearchListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String query = searchField.getText();
+
+            //start a download from the search box by entering a URL.
+            if (FileMenuActions.openMagnetOrTorrent(query)) {
+                searchField.setText("");
+                searchField.hidePopup();
+                return;
+            }
+
+            final SearchInformation info = SearchInformation.createTitledKeywordSearch(query, null, MediaType.getTorrentMediaType(), query);
+
+            // If the search worked, store & clear it.
+            if (SearchMediator.instance().triggerSearch(info) != 0) {
+                if (info.isKeywordSearch()) {
+
+                    searchField.addToDictionary();
+
+                    // Clear the existing search.
+                    searchField.setText("");
+                    searchField.hidePopup();
+                }
+            }
+        }
+    }
+    
+    private class SchemaListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            SearchSettings.MAX_QUERY_LENGTH.revertToDefault();
+
+            //Truncate if you have too much text for a gnutella search
+            if (searchField.getText().length() > SearchSettings.MAX_QUERY_LENGTH.getValue()) {
+                try {
+                    searchField.setText(searchField.getText(0, SearchSettings.MAX_QUERY_LENGTH.getValue()));
+                } catch (BadLocationException e) {
+                }
+            }
+
+            requestSearchFocus();
+        }
     }
 }

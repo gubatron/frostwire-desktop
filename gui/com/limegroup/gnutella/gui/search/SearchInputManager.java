@@ -15,9 +15,11 @@ import javax.swing.SwingUtilities;
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.gui.theme.ThemeObserver;
+import com.limegroup.gnutella.gui.ApplicationHeader;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconButton;
+import com.limegroup.gnutella.gui.MainFrame;
 import com.limegroup.gnutella.gui.actions.FileMenuActions;
 import com.limegroup.gnutella.gui.actions.FileMenuActions.OpenMagnetTorrentAction;
 
@@ -55,7 +57,7 @@ final class SearchInputManager implements ThemeObserver {
 
         getMainPanel().removeAll();
         getMainPanel().add(SEARCH, BorderLayout.CENTER);
-        
+
         getMainPanel().add(createTorrentActionsPanel(), BorderLayout.PAGE_END);
 
         getComponent().removeAll();
@@ -66,14 +68,6 @@ final class SearchInputManager implements ThemeObserver {
         c.weighty = 1;
         c.insets = new Insets(0, 0, 0, 0);
         getComponent().add(MAIN_PANEL, c);
-    }
-
-    void goToSearch() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                requestSearchFocus(false);
-            }
-        });
     }
 
     void requestSearchFocus() {
@@ -90,7 +84,7 @@ final class SearchInputManager implements ThemeObserver {
     JComponent getComponent() {
         if (COMPONENT_PANEL == null) {
             COMPONENT_PANEL = new JPanel(new GridBagLayout());
-            
+
             COMPONENT_PANEL.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, ThemeMediator.DARK_BORDER_COLOR));
         }
         return COMPONENT_PANEL;
@@ -102,12 +96,12 @@ final class SearchInputManager implements ThemeObserver {
     void panelReset(SearchResultMediator rp) {
         SEARCH.panelReset(rp);
     }
-    
+
     /**
      * Removes the filter associated with the specified result panel.
      */
     void panelRemoved(SearchResultMediator rp) {
-        if(SEARCH.panelRemoved(rp))
+        if (SEARCH.panelRemoved(rp))
             requestSearchFocus(false);
     }
 
@@ -115,10 +109,12 @@ final class SearchInputManager implements ThemeObserver {
      * Requests focus for the search field.
      */
     private void requestSearchFocus(boolean immediate) {
-        if (immediate)
-            SEARCH.requestSearchFocusImmediately();
-        else
-            SEARCH.requestSearchFocus();
+        ApplicationHeader header = GUIMediator.instance().getMainFrame().getApplicationHeader();
+        if (immediate) {
+            header.requestSearchFocusImmediately();
+        } else {
+            header.requestSearchFocus();
+        }
     }
 
     private JPanel getMainPanel() {
@@ -135,11 +131,11 @@ final class SearchInputManager implements ThemeObserver {
     public void setFiltersFor(SearchResultMediator rp) {
         SEARCH.setFiltersFor(rp);
     }
-    
+
     private JPanel createTorrentActionsPanel() {
-        
+
         JPanel buttons_container = new JPanel();
-        
+
         //OPEN TORRENT
         IconButton openTorrentButton = new IconButton("Open", "OPEN_TORRENT");
         openTorrentButton.setToolTipText(I18n.tr("Open a .torrent or Magnet link or YouTube video link"));
@@ -151,12 +147,12 @@ final class SearchInputManager implements ThemeObserver {
                 openMagnetTorrentAction.actionPerformed(null);
             }
         });
-        
+
         //SEND FILE
-        IconButton sendFileButton = new IconButton("Send","SHARE");
+        IconButton sendFileButton = new IconButton("Send", "SHARE");
         sendFileButton.setToolTipText(I18n.tr("Send a file or folder to a friend (No size limit, No third parties involved)"));
         sendFileButton.addActionListener(new ActionListener() {
-            
+
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 SendFileProgressDialog dlg = new SendFileProgressDialog(GUIMediator.getAppFrame());
@@ -166,7 +162,7 @@ final class SearchInputManager implements ThemeObserver {
 
         buttons_container.add(openTorrentButton);
         buttons_container.add(sendFileButton);
-        
+
         return buttons_container;
     }
 

@@ -67,7 +67,7 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  * This class constructs the main <tt>JFrame</tt> for the program as well as 
  * all of the other GUI classes.  
  */
-public final class MainFrame implements  ThemeObserver {
+public final class MainFrame  {
 
     /**
      * Handle to the <tt>JTabbedPane</tt> instance.
@@ -237,7 +237,7 @@ public final class MainFrame implements  ThemeObserver {
         
         setMinimalSize(FRAME, getStatusLine().getComponent(), APPLICATION_HEADER, TABBED_PANE, getStatusLine().getComponent());
 
-        ThemeMediator.addThemeObserver(this);
+        FRAME.setJMenuBar(getMenuMediator().getMenuBar());
 
         if (ApplicationSettings.MAGNET_CLIPBOARD_LISTENER.getValue()) {
             FRAME.addWindowListener(MagnetClipboardListener.getInstance());
@@ -289,15 +289,6 @@ public final class MainFrame implements  ThemeObserver {
                 lastState = null;
             }
         }
-    }
-
-    public void updateTheme() {
-        FRAME.setJMenuBar(getMenuMediator().getMenuBar());
-        //LOGO_PANEL.updateTheme();
-        //setSearchIconLocation();
-        //updateLogoHeight();
-        //for(GUIMediator.Tabs tab : GUIMediator.Tabs.values())
-        //  updateTabIcon(tab);
     }
     
     /**

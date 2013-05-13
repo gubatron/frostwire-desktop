@@ -49,11 +49,6 @@ import com.limegroup.gnutella.settings.SearchSettings;
 class SearchInputPanel extends JPanel {
 
     /**
-     * The sole input text field that is at the top of all searches.
-     */
-    private final GoogleSearchField SEARCH_FIELD = new GoogleSearchField();
-
-    /**
      * The box that holds the schemas for searching.
      */
 
@@ -67,44 +62,16 @@ class SearchInputPanel extends JPanel {
     /**
      * The listener for new searches.
      */
-    private final ActionListener SEARCH_LISTENER = new SearchListener();
 
     private JPanel SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
 
     private SearchFilterPanel _filterPanel;
 
     SearchInputPanel() {
-        final ActionListener schemaListener = new SchemaListener();
-
-        SEARCH_FIELD.addActionListener(SEARCH_LISTENER);
 
         createDefaultSearchPanel();
 
         setBorder(BorderFactory.createEmptyBorder(0, 3, 5, 2));
-
-        schemaListener.actionPerformed(null);
-    }
-
-    void requestSearchFocusImmediately() {
-        if (SEARCH_FIELD != null) {
-            SEARCH_FIELD.requestFocus();
-        }
-    }
-
-    void requestSearchFocus() {
-        // Workaround for bug manifested on Java 1.3 where FocusEvents
-        // are improperly posted, causing BasicTabbedPaneUI to throw an
-        // ArrayIndexOutOfBoundsException.
-        // See:
-        // http://developer.java.sun.com/developer/bugParade/bugs/4523606.html
-        // http://developer.java.sun.com/developer/bugParade/bugs/4379600.html
-        // http://developer.java.sun.com/developer/bugParade/bugs/4128120.html
-        // for related problems.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                requestSearchFocusImmediately();
-            }
-        });
     }
 
     /**
@@ -130,23 +97,17 @@ class SearchInputPanel extends JPanel {
     private void createDefaultSearchPanel() {
         setLayout(new BoxLayout(this, BoxPanel.Y_AXIS));
         add(Box.createVerticalStrut(3));
-        SEARCH_FIELD.setPrompt(I18n.tr("Search or enter URL"));
-        SEARCH_FIELD.setMinimumSize(new Dimension(100, 27));
-        add(SEARCH_FIELD);
         add(Box.createVerticalStrut(5));
         add(createSearchButtonPanel());
         //JPanel cp = createSearchOptionsPanel();
         //JPanel p = new JPanel(new BorderLayout());
         //p.add(cp, BorderLayout.PAGE_START);
-//        JScrollPane sp = new JScrollPane(p);
-//        sp.setBorder(BorderFactory.createEmptyBorder());
-//        Dimension d = new Dimension(100, 70000);
-//        sp.setPreferredSize(d);
-//        add(sp);
+        //        JScrollPane sp = new JScrollPane(p);
+        //        sp.setBorder(BorderFactory.createEmptyBorder());
+        //        Dimension d = new Dimension(100, 70000);
+        //        sp.setPreferredSize(d);
+        //        add(sp);
 
-        Font origFont = SEARCH_FIELD.getFont();
-        Font newFont = origFont.deriveFont(origFont.getSize2D() + 2f);
-        SEARCH_FIELD.setFont(newFont);
     }
 
     private JPanel createSearchOptionsPanel() {
@@ -310,55 +271,6 @@ class SearchInputPanel extends JPanel {
         iconButton.setPreferredSize(new Dimension(16, 16));
     }
 
-    /**
-     * Listener for selecting a new schema.
-     */
-    private class SchemaListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            SearchSettings.MAX_QUERY_LENGTH.revertToDefault();
-
-            //Truncate if you have too much text for a gnutella search
-            if (SEARCH_FIELD.getText().length() > SearchSettings.MAX_QUERY_LENGTH.getValue()) {
-                try {
-                    SEARCH_FIELD.setText(SEARCH_FIELD.getText(0, SearchSettings.MAX_QUERY_LENGTH.getValue()));
-                } catch (BadLocationException e) {
-                }
-            }
-
-            requestSearchFocus();
-        }
-    }
-
-    /**
-     * Listener for starting a new search.
-     */
-    private class SearchListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            String query = SEARCH_FIELD.getText();
-
-            //start a download from the search box by entering a URL.
-            if (FileMenuActions.openMagnetOrTorrent(query)) {
-                SEARCH_FIELD.setText("");
-                SEARCH_FIELD.hidePopup();
-                return;
-            }
-
-            final SearchInformation info = SearchInformation.createTitledKeywordSearch(query, null, MediaType.getTorrentMediaType(), query);
-
-            // If the search worked, store & clear it.
-            if (SearchMediator.instance().triggerSearch(info) != 0) {
-                if (info.isKeywordSearch()) {
-
-                    SEARCH_FIELD.addToDictionary();
-
-                    // Clear the existing search.
-                    SEARCH_FIELD.setText("");
-                    SEARCH_FIELD.hidePopup();
-                }
-            }
-        }
-    }
-
     private class ToggleSearchOptionsPanelAction extends AbstractAction {
 
         private final String TOOLTIP_COLLAPSED = I18n.tr("Show search result filter controls");
@@ -375,15 +287,15 @@ class SearchInputPanel extends JPanel {
 
             Icon iconForButton = null;
 
-//            if (!SEARCH_OPTIONS_COLLAPSIBLE_PANEL.isCollapsed()) {
-//                iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_LESS");
-//                ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.setValue(false);
-//                putValue(SHORT_DESCRIPTION, TOOLTIP_SHOWN);
-//            } else {
-//                iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE");
-//                ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.setValue(true);
-//                putValue(SHORT_DESCRIPTION, TOOLTIP_COLLAPSED);
-//            }
+            //            if (!SEARCH_OPTIONS_COLLAPSIBLE_PANEL.isCollapsed()) {
+            //                iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_LESS");
+            //                ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.setValue(false);
+            //                putValue(SHORT_DESCRIPTION, TOOLTIP_SHOWN);
+            //            } else {
+            //                iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE");
+            //                ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.setValue(true);
+            //                putValue(SHORT_DESCRIPTION, TOOLTIP_COLLAPSED);
+            //            }
 
             iconButton.setIcon(iconForButton);
             fixIconButton(iconButton);
@@ -396,7 +308,7 @@ class SearchInputPanel extends JPanel {
     }
 
     public void setFiltersFor(SearchResultMediator rp) {
-        _filterPanel.setFilterFor(rp);
+        //_filterPanel.setFilterFor(rp);
         //SCHEMA_BOX.setFilterFor(rp);
     }
 
