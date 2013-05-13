@@ -135,6 +135,9 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
     public AtomicInteger searchCount = new AtomicInteger(0);
 
+    private SearchFilterPanel filterPanel;
+    private JComponent panelSearchOptions;
+
     /**
      * Specialized constructor for creating a "dummy" result panel.
      * This should only be called once at search window creation-time.
@@ -692,7 +695,9 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
         tablePane.add(SCROLL_PANE);
 
-        tablePane.add(createSearchOptionsPanel());
+        panelSearchOptions = createSearchOptionsPanel();
+        panelSearchOptions.setVisible(false);
+        tablePane.add(panelSearchOptions);
 
         TABLE_PANE = tablePane;
 
@@ -705,7 +710,14 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
         // reusing schema box panel for more options button
         // minor optimization to keep the layout as flat as possible
-        panel.add(new JButton(I18n.tr("Hide Options")));
+        JButton buttonOptions = new JButton(I18n.tr("Hide Options"));
+        buttonOptions.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelSearchOptions.setVisible(!panelSearchOptions.isVisible());
+            }
+        });
+        panel.add(buttonOptions);
 
         return panel;
     }
@@ -724,16 +736,16 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
         panel.add(Box.createVerticalStrut(15));
 
-        SearchFilterPanel _filterPanel = new SearchFilterPanel();
-        _filterPanel.setBorder(ThemeMediator.createTitledBorder(I18n.tr("Filter")));
-        _filterPanel.setAlignmentX(0.0f);
-        panel.add(_filterPanel);
+        filterPanel = new SearchFilterPanel();
+        filterPanel.setBorder(ThemeMediator.createTitledBorder(I18n.tr("Filter")));
+        filterPanel.setAlignmentX(0.0f);
+        panel.add(filterPanel);
 
         JScrollPane sp = new JScrollPane(panel);
         sp.setBorder(BorderFactory.createEmptyBorder());
         Dimension d = new Dimension(100, 70000);
         sp.setPreferredSize(d);
-        
+
         return sp;
     }
 
