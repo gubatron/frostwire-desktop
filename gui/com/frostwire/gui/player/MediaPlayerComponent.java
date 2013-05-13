@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -106,7 +107,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     /**
      * The ProgressBar dimensions for showing the name & play progress.
      */
-    private final Dimension progressBarDimension = new Dimension(180, 5);
+    private final Dimension progressBarDimension = new Dimension(180, 10);
 
     /**
      * Volume slider dimensions for adjusting the audio level of a song
@@ -159,14 +160,14 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
         // create sliders
         PROGRESS.setMinimumSize(progressBarDimension);
-        //PROGRESS.setMaximumSize(progressBarDimension);
+        PROGRESS.setMaximumSize(progressBarDimension);
         PROGRESS.setPreferredSize(progressBarDimension);
         PROGRESS.setMaximum(3600);
         PROGRESS.setEnabled(false);
 
-        //VOLUME.setMaximumSize(volumeSliderDimension);
-        //VOLUME.setPreferredSize(volumeSliderDimension);
-        VOLUME.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        VOLUME.setMinimumSize(volumeSliderDimension);
+        VOLUME.setMaximumSize(volumeSliderDimension);
+        VOLUME.setPreferredSize(volumeSliderDimension);
         VOLUME.setMinimum(0);
         VOLUME.setValue(50);
         VOLUME.setMaximum(100);
@@ -177,11 +178,10 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         registerListeners();
 
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createLineBorder(Color.RED));
         panel.setLayout(new MigLayout("insets 0"));
 
         panel.add(createPanelOne(), "span 1 2");
-        panel.add(createPanelTwo(), "wrap");
+        panel.add(createPanelTwo(), "wrap, growx");
         panel.add(createProgressPanel());
 
         return panel;
@@ -212,15 +212,14 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     private JPanel createPanelTwo() {
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0"));
+        panel.setLayout(new MigLayout("insets 0", "[grow][][]", ""));
 
         JLabel l = new JLabel("Test Test");
         l.setForeground(Color.WHITE);
-        panel.add(l);
+        panel.add(l, "growx");
 
         initPlaylistPlaybackModeControls();
         panel.add(LOOP_BUTTON);
-        LOOP_BUTTON.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
         panel.add(SHUFFLE_BUTTON);
 
         panel.add(VOLUME);
@@ -232,11 +231,18 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout("insets 0"));
 
+        Font f = panel.getFont();
+        f = f.deriveFont(10f);
+
         Dimension timeLabelsDimension = new Dimension(45, 11);
         progressCurrentTime.setMinimumSize(timeLabelsDimension);
         progressCurrentTime.setPreferredSize(timeLabelsDimension);
+        progressCurrentTime.setForeground(Color.WHITE);
+        progressCurrentTime.setFont(f);
         progressSongLength.setPreferredSize(timeLabelsDimension);
         progressSongLength.setMinimumSize(timeLabelsDimension);
+        progressSongLength.setForeground(Color.WHITE);
+        progressSongLength.setFont(f);
 
         panel.add(progressCurrentTime);
         panel.add(PROGRESS);
@@ -247,7 +253,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     public void initPlaylistPlaybackModeControls() {
         SHUFFLE_BUTTON = new JToggleButton();
-        SHUFFLE_BUTTON.setBorderPainted(false);
+        //SHUFFLE_BUTTON.setBorderPainted(false);
         SHUFFLE_BUTTON.setContentAreaFilled(false);
         SHUFFLE_BUTTON.setBackground(null);
         SHUFFLE_BUTTON.setIcon(GUIMediator.getThemeImage("shuffle_off"));
