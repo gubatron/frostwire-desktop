@@ -222,9 +222,6 @@ class SearchInputPanel extends JPanel {
         c.anchor = GridBagConstraints.WEST;
         c.fill = GridBagConstraints.NONE;
         c.insets = new Insets(0, 10, 0, 0);
-        JLabel filterLabel = new JLabel(I18n.tr("<html><strong>Refine Results</strong></html>"));
-        //filterLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-        filterLabelIconPanel.add(filterLabel, c);
 
         c = new GridBagConstraints();
         c.gridx = 1;
@@ -234,22 +231,7 @@ class SearchInputPanel extends JPanel {
         c.weightx = 1.0;
         c.insets = new Insets(0, 3, 0, 0);
 
-        final JButton iconButton = new JButton();
-        iconButton.setAction(toggleSearchOptionsPanelAction);
-        iconButton.setIcon((ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.getValue()) ? IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE") : IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_LESS"));
-        fixIconButton(iconButton);
-
-        filterLabelIconPanel.add(iconButton, c);
-
-        filterLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                ActionEvent evt = new ActionEvent(iconButton, 1, null);
-
-                toggleSearchOptionsPanelAction.actionPerformed(evt);
-            }
-        });
-
+        
         c = new GridBagConstraints();
         c.anchor = GridBagConstraints.WEST;
         c.fill = GridBagConstraints.NONE;

@@ -166,7 +166,7 @@ public final class SearchMediator {
      * Requests the search focus in the INPUT_MANAGER.
      */
     public static void requestSearchFocus() {
-        getSearchInputManager().requestSearchFocus();
+        GUIMediator.instance().getMainFrame().getApplicationHeader().requestSearchFocus();
     }
 
     /** 
