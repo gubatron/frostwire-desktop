@@ -49,13 +49,6 @@ import com.limegroup.gnutella.settings.SearchSettings;
 class SearchInputPanel extends JPanel {
 
     /**
-     * 
-     */
-    private static final long serialVersionUID = -5638062215253666235L;
-
-    private final SchemaBox SCHEMA_BOX = new SchemaBox();
-
-    /**
      * The sole input text field that is at the top of all searches.
      */
     private final GoogleSearchField SEARCH_FIELD = new GoogleSearchField();
@@ -136,7 +129,6 @@ class SearchInputPanel extends JPanel {
      */
     private void createDefaultSearchPanel() {
         setLayout(new BoxLayout(this, BoxPanel.Y_AXIS));
-        add(SCHEMA_BOX);
         add(Box.createVerticalStrut(3));
         SEARCH_FIELD.setPrompt(I18n.tr("Search or enter URL"));
         SEARCH_FIELD.setMinimumSize(new Dimension(100, 27));
@@ -370,9 +362,6 @@ class SearchInputPanel extends JPanel {
     private class ToggleSearchOptionsPanelAction extends AbstractAction {
 
         private final String TOOLTIP_COLLAPSED = I18n.tr("Show search result filter controls");
-        private final String TOOLTIP_SHOWN = I18n.tr("Hide search result filter controls");
-
-        private static final long serialVersionUID = -2415729526575357348L;
 
         public ToggleSearchOptionsPanelAction() {
             putValue(SHORT_DESCRIPTION, TOOLTIP_COLLAPSED);
@@ -408,7 +397,7 @@ class SearchInputPanel extends JPanel {
 
     public void setFiltersFor(SearchResultMediator rp) {
         _filterPanel.setFilterFor(rp);
-        SCHEMA_BOX.setFilterFor(rp);
+        //SCHEMA_BOX.setFilterFor(rp);
     }
 
     /**
@@ -416,7 +405,7 @@ class SearchInputPanel extends JPanel {
      */
     void panelReset(SearchResultMediator rp) {
         _filterPanel.panelReset(rp);
-        SCHEMA_BOX.panelReset(rp);
+        //SCHEMA_BOX.panelReset(rp);
     }
 
     /**

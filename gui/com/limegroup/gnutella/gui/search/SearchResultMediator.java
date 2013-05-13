@@ -15,6 +15,7 @@
 
 package com.limegroup.gnutella.gui.search;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -657,12 +658,19 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
     protected void setupMainPanelBase() {
         if (SearchSettings.ENABLE_SPAM_FILTER.getValue() && MAIN_PANEL != null) {
+            MAIN_PANEL.add(createSchemaBox());
             MAIN_PANEL.add(getScrolledTablePane());
             addButtonRow();
             MAIN_PANEL.setMinimumSize(ZERO_DIMENSION);
         } else {
             super.setupMainPanel();
         }
+    }
+
+    private Component createSchemaBox() {
+        SchemaBox panel = new SchemaBox();
+
+        return panel;
     }
 
     /**

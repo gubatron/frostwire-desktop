@@ -43,7 +43,6 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 import com.frostwire.gui.filters.TableLineFilter;
-import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.I18n;
@@ -54,11 +53,6 @@ import com.limegroup.gnutella.settings.SearchSettings;
  * A group of radio buttons for each schema.
  */
 final class SchemaBox extends JPanel {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 4148383858573954999L;
 
     /**
      * String for 'Select Type'
@@ -113,7 +107,7 @@ final class SchemaBox extends JPanel {
         cols = 2;
         rows = (int) Math.ceil(allSchemas.size() / 2.0);
         SCHEMAS = new JPanel();
-        SCHEMAS.setLayout(new GridLayout(rows - 1, cols, 0, 0));
+        SCHEMAS.setLayout(new FlowLayout());
         SCHEMAS.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         addSchemas(allSchemas);
 
@@ -131,17 +125,6 @@ final class SchemaBox extends JPanel {
         d.height += 10;
         setPreferredSize(d);
         setMinimumSize(d);
-    }
-
-    /**
-     * Adds the specified ActionListener to all possible buttons.
-     */
-    public void addSelectionListener(ActionListener listener) {
-        //        Enumeration<AbstractButton> elements = GROUP.getElements();
-        //        for(; elements.hasMoreElements(); ) {
-        //            AbstractButton button = elements.nextElement();
-        //            button.addActionListener(listener);
-        //        }
     }
 
     /**
