@@ -16,9 +16,7 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,20 +29,14 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
-import javax.swing.border.Border;
 
 import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ImageManipulator;
 import com.limegroup.gnutella.settings.SearchSettings;
@@ -53,11 +45,6 @@ import com.limegroup.gnutella.settings.SearchSettings;
  * A group of radio buttons for each schema.
  */
 final class SchemaBox extends JPanel {
-
-    /**
-     * String for 'Select Type'
-     */
-    private static final String SELECT_TYPE = I18n.tr("What are you looking for?");
 
     /**
      * The property that the media type is stored in.
@@ -89,11 +76,6 @@ final class SchemaBox extends JPanel {
      */
     private final MouseListener CLICK_FORWARDER = new Clicker();
 
-    /**
-     * The ditherer for highlighted buttons.
-     */
-    private final Ditherer DITHERER = new Ditherer(20, new Color(0xffffff), new Color(0xfdf899));
-
     private Set<AbstractButton> buttons = new HashSet<AbstractButton>();
 
     private AbstractButton lastSelectedButton;
@@ -103,59 +85,10 @@ final class SchemaBox extends JPanel {
      */
     SchemaBox() {
         List<NamedMediaType> allSchemas = NamedMediaType.getAllNamedMediaTypes();
-        int cols, rows;
-        cols = 2;
-        rows = (int) Math.ceil(allSchemas.size() / 2.0);
         SCHEMAS = new JPanel();
         SCHEMAS.setLayout(new FlowLayout());
-        SCHEMAS.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         addSchemas(allSchemas);
-
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel("<html><b>" + SELECT_TYPE + "</b></html>"));
-        add(panel);
-
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JPanel p = new BoxPanel(BoxPanel.X_AXIS);
-        p.add(SCHEMAS);
-        p.add(Box.createHorizontalStrut(1));
-        add(p);
-
-        Dimension d = getPreferredSize();
-        d.height += 10;
-        setPreferredSize(d);
-        setMinimumSize(d);
-    }
-
-    /**
-     * Returns the selected icon, or null if the selection has no icon.
-     */
-    public Icon getSelectedIcon() {
-        NamedMediaType nmt = getSelectedMedia();
-        if (nmt == null)
-            return null;
-
-        return nmt.getIcon();
-    }
-
-    /**
-     * Returns the description of the selected item.
-     */
-    public String getSelectedItem() {
-        NamedMediaType nmt = getSelectedMedia();
-        if (nmt == null)
-            return null;
-        return nmt.getName();
-    }
-
-    /**
-     * Returns the selected item's media type.
-     */
-    public MediaType getSelectedMediaType() {
-        NamedMediaType nmt = getSelectedMedia();
-        if (nmt == null)
-            return null;
-        return nmt.getMediaType();
+        add(SCHEMAS);
     }
 
     /**
@@ -165,44 +98,36 @@ final class SchemaBox extends JPanel {
         //We first add specific ones in a certain order.
         //After that, leave it to random chance.
         NamedMediaType current;
-        Border border;
-        Color borderColor = getBorderColor(this);
 
         // Then add 'Audio'
         current = NamedMediaType.getFromDescription(MediaType.SCHEMA_AUDIO);
         schemas.remove(current);
-        border = BorderFactory.createMatteBorder(1, 1, 0, 1, borderColor);
-        addMediaType(current, I18n.tr("Search For Audio Files, Including mp3, wav, ogg, and More"), border);
+        addMediaType(current, I18n.tr("Search For Audio Files, Including mp3, wav, ogg, and More"));
 
         // Then add 'Images'
         current = NamedMediaType.getFromDescription(MediaType.SCHEMA_IMAGES);
         schemas.remove(current);
-        border = BorderFactory.createMatteBorder(1, 0, 0, 1, borderColor);
-        addMediaType(current, I18n.tr("Search For Image Files, Including jpg, gif, png and More"), border);
+        addMediaType(current, I18n.tr("Search For Image Files, Including jpg, gif, png and More"));
 
         // Then add 'Video'
         current = NamedMediaType.getFromDescription(MediaType.SCHEMA_VIDEO);
         schemas.remove(current);
-        border = BorderFactory.createMatteBorder(1, 1, 0, 1, borderColor);
-        addMediaType(current, I18n.tr("Search For Video Files, Including avi, mpg, wmv, and More"), border);
+        addMediaType(current, I18n.tr("Search For Video Files, Including avi, mpg, wmv, and More"));
 
         // Then add 'Documents'
         current = NamedMediaType.getFromDescription(MediaType.SCHEMA_DOCUMENTS);
         schemas.remove(current);
-        border = BorderFactory.createMatteBorder(1, 0, 0, 1, borderColor);
-        addMediaType(current, I18n.tr("Search for Document Files, Including html, txt, pdf, and More"), border);
+        addMediaType(current, I18n.tr("Search for Document Files, Including html, txt, pdf, and More"));
 
         // Then add 'Programs'
         current = NamedMediaType.getFromDescription(MediaType.SCHEMA_PROGRAMS);
         schemas.remove(current);
-        border = BorderFactory.createMatteBorder(1, 1, 1, 1, borderColor);
-        addMediaType(current, I18n.tr("Search for Program Files, Including exe, zip, gz, and More"), border);
+        addMediaType(current, I18n.tr("Search for Program Files, Including exe, zip, gz, and More"));
 
         // Then add 'Torrents'
         current = NamedMediaType.getFromDescription(MediaType.SCHEMA_TORRENTS);
         schemas.remove(current);
-        border = BorderFactory.createMatteBorder(1, 0, 1, 1, borderColor);
-        addMediaType(current, I18n.tr("Search for Torrents!"), border);
+        addMediaType(current, I18n.tr("Search for Torrents!"));
     }
 
     /**
@@ -210,7 +135,7 @@ final class SchemaBox extends JPanel {
      *
      * Marks the 'Any Type' as selected.
      */
-    private void addMediaType(NamedMediaType type, String toolTip, Border buttonBorder) {
+    private void addMediaType(NamedMediaType type, String toolTip) {
         Icon icon = type.getIcon();
         Icon disabledIcon = null;
         Icon rolloverIcon = null;
@@ -232,18 +157,11 @@ final class SchemaBox extends JPanel {
         button.setMargin(new Insets(0, 0, 0, 0));
         button.setOpaque(false);
         button.addMouseListener(CLICK_FORWARDER);
-        button.setPreferredSize(new Dimension(95, 22));
         if (toolTip != null) {
             button.setToolTipText(toolTip);
         }
 
-        DitherPanel panel = new DitherPanel(DITHERER, null);
-        panel.setDithering(false);
-        panel.setLayout(new FlowLayout(FlowLayout.LEFT, 7, 1));
-        panel.add(button);
-        panel.addMouseListener(CLICK_FORWARDER);
-        panel.setBorder(buttonBorder);
-        SCHEMAS.add(panel);
+        SCHEMAS.add(button);
 
         if (SearchSettings.LAST_MEDIA_TYPE_USED.getValue().contains(type.getMediaType().getMimeType())) {
             button.setSelected(true);
@@ -264,42 +182,17 @@ final class SchemaBox extends JPanel {
     }
 
     /**
-     * Iterates through all the elements in the group
-     * and returns the media type of the selected button.
-     */
-    NamedMediaType getSelectedMedia() {
-        //        Enumeration<AbstractButton> elements = GROUP.getElements();
-        //        for(; elements.hasMoreElements(); ) {
-        //            AbstractButton button = elements.nextElement();
-        //            if(button.isSelected())
-        //                return (NamedMediaType)button.getClientProperty(MEDIA);
-        //        }
-        return null;
-    }
-
-    private Color getBorderColor(JPanel panel) {
-        //SubstanceColorScheme baseBorderScheme = SubstanceColorSchemeUtilities.getColorScheme(panel, ColorSchemeAssociationKind.BORDER, ComponentState.ENABLED);
-
-        return Color.RED;// baseBorderScheme.getLineColor();
-    }
-
-    /**
      * Listener for ItemEvent, so that the buttons can be highlighted or not
      * when selected (or not).
      */
     private static class Highlighter implements ItemListener {
         public void itemStateChanged(ItemEvent e) {
             AbstractButton button = (AbstractButton) e.getSource();
-            DitherPanel parent = (DitherPanel) button.getParent();
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 button.setIcon((Icon) button.getClientProperty(SELECTED));
-                parent.setDithering(true);
             } else {
                 button.setIcon((Icon) button.getClientProperty(DESELECTED));
-                parent.setDithering(false);
             }
-
-            parent.repaint();
         }
     }
 
