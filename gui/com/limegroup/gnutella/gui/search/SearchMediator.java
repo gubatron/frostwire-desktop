@@ -53,6 +53,7 @@ import com.frostwire.search.VuzeMagnetDownloader;
 import com.frostwire.search.archiveorg.ArchiveorgCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube2.YouTubeCrawledSearchResult;
+import com.limegroup.gnutella.gui.ApplicationHeader;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SearchSettings;
@@ -184,7 +185,7 @@ public final class SearchMediator {
 
         rp.setToken(token);
         updateSearchIcon(token, true);
-        getSearchInputManager().panelReset(rp);
+        rp.resetFiltersPanel();
 
         GUIMediator.instance().setSearching(true);
         performSearch(token, info.getQuery());
@@ -488,8 +489,10 @@ public final class SearchMediator {
      */
     static void searchKilled(SearchResultMediator panel) {
         instance().stopSearch(panel.getToken());
-        getSearchInputManager().panelRemoved(panel);
         panel.cleanup();
+        
+        ApplicationHeader header = GUIMediator.instance().getMainFrame().getApplicationHeader();
+        header.requestSearchFocus();
     }
 
     void stopSearch(long token) {

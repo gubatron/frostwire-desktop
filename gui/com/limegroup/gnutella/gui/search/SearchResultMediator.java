@@ -839,4 +839,8 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     public void updateFiltersPanel() {
         searchOptionsPanel.updateFiltersPanel();
     }
+
+    public void resetFiltersPanel() {
+        searchOptionsPanel.resetFiltersPanel();
+    }
 }

@@ -70,10 +70,6 @@ final class SearchInputManager implements ThemeObserver {
         getComponent().add(MAIN_PANEL, c);
     }
 
-    void requestSearchFocus() {
-        requestSearchFocus(false);
-    }
-
     /**
      * Returns the <tt>JComponent</tt> instance containing the UI elements
      * for the search input section of the search tab.
@@ -90,46 +86,11 @@ final class SearchInputManager implements ThemeObserver {
         return COMPONENT_PANEL;
     }
 
-    /**
-     * Resets the FilterPanel for the specified ResultPanel.
-     */
-    void panelReset(SearchResultMediator rp) {
-        SEARCH.panelReset(rp);
-    }
-
-    /**
-     * Removes the filter associated with the specified result panel.
-     */
-    void panelRemoved(SearchResultMediator rp) {
-        if (SEARCH.panelRemoved(rp))
-            requestSearchFocus(false);
-    }
-
-    /**
-     * Requests focus for the search field.
-     */
-    private void requestSearchFocus(boolean immediate) {
-        ApplicationHeader header = GUIMediator.instance().getMainFrame().getApplicationHeader();
-        if (immediate) {
-            header.requestSearchFocusImmediately();
-        } else {
-            header.requestSearchFocus();
-        }
-    }
-
     private JPanel getMainPanel() {
         if (MAIN_PANEL == null) {
             MAIN_PANEL = new JPanel(new BorderLayout());
         }
         return MAIN_PANEL;
-    }
-
-    public void clearFilters() {
-        SEARCH.clearFilters();
-    }
-
-    public void setFiltersFor(SearchResultMediator rp) {
-        SEARCH.setFiltersFor(rp);
     }
 
     private JPanel createTorrentActionsPanel() {
