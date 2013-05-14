@@ -39,24 +39,19 @@ final class SchemaBox extends JPanel {
 
     private final ButtonGroup buttonGroup;
 
-    private SearchResultMediator resultPanel;
+    private final SearchResultMediator resultPanel;
 
     /**
      * Constructs the SchemaBox.
      */
-    public SchemaBox() {
-        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+    public SchemaBox(SearchResultMediator resultPanel) {
+        this.resultPanel = resultPanel;
+
         this.buttonGroup = new ButtonGroup();
+
+        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         addSchemas();
         add(Box.createHorizontalGlue());
-    }
-
-    public SearchResultMediator getResultPanel() {
-        return resultPanel;
-    }
-
-    public void setResultPanel(SearchResultMediator resultPanel) {
-        this.resultPanel = resultPanel;
     }
 
     /**
