@@ -52,15 +52,25 @@ final class SearchOptionsPanel extends JPanel {
 
     private final SearchResultMediator resultPanel;
 
+    private final LabeledTextField textFieldKeywords;
+    private final LabeledRangeSlider sliderSize;
+    private final LabeledRangeSlider sliderSeeds;
+
     public SearchOptionsPanel(SearchResultMediator resultPanel) {
         this.resultPanel = resultPanel;
 
         setLayout(new MigLayout("insets 0"));
 
         add(createSearchEnginesFilter(), "wrap");
-        add(createNameFilter(), "wrap");
-        add(createSizeFilter(), "wrap");
-        add(createSeedsFilter(), "wrap");
+
+        this.textFieldKeywords = createNameFilter();
+        add(textFieldKeywords, "wrap");
+
+        this.sliderSize = createSizeFilter();
+        add(sliderSize, "wrap");
+
+        this.sliderSeeds = createSeedsFilter();
+        add(sliderSeeds, "wrap");
 
         //
         //        SearchFilterPanel filterPanel = new SearchFilterPanel();
@@ -78,7 +88,7 @@ final class SearchOptionsPanel extends JPanel {
         return panel;
     }
 
-    private JComponent createNameFilter() {
+    private LabeledTextField createNameFilter() {
         LabeledTextField textField = new LabeledTextField(I18n.tr("Name"), 40, -1, 100);
 
         textField.addKeyListener(new KeyAdapter() {
@@ -91,7 +101,7 @@ final class SearchOptionsPanel extends JPanel {
         return textField;
     }
 
-    private JComponent createSizeFilter() {
+    private LabeledRangeSlider createSizeFilter() {
         LabeledRangeSlider slider = new LabeledRangeSlider(I18n.tr("Size"), null, 0, 1000);
         slider.setPreferredSize(new Dimension(80, (int) slider.getPreferredSize().getHeight()));
         slider.addChangeListener(new ChangeListener() {
@@ -103,7 +113,7 @@ final class SearchOptionsPanel extends JPanel {
         return slider;
     }
 
-    private JComponent createSeedsFilter() {
+    private LabeledRangeSlider createSeedsFilter() {
         LabeledRangeSlider slider = new LabeledRangeSlider(I18n.tr("Seeds"), null, 0, 1000);
         slider.setPreferredSize(new Dimension(80, (int) slider.getPreferredSize().getHeight()));
         slider.addChangeListener(new ChangeListener() {
@@ -176,5 +186,10 @@ final class SearchOptionsPanel extends JPanel {
         //        if (_activeFilter != null) {
         //            _activeFilter.setRangeSeeds(_rangeSliderSeeds.getValue(), _rangeSliderSeeds.getUpperValue());
         //        }
+    }
+
+    public void updateFiltersPanel() {
+        GeneralResultFilter filter = new GeneralResultFilter(resultPanel, sliderSeeds, sliderSize, textFieldKeywords);
+        resultPanel.filterChanged(filter, 1);
     }
 }

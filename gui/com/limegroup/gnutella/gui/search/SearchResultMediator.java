@@ -126,7 +126,8 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
     public AtomicInteger searchCount = new AtomicInteger(0);
 
-    private JComponent panelSearchOptions;
+    private SearchOptionsPanel searchOptionsPanel;
+    private JScrollPane scrollPaneSearchOptions;
 
     /**
      * Specialized constructor for creating a "dummy" result panel.
@@ -685,16 +686,16 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
         tablePane.add(SCROLL_PANE);
 
-        panelSearchOptions = createSearchOptionsPanel();
-        panelSearchOptions.setVisible(false);
-        tablePane.add(panelSearchOptions);
+        scrollPaneSearchOptions = createSearchOptionsPanel();
+        scrollPaneSearchOptions.setVisible(false);
+        tablePane.add(scrollPaneSearchOptions);
 
         TABLE_PANE = tablePane;
 
         return tablePane;
     }
 
-    private Component createSchemaBox() {
+    private JComponent createSchemaBox() {
         SchemaBox schemaBox = new SchemaBox(this);
 
         // reusing schema box panel for more options button
@@ -703,7 +704,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         buttonOptions.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panelSearchOptions.setVisible(!panelSearchOptions.isVisible());
+                scrollPaneSearchOptions.setVisible(!scrollPaneSearchOptions.isVisible());
             }
         });
         schemaBox.add(buttonOptions);
@@ -711,8 +712,8 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         return schemaBox;
     }
 
-    private JComponent createSearchOptionsPanel() {
-        SearchOptionsPanel searchOptionsPanel = new SearchOptionsPanel(this);
+    private JScrollPane createSearchOptionsPanel() {
+        searchOptionsPanel = new SearchOptionsPanel(this);
 
         JScrollPane sp = new JScrollPane(searchOptionsPanel);
         sp.setBorder(BorderFactory.createEmptyBorder());
@@ -833,5 +834,9 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
     List<String> getSearchTokens() {
         return searchTokens;
+    }
+
+    public void updateFiltersPanel() {
+        searchOptionsPanel.updateFiltersPanel();
     }
 }

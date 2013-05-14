@@ -142,11 +142,12 @@ public final class SearchMediator {
         // Link up the tabs of results with the filters of the input screen.
         getSearchResultDisplayer().setSearchListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                SearchResultMediator panel = getSearchResultDisplayer().getSelectedResultPanel();
-                if (panel == null)
-                    getSearchInputManager().clearFilters();
-                else
-                    getSearchInputManager().setFiltersFor(panel);
+                SearchResultMediator resultPanel = getSearchResultDisplayer().getSelectedResultPanel();
+                resultPanel.updateFiltersPanel();
+//                if (resultPanel == null)
+//                    getSearchInputManager().clearFilters();
+//                else
+//                    getSearchInputManager().setFiltersFor(resultPanel);
             }
         });
         

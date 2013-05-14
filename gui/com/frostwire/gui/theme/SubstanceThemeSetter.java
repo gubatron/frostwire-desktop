@@ -23,12 +23,8 @@ import java.awt.Toolkit;
 import java.lang.reflect.Method;
 
 import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JTabbedPane;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
-import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.FontUIResource;
 
 import org.limewire.util.OSUtils;
@@ -36,8 +32,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import sun.swing.SwingUtilities2;
-
-import com.limegroup.gnutella.gui.search.RangeSlider;
 
 /**
  * 
