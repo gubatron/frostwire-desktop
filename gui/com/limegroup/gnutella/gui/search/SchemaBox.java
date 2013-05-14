@@ -18,18 +18,15 @@ package com.limegroup.gnutella.gui.search;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 
-import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ImageManipulator;
@@ -40,18 +37,26 @@ import com.limegroup.gnutella.settings.SearchSettings;
  */
 final class SchemaBox extends JPanel {
 
-    /**
-     * The property that the media type is stored in.
-     */
-    private static final String MEDIA = "NAMED_MEDIA_TYPE";
+    private final ButtonGroup buttonGroup;
+
+    private SearchResultMediator resultPanel;
 
     /**
      * Constructs the SchemaBox.
      */
-    SchemaBox() {
+    public SchemaBox() {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+        this.buttonGroup = new ButtonGroup();
         addSchemas();
         add(Box.createHorizontalGlue());
+    }
+
+    public SearchResultMediator getResultPanel() {
+        return resultPanel;
+    }
+
+    public void setResultPanel(SearchResultMediator resultPanel) {
+        this.resultPanel = resultPanel;
     }
 
     /**
@@ -94,9 +99,8 @@ final class SchemaBox extends JPanel {
         Icon icon = type.getIcon();
         Icon disabledIcon = null;
         Icon rolloverIcon = null;
-        final AbstractButton button = new JToggleButton(type.getName());
+        JToggleButton button = new JRadioButton(type.getName());
 
-        button.putClientProperty(MEDIA, type);
         if (icon != null) {
             disabledIcon = ImageManipulator.darken(icon);
             rolloverIcon = ImageManipulator.brighten(icon);
@@ -112,44 +116,46 @@ final class SchemaBox extends JPanel {
             button.setToolTipText(toolTip);
         }
 
+        buttonGroup.add(button);
         add(button);
 
+        button.addActionListener(new SchemaButtonActionListener(type));
+        button.setSelected(isMediaTypeSelected(type));
+    }
+
+    private boolean isMediaTypeSelected(NamedMediaType type) {
+        boolean result = false;
+
         if (SearchSettings.LAST_MEDIA_TYPE_USED.getValue().contains(type.getMediaType().getMimeType())) {
-            button.setSelected(true);
+            result = true;
         }
 
         if (SearchSettings.LAST_MEDIA_TYPE_USED.getValue().isEmpty() && type.getMediaType().equals(MediaType.getAudioMediaType())) {
-            button.setSelected(true);
+            result = true;
         }
 
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onFileTypeChanged(button);
+        return result;
+    }
+
+    private final class SchemaButtonActionListener implements ActionListener {
+
+        private final NamedMediaType nmt;
+        private final MediaTypeFilter filter;
+
+        public SchemaButtonActionListener(NamedMediaType nmt) {
+            this.nmt = nmt;
+
+            this.filter = new MediaTypeFilter(nmt);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String mimeType = nmt.getMediaType().getMimeType();
+            SearchSettings.LAST_MEDIA_TYPE_USED.setValue(mimeType);
+
+            if (resultPanel != null) {
+                resultPanel.filterChanged(filter, 2);
             }
-        });
-    }
-
-    protected void onFileTypeChanged(AbstractButton button) {
-        NamedMediaType type = (NamedMediaType) button.getClientProperty(MEDIA);
-
-        String mimeType = type.getMediaType().getMimeType();
-        SearchSettings.LAST_MEDIA_TYPE_USED.setValue(mimeType);
-
-        updateSearchResults(new MediaTypeFilter());
-    }
-
-    private void updateSearchResults(TableLineFilter<SearchResultDataLine> filter) {
-        List<SearchResultMediator> resultPanels = SearchMediator.getSearchResultDisplayer().getResultPanels();
-        for (SearchResultMediator resultPanel : resultPanels) {
-            resultPanel.filterChanged(filter, 2);
         }
-    }
-
-    public void setFilterFor(SearchResultMediator rp) {
-        rp.filterChanged(new MediaTypeFilter(), 2);
-    }
-
-    public void panelReset(SearchResultMediator rp) {
-        rp.filterChanged(new MediaTypeFilter(), 2);
     }
 }

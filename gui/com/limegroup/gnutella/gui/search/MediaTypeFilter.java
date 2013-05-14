@@ -19,7 +19,6 @@
 package com.limegroup.gnutella.gui.search;
 
 import com.frostwire.gui.filters.TableLineFilter;
-import com.limegroup.gnutella.settings.SearchSettings;
 
 /**
  * 
@@ -27,13 +26,21 @@ import com.limegroup.gnutella.settings.SearchSettings;
  * @author aldenml
  *
  */
-public class MediaTypeFilter implements TableLineFilter<SearchResultDataLine> {
+final class MediaTypeFilter implements TableLineFilter<SearchResultDataLine> {
 
-    public MediaTypeFilter() {
+    private final NamedMediaType nmt;
+
+    public MediaTypeFilter(NamedMediaType nmt) {
+        this.nmt = nmt;
+    }
+
+    public NamedMediaType getMediaType() {
+        return nmt;
     }
 
     @Override
     public boolean allow(SearchResultDataLine node) {
+        // TODO: refactor this code block
         try {
             // hard coding disable youtube extension
             if (node.getExtension().equals("youtube")) {
@@ -43,11 +50,6 @@ public class MediaTypeFilter implements TableLineFilter<SearchResultDataLine> {
             // ignore
         }
 
-        NamedMediaType nmt = node.getNamedMediaType();
-        if (nmt != null) {
-            return SearchSettings.LAST_MEDIA_TYPE_USED.getValue().equals(nmt.getMediaType().getMimeType());
-        }
-
-        return false;
+        return nmt.equals(node.getNamedMediaType());
     }
 }

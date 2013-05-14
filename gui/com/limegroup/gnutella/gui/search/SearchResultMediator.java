@@ -705,8 +705,9 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     }
 
     private Component createSchemaBox() {
-        SchemaBox panel = new SchemaBox();
-        panel.setBorder(BorderFactory.createLineBorder(Color.RED));
+        SchemaBox schemaBox = new SchemaBox();
+        schemaBox.setBorder(BorderFactory.createLineBorder(Color.RED));
+        schemaBox.setResultPanel(this);
 
         // reusing schema box panel for more options button
         // minor optimization to keep the layout as flat as possible
@@ -717,9 +718,9 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
                 panelSearchOptions.setVisible(!panelSearchOptions.isVisible());
             }
         });
-        panel.add(buttonOptions);
+        schemaBox.add(buttonOptions);
 
-        return panel;
+        return schemaBox;
     }
 
     private JComponent createSearchOptionsPanel() {
