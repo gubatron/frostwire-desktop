@@ -48,13 +48,10 @@ import org.limewire.util.OSUtils;
 import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.library.LibraryMediator;
-import com.frostwire.gui.player.MediaPlayerComponent;
 import com.frostwire.gui.tabs.ChatTab;
 import com.frostwire.gui.tabs.LibraryTab;
 import com.frostwire.gui.tabs.SearchDownloadTab;
 import com.frostwire.gui.tabs.Tab;
-import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.gui.theme.ThemeObserver;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
@@ -156,13 +153,7 @@ public final class MainFrame  {
         //com.frostwire.gui.updates.UpdateManager.scheduleUpdateCheckTask(0,"http://update1.frostwire.com/example.php");
 
         FRAME = frame;
-//        Dimension minFrameDimensions = null;
-//        if (OSUtils.isMacOSX()) {
-//            minFrameDimensions = new Dimension(875, 97);
-//        } else {
-//            minFrameDimensions = new Dimension(875, 134);
-//        }
-//        FRAME.setMinimumSize(minFrameDimensions);
+
         new DropTarget(FRAME, new TransferHandlerDropTargetListener(DNDUtils.DEFAULT_TRANSFER_HANDLER));
 
         TABBED_PANE = new JPanel(new CardLayout());
@@ -227,12 +218,9 @@ public final class MainFrame  {
 
         APPLICATION_HEADER = new ApplicationHeader(TABS);
         LOGO_PANEL = APPLICATION_HEADER.getLogoPanel();
-        
-        //JComponent player = new MediaPlayerComponent().getMediaPanel(true);
 
         contentPane.add(APPLICATION_HEADER, "growx, dock north");
         contentPane.add(TABBED_PANE, "wrap");
-        //contentPane.add(player, "growx");
         contentPane.add(getStatusLine().getComponent(), "dock south, shrink 0");
         
         setMinimalSize(FRAME, getStatusLine().getComponent(), APPLICATION_HEADER, TABBED_PANE, getStatusLine().getComponent());
