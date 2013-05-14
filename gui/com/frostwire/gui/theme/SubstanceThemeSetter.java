@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 
 import sun.swing.SwingUtilities2;
 
-import com.frostwire.gui.components.RangeSlider;
+import com.limegroup.gnutella.gui.search.RangeSlider;
 
 /**
  * 

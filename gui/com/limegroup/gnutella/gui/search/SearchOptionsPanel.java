@@ -17,24 +17,30 @@
 
 package com.limegroup.gnutella.gui.search;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import net.miginfocom.swing.MigLayout;
 
 import org.limewire.setting.BooleanSetting;
 
-import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.LabeledTextField;
 
 /**
  * 
@@ -49,21 +55,64 @@ final class SearchOptionsPanel extends JPanel {
     public SearchOptionsPanel(SearchResultMediator resultPanel) {
         this.resultPanel = resultPanel;
 
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        setLayout(new MigLayout("insets 0"));
 
-        JPanel controls = new JPanel();
-        controls.setLayout(new GridBagLayout());
-        controls.setAlignmentX(0.0f);
+        add(createSearchEnginesFilter(), "wrap");
+        add(createNameFilter(), "wrap");
+        add(createSizeFilter(), "wrap");
+        add(createSeedsFilter(), "wrap");
+
+        //
+        //        SearchFilterPanel filterPanel = new SearchFilterPanel();
+        //        filterPanel.setBorder(ThemeMediator.createTitledBorder(I18n.tr("Filter")));
+        //        filterPanel.setAlignmentX(0.0f);
+        //        add(filterPanel);
+    }
+
+    private JComponent createSearchEnginesFilter() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        panel.setAlignmentX(0.0f);
         List<SearchEngine> searchEngines = SearchEngine.getEngines();
-        setupCheckboxes(searchEngines, controls);
-        add(controls);
+        setupCheckboxes(searchEngines, panel);
+        return panel;
+    }
 
-        add(Box.createVerticalStrut(15));
+    private JComponent createNameFilter() {
+        LabeledTextField textField = new LabeledTextField(I18n.tr("Name"), 40, -1, 100);
 
-        SearchFilterPanel filterPanel = new SearchFilterPanel();
-        filterPanel.setBorder(ThemeMediator.createTitledBorder(I18n.tr("Filter")));
-        filterPanel.setAlignmentX(0.0f);
-        add(filterPanel);
+        textField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                keywordFilterChanged(e);
+            }
+        });
+
+        return textField;
+    }
+
+    private JComponent createSizeFilter() {
+        LabeledRangeSlider slider = new LabeledRangeSlider(I18n.tr("Size"), null, 0, 1000);
+        slider.setPreferredSize(new Dimension(80, (int) slider.getPreferredSize().getHeight()));
+        slider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                sliderSize_stateChanged(e);
+            }
+        });
+
+        return slider;
+    }
+
+    private JComponent createSeedsFilter() {
+        LabeledRangeSlider slider = new LabeledRangeSlider(I18n.tr("Seeds"), null, 0, 1000);
+        slider.setPreferredSize(new Dimension(80, (int) slider.getPreferredSize().getHeight()));
+        slider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                sliderSeeds_stateChanged(e);
+            }
+        });
+
+        return slider;
     }
 
     private void setupCheckboxes(List<SearchEngine> searchEngines, JPanel parent) {
@@ -109,5 +158,23 @@ final class SearchOptionsPanel extends JPanel {
             cBoxes.put(cBox, se.getEnabledSetting());
             cBox.addItemListener(listener);
         }
+    }
+
+    private void keywordFilterChanged(KeyEvent e) {
+        //        if (_activeFilter != null) {
+        //            _activeFilter.updateKeywordFiltering(_keywordFilterTextField.getText());
+        //        }
+    }
+
+    private void sliderSize_stateChanged(ChangeEvent e) {
+        //        if (_activeFilter != null) {
+        //            _activeFilter.setRangeSize(_rangeSliderSize.getValue(), _rangeSliderSize.getUpperValue());
+        //        }
+    }
+
+    private void sliderSeeds_stateChanged(ChangeEvent e) {
+        //        if (_activeFilter != null) {
+        //            _activeFilter.setRangeSeeds(_rangeSliderSeeds.getValue(), _rangeSliderSeeds.getUpperValue());
+        //        }
     }
 }

@@ -6,7 +6,7 @@
  * found at http://developers.sun.com/berkeley_license.html .
  *
  */
-package com.frostwire.gui.components;
+package com.frostwire.gui.library;
 
 import java.text.Collator;
 import java.util.ArrayList;

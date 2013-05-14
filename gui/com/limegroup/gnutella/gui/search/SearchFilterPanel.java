@@ -30,7 +30,6 @@ import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.frostwire.gui.components.LabeledRangeSlider;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledTextField;
@@ -41,7 +40,7 @@ import com.limegroup.gnutella.gui.LabeledTextField;
  * @author aldenml
  *
  */
-public class SearchFilterPanel extends JPanel {
+final class SearchFilterPanel extends JPanel {
 
     private LabeledRangeSlider _rangeSliderSeeds;
     private LabeledRangeSlider _rangeSliderSize;

@@ -18,7 +18,6 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import com.frostwire.gui.components.LabeledRangeSlider;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.LabeledTextField;

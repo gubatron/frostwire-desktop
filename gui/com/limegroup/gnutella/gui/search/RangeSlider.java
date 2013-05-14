@@ -1,4 +1,4 @@
-package com.frostwire.gui.components;
+package com.limegroup.gnutella.gui.search;
 
 import javax.swing.JSlider;
 import javax.swing.UIManager;

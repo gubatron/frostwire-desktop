@@ -1,4 +1,4 @@
-package com.frostwire.gui.components;
+package com.limegroup.gnutella.gui.search;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,7 +11,6 @@ import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.plaf.basic.BasicSliderUI;
 import javax.swing.plaf.synth.SynthSliderUI;
 
 /**

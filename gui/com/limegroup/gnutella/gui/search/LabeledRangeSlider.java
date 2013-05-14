@@ -1,4 +1,4 @@
-package com.frostwire.gui.components;
+package com.limegroup.gnutella.gui.search;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
