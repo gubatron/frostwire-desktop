@@ -29,13 +29,13 @@ import com.frostwire.gui.theme.SkinRangeSliderUI;
  * @author aldenml
  *
  */
-public class RangeSlider2 extends JSlider {
+public class RangeSlider extends JSlider {
 
     protected int thumbNum;
 
     protected BoundedRangeModel[] sliderModels;
 
-    public RangeSlider2() {
+    public RangeSlider() {
         createThumbs(2);
         updateUI();
     }

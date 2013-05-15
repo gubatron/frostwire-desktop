@@ -19,7 +19,7 @@ public class LabeledRangeSlider extends JPanel {
 
     private static final long serialVersionUID = 17039376083098413L;
 
-    private final RangeSlider2 slider;
+    private final RangeSlider slider;
 
     private final JLabel titleLabel;
     private final JLabel minLabel;
@@ -33,7 +33,7 @@ public class LabeledRangeSlider extends JPanel {
      * @param maxValue
      */
     public LabeledRangeSlider(String title, String defaultMaxText, int minValue, int maxValue) {
-        slider = new RangeSlider2();
+        slider = new RangeSlider();
         slider.setValue(minValue);
         slider.setUpperValue(maxValue);
 

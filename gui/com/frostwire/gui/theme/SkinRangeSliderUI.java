@@ -32,7 +32,7 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.synth.SynthContext;
 import javax.swing.plaf.synth.SynthSliderUI;
 
-import com.limegroup.gnutella.gui.search.RangeSlider2;
+import com.limegroup.gnutella.gui.search.RangeSlider;
 
 // adapted from http://www.java2s.com/Code/Java/Swing-Components/ThumbSliderExample2.htm
 /**
@@ -165,7 +165,7 @@ public class SkinRangeSliderUI extends SynthSliderUI {
 
     private static class RangeSliderAdditionalUI {
 
-        private RangeSlider2 mSlider;
+        private RangeSlider mSlider;
 
         private SkinRangeSliderUI ui;
 
@@ -188,7 +188,7 @@ public class SkinRangeSliderUI extends SynthSliderUI {
         }
 
         public void installUI(JComponent c) {
-            mSlider = (RangeSlider2) c;
+            mSlider = (RangeSlider) c;
             thumbNum = mSlider.getThumbNum();
             thumbRects = new Rectangle[thumbNum];
             for (int i = 0; i < thumbNum; i++) {
@@ -286,11 +286,11 @@ public class SkinRangeSliderUI extends SynthSliderUI {
 
             protected int adjustingThumbIndex;
 
-            protected RangeSlider2 slider;
+            protected RangeSlider slider;
 
             protected Rectangle trackRect;
 
-            TrackListener(RangeSlider2 slider) {
+            TrackListener(RangeSlider slider) {
                 this.slider = slider;
             }
 
