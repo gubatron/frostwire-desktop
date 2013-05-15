@@ -1,193 +1,52 @@
 package com.frostwire.gui.theme;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
-import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JSlider;
-import javax.swing.Painter;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.synth.ColorType;
-import javax.swing.plaf.synth.Region;
 import javax.swing.plaf.synth.SynthContext;
-import javax.swing.plaf.synth.SynthLookAndFeel;
-import javax.swing.plaf.synth.SynthPainter;
 import javax.swing.plaf.synth.SynthSliderUI;
-import javax.swing.plaf.synth.SynthStyle;
 
 import com.limegroup.gnutella.gui.search.RangeSlider2;
 
 // adapted from http://www.java2s.com/Code/Java/Swing-Components/ThumbSliderExample2.htm
 public class SkinRangeSliderUI extends SynthSliderUI {
 
-    MThumbSliderAdditionalUI additonalUi;
+    private RangeSliderAdditionalUI additonalUi;
+    private MouseInputAdapter thumbTrackListener;
 
-    MouseInputAdapter mThumbTrackListener;
+    private Rectangle zeroRect = new Rectangle();
 
     public static ComponentUI createUI(JComponent c) {
         return new SkinRangeSliderUI((JSlider) c);
     }
 
-    public SkinRangeSliderUI(JSlider b) {
-        super(b);
+    public SkinRangeSliderUI(JSlider c) {
+        super(c);
     }
 
+    @Override
     public void installUI(JComponent c) {
-        additonalUi = new MThumbSliderAdditionalUI(this);
+        additonalUi = new RangeSliderAdditionalUI(this);
         additonalUi.installUI(c);
-        mThumbTrackListener = createMThumbTrackListener((JSlider) c);
+        thumbTrackListener = createThumbTrackListener((JSlider) c);
         super.installUI(c);
     }
 
+    @Override
     public void uninstallUI(JComponent c) {
         super.uninstallUI(c);
         additonalUi.uninstallUI(c);
         additonalUi = null;
-        mThumbTrackListener = null;
-    }
-
-    protected MouseInputAdapter createMThumbTrackListener(JSlider slider) {
-        return additonalUi.trackListener;
-    }
-
-    protected TrackListener createTrackListener(JSlider slider) {
-        return null;
-    }
-
-    protected ChangeListener createChangeListener(JSlider slider) {
-        return additonalUi.changeHandler;
-    }
-
-    protected void installListeners(JSlider slider) {
-        slider.addMouseListener(mThumbTrackListener);
-        slider.addMouseMotionListener(mThumbTrackListener);
-        slider.addFocusListener(focusListener);
-        slider.addComponentListener(componentListener);
-        slider.addPropertyChangeListener(propertyChangeListener);
-        slider.getModel().addChangeListener(changeListener);
-    }
-
-    protected void uninstallListeners(JSlider slider) {
-        slider.removeMouseListener(mThumbTrackListener);
-        slider.removeMouseMotionListener(mThumbTrackListener);
-        slider.removeFocusListener(focusListener);
-        slider.removeComponentListener(componentListener);
-        slider.removePropertyChangeListener(propertyChangeListener);
-        slider.getModel().removeChangeListener(changeListener);
-    }
-
-    protected void calculateGeometry() {
-        super.calculateGeometry();
-        additonalUi.calculateThumbsSize();
-        additonalUi.calculateThumbsLocation();
-    }
-
-    private void calculateThumbRect() {
-        int thumbNum = additonalUi.getThumbNum();
-        Rectangle[] thumbRects = additonalUi.getThumbRects();
-
-        thumbRect = zeroRect;
-        
-        for (int i = thumbNum - 1; 0 <= i; i--) {
-            Rectangle rect = thumbRects[i];
-            SwingUtilities.computeUnion(rect.x, rect.y, rect.width, rect.height, thumbRect);
-        }
-
-        System.out.println(thumbRect.x + "," + thumbRect.y + "," + thumbRect.width + "," + thumbRect.height);
-    }
-
-    protected void calculateThumbLocation() {
-    }
-
-    Rectangle zeroRect = new Rectangle();
-
-    @Override
-    protected void paint(SynthContext context, Graphics g) {
-        calculateThumbRect();
-        super.paint(context, g);
-        //paintThumbs(context, g);
-    }
-
-    @Override
-    protected void paintThumb(SynthContext context, Graphics g, Rectangle thumbBounds) {
-        paintThumbs(context, g);
-    }
-
-    private void paintThumbs(SynthContext context, Graphics g) {
-
-        Rectangle clip = g.getClipBounds();
-        
-
-        //super.paint(g, c);
-
-        int thumbNum = additonalUi.getThumbNum();
-        Rectangle[] thumbRects = additonalUi.getThumbRects();
-
-        for (int i = thumbNum - 1; 0 <= i; i--) {
-            if (clip.intersects(thumbRects[i])) {
-                thumbRect = thumbRects[i];
-
-                super.paintThumb(context, g, thumbRect);
-
-            }
-        }
-        
-        //sliderThumbSubcontext.
-    }
-
-
-    protected void paintThumb1(SynthContext context, Graphics g, Rectangle thumbBounds) {
-        int orientation = slider.getOrientation();
-        getPainter(context).paintSliderThumbBackground(context, g, thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, orientation);
-        getPainter(context).paintSliderThumbBorder(context, g, thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, orientation);
-    }
-
-    static SynthPainter NULL_PAINTER = new SynthPainter() {
-    };
-
-    SynthPainter getPainter(SynthContext context) {
-        SynthPainter painter = context.getStyle().getPainter(context);
-
-        if (painter != null) {
-            return painter;
-        }
-        return NULL_PAINTER;
-    }
-
-    private static void paintRegion(SynthContext state, Graphics g, Rectangle bounds) {
-        JComponent c = state.getComponent();
-        SynthStyle style = state.getStyle();
-        int x, y, width, height;
-
-        if (bounds == null) {
-            x = 0;
-            y = 0;
-            width = c.getWidth();
-            height = c.getHeight();
-        } else {
-            x = bounds.x;
-            y = bounds.y;
-            width = bounds.width;
-            height = bounds.height;
-        }
-
-        // Fill in the background, if necessary.
-        boolean subregion = state.getRegion().isSubregion();
-        if ((subregion && style.isOpaque(state)) || (!subregion && c.isOpaque())) {
-            g.setColor(style.getColor(state, ColorType.BACKGROUND));
-            g.fillRect(x, y, width, height);
-        }
+        thumbTrackListener = null;
     }
 
     public void scrollByBlock(int direction) {
@@ -196,46 +55,112 @@ public class SkinRangeSliderUI extends SynthSliderUI {
     public void scrollByUnit(int direction) {
     }
 
-    //
-    // MThumbSliderAdditional
-    //
     public Rectangle getTrackRect() {
         return trackRect;
     }
 
-    public Dimension getThumbSize() {
-        return super.getThumbSize();
+    @Override
+    protected TrackListener createTrackListener(JSlider slider) {
+        return null;
     }
 
-    public int xPositionForValue(int value) {
-        return super.xPositionForValue(value);
+    protected ChangeListener createChangeListener(JSlider slider) {
+        return additonalUi.changeHandler;
     }
 
-    public int yPositionForValue(int value) {
-        return super.yPositionForValue(value);
+    @Override
+    protected void installListeners(JSlider slider) {
+        slider.addMouseListener(thumbTrackListener);
+        slider.addMouseMotionListener(thumbTrackListener);
+        slider.addFocusListener(focusListener);
+        slider.addComponentListener(componentListener);
+        slider.addPropertyChangeListener(propertyChangeListener);
+        slider.getModel().addChangeListener(changeListener);
     }
 
-    static class MThumbSliderAdditionalUI {
+    @Override
+    protected void uninstallListeners(JSlider slider) {
+        slider.removeMouseListener(thumbTrackListener);
+        slider.removeMouseMotionListener(thumbTrackListener);
+        slider.removeFocusListener(focusListener);
+        slider.removeComponentListener(componentListener);
+        slider.removePropertyChangeListener(propertyChangeListener);
+        slider.getModel().removeChangeListener(changeListener);
+    }
 
-        RangeSlider2 mSlider;
+    @Override
+    protected void calculateGeometry() {
+        super.calculateGeometry();
+        additonalUi.calculateThumbsSize();
+        additonalUi.calculateThumbsLocation();
+    }
 
-        SkinRangeSliderUI ui;
+    @Override
+    protected void calculateThumbLocation() {
+    }
 
-        Rectangle[] thumbRects;
+    @Override
+    protected void paint(SynthContext context, Graphics g) {
+        calculateThumbRect();
+        super.paint(context, g);
+    }
 
-        int thumbNum;
+    @Override
+    protected void paintThumb(SynthContext context, Graphics g, Rectangle thumbBounds) {
+        paintThumbs(context, g);
+    }
+
+    private void paintThumbs(SynthContext context, Graphics g) {
+        Rectangle clip = g.getClipBounds();
+
+        int thumbNum = additonalUi.getThumbNum();
+        Rectangle[] thumbRects = additonalUi.getThumbRects();
+
+        for (int i = thumbNum - 1; 0 <= i; i--) {
+            if (clip.intersects(thumbRects[i])) {
+                thumbRect = thumbRects[i];
+                super.paintThumb(context, g, thumbRect);
+            }
+        }
+    }
+
+    private void calculateThumbRect() {
+        int thumbNum = additonalUi.getThumbNum();
+        Rectangle[] thumbRects = additonalUi.getThumbRects();
+
+        thumbRect = zeroRect;
+
+        for (int i = thumbNum - 1; 0 <= i; i--) {
+            Rectangle rect = thumbRects[i];
+            SwingUtilities.computeUnion(rect.x, rect.y, rect.width, rect.height, thumbRect);
+        }
+    }
+
+    private MouseInputAdapter createThumbTrackListener(JSlider slider) {
+        return additonalUi.trackListener;
+    }
+
+    private static class RangeSliderAdditionalUI {
+
+        private RangeSlider2 mSlider;
+
+        private SkinRangeSliderUI ui;
+
+        private Rectangle[] thumbRects;
+
+        private int thumbNum;
 
         private transient boolean isDragging;
 
-        Icon thumbRenderer;
+        private Rectangle trackRect;
 
-        Rectangle trackRect;
+        private ChangeHandler changeHandler;
 
-        ChangeHandler changeHandler;
+        private TrackListener trackListener;
 
-        TrackListener trackListener;
+        private static Rectangle unionRect = new Rectangle();
 
-        public MThumbSliderAdditionalUI(SkinRangeSliderUI ui) {
+        public RangeSliderAdditionalUI(SkinRangeSliderUI ui) {
             this.ui = ui;
         }
 
@@ -247,7 +172,7 @@ public class SkinRangeSliderUI extends SynthSliderUI {
                 thumbRects[i] = new Rectangle();
             }
             isDragging = false;
-            trackListener = new MThumbSliderAdditionalUI.TrackListener(mSlider);
+            trackListener = new RangeSliderAdditionalUI.TrackListener(mSlider);
             changeHandler = new ChangeHandler();
         }
 
@@ -255,6 +180,27 @@ public class SkinRangeSliderUI extends SynthSliderUI {
             thumbRects = null;
             trackListener = null;
             changeHandler = null;
+        }
+
+        public int getThumbNum() {
+            return thumbNum;
+        }
+
+        public Rectangle[] getThumbRects() {
+            return thumbRects;
+        }
+
+        public void setThumbLocationAt(int x, int y, int index) {
+            Rectangle rect = thumbRects[index];
+            unionRect.setBounds(rect);
+
+            rect.setLocation(x, y);
+            SwingUtilities.computeUnion(rect.x, rect.y, rect.width, rect.height, unionRect);
+            mSlider.repaint(unionRect.x, unionRect.y, unionRect.width, unionRect.height);
+        }
+
+        public Rectangle getTrackRect() {
+            return ui.getTrackRect();
         }
 
         protected void calculateThumbsSize() {
@@ -297,29 +243,6 @@ public class SkinRangeSliderUI extends SynthSliderUI {
                     thumbRects[i].y = valuePosition - (thumbRects[i].height / 2);
                 }
             }
-        }
-
-        public int getThumbNum() {
-            return thumbNum;
-        }
-
-        public Rectangle[] getThumbRects() {
-            return thumbRects;
-        }
-
-        private static Rectangle unionRect = new Rectangle();
-
-        public void setThumbLocationAt(int x, int y, int index) {
-            Rectangle rect = thumbRects[index];
-            unionRect.setBounds(rect);
-
-            rect.setLocation(x, y);
-            SwingUtilities.computeUnion(rect.x, rect.y, rect.width, rect.height, unionRect);
-            mSlider.repaint(unionRect.x, unionRect.y, unionRect.width, unionRect.height);
-        }
-
-        public Rectangle getTrackRect() {
-            return ui.getTrackRect();
         }
 
         public class ChangeHandler implements ChangeListener {
@@ -429,26 +352,6 @@ public class SkinRangeSliderUI extends SynthSliderUI {
                 mSlider.setValueIsAdjusting(false);
                 mSlider.repaint();
             }
-
-            public boolean shouldScroll(int direction) {
-                return false;
-            }
-
-        }
-    }
-
-    private final class ThumbStyle extends SynthStyle {
-
-        @Override
-        protected Color getColorForState(SynthContext context, ColorType type) {
-            // TODO Auto-generated method stub
-            return null;
-        }
-
-        @Override
-        protected Font getFontForState(SynthContext context) {
-            // TODO Auto-generated method stub
-            return null;
         }
     }
 }
