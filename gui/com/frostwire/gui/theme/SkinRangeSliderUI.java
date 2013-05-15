@@ -320,6 +320,8 @@ public class SkinRangeSliderUI extends SynthSliderUI {
                     thumbTop = Math.max(thumbTop, trackTop - halfThumbHeight);
                     thumbTop = Math.min(thumbTop, trackBottom - halfThumbHeight);
 
+                    // pending over-range control
+
                     setThumbLocationAt(rect.x, thumbTop, adjustingThumbIndex);
 
                     thumbMiddle = thumbTop + halfThumbHeight;
@@ -334,6 +336,13 @@ public class SkinRangeSliderUI extends SynthSliderUI {
 
                     thumbLeft = Math.max(thumbLeft, trackLeft - halfThumbWidth);
                     thumbLeft = Math.min(thumbLeft, trackRight - halfThumbWidth);
+
+                    if (adjustingThumbIndex == 0) {
+                        thumbLeft = Math.min(thumbLeft, ui.xPositionForValue(mSlider.getValueAt(1) - 1) - halfThumbWidth);
+                    }
+                    if (adjustingThumbIndex == 1) {
+                        thumbLeft = Math.max(ui.xPositionForValue(mSlider.getValueAt(0) + 1) - halfThumbWidth, thumbLeft);
+                    }
 
                     setThumbLocationAt(thumbLeft, rect.y, adjustingThumbIndex);
 

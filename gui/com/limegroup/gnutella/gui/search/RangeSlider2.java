@@ -49,9 +49,14 @@ public class RangeSlider2 extends JSlider {
         return getModelAt(index).getValue();
     }
 
-    public void setValueAt(int n, int index) {
-        getModelAt(index).setValue(n);
-        // should I fire?
+    public void setValueAt(int newValue, int index) {
+        if (index == 0) {
+            newValue = Math.min(getValueAt(1) - 1, newValue);
+        }
+        if (index == 1) {
+            newValue = Math.max(getValueAt(0) + 1, newValue);
+        }
+        getModelAt(index).setValue(newValue);
     }
 
     public int getMinimum() {
