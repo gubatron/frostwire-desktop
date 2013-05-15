@@ -1,27 +1,30 @@
 package com.frostwire.gui.theme;
 
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FontMetrics;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JSlider;
+import javax.swing.Painter;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicSliderUI;
 import javax.swing.plaf.synth.ColorType;
 import javax.swing.plaf.synth.Region;
 import javax.swing.plaf.synth.SynthContext;
 import javax.swing.plaf.synth.SynthLookAndFeel;
+import javax.swing.plaf.synth.SynthPainter;
 import javax.swing.plaf.synth.SynthSliderUI;
-
-import sun.swing.SwingUtilities2;
+import javax.swing.plaf.synth.SynthStyle;
 
 import com.limegroup.gnutella.gui.search.RangeSlider2;
 
@@ -34,10 +37,6 @@ public class SkinRangeSliderUI extends SynthSliderUI {
 
     public static ComponentUI createUI(JComponent c) {
         return new SkinRangeSliderUI((JSlider) c);
-    }
-
-    public SkinRangeSliderUI() {
-        super(null);
     }
 
     public SkinRangeSliderUI(JSlider b) {
@@ -92,14 +91,14 @@ public class SkinRangeSliderUI extends SynthSliderUI {
         super.calculateGeometry();
         additonalUi.calculateThumbsSize();
         additonalUi.calculateThumbsLocation();
-
-        //calculateThumbRect();
     }
 
     private void calculateThumbRect() {
         int thumbNum = additonalUi.getThumbNum();
         Rectangle[] thumbRects = additonalUi.getThumbRects();
 
+        thumbRect = zeroRect;
+        
         for (int i = thumbNum - 1; 0 <= i; i--) {
             Rectangle rect = thumbRects[i];
             SwingUtilities.computeUnion(rect.x, rect.y, rect.width, rect.height, thumbRect);
@@ -112,26 +111,23 @@ public class SkinRangeSliderUI extends SynthSliderUI {
     }
 
     Rectangle zeroRect = new Rectangle();
-    
+
     @Override
     protected void paint(SynthContext context, Graphics g) {
+        calculateThumbRect();
         super.paint(context, g);
-        paint(g, slider);
+        //paintThumbs(context, g);
     }
 
     @Override
     protected void paintThumb(SynthContext context, Graphics g, Rectangle thumbBounds) {
-        //int orientation = slider.getOrientation();
-        //paint(g, slider);
-        //SynthLookAndFeel.updateSubregion(context, g, thumbBounds);
-        //context.getPainter().paintSliderThumbBackground(context, g, thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, orientation);
-        //context.getPainter().paintSliderThumbBorder(context, g, thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, orientation);
+        paintThumbs(context, g);
     }
 
-    public void paint(Graphics g, JComponent c) {
+    private void paintThumbs(SynthContext context, Graphics g) {
 
         Rectangle clip = g.getClipBounds();
-        thumbRect = zeroRect;
+        
 
         //super.paint(g, c);
 
@@ -142,9 +138,55 @@ public class SkinRangeSliderUI extends SynthSliderUI {
             if (clip.intersects(thumbRects[i])) {
                 thumbRect = thumbRects[i];
 
-                paintThumb(g);
+                super.paintThumb(context, g, thumbRect);
 
             }
+        }
+        
+        //sliderThumbSubcontext.
+    }
+
+
+    protected void paintThumb1(SynthContext context, Graphics g, Rectangle thumbBounds) {
+        int orientation = slider.getOrientation();
+        getPainter(context).paintSliderThumbBackground(context, g, thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, orientation);
+        getPainter(context).paintSliderThumbBorder(context, g, thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, orientation);
+    }
+
+    static SynthPainter NULL_PAINTER = new SynthPainter() {
+    };
+
+    SynthPainter getPainter(SynthContext context) {
+        SynthPainter painter = context.getStyle().getPainter(context);
+
+        if (painter != null) {
+            return painter;
+        }
+        return NULL_PAINTER;
+    }
+
+    private static void paintRegion(SynthContext state, Graphics g, Rectangle bounds) {
+        JComponent c = state.getComponent();
+        SynthStyle style = state.getStyle();
+        int x, y, width, height;
+
+        if (bounds == null) {
+            x = 0;
+            y = 0;
+            width = c.getWidth();
+            height = c.getHeight();
+        } else {
+            x = bounds.x;
+            y = bounds.y;
+            width = bounds.width;
+            height = bounds.height;
+        }
+
+        // Fill in the background, if necessary.
+        boolean subregion = state.getRegion().isSubregion();
+        if ((subregion && style.isOpaque(state)) || (!subregion && c.isOpaque())) {
+            g.setColor(style.getColor(state, ColorType.BACKGROUND));
+            g.fillRect(x, y, width, height);
         }
     }
 
@@ -392,6 +434,21 @@ public class SkinRangeSliderUI extends SynthSliderUI {
                 return false;
             }
 
+        }
+    }
+
+    private final class ThumbStyle extends SynthStyle {
+
+        @Override
+        protected Color getColorForState(SynthContext context, ColorType type) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        protected Font getFontForState(SynthContext context) {
+            // TODO Auto-generated method stub
+            return null;
         }
     }
 }
