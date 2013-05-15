@@ -28,8 +28,6 @@ public class RangeSlider2 extends JSlider {
 
     protected Color trackFillColor;
 
-    private static final String uiClassID = "MThumbSliderUI";
-
     public RangeSlider2() {
       createThumbs(2);
       updateUI();
@@ -45,10 +43,6 @@ public class RangeSlider2 extends JSlider {
         thumbRenderers[i] = null;
         fillColors[i] = null;
       }
-    }
-
-    public String getUIClassID() {
-      return uiClassID;
     }
 
     public int getThumbNum() {

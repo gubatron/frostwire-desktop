@@ -1,6 +1,7 @@
 package com.frostwire.gui.theme;
 
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -14,12 +15,18 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicSliderUI;
+import javax.swing.plaf.synth.ColorType;
+import javax.swing.plaf.synth.Region;
+import javax.swing.plaf.synth.SynthContext;
+import javax.swing.plaf.synth.SynthLookAndFeel;
 import javax.swing.plaf.synth.SynthSliderUI;
+
+import sun.swing.SwingUtilities2;
 
 import com.limegroup.gnutella.gui.search.RangeSlider2;
 
 // adapted from http://www.java2s.com/Code/Java/Swing-Components/ThumbSliderExample2.htm
-public class SkinRangeSliderUI extends BasicSliderUI {
+public class SkinRangeSliderUI extends SynthSliderUI {
 
     MThumbSliderAdditionalUI additonalUi;
 
@@ -85,19 +92,48 @@ public class SkinRangeSliderUI extends BasicSliderUI {
         super.calculateGeometry();
         additonalUi.calculateThumbsSize();
         additonalUi.calculateThumbsLocation();
+
+        //calculateThumbRect();
+    }
+
+    private void calculateThumbRect() {
+        int thumbNum = additonalUi.getThumbNum();
+        Rectangle[] thumbRects = additonalUi.getThumbRects();
+
+        for (int i = thumbNum - 1; 0 <= i; i--) {
+            Rectangle rect = thumbRects[i];
+            SwingUtilities.computeUnion(rect.x, rect.y, rect.width, rect.height, thumbRect);
+        }
+
+        System.out.println(thumbRect.x + "," + thumbRect.y + "," + thumbRect.width + "," + thumbRect.height);
     }
 
     protected void calculateThumbLocation() {
     }
 
     Rectangle zeroRect = new Rectangle();
+    
+    @Override
+    protected void paint(SynthContext context, Graphics g) {
+        super.paint(context, g);
+        paint(g, slider);
+    }
+
+    @Override
+    protected void paintThumb(SynthContext context, Graphics g, Rectangle thumbBounds) {
+        //int orientation = slider.getOrientation();
+        //paint(g, slider);
+        //SynthLookAndFeel.updateSubregion(context, g, thumbBounds);
+        //context.getPainter().paintSliderThumbBackground(context, g, thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, orientation);
+        //context.getPainter().paintSliderThumbBorder(context, g, thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, orientation);
+    }
 
     public void paint(Graphics g, JComponent c) {
 
         Rectangle clip = g.getClipBounds();
         thumbRect = zeroRect;
 
-        super.paint(g, c);
+        //super.paint(g, c);
 
         int thumbNum = additonalUi.getThumbNum();
         Rectangle[] thumbRects = additonalUi.getThumbRects();
