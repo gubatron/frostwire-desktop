@@ -179,12 +179,14 @@ final class SearchOptionsPanel extends JPanel {
     }
 
     private void sliderSize_stateChanged(ChangeEvent e) {
+        System.out.println("sliderSize_stateChanged");
         //        if (_activeFilter != null) {
         //            _activeFilter.setRangeSize(_rangeSliderSize.getValue(), _rangeSliderSize.getUpperValue());
         //        }
     }
 
     private void sliderSeeds_stateChanged(ChangeEvent e) {
+        System.out.println("sliderSeeds_stateChanged");
         //        if (_activeFilter != null) {
         //            _activeFilter.setRangeSeeds(_rangeSliderSeeds.getValue(), _rangeSliderSeeds.getUpperValue());
         //        }
