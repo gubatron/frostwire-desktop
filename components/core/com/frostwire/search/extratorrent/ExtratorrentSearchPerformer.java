@@ -18,6 +18,8 @@
 
 package com.frostwire.search.extratorrent;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.frostwire.search.torrent.TorrentJsonSearchPerformer;
@@ -30,8 +32,18 @@ import com.frostwire.util.JsonUtils;
  */
 public class ExtratorrentSearchPerformer extends TorrentJsonSearchPerformer<ExtratorrentItem, ExtratorrentSearchResult> {
 
+    private final Comparator<ExtratorrentItem> itemComparator;
+    
     public ExtratorrentSearchPerformer(long token, String keywords, int timeout) {
         super(token, keywords, timeout, 1);
+        
+        itemComparator = new Comparator<ExtratorrentItem>() {
+            @Override
+            public int compare(ExtratorrentItem a, ExtratorrentItem b) {
+                return b.seeds - a.seeds;
+            }
+            
+        };
     }
 
     @Override
@@ -42,6 +54,7 @@ public class ExtratorrentSearchPerformer extends TorrentJsonSearchPerformer<Extr
     @Override
     protected List<ExtratorrentItem> parseJson(String json) {
         ExtratorrentResponse response = JsonUtils.toObject(json, ExtratorrentResponse.class);
+        Collections.sort(response.list,itemComparator);
         return response.list;
     }
 
@@ -49,4 +62,6 @@ public class ExtratorrentSearchPerformer extends TorrentJsonSearchPerformer<Extr
     protected ExtratorrentSearchResult fromItem(ExtratorrentItem item) {
         return new ExtratorrentSearchResult(item);
     }
+    
+    
 }
