@@ -15,7 +15,6 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -687,7 +686,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         tablePane.add(SCROLL_PANE);
 
         scrollPaneSearchOptions = createSearchOptionsPanel();
-        scrollPaneSearchOptions.setVisible(false);
+        scrollPaneSearchOptions.setVisible(true); // put this in a configuration
         tablePane.add(scrollPaneSearchOptions);
 
         TABLE_PANE = tablePane;

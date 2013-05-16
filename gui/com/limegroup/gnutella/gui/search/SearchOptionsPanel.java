@@ -73,12 +73,6 @@ final class SearchOptionsPanel extends JPanel {
         add(sliderSeeds, "wrap");
 
         resetFiltersPanel();
-
-        //
-        //        SearchFilterPanel filterPanel = new SearchFilterPanel();
-        //        filterPanel.setBorder(ThemeMediator.createTitledBorder(I18n.tr("Filter")));
-        //        filterPanel.setAlignmentX(0.0f);
-        //        add(filterPanel);
     }
 
     private JComponent createSearchEnginesFilter() {
