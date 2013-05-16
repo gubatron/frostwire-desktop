@@ -18,7 +18,9 @@ package com.limegroup.gnutella.gui.search;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -52,6 +54,14 @@ final class SchemaBox extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         addSchemas();
         add(Box.createHorizontalGlue());
+    }
+
+    public void applyFilters() {
+        AbstractButton button = getSelectedButton();
+
+        if (button != null) {
+            button.doClick();
+        }
     }
 
     /**
@@ -130,6 +140,20 @@ final class SchemaBox extends JPanel {
         }
 
         return result;
+    }
+
+    private AbstractButton getSelectedButton() {
+        AbstractButton selectedButton = null;
+
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                selectedButton = button;
+            }
+        }
+
+        return selectedButton;
     }
 
     private final class SchemaButtonActionListener implements ActionListener {

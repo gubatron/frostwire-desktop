@@ -75,6 +75,30 @@ final class SearchOptionsPanel extends JPanel {
         resetFiltersPanel();
     }
 
+    public void updateFiltersPanel() {
+        GeneralResultFilter filter = new GeneralResultFilter(resultPanel, sliderSeeds, sliderSize, textFieldKeywords);
+        resultPanel.filterChanged(filter, 1);
+    }
+
+    public void resetFiltersPanel() {
+        sliderSeeds.setMinimum(0);
+        sliderSeeds.setMaximum(1000);
+        sliderSeeds.setValue(0);
+        sliderSeeds.setUpperValue(1000);
+    
+        sliderSize.setMinimum(0);
+        sliderSize.setMaximum(1000);
+        sliderSize.setValue(0);
+        sliderSize.setUpperValue(1000);
+    
+        sliderSeeds.getMinimumValueLabel().setText(I18n.tr("0"));
+        sliderSeeds.getMaximumValueLabel().setText(I18n.tr("Max"));
+        sliderSize.getMinimumValueLabel().setText(I18n.tr("0"));
+        sliderSize.getMaximumValueLabel().setText(I18n.tr("Max"));
+    
+        textFieldKeywords.setText("");
+    }
+
     private JComponent createSearchEnginesFilter() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
@@ -184,29 +208,5 @@ final class SearchOptionsPanel extends JPanel {
         //        if (_activeFilter != null) {
         //            _activeFilter.setRangeSeeds(_rangeSliderSeeds.getValue(), _rangeSliderSeeds.getUpperValue());
         //        }
-    }
-
-    public void updateFiltersPanel() {
-        GeneralResultFilter filter = new GeneralResultFilter(resultPanel, sliderSeeds, sliderSize, textFieldKeywords);
-        resultPanel.filterChanged(filter, 1);
-    }
-
-    public void resetFiltersPanel() {
-        sliderSeeds.setMinimum(0);
-        sliderSeeds.setMaximum(1000);
-        sliderSeeds.setValue(0);
-        sliderSeeds.setUpperValue(1000);
-
-        sliderSize.setMinimum(0);
-        sliderSize.setMaximum(1000);
-        sliderSize.setValue(0);
-        sliderSize.setUpperValue(1000);
-
-        sliderSeeds.getMinimumValueLabel().setText(I18n.tr("0"));
-        sliderSeeds.getMaximumValueLabel().setText(I18n.tr("Max"));
-        sliderSize.getMinimumValueLabel().setText(I18n.tr("0"));
-        sliderSize.getMaximumValueLabel().setText(I18n.tr("Max"));
-
-        textFieldKeywords.setText("");
     }
 }

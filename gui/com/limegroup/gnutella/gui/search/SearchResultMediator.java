@@ -70,7 +70,7 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.QueryUtils;
 
-public class SearchResultMediator extends AbstractTableMediator<TableRowFilteredModel, SearchResultDataLine, UISearchResult> {
+public final class SearchResultMediator extends AbstractTableMediator<TableRowFilteredModel, SearchResultDataLine, UISearchResult> {
 
     protected static final String SEARCH_TABLE = "SEARCH_TABLE";
 
@@ -125,6 +125,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
     public AtomicInteger searchCount = new AtomicInteger(0);
 
+    private SchemaBox schemaBox;
     private SearchOptionsPanel searchOptionsPanel;
     private JScrollPane scrollPaneSearchOptions;
 
@@ -695,7 +696,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     }
 
     private JComponent createSchemaBox() {
-        SchemaBox schemaBox = new SchemaBox(this);
+        schemaBox = new SchemaBox(this);
 
         // reusing schema box panel for more options button
         // minor optimization to keep the layout as flat as possible
@@ -836,6 +837,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     }
 
     public void updateFiltersPanel() {
+        schemaBox.applyFilters();
         searchOptionsPanel.updateFiltersPanel();
     }
 

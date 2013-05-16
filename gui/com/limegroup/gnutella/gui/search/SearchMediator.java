@@ -65,7 +65,7 @@ import com.limegroup.gnutella.settings.SearchSettings;
  * underlying classes.
  */
 public final class SearchMediator {
-    
+
     public static final Logger LOG = LoggerFactory.getLogger(SearchMediator.class);
 
     /**
@@ -145,21 +145,17 @@ public final class SearchMediator {
             public void stateChanged(ChangeEvent e) {
                 SearchResultMediator resultPanel = getSearchResultDisplayer().getSelectedResultPanel();
                 resultPanel.updateFiltersPanel();
-//                if (resultPanel == null)
-//                    getSearchInputManager().clearFilters();
-//                else
-//                    getSearchInputManager().setFiltersFor(resultPanel);
             }
         });
-        
+
         try {
             CrawlPagedWebSearchPerformer.setCache(new DatabaseCrawlCache());
         } catch (Throwable t) {
             LOG.error("could not set database crawl cache", t);
         }
-        
+
         CrawlPagedWebSearchPerformer.setMagnetDownloader(new VuzeMagnetDownloader());
-        
+
         this.manager = new SearchManagerImpl(SEARCH_MANAGER_NUM_THREADS);
         this.manager.registerListener(new ManagerListener());
     }
@@ -490,7 +486,7 @@ public final class SearchMediator {
     static void searchKilled(SearchResultMediator panel) {
         instance().stopSearch(panel.getToken());
         panel.cleanup();
-        
+
         ApplicationHeader header = GUIMediator.instance().getMainFrame().getApplicationHeader();
         header.requestSearchFocus();
     }
@@ -612,7 +608,8 @@ public final class SearchMediator {
     public void clearCache() {
         try {
             CrawlPagedWebSearchPerformer.getCache().clear();
-        } catch (Throwable t) {}
+        } catch (Throwable t) {
+        }
     }
 
     public long getTotalTorrents() {
@@ -620,7 +617,7 @@ public final class SearchMediator {
         try {
             r = CrawlPagedWebSearchPerformer.getCache().size();
         } catch (Throwable t) {
-            
+
         }
         return r;
     }
