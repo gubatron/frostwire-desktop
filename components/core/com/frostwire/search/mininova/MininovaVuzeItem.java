@@ -18,6 +18,8 @@
 
 package com.frostwire.search.mininova;
 
+import com.frostwire.search.torrent.ComparableTorrentJsonItem;
+
 /*
  *               { "title": "...", 
  *               "date": "Wed, 18 Nov 2009 10:07:42 +0100", 
@@ -37,7 +39,7 @@ package com.frostwire.search.mininova;
  * @author aldenml
  *
  */
-public class MininovaVuzeItem {
+public class MininovaVuzeItem implements ComparableTorrentJsonItem {
 
     public String title;
 
@@ -56,4 +58,9 @@ public class MininovaVuzeItem {
     public String download; //.torrent download url
 
     public String hash;
+    
+    @Override
+    public int getSeeds() {
+        return seeds;
+    }
 }

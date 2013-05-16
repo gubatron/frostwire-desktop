@@ -18,12 +18,14 @@
 
 package com.frostwire.search.clearbits;
 
+import com.frostwire.search.torrent.ComparableTorrentJsonItem;
+
 /**
  * @author gubatron
  * @author aldenml
  *
  */
-public class ClearBitsItem {
+public class ClearBitsItem implements ComparableTorrentJsonItem {
 
     private final static String CLEARBITS_TORRENT_GET_URL_PREFIX = "http://www.clearbits.net/get/";
     private final static String CLEARBITS_TORRENT_PAGE_URL_PREFIX = "http://www.clearbits.net/torrents/";
@@ -128,5 +130,10 @@ public class ClearBitsItem {
         location = urlBuilder.toString();
 
         //title = "(Clearbits.net) " + title;
+    }
+
+    @Override
+    public int getSeeds() {
+        return seeds;
     }
 }

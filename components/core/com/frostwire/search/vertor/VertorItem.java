@@ -18,6 +18,8 @@
 
 package com.frostwire.search.vertor;
 
+import com.frostwire.search.torrent.ComparableTorrentJsonItem;
+
 /*
 { "results":[
    {"name":"...",
@@ -34,7 +36,7 @@ package com.frostwire.search.vertor;
  * @author aldenml
  *
  */
-public class VertorItem {
+public class VertorItem implements ComparableTorrentJsonItem {
 
     public String name;
 
@@ -51,4 +53,14 @@ public class VertorItem {
     public String download;
 
     public String category;
+
+    @Override
+    public int getSeeds() {
+        int result = 0;
+        try {
+            result = Integer.valueOf(seeds);
+        } catch (Exception e) {
+        }
+        return result;
+    }
 }

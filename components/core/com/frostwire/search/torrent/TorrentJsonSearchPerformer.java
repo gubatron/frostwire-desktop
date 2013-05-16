@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 
 package com.frostwire.search.torrent;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,10 +30,19 @@ import com.frostwire.search.SearchResult;
  * @author aldenml
  *
  */
-public abstract class TorrentJsonSearchPerformer<T, R extends TorrentSearchResult> extends TorrentSearchPerformer {
+public abstract class TorrentJsonSearchPerformer<T extends ComparableTorrentJsonItem, R extends TorrentSearchResult> extends TorrentSearchPerformer {
 
+    private final Comparator<T> itemComparator;
+    
     public TorrentJsonSearchPerformer(long token, String keywords, int timeout, int pages) {
         super(token, keywords, timeout, pages);
+        itemComparator = new Comparator<T>() {
+            @Override
+            public int compare(T a, T b) {
+                return b.getSeeds() - a.getSeeds();
+            }
+            
+        };
     }
 
     @Override
@@ -41,6 +52,8 @@ public abstract class TorrentJsonSearchPerformer<T, R extends TorrentSearchResul
         List<T> items = parseJson(page);
 
         if (items != null) {
+            Collections.sort(items,itemComparator);
+            
             for (T item : items) {
                 if (!isStopped()) {
                     SearchResult sr = fromItem(item);
