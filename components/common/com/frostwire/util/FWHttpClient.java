@@ -23,12 +23,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
+import java.util.MissingFormatArgumentException;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -76,7 +78,7 @@ final class FWHttpClient implements HttpClient {
 
             result = new String(baos.toByteArray(), "UTF-8");
         } catch (Throwable e) {
-            LOG.warn("Error getting string from http body response: " + e.getMessage());
+            LOG.error("Error getting string from http body response: " + e.getMessage(),e);
         } finally {
             closeQuietly(baos);
         }
@@ -164,37 +166,74 @@ final class FWHttpClient implements HttpClient {
 
         int httpResponseCode = getResponseCode(conn);
 
-        if (httpResponseCode != HttpURLConnection.HTTP_OK && httpResponseCode != HttpURLConnection.HTTP_PARTIAL) {
+        if (httpResponseCode != HttpURLConnection.HTTP_OK && 
+            httpResponseCode != HttpURLConnection.HTTP_PARTIAL &&
+            httpResponseCode != HttpURLConnection.HTTP_MOVED_PERM &&
+            httpResponseCode != HttpURLConnection.HTTP_MOVED_TEMP &&
+            httpResponseCode != -1) { //some servers return -1 on 302
             throw new ResponseCodeNotSupportedException(httpResponseCode);
         }
-
-        onHeaders(conn.getHeaderFields());
-
-        checkRangeSupport(rangeStart, conn);
-
-        try {
-            byte[] b = new byte[4096];
-            int n = 0;
-            while (!canceled && (n = in.read(b, 0, b.length)) != -1) {
-                if (!canceled) {
-                    out.write(b, 0, n);
-                    onData(b, 0, n);
+        
+        if (httpResponseCode == HttpURLConnection.HTTP_MOVED_PERM ||
+            httpResponseCode == HttpURLConnection.HTTP_MOVED_TEMP ||
+            httpResponseCode == -1) {
+            String newLocation = null;
+            if (httpResponseCode == -1) {
+                String outStr = readString(in);
+                String[] split = outStr.split("\r\n");
+                for (String line : split) {
+                    if (line.contains("Location:")) {
+                        newLocation = line.substring(8).trim();
+                        LOG.info("Got HTTP " + newLocation + " Redirect response to " + newLocation);
+                        get(newLocation.trim(),out,timeout,userAgent,referrer,rangeStart,rangeLength);
+                    }
                 }
-            }
-
-            closeQuietly(out);
-
-            if (canceled) {
-                onCancel();
+                throw new MissingFormatArgumentException("HTTP " + httpResponseCode + " response missing 'Location:' header for redirect.");
+                
+            } else if (conn.getHeaderFields().containsKey("Location") &&
+                !StringUtils.isNullOrEmpty(newLocation = conn.getHeaderField("Location"))) {
+                LOG.info("Got HTTP " + newLocation + " Redirect response to " + newLocation);
+                get(newLocation.trim(),out,timeout,userAgent,referrer,rangeStart,rangeLength);
             } else {
-                onComplete();
+                throw new MissingFormatArgumentException("HTTP " + httpResponseCode + " response missing 'Location:' header for redirect.");
             }
-        } catch (Exception e) {
-            onError(e);
-        } finally {
-            closeQuietly(in);
-            closeQuietly(conn);
+        } else {
+
+            onHeaders(conn.getHeaderFields());
+
+            checkRangeSupport(rangeStart, conn);
+    
+            try {
+                byte[] b = new byte[4096];
+                int n = 0;
+                while (!canceled && (n = in.read(b, 0, b.length)) != -1) {
+                    if (!canceled) {
+                        out.write(b, 0, n);
+                        onData(b, 0, n);
+                    }
+                }
+    
+                closeQuietly(out);
+    
+                if (canceled) {
+                    onCancel();
+                } else {
+                    onComplete();
+                }
+            } catch (Exception e) {
+                onError(e);
+            } finally {
+                closeQuietly(in);
+                closeQuietly(conn);
+            }
         }
+    }
+
+    private String readString(InputStream in) throws IOException {
+        char[] buffer = new char[2048]; 
+        new InputStreamReader(in).read(buffer, 0, 2048);
+        String outStr = new String(buffer);
+        return outStr;
     }
 
     private void setHostnameVerifier(HttpsURLConnection conn) {
