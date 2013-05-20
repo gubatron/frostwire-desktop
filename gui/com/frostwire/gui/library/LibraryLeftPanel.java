@@ -59,7 +59,7 @@ public class LibraryLeftPanel extends JPanel {
     protected void setupUI() {
         setLayout(new BorderLayout());
         
-        add(librarySearch.getSearchField(), BorderLayout.PAGE_START);
+        //add(librarySearch.getSearchField(), BorderLayout.PAGE_START);
 
         //Prepare a split pane with explorers
         splitPane.setTopComponent(libraryExplorer);

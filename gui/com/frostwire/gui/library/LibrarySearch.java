@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
@@ -57,9 +58,13 @@ import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.LibrarySettings;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class LibrarySearch extends JPanel {
-
-    private static final long serialVersionUID = 2266243762191789491L;
 
     private JLabel statusLabel;
     private SearchField searchField;
@@ -483,7 +488,7 @@ public class LibrarySearch extends JPanel {
 
             return true;
         }
-        
+
         private String normalize(String token) {
             String norm = Normalizer.normalize(token, Normalizer.Form.NFKD);
             norm = norm.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
