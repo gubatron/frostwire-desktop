@@ -88,16 +88,20 @@ public class RangeSlider extends JSlider {
 
     @Override
     public void setMinimum(int minimum) {
+        int oldMin = getModelAt(0).getMinimum();
         for (BoundedRangeModel model : sliderModels) {
             model.setMinimum(minimum);
         }
+        firePropertyChange("minimum", Integer.valueOf(oldMin), Integer.valueOf(minimum));
     }
 
     @Override
     public void setMaximum(int maximum) {
+        int oldMax = getModelAt(0).getMaximum();
         for (BoundedRangeModel model : sliderModels) {
             model.setMaximum(maximum);
         }
+        firePropertyChange("maximum", Integer.valueOf(oldMax), Integer.valueOf(maximum));
     }
 
     @Override

@@ -99,6 +99,13 @@ public class SkinRangeSliderUI extends SynthSliderUI {
         slider.addComponentListener(componentListener);
         slider.addPropertyChangeListener(propertyChangeListener);
         slider.getModel().addChangeListener(changeListener);
+
+        if (slider instanceof RangeSlider) {
+            RangeSlider rangeSlider = (RangeSlider) slider;
+            for (int i = 0; i < rangeSlider.getThumbNum(); i++) {
+                rangeSlider.getModelAt(i).addChangeListener(changeListener);
+            }
+        }
     }
 
     @Override
@@ -109,6 +116,13 @@ public class SkinRangeSliderUI extends SynthSliderUI {
         slider.removeComponentListener(componentListener);
         slider.removePropertyChangeListener(propertyChangeListener);
         slider.getModel().removeChangeListener(changeListener);
+
+        if (slider instanceof RangeSlider) {
+            RangeSlider rangeSlider = (RangeSlider) slider;
+            for (int i = 0; i < rangeSlider.getThumbNum(); i++) {
+                rangeSlider.getModelAt(i).removeChangeListener(changeListener);
+            }
+        }
     }
 
     @Override

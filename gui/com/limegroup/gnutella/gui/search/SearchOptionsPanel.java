@@ -55,8 +55,8 @@ final class SearchOptionsPanel extends JPanel {
     private final LabeledTextField textFieldKeywords;
     private final LabeledRangeSlider sliderSize;
     private final LabeledRangeSlider sliderSeeds;
-    
-    //private final GeneralResultFilter 
+
+    private GeneralResultFilter generalFilter;
 
     public SearchOptionsPanel(SearchResultMediator resultPanel) {
         this.resultPanel = resultPanel;
@@ -78,8 +78,8 @@ final class SearchOptionsPanel extends JPanel {
     }
 
     public void updateFiltersPanel() {
-        GeneralResultFilter filter = new GeneralResultFilter(resultPanel, sliderSeeds, sliderSize, textFieldKeywords);
-        resultPanel.filterChanged(filter, 1);
+        generalFilter = new GeneralResultFilter(resultPanel, sliderSeeds, sliderSize, textFieldKeywords);
+        resultPanel.filterChanged(generalFilter, 1);
     }
 
     public void resetFilters() {
@@ -116,7 +116,7 @@ final class SearchOptionsPanel extends JPanel {
         textField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                keywordFilterChanged(e);
+                textFieldKeywords_keyReleased(e);
             }
         });
 
@@ -192,23 +192,21 @@ final class SearchOptionsPanel extends JPanel {
         }
     }
 
-    private void keywordFilterChanged(KeyEvent e) {
-        //        if (_activeFilter != null) {
-        //            _activeFilter.updateKeywordFiltering(_keywordFilterTextField.getText());
-        //        }
+    private void textFieldKeywords_keyReleased(KeyEvent e) {
+        if (generalFilter != null) {
+            generalFilter.updateKeywordFiltering(textFieldKeywords.getText());
+        }
     }
 
     private void sliderSize_stateChanged(ChangeEvent e) {
-        System.out.println("sliderSize_stateChanged");
-        //        if (_activeFilter != null) {
-        //            _activeFilter.setRangeSize(_rangeSliderSize.getValue(), _rangeSliderSize.getUpperValue());
-        //        }
+        if (generalFilter != null) {
+            generalFilter.setRangeSize(sliderSize.getLowerValue(), sliderSize.getUpperValue());
+        }
     }
 
     private void sliderSeeds_stateChanged(ChangeEvent e) {
-        System.out.println("sliderSeeds_stateChanged");
-        //        if (_activeFilter != null) {
-        //            _activeFilter.setRangeSeeds(_rangeSliderSeeds.getValue(), _rangeSliderSeeds.getUpperValue());
-        //        }
+        if (generalFilter != null) {
+            generalFilter.setRangeSeeds(sliderSeeds.getLowerValue(), sliderSeeds.getUpperValue());
+        }
     }
 }
