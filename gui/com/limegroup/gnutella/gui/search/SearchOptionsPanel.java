@@ -55,6 +55,8 @@ final class SearchOptionsPanel extends JPanel {
     private final LabeledTextField textFieldKeywords;
     private final LabeledRangeSlider sliderSize;
     private final LabeledRangeSlider sliderSeeds;
+    
+    //private final GeneralResultFilter 
 
     public SearchOptionsPanel(SearchResultMediator resultPanel) {
         this.resultPanel = resultPanel;
@@ -72,7 +74,7 @@ final class SearchOptionsPanel extends JPanel {
         this.sliderSeeds = createSeedsFilter();
         add(sliderSeeds, "wrap");
 
-        resetFiltersPanel();
+        resetFilters();
     }
 
     public void updateFiltersPanel() {
@@ -80,22 +82,22 @@ final class SearchOptionsPanel extends JPanel {
         resultPanel.filterChanged(filter, 1);
     }
 
-    public void resetFiltersPanel() {
+    public void resetFilters() {
         sliderSeeds.setMinimum(0);
-        sliderSeeds.setMaximum(1000);
-        sliderSeeds.setValue(0);
-        sliderSeeds.setUpperValue(1000);
-    
+        sliderSeeds.setMaximum(100);
+        sliderSeeds.setLowerValue(0);
+        sliderSeeds.setUpperValue(100);
+
         sliderSize.setMinimum(0);
-        sliderSize.setMaximum(1000);
-        sliderSize.setValue(0);
-        sliderSize.setUpperValue(1000);
-    
+        sliderSize.setMaximum(100);
+        sliderSize.setLowerValue(0);
+        sliderSize.setUpperValue(100);
+
         sliderSeeds.getMinimumValueLabel().setText(I18n.tr("0"));
         sliderSeeds.getMaximumValueLabel().setText(I18n.tr("Max"));
         sliderSize.getMinimumValueLabel().setText(I18n.tr("0"));
         sliderSize.getMaximumValueLabel().setText(I18n.tr("Max"));
-    
+
         textFieldKeywords.setText("");
     }
 

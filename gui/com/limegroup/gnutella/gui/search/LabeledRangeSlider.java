@@ -89,12 +89,12 @@ public class LabeledRangeSlider extends JPanel {
     /**
      * Sets the lower value in the range.
      */
-    public void setValue(int value) {
-        slider.setValue(value);
+    public void setLowerValue(int value) {
+        slider.setLowerValue(value);
     }
 
-    public int getValue() {
-        return slider.getValue();
+    public int getLowerValue() {
+        return slider.getLowerValue();
     }
 
     public int getUpperValue() {

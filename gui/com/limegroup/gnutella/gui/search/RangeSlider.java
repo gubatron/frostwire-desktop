@@ -76,12 +76,38 @@ public class RangeSlider extends JSlider {
         getModelAt(index).setRangeProperties(newValue, getExtent(), getMinimum(), getMaximum(), getValueIsAdjusting());
     }
 
+    @Override
     public int getMinimum() {
         return getModelAt(0).getMinimum();
     }
 
+    @Override
     public int getMaximum() {
         return getModelAt(0).getMaximum();
+    }
+
+    @Override
+    public void setMinimum(int minimum) {
+        for (BoundedRangeModel model : sliderModels) {
+            model.setMinimum(minimum);
+        }
+    }
+
+    @Override
+    public void setMaximum(int maximum) {
+        for (BoundedRangeModel model : sliderModels) {
+            model.setMaximum(maximum);
+        }
+    }
+
+    @Override
+    public int getValue() {
+        return 0; // returns a dummy value
+    }
+
+    @Override
+    public void setValue(int n) {
+        // ignore
     }
 
     public BoundedRangeModel getModelAt(int index) {
@@ -90,7 +116,7 @@ public class RangeSlider extends JSlider {
 
     @Override
     public void updateUI() {
-        setUI(new SkinRangeSliderUI(this));
+        super.setUI(new SkinRangeSliderUI(this));
     }
 
     protected void createThumbs(int n) {

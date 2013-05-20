@@ -842,6 +842,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     }
 
     public void resetFiltersPanel() {
-        searchOptionsPanel.resetFiltersPanel();
+        schemaBox.applyFilters();
+        searchOptionsPanel.resetFilters();
     }
 }
