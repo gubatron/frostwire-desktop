@@ -28,7 +28,7 @@ import com.limegroup.gnutella.gui.LabeledTextField;
  * @author aldenml
  *
  */
-public class GeneralResultFilter implements TableLineFilter<SearchResultDataLine> {
+public final class GeneralResultFilter implements TableLineFilter<SearchResultDataLine> {
 
     private SearchResultMediator _rp;
     private LabeledRangeSlider _rangeSliderSeeds;
@@ -100,6 +100,8 @@ public class GeneralResultFilter implements TableLineFilter<SearchResultDataLine
             int seedNorm = ((seeds - _minResultsSeeds) * 1000) / (_maxResultsSeeds - _minResultsSeeds);
 
             if (_minSeeds == 0 && _maxSeeds == 1000) {
+                inSeedRange = true;
+            } else if (seeds == _minSeeds || seeds == _maxSeeds) {
                 inSeedRange = true;
             } else if (_minSeeds == 0) {
                 inSeedRange = seedNorm <= _maxSeeds;

@@ -84,14 +84,14 @@ final class SearchOptionsPanel extends JPanel {
 
     public void resetFilters() {
         sliderSeeds.setMinimum(0);
-        sliderSeeds.setMaximum(100);
+        sliderSeeds.setMaximum(1000);
         sliderSeeds.setLowerValue(0);
-        sliderSeeds.setUpperValue(100);
+        sliderSeeds.setUpperValue(1000);
 
         sliderSize.setMinimum(0);
-        sliderSize.setMaximum(100);
+        sliderSize.setMaximum(1000);
         sliderSize.setLowerValue(0);
-        sliderSize.setUpperValue(100);
+        sliderSize.setUpperValue(1000);
 
         sliderSeeds.getMinimumValueLabel().setText(I18n.tr("0"));
         sliderSeeds.getMaximumValueLabel().setText(I18n.tr("Max"));
@@ -205,6 +205,7 @@ final class SearchOptionsPanel extends JPanel {
     }
 
     private void sliderSeeds_stateChanged(ChangeEvent e) {
+        System.out.println(sliderSeeds.getLowerValue() + " - " + sliderSeeds.getUpperValue());
         if (generalFilter != null) {
             generalFilter.setRangeSeeds(sliderSeeds.getLowerValue(), sliderSeeds.getUpperValue());
         }
