@@ -65,8 +65,6 @@ import com.limegroup.gnutella.settings.UISettings;
 
 public class SearchField extends JXSearchField {
 
-    private static final long serialVersionUID = 3506693592729700194L;
-
     /**
      * The sole JPopupMenu that's shared among all the text fields.
      */
@@ -210,11 +208,6 @@ public class SearchField extends JXSearchField {
     private static abstract class FieldAction extends AbstractAction {
 
         /**
-         * 
-         */
-        private static final long serialVersionUID = 2309395089029318488L;
-
-        /**
          * Constructs a new FieldAction looking up the name from the MessagesBundles.
          */
         public FieldAction(String name) {
@@ -236,11 +229,6 @@ public class SearchField extends JXSearchField {
      */
     private static Action UNDO_ACTION = new FieldAction(I18nMarker.marktr("Undo")) {
 
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -4598808952764108125L;
-
         public void actionPerformed(ActionEvent e) {
             getField(e).undo();
         }
@@ -250,11 +238,6 @@ public class SearchField extends JXSearchField {
      * The cut action
      */
     private static Action CUT_ACTION = new FieldAction(I18nMarker.marktr("Cut")) {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 4315097846248426786L;
 
         public void actionPerformed(ActionEvent e) {
             getField(e).cut();
@@ -266,11 +249,6 @@ public class SearchField extends JXSearchField {
      */
     private static Action COPY_ACTION = new FieldAction(I18nMarker.marktr("Copy")) {
 
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -6811443826148258282L;
-
         public void actionPerformed(ActionEvent e) {
             getField(e).copy();
         }
@@ -280,11 +258,6 @@ public class SearchField extends JXSearchField {
      * The paste action.
      */
     private static Action PASTE_ACTION = new FieldAction(I18nMarker.marktr("Paste")) {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 5894287146853247748L;
 
         public void actionPerformed(ActionEvent e) {
             getField(e).paste();
@@ -296,11 +269,6 @@ public class SearchField extends JXSearchField {
      */
     private static Action DELETE_ACTION = new FieldAction(I18nMarker.marktr("Delete")) {
 
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 5996971351238158202L;
-
         public void actionPerformed(ActionEvent e) {
             getField(e).replaceSelection("");
         }
@@ -310,11 +278,6 @@ public class SearchField extends JXSearchField {
      * The select all action.
      */
     private static Action SELECT_ALL_ACTION = new FieldAction(I18nMarker.marktr("Select All")) {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -4805338416149604566L;
 
         public void actionPerformed(ActionEvent e) {
             getField(e).selectAll();

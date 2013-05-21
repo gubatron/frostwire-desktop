@@ -18,6 +18,7 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -161,7 +162,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         cloudSearchField.setPrompt(I18n.tr("Search or enter URL"));
         Font origFont = cloudSearchField.getFont();
         Font newFont = origFont.deriveFont(origFont.getSize2D() + 2f);
-        cloudSearchField.setFont(newFont);
+        cloudSearchField.setFont(newFont);        
     }
 
     private void createUpdateButton() {

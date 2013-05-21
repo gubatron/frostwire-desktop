@@ -1,9 +1,9 @@
 package com.frostwire.gui.searchfield;
 
-import java.awt.Color;
 import java.awt.Component.BaselineResizeBehavior;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.TextComponent;
@@ -26,6 +26,7 @@ import javax.swing.text.Position.Bias;
 import javax.swing.text.View;
 
 import com.frostwire.gui.searchfield.PromptSupport.FocusBehavior;
+import com.frostwire.gui.theme.SkinTextFieldBackgroundPainter;
 
 /**
  * <p>
@@ -42,6 +43,8 @@ import com.frostwire.gui.searchfield.PromptSupport.FocusBehavior;
  */
 public abstract class PromptTextUI extends TextUI  {
 	static final FocusHandler focusHandler = new FocusHandler();
+	
+	private final SkinTextFieldBackgroundPainter backgroundPainter;
 
 	/**
 	 * Delegate the hard work to this object.
@@ -61,6 +64,7 @@ public abstract class PromptTextUI extends TextUI  {
 	 */
 	public PromptTextUI(TextUI delegate) {
 		this.delegate = delegate;
+		this.backgroundPainter = new SkinTextFieldBackgroundPainter(SkinTextFieldBackgroundPainter.State.Enabled);
 	}
 
 	/**
@@ -172,8 +176,9 @@ public abstract class PromptTextUI extends TextUI  {
 		if (shouldPaintPrompt(txt)) {
 			paintPromptComponent(g, txt);
 		} else {
-		    g.setColor(Color.WHITE);
-		    g.fillRect(0, 0, c.getWidth(), c.getHeight());
+		    int w = c.getWidth();
+		    int h = c.getHeight();
+		    backgroundPainter.paint((Graphics2D) g, c, w, h);
 		    delegate.paint(g, c);
 		}
 	}
