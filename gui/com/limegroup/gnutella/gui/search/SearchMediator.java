@@ -112,11 +112,6 @@ public final class SearchMediator {
     private final SearchManager manager;
 
     /**
-     * Variable for the component that handles all search input from the user.
-     */
-    private static SearchInputManager INPUT_MANAGER;
-
-    /**
      * This instance handles the display of all search results.
      * TODO: Changed to package-protected for testing to add special results
      */
@@ -511,15 +506,6 @@ public final class SearchMediator {
     }
 
     /**
-     * Returns the search input panel component.
-     *
-     * @return the search input panel component
-     */
-    public static JComponent getSearchComponent() {
-        return getSearchInputManager().getComponent();
-    }
-
-    /**
      * Returns the <tt>JComponent</tt> instance containing all of the
      * search result UI components.
      *
@@ -528,13 +514,6 @@ public final class SearchMediator {
      */
     public static JComponent getResultComponent() {
         return getSearchResultDisplayer().getComponent();
-    }
-
-    private static SearchInputManager getSearchInputManager() {
-        if (INPUT_MANAGER == null) {
-            INPUT_MANAGER = new SearchInputManager();
-        }
-        return INPUT_MANAGER;
     }
 
     public static SearchResultDisplayer getSearchResultDisplayer() {

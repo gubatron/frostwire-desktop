@@ -34,12 +34,6 @@ import com.limegroup.gnutella.settings.UISettings;
 public final class SearchDownloadTab extends AbstractTab {
 
     /**
-     * Split pane for the split between the search input panel and the 
-     * search results panel.
-     */
-    private final JSplitPane mainSplitPane;
-
-    /**
      * Split pane for the split between the search and download sections
      * of the window.
      */
@@ -62,11 +56,6 @@ public final class SearchDownloadTab extends AbstractTab {
         searchDownloadSplitPane.setResizeWeight(0.6);
         searchDownloadSplitPane.setDividerLocation(UISettings.UI_TRANSFERS_DIVIDER_LOCATION.getValue());
 
-        JComponent searchBoxPanel = SearchMediator.getSearchComponent();
-
-        mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, searchBoxPanel, searchDownloadSplitPane);
-        mainSplitPane.setDividerSize(0);
-
         searchDownloadSplitPane.addPropertyChangeListener(JSplitPane.LAST_DIVIDER_LOCATION_PROPERTY, new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 JSplitPane splitPane = (JSplitPane) evt.getSource();
@@ -80,6 +69,6 @@ public final class SearchDownloadTab extends AbstractTab {
     }
 
     public JComponent getComponent() {
-        return mainSplitPane;
+        return searchDownloadSplitPane;
     }
 }
