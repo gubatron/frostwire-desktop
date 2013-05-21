@@ -18,12 +18,10 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -162,7 +160,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         cloudSearchField.setPrompt(I18n.tr("Search or enter URL"));
         Font origFont = cloudSearchField.getFont();
         Font newFont = origFont.deriveFont(origFont.getSize2D() + 2f);
-        cloudSearchField.setFont(newFont);        
+        cloudSearchField.setFont(newFont);
     }
 
     private void createUpdateButton() {
@@ -194,13 +192,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
     }
 
     private void addTabButtons(final Map<Tabs, Tab> tabs) {
-
-        GridLayout gridLayout = new GridLayout(1, GUIMediator.Tabs.values().length);
-        gridLayout.setHgap(8);
-
-        JPanel buttonContainer = new JPanel(gridLayout);
-        //buttonContainer.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 32));
-        buttonContainer.setOpaque(false);
+        JPanel buttonContainer = new JPanel(new MigLayout("insets 0"));
         ButtonGroup group = new ButtonGroup();
 
         Font buttonFont = new Font("Helvetica", Font.BOLD, 14);
@@ -255,13 +247,12 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         Icon disabledIcon = null;
         Icon rolloverIcon = null;
 
-        @SuppressWarnings("serial")
-        final AbstractButton button = new JRadioButton(I18n.tr(t.getTitle())) {
+        final JRadioButton button = new JRadioButton(I18n.tr(t.getTitle())) {
             protected void paintComponent(Graphics g) {
                 if (isSelected()) {
-                    g.drawImage(headerButtonBackgroundSelected, 0, 0, null);
+                    g.drawImage(headerButtonBackgroundSelected, 0, 1, null);
                 } else {
-                    g.drawImage(headerButtonBackgroundUnselected, 0, 0, null);
+                    g.drawImage(headerButtonBackgroundUnselected, 0, 1, null);
                 }
                 super.paintComponent(g);
             }
@@ -277,9 +268,10 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         button.putClientProperty(DESELECTED, disabledIcon);
         button.setIcon(disabledIcon);
         button.setRolloverIcon(rolloverIcon);
+        button.setPressedIcon(rolloverIcon);
         button.addItemListener(HIGHLIGHTER);
         button.setBorderPainted(false);
-        button.setBorder(BorderFactory.createEmptyBorder(0, 7, 5, 0));
+        button.setBorder(BorderFactory.createEmptyBorder(6, 7, 5, 0));
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
         button.setOpaque(false);
@@ -289,7 +281,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         //button.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
         button.setForeground(ThemeMediator.TAB_BUTTON_FOREGROUND_COLOR);
 
-        Dimension buttonDim = new Dimension(107, 34);
+        Dimension buttonDim = new Dimension(107, 35);
         button.setPreferredSize(buttonDim);
         button.setMinimumSize(buttonDim);
         button.setMaximumSize(buttonDim);
