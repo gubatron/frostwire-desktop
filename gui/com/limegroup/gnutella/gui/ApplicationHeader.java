@@ -1,3 +1,20 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.limegroup.gnutella.gui;
 
 import java.awt.CardLayout;
@@ -48,7 +65,13 @@ import com.limegroup.gnutella.gui.search.SearchInformation;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.settings.SearchSettings;
 
-public class ApplicationHeader extends JPanel implements RefreshListener {
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public final class ApplicationHeader extends JPanel implements RefreshListener {
 
     /*
     * The property to store the selected icon in.
@@ -92,13 +115,13 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
 
     public ApplicationHeader(Map<Tabs, Tab> tabs) {
         setMinimumSize(new Dimension(300, 54));
-        setLayout(new MigLayout("", "[][][][grow][]"));
+        setLayout(new MigLayout("insets 0 10 0 0", "[][][][grow][]"));
 
         headerButtonBackgroundSelected = GUIMediator.getThemeImage("selected_header_button_background").getImage();
         headerButtonBackgroundUnselected = GUIMediator.getThemeImage("unselected_header_button_background").getImage();
 
         searchPanels = createSearchPanel();
-        add(searchPanels);
+        add(searchPanels, "w 200!");
 
         addTabButtons(tabs);
 
@@ -136,7 +159,6 @@ public class ApplicationHeader extends JPanel implements RefreshListener {
         cloudSearchField = new GoogleSearchField();
         cloudSearchField.addActionListener(new SearchListener());
         cloudSearchField.setPrompt(I18n.tr("Search or enter URL"));
-        cloudSearchField.setMinimumSize(new Dimension(100, 27));
         Font origFont = cloudSearchField.getFont();
         Font newFont = origFont.deriveFont(origFont.getSize2D() + 2f);
         cloudSearchField.setFont(newFont);
