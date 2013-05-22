@@ -178,9 +178,9 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         registerListeners();
 
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0"));
+        panel.setLayout(new MigLayout("insets 0, gap 0, filly", "[][]"));
 
-        panel.add(createPanelOne(), "span 1 2");
+        panel.add(createPanelOne(), "span 1 2, growy, gapright 4");
         panel.add(createPanelTwo(), "wrap, growx");
         panel.add(createProgressPanel());
 
@@ -189,9 +189,10 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     private JPanel createPanelOne() {
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        panel.setLayout(new MigLayout("insets 0, filly"));
 
-        panel.add(new JSeparator(SwingConstants.VERTICAL));
+        JSeparator sep1 = new JSeparator(SwingConstants.VERTICAL);
+        panel.add(sep1, "growy");
 
         panel.add(PREV_BUTTON);
 
@@ -205,14 +206,15 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
         panel.add(NEXT_BUTTON);
 
-        panel.add(new JSeparator(SwingConstants.VERTICAL));
-
+        JSeparator sep2 = new JSeparator(SwingConstants.VERTICAL);
+        panel.add(sep2, "growy");
+        
         return panel;
     }
 
     private JPanel createPanelTwo() {
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0", "[grow][][]", ""));
+        panel.setLayout(new MigLayout("insets 0, gap 0", "[grow][][]", ""));
 
         JLabel l = new JLabel("Test Test");
         l.setForeground(Color.WHITE);
@@ -223,7 +225,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         panel.add(SHUFFLE_BUTTON);
 
         panel.add(VOLUME);
-
+        
         return panel;
     }
 
@@ -247,7 +249,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         panel.add(progressCurrentTime);
         panel.add(PROGRESS);
         panel.add(progressSongLength);
-
+        
         return panel;
     }
 
@@ -260,7 +262,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         SHUFFLE_BUTTON.setSelectedIcon(GUIMediator.getThemeImage("shuffle_on"));
         SHUFFLE_BUTTON.setToolTipText(I18n.tr("Shuffle songs"));
         SHUFFLE_BUTTON.setSelected(PLAYER.isShuffle());
-        SHUFFLE_BUTTON.setMargin(new Insets(0, 0, 0, 0));
+        //SHUFFLE_BUTTON.setMargin(new Insets(0, 0, 0, 0));
 
         LOOP_BUTTON = new JButton();
         //LOOP_BUTTON.setBorderPainted(false);
@@ -268,7 +270,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         LOOP_BUTTON.setBackground(null);
         LOOP_BUTTON.setIcon(getCurrentLoopButtonImage());
         LOOP_BUTTON.setToolTipText(I18n.tr("Repeat songs"));
-        LOOP_BUTTON.setMargin(new Insets(0, 0, 0, 0));
+        //LOOP_BUTTON.setMargin(new Insets(0, 0, 0, 0));
 
         SHUFFLE_BUTTON.addActionListener(new ActionListener() {
 

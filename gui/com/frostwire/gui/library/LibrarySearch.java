@@ -20,6 +20,7 @@ package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -150,6 +151,9 @@ public class LibrarySearch extends JPanel {
         searchField = new SearchField();
         searchField.setSearchMode(SearchMode.INSTANT);
         searchField.setInstantSearchDelay(50);
+        Font origFont = searchField.getFont();
+        Font newFont = origFont.deriveFont(origFont.getSize2D() + 2f);
+        searchField.setFont(newFont);
 
         searchField.addActionListener(new ActionListener() {
             private SearchLibraryAction a = new SearchLibraryAction();
