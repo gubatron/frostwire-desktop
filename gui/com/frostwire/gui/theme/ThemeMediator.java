@@ -27,6 +27,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.InsetsUIResource;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
@@ -229,6 +230,9 @@ public class ThemeMediator {
                                 defaults.put("TextField[Disabled].backgroundPainter", new SkinTextFieldBackgroundPainter(SkinTextFieldBackgroundPainter.State.Disabled));
                                 defaults.put("TextField[Enabled].backgroundPainter", new SkinTextFieldBackgroundPainter(SkinTextFieldBackgroundPainter.State.Enabled));
                                 defaults.put("TextField[Focused].backgroundPainter", new SkinTextFieldBackgroundPainter(SkinTextFieldBackgroundPainter.State.Focused));
+                                
+                                // scrollpane
+                                defaults.put("ScrollPane.background", new ColorUIResource(Color.WHITE));
 
                                 return defaults;
                             }

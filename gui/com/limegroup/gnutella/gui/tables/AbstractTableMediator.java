@@ -315,7 +315,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
     protected void setupTable() {
         TABLE.setRowHeight(TABLE.getRowHeight() + 1);
         TABLE.setShowGrid(false);
-        TABLE.setIntercellSpacing(ZERO_DIMENSION);
+        //TABLE.setIntercellSpacing(ZERO_DIMENSION);
         TABLE.setColumnSelectionAllowed(false);
         TABLE.setTableSettings(SETTINGS);
         TABLE.getTableHeader().addMouseListener(new FlexibleColumnResizeAdapter());
@@ -408,7 +408,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
                 MAIN_PANEL.add(Box.createVerticalStrut(GUIConstants.SEPARATOR));
                 MAIN_PANEL.add(BUTTON_ROW);
             }
-            MAIN_PANEL.setMinimumSize(ZERO_DIMENSION);
+            //MAIN_PANEL.setMinimumSize(ZERO_DIMENSION);
         }
     }
 

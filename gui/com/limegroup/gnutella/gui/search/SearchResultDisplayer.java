@@ -17,7 +17,6 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.IllegalComponentStateException;
@@ -29,7 +28,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.Icon;
@@ -45,8 +43,6 @@ import com.frostwire.gui.components.slides.MultimediaSlideshowPanel;
 import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.gui.components.slides.SlideshowPanel;
 import com.frostwire.gui.theme.SkinTabbedPane;
-import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.gui.theme.ThemeObserver;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -123,7 +119,7 @@ public final class SearchResultDisplayer implements RefreshListener {
      */
     public SearchResultDisplayer() {
         MAIN_PANEL = new BoxPanel(BoxPanel.Y_AXIS);
-        MAIN_PANEL.setMinimumSize(new Dimension(0, 0));
+        MAIN_PANEL.setMinimumSize(new Dimension(0, 150));
 
         tabbedPane = new SkinTabbedPane(GUIMediator.getThemeImage("indeterminate_small_progress"));
         results = new JPanel();

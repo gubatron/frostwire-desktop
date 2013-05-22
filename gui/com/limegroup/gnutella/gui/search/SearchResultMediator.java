@@ -15,6 +15,7 @@
 
 package com.limegroup.gnutella.gui.search;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -52,7 +53,6 @@ import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -668,7 +668,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
             MAIN_PANEL.add(createSchemaBox());
             MAIN_PANEL.add(getScrolledTablePane());
             addButtonRow();
-            MAIN_PANEL.setMinimumSize(ZERO_DIMENSION);
+            //MAIN_PANEL.setMinimumSize(ZERO_DIMENSION);
         } else {
             super.setupMainPanel();
         }
@@ -687,7 +687,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         tablePane.add(SCROLL_PANE);
 
         scrollPaneSearchOptions = createSearchOptionsPanel();
-        scrollPaneSearchOptions.setVisible(true); // put this in a configuration
+        scrollPaneSearchOptions.setVisible(false); // put this in a configuration
         tablePane.add(scrollPaneSearchOptions);
 
         TABLE_PANE = tablePane;
@@ -739,10 +739,8 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     private void setupFakeTable(JPanel overlay) {
         MAIN_PANEL.removeAll();
 
-        //Fixes flickering!
+        // fixes flickering!
         JPanel background = new JPanel() {
-            private static final long serialVersionUID = 8931395134232576566L;
-
             public boolean isOptimizedDrawingEnabled() {
                 return false;
             }
@@ -750,21 +748,26 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
 
         background.setLayout(new OverlayLayout(background));
 
-        JPanel overlayPanel = new BoxPanel(BoxPanel.Y_AXIS);
-        overlayPanel.setOpaque(false);
-        overlayPanel.add(Box.createVerticalStrut(20));
-        overlayPanel.add(overlay);
+        //overlay.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
-        overlayPanel.setMinimumSize(new Dimension(0, 0));
+        JPanel overlayPanel = new JPanel();
+        overlayPanel.setOpaque(false);
+        overlayPanel.add(overlay);
+        JScrollPane scrollPane = new JScrollPane(overlayPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getViewport().setBackground(Color.WHITE);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(25, 10, 4, 10));
+
         JComponent table = getScrolledTablePane();
         table.setOpaque(false);
-        background.add(overlayPanel);
+        background.add(scrollPane);
         background.add(table);
 
         MAIN_PANEL.add(background);
         addButtonRow();
 
-        MAIN_PANEL.setMinimumSize(ZERO_DIMENSION);
+        //MAIN_PANEL.setMinimumSize(ZERO_DIMENSION);
     }
 
     /**
