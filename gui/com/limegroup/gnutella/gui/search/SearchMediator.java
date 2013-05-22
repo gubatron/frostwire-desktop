@@ -139,7 +139,9 @@ public final class SearchMediator {
         getSearchResultDisplayer().setSearchListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 SearchResultMediator resultPanel = getSearchResultDisplayer().getSelectedResultPanel();
-                resultPanel.updateFiltersPanel();
+                if (resultPanel != null) {
+                    resultPanel.updateFiltersPanel();
+                }
             }
         });
 
