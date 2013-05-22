@@ -37,7 +37,6 @@ import com.frostwire.gui.components.slides.SlideshowPanel.SlideshowListener;
  */
 class SlideshowPanelControls extends JPanel implements SlideshowListener {
 
-    private static final long serialVersionUID = 7167253192165957777L;
     private final SlideshowPanel _thePanel;
 
     private ButtonGroup _buttonGroup;

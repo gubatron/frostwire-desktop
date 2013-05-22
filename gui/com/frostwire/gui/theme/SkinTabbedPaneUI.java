@@ -1,17 +1,33 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.frostwire.gui.theme;
 
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-
-import javax.swing.Icon;
 import javax.swing.JComponent;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.synth.SynthTabbedPaneUI;
-import javax.swing.text.View;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class SkinTabbedPaneUI extends SynthTabbedPaneUI {
 
     public static ComponentUI createUI(JComponent comp) {
@@ -21,74 +37,4 @@ public class SkinTabbedPaneUI extends SynthTabbedPaneUI {
 
     public SkinTabbedPaneUI() {
     }
-
-    //    @Override
-    //    protected int getTabExtraWidth(int tabPlacement, int tabIndex) {
-    //        int extraWidth = super.getTabExtraWidth(tabPlacement, tabIndex);
-    //        if (tabbedPane instanceof SkinTabbedPane && ((SkinTabbedPane) tabbedPane).isExtraIconActiveAt(tabIndex)) {
-    //            Icon extraIcon = ((SkinTabbedPane) tabbedPane).getExtraIcon();
-    //            extraWidth += extraIcon != null ? extraIcon.getIconWidth() : 0;
-    //        }
-    //        return extraWidth;
-    //    }
-
-    @Override
-    protected int calculateTabWidth(int tabPlacement, int tabIndex, FontMetrics metrics) {
-        int tabWidth = super.calculateTabWidth(tabPlacement, tabIndex, metrics);
-
-        return tabWidth + getIconWidth(tabIndex);
-    }
-
-    private int getIconWidth(int tabIndex) {
-        int iconWidth = 0;
-        if (tabPane instanceof SkinTabbedPane && ((SkinTabbedPane) tabPane).isExtraIconActiveAt(tabIndex)) {
-            Icon extraIcon = ((SkinTabbedPane) tabPane).getExtraIcon();
-            iconWidth += extraIcon != null ? extraIcon.getIconWidth() : 0;
-        }
-        return iconWidth;
-    }
-
-    /*
-    @Override
-    protected void layoutLabel(int tabPlacement, FontMetrics metrics, int tabIndex, String title, Icon icon, Rectangle tabRect, Rectangle iconRect, Rectangle textRect, boolean isSelected) {
-        Icon extraIcon = null;
-        if (tabbedPane instanceof SkinTabbedPane && ((SkinTabbedPane) tabbedPane).isExtraIconActiveAt(tabIndex)) {
-            extraIcon = ((SkinTabbedPane) tabbedPane).getExtraIcon();
-        }
-        if (extraIcon == null) {
-            super.layoutLabel(tabPlacement, metrics, tabIndex, title, icon, tabRect, iconRect, textRect, isSelected);
-            return;
-        }
-
-        textRect.x = textRect.y = iconRect.x = iconRect.y = 0;
-
-        View v = getTextViewForTab(tabIndex);
-        if (v != null) {
-            tabPane.putClientProperty("html", v);
-        }
-
-        SwingUtilities.layoutCompoundLabel((JComponent) tabPane, metrics, title, icon, SwingUtilities.CENTER, SwingUtilities.LEFT, SwingUtilities.CENTER, SwingUtilities.TRAILING, tabRect, iconRect, textRect, textIconGap);
-
-        tabPane.putClientProperty("html", null);
-
-        int xNudge = getTabLabelShiftX(tabPlacement, tabIndex, isSelected);
-        int yNudge = getTabLabelShiftY(tabPlacement, tabIndex, isSelected);
-        iconRect.x += xNudge + 6;
-        iconRect.y += yNudge;
-        textRect.x += xNudge;
-        textRect.y += yNudge;
-    }*/
-
-    /*
-    @Override
-    protected void paintTab(Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex, Rectangle iconRect, Rectangle textRect) {
-        super.paintTab(g, tabPlacement, rects, tabIndex, iconRect, textRect);
-        Icon extraIcon = null;
-        if (tabbedPane instanceof SkinTabbedPane && ((SkinTabbedPane) tabbedPane).isExtraIconActiveAt(tabIndex)) {
-            extraIcon = ((SkinTabbedPane) tabbedPane).getExtraIcon();
-        }
-        if (extraIcon != null) {
-            extraIcon.paintIcon(tabPane, g, textRect.x + textRect.width + 4, textRect.y);
-        }
-    }*/
 }

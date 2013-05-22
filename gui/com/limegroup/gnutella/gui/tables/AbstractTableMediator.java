@@ -408,7 +408,6 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
                 MAIN_PANEL.add(Box.createVerticalStrut(GUIConstants.SEPARATOR));
                 MAIN_PANEL.add(BUTTON_ROW);
             }
-            //MAIN_PANEL.setMinimumSize(ZERO_DIMENSION);
         }
     }
 

@@ -42,7 +42,6 @@ import javax.swing.plaf.TabbedPaneUI;
 import com.frostwire.gui.components.slides.MultimediaSlideshowPanel;
 import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.gui.components.slides.SlideshowPanel;
-import com.frostwire.gui.theme.SkinTabbedPane;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -64,7 +63,7 @@ public final class SearchResultDisplayer implements RefreshListener {
     /**
      * The main tabbed pane for displaying different search results.
      */
-    private SkinTabbedPane tabbedPane;
+    private SearchTabbedPane tabbedPane;
 
     /** The contents of tabbedPane. 
      *  INVARIANT: entries.size()==# of tabs in tabbedPane 
@@ -121,7 +120,7 @@ public final class SearchResultDisplayer implements RefreshListener {
         MAIN_PANEL = new BoxPanel(BoxPanel.Y_AXIS);
         MAIN_PANEL.setMinimumSize(new Dimension(0, 150));
 
-        tabbedPane = new SkinTabbedPane(GUIMediator.getThemeImage("indeterminate_small_progress"));
+        tabbedPane = new SearchTabbedPane();
         results = new JPanel();
 
         // make the results panel take up as much space as possible
@@ -224,7 +223,7 @@ public final class SearchResultDisplayer implements RefreshListener {
      */
     private void setupTabbedPane() {
         removeTabbedPaneListeners();
-        tabbedPane = new SkinTabbedPane(GUIMediator.getThemeImage("indeterminate_small_progress"));
+        tabbedPane = new SearchTabbedPane();
         tabbedPane.setRequestFocusEnabled(false);
         results.add("tabbedPane", tabbedPane);
         addTabbedPaneListeners();
@@ -294,7 +293,7 @@ public final class SearchResultDisplayer implements RefreshListener {
         }
 
         try {
-            tabbedPane.setExtraIconActiveAt(entries.size() - 1, true);
+            tabbedPane.setProgressActiveAt(entries.size() - 1, true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -369,7 +368,7 @@ public final class SearchResultDisplayer implements RefreshListener {
 
         //Update index on tab.  Don't forget to add 1 since line hasn't
         //actually been added!
-        tabbedPane.setExtraIconActiveAt(resultPanelIndex, active);
+        tabbedPane.setProgressActiveAt(resultPanelIndex, active);
     }
 
     /**

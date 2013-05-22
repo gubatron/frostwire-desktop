@@ -194,7 +194,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     protected void setupConstants() {
 
         FILTER = new CompositeFilter(4);
-        MAIN_PANEL = new PaddedPanel(0);
+        MAIN_PANEL = new PaddedPanel();
 
         setupDataModel();
 
@@ -668,7 +668,6 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
             MAIN_PANEL.add(createSchemaBox());
             MAIN_PANEL.add(getScrolledTablePane());
             addButtonRow();
-            //MAIN_PANEL.setMinimumSize(ZERO_DIMENSION);
         } else {
             super.setupMainPanel();
         }
