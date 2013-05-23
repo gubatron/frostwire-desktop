@@ -15,6 +15,7 @@
 
 package com.limegroup.gnutella.gui.search;
 
+import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,6 +61,10 @@ final class SchemaBox extends JPanel {
 
         Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR);
         setBorder(border);
+
+        Dimension dim = new Dimension(100, 35);
+        setPreferredSize(dim);
+        setMinimumSize(dim);
     }
 
     public void applyFilters() {
@@ -121,7 +126,7 @@ final class SchemaBox extends JPanel {
         button.setBorderPainted(false);
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
-        button.setMargin(new Insets(0, 0, 0, 0));
+        button.setMargin(new Insets(0, 6, 0, 0));
         button.setOpaque(false);
         if (toolTip != null) {
             button.setToolTipText(toolTip);

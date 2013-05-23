@@ -30,9 +30,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -63,18 +66,26 @@ final class SearchOptionsPanel extends JPanel {
     public SearchOptionsPanel(SearchResultMediator resultPanel) {
         this.resultPanel = resultPanel;
 
-        setLayout(new MigLayout("insets 0"));
+        setLayout(new MigLayout("insets 0, fillx"));
 
         add(createSearchEnginesFilter(), "wrap");
+        
+        add(new JSeparator(SwingConstants.HORIZONTAL), "growx, wrap");
 
         this.textFieldKeywords = createNameFilter();
-        add(textFieldKeywords, "wrap");
+        add(textFieldKeywords, "gapx 3, wrap");
+        
+        add(new JSeparator(SwingConstants.HORIZONTAL), "growx, wrap");
 
         this.sliderSize = createSizeFilter();
-        add(sliderSize, "wrap");
+        add(sliderSize, "gapx 3, wrap");
+        
+        add(new JSeparator(SwingConstants.HORIZONTAL), "growx, wrap");
 
         this.sliderSeeds = createSeedsFilter();
-        add(sliderSeeds, "wrap");
+        add(sliderSeeds, "gapx 3, wrap");
+        
+        add(new JSeparator(SwingConstants.HORIZONTAL), "growx, wrap");
 
         resetFilters();
     }
@@ -105,16 +116,18 @@ final class SearchOptionsPanel extends JPanel {
 
     private JComponent createSearchEnginesFilter() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
-        panel.setAlignmentX(0.0f);
+        panel.setLayout(new MigLayout("insets 3, wrap 2"));
         List<SearchEngine> searchEngines = SearchEngine.getEngines();
         setupCheckboxes(searchEngines, panel);
+
+        //panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
+
         return panel;
     }
 
     private LabeledTextField createNameFilter() {
-        LabeledTextField textField = new LabeledTextField(I18n.tr("Name"), 40, -1, 100);
-
+        LabeledTextField textField = new LabeledTextField(I18n.tr("Name"), 40, -1, 200);
+        
         textField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -127,7 +140,7 @@ final class SearchOptionsPanel extends JPanel {
 
     private LabeledRangeSlider createSizeFilter() {
         LabeledRangeSlider slider = new LabeledRangeSlider(I18n.tr("Size"), null, 0, 1000);
-        slider.setPreferredSize(new Dimension(80, (int) slider.getPreferredSize().getHeight()));
+        slider.setPreferredSize(new Dimension(200, (int) slider.getPreferredSize().getHeight()));
         slider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 sliderSize_stateChanged(e);
@@ -139,7 +152,7 @@ final class SearchOptionsPanel extends JPanel {
 
     private LabeledRangeSlider createSeedsFilter() {
         LabeledRangeSlider slider = new LabeledRangeSlider(I18n.tr("Seeds"), null, 0, 1000);
-        slider.setPreferredSize(new Dimension(80, (int) slider.getPreferredSize().getHeight()));
+        slider.setPreferredSize(new Dimension(200, (int) slider.getPreferredSize().getHeight()));
         slider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 sliderSeeds_stateChanged(e);
@@ -182,12 +195,7 @@ final class SearchOptionsPanel extends JPanel {
             JCheckBox cBox = new JCheckBox(se.getName());
             cBox.setSelected(se.isEnabled());
 
-            GridBagConstraints c = new GridBagConstraints();
-            c.fill = GridBagConstraints.HORIZONTAL;
-            c.weightx = 1.0;
-            c.gridwidth = GridBagConstraints.REMAINDER;
-            c.insets = new Insets(0, 10, 2, 10);
-            parent.add(cBox, c);
+            parent.add(cBox);
 
             cBoxes.put(cBox, se.getEnabledSetting());
             cBox.addItemListener(listener);

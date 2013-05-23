@@ -19,7 +19,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -41,7 +40,10 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.OverlayLayout;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -708,10 +710,16 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         // minor optimization to keep the layout as flat as possible
         final JButton buttonOptions = new JButton(strShowOpts);
         buttonOptions.setContentAreaFilled(false);
-        //buttonOptions.setBorderPainted(false);
+        buttonOptions.setBorderPainted(false);
         buttonOptions.setOpaque(false);
-        buttonOptions.setMargin(new Insets(0, 0, 0, 0));
-        buttonOptions.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, ThemeMediator.LIGHT_BORDER_COLOR));
+
+        Dimension dim = new Dimension(120, 30);
+        buttonOptions.setMinimumSize(dim);
+        buttonOptions.setMaximumSize(dim);
+        buttonOptions.setPreferredSize(dim);
+        buttonOptions.setSize(dim);
+        //buttonOptions.setMargin(new Insets(0, 0, 0, 0));
+        //buttonOptions.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, ThemeMediator.LIGHT_BORDER_COLOR));
 
         buttonOptions.addActionListener(new ActionListener() {
             @Override
@@ -721,6 +729,10 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
                 buttonOptions.setText(scrollPaneSearchOptions.isVisible() ? strHideOpts : strShowOpts);
             }
         });
+        
+        JSeparator sep = new JSeparator(SwingConstants.VERTICAL);
+        sep.setMaximumSize(new Dimension(2, 100));
+        schemaBox.add(sep);
         schemaBox.add(buttonOptions);
 
         return schemaBox;
@@ -734,8 +746,10 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         JScrollPane sp = new JScrollPane(searchOptionsPanel);
         Border border = BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createMatteBorder(0, 1, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
         sp.setBorder(border);
-        Dimension d = new Dimension(100, 70000);
+        sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        Dimension d = new Dimension(230, 70000);
         sp.setPreferredSize(d);
+        sp.setMaximumSize(d);
 
         return sp;
     }
