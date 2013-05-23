@@ -590,13 +590,15 @@ public final class SearchResultDisplayer implements RefreshListener {
      * Returns the title of the specified ResultPanel.
      */
     private String titleOf(SearchResultMediator rp) {
-        int current = rp.filteredResults();
+        //        int current = rp.filteredResults();
         int total = rp.totalResults();
 
-        if (current < total)
-            return rp.getTitle() + " (" + current + " " + I18n.tr("results") + ")";
-        else
-            return rp.getTitle() + " (" + total + " " + I18n.tr("results") + ")";
+        return rp.getTitle() + " (" + total + " " + I18n.tr("results") + ")";
+        //
+        //        if (current < total)
+        //            return rp.getTitle() + " (" + current + " " + I18n.tr("results") + ")";
+        //        else
+        //            return rp.getTitle() + " (" + total + " " + I18n.tr("results") + ")";
     }
 
     /**

@@ -20,17 +20,22 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 import javax.swing.border.Border;
+
+import org.apache.commons.io.FilenameUtils;
 
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.MediaType;
@@ -43,9 +48,10 @@ import com.limegroup.gnutella.settings.SearchSettings;
  */
 final class SchemaBox extends JPanel {
 
-    private final ButtonGroup buttonGroup;
-
     private final SearchResultMediator resultPanel;
+
+    private final ButtonGroup buttonGroup;
+    private final Map<NamedMediaType, JToggleButton> buttonsMap;
 
     /**
      * Constructs the SchemaBox.
@@ -54,6 +60,7 @@ final class SchemaBox extends JPanel {
         this.resultPanel = resultPanel;
 
         this.buttonGroup = new ButtonGroup();
+        this.buttonsMap = new HashMap<NamedMediaType, JToggleButton>();
 
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         addSchemas();
@@ -73,6 +80,25 @@ final class SchemaBox extends JPanel {
         if (button != null) {
             button.doClick();
         }
+    }
+
+    public void updateCounters(UISearchResult sr) {
+        NamedMediaType nmt = NamedMediaType.getFromExtension(sr.getExtension());
+        if (nmt != null && buttonsMap.containsKey(nmt)) {
+            JToggleButton button = buttonsMap.get(nmt);
+            incrementText(button);
+        }
+    }
+
+    private void incrementText(JToggleButton button) {
+        String text = button.getText();
+        int n = 0;
+        try { // only justified situation of using try-catch for logic flow, since regex is slower
+            n = Integer.valueOf(text);
+        } catch (Throwable e) {
+            // no an integer
+        }
+        button.setText(String.valueOf(n + 1));
     }
 
     /**
@@ -115,7 +141,7 @@ final class SchemaBox extends JPanel {
         Icon icon = type.getIcon();
         Icon disabledIcon = null;
         Icon rolloverIcon = null;
-        JToggleButton button = new JRadioButton(type.getName());
+        JToggleButton button = new JRadioButton("0");
 
         if (icon != null) {
             disabledIcon = ImageManipulator.darken(icon);
@@ -123,10 +149,18 @@ final class SchemaBox extends JPanel {
         }
         button.setIcon(disabledIcon);
         button.setRolloverIcon(rolloverIcon);
+        button.setRolloverSelectedIcon(rolloverIcon);
+        button.setPressedIcon(rolloverIcon);
+
+        button.setSelectedIcon(rolloverIcon);// use the right icon here
+
         button.setBorderPainted(false);
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
         button.setMargin(new Insets(0, 6, 0, 0));
+        Dimension d = new Dimension(60, 20);
+        button.setPreferredSize(d);
+        button.setMinimumSize(d);
         button.setOpaque(false);
         if (toolTip != null) {
             button.setToolTipText(toolTip);
@@ -137,6 +171,8 @@ final class SchemaBox extends JPanel {
 
         button.addActionListener(new SchemaButtonActionListener(type));
         button.setSelected(isMediaTypeSelected(type));
+
+        buttonsMap.put(type, button);
     }
 
     private boolean isMediaTypeSelected(NamedMediaType type) {
@@ -154,6 +190,20 @@ final class SchemaBox extends JPanel {
     }
 
     private AbstractButton getSelectedButton() {
+        AbstractButton selectedButton = null;
+
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                selectedButton = button;
+            }
+        }
+
+        return selectedButton;
+    }
+
+    private AbstractButton getMediaTypeButton(String ext) {
         AbstractButton selectedButton = null;
 
         for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {

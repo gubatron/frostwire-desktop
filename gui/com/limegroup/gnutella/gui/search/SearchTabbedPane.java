@@ -53,6 +53,14 @@ final class SearchTabbedPane extends JTabbedPane {
         setTabComponentAt(getTabCount() - 1, new SearchTabHeader(title));
     }
 
+    @Override
+    public void setTitleAt(int index, String title) {
+        Component c = getTabComponentAt(index);
+        if (c instanceof SearchTabHeader) {
+            ((SearchTabHeader) c).setTitle(title);
+        }
+    }
+
     public void setProgressActiveAt(int index, boolean active) {
         Component c = getTabComponentAt(index);
         if (c instanceof SearchTabHeader) {
@@ -80,6 +88,10 @@ final class SearchTabbedPane extends JTabbedPane {
             labelText.setAlignmentX(SwingConstants.RIGHT);
             labelText.setIcon(GUIMediator.getThemeImage("indeterminate_small_progress"));
             add(labelText);
+        }
+
+        public void setTitle(String title) {
+            labelText.setText(title);
         }
 
         public void setProgressActive(boolean active) {

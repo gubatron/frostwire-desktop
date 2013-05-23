@@ -729,7 +729,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
                 buttonOptions.setText(scrollPaneSearchOptions.isVisible() ? strHideOpts : strShowOpts);
             }
         });
-        
+
         JSeparator sep = new JSeparator(SwingConstants.VERTICAL);
         sep.setMaximumSize(new Dimension(2, 100));
         schemaBox.add(sep);
@@ -879,5 +879,12 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         schemaBox.applyFilters();
         searchOptionsPanel.resetFilters();
         searchOptionsPanel.updateFiltersPanel();
+    }
+
+    @Override
+    public void add(UISearchResult o, int index) {
+        super.add(o, index);
+
+        schemaBox.updateCounters(o);
     }
 }
