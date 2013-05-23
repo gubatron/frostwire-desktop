@@ -91,7 +91,7 @@ public class DownloadTask extends DeviceTask {
                 try {
                     is = url.openStream();
 
-                    String filename = FilenameUtils.getName(currentFD.filePath);
+                    String filename = FilenameUtils.cleanFileName(FilenameUtils.getName(currentFD.filePath));
                     File file = buildFile(savePath, filename);
                     Path incompleteFile = buildIncompleteFile(file).toPath();
                     lastFile = file.getAbsoluteFile();
