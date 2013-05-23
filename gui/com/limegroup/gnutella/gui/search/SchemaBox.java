@@ -15,12 +15,14 @@
 
 package com.limegroup.gnutella.gui.search;
 
+import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 
 import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -54,6 +56,7 @@ final class SchemaBox extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         addSchemas();
         add(Box.createHorizontalGlue());
+        //setBorder(BorderFactory.createLineBorder(Color.RED));
     }
 
     public void applyFilters() {

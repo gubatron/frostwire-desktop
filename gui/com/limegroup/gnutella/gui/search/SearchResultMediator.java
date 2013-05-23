@@ -41,6 +41,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.OverlayLayout;
+import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -51,6 +52,7 @@ import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIConstants;
@@ -194,7 +196,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     protected void setupConstants() {
 
         FILTER = new CompositeFilter(4);
-        MAIN_PANEL = new PaddedPanel();
+        MAIN_PANEL = new PaddedPanel(0);
 
         setupDataModel();
 
@@ -682,6 +684,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         tablePane.setLayout(new BoxLayout(tablePane, BoxLayout.LINE_AXIS));
 
         SCROLL_PANE = new JScrollPane(TABLE);
+        SCROLL_PANE.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(2, 6, 0, 6), SCROLL_PANE.getBorder()));
 
         tablePane.add(SCROLL_PANE);
 
@@ -715,7 +718,8 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         searchOptionsPanel = new SearchOptionsPanel(this);
 
         JScrollPane sp = new JScrollPane(searchOptionsPanel);
-        sp.setBorder(BorderFactory.createEmptyBorder());
+        Border border = BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createMatteBorder(0, 1, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
+        sp.setBorder(border);
         Dimension d = new Dimension(100, 70000);
         sp.setPreferredSize(d);
 
@@ -756,7 +760,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.getViewport().setBackground(Color.WHITE);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder(25, 10, 4, 10));
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(28, 10, 4, 10));
 
         JComponent table = getScrolledTablePane();
         table.setOpaque(false);
