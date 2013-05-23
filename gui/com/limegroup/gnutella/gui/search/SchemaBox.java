@@ -15,7 +15,6 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Color;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +29,9 @@ import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
+import javax.swing.border.Border;
 
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ImageManipulator;
@@ -56,7 +57,9 @@ final class SchemaBox extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         addSchemas();
         add(Box.createHorizontalGlue());
-        //setBorder(BorderFactory.createLineBorder(Color.RED));
+
+        Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR);
+        setBorder(border);
     }
 
     public void applyFilters() {

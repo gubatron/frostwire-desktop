@@ -57,7 +57,7 @@ public final class SkinTabbedPaneTabBackgroundPainter extends AbstractSkinPainte
 
     private void paintSelectedTab(Graphics2D g, int width, int height) {
         if (testValid(0, 0, width, height)) {
-            Shape s = shapeGenerator.createRectangle(0, 0, width, height);
+            Shape s = shapeGenerator.createRectangle(0, 0, width, height + 1);
             g.setPaint(SkinColors.LIGHT_BACKGROUND_COLOR);
             g.fill(s);
 
@@ -66,8 +66,10 @@ public final class SkinTabbedPaneTabBackgroundPainter extends AbstractSkinPainte
     }
 
     private void paintDefaultTab(Graphics2D g, int width, int height) {
-        if (testValid(0, 0, width, height)) {
-            Shape s = shapeGenerator.createRectangle(0, 0, width - 4, height - 2);
+        int w = width - 4;
+        int h = height;
+        if (testValid(0, 0, w, h)) {
+            Shape s = shapeGenerator.createRectangle(0, 0, w, h);
             g.setPaint(SkinColors.GENERAL_BORDER_COLOR);
             g.fill(s);
 
@@ -78,8 +80,8 @@ public final class SkinTabbedPaneTabBackgroundPainter extends AbstractSkinPainte
     private void paintBorder(Graphics2D g, int width, int height) {
         Path2D path = new Path2D.Double(Path2D.WIND_EVEN_ODD);
         path.reset();
-        int h = height - 2;
         int w = width - 4;
+        int h = height;
         path.moveTo(0, h);
         path.lineTo(0, 0);
         path.lineTo(w, 0);

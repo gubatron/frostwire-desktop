@@ -50,7 +50,7 @@ public final class SkinTabbedPaneTabAreaBackgroundPainter extends AbstractSkinPa
 
     private void paintBorder(Graphics2D g, int width, int height) {
         g.setPaint(SkinColors.GENERAL_BORDER_COLOR);
-        int y = height - 4;
+        int y = height;// - 4;
         g.drawLine(0, y, width, y);
     }
 

@@ -19,6 +19,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -700,13 +701,24 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     private JComponent createSchemaBox() {
         schemaBox = new SchemaBox(this);
 
+        final String strShowOpts = I18n.tr("Show Options");
+        final String strHideOpts = I18n.tr("Hide Options");
+
         // reusing schema box panel for more options button
         // minor optimization to keep the layout as flat as possible
-        JButton buttonOptions = new JButton(I18n.tr("Hide Options"));
+        final JButton buttonOptions = new JButton(strShowOpts);
+        buttonOptions.setContentAreaFilled(false);
+        //buttonOptions.setBorderPainted(false);
+        buttonOptions.setOpaque(false);
+        buttonOptions.setMargin(new Insets(0, 0, 0, 0));
+        buttonOptions.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, ThemeMediator.LIGHT_BORDER_COLOR));
+
         buttonOptions.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 scrollPaneSearchOptions.setVisible(!scrollPaneSearchOptions.isVisible());
+
+                buttonOptions.setText(scrollPaneSearchOptions.isVisible() ? strHideOpts : strShowOpts);
             }
         });
         schemaBox.add(buttonOptions);
@@ -716,6 +728,8 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
 
     private JScrollPane createSearchOptionsPanel() {
         searchOptionsPanel = new SearchOptionsPanel(this);
+        searchOptionsPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
+        searchOptionsPanel.updateUI();
 
         JScrollPane sp = new JScrollPane(searchOptionsPanel);
         Border border = BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createMatteBorder(0, 1, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
