@@ -52,10 +52,15 @@ public final class SkinPanelUI extends SynthPanelUI {
     @Override
     public void update(Graphics g, JComponent c) {
         if (c.isOpaque()) {
-            g.setColor(SkinColors.DARK_BOX_BACKGROUND_COLOR);
-            if (c.getBorder() instanceof SkinTitledBorder) {
-                g.fillRoundRect(0, 0, c.getWidth() - 1, c.getHeight() - 2, 14, 14);
+            if (Boolean.TRUE.equals(c.getClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND))) {
+                g.setColor(SkinColors.DARK_BOX_BACKGROUND_COLOR);
+                if (c.getBorder() instanceof SkinTitledBorder) {
+                    g.fillRoundRect(0, 0, c.getWidth() - 1, c.getHeight() - 2, 14, 14);
+                } else {
+                    g.fillRect(0, 0, c.getWidth(), c.getHeight());
+                }
             } else {
+                g.setColor(c.getBackground());
                 g.fillRect(0, 0, c.getWidth(), c.getHeight());
             }
         } else {

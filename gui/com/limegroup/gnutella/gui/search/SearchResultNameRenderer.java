@@ -18,10 +18,13 @@
 
 package com.limegroup.gnutella.gui.search;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -29,7 +32,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.plaf.TableUI;
 import javax.swing.table.TableCellRenderer;
 
 import com.frostwire.gui.player.MediaPlayer;
@@ -46,8 +48,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
  */
 public final class SearchResultNameRenderer extends JPanel implements TableCellRenderer {
 
-    private static final long serialVersionUID = -1624943333769190212L;
-
     private JLabel labelText;
     private JLabel labelPlay;
     private JLabel labelPartialDownload;
@@ -61,121 +61,18 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        //if (!SubstanceLookAndFeel.isCurrentLookAndFeel())
-        //    return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-        TableUI tableUI = table.getUI();
-//        SubstanceTableUI ui = (SubstanceTableUI) tableUI;
-//
-//        // Recompute the focus indication to prevent flicker - JTable
-//        // registers a listener on selection changes and repaints the
-//        // relevant cell before our listener (in TableUI) gets the
-//        // chance to start the fade sequence. The result is that the
-//        // first frame uses full opacity, and the next frame starts the
-//        // fade sequence. So, we use the UI delegate to compute the
-//        // focus indication.
-//        hasFocus = ui.isFocusedCell(row, column);
-//
-//        TableCellId cellId = new TableCellId(row, column);
-//
-//        StateTransitionTracker.ModelStateInfo modelStateInfo = ui.getModelStateInfo(cellId);
-//        ComponentState currState = ui.getCellState(cellId);
-//        // special case for drop location
-//        JTable.DropLocation dropLocation = table.getDropLocation();
-//        boolean isDropLocation = (dropLocation != null && !dropLocation.isInsertRow() && !dropLocation.isInsertColumn() && dropLocation.getRow() == row && dropLocation.getColumn() == column);
-//
-//        if (!isDropLocation && (modelStateInfo != null)) {
-//            if (ui.hasRolloverAnimations() || ui.hasSelectionAnimations()) {
-//                Map<ComponentState, StateContributionInfo> activeStates = modelStateInfo.getStateContributionMap();
-//                SubstanceColorScheme colorScheme = getColorSchemeForState(table, ui, currState);
-//                if (currState.isDisabled() || (activeStates == null) || (activeStates.size() == 1)) {
-//                    super.setForeground(new ColorUIResource(colorScheme.getForegroundColor()));
-//                } else {
-//                    float aggrRed = 0;
-//                    float aggrGreen = 0;
-//                    float aggrBlue = 0;
-//                    for (Map.Entry<ComponentState, StateTransitionTracker.StateContributionInfo> activeEntry : modelStateInfo.getStateContributionMap().entrySet()) {
-//                        ComponentState activeState = activeEntry.getKey();
-//                        SubstanceColorScheme scheme = getColorSchemeForState(table, ui, activeState);
-//                        Color schemeFg = scheme.getForegroundColor();
-//                        float contribution = activeEntry.getValue().getContribution();
-//                        aggrRed += schemeFg.getRed() * contribution;
-//                        aggrGreen += schemeFg.getGreen() * contribution;
-//                        aggrBlue += schemeFg.getBlue() * contribution;
-//                    }
-//                    super.setForeground(new ColorUIResource(new Color((int) aggrRed, (int) aggrGreen, (int) aggrBlue)));
-//                }
-//            } else {
-//                SubstanceColorScheme scheme = getColorSchemeForState(table, ui, currState);
-//                super.setForeground(new ColorUIResource(scheme.getForegroundColor()));
-//            }
-//        } else {
-//            SubstanceColorScheme scheme = getColorSchemeForState(table, ui, currState);
-//            if (isDropLocation) {
-//                scheme = SubstanceColorSchemeUtilities.getColorScheme(table, ColorSchemeAssociationKind.TEXT_HIGHLIGHT, currState);
-//            }
-//            super.setForeground(new ColorUIResource(scheme.getForegroundColor()));
-//        }
-//
-//        SubstanceStripingUtils.applyStripedBackground(table, row, this);
-//
-//        this.setFont(table.getFont());
-//
-//        TableCellId cellFocusId = new TableCellId(row, column);
-//
-//        StateTransitionTracker focusStateTransitionTracker = ui.getStateTransitionTracker(cellFocusId);
-//
-//        Insets regInsets = ui.getCellRendererInsets();
-//        if (hasFocus || (focusStateTransitionTracker != null)) {
-//            SubstanceTableCellBorder border = new SubstanceTableCellBorder(regInsets, ui, cellFocusId);
-//
-//            // System.out.println("[" + row + ":" + column + "] hasFocus : "
-//            // + hasFocus + ", focusState : " + focusState);
-//            if (focusStateTransitionTracker != null) {
-//                border.setAlpha(focusStateTransitionTracker.getFocusStrength(hasFocus));
-//            }
-//
-//            // special case for tables with no grids
-//            if (!table.getShowHorizontalLines() && !table.getShowVerticalLines()) {
-//                this.setBorder(new CompoundBorder(new EmptyBorder(table.getRowMargin() / 2, 0, table.getRowMargin() / 2, 0), border));
-//            } else {
-//                this.setBorder(border);
-//            }
-//        } else {
-//            this.setBorder(new EmptyBorder(regInsets.top, regInsets.left, regInsets.bottom, regInsets.right));
-//        }
-
-        this.setData((SearchResultNameHolder) value, table);
-        this.setOpaque(false);
+        this.setData((SearchResultNameHolder) value, table, row);
+        this.setOpaque(true);
         this.setEnabled(table.isEnabled());
+
+        if (isSelected) {
+            this.setBackground(ThemeMediator.TABLE_SELECTED_BACKGROUND_ROW_COLOR);
+        } else {
+            this.setBackground(row % 2 == 1 ? ThemeMediator.TABLE_ALTERNATE_ROW_COLOR : Color.WHITE);
+        }
+
         return this;
-    }
-
-//    private SubstanceColorScheme getColorSchemeForState(JTable table, SubstanceTableUI ui, ComponentState state) {
-//        UpdateOptimizationInfo updateOptimizationInfo = ui.getUpdateOptimizationInfo();
-//        if (state == ComponentState.ENABLED) {
-//            if (updateOptimizationInfo == null) {
-//                return SubstanceColorSchemeUtilities.getColorScheme(table, state);
-//            } else {
-//                return updateOptimizationInfo.getDefaultScheme();
-//            }
-//        } else {
-//            if (updateOptimizationInfo == null) {
-//                return SubstanceColorSchemeUtilities.getColorScheme(table, ColorSchemeAssociationKind.HIGHLIGHT, state);
-//            } else {
-//                return updateOptimizationInfo.getHighlightColorScheme(state);
-//            }
-//        }
-//    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.swing.JComponent#paint(java.awt.Graphics)
-     */
-    @Override
-    public final void paint(Graphics g) {
-        super.paint(g);
     }
 
     /*
@@ -189,19 +86,8 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         updatePlayButtons();
     }
 
-    @Override
-    protected final void paintBorder(Graphics g) {
-        super.paintBorder(g);
-    }
-
-    @Override
-    public final void paintComponents(Graphics g) {
-        super.paintComponents(g);
-    }
-
     private void setupUI() {
         setLayout(new GridBagLayout());
-        //putClientProperty(SubstanceLookAndFeel.COLORIZATION_FACTOR, 1.0);
 
         GridBagConstraints c;
 
@@ -273,7 +159,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         }
     }
 
-    private void setData(SearchResultNameHolder value, JTable table) {
+    private void setData(SearchResultNameHolder value, JTable table, int row) {
         this.sr = value.getSearchResult();
 
         labelText.setText(value.getHtml());
@@ -281,7 +167,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         labelText.setFont(table.getFont());
         ThemeMediator.fixLabelFont(labelText);
 
-        boolean showButtons = true;//state.equals(ComponentState.ROLLOVER_SELECTED) || state.equals(ComponentState.ROLLOVER_UNSELECTED);
+        boolean showButtons = mouseIsOverRow(table, row);
         labelPlay.setVisible(showButtons && (sr.getSearchResult() instanceof StreamableSearchResult));
         labelPartialDownload.setVisible(showButtons && sr.getSearchResult() instanceof CrawlableSearchResult);
         labelDownload.setVisible(showButtons);
@@ -293,6 +179,20 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         if (isStreamableSourceBeingPlayed(sr)) {
             labelPlay.setVisible(true);
         }
+    }
+
+    private boolean mouseIsOverRow(JTable table, int row) {
+        boolean mouseOver = false;
+        try {
+            Point p1 = MouseInfo.getPointerInfo().getLocation();
+            Point p2 = table.getLocationOnScreen();
+            p1.translate((int) -p2.getX(), (int) -p2.getY());
+            mouseOver = table.rowAtPoint(p1) == row;
+        } catch (Throwable e) {
+            //System.out.println(e);
+            // ignore
+        }
+        return mouseOver;
     }
 
     public void updatePlayButtons() {

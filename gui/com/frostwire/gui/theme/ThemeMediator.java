@@ -48,6 +48,9 @@ public class ThemeMediator {
 
     public static final Color LIGHT_BORDER_COLOR = SkinColors.GENERAL_BORDER_COLOR;
 
+    public static final Color TABLE_ALTERNATE_ROW_COLOR = SkinColors.TABLE_ALTERNATE_ROW_COLOR;
+    public static final Color TABLE_SELECTED_BACKGROUND_ROW_COLOR = SkinColors.TABLE_SELECTED_BACKGROUND_ROW_COLOR;
+
     public static final Color DARK_BORDER_COLOR = new Color(0xA9BDC7);
 
     public static final Color LIGHT_FOREGROUND_COLOR = new Color(0xFFFFFF);
@@ -231,7 +234,7 @@ public class ThemeMediator {
                                 defaults.put("TextField[Disabled].backgroundPainter", new SkinTextFieldBackgroundPainter(SkinTextFieldBackgroundPainter.State.Disabled));
                                 defaults.put("TextField[Enabled].backgroundPainter", new SkinTextFieldBackgroundPainter(SkinTextFieldBackgroundPainter.State.Enabled));
                                 defaults.put("TextField[Focused].backgroundPainter", new SkinTextFieldBackgroundPainter(SkinTextFieldBackgroundPainter.State.Focused));
-                                
+
                                 // scrollpane
                                 defaults.put("ScrollPane.background", new ColorUIResource(Color.WHITE));
 
