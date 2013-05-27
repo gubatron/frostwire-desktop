@@ -32,9 +32,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.plaf.TableUI;
 import javax.swing.table.TableCellRenderer;
 
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.theme.SkinTableUI;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.search.CrawlableSearchResult;
 import com.frostwire.search.StreamableSearchResult;
@@ -183,13 +185,14 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
 
     private boolean mouseIsOverRow(JTable table, int row) {
         boolean mouseOver = false;
+
         try {
-            Point p1 = MouseInfo.getPointerInfo().getLocation();
-            Point p2 = table.getLocationOnScreen();
-            p1.translate((int) -p2.getX(), (int) -p2.getY());
-            mouseOver = table.rowAtPoint(p1) == row;
+            TableUI ui = table.getUI();
+            if (ui instanceof SkinTableUI) {
+                mouseOver = ((SkinTableUI) ui).getRowAtMouse() == row;
+            }
         } catch (Throwable e) {
-            //System.out.println(e);
+            System.out.println(e);
             // ignore
         }
         return mouseOver;

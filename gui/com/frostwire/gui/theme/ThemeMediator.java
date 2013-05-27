@@ -277,8 +277,9 @@ public class ThemeMediator {
         UIManager.put("TreeUI", "com.frostwire.gui.theme.SkinTreeUI");
         UIManager.put("TextFieldUI", "com.frostwire.gui.theme.SkinTextFieldUI");
         UIManager.put("RangeSliderUI", "com.frostwire.gui.theme.SkinRangeSliderUI");
+        UIManager.put("TableUI", "com.frostwire.gui.theme.SkinTableUI");
 
-        UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
+        //UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
     }
 
     private static FontUIResource getControlFont() {
