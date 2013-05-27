@@ -15,12 +15,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class PlayableCell implements Comparable<PlayableCell> {
 
     private Object dataLine;

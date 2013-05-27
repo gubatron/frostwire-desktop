@@ -23,8 +23,6 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.MouseInfo;
-import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -192,13 +190,12 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
                 mouseOver = ((SkinTableUI) ui).getRowAtMouse() == row;
             }
         } catch (Throwable e) {
-            System.out.println(e);
             // ignore
         }
         return mouseOver;
     }
 
-    public void updatePlayButtons() {
+    private void updatePlayButtons() {
         labelPlay.setIcon((isStreamableSourceBeingPlayed(sr)) ? GUIMediator.getThemeImage("speaker") : GUIMediator.getThemeImage("search_result_play_over"));
     }
 
