@@ -15,14 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
-import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
-import javax.swing.UIManager;
-import javax.swing.plaf.TableUI;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import com.frostwire.gui.theme.ThemeSettings;
@@ -30,13 +28,11 @@ import com.frostwire.gui.theme.ThemeSettings;
 /**
  *  Creates both a renderer and an editor for cells in the playlist table that display the name
  *  of the file being played.
+ *  
+ *  @author gubatron
+ *  @author aldenml
  */
 class PlaylistItemPropertyRenderer extends DefaultTableCellRenderer {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 5077708462742409205L;
 
     public PlaylistItemPropertyRenderer() {
     }
@@ -57,42 +53,7 @@ class PlaylistItemPropertyRenderer extends DefaultTableCellRenderer {
         } else if (playing) {
             setForeground(ThemeSettings.PLAYING_DATA_LINE_COLOR.getValue());
         } else {
-//            Color color = Color.BLACK;
-//            if (SubstanceLookAndFeel.isCurrentLookAndFeel()) {
-//                color = getSubstanceForegroundColor(table, row, column);
-//            } else {
-//                color = UIManager.getColor("Table.foreground");
-//            }
-//
-//            setForeground(color);
+            setForeground(table.getForeground());
         }
     }
-
-//    private Color getSubstanceForegroundColor(JTable table, int row, int column) {
-//        TableUI tableUI = table.getUI();
-//        SubstanceTableUI ui = (SubstanceTableUI) tableUI;
-//        TableCellId cellId = new TableCellId(row, column);
-//        ComponentState currState = ui.getCellState(cellId);
-//
-//        SubstanceColorScheme scheme = getColorSchemeForState(table, ui, currState);
-//
-//        return scheme.getForegroundColor();
-//    }
-//
-//    private SubstanceColorScheme getColorSchemeForState(JTable table, SubstanceTableUI ui, ComponentState state) {
-//        UpdateOptimizationInfo updateOptimizationInfo = ui.getUpdateOptimizationInfo();
-//        if (state == ComponentState.ENABLED) {
-//            if (updateOptimizationInfo == null) {
-//                return SubstanceColorSchemeUtilities.getColorScheme(table, state);
-//            } else {
-//                return updateOptimizationInfo.getDefaultScheme();
-//            }
-//        } else {
-//            if (updateOptimizationInfo == null) {
-//                return SubstanceColorSchemeUtilities.getColorScheme(table, ColorSchemeAssociationKind.HIGHLIGHT, state);
-//            } else {
-//                return updateOptimizationInfo.getHighlightColorScheme(state);
-//            }
-//        }
-//    }
 }

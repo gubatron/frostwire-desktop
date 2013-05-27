@@ -37,7 +37,8 @@ public class PlaylistItemDB {
         String trackNumber = (String) row.get(13);
         String trackYear = (String) row.get(14);
         boolean starred = (Boolean) row.get(15);
-        int sortIndex = (Integer) row.get(16) == null ? 0 : (Integer) row.get(16);
+        
+        int sortIndex = row.size() < 17 || (Integer) row.get(16) == null ? 0 : (Integer) row.get(16);
 
         obj.setId(id);
         obj.setFilePath(filePath);

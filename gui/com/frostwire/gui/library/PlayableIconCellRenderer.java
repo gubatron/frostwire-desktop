@@ -37,8 +37,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
  */
 class PlayableIconCellRenderer extends DefaultTableCellRenderer {
 
-    private static final long serialVersionUID = -6392689488563533358L;
-
     private static final Icon speaker;
 
     static {
