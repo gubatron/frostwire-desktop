@@ -237,6 +237,9 @@ public class ThemeMediator {
 
                                 // scrollpane
                                 defaults.put("ScrollPane.background", new ColorUIResource(Color.WHITE));
+                                
+                                // editorpane
+                                defaults.put("EditorPane[Enabled].backgroundPainter", SkinColors.LIGHT_BACKGROUND_COLOR);
 
                                 return defaults;
                             }

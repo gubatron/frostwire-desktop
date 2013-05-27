@@ -36,11 +36,6 @@ import com.limegroup.gnutella.gui.URLLabel;
  */
 final class WelcomeWindow extends SetupWindow {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -5102133230630399469L;
-
     private static final String TEXT1 = I18n.tr("FrostWire is a Peer to Peer Application that enables you to share files of your choosing with other users connected to the BitTorrent network.");
     private static final String TEXT2 = I18n.tr("Installing and using the program does not constitute a license for obtaining or distributing unauthorized content.");
 
@@ -77,7 +72,8 @@ final class WelcomeWindow extends SetupWindow {
     private JComponent createPanel(String text1, String text2) {
 
         JPanel panel = new JPanel();
-        panel.setBackground(GUIUtils.hexToColor("F7F7F7"));
+        panel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
+        panel.updateUI();
         panel.setBorder(BorderFactory.createLineBorder(ThemeMediator.DARK_BORDER_COLOR));
         //panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(GUIUtils.hexToColor("C8C8C8"), 1),
         //        BorderFactory.createLineBorder(GUIUtils.hexToColor("FBFBFB"), 3)));

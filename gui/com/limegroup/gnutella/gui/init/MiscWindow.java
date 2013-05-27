@@ -105,6 +105,9 @@ final class MiscWindow extends SetupWindow {
 
             gbc.insets = new Insets(0, 0, 10, 0);
             mainPanel.add(startupPanel, gbc);
+            
+            startupPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
+            startupPanel.updateUI();
         }
 
         // Content Filtering
@@ -181,6 +184,9 @@ final class MiscWindow extends SetupWindow {
             outerLayoutConstraints.fill = GridBagConstraints.HORIZONTAL;
             outerLayoutConstraints.gridy = GridBagConstraints.RELATIVE;
             mainPanel.add(chatCommunityPanel, outerLayoutConstraints);
+            
+            chatCommunityPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
+            chatCommunityPanel.updateUI();
         }
 
         // Vertical Filler

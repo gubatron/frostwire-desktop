@@ -29,13 +29,11 @@ import javax.swing.JPanel;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
 
+import com.frostwire.gui.theme.ThemeMediator;
+
 /** State Your Intent. */
 final class IntentWindow extends SetupWindow {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 5196113358670223989L;
     private boolean setWillNot = false;
     private Properties properties;
 
@@ -70,6 +68,8 @@ final class IntentWindow extends SetupWindow {
         final IntentPanel intentPanel = new IntentPanel();
         innerPanel.add(intentPanel, BorderLayout.CENTER);
         setSetupComponent(innerPanel);
+        intentPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
+        intentPanel.updateUI();
 
         setNext(null);
         intentPanel.addButtonListener(new ActionListener() {
