@@ -26,7 +26,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -36,6 +35,7 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+import javax.swing.UIDefaults;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -43,6 +43,7 @@ import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
+import com.frostwire.gui.theme.SkinSeparatorBackgroundPainter;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -177,45 +178,42 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         panel.setLayout(new MigLayout("insets 0, gap 0, filly",  //component constraints
                                       "[][]"));
 
-        panel.add(createPlaybackButtonsPanel(), "span 1 2, growy");//, gapright 4");
+        panel.add(createPlaybackButtonsPanel(), "span 1 2, growy, gapright 4");
         panel.add(createPanelTwo(), "wrap, growx");
         panel.add(createProgressPanel());
 
         return panel;
     }
-
+    
     private JPanel createPlaybackButtonsPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0", //layout constraints
-                                      "[3]8[32]6[36]6[32]8[3]", //columns constraints
-                                      "[center]" //row contraints
-                                      ));
-
+        panel.setLayout(new MigLayout("insets 0, filly"));
+        
+        
         JSeparator sep1 = new JSeparator(SwingConstants.VERTICAL);
-        sep1.setLayout(new MigLayout("insets 0"));
-        sep1.setBorder(BorderFactory.createLineBorder(Color.GREEN, 1));
+
+        UIDefaults defaults = new UIDefaults();
+        defaults.put("Separator[Enabled].backgroundPainter", new SkinSeparatorBackgroundPainter(SkinSeparatorBackgroundPainter.State.Enabled, new Color(0x295164)));
+        sep1.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
+        sep1.putClientProperty("Nimbus.Overrides", defaults);
+        
         panel.add(sep1,"growy");
 
-        PREV_BUTTON.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
-        PREV_BUTTON.setBorderPainted(true);
-        panel.add(PREV_BUTTON);
-
+        panel.add(PREV_BUTTON,"w 45!");
+        
         PLAY_PAUSE_CARD_LAYOUT = new CardLayout();
         PLAY_PAUSE_BUTTON_CONTAINER = new JPanel(PLAY_PAUSE_CARD_LAYOUT);
         PLAY_PAUSE_BUTTON_CONTAINER.setOpaque(false);
 
-        PLAY_BUTTON.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
-        PLAY_BUTTON.setBorderPainted(true);
         PLAY_PAUSE_BUTTON_CONTAINER.add(PLAY_BUTTON, "PLAY");
         PLAY_PAUSE_BUTTON_CONTAINER.add(PAUSE_BUTTON, "PAUSE");
-        panel.add(PLAY_PAUSE_BUTTON_CONTAINER);
+        panel.add(PLAY_PAUSE_BUTTON_CONTAINER, "w 49!");
 
-        NEXT_BUTTON.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 1));
-        NEXT_BUTTON.setBorderPainted(true);
-        panel.add(NEXT_BUTTON);
-
-        JSeparator sep2 = new JSeparator(SwingConstants.VERTICAL);
-        sep2.setBorder(BorderFactory.createLineBorder(Color.GREEN, 1));
+        panel.add(NEXT_BUTTON,"w 45!");
+        
+        JSeparator sep2 = new JSeparator(SwingConstants.VERTICAL);        
+        sep2.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
+        sep2.putClientProperty("Nimbus.Overrides", defaults);
         panel.add(sep2, "growy");
         
         return panel;
