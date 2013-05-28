@@ -356,8 +356,8 @@ public final class StatusLine implements ThemeObserver {
     private Component createSeparator() {
         JSeparator sep = new JSeparator(SwingConstants.VERTICAL);
         //  separators need preferred size in GridBagLayout
-        sep.setPreferredSize(new Dimension(2, 20));
-        sep.setMinimumSize(new Dimension(2, 20));
+        sep.setPreferredSize(new Dimension(2, 30));
+        sep.setMinimumSize(new Dimension(2, 30));
         return sep;
     }
 

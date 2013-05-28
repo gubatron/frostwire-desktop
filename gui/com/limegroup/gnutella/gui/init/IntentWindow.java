@@ -69,7 +69,6 @@ final class IntentWindow extends SetupWindow {
         innerPanel.add(intentPanel, BorderLayout.CENTER);
         setSetupComponent(innerPanel);
         intentPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
-        intentPanel.updateUI();
 
         setNext(null);
         intentPanel.addButtonListener(new ActionListener() {

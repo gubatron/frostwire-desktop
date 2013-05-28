@@ -212,7 +212,7 @@ public final class MainFrame  {
         JPanel contentPane = new JPanel();
 
         FRAME.setContentPane(contentPane);
-        contentPane.setLayout(new MigLayout());
+        contentPane.setLayout(new MigLayout("insets 0, gap 0"));
 
         buildTabs();
 

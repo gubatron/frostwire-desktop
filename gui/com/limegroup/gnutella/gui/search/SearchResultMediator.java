@@ -741,7 +741,6 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     private JScrollPane createSearchOptionsPanel() {
         searchOptionsPanel = new SearchOptionsPanel(this);
         searchOptionsPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
-        searchOptionsPanel.updateUI();
 
         JScrollPane sp = new JScrollPane(searchOptionsPanel);
         Border border = BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createMatteBorder(0, 1, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
