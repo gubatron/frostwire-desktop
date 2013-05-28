@@ -135,7 +135,7 @@ final class SchemaBox extends JPanel {
         
         // Then add 'Torrents'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_TORRENTS);
-        tooltipPlaceHolders.put(nmt,I18n.tr("%s Torrent files found (includes only .torrent files. Torrent files point to one or more files shared on the BitTorrent network.)"));
+        tooltipPlaceHolders.put(nmt,I18n.tr("%s Torrent files found (includes only .torrent files. Torrent files point to collections of files shared on the BitTorrent network.)"));
         addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt),0));
     }
 
@@ -210,6 +210,7 @@ final class SchemaBox extends JPanel {
         return selectedButton;
     }
 
+    /**
     private AbstractButton getMediaTypeButton(String ext) {
         AbstractButton selectedButton = null;
 
@@ -223,6 +224,7 @@ final class SchemaBox extends JPanel {
 
         return selectedButton;
     }
+    */
 
     private final class SchemaButtonActionListener implements ActionListener {
 
