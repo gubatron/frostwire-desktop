@@ -107,6 +107,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
     private JLabel updateButton;
     private ImageIcon updateImageButtonOn;
     private ImageIcon updateImageButtonOff;
+    private long updateButtonAnimationStartedTimestamp;
 
     private GoogleSearchField cloudSearchField;
     private SearchField librarySearchField;
@@ -136,7 +137,6 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
 
         final ActionListener schemaListener = new SchemaListener();
         schemaListener.actionPerformed(null);
-
     }
 
     private JPanel createSearchPanel() {
@@ -178,6 +178,8 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         updateButton.setMaximumSize(d);
         updateButton.setBorder(null);
         updateButton.setOpaque(false);
+        
+        updateButtonAnimationStartedTimestamp = -1;
 
         updateButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -403,36 +405,54 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         updateButton.setVisible(show);
 
         if (show) {
-            //Animate the button.
-            //            final Timeline timeline = new Timeline(new IntermittentButton(updateButton,updateImageButtonOn,updateImageButtonOff));
-            //            
-            //            timeline.addCallback(new TimelineCallbackAdapter() {
-            //                private long lastChange = 0;
-            //                private boolean lastState = false;
-            //                
-            //                @Override
-            //                public void onTimelinePulse(float durationFraction, float timelinePosition) {
-            //                    int currentSecond = (int) (durationFraction*timeline.getDuration()/1000);
-            //                    if (currentSecond != lastChange) {
-            //                        lastChange = currentSecond;
-            //                        updateButton.setIcon((lastState) ? updateImageButtonOn : updateImageButtonOff);
-            //                        lastState = !lastState;
-            //                    }
-            //                }
-            //                
-            //                @Override
-            //                public void onTimelineStateChanged(TimelineState oldState,
-            //                        TimelineState newState, float durationFraction,
-            //                        float timelinePosition) {
-            //                    if (newState == TimelineState.DONE) {
-            //                        updateButton.setIcon(updateImageButtonOn);
-            //                    }
-            //                }
-            //            });
-            //            
-            //            timeline.setDuration(30000);
-            //            timeline.play();
+            //Start animating the button for 30 seconds.
+            if (updateButtonAnimationStartedTimestamp == -1) {
+                startUpdateButtonIntermittentAnimation();
+            }
+            
+            
+            
         }
+    }
+
+    private void startUpdateButtonIntermittentAnimation() {
+        updateButtonAnimationStartedTimestamp = System.currentTimeMillis();
+
+        //start animation thread.
+        Thread t = new Thread("update-button-animation") {
+            private final long  ANIMATION_DURATION = 30000;
+            private final long ANIMATION_INTERVAL = 1000;
+            private long updateButtonAnimationLastChange;
+            
+            public void run() {
+                long now = System.currentTimeMillis();
+                updateButtonAnimationLastChange = now;
+                
+                boolean buttonState = true;
+                while (now - updateButtonAnimationStartedTimestamp < ANIMATION_DURATION) {
+                    if (now - updateButtonAnimationLastChange >= ANIMATION_INTERVAL) {
+                        switchButtonImage(buttonState);
+                        buttonState = !buttonState;
+                    }
+                    try {
+                        sleep(ANIMATION_INTERVAL);
+                    } catch (InterruptedException e) {
+                    }
+                    now = System.currentTimeMillis();
+                }
+                switchButtonImage(false);
+            }
+            
+            public void switchButtonImage(final boolean state) {
+                updateButtonAnimationLastChange = System.currentTimeMillis();
+                GUIMediator.safeInvokeAndWait(new Runnable() {
+                    public void run() {
+                        updateButton.setIcon(state ? updateImageButtonOn : updateImageButtonOff);
+                    }
+                });
+            }
+        };
+        t.start();
     }
 
     @Override
