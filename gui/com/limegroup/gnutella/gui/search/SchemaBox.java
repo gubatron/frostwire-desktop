@@ -28,14 +28,11 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 import javax.swing.border.Border;
-
-import org.apache.commons.io.FilenameUtils;
 
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.MediaType;
@@ -52,6 +49,7 @@ final class SchemaBox extends JPanel {
 
     private final ButtonGroup buttonGroup;
     private final Map<NamedMediaType, JToggleButton> buttonsMap;
+    private final Map<NamedMediaType, String> tooltipPlaceHolders;
 
     /**
      * Constructs the SchemaBox.
@@ -61,6 +59,7 @@ final class SchemaBox extends JPanel {
 
         this.buttonGroup = new ButtonGroup();
         this.buttonsMap = new HashMap<NamedMediaType, JToggleButton>();
+        this.tooltipPlaceHolders = new HashMap<NamedMediaType,String>();
 
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         addSchemas();
@@ -86,11 +85,11 @@ final class SchemaBox extends JPanel {
         NamedMediaType nmt = NamedMediaType.getFromExtension(sr.getExtension());
         if (nmt != null && buttonsMap.containsKey(nmt)) {
             JToggleButton button = buttonsMap.get(nmt);
-            incrementText(button);
+            incrementText(button,nmt);
         }
     }
 
-    private void incrementText(JToggleButton button) {
+    private void incrementText(JToggleButton button, NamedMediaType nmt) {
         String text = button.getText();
         int n = 0;
         try { // only justified situation of using try-catch for logic flow, since regex is slower
@@ -98,7 +97,9 @@ final class SchemaBox extends JPanel {
         } catch (Throwable e) {
             // no an integer
         }
-        button.setText(String.valueOf(n + 1));
+        String incrementedCounterValue = String.valueOf(n + 1);
+        button.setText(incrementedCounterValue);
+        button.setToolTipText(String.format(tooltipPlaceHolders.get(nmt),incrementedCounterValue));
     }
 
     /**
@@ -109,27 +110,33 @@ final class SchemaBox extends JPanel {
 
         // Then add 'Audio'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_AUDIO);
-        addMediaType(nmt, I18n.tr("Search For Audio Files, Including mp3, wav, ogg, and More"));
+        tooltipPlaceHolders.put(nmt, I18n.tr("%s Audio files found (including .mp3, .wav, .ogg, and more)"));
+        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt),0));
 
         // Then add 'Images'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_IMAGES);
-        addMediaType(nmt, I18n.tr("Search For Image Files, Including jpg, gif, png and More"));
+        tooltipPlaceHolders.put(nmt, I18n.tr("%s Image files found (including .jpg, .gif, .png and more)"));
+        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt),0));
 
         // Then add 'Video'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_VIDEO);
-        addMediaType(nmt, I18n.tr("Search For Video Files, Including avi, mpg, wmv, and More"));
-
+        tooltipPlaceHolders.put(nmt,I18n.tr("%s Video files found (including .avi, .mpg, .wmv, and more)"));
+        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt),0));
+        
         // Then add 'Documents'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_DOCUMENTS);
-        addMediaType(nmt, I18n.tr("Search for Document Files, Including html, txt, pdf, and More"));
-
+        tooltipPlaceHolders.put(nmt,I18n.tr("%s Document files found (including .html, .txt, .pdf, and more)"));
+        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt),0));
+        
         // Then add 'Programs'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_PROGRAMS);
-        addMediaType(nmt, I18n.tr("Search for Program Files, Including exe, zip, gz, and More"));
-
+        tooltipPlaceHolders.put(nmt,I18n.tr("%s Program files found (including .exe, .zip, .gz, and more)"));
+        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt),0));
+        
         // Then add 'Torrents'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_TORRENTS);
-        addMediaType(nmt, I18n.tr("Search for Torrents!"));
+        tooltipPlaceHolders.put(nmt,I18n.tr("%s Torrent files found (includes only .torrent files. Torrent files point to collections of files shared on the BitTorrent network.)"));
+        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt),0));
     }
 
     /**
@@ -203,6 +210,7 @@ final class SchemaBox extends JPanel {
         return selectedButton;
     }
 
+    /**
     private AbstractButton getMediaTypeButton(String ext) {
         AbstractButton selectedButton = null;
 
@@ -216,6 +224,7 @@ final class SchemaBox extends JPanel {
 
         return selectedButton;
     }
+    */
 
     private final class SchemaButtonActionListener implements ActionListener {
 

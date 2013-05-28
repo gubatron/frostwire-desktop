@@ -97,7 +97,6 @@ public class TitledPaddedPanel extends JPanel {
         _mainPanel.setBorder(innerBorder);
 
         titlePanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
-        titlePanel.updateUI();
 
         titlePanel.add(_mainPanel);
         super.add(titlePanel);

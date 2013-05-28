@@ -48,7 +48,7 @@ public class IntentPanel extends JPanel {
         bg.add(mightUseButton);
         bg.add(willNotButton);
 
-        setBorder(BorderFactory.createLineBorder(ThemeMediator.DARK_BORDER_COLOR));
+        setBorder(BorderFactory.createLineBorder(ThemeMediator.LIGHT_BORDER_COLOR));
 
         setBackground(GUIUtils.hexToColor("F7F7F7"));
         //setBorder(BorderFactory.createCompoundBorder(

@@ -114,8 +114,7 @@ abstract class SetupWindow extends JPanel {
         jpTop.setLayout(new BorderLayout());
         //jpTop.setBackground(Color.white);
         jpTop.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
-        jpTop.updateUI();
-        jpTop.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.DARK_BORDER_COLOR));
+        jpTop.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
         add(jpTop, BorderLayout.NORTH);
 
         JPanel jpTitle = new JPanel(new BorderLayout());

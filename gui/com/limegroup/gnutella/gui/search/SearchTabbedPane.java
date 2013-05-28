@@ -81,7 +81,7 @@ final class SearchTabbedPane extends JTabbedPane {
             buttonClose.setContentAreaFilled(false);
             buttonClose.setBorderPainted(false);
             buttonClose.addActionListener(closeAction);
-            add(buttonClose, "h 15!, w 15!");
+            add(buttonClose, "h 17!, w 23!");
 
             labelText = new JLabel(text.trim());
             labelText.setHorizontalTextPosition(SwingConstants.LEADING);

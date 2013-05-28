@@ -107,7 +107,6 @@ final class MiscWindow extends SetupWindow {
             mainPanel.add(startupPanel, gbc);
             
             startupPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
-            startupPanel.updateUI();
         }
 
         // Content Filtering
