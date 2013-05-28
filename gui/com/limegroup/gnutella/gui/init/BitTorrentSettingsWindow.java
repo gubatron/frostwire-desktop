@@ -75,7 +75,6 @@ class BitTorrentSettingsWindow extends SetupWindow {
         gbc.weighty = 0.5;
         mainPanel.add(_torrentSaveFolderComponent, gbc);
         _torrentSaveFolderComponent.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
-        _torrentSaveFolderComponent.updateUI();
 
         //Torrent Seeding container
         _torrentSeedingSettingComponent = new TorrentSeedingSettingComponent(false, true);
