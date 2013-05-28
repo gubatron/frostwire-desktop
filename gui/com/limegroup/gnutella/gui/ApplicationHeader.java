@@ -445,7 +445,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
             
             public void switchButtonImage(final boolean state) {
                 updateButtonAnimationLastChange = System.currentTimeMillis();
-                GUIMediator.safeInvokeAndWait(new Runnable() {
+                GUIMediator.safeInvokeLater(new Runnable() {
                     public void run() {
                         updateButton.setIcon(state ? updateImageButtonOn : updateImageButtonOff);
                     }
