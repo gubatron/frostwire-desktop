@@ -73,7 +73,7 @@ final class WelcomeWindow extends SetupWindow {
 
         JPanel panel = new JPanel();
         panel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
-        panel.setBorder(BorderFactory.createLineBorder(ThemeMediator.DARK_BORDER_COLOR));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeMediator.LIGHT_BORDER_COLOR));
         //panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(GUIUtils.hexToColor("C8C8C8"), 1),
         //        BorderFactory.createLineBorder(GUIUtils.hexToColor("FBFBFB"), 3)));
         panel.setLayout(new GridBagLayout());

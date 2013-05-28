@@ -174,7 +174,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         g2d.setColor(Color.WHITE);
         g2d.fillRect(0, 0, TABLE.getWidth(), TABLE.getHeight());
 
-        g2d.setColor(ThemeMediator.DARK_BORDER_COLOR);
+        g2d.setColor(ThemeMediator.LIGHT_BORDER_COLOR);
         g2d.drawRoundRect(helpPadding, helpPadding, TABLE.getWidth() - helpPadding * 2, TABLE.getHeight() - helpPadding * 2, 6, 6);
 
         try {
