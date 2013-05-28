@@ -19,9 +19,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -29,7 +27,6 @@ import java.awt.event.MouseEvent;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -46,8 +43,6 @@ import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
-import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.gui.theme.ThemeObserver;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -178,35 +173,49 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         registerListeners();
 
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0, gap 0, filly", "[][]"));
+        panel.setPreferredSize(new Dimension(130,55));
+        panel.setLayout(new MigLayout("insets 0, gap 0, filly",  //component constraints
+                                      "[][]"));
 
-        panel.add(createPanelOne(), "span 1 2, growy, gapright 4");
+        panel.add(createPlaybackButtonsPanel(), "span 1 2, growy");//, gapright 4");
         panel.add(createPanelTwo(), "wrap, growx");
         panel.add(createProgressPanel());
 
         return panel;
     }
 
-    private JPanel createPanelOne() {
+    private JPanel createPlaybackButtonsPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0, filly"));
+        panel.setLayout(new MigLayout("insets 0", //layout constraints
+                                      "[3]8[32]6[36]6[32]8[3]", //columns constraints
+                                      "[center]" //row contraints
+                                      ));
 
         JSeparator sep1 = new JSeparator(SwingConstants.VERTICAL);
-        panel.add(sep1, "growy");
+        sep1.setLayout(new MigLayout("insets 0"));
+        sep1.setBorder(BorderFactory.createLineBorder(Color.GREEN, 1));
+        panel.add(sep1,"growy");
 
+        PREV_BUTTON.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+        PREV_BUTTON.setBorderPainted(true);
         panel.add(PREV_BUTTON);
 
         PLAY_PAUSE_CARD_LAYOUT = new CardLayout();
         PLAY_PAUSE_BUTTON_CONTAINER = new JPanel(PLAY_PAUSE_CARD_LAYOUT);
         PLAY_PAUSE_BUTTON_CONTAINER.setOpaque(false);
 
+        PLAY_BUTTON.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+        PLAY_BUTTON.setBorderPainted(true);
         PLAY_PAUSE_BUTTON_CONTAINER.add(PLAY_BUTTON, "PLAY");
         PLAY_PAUSE_BUTTON_CONTAINER.add(PAUSE_BUTTON, "PAUSE");
         panel.add(PLAY_PAUSE_BUTTON_CONTAINER);
 
+        NEXT_BUTTON.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 1));
+        NEXT_BUTTON.setBorderPainted(true);
         panel.add(NEXT_BUTTON);
 
         JSeparator sep2 = new JSeparator(SwingConstants.VERTICAL);
+        sep2.setBorder(BorderFactory.createLineBorder(Color.GREEN, 1));
         panel.add(sep2, "growy");
         
         return panel;
