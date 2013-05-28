@@ -213,6 +213,8 @@ public class ThemeMediator {
                                 // list
                                 defaults.put("List.cellNoFocusBorder", new InsetsUIResource(0, 0, 0, 0));
                                 defaults.put("List.focusCellHighlightBorder", new InsetsUIResource(0, 0, 0, 0));
+                                defaults.put("List[Selected].textBackground", new Color(SkinColors.TABLE_SELECTED_BACKGROUND_ROW_COLOR.getRGB()));
+                                defaults.put("List[Selected].textForeground", new Color(SkinColors.TEXT_FONT_FOREGROUND_COLOR.getRGB()));
 
                                 // popup
                                 defaults.put("PopupMenu[Disabled].backgroundPainter", new SkinPopupMenuBackgroundPainter(SkinPopupMenuBackgroundPainter.State.Disabled));
@@ -233,7 +235,7 @@ public class ThemeMediator {
 
                                 // scrollpane
                                 defaults.put("ScrollPane.background", new ColorUIResource(Color.WHITE));
-                                
+
                                 // editorpane
                                 defaults.put("EditorPane[Enabled].backgroundPainter", SkinColors.LIGHT_BACKGROUND_COLOR);
 
