@@ -16,51 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.search.vertor;
+package com.frostwire.search.torrent;
 
-import com.frostwire.search.torrent.ComparableTorrentJsonItem;
-
-/*
-{ "results":[
-   {"name":"...",
-   "cdate":"8 Jun 11",
-   "seeds":"733",
-   "leechers":"287",
-   "size":"105166808",
-   "url":"...",
-   "download":"...",
-   "category":"Music"},
-*/
 /**
  * @author gubatron
  * @author aldenml
  *
  */
-public class VertorItem implements ComparableTorrentJsonItem {
-
-    public String name;
-
-    public String cdate;
-
-    public String seeds;
-
-    public String leechers;
-
-    public String size;
-
-    public String url;
-
-    public String download;
-
-    public String category;
-
-    @Override
-    public int getSeeds() {
-        int result = 0;
-        try {
-            result = Integer.valueOf(seeds);
-        } catch (Exception e) {
-        }
-        return result;
-    }
+public interface ComparableTorrentJsonItem {
+    public int getSeeds();
 }
