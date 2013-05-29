@@ -39,15 +39,13 @@ public class LibraryLeftPanel extends JPanel {
     public static final int MIN_WIDTH = 155;
     public static final int MAX_WIDTH = 300;
 
-    private final LibrarySearch librarySearch;
     private final LibraryExplorer libraryExplorer;
     private final LibraryPlaylists libraryPlaylists;
     private final LibraryCoverArt libraryCoverArt;
 
     private final JSplitPane splitPane;
 
-    public LibraryLeftPanel(LibrarySearch librarySearch, LibraryExplorer libraryExplorer, LibraryPlaylists libraryPlaylists, LibraryCoverArt libraryCoverArt) {
-        this.librarySearch = librarySearch;
+    public LibraryLeftPanel(LibraryExplorer libraryExplorer, LibraryPlaylists libraryPlaylists, LibraryCoverArt libraryCoverArt) {
         this.libraryExplorer = libraryExplorer;
         this.libraryPlaylists = libraryPlaylists;
         this.libraryCoverArt = libraryCoverArt;
@@ -58,8 +56,6 @@ public class LibraryLeftPanel extends JPanel {
 
     protected void setupUI() {
         setLayout(new BorderLayout());
-        
-        //add(librarySearch.getSearchField(), BorderLayout.PAGE_START);
 
         //Prepare a split pane with explorers
         splitPane.setTopComponent(libraryExplorer);
@@ -81,7 +77,7 @@ public class LibraryLeftPanel extends JPanel {
                 layoutComponents();
             }
         });
-        
+
         DividerLocationSettingUpdater.install(splitPane, UISettings.UI_LIBRARY_EXPLORER_DIVIDER_POSITION);
     }
 
@@ -90,7 +86,7 @@ public class LibraryLeftPanel extends JPanel {
         size.height = size.width;
         libraryCoverArt.setSize(size);
         libraryCoverArt.setPreferredSize(size);
-        
+
         revalidate();
     }
 }

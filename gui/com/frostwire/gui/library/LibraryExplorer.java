@@ -72,8 +72,6 @@ import com.limegroup.gnutella.settings.SharingSettings;
  */
 public class LibraryExplorer extends AbstractLibraryListPanel {
 
-    private static final long serialVersionUID = -5354238047697767760L;
-
     private DefaultTreeModel model;
     private JTree tree;
 
@@ -536,7 +534,6 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             executePendingRunnables();
         }
     }
-
 
     public void selectFinishedDownloads() {
         try {
