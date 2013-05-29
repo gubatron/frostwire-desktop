@@ -18,12 +18,14 @@
 
 package com.frostwire.search.isohunt;
 
+import com.frostwire.search.torrent.ComparableTorrentJsonItem;
+
 /**
  * @author gubatron
  * @author aldenml
  *
  */
-public class ISOHuntItem {
+public class ISOHuntItem implements ComparableTorrentJsonItem {
 
     public String title;
 
@@ -54,4 +56,15 @@ public class ISOHuntItem {
     public String pubDate; //In this format Thu, 29 Apr 2010 16:32:44 GMT
 
     public String hash;
+    
+    @Override
+    public int getSeeds() {
+        int result = 0;
+        try {
+            result = Integer.valueOf(Seeds);
+        } catch (Exception e) {
+
+        }
+        return result;
+    }
 }

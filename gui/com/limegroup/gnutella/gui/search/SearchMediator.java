@@ -588,7 +588,7 @@ public final class SearchMediator {
 
     public void clearCache() {
         try {
-            CrawlPagedWebSearchPerformer.getCache().clear();
+            CrawlPagedWebSearchPerformer.clearCache();
         } catch (Throwable t) {
         }
     }
@@ -596,7 +596,7 @@ public final class SearchMediator {
     public long getTotalTorrents() {
         long r = 0;
         try {
-            r = CrawlPagedWebSearchPerformer.getCache().size();
+            r = CrawlPagedWebSearchPerformer.getCacheSize();
         } catch (Throwable t) {
 
         }

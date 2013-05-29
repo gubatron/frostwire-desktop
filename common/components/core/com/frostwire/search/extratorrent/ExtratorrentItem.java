@@ -18,6 +18,8 @@
 
 package com.frostwire.search.extratorrent;
 
+import com.frostwire.search.torrent.ComparableTorrentJsonItem;
+
 /*
 {
  "title":"Extratorrent Search: ...",
@@ -47,7 +49,7 @@ package com.frostwire.search.extratorrent;
  * @author aldenml
  *
  */
-public class ExtratorrentItem {
+public class ExtratorrentItem implements ComparableTorrentJsonItem {
 
     public String title;
 
@@ -76,4 +78,9 @@ public class ExtratorrentItem {
     public int leechs;
 
     public long size;
+    
+    @Override
+    public int getSeeds() {
+        return seeds;
+    }
 }

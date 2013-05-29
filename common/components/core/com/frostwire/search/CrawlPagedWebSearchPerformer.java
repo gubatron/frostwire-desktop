@@ -50,10 +50,6 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
         this(token, keywords, timeout, pages, DEFAULT_NUM_CRAWLS);
     }
 
-    public static CrawlCache getCache() {
-        return cache;
-    }
-
     public static void setCache(CrawlCache cache) {
         CrawlPagedWebSearchPerformer.cache = cache;
     }
@@ -88,6 +84,11 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
                             data = fetchBytes(url, sr.getDetailsUrl(), DEFAULT_CRAWL_TIMEOUT);
                         }
 
+                        //we put this here optimistically hoping this is actually
+                        //valid data. if no data can be crawled from this we remove it
+                        //from the cache. we do this because this same data may come
+                        //from another search engine and this way we avoid the
+                        //expense of performing another download.
                         if (data != null) {
                             cachePut(url, data);
                         } else {
@@ -168,5 +169,23 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
         }
 
         return null;
+    }
+
+    public static void clearCache() {
+        if (cache != null) {
+            synchronized (cache) {
+                cache.clear();
+            }
+        }
+    }
+
+    public static long getCacheSize() {
+        long result = 0;
+        if (cache != null) {
+            synchronized (cache) {
+                result = cache.size();
+            }
+        }
+        return result;
     }
 }

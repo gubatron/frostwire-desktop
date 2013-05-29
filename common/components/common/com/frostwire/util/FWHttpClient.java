@@ -76,7 +76,7 @@ final class FWHttpClient implements HttpClient {
 
             result = new String(baos.toByteArray(), "UTF-8");
         } catch (Throwable e) {
-            LOG.warn("Error getting string from http body response: " + e.getMessage());
+            LOG.error("Error getting string from http body response: " + e.getMessage(),e);
         } finally {
             closeQuietly(baos);
         }
@@ -95,7 +95,7 @@ final class FWHttpClient implements HttpClient {
 
             result = baos.toByteArray();
         } catch (Throwable e) {
-            LOG.warn("Error getting string from http body response: " + e.getMessage());
+            LOG.error("Error getting string from http body response: " + e.getMessage(),e);
         } finally {
             closeQuietly(baos);
         }
@@ -144,7 +144,6 @@ final class FWHttpClient implements HttpClient {
         URL u = new URL(url);
         URLConnection conn = u.openConnection();
 
-        conn.setConnectTimeout(timeout);
         conn.setReadTimeout(timeout);
         conn.setRequestProperty("User-Agent", userAgent);
 
@@ -152,6 +151,10 @@ final class FWHttpClient implements HttpClient {
             conn.setRequestProperty("Referer", referrer);
         }
 
+        if (conn instanceof HttpURLConnection) {
+            ((HttpURLConnection) conn).setInstanceFollowRedirects(true);
+        }
+        
         if (conn instanceof HttpsURLConnection) {
             setHostnameVerifier((HttpsURLConnection) conn);
         }
@@ -164,12 +167,12 @@ final class FWHttpClient implements HttpClient {
 
         int httpResponseCode = getResponseCode(conn);
 
-        if (httpResponseCode != HttpURLConnection.HTTP_OK && httpResponseCode != HttpURLConnection.HTTP_PARTIAL) {
+        if (httpResponseCode != HttpURLConnection.HTTP_OK && 
+            httpResponseCode != HttpURLConnection.HTTP_PARTIAL) {
             throw new ResponseCodeNotSupportedException(httpResponseCode);
         }
 
         onHeaders(conn.getHeaderFields());
-
         checkRangeSupport(rangeStart, conn);
 
         try {
@@ -210,6 +213,8 @@ final class FWHttpClient implements HttpClient {
         try {
             return ((HttpURLConnection) conn).getResponseCode();
         } catch (IOException e) {
+            e.printStackTrace();
+            LOG.error("can't get response code ",e);
             return -1;
         }
     }
