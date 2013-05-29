@@ -26,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.Line;
@@ -33,16 +34,10 @@ import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.URLLabel;
 import com.limegroup.gnutella.gui.search.DitherPanel;
 import com.limegroup.gnutella.gui.search.Ditherer;
-import com.limegroup.gnutella.gui.themes.SkinCustomUI;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class IntentPanel extends JPanel {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 2787016363153722074L;
     private final JRadioButton mightUseButton;
     private final JRadioButton willNotButton;
 
@@ -53,8 +48,7 @@ public class IntentPanel extends JPanel {
         bg.add(mightUseButton);
         bg.add(willNotButton);
 
-        putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_NOISE, true);
-        setBorder(BorderFactory.createLineBorder(ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder()));
+        setBorder(BorderFactory.createLineBorder(ThemeMediator.LIGHT_BORDER_COLOR));
 
         setBackground(GUIUtils.hexToColor("F7F7F7"));
         //setBorder(BorderFactory.createCompoundBorder(

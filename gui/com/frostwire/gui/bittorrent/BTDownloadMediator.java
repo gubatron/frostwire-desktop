@@ -40,12 +40,14 @@ import org.limewire.util.OSUtils;
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.core.FileDescriptor;
-import com.frostwire.gui.TipsClient;
 import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleMediaFileAction;
 import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.theme.SkinMenu;
+import com.frostwire.gui.theme.SkinMenuItem;
+import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.transfers.PeerHttpUpload;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -58,10 +60,6 @@ import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.TableSettings;
-import com.limegroup.gnutella.gui.themes.SkinMenu;
-import com.limegroup.gnutella.gui.themes.SkinMenuItem;
-import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
@@ -267,7 +265,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     private BTDownloadMediator() {
         super("DOWNLOAD_TABLE");
         GUIMediator.addRefreshListener(this);
-        ThemeMediator.addThemeObserver(this);
 
         restoreSorting();
     }

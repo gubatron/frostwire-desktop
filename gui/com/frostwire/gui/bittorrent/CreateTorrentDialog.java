@@ -1,3 +1,20 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.frostwire.gui.bittorrent;
 
 import java.awt.Color;
@@ -33,6 +50,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
@@ -53,15 +71,20 @@ import org.gudy.azureus2.core3.util.TrackersUtil;
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class CreateTorrentDialog extends JDialog implements TOTorrentProgressListener {
 
-	private static final long serialVersionUID = -985586062136324042L;
 	/**
 	 * TRACKER TYPES
 	 */
@@ -175,8 +198,12 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	private void initTorrentContents() {
 		GridBagConstraints c;
 		JPanel torrentContentsPanel = new JPanel(new GridBagLayout());
-		torrentContentsPanel.setBorder(BorderFactory.createTitledBorder(I18n
-				.tr("Torrent Contents")));
+		Border titleBorder = BorderFactory.createTitledBorder(I18n
+                .tr("Torrent Contents"));
+		Border lineBorder = BorderFactory.createLineBorder(ThemeMediator.LIGHT_BORDER_COLOR);
+		Border border = BorderFactory.createCompoundBorder(lineBorder, titleBorder);
+		torrentContentsPanel.setBorder(border);
+		torrentContentsPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
 
 		_buttonSelectFile = new JButton(I18n.tr("Select File or Folder..."));
 		_buttonSelectFile.setToolTipText(I18n.tr("Click here to select a single file or a folder as the content indexed by your new .torrent"));
@@ -225,8 +252,12 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	private void initTorrentProperties() {
 		GridBagConstraints c;
 		JPanel torrentPropertiesPanel = new JPanel(new GridBagLayout());
-		torrentPropertiesPanel.setBorder(BorderFactory.createTitledBorder(I18n
-				.tr("Torrent Properties")));
+		Border titleBorder = BorderFactory.createTitledBorder(I18n
+                .tr("Torrent Properties"));
+		Border lineBorder = BorderFactory.createLineBorder(ThemeMediator.LIGHT_BORDER_COLOR);
+        Border border = BorderFactory.createCompoundBorder(lineBorder, titleBorder);
+        torrentPropertiesPanel.setBorder(border);
+        torrentPropertiesPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
 
 		// Trackerless
 		c = new GridBagConstraints();

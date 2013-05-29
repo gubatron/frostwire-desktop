@@ -5,11 +5,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import com.frostwire.gui.theme.SkinMenu;
 import com.limegroup.gnutella.gui.XMLUtils;
 import com.limegroup.gnutella.gui.tables.ColumnSelectionMenu;
 import com.limegroup.gnutella.gui.tables.DataLineModel;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
-import com.limegroup.gnutella.gui.themes.SkinMenu;
 
 final class SearchColumnSelectionMenu extends ColumnSelectionMenu {
 

@@ -25,112 +25,89 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 
 import org.limewire.util.OSUtils;
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeObserver;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
+import com.frostwire.gui.theme.ThemeSettings;
 
-public final class SortHeaderRenderer extends SubstanceDefaultTableCellRenderer
-implements ThemeObserver {
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 7939527295034958674L;
+public final class SortHeaderRenderer extends DefaultTableCellRenderer {
+
     public static Icon ASCENDING;
     public static Icon DESCENDING;
-    
+
     static {
-        updateIcons();
+        setupIcons();
     }
-    
-    private static void updateIcons() {
-        if(OSUtils.isMacOSX() || ThemeSettings.isWindowsTheme()) {
-            ASCENDING = AquaSortArrowIcon.getAscendingIcon();
-            DESCENDING = AquaSortArrowIcon.getDescendingIcon();
-        } else {
-            ASCENDING = SortArrowIcon.getAscendingIcon();
-            DESCENDING = SortArrowIcon.getDescendingIcon();
-        }
-    }
-    
+
     private boolean allowIcon = true;
-    
+
     public SortHeaderRenderer() {
         setHorizontalAlignment(CENTER);
         setIconTextGap(2); // reduce from the default of 4 pixels
         setHorizontalTextPosition(LEFT);
-        ThemeMediator.addThemeObserver(this);
     }
-    
-    public void updateTheme() {
-        updateIcons();
-    }
-    
+
     public void setAllowIcon(boolean allow) {
         allowIcon = allow;
     }
-    
-    public Component getTableCellRendererComponent( JTable table,
-    Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
         int index = -1;
         boolean ascending = true;
         boolean isPressed = false;
         if (allowIcon && table instanceof JSortTable) {
-            JSortTable sortTable = (JSortTable)table;
+            JSortTable sortTable = (JSortTable) table;
             index = sortTable.getSortedColumnIndex();
             ascending = sortTable.isSortedColumnAscending();
             isPressed = (sortTable.getPressedColumnIndex() == col);
         }
-        
+
         JLabel renderer = this;
-        
+
         if (table != null) {
             JTableHeader header = table.getTableHeader();
             try {
                 if (header != null) {
                     TableCellRenderer tcr = header.getDefaultRenderer();
-                    Component c = tcr.getTableCellRendererComponent(
-                    table, value, isSelected, hasFocus, row, col);
-                    if(c instanceof JLabel) {
-                        renderer = (JLabel)c;
+                    Component c = tcr.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+                    if (c instanceof JLabel) {
+                        renderer = (JLabel) c;
                         renderer.setFont(header.getFont());
                         renderer.setBackground(header.getBackground());
                         renderer.setForeground(header.getForeground());
                     }
                 }
-            } catch(NullPointerException ignored) {
+            } catch (NullPointerException ignored) {
                 // happens occasionally, ignore.
             }
         }
-        
-        if(value instanceof Icon) {
-            renderer.setIcon((Icon)value);
+
+        if (value instanceof Icon) {
+            renderer.setIcon((Icon) value);
             renderer.setText(null);
         } else {
             Icon icon = (col == index) ? (ascending ? ASCENDING : DESCENDING) : null;
             renderer.setIcon(icon);
             renderer.setText((value == null) ? null : value.toString());
         }
-        
-        if(renderer != this) {
+
+        if (renderer != this) {
             renderer.setHorizontalAlignment(CENTER);
             renderer.setIconTextGap(2); // reduce from the default of 4 pixels
             renderer.setHorizontalTextPosition(LEFT);
         }
-        
+
         // Update the borders to simulate pressing, but only if the actual
         // renderer didn't put its own borders on.
         Border pressed, normal, active;
         pressed = UIManager.getBorder("TableHeader.cellPressedBorder");
-        normal  = UIManager.getBorder("TableHeader.cellBorder");
-        active  = renderer.getBorder();
-        if(active == pressed || active == normal || active == null) {
-            if ( isPressed ) {
+        normal = UIManager.getBorder("TableHeader.cellBorder");
+        active = renderer.getBorder();
+        if (active == pressed || active == normal || active == null) {
+            if (isPressed) {
                 // need to explicitly check for null since some laf's
                 // [osx] might not have it.  all will have cellBorder tho.
                 renderer.setBorder(pressed == null ? normal : pressed);
@@ -138,7 +115,17 @@ implements ThemeObserver {
                 renderer.setBorder(normal);
             }
         }
+
         return renderer;
     }
-}
 
+    private static void setupIcons() {
+        if (OSUtils.isMacOSX() || ThemeSettings.isWindowsTheme()) {
+            ASCENDING = AquaSortArrowIcon.getAscendingIcon();
+            DESCENDING = AquaSortArrowIcon.getDescendingIcon();
+        } else {
+            ASCENDING = SortArrowIcon.getAscendingIcon();
+            DESCENDING = SortArrowIcon.getDescendingIcon();
+        }
+    }
+}

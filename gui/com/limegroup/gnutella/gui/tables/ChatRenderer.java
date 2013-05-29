@@ -5,18 +5,17 @@ import java.awt.Component;
 import javax.swing.Icon;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
-
+import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.gui.theme.ThemeObserver;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
 /**
  * Renders the column in the search window that displays an icon for
  * whether or not the host returning the result is chattable.
  */
-public final class ChatRenderer extends SubstanceDefaultTableCellRenderer 
+public final class ChatRenderer extends DefaultTableCellRenderer 
 	implements ThemeObserver {
 
 	/**

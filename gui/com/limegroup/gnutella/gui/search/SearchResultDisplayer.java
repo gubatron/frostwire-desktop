@@ -17,7 +17,6 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.IllegalComponentStateException;
@@ -29,9 +28,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -48,16 +47,13 @@ import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.RefreshListener;
-import com.limegroup.gnutella.gui.themes.SkinTabbedPane;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.settings.UpdateManagerSettings;
 
 /**
  * This class handles the display of search results.
  */
-public final class SearchResultDisplayer implements ThemeObserver, RefreshListener {
+public final class SearchResultDisplayer implements RefreshListener {
 
     /**
      * <tt>JPanel</tt> containing the primary components of the search result
@@ -68,7 +64,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
     /**
      * The main tabbed pane for displaying different search results.
      */
-    private SkinTabbedPane tabbedPane;
+    private SearchTabbedPane tabbedPane;
 
     /** The contents of tabbedPane. 
      *  INVARIANT: entries.size()==# of tabs in tabbedPane 
@@ -123,16 +119,16 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      */
     public SearchResultDisplayer() {
         MAIN_PANEL = new BoxPanel(BoxPanel.Y_AXIS);
-        MAIN_PANEL.setMinimumSize(new Dimension(0, 0));
+        MAIN_PANEL.setMinimumSize(new Dimension(0, 150));
 
-        tabbedPane = new SkinTabbedPane(GUIMediator.getThemeImage("indeterminate_small_progress"));
+        tabbedPane = new SearchTabbedPane();
         results = new JPanel();
 
         // make the results panel take up as much space as possible
         // for when the window is resized. 
         results.setPreferredSize(new Dimension(10000, 10000));
         results.setLayout(switcher);
-        results.setBackground(Color.WHITE);
+        //results.setBackground(Color.WHITE);
 
         //Add SlideShowPanel here.
         promoSlides = null;
@@ -145,7 +141,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
         if (promoSlides != null) {
             JPanel p = (JPanel) promoSlides;
-            p.setBackground(Color.WHITE);
+            //p.setBackground(Color.WHITE);
             Dimension promoDimensions = new Dimension(717, 380);
             p.setPreferredSize(promoDimensions);
             p.setSize(promoDimensions);
@@ -167,7 +163,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
         MAIN_PANEL.add(results);
 
-        ThemeMediator.addThemeObserver(this);
         CancelSearchIconProxy.updateTheme();
     }
 
@@ -229,7 +224,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      */
     private void setupTabbedPane() {
         removeTabbedPaneListeners();
-        tabbedPane = new SkinTabbedPane(GUIMediator.getThemeImage("indeterminate_small_progress"));
+        tabbedPane = new SearchTabbedPane();
         tabbedPane.setRequestFocusEnabled(false);
         results.add("tabbedPane", tabbedPane);
         addTabbedPaneListeners();
@@ -299,7 +294,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         }
 
         try {
-            tabbedPane.setExtraIconActiveAt(entries.size() - 1, true);
+            tabbedPane.setProgressActiveAt(entries.size() - 1, true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -374,7 +369,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
         //Update index on tab.  Don't forget to add 1 since line hasn't
         //actually been added!
-        tabbedPane.setExtraIconActiveAt(resultPanelIndex, active);
+        tabbedPane.setProgressActiveAt(resultPanelIndex, active);
     }
 
     /**
@@ -485,7 +480,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
         fixIcons();
         SearchMediator.searchKilled(killed);
-        ThemeMediator.removeThemeObserver(killed);
 
         if (entries.size() == 0) {
             try {
@@ -564,18 +558,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         return MAIN_PANEL;
     }
 
-    // inherit doc comment
-    public void updateTheme() {
-        DUMMY.updateTheme();
-
-        CancelSearchIconProxy.updateTheme();
-        fixIcons();
-        for (Iterator<SearchResultMediator> i = entries.iterator(); i.hasNext();) {
-            SearchResultMediator curPanel = (SearchResultMediator) i.next();
-            curPanel.updateTheme();
-        }
-    }
-
     /**
      * Every second, redraw only the tab portion of the TabbedPane
      * and determine if we should stop the lime spinning.
@@ -608,13 +590,15 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      * Returns the title of the specified ResultPanel.
      */
     private String titleOf(SearchResultMediator rp) {
-        int current = rp.filteredResults();
+        //        int current = rp.filteredResults();
         int total = rp.totalResults();
 
-        if (current < total)
-            return rp.getTitle() + " (" + current + " " + I18n.tr("results") + ")";
-        else
-            return rp.getTitle() + " (" + total + " " + I18n.tr("results") + ")";
+        return rp.getTitle() + " (" + total + " " + I18n.tr("results") + ")";
+        //
+        //        if (current < total)
+        //            return rp.getTitle() + " (" + current + " " + I18n.tr("results") + ")";
+        //        else
+        //            return rp.getTitle() + " (" + total + " " + I18n.tr("results") + ")";
     }
 
     /**

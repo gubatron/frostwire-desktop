@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,6 +56,10 @@ import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.theme.SkinMenu;
+import com.frostwire.gui.theme.SkinMenuItem;
+import com.frostwire.gui.theme.SkinPopupMenu;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -65,10 +69,6 @@ import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
-import com.limegroup.gnutella.gui.themes.SkinMenu;
-import com.limegroup.gnutella.gui.themes.SkinMenuItem;
-import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.util.GUILauncher;
 import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
 import com.limegroup.gnutella.util.QueryUtils;
@@ -174,7 +174,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         g2d.setColor(Color.WHITE);
         g2d.fillRect(0, 0, TABLE.getWidth(), TABLE.getHeight());
 
-        g2d.setColor(ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder());
+        g2d.setColor(ThemeMediator.LIGHT_BORDER_COLOR);
         g2d.drawRoundRect(helpPadding, helpPadding, TABLE.getWidth() - helpPadding * 2, TABLE.getHeight() - helpPadding * 2, 6, 6);
 
         try {
@@ -301,7 +301,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     private LibraryPlaylistsTableMediator() {
         super("LIBRARY_PLAYLISTS_TABLE");
         setMediaType(MediaType.getAudioMediaType());
-        ThemeMediator.addThemeObserver(this);
     }
 
     /**

@@ -31,6 +31,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JList;
@@ -53,7 +54,6 @@ import org.limewire.collection.CollectionUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.Librarian;
@@ -61,6 +61,10 @@ import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
+import com.frostwire.gui.theme.SkinMenu;
+import com.frostwire.gui.theme.SkinMenuItem;
+import com.frostwire.gui.theme.SkinPopupMenu;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.gui.upnp.UPnPManager;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -77,10 +81,6 @@ import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
-import com.limegroup.gnutella.gui.themes.SkinMenu;
-import com.limegroup.gnutella.gui.themes.SkinMenuItem;
-import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.gui.util.GUILauncher;
 import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
@@ -362,7 +362,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      */
     private LibraryFilesTableMediator() {
         super("LIBRARY_FILES_TABLE");
-        ThemeMediator.addThemeObserver(this);
     }
 
     /**
@@ -1147,7 +1146,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
     /**
      * Sets an icon based on the filename extension.      */
-    private static class FileNameListCellRenderer extends SubstanceDefaultListCellRenderer {
+    private static class FileNameListCellRenderer extends DefaultListCellRenderer {
 
         /**
          * 

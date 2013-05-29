@@ -30,6 +30,7 @@ import org.limewire.util.StringUtils;
 import com.frostwire.AzureusStarter;
 import com.frostwire.gui.bittorrent.TorrentSeedingSettingComponent;
 import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -73,6 +74,7 @@ class BitTorrentSettingsWindow extends SetupWindow {
         gbc.weightx = 1;
         gbc.weighty = 0.5;
         mainPanel.add(_torrentSaveFolderComponent, gbc);
+        _torrentSaveFolderComponent.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
 
         //Torrent Seeding container
         _torrentSeedingSettingComponent = new TorrentSeedingSettingComponent(false, true);
@@ -84,6 +86,8 @@ class BitTorrentSettingsWindow extends SetupWindow {
         gbc.weighty = 0.5;
 
         mainPanel.add(_torrentSeedingSettingComponent, gbc);
+        _torrentSeedingSettingComponent.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
+        _torrentSeedingSettingComponent.updateUI();
 
         setSetupComponent(mainPanel);
     }

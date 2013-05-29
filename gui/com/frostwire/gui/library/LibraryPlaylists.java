@@ -41,6 +41,7 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.JList;
@@ -50,22 +51,27 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ToolTipManager;
+import javax.swing.UIDefaults;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.plaf.InsetsUIResource;
+import javax.swing.plaf.basic.BasicTextFieldUI;
+import javax.swing.plaf.basic.BasicTextUI;
 
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
-import com.frostwire.gui.components.SortedListModel;
-import com.frostwire.gui.components.SortedListModel.SortOrder;
+import com.frostwire.gui.library.SortedListModel.SortOrder;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.theme.SkinMenuItem;
+import com.frostwire.gui.theme.SkinPopupMenu;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -77,9 +83,6 @@ import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.tables.DefaultMouseListener;
 import com.limegroup.gnutella.gui.tables.MouseObserver;
 import com.limegroup.gnutella.gui.tables.TableSettings;
-import com.limegroup.gnutella.gui.themes.SkinMenuItem;
-import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 
@@ -116,7 +119,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     private Action copyPlaylistFilesAction = new CopyPlaylistFilesAction();
     private Action exportPlaylistAction = new ExportPlaylistAction();
     private Action exportToiTunesAction = new ExportToiTunesAction();
-    
+
     private List<Playlist> importingPlaylists;
 
     public LibraryPlaylists() {
@@ -246,6 +249,10 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         });
 
         _textName = new JTextField();
+        UIDefaults defaults = new UIDefaults();
+        defaults.put("TextField.contentMargins", new InsetsUIResource(0, 4, 0, 4));
+        _textName.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
+        _textName.putClientProperty("Nimbus.Overrides", defaults);
         _textName.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -302,7 +309,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         }
 
         Playlist playlist = cell.getPlaylist();
-        
+
         if (playlist != null) {
             playlist.refresh();
             LibraryMediator.instance().updateTableItems(playlist);
@@ -472,8 +479,6 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         });
     }
 
-
-    
     /**
      * Saves a playlist.
      */
@@ -602,7 +607,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         }
     }
 
-    private class LibraryPlaylistsCellRenderer extends SubstanceDefaultListCellRenderer {
+    private class LibraryPlaylistsCellRenderer extends DefaultListCellRenderer {
 
         @Override
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -615,10 +620,10 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
             if (icon != null) {
                 setIcon(icon);
             }
-            
+
             this.setFont(list.getFont());
             ThemeMediator.fixLabelFont(this);
-            
+
             return this;
         }
     }
@@ -718,7 +723,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     }
 
     private class DeleteAction extends AbstractAction {
-        
+
         private static final long serialVersionUID = 520856485566457934L;
 
         public DeleteAction() {
@@ -745,7 +750,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
             }
         }
     }
-    
+
     private final class CleanupPlaylistAction extends AbstractAction {
 
         private static final long serialVersionUID = 8400749433148927596L;
@@ -834,40 +839,41 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     }
 
     public final static class CopyPlaylistFilesAction extends AbstractAction {
-        
-        public CopyPlaylistFilesAction() { 
+
+        public CopyPlaylistFilesAction() {
             putValue(Action.NAME, I18n.tr("Export playlist files to folder"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Copy all playlist files to a folder of your choosing"));
             putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
         }
-        
+
         public void actionPerformed(ActionEvent e) {
             copyPlaylistFilesToFolder(LibraryMediator.instance().getSelectedPlaylist());
         }
+
         private void copyPlaylistFilesToFolder(Playlist playlist) {
             if (playlist == null || playlist.getItems().isEmpty()) {
                 return;
             }
-            
+
             File suggestedDirectory = FileChooserHandler.getLastInputDirectory();
             if (suggestedDirectory.equals(CommonUtils.getCurrentDirectory())) {
                 suggestedDirectory = new File(CommonUtils.getUserHomeDir(), "Desktop");
             }
-            
+
             final File selFolder = FileChooserHandler.getSaveAsDir(GUIMediator.getAppFrame(), I18nMarker.marktr("Where do you want the playlist files copied to?"), suggestedDirectory);
-            
+
             if (selFolder == null) {
                 return;
             }
 
             //let's make a copy of the list in case the playlist will be modified during the copying.
             final List<PlaylistItem> playlistItems = new ArrayList<>(playlist.getItems());
-            
+
             BackgroundExecutorService.schedule(new Thread("Library-copy-playlist-files") {
                 @Override
                 public void run() {
 
-                    int n=0;
+                    int n = 0;
                     int total = playlistItems.size();
                     String targetName = selFolder.getName();
 
@@ -879,18 +885,18 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
                                 Path target = FileSystems.getDefault().getPath(selFolder.getAbsolutePath(), f.getName());
                                 Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
                                 n++;
-                                
+
                                 //invoked on UI thread later
-                                String status = String.format("Copied %d of %d to %s",n,total,targetName);
+                                String status = String.format("Copied %d of %d to %s", n, total, targetName);
                                 LibraryMediator.instance().getLibrarySearch().pushStatus(status);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
                     }
-                    
+
                     GUIMediator.launchExplorer(selFolder);
-                    
+
                     //and clear the output
                     try {
                         Thread.sleep(2000);
@@ -898,12 +904,11 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
                     } catch (InterruptedException e) {
                     }
 
-                    
                 }
             });
         }
     }
-    
+
     private final class ExportPlaylistAction extends AbstractAction {
 
         private static final long serialVersionUID = 6149822357662730490L;

@@ -15,7 +15,6 @@
 
 package com.limegroup.gnutella.gui.actions;
 
-import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -45,17 +44,13 @@ import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.TorrentFileFilter;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
 
-public class FileMenuActions {
+public final class FileMenuActions {
 
     static final int SPACE = 6;
 
     /** Shows the File, Open Magnet or Torrent dialog box to let the user enter a magnet or torrent. */
     public static class OpenMagnetTorrentAction extends AbstractAction {
 
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 7148824020273223391L;
         private JDialog dialog = null;
         private AutoCompleteTextField PATH_FIELD;
 
@@ -156,7 +151,7 @@ public class FileMenuActions {
             constraints.gridy = 3;
             constraints.gridwidth = GridBagConstraints.REMAINDER;
             constraints.weighty = 1;
-            panel.add(new Canvas(), constraints);
+            panel.add(new JPanel(), constraints);
 
             row = new ButtonRow(new Action[] { new OkAction(), new CancelAction() }, ButtonRow.X_AXIS, ButtonRow.LEFT_GLUE);
 
@@ -315,11 +310,6 @@ public class FileMenuActions {
 
     public static class ExitAction extends AbstractAction {
 
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 8000042651676530796L;
-
         public ExitAction() {
             super(I18n.tr("E&xit"));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Close and exit the program"));
@@ -347,11 +337,6 @@ public class FileMenuActions {
     }
 
     public static class SendFileAction extends AbstractAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -313458189470318964L;
 
         public SendFileAction() {
             super(I18n.tr("Send File or Folder..."));

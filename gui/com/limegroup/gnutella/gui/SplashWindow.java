@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -57,9 +56,10 @@ public final class SplashWindow {
         splashLabel = new JLabel();
         splashWindow = new JWindow();
         
+        glassPane.setProgressPreferredSize(new Dimension(400, 17));
         glassPane.add(Box.createVerticalGlue(), 0);
-        glassPane.add(Box.createVerticalStrut(8));
-        glassPane.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
+        glassPane.add(Box.createVerticalStrut(6));
+        //glassPane.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
         
         URL imageURL = null;
         try {

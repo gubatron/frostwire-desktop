@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui;
 
 import java.awt.BorderLayout;
@@ -5,16 +20,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.text.NumberFormat;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import org.limewire.util.OSUtils;
-
-import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
 
 /**
  * Displays a status update in various ways, depending on the
@@ -27,114 +38,94 @@ import com.limegroup.gnutella.gui.themes.SkinHandler;
  *   - Displays an indeterminate JProgressBar with the status text
  *     inside the progressbar.
  */
-public class StatusComponent extends JPanel {
-    
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -1278146862770218271L;
+public final class StatusComponent extends JPanel {
 
     /** The JProgressBar whose text is updated, if not running on OSX. */
     private final JProgressBar BAR;
-    
+
     /** The JLabel being updated if this is running on OSX. */
     private final JLabel LABEL;
-    
+
     /** Whether or not this status component is using steps. */
     private final boolean STEPPING;
-    
+
     /** The NumberFormat being used for stepping. */
     private final NumberFormat NF;
-        
+
     /** Creates a new StatusComponent with an indeterminate progressbar. */
     public StatusComponent() {
         STEPPING = false;
         NF = null;
         LABEL = new JLabel();
-        BAR = new LimeJProgressBar();
-        
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));        
+        BAR = new JProgressBar();
+
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         construct();
         GUIUtils.setOpaque(false, this);
-        if(BAR != null && !OSUtils.isMacOSX()) {
+        if (BAR != null && !OSUtils.isMacOSX()) {
             BAR.setOpaque(true);
-        }
-        if(LABEL != null) {
-            LABEL.setForeground(SkinHandler.getWindow4Color());
         }
         BAR.setIndeterminate(true);
     }
-    
+
     /** Creates a new StatusComponent with the specified number of steps. */
     public StatusComponent(int steps) {
         STEPPING = true;
         LABEL = new JLabel();
-        LABEL.setFont(LABEL.getFont().deriveFont(Font.BOLD)); 
-        BAR = new LimeJProgressBar();
-        Dimension prefSize = BAR.getPreferredSize();
-        BAR.setPreferredSize(new Dimension(prefSize.width, 13));
-        GUIUtils.restrictSize(BAR, SizePolicy.RESTRICT_HEIGHT);
+        LABEL.setFont(LABEL.getFont().deriveFont(Font.BOLD));
+        BAR = new JProgressBar();
         NF = NumberFormat.getInstance(GUIMediator.getLocale());
         NF.setMaximumIntegerDigits(3);
         NF.setMaximumFractionDigits(0);
-        
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         construct();
         GUIUtils.setOpaque(false, this);
-        if(LABEL != null) {
-            LABEL.setForeground(SkinHandler.getWindow4Color());
-        }
-        
-        BAR.setMaximum(steps+1);
+
+        BAR.setMaximum(steps + 1);
         BAR.setMinimum(0);
         BAR.setValue(0);
-
     }
-    
+
     /**
      * Sets the preferred size of the progressbar.
      */
     public void setProgressPreferredSize(Dimension dim) {
-        setMinimumSize(dim);
-        setMaximumSize(dim);
-        setPreferredSize(dim);
-        if(BAR != null) {
+        if (BAR != null) {
             BAR.setMinimumSize(dim);
             BAR.setMaximumSize(dim);
             BAR.setPreferredSize(dim);
         }
     }
-    
+
     /**
      * Updates the status of this component.
      */
     public void setText(String text) {
-        if(STEPPING) {
+        if (STEPPING) {
             BAR.setValue(BAR.getValue() + 1);
-            String percent = NF.format(((double)BAR.getValue() / (double)BAR.getMaximum() * 100d));
+            String percent = NF.format(((double) BAR.getValue() / (double) BAR.getMaximum() * 100d));
             text = percent + "% (" + text + ")";
         }
-            
-        if(STEPPING || OSUtils.isMacOSX())
+
+        if (STEPPING || OSUtils.isMacOSX())
             LABEL.setText(text);
         else
             BAR.setString(text);
     }
-    
+
     /**
      * Constructs the panel.
      */
     private void construct() {
-        if(STEPPING || OSUtils.isMacOSX()) {
+        if (STEPPING || OSUtils.isMacOSX()) {
             JPanel panel = new JPanel(new BorderLayout());
             panel.add(LABEL, BorderLayout.SOUTH);
             add(panel);
-            add(Box.createVerticalStrut(9));
+            //add(Box.createVerticalStrut(9));
         } else {
             BAR.setStringPainted(true);
         }
         add(BAR);
-        
     }
-}                
-        
+}

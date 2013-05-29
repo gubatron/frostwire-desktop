@@ -33,13 +33,12 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.ChatMediator;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.SizedTextField;
 import com.limegroup.gnutella.gui.WindowsUtils;
-import com.limegroup.gnutella.gui.themes.SkinCustomUI;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.ChatSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.MacOSXUtils;
@@ -84,8 +83,7 @@ final class MiscWindow extends SetupWindow {
             GridBagConstraints gbc = new GridBagConstraints();
             JPanel startupPanel = new JPanel(new GridBagLayout());
 
-            startupPanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
-            startupPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("System Startup")));
+            startupPanel.setBorder(ThemeMediator.createTitledBorder(I18n.tr("System Startup")));
 
             _startup = new JCheckBox(I18n.tr("Start Automatically"));
             _startup.setSelected(StartupSettings.RUN_ON_STARTUP.getValue());
@@ -107,6 +105,8 @@ final class MiscWindow extends SetupWindow {
 
             gbc.insets = new Insets(0, 0, 10, 0);
             mainPanel.add(startupPanel, gbc);
+            
+            startupPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
         }
 
         // Content Filtering
@@ -156,8 +156,7 @@ final class MiscWindow extends SetupWindow {
 
             JPanel chatCommunityPanel = new JPanel(new GridLayout(2, 0));
 
-            chatCommunityPanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
-            chatCommunityPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Chat Community")));
+            chatCommunityPanel.setBorder(ThemeMediator.createTitledBorder(I18n.tr("Chat Community")));
 
             //create multiline to describe why the chat needs a nick (descChat)
             JLabel descChat = new JLabel("<html>" + I18n.tr("FrostWire's Community Chat Tab requires you to have a nickname to communicate with others in the chatrooms.") + "</html>");
@@ -184,6 +183,9 @@ final class MiscWindow extends SetupWindow {
             outerLayoutConstraints.fill = GridBagConstraints.HORIZONTAL;
             outerLayoutConstraints.gridy = GridBagConstraints.RELATIVE;
             mainPanel.add(chatCommunityPanel, outerLayoutConstraints);
+            
+            chatCommunityPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
+            chatCommunityPanel.updateUI();
         }
 
         // Vertical Filler

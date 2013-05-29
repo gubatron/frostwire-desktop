@@ -35,8 +35,8 @@ import javax.swing.plaf.ComponentUI;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
+import com.frostwire.gui.theme.ThemeSettings;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /**

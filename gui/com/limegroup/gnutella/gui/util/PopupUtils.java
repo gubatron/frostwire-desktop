@@ -21,9 +21,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import com.limegroup.gnutella.gui.themes.SkinMenu;
-import com.limegroup.gnutella.gui.themes.SkinMenuItem;
-import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
+import com.frostwire.gui.theme.SkinMenu;
+import com.frostwire.gui.theme.SkinMenuItem;
+import com.frostwire.gui.theme.SkinPopupMenu;
 
 /**
  * Utilities relating to JPopupMenu & JMenus.

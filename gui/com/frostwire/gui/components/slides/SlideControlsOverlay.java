@@ -32,8 +32,6 @@ import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.pushingpixels.substance.internal.utils.SubstanceTextUtilities;
-
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconButton;
@@ -78,7 +76,7 @@ class SlideControlsOverlay extends JPanel {
     private void setupTitle() {
         if (controller.getSlide().title != null) {
             JLabel labelTitle = new JLabel(controller.getSlide().title);
-            labelTitle.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
+            //labelTitle.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
             labelTitle.setForeground(TEXT_FOREGROUND);
             labelTitle.setFont(deriveFont(true,TITLE_TEXT_FONT_SIZE_DELTA));
             add(labelTitle, "cell 0 0, span 3, top");
@@ -101,7 +99,7 @@ class SlideControlsOverlay extends JPanel {
         Slide slide = controller.getSlide();
 
         JLabel labelAuthor = new JLabel(slide.author + " " + I18n.tr("on"));
-        labelAuthor.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
+        //labelAuthor.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
         labelAuthor.setForeground(TEXT_FOREGROUND);
         labelAuthor.setFont(deriveFont(false,BASE_TEXT_FONT_SIZE_DELTA));
 
@@ -262,7 +260,7 @@ class SlideControlsOverlay extends JPanel {
 
         public OverlayIconButton(Action action) {
             super(action);
-            putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
+            //putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
             setForeground(TEXT_FOREGROUND);
             setFont(getFont().deriveFont(getFont().getSize2D() + BASE_TEXT_FONT_SIZE_DELTA));
         }

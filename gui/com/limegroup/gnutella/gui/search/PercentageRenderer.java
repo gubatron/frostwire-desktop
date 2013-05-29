@@ -3,13 +3,12 @@ package com.limegroup.gnutella.gui.search;
 import java.awt.Component;
 
 import javax.swing.JTable;
-
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  * a TableCellRenderer rendering a Float as percentage 
  */
-public class PercentageRenderer extends SubstanceDefaultTableCellRenderer {
+public class PercentageRenderer extends DefaultTableCellRenderer {
 
     /**
      * 

@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -47,8 +49,8 @@ import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.InternetRadioStationDB;
 import com.frostwire.alexandria.db.PlaylistItemDB;
 import com.frostwire.gui.bittorrent.TorrentUtil;
-import com.frostwire.gui.components.SearchField;
-import com.frostwire.gui.components.searchfield.JXSearchField.SearchMode;
+import com.frostwire.gui.searchfield.SearchField;
+import com.frostwire.gui.searchfield.JXSearchField.SearchMode;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -57,9 +59,13 @@ import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.LibrarySettings;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class LibrarySearch extends JPanel {
-
-    private static final long serialVersionUID = 2266243762191789491L;
 
     private JLabel statusLabel;
     private SearchField searchField;
@@ -145,6 +151,9 @@ public class LibrarySearch extends JPanel {
         searchField = new SearchField();
         searchField.setSearchMode(SearchMode.INSTANT);
         searchField.setInstantSearchDelay(50);
+        Font origFont = searchField.getFont();
+        Font newFont = origFont.deriveFont(origFont.getSize2D() + 2f);
+        searchField.setFont(newFont);
 
         searchField.addActionListener(new ActionListener() {
             private SearchLibraryAction a = new SearchLibraryAction();
@@ -483,7 +492,7 @@ public class LibrarySearch extends JPanel {
 
             return true;
         }
-        
+
         private String normalize(String token) {
             String norm = Normalizer.normalize(token, Normalizer.Form.NFKD);
             norm = norm.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");

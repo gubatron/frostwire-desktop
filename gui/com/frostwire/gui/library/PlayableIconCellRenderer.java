@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,11 +24,10 @@ import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
-
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 
 /**
  * 
@@ -36,9 +35,7 @@ import com.limegroup.gnutella.gui.themes.ThemeMediator;
  * @author aldenml
  *
  */
-class PlayableIconCellRenderer extends SubstanceDefaultTableCellRenderer {
-
-    private static final long serialVersionUID = -6392689488563533358L;
+class PlayableIconCellRenderer extends DefaultTableCellRenderer {
 
     private static final Icon speaker;
 

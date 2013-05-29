@@ -15,6 +15,7 @@
 
 package com.limegroup.gnutella.gui.search;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -30,12 +31,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.OverlayLayout;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -43,9 +52,12 @@ import org.limewire.i18n.I18nMarker;
 
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.filters.TableLineFilter;
+import com.frostwire.gui.theme.SkinMenu;
+import com.frostwire.gui.theme.SkinMenuItem;
+import com.frostwire.gui.theme.SkinPopupMenu;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -59,14 +71,11 @@ import com.limegroup.gnutella.gui.tables.ColumnPreferenceHandler;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.TableSettings;
-import com.limegroup.gnutella.gui.themes.SkinMenu;
-import com.limegroup.gnutella.gui.themes.SkinMenuItem;
-import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.QueryUtils;
 
-public class SearchResultMediator extends AbstractTableMediator<TableRowFilteredModel, SearchResultDataLine, UISearchResult> {
+public final class SearchResultMediator extends AbstractTableMediator<TableRowFilteredModel, SearchResultDataLine, UISearchResult> {
 
     protected static final String SEARCH_TABLE = "SEARCH_TABLE";
 
@@ -120,6 +129,10 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     protected Box SOUTH_PANEL;
 
     public AtomicInteger searchCount = new AtomicInteger(0);
+
+    private SchemaBox schemaBox;
+    private SearchOptionsPanel searchOptionsPanel;
+    private JScrollPane scrollPaneSearchOptions;
 
     /**
      * Specialized constructor for creating a "dummy" result panel.
@@ -186,7 +199,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     protected void setupConstants() {
 
         FILTER = new CompositeFilter(4);
-        MAIN_PANEL = new PaddedPanel();
+        MAIN_PANEL = new PaddedPanel(0);
 
         setupDataModel();
 
@@ -657,12 +670,87 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
     protected void setupMainPanelBase() {
         if (SearchSettings.ENABLE_SPAM_FILTER.getValue() && MAIN_PANEL != null) {
+            MAIN_PANEL.add(createSchemaBox());
             MAIN_PANEL.add(getScrolledTablePane());
             addButtonRow();
-            MAIN_PANEL.setMinimumSize(ZERO_DIMENSION);
         } else {
             super.setupMainPanel();
         }
+    }
+
+    @Override
+    protected JComponent getScrolledTablePane() {
+        if (TABLE_PANE != null)
+            return TABLE_PANE;
+
+        JPanel tablePane = new JPanel();
+        tablePane.setLayout(new BoxLayout(tablePane, BoxLayout.LINE_AXIS));
+
+        SCROLL_PANE = new JScrollPane(TABLE);
+        SCROLL_PANE.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(2, 6, 0, 6), SCROLL_PANE.getBorder()));
+
+        tablePane.add(SCROLL_PANE);
+
+        scrollPaneSearchOptions = createSearchOptionsPanel();
+        scrollPaneSearchOptions.setVisible(false); // put this in a configuration
+        tablePane.add(scrollPaneSearchOptions);
+
+        TABLE_PANE = tablePane;
+
+        return tablePane;
+    }
+
+    private JComponent createSchemaBox() {
+        schemaBox = new SchemaBox(this);
+
+        final String strShowOpts = I18n.tr("Show Options");
+        final String strHideOpts = I18n.tr("Hide Options");
+
+        // reusing schema box panel for more options button
+        // minor optimization to keep the layout as flat as possible
+        final JButton buttonOptions = new JButton(strShowOpts);
+        buttonOptions.setContentAreaFilled(false);
+        buttonOptions.setBorderPainted(false);
+        buttonOptions.setOpaque(false);
+
+        Dimension dim = new Dimension(120, 30);
+        buttonOptions.setMinimumSize(dim);
+        buttonOptions.setMaximumSize(dim);
+        buttonOptions.setPreferredSize(dim);
+        buttonOptions.setSize(dim);
+        //buttonOptions.setMargin(new Insets(0, 0, 0, 0));
+        //buttonOptions.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, ThemeMediator.LIGHT_BORDER_COLOR));
+
+        buttonOptions.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                scrollPaneSearchOptions.setVisible(!scrollPaneSearchOptions.isVisible());
+
+                buttonOptions.setText(scrollPaneSearchOptions.isVisible() ? strHideOpts : strShowOpts);
+            }
+        });
+
+        JSeparator sep = new JSeparator(SwingConstants.VERTICAL);
+        sep.setMaximumSize(new Dimension(2, 100));
+        schemaBox.add(sep);
+        schemaBox.add(buttonOptions);
+
+        return schemaBox;
+    }
+
+    private JScrollPane createSearchOptionsPanel() {
+        searchOptionsPanel = new SearchOptionsPanel(this);
+        searchOptionsPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
+
+        JScrollPane sp = new JScrollPane(searchOptionsPanel);
+        Border border = BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createMatteBorder(0, 1, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
+        sp.setBorder(border);
+        sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        Dimension d = new Dimension(230, 70000);
+        sp.setPreferredSize(d);
+        sp.setMaximumSize(d);
+
+        return sp;
     }
 
     /**
@@ -681,10 +769,8 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     private void setupFakeTable(JPanel overlay) {
         MAIN_PANEL.removeAll();
 
-        //Fixes flickering!
+        // fixes flickering!
         JPanel background = new JPanel() {
-            private static final long serialVersionUID = 8931395134232576566L;
-
             public boolean isOptimizedDrawingEnabled() {
                 return false;
             }
@@ -692,21 +778,26 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
         background.setLayout(new OverlayLayout(background));
 
-        JPanel overlayPanel = new BoxPanel(BoxPanel.Y_AXIS);
-        overlayPanel.setOpaque(false);
-        overlayPanel.add(Box.createVerticalStrut(20));
-        overlayPanel.add(overlay);
+        //overlay.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
-        overlayPanel.setMinimumSize(new Dimension(0, 0));
+        JPanel overlayPanel = new JPanel();
+        overlayPanel.setOpaque(false);
+        overlayPanel.add(overlay);
+        JScrollPane scrollPane = new JScrollPane(overlayPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getViewport().setBackground(Color.WHITE);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(28, 10, 4, 10));
+
         JComponent table = getScrolledTablePane();
         table.setOpaque(false);
-        background.add(overlayPanel);
+        background.add(scrollPane);
         background.add(table);
 
         MAIN_PANEL.add(background);
         addButtonRow();
 
-        MAIN_PANEL.setMinimumSize(ZERO_DIMENSION);
+        //MAIN_PANEL.setMinimumSize(ZERO_DIMENSION);
     }
 
     /**
@@ -776,5 +867,23 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
 
     List<String> getSearchTokens() {
         return searchTokens;
+    }
+
+    public void updateFiltersPanel() {
+        schemaBox.applyFilters();
+        searchOptionsPanel.updateFiltersPanel();
+    }
+
+    public void resetFiltersPanel() {
+        schemaBox.applyFilters();
+        searchOptionsPanel.resetFilters();
+        searchOptionsPanel.updateFiltersPanel();
+    }
+
+    @Override
+    public void add(UISearchResult o, int index) {
+        super.add(o, index);
+
+        schemaBox.updateCounters(o);
     }
 }

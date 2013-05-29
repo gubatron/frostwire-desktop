@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 
@@ -33,7 +32,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
  *  Creates both a renderer and an editor for cells in the playlist table that display the name
  *  of the file being played.
  */
-class InternetRadioBookmarkRenderer extends SubstanceDefaultTableCellRenderer {
+class InternetRadioBookmarkRenderer extends DefaultTableCellRenderer {
 
     private static final long serialVersionUID = 6800146830099830381L;
 

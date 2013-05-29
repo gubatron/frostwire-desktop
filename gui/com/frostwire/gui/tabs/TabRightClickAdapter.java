@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPopupMenu;
 
-import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
+import com.frostwire.gui.theme.SkinPopupMenu;
 
 /**
  * This class is put as a mouse adapter on the tabs so that the users

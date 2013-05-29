@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,10 +34,10 @@ import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
+import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.gui.theme.ThemeObserver;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ChatSettings;
 
@@ -110,7 +110,7 @@ public final class ChatMediator implements ThemeObserver {
 	        
 	        
 	        Border margin = BorderFactory.createEmptyBorder(4, 4, 4, 4);
-	        Border line = BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.CURRENT_THEME.getCustomUI().getLightBorder());
+	        Border line = BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR);
 	        Border border = BorderFactory.createCompoundBorder(line, margin);
 	        MAIN_PANEL.setBorder(border);
 	    }

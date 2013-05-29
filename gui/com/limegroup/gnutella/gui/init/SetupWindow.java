@@ -16,7 +16,6 @@
 package com.limegroup.gnutella.gui.init;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -26,13 +25,11 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.LookAndFeel;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.URLLabel;
-import com.limegroup.gnutella.gui.themes.SkinCustomUI;
 
 /**
  * This abstract class creates a <tt>JPanel</tt> that uses 
@@ -40,11 +37,6 @@ import com.limegroup.gnutella.gui.themes.SkinCustomUI;
  * basic accessor and mutator methods required by subclasses.
  */
 abstract class SetupWindow extends JPanel {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 6493935905177540283L;
 
     /**
      * The width of the setup window.
@@ -119,10 +111,10 @@ abstract class SetupWindow extends JPanel {
         setLayout(new BorderLayout());
 
         JPanel jpTop = new JPanel();
-        jpTop.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_NOISE, true);
         jpTop.setLayout(new BorderLayout());
-        jpTop.setBackground(Color.white);
-        jpTop.setBorder(BorderFactory.createEtchedBorder());
+        //jpTop.setBackground(Color.white);
+        jpTop.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
+        jpTop.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
         add(jpTop, BorderLayout.NORTH);
 
         JPanel jpTitle = new JPanel(new BorderLayout());
@@ -132,14 +124,15 @@ abstract class SetupWindow extends JPanel {
         JLabel jlTitle = new JLabel(I18n.tr(_key));
         jlTitle.setBorder(BorderFactory.createEmptyBorder(5, 8, 5, 5));
         jlTitle.setFont(new Font("Dialog", Font.BOLD, 16));
-        jlTitle.setForeground(Color.black);
+        //jlTitle.setForeground(Color.black);
         jlTitle.setOpaque(false);
         jpTitle.add(jlTitle, BorderLayout.NORTH);
 
         MultiLineLabel jtaDescription = new MultiLineLabel(I18n.tr(_labelKey));
         jtaDescription.setOpaque(false);
         jtaDescription.setBorder(BorderFactory.createEmptyBorder(5, 8, 5, 8));
-        jtaDescription.setForeground(Color.black);
+        //jtaDescription.setForeground(Color.black);
+        jtaDescription.setBackground(jpTitle.getBackground());
         jtaDescription.setFont(new Font("Dialog", Font.PLAIN, 12));
         jpTitle.add(jtaDescription, BorderLayout.CENTER);
 
@@ -147,7 +140,7 @@ abstract class SetupWindow extends JPanel {
             JLabel jlURL = new URLLabel(_moreInfoURL, I18n.tr("Learn more about this option..."));
             jlURL.setOpaque(false);
             jlURL.setBorder(BorderFactory.createEmptyBorder(5, 8, 5, 8));
-            jlURL.setForeground(Color.black);
+            //jlURL.setForeground(Color.black);
             jlURL.setOpaque(false);
             jpTitle.add(jlURL, BorderLayout.SOUTH);
         }
@@ -288,11 +281,6 @@ abstract class SetupWindow extends JPanel {
     protected static class MultiLineLabel extends JTextArea {
 
         /**
-         * 
-         */
-        private static final long serialVersionUID = -2269845470113202415L;
-
-        /**
          * Creates a label that can have multiple lines and that has the 
          * default width.
          *
@@ -303,9 +291,9 @@ abstract class SetupWindow extends JPanel {
             setLineWrap(true);
             setWrapStyleWord(true);
             setHighlighter(null);
-            LookAndFeel.installBorder(this, "Label.border");
-            LookAndFeel.installColorsAndFont(this, "Label.background", "Label.foreground", "Label.font");
-            setSelectedTextColor(UIManager.getColor("Label.foreground"));
+            //LookAndFeel.installBorder(this, "Label.border");
+            //LookAndFeel.installColorsAndFont(this, "Label.background", "Label.foreground", "Label.font");
+            //setSelectedTextColor(UIManager.getColor("Label.foreground"));
             setText(s);
         }
 

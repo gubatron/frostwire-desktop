@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.options.panes;
 
 import java.awt.Component;
@@ -30,7 +45,6 @@ import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
  * Subclasses only need to override the applyOptions() method for storing
  * options to disk.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public abstract class AbstractPaneItem implements PaneItem {
 	
 	/**
@@ -67,12 +81,6 @@ public abstract class AbstractPaneItem implements PaneItem {
 			add(getVerticalSeparator());
 		}
 	}
-    
-    protected void addLabel(String labelText) {
-        JComponent label = new MultiLineLabel(labelText, LABEL_WIDTH, true /* resizable */);
-        GUIUtils.restrictSize(label, SizePolicy.RESTRICT_HEIGHT);
-        add(label);
-    }
 
 	/**
 	 * Implements the <tt>PaneItem</tt> interface. <p>

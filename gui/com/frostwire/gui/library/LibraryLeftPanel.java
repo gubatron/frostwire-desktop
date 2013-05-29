@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,8 +36,6 @@ import com.limegroup.gnutella.settings.UISettings;
  */
 public class LibraryLeftPanel extends JPanel {
 
-    private static final long serialVersionUID = -2924157073406477820L;
-
     public static final int MIN_WIDTH = 155;
     public static final int MAX_WIDTH = 300;
 
@@ -61,7 +59,7 @@ public class LibraryLeftPanel extends JPanel {
     protected void setupUI() {
         setLayout(new BorderLayout());
         
-        add(librarySearch.getSearchField(), BorderLayout.PAGE_START);
+        //add(librarySearch.getSearchField(), BorderLayout.PAGE_START);
 
         //Prepare a split pane with explorers
         splitPane.setTopComponent(libraryExplorer);

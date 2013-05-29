@@ -20,38 +20,19 @@ package com.frostwire.gui.library;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.TableUI;
 import javax.swing.table.TableCellRenderer;
 
-import org.pushingpixels.substance.api.ColorSchemeAssociationKind;
-import org.pushingpixels.substance.api.ComponentState;
-import org.pushingpixels.substance.api.SubstanceColorScheme;
-import org.pushingpixels.substance.api.SubstanceLookAndFeel;
-import org.pushingpixels.substance.internal.animation.StateTransitionTracker;
-import org.pushingpixels.substance.internal.animation.StateTransitionTracker.StateContributionInfo;
-import org.pushingpixels.substance.internal.ui.SubstanceTableUI;
-import org.pushingpixels.substance.internal.ui.SubstanceTableUI.TableCellId;
-import org.pushingpixels.substance.internal.utils.SubstanceColorSchemeUtilities;
-import org.pushingpixels.substance.internal.utils.SubstanceStripingUtils;
-import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
-import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,10 +40,10 @@ import com.frostwire.gui.player.DeviceMediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
+import com.frostwire.gui.theme.SkinTableUI;
+import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.gui.theme.ThemeSettings;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.themes.SkinTableCellRenderer;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 /**
  * 
@@ -70,9 +51,7 @@ import com.limegroup.gnutella.gui.themes.ThemeSettings;
  * @author aldenml
  * 
  */
-public final class LibraryNameHolderRenderer extends JPanel implements TableCellRenderer, SkinTableCellRenderer {
-
-    private static final long serialVersionUID = -1624943333769190212L;
+public final class LibraryNameHolderRenderer extends JPanel implements TableCellRenderer {
 
     private static final Logger LOG = LoggerFactory.getLogger(LibraryNameHolderRenderer.class);
 
@@ -88,147 +67,22 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        //if (!SubstanceLookAndFeel.isCurrentLookAndFeel())
-        //    return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-        TableUI tableUI = table.getUI();
-        SubstanceTableUI ui = (SubstanceTableUI) tableUI;
-
-        // Recompute the focus indication to prevent flicker - JTable
-        // registers a listener on selection changes and repaints the
-        // relevant cell before our listener (in TableUI) gets the
-        // chance to start the fade sequence. The result is that the
-        // first frame uses full opacity, and the next frame starts the
-        // fade sequence. So, we use the UI delegate to compute the
-        // focus indication.
-        hasFocus = ui.isFocusedCell(row, column);
-
-        TableCellId cellId = new TableCellId(row, column);
-
-        StateTransitionTracker.ModelStateInfo modelStateInfo = ui.getModelStateInfo(cellId);
-        ComponentState currState = ui.getCellState(cellId);
-        // special case for drop location
-        JTable.DropLocation dropLocation = table.getDropLocation();
-        boolean isDropLocation = (dropLocation != null && !dropLocation.isInsertRow() && !dropLocation.isInsertColumn() && dropLocation.getRow() == row && dropLocation.getColumn() == column);
-
-        if (!isDropLocation && (modelStateInfo != null)) {
-            if (ui.hasRolloverAnimations() || ui.hasSelectionAnimations()) {
-                Map<ComponentState, StateContributionInfo> activeStates = modelStateInfo.getStateContributionMap();
-                SubstanceColorScheme colorScheme = getColorSchemeForState(table, ui, currState);
-                if (currState.isDisabled() || (activeStates == null) || (activeStates.size() == 1)) {
-                    super.setForeground(new ColorUIResource(colorScheme.getForegroundColor()));
-                } else {
-                    float aggrRed = 0;
-                    float aggrGreen = 0;
-                    float aggrBlue = 0;
-                    for (Map.Entry<ComponentState, StateTransitionTracker.StateContributionInfo> activeEntry : modelStateInfo.getStateContributionMap().entrySet()) {
-                        ComponentState activeState = activeEntry.getKey();
-                        SubstanceColorScheme scheme = getColorSchemeForState(table, ui, activeState);
-                        Color schemeFg = scheme.getForegroundColor();
-                        float contribution = activeEntry.getValue().getContribution();
-                        aggrRed += schemeFg.getRed() * contribution;
-                        aggrGreen += schemeFg.getGreen() * contribution;
-                        aggrBlue += schemeFg.getBlue() * contribution;
-                    }
-                    super.setForeground(new ColorUIResource(new Color((int) aggrRed, (int) aggrGreen, (int) aggrBlue)));
-                }
-            } else {
-                SubstanceColorScheme scheme = getColorSchemeForState(table, ui, currState);
-                super.setForeground(new ColorUIResource(scheme.getForegroundColor()));
-            }
-        } else {
-            SubstanceColorScheme scheme = getColorSchemeForState(table, ui, currState);
-            if (isDropLocation) {
-                scheme = SubstanceColorSchemeUtilities.getColorScheme(table, ColorSchemeAssociationKind.TEXT_HIGHLIGHT, currState);
-            }
-            super.setForeground(new ColorUIResource(scheme.getForegroundColor()));
-        }
-
-        SubstanceStripingUtils.applyStripedBackground(table, row, this);
-
-        this.setFont(table.getFont());
-
-        TableCellId cellFocusId = new TableCellId(row, column);
-
-        StateTransitionTracker focusStateTransitionTracker = ui.getStateTransitionTracker(cellFocusId);
-
-        Insets regInsets = ui.getCellRendererInsets();
-        if (hasFocus || (focusStateTransitionTracker != null)) {
-            SubstanceTableCellBorder border = new SubstanceTableCellBorder(regInsets, ui, cellFocusId);
-
-            // System.out.println("[" + row + ":" + column + "] hasFocus : "
-            // + hasFocus + ", focusState : " + focusState);
-            if (focusStateTransitionTracker != null) {
-                border.setAlpha(focusStateTransitionTracker.getFocusStrength(hasFocus));
-            }
-
-            // special case for tables with no grids
-            if (!table.getShowHorizontalLines() && !table.getShowVerticalLines()) {
-                this.setBorder(new CompoundBorder(new EmptyBorder(table.getRowMargin() / 2, 0, table.getRowMargin() / 2, 0), border));
-            } else {
-                this.setBorder(border);
-            }
-        } else {
-            this.setBorder(new EmptyBorder(regInsets.top, regInsets.left, regInsets.bottom, regInsets.right));
-        }
-
-        this.setData((LibraryNameHolder) value, currState, table, row, column);
-        this.setOpaque(false);
+        this.setData((LibraryNameHolder) value, table, row, column);
+        this.setOpaque(true);
         this.setEnabled(table.isEnabled());
+
+        if (isSelected) {
+            this.setBackground(ThemeMediator.TABLE_SELECTED_BACKGROUND_ROW_COLOR);
+        } else {
+            this.setBackground(row % 2 == 1 ? ThemeMediator.TABLE_ALTERNATE_ROW_COLOR : Color.WHITE);
+        }
 
         return this;
     }
 
-    private SubstanceColorScheme getColorSchemeForState(JTable table, SubstanceTableUI ui, ComponentState state) {
-        UpdateOptimizationInfo updateOptimizationInfo = ui.getUpdateOptimizationInfo();
-        if (state == ComponentState.ENABLED) {
-            if (updateOptimizationInfo == null) {
-                return SubstanceColorSchemeUtilities.getColorScheme(table, state);
-            } else {
-                return updateOptimizationInfo.getDefaultScheme();
-            }
-        } else {
-            if (updateOptimizationInfo == null) {
-                return SubstanceColorSchemeUtilities.getColorScheme(table, ColorSchemeAssociationKind.HIGHLIGHT, state);
-            } else {
-                return updateOptimizationInfo.getHighlightColorScheme(state);
-            }
-        }
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.swing.JComponent#paint(java.awt.Graphics)
-     */
-    @Override
-    public final void paint(Graphics g) {
-        super.paint(g);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
-     */
-    @Override
-    protected final void paintComponent(Graphics g) {
-        super.paintComponent(g);
-    }
-
-    @Override
-    protected final void paintBorder(Graphics g) {
-        super.paintBorder(g);
-    }
-
-    @Override
-    public final void paintComponents(Graphics g) {
-        super.paintComponents(g);
-    }
-
     private void setupUI() {
         setLayout(new GridBagLayout());
-        putClientProperty(SubstanceLookAndFeel.COLORIZATION_FACTOR, 1.0);
 
         GridBagConstraints c;
 
@@ -321,21 +175,35 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
         }
     }
 
-    private void setData(LibraryNameHolder value, ComponentState state, JTable table, int row, int column) {
+    private void setData(LibraryNameHolder value, JTable table, int row, int column) {
         try {
             libraryNameHolder = value;
             labelText.setText(value.toString());
-            
+
             labelText.setFont(table.getFont());
             ThemeMediator.fixLabelFont(labelText);
 
-            boolean showButtons = state.equals(ComponentState.ROLLOVER_SELECTED) || state.equals(ComponentState.ROLLOVER_UNSELECTED);
+            boolean showButtons = mouseIsOverRow(table, row);
             labelPlay.setVisible(showButtons && !isSourceBeingPlayed() && isPlayableDataLine());
             labelDownload.setVisible(showButtons && isDownloadableFromOtherDevice());
             setFontColor(libraryNameHolder.isPlaying(), table, row, column);
         } catch (Throwable e) {
             LOG.warn("Error puting data in name holder renderer");
         }
+    }
+
+    private boolean mouseIsOverRow(JTable table, int row) {
+        boolean mouseOver = false;
+
+        try {
+            TableUI ui = table.getUI();
+            if (ui instanceof SkinTableUI) {
+                mouseOver = ((SkinTableUI) ui).getRowAtMouse() == row;
+            }
+        } catch (Throwable e) {
+            // ignore
+        }
+        return mouseOver;
     }
 
     private boolean isDownloadableFromOtherDevice() {
@@ -387,25 +255,7 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
         } else if (isPlaying) {
             labelText.setForeground(ThemeSettings.PLAYING_DATA_LINE_COLOR.getValue());
         } else {
-            Color color = Color.BLACK;
-            if (SubstanceLookAndFeel.isCurrentLookAndFeel()) {
-                color = getSubstanceForegroundColor(table, row, column);
-            } else {
-                color = UIManager.getColor("Table.foreground");
-            }
-
-            labelText.setForeground(color);
+            labelText.setForeground(table.getForeground());
         }
-    }
-
-    private Color getSubstanceForegroundColor(JTable table, int row, int column) {
-        TableUI tableUI = table.getUI();
-        SubstanceTableUI ui = (SubstanceTableUI) tableUI;
-        TableCellId cellId = new TableCellId(row, column);
-        ComponentState currState = ui.getCellState(cellId);
-
-        SubstanceColorScheme scheme = getColorSchemeForState(table, ui, currState);
-
-        return scheme.getForegroundColor();
     }
 }

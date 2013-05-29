@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class PlayableCell implements Comparable<PlayableCell> {
 
     private Object dataLine;

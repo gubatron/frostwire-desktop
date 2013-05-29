@@ -53,6 +53,7 @@ import com.frostwire.search.VuzeMagnetDownloader;
 import com.frostwire.search.archiveorg.ArchiveorgCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube2.YouTubeCrawledSearchResult;
+import com.limegroup.gnutella.gui.ApplicationHeader;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SearchSettings;
@@ -64,7 +65,7 @@ import com.limegroup.gnutella.settings.SearchSettings;
  * underlying classes.
  */
 public final class SearchMediator {
-    
+
     public static final Logger LOG = LoggerFactory.getLogger(SearchMediator.class);
 
     /**
@@ -111,11 +112,6 @@ public final class SearchMediator {
     private final SearchManager manager;
 
     /**
-     * Variable for the component that handles all search input from the user.
-     */
-    private static SearchInputManager INPUT_MANAGER;
-
-    /**
      * This instance handles the display of all search results.
      * TODO: Changed to package-protected for testing to add special results
      */
@@ -142,22 +138,21 @@ public final class SearchMediator {
         // Link up the tabs of results with the filters of the input screen.
         getSearchResultDisplayer().setSearchListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                SearchResultMediator panel = getSearchResultDisplayer().getSelectedResultPanel();
-                if (panel == null)
-                    getSearchInputManager().clearFilters();
-                else
-                    getSearchInputManager().setFiltersFor(panel);
+                SearchResultMediator resultPanel = getSearchResultDisplayer().getSelectedResultPanel();
+                if (resultPanel != null) {
+                    resultPanel.updateFiltersPanel();
+                }
             }
         });
-        
+
         try {
             CrawlPagedWebSearchPerformer.setCache(new DatabaseCrawlCache());
         } catch (Throwable t) {
             LOG.error("could not set database crawl cache", t);
         }
-        
+
         CrawlPagedWebSearchPerformer.setMagnetDownloader(new VuzeMagnetDownloader());
-        
+
         this.manager = new SearchManagerImpl(SEARCH_MANAGER_NUM_THREADS);
         this.manager.registerListener(new ManagerListener());
     }
@@ -166,7 +161,7 @@ public final class SearchMediator {
      * Requests the search focus in the INPUT_MANAGER.
      */
     public static void requestSearchFocus() {
-        getSearchInputManager().requestSearchFocus();
+        GUIMediator.instance().getMainFrame().getApplicationHeader().requestSearchFocus();
     }
 
     /** 
@@ -183,7 +178,7 @@ public final class SearchMediator {
 
         rp.setToken(token);
         updateSearchIcon(token, true);
-        getSearchInputManager().panelReset(rp);
+        rp.resetFiltersPanel();
 
         GUIMediator.instance().setSearching(true);
         performSearch(token, info.getQuery());
@@ -487,8 +482,10 @@ public final class SearchMediator {
      */
     static void searchKilled(SearchResultMediator panel) {
         instance().stopSearch(panel.getToken());
-        getSearchInputManager().panelRemoved(panel);
         panel.cleanup();
+
+        ApplicationHeader header = GUIMediator.instance().getMainFrame().getApplicationHeader();
+        header.requestSearchFocus();
     }
 
     void stopSearch(long token) {
@@ -511,15 +508,6 @@ public final class SearchMediator {
     }
 
     /**
-     * Returns the search input panel component.
-     *
-     * @return the search input panel component
-     */
-    public static JComponent getSearchComponent() {
-        return getSearchInputManager().getComponent();
-    }
-
-    /**
      * Returns the <tt>JComponent</tt> instance containing all of the
      * search result UI components.
      *
@@ -528,13 +516,6 @@ public final class SearchMediator {
      */
     public static JComponent getResultComponent() {
         return getSearchResultDisplayer().getComponent();
-    }
-
-    private static SearchInputManager getSearchInputManager() {
-        if (INPUT_MANAGER == null) {
-            INPUT_MANAGER = new SearchInputManager();
-        }
-        return INPUT_MANAGER;
     }
 
     public static SearchResultDisplayer getSearchResultDisplayer() {
@@ -608,7 +589,8 @@ public final class SearchMediator {
     public void clearCache() {
         try {
             CrawlPagedWebSearchPerformer.getCache().clear();
-        } catch (Throwable t) {}
+        } catch (Throwable t) {
+        }
     }
 
     public long getTotalTorrents() {
@@ -616,7 +598,7 @@ public final class SearchMediator {
         try {
             r = CrawlPagedWebSearchPerformer.getCache().size();
         } catch (Throwable t) {
-            
+
         }
         return r;
     }

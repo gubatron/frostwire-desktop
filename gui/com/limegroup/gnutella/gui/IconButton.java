@@ -17,11 +17,6 @@ import com.limegroup.gnutella.settings.UISettings;
  */
 public class IconButton extends JButton {
     
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -1721737190332501987L;
-    
     private String message;
     private String iconName;
     private String rollOverIconName;

@@ -36,9 +36,6 @@ final class ViewMenu extends AbstractMenu {
     ViewMenu(final String key) {
         super(I18n.tr("&View"));
 
-        MENU.add(new ThemeMenu().getMenu());
-
-        MENU.addSeparator();
         ToggleSettingAction toggleAction = new ToggleIconSettingAction(UISettings.SMALL_ICONS, I18n.tr("Use &Small Icons"), I18n.tr("Use Small Icons"));
         addToggleMenuItem(toggleAction);
 

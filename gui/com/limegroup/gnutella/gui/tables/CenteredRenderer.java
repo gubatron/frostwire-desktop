@@ -1,13 +1,12 @@
 package com.limegroup.gnutella.gui.tables;
 
 import javax.swing.JLabel;
-
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  * Simple renderer that centers the data.
  */
-public final class CenteredRenderer extends SubstanceDefaultTableCellRenderer {
+public final class CenteredRenderer extends DefaultTableCellRenderer {
 	/**
      * 
      */

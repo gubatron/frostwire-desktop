@@ -66,8 +66,8 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
+import com.frostwire.gui.theme.ThemeSettings;
 import com.limegroup.gnutella.SpeedConstants;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
 /**

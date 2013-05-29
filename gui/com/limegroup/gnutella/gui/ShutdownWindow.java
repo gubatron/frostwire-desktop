@@ -11,8 +11,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
-import com.limegroup.gnutella.gui.themes.SkinCustomUI;
-
 class ShutdownWindow extends JDialog {
     
     /**
@@ -27,7 +25,6 @@ class ShutdownWindow extends JDialog {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         JComponent pane = (JComponent)getContentPane();
-        pane.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_LIGHT_NOISE, true);
         pane.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;

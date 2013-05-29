@@ -1,3 +1,20 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.frostwire.gui.bittorrent;
 
 import java.awt.Color;
@@ -31,9 +48,6 @@ import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.TOTorrentFile;
 import org.gudy.azureus2.core3.util.UrlUtils;
-import org.pushingpixels.trident.Timeline;
-import org.pushingpixels.trident.Timeline.TimelineState;
-import org.pushingpixels.trident.callback.TimelineCallbackAdapter;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.HttpFetcher.HttpRequestInfo;
@@ -44,6 +58,11 @@ import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class ShareTorrentDialog extends JDialog {
 
 
@@ -90,7 +109,6 @@ public class ShareTorrentDialog extends JDialog {
 			
 	}
 
-	private static final long serialVersionUID = -7466273012830791935L;
 	private TOTorrent _torrent;
 	private Container _container;
 	private JLabel _introLabel;
@@ -397,24 +415,24 @@ public class ShareTorrentDialog extends JDialog {
 		//Animate
 		int Y_DISPLACEMENT = 50;
 		
-		Timeline timeline = new Timeline(new TimelineJLabel(_feedbackLabel));
-
-		timeline.addCallback(new TimelineCallbackAdapter() {
-			
-			@Override
-			public void onTimelineStateChanged(TimelineState oldState,
-					TimelineState newState, float durationFraction,
-					float timelinePosition) {
-				if (newState == TimelineState.DONE) {
-					_feedbackLabel.setVisible(false);
-				}
-			}
-		});
-		
-		timeline.setDuration(800);
-		timeline.addPropertyToInterpolate("y", startY,(int) startY-Y_DISPLACEMENT);
-		timeline.addPropertyToInterpolate("color",Color.BLACK, _feedbackLabel.getBackground());
-		timeline.play();
+//		Timeline timeline = new Timeline(new TimelineJLabel(_feedbackLabel));
+//
+//		timeline.addCallback(new TimelineCallbackAdapter() {
+//			
+//			@Override
+//			public void onTimelineStateChanged(TimelineState oldState,
+//					TimelineState newState, float durationFraction,
+//					float timelinePosition) {
+//				if (newState == TimelineState.DONE) {
+//					_feedbackLabel.setVisible(false);
+//				}
+//			}
+//		});
+//		
+//		timeline.setDuration(800);
+//		timeline.addPropertyToInterpolate("y", startY,(int) startY-Y_DISPLACEMENT);
+//		timeline.addPropertyToInterpolate("color",Color.BLACK, _feedbackLabel.getBackground());
+//		timeline.play();
 		
 	}
 

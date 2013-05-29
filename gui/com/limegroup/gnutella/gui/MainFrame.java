@@ -15,7 +15,6 @@
 
 package com.limegroup.gnutella.gui;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -41,6 +40,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
+import net.miginfocom.swing.MigLayout;
+
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
@@ -57,16 +58,13 @@ import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
 import com.limegroup.gnutella.gui.menu.MenuMediator;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
-import com.limegroup.gnutella.gui.themes.SkinCustomUI;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /**
  * This class constructs the main <tt>JFrame</tt> for the program as well as 
  * all of the other GUI classes.  
  */
-public final class MainFrame implements RefreshListener, ThemeObserver {
+public final class MainFrame  {
 
     /**
      * Handle to the <tt>JTabbedPane</tt> instance.
@@ -155,18 +153,11 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         //com.frostwire.gui.updates.UpdateManager.scheduleUpdateCheckTask(0,"http://update1.frostwire.com/example.php");
 
         FRAME = frame;
-        Dimension minFrameDimensions = null;
-        if (OSUtils.isMacOSX()) {
-            minFrameDimensions = new Dimension(875, 97);
-        } else {
-            minFrameDimensions = new Dimension(875, 134);
-        }
-        FRAME.setMinimumSize(minFrameDimensions);
+
         new DropTarget(FRAME, new TransferHandlerDropTargetListener(DNDUtils.DEFAULT_TRANSFER_HANDLER));
 
         TABBED_PANE = new JPanel(new CardLayout());
-        TABBED_PANE.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_LIGHT_NOISE, true);
-
+        
         // Add a listener for saving the dimensions of the window &
         // position the search icon overlay correctly.
         FRAME.addComponentListener(new ComponentListener() {
@@ -221,30 +212,43 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         JPanel contentPane = new JPanel();
 
         FRAME.setContentPane(contentPane);
-        contentPane.setLayout(new BorderLayout());
+        contentPane.setLayout(new MigLayout("insets 0, gap 0"));
 
         buildTabs();
 
         APPLICATION_HEADER = new ApplicationHeader(TABS);
         LOGO_PANEL = APPLICATION_HEADER.getLogoPanel();
-        contentPane.add(APPLICATION_HEADER, BorderLayout.PAGE_START);
 
-        //ADD TABBED PANE
-        contentPane.add(TABBED_PANE, BorderLayout.CENTER);
+        contentPane.add(APPLICATION_HEADER, "growx, dock north");
+        contentPane.add(TABBED_PANE, "wrap");
+        contentPane.add(getStatusLine().getComponent(), "dock south, shrink 0");
+        
+        setMinimalSize(FRAME, getStatusLine().getComponent(), APPLICATION_HEADER, TABBED_PANE, getStatusLine().getComponent());
 
-        //ADD STATUS LINE
-        contentPane.add(getStatusLine().getComponent(), BorderLayout.PAGE_END);
-
-        ThemeMediator.addThemeObserver(this);
-        GUIMediator.addRefreshListener(this);
+        FRAME.setJMenuBar(getMenuMediator().getMenuBar());
 
         if (ApplicationSettings.MAGNET_CLIPBOARD_LISTENER.getValue()) {
             FRAME.addWindowListener(MagnetClipboardListener.getInstance());
         }
+    }
+    
+    private void setMinimalSize(JFrame frame, JComponent horizontal, JComponent... verticals) {
+        int width = 0;
+        int height = 0;
 
-        PowerManager pm = new PowerManager();
-        FRAME.addWindowListener(pm);
-        GUIMediator.addRefreshListener(pm);
+        width = horizontal.getMinimumSize().width;
+
+        for (JComponent c : verticals) {
+            height += c.getMinimumSize().height;
+        }
+
+        // for some reason I can pack the frame
+        // this disallow me of getting the right size of the title bar
+        // and in general the insets's frame
+        // lets add some fixed value for now
+        height += 50;
+
+        frame.setMinimumSize(new Dimension(width, height));
     }
 
     public ApplicationHeader getApplicationHeader() {
@@ -273,15 +277,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
                 lastState = null;
             }
         }
-    }
-
-    public void updateTheme() {
-        FRAME.setJMenuBar(getMenuMediator().getMenuBar());
-        //LOGO_PANEL.updateTheme();
-        //setSearchIconLocation();
-        //updateLogoHeight();
-        //for(GUIMediator.Tabs tab : GUIMediator.Tabs.values())
-        //  updateTabIcon(tab);
     }
     
     /**
@@ -381,13 +376,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         }
     }
 
-    /**
-     * Should be called whenever state may have changed, so MainFrame can then
-     * re-layout window (if necessary).
-     */
-    public void refresh() {
-    }
-
     final BTDownloadMediator getBTDownloadMediator() {
         if (BT_DOWNLOAD_MEDIATOR == null) {
 
@@ -458,7 +446,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     public final void setSearching(boolean searching) {
         LOGO_PANEL.setSearching(searching);
-        refresh();
     }
 
     public Tabs getSelectedTab() {

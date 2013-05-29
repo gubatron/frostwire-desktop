@@ -4,12 +4,11 @@ import java.awt.Component;
 import java.util.Date;
 
 import javax.swing.JTable;
-
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIUtils;
 
-public class DateRenderer extends SubstanceDefaultTableCellRenderer {
+public class DateRenderer extends DefaultTableCellRenderer {
 
     /**
      * 
