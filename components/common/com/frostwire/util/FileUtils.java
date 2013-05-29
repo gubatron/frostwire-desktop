@@ -150,4 +150,7 @@ public final class FileUtils {
         return results;
     }    
 
+    public static boolean isValidDirectory(File dir) {
+        return dir != null && dir.exists() && dir.isDirectory();
+    }
 }

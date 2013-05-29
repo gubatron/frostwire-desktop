@@ -18,6 +18,8 @@
 
 package com.frostwire.search.kat;
 
+import com.frostwire.search.torrent.ComparableTorrentJsonItem;
+
 /**
  * KickAssTorrents Search Result Item.
  * 
@@ -25,7 +27,7 @@ package com.frostwire.search.kat;
  * @author aldenml
  *
  */
-public class KATItem {
+public class KATItem implements ComparableTorrentJsonItem {
 	/**
     {
             "title": "Paulo Coelhos English E-Books",
@@ -54,4 +56,9 @@ public class KATItem {
     public long size;
     
     public int verified;
+    
+    @Override
+    public int getSeeds() {
+        return seeds;
+    }
 }
