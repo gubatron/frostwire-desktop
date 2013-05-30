@@ -671,11 +671,6 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
 
     private class ExploreAction extends AbstractAction {
 
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 2767346265174793478L;
-
         public ExploreAction() {
             putValue(Action.NAME, I18n.tr("Explore"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Open Library Folder"));

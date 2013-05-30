@@ -151,6 +151,7 @@ public class LibrarySearch extends JPanel {
         searchField = new SearchField();
         searchField.setSearchMode(SearchMode.INSTANT);
         searchField.setInstantSearchDelay(50);
+        searchField.setPrompt(I18n.tr("Search in Library"));
         Font origFont = searchField.getFont();
         Font newFont = origFont.deriveFont(origFont.getSize2D() + 2f);
         searchField.setFont(newFont);
