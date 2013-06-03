@@ -241,20 +241,36 @@ public class ThemeMediator {
 
                                 // radio buttons
                                 //defaults.put("RadioButton.icon", new IconUIResource()); 
-                                defaults.put("RadioButton[Disabled+Selected].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.DisabledSelected));
-                                defaults.put("RadioButton[Disabled].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.Disabled));
-                                defaults.put("RadioButton[Enabled].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.Enabled));
-                                defaults.put("RadioButton[Focused+MouseOver+Selected].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.FocusedMouseOverSelected));
-                                defaults.put("RadioButton[Focused+MouseOver].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.FocusedMouseOver));
-                                defaults.put("RadioButton[Focused+Pressed+Selected].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.FocusedPressedSelected));
-                                defaults.put("RadioButton[Focused+Pressed].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.FocusedPressed));
-                                defaults.put("RadioButton[Focused+Selected].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.FocusedSelected));
-                                defaults.put("RadioButton[Focused].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.Focused));
-                                defaults.put("RadioButton[MouseOver+Selected].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.MouseOverSelected));
-                                defaults.put("RadioButton[MouseOver].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.MouseOver));
-                                defaults.put("RadioButton[Pressed+Selected].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.PressedSelected));
-                                defaults.put("RadioButton[Pressed].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.Pressed));
-                                defaults.put("RadioButton[Selected].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.Selected));
+                                defaults.put("RadioButton[Disabled+Selected].iconPainter", new SkinRadioButtonIconPainter(SkinRadioButtonIconPainter.State.DisabledSelected));
+                                defaults.put("RadioButton[Disabled].iconPainter", new SkinRadioButtonIconPainter(SkinRadioButtonIconPainter.State.Disabled));
+                                defaults.put("RadioButton[Enabled].iconPainter", new SkinRadioButtonIconPainter(SkinRadioButtonIconPainter.State.Enabled));
+                                defaults.put("RadioButton[Focused+MouseOver+Selected].iconPainter", new SkinRadioButtonIconPainter(SkinRadioButtonIconPainter.State.FocusedMouseOverSelected));
+                                defaults.put("RadioButton[Focused+MouseOver].iconPainter", new SkinRadioButtonIconPainter(SkinRadioButtonIconPainter.State.FocusedMouseOver));
+                                defaults.put("RadioButton[Focused+Pressed+Selected].iconPainter", new SkinRadioButtonIconPainter(SkinRadioButtonIconPainter.State.FocusedPressedSelected));
+                                defaults.put("RadioButton[Focused+Pressed].iconPainter", new SkinRadioButtonIconPainter(SkinRadioButtonIconPainter.State.FocusedPressed));
+                                defaults.put("RadioButton[Focused+Selected].iconPainter", new SkinRadioButtonIconPainter(SkinRadioButtonIconPainter.State.FocusedSelected));
+                                defaults.put("RadioButton[Focused].iconPainter", new SkinRadioButtonIconPainter(SkinRadioButtonIconPainter.State.Focused));
+                                defaults.put("RadioButton[MouseOver+Selected].iconPainter", new SkinRadioButtonIconPainter(SkinRadioButtonIconPainter.State.MouseOverSelected));
+                                defaults.put("RadioButton[MouseOver].iconPainter", new SkinRadioButtonIconPainter(SkinRadioButtonIconPainter.State.MouseOver));
+                                defaults.put("RadioButton[Pressed+Selected].iconPainter", new SkinRadioButtonIconPainter(SkinRadioButtonIconPainter.State.PressedSelected));
+                                defaults.put("RadioButton[Pressed].iconPainter", new SkinRadioButtonIconPainter(SkinRadioButtonIconPainter.State.Pressed));
+                                defaults.put("RadioButton[Selected].iconPainter", new SkinRadioButtonIconPainter(SkinRadioButtonIconPainter.State.Selected));
+
+                                // checkbox
+                                defaults.put("CheckBox[Disabled+Selected].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.DisabledSelected));
+                                defaults.put("CheckBox[Disabled].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.Disabled));
+                                defaults.put("CheckBox[Enabled].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.Enabled));
+                                defaults.put("CheckBox[Focused+MouseOver+Selected].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.FocusedMouseOverSelected));
+                                defaults.put("CheckBox[Focused+MouseOver].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.FocusedMouseOver));
+                                defaults.put("CheckBox[Focused+Pressed+Selected].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.FocusedPressedSelected));
+                                defaults.put("CheckBox[Focused+Pressed].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.FocusedPressed));
+                                defaults.put("CheckBox[Focused+Selected].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.FocusedSelected));
+                                defaults.put("CheckBox[Focused].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.Focused));
+                                defaults.put("CheckBox[MouseOver+Selected].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.MouseOverSelected));
+                                defaults.put("CheckBox[MouseOver].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.MouseOver));
+                                defaults.put("CheckBox[Pressed+Selected].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.PressedSelected));
+                                defaults.put("CheckBox[Pressed].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.Pressed));
+                                defaults.put("CheckBox[Selected].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.Selected));
 
                                 return defaults;
                             }

@@ -29,11 +29,11 @@ import javax.swing.JComponent;
  * @author aldenml
  *
  */
-public final class RadioButtonIconPainter extends AbstractSkinPainter {
+public final class SkinRadioButtonIconPainter extends AbstractSkinPainter {
 
     private final Image image;
 
-    public RadioButtonIconPainter(State state) {
+    public SkinRadioButtonIconPainter(State state) {
         this.image = getImage(getImageName(state));
     }
 
