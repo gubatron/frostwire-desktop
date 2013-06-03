@@ -26,6 +26,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,6 +39,7 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+import javax.swing.SwingWorker;
 import javax.swing.UIDefaults;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -51,8 +54,11 @@ import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
+import com.frostwire.gui.library.tags.TagsData;
+import com.frostwire.gui.library.tags.TagsReader;
 import com.frostwire.gui.theme.SkinSeparatorBackgroundPainter;
 import com.frostwire.mplayer.MediaPlaybackState;
+import com.frostwire.util.StringUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MPlayerMediator;
@@ -145,10 +151,13 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     private MediaButton shareButton;
 
-    //TODO: Show icon for facebook,youtube,twitter if any of these urls
-    //is found inside the ID3 tags of the current file being played.
     private MediaButton socialButton;
     
+    private Pattern facebookURLPattern = Pattern.compile("http(s)?\\:\\/\\/(www\\.)?facebook\\.com\\/([\\w-]+)");
+
+    private Pattern twitterURLPattern = Pattern.compile("http(s)?\\:\\/\\/(www\\.)?twitter\\.com\\/([\\w\\p{L}_]*[\\:|\\.]?\\s?)+");
+
+    private Pattern twitterUsernamePattern = Pattern.compile("(@[\\w\\p{L}_]*[\\:|\\.]?\\s?)+");
     
     /**
      * Constructs a new <tt>MediaPlayerComponent</tt>.
@@ -246,12 +255,16 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                                       "[grow][][]", //columns
                                       "")); //row
         
+        socialButton = new MediaButton("","","");
+        socialButton.setVisible(false);
+        panel.add(socialButton);
+        
         shareButton = new MediaButton(I18n.tr("Send this file to a friend"), "share", "share");
         shareButton.addActionListener(new SendToFriendActionListener());
         shareButton.setVisible(false);
         panel.add(shareButton);
 
-        trackTitle = new JLabel("123456789012345678901234");
+        trackTitle = new JLabel("");
         trackTitle.setForeground(Color.WHITE);
         panel.add(trackTitle, "growx");
         trackTitle.addMouseListener(new MouseAdapter() {
@@ -488,6 +501,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             progressSongLength.setText("--:--:--");
         }
         setTitle(mediaSource);
+        updateSocialButton(mediaSource);
     }
 
 
@@ -503,7 +517,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             
             //only share files that exist
             shareButton.setVisible(currentMedia != null && (currentMedia.getFile() != null || (currentMedia.getPlaylistItem() != null && currentMedia.getPlaylistItem().getFilePath() != null && new File(currentMedia.getPlaylistItem().getFilePath()).exists())));
-            updateSocialButton(currentMedia);
+
             
             PlaylistItem playlistItem = currentMedia.getPlaylistItem();
 
@@ -859,12 +873,106 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         LibraryMediator.instance().selectCurrentMedia();
     }
 
-    private void updateSocialButton(MediaSource currentMedia) {
-        if (currentMedia != null) {
-            if (currentMedia.getFile().getAbsolutePath().toLowerCase().endsWith("mp3")) {
-                //MP3FileReader
+    private void updateSocialButton(final MediaSource currentMedia) {
+        SwingWorker<Void, Void> swingWorker = new SwingWorker<Void, Void>() {
+
+            private boolean foundSocialLink;
+            private String socialLink;
+            
+            @Override
+            protected Void doInBackground() throws Exception {
+                if (currentMedia != null && (currentMedia.getFile() != null || currentMedia.getPlaylistItem() != null)) {
+                    String commentToParse = "";
+                    if (currentMedia.getFile() != null) {
+                        commentToParse = getCommentFromMP3(currentMedia);
+                    } else if (currentMedia.getPlaylistItem() != null) {
+                        PlaylistItem playlistItem = currentMedia.getPlaylistItem();
+                        commentToParse = playlistItem.getTrackComment();
+                    }
+                    parseSocialLink(commentToParse);
+                }
+                return null;
+            }
+            
+            @Override
+            protected void done() {
+                if (foundSocialLink) {
+                    setupSocialButtonAction();
+                }
+                
+                socialButton.setVisible(foundSocialLink);
+            }
+
+            private void setupSocialButtonAction() {
+                if (socialLink.contains("facebook")) {
+                    socialButton.setIcon(GUIMediator.getThemeImage("FACEBOOK"));
+                } else if (socialLink.contains("twitter")) {
+                    socialButton.setIcon(GUIMediator.getThemeImage("TWITTER"));
+                }
+                
+                removeSocialButtonActionListeners();
+                
+                socialButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent arg0) {
+                       GUIMediator.openURL(socialLink);
+                    }
+                });
+            }
+
+            private void removeSocialButtonActionListeners() {
+                ActionListener[] actionListeners = socialButton.getActionListeners();
+                if (actionListeners != null && actionListeners.length > 0) {
+                    for (ActionListener al : actionListeners) {
+                        socialButton.removeActionListener(al);
+                    }
+                }
+            }
+            
+            private void parseSocialLink(String commentToParse) {
+                if (!StringUtils.isNullOrEmpty(commentToParse)) {
+                    String trimmedComment = commentToParse.toLowerCase().trim();
+                    
+                    Matcher facebookMatcher = facebookURLPattern.matcher(trimmedComment);
+
+                    if (facebookMatcher.find()) {
+                        socialLink = facebookMatcher.group(0);
+                    } else {
+                        Matcher twitterURLMatcher = twitterURLPattern.matcher(trimmedComment);
+                        
+                        if (twitterURLMatcher.find()) {
+                            socialLink = twitterURLMatcher.group(0);
+                        } else {
+                            Matcher twitterUsernameMatcher = twitterUsernamePattern.matcher(trimmedComment);
+                            
+                            if (twitterUsernameMatcher.find()) {
+                                String tweep = twitterUsernameMatcher.group(0).trim();
+                                socialLink = "https://twitter.com/" + tweep.substring(1);
+                            }
+                        }
+                    }
+                    
+                    foundSocialLink = !StringUtils.isNullOrEmpty(socialLink);
+                }
+            }
+
+        };
+        
+        swingWorker.execute();
+    }
+
+
+    private String getCommentFromMP3(MediaSource currentMedia) {
+        String comment = "";
+        File fileToParse = currentMedia.getFile();
+        if (fileToParse.isFile() && fileToParse.exists() && fileToParse.getAbsolutePath().toLowerCase().endsWith(".mp3")) {
+            TagsReader reader = new TagsReader(fileToParse);
+            TagsData tagData = reader.parse();
+            if (tagData != null && !StringUtils.isNullOrEmpty(tagData.getComment())) {
+                comment = tagData.getComment();
             }
         }
+        return comment;
     }
 
     private final class SendToFriendActionListener implements ActionListener {
