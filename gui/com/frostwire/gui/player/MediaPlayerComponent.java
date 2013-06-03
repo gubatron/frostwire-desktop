@@ -24,8 +24,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.Map;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -39,12 +41,16 @@ import javax.swing.UIDefaults;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.jaudiotagger.audio.mp3.MP3FileReader;
+
 import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.theme.SkinSeparatorBackgroundPainter;
 import com.frostwire.mplayer.MediaPlaybackState;
+import com.frostwire.util.FileUtils;
+import com.frostwire.util.StringUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MPlayerMediator;
@@ -58,6 +64,11 @@ import com.limegroup.gnutella.gui.RefreshListener;
 public final class MediaPlayerComponent implements MediaPlayerListener, RefreshListener {
 
     public static final String STREAMING_AUDIO = "Streaming Audio";
+    
+    private static final int MAX_CHARS = 23;
+
+    private static final int BOUND_CHARS = 12;
+    
 
     /**
      * Constant for the play button.
@@ -98,7 +109,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     /**
      * The media player.
      */
-    private final MediaPlayer PLAYER;
+    private final MediaPlayer mediaPlayer;
 
     /**
      * The ProgressBar dimensions for showing the name & play progress.
@@ -128,12 +139,20 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     private CardLayout PLAY_PAUSE_CARD_LAYOUT;
 
+    private JLabel trackTitle;
+
+    private MediaButton shareButton;
+
+    //TODO: Show icon for facebook,youtube,twitter if any of these urls
+    //is found inside the ID3 tags of the current file being played.
+    private MediaButton socialButton;
+    
     /**
      * Constructs a new <tt>MediaPlayerComponent</tt>.
      */
     public MediaPlayerComponent() {
-        PLAYER = MediaPlayer.instance();
-        PLAYER.addMediaPlayerListener(this);
+        mediaPlayer = MediaPlayer.instance();
+        mediaPlayer.addMediaPlayerListener(this);
 
         GUIMediator.addRefreshListener(this);
     }
@@ -174,12 +193,11 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         registerListeners();
 
         JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(130,55));
         panel.setLayout(new MigLayout("insets 0, gap 0, filly",  //component constraints
                                       "[][]"));
 
         panel.add(createPlaybackButtonsPanel(), "span 1 2, growy, gapright 4");
-        panel.add(createPanelTwo(), "wrap, growx");
+        panel.add(createTrackDetailPanel(), "wrap, growx");
         panel.add(createProgressPanel());
 
         return panel;
@@ -219,13 +237,15 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         return panel;
     }
 
-    private JPanel createPanelTwo() {
+    private JPanel createTrackDetailPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0, gap 0", "[grow][][]", ""));
+        panel.setLayout(new MigLayout("insets 0, gap 0, w 434!", //layout
+                                      "[grow][][]", //columns
+                                      "")); //row
 
-        JLabel l = new JLabel("Test Test");
-        l.setForeground(Color.WHITE);
-        panel.add(l, "growx");
+        trackTitle = new JLabel("123456789012345678901234");
+        trackTitle.setForeground(Color.WHITE);
+        panel.add(trackTitle, "growx");
 
         initPlaylistPlaybackModeControls();
         panel.add(LOOP_BUTTON);
@@ -268,7 +288,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         SHUFFLE_BUTTON.setIcon(GUIMediator.getThemeImage("shuffle_off"));
         SHUFFLE_BUTTON.setSelectedIcon(GUIMediator.getThemeImage("shuffle_on"));
         SHUFFLE_BUTTON.setToolTipText(I18n.tr("Shuffle songs"));
-        SHUFFLE_BUTTON.setSelected(PLAYER.isShuffle());
+        SHUFFLE_BUTTON.setSelected(mediaPlayer.isShuffle());
         //SHUFFLE_BUTTON.setMargin(new Insets(0, 0, 0, 0));
 
         LOOP_BUTTON = new JButton();
@@ -283,14 +303,14 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                PLAYER.setShuffle(SHUFFLE_BUTTON.isSelected());
+                mediaPlayer.setShuffle(SHUFFLE_BUTTON.isSelected());
             }
         });
 
         LOOP_BUTTON.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PLAYER.setRepeatMode(PLAYER.getRepeatMode().getNextState());
+                mediaPlayer.setRepeatMode(mediaPlayer.getRepeatMode().getNextState());
                 LOOP_BUTTON.setIcon(getCurrentLoopButtonImage());
             }
         });
@@ -298,9 +318,9 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     }
 
     private ImageIcon getCurrentLoopButtonImage() {
-        if (PLAYER.getRepeatMode() == RepeatMode.ALL) {
+        if (mediaPlayer.getRepeatMode() == RepeatMode.ALL) {
             return GUIMediator.getThemeImage("loop_all");
-        } else if (PLAYER.getRepeatMode() == RepeatMode.SONG) {
+        } else if (mediaPlayer.getRepeatMode() == RepeatMode.SONG) {
             return GUIMediator.getThemeImage("loop_one");
         } else { // RepeatMode.None
             return GUIMediator.getThemeImage("loop_off");
@@ -337,7 +357,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
      * Updates the audio player.
      */
     public void refresh() {
-        PLAYER.refresh();
+        mediaPlayer.refresh();
     }
 
     /**
@@ -372,7 +392,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
      */
     private void setVolumeValue() {
         VOLUME.repaint();
-        PLAYER.setVolume(((float) VOLUME.getValue()) / VOLUME.getMaximum());
+        mediaPlayer.setVolume(((float) VOLUME.getValue()) / VOLUME.getMaximum());
     }
 
     /**
@@ -380,9 +400,9 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
      */
     public void play() {
 
-        if (PLAYER.getCurrentMedia() != null) {
-            if (PLAYER.getState() == MediaPlaybackState.Paused || PLAYER.getState() == MediaPlaybackState.Playing) {
-                PLAYER.togglePause();
+        if (mediaPlayer.getCurrentMedia() != null) {
+            if (mediaPlayer.getState() == MediaPlaybackState.Paused || mediaPlayer.getState() == MediaPlaybackState.Playing) {
+                mediaPlayer.togglePause();
             }
         } else {
             if (GUIMediator.instance().getSelectedTab() != null && GUIMediator.instance().getSelectedTab().equals(GUIMediator.Tabs.LIBRARY)) {
@@ -402,20 +422,20 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
      * Pauses the currently playing audio file.
      */
     public void pauseSong() {
-        PLAYER.togglePause();
+        mediaPlayer.togglePause();
     }
 
     /**
      * Stops the currently playing audio file.
      */
     public void stopSong() {
-        PLAYER.stop();
+        mediaPlayer.stop();
     }
 
     public void seek(float percent) {
-        if (currentPlayListItem != null && currentPlayListItem.getURL() == null && PLAYER.canSeek()) {
-            float timeInSecs = PLAYER.getDurationInSecs() * percent;
-            PLAYER.seek(timeInSecs);
+        if (currentPlayListItem != null && currentPlayListItem.getURL() == null && mediaPlayer.canSeek()) {
+            float timeInSecs = mediaPlayer.getDurationInSecs() * percent;
+            mediaPlayer.seek(timeInSecs);
         }
     }
 
@@ -436,9 +456,9 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         currentPlayListItem = mediaSource;
 
         setVolumeValue();
-        if (mediaSource.getURL() == null && PLAYER.canSeek()) {
+        if (mediaSource.getURL() == null && mediaPlayer.canSeek()) {
             setProgressEnabled(true);
-            progressSongLength.setText(LibraryUtils.getSecondsInDDHHMMSS((int) PLAYER.getDurationInSecs()));
+            progressSongLength.setText(LibraryUtils.getSecondsInDDHHMMSS((int) mediaPlayer.getDurationInSecs()));
         } else {
             setProgressEnabled(false);
             progressSongLength.setText("--:--:--");
@@ -454,12 +474,12 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         progressCurrentTime.setText(LibraryUtils.getSecondsInDDHHMMSS((int) _progress));
 
         if (currentPlayListItem != null && currentPlayListItem.getURL() == null) {
-            progressSongLength.setText(LibraryUtils.getSecondsInDDHHMMSS((int) PLAYER.getDurationInSecs()));
+            progressSongLength.setText(LibraryUtils.getSecondsInDDHHMMSS((int) mediaPlayer.getDurationInSecs()));
         }
 
-        if (currentPlayListItem != null && currentPlayListItem.getURL() == null && PLAYER.canSeek()) {
+        if (currentPlayListItem != null && currentPlayListItem.getURL() == null && mediaPlayer.canSeek()) {
             setProgressEnabled(true);
-            float progressUpdate = ((PROGRESS.getMaximum() * currentTimeInSecs) / PLAYER.getDurationInSecs());
+            float progressUpdate = ((PROGRESS.getMaximum() * currentTimeInSecs) / mediaPlayer.getDurationInSecs());
             setProgressValue((int) progressUpdate);
         }
     }
@@ -585,7 +605,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     // }
 
     private boolean isPlaying() {
-        return !(PLAYER.getState() == MediaPlaybackState.Stopped || PLAYER.getState() == MediaPlaybackState.Uninitialized || PLAYER.getState() == MediaPlaybackState.Paused || PLAYER.getState() == MediaPlaybackState.Failed);
+        return !(mediaPlayer.getState() == MediaPlaybackState.Stopped || mediaPlayer.getState() == MediaPlaybackState.Uninitialized || mediaPlayer.getState() == MediaPlaybackState.Paused || mediaPlayer.getState() == MediaPlaybackState.Failed);
     }
 
     /**
@@ -596,8 +616,8 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
      * */
     public boolean attemptStop() {
 
-        if (PLAYER.getState() != MediaPlaybackState.Stopped) {
-            PLAYER.stop();
+        if (mediaPlayer.getState() != MediaPlaybackState.Stopped) {
+            mediaPlayer.stop();
             return true;
         }
 
@@ -640,7 +660,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     }
 
     private void next() {
-        PLAYER.playNextMedia();
+        mediaPlayer.playNextMedia();
     }
 
     /**
@@ -653,13 +673,13 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     }
 
     private void back() {
-        MediaSource currentMedia = PLAYER.getCurrentMedia();
+        MediaSource currentMedia = mediaPlayer.getCurrentMedia();
 
         if (currentMedia != null) {
-            MediaSource previousSong = PLAYER.getPreviousMedia(currentMedia);
+            MediaSource previousSong = mediaPlayer.getPreviousMedia(currentMedia);
 
             if (previousSong != null) {
-                PLAYER.asyncLoadMedia(previousSong, true, true);
+                mediaPlayer.asyncLoadMedia(previousSong, true, true);
             }
         }
     }
@@ -709,4 +729,38 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     public void icyInfo(MediaPlayer mediaPlayer, String data) {
 
     }
+    
+    private void setupIconAndText(Icon speakerIcon2, String currentText) {
+        if (currentText.length() > MAX_CHARS) {
+            currentText = currentText.substring(0, BOUND_CHARS) + " ... " + currentText.substring(currentText.length() - BOUND_CHARS);
+        }
+
+        final String currentTextFinal = currentText;
+
+        MediaSource currentMedia = MediaPlayer.instance().getCurrentMedia();
+
+        //only share files that exist
+        shareButton.setVisible(currentMedia != null && (currentMedia.getFile() != null || (currentMedia.getPlaylistItem() != null && currentMedia.getPlaylistItem().getFilePath() != null && new File(currentMedia.getPlaylistItem().getFilePath()).exists())));
+
+        updateTrackTitle(currentTextFinal);
+        updateSocialButton(currentMedia);
+    }
+
+    private void updateTrackTitle(final String currentTextFinal) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            @Override
+            public void run() {
+                trackTitle.setText("<html><font color=\"496989\"><u>" + currentTextFinal + "</u></font></html>");
+            }
+        });
+    }
+    
+    private void updateSocialButton(MediaSource currentMedia) {
+        if (currentMedia != null) {
+            if (currentMedia.getFile().getAbsolutePath().toLowerCase().endsWith("mp3")) {
+                //MP3FileReader
+            }
+        }
+    }
+    
 }

@@ -75,7 +75,7 @@ public class CurrentMediaStatusComponent extends JPanel implements MediaPlayerLi
     private String currentStatusLabel;
 
     public CurrentMediaStatusComponent() {
-    	MediaPlayer.instance().addMediaPlayerListener(this);
+    	    MediaPlayer.instance().addMediaPlayerListener(this);
         lastState = MediaPlaybackState.Uninitialized;
         initComponents();
     }
