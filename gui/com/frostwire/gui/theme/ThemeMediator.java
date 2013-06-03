@@ -272,6 +272,15 @@ public class ThemeMediator {
                                 defaults.put("CheckBox[Pressed].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.Pressed));
                                 defaults.put("CheckBox[Selected].iconPainter", new SkinCheckBoxIconPainter(SkinCheckBoxIconPainter.State.Selected));
 
+                                // slider
+                                defaults.put("Slider:SliderThumb[Disabled].backgroundPainter", new SkinSliderThumbPainter(SkinSliderThumbPainter.State.Disabled));
+                                defaults.put("Slider:SliderThumb[Enabled].backgroundPainter", new SkinSliderThumbPainter(SkinSliderThumbPainter.State.Enabled));
+                                defaults.put("Slider:SliderThumb[Focused+MouseOver].backgroundPainter", new SkinSliderThumbPainter(SkinSliderThumbPainter.State.FocusedMouseOver));
+                                defaults.put("Slider:SliderThumb[Focused+Pressed].backgroundPainter", new SkinSliderThumbPainter(SkinSliderThumbPainter.State.FocusedPressed));
+                                defaults.put("Slider:SliderThumb[Focused].backgroundPainter", new SkinSliderThumbPainter(SkinSliderThumbPainter.State.Focused));
+                                defaults.put("Slider:SliderThumb[MouseOver].backgroundPainter", new SkinSliderThumbPainter(SkinSliderThumbPainter.State.MouseOver));
+                                defaults.put("Slider:SliderThumb[Pressed].backgroundPainter", new SkinSliderThumbPainter(SkinSliderThumbPainter.State.Pressed));
+
                                 return defaults;
                             }
                         });
