@@ -292,19 +292,14 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         Font f = panel.getFont();
         f = f.deriveFont(10f);
 
-        Dimension timeLabelsDimension = new Dimension(45, 11);
-        progressCurrentTime.setMinimumSize(timeLabelsDimension);
-        progressCurrentTime.setPreferredSize(timeLabelsDimension);
         progressCurrentTime.setForeground(Color.WHITE);
         progressCurrentTime.setFont(f);
-        progressSongLength.setPreferredSize(timeLabelsDimension);
-        progressSongLength.setMinimumSize(timeLabelsDimension);
         progressSongLength.setForeground(Color.WHITE);
         progressSongLength.setFont(f);
 
-        panel.add(progressCurrentTime);
+        panel.add(progressCurrentTime,"gap 2!");
         panel.add(PROGRESS, "growx");
-        panel.add(progressSongLength, "");
+        panel.add(progressSongLength, "align center");
 
         return panel;
     }
