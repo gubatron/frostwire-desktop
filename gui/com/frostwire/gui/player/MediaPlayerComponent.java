@@ -41,6 +41,11 @@ import javax.swing.event.ChangeListener;
 
 import net.miginfocom.swing.MigLayout;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.theme.SkinSeparatorBackgroundPainter;
@@ -56,6 +61,11 @@ import com.limegroup.gnutella.gui.RefreshListener;
  * MediaPlayer events.
  */
 public final class MediaPlayerComponent implements MediaPlayerListener, RefreshListener {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MediaPlayerComponent.class);
+
+    private static final int MAX_TITLE_CHARS = 33;
+    private static final int BOUND_TITLE_CHARS = 12;
 
     public static final String STREAMING_AUDIO = "Streaming Audio";
 
@@ -128,6 +138,8 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     private CardLayout PLAY_PAUSE_CARD_LAYOUT;
 
+    private JLabel labelTitle;
+
     /**
      * Constructs a new <tt>MediaPlayerComponent</tt>.
      */
@@ -174,9 +186,9 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         registerListeners();
 
         JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(130,55));
-        panel.setLayout(new MigLayout("insets 0, gap 0, filly",  //component constraints
-                                      "[][]"));
+        panel.setPreferredSize(new Dimension(130, 55));
+        panel.setLayout(new MigLayout("insets 0, gap 0, filly", //component constraints
+                "[][]"));
 
         panel.add(createPlaybackButtonsPanel(), "span 1 2, growy, gapright 4");
         panel.add(createPanelTwo(), "wrap, growx");
@@ -184,23 +196,22 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
         return panel;
     }
-    
+
     private JPanel createPlaybackButtonsPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout("insets 0, filly"));
-        
-        
+
         JSeparator sep1 = new JSeparator(SwingConstants.VERTICAL);
 
         UIDefaults defaults = new UIDefaults();
         defaults.put("Separator[Enabled].backgroundPainter", new SkinSeparatorBackgroundPainter(SkinSeparatorBackgroundPainter.State.Enabled, new Color(0x295164)));
         sep1.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
         sep1.putClientProperty("Nimbus.Overrides", defaults);
-        
-        panel.add(sep1,"growy");
 
-        panel.add(PREV_BUTTON,"w 45!");
-        
+        panel.add(sep1, "growy");
+
+        panel.add(PREV_BUTTON, "w 45!");
+
         PLAY_PAUSE_CARD_LAYOUT = new CardLayout();
         PLAY_PAUSE_BUTTON_CONTAINER = new JPanel(PLAY_PAUSE_CARD_LAYOUT);
         PLAY_PAUSE_BUTTON_CONTAINER.setOpaque(false);
@@ -209,13 +220,13 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         PLAY_PAUSE_BUTTON_CONTAINER.add(PAUSE_BUTTON, "PAUSE");
         panel.add(PLAY_PAUSE_BUTTON_CONTAINER, "w 49!");
 
-        panel.add(NEXT_BUTTON,"w 45!");
-        
-        JSeparator sep2 = new JSeparator(SwingConstants.VERTICAL);        
+        panel.add(NEXT_BUTTON, "w 45!");
+
+        JSeparator sep2 = new JSeparator(SwingConstants.VERTICAL);
         sep2.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
         sep2.putClientProperty("Nimbus.Overrides", defaults);
         panel.add(sep2, "growy");
-        
+
         return panel;
     }
 
@@ -223,16 +234,32 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout("insets 0, gap 0", "[grow][][]", ""));
 
-        JLabel l = new JLabel("Test Test");
-        l.setForeground(Color.WHITE);
-        panel.add(l, "growx");
+        labelTitle = new JLabel("");
+        labelTitle.setForeground(Color.WHITE);
+        labelTitle.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (MediaPlayer.instance().getCurrentMedia().getFile() != null || MediaPlayer.instance().getCurrentMedia().getPlaylistItem() != null || MediaPlayer.instance().getCurrentMedia() instanceof InternetRadioAudioSource
+                        || MediaPlayer.instance().getCurrentMedia() instanceof DeviceMediaSource) {
+                    showCurrentMedia();
+                } else if (MediaPlayer.instance().getCurrentMedia() instanceof StreamMediaSource) {
+                    StreamMediaSource mediaSource = (StreamMediaSource) MediaPlayer.instance().getCurrentMedia();
+                    if (mediaSource.getDetailsUrl() != null) {
+                        GUIMediator.openURL(mediaSource.getDetailsUrl());
+                    }
+                } else if (MediaPlayer.instance().getCurrentMedia().getURL() != null) {
+                    GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
+                }
+            }
+        });
+        panel.add(labelTitle, "growx");
 
         initPlaylistPlaybackModeControls();
         panel.add(LOOP_BUTTON);
         panel.add(SHUFFLE_BUTTON);
 
         panel.add(VOLUME);
-        
+
         return panel;
     }
 
@@ -256,7 +283,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         panel.add(progressCurrentTime);
         panel.add(PROGRESS);
         panel.add(progressSongLength);
-        
+
         return panel;
     }
 
@@ -443,6 +470,81 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             setProgressEnabled(false);
             progressSongLength.setText("--:--:--");
         }
+        setTitle(mediaSource);
+    }
+
+    private void setTitle(MediaSource mediaSource) {
+        try {
+            if (mediaSource == null) {
+                return;
+            }
+
+            //update controls
+            MediaSource currentMedia = mediaSource;//mediaPlayer.getCurrentMedia();
+            PlaylistItem playlistItem = currentMedia.getPlaylistItem();
+
+            String currentText = null;
+
+            if (currentMedia instanceof DeviceMediaSource) {
+                FileDescriptor fd = ((DeviceMediaSource) currentMedia).getFileDescriptor();
+                String artistName = fd.artist;
+                String songTitle = fd.title;
+
+                String albumToolTip = fd.album;
+                String yearToolTip = fd.year;
+
+                currentText = artistName + " - " + songTitle;
+
+                labelTitle.setToolTipText(artistName + " - " + songTitle + albumToolTip + yearToolTip);
+            } else if (currentMedia != null && currentMedia instanceof StreamMediaSource) {
+                currentText = ((StreamMediaSource) currentMedia).getTitle();
+            } else if (playlistItem != null) {
+                //Playing from Playlist.
+                String artistName = playlistItem.getTrackArtist();
+                String songTitle = playlistItem.getTrackTitle();
+
+                String albumToolTip = (playlistItem.getTrackAlbum() != null && playlistItem.getTrackAlbum().length() > 0) ? " - " + playlistItem.getTrackAlbum() : "";
+                String yearToolTip = (playlistItem.getTrackYear() != null && playlistItem.getTrackYear().length() > 0) ? " (" + playlistItem.getTrackYear() + ")" : "";
+
+                currentText = artistName + " - " + songTitle;
+
+                labelTitle.setToolTipText(artistName + " - " + songTitle + albumToolTip + yearToolTip);
+
+            } else if (currentMedia != null && currentMedia.getFile() != null) {
+                //playing from Audio.
+                currentText = currentMedia.getFile().getName();
+
+                labelTitle.setToolTipText(currentMedia.getFile().getAbsolutePath());
+            } else if (currentMedia != null && currentMedia.getFile() == null && currentMedia.getURL() != null) {
+                System.out.println("StreamURL: " + currentMedia.getURL().toString());
+
+                //sString streamURL = currentMedia.getURL().toString();
+                //Pattern urlStart = Pattern.compile("(http://[\\d\\.]+:\\d+).*");
+                //Matcher matcher = urlStart.matcher(streamURL);
+
+                currentText = "internet "; // generic internet stream
+            }
+
+            setTitleHelper(currentText);
+        } catch (Throwable e) {
+            LOG.error("Error doing UI updates", e);
+        }
+    }
+
+    private void setTitleHelper(String currentText) {
+        if (currentText.length() > MAX_TITLE_CHARS) {
+            currentText = currentText.substring(0, BOUND_TITLE_CHARS) + " ... " + currentText.substring(currentText.length() - BOUND_TITLE_CHARS);
+        }
+
+        final String finalCurrentText = currentText;
+
+        GUIMediator.safeInvokeLater(new Runnable() {
+            @Override
+            public void run() {
+                labelTitle.setText("<html><u>" + finalCurrentText + "</u></html>");
+                labelTitle.setText(finalCurrentText);
+            }
+        });
     }
 
     /**
@@ -476,6 +578,12 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             showPauseButton();
         } else if (state == MediaPlaybackState.Paused) {
             showPlayButton();
+        }
+
+        if (state == MediaPlaybackState.Stopped || state == MediaPlaybackState.Closed) {
+            labelTitle.setText("");
+        } else {
+            setTitle(mediaPlayer.getCurrentMedia());
         }
     }
 
@@ -707,6 +815,23 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     @Override
     public void icyInfo(MediaPlayer mediaPlayer, String data) {
+        if (data != null) {
+            for (String s : data.split(";")) {
+                if (s.startsWith("StreamTitle=")) {
+                    try {
+                        String streamTitle = s.substring(13, s.length() - 1);
+                        setTitleHelper("radio " + streamTitle);
+                    } catch (Throwable e) {
+                        LOG.warn("Error updating UI", e);
+                    }
+                    break;
+                }
+            }
+        }
+    }
 
+    public void showCurrentMedia() {
+        GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
+        LibraryMediator.instance().selectCurrentMedia();
     }
 }

@@ -49,7 +49,6 @@ import javax.swing.text.BadLocationException;
 import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.library.LibraryMediator;
-import com.frostwire.gui.library.LibrarySearch;
 import com.frostwire.gui.player.MediaPlayerComponent;
 import com.frostwire.gui.searchfield.GoogleSearchField;
 import com.frostwire.gui.searchfield.SearchField;
