@@ -303,13 +303,13 @@ public class FilePane extends JPanel implements PropertyChangeListener {
 
         private void repaintSelection(Object source) {
             if (source instanceof JList) {
-                repaintListSelection((JList)source);
+                repaintListSelection((JList<Object>)source);
             } else if (source instanceof JTable) {
                 repaintTableSelection((JTable)source);
             }
         }
 
-        private void repaintListSelection(JList list) {
+        private void repaintListSelection(JList<Object> list) {
             int[] indices = list.getSelectedIndices();
             for (int i : indices) {
                 Rectangle bounds = list.getCellBounds(i, i);
@@ -341,7 +341,7 @@ public class FilePane extends JPanel implements PropertyChangeListener {
     private boolean fullRowSelection = false;
 
     private ListSelectionModel listSelectionModel;
-    private JList list;
+    private JList<Object> list;
     private JTable detailsTable;
 
     private static final int COLUMN_FILENAME = 0;
@@ -470,7 +470,7 @@ public class FilePane extends JPanel implements PropertyChangeListener {
 
         switch (viewType) {
           case VIEWTYPE_LIST:
-            list = (JList)findChildComponent(viewPanels[viewType], JList.class);
+            list = (JList<Object>)findChildComponent(viewPanels[viewType], JList.class);
             if (listSelectionModel == null) {
                 listSelectionModel = list.getSelectionModel();
                 if (detailsTable != null) {
@@ -642,7 +642,7 @@ public class FilePane extends JPanel implements PropertyChangeListener {
     }
 
 
-    private void updateListRowCount(JList list) {
+    private void updateListRowCount(JList<Object> list) {
         if (smallIconsView) {
             list.setVisibleRowCount(getModel().getSize() / 3);
         } else {
@@ -653,14 +653,14 @@ public class FilePane extends JPanel implements PropertyChangeListener {
     public JPanel createList() {
         JPanel p = new JPanel(new BorderLayout());
         final JFileChooser fileChooser = getFileChooser();
-        final JList list = new JList() {
+        final JList<Object> list = new JList<Object>() {
             /**
              * 
              */
             private static final long serialVersionUID = 7343396893205583428L;
 
             public int getNextMatch(String prefix, int startIndex, Position.Bias bias) {
-                ListModel model = getModel();
+                ListModel<Object> model = getModel();
                 int max = model.getSize();
                 if (prefix == null || startIndex < 0 || startIndex >= max) {
                     throw new IllegalArgumentException();
@@ -729,7 +729,7 @@ public class FilePane extends JPanel implements PropertyChangeListener {
     /**
      * This model allows for sorting JList
      */
-    private class SortableListModel extends AbstractListModel
+    private class SortableListModel extends AbstractListModel<Object>
             implements TableModelListener, RowSorterListener {
 
         /**
@@ -1560,7 +1560,7 @@ public class FilePane extends JPanel implements PropertyChangeListener {
          */
         private static final long serialVersionUID = -7099480042235528638L;
 
-        public Component getListCellRendererComponent(JList list, Object value,
+        public Component getListCellRendererComponent(JList<?> list, Object value,
                                                       int index, boolean isSelected,
                                                       boolean cellHasFocus) {
 
@@ -2089,7 +2089,7 @@ public class FilePane extends JPanel implements PropertyChangeListener {
         public Action getApproveSelectionAction();
         public Action getChangeToParentDirectoryAction();
         public Action getNewFolderAction();
-        public MouseListener createDoubleClickListener(JList list);
+        public MouseListener createDoubleClickListener(JList<Object> list);
         public ListSelectionListener createListSelectionListener();
         public boolean usesShellFolder();
     }
@@ -2101,7 +2101,7 @@ public class FilePane extends JPanel implements PropertyChangeListener {
      * Otherwise, this method returns -1.
      * This is used to make WindowsL&F JFileChooser act like native dialogs.
      */
-    public static int loc2IndexFileList(JList list, Point point) {
+    public static int loc2IndexFileList(JList<Object> list, Point point) {
         int index = list.locationToIndex(point);
         if (index != -1) {
             Object bySize = list.getClientProperty("List.isFileList");
@@ -2117,10 +2117,10 @@ public class FilePane extends JPanel implements PropertyChangeListener {
      * Returns true if the given point is within the actual bounds of the
      * JList item at index (not just inside the cell).
      */
-    private static boolean pointIsInActualBounds(JList list, int index,
+    private static boolean pointIsInActualBounds(JList<Object> list, int index,
                                                 Point point) {
-        ListCellRenderer renderer = list.getCellRenderer();
-        ListModel dataModel = list.getModel();
+        ListCellRenderer<Object> renderer = (ListCellRenderer<Object>) list.getCellRenderer();
+        ListModel<Object> dataModel = list.getModel();
         Object value = dataModel.getElementAt(index);
         Component item = renderer.getListCellRendererComponent(list,
                           value, index, false, false);

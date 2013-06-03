@@ -29,19 +29,12 @@
  */
 package com.frostwire.gui.theme;
 
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GraphicsConfiguration;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 
 import javax.swing.JComboBox;
-import javax.swing.JScrollBar;
-import javax.swing.ListCellRenderer;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicComboPopup;
 
 /**
@@ -63,7 +56,7 @@ public class SkinComboPopup extends BasicComboPopup {
      * @param combo
      *            Combobox.
      */
-    public SkinComboPopup(JComboBox combo) {
+    public SkinComboPopup(JComboBox<Object> combo) {
         super(combo);
         // fix for defect 154
         this.setOpaque(true);
@@ -228,7 +221,7 @@ public class SkinComboPopup extends BasicComboPopup {
 //        // this.list.putClientProperty(SubstanceListUI.ROLLED_OVER_INDEX, null);
 //    }
 
-    public JComboBox getCombobox() {
+    public JComboBox<Object> getCombobox() {
         return this.comboBox;
     }
 }

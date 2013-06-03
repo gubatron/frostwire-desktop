@@ -29,7 +29,7 @@ import javax.swing.event.ListDataListener;
  * @author John O'Conner
  */
 @SuppressWarnings({"serial", "unused", "rawtypes", "unchecked"})
-public class SortedListModel extends AbstractListModel {
+public class SortedListModel extends AbstractListModel<Object> {
     
     private SortedListModel() {}
     

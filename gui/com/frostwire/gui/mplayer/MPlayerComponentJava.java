@@ -21,12 +21,14 @@ package com.frostwire.gui.mplayer;
 import java.awt.Canvas;
 import java.awt.Component;
 
-import org.limewire.util.SystemUtils;
-
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class MPlayerComponentJava extends Canvas implements MPlayerComponent {
 
-	private static final long serialVersionUID = -5860833860676831251L;
-	
 	public MPlayerComponentJava() {
 		
     }

@@ -96,7 +96,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
     // made most things in this class private.
 
     private JLabel lookInLabel;
-    private JComboBox directoryComboBox;
+    private JComboBox<Object> directoryComboBox;
     private DirectoryComboBoxModel directoryComboBoxModel;
     private Action directoryComboBoxAction = new DirectoryComboBoxAction();
 
@@ -116,7 +116,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
     private JPanel buttonPanel;
     private JPanel bottomPanel;
 
-    private JComboBox filterComboBox;
+    private JComboBox<Object> filterComboBox;
 
     private static final Dimension hstrut5 = new Dimension(5, 1);
     //private static final Dimension hstrut11 = new Dimension(11, 1);
@@ -236,7 +236,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
             return BaseFileChooserUI.this.getNewFolderAction();
         }
 
-        public MouseListener createDoubleClickListener(JList list) {
+        public MouseListener createDoubleClickListener(JList<Object>list) {
             return BaseFileChooserUI.this.createDoubleClickListener(getFileChooser(),
                                                                      list);
         }
@@ -470,7 +470,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
 
         filterComboBoxModel = createFilterComboBoxModel();
         fc.addPropertyChangeListener(filterComboBoxModel);
-        filterComboBox = new JComboBox(filterComboBoxModel);
+        filterComboBox = new JComboBox<Object>(filterComboBoxModel);
         filterComboBox.putClientProperty(AccessibleContext.ACCESSIBLE_DESCRIPTION_PROPERTY,
                                          filesOfTypeLabelText);
         filesOfTypeLabel.setLabelFor(filterComboBox);
@@ -594,7 +594,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
 
     // Obsolete class, not used in this version.
     protected class SingleClickListener extends MouseAdapter {
-        public  SingleClickListener(JList list) {
+        public  SingleClickListener(JList<Object> list) {
         }
     }
 
@@ -930,7 +930,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
          */
         private static final long serialVersionUID = -8500297350257807164L;
         IndentIcon ii = new IndentIcon();
-        public Component getListCellRendererComponent(JList list, Object value,
+        public Component getListCellRendererComponent(JList<?> list, Object value,
                                                       int index, boolean isSelected,
                                                       boolean cellHasFocus) {
 
@@ -985,7 +985,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
     /**
      * Data model for a type-face selection combo-box.
      */
-    protected class DirectoryComboBoxModel extends AbstractListModel implements ComboBoxModel {
+    protected class DirectoryComboBoxModel extends AbstractListModel<Object> implements ComboBoxModel<Object> {
         /**
          * 
          */
@@ -1137,7 +1137,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
          */
         private static final long serialVersionUID = -33803419008776614L;
 
-        public Component getListCellRendererComponent(JList list,
+        public Component getListCellRendererComponent(JList<?> list,
             Object value, int index, boolean isSelected,
             boolean cellHasFocus) {
 
@@ -1161,7 +1161,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
     /**
      * Data model for a type-face selection combo-box.
      */
-    protected class FilterComboBoxModel extends AbstractListModel implements ComboBoxModel, PropertyChangeListener {
+    protected class FilterComboBoxModel extends AbstractListModel<Object> implements ComboBoxModel<Object>, PropertyChangeListener {
         /**
          * 
          */

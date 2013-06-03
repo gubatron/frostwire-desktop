@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.util;
 
-import org.limewire.service.ErrorService;
 import org.limewire.util.CommonUtils;
 
 /**

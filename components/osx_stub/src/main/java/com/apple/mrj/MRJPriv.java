@@ -108,7 +108,7 @@
 /*     */   {
 /*     */     try
 /*     */     {
-/* 118 */       Class localClass = Class.forName("com.apple.mrj.MRJShellLibrary");
+/* 118 */       Class<?> localClass = Class.forName("com.apple.mrj.MRJShellLibrary");
 /* 119 */       if (localClass != null)
 /* 120 */         return true;
 /*     */     } catch (Exception localException) {

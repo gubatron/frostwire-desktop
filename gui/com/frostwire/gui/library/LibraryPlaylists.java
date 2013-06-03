@@ -56,8 +56,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.plaf.InsetsUIResource;
-import javax.swing.plaf.basic.BasicTextFieldUI;
-import javax.swing.plaf.basic.BasicTextUI;
 
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
@@ -94,7 +92,7 @@ import com.limegroup.gnutella.settings.QuestionsHandler;
  */
 public class LibraryPlaylists extends AbstractLibraryListPanel {
 
-    private DefaultListModel _model;
+    private DefaultListModel<Object> _model;
     private int _selectedIndexToRename;
 
     private LibraryPlaylistsListCell _newPlaylistCell;
@@ -104,7 +102,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     private LibraryPlaylistsMouseObserver _listMouseObserver;
     private ListSelectionListener _listSelectionListener;
 
-    private JList _list;
+    private JList<Object> _list;
     private JScrollPane _scrollPane;
     private JTextField _textName;
 
@@ -185,7 +183,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     }
 
     private void setupModel() {
-        _model = new DefaultListModel();
+        _model = new DefaultListModel<Object>();
 
         _newPlaylistCell = new LibraryPlaylistsListCell(I18n.tr("New Playlist"), I18n.tr("Creates a new Playlist"), GUIMediator.getThemeImage("playlist_plus"), null, null);
 
@@ -610,7 +608,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     private class LibraryPlaylistsCellRenderer extends DefaultListCellRenderer {
 
         @Override
-        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) value;
             setText(cell.getText());

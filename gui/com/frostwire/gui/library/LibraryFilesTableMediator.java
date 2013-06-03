@@ -64,7 +64,6 @@ import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
-import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.gui.upnp.UPnPManager;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -630,8 +629,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     /**
      * Creates a JList of files and sets and makes it non-selectable. 
      */
-    private static JList createFileList(List<String> fileNames) {
-        JList fileList = new JList(fileNames.toArray());
+    private static JList<String> createFileList(List<String> fileNames) {
+        JList<String> fileList = new JList<String>(fileNames.toArray(new String[0]));
         fileList.setVisibleRowCount(5);
         fileList.setCellRenderer(new FileNameListCellRenderer());
         //fileList.setSelectionForeground(fileList.getForeground());
@@ -1065,7 +1064,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             LibraryMediator.instance().getLibrarySearch().pushStatus(status);
 
             
-            SwingWorker demuxWorker = new SwingWorker<Void, Void>() {
+            SwingWorker<Void, Void> demuxWorker = new SwingWorker<Void, Void>() {
 
                 @Override
                 protected Void doInBackground() throws Exception {
@@ -1154,7 +1153,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         private static final long serialVersionUID = 5064313639046811749L;
 
         @Override
-        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             String extension = FileUtils.getFileExtension(value.toString());
             if (extension != null) {

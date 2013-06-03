@@ -20,7 +20,6 @@ package com.limegroup.gnutella.gui.tables;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,9 +43,6 @@ import com.frostwire.gui.theme.SkinProgressBarUI;
  */
 public class ProgressBarRenderer extends JProgressBar implements TableCellRenderer {
 
-
-    private Border _selectedBorder;
-    private Border _unselectedBorder;
     private Map<Color, Border> borders = new HashMap<Color, Border>();
 
     /**

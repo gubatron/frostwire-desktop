@@ -413,7 +413,7 @@ public class ShareTorrentDialog extends JDialog {
 		_feedbackLabel.setText(title);
 		
 		//Animate
-		int Y_DISPLACEMENT = 50;
+		//int Y_DISPLACEMENT = 50;
 		
 //		Timeline timeline = new Timeline(new TimelineJLabel(_feedbackLabel));
 //
