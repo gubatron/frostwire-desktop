@@ -27,10 +27,10 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Map;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
@@ -41,16 +41,18 @@ import javax.swing.UIDefaults;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.jaudiotagger.audio.mp3.MP3FileReader;
-
 import net.miginfocom.swing.MigLayout;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.core.FileDescriptor;
+import com.frostwire.gui.bittorrent.SendFileProgressDialog;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.theme.SkinSeparatorBackgroundPainter;
 import com.frostwire.mplayer.MediaPlaybackState;
-import com.frostwire.util.FileUtils;
-import com.frostwire.util.StringUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MPlayerMediator;
@@ -63,13 +65,13 @@ import com.limegroup.gnutella.gui.RefreshListener;
  */
 public final class MediaPlayerComponent implements MediaPlayerListener, RefreshListener {
 
+    private static final Logger LOG = LoggerFactory.getLogger(MediaPlayerComponent.class);
+
+    private static final int MAX_TITLE_CHARS = 23;
+    private static final int BOUND_TITLE_CHARS = 12;
+
     public static final String STREAMING_AUDIO = "Streaming Audio";
     
-    private static final int MAX_CHARS = 23;
-
-    private static final int BOUND_CHARS = 12;
-    
-
     /**
      * Constant for the play button.
      */
@@ -147,6 +149,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     //is found inside the ID3 tags of the current file being played.
     private MediaButton socialButton;
     
+    
     /**
      * Constructs a new <tt>MediaPlayerComponent</tt>.
      */
@@ -195,6 +198,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout("insets 0, gap 0, filly",  //component constraints
                                       "[][]"));
+        panel.setPreferredSize(new Dimension(130, 55));
 
         panel.add(createPlaybackButtonsPanel(), "span 1 2, growy, gapright 4");
         panel.add(createTrackDetailPanel(), "wrap, growx");
@@ -202,23 +206,22 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
         return panel;
     }
-    
+
     private JPanel createPlaybackButtonsPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout("insets 0, filly"));
-        
-        
+
         JSeparator sep1 = new JSeparator(SwingConstants.VERTICAL);
 
         UIDefaults defaults = new UIDefaults();
         defaults.put("Separator[Enabled].backgroundPainter", new SkinSeparatorBackgroundPainter(SkinSeparatorBackgroundPainter.State.Enabled, new Color(0x295164)));
         sep1.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
         sep1.putClientProperty("Nimbus.Overrides", defaults);
-        
-        panel.add(sep1,"growy");
 
-        panel.add(PREV_BUTTON,"w 45!");
-        
+        panel.add(sep1, "growy");
+
+        panel.add(PREV_BUTTON, "w 45!");
+
         PLAY_PAUSE_CARD_LAYOUT = new CardLayout();
         PLAY_PAUSE_BUTTON_CONTAINER = new JPanel(PLAY_PAUSE_CARD_LAYOUT);
         PLAY_PAUSE_BUTTON_CONTAINER.setOpaque(false);
@@ -227,13 +230,13 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         PLAY_PAUSE_BUTTON_CONTAINER.add(PAUSE_BUTTON, "PAUSE");
         panel.add(PLAY_PAUSE_BUTTON_CONTAINER, "w 49!");
 
-        panel.add(NEXT_BUTTON,"w 45!");
-        
-        JSeparator sep2 = new JSeparator(SwingConstants.VERTICAL);        
+        panel.add(NEXT_BUTTON, "w 45!");
+
+        JSeparator sep2 = new JSeparator(SwingConstants.VERTICAL);
         sep2.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
         sep2.putClientProperty("Nimbus.Overrides", defaults);
         panel.add(sep2, "growy");
-        
+
         return panel;
     }
 
@@ -242,17 +245,38 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         panel.setLayout(new MigLayout("insets 0, gap 0, w 434!", //layout
                                       "[grow][][]", //columns
                                       "")); //row
+        
+        shareButton = new MediaButton(I18n.tr("Send this file to a friend"), "share", "share");
+        shareButton.addActionListener(new SendToFriendActionListener());
+        shareButton.setVisible(false);
+        panel.add(shareButton);
 
         trackTitle = new JLabel("123456789012345678901234");
         trackTitle.setForeground(Color.WHITE);
         panel.add(trackTitle, "growx");
+        trackTitle.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (MediaPlayer.instance().getCurrentMedia().getFile() != null || MediaPlayer.instance().getCurrentMedia().getPlaylistItem() != null || MediaPlayer.instance().getCurrentMedia() instanceof InternetRadioAudioSource
+                        || MediaPlayer.instance().getCurrentMedia() instanceof DeviceMediaSource) {
+                    showCurrentMedia();
+                } else if (MediaPlayer.instance().getCurrentMedia() instanceof StreamMediaSource) {
+                    StreamMediaSource mediaSource = (StreamMediaSource) MediaPlayer.instance().getCurrentMedia();
+                    if (mediaSource.getDetailsUrl() != null) {
+                        GUIMediator.openURL(mediaSource.getDetailsUrl());
+                    }
+                } else if (MediaPlayer.instance().getCurrentMedia().getURL() != null) {
+                    GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
+                }
+            }
+        });
 
         initPlaylistPlaybackModeControls();
         panel.add(LOOP_BUTTON);
         panel.add(SHUFFLE_BUTTON);
 
         panel.add(VOLUME);
-        
+
         return panel;
     }
 
@@ -276,7 +300,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         panel.add(progressCurrentTime);
         panel.add(PROGRESS);
         panel.add(progressSongLength);
-        
+
         return panel;
     }
 
@@ -463,6 +487,88 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             setProgressEnabled(false);
             progressSongLength.setText("--:--:--");
         }
+        setTitle(mediaSource);
+    }
+
+
+    
+    private void setTitle(MediaSource mediaSource) {
+        try {
+            if (mediaSource == null) {
+                return;
+            }
+
+            //update controls
+            MediaSource currentMedia = mediaSource;//mediaPlayer.getCurrentMedia();
+            
+            //only share files that exist
+            shareButton.setVisible(currentMedia != null && (currentMedia.getFile() != null || (currentMedia.getPlaylistItem() != null && currentMedia.getPlaylistItem().getFilePath() != null && new File(currentMedia.getPlaylistItem().getFilePath()).exists())));
+            updateSocialButton(currentMedia);
+            
+            PlaylistItem playlistItem = currentMedia.getPlaylistItem();
+
+            String currentText = null;
+
+            if (currentMedia instanceof DeviceMediaSource) {
+                FileDescriptor fd = ((DeviceMediaSource) currentMedia).getFileDescriptor();
+                String artistName = fd.artist;
+                String songTitle = fd.title;
+
+                String albumToolTip = fd.album;
+                String yearToolTip = fd.year;
+
+                currentText = artistName + " - " + songTitle;
+
+                trackTitle.setToolTipText(artistName + " - " + songTitle + albumToolTip + yearToolTip);
+            } else if (currentMedia != null && currentMedia instanceof StreamMediaSource) {
+                currentText = ((StreamMediaSource) currentMedia).getTitle();
+            } else if (playlistItem != null) {
+                //Playing from Playlist.
+                String artistName = playlistItem.getTrackArtist();
+                String songTitle = playlistItem.getTrackTitle();
+
+                String albumToolTip = (playlistItem.getTrackAlbum() != null && playlistItem.getTrackAlbum().length() > 0) ? " - " + playlistItem.getTrackAlbum() : "";
+                String yearToolTip = (playlistItem.getTrackYear() != null && playlistItem.getTrackYear().length() > 0) ? " (" + playlistItem.getTrackYear() + ")" : "";
+
+                currentText = artistName + " - " + songTitle;
+
+                trackTitle.setToolTipText(artistName + " - " + songTitle + albumToolTip + yearToolTip);
+
+            } else if (currentMedia != null && currentMedia.getFile() != null) {
+                //playing from Audio.
+                currentText = currentMedia.getFile().getName();
+
+                trackTitle.setToolTipText(currentMedia.getFile().getAbsolutePath());
+            } else if (currentMedia != null && currentMedia.getFile() == null && currentMedia.getURL() != null) {
+                System.out.println("StreamURL: " + currentMedia.getURL().toString());
+
+                //sString streamURL = currentMedia.getURL().toString();
+                //Pattern urlStart = Pattern.compile("(http://[\\d\\.]+:\\d+).*");
+                //Matcher matcher = urlStart.matcher(streamURL);
+
+                currentText = "internet "; // generic internet stream
+            }
+
+            setTitleHelper(currentText);
+        } catch (Throwable e) {
+            LOG.error("Error doing UI updates", e);
+        }
+    }
+
+    private void setTitleHelper(String currentText) {
+        if (currentText.length() > MAX_TITLE_CHARS) {
+            currentText = currentText.substring(0, BOUND_TITLE_CHARS) + " ... " + currentText.substring(currentText.length() - BOUND_TITLE_CHARS);
+        }
+
+        final String finalCurrentText = currentText;
+
+        GUIMediator.safeInvokeLater(new Runnable() {
+            @Override
+            public void run() {
+                trackTitle.setText("<html><u>" + finalCurrentText + "</u></html>");
+                trackTitle.setText(finalCurrentText);
+            }
+        });
     }
 
     /**
@@ -496,6 +602,12 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             showPauseButton();
         } else if (state == MediaPlaybackState.Paused) {
             showPlayButton();
+        }
+
+        if (state == MediaPlaybackState.Stopped || state == MediaPlaybackState.Closed) {
+            trackTitle.setText("");
+        } else {
+            setTitle(mediaPlayer.getCurrentMedia());
         }
     }
 
@@ -727,34 +839,26 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     @Override
     public void icyInfo(MediaPlayer mediaPlayer, String data) {
-
-    }
-    
-    private void setupIconAndText(Icon speakerIcon2, String currentText) {
-        if (currentText.length() > MAX_CHARS) {
-            currentText = currentText.substring(0, BOUND_CHARS) + " ... " + currentText.substring(currentText.length() - BOUND_CHARS);
-        }
-
-        final String currentTextFinal = currentText;
-
-        MediaSource currentMedia = MediaPlayer.instance().getCurrentMedia();
-
-        //only share files that exist
-        shareButton.setVisible(currentMedia != null && (currentMedia.getFile() != null || (currentMedia.getPlaylistItem() != null && currentMedia.getPlaylistItem().getFilePath() != null && new File(currentMedia.getPlaylistItem().getFilePath()).exists())));
-
-        updateTrackTitle(currentTextFinal);
-        updateSocialButton(currentMedia);
-    }
-
-    private void updateTrackTitle(final String currentTextFinal) {
-        GUIMediator.safeInvokeLater(new Runnable() {
-            @Override
-            public void run() {
-                trackTitle.setText("<html><font color=\"496989\"><u>" + currentTextFinal + "</u></font></html>");
+        if (data != null) {
+            for (String s : data.split(";")) {
+                if (s.startsWith("StreamTitle=")) {
+                    try {
+                        String streamTitle = s.substring(13, s.length() - 1);
+                        setTitleHelper("radio " + streamTitle);
+                    } catch (Throwable e) {
+                        LOG.warn("Error updating UI", e);
+                    }
+                    break;
+                }
             }
-        });
+        }
     }
-    
+
+    public void showCurrentMedia() {
+        GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
+        LibraryMediator.instance().selectCurrentMedia();
+    }
+
     private void updateSocialButton(MediaSource currentMedia) {
         if (currentMedia != null) {
             if (currentMedia.getFile().getAbsolutePath().toLowerCase().endsWith("mp3")) {
@@ -762,5 +866,37 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             }
         }
     }
-    
+
+    private final class SendToFriendActionListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            MediaSource currentMedia = MediaPlayer.instance().getCurrentMedia();
+
+            if (currentMedia == null) {
+                return;
+            }
+
+            File file = null;
+
+            if (currentMedia.getFile() != null) {
+                file = currentMedia.getFile();
+            } else if (currentMedia.getPlaylistItem() != null && currentMedia.getPlaylistItem().getFilePath() != null) {
+                file = new File(currentMedia.getPlaylistItem().getFilePath());
+            }
+
+            if (file == null) {
+                return;
+            }
+
+            String fileFolder = file.isFile() ? I18n.tr("file") : I18n.tr("folder");
+            int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Do you want to send this {0} to a friend?", fileFolder) + "\n\n\"" + file.getName() + "\"", I18n.tr("Send files with FrostWire"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+            if (result == JOptionPane.YES_OPTION) {
+                new SendFileProgressDialog(GUIMediator.getAppFrame(), file).setVisible(true);
+                GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
+            }
+        }
+    }
 }
