@@ -112,8 +112,6 @@ public final class StatusLine implements ThemeObserver {
     private JPanel _centerPanel;
     private Component _centerComponent;
 
-    private CurrentMediaStatusComponent _audioStatusComponent;
-
     ///////////////////////////////////////////////////////////////////////////
     //  Construction
     ///////////////////////////////////////////////////////////////////////////
@@ -141,7 +139,8 @@ public final class StatusLine implements ThemeObserver {
         });
 
         GUIMediator.setSplashScreenString(I18n.tr("Creating Audio Status Component..."));
-        _audioStatusComponent = new CurrentMediaStatusComponent();
+        //TODO: SupportFrostWireComponent
+        //        _audioStatusComponent = new CurrentMediaStatusComponent();
 
         //  make icons and panels for connection quality
         GUIMediator.setSplashScreenString(I18n.tr("Creating Connection Quality Indicator..."));
@@ -239,9 +238,10 @@ public final class StatusLine implements ThemeObserver {
      * and makes sure it has room to add an indicator before adding it.
      */
     public void refresh() {
-        if (_audioStatusComponent == null || _centerComponent == null) {
-            return;
-        }
+        //TODO: SupportFrostWireComponent
+//        if (_audioStatusComponent == null || _centerComponent == null) {
+//            return;
+//        }
 
         getComponent().removeAll();
 
@@ -255,7 +255,8 @@ public final class StatusLine implements ThemeObserver {
         remainingWidth -= sepWidth;
         remainingWidth -= GUIConstants.SEPARATOR / 2;
 
-        remainingWidth -= _audioStatusComponent.getWidth();
+        //TODO: SupportFrostWireComponent        
+//        remainingWidth -= _audioStatusComponent.getWidth();
         remainingWidth -= GUIConstants.SEPARATOR;
 
         //  subtract center component
@@ -342,7 +343,8 @@ public final class StatusLine implements ThemeObserver {
 
         // current song component
         BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-        BAR.add(_audioStatusComponent, gbc);
+        //TODO: SupportFrostWireComponent
+        //        BAR.add(_audioStatusComponent, gbc);
         BAR.add(Box.createHorizontalStrut(10));
         BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
 
