@@ -19,11 +19,14 @@
 package com.frostwire.gui.theme;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.LinearGradientPaint;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.plaf.nimbus.AbstractRegionPainter;
 
 /**
@@ -33,6 +36,8 @@ import javax.swing.plaf.nimbus.AbstractRegionPainter;
  *
  */
 public abstract class AbstractSkinPainter extends AbstractRegionPainter {
+
+    private static final String IMAGES_PATH = "org/limewire/gui/images/skin_";
 
     protected final ShapeGenerator shapeGenerator;
 
@@ -62,7 +67,7 @@ public abstract class AbstractSkinPainter extends AbstractRegionPainter {
 
         return createGradient(xCenter, yMin, xCenter, yMax, new float[] { 0f, 1f }, colors);
     }
-    
+
     /**
      * Creates a simple horizontal gradient using the shape for bounds and the
      * colors for top and bottom colors.
@@ -73,10 +78,10 @@ public abstract class AbstractSkinPainter extends AbstractRegionPainter {
      * @return the gradient.
      */
     protected Paint createHorizontalGradient(Shape s, Color[] colors) {
-        Rectangle2D bounds  = s.getBounds2D();
-        float       xMin    = (float) bounds.getMinX();
-        float       xMax    = (float) bounds.getMaxX();
-        float       yCenter = (float) bounds.getCenterY();
+        Rectangle2D bounds = s.getBounds2D();
+        float xMin = (float) bounds.getMinX();
+        float xMax = (float) bounds.getMaxX();
+        float yCenter = (float) bounds.getCenterY();
 
         return createGradient(xMin, yCenter, xMax, yCenter, new float[] { 0f, 1f }, colors);
     }
@@ -107,5 +112,13 @@ public abstract class AbstractSkinPainter extends AbstractRegionPainter {
 
     protected final boolean testValid(int x, int y, int w, int h) {
         return x >= 0 && y >= 0 && (w - x) > 0 && (h - y) > 0;
+    }
+
+    protected final Image getImage(String name) {
+        try {
+            return ImageIO.read(ClassLoader.getSystemResource(IMAGES_PATH + name + ".png"));
+        } catch (IOException e) {
+            throw new RuntimeException("Error loading skin image", e);
+        }
     }
 }

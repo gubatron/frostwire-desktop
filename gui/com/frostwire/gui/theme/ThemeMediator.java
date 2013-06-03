@@ -239,6 +239,23 @@ public class ThemeMediator {
                                 // editorpane
                                 defaults.put("EditorPane[Enabled].backgroundPainter", SkinColors.LIGHT_BACKGROUND_COLOR);
 
+                                // radio buttons
+                                //defaults.put("RadioButton.icon", new IconUIResource()); 
+                                defaults.put("RadioButton[Disabled+Selected].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.DisabledSelected));
+                                defaults.put("RadioButton[Disabled].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.Disabled));
+                                defaults.put("RadioButton[Enabled].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.Enabled));
+                                defaults.put("RadioButton[Focused+MouseOver+Selected].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.FocusedMouseOverSelected));
+                                defaults.put("RadioButton[Focused+MouseOver].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.FocusedMouseOver));
+                                defaults.put("RadioButton[Focused+Pressed+Selected].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.FocusedPressedSelected));
+                                defaults.put("RadioButton[Focused+Pressed].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.FocusedPressed));
+                                defaults.put("RadioButton[Focused+Selected].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.FocusedSelected));
+                                defaults.put("RadioButton[Focused].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.Focused));
+                                defaults.put("RadioButton[MouseOver+Selected].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.MouseOverSelected));
+                                defaults.put("RadioButton[MouseOver].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.MouseOver));
+                                defaults.put("RadioButton[Pressed+Selected].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.PressedSelected));
+                                defaults.put("RadioButton[Pressed].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.Pressed));
+                                defaults.put("RadioButton[Selected].iconPainter", new RadioButtonIconPainter(RadioButtonIconPainter.State.Selected));
+
                                 return defaults;
                             }
                         });
