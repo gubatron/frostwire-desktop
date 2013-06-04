@@ -15,6 +15,7 @@
 
 package com.limegroup.gnutella.gui.search;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -30,8 +31,6 @@ import java.util.Map;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JComponent;
@@ -42,8 +41,9 @@ import javax.swing.border.Border;
 import javax.swing.plaf.synth.SynthContext;
 import javax.swing.plaf.synth.SynthRadioButtonUI;
 
+import net.miginfocom.swing.MigLayout;
+
 import com.frostwire.gui.theme.AbstractSkinPainter;
-import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ImageManipulator;
@@ -70,16 +70,19 @@ final class SchemaBox extends JPanel {
         this.buttonsMap = new HashMap<NamedMediaType, JToggleButton>();
         this.tooltipPlaceHolders = new HashMap<NamedMediaType, String>();
 
-        setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+        //setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+        setLayout(new BorderLayout());
+//        setBackground(Color.GRAY);
+        //setOpaque(true);
         addSchemas();
-        add(Box.createHorizontalGlue());
+        //add(Box.createHorizontalGlue());
 
-        Border colorBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR);
-        Border marginBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
-        Border border = BorderFactory.createCompoundBorder(colorBorder, marginBorder);
+        //Border colorBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR);
+        Border marginBorder = BorderFactory.createEmptyBorder(3, 4, 0, 0);
+        Border border = marginBorder;//BorderFactory.createCompoundBorder(colorBorder, marginBorder);
         setBorder(border);
 
-        Dimension dim = new Dimension(100, 35);
+        Dimension dim = new Dimension(10, 30);
         setPreferredSize(dim);
         setMinimumSize(dim);
     }
@@ -119,35 +122,45 @@ final class SchemaBox extends JPanel {
     private void addSchemas() {
         NamedMediaType nmt;
 
+        JPanel panel = new JPanel(new MigLayout("insets 0, fillx"));
+//        panel.setBackground(Color.BLUE);
+        //panel.setOpaque(true);
+        //panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 4, 0));
+        Dimension dim = new Dimension(400, 30);
+        panel.setPreferredSize(dim);
+        panel.setMinimumSize(dim);
+
         // Then add 'Audio'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_AUDIO);
         tooltipPlaceHolders.put(nmt, I18n.tr("%s Audio files found (including .mp3, .wav, .ogg, and more)"));
-        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
+        addMediaType(panel, nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
 
         // Then add 'Images'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_IMAGES);
         tooltipPlaceHolders.put(nmt, I18n.tr("%s Image files found (including .jpg, .gif, .png and more)"));
-        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
+        addMediaType(panel, nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
 
         // Then add 'Video'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_VIDEO);
         tooltipPlaceHolders.put(nmt, I18n.tr("%s Video files found (including .avi, .mpg, .wmv, and more)"));
-        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
+        addMediaType(panel, nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
 
         // Then add 'Documents'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_DOCUMENTS);
         tooltipPlaceHolders.put(nmt, I18n.tr("%s Document files found (including .html, .txt, .pdf, and more)"));
-        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
+        addMediaType(panel, nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
 
         // Then add 'Programs'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_PROGRAMS);
         tooltipPlaceHolders.put(nmt, I18n.tr("%s Program files found (including .exe, .zip, .gz, and more)"));
-        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
+        addMediaType(panel, nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
 
         // Then add 'Torrents'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_TORRENTS);
         tooltipPlaceHolders.put(nmt, I18n.tr("%s Torrent files found (includes only .torrent files. Torrent files point to collections of files shared on the BitTorrent network.)"));
-        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
+        addMediaType(panel, nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
+
+        add(panel, BorderLayout.LINE_START);
     }
 
     /**
@@ -155,7 +168,7 @@ final class SchemaBox extends JPanel {
      *
      * Marks the 'Any Type' as selected.
      */
-    private void addMediaType(NamedMediaType type, String toolTip) {
+    private void addMediaType(JPanel panel, NamedMediaType type, String toolTip) {
         Icon icon = type.getIcon();
         Icon disabledIcon = null;
         Icon rolloverIcon = null;
@@ -175,10 +188,10 @@ final class SchemaBox extends JPanel {
         button.setBorderPainted(false);
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
-        button.setMargin(new Insets(4, 6, 4, 0));
-        Dimension d = new Dimension(60, 20);
-        button.setPreferredSize(d);
-        button.setMinimumSize(d);
+        button.setMargin(new Insets(4, 6, 4, 6));
+        //Dimension d = new Dimension(60, 20);
+        //button.setPreferredSize(d);
+        //button.setMinimumSize(d);
         button.setOpaque(false);
         if (toolTip != null) {
             button.setToolTipText(toolTip);
@@ -187,7 +200,7 @@ final class SchemaBox extends JPanel {
         buttonGroup.add(button);
 
         button.setUI(new SchemaButtonUI(button));
-        add(button);
+        panel.add(button);
 
         button.addActionListener(new SchemaButtonActionListener(type));
         button.setSelected(isMediaTypeSelected(type));

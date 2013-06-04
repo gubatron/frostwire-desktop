@@ -702,7 +702,11 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
 
     private JComponent createSchemaBox() {
         schemaBox = new SchemaBox(this);
-
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
+        
         final String strShowOpts = I18n.tr("Show Options");
         final String strHideOpts = I18n.tr("Hide Options");
 
@@ -710,7 +714,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         // minor optimization to keep the layout as flat as possible
         final JButton buttonOptions = new JButton(strShowOpts);
         buttonOptions.setContentAreaFilled(false);
-        buttonOptions.setBorderPainted(false);
+        //buttonOptions.setBorderPainted(false);
         buttonOptions.setOpaque(false);
 
         Dimension dim = new Dimension(120, 30);
@@ -719,7 +723,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         buttonOptions.setPreferredSize(dim);
         buttonOptions.setSize(dim);
         //buttonOptions.setMargin(new Insets(0, 0, 0, 0));
-        //buttonOptions.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, ThemeMediator.LIGHT_BORDER_COLOR));
+        //buttonOptions.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
 
         buttonOptions.addActionListener(new ActionListener() {
             @Override
@@ -732,10 +736,13 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
 
         JSeparator sep = new JSeparator(SwingConstants.VERTICAL);
         sep.setMaximumSize(new Dimension(2, 100));
-        schemaBox.add(sep);
-        schemaBox.add(buttonOptions);
+        
+        panel.add(schemaBox);
+        panel.add(Box.createHorizontalGlue());
+        panel.add(sep);
+        panel.add(buttonOptions);
 
-        return schemaBox;
+        return panel;
     }
 
     private JScrollPane createSearchOptionsPanel() {
