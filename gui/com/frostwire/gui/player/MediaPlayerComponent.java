@@ -18,6 +18,7 @@ package com.frostwire.gui.player;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -243,13 +244,16 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     private JPanel createTrackDetailPanel() {
         JPanel panel = new JPanel();
+        Cursor theHand = new Cursor(Cursor.HAND_CURSOR);
         panel.setLayout(new MigLayout("insets 0, gap 8, w 464!", //layout
                                       "[][][grow][][][]", //columns
                                       "")); //row
         
         socialButton = new MediaButton("","","");
+        socialButton.setCursor(theHand);
         socialButton.setVisible(false);
         shareButton = new MediaButton(I18n.tr("Send this file to a friend"), "share", "share");
+        shareButton.setCursor(theHand);
         shareButton.addActionListener(new SendToFriendActionListener());
         shareButton.setVisible(false);
 
@@ -257,6 +261,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         panel.add(shareButton,"w 18!");
 
         trackTitle = new JLabel("");
+        trackTitle.setCursor(theHand);
         trackTitle.setForeground(Color.WHITE);
         trackTitle.addMouseListener(new MouseAdapter() {
             @Override
