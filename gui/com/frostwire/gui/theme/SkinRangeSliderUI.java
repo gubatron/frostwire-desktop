@@ -29,6 +29,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.synth.SynthConstants;
 import javax.swing.plaf.synth.SynthContext;
 import javax.swing.plaf.synth.SynthSliderUI;
 
@@ -47,6 +48,9 @@ public class SkinRangeSliderUI extends SynthSliderUI {
     private MouseInputAdapter thumbTrackListener;
 
     private Rectangle zeroRect = new Rectangle();
+
+    private transient boolean mousePressed;
+    private transient boolean mouseOver;
 
     public static ComponentUI createUI(JComponent c) {
         return new SkinRangeSliderUI((JSlider) c);
@@ -156,7 +160,7 @@ public class SkinRangeSliderUI extends SynthSliderUI {
         for (int i = thumbNum - 1; 0 <= i; i--) {
             if (clip.intersects(thumbRects[i])) {
                 thumbRect = thumbRects[i];
-                super.paintThumb(context, g, thumbRect);
+                super.paintThumb(getThumbContext(context), g, thumbRect);
             }
         }
     }
@@ -175,6 +179,46 @@ public class SkinRangeSliderUI extends SynthSliderUI {
 
     private MouseInputAdapter createThumbTrackListener(JSlider slider) {
         return additonalUi.trackListener;
+    }
+
+    private SynthContext getThumbContext(SynthContext ctx) {
+        SynthContext context = ctx;
+
+        int state = ctx.getComponentState();
+
+        if (mousePressed) {
+            state |= SynthConstants.PRESSED;
+        }
+
+        // not working logic per thumb
+        //        Point p = slider.getMousePosition();
+        //        if (thumbRect != null && p != null && thumbRect.contains(p)) {
+        //            state |= SynthConstants.MOUSE_OVER;
+        //        }
+
+        if (mouseOver) {
+            state |= SynthConstants.MOUSE_OVER;
+        }
+
+        if (state != ctx.getComponentState()) {
+            context = new SynthContext(ctx.getComponent(), ctx.getRegion(), ctx.getStyle(), state);
+        }
+
+        return context;
+    }
+
+    private void setMousePressed(boolean pressed) {
+        if (mousePressed != pressed) {
+            mousePressed = pressed;
+            slider.repaint();
+        }
+    }
+
+    private void setMouseOver(boolean pressed) {
+        if (mouseOver != pressed) {
+            mouseOver = pressed;
+            slider.repaint();
+        }
     }
 
     private static class RangeSliderAdditionalUI {
@@ -312,6 +356,7 @@ public class SkinRangeSliderUI extends SynthSliderUI {
                 if (!slider.isEnabled()) {
                     return;
                 }
+                ui.setMousePressed(true);
                 currentMouseX = e.getX();
                 currentMouseY = e.getY();
                 slider.requestFocus();
@@ -396,7 +441,18 @@ public class SkinRangeSliderUI extends SynthSliderUI {
                 offset = 0;
                 isDragging = false;
                 mSlider.setValueIsAdjusting(false);
+                ui.setMousePressed(false);
                 mSlider.repaint();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                ui.setMouseOver(false);
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                ui.setMouseOver(true);
             }
         }
     }
