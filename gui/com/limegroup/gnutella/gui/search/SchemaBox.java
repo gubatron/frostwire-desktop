@@ -15,8 +15,13 @@
 
 package com.limegroup.gnutella.gui.search;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Insets;
+import java.awt.Paint;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
@@ -29,11 +34,15 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 import javax.swing.border.Border;
+import javax.swing.plaf.synth.SynthContext;
+import javax.swing.plaf.synth.SynthRadioButtonUI;
 
+import com.frostwire.gui.theme.AbstractSkinPainter;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.I18n;
@@ -59,13 +68,15 @@ final class SchemaBox extends JPanel {
 
         this.buttonGroup = new ButtonGroup();
         this.buttonsMap = new HashMap<NamedMediaType, JToggleButton>();
-        this.tooltipPlaceHolders = new HashMap<NamedMediaType,String>();
+        this.tooltipPlaceHolders = new HashMap<NamedMediaType, String>();
 
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         addSchemas();
         add(Box.createHorizontalGlue());
 
-        Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR);
+        Border colorBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR);
+        Border marginBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
+        Border border = BorderFactory.createCompoundBorder(colorBorder, marginBorder);
         setBorder(border);
 
         Dimension dim = new Dimension(100, 35);
@@ -85,7 +96,7 @@ final class SchemaBox extends JPanel {
         NamedMediaType nmt = NamedMediaType.getFromExtension(sr.getExtension());
         if (nmt != null && buttonsMap.containsKey(nmt)) {
             JToggleButton button = buttonsMap.get(nmt);
-            incrementText(button,nmt);
+            incrementText(button, nmt);
         }
     }
 
@@ -99,7 +110,7 @@ final class SchemaBox extends JPanel {
         }
         String incrementedCounterValue = String.valueOf(n + 1);
         button.setText(incrementedCounterValue);
-        button.setToolTipText(String.format(tooltipPlaceHolders.get(nmt),incrementedCounterValue));
+        button.setToolTipText(String.format(tooltipPlaceHolders.get(nmt), incrementedCounterValue));
     }
 
     /**
@@ -111,32 +122,32 @@ final class SchemaBox extends JPanel {
         // Then add 'Audio'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_AUDIO);
         tooltipPlaceHolders.put(nmt, I18n.tr("%s Audio files found (including .mp3, .wav, .ogg, and more)"));
-        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt),0));
+        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
 
         // Then add 'Images'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_IMAGES);
         tooltipPlaceHolders.put(nmt, I18n.tr("%s Image files found (including .jpg, .gif, .png and more)"));
-        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt),0));
+        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
 
         // Then add 'Video'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_VIDEO);
-        tooltipPlaceHolders.put(nmt,I18n.tr("%s Video files found (including .avi, .mpg, .wmv, and more)"));
-        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt),0));
-        
+        tooltipPlaceHolders.put(nmt, I18n.tr("%s Video files found (including .avi, .mpg, .wmv, and more)"));
+        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
+
         // Then add 'Documents'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_DOCUMENTS);
-        tooltipPlaceHolders.put(nmt,I18n.tr("%s Document files found (including .html, .txt, .pdf, and more)"));
-        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt),0));
-        
+        tooltipPlaceHolders.put(nmt, I18n.tr("%s Document files found (including .html, .txt, .pdf, and more)"));
+        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
+
         // Then add 'Programs'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_PROGRAMS);
-        tooltipPlaceHolders.put(nmt,I18n.tr("%s Program files found (including .exe, .zip, .gz, and more)"));
-        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt),0));
-        
+        tooltipPlaceHolders.put(nmt, I18n.tr("%s Program files found (including .exe, .zip, .gz, and more)"));
+        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
+
         // Then add 'Torrents'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_TORRENTS);
-        tooltipPlaceHolders.put(nmt,I18n.tr("%s Torrent files found (includes only .torrent files. Torrent files point to collections of files shared on the BitTorrent network.)"));
-        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt),0));
+        tooltipPlaceHolders.put(nmt, I18n.tr("%s Torrent files found (includes only .torrent files. Torrent files point to collections of files shared on the BitTorrent network.)"));
+        addMediaType(nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
     }
 
     /**
@@ -164,7 +175,7 @@ final class SchemaBox extends JPanel {
         button.setBorderPainted(false);
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
-        button.setMargin(new Insets(0, 6, 0, 0));
+        button.setMargin(new Insets(4, 6, 4, 0));
         Dimension d = new Dimension(60, 20);
         button.setPreferredSize(d);
         button.setMinimumSize(d);
@@ -174,6 +185,8 @@ final class SchemaBox extends JPanel {
         }
 
         buttonGroup.add(button);
+
+        button.setUI(new SchemaButtonUI(button));
         add(button);
 
         button.addActionListener(new SchemaButtonActionListener(type));
@@ -210,22 +223,6 @@ final class SchemaBox extends JPanel {
         return selectedButton;
     }
 
-    /**
-    private AbstractButton getMediaTypeButton(String ext) {
-        AbstractButton selectedButton = null;
-
-        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
-            AbstractButton button = buttons.nextElement();
-
-            if (button.isSelected()) {
-                selectedButton = button;
-            }
-        }
-
-        return selectedButton;
-    }
-    */
-
     private final class SchemaButtonActionListener implements ActionListener {
 
         private final NamedMediaType nmt;
@@ -245,6 +242,49 @@ final class SchemaBox extends JPanel {
             if (resultPanel != null) {
                 resultPanel.filterChanged(filter, 2);
             }
+        }
+    }
+
+    private static final class SchemaButtonBackgroundPainter extends AbstractSkinPainter {
+
+        private static final Color STROKE = new Color(161, 195, 214);
+        private static final Color LIGHT = new Color(203, 224, 236);
+        private static final Color DARK = new Color(182, 206, 220);
+
+        private static final Color[] BACKGROUND = new Color[] { LIGHT, DARK };
+
+        @Override
+        protected void doPaint(Graphics2D g, JComponent c, int width, int height, Object[] extendedCacheKeys) {
+            int w = width - 2;
+            int h = height - 1;
+            if (testValid(0, 0, w, h)) {
+                Shape s = shapeGenerator.createRectangle(0, 0, w, h);
+                Paint background = createVerticalGradient(s, BACKGROUND);
+                g.setPaint(background);
+                g.fill(s);
+                g.setPaint(STROKE);
+                g.draw(s);
+            }
+        }
+    }
+
+    private static final class SchemaButtonUI extends SynthRadioButtonUI {
+
+        private final JToggleButton button;
+
+        protected final SchemaButtonBackgroundPainter backgroundPainter;
+
+        public SchemaButtonUI(JToggleButton button) {
+            this.button = button;
+            this.backgroundPainter = new SchemaButtonBackgroundPainter();
+        }
+
+        @Override
+        protected void paint(SynthContext context, Graphics g) {
+            if (button.isSelected()) {
+                backgroundPainter.doPaint((Graphics2D) g, button, button.getWidth(), button.getHeight(), null);
+            }
+            super.paint(context, g);
         }
     }
 }

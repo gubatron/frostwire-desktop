@@ -28,7 +28,7 @@ import java.awt.geom.Path2D;
  *
  * @author Kathryn Huxtable
  */
-final class ShapeGenerator {
+public final class ShapeGenerator {
 
     /**
      * The base radius (arc size) for most control's borders. This is used to

@@ -321,6 +321,7 @@ public class ThemeMediator {
         UIManager.put("TextFieldUI", "com.frostwire.gui.theme.SkinTextFieldUI");
         UIManager.put("RangeSliderUI", "com.frostwire.gui.theme.SkinRangeSliderUI");
         UIManager.put("TableUI", "com.frostwire.gui.theme.SkinTableUI");
+        UIManager.put("RadioButtonUI", "com.frostwire.gui.theme.SkinRadioButtonUI");
 
         //UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
     }
