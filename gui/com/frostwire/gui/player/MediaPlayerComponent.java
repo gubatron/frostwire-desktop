@@ -125,11 +125,6 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     private final Dimension progressBarDimension = new Dimension(180, 10);
 
     /**
-     * Volume slider dimensions for adjusting the audio level of a song
-     */
-    private final Dimension volumeSliderDimension = new Dimension(70, 19);
-
-    /**
      * The current song that is playing
      */
     private MediaSource currentPlayListItem;
@@ -187,19 +182,16 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
         // create sliders
         PROGRESS.setMinimumSize(progressBarDimension);
-        PROGRESS.setMaximumSize(progressBarDimension);
         PROGRESS.setPreferredSize(progressBarDimension);
         PROGRESS.setMaximum(3600);
         PROGRESS.setEnabled(false);
 
-        VOLUME.setMinimumSize(volumeSliderDimension);
-        VOLUME.setMaximumSize(volumeSliderDimension);
-        VOLUME.setPreferredSize(volumeSliderDimension);
         VOLUME.setMinimum(0);
         VOLUME.setValue(50);
         VOLUME.setMaximum(100);
         VOLUME.setEnabled(true);
         VOLUME.setOpaque(false);
+        VOLUME.setToolTipText(I18n.tr("Volume"));
 
         // setup buttons
         registerListeners();
@@ -211,7 +203,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
         panel.add(createPlaybackButtonsPanel(), "span 1 2, growy, gapright 4");
         panel.add(createTrackDetailPanel(), "wrap, growx");
-        panel.add(createProgressPanel());
+        panel.add(createProgressPanel(),"growx");
 
         return panel;
     }
@@ -251,22 +243,21 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     private JPanel createTrackDetailPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0, gap 0, w 434!", //layout
-                                      "[grow][][]", //columns
+        panel.setLayout(new MigLayout("insets 0, gap 8, w 464!", //layout
+                                      "[][][grow][][][]", //columns
                                       "")); //row
         
         socialButton = new MediaButton("","","");
         socialButton.setVisible(false);
-        panel.add(socialButton);
-        
         shareButton = new MediaButton(I18n.tr("Send this file to a friend"), "share", "share");
         shareButton.addActionListener(new SendToFriendActionListener());
         shareButton.setVisible(false);
-        panel.add(shareButton);
+
+        panel.add(socialButton,"w 18!");
+        panel.add(shareButton,"w 18!");
 
         trackTitle = new JLabel("");
         trackTitle.setForeground(Color.WHITE);
-        panel.add(trackTitle, "growx");
         trackTitle.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -283,58 +274,50 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 }
             }
         });
+        panel.add(trackTitle, "growx");
 
         initPlaylistPlaybackModeControls();
-        panel.add(LOOP_BUTTON);
-        panel.add(SHUFFLE_BUTTON);
-
-        panel.add(VOLUME);
+        panel.add(LOOP_BUTTON,"w 24!");
+        panel.add(SHUFFLE_BUTTON,"w 24!");
+        panel.add(VOLUME,"w 83!");
 
         return panel;
     }
 
     private JPanel createProgressPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0"));
+        panel.setLayout(new MigLayout("insets 0, fillx",
+                    "[][grow][align right]"));
 
         Font f = panel.getFont();
         f = f.deriveFont(10f);
 
-        Dimension timeLabelsDimension = new Dimension(45, 11);
-        progressCurrentTime.setMinimumSize(timeLabelsDimension);
-        progressCurrentTime.setPreferredSize(timeLabelsDimension);
         progressCurrentTime.setForeground(Color.WHITE);
         progressCurrentTime.setFont(f);
-        progressSongLength.setPreferredSize(timeLabelsDimension);
-        progressSongLength.setMinimumSize(timeLabelsDimension);
         progressSongLength.setForeground(Color.WHITE);
         progressSongLength.setFont(f);
 
-        panel.add(progressCurrentTime);
-        panel.add(PROGRESS);
-        panel.add(progressSongLength);
+        panel.add(progressCurrentTime,"gap 2!");
+        panel.add(PROGRESS, "growx");
+        panel.add(progressSongLength, "align center");
 
         return panel;
     }
 
     public void initPlaylistPlaybackModeControls() {
         SHUFFLE_BUTTON = new JToggleButton();
-        //SHUFFLE_BUTTON.setBorderPainted(false);
         SHUFFLE_BUTTON.setContentAreaFilled(false);
         SHUFFLE_BUTTON.setBackground(null);
         SHUFFLE_BUTTON.setIcon(GUIMediator.getThemeImage("shuffle_off"));
         SHUFFLE_BUTTON.setSelectedIcon(GUIMediator.getThemeImage("shuffle_on"));
         SHUFFLE_BUTTON.setToolTipText(I18n.tr("Shuffle songs"));
         SHUFFLE_BUTTON.setSelected(mediaPlayer.isShuffle());
-        //SHUFFLE_BUTTON.setMargin(new Insets(0, 0, 0, 0));
 
         LOOP_BUTTON = new JButton();
-        //LOOP_BUTTON.setBorderPainted(false);
         LOOP_BUTTON.setContentAreaFilled(false);
         LOOP_BUTTON.setBackground(null);
         LOOP_BUTTON.setIcon(getCurrentLoopButtonImage());
         LOOP_BUTTON.setToolTipText(I18n.tr("Repeat songs"));
-        //LOOP_BUTTON.setMargin(new Insets(0, 0, 0, 0));
 
         SHUFFLE_BUTTON.addActionListener(new ActionListener() {
 
