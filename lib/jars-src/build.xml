@@ -24,7 +24,6 @@
 		<ant dir="mp4parser" />
 		<ant dir="jaudiotagger" />
 		<ant dir="slf4j-api" />
-		<ant dir="slf4j-jdk14" />
 
 		<antcall target="copyjars" />
 
@@ -55,7 +54,6 @@
 		<ant dir="mp4parser" target="clean" />
 		<ant dir="jaudiotagger" target="clean" />
 		<ant dir="slf4j-api" target="clean" />
-		<ant dir="slf4j-jdk14" target="clean" />
 
 		<mkdir dir="dist" />
 
@@ -73,10 +71,6 @@
 		<copy file="dist/gson-1.4.jar" todir="../jars/" />
 		<copy file="dist/httpclient-4.0.jar" todir="../jars/" />
 		<copy file="dist/httpcore-4.0.1.jar" todir="../jars/" />
-		<copy file="dist/netx.jar" todir="../jars/" />
-		<copy file="dist/trident.jar" todir="../jars/" />
-		<copy file="dist/laf-widget.jar" todir="../jars/" />
-		<copy file="dist/substance.jar" todir="../jars/" />
 		<copy file="dist/lucene-3.5.0.jar" todir="../jars/" />
 		<copy file="dist/h2-1.3.164.jar" todir="../jars/" />
 		<copy file="dist/dnsjava-2.1.3.jar" todir="../jars/" />
@@ -84,8 +78,7 @@
 		<copy file="dist/fwtips.jar" todir="../jars/" />
 		<copy file="dist/mp4parser.jar" todir="../jars/" />
 		<copy file="dist/jaudiotagger.jar" todir="../jars/" />
-		<copy file="slf4j-api-1.7.5" todir="../jars/" />
-		<copy file="slf4j-jdk14-1.7.5" todir="../jars/" />
+		<copy file="dist/slf4j-api-1.7.5.jar" todir="../jars/" />
 
 	</target>
 
