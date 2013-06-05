@@ -477,7 +477,7 @@ public class StringUtils {
         try {
             return URLEncoder.encode(s, "UTF-8").replaceAll("\\+", "%20");
         } catch (UnsupportedEncodingException e) {
-            return URLEncoder.encode(s).replaceAll("\\+", "%20");
+            return s.replaceAll("\\+", "%20");
         }
     }
 
@@ -488,7 +488,7 @@ public class StringUtils {
         try {
             return URLDecoder.decode(s, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            return URLDecoder.decode(s);
+            return s;
         }
     }
 }
