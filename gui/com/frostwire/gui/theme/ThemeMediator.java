@@ -51,7 +51,7 @@ public class ThemeMediator {
     public static final Color TABLE_ALTERNATE_ROW_COLOR = SkinColors.TABLE_ALTERNATE_ROW_COLOR;
     public static final Color TABLE_SELECTED_BACKGROUND_ROW_COLOR = SkinColors.TABLE_SELECTED_BACKGROUND_ROW_COLOR;
 
-    public static final Color TAB_BUTTON_FOREGROUND_COLOR = new Color(0x6489a8);
+    public static final Color TAB_BUTTON_FOREGROUND_COLOR = new Color(0xFFFFFF);
 
     public static final String SKIN_PROPERTY_DARK_BOX_BACKGROUND = "skin_property_dark_box_background";
 
