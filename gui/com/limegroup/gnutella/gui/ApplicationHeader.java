@@ -26,8 +26,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -120,7 +118,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         headerButtonBackgroundUnselected = GUIMediator.getThemeImage("unselected_header_button_background").getImage();
 
         searchPanels = createSearchPanel();
-        add(searchPanels, "w 280!, gapright 7");
+        add(searchPanels, "w 320!, gapright 7");
 
         addTabButtons(tabs);
 
@@ -280,8 +278,8 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
 
         button.putClientProperty(SELECTED, icon);
         if (icon != null) {
-            disabledIcon = ImageManipulator.darken(icon);
-            rolloverIcon = ImageManipulator.brighten(icon);
+            disabledIcon = icon;//ImageManipulator.darken(icon);
+            rolloverIcon = icon;//ImageManipulator.brighten(icon);
         }
         button.putClientProperty(DESELECTED, disabledIcon);
         button.setIcon(disabledIcon);
@@ -300,7 +298,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         button.setHorizontalAlignment(SwingConstants.CENTER);
         button.setForeground(ThemeMediator.TAB_BUTTON_FOREGROUND_COLOR);
 
-        Dimension buttonDim = new Dimension(80, 55);
+        Dimension buttonDim = new Dimension(65, 55);
         button.setPreferredSize(buttonDim);
         button.setMinimumSize(buttonDim);
         button.setMaximumSize(buttonDim);
@@ -320,70 +318,16 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         }
     }
 
-    /*
-    * Listener for ItemEvent, so that the buttons can be highlighted or not
-    * when selected (or not).
-    */
-    private static class Highlighter implements ItemListener {
-        public void itemStateChanged(ItemEvent e) {
-            AbstractButton button = (AbstractButton) e.getSource();
-            //DitherPanel parent = (DitherPanel) button.getParent();
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                button.setIcon((Icon) button.getClientProperty(SELECTED));
-                //parent.setDithering(true);
-            } else {
-                button.setIcon((Icon) button.getClientProperty(DESELECTED));
-                //parent.setDithering(false);
-            }
-        }
-    }
-
     /**
      * Forwards click events from a panel to the panel's component.
      */
-    private static class Clicker implements MouseListener {
-        public void mouseEntered(MouseEvent e) {
-            /*
-            JComponent c = (JComponent) e.getSource();
-            AbstractButton b;
-            if (c instanceof AbstractButton) {
-                b = (AbstractButton) c;
-                c = (JComponent) c.getParent();
-            } else {
-                b = (AbstractButton) c.getComponent(0);
-            }
-            //           if (!b.isSelected())
-            //               setIfNotNull(c, "TabbedPane.selected");
-            */
-        }
-
-        public void mouseExited(MouseEvent e) {
-            /**
-            JComponent c = (JComponent) e.getSource();
-            AbstractButton b;
-            if (c instanceof AbstractButton) {
-                b = (AbstractButton) c;
-                c = (JComponent) c.getParent();
-            } else {
-                b = (AbstractButton) c.getComponent(0);
-            }
-            */
-            //           if (!b.isSelected())
-            //               setIfNotNull(c, "TabbedPane.background");
-        }
-
+    private static class Clicker extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
             JComponent c = (JComponent) e.getSource();
             if (!(c instanceof AbstractButton)) {
                 AbstractButton b = (AbstractButton) c.getComponent(0);
                 b.doClick();
             }
-        }
-
-        public void mousePressed(MouseEvent e) {
-        }
-
-        public void mouseReleased(MouseEvent e) {
         }
     }
 
