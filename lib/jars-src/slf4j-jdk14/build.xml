@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="h2" default="main" basedir=".">
+
+	<property name="jars" value="../dist" />
+
+	<path id="default.classpath">
+		<fileset dir="${jars}" includes="*.jar" excludes="slf4j-jdk14-1.7.5.jar" />
+	</path>
+
+	<target name="main">
+		<mkdir dir="bin" />
+
+		<!-- build -->
+		<javac srcdir="." destdir="bin" fork="true" includeantruntime="false">
+			<classpath refid="default.classpath" />
+		</javac>
+
+		<!-- jar -->
+		<jar jarfile="../dist/slf4j-jdk14-1.7.5.jar">
+			<fileset dir="bin" />
+		</jar>
+
+	</target>
+
+	<target name="clean">
+
+		<delete dir="bin" />
+
+	</target>
+
+</project>
