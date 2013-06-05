@@ -47,9 +47,13 @@ public final class MediaButton extends JButton {
         setContentAreaFilled(false);
         setBorderPainted(false);
         setRolloverEnabled(true);
-        setIcon(GUIMediator.getThemeImage(upName));
+        if (upName != null) {
+            setIcon(GUIMediator.getThemeImage(upName));
+        }
         setHorizontalAlignment(SwingConstants.CENTER);
-        setPressedIcon(GUIMediator.getThemeImage(downName));
+        if (downName != null) {
+            setPressedIcon(GUIMediator.getThemeImage(downName));
+        }
         //        setPreferredSize(new Dimension(
         //            getIcon().getIconWidth(), getIcon().getIconHeight()));
         setMargin(new Insets(0, 0, 0, 0));
