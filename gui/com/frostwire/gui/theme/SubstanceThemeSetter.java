@@ -100,7 +100,8 @@ public class SubstanceThemeSetter {
         return font;
     }
 
-    private void fixLinuxOSFont() {
+    static Font fixLinuxOSFont() {
+    	Font font = null;
         try {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
 
@@ -112,12 +113,15 @@ public class SubstanceThemeSetter {
             if (fontName != null) {
                 // linux is hardcoded to Dialog
                 fontName = "Dialog";
+                font = new Font(fontName, Font.PLAIN, 12);
                 method.invoke(toolkit, "gnome.Gtk/FontName", fontName);
                 //SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getDefaultFontPolicy());
             }
         } catch (Throwable e) {
             LOG.error("Error fixing font", e);
         }
+        
+        return font;
     }
 
     private void fixAAFontSettings() {

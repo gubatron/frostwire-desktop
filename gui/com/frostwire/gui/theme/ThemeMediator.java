@@ -337,7 +337,11 @@ public class ThemeMediator {
         } else if (OSUtils.isMacOSX()) {
             font = AquaFonts.getControlTextFont();
         } else if (OSUtils.isLinux()) {
-            throw new RuntimeException("Need to fix");
+        	Font recommendedFont = SubstanceThemeSetter.fixLinuxOSFont();
+        	if (recommendedFont != null) {
+        		font = new FontUIResource(recommendedFont);
+        	}
+            //throw new RuntimeException("Need to fix");
         }
 
         return font;
