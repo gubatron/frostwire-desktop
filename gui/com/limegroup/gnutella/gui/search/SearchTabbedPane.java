@@ -41,16 +41,15 @@ import com.limegroup.gnutella.gui.GUIMediator;
  */
 final class SearchTabbedPane extends JTabbedPane {
 
-    private final CloseActionHandler closeAction;
-
     public SearchTabbedPane() {
-        this.closeAction = new CloseActionHandler();
     }
 
     @Override
     public void addTab(String title, Icon icon, Component component) {
         super.addTab(title, icon, component);
-        setTabComponentAt(getTabCount() - 1, new SearchTabHeader(title));
+
+        int tabIndex = getTabCount() - 1;
+        setTabComponentAt(tabIndex, new SearchTabHeader(tabIndex, title));
     }
 
     @Override
@@ -73,14 +72,14 @@ final class SearchTabbedPane extends JTabbedPane {
         private final JButton buttonClose;
         private final JLabel labelText;
 
-        public SearchTabHeader(String text) {
+        public SearchTabHeader(int tabIdex, String text) {
             setLayout(new MigLayout("insets 0, gap 0"));
 
             buttonClose = new JButton(CancelSearchIconProxy.createSelected());
             buttonClose.setOpaque(false);
             buttonClose.setContentAreaFilled(false);
             buttonClose.setBorderPainted(false);
-            buttonClose.addActionListener(closeAction);
+            buttonClose.addActionListener(new CloseActionHandler(tabIdex));
             add(buttonClose, "h 17!, w 23!");
 
             labelText = new JLabel(text.trim());
@@ -104,10 +103,16 @@ final class SearchTabbedPane extends JTabbedPane {
     }
 
     public class CloseActionHandler implements ActionListener {
+
+        private final int tabIndex;
+
+        public CloseActionHandler(int tabIndex) {
+            this.tabIndex = tabIndex;
+        }
+
         public void actionPerformed(ActionEvent evt) {
-            int index = getSelectedIndex();
-            if (index != -1) {
-                SearchMediator.getSearchResultDisplayer().killSearchAtIndex(index);
+            if (tabIndex != -1) {
+                SearchMediator.getSearchResultDisplayer().killSearchAtIndex(tabIndex);
             }
         }
     }

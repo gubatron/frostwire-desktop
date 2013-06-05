@@ -638,16 +638,16 @@ public final class SearchResultDisplayer implements RefreshListener {
          * Redoes the icons on the tab which this is over.
          */
         public void mouseMoved(MouseEvent e) {
-            int x = e.getX();
-            int y = e.getY();
-            int idx = shouldKillIndex(x, y);
-            if (idx != lastIdx && lastIdx != -1)
-                resetIcon();
-
-            if (idx != -1) {
-                tabbedPane.setIconAt(idx, CancelSearchIconProxy.createArmed());
-                lastIdx = idx;
-            }
+//            int x = e.getX();
+//            int y = e.getY();
+//            int idx = shouldKillIndex(x, y);
+//            if (idx != lastIdx && lastIdx != -1)
+//                resetIcon();
+//
+//            if (idx != -1) {
+//                tabbedPane.setIconAt(idx, CancelSearchIconProxy.createArmed());
+//                lastIdx = idx;
+//            }
         }
 
         /**
@@ -656,6 +656,7 @@ public final class SearchResultDisplayer implements RefreshListener {
          */
         private int shouldKillIndex(int x, int y) {
             int idx = getIndexForPoint(x, y);
+            System.out.println("PANE:" + idx);
             if (idx != -1) {
                 Icon icon = tabbedPane.getIconAt(idx);
                 if (icon != null && icon instanceof CancelSearchIconProxy)
