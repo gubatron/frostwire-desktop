@@ -16,10 +16,6 @@
 		<ant dir="httpcomponents-client-4.0" />
 		<ant dir="gettext-commons-0_9_5" />
 		<ant dir="google-gson-1.4" />
-		<ant dir="netx-0.5" />
-		<ant dir="trident-64a55aa" />
-		<ant dir="laf-widget-1543ae9" />
-		<ant dir="substance-58d3873" />
 		<ant dir="lucene-3.5.0" />
 		<ant dir="h2-1.3.164" />
 		<ant dir="dnsjava-2.1.3" />
@@ -27,6 +23,8 @@
 		<ant dir="fwtips" />
 		<ant dir="mp4parser" />
 		<ant dir="jaudiotagger" />
+		<ant dir="slf4j-api" />
+		<ant dir="slf4j-jdk14" />
 
 		<antcall target="copyjars" />
 
@@ -56,6 +54,8 @@
 		<ant dir="fwtips" target="clean" />
 		<ant dir="mp4parser" target="clean" />
 		<ant dir="jaudiotagger" target="clean" />
+		<ant dir="slf4j-api" target="clean" />
+		<ant dir="slf4j-jdk14" target="clean" />
 
 		<mkdir dir="dist" />
 
@@ -84,6 +84,8 @@
 		<copy file="dist/fwtips.jar" todir="../jars/" />
 		<copy file="dist/mp4parser.jar" todir="../jars/" />
 		<copy file="dist/jaudiotagger.jar" todir="../jars/" />
+		<copy file="slf4j-api-1.7.5" todir="../jars/" />
+		<copy file="slf4j-jdk14-1.7.5" todir="../jars/" />
 
 	</target>
 
