@@ -24,37 +24,47 @@
  */
 package org.slf4j.impl;
 
-import org.slf4j.helpers.BasicMDCAdapter;
-import org.slf4j.spi.MDCAdapter;
+import org.slf4j.Logger;
+import org.slf4j.ILoggerFactory;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
- * This implementation is bound to {@link BasicMDCAdapter}.
- *
+ * JDK14LoggerFactory is an implementation of {@link ILoggerFactory} returning
+ * the appropriately named {@link JDK14LoggerAdapter} instance.
+ * 
  * @author Ceki G&uuml;lc&uuml;
  */
-public class StaticMDCBinder {
+public class JDK14LoggerFactory implements ILoggerFactory {
 
-  
-  /**
-   * The unique instance of this class.
-   */
-  public static final StaticMDCBinder SINGLETON = new StaticMDCBinder();
+  // key: name (String), value: a JDK14LoggerAdapter;
+  ConcurrentMap<String, Logger> loggerMap;
 
-  private StaticMDCBinder() {
+  public JDK14LoggerFactory() {
+    loggerMap =new ConcurrentHashMap<String, Logger>();
   }
-  
-  /**
-   * Currently this method always returns an instance of 
-   * {@link BasicMDCAdapter}.
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.slf4j.ILoggerFactory#getLogger(java.lang.String)
    */
-  public MDCAdapter getMDCA() {
-    // note that this method is invoked only from within the static initializer of 
-    // the org.slf4j.MDC class.
-    return new BasicMDCAdapter();
-  }
-  
-  public String  getMDCAdapterClassStr() {
-    return BasicMDCAdapter.class.getName();
+  public synchronized Logger getLogger(String name) {
+    // the root logger is called "" in JUL
+    if(name.equalsIgnoreCase(Logger.ROOT_LOGGER_NAME)) {
+      name = "";
+    }
+
+    Logger slf4jLogger = loggerMap.get(name);
+    if (slf4jLogger != null)
+      return slf4jLogger;
+    else {
+      java.util.logging.Logger julLogger = java.util.logging.Logger
+          .getLogger(name);
+      Logger newInstance = new JDK14LoggerAdapter(julLogger);
+      Logger oldInstance = loggerMap.putIfAbsent(name, newInstance);
+      return oldInstance == null ? newInstance : oldInstance;
+    }
   }
 }
