@@ -18,6 +18,7 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -33,7 +34,6 @@ import java.awt.event.MouseListener;
 import java.util.Map;
 
 import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -41,7 +41,10 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.text.BadLocationException;
@@ -55,6 +58,7 @@ import com.frostwire.gui.searchfield.SearchField;
 import com.frostwire.gui.tabs.LibraryTab;
 import com.frostwire.gui.tabs.Tab;
 import com.frostwire.gui.theme.SkinApplicationHeaderUI;
+import com.frostwire.gui.theme.SkinSeparatorBackgroundPainter;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.gui.updates.UpdateMediator;
 import com.limegroup.gnutella.MediaType;
@@ -91,11 +95,6 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
      */
     private final MouseListener CLICK_FORWARDER = new Clicker();
 
-    /**
-     * The listener for changing the highlighting of buttons.
-     */
-    private final ItemListener HIGHLIGHTER = new Highlighter();
-
     /** Button background for selected button */
     private final Image headerButtonBackgroundSelected;
 
@@ -121,7 +120,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         headerButtonBackgroundUnselected = GUIMediator.getThemeImage("unselected_header_button_background").getImage();
 
         searchPanels = createSearchPanel();
-        add(searchPanels, "w 200!");
+        add(searchPanels, "w 280!");
 
         addTabButtons(tabs);
 
@@ -194,10 +193,11 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
     }
 
     private void addTabButtons(final Map<Tabs, Tab> tabs) {
-        JPanel buttonContainer = new JPanel(new MigLayout("insets 0"));
+        JPanel buttonContainer = new JPanel(new MigLayout("insets 0, gap 0"));
         ButtonGroup group = new ButtonGroup();
 
-        Font buttonFont = new Font("Helvetica", Font.BOLD, 14);
+        Font buttonFont = new Font("Helvetica", Font.BOLD, 10);
+        buttonContainer.add(createTabButtonSeparator(),"growy");
 
         for (Tabs t : GUIMediator.Tabs.values()) {
             final Tabs lameFinalT = t; //java...
@@ -215,11 +215,21 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
 
             group.add(button);
             buttonContainer.add(button);
+            buttonContainer.add(createTabButtonSeparator(),"growy");
 
             button.setSelected(t.equals(GUIMediator.Tabs.SEARCH));
         }
 
         add(buttonContainer, "");
+    }
+
+    private JSeparator createTabButtonSeparator() {
+        JSeparator sep1 = new JSeparator(SwingConstants.VERTICAL);
+        UIDefaults defaults = new UIDefaults();
+        defaults.put("Separator[Enabled].backgroundPainter", new SkinSeparatorBackgroundPainter(SkinSeparatorBackgroundPainter.State.Enabled, new Color(0x295164)));
+        sep1.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
+        sep1.putClientProperty("Nimbus.Overrides", defaults);
+        return sep1;
     }
 
     /** Given a Tab mark that button as selected 
@@ -269,21 +279,22 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         }
         button.putClientProperty(DESELECTED, disabledIcon);
         button.setIcon(disabledIcon);
-        button.setRolloverIcon(rolloverIcon);
         button.setPressedIcon(rolloverIcon);
-        button.addItemListener(HIGHLIGHTER);
+        button.setSelectedIcon(disabledIcon);
+        button.setRolloverIcon(rolloverIcon);
+        button.setRolloverSelectedIcon(rolloverIcon);
         button.setBorderPainted(false);
-        button.setBorder(BorderFactory.createEmptyBorder(6, 7, 5, 0));
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
         button.setOpaque(false);
         button.addMouseListener(CLICK_FORWARDER);
         button.setToolTipText(t.getToolTip());
-
-        //button.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
+        button.setHorizontalAlignment(SwingConstants.CENTER);
         button.setForeground(ThemeMediator.TAB_BUTTON_FOREGROUND_COLOR);
 
-        Dimension buttonDim = new Dimension(107, 35);
+        Dimension buttonDim = new Dimension(80, 55);
         button.setPreferredSize(buttonDim);
         button.setMinimumSize(buttonDim);
         button.setMaximumSize(buttonDim);
