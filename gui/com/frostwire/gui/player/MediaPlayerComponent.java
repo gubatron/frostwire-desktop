@@ -249,7 +249,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                                       "[][][grow][][][]", //columns
                                       "")); //row
         
-        socialButton = new MediaButton("","","");
+        socialButton = new MediaButton("",null,null);
         socialButton.setCursor(theHand);
         socialButton.setVisible(false);
         shareButton = new MediaButton(I18n.tr("Send this file to a friend"), "share", "share");
