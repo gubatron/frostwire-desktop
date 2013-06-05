@@ -122,7 +122,6 @@ final class AboutWindow {
 		gbc.gridy = 0;
 
 		LogoPanel logo = new LogoPanel();
-		logo.setSearching(true);
 		pane.add(logo, gbc);
 
 		gbc.gridy = 1;

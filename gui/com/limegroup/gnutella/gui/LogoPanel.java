@@ -28,22 +28,6 @@ import javax.swing.JLabel;
  */
 final class LogoPanel extends BoxPanel {
 
-    /**
-     * Icon for the when we're searching.
-     */
-    private final ImageIcon searchingIcon;
-
-    /**
-     * Icon for not searching.
-     */
-    private final ImageIcon notSearchingIcon;
-
-    /**
-     * Constant for the <tt>JLabel</tt> used for displaying the lime/spinning
-     * lime search status indicator.
-     */
-    private JLabel labelIcon;
-
     private JLabel labelLogo;
 
     /**
@@ -51,53 +35,29 @@ final class LogoPanel extends BoxPanel {
      */
     LogoPanel() {
         super(BoxPanel.X_AXIS);
-
-        searchingIcon = GUIMediator.getThemeImage("searching");
-        notSearchingIcon = GUIMediator.getThemeImage("notsearching");
-
         setupUI();
     }
 
     private void setupUI() {
-
-        labelIcon = new JLabel();
-        labelIcon.setIcon(notSearchingIcon);
-
         labelLogo = new JLabel();
-        ImageIcon logoIcon = GUIMediator.getThemeImage("logo");
+        ImageIcon logoIcon = GUIMediator.getThemeImage("logo_header");
         labelLogo.setIcon(logoIcon);
-
         labelLogo.setSize(logoIcon.getIconWidth(), logoIcon.getIconHeight());
-        labelIcon.setSize(searchingIcon.getIconWidth(), searchingIcon.getIconHeight());
 
         GUIUtils.setOpaque(false, this);
 
         add(Box.createHorizontalGlue());
-        add(labelIcon);
         add(labelLogo);
         add(Box.createHorizontalGlue());
 
         this.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent me) {
-                GUIMediator.openURL("http://www.frostwire.com");
+                GUIMediator.openURL("http://www.frostwire.com/?from=header");
             }
 
             public void mouseEntered(MouseEvent me) {
                 setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
         });
-    }
-
-    /**
-     * Sets the searching or not searching status of the application.
-     *
-     * @param searching the searching status of the application
-     */
-    void setSearching(boolean searching) {
-        if (searching) {
-            labelIcon.setIcon(searchingIcon);
-        } else {
-            labelIcon.setIcon(notSearchingIcon);
-        }
     }
 }

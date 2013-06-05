@@ -445,7 +445,7 @@ public final class MainFrame  {
      * @param searching the searching status of the application
      */
     public final void setSearching(boolean searching) {
-        LOGO_PANEL.setSearching(searching);
+        //LOGO_PANEL.setSearching(searching);
     }
 
     public Tabs getSelectedTab() {

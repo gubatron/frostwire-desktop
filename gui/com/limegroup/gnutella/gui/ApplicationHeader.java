@@ -125,12 +125,18 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         addTabButtons(tabs);
 
         createUpdateButton();
-        add(updateButton, "growx, alignx center");
+        JPanel logoUpdateButtonsPanel = new JPanel();
+        logoPanel = new LogoPanel();
+        //only one will be shown at the time.
+        logoUpdateButtonsPanel.add(logoPanel);
+        logoUpdateButtonsPanel.add(updateButton);
+        
+        add(logoUpdateButtonsPanel, "growx, alignx center");
 
         JComponent player = new MediaPlayerComponent().getMediaPanel();
         add(player, "dock east, growy, gapright 5");
 
-        logoPanel = new LogoPanel();
+
 
         GUIMediator.addRefreshListener(this);
 
@@ -413,6 +419,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
             return;
         }
 
+        logoPanel.setVisible(!show);
         updateButton.setVisible(show);
 
         if (show) {
@@ -420,9 +427,6 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
             if (updateButtonAnimationStartedTimestamp == -1) {
                 startUpdateButtonIntermittentAnimation();
             }
-            
-            
-            
         }
     }
 
