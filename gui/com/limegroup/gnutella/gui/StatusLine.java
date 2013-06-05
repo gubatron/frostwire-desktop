@@ -48,8 +48,6 @@ import com.frostwire.AzureusStarter;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.theme.SkinCheckBoxMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
-import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.gui.theme.ThemeObserver;
 import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -59,7 +57,7 @@ import com.limegroup.gnutella.settings.StatusBarSettings;
  * The component for the space at the bottom of the main application
  * window, including the connected status and the media player.
  */
-public final class StatusLine implements ThemeObserver {
+public final class StatusLine {
 
     /**
      * The different connection status possibilities.
@@ -101,6 +99,8 @@ public final class StatusLine implements ThemeObserver {
 
     private IconButton seedingStatusButton;
 
+    private DonationButtons _donationButtons;
+
     /**
      * Variables for the center portion of the status bar, which can display
      * the StatusComponent (progress bar during program load), the UpdatePanel
@@ -138,9 +138,8 @@ public final class StatusLine implements ThemeObserver {
             }
         });
 
-        GUIMediator.setSplashScreenString(I18n.tr("Creating Audio Status Component..."));
-        //TODO: SupportFrostWireComponent
-        //        _audioStatusComponent = new CurrentMediaStatusComponent();
+        GUIMediator.setSplashScreenString(I18n.tr("Creating donation buttons so you can give us a hand..."));
+        createDonationButtonsComponent();
 
         //  make icons and panels for connection quality
         GUIMediator.setSplashScreenString(I18n.tr("Creating Connection Quality Indicator..."));
@@ -177,25 +176,28 @@ public final class StatusLine implements ThemeObserver {
         setConnectionQuality(0);
 
         GUIMediator.addRefreshListener(REFRESH_LISTENER);
-        ThemeMediator.addThemeObserver(this);
 
         refresh();
     }
 
+    private void createDonationButtonsComponent() {
+        _donationButtons = new DonationButtons();
+    }
+
     private void createTwitterButton() {
         _twitterButton = new IconButton("TWITTER");
-        initSocialButton(_twitterButton, I18n.tr("Follow us @frostwire"), "https://twitter.com/#!/frostwire");
+        initSocialButton(_twitterButton, I18n.tr("Follow us @frostwire"), "https://twitter.com/frostwire");
     }
 
     private void createFacebookButton() {
         _facebookButton = new IconButton("FACEBOOK");
-        initSocialButton(_facebookButton, I18n.tr("Like FrostWire on Facebook and stay in touch with the community. Get Help and Help Others."), "http://www.facebook.com/pages/FrostWire/110265295669948");
+        initSocialButton(_facebookButton, I18n.tr("Like FrostWire on Facebook and stay in touch with the community. Get Help and Help Others."), "https://www.facebook.com/FrostwireOfficial");
     }
 
     private void createGooglePlusButton() {
         _googlePlusButton = new IconButton("GOOGLEPLUS");
         _googlePlusButton.setPreferredSize(new Dimension(19, 16));
-        initSocialButton(_googlePlusButton, I18n.tr("Circle FrostWire on G+"), "https://plus.google.com/b/101138154526002646407/");
+        initSocialButton(_googlePlusButton, I18n.tr("Circle FrostWire on G+"), "https://plus.google.com/+frostwire/posts");
     }
 
     private void initSocialButton(IconButton socialButton, String toolTipText, final String url) {
@@ -238,11 +240,6 @@ public final class StatusLine implements ThemeObserver {
      * and makes sure it has room to add an indicator before adding it.
      */
     public void refresh() {
-        //TODO: SupportFrostWireComponent
-//        if (_audioStatusComponent == null || _centerComponent == null) {
-//            return;
-//        }
-
         getComponent().removeAll();
 
         //  figure out remaining width, and do not add indicators if no room
@@ -255,9 +252,11 @@ public final class StatusLine implements ThemeObserver {
         remainingWidth -= sepWidth;
         remainingWidth -= GUIConstants.SEPARATOR / 2;
 
-        //TODO: SupportFrostWireComponent        
-//        remainingWidth -= _audioStatusComponent.getWidth();
-        remainingWidth -= GUIConstants.SEPARATOR;
+        // substract donation buttons as needed2
+        if (_donationButtons != null) {
+            remainingWidth -= _donationButtons.getWidth();
+            remainingWidth -= GUIConstants.SEPARATOR;
+        }
 
         //  subtract center component
         int indicatorWidth = _centerComponent.getWidth();
@@ -341,12 +340,13 @@ public final class StatusLine implements ThemeObserver {
         gbc.weightx = 0;
         BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
 
-        // current song component
-        BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-        //TODO: SupportFrostWireComponent
-        //        BAR.add(_audioStatusComponent, gbc);
-        BAR.add(Box.createHorizontalStrut(10));
-        BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
+        // donation buttons
+        if (_donationButtons != null && StatusBarSettings.DONATION_BUTTONS_DISPLAY_ENABLED.getValue()) {
+            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+            BAR.add(_donationButtons, gbc);
+            BAR.add(Box.createHorizontalStrut(10));
+            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
+        }
 
         BAR.validate();
         BAR.repaint();
@@ -676,6 +676,11 @@ public final class StatusLine implements ThemeObserver {
                 jcbmi.setState(StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
 
+                //  add 'Show Donation Buttons' menu item
+                jcbmi = new SkinCheckBoxMenuItem(new ShowDonationButtonsAction());
+                jcbmi.setState(StatusBarSettings.DONATION_BUTTONS_DISPLAY_ENABLED.getValue());
+                jpm.add(jcbmi);
+
                 jpm.pack();
                 jpm.show(me.getComponent(), me.getX(), me.getY());
             }
@@ -762,6 +767,23 @@ public final class StatusLine implements ThemeObserver {
 
         public void actionPerformed(ActionEvent e) {
             StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.invert();
+            refresh();
+        }
+    }
+
+    private class ShowDonationButtonsAction extends AbstractAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1455679943975682049L;
+
+        public ShowDonationButtonsAction() {
+            putValue(Action.NAME, I18n.tr("Show Donation Buttons"));
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            StatusBarSettings.DONATION_BUTTONS_DISPLAY_ENABLED.invert();
             refresh();
         }
     }

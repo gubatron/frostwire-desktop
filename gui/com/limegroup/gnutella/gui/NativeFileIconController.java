@@ -110,12 +110,7 @@ public class NativeFileIconController implements FileIconController {
         for(int i = 0; i < 10; i++) {
             try {
                 chooser = new JFileChooser() {
-                    /**
-					 * 
-					 */
-					private static final long serialVersionUID = 8831689600678227460L;
-
-					{
+                    {
                         FileChooserUI ui =
                             (FileChooserUI)ResourceManager.getNativeUI(this);
                         setUI(ui);

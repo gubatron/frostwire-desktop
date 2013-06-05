@@ -20,7 +20,7 @@ package com.frostwire.gui.library;
 
 import org.limewire.util.StringUtils;
 
-import com.limegroup.gnutella.gui.tables.SizeHolder;
+import com.frostwire.gui.LocaleLabel.LocaleString;
 
 /**
  * 
@@ -30,35 +30,50 @@ import com.limegroup.gnutella.gui.tables.SizeHolder;
  */
 public class PlayableCell implements Comparable<PlayableCell> {
 
-    private Object dataLine;
-    private Object wrappedObject;
-    private final boolean isPlaying;
-    private final int columnIndex;
+    private final Object dataLine;
+    private final Object wrappedObject;
 
-    public PlayableCell(Object dataLine, Object wrapMe, boolean isPlaying, int columnIndex) {
+    private final String strValue;
+    private final LocaleString localeString;
+
+    private boolean playing;
+    private int column;
+
+    public PlayableCell(Object dataLine, String strValue, boolean isPlaying, int columnIndex) {
+        this(dataLine, strValue, strValue, isPlaying, columnIndex);
+    }
+
+    public PlayableCell(Object dataLine, Object wrapMe, String strValue, boolean isPlaying, int columnIndex) {
         this.dataLine = dataLine;
         this.wrappedObject = wrapMe;
-        this.isPlaying = isPlaying;
-        this.columnIndex = columnIndex;
+
+        this.strValue = strValue;
+        this.localeString = new LocaleString(strValue);
     }
 
     public boolean isPlaying() {
-        return isPlaying;
+        return playing;
+    }
+
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public LocaleString getLocaleString() {
+        return localeString;
     }
 
     @Override
     public String toString() {
-        if (wrappedObject != null) {
-
-            if (wrappedObject instanceof SizeHolder) {
-                if (((SizeHolder) wrappedObject).getSize() == 0) {
-                    return "--";
-                }
-            }
-
-            return wrappedObject.toString();
-        }
-        return "";
+        return strValue;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -66,7 +81,7 @@ public class PlayableCell implements Comparable<PlayableCell> {
     public int compareTo(PlayableCell o) {
         if (wrappedObject instanceof Comparable && wrappedObject != null && o.wrappedObject != null && wrappedObject.getClass().equals(o.wrappedObject.getClass())) {
 
-            if (dataLine instanceof LibraryInternetRadioTableDataLine && columnIndex == LibraryInternetRadioTableDataLine.BITRATE_IDX) {
+            if (dataLine instanceof LibraryInternetRadioTableDataLine && column == LibraryInternetRadioTableDataLine.BITRATE_IDX) {
                 return compareByBitrate((String) wrappedObject, (String) o.wrappedObject);
             }
 
@@ -91,7 +106,7 @@ public class PlayableCell implements Comparable<PlayableCell> {
             return 0;
         }
     }
-    
+
     public Object getDataLine() {
         return dataLine;
     }

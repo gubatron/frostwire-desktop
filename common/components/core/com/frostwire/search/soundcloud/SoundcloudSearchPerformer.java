@@ -62,6 +62,11 @@ public class SoundcloudSearchPerformer extends PagedRegexSearchPerformer<Soundcl
     }
 
     @Override
+    public String fetch(String url) {
+        return fetch(url, "enablev2=false");
+    }
+
+    @Override
     protected String getUrl(int page, String encodedKeywords) {
         return "http://soundcloud.com/tracks/search?page=" + page + "&q[fulltext]=" + encodedKeywords + "&q[downloadable]=true&advanced=1";
     }

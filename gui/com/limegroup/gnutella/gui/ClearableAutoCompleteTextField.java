@@ -217,7 +217,7 @@ public class ClearableAutoCompleteTextField extends AutoCompleteTextField {
         
         boolean different = false;
         Vector<String> v = new Vector<String>();
-        ListModel model = entryList.getModel();
+        ListModel<?> model = entryList.getModel();
         for(int i = 0; iter.hasNext(); i++) {
             String next = iter.next();
             v.add(next);
@@ -341,7 +341,7 @@ public class ClearableAutoCompleteTextField extends AutoCompleteTextField {
     /**
      * A list that's used to show auto-complete items.
      */
-    protected class AutoCompleteList extends JList {
+    protected class AutoCompleteList extends JList<Object> {
         /**
          * 
          */

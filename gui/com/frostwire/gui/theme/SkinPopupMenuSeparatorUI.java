@@ -35,6 +35,7 @@ import com.apple.laf.AquaPopupMenuSeparatorUI;
 public final class SkinPopupMenuSeparatorUI extends BasicPopupMenuSeparatorUI {
 
     public static ComponentUI createUI(JComponent comp) {
+        ThemeMediator.testComponentCreationThreadingViolation();
         if (OSUtils.isMacOSX() && !(comp instanceof SkinPopupMenu.Separator)) {
             return AquaPopupMenuSeparatorUI.createUI(comp);
         } else {

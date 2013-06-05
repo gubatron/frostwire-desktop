@@ -77,7 +77,7 @@ final class AboutWindow {
 
 		// set up limewire version label
 		JLabel client = new JLabel(I18n.tr("FrostWire") + " "
-				+ FrostWireUtils.getFrostWireVersion());
+				+ FrostWireUtils.getFrostWireVersion() + " (build " + FrostWireUtils.getBuildNumber() + ")");
 		client.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// set up java version label

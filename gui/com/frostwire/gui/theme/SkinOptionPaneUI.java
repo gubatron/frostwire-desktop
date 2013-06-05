@@ -35,6 +35,7 @@ import javax.swing.plaf.synth.SynthOptionPaneUI;
 public class SkinOptionPaneUI extends SynthOptionPaneUI {
 
     public static ComponentUI createUI(JComponent comp) {
+        ThemeMediator.testComponentCreationThreadingViolation();
         return new SkinOptionPaneUI();
     }
 

@@ -164,7 +164,7 @@ public class SkinFileChooserUI extends BaseFileChooserUI {
     }
 
     public static ComponentUI createUI(JComponent comp) {
-    //	SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        ThemeMediator.testComponentCreationThreadingViolation();
         return new SkinFileChooserUI((JFileChooser) comp);
     }
 

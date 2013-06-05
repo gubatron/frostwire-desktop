@@ -221,6 +221,7 @@ public class SkinComboPopup extends BasicComboPopup {
 //        // this.list.putClientProperty(SubstanceListUI.ROLLED_OVER_INDEX, null);
 //    }
 
+    @SuppressWarnings("unchecked")
     public JComboBox<Object> getCombobox() {
         return this.comboBox;
     }

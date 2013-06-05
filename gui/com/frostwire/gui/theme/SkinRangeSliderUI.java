@@ -53,6 +53,7 @@ public class SkinRangeSliderUI extends SynthSliderUI {
     private transient boolean mouseOver;
 
     public static ComponentUI createUI(JComponent c) {
+        ThemeMediator.testComponentCreationThreadingViolation();
         return new SkinRangeSliderUI((JSlider) c);
     }
 

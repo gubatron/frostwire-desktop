@@ -182,6 +182,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
     // ComponentUI Interface Implementation methods
     //
     public static ComponentUI createUI(JComponent c) {
+        ThemeMediator.testComponentCreationThreadingViolation();
         return new BaseFileChooserUI((JFileChooser) c);
     }
 
@@ -280,11 +281,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
         topPanel.add(lookInLabel, BorderLayout.BEFORE_LINE_BEGINS);
 
         // CurrentDir ComboBox
-        directoryComboBox = new JComboBox() {
-            /**
-             * 
-             */
-            private static final long serialVersionUID = -4607302139516491757L;
+        directoryComboBox = new JComboBox<Object>() {
 
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();

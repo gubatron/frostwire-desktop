@@ -52,7 +52,7 @@ public final class LibraryTab extends AbstractTab {
      * @param PLAYLIST_MEDIATOR the <tt>PlayListMediator</tt> instance 
      */
     public LibraryTab(LibraryMediator lm) {
-        super(I18n.tr("Library"), I18n.tr("View Repository of Saved Files"), "library_tab");
+        super(I18n.tr("Library"), I18n.tr("Browse, Search and Play files in your computer. Wi-Fi sharing, Internet Radio and more."), "library_tab");
         LIBRARY_MEDIATOR = lm;
     }
 

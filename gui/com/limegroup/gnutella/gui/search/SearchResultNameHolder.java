@@ -18,6 +18,7 @@
 
 package com.limegroup.gnutella.gui.search;
 
+import com.frostwire.gui.LocaleLabel.LocaleString;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 
 /**
@@ -29,11 +30,15 @@ import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 public final class SearchResultNameHolder implements Comparable<SearchResultNameHolder> {
 
     private final UISearchResult sr;
+    private final String displayName;
     private final String html;
+    private final LocaleString localeString;
 
     public SearchResultNameHolder(final UISearchResult sr) {
         this.sr = sr;
-        this.html = "<html><div width=\"1000000px\">" + simpleHighlighter(sr.getQuery(), sr.getDisplayName()) + "</div></html>";
+        this.displayName = sr.getDisplayName();
+        this.html = "<html><div width=\"1000000px\">" + simpleHighlighter(sr.getQuery(), displayName) + "</div></html>";
+        this.localeString = new LocaleString(html);
     }
 
     public int compareTo(SearchResultNameHolder o) {
@@ -48,8 +53,12 @@ public final class SearchResultNameHolder implements Comparable<SearchResultName
         return html;
     }
 
+    public LocaleString getLocaleString() {
+        return localeString;
+    }
+
     public String toString() {
-        return sr.getDisplayName();
+        return displayName;
     }
 
     private String simpleHighlighter(String query, String str) {

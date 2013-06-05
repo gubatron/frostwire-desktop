@@ -1,4 +1,19 @@
-package com.limegroup.gnutella.gui.tables; 
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package com.limegroup.gnutella.gui.tables;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -10,10 +25,6 @@ import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-
-import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.gui.theme.ThemeObserver;
-
 
 /**
  * Draws a cell with it's default renderer, but the foreground
@@ -61,34 +72,23 @@ import com.frostwire.gui.theme.ThemeObserver;
  *
  * NOTE: This does not color selected or focused cells.
  */
-class ColorRenderer extends DefaultTableCellRenderer implements ThemeObserver {
-    
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 653501867944836138L;
+class ColorRenderer extends DefaultTableCellRenderer {
+
     /**
      * Map is from TableCellRenderer to TableCellRenderer.
      * Every instance of a renderer will have a mirrored instance as its value.
      */
-    private static final Map<TableCellRenderer, TableCellRenderer> otherRenderers =
-        new HashMap<TableCellRenderer, TableCellRenderer>();
-    
+    private static final Map<TableCellRenderer, TableCellRenderer> otherRenderers = new HashMap<TableCellRenderer, TableCellRenderer>();
+
     public ColorRenderer() {
-        ThemeMediator.addThemeObserver(this);
     }
-    
-    public Component getTableCellRendererComponent(JTable table,
-                                                   Object value, 
-                                                   boolean isSel, 
-                                                   boolean hasFocus,
-                                                   int row,
-                                                   int column) {        
-        ColoredCell cc=(ColoredCell)value;
+
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSel, boolean hasFocus, int row, int column) {
+        ColoredCell cc = (ColoredCell) value;
         Color clr;
         Object val;
         Class<?> clazz;
-        if(cc != null) {
+        if (cc != null) {
             clr = cc.getColor();
             val = cc.getValue();
             clazz = cc.getCellClass();
@@ -97,44 +97,33 @@ class ColorRenderer extends DefaultTableCellRenderer implements ThemeObserver {
             val = "";
             clazz = String.class;
         }
-        
-        TableCellRenderer tcr = table.getDefaultRenderer( clazz );
-        tcr = getCachedOrNewRenderer( tcr );
-        
-        Component renderer = tcr.getTableCellRendererComponent(
-                table, val, isSel, hasFocus, row, column);
-        
+
+        TableCellRenderer tcr = table.getDefaultRenderer(clazz);
+        tcr = getCachedOrNewRenderer(tcr);
+
+        Component renderer = tcr.getTableCellRendererComponent(table, val, isSel, hasFocus, row, column);
+
         if ((!isSel && !hasFocus)) // || isReadable(clr, renderer.getBackground()))
             renderer.setForeground(clr);
 
         return renderer;
-    }    
-    
-    public void updateTheme() {
-        for( Iterator<?> i = otherRenderers.values().iterator(); i.hasNext(); ) {
-            Object o = i.next();
-            if ( o instanceof ThemeObserver )  {
-                ((ThemeObserver)o).updateTheme();
-            }
-        }
     }
-   
+
     public void updateUI() {
-        for( Iterator<?> i = otherRenderers.values().iterator(); i.hasNext(); ) {
+        for (Iterator<?> i = otherRenderers.values().iterator(); i.hasNext();) {
             Object o = i.next();
-            if ( o instanceof JComponent )  {
-                ((JComponent)o).updateUI();
+            if (o instanceof JComponent) {
+                ((JComponent) o).updateUI();
             }
         }
     }
-    
-    
-    private TableCellRenderer getCachedOrNewRenderer( TableCellRenderer tcr ) {
+
+    private TableCellRenderer getCachedOrNewRenderer(TableCellRenderer tcr) {
         TableCellRenderer renderer = otherRenderers.get(tcr);
-        
+
         // if it doesn't exist, put a copy of the renderer in there
         // so that the setForeground doesn't effect the real renderer.
-        if ( renderer == null ) {
+        if (renderer == null) {
             Class<? extends TableCellRenderer> rendererClass = tcr.getClass();
             try {
                 renderer = rendererClass.newInstance();
@@ -145,7 +134,7 @@ class ColorRenderer extends DefaultTableCellRenderer implements ThemeObserver {
             } catch (ClassCastException e) {
                 throw new RuntimeException(e);
             }
-            otherRenderers.put( tcr, renderer );
+            otherRenderers.put(tcr, renderer);
         }
         return renderer;
     }

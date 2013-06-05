@@ -38,4 +38,7 @@ public class StatusBarSettings extends LimeProps {
      */
     public static BooleanSetting BANDWIDTH_DISPLAY_ENABLED =
         FACTORY.createBooleanSetting("BANDWIDTH_DISPLAY_ENABLED", true);
+    
+    public static BooleanSetting DONATION_BUTTONS_DISPLAY_ENABLED =
+        FACTORY.createBooleanSetting("DONATION_BUTTONS_DISPLAY_ENABLED", true);
 }

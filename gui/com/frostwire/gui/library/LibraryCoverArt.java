@@ -30,12 +30,7 @@ import java.io.File;
 
 import javax.swing.JPanel;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.frostwire.gui.library.tags.TagsReader;
-import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.gui.theme.ThemeObserver;
 import com.limegroup.gnutella.gui.GUIMediator;
 
 /**
@@ -43,12 +38,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
  * @author aldenml
  *
  */
-public final class LibraryCoverArt extends JPanel implements ThemeObserver {
-
-    private static final long serialVersionUID = 4302859512245078593L;
-
-    @SuppressWarnings("unused")
-    private static final Log LOG = LogFactory.getLog(LibraryCoverArt.class);
+public final class LibraryCoverArt extends JPanel {
 
     private final BufferedImage background;
     private final Image defaultCoverArt;
@@ -63,10 +53,9 @@ public final class LibraryCoverArt extends JPanel implements ThemeObserver {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                updateTheme();
+                setPrivateImage(coverArtImage);
             }
         });
-        ThemeMediator.addThemeObserver(this);
     }
 
     /**
@@ -138,10 +127,5 @@ public final class LibraryCoverArt extends JPanel implements ThemeObserver {
 
         repaint();
         getToolkit().sync();
-    }
-
-    @Override
-    public void updateTheme() {
-        setPrivateImage(coverArtImage);
     }
 }

@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -147,19 +146,6 @@ public final class ResourceManager {
      */
     public static void resetLoadFailure() {
         loadFailureEncountered = false;
-    }
-    
-    
-    
-    /**
-     * Returns the XML resource bundle for the given schema.
-     * 
-     * @param String schema name (not the URI but name returned by
-     *        LimeXMLSchema.getDisplayString)
-     * @return ResourceBundle
-     */
-    static ResourceBundle getXMLResourceBundle(String name) {
-        return ResourceBundle.getBundle("xml.display." + name, _locale);
     }
 
     /**

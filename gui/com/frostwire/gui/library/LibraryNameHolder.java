@@ -26,10 +26,10 @@ package com.frostwire.gui.library;
  */
 public class LibraryNameHolder extends PlayableCell {
 
-    private boolean exists;
+    private final boolean exists;
 
-    public LibraryNameHolder(Object dataLine, Object wrapMe, boolean isPlaying, boolean exists, int columnIndex) {
-        super(dataLine, wrapMe, isPlaying, columnIndex);
+    public LibraryNameHolder(Object dataLine, String strValue, boolean isPlaying, boolean exists, int columnIndex) {
+        super(dataLine, strValue, isPlaying, columnIndex);
         this.exists = exists;
     }
 

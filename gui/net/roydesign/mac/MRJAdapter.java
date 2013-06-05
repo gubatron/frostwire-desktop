@@ -57,13 +57,6 @@
 
 package net.roydesign.mac;
 
-import com.apple.eio.FileManager;
-import com.apple.mrj.MRJFileUtils;
-import com.apple.mrj.MRJOSType;
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.LookAndFeel;
-import javax.swing.UIManager;
 import java.awt.Frame;
 import java.awt.MenuBar;
 import java.awt.event.ActionListener;
@@ -77,10 +70,16 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.Properties;
+
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
+
+import com.apple.eio.FileManager;
+import com.apple.mrj.MRJFileUtils;
+import com.apple.mrj.MRJOSType;
 
 /**
  * <p>This class offers a unique interface to the functionality provided by
@@ -145,7 +144,7 @@ public final class MRJAdapter implements MRJFolderConstants
 	/**
 	 * The Cocoa class loader when running on Mac OS X.
 	 */
-	private static ClassLoader cocoaClassLoader;
+	//private static ClassLoader cocoaClassLoader;
 
 	/**
 	 * The name of the startup disk.
@@ -155,7 +154,7 @@ public final class MRJAdapter implements MRJFolderConstants
 	/**
 	 * The path to the current application on disk.
 	 */
-	private static String applicationPath;
+	//private static String applicationPath;
 
 	/**
 	 * The frame that we use to fake the frameless menu bar.
@@ -211,15 +210,15 @@ public final class MRJAdapter implements MRJFolderConstants
 		// Instantiate the Cocoa class loader if we're on Mac OS X
 		if (mrjVersion >= 3.0f)
 		{
-			try
-			{
-				cocoaClassLoader = new URLClassLoader(
-					new URL[] {new URL("file://127.0.0.1/System/Library/Java/")});
-			}
-			catch (MalformedURLException ex)
-			{
-				// Nothing to worry about since we control the URL string
-			}
+//			try
+//			{
+//				cocoaClassLoader = new URLClassLoader(
+//					new URL[] {new URL("file://127.0.0.1/System/Library/Java/")});
+//			}
+//			catch (MalformedURLException ex)
+//			{
+//				// Nothing to worry about since we control the URL string
+//			}
 		}
 	}
 
@@ -549,7 +548,7 @@ public final class MRJAdapter implements MRJFolderConstants
 				{
 					// We use reflection here because for some unknown reason
 					// Apple hasn't included this method in MRJToolkitStubs
-					Class cls = Class.forName("com.apple.mrj.MRJFileUtils");
+					Class<?> cls = Class.forName("com.apple.mrj.MRJFileUtils");
 					getResourceMethod = cls.getMethod("getResource",
 						new Class[] {String.class});
 				}
@@ -592,7 +591,7 @@ public final class MRJAdapter implements MRJFolderConstants
 				{
 					// We use reflection here because for some unknown reason
 					// Apple hasn't included this method in MRJToolkitStubs
-					Class cls = Class.forName("com.apple.mrj.MRJFileUtils");
+					Class<?> cls = Class.forName("com.apple.mrj.MRJFileUtils");
 					getResourceSubMethod = cls.getMethod("getResource",
 						new Class[] {String.class, String.class});
 				}
@@ -635,21 +634,21 @@ public final class MRJAdapter implements MRJFolderConstants
 			{
 				/** @todo We might want to cache some of these reflected objects */
 				
-				Class fileForkerClass = Class.forName("glguerin.io.FileForker");
+				Class<?> fileForkerClass = Class.forName("glguerin.io.FileForker");
 				Method setFactoryMethod = fileForkerClass.getMethod("SetFactory",
 					new Class[] {String.class});
-				Class macPlatformClass = Class.forName("glguerin.util.MacPlatform");
+				Class<?> macPlatformClass = Class.forName("glguerin.util.MacPlatform");
 				Method selectFactoryNameMethod = macPlatformClass.getMethod(
 					"selectFactoryName", new Class[] {String.class});
 				String fctry = (String)selectFactoryNameMethod.invoke(null,
 					new Object[] {null});
 				setFactoryMethod.invoke(null, new Object[] {fctry});
 				
-				Method makeOneMethod = fileForkerClass.getMethod("MakeOne", null);
-				Object ff = makeOneMethod.invoke(null, null);
+				Method makeOneMethod = fileForkerClass.getMethod("MakeOne", (Class<?>[])null);
+				Object ff = makeOneMethod.invoke(null, (Object[])null);
 				
-				Class pathnameClass = Class.forName("glguerin.io.Pathname");
-				Constructor pathnameConstructor =
+				Class<?> pathnameClass = Class.forName("glguerin.io.Pathname");
+				Constructor<?> pathnameConstructor =
 					pathnameClass.getConstructor(new Class[] {File.class});
 				Object path = pathnameConstructor.newInstance(new Object[] {file});
 				
@@ -713,7 +712,7 @@ public final class MRJAdapter implements MRJFolderConstants
 			{
 				/** @todo We might want to cache some of these reflected objects */
 				
-				Class browserLauncherClass = Class.forName("edu.stanford.ejalbert.BrowserLauncher");
+				Class<?> browserLauncherClass = Class.forName("edu.stanford.ejalbert.BrowserLauncher");
 				Method openURLMethod = browserLauncherClass.getMethod("openURL",
 					new Class[] {String.class});
 				openURLMethod.invoke(null, new Object[] {url});
@@ -1522,6 +1521,7 @@ public final class MRJAdapter implements MRJFolderConstants
 	 * @return the path to the application on disk
 	 * @exception IOException if an I/O error occurs
 	 */
+	/*
 	private static String getApplicationPath() throws IOException
 	{
 		if (applicationPath == null)
@@ -1544,7 +1544,7 @@ public final class MRJAdapter implements MRJFolderConstants
 			}
 			else if (mrjVersion != -1.0f)
 			{
-				/** @todo Does anyone has some briefly elegant JDirect code to do this? */
+				// @todo Does anyone has some briefly elegant JDirect code to do this? 
 				throw new IOException();
 			}
 			else
@@ -1553,7 +1553,7 @@ public final class MRJAdapter implements MRJFolderConstants
 			}
 		}
 		return applicationPath;
-	}
+	}*/
 
 	/**
 	 * Execute the given AppleScript script. This methods compiles and runs

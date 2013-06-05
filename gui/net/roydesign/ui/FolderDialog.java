@@ -118,7 +118,8 @@ public class FolderDialog extends FileDialog
 	 * you make it invisible yourself via <code>setVisible(false)</code>
 	 * or <code>dispose()</code>.
 	 */
-	public void show()
+	@SuppressWarnings("deprecation")
+    public void show()
 	{
 		// Set the system property required by Mac OS X
 		String prop = null;

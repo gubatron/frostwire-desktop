@@ -48,6 +48,8 @@ import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import net.miginfocom.swing.MigLayout;
+
 import org.limewire.i18n.I18nMarker;
 
 import com.frostwire.gui.bittorrent.TorrentUtil;
@@ -702,11 +704,11 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
 
     private JComponent createSchemaBox() {
         schemaBox = new SchemaBox(this);
-        
+
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
-        
+
         final String strShowOpts = I18n.tr("Show Options");
         final String strHideOpts = I18n.tr("Hide Options");
 
@@ -736,7 +738,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
 
         JSeparator sep = new JSeparator(SwingConstants.VERTICAL);
         sep.setMaximumSize(new Dimension(2, 100));
-        
+
         panel.add(schemaBox);
         panel.add(Box.createHorizontalGlue());
         panel.add(sep);
@@ -789,13 +791,14 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
 
         JPanel overlayPanel = new JPanel();
         overlayPanel.setOpaque(false);
-        overlayPanel.add(overlay);
+        overlayPanel.setLayout(new MigLayout("fill"));
+        overlayPanel.add(overlay, "center");
         JScrollPane scrollPane = new JScrollPane(overlayPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.getViewport().setBackground(Color.WHITE);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(28, 10, 4, 10));
-
+        
         JComponent table = getScrolledTablePane();
         table.setOpaque(false);
         background.add(scrollPane);
@@ -803,8 +806,6 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
 
         MAIN_PANEL.add(background);
         addButtonRow();
-
-        //MAIN_PANEL.setMinimumSize(ZERO_DIMENSION);
     }
 
     /**

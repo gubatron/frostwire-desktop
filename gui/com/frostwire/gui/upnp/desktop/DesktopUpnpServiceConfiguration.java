@@ -67,7 +67,7 @@ public class DesktopUpnpServiceConfiguration extends DefaultUpnpServiceConfigura
             private final long WINDOW_SIZE = 1000;
 
             @Override
-            protected IncomingDatagramMessage readRequestMessage(InetAddress receivedOnAddress, DatagramPacket datagram, ByteArrayInputStream is, String requestMethod, String httpProtocol) throws Exception {
+            protected IncomingDatagramMessage<?> readRequestMessage(InetAddress receivedOnAddress, DatagramPacket datagram, ByteArrayInputStream is, String requestMethod, String httpProtocol) throws Exception {
                 //Throttle the parsing of incoming search messages.
                 if (UpnpRequest.Method.getByHttpName(requestMethod).equals(UpnpRequest.Method.MSEARCH)) {
                     if (System.currentTimeMillis() - lastTimeIncomingSearchRequestParsed < INCOMING_SEARCH_REQUEST_PARSE_INTERVAL) {
@@ -81,9 +81,9 @@ public class DesktopUpnpServiceConfiguration extends DefaultUpnpServiceConfigura
             }
 
             @Override
-            protected IncomingDatagramMessage readResponseMessage(InetAddress receivedOnAddress, DatagramPacket datagram, ByteArrayInputStream is, int statusCode, String statusMessage, String httpProtocol) throws Exception {
+            protected IncomingDatagramMessage<?> readResponseMessage(InetAddress receivedOnAddress, DatagramPacket datagram, ByteArrayInputStream is, int statusCode, String statusMessage, String httpProtocol) throws Exception {
 
-                IncomingDatagramMessage response = null;
+                IncomingDatagramMessage<?> response = null;
                 String host = datagram.getAddress().getHostAddress();
 
                 if (!readResponseWindows.containsKey(host)) {
@@ -107,7 +107,7 @@ public class DesktopUpnpServiceConfiguration extends DefaultUpnpServiceConfigura
         };
     }
 
-    public DatagramIO createDatagramIO(NetworkAddressFactory networkAddressFactory) {
+    public DatagramIO<?> createDatagramIO(NetworkAddressFactory networkAddressFactory) {
         return new DatagramIOImpl(new DatagramIOConfigurationImpl()) {
             public void run() {
                 while (true) {
@@ -115,7 +115,7 @@ public class DesktopUpnpServiceConfiguration extends DefaultUpnpServiceConfigura
                         byte[] buf = new byte[getConfiguration().getMaxDatagramBytes()];
                         DatagramPacket datagram = new DatagramPacket(buf, buf.length);
                         socket.receive(datagram);
-                        IncomingDatagramMessage incomingDatagramMessage = datagramProcessor.read(localAddress.getAddress(), datagram);
+                        IncomingDatagramMessage<?> incomingDatagramMessage = datagramProcessor.read(localAddress.getAddress(), datagram);
 
                         if (incomingDatagramMessage != null) {
                             router.received(incomingDatagramMessage);
@@ -142,7 +142,7 @@ public class DesktopUpnpServiceConfiguration extends DefaultUpnpServiceConfigura
         };
     }
 
-    public MulticastReceiver createMulticastReceiver(NetworkAddressFactory networkAddressFactory) {
+    public MulticastReceiver<?> createMulticastReceiver(NetworkAddressFactory networkAddressFactory) {
         return new MulticastReceiverImpl(new MulticastReceiverConfigurationImpl(networkAddressFactory.getMulticastGroup(), networkAddressFactory.getMulticastPort())) {
             public void run() {
                 while (true) {
@@ -154,7 +154,7 @@ public class DesktopUpnpServiceConfiguration extends DefaultUpnpServiceConfigura
 
                         InetAddress receivedOnLocalAddress = networkAddressFactory.getLocalAddress(multicastInterface, multicastAddress.getAddress() instanceof Inet6Address, datagram.getAddress());
 
-                        IncomingDatagramMessage incomingDatagramMessage = datagramProcessor.read(receivedOnLocalAddress, datagram);
+                        IncomingDatagramMessage<?> incomingDatagramMessage = datagramProcessor.read(receivedOnLocalAddress, datagram);
 
                         if (incomingDatagramMessage != null) {
                             router.received(incomingDatagramMessage);

@@ -44,7 +44,7 @@ public class ListEditor extends JPanel {
     private static final long serialVersionUID = 5689653237762528073L;
     /** INVARIANT: model contains exactly the same elements as realModel. */
     protected Vector<String> model;
-    protected DefaultListModel /* of String */ realModel;
+    protected DefaultListModel<Object> /* of String */ realModel;
 
     protected Vector<ListDataListener> listeners;
 
@@ -52,7 +52,7 @@ public class ListEditor extends JPanel {
     protected JTextField editor;
     protected JButton addButton;
     protected JButton removeButton;
-    protected JList list;
+    protected JList<Object> list;
 
     /** True if I should append new items to end of the list; false if I should
      *  add them to the end of the list. */
@@ -110,7 +110,7 @@ public class ListEditor extends JPanel {
         add(removeButton, gbc);
         
         //Bottom half of the editor
-        list=new JList();
+        list=new JList<Object>();
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.addListSelectionListener(new ListListener());
         GUIUtils.bindKeyToAction(list,
@@ -153,7 +153,7 @@ public class ListEditor extends JPanel {
      public synchronized void setModel(Vector<String> model) {
          //Copy model into realModel.
          this.model=model;        
-         this.realModel=new DefaultListModel();
+         this.realModel=new DefaultListModel<Object>();
          for (int i=0; i<model.size(); i++)
              realModel.addElement(model.get(i));
          list.setModel(realModel);

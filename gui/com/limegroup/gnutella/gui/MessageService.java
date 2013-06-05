@@ -1,7 +1,6 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
@@ -30,7 +29,6 @@ import org.limewire.setting.IntSetting;
 /**
  * This class handles displaying messages to the user.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class MessageService {
 	/**
 	 * Constant for when the 'Always use this answer' checkbox wants to 
@@ -359,7 +357,7 @@ public final class MessageService {
      * @param listRenderer an optional list cell renderer, can be <code>null</code>
      */
     final int showConfirmListMessage(String message, Object[] listModel, int messageType,
-            ListCellRenderer listRenderer) {
+            ListCellRenderer<Object> listRenderer) {
         return showConfirmListMessage(message, listModel, messageType, listRenderer,
                 I18n.tr("Message"));
     }
@@ -377,8 +375,8 @@ public final class MessageService {
      * @param the title shown in the dialog window bar
      */
     final int showConfirmListMessage(String message, Object[] listModel,
-            int messageType, ListCellRenderer listRenderer, String title) {
-            JList list = new JList(listModel);
+            int messageType, ListCellRenderer<Object> listRenderer, String title) {
+            JList<Object> list = new JList<Object>(listModel);
             list.setVisibleRowCount(5);
             list.setSelectionForeground(list.getForeground());
             list.setSelectionBackground(list.getBackground());

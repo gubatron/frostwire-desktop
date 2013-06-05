@@ -31,11 +31,15 @@ import javax.swing.SwingConstants;
  */
 public final class MediaButton extends JButton {
 
-    private final String tipText;
-    private final String upName;
-    private final String downName;
+    private String tipText;
+    private String upName;
+    private String downName;
 
     public MediaButton(String tipText, String upName, String downName) {
+        init(tipText,upName,downName);
+    }
+    
+    public void init(String tipText, String upName, String downName) {
         this.tipText = tipText;
         this.upName = upName;
         this.downName = downName;
@@ -57,6 +61,7 @@ public final class MediaButton extends JButton {
         //        setPreferredSize(new Dimension(
         //            getIcon().getIconWidth(), getIcon().getIconHeight()));
         setMargin(new Insets(0, 0, 0, 0));
+        setBorder(null);
         setToolTipText(tipText);
     }
 }
