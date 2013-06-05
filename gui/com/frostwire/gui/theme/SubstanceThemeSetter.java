@@ -78,7 +78,8 @@ public class SubstanceThemeSetter {
 
     // windows font policy http://msdn.microsoft.com/en-us/library/windows/desktop/aa511282.aspx
     // table of languages http://msdn.microsoft.com/en-us/library/ee825488(v=cs.20).aspx
-    private void fixWindowsOSFont() {
+    static Font fixWindowsOSFont() {
+        Font font = null;
         try {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
 
@@ -88,13 +89,15 @@ public class SubstanceThemeSetter {
             String fontName = ThemeMediator.getRecommendedFontName();
 
             if (fontName != null) {
-                Font font = new Font(fontName, Font.PLAIN, 12);
+                font = new Font(fontName, Font.PLAIN, 12);
                 method.invoke(toolkit, "win.icon.font", font);
                 //SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getDefaultFontPolicy());
             }
         } catch (Throwable e) {
             LOG.error("Error fixing font", e);
         }
+        
+        return font;
     }
 
     private void fixLinuxOSFont() {

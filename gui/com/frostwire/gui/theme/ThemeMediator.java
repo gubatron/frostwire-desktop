@@ -329,7 +329,11 @@ public class ThemeMediator {
     private static FontUIResource getControlFont() {
         FontUIResource font = null;
         if (OSUtils.isWindows()) {
-            throw new RuntimeException("Need to fix");
+            Font recommendedFont = SubstanceThemeSetter.fixWindowsOSFont();
+            if (recommendedFont != null){
+              font = new FontUIResource(recommendedFont);  
+            }
+            //throw new RuntimeException("Need to fix");
         } else if (OSUtils.isMacOSX()) {
             font = AquaFonts.getControlTextFont();
         } else if (OSUtils.isLinux()) {
