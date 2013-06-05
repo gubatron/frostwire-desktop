@@ -223,7 +223,7 @@ public final class MainFrame  {
         contentPane.add(TABBED_PANE, "wrap");
         contentPane.add(getStatusLine().getComponent(), "dock south, shrink 0");
         
-        setMinimalSize(FRAME, getStatusLine().getComponent(), APPLICATION_HEADER, TABBED_PANE, getStatusLine().getComponent());
+        setMinimalSize(FRAME, APPLICATION_HEADER, APPLICATION_HEADER, TABBED_PANE, getStatusLine().getComponent());
 
         FRAME.setJMenuBar(getMenuMediator().getMenuBar());
 
