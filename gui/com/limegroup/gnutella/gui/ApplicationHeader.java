@@ -504,6 +504,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
 
     private class SearchListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
             String query = cloudSearchField.getText();
 
             //start a download from the search box by entering a URL.

@@ -2,21 +2,14 @@ package com.limegroup.gnutella.gui;
 
 import java.awt.Frame;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.Calendar;
-import java.util.Enumeration;
 import java.util.StringTokenizer;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPopupMenu;
 import javax.swing.ToolTipManager;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 
 import org.limewire.util.OSUtils;
 
@@ -123,86 +116,10 @@ public class Main {
 	    if (CHOSEN_SPLASH_URL != null)
 	        return CHOSEN_SPLASH_URL;
 	    
-	    int max_splashes = countSplashesInSplashJar();
+	    final String splashPath = "org/limewire/gui/images/app_splash.jpg";
 	    
-	    //different splash every minute... that way it round robins forward in a loop.
-	    final int randomSplash = 1+(Calendar.getInstance().get(Calendar.MINUTE) % max_splashes);
-	    final String splashPath = "com/frostwire/splash/";
-	    
-	    CHOSEN_SPLASH_URL = ClassLoader.getSystemResource(splashPath + randomSplash + ".jpg");
+	    CHOSEN_SPLASH_URL = ClassLoader.getSystemResource(splashPath);
 	    return CHOSEN_SPLASH_URL;
-	}
-
-	/**
-	 * Lookup splash.jar in the classpath and count all the splashes in it.
-	 * @return
-	 */
-    private static int countSplashesInSplashJar() {
-    	int result = 0;
-    	
-    	//if running in windows, from .exe, splash.jar should be at the same level
-    	File splashJar = new File("splash.jar");
-    	if (splashJar.exists() && splashJar.isFile()) {
-    		return countImagesInJar("splash.jar");
-    	}
-
-    	//otherwise try to find splash.jar in the classpath.
-		String pathSeparator = System.getProperty("path.separator");
-        String classPath = System.getProperty("java.class.path");
-        
-        String[] classPathEntries = classPath.split(pathSeparator);
-
-        try {
-            for (String entry : classPathEntries) {
-            	//System.out.println("class path entry = " + entry);
-        		if (entry.endsWith("splash.jar")) {
-        			result = countImagesInJar(entry);
-        			break;
-        		}
-            }
-        } catch (Exception ignore) { }
-
-        //running from FrostWire.app on Mac and splash.jar was not in the classpath
-        //for some reason...
-        if (result == 0 && classPath.toLowerCase().contains("frostwire.app") &&
-        	System.getProperty("os.name").toLowerCase().startsWith("mac")) {
-        	
-        	String[] splitClasspath = classPath.split(":");
-        	
-        	for (String entry : splitClasspath) {
-        		if (entry.contains("FrostWire.app") && entry.endsWith("jar")) {
-        			classPath = entry.substring(0, entry.lastIndexOf("/"));
-        			return countImagesInJar(classPath + "/splash.jar");
-        		}
-        	}
-        }
-        
-		return result;
-	}
-
-	private static int countImagesInJar(String entry) {
-		int result = 0;
-		
-			JarFile jar = null;
-			
-			try {
-				jar = new JarFile(new File(entry));
-			} catch (Exception e) {
-				return 0;
-			}
-			
-			Enumeration<JarEntry> jarEntries = jar.entries();
-			while (jarEntries.hasMoreElements()) {
-				String fileName = jarEntries.nextElement().getName();
-				
-				if (fileName.endsWith("png") || fileName.endsWith("jpg") || fileName.endsWith("gif")) {
-					result++;
-					//System.out.println("one more image inside jar - " + fileName + " (" + result + ")");
-				}
-			}
-			
-			return result;
-
 	}
     
     /** Determines if this is running a Mac OSX lower than Leopard */
