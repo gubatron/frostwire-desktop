@@ -48,13 +48,9 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
 
 public class LanguagePanel extends JPanel {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -4464891813825761134L;
     private final JLabel languageLabel;
     private final ActionListener actionListener;
-    private final JComboBox languageOptions;
+    private final JComboBox<Object> languageOptions;
 
     /**
      * Constructs a LanguagePanel that will notify the given listener when the
@@ -66,11 +62,11 @@ public class LanguagePanel extends JPanel {
         this.actionListener = actionListener;
         this.languageLabel = new JLabel();
 
-        languageOptions = new JComboBox();
+        languageOptions = new JComboBox<Object>();
         Font font = new Font("Dialog", Font.PLAIN, 11);
         languageOptions.setFont(font);
         Locale[] locales = LanguageUtils.getLocales(font);
-        languageOptions.setModel(new DefaultComboBoxModel(locales));
+        languageOptions.setModel(new DefaultComboBoxModel<Object>(locales));
         languageOptions.setRenderer(LanguageFlagFactory.getListRenderer());
 
         Locale locale = guessLocale(locales);

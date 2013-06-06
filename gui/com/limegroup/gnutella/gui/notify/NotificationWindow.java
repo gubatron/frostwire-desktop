@@ -78,8 +78,6 @@ import com.limegroup.gnutella.gui.search.Ditherer;
  */
 public class NotificationWindow extends AnimatedWindow {
 
-    private static final long serialVersionUID = 7826381963144231497L;
-
     private final static int DEFAULT_TIMEOUT = 6 * 1000;
 
     private JLabel titleLabel;
@@ -102,7 +100,7 @@ public class NotificationWindow extends AnimatedWindow {
 
     private BoxPanel topPanel;
 
-    private ComboBoxModel model;
+    private ComboBoxModel<Object> model;
 
     private ModelListener modelListener = new ModelListener();
 
@@ -120,7 +118,7 @@ public class NotificationWindow extends AnimatedWindow {
 
     private boolean pendingScreenUpdate;
 
-    public NotificationWindow(Window parent, ComboBoxModel model) {
+    public NotificationWindow(Window parent, ComboBoxModel<Object> model) {
         super(parent);
 
         setModel(model);
@@ -172,7 +170,7 @@ public class NotificationWindow extends AnimatedWindow {
     }
     
     public NotificationWindow(Window parent) {
-        this(parent, new DefaultComboBoxModel());
+        this(parent, new DefaultComboBoxModel<Object>());
     }
 
     /** Ensure this is always on top. */
@@ -184,7 +182,7 @@ public class NotificationWindow extends AnimatedWindow {
     }
 
     public void addNotification(Object notification) {
-        ((MutableComboBoxModel) model).addElement(notification);
+        ((MutableComboBoxModel<Object>) model).addElement(notification);
     }
 
     private void doNotificationLayout() {
@@ -349,7 +347,7 @@ public class NotificationWindow extends AnimatedWindow {
         return locationOffset;
     }
 
-    public ComboBoxModel getModel() {
+    public ComboBoxModel<Object> getModel() {
         return model;
     }
 
@@ -451,9 +449,9 @@ public class NotificationWindow extends AnimatedWindow {
 
     public void removeAllNotifications() {
         if (model instanceof DefaultComboBoxModel) {
-            ((DefaultComboBoxModel) model).removeAllElements();
+            ((DefaultComboBoxModel<Object>) model).removeAllElements();
         } else {
-            MutableComboBoxModel mutableModel = (MutableComboBoxModel) model;
+            MutableComboBoxModel<Object> mutableModel = (MutableComboBoxModel<Object>) model;
             int size = model.getSize();
             for (int i = 0; i < size; i++) {
                 Object item = model.getElementAt(0);
@@ -468,7 +466,7 @@ public class NotificationWindow extends AnimatedWindow {
      * @param notification
      */
     public void removeNotification(Object notification) {
-        ((MutableComboBoxModel) model).removeElement(notification);
+        ((MutableComboBoxModel<Object>) model).removeElement(notification);
     }
 
     /**
@@ -495,8 +493,8 @@ public class NotificationWindow extends AnimatedWindow {
     /**
      * Sets the underlying data model.
      */
-    public void setModel(ComboBoxModel model) {
-        ComboBoxModel oldModel = this.model;
+    public void setModel(ComboBoxModel<Object> model) {
+        ComboBoxModel<Object> oldModel = this.model;
         if (oldModel != null) {
             oldModel.removeListDataListener(modelListener);
         }

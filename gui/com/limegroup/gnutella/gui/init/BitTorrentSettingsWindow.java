@@ -24,17 +24,14 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import org.limewire.i18n.I18nMarker;
-import org.limewire.util.CommonUtils;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.AzureusStarter;
-import com.frostwire.gui.bittorrent.TorrentSeedingSettingComponent;
 import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
+import com.frostwire.gui.bittorrent.TorrentSeedingSettingComponent;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class displays a setup window for allowing the user to choose
