@@ -100,6 +100,8 @@ public final class StatusLine implements ThemeObserver {
     private IconButton _googlePlusButton;
 
     private IconButton seedingStatusButton;
+    
+    private DonationButtons _donationButtons;
 
     /**
      * Variables for the center portion of the status bar, which can display
@@ -182,8 +184,7 @@ public final class StatusLine implements ThemeObserver {
     }
 
     private void createDonationButtonsComponent() {
-        // TODO Auto-generated method stub
-        
+        _donationButtons = new DonationButtons();
     }
 
     private void createTwitterButton() {
@@ -242,11 +243,6 @@ public final class StatusLine implements ThemeObserver {
      * and makes sure it has room to add an indicator before adding it.
      */
     public void refresh() {
-        //TODO: SupportFrostWireComponent
-//        if (_audioStatusComponent == null || _centerComponent == null) {
-//            return;
-//        }
-
         getComponent().removeAll();
 
         //  figure out remaining width, and do not add indicators if no room
@@ -259,9 +255,11 @@ public final class StatusLine implements ThemeObserver {
         remainingWidth -= sepWidth;
         remainingWidth -= GUIConstants.SEPARATOR / 2;
 
-        //TODO: SupportFrostWireComponent        
-//        remainingWidth -= _audioStatusComponent.getWidth();
-        remainingWidth -= GUIConstants.SEPARATOR;
+        // substract donation buttons as needed2
+        if (_donationButtons != null) {
+            remainingWidth -= _donationButtons.getWidth();
+            remainingWidth -= GUIConstants.SEPARATOR;
+        }
 
         //  subtract center component
         int indicatorWidth = _centerComponent.getWidth();
@@ -345,13 +343,14 @@ public final class StatusLine implements ThemeObserver {
         gbc.weightx = 0;
         BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
 
-        // current song component
-        BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-        //TODO: SupportFrostWireComponent
-        //        BAR.add(_audioStatusComponent, gbc);
-        BAR.add(Box.createHorizontalStrut(10));
-        BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
-
+        // donation buttons
+        if (_donationButtons != null) {
+            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+            BAR.add(_donationButtons, gbc);
+            BAR.add(Box.createHorizontalStrut(10));
+            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
+        }
+        
         BAR.validate();
         BAR.repaint();
     }

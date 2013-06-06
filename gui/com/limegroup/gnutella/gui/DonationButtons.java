@@ -4,15 +4,38 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import net.miginfocom.swing.MigLayout;
+
 
 public class DonationButtons extends JPanel {
+    
+    private static final Color FONT_COLOR = new Color(0x1f3545);
+    
+    public DonationButtons() {
+        setLayout(new MigLayout("insets 0, nogrid, ltr, gapx 6","","[align center]"));
+        add(createDonateLabel());
+        add(new DonationButton("$1","http://www.frostwire.com/?donate1",I18n.tr("Support FrostWire development with a USD $1 donation")));
+        add(new DonationButton("$5","http://www.frostwire.com/?donate5",I18n.tr("Support FrostWire development with a USD $5 donation")));
+        add(new DonationButton("$10","http://www.frostwire.com/?donate10",I18n.tr("Support FrostWire development with a USD $10 donation")));
+        add(new DonationButton("$25","http://www.frostwire.com/?donate25",I18n.tr("Support FrostWire development with a USD $25 donation")));
+    }
+
+    private JLabel createDonateLabel() {
+        Font labelFont = new Font("Helvetica", Font.BOLD, 10);
+        JLabel donateLabel = new JLabel(I18n.tr("Donate")+":");
+        donateLabel.setForeground(FONT_COLOR);
+        donateLabel.setFont(labelFont);
+        return donateLabel;
+    }
 
     private class DonationButton extends JButton {
 
@@ -21,12 +44,14 @@ public class DonationButtons extends JPanel {
         }
 
         private void initComponent(String text, final String donationURL, String tipText) {
-            Font buttonFont = new Font("Helvetica", Font.BOLD, 10);
-            setMinimumSize(new Dimension(26,18));
-            setPreferredSize(new Dimension(26,18));
-            setMaximumSize(new Dimension(36,18));
+            Font buttonFont = new Font("Helvetica", Font.BOLD, 9);
+            setMinimumSize(new Dimension(38,22));
+            setMargin(new Insets(0,0,0,0));
+            setOpaque(false);
+            setPreferredSize(new Dimension(40,22));
+            setMaximumSize(new Dimension(40,22));
             setFont(buttonFont);
-            setForeground(new Color(0x1f3545));
+            setForeground(FONT_COLOR);
             setBackground(new Color(0xedf1f4));
             setText(text);
             setHorizontalTextPosition(SwingConstants.CENTER);
