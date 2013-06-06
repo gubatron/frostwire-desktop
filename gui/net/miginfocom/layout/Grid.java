@@ -1434,7 +1434,8 @@ public final class Grid
 		TreeSet<Integer> secIndexes = isRows ? colIndexes : rowIndexes;
 		DimConstraint[] primDCs = (isRows ? rowConstr : colConstr).getConstaints();
 
-		ArrayList<LinkedDimGroup>[] groupLists = new ArrayList[primIndexes.size()];
+		@SuppressWarnings("unchecked")
+        ArrayList<LinkedDimGroup>[] groupLists = new ArrayList[primIndexes.size()];
 
 		int gIx = 0;
 		for (int i : primIndexes) {
@@ -2302,10 +2303,11 @@ public final class Grid
 	}
 
 	private static WeakHashMap<Object, int[][]>[] PARENT_ROWCOL_SIZES_MAP = null;
-	private static synchronized void putSizesAndIndexes(Object parComp, int[] sizes, int[] ixArr, boolean isRows)
+	@SuppressWarnings("unchecked")
+    private static synchronized void putSizesAndIndexes(Object parComp, int[] sizes, int[] ixArr, boolean isRows)
 	{
 		if (PARENT_ROWCOL_SIZES_MAP == null)    // Lazy since only if designing in IDEs
-			PARENT_ROWCOL_SIZES_MAP = new WeakHashMap[] {new WeakHashMap(4), new WeakHashMap(4)};
+			PARENT_ROWCOL_SIZES_MAP = new WeakHashMap[] {new WeakHashMap<Object, int[][]>(4), new WeakHashMap<Object, int[][]>(4)};
 
 		PARENT_ROWCOL_SIZES_MAP[isRows ? 0 : 1].put(parComp, new int[][] {ixArr, sizes});
 	}

@@ -1596,6 +1596,7 @@ public class FilePane extends JPanel implements PropertyChangeListener {
     void setFileSelected() {
         if (getFileChooser().isMultiSelectionEnabled() && !isDirectorySelected()) {
             File[] files = getFileChooser().getSelectedFiles(); // Should be selected
+            @SuppressWarnings("deprecation")
             Object[] selectedObjects = list.getSelectedValues(); // Are actually selected
 
             listSelectionModel.setValueIsAdjusting(true);

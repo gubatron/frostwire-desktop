@@ -507,7 +507,8 @@ public final class LayoutUtil
 	 * @return The object. Never <code>null</code>.
 	 * @throws IOException If there was a problem saving as XML
 	 */
-	public static synchronized Object readAsXML(ObjectInput in) throws IOException
+	@SuppressWarnings("resource")
+    public static synchronized Object readAsXML(ObjectInput in) throws IOException
 	{
 		if (readBuf == null)
 			readBuf = new byte[16384];

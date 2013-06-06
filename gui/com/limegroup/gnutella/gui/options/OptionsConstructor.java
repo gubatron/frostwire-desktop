@@ -350,7 +350,7 @@ public final class OptionsConstructor {
      * 
      * @param parentKey the key of the parent node to add the new node to
      */
-    private final OptionsTreeNode addOption(final String parentKey, final String childKey, final String label, Class<? extends AbstractPaneItem>... clazzes) {
+    private final OptionsTreeNode addOption(final String parentKey, final String childKey, final String label, @SuppressWarnings("unchecked") Class<? extends AbstractPaneItem>... clazzes) {
         StringBuilder sb = new StringBuilder();
         sb.append(label);
         sb.append(" ");
