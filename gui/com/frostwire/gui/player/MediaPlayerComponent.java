@@ -1022,19 +1022,32 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             
             @Override
             protected void done() {
+                String tooltipText = "";
+                String iconUpName = "";
+                String iconDownName = "";
                 if (isLocalFile) { //won't be shown in 5.6.x, code here for 6.x
-                    mediaSourceButton.init(I18n.tr("Playing local file"), "speaker_light", "speaker_light");
+                    tooltipText = I18n.tr("Playing local file");
+                    iconUpName = iconDownName = "speaker_light";
                 } else if (isPlaylistItem) { //won't be shown in 5.6.x, code here for 6.x
-                    mediaSourceButton.init(I18n.tr("Playing track from") + " " + playlistName, "playlist", "playlist");
+                    tooltipText = I18n.tr("Playing track from") + " " + playlistName;
+                    iconUpName = iconDownName = "playlist";
                 } else if (isYT) {
-                    mediaSourceButton.init(I18n.tr("Open YouTube source page"), "youtube_on", "youtube_off");
+                    tooltipText = I18n.tr("Open YouTube source page");
+                    iconUpName = "youtube_off";
+                    iconDownName = "youtube_on";
                 } else if (isSC) {
-                    mediaSourceButton.init(I18n.tr("Open SoundCloud source page"), "soundcloud_on", "soundcloud_off");
+                    tooltipText = I18n.tr("Open SoundCloud source page");
+                    iconUpName = "soundcloud_off";
+                    iconDownName = "soundcloud_on";
                 } else if (isInternetRadio) {
-                    mediaSourceButton.init(I18n.tr("Playing Internet Radio"), "radio_light_small", "radio_light_small");
+                    tooltipText = I18n.tr("Playing Internet Radio");
+                    iconUpName = iconDownName = "radio_light_small";
                 } else if (isWifiStream) {
-                    mediaSourceButton.init(I18n.tr("Playing local Wi-Fi Stream from") + " " + deviceName, "wifi_sharing_light_small", "wifi_sharing_light_small");
+                    tooltipText = I18n.tr("Playing local Wi-Fi Stream from") + " " + deviceName;
+                    iconUpName = iconDownName = "wifi_sharing_light_small";
                 }
+                mediaSourceButton.init(tooltipText,iconUpName,iconDownName);
+                
                 //TODO: Add "isLocalFile || isPlaylistItem ||" on FrostWire 6.x when we have room for 3 buttons.
                 mediaSourceButton.setVisible(isYT || isSC || isInternetRadio || isWifiStream);
             }
