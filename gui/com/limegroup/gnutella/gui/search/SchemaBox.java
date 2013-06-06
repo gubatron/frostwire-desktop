@@ -85,6 +85,7 @@ final class SchemaBox extends JPanel {
         Dimension dim = new Dimension(10, 30);
         setPreferredSize(dim);
         setMinimumSize(dim);
+        setMaximumSize(new Dimension(100000, 30));
     }
 
     public void applyFilters() {
@@ -129,6 +130,7 @@ final class SchemaBox extends JPanel {
         Dimension dim = new Dimension(400, 30);
         panel.setPreferredSize(dim);
         panel.setMinimumSize(dim);
+        panel.setMaximumSize(new Dimension(100000, 30));
 
         // Then add 'Audio'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_AUDIO);
