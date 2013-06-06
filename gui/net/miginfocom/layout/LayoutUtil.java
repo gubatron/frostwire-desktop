@@ -186,7 +186,7 @@ public final class LayoutUtil
 	 * @param c The class to set the registered deligate for.
 	 * @param del The new delegate or <code>null</code> to erase to old one.
 	 */
-	static synchronized void setDelegate(Class c, PersistenceDelegate del)
+	static synchronized void setDelegate(Class<?> c, PersistenceDelegate del)
 	{
 		try {
 			Introspector.getBeanInfo(c, Introspector.IGNORE_ALL_BEANINFO).getBeanDescriptor().setValue("persistenceDelegate", del);

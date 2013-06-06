@@ -85,7 +85,7 @@ abstract class MRJEventProxy
 	 * the keys above. The hash table contains <code>ListenerInfo</code>
 	 * objects.
 	 */
-	private Hashtable listenerLists = new Hashtable();
+	private Hashtable<Object, Hashtable<Object, Object>> listenerLists = new Hashtable<Object, Hashtable<Object, Object>>();
 
 	/**
 	 * This class encapsulates a listener and the source object to use when
@@ -260,11 +260,11 @@ abstract class MRJEventProxy
 	private void addListener(ActionListener l, Object source, String key)
 	{
 		// Get the hash table containing the listeners for the given key
-		Hashtable ht = (Hashtable)listenerLists.get(key);
+		Hashtable<Object, Object> ht = (Hashtable<Object, Object>)listenerLists.get(key);
 		if (ht == null)
 		{
 			// If there is none yet, create it
-			ht = new Hashtable(1); // In most cases, 1 will be enough
+			ht = new Hashtable<Object, Object>(1); // In most cases, 1 will be enough
 			listenerLists.put(key, ht);
 		}
 
@@ -288,7 +288,7 @@ abstract class MRJEventProxy
 	 */
 	private void removeListener(ActionListener l, String key)
 	{
-		Hashtable ht = (Hashtable)listenerLists.get(key);
+		Hashtable<Object, Object> ht = (Hashtable<Object, Object>)listenerLists.get(key);
 		String name = l.getClass().getName();
 		if (ht != null && ht.remove(name) != null && ht.isEmpty())
 			listenerLists.remove(key);
@@ -318,21 +318,21 @@ abstract class MRJEventProxy
 	 */
 	protected void fireMenuEvent(int type)
 	{
-		Hashtable ht = null;
+		Hashtable<Object, Object> ht = null;
 		switch (type)
 		{
 			case ApplicationEvent.ABOUT:
-				ht = (Hashtable)listenerLists.get(ABOUT_KEY);
+				ht = (Hashtable<Object, Object>)listenerLists.get(ABOUT_KEY);
 				break;
 			case ApplicationEvent.PREFERENCES:
-				ht = (Hashtable)listenerLists.get(PREFERENCES_KEY);
+				ht = (Hashtable<Object, Object>)listenerLists.get(PREFERENCES_KEY);
 				break;
 			default:
 				throw new Error("unknown event type");
 		}
 		if (ht == null)
 			return;
-		Enumeration enm = ht.elements();
+		Enumeration<Object> enm = ht.elements();
 		while (enm.hasMoreElements())
 		{
 			ListenerInfo li = (ListenerInfo)enm.nextElement();
@@ -355,21 +355,21 @@ abstract class MRJEventProxy
 	 */
 	protected void fireDocumentEvent(int type, File file)
 	{
-		Hashtable ht = null;
+		Hashtable<Object, Object> ht = null;
 		switch (type)
 		{
 			case ApplicationEvent.OPEN_DOCUMENT:
-				ht = (Hashtable)listenerLists.get(OPEN_DOCUMENT_KEY);
+				ht = (Hashtable<Object, Object>)listenerLists.get(OPEN_DOCUMENT_KEY);
 				break;
 			case ApplicationEvent.PRINT_DOCUMENT:
-				ht = (Hashtable)listenerLists.get(PRINT_DOCUMENT_KEY);
+				ht = (Hashtable<Object, Object>)listenerLists.get(PRINT_DOCUMENT_KEY);
 				break;
 			default:
 				throw new Error("unknown event type");
 		}
 		if (ht == null)
 			return;
-		Enumeration enm = ht.elements();
+		Enumeration<Object> enm = ht.elements();
 		while (enm.hasMoreElements())
 		{
 			ListenerInfo li = (ListenerInfo)enm.nextElement();
@@ -387,17 +387,17 @@ abstract class MRJEventProxy
 	 */
 	protected void fireApplicationEvent(int type)
 	{
-		Hashtable ht = null;
+		Hashtable<Object, Object> ht = null;
 		switch (type)
 		{
 			case ApplicationEvent.OPEN_APPLICATION:
-				ht = (Hashtable)listenerLists.get(OPEN_APPLICATION_KEY);
+				ht = (Hashtable<Object, Object>)listenerLists.get(OPEN_APPLICATION_KEY);
 				break;
 			case ApplicationEvent.REOPEN_APPLICATION:
-				ht = (Hashtable)listenerLists.get(REOPEN_APPLICATION_KEY);
+				ht = (Hashtable<Object, Object>)listenerLists.get(REOPEN_APPLICATION_KEY);
 				break;
 			case ApplicationEvent.QUIT_APPLICATION:
-				ht = (Hashtable)listenerLists.get(QUIT_APPLICATION_KEY);
+				ht = (Hashtable<Object, Object>)listenerLists.get(QUIT_APPLICATION_KEY);
 				if (ht == null)
 				{
 					System.exit(0);
@@ -409,7 +409,7 @@ abstract class MRJEventProxy
 		}
 		if (ht == null)
 			return;
-		Enumeration enm = ht.elements();
+		Enumeration<Object> enm = ht.elements();
 		while (enm.hasMoreElements())
 		{
 			ListenerInfo li = (ListenerInfo)enm.nextElement();

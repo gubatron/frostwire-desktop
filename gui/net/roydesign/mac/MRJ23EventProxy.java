@@ -44,18 +44,18 @@ class MRJ23EventProxy extends MRJEventProxy
 	 * The Apple event class identifying required Apple events that all
 	 * applications must support
 	 */
-	private static final int kCoreEventClass = 0x61657674; // 'aevt'
+	//private static final int kCoreEventClass = 0x61657674; // 'aevt'
 
 	/**
 	 * The Apple event ID for the Preferences menu item on Mac OS X.
 	 */
-	private static final int kPreferencesItem = 0x70726566; // 'pref'
+	//private static final int kPreferencesItem = 0x70726566; // 'pref'
 
 	/**
 	 * The Apple event ID for the Reopen Application event on Mac OS
 	 * and Mac OS X.
 	 */
-	private static final int kReopenApplicationEvent = 0x72617070; // 'rapp'
+	//private static final int kReopenApplicationEvent = 0x72617070; // 'rapp'
 
 	/**
 	 * The single instance of MRJ23EventProxy.
@@ -76,7 +76,7 @@ class MRJ23EventProxy extends MRJEventProxy
 	 * reference to an <code>AppleEventHandlerThunk</code>, to prevent
 	 * it from being garbage collected.
 	 */
-	private Object reopenApplicationHandler;
+	//private Object reopenApplicationHandler;
 
 	/**
 	 * Whether the Preferences menu item is enabled or not.
@@ -136,20 +136,20 @@ class MRJ23EventProxy extends MRJEventProxy
 		}
 		if (MRJAdapter.mrjVersion >= 2.1f)
 		{
-			AppleEventHandler aeh = new AppleEventHandler()
-				{
-					public short handleEvent(int event, int reply, int refcon)
-					{
-						new Thread()
-							{
-								public void run()
-								{
-									fireApplicationEvent(ApplicationEvent.REOPEN_APPLICATION);
-								}
-							}.start();
-						return 0;
-					}
-				};
+//			AppleEventHandler aeh = new AppleEventHandler()
+//				{
+//					public short handleEvent(int event, int reply, int refcon)
+//					{
+//						new Thread()
+//							{
+//								public void run()
+//								{
+//									fireApplicationEvent(ApplicationEvent.REOPEN_APPLICATION);
+//								}
+//							}.start();
+//						return 0;
+//					}
+//				};
 			if (MRJAdapter.mrjVersion >= 3.0f)
 			{
 //				reopenApplicationHandler = new JD3AppleEventHandlerThunk(aeh);
