@@ -106,12 +106,6 @@ public final class MainFrame  {
     private final JFrame FRAME;
 
     /**
-     * Constant for the <tt>LogoPanel</tt> used for displaying the
-     * lime/spinning lime search status indicator and the logo.
-     */
-    private LogoPanel LOGO_PANEL;
-
-    /**
      * The array of tabs in the main application window.
      */
     private Map<GUIMediator.Tabs, Tab> TABS = new HashMap<GUIMediator.Tabs, Tab>(3);
@@ -217,7 +211,6 @@ public final class MainFrame  {
         buildTabs();
 
         APPLICATION_HEADER = new ApplicationHeader(TABS);
-        LOGO_PANEL = APPLICATION_HEADER.getLogoPanel();
 
         contentPane.add(APPLICATION_HEADER, "growx, dock north");
         contentPane.add(TABBED_PANE, "wrap");

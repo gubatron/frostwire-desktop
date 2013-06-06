@@ -39,7 +39,7 @@ public class LanguageWindow extends JDialog {
 
     private JCheckBox showLanguageCheckbox;
 
-    private JComboBox localeComboBox;
+    private JComboBox<Object> localeComboBox;
 
     private JPanel mainPanel;
 
@@ -94,7 +94,7 @@ public class LanguageWindow extends JDialog {
     	GridBagConstraints c = new GridBagConstraints();
 
         // add locales to model and select the best match 
-        DefaultComboBoxModel localeModel = new DefaultComboBoxModel();
+        DefaultComboBoxModel<Object> localeModel = new DefaultComboBoxModel<Object>();
         int selectedScore = -1;
         int selectedIndex = -1;
         Locale systemLocale = Locale.getDefault();
@@ -110,7 +110,7 @@ public class LanguageWindow extends JDialog {
             }
         }
 
-        localeComboBox = new JComboBox(localeModel);
+        localeComboBox = new JComboBox<Object>(localeModel);
         localeComboBox.setFont(dialogFont);
         localeComboBox.setRenderer(LanguageFlagFactory.getListRenderer());
         localeComboBox.setMaximumRowCount(15);
