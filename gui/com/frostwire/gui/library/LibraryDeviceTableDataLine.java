@@ -41,19 +41,19 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
  *
  */
 public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLine<FileDescriptor> {
-    
+
     /**
      * Icon column
      */
     static final int ICON_IDX = 0;
     private static final LimeTableColumn ICON_COLUMN = new LimeTableColumn(ICON_IDX, "DEVICE_TABLE_ICON", I18n.tr("Icon"), 20, true, false, false, PlayableIconCell.class);
-    
+
     /**
      * Title column
      */
     static final int TITLE_IDX = 1;
     private static final LimeTableColumn TITLE_COLUMN = new LimeTableColumn(TITLE_IDX, "DEVICE_TABLE_TITLE", I18n.tr("Title"), 80, true, LibraryNameHolder.class);
-    
+
     /**
      * Artist column
      */
@@ -79,11 +79,11 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
     private static final LimeTableColumn SIZE_COLUMN = new LimeTableColumn(SIZE_IDX, "DEVICE_TABLE_SIZE", I18n.tr("Size"), 80, false, PlayableCell.class);
 
     static final int DATE_ADDED_IDX = 6;
-    private static final LimeTableColumn DATE_ADDED_COLUMN = new LimeTableColumn(DATE_ADDED_IDX,"DEVICE_TABLE_DATE_ADDED",I18n.tr("Date Added"),80,true,PlayableCell.class);
+    private static final LimeTableColumn DATE_ADDED_COLUMN = new LimeTableColumn(DATE_ADDED_IDX, "DEVICE_TABLE_DATE_ADDED", I18n.tr("Date Added"), 80, true, PlayableCell.class);
 
     static final int DATE_MODIFIED_IDX = 7;
-    private static final LimeTableColumn DATE_MODIFIED_COLUMN = new LimeTableColumn(DATE_MODIFIED_IDX, "DEVICE_TABLE_DATE_MODIFIED",I18n.tr("Date Modified"),80, false, PlayableCell.class);
-    
+    private static final LimeTableColumn DATE_MODIFIED_COLUMN = new LimeTableColumn(DATE_MODIFIED_IDX, "DEVICE_TABLE_DATE_MODIFIED", I18n.tr("Date Modified"), 80, false, PlayableCell.class);
+
     /**
      * Total number of columns
      */
@@ -101,28 +101,31 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
      *  Kb or Mb
      */
     private SizeHolder sizeHolder;
-    
+
     /**
      * The model this is being displayed on
      */
     private final LibraryDeviceTableModel model;
-    
+
     private final Device device;
-    
+
     /**
      * Whether or not the icon has been loaded.
      */
     private boolean _iconLoaded = false;
-    
+
     /**
      * Whether or not the icon has been scheduled to load.
      */
     private boolean _iconScheduledForLoad = false;
-    
+
     public LibraryDeviceTableDataLine(LibraryDeviceTableModel ltm) {
         this.model = ltm;
         this.device = ltm.getDevice();
     }
+    
+    private Date dateAdded;
+    private Date dateModified;
 
     /**
      * Sets up the dataline for use with the playlist.
@@ -130,6 +133,9 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
     public void initialize(FileDescriptor item) {
         super.initialize(item);
         sizeHolder = new SizeHolder(item.fileSize);
+        
+        this.dateAdded = new Date(initializer.dateAdded * 1000);
+        this.dateModified = new Date(initializer.dateModified * 1000);
     }
 
     /**
@@ -151,9 +157,9 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
         case SIZE_IDX:
             return new PlayableCell(this, sizeHolder.toString(), playing, idx);
         case DATE_ADDED_IDX:
-            return new PlayableCell(this, new Date(initializer.dateAdded*1000), playing, idx);
+            return new PlayableCell(this, dateAdded, dateAdded.toString(), playing, idx);
         case DATE_MODIFIED_IDX:
-            return new PlayableCell(this, new Date(initializer.dateModified*1000), playing, idx);
+            return new PlayableCell(this, dateModified, dateModified.toString(), playing, idx);
         }
         return null;
     }
@@ -161,7 +167,7 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
     private boolean isPlaying() {
         if (initializer != null) {
             String url = device.getDownloadURL(initializer);
-           return MediaPlayer.instance().isThisBeingPlayed(url);
+            return MediaPlayer.instance().isThisBeingPlayed(url);
         }
 
         return false;
@@ -193,7 +199,7 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
     }
 
     public boolean isClippable(int idx) {
-        switch(idx) {
+        switch (idx) {
         case ICON_IDX:
             return false;
         default:
@@ -219,7 +225,7 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
         if (!StringUtils.isNullOrEmpty(initializer.title, true)) {
             list.add(I18n.tr("Title") + ": " + initializer.title);
         }
-        
+
         if (!StringUtils.isNullOrEmpty(filterUnknown(initializer.artist), true)) {
             list.add(I18n.tr("Artist") + ": " + initializer.artist);
         }
@@ -237,15 +243,15 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
     public File getFile() {
         return null;
     }
-    
+
     private String filterUnknown(String str) {
         return str != null && str.contains("<unknown>") ? "" : str;
     }
-    
+
     private Icon getIcon() {
         final File file = new File(initializer.filePath);
         boolean iconAvailable = IconManager.instance().isIconForFileAvailable(file);
-        if(!iconAvailable && !_iconScheduledForLoad) {
+        if (!iconAvailable && !_iconScheduledForLoad) {
             _iconScheduledForLoad = true;
             BackgroundExecutorService.schedule(new Runnable() {
                 public void run() {
@@ -259,7 +265,7 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
                 }
             });
             return null;
-        } else if(_iconLoaded || iconAvailable) {
+        } else if (_iconLoaded || iconAvailable) {
             return IconManager.instance().getIconForFile(file);
         } else {
             return null;

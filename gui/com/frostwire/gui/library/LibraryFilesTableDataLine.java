@@ -130,6 +130,8 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
     public int getColumnCount() {
         return getLimeTableColumns().length;
     }
+    
+    private Date lastModified;
 
     /**
      * Initialize the object.
@@ -177,6 +179,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
             _sizeHolder = new SizeHolder(0);
         }
 
+        this.lastModified = new Date(initializer.lastModified());
     }
 
     /**
@@ -202,13 +205,13 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         case NAME_IDX:
             return new LibraryNameHolder(this, _name, isPlaying, true, idx);
         case SIZE_IDX:
-            return new PlayableCell(this, _sizeHolder, isPlaying, idx);
+            return new PlayableCell(this, _sizeHolder, _sizeHolder.toString(), isPlaying, idx);
         case TYPE_IDX:
             return new PlayableCell(this, _type, isPlaying, idx);
         case PATH_IDX:
             return new PlayableCell(this, _path, isPlaying, idx);
         case MODIFICATION_TIME_IDX:
-            return new PlayableCell(this, new Date(initializer.lastModified()), isPlaying, idx);
+            return new PlayableCell(this, lastModified, lastModified.toString(), isPlaying, idx);
         case SHARE_IDX:
             return new FileShareCell(this, initializer.getAbsolutePath(), shared);
         }

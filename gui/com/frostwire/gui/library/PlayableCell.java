@@ -20,7 +20,7 @@ package com.frostwire.gui.library;
 
 import org.limewire.util.StringUtils;
 
-import com.limegroup.gnutella.gui.tables.SizeHolder;
+import com.frostwire.gui.LocaleLabel.LocaleString;
 
 /**
  * 
@@ -35,30 +35,34 @@ public class PlayableCell implements Comparable<PlayableCell> {
     private final boolean isPlaying;
     private final int columnIndex;
 
-    public PlayableCell(Object dataLine, Object wrapMe, boolean isPlaying, int columnIndex) {
+    private final String strValue;
+    private final LocaleString localeString;
+
+    public PlayableCell(Object dataLine, String strValue, boolean isPlaying, int columnIndex) {
+        this(dataLine, strValue, strValue, isPlaying, columnIndex);
+    }
+
+    public PlayableCell(Object dataLine, Object wrapMe, String strValue, boolean isPlaying, int columnIndex) {
         this.dataLine = dataLine;
         this.wrappedObject = wrapMe;
         this.isPlaying = isPlaying;
         this.columnIndex = columnIndex;
+
+        this.strValue = strValue;
+        this.localeString = new LocaleString(strValue);
     }
 
     public boolean isPlaying() {
         return isPlaying;
     }
 
+    public LocaleString getLocaleString() {
+        return localeString;
+    }
+
     @Override
     public String toString() {
-        if (wrappedObject != null) {
-
-            if (wrappedObject instanceof SizeHolder) {
-                if (((SizeHolder) wrappedObject).getSize() == 0) {
-                    return "--";
-                }
-            }
-
-            return wrappedObject.toString();
-        }
-        return "";
+        return strValue;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -91,7 +95,7 @@ public class PlayableCell implements Comparable<PlayableCell> {
             return 0;
         }
     }
-    
+
     public Object getDataLine() {
         return dataLine;
     }

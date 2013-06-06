@@ -36,6 +36,7 @@ import javax.swing.table.TableCellRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.frostwire.gui.LocaleLabel;
 import com.frostwire.gui.player.DeviceMediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
@@ -55,7 +56,7 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
 
     private static final Logger LOG = LoggerFactory.getLogger(LibraryNameHolderRenderer.class);
 
-    private JLabel labelText;
+    private LocaleLabel labelText;
     private JLabel labelPlay;
     private JLabel labelDownload;
 
@@ -86,7 +87,7 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
 
         GridBagConstraints c;
 
-        labelText = new JLabel();
+        labelText = new LocaleLabel();
         labelText.setHorizontalTextPosition(SwingConstants.LEFT);
         c = new GridBagConstraints();
         c.gridx = GridBagConstraints.RELATIVE;
@@ -178,10 +179,7 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
     private void setData(LibraryNameHolder value, JTable table, int row, int column) {
         try {
             libraryNameHolder = value;
-            labelText.setText(value.toString());
-
-            labelText.setFont(table.getFont());
-            ThemeMediator.fixLabelFont(labelText);
+            labelText.setText(value.getLocaleString());
 
             boolean showButtons = mouseIsOverRow(table, row);
             labelPlay.setVisible(showButtons && !isSourceBeingPlayed() && isPlayableDataLine());
