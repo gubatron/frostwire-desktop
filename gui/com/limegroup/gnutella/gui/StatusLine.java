@@ -138,9 +138,8 @@ public final class StatusLine implements ThemeObserver {
             }
         });
 
-        GUIMediator.setSplashScreenString(I18n.tr("Creating Audio Status Component..."));
-        //TODO: SupportFrostWireComponent
-        //        _audioStatusComponent = new CurrentMediaStatusComponent();
+        GUIMediator.setSplashScreenString(I18n.tr("Creating donation buttons so you can give us a hand..."));
+        createDonationButtonsComponent();
 
         //  make icons and panels for connection quality
         GUIMediator.setSplashScreenString(I18n.tr("Creating Connection Quality Indicator..."));
@@ -180,6 +179,11 @@ public final class StatusLine implements ThemeObserver {
         ThemeMediator.addThemeObserver(this);
 
         refresh();
+    }
+
+    private void createDonationButtonsComponent() {
+        // TODO Auto-generated method stub
+        
     }
 
     private void createTwitterButton() {
@@ -676,6 +680,11 @@ public final class StatusLine implements ThemeObserver {
                 jcbmi.setState(StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
 
+                //  add 'Show Donation Buttons' menu item
+                jcbmi = new SkinCheckBoxMenuItem(new ShowDonationButtonsAction());
+                jcbmi.setState(StatusBarSettings.DONATION_BUTTONS_DISPLAY_ENABLED.getValue());
+                jpm.add(jcbmi);
+                
                 jpm.pack();
                 jpm.show(me.getComponent(), me.getX(), me.getY());
             }
@@ -766,6 +775,24 @@ public final class StatusLine implements ThemeObserver {
         }
     }
 
+    private class ShowDonationButtonsAction extends AbstractAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1455679943975682049L;
+
+        public ShowDonationButtonsAction() {
+            putValue(Action.NAME, I18n.tr("Show Donation Buttons"));
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            StatusBarSettings.DONATION_BUTTONS_DISPLAY_ENABLED.invert();
+            refresh();
+        }
+    }
+
+    
     private class LazyTooltip extends JLabel {
 
         /**
