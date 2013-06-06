@@ -17,7 +17,6 @@ package com.frostwire.gui.theme;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Window;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,8 +34,6 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import org.limewire.util.OSUtils;
 
 import com.apple.laf.AquaFonts;
-import com.limegroup.gnutella.gui.TipOfTheDayMediator;
-import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /**
@@ -60,17 +57,6 @@ public class ThemeMediator {
      * ui components of theme changes.
      */
     private static final List<ThemeObserver> THEME_OBSERVERS = new LinkedList<ThemeObserver>();
-
-    public static void updateComponentHierarchy() {
-        //SwingUtilities.updateComponentTreeUI(GUIMediator.getMainOptionsComponent());
-        TipOfTheDayMediator.instance().updateComponentTreeUI();
-        NotifyUserProxy.instance().updateUI();
-        updateThemeObservers();
-
-        for (Window window : Window.getWindows()) {
-            SwingUtilities.updateComponentTreeUI(window);
-        }
-    }
 
     /**
      * Adds the specified <tt>ThemeObserver</tt> instance to the list of

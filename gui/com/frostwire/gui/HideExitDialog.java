@@ -42,11 +42,6 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  */
 public class HideExitDialog extends JDialog {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 2944990636303224030L;
-    
     public static final int NONE = 0;
     public static final int HIDE = 1;
     public static final int EXIT = 2;
@@ -74,7 +69,7 @@ public class HideExitDialog extends JDialog {
 
         GridBagConstraints c;
 
-        _label = new JLabel(I18n.tr("<html>Closing the FrostWire window will only hide the application<p>This way file transfers may continue in the background.</html>"));
+        _label = new JLabel(I18n.tr("<html>" + I18n.tr("Closing the FrostWire window will only hide the application") + "<p>" + I18n.tr("This way file transfers may continue in the background.") + "</html>"));
         c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.WEST;
