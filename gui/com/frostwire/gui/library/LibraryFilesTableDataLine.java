@@ -180,6 +180,8 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         }
 
         this.lastModified = new Date(initializer.lastModified());
+        
+        this.nameCell = new LibraryNameHolder(this, _name, false, true, 0);
     }
 
     /**
@@ -189,6 +191,8 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         return initializer;
     }
 
+    private LibraryNameHolder nameCell;
+    
     /**
      * Returns the object stored in the specified cell in the table.
      *
@@ -203,7 +207,9 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         case ICON_IDX:
             return new PlayableIconCell(getIcon(), isPlaying);
         case NAME_IDX:
-            return new LibraryNameHolder(this, _name, isPlaying, true, idx);
+            nameCell.setPlaying(isPlaying);
+            nameCell.setColumn(idx);
+            return nameCell;
         case SIZE_IDX:
             return new PlayableCell(this, _sizeHolder, _sizeHolder.toString(), isPlaying, idx);
         case TYPE_IDX:
