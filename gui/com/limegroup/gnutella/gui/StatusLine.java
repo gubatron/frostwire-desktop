@@ -189,18 +189,18 @@ public final class StatusLine implements ThemeObserver {
 
     private void createTwitterButton() {
         _twitterButton = new IconButton("TWITTER");
-        initSocialButton(_twitterButton, I18n.tr("Follow us @frostwire"), "https://twitter.com/#!/frostwire");
+        initSocialButton(_twitterButton, I18n.tr("Follow us @frostwire"), "https://twitter.com/frostwire");
     }
 
     private void createFacebookButton() {
         _facebookButton = new IconButton("FACEBOOK");
-        initSocialButton(_facebookButton, I18n.tr("Like FrostWire on Facebook and stay in touch with the community. Get Help and Help Others."), "http://www.facebook.com/pages/FrostWire/110265295669948");
+        initSocialButton(_facebookButton, I18n.tr("Like FrostWire on Facebook and stay in touch with the community. Get Help and Help Others."), "https://www.facebook.com/FrostwireOfficial");
     }
 
     private void createGooglePlusButton() {
         _googlePlusButton = new IconButton("GOOGLEPLUS");
         _googlePlusButton.setPreferredSize(new Dimension(19, 16));
-        initSocialButton(_googlePlusButton, I18n.tr("Circle FrostWire on G+"), "https://plus.google.com/b/101138154526002646407/");
+        initSocialButton(_googlePlusButton, I18n.tr("Circle FrostWire on G+"), "https://plus.google.com/+frostwire/posts");
     }
 
     private void initSocialButton(IconButton socialButton, String toolTipText, final String url) {

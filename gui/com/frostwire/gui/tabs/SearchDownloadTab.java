@@ -48,7 +48,7 @@ public final class SearchDownloadTab extends AbstractTab {
      *  obtaining the necessary ui components to add
      */
     public SearchDownloadTab(BTDownloadMediator downloadMediator) {
-        super(I18n.tr("Search"), I18n.tr("Search and Download Files"), "search_tab");
+        super(I18n.tr("Search"), I18n.tr("Search and Download Files from the Internet."), "search_tab");
 
         searchDownloadSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, SearchMediator.getResultComponent(), downloadMediator.getComponent());
         searchDownloadSplitPane.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
