@@ -1,10 +1,9 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,14 +22,17 @@ public class DonationButtons extends JPanel {
     public DonationButtons() {
         setLayout(new MigLayout("insets 0, nogrid, ltr, gapx 6","","[align center]"));
         add(createDonateLabel());
-        add(new DonationButton("$1","http://www.frostwire.com/?donate1",I18n.tr("Support FrostWire development with a USD $1 donation")));
-        add(new DonationButton("$5","http://www.frostwire.com/?donate5",I18n.tr("Support FrostWire development with a USD $5 donation")));
-        add(new DonationButton("$10","http://www.frostwire.com/?donate10",I18n.tr("Support FrostWire development with a USD $10 donation")));
-        add(new DonationButton("$25","http://www.frostwire.com/?donate25",I18n.tr("Support FrostWire development with a USD $25 donation")));
+        //MigLayout lesson: Using px explicitly as the unit does make a big difference.
+        add(new DonationButton("$1","https://gumroad.com/l/COllj",I18n.tr("Support FrostWire development with a USD $1/mo donation")),"w 26px!, h 18px!");
+        add(new DonationButton("$5","https://gumroad.com/l/Ffdv",I18n.tr("Support FrostWire development with a USD $5/mo donation")),"w 26px!, h 18px!");
+        add(new DonationButton("$10","https://gumroad.com/l/moCT",I18n.tr("Support FrostWire development with a USD $10/mo donation")),"w 30px!, h 18px!");
+        add(new DonationButton("$25","https://gumroad.com/l/DrUTE",I18n.tr("Support FrostWire development with a USD $25/mo donation")),"w 30px!, h 18px!");
+        add(new DonationButton("฿","bitcoin:14F6JPXK2fR5b4gZp3134qLRGgYtvabMWL",I18n.tr("Support FrostWire development with a ฿itcoin donation")),"w 26px!, h 18px!");
+        add(new DonationButton("Ł","litecoin:LLW2rNAXbAt41SGjk8GZjbi3uYT2snjbq1",I18n.tr("Support FrostWire development with a Łitecoin donation")),"w 26px!, h 18px!");
     }
 
     private JLabel createDonateLabel() {
-        Font labelFont = new Font("Helvetica", Font.BOLD, 10);
+        Font labelFont = new Font("Helvetica", Font.BOLD, 12);
         JLabel donateLabel = new JLabel(I18n.tr("Donate")+":");
         donateLabel.setForeground(FONT_COLOR);
         donateLabel.setFont(labelFont);
@@ -44,12 +46,11 @@ public class DonationButtons extends JPanel {
         }
 
         private void initComponent(String text, final String donationURL, String tipText) {
-            Font buttonFont = new Font("Helvetica", Font.BOLD, 9);
-            setMinimumSize(new Dimension(38,22));
-            setMargin(new Insets(0,0,0,0));
+            Font buttonFont = new Font("Helvetica", Font.BOLD, 12);
+            setCursor(new Cursor(Cursor.HAND_CURSOR));
+            setBorder(null);
+            setContentAreaFilled(false);
             setOpaque(false);
-            setPreferredSize(new Dimension(40,22));
-            setMaximumSize(new Dimension(40,22));
             setFont(buttonFont);
             setForeground(FONT_COLOR);
             setBackground(new Color(0xedf1f4));
@@ -70,14 +71,11 @@ public class DonationButtons extends JPanel {
             // TODO Move this code to a UI if necessary, for now KIFSS
             g.setColor(getBackground());
             g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 2, 2);
+            g.setColor(new Color(0xe4e8ea));
+            g.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 2, 2);
             super.paintComponent(g);
         }
         
-        @Override
-        protected void paintBorder(Graphics g) {
-            g.setColor(new Color(0xe4e8ea));
-            g.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 2, 2);
-        }
         
     }
     
