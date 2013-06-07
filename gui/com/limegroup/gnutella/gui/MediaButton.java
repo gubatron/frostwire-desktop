@@ -61,6 +61,7 @@ public final class MediaButton extends JButton {
         //        setPreferredSize(new Dimension(
         //            getIcon().getIconWidth(), getIcon().getIconHeight()));
         setMargin(new Insets(0, 0, 0, 0));
+        setBorder(null);
         setToolTipText(tipText);
     }
 }

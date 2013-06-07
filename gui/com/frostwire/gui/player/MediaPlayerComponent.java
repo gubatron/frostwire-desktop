@@ -205,7 +205,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                                       "[][]"));
         panel.setPreferredSize(new Dimension(130, 55));
 
-        panel.add(createPlaybackButtonsPanel(), "span 1 2, growy, gapright 4");
+        panel.add(createPlaybackButtonsPanel(), "span 1 2, growy, gapright 4px");
         panel.add(createTrackDetailPanel(), "wrap, growx");
         panel.add(createProgressPanel(),"growx");
 
@@ -225,7 +225,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
         panel.add(sep1, "growy");
 
-        panel.add(PREV_BUTTON, "w 45!");
+        panel.add(PREV_BUTTON, "w 30px!");
 
         PLAY_PAUSE_CARD_LAYOUT = new CardLayout();
         PLAY_PAUSE_BUTTON_CONTAINER = new JPanel(PLAY_PAUSE_CARD_LAYOUT);
@@ -233,9 +233,9 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
         PLAY_PAUSE_BUTTON_CONTAINER.add(PLAY_BUTTON, "PLAY");
         PLAY_PAUSE_BUTTON_CONTAINER.add(PAUSE_BUTTON, "PAUSE");
-        panel.add(PLAY_PAUSE_BUTTON_CONTAINER, "w 49!");
+        panel.add(PLAY_PAUSE_BUTTON_CONTAINER, "w 36px!");
 
-        panel.add(NEXT_BUTTON, "w 45!");
+        panel.add(NEXT_BUTTON, "w 30px!");
 
         JSeparator sep2 = new JSeparator(SwingConstants.VERTICAL);
         sep2.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
@@ -248,14 +248,14 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     private JPanel createTrackDetailPanel() {
         JPanel panel = new JPanel();
         Cursor theHand = new Cursor(Cursor.HAND_CURSOR);
-        panel.setLayout(new MigLayout("insets 0, gap 8, w 464!", //layout
+        panel.setLayout(new MigLayout("insets 0, gap 8px, w 355px!", //layout
                                       "[][][grow][][][]", //columns
                                       "")); //row
         
         socialButton = new MediaButton("",null,null);
         socialButton.setCursor(theHand);
         socialButton.setVisible(false);
-        panel.add(socialButton,"w 18!");
+        panel.add(socialButton,"w 18px!");
 
         //only one of these 2 buttons is shown at the time, that's why it's on the same container.
         JPanel shareAndSourceButtonPanel = new JPanel();
@@ -271,10 +271,11 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         shareAndSourceButtonPanel.add(shareButton);
         shareAndSourceButtonPanel.add(mediaSourceButton);
         
-        panel.add(shareAndSourceButtonPanel,"w 18!");
+        panel.add(shareAndSourceButtonPanel,"w 18px!");
 
         Font buttonFont = new Font("Helvetica", Font.BOLD, 10);
         trackTitle = new JLabel("");
+        trackTitle.setBorder(null);
         trackTitle.setFont(buttonFont);
         trackTitle.setCursor(theHand);
         trackTitle.setForeground(Color.WHITE);
@@ -294,7 +295,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 }
             }
         });
-        panel.add(trackTitle, "growx, wmax 255");
+        panel.add(trackTitle, "growx, wmax 188px");
 
         initPlaylistPlaybackModeControls();
         panel.add(LOOP_BUTTON,"w 24!");
@@ -306,7 +307,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     private JPanel createProgressPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0 0 0 0 4, fillx",
+        panel.setLayout(new MigLayout("insets 0 0 5px 0 4px, fillx",
                     "[][grow][align right]"));
 
         Font f = panel.getFont();
@@ -317,7 +318,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         progressSongLength.setForeground(Color.WHITE);
         progressSongLength.setFont(f);
 
-        panel.add(progressCurrentTime,"gap 2!");
+        panel.add(progressCurrentTime,"gap 2px!");
         panel.add(PROGRESS, "growx");
         panel.add(progressSongLength, "align center");
 
