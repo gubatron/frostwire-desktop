@@ -100,6 +100,8 @@ public final class StatusLine implements ThemeObserver {
     private IconButton _googlePlusButton;
 
     private IconButton seedingStatusButton;
+    
+    private DonationButtons _donationButtons;
 
     /**
      * Variables for the center portion of the status bar, which can display
@@ -138,9 +140,8 @@ public final class StatusLine implements ThemeObserver {
             }
         });
 
-        GUIMediator.setSplashScreenString(I18n.tr("Creating Audio Status Component..."));
-        //TODO: SupportFrostWireComponent
-        //        _audioStatusComponent = new CurrentMediaStatusComponent();
+        GUIMediator.setSplashScreenString(I18n.tr("Creating donation buttons so you can give us a hand..."));
+        createDonationButtonsComponent();
 
         //  make icons and panels for connection quality
         GUIMediator.setSplashScreenString(I18n.tr("Creating Connection Quality Indicator..."));
@@ -180,6 +181,10 @@ public final class StatusLine implements ThemeObserver {
         ThemeMediator.addThemeObserver(this);
 
         refresh();
+    }
+
+    private void createDonationButtonsComponent() {
+        _donationButtons = new DonationButtons();
     }
 
     private void createTwitterButton() {
@@ -238,11 +243,6 @@ public final class StatusLine implements ThemeObserver {
      * and makes sure it has room to add an indicator before adding it.
      */
     public void refresh() {
-        //TODO: SupportFrostWireComponent
-//        if (_audioStatusComponent == null || _centerComponent == null) {
-//            return;
-//        }
-
         getComponent().removeAll();
 
         //  figure out remaining width, and do not add indicators if no room
@@ -255,9 +255,11 @@ public final class StatusLine implements ThemeObserver {
         remainingWidth -= sepWidth;
         remainingWidth -= GUIConstants.SEPARATOR / 2;
 
-        //TODO: SupportFrostWireComponent        
-//        remainingWidth -= _audioStatusComponent.getWidth();
-        remainingWidth -= GUIConstants.SEPARATOR;
+        // substract donation buttons as needed2
+        if (_donationButtons != null) {
+            remainingWidth -= _donationButtons.getWidth();
+            remainingWidth -= GUIConstants.SEPARATOR;
+        }
 
         //  subtract center component
         int indicatorWidth = _centerComponent.getWidth();
@@ -341,13 +343,14 @@ public final class StatusLine implements ThemeObserver {
         gbc.weightx = 0;
         BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
 
-        // current song component
-        BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-        //TODO: SupportFrostWireComponent
-        //        BAR.add(_audioStatusComponent, gbc);
-        BAR.add(Box.createHorizontalStrut(10));
-        BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
-
+        // donation buttons
+        if (_donationButtons != null) {
+            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+            BAR.add(_donationButtons, gbc);
+            BAR.add(Box.createHorizontalStrut(10));
+            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
+        }
+        
         BAR.validate();
         BAR.repaint();
     }
@@ -676,6 +679,11 @@ public final class StatusLine implements ThemeObserver {
                 jcbmi.setState(StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
 
+                //  add 'Show Donation Buttons' menu item
+                jcbmi = new SkinCheckBoxMenuItem(new ShowDonationButtonsAction());
+                jcbmi.setState(StatusBarSettings.DONATION_BUTTONS_DISPLAY_ENABLED.getValue());
+                jpm.add(jcbmi);
+                
                 jpm.pack();
                 jpm.show(me.getComponent(), me.getX(), me.getY());
             }
@@ -766,6 +774,24 @@ public final class StatusLine implements ThemeObserver {
         }
     }
 
+    private class ShowDonationButtonsAction extends AbstractAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1455679943975682049L;
+
+        public ShowDonationButtonsAction() {
+            putValue(Action.NAME, I18n.tr("Show Donation Buttons"));
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            StatusBarSettings.DONATION_BUTTONS_DISPLAY_ENABLED.invert();
+            refresh();
+        }
+    }
+
+    
     private class LazyTooltip extends JLabel {
 
         /**
