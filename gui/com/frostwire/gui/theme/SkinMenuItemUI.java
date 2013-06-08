@@ -35,6 +35,7 @@ import com.apple.laf.AquaMenuItemUI;
 public final class SkinMenuItemUI extends SynthMenuItemUI {
 
     public static ComponentUI createUI(JComponent comp) {
+        ThemeMediator.testComponentCreationThreadingViolation();
         if (OSUtils.isMacOSX() && !(comp instanceof SkinMenuItem)) {
             return AquaMenuItemUI.createUI(comp);
         } else {

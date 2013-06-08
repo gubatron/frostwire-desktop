@@ -35,6 +35,7 @@ import com.apple.laf.AquaMenuItemUI;
 public final class SkinCheckBoxMenuItemUI extends SynthCheckBoxMenuItemUI {
 
     public static ComponentUI createUI(JComponent comp) {
+        ThemeMediator.testComponentCreationThreadingViolation();
         if (OSUtils.isMacOSX() && !(comp instanceof SkinCheckBoxMenuItem)) {
             return AquaMenuItemUI.createUI(comp);
         } else {

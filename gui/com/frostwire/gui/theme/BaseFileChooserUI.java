@@ -182,6 +182,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
     // ComponentUI Interface Implementation methods
     //
     public static ComponentUI createUI(JComponent c) {
+        ThemeMediator.testComponentCreationThreadingViolation();
         return new BaseFileChooserUI((JFileChooser) c);
     }
 
