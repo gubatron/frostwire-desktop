@@ -62,28 +62,28 @@ final class FWHttpClient implements HttpClient {
     }
 
     public String get(String url, int timeout, String userAgent) {
-        return get(url, timeout, userAgent, null);
+        return get(url, timeout, userAgent, null, null);
     }
 
-    public String get(String url, int timeout, String userAgent, String referrer) {
+    public String get(String url, int timeout, String userAgent, String referrer, String cookie) {
         String result = null;
 
         ByteArrayOutputStream baos = null;
 
         try {
             baos = new ByteArrayOutputStream();
-            get(url, baos, timeout, userAgent, referrer, -1);
+            get(url, baos, timeout, userAgent, referrer, cookie, -1);
 
             result = new String(baos.toByteArray(), "UTF-8");
         } catch (Throwable e) {
-            LOG.error("Error getting string from http body response: " + e.getMessage(),e);
+            LOG.error("Error getting string from http body response: " + e.getMessage(), e);
         } finally {
             closeQuietly(baos);
         }
 
         return result;
     }
-    
+
     public byte[] getBytes(String url, int timeout, String userAgent, String referrer) {
         byte[] result = null;
 
@@ -91,11 +91,11 @@ final class FWHttpClient implements HttpClient {
 
         try {
             baos = new ByteArrayOutputStream();
-            get(url, baos, timeout, userAgent, referrer, -1);
+            get(url, baos, timeout, userAgent, referrer, null, -1);
 
             result = baos.toByteArray();
         } catch (Throwable e) {
-            LOG.error("Error getting string from http body response: " + e.getMessage(),e);
+            LOG.error("Error getting string from http body response: " + e.getMessage(), e);
         } finally {
             closeQuietly(baos);
         }
@@ -124,7 +124,7 @@ final class FWHttpClient implements HttpClient {
                 rangeStart = -1;
             }
 
-            get(url, fos, timeout, userAgent, referrer, rangeStart);
+            get(url, fos, timeout, userAgent, null, referrer, rangeStart);
         } finally {
             closeQuietly(fos);
         }
@@ -135,11 +135,11 @@ final class FWHttpClient implements HttpClient {
         return prefix + ((rangeLength > -1) ? (rangeStart + rangeLength) : "");
     }
 
-    private void get(String url, OutputStream out, int timeout, String userAgent, String referrer, int rangeStart) throws IOException {
-        get(url, out, timeout, userAgent, referrer, rangeStart, -1);
+    private void get(String url, OutputStream out, int timeout, String userAgent, String referrer, String cookie, int rangeStart) throws IOException {
+        get(url, out, timeout, userAgent, referrer, cookie, rangeStart, -1);
     }
 
-    private void get(String url, OutputStream out, int timeout, String userAgent, String referrer, int rangeStart, int rangeLength) throws IOException {
+    private void get(String url, OutputStream out, int timeout, String userAgent, String referrer, String cookie, int rangeStart, int rangeLength) throws IOException {
         canceled = false;
         URL u = new URL(url);
         URLConnection conn = u.openConnection();
@@ -151,10 +151,14 @@ final class FWHttpClient implements HttpClient {
             conn.setRequestProperty("Referer", referrer);
         }
 
+        if (cookie != null) {
+            conn.setRequestProperty("Cookie", cookie);
+        }
+
         if (conn instanceof HttpURLConnection) {
             ((HttpURLConnection) conn).setInstanceFollowRedirects(true);
         }
-        
+
         if (conn instanceof HttpsURLConnection) {
             setHostnameVerifier((HttpsURLConnection) conn);
         }
@@ -167,8 +171,7 @@ final class FWHttpClient implements HttpClient {
 
         int httpResponseCode = getResponseCode(conn);
 
-        if (httpResponseCode != HttpURLConnection.HTTP_OK && 
-            httpResponseCode != HttpURLConnection.HTTP_PARTIAL) {
+        if (httpResponseCode != HttpURLConnection.HTTP_OK && httpResponseCode != HttpURLConnection.HTTP_PARTIAL) {
             throw new ResponseCodeNotSupportedException(httpResponseCode);
         }
 
@@ -214,7 +217,7 @@ final class FWHttpClient implements HttpClient {
             return ((HttpURLConnection) conn).getResponseCode();
         } catch (IOException e) {
             e.printStackTrace();
-            LOG.error("can't get response code ",e);
+            LOG.error("can't get response code ", e);
             return -1;
         }
     }

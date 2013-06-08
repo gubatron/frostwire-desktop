@@ -40,7 +40,7 @@ public interface HttpClient {
 
     public String get(String url, int timeout, String userAgent);
 
-    public String get(String url, int timeout, String userAgent, String referrer);
+    public String get(String url, int timeout, String userAgent, String referrer, String cookie);
 
     public byte[] getBytes(String url, int timeout, String userAgent, String referrer);
 
