@@ -22,6 +22,8 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 
+import org.limewire.util.OSUtils;
+
 import com.frostwire.gui.theme.ThemeMediator;
 
 /**
@@ -33,14 +35,16 @@ import com.frostwire.gui.theme.ThemeMediator;
 public class LocaleLabel extends JLabel {
 
     public void setText(LocaleString text) {
-        Font f;
-        if (text.canDisplay()) {
-            f = getParent().getFont();
-        } else {
-            f = ThemeMediator.DIALOG_FONT;
-        }
+        if (OSUtils.isWindows()) {
+            Font f;
+            if (text.canDisplay()) {
+                f = getParent().getFont();
+            } else {
+                f = ThemeMediator.DIALOG_FONT;
+            }
 
-        changeFont(f);
+            changeFont(f);
+        }
         setText(text.getValue());
     }
 
@@ -58,7 +62,7 @@ public class LocaleLabel extends JLabel {
 
         public LocaleString(String value) {
             this.value = value;
-            this.canDisplay = null;
+            this.canDisplay = OSUtils.isWindows() ? null : Boolean.TRUE;
         }
 
         public String getValue() {
