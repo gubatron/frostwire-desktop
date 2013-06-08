@@ -52,7 +52,7 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  * @author aldenml
  *
  */
-public class ThemeMediator {
+public final class ThemeMediator {
 
     private static final Logger LOG = LoggerFactory.getLogger(ThemeMediator.class);
 
@@ -66,6 +66,9 @@ public class ThemeMediator {
     public static final Color TAB_BUTTON_FOREGROUND_COLOR = new Color(0xFFFFFF);
 
     public static final String SKIN_PROPERTY_DARK_BOX_BACKGROUND = "skin_property_dark_box_background";
+
+    private ThemeMediator() {
+    }
 
     public static void changeTheme() {
         try {
