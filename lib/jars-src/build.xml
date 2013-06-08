@@ -76,8 +76,8 @@
 		<copy file="dist/fwtips.jar" todir="../jars/" />
 		<copy file="dist/mp4parser.jar" todir="../jars/" />
 		<copy file="dist/jaudiotagger.jar" todir="../jars/" />
-		<copy file="slf4j-api-1.7.5" todir="../jars/" />
-		<copy file="slf4j-jdk14-1.7.5" todir="../jars/" />
+		<copy file="dist/slf4j-api-1.7.5.jar" todir="../jars/" />
+		<copy file="dist/slf4j-jdk14-1.7.5.jar" todir="../jars/" />
 
 	</target>
 
