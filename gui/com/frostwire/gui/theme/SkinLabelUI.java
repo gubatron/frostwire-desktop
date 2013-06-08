@@ -34,6 +34,7 @@ import javax.swing.plaf.synth.SynthLabelUI;
 public class SkinLabelUI extends SynthLabelUI {
 
     public static ComponentUI createUI(JComponent comp) {
+        ThemeMediator.testComponentCreationThreadingViolation();
         return new SkinLabelUI();
     }
 

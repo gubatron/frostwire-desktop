@@ -136,7 +136,11 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
         
         this.dateAdded = new Date(initializer.dateAdded * 1000);
         this.dateModified = new Date(initializer.dateModified * 1000);
+        
+        this.nameCell = new LibraryNameHolder(this, initializer.title, false, true, 0);
     }
+    
+    private LibraryNameHolder nameCell;
 
     /**
      * Returns the value for the specified index.
@@ -147,7 +151,9 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
         case ICON_IDX:
             return new PlayableIconCell(getIcon(), playing);
         case TITLE_IDX:
-            return new LibraryNameHolder(this, initializer.title, playing, true, idx);
+            nameCell.setPlaying(playing);
+            nameCell.setColumn(idx);
+            return nameCell;
         case ARTIST_IDX:
             return new PlayableCell(this, filterUnknown(initializer.artist), playing, idx);
         case ALBUM_IDX:

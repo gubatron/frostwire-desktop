@@ -38,7 +38,6 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
     static final int SORT_INDEX_IDX = 0;
     private static final LimeTableColumn SORT_INDEX_COLUMN = new LimeTableColumn(SORT_INDEX_IDX, "PLAYLIST_TABLE_SORT_INDEX", I18n.tr("Index"), 30, true, false, false, PlaylistItemStringProperty.class);
 
-    
     /**
      * Starred column
      */
@@ -145,7 +144,11 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
         if (bitrate != null && bitrate.length() > 0 && !bitrate.endsWith(" kbps")) {
             bitrate = bitrate + " kbps";
         }
+
+        this.nameCell = new LibraryNameHolder(this, initializer.getTrackTitle(), false, exists, 0);
     }
+
+    private LibraryNameHolder nameCell;
 
     /**
      * Returns the value for the specified index.
@@ -172,7 +175,9 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
         case SIZE_IDX:
             return new PlaylistItemStringProperty(this, sizeHolder.toString(), playing, exists);
         case TITLE_IDX:
-            return new LibraryNameHolder(this, initializer.getTrackTitle(), playing, exists, idx);
+            nameCell.setPlaying(playing);
+            nameCell.setColumn(idx);
+            return nameCell;
         case TRACK_IDX:
             return new PlaylistItemTrackProperty(this, initializer.getTrackNumber(), playing, exists);
         case TYPE_IDX:

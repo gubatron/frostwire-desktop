@@ -94,7 +94,11 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
                 GUIMediator.openURL("http://" + item.getWebsite().replace("http://", ""));
             }
         };
+        
+        this.nameCell = new LibraryNameHolder(this, initializer.getName(), false, true, 0);
     }
+    
+    private LibraryNameHolder nameCell;
 
     /**
      * Returns the value for the specified index.
@@ -105,7 +109,9 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
         case BOOKMARKED_IDX:
         	return new InternetRadioBookmark(this, playing);
         case NAME_IDX:
-            return new LibraryNameHolder(this, initializer.getName(), playing, true, idx);
+            nameCell.setPlaying(playing);
+            nameCell.setColumn(idx);
+            return nameCell;
         case DESCRIPTION_IDX:
             return new PlayableCell(this, initializer.getDescription(), playing, idx);
         case URL_IDX:
