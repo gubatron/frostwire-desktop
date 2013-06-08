@@ -248,7 +248,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     private JPanel createTrackDetailPanel() {
         JPanel panel = new JPanel();
         Cursor theHand = new Cursor(Cursor.HAND_CURSOR);
-        panel.setLayout(new MigLayout("insets 0, gap 8px, w 355px!", //layout
+        panel.setLayout(new MigLayout("insets 0, gap 7px, w 355px!", //layout
                                       "[][][grow][][][]", //columns
                                       "")); //row
         
@@ -295,12 +295,12 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 }
             }
         });
-        panel.add(trackTitle, "growx, wmax 188px");
+        panel.add(trackTitle, "growx, wmax 186px");
 
         initPlaylistPlaybackModeControls();
-        panel.add(LOOP_BUTTON,"w 24!");
-        panel.add(SHUFFLE_BUTTON,"w 24!");
-        panel.add(VOLUME,"w 83!");
+        panel.add(LOOP_BUTTON,"w 20px!");
+        panel.add(SHUFFLE_BUTTON,"w 20px!");
+        panel.add(VOLUME,"w 58px!");
 
         return panel;
     }

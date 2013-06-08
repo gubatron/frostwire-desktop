@@ -112,13 +112,13 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
 
     public ApplicationHeader(Map<Tabs, Tab> tabs) {
         setMinimumSize(new Dimension(995, 54));
-        setLayout(new MigLayout("insets 0 10 0 0, ay 50%, filly", "[][][grow][][]"));
+        setLayout(new MigLayout("insets 0 10px 0 0, ay 50%, filly", "[][][grow][][]"));
 
         headerButtonBackgroundSelected = GUIMediator.getThemeImage("selected_header_button_background").getImage();
         headerButtonBackgroundUnselected = GUIMediator.getThemeImage("unselected_header_button_background").getImage();
 
         searchPanels = createSearchPanel();
-        add(searchPanels, "w 320!, gapright 7");
+        add(searchPanels, "w 240px!, gapright 10px");
 
         addTabButtons(tabs);
 
@@ -132,7 +132,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         add(logoUpdateButtonsPanel, "growx, alignx center");
 
         JComponent player = new MediaPlayerComponent().getMediaPanel();
-        add(player, "dock east, growy, gapright 5");
+        add(player, "dock east, growy, gapright 7px");
 
 
 
