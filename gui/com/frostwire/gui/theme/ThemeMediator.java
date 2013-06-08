@@ -17,9 +17,12 @@ package com.frostwire.gui.theme;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
@@ -32,6 +35,10 @@ import javax.swing.plaf.InsetsUIResource;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.limewire.util.OSUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import sun.swing.SwingUtilities2;
 
 import com.apple.laf.AquaFonts;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -40,6 +47,8 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  * Class that mediates between themes and FrostWire.
  */
 public class ThemeMediator {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ThemeMediator.class);
 
     public static final Font DIALOG_FONT = new Font(Font.DIALOG, Font.PLAIN, 12);
 
@@ -270,7 +279,7 @@ public class ThemeMediator {
                                 return defaults;
                             }
                         });
-                        new SubstanceThemeSetter().apply();
+                        apply();
 
                         //updateComponentHierarchy();
 
@@ -315,19 +324,17 @@ public class ThemeMediator {
     private static FontUIResource getControlFont() {
         FontUIResource font = null;
         if (OSUtils.isWindows()) {
-            Font recommendedFont = SubstanceThemeSetter.fixWindowsOSFont();
-            if (recommendedFont != null){
-              font = new FontUIResource(recommendedFont);  
+            Font recommendedFont = fixWindowsOSFont();
+            if (recommendedFont != null) {
+                font = new FontUIResource(recommendedFont);
             }
-            //throw new RuntimeException("Need to fix");
         } else if (OSUtils.isMacOSX()) {
             font = AquaFonts.getControlTextFont();
         } else if (OSUtils.isLinux()) {
-        	Font recommendedFont = SubstanceThemeSetter.fixLinuxOSFont();
-        	if (recommendedFont != null) {
-        		font = new FontUIResource(recommendedFont);
-        	}
-            //throw new RuntimeException("Need to fix");
+            Font recommendedFont = fixLinuxOSFont();
+            if (recommendedFont != null) {
+                font = new FontUIResource(recommendedFont);
+            }
         }
 
         return font;
@@ -399,4 +406,90 @@ public class ThemeMediator {
             throw uiThreadingViolationError;
         }
     }
+
+    public static void apply() {
+        //SubstanceLookAndFeel.setSkin(_skinClassName);
+        ThemeMediator.applyCommonSkinUI();
+
+        //        if (OSUtils.isWindows()) {
+        //            fixWindowsOSFont();
+        //        } else if (OSUtils.isLinux()) {
+        //            fixLinuxOSFont();
+        //        }
+
+        fixAAFontSettings();
+
+        UIManager.put("Tree.leafIcon", UIManager.getIcon("Tree.closedIcon"));
+
+        // remove split pane borders
+        UIManager.put("SplitPane.border", BorderFactory.createEmptyBorder());
+
+        if (!OSUtils.isMacOSX()) {
+            UIManager.put("Table.focusRowHighlightBorder", UIManager.get("Table.focusCellHighlightBorder"));
+        }
+
+        UIManager.put("Table.focusCellHighlightBorder", BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        // Add a bold text version of simple text.
+        Font normal = UIManager.getFont("Table.font");
+        FontUIResource bold = new FontUIResource(normal.getName(), Font.BOLD, normal.getSize());
+        UIManager.put("Table.font.bold", bold);
+        UIManager.put("Tree.rowHeight", 0);
+    }
+
+    private static void fixAAFontSettings() {
+        UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+        boolean lafCond = SwingUtilities2.isLocalDisplay();
+        Object aaTextInfo = SwingUtilities2.AATextInfo.getAATextInfo(lafCond);
+        defaults.put(SwingUtilities2.AA_TEXT_PROPERTY_KEY, aaTextInfo);
+    }
+
+    // windows font policy http://msdn.microsoft.com/en-us/library/windows/desktop/aa511282.aspx
+    // table of languages http://msdn.microsoft.com/en-us/library/ee825488(v=cs.20).aspx
+    static Font fixWindowsOSFont() {
+        Font font = null;
+        try {
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+
+            Method method = Toolkit.class.getDeclaredMethod("setDesktopProperty", String.class, Object.class);
+            method.setAccessible(true);
+
+            String fontName = ThemeMediator.getRecommendedFontName();
+
+            if (fontName != null) {
+                font = new Font(fontName, Font.PLAIN, 12);
+                method.invoke(toolkit, "win.icon.font", font);
+                //SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getDefaultFontPolicy());
+            }
+        } catch (Throwable e) {
+            LOG.error("Error fixing font", e);
+        }
+
+        return font;
+    }
+
+    static Font fixLinuxOSFont() {
+        Font font = null;
+        try {
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+
+            Method method = Toolkit.class.getDeclaredMethod("setDesktopProperty", String.class, Object.class);
+            method.setAccessible(true);
+
+            String fontName = ThemeMediator.getRecommendedFontName();
+
+            if (fontName != null) {
+                // linux is hardcoded to Dialog
+                fontName = "Dialog";
+                font = new Font(fontName, Font.PLAIN, 12);
+                method.invoke(toolkit, "gnome.Gtk/FontName", fontName);
+                //SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getDefaultFontPolicy());
+            }
+        } catch (Throwable e) {
+            LOG.error("Error fixing font", e);
+        }
+
+        return font;
+    }
+
 }

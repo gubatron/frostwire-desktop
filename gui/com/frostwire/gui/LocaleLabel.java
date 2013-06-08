@@ -72,7 +72,7 @@ public class LocaleLabel extends JLabel {
         public boolean canDisplay() {
             if (canDisplay == null) {
                 canDisplay = getDefaultFont().canDisplayUpTo(value) == -1;
-                System.out.println("display probe");
+                //System.out.println("display probe");
             }
 
             return canDisplay;
