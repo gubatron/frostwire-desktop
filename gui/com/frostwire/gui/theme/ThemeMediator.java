@@ -22,8 +22,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.lang.reflect.Method;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -68,48 +66,6 @@ public class ThemeMediator {
     public static final Color TAB_BUTTON_FOREGROUND_COLOR = new Color(0xFFFFFF);
 
     public static final String SKIN_PROPERTY_DARK_BOX_BACKGROUND = "skin_property_dark_box_background";
-
-    /**
-     * <tt>List</tt> of <tt>ThemeObserver</tt> classes to notify of
-     * ui components of theme changes.
-     */
-    private static final List<ThemeObserver> THEME_OBSERVERS = new LinkedList<ThemeObserver>();
-
-    /**
-     * Adds the specified <tt>ThemeObserver</tt> instance to the list of
-     * <tt>ThemeObserver</tt>s that should be notified whenever the theme
-     * changes.
-     *
-     * @param observer the <tt>ThemeObserver</tt> to add to the notification
-     *  list
-     */
-    public static void addThemeObserver(ThemeObserver observer) {
-        THEME_OBSERVERS.add(observer);
-    }
-
-    /**
-     * Removes the specified <tt>ThemeObserver</tt> instance from the list
-     * of <tt>ThemeObserver</tt>s.  This is necessary to allow the removed
-     * component to be garbage-collected.
-     *
-     * @param observer the <tt>ThemeObserver</tt> to remove from the
-     *  notification list
-     */
-    public static void removeThemeObserver(ThemeObserver observer) {
-        THEME_OBSERVERS.remove(observer);
-    }
-
-    /**
-     * Updates all theme observers.
-     */
-    public static void updateThemeObservers() {
-        for (ThemeObserver curObserver : THEME_OBSERVERS) {
-            curObserver.updateTheme();
-        }
-
-        //GUIMediator.getMainOptionsComponent().validate();
-        //GUIMediator.getAppFrame().validate();
-    }
 
     public static void changeTheme() {
         try {

@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui;
 
 import java.awt.BorderLayout;
@@ -30,12 +45,16 @@ import javax.swing.border.EtchedBorder;
 
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.gui.theme.ThemeObserver;
 import com.frostwire.gui.theme.ThemeSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 
-public final class TipOfTheDayMediator implements ThemeObserver {
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public final class TipOfTheDayMediator {
 
     private static final int TIP_HEIGHT = 180;
 
@@ -59,8 +78,7 @@ public final class TipOfTheDayMediator implements ThemeObserver {
     /**
      * The 'Show Tips At Startup' string
      */
-    private static final String TOTD_STARTUP = I18n
-            .tr("Show Tips At Startup");
+    private static final String TOTD_STARTUP = I18n.tr("Show Tips At Startup");
 
     /**
      * 'Next'.
@@ -138,7 +156,6 @@ public final class TipOfTheDayMediator implements ThemeObserver {
         previousButton = new JButton(TOTD_PREVIOUS);
         previousButton.addActionListener(new PreviousTipListener());
         constructDialog();
-        ThemeMediator.addThemeObserver(this);
     }
 
     /**
@@ -149,7 +166,7 @@ public final class TipOfTheDayMediator implements ThemeObserver {
             instance = new TipOfTheDayMediator();
         return instance;
     }
-    
+
     public static synchronized boolean isConstructed() {
         return instance != null;
     }
@@ -274,8 +291,7 @@ public final class TipOfTheDayMediator implements ThemeObserver {
         dialog.getContentPane().removeAll();
         // Lower the size of the font in the TIP because
         // it's going to get larger again.
-        Font tipFont = new Font(tipPane.getFont().getName(), tipPane.getFont().getStyle(), tipPane
-                .getFont().getSize() - 2);
+        Font tipFont = new Font(tipPane.getFont().getName(), tipPane.getFont().getStyle(), tipPane.getFont().getSize() - 2);
         tipPane.setFont(tipFont);
         constructDialog();
         tipPane.setContentType("text/html");
@@ -292,7 +308,7 @@ public final class TipOfTheDayMediator implements ThemeObserver {
      */
     private void constructDialog() {
         Color darkColor = ThemeSettings.DEFAULT_TIP_OF_THE_DAY_PANEL_COLOR.getValue();
-        
+
         JPanel centerPanel = new JPanel(new BorderLayout());
         centerPanel.setBackground(darkColor);
         centerPanel.setOpaque(true);
@@ -312,10 +328,8 @@ public final class TipOfTheDayMediator implements ThemeObserver {
         tipPanel.setOpaque(true);
 
         JLabel titleLabel = new JLabel(TOTD_INTRO);
-        titleLabel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0,
-                0, 1, 0, darkColor), BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        Font titleFont = new Font("Dialog", titleLabel.getFont().getStyle(), titleLabel
-                .getFont().getSize() + 5);
+        titleLabel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, darkColor), BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        Font titleFont = new Font("Dialog", titleLabel.getFont().getStyle(), titleLabel.getFont().getSize() + 5);
         titleLabel.setFont(titleFont);
         tipPanel.add(titleLabel, BorderLayout.NORTH);
 
@@ -323,8 +337,7 @@ public final class TipOfTheDayMediator implements ThemeObserver {
         tipPane.setContentType("text");
         tipPane.setEditable(false);
         // tipPane.setBackground(tipPanel.getBackground());
-        Font tipFont = new Font("Dialog", tipPane.getFont().getStyle(),
-                tipPane.getFont().getSize() + 2);
+        Font tipFont = new Font("Dialog", tipPane.getFont().getStyle(), tipPane.getFont().getSize() + 2);
         tipPane.setFont(tipFont);
         tipPane.addHyperlinkListener(GUIUtils.getHyperlinkListener());
         tipPane.setText(I18n.tr("Loading tips..."));

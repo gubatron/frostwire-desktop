@@ -48,8 +48,6 @@ import com.frostwire.AzureusStarter;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.theme.SkinCheckBoxMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
-import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.gui.theme.ThemeObserver;
 import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -59,7 +57,7 @@ import com.limegroup.gnutella.settings.StatusBarSettings;
  * The component for the space at the bottom of the main application
  * window, including the connected status and the media player.
  */
-public final class StatusLine implements ThemeObserver {
+public final class StatusLine {
 
     /**
      * The different connection status possibilities.
@@ -100,7 +98,7 @@ public final class StatusLine implements ThemeObserver {
     private IconButton _googlePlusButton;
 
     private IconButton seedingStatusButton;
-    
+
     private DonationButtons _donationButtons;
 
     /**
@@ -178,7 +176,6 @@ public final class StatusLine implements ThemeObserver {
         setConnectionQuality(0);
 
         GUIMediator.addRefreshListener(REFRESH_LISTENER);
-        ThemeMediator.addThemeObserver(this);
 
         refresh();
     }
@@ -350,7 +347,7 @@ public final class StatusLine implements ThemeObserver {
             BAR.add(Box.createHorizontalStrut(10));
             BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
         }
-        
+
         BAR.validate();
         BAR.repaint();
     }
@@ -683,7 +680,7 @@ public final class StatusLine implements ThemeObserver {
                 jcbmi = new SkinCheckBoxMenuItem(new ShowDonationButtonsAction());
                 jcbmi.setState(StatusBarSettings.DONATION_BUTTONS_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
-                
+
                 jpm.pack();
                 jpm.show(me.getComponent(), me.getX(), me.getY());
             }
@@ -791,7 +788,6 @@ public final class StatusLine implements ThemeObserver {
         }
     }
 
-    
     private class LazyTooltip extends JLabel {
 
         /**
