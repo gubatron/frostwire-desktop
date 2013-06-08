@@ -69,8 +69,12 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
      * @param url
      * @return the web page (html)
      */
-    public final String fetch(String url) {
-        return client.get(url, timeout);
+    public String fetch(String url) {
+        return fetch(url, null);
+    }
+
+    public String fetch(String url, String cookie) {
+        return client.get(url, timeout, DEFAULT_USER_AGENT, null, cookie);
     }
 
     /**
