@@ -45,8 +45,6 @@ public final class ThemeSettings extends LimeProps {
      */
     public static final String EXTENSION = "fwtp";
     
-    public static final File SKINS_FILE = new File(CommonUtils.getUserSettingsDir(), "skins.dat");
-    
     public static final File THEME_DIR_FILE =
 		new File(CommonUtils.getUserSettingsDir(), "themes");
     

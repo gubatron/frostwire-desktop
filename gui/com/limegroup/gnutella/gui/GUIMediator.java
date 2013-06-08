@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.swing.Action;
 import javax.swing.Box;
@@ -1062,18 +1061,6 @@ public final class GUIMediator {
     public static void resetLocale() {
         ResourceManager.resetLocaleOptions();
         GUIUtils.resetLocale();
-    }
-
-    /**
-     * Return ResourceBundle for use with specific xml schema
-     * 
-     * @param schemaname
-     *            the name of schema (not the URI but name returned by
-     *            LimeXMLSchema.getDisplayString)
-     * @return a ResourceBundle matching the passed in param
-     */
-    public static final ResourceBundle getXMLResourceBundle(final String schemaname) {
-        return ResourceManager.getXMLResourceBundle(schemaname);
     }
 
     /**
