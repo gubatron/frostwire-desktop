@@ -48,8 +48,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
  */
 public class LibraryIconTree extends JTree {
 
-    private static final long serialVersionUID = 3025054051505168836L;
-
     private static final Logger LOG = Logger.getLogger(LibraryIconTree.class.getName());
 
     private Image speaker;
@@ -68,7 +66,7 @@ public class LibraryIconTree extends JTree {
         super.paintComponent(g);
 
         try {
-        	MediaPlayer player = MediaPlayer.instance();
+            MediaPlayer player = MediaPlayer.instance();
 
             if (player.getState() != MediaPlaybackState.Stopped) {
                 if (player.getCurrentMedia() instanceof InternetRadioAudioSource) {
@@ -122,7 +120,7 @@ public class LibraryIconTree extends JTree {
         if (rect != null) {
             Dimension lsize = rect.getSize();
             Point llocation = rect.getLocation();
-            g.drawImage(image, llocation.x + lsize.width - speaker.getWidth(null) - 4, llocation.y + (lsize.height - speaker.getHeight(null)) / 2, null);
+            g.drawImage(image, llocation.x + getWidth() - speaker.getWidth(null) - 4, llocation.y + (lsize.height - speaker.getHeight(null)) / 2, null);
         }
     }
 
