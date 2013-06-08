@@ -15,11 +15,6 @@ import com.frostwire.gui.theme.ThemeMediator;
 public final class IconAndNameRenderer extends DefaultTableCellRenderer {
 
     /**
-     * 
-     */
-    private static final long serialVersionUID = 8244672573299436077L;
-
-    /**
      * Constructs a new IconAndNameRenderer with the Icon aligned to the left
      * of the text, with a text gap of 5 between the icon and text.
      */

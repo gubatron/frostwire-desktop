@@ -33,6 +33,7 @@ import javax.swing.SwingConstants;
 import javax.swing.plaf.TableUI;
 import javax.swing.table.TableCellRenderer;
 
+import com.frostwire.gui.LocaleLabel;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.theme.SkinTableUI;
 import com.frostwire.gui.theme.ThemeMediator;
@@ -48,7 +49,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
  */
 public final class SearchResultNameRenderer extends JPanel implements TableCellRenderer {
 
-    private JLabel labelText;
+    private LocaleLabel labelText;
     private JLabel labelPlay;
     private JLabel labelPartialDownload;
     private JLabel labelDownload;
@@ -91,7 +92,7 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
 
         GridBagConstraints c;
 
-        labelText = new JLabel();
+        labelText = new LocaleLabel();
         labelText.setHorizontalTextPosition(SwingConstants.LEFT);
         c = new GridBagConstraints();
         c.gridx = GridBagConstraints.RELATIVE;
@@ -162,10 +163,9 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
     private void setData(SearchResultNameHolder value, JTable table, int row) {
         this.sr = value.getSearchResult();
 
-        labelText.setText(value.getHtml());
+        labelText.setText(value.getLocaleString());
 
         labelText.setFont(table.getFont());
-        ThemeMediator.fixLabelFont(labelText);
 
         boolean showButtons = mouseIsOverRow(table, row);
         labelPlay.setVisible(showButtons && (sr.getSearchResult() instanceof StreamableSearchResult));
