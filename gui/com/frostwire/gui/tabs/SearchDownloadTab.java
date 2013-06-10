@@ -71,4 +71,8 @@ public final class SearchDownloadTab extends AbstractTab {
     public JComponent getComponent() {
         return searchDownloadSplitPane;
     }
+    
+    public void setDividerLocation(int newLocation) {
+        searchDownloadSplitPane.setDividerLocation(newLocation);
+    }
 }

@@ -75,6 +75,8 @@ public final class SearchResultDisplayer implements RefreshListener {
      */
     private static final List<SearchResultMediator> entries = new ArrayList<SearchResultMediator>();
 
+    private static final int MIN_HEIGHT = 220;
+
     /** Results is a panel that displays either a JTabbedPane when lots of
      *  results exist OR a blank ResultPanel when nothing is showing.
      *  Use switcher to switch between the two.  The first entry is the
@@ -118,7 +120,7 @@ public final class SearchResultDisplayer implements RefreshListener {
      */
     public SearchResultDisplayer() {
         MAIN_PANEL = new BoxPanel(BoxPanel.Y_AXIS);
-        MAIN_PANEL.setMinimumSize(new Dimension(0, 150));
+        MAIN_PANEL.setMinimumSize(new Dimension(0, 0));
 
         tabbedPane = new SearchTabbedPane();
         results = new JPanel();
@@ -197,6 +199,11 @@ public final class SearchResultDisplayer implements RefreshListener {
      */
     SearchResultMediator addResultTab(long token, List<String> searchTokens, SearchInformation info) {
         SearchResultMediator panel = new SearchResultMediator(token, searchTokens, info);
+        
+        if (MAIN_PANEL.getHeight() < SearchResultDisplayer.MIN_HEIGHT) {
+            GUIMediator.instance().getMainFrame().resizeSearchTransferDivider(SearchResultDisplayer.MIN_HEIGHT);
+        }
+        
         return addResultPanelInternal(panel, info.getTitle());
     }
 

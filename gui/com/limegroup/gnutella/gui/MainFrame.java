@@ -472,4 +472,9 @@ public final class MainFrame  {
     public Tab getTab(Tabs tabs) {
         return TABS.get(tabs);
     }
+
+    public void resizeSearchTransferDivider(int newLocation) {
+        SearchDownloadTab searchTab = (SearchDownloadTab) TABS.get(GUIMediator.Tabs.SEARCH);
+        searchTab.setDividerLocation(newLocation);
+    }
 }
