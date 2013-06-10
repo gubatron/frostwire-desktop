@@ -24,12 +24,12 @@
  */
 package org.slf4j.impl;
 
+import org.slf4j.helpers.BasicMDCAdapter;
 import org.slf4j.spi.MDCAdapter;
 
 
 /**
- * This class is only a stub. Real implementations are found in 
- * each SLF4J binding project, e.g. slf4j-nop, slf4j-log4j12 etc.
+ * This implementation is bound to {@link BasicMDCAdapter}.
  *
  * @author Ceki G&uuml;lc&uuml;
  */
@@ -42,18 +42,19 @@ public class StaticMDCBinder {
   public static final StaticMDCBinder SINGLETON = new StaticMDCBinder();
 
   private StaticMDCBinder() {
-    throw new UnsupportedOperationException("This code should never make it into the jar");
   }
   
   /**
    * Currently this method always returns an instance of 
-   * {@link StaticMDCBinder}.
+   * {@link BasicMDCAdapter}.
    */
   public MDCAdapter getMDCA() {
-    throw new UnsupportedOperationException("This code should never make it into the jar");
+    // note that this method is invoked only from within the static initializer of 
+    // the org.slf4j.MDC class.
+    return new BasicMDCAdapter();
   }
   
   public String  getMDCAdapterClassStr() {
-    throw new UnsupportedOperationException("This code should never make it into the jar");
+    return BasicMDCAdapter.class.getName();
   }
 }

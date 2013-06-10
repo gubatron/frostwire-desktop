@@ -55,7 +55,7 @@ public class DonationButtons extends JPanel {
     }
 
     private JLabel createDonateLabel() {
-        Font labelFont = new Font("Helvetica", Font.BOLD, 12);
+        Font labelFont = getFont().deriveFont(Font.BOLD);// new Font("Helvetica", Font.BOLD, 12);
         JLabel donateLabel = new JLabel(I18n.tr("Donate") + ":");
         donateLabel.setForeground(FONT_COLOR);
         donateLabel.setFont(labelFont);
