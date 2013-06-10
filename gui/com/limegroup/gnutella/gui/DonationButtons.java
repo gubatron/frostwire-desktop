@@ -69,7 +69,7 @@ public class DonationButtons extends JPanel {
         }
 
         private void initComponent(String text, final String donationURL, String tipText) {
-            Font buttonFont = new Font("Helvetica", Font.BOLD, 12);
+            Font buttonFont = new Font("Dialog", Font.BOLD, 12);
             setCursor(new Cursor(Cursor.HAND_CURSOR));
             setBorder(null);
             setContentAreaFilled(false);
