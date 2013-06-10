@@ -266,9 +266,9 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         final JRadioButton button = new JRadioButton(I18n.tr(t.getTitle())) {
             protected void paintComponent(Graphics g) {
                 if (isSelected()) {
-                    g.drawImage(headerButtonBackgroundSelected, 0, 1, null);
+                    g.drawImage(headerButtonBackgroundSelected, 0, 0, null);
                 } else {
-                    g.drawImage(headerButtonBackgroundUnselected, 0, 1, null);
+                    g.drawImage(headerButtonBackgroundUnselected, 0, 0, null);
                 }
                 super.paintComponent(g);
             }
