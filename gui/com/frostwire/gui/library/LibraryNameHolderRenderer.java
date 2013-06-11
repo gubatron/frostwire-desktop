@@ -20,12 +20,14 @@ package com.frostwire.gui.library;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -61,12 +63,15 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
 
     private LibraryNameHolder libraryNameHolder;
 
+    private Font tableFont;
+
     public LibraryNameHolderRenderer() {
         setupUI();
     }
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        tableFont = table.getFont();
 
         this.setData((LibraryNameHolder) value, table, row, column);
         this.setOpaque(true);
@@ -184,6 +189,8 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
             labelPlay.setVisible(showButtons && !isSourceBeingPlayed() && isPlayableDataLine());
             labelDownload.setVisible(showButtons && isDownloadableFromOtherDevice());
             setFontColor(libraryNameHolder.isPlaying(), table, row, column);
+
+            syncFont(labelText);
         } catch (Throwable e) {
             LOG.warn("Error puting data in name holder renderer");
         }
@@ -253,6 +260,12 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
             labelText.setForeground(ThemeMediator.PLAYING_DATA_LINE_COLOR);
         } else {
             labelText.setForeground(table.getForeground());
+        }
+    }
+
+    private void syncFont(JComponent c) {
+        if (tableFont != null && !tableFont.equals(c.getFont())) {
+            c.setFont(tableFont);
         }
     }
 }
