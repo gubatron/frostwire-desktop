@@ -73,8 +73,6 @@ public class LibraryNameHolderEditor extends AbstractCellEditor implements Table
             });
         }
 
-        System.out.println("Heello");
-
         return component;
     }
 }
