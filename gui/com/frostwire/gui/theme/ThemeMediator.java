@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Frame;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
@@ -32,6 +33,7 @@ import java.lang.reflect.Method;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
@@ -78,6 +80,9 @@ public final class ThemeMediator {
     public static Color PLAYING_DATA_LINE_COLOR = new Color(7, 170, 0);
 
     public static Color FILE_NO_EXISTS_DATA_LINE_COLOR = Color.RED;
+
+    private static final int TABLE_FONT_SIZE_MIN = 10;
+    private static final int TABLE_FONT_SIZE_MAX = 20;
 
     private ThemeMediator() {
     }
@@ -130,18 +135,20 @@ public final class ThemeMediator {
         return new SkinTitledBorder(title);
     }
 
-    public static void changeTablesFont(int delta) {
-        Frame[] frames = Frame.getFrames();
-        for (Frame frame : frames) {
-            changeTablesFont(frame, delta);
-        }
-    }
-
     static void testComponentCreationThreadingViolation() {
         if (!SwingUtilities.isEventDispatchThread()) {
             UiThreadingViolationException uiThreadingViolationError = new UiThreadingViolationException("Component creation must be done on Event Dispatch Thread");
             uiThreadingViolationError.printStackTrace(System.err);
             throw uiThreadingViolationError;
+        }
+    }
+
+    private static void changeTablesFont(int size) {
+        if (TABLE_FONT_SIZE_MIN <= size && size <= TABLE_FONT_SIZE_MAX) {
+            Frame[] frames = Frame.getFrames();
+            for (Frame frame : frames) {
+                changeTablesFont(frame, size);
+            }
         }
     }
 
@@ -154,10 +161,13 @@ public final class ThemeMediator {
                     switch (e.getKeyCode()) {
                     case KeyEvent.VK_PLUS:
                     case KeyEvent.VK_EQUALS:
-                        changeTablesFont(1);
+                        modifyTablesFont(1);
                         return true;
                     case KeyEvent.VK_MINUS:
-                        changeTablesFont(-1);
+                        modifyTablesFont(-1);
+                        return true;
+                    case KeyEvent.VK_0:
+                        modifyTablesFont(0);
                         return true;
                     }
                 }
@@ -166,25 +176,54 @@ public final class ThemeMediator {
         });
     }
 
-    private static void changeTablesFont(Container c, int delta) {
+    private static void modifyTablesFont(int delta) {
+        int currentSize = ApplicationSettings.GUI_TABLES_FONT_SIZE.getValue();
+        if (currentSize == 0 || delta == 0) {
+            UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+            currentSize = defaults.getFont("defaultFont").getSize();
+        }
+
+        changeTablesFont(currentSize + delta);
+    }
+
+    private static void changeTablesFont(Container c, int size) {
         Component[] comps = c.getComponents();
         for (Component comp : comps) {
             if (comp instanceof LimeJTable) {
-                Font f = comp.getFont();
-                f = f.deriveFont((float) (f.getSize() + delta));
-                UIDefaults nimbusOverrides = new UIDefaults();
-                nimbusOverrides.put("Table.font", f);
-                LimeJTable table = (LimeJTable) comp;
-                table.putClientProperty("Nimbus.Overrides", nimbusOverrides);
-                TableCellEditor editor = table.getCellEditor();
-                if (editor != null) {
-                    editor.cancelCellEditing();
-                }
-                SwingUtilities.updateComponentTreeUI(comp);
+                changeTableFont((JTable) comp, size);
             } else if (comp instanceof Container) {
-                changeTablesFont((Container) comp, delta);
+                changeTablesFont((Container) comp, size);
             }
         }
+    }
+
+    private static void changeTableFont(JTable table, int size) {
+        Font f = deriveTableFont(table, size);
+        UIDefaults nimbusOverrides = new UIDefaults();
+        nimbusOverrides.put("Table.font", f);
+        table.putClientProperty("Nimbus.Overrides", nimbusOverrides);
+        TableCellEditor editor = table.getCellEditor();
+        if (editor != null) {
+            editor.cancelCellEditing();
+        }
+        FontMetrics fm = table.getFontMetrics(f);
+        int h = fm.getHeight() + 4;
+        table.setRowHeight(h);
+        SwingUtilities.updateComponentTreeUI(table);
+    }
+
+    private static Font deriveTableFont(JTable table, int size) {
+        Font f = null;
+        if (size < TABLE_FONT_SIZE_MIN || TABLE_FONT_SIZE_MAX < size) {
+            ApplicationSettings.GUI_TABLES_FONT_SIZE.setValue(0);
+            UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+            return defaults.getFont("defaultFont");
+        } else {
+            f = table.getFont().deriveFont((float) size);
+            ApplicationSettings.GUI_TABLES_FONT_SIZE.setValue(size);
+        }
+
+        return f;
     }
 
     private static void applyCommonSkinUI() {

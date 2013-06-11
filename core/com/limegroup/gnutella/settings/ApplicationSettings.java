@@ -20,7 +20,6 @@ import java.util.UUID;
 
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.FileSetting;
-import org.limewire.setting.FloatSetting;
 import org.limewire.setting.IntSetting;
 import org.limewire.setting.LongSetting;
 import org.limewire.setting.StringSetting;
@@ -78,13 +77,6 @@ public class ApplicationSettings extends LimeProps {
      * The time that this was last shutdown (system time in milliseconds).
      */
     public static final LongSetting LAST_SHUTDOWN_TIME = FACTORY.createLongSetting("LAST_SHUTDOWN_TIME", 0);
-
-    /**
-     * The fraction of time this is running, a unitless quality.  This is
-     * used to identify highly available hosts with big pongs.  This value
-     * should only be updated once per session.
-     */
-    public static final FloatSetting FRACTIONAL_UPTIME = FACTORY.createFloatSetting("FRACTIONAL_UPTIME", 0.0f);
 
     /**
      * Specifies whether or not the program has been installed, either by
@@ -192,11 +184,6 @@ public class ApplicationSettings extends LimeProps {
      */
     public static final BooleanSetting HANDLE_TORRENTS = FACTORY.createBooleanSetting("HANDLE_TORRENTS", true);
 
-    /**
-     * Whether or not to use 'secure results' to screen search results.
-     */
-    public static final BooleanSetting USE_SECURE_RESULTS = FACTORY.createBooleanSetting("USE_SECURE_RESULTS", false); // FTA: doesn't show 'secure results'
-
     /** The last directory used for opening a file chooser. */
     public static final FileSetting LAST_FILECHOOSER_DIRECTORY = FACTORY.createFileSetting("LAST_FILECHOOSER_DIR", new File("")).setAlwaysSave(true);
 
@@ -216,6 +203,8 @@ public class ApplicationSettings extends LimeProps {
     public static final StringSetting APP_UUID = FACTORY.createStringSetting("APP_UUID", ByteUtils.encodeHex(ByteUtils.uuidToByteArray(UUID.randomUUID())));
 
     public static final FileSetting APP_DATABASES_PATH = FACTORY.createFileSetting("APP_DATABASES_PATH", new File(CommonUtils.getUserSettingsDir(), "dbs"));
+
+    public static final IntSetting GUI_TABLES_FONT_SIZE = (IntSetting) FACTORY.createIntSetting("GUI_TABLES_FONT_SIZE", 0).setAlwaysSave(true);
 
     /**
      * Gets the current language setting.
