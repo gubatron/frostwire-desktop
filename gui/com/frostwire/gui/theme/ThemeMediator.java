@@ -40,6 +40,7 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.InsetsUIResource;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import javax.swing.table.TableCellEditor;
 
 import org.limewire.util.OSUtils;
 import org.slf4j.Logger;
@@ -173,7 +174,12 @@ public final class ThemeMediator {
                 f = f.deriveFont((float) (f.getSize() + delta));
                 UIDefaults nimbusOverrides = new UIDefaults();
                 nimbusOverrides.put("Table.font", f);
-                ((LimeJTable) comp).putClientProperty("Nimbus.Overrides", nimbusOverrides);
+                LimeJTable table = (LimeJTable) comp;
+                table.putClientProperty("Nimbus.Overrides", nimbusOverrides);
+                TableCellEditor editor = table.getCellEditor();
+                if (editor != null) {
+                    editor.cancelCellEditing();
+                }
                 SwingUtilities.updateComponentTreeUI(comp);
             } else if (comp instanceof Container) {
                 changeTablesFont((Container) comp, delta);
