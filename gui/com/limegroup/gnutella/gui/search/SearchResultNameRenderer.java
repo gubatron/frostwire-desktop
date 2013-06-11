@@ -20,12 +20,14 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -179,6 +181,8 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         if (isStreamableSourceBeingPlayed(sr)) {
             labelPlay.setVisible(true);
         }
+
+        syncFont(table, labelText);
     }
 
     private boolean mouseIsOverRow(JTable table, int row) {
@@ -206,5 +210,12 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
 
         StreamableSearchResult ssr = (StreamableSearchResult) sr;
         return MediaPlayer.instance().isThisBeingPlayed(ssr.getStreamUrl());
+    }
+
+    private void syncFont(JTable table, JComponent c) {
+        Font tableFont = table.getFont();
+        if (tableFont != null && !tableFont.equals(c.getFont())) {
+            c.setFont(tableFont);
+        }
     }
 }
