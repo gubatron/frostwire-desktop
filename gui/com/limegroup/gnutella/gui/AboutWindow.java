@@ -204,7 +204,7 @@ final class AboutWindow {
         sb.append("<ul>");
 
         sb.append(I18n.tr("<h1>FrostWire Chat Operators</h1>"));
-        String chat_operators = "Aubrey,Casper,COOTMASTER,Emily,Gummo,Hobo,Humanoid,iDan,lexie,OfficerSparker,THX1138,WolfWalker,Wyrdjax,Daemon,Trinity";
+        String chat_operators = "Aubrey,Casper,COOTMASTER,Emily,Gummo,Hobo,Humanoid,iDan,lexie,OfficerSparker,Scott1x,THX1138,WolfWalker,Wyrdjax,Daemon,Trinity";
         appendListOfNames(chat_operators, sb);
         sb.append("</ul>");
 
