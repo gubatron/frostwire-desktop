@@ -19,8 +19,14 @@
 package com.frostwire.gui.theme;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Font;
+import java.awt.Frame;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.lang.reflect.Method;
 
 import javax.swing.BorderFactory;
@@ -42,6 +48,7 @@ import org.slf4j.LoggerFactory;
 import sun.swing.SwingUtilities2;
 
 import com.apple.laf.AquaFonts;
+import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /**
@@ -88,6 +95,8 @@ public final class ThemeMediator {
                         });
                         applySkinSettings();
 
+                        setupGlobalKeyManager();
+
                     } catch (Exception e) {
                         LOG.error("Unable to change the L&F", e);
                     }
@@ -120,11 +129,57 @@ public final class ThemeMediator {
         return new SkinTitledBorder(title);
     }
 
+    public static void changeTablesFont(int delta) {
+        Frame[] frames = Frame.getFrames();
+        for (Frame frame : frames) {
+            changeTablesFont(frame, delta);
+        }
+    }
+
     static void testComponentCreationThreadingViolation() {
         if (!SwingUtilities.isEventDispatchThread()) {
             UiThreadingViolationException uiThreadingViolationError = new UiThreadingViolationException("Component creation must be done on Event Dispatch Thread");
             uiThreadingViolationError.printStackTrace(System.err);
             throw uiThreadingViolationError;
+        }
+    }
+
+    private static void setupGlobalKeyManager() {
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {
+                // handle Ctrl+- for font change in tables
+                if (e.getID() == KeyEvent.KEY_PRESSED && (e.isMetaDown() || e.isControlDown())) {
+                    switch (e.getKeyCode()) {
+                    case KeyEvent.VK_PLUS:
+                    case KeyEvent.VK_EQUALS:
+                        changeTablesFont(1);
+                        return true;
+                    case KeyEvent.VK_MINUS:
+                        changeTablesFont(-1);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    private static void changeTablesFont(Container c, int delta) {
+        Component[] comps = c.getComponents();
+        for (Component comp : comps) {
+            if (comp instanceof LimeJTable) {
+                Font f = comp.getFont();
+                f = f.deriveFont(f.getSize() + delta);
+                UIDefaults nimbusOverrides = new UIDefaults();
+                nimbusOverrides.put("Table.font", f);
+                ((LimeJTable) comp).putClientProperty("Nimbus.Overrides", nimbusOverrides);
+                SwingUtilities.updateComponentTreeUI(comp);
+
+                System.out.println(comp);
+            } else if (comp instanceof Container) {
+                changeTablesFont((Container) comp, delta);
+            }
         }
     }
 
