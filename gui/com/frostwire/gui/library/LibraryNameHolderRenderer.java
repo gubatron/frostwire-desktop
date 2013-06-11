@@ -43,7 +43,6 @@ import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.theme.SkinTableUI;
 import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.gui.theme.ThemeSettings;
 import com.limegroup.gnutella.gui.GUIMediator;
 
 /**
@@ -249,9 +248,9 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
      */
     private void setFontColor(boolean isPlaying, JTable table, int row, int column) {
         if (!libraryNameHolder.isExists()) {
-            setForeground(ThemeSettings.FILE_NO_EXISTS_DATA_LINE_COLOR.getValue());
+            setForeground(ThemeMediator.FILE_NO_EXISTS_DATA_LINE_COLOR);
         } else if (isPlaying) {
-            labelText.setForeground(ThemeSettings.PLAYING_DATA_LINE_COLOR.getValue());
+            labelText.setForeground(ThemeMediator.PLAYING_DATA_LINE_COLOR);
         } else {
             labelText.setForeground(table.getForeground());
         }

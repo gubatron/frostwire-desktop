@@ -15,7 +15,6 @@
 
 package com.limegroup.gnutella.gui.tables;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -45,7 +44,6 @@ import javax.swing.text.Position;
 
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.theme.ThemeSettings;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.MultilineToolTip;
 import com.limegroup.gnutella.util.DataUtils;
@@ -528,56 +526,7 @@ public class LimeJTable extends JTable implements JSortTable {
             }
         }
     }
-    
-//    /**
-//     * Returns the color that a specific row will be.
-//     */
-//    public Color getBackgroundForRow(int row) {
-//        return Color.YELLOW; // Check color
-//    }
-        
-    
-    /**
-     * This overrides JTable.prepareRenderer so that we can stripe the
-     * rows as needed.
-     */    
-    public Component prepareRenderer(TableCellRenderer renderer,
-      int row, int column) {
-        if(renderer == null)
-            throw new IllegalStateException("null renderer, row: " + row +
-                ", column: " + column + ", id: " + tableSettings.getID() +
-                ", columnId: " + getColumnModel().getColumn(column));
-        
-        Object value = getValueAt(row, column);
-    	boolean isSelected = isCellSelected(row, column);
-    	boolean rowIsAnchor = selectionModel.getAnchorSelectionIndex() == row;
-    	boolean colIsAnchor = columnModel.getSelectionModel().getAnchorSelectionIndex() == column;
-    	boolean hasFocus = rowIsAnchor && colIsAnchor && hasFocus();
-    
-    	Component r = renderer.getTableCellRendererComponent(this, value,
-    	                                              isSelected, hasFocus,
-    	                                              row, column);
 
-    	if (isOverrideRowColor(row)) {
-            Color  odd = getEvenRowColor(row);
-            Color even = getOddRowColor(row);
-            
-            if ( isSelected ) {
-                // do nothing if selected.
-            } else if (hasFocus && isCellEditable(row, column)) {
-                // do nothing if we're focused & editting.
-            } else if (even.equals(odd)) {
-                // do nothing if backgrounds are the same.
-            } else if ( row % 2 != 0 ) {
-                r.setBackground(odd);
-            } else {
-                r.setBackground(even);
-            }
-    	}
-        
-        return r;
-    }
-    
     /**
      * Returns the next list element that starts with 
      * a prefix.
@@ -662,26 +611,6 @@ public class LimeJTable extends JTable implements JSortTable {
     protected boolean isOverrideRowColor(int row) {
         return false;
     }
-    
-    /**
-     * Returns the default Color for an even row.  This <b>can</b> be overridden.
-     * 
-     * @param row the row in which we're interested
-     * @return the default Color for an even row
-     */
-    protected Color getEvenRowColor(int row) {
-        return ThemeSettings.DEFAULT_TABLE_EVEN_ROW_COLOR.getValue();
-    }
-
-    /**
-     * Returns the default Color for an even row.  This <b>can</b> be overridden.
-     * 
-     * @param row the row in which we're interested
-     * @return the default Color for an even row
-     */
-    protected Color getOddRowColor(int row) {
-        return ThemeSettings.DEFAULT_TABLE_ODD_ROW_COLOR.getValue();
-    }     
     
     /**
      * Repaints the focused row if one was focused.

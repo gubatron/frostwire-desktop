@@ -31,8 +31,6 @@ import javax.swing.table.TableCellRenderer;
 
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.theme.ThemeSettings;
-
 public final class SortHeaderRenderer extends DefaultTableCellRenderer {
 
     public static Icon ASCENDING;
@@ -120,7 +118,7 @@ public final class SortHeaderRenderer extends DefaultTableCellRenderer {
     }
 
     private static void setupIcons() {
-        if (OSUtils.isMacOSX() || ThemeSettings.isWindowsTheme()) {
+        if (OSUtils.isMacOSX()) {
             ASCENDING = AquaSortArrowIcon.getAscendingIcon();
             DESCENDING = AquaSortArrowIcon.getDescendingIcon();
         } else {

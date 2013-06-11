@@ -66,7 +66,6 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
-import com.frostwire.gui.theme.ThemeSettings;
 import com.limegroup.gnutella.SpeedConstants;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
@@ -306,14 +305,10 @@ public final class GUIUtils {
     public static void setOpaque(boolean op, JComponent c) {
         c.setOpaque(op);
         Component[] cs = c.getComponents();
-        for(int i = 0; i < cs.length; i++) {
-            if(cs[i] instanceof JComponent &&
-               !(cs[i] instanceof JTextField) &&
-               (ThemeSettings.isNativeOSXTheme() ||
-                !(cs[i] instanceof JButton))
-              ) {  
-                ((JComponent)cs[i]).setOpaque(op);
-                setOpaque(op, (JComponent)cs[i]);
+        for (int i = 0; i < cs.length; i++) {
+            if (cs[i] instanceof JComponent && !(cs[i] instanceof JTextField) && (!(cs[i] instanceof JButton))) {
+                ((JComponent) cs[i]).setOpaque(op);
+                setOpaque(op, (JComponent) cs[i]);
             }
         }
     }

@@ -34,7 +34,6 @@ import javax.swing.plaf.ComponentUI;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.gui.theme.ThemeSettings;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
@@ -167,16 +166,16 @@ public final class ResourceManager {
         if (icon != null)
             return icon;
 
-        File themeDir = ThemeSettings.THEME_DIR.getValue();
+        //File themeDir = ThemeSettings.THEME_DIR.getValue();
 
         //System.out.println("ResourceManager.getThemeImage("+name+") Getting Theme Image from: \n" + org.limewire.util.CommonUtils.getUserSettingsDir() + "\n");
         
         // Next try to get from themes.
-        icon = getImageFromURL(new File(themeDir, name).getPath(), true);
-        if (icon != null && icon.getImage() != null) {
-            THEME_IMAGES.put(name, icon);
-            return icon;
-        }
+//        icon = getImageFromURL(new File(themeDir, name).getPath(), true);
+//        if (icon != null && icon.getImage() != null) {
+//            THEME_IMAGES.put(name, icon);
+//            return icon;
+//        }
 
         // Then try to get from org/limewire/gui/images resources
         icon = getImageFromURL(IMAGES_PATH + name, false);
@@ -426,114 +425,6 @@ public final class ResourceManager {
     public boolean isBrushedMetalSet() {
         return BRUSHED_METAL;
     }
-
-    /**
-     * Updates to the current theme.
-     */
-    public void themeChanged() {
-        THEME_IMAGES.clear();
-        //try {
-            if (ThemeSettings.isOtherTheme()) {
-//                // in case this is using metal ...
-//                UIManager.put("swing.boldMetal", Boolean.FALSE);
-//                if (_defaultTheme != null)
-//                    MetalLookAndFeel.setCurrentTheme(_defaultTheme);
-//
-//                String other = ThemeSettings.getOtherLF();
-//                UIManager.setLookAndFeel(other);
-            } else if (ThemeSettings.isNativeTheme()) {
-//                if (OSUtils.isWindows() && isPlasticWindowsAvailable()) {
-//                    try {
-//                        UIManager.setLookAndFeel("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
-//                    } catch (NullPointerException npe) {
-//                        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-//                    }
-//                } else
-//                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//
-//                if (OSUtils.isMacOSX()) {
-//                    if (!_fontReduced) {
-//                        _fontReduced = true;
-//                        reduceFont("Label.font");
-//                        reduceFont("Table.font");
-//                    }
-//
-//                    UIManager.put("List.focusCellHighlightBorder",
-//                            BorderFactory.createEmptyBorder(1, 1, 1, 1));
-//                    UIManager.put("ScrollPane.border",
-//                            BorderFactory.createMatteBorder(1, 1, 1, 1, Color.lightGray));
-//                }
-//
-//                // HACK: On Windows sometimes, JFileChooser can't
-//                // show because some icons throw an AIOOBE
-//                // when they're retrieved. To workaround this,
-//                // we install our own version of those icons.
-//                if (OSUtils.isWindows()) {
-//                    replaceIconIfFailing("FileChooser.upFolderIcon",
-//                            "upFolderIconVistaFix");
-//                    replaceIconIfFailing("FileChooser.detailsViewIcon",
-//                            "detailsViewIconVistaFix");
-//                    replaceIconIfFailing("FileChooser.listViewIcon",
-//                            "listViewIconVistaFix");
-//                    replaceIconIfFailing("FileChooser.newFolderIcon",
-//                            "newFolderIconVistaFix");
-//                }
-            } else {
-//                if (isPlasticAvailable()) {
-//                    if (_defaultTheme == null)
-//                        _defaultTheme = getDefaultTheme();
-//
-//                    LimePlasticTheme.installThisTheme();
-//                    UIManager
-//                            .setLookAndFeel("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
-//                    LimeLookAndFeel.installUIManagerDefaults();
-//                } else {
-//                    UIManager.setLookAndFeel(new LimeLookAndFeel());
-//                }
-            }
-
-            
-
-//        } catch (UnsupportedLookAndFeelException e) {
-//            throw new ExceptionInInitializerError(e);
-//        } catch (ClassNotFoundException e) {
-//            throw new ExceptionInInitializerError(e);
-//        } catch (InstantiationException e) {
-//            throw new ExceptionInInitializerError(e);
-//        } catch (IllegalAccessException e) {
-//            throw new ExceptionInInitializerError(e);
-//        }
-        
-        //wrapDesktopProperties();
-    }
-    
-//    /**
-//     * Replaces an icon resource in UIManager with a different resource if the
-//     * original resource can't be retrieved correctly.
-//     * 
-//     * @param resource
-//     * @param replacementName
-//     */
-//    private void replaceIconIfFailing(String resource, String replacementName) {
-//        try {
-//            UIManager.getIcon(resource);
-//        } catch (ArrayIndexOutOfBoundsException aioobe) {
-//            UIManager.put(resource, getThemeImage(replacementName));
-//        }
-//    }
-//    
-//    /**
-//     * Determines if the Plastic Windows Theme is available.
-//     */
-//    private boolean isPlasticWindowsAvailable() {
-//        try {
-//            Class plastic = Class
-//                    .forName("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
-//            return plastic != null;
-//        } catch (ClassNotFoundException cnfe) {
-//            return false;
-//        }
-//    }
 
     /**
      * Updates the component to use the native UI resource.

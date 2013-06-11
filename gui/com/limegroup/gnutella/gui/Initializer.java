@@ -19,7 +19,6 @@ import org.limewire.util.Stopwatch;
 import org.limewire.util.SystemUtils;
 
 import com.frostwire.AzureusStarter;
-import com.frostwire.gui.theme.ThemeSettings;
 import com.frostwire.util.UserAgentGenerator;
 import com.limegroup.gnutella.ExternalControl;
 import com.limegroup.gnutella.LimeCoreGlue;
@@ -174,9 +173,6 @@ public final class Initializer {
             SystemUtils.setOpenFileLimit(1024);
             stopwatch.resetAndLog("Open file limit raise");
             
-            if(ThemeSettings.isBrushedMetalTheme())
-                System.setProperty("apple.awt.brushMetalLook", "true");     
-
             MacEventHandler.instance();
             stopwatch.resetAndLog("MacEventHandler instance");
         }

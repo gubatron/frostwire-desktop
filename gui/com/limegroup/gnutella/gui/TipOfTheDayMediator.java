@@ -45,7 +45,7 @@ import javax.swing.border.EtchedBorder;
 
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.theme.ThemeSettings;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.settings.StartupSettings;
 
 /**
@@ -307,10 +307,9 @@ public final class TipOfTheDayMediator {
      * Builds the TOTD dialog.
      */
     private void constructDialog() {
-        Color darkColor = ThemeSettings.DEFAULT_TIP_OF_THE_DAY_PANEL_COLOR.getValue();
 
         JPanel centerPanel = new JPanel(new BorderLayout());
-        centerPanel.setBackground(darkColor);
+        centerPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
         centerPanel.setOpaque(true);
         centerPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
@@ -328,7 +327,7 @@ public final class TipOfTheDayMediator {
         tipPanel.setOpaque(true);
 
         JLabel titleLabel = new JLabel(TOTD_INTRO);
-        titleLabel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, darkColor), BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        titleLabel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR), BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         Font titleFont = new Font("Dialog", titleLabel.getFont().getStyle(), titleLabel.getFont().getSize() + 5);
         titleLabel.setFont(titleFont);
         tipPanel.add(titleLabel, BorderLayout.NORTH);

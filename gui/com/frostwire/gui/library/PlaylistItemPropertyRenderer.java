@@ -23,7 +23,7 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.frostwire.gui.theme.ThemeSettings;
+import com.frostwire.gui.theme.ThemeMediator;
 
 /**
  *  Creates both a renderer and an editor for cells in the playlist table that display the name
@@ -49,9 +49,9 @@ class PlaylistItemPropertyRenderer extends DefaultTableCellRenderer {
      */
     private void setFontColor(boolean playing, boolean exists, JTable table, int row, int column) {
         if (!exists) {
-            setForeground(ThemeSettings.FILE_NO_EXISTS_DATA_LINE_COLOR.getValue());
+            setForeground(ThemeMediator.FILE_NO_EXISTS_DATA_LINE_COLOR);
         } else if (playing) {
-            setForeground(ThemeSettings.PLAYING_DATA_LINE_COLOR.getValue());
+            setForeground(ThemeMediator.PLAYING_DATA_LINE_COLOR);
         } else {
             setForeground(table.getForeground());
         }

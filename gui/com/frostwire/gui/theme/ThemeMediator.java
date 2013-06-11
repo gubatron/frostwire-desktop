@@ -67,6 +67,10 @@ public final class ThemeMediator {
 
     public static final String SKIN_PROPERTY_DARK_BOX_BACKGROUND = "skin_property_dark_box_background";
 
+    public static Color PLAYING_DATA_LINE_COLOR = new Color(7, 170, 0);
+
+    public static Color FILE_NO_EXISTS_DATA_LINE_COLOR = Color.RED;
+
     private ThemeMediator() {
     }
 
