@@ -170,13 +170,11 @@ public final class ThemeMediator {
         for (Component comp : comps) {
             if (comp instanceof LimeJTable) {
                 Font f = comp.getFont();
-                f = f.deriveFont((float)(f.getSize() + delta));
+                f = f.deriveFont((float) (f.getSize() + delta));
                 UIDefaults nimbusOverrides = new UIDefaults();
                 nimbusOverrides.put("Table.font", f);
                 ((LimeJTable) comp).putClientProperty("Nimbus.Overrides", nimbusOverrides);
                 SwingUtilities.updateComponentTreeUI(comp);
-
-                System.out.println(comp);
             } else if (comp instanceof Container) {
                 changeTablesFont((Container) comp, delta);
             }

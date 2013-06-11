@@ -63,15 +63,12 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
 
     private LibraryNameHolder libraryNameHolder;
 
-    private Font tableFont;
-
     public LibraryNameHolderRenderer() {
         setupUI();
     }
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        tableFont = table.getFont();
 
         this.setData((LibraryNameHolder) value, table, row, column);
         this.setOpaque(true);
@@ -190,7 +187,7 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
             labelDownload.setVisible(showButtons && isDownloadableFromOtherDevice());
             setFontColor(libraryNameHolder.isPlaying(), table, row, column);
 
-            syncFont(labelText);
+            syncFont(table, labelText);
         } catch (Throwable e) {
             LOG.warn("Error puting data in name holder renderer");
         }
@@ -263,7 +260,8 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
         }
     }
 
-    private void syncFont(JComponent c) {
+    private void syncFont(JTable table, JComponent c) {
+        Font tableFont = table.getFont();
         if (tableFont != null && !tableFont.equals(c.getFont())) {
             c.setFont(tableFont);
         }

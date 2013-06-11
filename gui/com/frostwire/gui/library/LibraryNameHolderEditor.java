@@ -34,8 +34,6 @@ import javax.swing.table.TableCellEditor;
  */
 public class LibraryNameHolderEditor extends AbstractCellEditor implements TableCellEditor {
 
-    private static final long serialVersionUID = -1173782952710148468L;
-
     private final LibraryNameHolderRenderer renderer;
 
     public LibraryNameHolderEditor() {
@@ -47,7 +45,7 @@ public class LibraryNameHolderEditor extends AbstractCellEditor implements Table
     }
 
     public Component getTableCellEditorComponent(final JTable table, final Object value, boolean isSelected, int row, int column) {
-        final Component component = renderer.getTableCellRendererComponent(table, value, isSelected, true, row, column);
+        final LibraryNameHolderRenderer component = (LibraryNameHolderRenderer) renderer.getTableCellRendererComponent(table, value, isSelected, true, row, column);
         if (component.getMouseListeners() == null || component.getMouseListeners().length == 0) {
             component.addMouseListener(new MouseAdapter() {
                 @Override
@@ -74,6 +72,8 @@ public class LibraryNameHolderEditor extends AbstractCellEditor implements Table
                 }
             });
         }
+
+        System.out.println("Heello");
 
         return component;
     }
