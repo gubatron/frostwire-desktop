@@ -26,7 +26,7 @@ public class PlaylistItem extends LibraryDatabaseEntity {
     private int sortIndex;
 
     public PlaylistItem(Playlist playlist) {
-        super(playlist.getLibraryDatabase());
+        super(playlist != null ? playlist.getLibraryDatabase() : null);
         this.playlist = playlist;
         this.id = LibraryDatabase.OBJECT_INVALID_ID;
     }
