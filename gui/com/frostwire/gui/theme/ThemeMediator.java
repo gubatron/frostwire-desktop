@@ -230,7 +230,7 @@ public final class ThemeMediator {
 
     private static void changeTableFont(JTable table, Font f) {
         UIDefaults nimbusOverrides = new UIDefaults();
-        nimbusOverrides.put("Table.font", f);
+        nimbusOverrides.put("Table.font", new FontUIResource(f));
         table.putClientProperty("Nimbus.Overrides", nimbusOverrides);
 
         TableCellEditor editor = table.getCellEditor();

@@ -38,6 +38,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -624,7 +625,7 @@ public class LimeJTable extends JTable implements JSortTable {
         Font f = ThemeMediator.getCurrentTableFont();
 
         UIDefaults nimbusOverrides = new UIDefaults();
-        nimbusOverrides.put("Table.font", f);
+        nimbusOverrides.put("Table.font", new FontUIResource(f));
         putClientProperty("Nimbus.Overrides", nimbusOverrides);
 
         FontMetrics fm = getFontMetrics(f);
