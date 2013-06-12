@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011, 2012, 2013, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.datatransfer.DataFlavor;
@@ -30,33 +31,39 @@ import java.util.List;
 import com.frostwire.alexandria.PlaylistItem;
 import com.limegroup.gnutella.gui.dnd.FileTransferable;
 
-public class LibraryPlaylistsTableTransferable implements Transferable {
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public final class LibraryPlaylistsTableTransferable implements Transferable {
 
     public static final DataFlavor ITEM_ARRAY = new DataFlavor(LibraryPlaylistsTableTransferable.Item[].class, "LibraryPlaylistTransferable.Item Array");
     public static final DataFlavor PLAYLIST_ITEM_ARRAY = new DataFlavor(LibraryPlaylistsTableTransferable.Item[].class, "LibraryPlaylistTransferable.PlaylistItemArray");
 
     private final List<LibraryPlaylistsTableTransferable.Item> items;
-    
+
     private final int playlistID;
     private final FileTransferable fileTransferable;
     private final int[] selectedIndexes;
-    
+
     public LibraryPlaylistsTableTransferable(List<PlaylistItem> playlistItems, int playlistID, int[] selectedIndexes) {
         items = LibraryUtils.convertToItems(playlistItems);
-        
+
         List<File> files = new ArrayList<File>(items.size());
         for (PlaylistItem item : playlistItems) {
             files.add(new File(item.getFilePath()));
         }
         fileTransferable = new FileTransferable(files);
         this.playlistID = playlistID;
-        
+
         this.selectedIndexes = selectedIndexes;
     }
-    
+
     public LibraryPlaylistsTableTransferable(List<PlaylistItem> playlistItems) {
         items = LibraryUtils.convertToItems(playlistItems);
-        
+
         List<File> files = new ArrayList<File>(items.size());
         for (PlaylistItem item : playlistItems) {
             files.add(new File(item.getFilePath()));
@@ -88,29 +95,29 @@ public class LibraryPlaylistsTableTransferable implements Transferable {
 
     @Override
     public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
-        if (flavor.equals(PLAYLIST_ITEM_ARRAY) ) {
-            return new PlaylistItemContainer(playlistID, selectedIndexes);
-        } else if (flavor.equals(ITEM_ARRAY) ) {
+        if (flavor.equals(PLAYLIST_ITEM_ARRAY)) {
+            return new PlaylistItemContainer(playlistID, selectedIndexes, items);
+        } else if (flavor.equals(ITEM_ARRAY)) {
             return items.toArray(new Item[0]);
         } else {
             return fileTransferable.getTransferData(flavor);
         }
     }
-    
+
     public static final class PlaylistItemContainer implements Serializable {
-        
-        private static final long serialVersionUID = 473769989120053185L;
-        public int playlistID;
-        public int[] selectedIndexes;
-        
-        public PlaylistItemContainer(int playlistID, int[] selectedIndexes) {
+
+        public final int playlistID;
+        public final int[] selectedIndexes;
+        public final List<Item> items;
+
+        public PlaylistItemContainer(int playlistID, int[] selectedIndexes, List<Item> items) {
             this.playlistID = playlistID;
             this.selectedIndexes = selectedIndexes;
+            this.items = items;
         }
     }
-    
+
     public static final class Item implements Serializable {
-        private static final long serialVersionUID = 928701185904989565L;
 
         public Item() {
         }

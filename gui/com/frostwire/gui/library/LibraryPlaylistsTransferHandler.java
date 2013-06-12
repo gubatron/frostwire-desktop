@@ -99,7 +99,6 @@ class LibraryPlaylistsTransferHandler extends TransferHandler {
 
             //Playlist selectedPlaylist = getSelectedPlaylist();
             Playlist playlist = cell.getPlaylist();
-
             if (playlist == null) {
                 try {
                     Transferable transferable = support.getTransferable();
@@ -123,7 +122,7 @@ class LibraryPlaylistsTransferHandler extends TransferHandler {
                 try {
                     Transferable transferable = support.getTransferable();
                     if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
-                        PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable.getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
+                        PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.PlaylistItemContainer) transferable.getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
                         LibraryUtils.asyncAddToPlaylist(playlist, playlistItems);
                     } else {
                         File[] files = DNDUtils.getFiles(support.getTransferable());

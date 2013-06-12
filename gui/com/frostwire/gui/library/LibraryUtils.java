@@ -60,7 +60,7 @@ import com.limegroup.gnutella.gui.I18n;
  * 
  */
 public class LibraryUtils {
-    
+
     public static final Icon FILE_UNSHARED_ICON;
     public static final Icon FILE_SHARING_ICON;
     public static final Icon FILE_SHARED_ICON;
@@ -92,23 +92,23 @@ public class LibraryUtils {
 
             List<PlaylistItem> items = playlist.getItems();
             if (index != -1 && index < items.size()) {
-                
+
                 // insert item
                 items.add(index, item);
-                
+
                 // update all sort indexes from insertion point onwards
-                for (int i=index; i < items.size(); i++) {
+                for (int i = index; i < items.size(); i++) {
                     PlaylistItem cur_item = items.get(i);
                     cur_item.setSortIndex(i + 1); //set index 1-based
                     cur_item.save();
                 }
-                
+
             } else {
                 items.add(item);
                 item.setSortIndex(items.size()); // set sort index to 1-based size
                 item.save();
             }
-            
+
             if (isPlaylistSelected(playlist)) {
                 // refresh UI
                 LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
@@ -417,6 +417,16 @@ public class LibraryUtils {
         return playlistItems.toArray(new PlaylistItem[0]);
     }
 
+    public static PlaylistItem[] convertToPlaylistItems(LibraryPlaylistsTableTransferable.PlaylistItemContainer itemContainer) {
+        List<PlaylistItem> playlistItems = new ArrayList<PlaylistItem>(itemContainer.items.size());
+        for (LibraryPlaylistsTableTransferable.Item item : itemContainer.items) {
+            PlaylistItem playlistItem = new PlaylistItem(null, item.id, item.filePath, item.fileName, item.fileSize, item.fileExtension, item.trackTitle, item.trackDurationInSecs, item.trackArtist, item.trackAlbum, item.coverArtPath, item.trackBitrate, item.trackComment, item.trackGenre,
+                    item.trackNumber, item.trackYear, item.starred);
+            playlistItems.add(playlistItem);
+        }
+        return playlistItems.toArray(new PlaylistItem[0]);
+    }
+
     public static File[] convertToFiles(PlaylistItem[] items) {
         List<File> files = new ArrayList<File>(items.length);
         for (PlaylistItem item : items) {
@@ -483,22 +493,22 @@ public class LibraryUtils {
                     }
                 }
             }
-            
+
             // reupdate sort indexes now that the ordering in the list is correct
             items = playlist.getItems();
-            for(int i=0; i<items.size(); i++) {
+            for (int i = 0; i < items.size(); i++) {
                 PlaylistItem item = items.get(i);
-                item.setSortIndex(i+1); // set index 1-based
+                item.setSortIndex(i + 1); // set index 1-based
                 item.save();
             }
-            
+
         } else {
             for (int i = 0; i < playlistItems.length && !playlist.isDeleted(); i++) {
-                
+
                 playlistItems[i].setPlaylist(playlist);
                 items.add(playlistItems[i]);
                 playlistItems[i].setSortIndex(items.size()); // set sort index to be at the end (1-based)
-                
+
                 if (starred) {
                     playlistItems[i].setStarred(starred);
                 }
@@ -782,39 +792,39 @@ public class LibraryUtils {
     }
 
     public static void movePlaylistItemsToIndex(Playlist playlist, int[] selectedIndexes, int index) {
-        
+
         List<PlaylistItem> items = playlist.getItems();
         int targetIndex = index;
-        
+
         // first, order items in list correctly
-        for (int i=0; i < selectedIndexes.length; i++) {
+        for (int i = 0; i < selectedIndexes.length; i++) {
             int sourceIndex = selectedIndexes[i];
-            
+
             if (sourceIndex != targetIndex) {
-                items.add( targetIndex, items.get(sourceIndex));
-                items.remove( sourceIndex < targetIndex ? sourceIndex : sourceIndex+1);
-                
+                items.add(targetIndex, items.get(sourceIndex));
+                items.remove(sourceIndex < targetIndex ? sourceIndex : sourceIndex + 1);
+
                 // adjust remaining selected indexes if insertion point is greater than their location
-                for (int j=i+1; j < selectedIndexes.length; j++) {
+                for (int j = i + 1; j < selectedIndexes.length; j++) {
                     if (targetIndex > selectedIndexes[j]) {
                         selectedIndexes[j]--;
                     }
                 }
-                
+
                 // update insertion point
                 if (sourceIndex > targetIndex) {
                     targetIndex++;
                 }
             }
         }
-        
+
         // second, generate new indexes based list order
-        for (int i=0; i < items.size(); i++) {
+        for (int i = 0; i < items.size(); i++) {
             PlaylistItem item = items.get(i);
             item.setSortIndex(i + 1); // set index (1-based)
             item.save();
         }
-        
+
         // initiate UI refresh
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {

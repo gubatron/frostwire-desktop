@@ -31,7 +31,7 @@ import javax.swing.JComponent;
 public final class SkinPopupMenuSeparatorPainter extends AbstractSkinPainter {
 
     private final State state;
-    
+
     public SkinPopupMenuSeparatorPainter(State state) {
         this.state = state;
     }
@@ -40,7 +40,6 @@ public final class SkinPopupMenuSeparatorPainter extends AbstractSkinPainter {
     protected void doPaint(Graphics2D g, JComponent c, int width, int height, Object[] extendedCacheKeys) {
         switch (state) {
         default:
-            System.out.println("test");
             g.setPaint(ThemeMediator.LIGHT_BORDER_COLOR);
             g.drawLine(0, 0, width, 0);
             break;

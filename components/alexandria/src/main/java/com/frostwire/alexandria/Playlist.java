@@ -1,3 +1,20 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, 2013, FrostWire(R). All rights reserved.
+ 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.frostwire.alexandria;
 
 import java.util.Collections;
@@ -9,16 +26,22 @@ import com.frostwire.alexandria.db.LibraryDatabaseEntity;
 import com.frostwire.alexandria.db.PlaylistDB;
 import com.frostwire.alexandria.db.PlaylistItemDB;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class Playlist extends LibraryDatabaseEntity {
 
     private int _id;
     private String _name;
     private String _description;
-    
+
     private boolean deleted;
 
     private List<PlaylistItem> _items;
-    
+
     public Playlist(LibraryDatabase libraryDB) {
         super(libraryDB);
         _id = LibraryDatabase.OBJECT_INVALID_ID;
@@ -34,9 +57,9 @@ public class Playlist extends LibraryDatabaseEntity {
         _items = new LinkedList<PlaylistItem>();
         this.deleted = false;
     }
-    
+
     public boolean isStarred() {
-    	return _id == LibraryDatabase.STARRED_PLAYLIST_ID;
+        return _id == LibraryDatabase.STARRED_PLAYLIST_ID;
     }
 
     public int getId() {
@@ -54,11 +77,11 @@ public class Playlist extends LibraryDatabaseEntity {
     public void setName(String name) {
         _name = name;
     }
-    
+
     public String getDescription() {
         return _description;
     }
-    
+
     public void setDescription(String description) {
         _description = description;
     }
@@ -66,7 +89,7 @@ public class Playlist extends LibraryDatabaseEntity {
     public List<PlaylistItem> getItems() {
         return _items;
     }
-    
+
     public boolean isDeleted() {
         return deleted;
     }
@@ -91,19 +114,23 @@ public class Playlist extends LibraryDatabaseEntity {
         }
     }
 
-    public PlaylistItem newItem(String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, float trackDurationInSecs, String trackArtist,
-            String trackAlbum, String coverArtPath, String trackBitrate, String trackComment, String trackGenre, String trackNumber, String trackYear, boolean starred) {
-        return new PlaylistItem(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist,
-                trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred);
+    public PlaylistItem newItem(String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, float trackDurationInSecs, String trackArtist, String trackAlbum, String coverArtPath, String trackBitrate, String trackComment, String trackGenre, String trackNumber,
+            String trackYear, boolean starred) {
+        return new PlaylistItem(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred);
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null || !(obj instanceof Playlist)) {
             return false;
         }
-        
-    	Playlist other = (Playlist) obj;
-    	return other.getId() == getId();
+
+        Playlist other = (Playlist) obj;
+        return other.getId() == getId();
+    }
+
+    @Override
+    public String toString() {
+        return _name;
     }
 }

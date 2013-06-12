@@ -24,17 +24,16 @@ public class PlaylistItem extends LibraryDatabaseEntity {
     private String trackYear;
     private boolean starred;
     private int sortIndex;
-    
+
     public PlaylistItem(Playlist playlist) {
         super(playlist.getLibraryDatabase());
         this.playlist = playlist;
         this.id = LibraryDatabase.OBJECT_INVALID_ID;
     }
 
-    public PlaylistItem(Playlist playlist, int id, String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, float trackDurationInSecs,
-            String trackArtist, String trackAlbum, String coverArtPath, String trackBitrate, String trackComment,
-            String trackGenre, String trackNumber, String trackYear, boolean starred) {
-        super(playlist.getLibraryDatabase());
+    public PlaylistItem(Playlist playlist, int id, String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, float trackDurationInSecs, String trackArtist, String trackAlbum, String coverArtPath, String trackBitrate, String trackComment, String trackGenre,
+            String trackNumber, String trackYear, boolean starred) {
+        super(playlist != null ? playlist.getLibraryDatabase() : null);
         this.playlist = playlist;
         this.id = id;
         this.filePath = filePath;
@@ -52,13 +51,13 @@ public class PlaylistItem extends LibraryDatabaseEntity {
         this.trackNumber = trackNumber;
         this.trackYear = trackYear;
         this.starred = starred;
-        this.sortIndex = playlist.getItems().size() + 1; // set sortIndex to the last position (1-based) by default
+        this.sortIndex = playlist != null ? (playlist.getItems().size() + 1) : 0; // set sortIndex to the last position (1-based) by default
     }
 
     public Playlist getPlaylist() {
         return playlist;
     }
-    
+
     public void setPlaylist(Playlist playlist) {
         this.playlist = playlist;
         setLibraryDatabase(playlist.getLibraryDatabase());
@@ -111,7 +110,7 @@ public class PlaylistItem extends LibraryDatabaseEntity {
     public void setTrackTitle(String trackTitle) {
         this.trackTitle = trackTitle;
     }
-    
+
     public float getTrackDurationInSecs() {
         return trackDurationInSecs;
     }
@@ -143,51 +142,51 @@ public class PlaylistItem extends LibraryDatabaseEntity {
     public void setCoverArtPath(String coverArtPath) {
         this.coverArtPath = coverArtPath;
     }
-    
+
     public String getTrackBitrate() {
         return trackBitrate;
     }
-    
+
     public void setTrackBitrate(String bitrate) {
         this.trackBitrate = bitrate;
     }
-    
+
     public String getTrackComment() {
         return trackComment;
     }
-    
+
     public void setTrackComment(String comment) {
         this.trackComment = comment;
     }
-    
+
     public String getTrackGenre() {
         return trackGenre;
     }
-    
+
     public void setTrackGenre(String genre) {
         this.trackGenre = genre;
     }
-    
+
     public String getTrackNumber() {
         return trackNumber;
     }
-    
+
     public void setTrackNumber(String track) {
         this.trackNumber = track;
     }
-    
+
     public String getTrackYear() {
         return trackYear;
     }
-    
+
     public void setTrackYear(String year) {
         this.trackYear = year;
     }
-    
+
     public boolean isStarred() {
         return starred;
     }
-    
+
     public void setStarred(boolean starred) {
         this.starred = starred;
     }
@@ -203,17 +202,17 @@ public class PlaylistItem extends LibraryDatabaseEntity {
             PlaylistItemDB.delete(db, this);
         }
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         return this.id == ((PlaylistItem) obj).id;
     }
-    
+
     @Override
     public int hashCode() {
-    	return id;
+        return id;
     }
-    
+
     @Override
     public String toString() {
         return "(" + id + ", title:" + trackTitle + ", number:" + trackNumber + ")";
