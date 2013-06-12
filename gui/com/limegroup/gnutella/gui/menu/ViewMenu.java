@@ -18,7 +18,9 @@ package com.limegroup.gnutella.gui.menu;
 import java.awt.event.ActionEvent;
 
 import org.limewire.setting.BooleanSetting;
+import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -45,23 +47,30 @@ final class ViewMenu extends AbstractMenu {
         toggleAction = new ToggleSmileySettingAction(UISettings.SMILEYS_IN_CHAT, I18n.tr("Show Smi&leys"), I18n.tr("Show emoticons in chat"));
         addToggleMenuItem(toggleAction);
 
-        //addMenuItem(new ChangeFontSizeAction(2, I18n.tr("&Increase Font Size"), I18n.tr("Increases the Font Size")));
+        MENU.addSeparator();
 
-        //addMenuItem(new ChangeFontSizeAction(-2, I18n.tr("&Decrease Font Size"), I18n.tr("Decreases the Font Size")));
+        addMenuItem(new ChangeFontSizeAction(1, I18n.tr("&Increase Tables Font Size") + " " + fontChangeCmd("+"), I18n.tr("Increases the Table Font Size")));
 
-        //addMenuItem(new ResetFontSizeAction());
+        addMenuItem(new ChangeFontSizeAction(-1, I18n.tr("&Decrease Tables Font Size") + " " + fontChangeCmd("-"), I18n.tr("Decreases the Table Font Size")));
+
+        addMenuItem(new ChangeFontSizeAction(0, I18n.tr("&Reset Tables Font Size") + " " + fontChangeCmd("0"), I18n.tr("Reset the Table Font Size")));
 
         MENU.addSeparator();
 
         addMenuItem(new ShowLanguageWindowAction());
     }
 
-    private static class ShowLanguageWindowAction extends AbstractAction {
+    private String fontChangeCmd(String cmd) {
+        String result;
+        if (OSUtils.isMacOSX()) {
+            result = "Cmd+" + cmd;
+        } else {
+            result = "Ctrl+" + cmd;
+        }
+        return result;
+    }
 
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -6305934985012530356L;
+    private static class ShowLanguageWindowAction extends AbstractAction {
 
         public ShowLanguageWindowAction() {
             super(I18n.tr("C&hange Language"));
@@ -77,11 +86,6 @@ final class ViewMenu extends AbstractMenu {
 
     private static class ToggleIconSettingAction extends ToggleSettingAction {
 
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -4953235635397552198L;
-
         public ToggleIconSettingAction(BooleanSetting setting, String name, String description) {
             super(setting, name, description);
         }
@@ -93,10 +97,6 @@ final class ViewMenu extends AbstractMenu {
     }
 
     private static class ToggleSmileySettingAction extends ToggleSettingAction {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -1098362918446138044L;
 
         public static BooleanSetting newsetting;
 
@@ -112,4 +112,18 @@ final class ViewMenu extends AbstractMenu {
         }
     }
 
+    private static class ChangeFontSizeAction extends AbstractAction {
+
+        private final int increment;
+
+        public ChangeFontSizeAction(int inc, String name, String description) {
+            super(name);
+            putValue(LONG_DESCRIPTION, description);
+            increment = inc;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            ThemeMediator.modifyTablesFont(increment);
+        }
+    }
 }
