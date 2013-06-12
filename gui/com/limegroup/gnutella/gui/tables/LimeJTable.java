@@ -68,11 +68,6 @@ import com.limegroup.gnutella.util.DataUtils;
 public class LimeJTable extends JTable implements JSortTable {
 
     /**
-     * 
-     */
-    private static final long serialVersionUID = 8592998839457123312L;
-
-    /**
      * The columns that are currently hidden.
      */
     protected Map<Object, LimeTableColumn> _hiddenColumns = new HashMap<Object, LimeTableColumn>();
@@ -629,7 +624,7 @@ public class LimeJTable extends JTable implements JSortTable {
         putClientProperty("Nimbus.Overrides", nimbusOverrides);
 
         FontMetrics fm = getFontMetrics(f);
-        int h = fm.getHeight() + 4;
+        int h = fm.getHeight() + 8;
         setRowHeight(h);
     }
 

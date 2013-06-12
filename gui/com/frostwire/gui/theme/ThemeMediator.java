@@ -238,7 +238,7 @@ public final class ThemeMediator {
             editor.cancelCellEditing();
         }
         FontMetrics fm = table.getFontMetrics(f);
-        int h = fm.getHeight() + 4;
+        int h = fm.getHeight() + 8;
         table.setRowHeight(h);
         SwingUtilities.updateComponentTreeUI(table);
     }

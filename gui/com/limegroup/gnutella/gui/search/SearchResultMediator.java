@@ -341,8 +341,8 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
                     break;
                 }
             }
-            PopupUtils.addMenuItem(I18n.tr("Copy Magnet"), COPY_MAGNET_ACTION_LISTENER, menu, !isStopped() && allWithHash);
-            PopupUtils.addMenuItem(I18n.tr("Copy Hash"), COPY_HASH_ACTION_LISTENER, menu, !isStopped() && allWithHash);
+            PopupUtils.addMenuItem(I18n.tr("Copy Magnet"), COPY_MAGNET_ACTION_LISTENER, menu, allWithHash);
+            PopupUtils.addMenuItem(I18n.tr("Copy Hash"), COPY_HASH_ACTION_LISTENER, menu, allWithHash);
 
             menu.add(createSearchAgainMenu(lines[0]));
         } else {
@@ -798,7 +798,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.getViewport().setBackground(Color.WHITE);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(28, 10, 4, 10));
-        
+
         JComponent table = getScrolledTablePane();
         table.setOpaque(false);
         background.add(scrollPane);
