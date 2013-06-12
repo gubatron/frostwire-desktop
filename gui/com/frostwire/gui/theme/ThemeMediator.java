@@ -135,6 +135,31 @@ public final class ThemeMediator {
         return new SkinTitledBorder(title);
     }
 
+    public static Font getDefaultFont() {
+        UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+        return defaults.getFont("defaultFont");
+    }
+
+    public static Font getCurrentTableFont() {
+        UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+        return defaults.getFont("Table.font");
+    }
+
+    public static void modifyTablesFont(int delta) {
+        int currentSize = ApplicationSettings.GUI_TABLES_FONT_SIZE.getValue();
+        if (currentSize == 0 || delta == 0) {
+            currentSize = getDefaultFont().getSize();
+        }
+
+        int newSize = currentSize + delta;
+        if (TABLE_FONT_SIZE_MIN <= newSize && newSize <= TABLE_FONT_SIZE_MAX) {
+            ApplicationSettings.GUI_TABLES_FONT_SIZE.setValue(currentSize + delta);
+            Font f = setupTableFont(UIManager.getLookAndFeelDefaults());
+
+            changeTablesFont(f);
+        }
+    }
+
     static void testComponentCreationThreadingViolation() {
         if (!SwingUtilities.isEventDispatchThread()) {
             UiThreadingViolationException uiThreadingViolationError = new UiThreadingViolationException("Component creation must be done on Event Dispatch Thread");
@@ -143,12 +168,10 @@ public final class ThemeMediator {
         }
     }
 
-    private static void changeTablesFont(int size) {
-        if (TABLE_FONT_SIZE_MIN <= size && size <= TABLE_FONT_SIZE_MAX) {
-            Frame[] frames = Frame.getFrames();
-            for (Frame frame : frames) {
-                changeTablesFont(frame, size);
-            }
+    private static void changeTablesFont(Font f) {
+        Frame[] frames = Frame.getFrames();
+        for (Frame frame : frames) {
+            changeTablesFont(frame, f);
         }
     }
 
@@ -159,9 +182,14 @@ public final class ThemeMediator {
                 // handle Ctrl+- for font change in tables
                 if (e.getID() == KeyEvent.KEY_PRESSED && (e.isMetaDown() || e.isControlDown())) {
                     switch (e.getKeyCode()) {
-                    case KeyEvent.VK_PLUS:
                     case KeyEvent.VK_EQUALS:
-                        modifyTablesFont(1);
+                        if (OSUtils.isMacOSX()) {
+                            if (e.getKeyChar() == '+') {
+                                modifyTablesFont(1);
+                            }
+                        } else {
+                            modifyTablesFont(1);
+                        }
                         return true;
                     case KeyEvent.VK_MINUS:
                         modifyTablesFont(-1);
@@ -176,32 +204,22 @@ public final class ThemeMediator {
         });
     }
 
-    private static void modifyTablesFont(int delta) {
-        int currentSize = ApplicationSettings.GUI_TABLES_FONT_SIZE.getValue();
-        if (currentSize == 0 || delta == 0) {
-            UIDefaults defaults = UIManager.getLookAndFeelDefaults();
-            currentSize = defaults.getFont("defaultFont").getSize();
-        }
-
-        changeTablesFont(currentSize + delta);
-    }
-
-    private static void changeTablesFont(Container c, int size) {
+    private static void changeTablesFont(Container c, Font f) {
         Component[] comps = c.getComponents();
         for (Component comp : comps) {
             if (comp instanceof LimeJTable) {
-                changeTableFont((JTable) comp, size);
+                changeTableFont((JTable) comp, f);
             } else if (comp instanceof Container) {
-                changeTablesFont((Container) comp, size);
+                changeTablesFont((Container) comp, f);
             }
         }
     }
 
-    private static void changeTableFont(JTable table, int size) {
-        Font f = deriveTableFont(table, size);
+    private static void changeTableFont(JTable table, Font f) {
         UIDefaults nimbusOverrides = new UIDefaults();
         nimbusOverrides.put("Table.font", f);
         table.putClientProperty("Nimbus.Overrides", nimbusOverrides);
+
         TableCellEditor editor = table.getCellEditor();
         if (editor != null) {
             editor.cancelCellEditing();
@@ -210,20 +228,6 @@ public final class ThemeMediator {
         int h = fm.getHeight() + 4;
         table.setRowHeight(h);
         SwingUtilities.updateComponentTreeUI(table);
-    }
-
-    private static Font deriveTableFont(JTable table, int size) {
-        Font f = null;
-        if (size < TABLE_FONT_SIZE_MIN || TABLE_FONT_SIZE_MAX < size) {
-            ApplicationSettings.GUI_TABLES_FONT_SIZE.setValue(0);
-            UIDefaults defaults = UIManager.getLookAndFeelDefaults();
-            return defaults.getFont("defaultFont");
-        } else {
-            f = table.getFont().deriveFont((float) size);
-            ApplicationSettings.GUI_TABLES_FONT_SIZE.setValue(size);
-        }
-
-        return f;
     }
 
     private static void applyCommonSkinUI() {
@@ -445,6 +449,9 @@ public final class ThemeMediator {
         defaults.put("Table[Enabled+Selected].textBackground", new Color(SkinColors.TABLE_SELECTED_BACKGROUND_ROW_COLOR.getRGB()));
         defaults.put("Table[Enabled+Selected].textForeground", SkinColors.TABLE_SELECTED_FOREGROUND_ROW_COLOR);
 
+        // table row setting
+        setupTableFont(defaults);
+
         // splitter
         defaults.put("SplitPane:SplitPaneDivider[Enabled].backgroundPainter", new SkinSplitPaneDividerBackgroundPainter(SkinSplitPaneDividerBackgroundPainter.State.Enabled));
 
@@ -549,5 +556,24 @@ public final class ThemeMediator {
         defaults.put("Slider:SliderThumb[Pressed].backgroundPainter", new SkinSliderThumbPainter(SkinSliderThumbPainter.State.Pressed));
 
         return defaults;
+    }
+
+    private static Font setupTableFont(UIDefaults defaults) {
+        int sizeSetting = ApplicationSettings.GUI_TABLES_FONT_SIZE.getValue();
+        if (sizeSetting != 0 && (sizeSetting < TABLE_FONT_SIZE_MIN || TABLE_FONT_SIZE_MAX < sizeSetting)) {
+            ApplicationSettings.GUI_TABLES_FONT_SIZE.setValue(0);
+            sizeSetting = 0;
+        }
+
+        Font f;
+        if (sizeSetting != 0) {
+            f = defaults.getFont("defaultFont").deriveFont((float) sizeSetting);
+        } else {
+            f = defaults.getFont("defaultFont");
+        }
+
+        defaults.put("Table.font", new FontUIResource(f));
+
+        return f;
     }
 }
