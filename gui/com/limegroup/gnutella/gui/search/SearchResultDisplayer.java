@@ -467,6 +467,13 @@ public final class SearchResultDisplayer implements RefreshListener {
         return ui.tabForCoordinate(tabbedPane, x, y);
     }
 
+    public void closeCurrentTab() {
+        int index = tabbedPane.getSelectedIndex();
+        if (index != -1) {
+            killSearchAtIndex(index);
+        }
+    }
+    
     /**
      * @modifies tabbed pane, entries
      * @effects removes the window at i from this

@@ -51,6 +51,10 @@ import org.slf4j.LoggerFactory;
 import sun.swing.SwingUtilities2;
 
 import com.apple.laf.AquaFonts;
+import com.frostwire.gui.tabs.SearchDownloadTab;
+import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.GUIMediator.Tabs;
+import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
@@ -197,11 +201,20 @@ public final class ThemeMediator {
                     case KeyEvent.VK_0:
                         modifyTablesFont(0);
                         return true;
+                    case KeyEvent.VK_W:
+                        closeCurrentSearchTab();
                     }
                 }
                 return false;
             }
         });
+    }
+
+    protected static void closeCurrentSearchTab() {
+        SearchDownloadTab searchTab = (SearchDownloadTab) GUIMediator.instance().getTab(Tabs.SEARCH);
+        if (searchTab.getComponent().isVisible()) {
+            SearchMediator.getSearchResultDisplayer().closeCurrentTab();
+        }
     }
 
     private static void changeTablesFont(Container c, Font f) {
