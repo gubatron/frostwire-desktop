@@ -18,16 +18,9 @@
 
 package com.frostwire.gui.theme;
 
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JComponent;
-import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicPopupMenuSeparatorUI;
-
-import org.limewire.util.OSUtils;
-
-import com.apple.laf.AquaPopupMenuSeparatorUI;
 
 /**
  * 
@@ -35,21 +28,26 @@ import com.apple.laf.AquaPopupMenuSeparatorUI;
  * @author aldenml
  *
  */
-public final class SkinPopupMenuSeparatorUI extends BasicPopupMenuSeparatorUI {
+public final class SkinPopupMenuSeparatorPainter extends AbstractSkinPainter {
 
-    public static ComponentUI createUI(JComponent comp) {
-        ThemeMediator.testComponentCreationThreadingViolation();
-        if (OSUtils.isMacOSX() && !(comp instanceof SkinPopupMenu.Separator)) {
-            return AquaPopupMenuSeparatorUI.createUI(comp);
-        } else {
-            return new SkinPopupMenuSeparatorUI();
-        }
+    private final State state;
+    
+    public SkinPopupMenuSeparatorPainter(State state) {
+        this.state = state;
     }
 
     @Override
-    public void paint(Graphics g, JComponent c) {
-        //super.paint(g, c);
-        ((Graphics2D) g).setPaint(SkinColors.GENERAL_BORDER_COLOR);
-        g.drawLine(0, 0, c.getWidth(), 0);
+    protected void doPaint(Graphics2D g, JComponent c, int width, int height, Object[] extendedCacheKeys) {
+        switch (state) {
+        default:
+            System.out.println("test");
+            g.setPaint(ThemeMediator.LIGHT_BORDER_COLOR);
+            g.drawLine(0, 0, width, 0);
+            break;
+        }
+    }
+
+    public static enum State {
+        Enabled
     }
 }

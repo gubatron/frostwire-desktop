@@ -568,6 +568,9 @@ public final class ThemeMediator {
         defaults.put("Slider:SliderThumb[MouseOver].backgroundPainter", new SkinSliderThumbPainter(SkinSliderThumbPainter.State.MouseOver));
         defaults.put("Slider:SliderThumb[Pressed].backgroundPainter", new SkinSliderThumbPainter(SkinSliderThumbPainter.State.Pressed));
 
+        // popupmenuseparator
+        defaults.put("PopupMenuSeparator[Enabled].backgroundPainter", new SkinPopupMenuSeparatorPainter(SkinPopupMenuSeparatorPainter.State.Enabled));
+
         return defaults;
     }
 
