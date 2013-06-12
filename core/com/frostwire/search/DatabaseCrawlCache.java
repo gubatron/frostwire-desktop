@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.frostwire.content.ContentValues;
 import com.frostwire.database.Cursor;
 import com.frostwire.search.CrawlCacheDB.Columns;
+import com.limegroup.gnutella.settings.SearchSettings;
 
 /**
  * 
@@ -70,15 +71,17 @@ public class DatabaseCrawlCache implements CrawlCache {
 
     @Override
     public void put(String key, byte[] data) {
-        try {
-            ContentValues values = new ContentValues();
+        if (SearchSettings.SMART_SEARCH_ENABLED.getValue()) {
+            try {
+                ContentValues values = new ContentValues();
 
-            values.put(Columns.KEY, key);
-            values.put(Columns.DATA, data);
+                values.put(Columns.KEY, key);
+                values.put(Columns.DATA, data);
 
-            db.insert(values);
-        } catch (Throwable e) {
-            LOG.warn("Error putting value to crawl cache: " + e.getMessage());
+                db.insert(values);
+            } catch (Throwable e) {
+                LOG.warn("Error putting value to crawl cache: " + e.getMessage());
+            }
         }
     }
 

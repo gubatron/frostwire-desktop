@@ -326,13 +326,5 @@ public final class SearchSettings extends LimeProps {
 	
 	public static final BooleanSetting SMART_SEARCH_ENABLED = FACTORY.createBooleanSetting("SMART_SEARCH_ENABLED", true);
 	
-	public static final IntSetting SMART_SEARCH_START_DELAY = FACTORY.createIntSetting("SMART_SEARCH_START_DELAY", 2000);
-	
-	public static final IntSetting SMART_SEARCH_MAXIMUM_TORRENTS_TO_SCAN = FACTORY.createIntSetting("SMART_SEARCH_MAXIMUM_TORRENTS_TO_SCAN", 20);
-	
-	public static final IntSetting SMART_SEARCH_DEEP_SEARCH_ROUNDS = FACTORY.createIntSetting("SMART_SEARCH_DEEP_SEARCH_ROUNDS", 3);
-	
-	public static final IntSetting SMART_SEARCH_FULLTEXT_SEARCH_RESULTS_LIMIT = FACTORY.createIntSetting("SMART_SEARCH_FULLTEXT_SEARCH_RESULTS_LIMIT", 256);
-
     public static final BooleanSetting SHOW_DETAIL_PAGE_AFTER_DOWNLOAD_START = FACTORY.createBooleanSetting("SHOW_DETAIL_PAGE_AFTER_DOWNLOAD_START", false);
 }

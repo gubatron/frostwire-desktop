@@ -225,21 +225,7 @@ public class SharingSettings extends LimeProps {
      */
     public static final IntSetting DEPTH_FOR_WARNING =
         FACTORY.createIntSetting("DEPTH_FOR_WARNING", 4);
-    
-	/**
-	 * The Creative Commons explanation URL
-	 */
-	public static final StringSetting CREATIVE_COMMONS_INTRO_URL = 
-		FACTORY.createRemoteStringSetting
-		("CREATIVE_COMMONS_URL","http://creativecommons.org/about/licenses/how1","creativeCommonsURL");
-	
-	/**
-	 * The Creative Commons verification explanation URL
-	 */
-	public static final StringSetting CREATIVE_COMMONS_VERIFICATION_URL = 
-		FACTORY.createRemoteStringSetting
-		("CREATIVE_COMMONS_VERIFICATION_URL","http://creativecommons.org/technology/embedding#2","creativeCommonsVerificationURL");
-    
+    	
     /**
      * Setting for whether or not to allow partial files to be shared.
      */
