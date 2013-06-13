@@ -30,10 +30,15 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Method;
 
+import javax.swing.Action;
+import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
+import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
@@ -164,11 +169,42 @@ public final class ThemeMediator {
         }
     }
 
+    public static void fixKeyStrokes(JTextField textField) {
+        if (OSUtils.isMacOSX()) {
+            fixKeyStroke(textField, "copy", KeyEvent.VK_C, 0);
+            fixKeyStroke(textField, "paste", KeyEvent.VK_V, 0);
+            fixKeyStroke(textField, "cut", KeyEvent.VK_X, 0);
+            fixKeyStroke(textField, "caret-begin-line", KeyEvent.VK_LEFT, 0);
+            fixKeyStroke(textField, "caret-end-line", KeyEvent.VK_RIGHT, 0);
+            fixKeyStroke(textField, "selection-begin-line", KeyEvent.VK_LEFT, KeyEvent.SHIFT_DOWN_MASK);
+            fixKeyStroke(textField, "selection-end-line", KeyEvent.VK_RIGHT, KeyEvent.SHIFT_DOWN_MASK);
+        }
+    }
+
     static void testComponentCreationThreadingViolation() {
         if (!SwingUtilities.isEventDispatchThread()) {
             UiThreadingViolationException uiThreadingViolationError = new UiThreadingViolationException("Component creation must be done on Event Dispatch Thread");
             uiThreadingViolationError.printStackTrace(System.err);
             throw uiThreadingViolationError;
+        }
+    }
+
+    private static void fixKeyStroke(JTextField textField, String name, int vk, int mask) {
+        Action action = null;
+
+        ActionMap actionMap = textField.getActionMap();
+        for (Object k : actionMap.allKeys()) {
+            if (k.equals(name)) {
+                action = actionMap.get(k);
+            }
+        }
+
+        if (action != null) {
+            InputMap[] inputMaps = new InputMap[] { textField.getInputMap(JComponent.WHEN_FOCUSED), textField.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT), textField.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW) };
+
+            for (InputMap i : inputMaps) {
+                i.put(KeyStroke.getKeyStroke(vk, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask() | mask), action);
+            }
         }
     }
 
