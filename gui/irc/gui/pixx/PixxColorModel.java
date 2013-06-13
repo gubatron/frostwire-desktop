@@ -2,6 +2,8 @@ package irc.gui.pixx;
 
 import java.awt.Color;
 
+import com.frostwire.gui.theme.ThemeMediator;
+
 /**
  * PixxInterface color model.
  */
@@ -86,7 +88,7 @@ public class PixxColorModel
     cols[3]=new Color(0xb9d3ee);
     cols[4]=new Color(0xb9d3ee);
     cols[5]=new Color(0xA5C6E9);
-    cols[6]=new Color(0xb9d3ee);
+    cols[6]= ThemeMediator.DARK_BACKGROUND_COLOR;// new Color(0xb9d3ee);
     cols[7]=new Color(0x90B9E4);
     cols[8]=new Color(0xb9d3ee);
 /*  cols[8]=new Color(0x669900);    */
@@ -118,49 +120,6 @@ public class PixxColorModel
   public int getColorCount()
   {
     return _colors.length;
-  }
-
-  private Color computeColor(int r,int g,int b,int i)
-  {
-    r*=i;
-    g*=i;
-    b*=i;
-    r/=256;
-    g/=256;
-    b/=256;
-    if(r>255) r=255;
-    if(g>255) g=255;
-    if(b>255) b=255;
-    return new Color(r,g,b);
-  }
-
-  /**
-   * Create a new PixxColorModel using given r g b basecolor.
-   * @param r red base color.
-   * @param g green base color.
-   * @param b blue base color.
-   */
-  public PixxColorModel(int r,int g,int b)
-  {
-    Color[] cols=new Color[16];
-    cols[0]=Color.black;
-    cols[1]=Color.white;
-    cols[2]=new Color(0x868686);
-    cols[3]=Color.gray;
-    cols[4]=new Color(0xD0D0D0);
-    cols[8]=new Color(0xa40000);
-    cols[10]=new Color(0x008000);
-    cols[13]=new Color(0x4040ff);
-    cols[14]=new Color(0xff40ff);
-
-    cols[5]=computeColor(r,g,b,0x66);
-    cols[6]=computeColor(r,g,b,0x55);
-    cols[7]=computeColor(r,g,b,0x4B);
-    cols[9]=computeColor(r,g,b,0x80);
-    cols[11]=computeColor(r,g,b,0x66);
-    cols[12]=computeColor(r,g,b,0x66);
-    cols[15]=computeColor(r,g,b,0x66);
-    init(cols);
   }
 
   /**

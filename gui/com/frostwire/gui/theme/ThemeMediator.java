@@ -78,6 +78,7 @@ public final class ThemeMediator {
     public static final Font DIALOG_FONT = new Font(Font.DIALOG, Font.PLAIN, 12);
 
     public static final Color LIGHT_BORDER_COLOR = SkinColors.GENERAL_BORDER_COLOR;
+    public static final Color DARK_BACKGROUND_COLOR = SkinColors.DARK_BOX_BACKGROUND_COLOR;
 
     public static final Color TABLE_ALTERNATE_ROW_COLOR = SkinColors.TABLE_ALTERNATE_ROW_COLOR;
     public static final Color TABLE_SELECTED_BACKGROUND_ROW_COLOR = SkinColors.TABLE_SELECTED_BACKGROUND_ROW_COLOR;
