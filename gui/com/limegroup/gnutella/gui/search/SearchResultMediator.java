@@ -84,7 +84,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     private static final DateRenderer DATE_RENDERER = new DateRenderer();
     private static final PercentageRenderer PERCENTAGE_RENDERER = new PercentageRenderer();
     private static final SearchResultNameRenderer SEARCH_RESULT_NAME_RENDERER = new SearchResultNameRenderer();
-
+    
     /**
      * The TableSettings that all ResultPanels will use.
      */
@@ -848,7 +848,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         tc = model.getColumn(SearchTableColumns.NAME_IDX);
         tc.setCellEditor(new SearchResultNameEditor());
         tc = model.getColumn(SearchTableColumns.SOURCE_IDX);
-        tc.setCellEditor(new ActionIconAndNameEditor());
+        tc.setCellEditor(new SourceEditor());
     }
 
     private final class RepeatSearchAction extends AbstractAction {

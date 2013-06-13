@@ -29,7 +29,6 @@ import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
-import com.limegroup.gnutella.gui.tables.ActionIconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 
@@ -68,7 +67,7 @@ public final class SearchResultDataLine extends AbstractDataLine<UISearchResult>
     private String seeds;
     private Icon icon;
     private SizeHolder size;
-    private ActionIconAndNameHolder source;
+    private SourceHolder source;
 
     public SearchResultDataLine(SearchTableColumns stc) {
         COLUMNS = stc;
@@ -92,7 +91,7 @@ public final class SearchResultDataLine extends AbstractDataLine<UISearchResult>
         seeds = RESULT.getSeeds() <= 0 || !(RESULT instanceof TorrentUISearchResult) ? "" : String.valueOf(RESULT.getSeeds());
         icon = getIcon();
         size = new SizeHolder(getSize());
-        source = new ActionIconAndNameHolder(null, _torrentDetailsAction, "<html><a href=\"#\">" + RESULT.getSource() + "</a></html>");
+        source = new SourceHolder(_torrentDetailsAction, RESULT.getSource(), RESULT.getSearchResult().getDetailsUrl());
     }
 
     /**
