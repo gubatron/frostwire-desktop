@@ -146,7 +146,7 @@ public final class ChatMediator {
             while (_nickname.equals("")) {
                 GUIMediator.safeInvokeAndWait(new Runnable() {
                     public void run() {
-                        _nickname = JOptionPane.showInputDialog(null, "Enter your desired chat Nickname", "Nickname required to connect", JOptionPane.INFORMATION_MESSAGE);
+                        _nickname = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Enter your desired chat Nickname"), I18n.tr("Nickname required to connect"), JOptionPane.INFORMATION_MESSAGE, null, null, null);
                     }
                 });
 
@@ -158,7 +158,7 @@ public final class ChatMediator {
                 if (isNickNameCensored(_nickname)) {
                     GUIMediator.safeInvokeAndWait(new Runnable() {
                         public void run() {
-                            JOptionPane.showMessageDialog(null, "The nickname '" + _nickname + "' can't be accepted");
+                            JOptionPane.showMessageDialog(null, I18n.tr("The nickname") + " '" + _nickname + "' " + I18n.tr("can't be accepted"));
                         }
                     });
                     _nickname = "";

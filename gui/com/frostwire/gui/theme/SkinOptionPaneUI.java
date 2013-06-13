@@ -23,6 +23,7 @@ import java.awt.GridBagConstraints;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.synth.SynthOptionPaneUI;
 
@@ -45,6 +46,17 @@ public class SkinOptionPaneUI extends SynthOptionPaneUI {
 
         if (msg instanceof JLabel) {
             ThemeMediator.fixComponentFont((JLabel) msg, getMessage());
+        } else if (msg instanceof JTextField) {
+            ThemeMediator.fixKeyStrokes((JTextField) msg);
+        }
+    }
+
+    @Override
+    protected void resetInputValue() {
+        if (inputComponent != null && (inputComponent instanceof JTextField)) {
+            //optionPane.setInputValue(((JTextField) inputComponent).getText());
+        } else {
+            super.resetInputValue();
         }
     }
 }
