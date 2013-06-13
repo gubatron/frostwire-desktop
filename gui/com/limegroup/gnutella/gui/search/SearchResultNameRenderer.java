@@ -21,27 +21,17 @@ package com.limegroup.gnutella.gui.search;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.plaf.TableUI;
 import javax.swing.table.TableCellRenderer;
 
 import com.frostwire.gui.LocaleLabel;
-import com.frostwire.gui.player.MediaPlayer;
-import com.frostwire.gui.theme.SkinTableUI;
 import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.search.CrawlableSearchResult;
-import com.frostwire.search.StreamableSearchResult;
-import com.limegroup.gnutella.gui.GUIMediator;
 
 /**
  * 
@@ -52,11 +42,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 public final class SearchResultNameRenderer extends JPanel implements TableCellRenderer {
 
     private LocaleLabel labelText;
-    private JLabel labelPlay;
-    private JLabel labelPartialDownload;
-    private JLabel labelDownload;
-
-    private UISearchResult sr;
 
     public SearchResultNameRenderer() {
         setupUI();
@@ -64,7 +49,6 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-
         this.setData((SearchResultNameHolder) value, table, row);
         this.setOpaque(true);
         this.setEnabled(table.isEnabled());
@@ -78,22 +62,9 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         return this;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
-     */
-    @Override
-    protected final void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        updatePlayButtons();
-    }
-
     private void setupUI() {
         setLayout(new GridBagLayout());
-
         GridBagConstraints c;
-
         labelText = new LocaleLabel();
         labelText.setHorizontalTextPosition(SwingConstants.LEFT);
         c = new GridBagConstraints();
@@ -101,115 +72,12 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         c.weightx = 1.0;
         c.fill = GridBagConstraints.HORIZONTAL;
         add(labelText, c);
-
-        labelPlay = new JLabel(GUIMediator.getThemeImage("search_result_play_over"));
-        labelPlay.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                labelPlay_mouseReleased(e);
-            }
-        });
-        c = new GridBagConstraints();
-        c.gridx = GridBagConstraints.RELATIVE;
-        c.ipadx = 1;
-        add(labelPlay, c);
-
-        labelPartialDownload = new JLabel(GUIMediator.getThemeImage("search_result_details_over"));
-        labelPartialDownload.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                labelPartialDownload_mouseReleased(e);
-            }
-        });
-        c = new GridBagConstraints();
-        c.gridx = GridBagConstraints.RELATIVE;
-        c.ipadx = 1;
-        add(labelPartialDownload, c);
-
-        labelDownload = new JLabel(GUIMediator.getThemeImage("search_result_download_over"));
-        labelDownload.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                labelDownload_mouseReleased(e);
-            }
-        });
-        c = new GridBagConstraints();
-        c.gridx = GridBagConstraints.RELATIVE;
-        c.ipadx = 1;
-        add(labelDownload, c);
-    }
-
-    private void labelPlay_mouseReleased(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {
-            if (sr.getSearchResult() instanceof StreamableSearchResult && !isStreamableSourceBeingPlayed(sr)) {
-                sr.play();
-                updatePlayButtons();
-            }
-        }
-    }
-
-    private void labelPartialDownload_mouseReleased(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {
-            if (sr.getSearchResult() instanceof CrawlableSearchResult) {
-                sr.download(true);
-            }
-        }
-    }
-
-    private void labelDownload_mouseReleased(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {
-            sr.download(false);
-        }
     }
 
     private void setData(SearchResultNameHolder value, JTable table, int row) {
-        this.sr = value.getSearchResult();
-
         labelText.setText(value.getLocaleString());
-
         labelText.setFont(table.getFont());
-
-        boolean showButtons = mouseIsOverRow(table, row);
-        labelPlay.setVisible(showButtons && (sr.getSearchResult() instanceof StreamableSearchResult));
-        labelPartialDownload.setVisible(showButtons && sr.getSearchResult() instanceof CrawlableSearchResult);
-        labelDownload.setVisible(showButtons);
-
-        if (showButtons) {
-            updatePlayButtons();
-        }
-
-        if (isStreamableSourceBeingPlayed(sr)) {
-            labelPlay.setVisible(true);
-        }
-
         syncFont(table, labelText);
-    }
-
-    private boolean mouseIsOverRow(JTable table, int row) {
-        boolean mouseOver = false;
-
-        try {
-            TableUI ui = table.getUI();
-            if (ui instanceof SkinTableUI) {
-                mouseOver = ((SkinTableUI) ui).getRowAtMouse() == row;
-            }
-        } catch (Throwable e) {
-            // ignore
-        }
-        return mouseOver;
-    }
-
-    private void updatePlayButtons() {
-        labelPlay.setIcon((isStreamableSourceBeingPlayed(sr)) ? GUIMediator.getThemeImage("speaker") : GUIMediator.getThemeImage("search_result_play_over"));
-    }
-
-    private boolean isStreamableSourceBeingPlayed(UISearchResult sr) {
-        if (!(sr instanceof StreamableSearchResult)) {
-            return false;
-        }
-
-        StreamableSearchResult ssr = (StreamableSearchResult) sr;
-        return MediaPlayer.instance().isThisBeingPlayed(ssr.getStreamUrl());
     }
 
     private void syncFont(JTable table, JComponent c) {

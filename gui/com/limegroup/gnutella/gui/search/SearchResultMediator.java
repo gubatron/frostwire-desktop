@@ -83,6 +83,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     private static final DateRenderer DATE_RENDERER = new DateRenderer();
     private static final PercentageRenderer PERCENTAGE_RENDERER = new PercentageRenderer();
     private static final SearchResultNameRenderer SEARCH_RESULT_NAME_RENDERER = new SearchResultNameRenderer();
+    private static final SearchResultActionsRenderer SEARCH_RESULT_ACTIONS_RENDERER = new SearchResultActionsRenderer();
     private static final SourceRenderer SOURCE_RENDERER = new SourceRenderer();
     
     /**
@@ -179,6 +180,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         TABLE.setDefaultRenderer(Date.class, DATE_RENDERER);
         TABLE.setDefaultRenderer(Float.class, PERCENTAGE_RENDERER);
         TABLE.setDefaultRenderer(SearchResultNameHolder.class, SEARCH_RESULT_NAME_RENDERER);
+        TABLE.setDefaultRenderer(SearchResultActionsHolder.class, SEARCH_RESULT_ACTIONS_RENDERER);
         TABLE.setDefaultRenderer(SourceHolder.class, SOURCE_RENDERER);
     }
 
@@ -846,6 +848,8 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     protected void setDefaultEditors() {
         TableColumnModel model = TABLE.getColumnModel();
         TableColumn tc;
+        tc = model.getColumn(SearchTableColumns.ACTIONS_IDX);
+        tc.setCellEditor(new SearchResultActionsEditor());
         tc = model.getColumn(SearchTableColumns.NAME_IDX);
         tc.setCellEditor(new SearchResultNameEditor());
         tc = model.getColumn(SearchTableColumns.SOURCE_IDX);
