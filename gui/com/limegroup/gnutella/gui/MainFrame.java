@@ -64,7 +64,7 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  * This class constructs the main <tt>JFrame</tt> for the program as well as 
  * all of the other GUI classes.  
  */
-public final class MainFrame  {
+public final class MainFrame {
 
     /**
      * Handle to the <tt>JTabbedPane</tt> instance.
@@ -151,7 +151,7 @@ public final class MainFrame  {
         new DropTarget(FRAME, new TransferHandlerDropTargetListener(DNDUtils.DEFAULT_TRANSFER_HANDLER));
 
         TABBED_PANE = new JPanel(new CardLayout());
-        
+
         // Add a listener for saving the dimensions of the window &
         // position the search icon overlay correctly.
         FRAME.addComponentListener(new ComponentListener() {
@@ -215,7 +215,7 @@ public final class MainFrame  {
         contentPane.add(APPLICATION_HEADER, "growx, dock north");
         contentPane.add(TABBED_PANE, "wrap");
         contentPane.add(getStatusLine().getComponent(), "dock south, shrink 0");
-        
+
         setMinimalSize(FRAME, APPLICATION_HEADER, APPLICATION_HEADER, TABBED_PANE, getStatusLine().getComponent());
 
         FRAME.setJMenuBar(getMenuMediator().getMenuBar());
@@ -224,7 +224,7 @@ public final class MainFrame  {
             FRAME.addWindowListener(MagnetClipboardListener.getInstance());
         }
     }
-    
+
     private void setMinimalSize(JFrame frame, JComponent horizontal, JComponent... verticals) {
         int width = 0;
         int height = 0;
@@ -271,7 +271,7 @@ public final class MainFrame  {
             }
         }
     }
-    
+
     /**
      * Build the Tab Structure based on advertising mode and Windows
      */
@@ -430,15 +430,6 @@ public final class MainFrame  {
             OPTIONS_MEDIATOR = OptionsMediator.instance();
         }
         return OPTIONS_MEDIATOR;
-    }
-
-    /**
-     * Sets the searching or not searching status of the application.
-     *
-     * @param searching the searching status of the application
-     */
-    public final void setSearching(boolean searching) {
-        //LOGO_PANEL.setSearching(searching);
     }
 
     public Tabs getSelectedTab() {

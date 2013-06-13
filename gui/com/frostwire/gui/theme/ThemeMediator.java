@@ -247,7 +247,7 @@ public final class ThemeMediator {
         });
     }
 
-    protected static void closeCurrentSearchTab() {
+    private static void closeCurrentSearchTab() {
         SearchDownloadTab searchTab = (SearchDownloadTab) GUIMediator.instance().getTab(Tabs.SEARCH);
         if (searchTab.getComponent().isVisible()) {
             SearchMediator.getSearchResultDisplayer().closeCurrentTab();

@@ -23,6 +23,7 @@ import java.awt.IllegalComponentStateException;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -199,11 +200,11 @@ public final class SearchResultDisplayer implements RefreshListener {
      */
     SearchResultMediator addResultTab(long token, List<String> searchTokens, SearchInformation info) {
         SearchResultMediator panel = new SearchResultMediator(token, searchTokens, info);
-        
+
         if (MAIN_PANEL.getHeight() < SearchResultDisplayer.MIN_HEIGHT) {
             GUIMediator.instance().getMainFrame().resizeSearchTransferDivider(SearchResultDisplayer.MIN_HEIGHT);
         }
-        
+
         return addResultPanelInternal(panel, info.getTitle());
     }
 
@@ -311,15 +312,9 @@ public final class SearchResultDisplayer implements RefreshListener {
         }
 
         //Remove an old search if necessary
-        if (entries.size() > SearchSettings.PARALLEL_SEARCH.getValue())
+        if (entries.size() > SearchSettings.PARALLEL_SEARCH.getValue()) {
             killSearchAtIndex(0);
-
-        GUIMediator.instance().setSearching(true);
-
-        //We might need to do something with our SlideShowPanel when we add new elements
-        //i.e. hide it..., show it
-        //if (OVERLAY != null)
-        // 	OVERLAY.searchPerformed();
+        }
 
         promoSlides.setVisible(false);
         switcher.last(results); //show tabbed results
@@ -446,25 +441,21 @@ public final class SearchResultDisplayer implements RefreshListener {
     }
 
     /**
-     * Returns the <tt>ResultPanel</tt> at the specified index.
-     * 
-     * @param index the index of the desired <tt>ResultPanel</tt>
-     * @return the <tt>ResultPanel</tt> at the specified index
-     */
-    SearchResultMediator getPanelAtIndex(int index) {
-        return entries.get(index);
-    }
-
-    List<SearchResultMediator> getResultPanels() {
-        return new ArrayList<SearchResultMediator>(entries);
-    }
-
-    /**
      * Get index for point.
      */
     int getIndexForPoint(int x, int y) {
         TabbedPaneUI ui = tabbedPane.getUI();
         return ui.tabForCoordinate(tabbedPane, x, y);
+    }
+
+    int getIndexForTabComponent(Component c) {
+        for (int i = 0; i < entries.size(); i++) {
+            SearchResultMediator rp = entries.get(i);
+            if (rp.getComponent().equals(c)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public void closeCurrentTab() {
@@ -473,7 +464,7 @@ public final class SearchResultDisplayer implements RefreshListener {
             killSearchAtIndex(index);
         }
     }
-    
+
     /**
      * @modifies tabbed pane, entries
      * @effects removes the window at i from this
@@ -501,35 +492,6 @@ public final class SearchResultDisplayer implements RefreshListener {
             } catch (ArrayIndexOutOfBoundsException aioobe) {
                 //happens on jdk1.5 beta w/ windows XP, ignore.
             }
-            GUIMediator.instance().setSearching(false);
-        } else {
-            checkToStopLime();
-        }
-    }
-
-    /**
-     * @modifies spinning lime state
-     * @effects If all searches are stopped, then the Lime stops spinning.
-     */
-    void checkToStopLime() {
-        if (entries == null || entries.size() == 0) {
-            GUIMediator.instance().setSearching(false);
-            return;
-        }
-
-        //		ResultPanel panel;
-        //		long now = System.currentTimeMillis();
-
-        // Decide if we definitely can stop the lime
-        boolean stopLime = true;
-        //		for (int i=0; i<entries.size(); i++) {
-        //			panel = entries.get(i);
-        //            stopLime &= panel.isStopped() ||
-        //                        panel.calculatePercentage(now) >= 1d;
-        //		}
-
-        if (stopLime) {
-            GUIMediator.instance().setSearching(false);
         }
     }
 
@@ -576,8 +538,6 @@ public final class SearchResultDisplayer implements RefreshListener {
      * and determine if we should stop the lime spinning.
      */
     public void refresh() {
-        checkToStopLime();
-
         if (tabbedPane.isVisible() && tabbedPane.isShowing()) {
             Rectangle allBounds = tabbedPane.getBounds();
             Component comp = null;
@@ -603,21 +563,15 @@ public final class SearchResultDisplayer implements RefreshListener {
      * Returns the title of the specified ResultPanel.
      */
     private String titleOf(SearchResultMediator rp) {
-        //        int current = rp.filteredResults();
         int total = rp.totalResults();
 
         return rp.getTitle() + " (" + total + " " + I18n.tr("results") + ")";
-        //
-        //        if (current < total)
-        //            return rp.getTitle() + " (" + current + " " + I18n.tr("results") + ")";
-        //        else
-        //            return rp.getTitle() + " (" + total + " " + I18n.tr("results") + ")";
     }
 
     /**
      * Listens for events on the JTabbedPane and dispatches commands.
      */
-    private class PaneListener implements MouseListener, MouseMotionListener, ChangeListener {
+    private class PaneListener extends MouseAdapter implements MouseListener, MouseMotionListener, ChangeListener {
 
         /**
          * The last index that was rolled over.
@@ -649,28 +603,11 @@ public final class SearchResultDisplayer implements RefreshListener {
         }
 
         /**
-         * Redoes the icons on the tab which this is over.
-         */
-        public void mouseMoved(MouseEvent e) {
-//            int x = e.getX();
-//            int y = e.getY();
-//            int idx = shouldKillIndex(x, y);
-//            if (idx != lastIdx && lastIdx != -1)
-//                resetIcon();
-//
-//            if (idx != -1) {
-//                tabbedPane.setIconAt(idx, CancelSearchIconProxy.createArmed());
-//                lastIdx = idx;
-//            }
-        }
-
-        /**
          * Returns the index of the tab if the coordinates x,y can close it.
          * Otherwise returns -1.
          */
         private int shouldKillIndex(int x, int y) {
             int idx = getIndexForPoint(x, y);
-            System.out.println("PANE:" + idx);
             if (idx != -1) {
                 Icon icon = tabbedPane.getIconAt(idx);
                 if (icon != null && icon instanceof CancelSearchIconProxy)
