@@ -2,9 +2,9 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +17,7 @@ import javax.swing.table.TableCellRenderer;
 
 import net.miginfocom.swing.MigLayout;
 
+import com.frostwire.gui.LocaleLabel;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
 
@@ -45,10 +46,13 @@ public class SourceRenderer extends JPanel implements TableCellRenderer {
     }
 
     private void initUI() {
-        setLayout(new MigLayout("debug, fillx, insets 5px 5px 0 0, gapx 4px, alignx left",
+        setLayout(new MigLayout("fillx, insets 5px 5px 0 0, gapx 4px, alignx left",
                 "[16px!]3px![left,grow]"));
         sourceIcon = new JLabel();
-        sourceLabel = new JLabel();
+        final Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
+        sourceIcon.setCursor(handCursor);
+        sourceLabel = new LocaleLabel();
+        sourceLabel.setCursor(handCursor);
         add(sourceIcon,"w 16px!, h 16px!, left");
         add(sourceLabel, "growx, align left");
     }
@@ -56,14 +60,12 @@ public class SourceRenderer extends JPanel implements TableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int columns) {
         this.setOpaque(true);
-        this.setEnabled(table.isEnabled());
-
+        this.setEnabled(true);
         if (isSelected) {
             this.setBackground(ThemeMediator.TABLE_SELECTED_BACKGROUND_ROW_COLOR);
         } else {
             this.setBackground(row % 2 == 1 ? ThemeMediator.TABLE_ALTERNATE_ROW_COLOR : Color.WHITE);
         }
-        
         this.updateUI((SourceHolder) value, table, row);
         return this;
     }
@@ -109,32 +111,7 @@ public class SourceRenderer extends JPanel implements TableCellRenderer {
             c.setFont(tableFont);
         }
     }
-
-
-    /**
-     * This will act more like a 'setMouseListener' that will put the given MouseListener implementation
-     * to this component, and every subcomponent. It'll remove previous listeners if they exist to avoid leaks.
-     */
-    @Override
-    public synchronized void addMouseListener(MouseListener l) {
-        removeAllMouseListeners(this);
-        removeAllMouseListeners(sourceIcon);
-        removeAllMouseListeners(sourceLabel);
-        
-        super.addMouseListener(l);
-        sourceIcon.addMouseListener(l);
-        sourceLabel.addMouseListener(l);
-    }
     
-    private void removeAllMouseListeners(Component c) {
-        MouseListener[] mouseListeners = c.getMouseListeners();
-        if (mouseListeners != null && mouseListeners.length > 0) {
-            for (MouseListener ml : mouseListeners) {
-                c.removeMouseListener(ml);
-            }
-        }
-    }
-
     private SourceHolder getSourceHolder() {
         return this.sourceHolder;
     }

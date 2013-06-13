@@ -21,8 +21,9 @@ public class SourceEditor extends AbstractCellEditor implements TableCellEditor 
     @Override
     public Component getTableCellEditorComponent(final JTable table, Object value, boolean isSelected, int row, int column) {
         sourceHolder = (SourceHolder) sourceHolder;
-        updateMouseAdapters();
-        return sourceRenderer.getTableCellRendererComponent(table, sourceHolder, isSelected, true, row, column);
+        Component tableCellRendererComponent = sourceRenderer.getTableCellRendererComponent(table, sourceHolder, false, true, row, column);
+        updateMouseAdapters(tableCellRendererComponent);
+        return tableCellRendererComponent;
     }
 
     @Override
@@ -30,21 +31,20 @@ public class SourceEditor extends AbstractCellEditor implements TableCellEditor 
         return sourceHolder;
     }
     
-    private void updateMouseAdapters() {
+    private void updateMouseAdapters(Component tableCellRendererComponent) {
         MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override
-            public void mouseReleased(MouseEvent arg0) {
+            public void mouseClicked(MouseEvent e) {
                 if (getSourceHolder() != null) {
                     getSourceHolder().getActionListener().actionPerformed(null);
                 }
             }
         };
         
-        sourceRenderer.addMouseListener(mouseAdapter);
+        tableCellRendererComponent.addMouseListener(mouseAdapter);
     }
 
     protected SourceHolder getSourceHolder() {
         return sourceHolder;
     }
-
 }
