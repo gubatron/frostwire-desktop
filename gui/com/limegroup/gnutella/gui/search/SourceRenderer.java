@@ -33,6 +33,12 @@ public class SourceRenderer extends DefaultTableCellRenderer implements TableCel
         sourceIcons.put("youtube", GUIMediator.getThemeImage("youtube_on"));
         sourceIcons.put("archive.org", GUIMediator.getThemeImage("archive_source"));
         sourceIcons.put("isohunt", GUIMediator.getThemeImage("isohunt_source"));
+        sourceIcons.put("clearbits", GUIMediator.getThemeImage("clearbits_source"));
+        sourceIcons.put("extratorrent", GUIMediator.getThemeImage("extratorrent_source"));
+        sourceIcons.put("kat", GUIMediator.getThemeImage("kat_source"));
+        sourceIcons.put("mininova", GUIMediator.getThemeImage("mininova_source"));
+        sourceIcons.put("tpb", GUIMediator.getThemeImage("tpb_source"));
+        sourceIcons.put("vertor", GUIMediator.getThemeImage("vertor_source"));
         sourceIcons.put("default", GUIMediator.getThemeImage("seeding_small"));
     }
 
