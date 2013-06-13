@@ -45,7 +45,7 @@ final class SearchTableColumns {
     private final LimeTableColumn SIZE_COLUMN = new SearchColumn(SIZE_IDX, "RESULT_PANEL_SIZE", I18n.tr("Size"), 53, true, String.class);
 
     static final int SOURCE_IDX = 4;
-    private final LimeTableColumn SOURCE_COLUMN = new SearchColumn(SOURCE_IDX, "RESULT_PANEL_SOURCE", I18n.tr("Source"), 220, true, ActionIconAndNameHolder.class);
+    private final LimeTableColumn SOURCE_COLUMN = new SearchColumn(SOURCE_IDX, "RESULT_PANEL_SOURCE", I18n.tr("Source"), 220, true, SourceHolder.class);
 
     static final int ADDED_IDX = 5;
     private final LimeTableColumn ADDED_COLUMN = new SearchColumn(ADDED_IDX, "RESULT_PANEL_ADDED", I18n.tr("Created"), 55, true, Date.class);

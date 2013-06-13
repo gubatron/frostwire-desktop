@@ -11,18 +11,22 @@ import javax.swing.table.TableCellEditor;
 public class SourceEditor extends AbstractCellEditor implements TableCellEditor {
 
     private SourceHolder sourceHolder;
+    private final SourceRenderer sourceRenderer;
+    
+    public SourceEditor() {
+        sourceRenderer = new SourceRenderer();
+    }
     
     @Override
     public Component getTableCellEditorComponent(final JTable table, Object value, boolean isSelected, int row, int column) {
         sourceHolder = (SourceHolder) sourceHolder;
-        
-        return null;
+        updateMouseAdapters();
+        return sourceRenderer.getTableCellRendererComponent(table, sourceHolder, isSelected, true, row, column);
     }
 
     @Override
     public Object getCellEditorValue() {
-        // TODO Auto-generated method stub
-        return null;
+        return sourceHolder;
     }
     
     private void updateMouseAdapters() {
@@ -35,9 +39,7 @@ public class SourceEditor extends AbstractCellEditor implements TableCellEditor 
             }
         };
         
-        sourceIcon.addMouseListener(mouseAdapter);
-        sourceLabel.addMouseListener(mouseAdapter);
-        this.addMouseListener(mouseAdapter);
+        sourceRenderer.addMouseListener(mouseAdapter);
     }
 
     protected SourceHolder getSourceHolder() {

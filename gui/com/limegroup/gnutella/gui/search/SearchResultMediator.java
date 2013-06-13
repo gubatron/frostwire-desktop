@@ -68,7 +68,6 @@ import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
-import com.limegroup.gnutella.gui.tables.ActionIconAndNameEditor;
 import com.limegroup.gnutella.gui.tables.ColumnPreferenceHandler;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
@@ -84,6 +83,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     private static final DateRenderer DATE_RENDERER = new DateRenderer();
     private static final PercentageRenderer PERCENTAGE_RENDERER = new PercentageRenderer();
     private static final SearchResultNameRenderer SEARCH_RESULT_NAME_RENDERER = new SearchResultNameRenderer();
+    private static final SourceRenderer SOURCE_RENDERER = new SourceRenderer();
     
     /**
      * The TableSettings that all ResultPanels will use.
@@ -179,6 +179,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         TABLE.setDefaultRenderer(Date.class, DATE_RENDERER);
         TABLE.setDefaultRenderer(Float.class, PERCENTAGE_RENDERER);
         TABLE.setDefaultRenderer(SearchResultNameHolder.class, SEARCH_RESULT_NAME_RENDERER);
+        TABLE.setDefaultRenderer(SourceHolder.class, SOURCE_RENDERER);
     }
 
     /**

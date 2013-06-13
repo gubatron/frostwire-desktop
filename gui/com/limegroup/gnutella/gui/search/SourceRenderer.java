@@ -3,8 +3,7 @@ package com.limegroup.gnutella.gui.search;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -51,7 +50,6 @@ public class SourceRenderer extends JPanel implements TableCellRenderer {
         this.sourceHolder = value;
         updateIcon();
         updateLinkLabel(table);
-        updateMouseAdapters();
     }
     
     private void syncFont(JTable table, JComponent c) {
@@ -62,15 +60,41 @@ public class SourceRenderer extends JPanel implements TableCellRenderer {
     }
 
     private void updateLinkLabel(JTable table) {
-        sourceLabel.setText(getSourceHolder().getSourceNameHTML());
-        syncFont(table, sourceLabel);
+        if (getSourceHolder() != null) {
+            sourceLabel.setText(getSourceHolder().getSourceNameHTML());
+            syncFont(table, sourceLabel);
+        }
     }
 
     private void updateIcon() {
-        System.out.println("SourceRenderer.updateIcon: how can we get the icon now? " + getSourceHolder().getSourceName());
+        if (getSourceHolder() != null) {
+            System.out.println("SourceRenderer.updateIcon: how can we get the icon now? " + getSourceHolder().getSourceName());
+        }
     }
 
-
+    /**
+     * This will act more like a 'setMouseListener' that will put the given MouseListener implementation
+     * to this component, and every subcomponent. It'll remove previous listeners if they exist to avoid leaks.
+     */
+    @Override
+    public synchronized void addMouseListener(MouseListener l) {
+        removeAllMouseListeners(this);
+        removeAllMouseListeners(sourceIcon);
+        removeAllMouseListeners(sourceLabel);
+        
+        super.addMouseListener(l);
+        sourceIcon.addMouseListener(l);
+        sourceLabel.addMouseListener(l);
+    }
+    
+    private void removeAllMouseListeners(Component c) {
+        MouseListener[] mouseListeners = c.getMouseListeners();
+        if (mouseListeners != null && mouseListeners.length > 0) {
+            for (MouseListener ml : mouseListeners) {
+                c.removeMouseListener(ml);
+            }
+        }
+    }
 
     private SourceHolder getSourceHolder() {
         return this.sourceHolder;
