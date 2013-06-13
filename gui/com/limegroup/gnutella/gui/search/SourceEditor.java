@@ -14,6 +14,7 @@ public class SourceEditor extends AbstractCellEditor implements TableCellEditor 
     private final SourceRenderer sourceRenderer;
     
     public SourceEditor() {
+        super();
         sourceRenderer = new SourceRenderer();
     }
     
