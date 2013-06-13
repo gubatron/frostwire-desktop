@@ -49,7 +49,7 @@ final class SearchTabbedPane extends JTabbedPane {
         super.addTab(title, icon, component);
 
         int tabIndex = getTabCount() - 1;
-        setTabComponentAt(tabIndex, new SearchTabHeader(tabIndex, title));
+        setTabComponentAt(tabIndex, new SearchTabHeader(component, title));
     }
 
     @Override
@@ -69,17 +69,20 @@ final class SearchTabbedPane extends JTabbedPane {
 
     private final class SearchTabHeader extends JPanel {
 
+        private final Component component;
         private final JButton buttonClose;
         private final JLabel labelText;
 
-        public SearchTabHeader(int tabIdex, String text) {
+        public SearchTabHeader(Component component, String text) {
+            this.component = component;
+
             setLayout(new MigLayout("insets 0, gap 0"));
 
             buttonClose = new JButton(CancelSearchIconProxy.createSelected());
             buttonClose.setOpaque(false);
             buttonClose.setContentAreaFilled(false);
             buttonClose.setBorderPainted(false);
-            buttonClose.addActionListener(new CloseActionHandler(tabIdex));
+            buttonClose.addActionListener(new CloseActionHandler());
             add(buttonClose, "h 17!, w 23!");
 
             labelText = new JLabel(text.trim());
@@ -100,19 +103,17 @@ final class SearchTabbedPane extends JTabbedPane {
                 labelText.setIcon(null);
             }
         }
-    }
 
-    public class CloseActionHandler implements ActionListener {
+        public class CloseActionHandler implements ActionListener {
 
-        private final int tabIndex;
+            public CloseActionHandler() {
+            }
 
-        public CloseActionHandler(int tabIndex) {
-            this.tabIndex = tabIndex;
-        }
-
-        public void actionPerformed(ActionEvent evt) {
-            if (tabIndex != -1) {
-                SearchMediator.getSearchResultDisplayer().killSearchAtIndex(tabIndex);
+            public void actionPerformed(ActionEvent evt) {
+                int index = SearchMediator.getSearchResultDisplayer().getIndexForTabComponent(component);
+                if (index != -1) {
+                    SearchMediator.getSearchResultDisplayer().killSearchAtIndex(index);
+                }
             }
         }
     }

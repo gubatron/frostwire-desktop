@@ -247,6 +247,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         });
 
         _textName = new JTextField();
+        ThemeMediator.fixKeyStrokes(_textName);
         UIDefaults defaults = new UIDefaults();
         defaults.put("TextField.contentMargins", new InsetsUIResource(0, 4, 0, 4));
         _textName.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);

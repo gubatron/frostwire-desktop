@@ -180,7 +180,6 @@ public final class SearchMediator {
         updateSearchIcon(token, true);
         rp.resetFiltersPanel();
 
-        GUIMediator.instance().setSearching(true);
         performSearch(token, info.getQuery());
     }
 
