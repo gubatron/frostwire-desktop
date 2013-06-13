@@ -20,7 +20,6 @@ import java.util.Date;
 import javax.swing.Icon;
 
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.tables.ActionIconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 
 /**
