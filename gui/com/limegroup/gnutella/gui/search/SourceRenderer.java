@@ -4,29 +4,21 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
-import net.miginfocom.swing.MigLayout;
-
-import com.frostwire.gui.LocaleLabel;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
 
-public class SourceRenderer extends JPanel implements TableCellRenderer {
+public class SourceRenderer extends DefaultTableCellRenderer implements TableCellRenderer {
 
     private SourceHolder sourceHolder;
-    private JLabel sourceIcon;
-    private JLabel sourceLabel;
-    
     private final Map<String,ImageIcon> sourceIcons;
     
     public SourceRenderer() {
@@ -37,7 +29,6 @@ public class SourceRenderer extends JPanel implements TableCellRenderer {
     }
     
     private void initIcons() {
-        System.out.println("SourceRenderer.initIcons again.");
         sourceIcons.put("soundcloud", GUIMediator.getThemeImage("soundcloud_off"));
         sourceIcons.put("youtube", GUIMediator.getThemeImage("youtube_on"));
         sourceIcons.put("archive.org", GUIMediator.getThemeImage("archive_source"));
@@ -46,15 +37,8 @@ public class SourceRenderer extends JPanel implements TableCellRenderer {
     }
 
     private void initUI() {
-        setLayout(new MigLayout("fillx, insets 5px 5px 0 0, gapx 4px, alignx left",
-                "[16px!]3px![left,grow]"));
-        sourceIcon = new JLabel();
         final Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
-        sourceIcon.setCursor(handCursor);
-        sourceLabel = new LocaleLabel();
-        sourceLabel.setCursor(handCursor);
-        add(sourceIcon,"w 16px!, h 16px!, left");
-        add(sourceLabel, "growx, align left");
+        setCursor(handCursor);
     }
     
     @Override
@@ -67,14 +51,10 @@ public class SourceRenderer extends JPanel implements TableCellRenderer {
             this.setBackground(row % 2 == 1 ? ThemeMediator.TABLE_ALTERNATE_ROW_COLOR : Color.WHITE);
         }
         this.updateUI((SourceHolder) value, table, row);
-        return this;
+        
+        return super.getTableCellRendererComponent(table, getText(), isSelected, hasFocus, row, columns);
     }
     
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-    }
-
     private void updateUI(SourceHolder value, JTable table, int row) {
         this.sourceHolder = value;
         updateIcon();
@@ -90,18 +70,18 @@ public class SourceRenderer extends JPanel implements TableCellRenderer {
             
             ImageIcon icon = sourceIcons.get(sourceName);
             if (icon != null) {
-                sourceIcon.setIcon(icon);
+                setIcon(icon);
             } else {
                 System.out.println("no icon for " + sourceName);
-                sourceIcon.setIcon(sourceIcons.get("default"));
+                setIcon(sourceIcons.get("default"));
             }
         }
     }
     
     private void updateLinkLabel(JTable table) {
         if (getSourceHolder() != null) {
-            sourceLabel.setText(getSourceHolder().getSourceNameHTML());
-            syncFont(table, sourceLabel);
+            setText(getSourceHolder().getSourceNameHTML());
+            syncFont(table, this);
         }
     }
     

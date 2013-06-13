@@ -1,7 +1,5 @@
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.event.ActionListener;
-
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 
 /**
@@ -11,18 +9,18 @@ import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
  */
 public class SourceHolder implements Comparable<SourceHolder> {
 
-    private final ActionListener actionListener;
+    private final UISearchResult uiSearchResult;
     private final String sourceNameHTML;
     private final String sourceName;
     private final String sourceURL;
     
-    public SourceHolder(ActionListener actionListener, String sourceName, String sourceURL) {
-        this.actionListener = actionListener;
-        this.sourceName = sourceName;
+    public SourceHolder(UISearchResult uiSearchResult) {
+        this.uiSearchResult = uiSearchResult;
+        this.sourceName = uiSearchResult.getSource();
         this.sourceNameHTML = "<html><a href=\"#\">" + sourceName + "</a></html>";
-        this.sourceURL  = sourceURL;
+        this.sourceURL  = uiSearchResult.getSearchResult().getDetailsUrl();
     }
-    
+
     @Override
     public int compareTo(SourceHolder o) {
         return AbstractTableMediator.compare(sourceName, o.getSourceName());
@@ -40,7 +38,12 @@ public class SourceHolder implements Comparable<SourceHolder> {
         return sourceURL;
     }
     
-    public ActionListener getActionListener() {
-        return actionListener;
+    public UISearchResult getUISearchResult() {
+        return uiSearchResult;
+    }
+    
+    @Override
+    public String toString() {
+        return sourceName + " ["+ sourceURL +"]";
     }
 }

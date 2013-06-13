@@ -91,7 +91,7 @@ public final class SearchResultDataLine extends AbstractDataLine<UISearchResult>
         seeds = RESULT.getSeeds() <= 0 || !(RESULT instanceof TorrentUISearchResult) ? "" : String.valueOf(RESULT.getSeeds());
         icon = getIcon();
         size = new SizeHolder(getSize());
-        source = new SourceHolder(_torrentDetailsAction, RESULT.getSource(), RESULT.getSearchResult().getDetailsUrl());
+        source = new SourceHolder(RESULT);
     }
 
     /**
