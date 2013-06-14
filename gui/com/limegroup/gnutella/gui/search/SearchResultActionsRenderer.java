@@ -25,13 +25,16 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.plaf.TableUI;
 import javax.swing.table.TableCellRenderer;
 
+import com.frostwire.gui.AlphaIcon;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.theme.SkinTableUI;
 import com.frostwire.gui.theme.ThemeMediator;
@@ -52,8 +55,26 @@ public final class SearchResultActionsRenderer extends JPanel implements TableCe
     private JLabel labelDownload;
 
     private UISearchResult sr;
+    
+    private final float BUTTONS_TRANSPARENCY = 0.35f;
+    private final ImageIcon play_solid;
+    private final AlphaIcon play_transparent;
+    private final ImageIcon download_solid;
+    private final AlphaIcon download_transparent;
+    private final ImageIcon details_solid;
+    private final AlphaIcon details_transparent;
+    private boolean showSolid;
 
     public SearchResultActionsRenderer() {
+        play_solid = GUIMediator.getThemeImage("search_result_play_over");
+        play_transparent = new AlphaIcon(play_solid, BUTTONS_TRANSPARENCY);
+        
+        download_solid = GUIMediator.getThemeImage("search_result_download_over");
+        download_transparent = new AlphaIcon(download_solid, BUTTONS_TRANSPARENCY);
+        
+        details_solid = GUIMediator.getThemeImage("search_result_details_over");
+        details_transparent = new AlphaIcon(details_solid, BUTTONS_TRANSPARENCY);
+        
         setupUI();
     }
 
@@ -70,25 +91,31 @@ public final class SearchResultActionsRenderer extends JPanel implements TableCe
             this.setBackground(row % 2 == 1 ? ThemeMediator.TABLE_ALTERNATE_ROW_COLOR : Color.WHITE);
         }
 
+        //TODO: Try removing the mouse listeners of the labels and add them again somewhere around here with another method
+        resetMouseListeners();
         return this;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
-     */
-    @Override
-    protected final void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        updatePlayButtons();
+    private void resetMouseListeners() {
+        MouseListener[] mouseListeners = labelDownload.getMouseListeners();
+        if (mouseListeners != null && mouseListeners.length > 0) {
+            for (MouseListener l : mouseListeners) {
+                labelDownload.removeMouseListener(l);
+            }
+        }
+        labelDownload.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                labelDownload_mouseReleased(e);
+            }
+        });
     }
 
     private void setupUI() {
         setLayout(new GridBagLayout());
         GridBagConstraints c;
 
-        labelPlay = new JLabel(GUIMediator.getThemeImage("search_result_play_over"));
+        labelPlay = new JLabel(play_transparent);
         labelPlay.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -102,7 +129,19 @@ public final class SearchResultActionsRenderer extends JPanel implements TableCe
         c.ipadx = 3;
         add(labelPlay, c);
 
-        labelPartialDownload = new JLabel(GUIMediator.getThemeImage("search_result_details_over"));
+        labelDownload = new JLabel(download_transparent);
+        labelDownload.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                labelDownload_mouseReleased(e);
+            }
+        });
+        c = new GridBagConstraints();
+        c.gridx = GridBagConstraints.RELATIVE;
+        c.ipadx = 3;
+        add(labelDownload, c);
+        
+        labelPartialDownload = new JLabel(details_solid);
         labelPartialDownload.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -114,24 +153,13 @@ public final class SearchResultActionsRenderer extends JPanel implements TableCe
         c.ipadx = 3;
         add(labelPartialDownload, c);
 
-        labelDownload = new JLabel(GUIMediator.getThemeImage("search_result_download_over"));
-        labelDownload.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                labelDownload_mouseReleased(e);
-            }
-        });
-        c = new GridBagConstraints();
-        c.gridx = GridBagConstraints.RELATIVE;
-        c.ipadx = 3;
-        add(labelDownload, c);
     }
 
     private void labelPlay_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
             if (sr.getSearchResult() instanceof StreamableSearchResult && !isStreamableSourceBeingPlayed(sr)) {
                 sr.play();
-                updatePlayButtons();
+                updatePlayButton();
             }
         }
     }
@@ -152,20 +180,21 @@ public final class SearchResultActionsRenderer extends JPanel implements TableCe
 
     private void setData(SearchResultActionsHolder value, JTable table, int row) {
         this.sr = value.getSearchResult();
-        boolean showButtons = mouseIsOverRow(table, row);
-        labelPlay.setVisible(showButtons && (sr.getSearchResult() instanceof StreamableSearchResult));
-        labelPartialDownload.setVisible(showButtons && sr.getSearchResult() instanceof CrawlableSearchResult);
-        labelDownload.setVisible(showButtons);
-
-        if (showButtons) {
-            updatePlayButtons();
-        }
-
-        if (isStreamableSourceBeingPlayed(sr)) {
-            labelPlay.setVisible(true);
-        }
+        showSolid = mouseIsOverRow(table, row);
+        updatePlayButton();
+        
+        labelDownload.setIcon(showSolid ? download_solid : download_transparent);
+        labelPartialDownload.setIcon(showSolid ? details_solid : details_transparent);
+        
+        labelPlay.setVisible(sr.getSearchResult() instanceof StreamableSearchResult);
+        labelDownload.setVisible(true);
+        labelPartialDownload.setVisible(sr.getSearchResult() instanceof CrawlableSearchResult);
     }
 
+    private void updatePlayButton() {
+        labelPlay.setIcon((isStreamableSourceBeingPlayed(sr)) ? GUIMediator.getThemeImage("speaker") : (showSolid) ? play_solid : play_transparent);
+    }
+    
     private boolean mouseIsOverRow(JTable table, int row) {
         boolean mouseOver = false;
 
@@ -180,10 +209,6 @@ public final class SearchResultActionsRenderer extends JPanel implements TableCe
         return mouseOver;
     }
 
-    private void updatePlayButtons() {
-        labelPlay.setIcon((isStreamableSourceBeingPlayed(sr)) ? GUIMediator.getThemeImage("speaker") : GUIMediator.getThemeImage("search_result_play_over"));
-    }
-
     private boolean isStreamableSourceBeingPlayed(UISearchResult sr) {
         if (!(sr instanceof StreamableSearchResult)) {
             return false;
@@ -192,4 +217,10 @@ public final class SearchResultActionsRenderer extends JPanel implements TableCe
         StreamableSearchResult ssr = (StreamableSearchResult) sr;
         return MediaPlayer.instance().isThisBeingPlayed(ssr.getStreamUrl());
     }
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        updatePlayButton();
+    }    
 }
