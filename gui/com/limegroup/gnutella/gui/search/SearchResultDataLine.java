@@ -15,8 +15,6 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +27,6 @@ import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
-import com.limegroup.gnutella.gui.tables.ActionIconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 
@@ -57,18 +54,16 @@ public final class SearchResultDataLine extends AbstractDataLine<UISearchResult>
      */
     private NamedMediaType _mediaType;
 
-    private ActionListener _torrentDetailsAction;
-
     /**
      * The date this was added to the network.
      */
     private Date addedOn;
-
+    private SearchResultActionsHolder actionsHolder;
     private SearchResultNameHolder name;
     private String seeds;
     private Icon icon;
     private SizeHolder size;
-    private ActionIconAndNameHolder source;
+    private SourceHolder source;
 
     public SearchResultDataLine(SearchTableColumns stc) {
         COLUMNS = stc;
@@ -82,17 +77,13 @@ public final class SearchResultDataLine extends AbstractDataLine<UISearchResult>
 
         RESULT = sr;
         _mediaType = NamedMediaType.getFromExtension(getExtension());
-        _torrentDetailsAction = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                RESULT.showDetails(true);
-            }
-        };
         addedOn = sr.getCreationTime() > 0 ? new Date(sr.getCreationTime()) : null;
+        actionsHolder = new SearchResultActionsHolder(sr);
         name = new SearchResultNameHolder(sr);
         seeds = RESULT.getSeeds() <= 0 || !(RESULT instanceof TorrentUISearchResult) ? "" : String.valueOf(RESULT.getSeeds());
         icon = getIcon();
         size = new SizeHolder(getSize());
-        source = new ActionIconAndNameHolder(null, _torrentDetailsAction, "<html><a href=\"#\">" + RESULT.getSource() + "</a></html>");
+        source = new SourceHolder(RESULT);
     }
 
     /**
@@ -245,6 +236,8 @@ public final class SearchResultDataLine extends AbstractDataLine<UISearchResult>
      */
     public Object getValueAt(int index) {
         switch (index) {
+        case SearchTableColumns.ACTIONS_IDX:
+            return actionsHolder;
         case SearchTableColumns.COUNT_IDX:
             return seeds;
         case SearchTableColumns.TYPE_IDX:

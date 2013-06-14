@@ -58,12 +58,13 @@ public final class MultilineToolTip extends JToolTip {
         StringBuilder sb = new StringBuilder();
 
         int size = arr.length;
-
-        for (int i = 0; i < size - 1; i++) {
-            sb.append(arr[i]);
-            sb.append(System.lineSeparator());
+            if (size - 1 > -1) {
+            for (int i = 0; i < size - 1; i++) {
+                sb.append(arr[i]);
+                sb.append(System.lineSeparator());
+            }
+            sb.append(arr[size - 1]);
         }
-        sb.append(arr[size - 1]);
 
         return sb.toString();
     }

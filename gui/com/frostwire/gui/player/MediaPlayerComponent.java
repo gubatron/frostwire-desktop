@@ -631,6 +631,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
         if (state == MediaPlaybackState.Stopped || state == MediaPlaybackState.Closed) {
             trackTitle.setText("");
+            updateMediaSourceButton(null);
         } else {
             updateTitle(mediaPlayer.getCurrentMedia());
         }
@@ -1050,7 +1051,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 mediaSourceButton.init(tooltipText,iconUpName,iconDownName);
                 
                 //TODO: Add "isLocalFile || isPlaylistItem ||" on FrostWire 6.x when we have room for 3 buttons.
-                mediaSourceButton.setVisible(isYT || isSC || isInternetRadio || isWifiStream);
+                mediaSourceButton.setVisible(currentMedia != null && (isYT || isSC || isInternetRadio || isWifiStream));
             }
 
             private void setupDeviceName(final MediaSource currentMedia) {
