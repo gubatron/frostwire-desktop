@@ -16,9 +16,6 @@
 package com.limegroup.gnutella.gui.menu;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-
-import javax.swing.KeyStroke;
 
 import org.limewire.setting.BooleanSetting;
 import org.limewire.util.OSUtils;
@@ -52,15 +49,25 @@ final class ViewMenu extends AbstractMenu {
 
         MENU.addSeparator();
 
-        addMenuItem(new ChangeFontSizeAction(1, I18n.tr("&Increase Font Size"), I18n.tr("Increases the Table Font Size")),KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, (OSUtils.isMacOSX() ? KeyEvent.META_MASK : KeyEvent.CTRL_MASK)));
+        addMenuItem(new ChangeFontSizeAction(1, I18n.tr("&Increase Tables Font Size") + " " + fontChangeCmd("+"), I18n.tr("Increases the Table Font Size")));
 
-        addMenuItem(new ChangeFontSizeAction(-1, I18n.tr("&Decrease Font Size"), I18n.tr("Decreases the Table Font Size")),KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, (OSUtils.isMacOSX() ? KeyEvent.META_MASK : KeyEvent.CTRL_MASK)));
+        addMenuItem(new ChangeFontSizeAction(-1, I18n.tr("&Decrease Tables Font Size") + " " + fontChangeCmd("-"), I18n.tr("Decreases the Table Font Size")));
 
-        addMenuItem(new ChangeFontSizeAction(0, I18n.tr("&Reset Font Size"), I18n.tr("Reset the Table Font Size")),KeyStroke.getKeyStroke(KeyEvent.VK_0, (OSUtils.isMacOSX() ? KeyEvent.META_MASK : KeyEvent.CTRL_MASK)));
+        addMenuItem(new ChangeFontSizeAction(0, I18n.tr("&Reset Tables Font Size") + " " + fontChangeCmd("0"), I18n.tr("Reset the Table Font Size")));
 
         MENU.addSeparator();
 
         addMenuItem(new ShowLanguageWindowAction());
+    }
+
+    private String fontChangeCmd(String cmd) {
+        String result;
+        if (OSUtils.isMacOSX()) {
+            result = "Cmd+" + cmd;
+        } else {
+            result = "Ctrl+" + cmd;
+        }
+        return result;
     }
 
     private static class ShowLanguageWindowAction extends AbstractAction {

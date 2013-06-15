@@ -22,7 +22,6 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.KeyStroke;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
@@ -67,14 +66,7 @@ abstract class AbstractMenu implements Menu {
     }
 
     protected JMenuItem addMenuItem(Action action) {
-        return addMenuItem(action, null);
-    }
-    
-    protected JMenuItem addMenuItem(Action action, KeyStroke acceleratorKeyStroke) {
         JMenuItem item = new JMenuItem(action);
-        if (acceleratorKeyStroke != null) {
-            item.setAccelerator(acceleratorKeyStroke);
-        }
         MENU.add(item);
         return item;
     }
