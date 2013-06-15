@@ -168,6 +168,7 @@ public class PartialYouTubePackageDialog extends JDialog {
     private void setupOkButton() {
         GridBagConstraints c;
         _buttonOK = new JButton(I18n.tr("Download Selected Files Only"));
+        _buttonOK.setEnabled(false);
         _buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 buttonOK_actionPerformed(e);
@@ -242,7 +243,7 @@ public class PartialYouTubePackageDialog extends JDialog {
 
     private void setupToggleAllSelectionCheckbox() {
         GridBagConstraints c;
-        _checkBoxToggleAll = new JCheckBox(I18n.tr("Select/Unselect all files"), true);
+        _checkBoxToggleAll = new JCheckBox(I18n.tr("Select/Unselect all files"), false);
         _checkBoxToggleAll.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -378,7 +379,7 @@ public class PartialYouTubePackageDialog extends JDialog {
         public FilePackageTableModel(List<FilePackage> filePackages) {
             _fileInfos = new FilePackageInfo[filePackages.size()];
             for (int i = 0; i < _fileInfos.length; i++) {
-                _fileInfos[i] = new FilePackageInfo(filePackages.get(i), true);
+                _fileInfos[i] = new FilePackageInfo(filePackages.get(i), false);
             }
         }
 
