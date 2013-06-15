@@ -62,10 +62,4 @@ public final class SearchResultNameRenderer extends FWAbstractJPanelTableCellRen
     protected void updateUIData(Object value, JTable table, int row) {
         setData((SearchResultNameHolder) value, table, row);
     }
-
-    @Override
-    protected void resetMouseListeners() {
-        // TODO Auto-generated method stub
-        
-    }
 }

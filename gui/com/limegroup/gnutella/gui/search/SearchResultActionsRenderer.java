@@ -23,7 +23,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -132,21 +131,6 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
         labelPlay.setVisible(sr.getSearchResult() instanceof StreamableSearchResult);
         labelDownload.setVisible(true);
         labelPartialDownload.setVisible(sr.getSearchResult() instanceof CrawlableSearchResult);
-    }
-    
-    protected void resetMouseListeners() {
-        MouseListener[] mouseListeners = labelDownload.getMouseListeners();
-        if (mouseListeners != null && mouseListeners.length > 0) {
-            for (MouseListener l : mouseListeners) {
-                labelDownload.removeMouseListener(l);
-            }
-        }
-        labelDownload.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                labelDownload_mouseReleased(e);
-            }
-        });
     }
 
     private void updatePlayButton() {
