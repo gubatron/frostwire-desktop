@@ -23,7 +23,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -643,34 +642,6 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
             DATA_MODEL.sort(SearchTableColumns.COUNT_IDX); // ascending
             DATA_MODEL.sort(SearchTableColumns.COUNT_IDX); // descending
         }
-
-        MouseListener filterDisplayer = new MouseListener() {
-            public void mouseClicked(MouseEvent e) {
-                if (e.isConsumed())
-                    return;
-                e.consume();
-            }
-
-            public void mousePressed(MouseEvent e) {
-            }
-
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            public void mouseExited(MouseEvent e) {
-            }
-        };
-        // catches around the button area.
-        MAIN_PANEL.addMouseListener(filterDisplayer);
-        // catches the blank area before results fill in
-        SCROLL_PANE.addMouseListener(filterDisplayer);
-        // catches selections on the table
-        TABLE.addMouseListener(filterDisplayer);
-        // catches the table header
-        TABLE.getTableHeader().addMouseListener(filterDisplayer);
     }
 
     protected void setupMainPanelBase() {
