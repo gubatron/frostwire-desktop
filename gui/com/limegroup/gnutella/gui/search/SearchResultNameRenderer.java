@@ -20,12 +20,9 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
@@ -39,27 +36,12 @@ import com.frostwire.gui.theme.ThemeMediator;
  * @author aldenml
  * 
  */
-public final class SearchResultNameRenderer extends JPanel implements TableCellRenderer {
+public final class SearchResultNameRenderer extends FWAbstractJPanelTableCellRenderer {
 
     private LocaleLabel labelText;
 
     public SearchResultNameRenderer() {
         setupUI();
-    }
-
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        this.setData((SearchResultNameHolder) value, table, row);
-        this.setOpaque(true);
-        this.setEnabled(table.isEnabled());
-
-        if (isSelected) {
-            this.setBackground(ThemeMediator.TABLE_SELECTED_BACKGROUND_ROW_COLOR);
-        } else {
-            this.setBackground(row % 2 == 1 ? ThemeMediator.TABLE_ALTERNATE_ROW_COLOR : Color.WHITE);
-        }
-
-        return this;
     }
 
     private void setupUI() {
@@ -80,10 +62,14 @@ public final class SearchResultNameRenderer extends JPanel implements TableCellR
         syncFont(table, labelText);
     }
 
-    private void syncFont(JTable table, JComponent c) {
-        Font tableFont = table.getFont();
-        if (tableFont != null && !tableFont.equals(c.getFont())) {
-            c.setFont(tableFont);
-        }
+    @Override
+    protected void updateUIData(Object value, JTable table, int row) {
+        setData((SearchResultNameHolder) value, table, row);
+    }
+
+    @Override
+    protected void resetMouseListeners() {
+        // TODO Auto-generated method stub
+        
     }
 }
