@@ -18,17 +18,13 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.table.TableCellRenderer;
 
 import com.frostwire.gui.LocaleLabel;
-import com.frostwire.gui.theme.ThemeMediator;
 
 /**
  * 
