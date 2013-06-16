@@ -51,6 +51,8 @@ import org.limewire.util.StringUtils;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.PaddedPanel;
+import com.limegroup.gnutella.gui.search.SearchResultActionsHolder;
+import com.limegroup.gnutella.gui.search.SearchResultActionsRenderer;
 import com.limegroup.gnutella.gui.search.SourceHolder;
 import com.limegroup.gnutella.gui.search.SourceRenderer;
 
@@ -165,6 +167,8 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
     private static TableCellRenderer ACTION_ICON_AND_NAME_RENDERER;
     
     private static SourceRenderer SOURCE_RENDERER;
+    
+    private static SearchResultActionsRenderer SEARCH_RESULT_ACTIONS_RENDERER;
 
     /**
      * Variable for the default renderer for all components.
@@ -388,12 +392,14 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         TABLE.setDefaultRenderer(Icon.class, getIconRenderer());
         TABLE.setDefaultRenderer(IconAndNameHolder.class, getIconAndNameRenderer());
         TABLE.setDefaultRenderer(ActionIconAndNameHolder.class, getActionIconAndNameRenderer());
+        TABLE.setDefaultRenderer(SearchResultActionsHolder.class, getSearchResultsActionsRenderer());
         TABLE.setDefaultRenderer(SourceHolder.class, getSourceRenderer());
         TABLE.setDefaultRenderer(Object.class, getDefaultRenderer());
         TABLE.setDefaultRenderer(CenteredHolder.class, getCenterRenderer());
         TABLE.setDefaultRenderer(SpeedRenderer.class, getSpeedRenderer());
         TABLE.setDefaultRenderer(Date.class, getDateRenderer());
     }
+
 
     /**
      * Intended for setting up default editors.  By default,
@@ -975,6 +981,15 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         }
         return ACTION_ICON_AND_NAME_RENDERER;
     }
+    
+    protected TableCellRenderer getSearchResultsActionsRenderer() {
+        if (SEARCH_RESULT_ACTIONS_RENDERER == null) {
+            SEARCH_RESULT_ACTIONS_RENDERER = new SearchResultActionsRenderer();
+            
+        }
+        return SEARCH_RESULT_ACTIONS_RENDERER;
+    }
+
 
     protected TableCellRenderer getDefaultRenderer() {
         if (DEFAULT_RENDERER == null) {
