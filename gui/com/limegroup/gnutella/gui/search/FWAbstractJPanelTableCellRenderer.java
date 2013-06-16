@@ -21,23 +21,45 @@ package com.limegroup.gnutella.gui.search;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.plaf.TableUI;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import com.frostwire.gui.theme.SkinTableUI;
 import com.frostwire.gui.theme.ThemeMediator;
+import com.limegroup.gnutella.gui.AbstractCellEditor;
+import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 
+
+/**
+ * Checklist for Editable/Interactive cell renderers (which will need a corresponding {@link AbstractCellEditor} implementation)
+ * 
+ * If you are writing a renderer for a cell editor, remember to:
+ * 1. Make sure the Model for your table <code>isCellEditable()</model> method returns true for that column.
+ * 2. Make sure to add the proper default cell editors on your mediator's setDefaultEditors class (on that particular column).
+ * 3. Make sure to add the proper default cell renderer on {@link AbstractTableMediator} <code>setDefaultRenderers()</code> 
+ * @author gubatron
+ *
+ */
 abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implements TableCellRenderer {
 
     private boolean foundLabelsOnFirstPass = true;
     
+    private boolean initializedDefaultMouseListeners = false;
+    
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    public Component getTableCellRendererComponent(final JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        initializeDefaultMouseListeners(table);
         updateUIData(value, table, row, column);
         setOpaque(true);
         setEnabled(table.isEnabled());
@@ -63,6 +85,37 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
         
         return this;
     }
+
+    private void initializeDefaultMouseListeners(final JTable table) {
+        if (!initializedDefaultMouseListeners) {
+            initializedDefaultMouseListeners = true;
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getButton() == MouseEvent.BUTTON1) {
+                        if (!e.getSource().equals(FWAbstractJPanelTableCellRenderer.this)) {
+                            Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(FWAbstractJPanelTableCellRenderer.this, e.getID(), e.getWhen(), e.getModifiers(), FWAbstractJPanelTableCellRenderer.this.getX() + e.getX(), FWAbstractJPanelTableCellRenderer.this.getY() + e.getY(), e.getClickCount(), e.isPopupTrigger(), e.getButton()));
+                        }
+                        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(table, e.getID(), e.getWhen(), e.getModifiers(), FWAbstractJPanelTableCellRenderer.this.getX() + e.getX(), FWAbstractJPanelTableCellRenderer.this.getY() + e.getY(), e.getClickCount(), false, e.getButton()));
+                    } else {
+                        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(table, e.getID(), e.getWhen(), e.getModifiers(), FWAbstractJPanelTableCellRenderer.this.getX() + e.getX(), FWAbstractJPanelTableCellRenderer.this.getY() + e.getY(), e.getClickCount(), true, e.getButton()));
+                    }
+                    e.consume();
+                    FWAbstractJPanelTableCellRenderer.this.invalidate();
+                }
+            });
+            
+            addMouseMotionListener(new MouseAdapter() {
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    if (table.isEditing()) {
+                        TableCellEditor editor = table.getCellEditor();
+                        editor.cancelCellEditing();
+                    }
+                }
+            });
+        }
+    }
     
     protected abstract void updateUIData(Object dataHolder, JTable table, int row, int column);
 
@@ -87,24 +140,63 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
         }
     }
     
+    /**
+     * Overridden for performance reasons.
+     * See the <a href="#override">Implementation Note</a>
+     * for more information.
+     */
+    public boolean isOpaque() {
+        Color back = getBackground();
+        Component p = getParent();
+        if (p != null) {
+            p = p.getParent();
+        }
 
-    @Override
-    public void revalidate() {
-        //do nothing by the JDK's documentation recomendation
-         
+        // p should now be the JTable.
+        boolean colorMatch = (back != null) && (p != null) &&
+            back.equals(p.getBackground()) &&
+                        p.isOpaque();
+        return !colorMatch && super.isOpaque();
     }
-    
-    //@Override
+
+    /**
+     * Overridden for performance reasons.
+     * See the <a href="#override">Implementation Note</a>
+     * for more information.
+     */
+    public void revalidate() {}
+
+    /**
+     * Overridden for performance reasons.
+     * See the <a href="#override">Implementation Note</a>
+     * for more information.
+     */
+    public void repaint(long tm, int x, int y, int width, int height) {}
+
+    /**
+     * Overridden for performance reasons.
+     * See the <a href="#override">Implementation Note</a>
+     * for more information.
+     */
+    public void repaint(Rectangle r) { }
+
+    /**
+     * Overridden for performance reasons.
+     * See the <a href="#override">Implementation Note</a>
+     * for more information.
+     *
+     * @since 1.5
+     */
     public void repaint() {
-        //do nothing by the JDK's documentation recomendation
     }
-    
-    @Override
+
+    /**
+     * Overridden for performance reasons.
+     * See the <a href="#override">Implementation Note</a>
+     * for more information.
+     */
     protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         // Strings get interned...
-        System.out.println("firePropertyChange 1 - propertyName=" + propertyName);
-        System.out.println("Old: " + oldValue);
-        System.out.println("New: " + newValue);
         if (propertyName=="text"
                 || propertyName == "labelFor"
                 || propertyName == "displayedMnemonic"
@@ -116,16 +208,33 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
         }
     }
 
+    /**
+     * Overridden for performance reasons.
+     * See the <a href="#override">Implementation Note</a>
+     * for more information.
+     */
+    public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) { }
     
-    @Override
-    public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
-        //do nothing by the JDK's documentation recomendation
-        System.out.println("firePropertyChange 2 - propertyName=" + propertyName);
-        System.out.println("Old: " + oldValue);
-        System.out.println("New: " + newValue);
-
-    }
-
-
- 
+    /**
+     * A subclass of <code>DefaultTableCellRenderer</code> that
+     * implements <code>UIResource</code>.
+     * <code>DefaultTableCellRenderer</code> doesn't implement
+     * <code>UIResource</code>
+     * directly so that applications can safely override the
+     * <code>cellRenderer</code> property with
+     * <code>DefaultTableCellRenderer</code> subclasses.
+     * <p>
+     * <strong>Warning:</strong>
+     * Serialized objects of this class will not be compatible with
+     * future Swing releases. The current serialization support is
+     * appropriate for short term storage or RMI between applications running
+     * the same version of Swing.  As of 1.4, support for long term storage
+     * of all JavaBeans<sup><font size="-2">TM</font></sup>
+     * has been added to the <code>java.beans</code> package.
+     * Please see {@link java.beans.XMLEncoder}.
+     */
+    public static class UIResource extends DefaultTableCellRenderer
+        implements javax.swing.plaf.UIResource
+    {
+    }    
 }

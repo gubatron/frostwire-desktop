@@ -182,6 +182,19 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         TABLE.setDefaultRenderer(SearchResultActionsHolder.class, SEARCH_RESULT_ACTIONS_RENDERER);
         TABLE.setDefaultRenderer(SourceHolder.class, SOURCE_RENDERER);
     }
+    
+    protected void setDefaultEditors() {
+        TableColumnModel model = TABLE.getColumnModel();
+        TableColumn tc;
+        tc = model.getColumn(SearchTableColumns.ACTIONS_IDX);
+        
+        tc.setCellEditor(new SearchResultActionsEditor(SEARCH_RESULT_ACTIONS_RENDERER));
+        tc = model.getColumn(SearchTableColumns.NAME_IDX);
+        tc.setCellEditor(new SearchResultNameEditor(SEARCH_RESULT_NAME_RENDERER));
+        tc = model.getColumn(SearchTableColumns.SOURCE_IDX);
+        tc.setCellEditor(new SourceEditor());
+    }
+
 
     /**
      * Does nothing.
@@ -814,17 +827,6 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     }
 
     public void cleanup() {
-    }
-
-    protected void setDefaultEditors() {
-        TableColumnModel model = TABLE.getColumnModel();
-        TableColumn tc;
-        tc = model.getColumn(SearchTableColumns.ACTIONS_IDX);
-        tc.setCellEditor(new SearchResultActionsEditor());
-        tc = model.getColumn(SearchTableColumns.NAME_IDX);
-        tc.setCellEditor(new SearchResultNameEditor());
-        tc = model.getColumn(SearchTableColumns.SOURCE_IDX);
-        tc.setCellEditor(new SourceEditor());
     }
 
     private final class RepeatSearchAction extends AbstractAction {

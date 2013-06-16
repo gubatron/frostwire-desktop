@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +28,7 @@ public class SourceRenderer extends DefaultTableCellRenderer implements TableCel
         sourceIcons = new HashMap<>();
         initIcons();
         initUI();
+        initMouseListener();
     }
     
     private void initIcons() {
@@ -45,6 +48,20 @@ public class SourceRenderer extends DefaultTableCellRenderer implements TableCel
     private void initUI() {
         final Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
         setCursor(handCursor);
+    }
+
+    private void initMouseListener() {
+        MouseAdapter mouseAdapter = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (getSourceHolder() != null) {
+                    getSourceHolder().getUISearchResult().showDetails(true);
+                    e.consume();
+                }
+            }
+        };
+        
+        addMouseListener(mouseAdapter);
     }
     
     @Override

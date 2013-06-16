@@ -19,9 +19,6 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.Component;
-import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
@@ -38,8 +35,8 @@ public class SearchResultNameEditor extends AbstractCellEditor implements TableC
 
     private final SearchResultNameRenderer renderer;
 
-    public SearchResultNameEditor() {
-        renderer = new SearchResultNameRenderer();
+    public SearchResultNameEditor(SearchResultNameRenderer searchResultNameRenderer) {
+        renderer = searchResultNameRenderer;
     }
 
     public Object getCellEditorValue() {
@@ -47,34 +44,6 @@ public class SearchResultNameEditor extends AbstractCellEditor implements TableC
     }
 
     public Component getTableCellEditorComponent(final JTable table, Object value, boolean isSelected, int row, int column) {
-        final Component component = renderer.getTableCellRendererComponent(table, value, isSelected, true, row, column);
-        if (component.getMouseListeners() == null || component.getMouseListeners().length == 0) {
-            component.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (e.getButton() == MouseEvent.BUTTON1) {
-                        if (!e.getSource().equals(component)) {
-                            Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(component, e.getID(), e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), e.isPopupTrigger(), e.getButton()));
-                        }
-                        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(table, e.getID(), e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), false, e.getButton()));
-                    } else {
-                        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(table, e.getID(), e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), true, e.getButton()));
-                    }
-                    e.consume();
-                    component.invalidate();
-                }
-            });
-            component.addMouseMotionListener(new MouseAdapter() {
-                @Override
-                public void mouseMoved(MouseEvent e) {
-                    if (table.isEditing()) {
-                        TableCellEditor editor = table.getCellEditor();
-                        editor.cancelCellEditing();
-                    }
-                }
-            });
-        }
-
-        return component;
+        return renderer.getTableCellRendererComponent(table, value, isSelected, true, row, column);
     }
 }
