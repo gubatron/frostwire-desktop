@@ -23,19 +23,17 @@ import java.awt.Component;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 
 /**
  * @author gubatron
  * @author aldenml
  *
  */
-public class SearchResultNameEditor extends AbstractCellEditor implements TableCellEditor {
+public class GenericCellEditor extends AbstractCellEditor implements TableCellEditor {
+    private final TableCellRenderer renderer;
 
-    private static final long serialVersionUID = -1173782952710148468L;
-
-    private final SearchResultNameRenderer renderer;
-
-    public SearchResultNameEditor(SearchResultNameRenderer searchResultNameRenderer) {
+    public GenericCellEditor(TableCellRenderer searchResultNameRenderer) {
         renderer = searchResultNameRenderer;
     }
 
