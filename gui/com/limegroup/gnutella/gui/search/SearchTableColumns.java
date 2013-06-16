@@ -32,7 +32,7 @@ final class SearchTableColumns {
     // columns.
 
     static final int ACTIONS_IDX = 0;
-    private final LimeTableColumn ACTIONS_COLUMN = new SearchColumn(ACTIONS_IDX, "RESULT_PANEL_ACTIONS", I18n.tr("Actions"), 30, true, SearchResultActionsHolder.class);
+    private final LimeTableColumn ACTIONS_COLUMN = new SearchColumn(ACTIONS_IDX, "RESULT_PANEL_ACTIONS", I18n.tr("Actions"), 63, true, SearchResultActionsHolder.class);
     
     static final int COUNT_IDX = 1;
     private final LimeTableColumn COUNT_COLUMN = new SearchColumn(COUNT_IDX, "RESULT_PANEL_COUNT", I18n.tr("Seeds"), 24, true, Integer.class);
@@ -59,13 +59,6 @@ final class SearchTableColumns {
      * The number of default columns.
      */
     static final int COLUMN_COUNT = 8;
-
-    /**
-     * Constructs a new SearchTableColumns.
-     */
-    SearchTableColumns() {
-        ACTIONS_COLUMN.setResizable(false);
-    }
 
     /**
      * Gets the column for the specified index.

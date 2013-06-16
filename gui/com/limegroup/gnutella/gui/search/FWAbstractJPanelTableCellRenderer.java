@@ -1,18 +1,32 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.plaf.TableUI;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import com.frostwire.gui.theme.SkinTableUI;
@@ -24,8 +38,7 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
     
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        initEventForwarding(table);
-        updateUIData(value, table, row);
+        updateUIData(value, table, row, column);
         setOpaque(true);
         setEnabled(table.isEnabled());
 
@@ -36,7 +49,7 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
         }
 
         //fix labels if you have any
-        if (foundLabelsOnFirstPass) {
+        if (!foundLabelsOnFirstPass) {
             Component[] components = getComponents();
             boolean foundLabels = false;
             for (Component c : components) {
@@ -51,51 +64,7 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
         return this;
     }
     
-    private void initEventForwarding(final JTable table) {
-        final Component component = FWAbstractJPanelTableCellRenderer.this;
-        if (component.getMouseListeners() == null || component.getMouseListeners().length == 0) {
-            addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-
-                    if (e.getButton() == MouseEvent.BUTTON1) {
-                        if (!e.getSource().equals(this)) {
-                            Toolkit.getDefaultToolkit()
-                                    .getSystemEventQueue()
-                                    .postEvent(
-                                            new MouseEvent(component, e.getID(), e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), e
-                                                    .isPopupTrigger(), e.getButton()));
-                        }
-                        Toolkit.getDefaultToolkit()
-                                .getSystemEventQueue()
-                                .postEvent(
-                                        new MouseEvent(table, e.getID(), e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), false, e
-                                                .getButton()));
-                    } else {
-                        Toolkit.getDefaultToolkit()
-                                .getSystemEventQueue()
-                                .postEvent(
-                                        new MouseEvent(table, e.getID(), e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), true, e
-                                                .getButton()));
-                    }
-                    e.consume();
-                    invalidate();
-                }
-            });
-            addMouseMotionListener(new MouseAdapter() {
-                @Override
-                public void mouseMoved(MouseEvent e) {
-                    if (table.isEditing()) {
-                        TableCellEditor editor = table.getCellEditor();
-                        editor.cancelCellEditing();
-                    }
-                }
-            });
-            System.out.println("FWAbstractJPanelTableCellRenderer.initEventForwarding() done.");
-        }
-    }
-
-    protected abstract void updateUIData(Object dataHolder, JTable table, int row);
+    protected abstract void updateUIData(Object dataHolder, JTable table, int row, int column);
 
     protected boolean mouseIsOverRow(JTable table, int row) {
         boolean mouseOver = false;
@@ -118,9 +87,11 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
         }
     }
     
+
     @Override
     public void revalidate() {
         //do nothing by the JDK's documentation recomendation
+         
     }
     
     //@Override
@@ -131,6 +102,9 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
     @Override
     protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         // Strings get interned...
+        System.out.println("firePropertyChange 1 - propertyName=" + propertyName);
+        System.out.println("Old: " + oldValue);
+        System.out.println("New: " + newValue);
         if (propertyName=="text"
                 || propertyName == "labelFor"
                 || propertyName == "displayedMnemonic"
@@ -142,43 +116,16 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
         }
     }
 
-    @Override
-    public void firePropertyChange(String propertyName, byte oldValue, byte newValue) {
-        //do nothing by the JDK's documentation recomendation
-    }
     
     @Override
     public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
         //do nothing by the JDK's documentation recomendation
+        System.out.println("firePropertyChange 2 - propertyName=" + propertyName);
+        System.out.println("Old: " + oldValue);
+        System.out.println("New: " + newValue);
+
     }
 
-    @Override
-    public void firePropertyChange(String propertyName, char oldValue, char newValue) {
-        //do nothing by the JDK's documentation recomendation
-    }
 
-    @Override
-    public void firePropertyChange(String propertyName, float oldValue, float newValue) {
-        //do nothing by the JDK's documentation recomendation
-    }
-
-    @Override
-    public void firePropertyChange(String propertyName, long oldValue, long newValue) {
-        //do nothing by the JDK's documentation recomendation
-    }
-
-    @Override
-    public void firePropertyChange(String propertyName, int oldValue, int newValue) {
-        //do nothing by the JDK's documentation recomendation
-    }
-
-    @Override
-    public void firePropertyChange(String propertyName, double oldValue, double newValue) {
-        //do nothing by the JDK's documentation recomendation
-    }
-
-    @Override
-    public void firePropertyChange(String propertyName, short oldValue, short newValue) {
-        //do nothing by the JDK's documentation recomendation
-    }
+ 
 }

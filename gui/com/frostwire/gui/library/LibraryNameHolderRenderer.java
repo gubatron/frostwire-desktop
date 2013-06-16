@@ -69,12 +69,11 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-
         this.setData((LibraryNameHolder) value, table, row, column);
         this.setOpaque(true);
         this.setEnabled(table.isEnabled());
 
-        if (isSelected) {
+        if (isSelected) { 
             this.setBackground(ThemeMediator.TABLE_SELECTED_BACKGROUND_ROW_COLOR);
         } else {
             this.setBackground(row % 2 == 1 ? ThemeMediator.TABLE_ALTERNATE_ROW_COLOR : Color.WHITE);

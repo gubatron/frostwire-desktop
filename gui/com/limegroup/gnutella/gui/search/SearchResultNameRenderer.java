@@ -59,7 +59,7 @@ public final class SearchResultNameRenderer extends FWAbstractJPanelTableCellRen
     }
 
     @Override
-    protected void updateUIData(Object value, JTable table, int row) {
+    protected void updateUIData(Object value, JTable table, int row, int column) {
         setData((SearchResultNameHolder) value, table, row);
     }
 }

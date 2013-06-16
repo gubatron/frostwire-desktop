@@ -53,8 +53,9 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
     private JLabel labelPlay;
     private JLabel labelPartialDownload;
     private JLabel labelDownload;
-    private UISearchResult sr;
+    private UISearchResult searchResult;
     private boolean showSolid;
+    private SearchResultActionsHolder actionsHolder;
 
     static {
         play_solid = GUIMediator.getThemeImage("search_result_play_over");
@@ -70,7 +71,7 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
     public SearchResultActionsRenderer() {
         setupUI();
     }
-
+    
     private void setupUI() {
         setLayout(new GridBagLayout());
         GridBagConstraints c;
@@ -84,8 +85,6 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
             }
         });
         c = new GridBagConstraints();
-        //c.fill = GridBagConstraints.HORIZONTAL;
-        //c.weightx = 1.0;
         c.gridx = GridBagConstraints.RELATIVE;
         c.ipadx = 3;
         add(labelPlay, c);
@@ -113,51 +112,55 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
         c.gridx = GridBagConstraints.RELATIVE;
         c.ipadx = 3;
         add(labelPartialDownload, c);
+        
+        setEnabled(true);
     }
     
     @Override
-    protected void updateUIData(Object dataHolder, JTable table, int row) {
-        updateUIData((SearchResultActionsHolder) dataHolder, table, row);
+    protected void updateUIData(Object dataHolder, JTable table, int row, int column) {
+        updateUIData((SearchResultActionsHolder) dataHolder, table, row, column);
     }
     
-    private void updateUIData(SearchResultActionsHolder value, JTable table, int row) {
-        this.sr = value.getSearchResult();
+    private void updateUIData(SearchResultActionsHolder value, JTable table, int row, int column) {
+        actionsHolder = value;
+        searchResult = actionsHolder.getSearchResult();
         showSolid = mouseIsOverRow(table, row);
         updatePlayButton();
-        
+        labelPlay.setVisible(searchResult.getSearchResult() instanceof StreamableSearchResult);
         labelDownload.setIcon(showSolid ? download_solid : download_transparent);
-        labelPartialDownload.setIcon(showSolid ? details_solid : details_transparent);
-        
-        labelPlay.setVisible(sr.getSearchResult() instanceof StreamableSearchResult);
         labelDownload.setVisible(true);
-        labelPartialDownload.setVisible(sr.getSearchResult() instanceof CrawlableSearchResult);
+        labelPartialDownload.setIcon(showSolid ? details_solid : details_transparent);
+        labelPartialDownload.setVisible(searchResult.getSearchResult() instanceof CrawlableSearchResult);
     }
 
     private void updatePlayButton() {
-        labelPlay.setIcon((isStreamableSourceBeingPlayed(sr)) ? GUIMediator.getThemeImage("speaker") : (showSolid) ? play_solid : play_transparent);
+        labelPlay.setIcon((isStreamableSourceBeingPlayed(searchResult)) ? GUIMediator.getThemeImage("speaker") : (showSolid) ? play_solid : play_transparent);
     }
 
 
     private void labelPlay_mouseReleased(MouseEvent e) {
+        System.out.println("labelPlay_mouseReleased");
         if (e.getButton() == MouseEvent.BUTTON1) {
-            if (sr.getSearchResult() instanceof StreamableSearchResult && !isStreamableSourceBeingPlayed(sr)) {
-                sr.play();
+            if (searchResult.getSearchResult() instanceof StreamableSearchResult && !isStreamableSourceBeingPlayed(searchResult)) {
+                searchResult.play();
                 updatePlayButton();
             }
         }
     }
 
     private void labelPartialDownload_mouseReleased(MouseEvent e) {
+        System.out.println("labelPlay_mouseReleased");
         if (e.getButton() == MouseEvent.BUTTON1) {
-            if (sr.getSearchResult() instanceof CrawlableSearchResult) {
-                sr.download(true);
+            if (searchResult.getSearchResult() instanceof CrawlableSearchResult) {
+                searchResult.download(true);
             }
         }
     }
 
     private void labelDownload_mouseReleased(MouseEvent e) {
+        System.out.println("labelPlay_mouseReleased");
         if (e.getButton() == MouseEvent.BUTTON1) {
-            sr.download(false);
+            searchResult.download(false);
         }
     }
  
