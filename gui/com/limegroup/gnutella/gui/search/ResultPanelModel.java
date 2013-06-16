@@ -262,6 +262,6 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, UISearch
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == SearchTableColumns.NAME_IDX || columnIndex == SearchTableColumns.SOURCE_IDX;
+        return columnIndex == SearchTableColumns.NAME_IDX || columnIndex == SearchTableColumns.SOURCE_IDX || columnIndex == SearchTableColumns.ACTIONS_IDX;
     }
 }
