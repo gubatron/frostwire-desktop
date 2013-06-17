@@ -69,26 +69,6 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
 
     private void initializeDefaultMouseListeners(final JTable table) {
         if (getMouseListeners() == null || getMouseListeners().length == 0) {
-            /**
-            addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-
-                    if (e.getButton() == MouseEvent.BUTTON1) {
-                        if (!e.getSource().equals(FWAbstractJPanelTableCellRenderer.this)) {
-                            Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(FWAbstractJPanelTableCellRenderer.this, e.getID(), e.getWhen(), e.getModifiers(), FWAbstractJPanelTableCellRenderer.this.getX() + e.getX(), FWAbstractJPanelTableCellRenderer.this.getY() + e.getY(), e.getClickCount(), e.isPopupTrigger(), e.getButton()));
-                        }
-                        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(table, e.getID(), e.getWhen(), e.getModifiers(), FWAbstractJPanelTableCellRenderer.this.getX() + e.getX(), FWAbstractJPanelTableCellRenderer.this.getY() + e.getY(), e.getClickCount(), false, e.getButton()));
-                    } else {
-                        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(table, e.getID(), e.getWhen(), e.getModifiers(), FWAbstractJPanelTableCellRenderer.this.getX() + e.getX(), FWAbstractJPanelTableCellRenderer.this.getY() + e.getY(), e.getClickCount(), true, e.getButton()));
-                    }
-                    e.consume();
-                    FWAbstractJPanelTableCellRenderer.this.invalidate();
-
-                }
-            });
-            */
-            
             addMouseMotionListener(new MouseAdapter() {
                 @Override
                 public void mouseMoved(MouseEvent e) {

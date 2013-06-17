@@ -16,8 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.limegroup.gnutella.gui.search;
+package com.limegroup.gnutella.gui.tables;
 
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -25,6 +26,8 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
 import com.frostwire.gui.LocaleLabel;
+import com.limegroup.gnutella.gui.search.FWAbstractJPanelTableCellRenderer;
+import com.limegroup.gnutella.gui.search.SearchResultNameHolder;
 
 /**
  * 
@@ -32,33 +35,27 @@ import com.frostwire.gui.LocaleLabel;
  * @author aldenml
  * 
  */
-public final class SearchResultNameRenderer extends FWAbstractJPanelTableCellRenderer {
+public final class NameHolderRenderer extends FWAbstractJPanelTableCellRenderer {
 
     private LocaleLabel labelText;
 
-    public SearchResultNameRenderer() {
+    public NameHolderRenderer() {
         setupUI();
     }
 
     private void setupUI() {
-        setLayout(new GridBagLayout());
-        GridBagConstraints c;
+        setLayout(new BorderLayout());
         labelText = new LocaleLabel();
-        labelText.setHorizontalTextPosition(SwingConstants.LEFT);
-        c = new GridBagConstraints();
-        c.gridx = GridBagConstraints.RELATIVE;
-        c.weightx = 1.0;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        add(labelText, c);
+        add(labelText, BorderLayout.CENTER);
     }
 
-    private void setData(SearchResultNameHolder value, JTable table, int row) {
+    private void setData(NameHolder value, JTable table, int row) {
         labelText.setText(value.getLocaleString());
         syncFontSize(table, labelText);
     }
 
     @Override
     protected void updateUIData(Object value, JTable table, int row, int column) {
-        setData((SearchResultNameHolder) value, table, row);
+        setData((NameHolder) value, table, row);
     }
 }

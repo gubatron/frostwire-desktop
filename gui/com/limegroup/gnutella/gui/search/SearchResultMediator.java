@@ -70,6 +70,7 @@ import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.ColumnPreferenceHandler;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
+import com.limegroup.gnutella.gui.tables.NameHolderRenderer;
 import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.settings.SearchSettings;
@@ -81,7 +82,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
 
     private static final DateRenderer DATE_RENDERER = new DateRenderer();
     private static final PercentageRenderer PERCENTAGE_RENDERER = new PercentageRenderer();
-    private static final SearchResultNameRenderer SEARCH_RESULT_NAME_RENDERER = new SearchResultNameRenderer();
+    private static final NameHolderRenderer SEARCH_RESULT_NAME_RENDERER = new NameHolderRenderer();
     private static final SearchResultActionsRenderer SEARCH_RESULT_ACTIONS_RENDERER = new SearchResultActionsRenderer();
     private static final SourceRenderer SOURCE_RENDERER = new SourceRenderer();
     

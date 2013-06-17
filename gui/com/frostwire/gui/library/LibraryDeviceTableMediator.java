@@ -73,7 +73,6 @@ import com.limegroup.gnutella.util.QueryUtils;
 public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<LibraryDeviceTableModel, LibraryDeviceTableDataLine, FileDescriptor> {
 
     private static final Logger LOG = LoggerFactory.getLogger(LibraryDeviceTableMediator.class);
-    private static final LibraryNameHolderRenderer LIBRARY_NAME_HOLDER_RENDERER = new LibraryNameHolderRenderer();
 
     /**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
@@ -202,7 +201,6 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         super.setDefaultRenderers();
         TABLE.setDefaultRenderer(PlayableIconCell.class, new PlayableIconCellRenderer());
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
-        TABLE.setDefaultRenderer(LibraryNameHolder.class, LIBRARY_NAME_HOLDER_RENDERER);
     }
 
     /**

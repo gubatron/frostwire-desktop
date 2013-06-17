@@ -26,12 +26,14 @@ import java.util.List;
 import javax.swing.Icon;
 
 import org.limewire.util.StringUtils;
+
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
+import com.limegroup.gnutella.gui.tables.NameHolder;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
@@ -45,8 +47,8 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
     /**
      * Play Column
      */
-    static final int PLAY_IDX = 0;
-    private static final LimeTableColumn PLAY_COLUMN = new LimeTableColumn(PLAY_IDX, "DEVICE_TABLE_PLAY", I18n.tr("Play"), 20, true, false, false, PlayableIconCell.class);
+    static final int ACTIONS_IDX = 0;
+    private static final LimeTableColumn ACTIONS_COLUMN = new LimeTableColumn(ACTIONS_IDX, "DEVICE_TABLE_ACTIONS", I18n.tr("Actions"), 36, true, true, true, LibraryActionsHolder.class);
     
     /**
      * Icon column
@@ -58,7 +60,7 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
      * Title column
      */
     static final int TITLE_IDX = 2;
-    private static final LimeTableColumn TITLE_COLUMN = new LimeTableColumn(TITLE_IDX, "DEVICE_TABLE_TITLE", I18n.tr("Title"), 80, true, LibraryNameHolder.class);
+    private static final LimeTableColumn TITLE_COLUMN = new LimeTableColumn(TITLE_IDX, "DEVICE_TABLE_TITLE", I18n.tr("Title"), 80, true, NameHolder.class);
 
     /**
      * Artist column
@@ -143,10 +145,10 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
         this.dateAdded = new Date(initializer.dateAdded * 1000);
         this.dateModified = new Date(initializer.dateModified * 1000);
         
-        this.nameCell = new LibraryNameHolder(this, initializer.title, false, true, 0);
+        this.nameCell = new NameHolder(initializer.title);
     }
     
-    private LibraryNameHolder nameCell;
+    private NameHolder nameCell;
 
     /**
      * Returns the value for the specified index.
@@ -154,13 +156,11 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
     public Object getValueAt(int idx) {
         boolean playing = isPlaying();
         switch (idx) {
-        case PLAY_IDX:
-            return new PlayActionHolder(this, playing);
+        case ACTIONS_IDX:
+            return new LibraryActionsHolder(this, playing);
         case ICON_IDX:
             return new PlayableIconCell(getIcon(), playing);
         case TITLE_IDX:
-            nameCell.setPlaying(playing);
-            nameCell.setColumn(idx);
             return nameCell;
         case ARTIST_IDX:
             return new PlayableCell(this, filterUnknown(initializer.artist), playing, idx);
@@ -192,8 +192,8 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
      */
     public LimeTableColumn getColumn(int idx) {
         switch (idx) {
-        case PLAY_IDX:
-            return PLAY_COLUMN;
+        case ACTIONS_IDX:
+            return ACTIONS_COLUMN;
         case ICON_IDX:
             return ICON_COLUMN;
         case TITLE_IDX:

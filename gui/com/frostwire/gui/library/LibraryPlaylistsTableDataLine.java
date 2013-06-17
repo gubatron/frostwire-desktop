@@ -28,6 +28,7 @@ import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
+import com.limegroup.gnutella.gui.tables.NameHolder;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 
 public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDataLine<PlaylistItem> {
@@ -48,7 +49,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
      * Title column
      */
     static final int TITLE_IDX = 2;
-    private static final LimeTableColumn TITLE_COLUMN = new LimeTableColumn(TITLE_IDX, "PLAYLIST_TABLE_TITLE", I18n.tr("Title"), 80, true, LibraryNameHolder.class);
+    private static final LimeTableColumn TITLE_COLUMN = new LimeTableColumn(TITLE_IDX, "PLAYLIST_TABLE_TITLE", I18n.tr("Title"), 80, true, NameHolder.class);
 
     /**
      * Artist column
@@ -145,10 +146,10 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
             bitrate = bitrate + " kbps";
         }
 
-        this.nameCell = new LibraryNameHolder(this, initializer.getTrackTitle(), false, exists, 0);
+        this.nameCell = new NameHolder(initializer.getTrackTitle());
     }
 
-    private LibraryNameHolder nameCell;
+    private NameHolder nameCell;
 
     /**
      * Returns the value for the specified index.
@@ -175,8 +176,6 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
         case SIZE_IDX:
             return new PlaylistItemStringProperty(this, sizeHolder.toString(), playing, exists);
         case TITLE_IDX:
-            nameCell.setPlaying(playing);
-            nameCell.setColumn(idx);
             return nameCell;
         case TRACK_IDX:
             return new PlaylistItemTrackProperty(this, initializer.getTrackNumber(), playing, exists);

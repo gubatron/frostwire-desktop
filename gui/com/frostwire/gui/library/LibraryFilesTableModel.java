@@ -179,6 +179,6 @@ final class LibraryFilesTableModel extends HashBasedDataLineModel<LibraryFilesTa
      *         <code>false</code> otherwise
      */
     public boolean isCellEditable(int row, int col) {
-        return col == LibraryFilesTableDataLine.NAME_IDX ||  col == LibraryFilesTableDataLine.SHARE_IDX;
+        return col == LibraryFilesTableDataLine.ACTIONS_IDX ||  col == LibraryFilesTableDataLine.SHARE_IDX;
     }
 }

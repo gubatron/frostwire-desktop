@@ -32,6 +32,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tables.ActionIconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
+import com.limegroup.gnutella.gui.tables.NameHolder;
 
 /**
  * 
@@ -48,7 +49,7 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
     private static final LimeTableColumn BOOKMARKED_COLUMN = new LimeTableColumn(BOOKMARKED_IDX, "INTERNET_RADIO_TABLE_BOOKMARKED", I18n.tr("Bookmarked"), 20, true, false, false, InternetRadioBookmark.class);
 
     static final int NAME_IDX = 1;
-    private static final LimeTableColumn NAME_COLUMN = new LimeTableColumn(NAME_IDX, "INTERNET_RADIO_TABLE_NAME", I18n.tr("Name"), 484, true, LibraryNameHolder.class);
+    private static final LimeTableColumn NAME_COLUMN = new LimeTableColumn(NAME_IDX, "INTERNET_RADIO_TABLE_NAME", I18n.tr("Name"), 484, true, NameHolder.class);
     
     static final int GENRE_IDX = 2;
     static final LimeTableColumn GENRE_COLUMN = new LimeTableColumn(GENRE_IDX, "INTERNET_RADIO_TABLE_GENRE", I18n.tr("Genre"), 268, true, PlayableCell.class);
@@ -95,10 +96,10 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
             }
         };
         
-        this.nameCell = new LibraryNameHolder(this, initializer.getName(), false, true, 0);
+        this.nameCell = new NameHolder(initializer.getName());
     }
     
-    private LibraryNameHolder nameCell;
+    private NameHolder nameCell;
 
     /**
      * Returns the value for the specified index.
@@ -109,8 +110,6 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
         case BOOKMARKED_IDX:
         	return new InternetRadioBookmark(this, playing);
         case NAME_IDX:
-            nameCell.setPlaying(playing);
-            nameCell.setColumn(idx);
             return nameCell;
         case DESCRIPTION_IDX:
             return new PlayableCell(this, initializer.getDescription(), playing, idx);

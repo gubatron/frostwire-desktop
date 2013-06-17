@@ -182,7 +182,10 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
 
     /** Variable for the date renderer. */
     private static TableCellRenderer DATE_RENDERER;
-
+    
+    
+    private static NameHolderRenderer NAME_HOLDER_RENDERER;
+    
     /**
      * A zero dimension to be used in all tables.
      */
@@ -210,6 +213,8 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * resorting.
      */
     protected boolean isResorting = false;
+
+
 
     /**
      * Basic constructor that uses a Template Pattern to delegate the
@@ -398,8 +403,18 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         TABLE.setDefaultRenderer(CenteredHolder.class, getCenterRenderer());
         TABLE.setDefaultRenderer(SpeedRenderer.class, getSpeedRenderer());
         TABLE.setDefaultRenderer(Date.class, getDateRenderer());
+        TABLE.setDefaultRenderer(NameHolder.class, getNameHolderRenderer());
+        
+        if (getAbstractActionsRenderer() != null) {
+            TABLE.setDefaultRenderer(AbstractActionsHolder.class, getAbstractActionsRenderer());
+        }
     }
 
+
+
+    protected TableCellRenderer getAbstractActionsRenderer() {
+        return null;
+    }
 
     /**
      * Intended for setting up default editors.  By default,
@@ -1016,4 +1031,12 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         }
         return DATE_RENDERER;
     }
+    
+    private TableCellRenderer getNameHolderRenderer() {
+        if (NAME_HOLDER_RENDERER == null) {
+            NAME_HOLDER_RENDERER = new NameHolderRenderer();
+        }
+        return NAME_HOLDER_RENDERER;
+    }
+
 }

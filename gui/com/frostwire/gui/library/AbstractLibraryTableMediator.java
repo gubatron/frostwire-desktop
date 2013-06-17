@@ -29,12 +29,13 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.table.TableCellRenderer;
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
-import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.limegroup.gnutella.MediaType;
@@ -49,6 +50,8 @@ import com.limegroup.gnutella.gui.tables.DataLineModel;
 abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E extends AbstractLibraryTableDataLine<I>, I> extends AbstractTableMediator<T, E, I> {
 
     private MediaType mediaType;
+    
+    private static final LibraryActionsRenderer ACTION_RENDERER = new LibraryActionsRenderer();
 
     protected Action SEND_TO_FRIEND_ACTION;
     protected Action OPTIONS_ACTION;
@@ -66,6 +69,11 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
 
     @Override
     protected void setupConstants() {
+    }
+    
+    @Override
+    protected TableCellRenderer getAbstractActionsRenderer() {
+        return ACTION_RENDERER;
     }
 
     public List<AbstractLibraryTableDataLine<I>> getSelectedLines() {

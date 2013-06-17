@@ -30,6 +30,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
+import com.limegroup.gnutella.gui.tables.NameHolder;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
@@ -43,41 +44,43 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
  */
 public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLine<File> {
 
+    static final int ACTIONS_IDX = 0;
+    
     /**
      * Constant for the column with the wi-fi shared state.
      */
-    static final int SHARE_IDX = 0;
+    static final int SHARE_IDX = 1;
 
     /**
      * Constant for the column with the icon of the file.
      */
-    static final int ICON_IDX = 1;
+    static final int ICON_IDX = 2;
 
     /**
      * Constant for the column with the name of the file.
      */
-    static final int NAME_IDX = 2;
+    static final int NAME_IDX = 3;
 
     /**
      * Constant for the column storing the size of the file.
      */
-    static final int SIZE_IDX = 3;
+    static final int SIZE_IDX = 4;
 
     /**
      * Constant for the column storing the file type (extension or more
      * more general type) of the file.
      */
-    static final int TYPE_IDX = 4;
+    static final int TYPE_IDX = 5;
 
     /**
      * Constant for the column storing the file's path
      */
-    static final int PATH_IDX = 5;
+    static final int PATH_IDX = 6;
 
     /**
      * Constant for the column indicating the mod time of a file.
      */
-    static final int MODIFICATION_TIME_IDX = 6;
+    static final int MODIFICATION_TIME_IDX = 7;
 
     /**
      * Add the columns to static array _in the proper order_.
@@ -181,7 +184,9 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 
         this.lastModified = new Date(initializer.lastModified());
         
-        this.nameCell = new LibraryNameHolder(this, _name, false, true, 0);
+        this.actionsHolder = new LibraryActionsHolder(this, false);
+        
+        this.nameCell = new NameHolder(_name);
     }
 
     /**
@@ -191,7 +196,8 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         return initializer;
     }
 
-    private LibraryNameHolder nameCell;
+    private LibraryActionsHolder actionsHolder;
+    private NameHolder nameCell;
     
     /**
      * Returns the object stored in the specified cell in the table.
@@ -204,11 +210,12 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
     public Object getValueAt(int idx) {
         boolean isPlaying = isPlaying();
         switch (idx) {
+        case ACTIONS_IDX:
+            actionsHolder.setPlaying(isPlaying());
+            return actionsHolder;
         case ICON_IDX:
             return new PlayableIconCell(getIcon(), isPlaying);
         case NAME_IDX:
-            nameCell.setPlaying(isPlaying);
-            nameCell.setColumn(idx);
             return nameCell;
         case SIZE_IDX:
             return new PlayableCell(this, _sizeHolder, _sizeHolder.toString(), isPlaying, idx);
@@ -259,11 +266,14 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 
     private LimeTableColumn[] getLimeTableColumns() {
         if (ltColumns == null) {
-            LimeTableColumn[] temp = { new LimeTableColumn(SHARE_IDX, "LIBRARY_TABLE_SHARE", I18n.tr("Wi-Fi Shared"), 18, true, FileShareCell.class),
+            LimeTableColumn[] temp = { 
+            new LimeTableColumn(ACTIONS_IDX, "LIBRARY_TABLE_ACTIONS", I18n.tr("Actions"), 18, true, LibraryActionsHolder.class),
+                    
+            new LimeTableColumn(SHARE_IDX, "LIBRARY_TABLE_SHARE", I18n.tr("Wi-Fi Shared"), 18, true, FileShareCell.class),
 
             new LimeTableColumn(ICON_IDX, "LIBRARY_TABLE_ICON", I18n.tr("Icon"), GUIMediator.getThemeImage("question_mark"), 18, true, PlayableIconCell.class),
 
-            new LimeTableColumn(NAME_IDX, "LIBRARY_TABLE_NAME", I18n.tr("Name"), 239, true, LibraryNameHolder.class),
+            new LimeTableColumn(NAME_IDX, "LIBRARY_TABLE_NAME", I18n.tr("Name"), 239, true, NameHolder.class),
 
             new LimeTableColumn(SIZE_IDX, "LIBRARY_TABLE_SIZE", I18n.tr("Size"), 62, true, PlayableCell.class),
 

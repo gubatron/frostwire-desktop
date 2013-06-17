@@ -16,24 +16,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.library;
+package com.limegroup.gnutella.gui.tables;
+
+import com.frostwire.gui.LocaleLabel.LocaleString;
+import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 
 /**
  * 
  * @author gubatron
  * @author aldenml
- *
+ * 
  */
-public class LibraryNameHolder extends PlayableCell {
+public class NameHolder implements Comparable<NameHolder> {
 
-    private final boolean exists;
+    private final String displayName;
 
-    public LibraryNameHolder(Object dataLine, String strValue, boolean isPlaying, boolean exists, int columnIndex) {
-        super(dataLine, strValue, isPlaying, columnIndex);
-        this.exists = exists;
+    private final LocaleString localeString;
+
+    public NameHolder(String str) {
+        this.displayName = str;
+        this.localeString = new LocaleString(str);
     }
 
-    public boolean isExists() {
-        return exists;
+    public int compareTo(NameHolder o) {
+        return AbstractTableMediator.compare(displayName, o.displayName);
+    }
+
+    public LocaleString getLocaleString() {
+        return localeString;
+    }
+
+    public String toString() {
+        return displayName;
     }
 }

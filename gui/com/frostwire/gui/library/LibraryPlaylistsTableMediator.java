@@ -68,6 +68,7 @@ import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
+import com.limegroup.gnutella.gui.search.GenericCellEditor;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.util.GUILauncher;
 import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
@@ -83,8 +84,6 @@ import com.limegroup.gnutella.util.QueryUtils;
  * 
  */
 final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<LibraryPlaylistsTableModel, LibraryPlaylistsTableDataLine, PlaylistItem> {
-
-    private static final LibraryNameHolderRenderer LIBRARY_NAME_HOLDER_RENDERER = new LibraryNameHolderRenderer();
 
     private Playlist currentPlaylist;
 
@@ -321,7 +320,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         TABLE.setDefaultRenderer(PlaylistItemTrackProperty.class, new PlaylistItemPropertyRenderer());
         TABLE.setDefaultRenderer(PlaylistItemStringProperty.class, new PlaylistItemPropertyRenderer());
         TABLE.setDefaultRenderer(PlaylistItemStarProperty.class, new PlaylistItemStarRenderer());
-        TABLE.setDefaultRenderer(LibraryNameHolder.class, LIBRARY_NAME_HOLDER_RENDERER);
     }
 
     /**
@@ -351,6 +349,9 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
                 }
             }
         });
+        
+        tc = model.getColumn(LibraryPlaylistTableDataLine.ACTIONS_IDX);
+        tc.setCellEditor(new GenericCellEditor(new LibraryActionsRenderer()));
     }
 
     /**
