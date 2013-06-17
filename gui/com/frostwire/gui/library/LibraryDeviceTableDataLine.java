@@ -43,51 +43,57 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLine<FileDescriptor> {
 
     /**
+     * Play Column
+     */
+    static final int PLAY_IDX = 0;
+    private static final LimeTableColumn PLAY_COLUMN = new LimeTableColumn(PLAY_IDX, "DEVICE_TABLE_PLAY", I18n.tr("Play"), 20, true, false, false, PlayableIconCell.class);
+    
+    /**
      * Icon column
      */
-    static final int ICON_IDX = 0;
+    static final int ICON_IDX = 1;
     private static final LimeTableColumn ICON_COLUMN = new LimeTableColumn(ICON_IDX, "DEVICE_TABLE_ICON", I18n.tr("Icon"), 20, true, false, false, PlayableIconCell.class);
 
     /**
      * Title column
      */
-    static final int TITLE_IDX = 1;
+    static final int TITLE_IDX = 2;
     private static final LimeTableColumn TITLE_COLUMN = new LimeTableColumn(TITLE_IDX, "DEVICE_TABLE_TITLE", I18n.tr("Title"), 80, true, LibraryNameHolder.class);
 
     /**
      * Artist column
      */
-    static final int ARTIST_IDX = 2;
+    static final int ARTIST_IDX = 3;
     private static final LimeTableColumn ARTIST_COLUMN = new LimeTableColumn(ARTIST_IDX, "DEVICE_TABLE_ARTIST", I18n.tr("Artist"), 80, true, PlayableCell.class);
 
     /**
      * Album column
      */
-    static final int ALBUM_IDX = 3;
+    static final int ALBUM_IDX = 4;
     private static final LimeTableColumn ALBUM_COLUMN = new LimeTableColumn(ALBUM_IDX, "DEVICE_TABLE_ALBUM", I18n.tr("Album"), 120, true, PlayableCell.class);
 
     /**
      * Year column
      */
-    static final int YEAR_IDX = 4;
+    static final int YEAR_IDX = 5;
     private static final LimeTableColumn YEAR_COLUMN = new LimeTableColumn(YEAR_IDX, "DEVICE_TABLE_YEAR", I18n.tr("Year"), 30, false, PlayableCell.class);
 
     /**
      * Size column (in bytes)
      */
-    static final int SIZE_IDX = 5;
+    static final int SIZE_IDX = 6;
     private static final LimeTableColumn SIZE_COLUMN = new LimeTableColumn(SIZE_IDX, "DEVICE_TABLE_SIZE", I18n.tr("Size"), 80, false, PlayableCell.class);
 
-    static final int DATE_ADDED_IDX = 6;
+    static final int DATE_ADDED_IDX = 7;
     private static final LimeTableColumn DATE_ADDED_COLUMN = new LimeTableColumn(DATE_ADDED_IDX, "DEVICE_TABLE_DATE_ADDED", I18n.tr("Date Added"), 80, true, PlayableCell.class);
 
-    static final int DATE_MODIFIED_IDX = 7;
+    static final int DATE_MODIFIED_IDX = 8;
     private static final LimeTableColumn DATE_MODIFIED_COLUMN = new LimeTableColumn(DATE_MODIFIED_IDX, "DEVICE_TABLE_DATE_MODIFIED", I18n.tr("Date Modified"), 80, false, PlayableCell.class);
 
     /**
      * Total number of columns
      */
-    static final int NUMBER_OF_COLUMNS = 8;
+    static final int NUMBER_OF_COLUMNS = 9;
 
     /**
      * Number of columns
@@ -148,6 +154,8 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
     public Object getValueAt(int idx) {
         boolean playing = isPlaying();
         switch (idx) {
+        case PLAY_IDX:
+            return new PlayActionHolder(this, playing);
         case ICON_IDX:
             return new PlayableIconCell(getIcon(), playing);
         case TITLE_IDX:
@@ -184,6 +192,8 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
      */
     public LimeTableColumn getColumn(int idx) {
         switch (idx) {
+        case PLAY_IDX:
+            return PLAY_COLUMN;
         case ICON_IDX:
             return ICON_COLUMN;
         case TITLE_IDX:

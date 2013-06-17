@@ -96,6 +96,8 @@ import com.limegroup.gnutella.util.QueryUtils;
  */
 final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<LibraryFilesTableModel, LibraryFilesTableDataLine, File> {
 
+    private static final FileShareCellRenderer FILE_SHARE_CELL_RENDERER = new FileShareCellRenderer();
+    private static final LibraryNameHolderRenderer LIBRARY_NAME_HOLDER_RENDERER = new LibraryNameHolderRenderer();
     /**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
      */
@@ -154,15 +156,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             }
         });
 
-    }
-
-    @Override
-    protected void setDefaultRenderers() {
-        super.setDefaultRenderers();
-        TABLE.setDefaultRenderer(LibraryNameHolder.class, new LibraryNameHolderRenderer());
-        TABLE.setDefaultRenderer(PlayableIconCell.class, new PlayableIconCellRenderer());
-        TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
-        TABLE.setDefaultRenderer(FileShareCell.class, new FileShareCellRenderer());
     }
 
     /**
@@ -370,17 +363,23 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         TABLE.setDragEnabled(true);
         TABLE.setTransferHandler(new LibraryFilesTableTransferHandler(this));
     }
+    
+    @Override
+    protected void setDefaultRenderers() {
+        super.setDefaultRenderers();
+        TABLE.setDefaultRenderer(LibraryNameHolder.class, LIBRARY_NAME_HOLDER_RENDERER);
+        TABLE.setDefaultRenderer(PlayableIconCell.class, new PlayableIconCellRenderer());
+        TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
+        TABLE.setDefaultRenderer(FileShareCell.class, FILE_SHARE_CELL_RENDERER);
+    }
 
     /**
      * Sets the default editors.
      */
     protected void setDefaultEditors() {
         TableColumnModel model = TABLE.getColumnModel();
-        TableColumn tc = model.getColumn(LibraryFilesTableDataLine.NAME_IDX);
-        tc.setCellEditor(new LibraryNameHolderEditor());
-
-        tc = model.getColumn(LibraryFilesTableDataLine.SHARE_IDX);
-        tc.setCellEditor(new FileShareCellEditor());
+        TableColumn tc = model.getColumn(LibraryFilesTableDataLine.SHARE_IDX);
+        tc.setCellEditor(new FileShareCellEditor(new FileShareCellRenderer()));
     }
 
     /**

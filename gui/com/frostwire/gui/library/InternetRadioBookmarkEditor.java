@@ -22,14 +22,13 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.AbstractCellEditor;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.table.TableCellEditor;
 
 import com.frostwire.alexandria.InternetRadioStation;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.search.GenericCellEditor;
 
 /**
  * 
@@ -37,22 +36,19 @@ import com.limegroup.gnutella.gui.GUIMediator;
  * @author aldenml
  *
  */
-public class InternetRadioBookmarkEditor extends AbstractCellEditor implements TableCellEditor {
+public class InternetRadioBookmarkEditor extends GenericCellEditor {
 
 	private static final long serialVersionUID = 8617767980030779166L;
 	private static final Icon bookmarkedOn;
     private static final Icon bookmarkedOff;
    
     static {
-    	bookmarkedOn = GUIMediator.getThemeImage("radio_bookmarked_on");
-    	bookmarkedOff = GUIMediator.getThemeImage("radio_bookmarked_off");
+        	bookmarkedOn = GUIMediator.getThemeImage("radio_bookmarked_on");
+        	bookmarkedOff = GUIMediator.getThemeImage("radio_bookmarked_off");
     }
 
-    public InternetRadioBookmarkEditor() {
-    }
-
-    public Object getCellEditorValue() {
-        return null;
+    public InternetRadioBookmarkEditor(InternetRadioBookmarkRenderer renderer) {
+        super(renderer);
     }
 
     public Component getTableCellEditorComponent(final JTable table, final Object value, boolean isSelected, int row, int column) {

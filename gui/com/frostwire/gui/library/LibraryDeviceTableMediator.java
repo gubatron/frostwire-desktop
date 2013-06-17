@@ -37,14 +37,12 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.filters.TableLineFilter;
@@ -74,7 +72,9 @@ import com.limegroup.gnutella.util.QueryUtils;
  */
 public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<LibraryDeviceTableModel, LibraryDeviceTableDataLine, FileDescriptor> {
 
-    private static final Log LOG = LogFactory.getLog(LibraryDeviceTableMediator.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LibraryDeviceTableMediator.class);
+    private static final LibraryNameHolderRenderer LIBRARY_NAME_HOLDER_RENDERER = new LibraryNameHolderRenderer();
+
     /**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
      */
@@ -86,9 +86,6 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
     private FileDescriptorFilter FILE_DESCRIPTOR_FILTER;
 
-    /**
-     * instance, for singelton access
-     */
     private static LibraryDeviceTableMediator INSTANCE;
 
     public static LibraryDeviceTableMediator instance() {
@@ -205,15 +202,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         super.setDefaultRenderers();
         TABLE.setDefaultRenderer(PlayableIconCell.class, new PlayableIconCellRenderer());
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
-        TABLE.setDefaultRenderer(LibraryNameHolder.class, new LibraryNameHolderRenderer());
-    }
-
-    protected void setDefaultEditors() {
-        TableColumnModel model = TABLE.getColumnModel();
-        TableColumn tc;
-
-        tc = model.getColumn(LibraryDeviceTableDataLine.TITLE_IDX);
-        tc.setCellEditor(new LibraryNameHolderEditor());
+        TABLE.setDefaultRenderer(LibraryNameHolder.class, LIBRARY_NAME_HOLDER_RENDERER);
     }
 
     /**

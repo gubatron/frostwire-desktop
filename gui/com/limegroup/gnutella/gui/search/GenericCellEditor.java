@@ -31,7 +31,8 @@ import javax.swing.table.TableCellRenderer;
  *
  */
 public class GenericCellEditor extends AbstractCellEditor implements TableCellEditor {
-    private final TableCellRenderer renderer;
+    
+    protected final TableCellRenderer renderer;
 
     public GenericCellEditor(TableCellRenderer searchResultNameRenderer) {
         renderer = searchResultNameRenderer;

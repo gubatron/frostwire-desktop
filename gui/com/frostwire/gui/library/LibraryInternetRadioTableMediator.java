@@ -60,6 +60,7 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
+import com.limegroup.gnutella.gui.search.GenericCellEditor;
 import com.limegroup.gnutella.gui.tables.ActionIconAndNameEditor;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
@@ -79,6 +80,8 @@ import com.limegroup.gnutella.util.QueryUtils;
  */
 final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediator<LibraryInternetRadioTableModel, LibraryInternetRadioTableDataLine, InternetRadioStation> {
 
+    private static final InternetRadioBookmarkRenderer INTERNET_RADIO_BOOKMARK_RENDERER = new InternetRadioBookmarkRenderer();
+    private static final LibraryNameHolderRenderer LIBRARY_NAME_HOLDER_RENDERER = new LibraryNameHolderRenderer();
     private Action importRadioStationAction;
     private Action copyStreamUrlAction;
     private Action LAUNCH_ACTION;
@@ -212,8 +215,8 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
-        TABLE.setDefaultRenderer(InternetRadioBookmark.class, new InternetRadioBookmarkRenderer());
-        TABLE.setDefaultRenderer(LibraryNameHolder.class, new LibraryNameHolderRenderer());
+        TABLE.setDefaultRenderer(InternetRadioBookmark.class, INTERNET_RADIO_BOOKMARK_RENDERER);
+        TABLE.setDefaultRenderer(LibraryNameHolder.class, LIBRARY_NAME_HOLDER_RENDERER);
     }
 
     /**
@@ -229,7 +232,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         //Why not TABLE.setDefaultCellEditor(Clazz, EditorObj)???
 
         tc = model.getColumn(LibraryInternetRadioTableDataLine.BOOKMARKED_IDX);
-        tc.setCellEditor(new InternetRadioBookmarkEditor());
+        tc.setCellEditor(new InternetRadioBookmarkEditor(new InternetRadioBookmarkRenderer()));
 
         TABLE.addMouseMotionListener(new MouseMotionAdapter() {
             int currentCellColumn = -1;
@@ -249,9 +252,6 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
                 }
             }
         });
-        
-        tc = model.getColumn(LibraryInternetRadioTableDataLine.NAME_IDX);
-        tc.setCellEditor(new LibraryNameHolderEditor());
     }
 
     /**

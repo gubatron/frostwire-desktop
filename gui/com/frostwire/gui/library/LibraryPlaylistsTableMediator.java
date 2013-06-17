@@ -54,8 +54,8 @@ import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
-import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
@@ -83,6 +83,8 @@ import com.limegroup.gnutella.util.QueryUtils;
  * 
  */
 final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<LibraryPlaylistsTableModel, LibraryPlaylistsTableDataLine, PlaylistItem> {
+
+    private static final LibraryNameHolderRenderer LIBRARY_NAME_HOLDER_RENDERER = new LibraryNameHolderRenderer();
 
     private Playlist currentPlaylist;
 
@@ -319,7 +321,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         TABLE.setDefaultRenderer(PlaylistItemTrackProperty.class, new PlaylistItemPropertyRenderer());
         TABLE.setDefaultRenderer(PlaylistItemStringProperty.class, new PlaylistItemPropertyRenderer());
         TABLE.setDefaultRenderer(PlaylistItemStarProperty.class, new PlaylistItemStarRenderer());
-        TABLE.setDefaultRenderer(LibraryNameHolder.class, new LibraryNameHolderRenderer());
+        TABLE.setDefaultRenderer(LibraryNameHolder.class, LIBRARY_NAME_HOLDER_RENDERER);
     }
 
     /**
@@ -349,9 +351,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
                 }
             }
         });
-
-        tc = model.getColumn(LibraryPlaylistsTableDataLine.TITLE_IDX);
-        tc.setCellEditor(new LibraryNameHolderEditor());
     }
 
     /**

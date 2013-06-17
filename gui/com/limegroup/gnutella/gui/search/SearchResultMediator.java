@@ -187,13 +187,10 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         TableColumnModel model = TABLE.getColumnModel();
         TableColumn tc;
         tc = model.getColumn(SearchTableColumns.ACTIONS_IDX);
-        tc.setCellEditor(new GenericCellEditor(SEARCH_RESULT_ACTIONS_RENDERER));
-
-        tc = model.getColumn(SearchTableColumns.NAME_IDX);
-        tc.setCellEditor(new GenericCellEditor(SEARCH_RESULT_NAME_RENDERER));
+        tc.setCellEditor(new GenericCellEditor(new SearchResultActionsRenderer()));
 
         tc = model.getColumn(SearchTableColumns.SOURCE_IDX);
-        tc.setCellEditor(new GenericCellEditor(SOURCE_RENDERER));
+        tc.setCellEditor(new GenericCellEditor(new SourceRenderer()));
     }
 
 

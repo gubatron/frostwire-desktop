@@ -17,7 +17,7 @@ public class SourceHolder implements Comparable<SourceHolder> {
     public SourceHolder(UISearchResult uiSearchResult) {
         this.uiSearchResult = uiSearchResult;
         this.sourceName = uiSearchResult.getSource();
-        this.sourceNameHTML = "<html><nobr><a href=\"#\">" + sourceName + "</a></nobr></html>";
+        this.sourceNameHTML = "<html><div width=\"1000000px\"><nobr><a href=\"#\">" + sourceName + "</a></nobr></div></html>";
         this.sourceURL  = uiSearchResult.getSearchResult().getDetailsUrl();
     }
 

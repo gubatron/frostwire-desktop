@@ -22,12 +22,13 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.AbstractCellEditor;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 
 import com.frostwire.gui.Librarian;
+import com.limegroup.gnutella.gui.search.GenericCellEditor;
 
 /**
  * 
@@ -35,55 +36,55 @@ import com.frostwire.gui.Librarian;
  * @author aldenml
  *
  */
-public class FileShareCellEditor extends AbstractCellEditor implements TableCellEditor {
+public class FileShareCellEditor extends GenericCellEditor {
+
 
     private static final long serialVersionUID = -1754077059065368054L;
 
-    public FileShareCellEditor() {
-    }
-
-    public Object getCellEditorValue() {
-        return null;
+    public FileShareCellEditor(TableCellRenderer fileShareCellRenderer) {
+        super(fileShareCellRenderer);
     }
 
     public Component getTableCellEditorComponent(final JTable table, final Object value, boolean isSelected, int row, int column) {
         final FileShareCell cell = (FileShareCell) value;
 
-        final JLabel component = (JLabel) new FileShareCellRenderer().getTableCellRendererComponent(table, value, isSelected, true, row, column);
-        component.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                String path = cell.getPath();
-                int state = Librarian.instance().getFileShareState(path);
-                switch (state) {
-                case Librarian.FILE_STATE_UNSHARED:
-                    cell.getDataLine().setShared(true);
-                    Librarian.instance().shareFile(path, true);
-                    component.setIcon(LibraryUtils.FILE_SHARING_ICON);
-                    break;
-                case Librarian.FILE_STATE_SHARING: //nothing to do for now
-                    break;
-                case Librarian.FILE_STATE_SHARED:
-                    cell.getDataLine().setShared(false);
-                    Librarian.instance().shareFile(path, false);
-                    component.setIcon(LibraryUtils.FILE_UNSHARED_ICON);
+        final JLabel component = (JLabel) renderer.getTableCellRendererComponent(table, value, isSelected, true, row, column);
+        if (component.getMouseListeners() == null) {
+            component.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    String path = cell.getPath();
+                    int state = Librarian.instance().getFileShareState(path);
+                    switch (state) {
+                    case Librarian.FILE_STATE_UNSHARED:
+                        cell.getDataLine().setShared(true);
+                        Librarian.instance().shareFile(path, true);
+                        component.setIcon(LibraryUtils.FILE_SHARING_ICON);
+                        break;
+                    case Librarian.FILE_STATE_SHARING: //nothing to do for now
+                        break;
+                    case Librarian.FILE_STATE_SHARED:
+                        cell.getDataLine().setShared(false);
+                        Librarian.instance().shareFile(path, false);
+                        component.setIcon(LibraryUtils.FILE_UNSHARED_ICON);
+                    }
+                    
+                    if (table.isEditing()) {
+                        TableCellEditor editor = table.getCellEditor();
+                        editor.cancelCellEditing();
+                    }
                 }
-                
-                if (table.isEditing()) {
-                    TableCellEditor editor = table.getCellEditor();
-                    editor.cancelCellEditing();
+            });
+            component.addMouseMotionListener(new MouseAdapter() {
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    if (table.isEditing()) {
+                        TableCellEditor editor = table.getCellEditor();
+                        editor.cancelCellEditing();
+                    }
                 }
-            }
-        });
-        component.addMouseMotionListener(new MouseAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                if (table.isEditing()) {
-                    TableCellEditor editor = table.getCellEditor();
-                    editor.cancelCellEditing();
-                }
-            }
-        });
+            });
+        }
 
         component.setIcon(FileShareCellRenderer.getNextFileShareStateIcon(cell.getPath()));
 

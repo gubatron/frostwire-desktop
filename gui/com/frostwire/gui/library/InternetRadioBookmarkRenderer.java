@@ -39,11 +39,10 @@ class InternetRadioBookmarkRenderer extends DefaultTableCellRenderer {
     private static final Icon bookmarkedOn;
     private static final Icon bookmarkedOff;
     private static final Icon speaker;
-   
 
     static {
-    	bookmarkedOn = GUIMediator.getThemeImage("radio_bookmarked_on");
-    	bookmarkedOff = GUIMediator.getThemeImage("radio_bookmarked_off");
+    	    bookmarkedOn = GUIMediator.getThemeImage("radio_bookmarked_on");
+    	    bookmarkedOff = GUIMediator.getThemeImage("radio_bookmarked_off");
         speaker = GUIMediator.getThemeImage("speaker");
     }
 

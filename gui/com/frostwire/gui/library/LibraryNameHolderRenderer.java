@@ -18,22 +18,15 @@
 
 package com.frostwire.gui.library;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.plaf.TableUI;
-import javax.swing.table.TableCellRenderer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,9 +36,9 @@ import com.frostwire.gui.player.DeviceMediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
-import com.frostwire.gui.theme.SkinTableUI;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.search.FWAbstractJPanelTableCellRenderer;
 
 /**
  * 
@@ -53,7 +46,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
  * @author aldenml
  * 
  */
-public final class LibraryNameHolderRenderer extends JPanel implements TableCellRenderer {
+public final class LibraryNameHolderRenderer extends FWAbstractJPanelTableCellRenderer { //extends JPanel implements TableCellRenderer {
 
     private static final Logger LOG = LoggerFactory.getLogger(LibraryNameHolderRenderer.class);
 
@@ -65,21 +58,6 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
 
     public LibraryNameHolderRenderer() {
         setupUI();
-    }
-
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        this.setData((LibraryNameHolder) value, table, row, column);
-        this.setOpaque(true);
-        this.setEnabled(table.isEnabled());
-
-        if (isSelected) { 
-            this.setBackground(ThemeMediator.TABLE_SELECTED_BACKGROUND_ROW_COLOR);
-        } else {
-            this.setBackground(row % 2 == 1 ? ThemeMediator.TABLE_ALTERNATE_ROW_COLOR : Color.WHITE);
-        }
-
-        return this;
     }
 
     private void setupUI() {
@@ -176,34 +154,23 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
         }
     }
 
-    private void setData(LibraryNameHolder value, JTable table, int row, int column) {
+    @Override
+    protected void updateUIData(Object dataHolder, JTable table, int row, int column) {
         try {
+            LibraryNameHolder value = (LibraryNameHolder) dataHolder;
             libraryNameHolder = value;
             labelText.setText(value.getLocaleString());
+            labelText.setVisible(true);
 
             boolean showButtons = mouseIsOverRow(table, row);
             labelPlay.setVisible(showButtons && !isSourceBeingPlayed() && isPlayableDataLine());
             labelDownload.setVisible(showButtons && isDownloadableFromOtherDevice());
             setFontColor(libraryNameHolder.isPlaying(), table, row, column);
 
-            syncFont(table, labelText);
+            syncFontSize(table, labelText);
         } catch (Throwable e) {
             LOG.warn("Error puting data in name holder renderer");
         }
-    }
-
-    private boolean mouseIsOverRow(JTable table, int row) {
-        boolean mouseOver = false;
-
-        try {
-            TableUI ui = table.getUI();
-            if (ui instanceof SkinTableUI) {
-                mouseOver = ((SkinTableUI) ui).getRowAtMouse() == row;
-            }
-        } catch (Throwable e) {
-            // ignore
-        }
-        return mouseOver;
     }
 
     private boolean isDownloadableFromOtherDevice() {
@@ -256,13 +223,6 @@ public final class LibraryNameHolderRenderer extends JPanel implements TableCell
             labelText.setForeground(ThemeMediator.PLAYING_DATA_LINE_COLOR);
         } else {
             labelText.setForeground(table.getForeground());
-        }
-    }
-
-    private void syncFont(JTable table, JComponent c) {
-        Font tableFont = table.getFont();
-        if (tableFont != null && !tableFont.equals(c.getFont())) {
-            c.setFont(tableFont);
         }
     }
 }

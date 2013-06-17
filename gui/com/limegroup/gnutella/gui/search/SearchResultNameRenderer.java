@@ -54,8 +54,7 @@ public final class SearchResultNameRenderer extends FWAbstractJPanelTableCellRen
 
     private void setData(SearchResultNameHolder value, JTable table, int row) {
         labelText.setText(value.getLocaleString());
-        labelText.setFont(table.getFont());
-        syncFont(table, labelText);
+        syncFontSize(table, labelText);
     }
 
     @Override

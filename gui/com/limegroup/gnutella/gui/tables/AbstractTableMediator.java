@@ -404,6 +404,11 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
     /**
      * Intended for setting up default editors.  By default,
      * no editors are added.
+     * 
+     * Important: Make sure to NOT REUSE Renderers used for non-editable cells.
+     * It's necessary for editors to have their own Renderer instance, otherwise
+     * you might get issues painting on editable cells. -gubatron
+     * 
      */
     protected void setDefaultEditors() {
     }
