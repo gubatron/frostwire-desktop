@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011, 2012, 2013, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,17 +18,23 @@
 
 package com.frostwire.gui.library;
 
-public class PlaylistItemIntProperty extends PlaylistItemProperty<PlaylistItemIntProperty> {
-    
-    protected final String stringValue;
-    protected final int intValue;
-    
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+class PlaylistItemIntProperty extends PlaylistItemProperty<PlaylistItemIntProperty> {
+
+    private final String stringValue;
+    private final int intValue;
+
     public PlaylistItemIntProperty(LibraryPlaylistsTableDataLine line, int value, boolean playing, boolean exists) {
         super(line, playing, exists);
         intValue = value;
-        stringValue = String.valueOf(value);
+        stringValue = value > 0 ? String.valueOf(value) : "";
     }
-    
+
     public PlaylistItemIntProperty(LibraryPlaylistsTableDataLine line, String stringValue, int intValue, boolean playing, boolean exists) {
         super(line, playing, exists);
         this.intValue = intValue;
@@ -44,5 +50,4 @@ public class PlaylistItemIntProperty extends PlaylistItemProperty<PlaylistItemIn
     public String getStringValue() {
         return stringValue;
     }
-
 }

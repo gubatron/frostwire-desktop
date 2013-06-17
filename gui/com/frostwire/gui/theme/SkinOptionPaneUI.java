@@ -50,13 +50,4 @@ public class SkinOptionPaneUI extends SynthOptionPaneUI {
             ThemeMediator.fixKeyStrokes((JTextField) msg);
         }
     }
-
-    @Override
-    protected void resetInputValue() {
-        if (inputComponent != null && (inputComponent instanceof JTextField)) {
-            //optionPane.setInputValue(((JTextField) inputComponent).getText());
-        } else {
-            super.resetInputValue();
-        }
-    }
 }
