@@ -58,15 +58,18 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
         updateUIData(value, table, row, column);
         setOpaque(true);
         setEnabled(table.isEnabled());
+        updateRowBackgroundColor(isSelected, row);
+        initializeDefaultMouseListeners(table);
+        return this;
+    }
 
+
+    private void updateRowBackgroundColor(boolean isSelected, int row) {
         if (isSelected) {
             setBackground(ThemeMediator.TABLE_SELECTED_BACKGROUND_ROW_COLOR);
         } else {
             setBackground(row % 2 == 1 ? ThemeMediator.TABLE_ALTERNATE_ROW_COLOR : Color.WHITE);
         }
-        
-        initializeDefaultMouseListeners(table);
-        return this;
     }
 
 
@@ -105,7 +108,7 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
                 mouseOver = ((SkinTableUI) ui).getRowAtMouse() == row;
             }
         } catch (Throwable e) {
-            // ignore
+            //e.printStackTrace();
         }
         return mouseOver;
     }

@@ -82,6 +82,8 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
      */
     static final int MODIFICATION_TIME_IDX = 7;
 
+    private static final SizeHolder ZERO_SIZED_HOLDER = new SizeHolder(0);
+
     /**
      * Add the columns to static array _in the proper order_.
      * The *_IDX variables above need to match the corresponding
@@ -170,16 +172,11 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         // only load file sizes, do nothing for directories
         // directories implicitly set SizeHolder to null and display nothing
         if (initializer.isFile()) {
-            long oldSize = _size;
             _size = initializer.length();
-            if (oldSize != _size) {
-                _sizeHolder = new SizeHolder(_size);
-            }
-
+            _sizeHolder = new SizeHolder(_size);
             shared = Librarian.instance().isFileShared(initializer.getAbsolutePath());
-
         } else if (initializer.isDirectory()) {
-            _sizeHolder = new SizeHolder(0);
+            _sizeHolder = ZERO_SIZED_HOLDER;
         }
 
         this.lastModified = new Date(initializer.lastModified());
@@ -208,10 +205,11 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
      *          the list
      */
     public Object getValueAt(int idx) {
+        try {
         boolean isPlaying = isPlaying();
         switch (idx) {
         case ACTIONS_IDX:
-            actionsHolder.setPlaying(isPlaying());
+            actionsHolder.setPlaying(isPlaying);
             return actionsHolder;
         case ICON_IDX:
             return new PlayableIconCell(getIcon(), isPlaying);
@@ -227,6 +225,9 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
             return new PlayableCell(this, lastModified, lastModified.toString(), isPlaying, idx);
         case SHARE_IDX:
             return new FileShareCell(this, initializer.getAbsolutePath(), shared);
+        }
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
         return null;
     }

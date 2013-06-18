@@ -76,7 +76,7 @@ final class LibraryFilesTableModel extends HashBasedDataLineModel<LibraryFilesTa
     }
 
     /**
-     * OVerride default so new ones get added to the end
+     * Override default so new ones get added to the end
      */
     @Override
     public int add(File o) {
