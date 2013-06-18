@@ -39,82 +39,86 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
     static final int SORT_INDEX_IDX = 0;
     private static final LimeTableColumn SORT_INDEX_COLUMN = new LimeTableColumn(SORT_INDEX_IDX, "PLAYLIST_TABLE_SORT_INDEX", I18n.tr("Index"), 30, true, false, false, PlaylistItemStringProperty.class);
 
+    
+    static final int ACTIONS_IDX = 1;
+    private static final LimeTableColumn ACTIONS_COLUMN = new LimeTableColumn(ACTIONS_IDX, "PLAYLIST_TABLE_ACTIONS", I18n.tr("Actions"),36,true, false, false, LibraryActionsHolder.class);
+    
     /**
      * Starred column
      */
-    static final int STARRED_IDX = 1;
+    static final int STARRED_IDX = 2;
     private static final LimeTableColumn STARRED_COLUMN = new LimeTableColumn(STARRED_IDX, "PLAYLIST_TABLE_STARRED", I18n.tr("Starred"), 20, true, false, false, PlaylistItemStarProperty.class);
 
     /**
      * Title column
      */
-    static final int TITLE_IDX = 2;
+    static final int TITLE_IDX = 3;
     private static final LimeTableColumn TITLE_COLUMN = new LimeTableColumn(TITLE_IDX, "PLAYLIST_TABLE_TITLE", I18n.tr("Title"), 80, true, NameHolder.class);
 
     /**
      * Artist column
      */
-    static final int ARTIST_IDX = 3;
+    static final int ARTIST_IDX = 4;
     private static final LimeTableColumn ARTIST_COLUMN = new LimeTableColumn(ARTIST_IDX, "PLAYLIST_TABLE_ARTIST", I18n.tr("Artist"), 80, true, PlaylistItemStringProperty.class);
 
     /**
      * Length column (in hour:minutes:seconds format)
      */
-    static final int LENGTH_IDX = 4;
+    static final int LENGTH_IDX = 5;
     private static final LimeTableColumn LENGTH_COLUMN = new LimeTableColumn(LENGTH_IDX, "PLAYLIST_TABLE_LENGTH", I18n.tr("Length"), 150, true, PlaylistItemStringProperty.class);
 
     /**
      * Album column
      */
-    static final int ALBUM_IDX = 5;
+    static final int ALBUM_IDX = 6;
     private static final LimeTableColumn ALBUM_COLUMN = new LimeTableColumn(ALBUM_IDX, "PLAYLIST_TABLE_ALBUM", I18n.tr("Album"), 120, true, PlaylistItemStringProperty.class);
 
     /**
      * Track column
      */
-    static final int TRACK_IDX = 6;
+    static final int TRACK_IDX = 7;
     private static final LimeTableColumn TRACK_COLUMN = new LimeTableColumn(TRACK_IDX, "PLAYLIST_TABLE_TRACK", I18n.tr("Track"), 20, true, PlaylistItemTrackProperty.class);
 
     /**
      * Genre column
      */
-    static final int GENRE_IDX = 7;
+    static final int GENRE_IDX = 8;
     private static final LimeTableColumn GENRE_COLUMN = new LimeTableColumn(GENRE_IDX, "PLAYLIST_TABLE_GENRE", I18n.tr("Genre"), 80, true, PlaylistItemStringProperty.class);
 
     /**
      * Bitrate column info
      */
-    static final int BITRATE_IDX = 8;
+    static final int BITRATE_IDX = 9;
     private static final LimeTableColumn BITRATE_COLUMN = new LimeTableColumn(BITRATE_IDX, "PLAYLIST_TABLE_BITRATE", I18n.tr("Bitrate"), 60, true, PlaylistItemBitRateProperty.class);
 
     /**
      * Comment column info
      */
-    static final int COMMENT_IDX = 9;
+    static final int COMMENT_IDX = 10;
     private static final LimeTableColumn COMMENT_COLUMN = new LimeTableColumn(COMMENT_IDX, "PLAYLIST_TABLE_COMMENT", I18n.tr("Comment"), 20, false, PlaylistItemStringProperty.class);
 
     /**
      * Size column (in bytes)
      */
-    static final int SIZE_IDX = 10;
+    static final int SIZE_IDX = 11;
     private static final LimeTableColumn SIZE_COLUMN = new LimeTableColumn(SIZE_IDX, "PLAYLIST_TABLE_SIZE", I18n.tr("Size"), 80, false, PlaylistItemStringProperty.class);
 
     /**
      * TYPE column
      */
-    static final int TYPE_IDX = 11;
+    static final int TYPE_IDX = 12;
     private static final LimeTableColumn TYPE_COLUMN = new LimeTableColumn(TYPE_IDX, "PLAYLIST_TABLE_TYPE", I18n.tr("Type"), 40, true, PlaylistItemStringProperty.class);
 
     /**
      * Year column
      */
-    static final int YEAR_IDX = 12;
+    static final int YEAR_IDX = 13;
     private static final LimeTableColumn YEAR_COLUMN = new LimeTableColumn(YEAR_IDX, "PLAYLIST_TABLE_YEAR", I18n.tr("Year"), 30, false, PlaylistItemStringProperty.class);
 
     /**
      * Total number of columns
      */
-    static final int NUMBER_OF_COLUMNS = 13;
+    static final int NUMBER_OF_COLUMNS = 14;
 
     /**
      * Number of columns
@@ -147,18 +151,24 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
         }
 
         this.nameCell = new NameHolder(initializer.getTrackTitle());
+        this.actionsHolder = new LibraryActionsHolder(this, false);
     }
 
     private NameHolder nameCell;
+    private LibraryActionsHolder actionsHolder;
 
     /**
      * Returns the value for the specified index.
      */
     public Object getValueAt(int idx) {
         boolean playing = isPlaying();
+        
         switch (idx) {
         case SORT_INDEX_IDX:
             return new PlaylistItemIntProperty(this, initializer.getSortIndex(), playing, exists);
+        case ACTIONS_IDX:
+            actionsHolder.setPlaying(playing);
+            return actionsHolder;
         case STARRED_IDX:
             return new PlaylistItemStarProperty(this, playing, exists);
         case ALBUM_IDX:
@@ -202,6 +212,8 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
         switch (idx) {
         case SORT_INDEX_IDX:
             return SORT_INDEX_COLUMN;
+        case ACTIONS_IDX:
+            return ACTIONS_COLUMN;
         case STARRED_IDX:
             return STARRED_COLUMN;
         case ALBUM_IDX:

@@ -40,7 +40,7 @@ class PlaylistItemPropertyRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         PlaylistItemProperty<?> property = (PlaylistItemProperty<?>) value;
         super.getTableCellRendererComponent(table, property.getStringValue(), isSelected, hasFocus, row, column);
-        setFontColor(property.isPlaying(), property.exists(), table, row, column);
+        //setFontColor(property.isPlaying(), property.exists(), table, row, column);
         return this;
     }
 

@@ -18,8 +18,8 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import com.frostwire.gui.LocaleLabel.LocaleString;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
+import com.limegroup.gnutella.gui.tables.NameHolder;
 
 /**
  * 
@@ -27,19 +27,17 @@ import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
  * @author aldenml
  * 
  */
-public final class SearchResultNameHolder implements Comparable<SearchResultNameHolder> {
+public final class SearchResultNameHolder extends NameHolder {
 
     private final UISearchResult sr;
     private final String displayName;
-    private final String html;
-    private final LocaleString localeString;
 
     public SearchResultNameHolder(final UISearchResult sr) {
+        super(buildHTMLString(sr));
         this.sr = sr;
         this.displayName = sr.getDisplayName();
-        this.html = "<html><div width=\"1000000px\">" + simpleHighlighter(sr.getQuery(), displayName) + "</div></html>";
-        this.localeString = new LocaleString(html);
     }
+    
 
     public int compareTo(SearchResultNameHolder o) {
         return AbstractTableMediator.compare(sr.getDisplayName(), o.sr.getDisplayName());
@@ -49,19 +47,15 @@ public final class SearchResultNameHolder implements Comparable<SearchResultName
         return sr;
     }
 
-    public String getHtml() {
-        return html;
-    }
-
-    public LocaleString getLocaleString() {
-        return localeString;
-    }
-
     public String toString() {
         return displayName;
     }
+    
+    private static String buildHTMLString(UISearchResult sr) {
+        return "<html><div width=\"1000000px\">" + simpleHighlighter(sr.getQuery(), sr.getDisplayName()) + "</div></html>";
+    }
 
-    private String simpleHighlighter(String query, String str) {
+    private static String simpleHighlighter(String query, String str) {
         if (!query.isEmpty()) {
             for (String token : query.split("\\s+")) {
                 StringBuilder sb = new StringBuilder(2 * str.length());

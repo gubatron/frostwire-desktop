@@ -27,6 +27,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.table.TableCellEditor;
 
 import com.frostwire.gui.AlphaIcon;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -111,6 +112,7 @@ public abstract class AbstractActionsRenderer extends FWAbstractJPanelTableCellR
     
 
     private void updatePlayButton() {
+        cancelEdit();
         labelPlay.setIcon((actionsHolder.isPlaying()) ? GUIMediator.getThemeImage("speaker") : (showSolid) ? play_solid : play_transparent);
     }
 

@@ -37,6 +37,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.util.FilenameUtils;
@@ -59,6 +61,7 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
+import com.limegroup.gnutella.gui.search.GenericCellEditor;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.LibrarySettings;
@@ -201,6 +204,16 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         super.setDefaultRenderers();
         TABLE.setDefaultRenderer(PlayableIconCell.class, new PlayableIconCellRenderer());
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
+    }
+    
+    @Override
+    protected void setDefaultEditors() {
+        super.setDefaultEditors();
+        TableColumnModel model = TABLE.getColumnModel();
+        TableColumn tc;
+
+        tc = model.getColumn(LibraryDeviceTableDataLine.ACTIONS_IDX);
+        tc.setCellEditor(new GenericCellEditor(new LibraryActionsRenderer()));
     }
 
     /**

@@ -50,8 +50,11 @@ import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
  */
 abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implements TableCellRenderer {
 
+    private JTable table; 
+    
     @Override
     public Component getTableCellRendererComponent(final JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        this.table = table;
         updateUIData(value, table, row, column);
         setOpaque(true);
         setEnabled(table.isEnabled());
@@ -72,14 +75,24 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
             addMouseMotionListener(new MouseAdapter() {
                 @Override
                 public void mouseMoved(MouseEvent e) {
-                    if (table.isEditing()) {
-                        TableCellEditor editor = table.getCellEditor();
-                        editor.cancelCellEditing();
-                    }
+                    cancelEdit();
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    cancelEdit();
                 }
             });
         }
     }
+
+    protected void cancelEdit() {
+        if (table!= null && table.isEditing()) {
+            TableCellEditor editor = table.getCellEditor();
+            editor.cancelCellEditing();
+        }
+    }
+
     
     protected abstract void updateUIData(Object dataHolder, JTable table, int row, int column);
 

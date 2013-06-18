@@ -350,7 +350,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             }
         });
         
-        tc = model.getColumn(LibraryPlaylistTableDataLine.ACTIONS_IDX);
+        tc = model.getColumn(LibraryPlaylistsTableDataLine.ACTIONS_IDX);
         tc.setCellEditor(new GenericCellEditor(new LibraryActionsRenderer()));
     }
 

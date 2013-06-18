@@ -60,6 +60,7 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
+import com.limegroup.gnutella.gui.search.GenericCellEditor;
 import com.limegroup.gnutella.gui.tables.ActionIconAndNameEditor;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
@@ -249,6 +250,9 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
                 }
             }
         });
+        
+        tc = model.getColumn(LibraryInternetRadioTableDataLine.ACTIONS_IDX);
+        tc.setCellEditor(new GenericCellEditor(new LibraryActionsRenderer()));
     }
 
     /**

@@ -146,9 +146,11 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
         this.dateModified = new Date(initializer.dateModified * 1000);
         
         this.nameCell = new NameHolder(initializer.title);
+        this.actionsHolder = new LibraryActionsHolder(this, false);
     }
     
     private NameHolder nameCell;
+    private LibraryActionsHolder actionsHolder;
 
     /**
      * Returns the value for the specified index.
@@ -157,7 +159,8 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
         boolean playing = isPlaying();
         switch (idx) {
         case ACTIONS_IDX:
-            return new LibraryActionsHolder(this, playing);
+            actionsHolder.setPlaying(playing);
+            return actionsHolder;
         case ICON_IDX:
             return new PlayableIconCell(getIcon(), playing);
         case TITLE_IDX:

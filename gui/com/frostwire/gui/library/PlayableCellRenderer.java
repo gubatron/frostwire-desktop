@@ -23,8 +23,6 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.frostwire.gui.theme.ThemeMediator;
-
 /**
  *  Creates both a renderer and an editor for cells in the playlist table that display the name
  *  of the file being played.
@@ -41,13 +39,15 @@ class PlayableCellRenderer extends DefaultTableCellRenderer {
         PlayableCell cell = (PlayableCell) value;
 
         super.getTableCellRendererComponent(table, cell.toString(), isSelected, hasFocus, row, column);
-        setFontColor(cell.isPlaying(), table, row, column);
+        //setFontColor(cell.isPlaying(), table, row, column);
         return this;
     }
 
     /**
-     * Check what font color to use if this song is playing. 
+     * Check what font color to use if this song is playing.
+     * We used to color rows differently when they were playing. 
      */
+    /*
     private void setFontColor(boolean isPlaying, JTable table, int row, int column) {
         if (isPlaying) {
             setForeground(ThemeMediator.PLAYING_DATA_LINE_COLOR);
@@ -55,4 +55,5 @@ class PlayableCellRenderer extends DefaultTableCellRenderer {
             setForeground(table.getForeground());
         }
     }
+    */
 }

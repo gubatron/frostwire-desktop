@@ -19,15 +19,11 @@
 package com.limegroup.gnutella.gui.tables;
 
 import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 
 import com.frostwire.gui.LocaleLabel;
 import com.limegroup.gnutella.gui.search.FWAbstractJPanelTableCellRenderer;
-import com.limegroup.gnutella.gui.search.SearchResultNameHolder;
 
 /**
  * 

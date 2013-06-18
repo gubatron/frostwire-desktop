@@ -42,13 +42,11 @@ class PlaylistItemStarRenderer extends DefaultTableCellRenderer {
 
     private static final Icon starOn;
     private static final Icon starOff;
-    private static final Icon speaker;
     private static final Icon exclamation;
 
     static {
         starOn = GUIMediator.getThemeImage("star_on");
         starOff = GUIMediator.getThemeImage("star_off");
-        speaker = GUIMediator.getThemeImage("speaker");
         exclamation = GUIMediator.getThemeImage("exclamation");
     }
 
@@ -59,29 +57,27 @@ class PlaylistItemStarRenderer extends DefaultTableCellRenderer {
         final LibraryPlaylistsTableDataLine line = ((PlaylistItemProperty<?>) value).getLine();
         final PlaylistItemProperty<?> cell = (PlaylistItemProperty<?>) value;
 
-        setIcon(cell.isPlaying(), line.getPlayListItem().isStarred(), cell.exists());
+        setIcon(line.getPlayListItem().isStarred(), cell.exists());
 
         final JLabel component = (JLabel) super.getTableCellRendererComponent(table, null, isSelected, hasFocus, row, column);
         component.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                setIcon(false, line.getPlayListItem().isStarred(), cell.exists());
+                setIcon(line.getPlayListItem().isStarred(), cell.exists());
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                setIcon(cell.isPlaying(), line.getPlayListItem().isStarred(), cell.exists());
+                setIcon(line.getPlayListItem().isStarred(), cell.exists());
             }
         });
 
         return component;
     }
 
-    private void setIcon(boolean playing, boolean starred, boolean exists) {
+    private void setIcon(boolean starred, boolean exists) {
         if (!exists) {
             setIcon(exclamation);
-        } else if (playing) {
-            setIcon(speaker);
         } else if (starred) {
             setIcon(starOn);
         } else {

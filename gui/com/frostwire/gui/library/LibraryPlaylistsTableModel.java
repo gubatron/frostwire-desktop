@@ -163,6 +163,6 @@ final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPla
 	 *         <code>false</code> otherwise
 	 */
 	public boolean isCellEditable(int row, int col) {
-	    return col == LibraryPlaylistsTableDataLine.STARRED_IDX || col == LibraryPlaylistsTableDataLine.TITLE_IDX;
+	    return col == LibraryPlaylistsTableDataLine.STARRED_IDX || col == LibraryPlaylistsTableDataLine.ACTIONS_IDX;
 	}
 }

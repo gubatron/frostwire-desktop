@@ -38,12 +38,10 @@ class InternetRadioBookmarkRenderer extends DefaultTableCellRenderer {
 
     private static final Icon bookmarkedOn;
     private static final Icon bookmarkedOff;
-    private static final Icon speaker;
 
     static {
-    	    bookmarkedOn = GUIMediator.getThemeImage("radio_bookmarked_on");
-    	    bookmarkedOff = GUIMediator.getThemeImage("radio_bookmarked_off");
-        speaker = GUIMediator.getThemeImage("speaker");
+        bookmarkedOn = GUIMediator.getThemeImage("radio_bookmarked_on");
+        bookmarkedOff = GUIMediator.getThemeImage("radio_bookmarked_off");
     }
 
     public InternetRadioBookmarkRenderer() {
@@ -51,31 +49,26 @@ class InternetRadioBookmarkRenderer extends DefaultTableCellRenderer {
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         final LibraryInternetRadioTableDataLine line = ((InternetRadioBookmark) value).getLine();
-        final InternetRadioBookmark cell = (InternetRadioBookmark) value;
 
-        setIcon(cell.isPlaying(), line.getInitializeObject().isBookmarked());
+        setIcon(line.getInitializeObject().isBookmarked());
 
         final JLabel component = (JLabel) super.getTableCellRendererComponent(table, null, isSelected, hasFocus, row, column);
         component.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                setIcon(false, line.getInitializeObject().isBookmarked());
+                setIcon(line.getInitializeObject().isBookmarked());
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                setIcon(cell.isPlaying(), line.getInitializeObject().isBookmarked());
+                setIcon(line.getInitializeObject().isBookmarked());
             }
         });
 
         return component;
     }
 
-    private void setIcon(boolean playing, boolean bookmarked) {
-    	if (playing) {
-            setIcon(speaker);
-        } else {
-            setIcon((bookmarked) ? bookmarkedOn : bookmarkedOff);
-        }
+    private void setIcon(boolean bookmarked) {
+        setIcon((bookmarked) ? bookmarkedOn : bookmarkedOff);
     }
 }
