@@ -70,12 +70,10 @@ final class SearchTabbedPane extends JTabbedPane {
     public void switchToTabByOffset(int offset) {
       int oldIndex = (getSelectedIndex()<0) ? 0 : getSelectedIndex();
       int newIndex = (oldIndex+offset) % getTabCount();
-      
       //java's modulo will return negative numbers... damn you Gosling.
       if (newIndex < 0) {
           newIndex += getTabCount();
       }
-      System.out.println("(" + oldIndex + "+" + offset + ") % " + " + " + getTabCount() + ") => " + newIndex);
       setSelectedIndex(newIndex);  
     }
 
