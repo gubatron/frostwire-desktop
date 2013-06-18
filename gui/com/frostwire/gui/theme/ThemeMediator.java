@@ -27,6 +27,7 @@ import java.awt.Frame;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Method;
 
@@ -221,6 +222,7 @@ public final class ThemeMediator {
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
                 // handle Ctrl+- for font change in tables
+                //System.out.println(e.getSource());
                 if (e.getID() == KeyEvent.KEY_PRESSED && (e.isMetaDown() || e.isControlDown())) {
                     switch (e.getKeyCode()) {
                     case KeyEvent.VK_EQUALS:
@@ -239,18 +241,24 @@ public final class ThemeMediator {
                         modifyTablesFont(0);
                         return true;
                     case KeyEvent.VK_W:
-                        closeCurrentSearchTab();
+                        closeCurrentSearchTab(e);
                     }
+                    
                 }
                 return false;
             }
         });
     }
 
-    private static void closeCurrentSearchTab() {
-        SearchDownloadTab searchTab = (SearchDownloadTab) GUIMediator.instance().getTab(Tabs.SEARCH);
-        if (searchTab.getComponent().isVisible()) {
-            SearchMediator.getSearchResultDisplayer().closeCurrentTab();
+    private static void closeCurrentSearchTab(KeyEvent e) {
+        if (e.getSource() instanceof Component) {
+            Window eventParentWindow = SwingUtilities.getWindowAncestor((Component) e.getSource());
+            if (GUIMediator.getAppFrame().equals(eventParentWindow)) {
+                SearchDownloadTab searchTab = (SearchDownloadTab) GUIMediator.instance().getTab(Tabs.SEARCH);
+                if (searchTab.getComponent().isVisible()) {
+                    SearchMediator.getSearchResultDisplayer().closeCurrentTab();
+                }
+            }
         }
     }
 
