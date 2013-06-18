@@ -86,6 +86,7 @@ final class SearchOptionsPanel extends JPanel {
 
     public void updateFiltersPanel() {
         generalFilter = new GeneralResultFilter(resultPanel, sliderSeeds, sliderSize, textFieldKeywords);
+        resultPanel.filterChanged(new SearchEngineFilter(), 0);
         resultPanel.filterChanged(generalFilter, 1);
     }
 
@@ -209,7 +210,7 @@ final class SearchOptionsPanel extends JPanel {
     }
 
     private void sliderSeeds_stateChanged(ChangeEvent e) {
-        System.out.println(sliderSeeds.getLowerValue() + " - " + sliderSeeds.getUpperValue());
+        //System.out.println(sliderSeeds.getLowerValue() + " - " + sliderSeeds.getUpperValue());
         if (generalFilter != null) {
             generalFilter.setRangeSeeds(sliderSeeds.getLowerValue(), sliderSeeds.getUpperValue());
         }
