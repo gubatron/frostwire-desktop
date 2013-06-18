@@ -30,6 +30,9 @@ import com.limegroup.gnutella.gui.tables.SizeHolder;
  * Library specific DataLineModel.
  * Uses HashBasedDataLineModel instead of BasicDataLineModel
  * for quicker access to row's based on the file.
+ * 
+ * @author gubatron
+ * @author aldenml
  */
 final class LibraryFilesTableModel extends HashBasedDataLineModel<LibraryFilesTableDataLine, File> {
 
@@ -179,6 +182,6 @@ final class LibraryFilesTableModel extends HashBasedDataLineModel<LibraryFilesTa
      *         <code>false</code> otherwise
      */
     public boolean isCellEditable(int row, int col) {
-        return col == LibraryFilesTableDataLine.ACTIONS_IDX ||  col == LibraryFilesTableDataLine.SHARE_IDX;
+        return col == LibraryFilesTableDataLine.ACTIONS_IDX || col == LibraryFilesTableDataLine.SHARE_IDX;
     }
 }

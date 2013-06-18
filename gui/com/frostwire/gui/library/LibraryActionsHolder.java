@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011, 2012, 2013, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,15 @@ import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.tables.AbstractActionsHolder;
 import com.limegroup.gnutella.gui.tables.DataLine;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class LibraryActionsHolder extends AbstractActionsHolder {
 
-    public LibraryActionsHolder(DataLine dataLine, boolean playing) {
+    public LibraryActionsHolder(DataLine<?> dataLine, boolean playing) {
         super(dataLine, playing);
     }
 

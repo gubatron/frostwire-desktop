@@ -45,7 +45,7 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLine<File> {
 
     static final int ACTIONS_IDX = 0;
-    
+
     /**
      * Constant for the column with the wi-fi shared state.
      */
@@ -135,7 +135,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
     public int getColumnCount() {
         return getLimeTableColumns().length;
     }
-    
+
     private Date lastModified;
 
     /**
@@ -180,9 +180,9 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         }
 
         this.lastModified = new Date(initializer.lastModified());
-        
+
         this.actionsHolder = new LibraryActionsHolder(this, false);
-        
+
         this.nameCell = new NameHolder(_name);
     }
 
@@ -195,7 +195,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 
     private LibraryActionsHolder actionsHolder;
     private NameHolder nameCell;
-    
+
     /**
      * Returns the object stored in the specified cell in the table.
      *
@@ -206,26 +206,26 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
      */
     public Object getValueAt(int idx) {
         try {
-        boolean isPlaying = isPlaying();
-        switch (idx) {
-        case ACTIONS_IDX:
-            actionsHolder.setPlaying(isPlaying);
-            return actionsHolder;
-        case ICON_IDX:
-            return new PlayableIconCell(getIcon(), isPlaying);
-        case NAME_IDX:
-            return nameCell;
-        case SIZE_IDX:
-            return new PlayableCell(this, _sizeHolder, _sizeHolder.toString(), isPlaying, idx);
-        case TYPE_IDX:
-            return new PlayableCell(this, _type, isPlaying, idx);
-        case PATH_IDX:
-            return new PlayableCell(this, _path, isPlaying, idx);
-        case MODIFICATION_TIME_IDX:
-            return new PlayableCell(this, lastModified, lastModified.toString(), isPlaying, idx);
-        case SHARE_IDX:
-            return new FileShareCell(this, initializer.getAbsolutePath(), shared);
-        }
+            boolean isPlaying = isPlaying();
+            switch (idx) {
+            case ACTIONS_IDX:
+                actionsHolder.setPlaying(isPlaying);
+                return actionsHolder;
+            case ICON_IDX:
+                return new PlayableIconCell(getIcon(), isPlaying);
+            case NAME_IDX:
+                return nameCell;
+            case SIZE_IDX:
+                return new PlayableCell(this, _sizeHolder, _sizeHolder.toString(), isPlaying, idx);
+            case TYPE_IDX:
+                return new PlayableCell(this, _type, isPlaying, idx);
+            case PATH_IDX:
+                return new PlayableCell(this, _path, isPlaying, idx);
+            case MODIFICATION_TIME_IDX:
+                return new PlayableCell(this, lastModified, lastModified.toString(), isPlaying, idx);
+            case SHARE_IDX:
+                return new FileShareCell(this, initializer.getAbsolutePath(), shared);
+            }
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -267,9 +267,8 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 
     private LimeTableColumn[] getLimeTableColumns() {
         if (ltColumns == null) {
-            LimeTableColumn[] temp = { 
-            new LimeTableColumn(ACTIONS_IDX, "LIBRARY_TABLE_ACTIONS", I18n.tr("Actions"), 18, true, LibraryActionsHolder.class),
-                    
+            LimeTableColumn[] temp = { new LimeTableColumn(ACTIONS_IDX, "LIBRARY_TABLE_ACTIONS", I18n.tr("Actions"), 18, true, LibraryActionsHolder.class),
+
             new LimeTableColumn(SHARE_IDX, "LIBRARY_TABLE_SHARE", I18n.tr("Wi-Fi Shared"), 18, true, FileShareCell.class),
 
             new LimeTableColumn(ICON_IDX, "LIBRARY_TABLE_ICON", I18n.tr("Icon"), GUIMediator.getThemeImage("question_mark"), 18, true, PlayableIconCell.class),

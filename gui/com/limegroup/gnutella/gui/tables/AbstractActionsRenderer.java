@@ -27,7 +27,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.table.TableCellEditor;
 
 import com.frostwire.gui.AlphaIcon;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -55,19 +54,19 @@ public abstract class AbstractActionsRenderer extends FWAbstractJPanelTableCellR
     static {
         play_solid = GUIMediator.getThemeImage("search_result_play_over");
         play_transparent = new AlphaIcon(play_solid, BUTTONS_TRANSPARENCY);
-        
+
         download_solid = GUIMediator.getThemeImage("search_result_download_over");
         download_transparent = new AlphaIcon(download_solid, BUTTONS_TRANSPARENCY);
     }
-    
+
     public AbstractActionsRenderer() {
         setupUI();
     }
-    
+
     protected abstract void onPlayAction();
-    
+
     protected abstract void onDownloadAction();
-    
+
     @Override
     protected void updateUIData(Object dataHolder, JTable table, int row, int column) {
         actionsHolder = (AbstractActionsHolder) dataHolder;
@@ -77,7 +76,7 @@ public abstract class AbstractActionsRenderer extends FWAbstractJPanelTableCellR
         labelDownload.setIcon(showSolid ? download_solid : download_transparent);
         labelDownload.setVisible(actionsHolder.isDownloadable());
     }
-    
+
     private void setupUI() {
         setLayout(new GridBagLayout());
         GridBagConstraints c;
@@ -106,16 +105,14 @@ public abstract class AbstractActionsRenderer extends FWAbstractJPanelTableCellR
         c.gridx = GridBagConstraints.RELATIVE;
         c.ipadx = 3;
         add(labelDownload, c);
-        
+
         setEnabled(true);
     }
-    
 
     private void updatePlayButton() {
         cancelEdit();
         labelPlay.setIcon((actionsHolder.isPlaying()) ? GUIMediator.getThemeImage("speaker") : (showSolid) ? play_solid : play_transparent);
     }
-
 
     private void labelPlay_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
@@ -125,12 +122,13 @@ public abstract class AbstractActionsRenderer extends FWAbstractJPanelTableCellR
             }
         }
     }
+
     private void labelDownload_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
             onDownloadAction();
         }
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
