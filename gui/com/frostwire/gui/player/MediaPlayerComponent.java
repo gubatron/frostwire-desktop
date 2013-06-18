@@ -557,8 +557,13 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 currentText = currentMedia.getFile().getName();
 
                 trackTitle.setToolTipText(currentMedia.getFile().getAbsolutePath());
-            } else if (currentMedia != null && currentMedia.getFile() == null && currentMedia.getURL() != null) {
-                System.out.println("StreamURL: " + currentMedia.getURL().toString());
+            } else if (currentMedia != null && currentMedia instanceof InternetRadioAudioSource) {
+                InternetRadioAudioSource radioSource = (InternetRadioAudioSource) currentMedia;
+                currentText = radioSource.getInternetRadioStation().getDescription();
+            }
+            else if (currentMedia != null && currentMedia.getFile() == null && currentMedia.getURL() != null) {
+                //
+                //System.out.println("StreamURL: " + currentMedia.getURL().toString());
 
                 //sString streamURL = currentMedia.getURL().toString();
                 //Pattern urlStart = Pattern.compile("(http://[\\d\\.]+:\\d+).*");
