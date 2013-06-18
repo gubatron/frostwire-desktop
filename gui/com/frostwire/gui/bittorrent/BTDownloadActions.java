@@ -161,7 +161,7 @@ final class BTDownloadActions {
             putValue(Action.NAME, I18n.tr("Show"));
             putValue(LimeAction.SHORT_NAME, I18n.tr("Show"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Shows the contents of this transfer in the Library Tab"));
-            putValue(LimeAction.ICON_NAME, "LIBRARY_TAB");
+            putValue(LimeAction.ICON_NAME, "DOWNLOAD_SHOW_IN_LIBRARY");
         }
 
         public void performAction(ActionEvent e) {
