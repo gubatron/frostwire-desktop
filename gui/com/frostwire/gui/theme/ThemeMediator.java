@@ -244,7 +244,32 @@ public final class ThemeMediator {
                         closeCurrentSearchTab(e);
                     }
                     
+                    //Ctrl+Tab, Ctrl+Shift Tab to switch search tabs (Windows/Firefox Style)
+                    if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_TAB) {
+                        int offset = (e.isShiftDown()) ? -1 : 1;
+                        SearchMediator.getSearchResultDisplayer().switchToTabByOffset(offset);
+                        return true;
+                    }
+                    
+                    //Cmd+Shift+[, Cmd+Shift+] Chrome Style.
+                    if (e.isMetaDown() && e.isShiftDown()) {
+                        int offset = 0;
+                        if (e.getKeyCode() == KeyEvent.VK_OPEN_BRACKET) {
+                            offset = -1;
+                        } else if (e.getKeyCode() == KeyEvent.VK_CLOSE_BRACKET) {
+                            offset = 1;
+                        }
+                        
+                        if (offset != 0) {
+                            SearchMediator.getSearchResultDisplayer().switchToTabByOffset(offset);
+                            return true;
+                        }
+                    }
                 }
+                
+                
+                
+                
                 return false;
             }
         });

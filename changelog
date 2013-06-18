@@ -6,6 +6,8 @@ frostwire (5.6.0) stable; urgency=high
   * fwplayer.exe improved unicode and HLS (Http Live Streaming) support. 
   * New Feature: Change font size with Ctrl/Cmd + '+', Ctrl/Cmd + '-'.
   * New Feature: Close search tabs with Ctrl/Cmd + 'w'.
+  * New Feature: Switch search tabs with Ctrl+Tab, Ctrl+Shift+Tab
+  * New Feature: Switch search tabs with Cmd+Shift+[, Cmd+Shift+]
   * Improved and optimized table rendering for search results and library files.
   * Refreshed presentation of search results.
   * Fixed issue related to smart search configuration.

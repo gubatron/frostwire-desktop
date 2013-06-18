@@ -167,6 +167,12 @@ public final class SearchResultDisplayer implements RefreshListener {
 
         CancelSearchIconProxy.updateTheme();
     }
+    
+    public void switchToTabByOffset(int offset) {
+        if (tabbedPane != null) {
+            tabbedPane.switchToTabByOffset(offset);
+        }
+    }
 
     private List<Slide> getDefaultSlides() {
         Slide s1 = new Slide("http://static.frostwire.com/images/overlays/default_now_on_android.png", "http://www.frostwire.com/?from=defaultSlide", 240000, null, null, null, null, null, null, 0, Slide.SLIDE_DOWNLOAD_METHOD_OPEN_URL, null, null, null, null, null, null, null, null, null, null,
