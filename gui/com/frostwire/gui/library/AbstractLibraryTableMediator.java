@@ -25,7 +25,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -41,6 +40,7 @@ import com.frostwire.gui.theme.SkinMenuItem;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
@@ -243,7 +243,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
             super(I18n.tr("Send to friend"));
             putValue(LimeAction.SHORT_NAME, I18n.tr("Send"));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Send to friend"));
-            putValue(Action.SMALL_ICON, GUIMediator.getThemeImage("share"));
+            //putValue(Action.SMALL_ICON, GUIMediator.getThemeImage("share"));
             putValue(LimeAction.ICON_NAME, "LIBRARY_SEND");
         }
 
