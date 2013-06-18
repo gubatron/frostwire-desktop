@@ -1,24 +1,22 @@
 package com.limegroup.gnutella.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
 import org.limewire.util.OSUtils;
@@ -42,12 +40,10 @@ final class AboutWindow {
 	 */
 	private final ScrollingTextPane SCROLLING_PANE;
 
-	/**
-	 * Check box to specify whether to scroll or not.
-	 */
-	private final JCheckBox SCROLL_CHECK_BOX = new JCheckBox(I18n
-			.tr("Automatically Scroll"));
-
+	private final JLabel EULA_LABEL;
+	
+	private final JLabel PRIVACY_POLICY_LABEL;
+	
 	/**
 	 * Constructs the elements of the about window.
 	 */
@@ -57,7 +53,7 @@ final class AboutWindow {
 		if (!OSUtils.isMacOSX())
 			DIALOG.setModal(true);
 
-		DIALOG.setSize(new Dimension(450, 400));
+		DIALOG.setSize(new Dimension(600, 400));
 		DIALOG.setResizable(false);
 		DIALOG.setTitle(I18n.tr("About FrostWire"));
 		DIALOG.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -88,16 +84,9 @@ final class AboutWindow {
 		JLabel url = new URLLabel("http://www.frostwire.com");
 		url.setHorizontalAlignment(SwingConstants.CENTER);
 
-		// set up scroll check box
-		SCROLL_CHECK_BOX.setSelected(true);
-		SCROLL_CHECK_BOX.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				if (SCROLL_CHECK_BOX.isSelected())
-					SCROLLING_PANE.startScroll();
-				else
-					SCROLLING_PANE.stopScroll();
-			}
-		});
+
+		EULA_LABEL = new URLLabel("http://www.frostwire.com/eula",I18n.tr("End User License Agreement"));
+		PRIVACY_POLICY_LABEL = new URLLabel("http://www.frostwire.com/privacy","Privacy Policy");
 
 		// set up close button
 		JButton button = new JButton(I18n.tr("Close"));
@@ -150,11 +139,22 @@ final class AboutWindow {
 		gbc.fill = GridBagConstraints.NONE;
 		pane.add(Box.createVerticalStrut(GUIConstants.SEPARATOR), gbc);
 
+		JPanel legalLinksPanel = new JPanel();
+		legalLinksPanel.setPreferredSize(new Dimension(300,27));
+		legalLinksPanel.setMinimumSize(new Dimension(300,27));
+		legalLinksPanel.add(EULA_LABEL,BorderLayout.LINE_START);
+		legalLinksPanel.add(PRIVACY_POLICY_LABEL,BorderLayout.LINE_END);
+		
+		gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridwidth = 1;
 		gbc.gridy = 8;
-		pane.add(SCROLL_CHECK_BOX, gbc);
-
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.WEST;
+		pane.add(legalLinksPanel, gbc);
+		
+		gbc = new GridBagConstraints();
+		gbc.gridy = 8;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.anchor = GridBagConstraints.EAST;
 		pane.add(button, gbc);
@@ -325,23 +325,6 @@ final class AboutWindow {
 	 */
 	void showDialog() {
 		GUIUtils.centerOnScreen(DIALOG);
-
-		if (SCROLL_CHECK_BOX.isSelected()) {
-			ActionListener startTimerListener = new ActionListener() {
-				public void actionPerformed(ActionEvent ae) {
-					// need to check isSelected() again,
-					// it might have changed in the past 10 seconds.
-					if (SCROLL_CHECK_BOX.isSelected()) {
-						// activate scroll timer
-						SCROLLING_PANE.startScroll();
-					}
-				}
-			};
-
-			Timer startTimer = new Timer(10000, startTimerListener);
-			startTimer.setRepeats(false);
-			startTimer.start();
-		}
 		DIALOG.setVisible(true);
 	}
 }
