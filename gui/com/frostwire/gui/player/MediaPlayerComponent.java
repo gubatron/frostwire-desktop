@@ -78,7 +78,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     private static final int MAX_TITLE_CHARS = 36;
     private static final int BOUND_TITLE_CHARS = 18;
 
-    public static final String STREAMING_AUDIO = "Streaming Audio";
+    public static final String STREAMING_AUDIO = I18n.tr("Streaming Audio");
     
     /**
      * Constant for the play button.
@@ -259,7 +259,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
         //only one of these 2 buttons is shown at the time, that's why it's on the same container.
         JPanel shareAndSourceButtonPanel = new JPanel();
-        shareButton = new MediaButton(I18n.tr("Send this file to a friend"), "share", "share");
+        shareButton = new MediaButton(I18n.tr("Send this file to a friend"), "player_share_on", "player_share_off");
         shareButton.setCursor(theHand);
         shareButton.addActionListener(new SendToFriendActionListener());
         shareButton.setVisible(false);
