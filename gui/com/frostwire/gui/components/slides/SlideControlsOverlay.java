@@ -29,6 +29,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.UIDefaults;
+import javax.swing.plaf.FontUIResource;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -78,7 +80,7 @@ class SlideControlsOverlay extends JPanel {
             JLabel labelTitle = new JLabel(controller.getSlide().title);
             //labelTitle.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
             labelTitle.setForeground(TEXT_FOREGROUND);
-            labelTitle.setFont(deriveFont(true,TITLE_TEXT_FONT_SIZE_DELTA));
+            labelTitle.setFont(deriveFont(true, TITLE_TEXT_FONT_SIZE_DELTA));
             add(labelTitle, "cell 0 0, span 3, top");
         }
     }
@@ -101,7 +103,7 @@ class SlideControlsOverlay extends JPanel {
         JLabel labelAuthor = new JLabel(slide.author + " " + I18n.tr("on"));
         //labelAuthor.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
         labelAuthor.setForeground(TEXT_FOREGROUND);
-        labelAuthor.setFont(deriveFont(false,BASE_TEXT_FONT_SIZE_DELTA));
+        labelAuthor.setFont(deriveFont(false, BASE_TEXT_FONT_SIZE_DELTA));
 
         add(labelAuthor, "cell 1 3, aligny baseline");
 
@@ -170,13 +172,12 @@ class SlideControlsOverlay extends JPanel {
         g2d.setColor(background);
         g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.setComposite(c);
-        
-        
+
         g2d.setColor(Color.BLACK);
-        g2d.fillRect(0, getHeight()-SOCIAL_BAR_HEIGHT, getWidth(), SOCIAL_BAR_HEIGHT);
-        
+        g2d.fillRect(0, getHeight() - SOCIAL_BAR_HEIGHT, getWidth(), SOCIAL_BAR_HEIGHT);
+
         g2d.setColor(background);
-        
+
         super.paint(g);
     }
 
@@ -260,9 +261,12 @@ class SlideControlsOverlay extends JPanel {
 
         public OverlayIconButton(Action action) {
             super(action);
-            //putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
             setForeground(TEXT_FOREGROUND);
-            setFont(getFont().deriveFont(getFont().getSize2D() + BASE_TEXT_FONT_SIZE_DELTA));
+            Font f = getFont().deriveFont(getFont().getSize2D() + BASE_TEXT_FONT_SIZE_DELTA);
+            UIDefaults defaults = new UIDefaults();
+            defaults.put("Button.font", new FontUIResource(f));
+            putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
+            putClientProperty("Nimbus.Overrides", defaults);
         }
     }
 
@@ -273,7 +277,7 @@ class SlideControlsOverlay extends JPanel {
         public SocialAction(String networkName, String url) {
             this(networkName, url, networkName.toUpperCase());
         }
-        
+
         public SocialAction(String networkName, String url, String imageName) {
             this.url = url;
 
