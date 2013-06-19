@@ -21,6 +21,7 @@ package com.limegroup.gnutella.gui.search;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -179,15 +180,42 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
  
     @Override
     public String getToolTipText(MouseEvent event) {
-        Component[] components = this.getComponents();
-
-        for (Component c : components) {
-            JComponent jc = (JComponent) c;
-            if (jc.isVisible() && jc.getBounds().contains(event.getPoint())) {
-                return jc.getToolTipText(event);
+        /*
+         * This is a Java Swing lesson on how to obtain the coordinates of the current cell
+         * as you hover with the mouse on a JTable.
+         * 
+         * You cannot use the renderer component, since it seems that once the table is done
+         * stamping the cells with it, the instance of the renderer is not the one under the mouse
+         * as it will always yield negative coordinates, for example, our debugger showed that this
+         * renderer's coordinates were always (-95,-25)...
+         * 
+         * What we did in this case, to show labels for the specific components inside the renderer
+         * was to get the mouse coordinates, and translate its coordinates to the coordinates of the
+         * current Cell Rectangle.
+         * 
+         * One interesting gotcha in the process is that you cannot alter the event coordinates and then
+         * try to use event.getPoint() since event.getPoint() will always give you a new instance of Point
+         * so we keep a copy of that Point and then translate that point.
+         * 
+         * tags: java, swing, table, get current cell coordinates, get table cell coordinates under mouse
+         */
+        try {
+            Component[] components = this.getComponents();
+            Point p = event.getPoint();
+            int row = table.rowAtPoint(p);
+            int col = table.columnAtPoint(p);
+            Rectangle currentCell = table.getCellRect(row, col, false);
+            p.translate(-currentCell.x, -currentCell.y);
+            
+            for (Component c : components) {
+                JComponent jc = (JComponent) c;
+                if (jc.isVisible() && jc.getBounds().contains(p)) {
+                    return jc.getToolTipText(event);
+                }
             }
+        } catch (Throwable t) {
+            //don't risk painting the table over a tooltip
         }
         return super.getToolTipText(event);
     }
-
 }
