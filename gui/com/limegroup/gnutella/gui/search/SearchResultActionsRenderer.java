@@ -90,6 +90,7 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
         add(labelPlay, c);
 
         labelDownload = new JLabel(download_transparent);
+        labelDownload.setToolTipText(I18n.tr("Download"));
         labelDownload.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -102,6 +103,7 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
         add(labelDownload, c);
         
         labelPartialDownload = new JLabel(details_solid);
+        labelPartialDownload.setToolTipText(I18n.tr("Select content to download from this torrent."));
         labelPartialDownload.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {

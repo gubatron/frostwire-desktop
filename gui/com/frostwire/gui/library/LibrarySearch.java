@@ -701,6 +701,6 @@ public class LibrarySearch extends JPanel {
     }
 
     public void setSearchPrompt(String string) {
-        searchField.setPrompt(I18n.tr("Search in ") + string);
+        searchField.setPrompt(string);
     }
 }

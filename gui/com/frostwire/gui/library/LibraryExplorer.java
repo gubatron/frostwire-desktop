@@ -129,6 +129,8 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
     public void refreshSelection(boolean clearCache) {
         LibraryNode node = (LibraryNode) tree.getLastSelectedPathComponent();
 
+        String searchPrompt = null;
+        
         if (node == null) {
             return;
         }
@@ -136,8 +138,19 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         if (node instanceof DeviceFileTypeTreeNode) {
             DeviceFileTypeTreeNode deviceFileTypeNode = (DeviceFileTypeTreeNode) node;
             LibraryMediator.instance().updateTableFiles(deviceFileTypeNode.getDevice(), deviceFileTypeNode.getFileType());
+            
+            if (deviceFileTypeNode.getDevice().isLocal()) {
+                searchPrompt = I18n.tr("Search your ") + node.getUserObject();
+            } else {
+                searchPrompt = I18n.tr("Search") + " " + deviceFileTypeNode.getDevice().getName() + I18n.tr("'s ") + deviceFileTypeNode.getUserObject();
+            }
+            
         } else {
             LibraryMediator.instance().clearLibraryTable();
+        }
+        
+        if (node instanceof DeviceNode || node instanceof DevicesNode) {
+            searchPrompt = "";
         }
 
         DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
@@ -179,9 +192,13 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
 
         }
+        
+        if (searchPrompt == null) {
+            searchPrompt = I18n.tr("Search your ") + node.getUserObject();
+        }
 
         LibraryMediator.instance().getLibrarySearch().clear();
-        LibraryMediator.instance().getLibrarySearch().setSearchPrompt(node.toString());
+        LibraryMediator.instance().getLibrarySearch().setSearchPrompt(searchPrompt);
     }
 
     protected void setupUI() {

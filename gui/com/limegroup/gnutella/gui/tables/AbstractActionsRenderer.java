@@ -95,6 +95,7 @@ public abstract class AbstractActionsRenderer extends FWAbstractJPanelTableCellR
         add(labelPlay, c);
 
         labelDownload = new JLabel(download_transparent);
+        labelDownload.setToolTipText(I18n.tr("Download"));
         labelDownload.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {

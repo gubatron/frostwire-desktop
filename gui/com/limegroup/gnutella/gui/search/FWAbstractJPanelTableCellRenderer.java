@@ -176,5 +176,18 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
      * for more information.
      */
     public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) { }
-        
+ 
+    @Override
+    public String getToolTipText(MouseEvent event) {
+        Component[] components = this.getComponents();
+
+        for (Component c : components) {
+            JComponent jc = (JComponent) c;
+            if (jc.isVisible() && jc.getBounds().contains(event.getPoint())) {
+                return jc.getToolTipText(event);
+            }
+        }
+        return super.getToolTipText(event);
+    }
+
 }

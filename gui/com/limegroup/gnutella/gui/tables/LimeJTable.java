@@ -50,6 +50,7 @@ import org.limewire.util.OSUtils;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.MultilineToolTip;
+import com.limegroup.gnutella.gui.search.FWAbstractJPanelTableCellRenderer;
 import com.limegroup.gnutella.util.DataUtils;
 
 /**
@@ -369,6 +370,18 @@ public class LimeJTable extends JTable implements JSortTable {
         Point p = e.getPoint();
         int row = rowAtPoint(p);
         int col = columnAtPoint(p);
+
+        TableCellRenderer cellRenderer = getCellRenderer(row, col);
+        
+        if (cellRenderer instanceof FWAbstractJPanelTableCellRenderer) {
+            FWAbstractJPanelTableCellRenderer renderer = (FWAbstractJPanelTableCellRenderer) cellRenderer;
+            String tooltip = renderer.getToolTipText(e); 
+            if (tooltip != null) {
+                this.tips = new String[] {tooltip};
+                return tooltip;
+            }
+        }
+        
         int colModel = convertColumnIndexToModel(col);
         DataLineModel<?, ?> dlm = (DataLineModel<?, ?>) dataModel;
         boolean isClippable = col > -1 && row > -1 ? dlm.isClippable(colModel) : false;

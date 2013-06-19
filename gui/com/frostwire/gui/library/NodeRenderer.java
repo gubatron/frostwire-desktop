@@ -67,6 +67,7 @@ public class NodeRenderer extends DefaultTreeCellRenderer {
         } else if (value instanceof DeviceFileTypeTreeNode) {
             DeviceFileTypeTreeNode node = (DeviceFileTypeTreeNode) value;
             setIcon(node.getIcon());
+            setText(node.getUserObject().toString());
         }
 
         return this;
