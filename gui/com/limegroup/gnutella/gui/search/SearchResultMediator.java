@@ -696,8 +696,8 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
 
-        final String strShowOpts = I18n.tr("Show Options");
-        final String strHideOpts = I18n.tr("Hide Options");
+        final String strShowOpts = I18n.tr("Search tools");
+        final String strHideOpts = I18n.tr("Search tools");
 
         // reusing schema box panel for more options button
         // minor optimization to keep the layout as flat as possible
@@ -706,11 +706,14 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         //buttonOptions.setBorderPainted(false);
         buttonOptions.setOpaque(false);
 
-        Dimension dim = new Dimension(120, 30);
+        Dimension dim = new Dimension(140, 30);
         buttonOptions.setMinimumSize(dim);
         buttonOptions.setMaximumSize(dim);
         buttonOptions.setPreferredSize(dim);
         buttonOptions.setSize(dim);
+        buttonOptions.setIcon(GUIMediator.getThemeImage("search_tools_left"));
+        buttonOptions.setHorizontalTextPosition(SwingConstants.RIGHT);
+        
         //buttonOptions.setMargin(new Insets(0, 0, 0, 0));
         //buttonOptions.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
 
@@ -719,6 +722,8 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
             public void actionPerformed(ActionEvent e) {
                 scrollPaneSearchOptions.setVisible(!scrollPaneSearchOptions.isVisible());
                 buttonOptions.setText(scrollPaneSearchOptions.isVisible() ? strHideOpts : strShowOpts);
+                buttonOptions.setIcon(!scrollPaneSearchOptions.isVisible() ? GUIMediator.getThemeImage("search_tools_left") : GUIMediator.getThemeImage("search_tools_right"));
+                buttonOptions.setHorizontalTextPosition(!scrollPaneSearchOptions.isVisible() ? SwingConstants.RIGHT : SwingConstants.LEFT);
             }
         });
 

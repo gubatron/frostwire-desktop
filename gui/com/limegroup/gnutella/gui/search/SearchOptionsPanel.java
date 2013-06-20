@@ -179,10 +179,6 @@ final class SearchOptionsPanel extends JPanel {
                     ((JCheckBox) e.getItemSelectable()).setSelected(true);
                 }
 
-//                for (JCheckBox cBox : cBoxes.keySet()) {
-//                    cBoxes.get(cBox).setValue(cBox.isSelected());
-//                }
-
                 if (resultPanel != null) {
                     resultPanel.filterChanged(new SearchEngineFilter(engineCheckboxes), 0);
                 }
