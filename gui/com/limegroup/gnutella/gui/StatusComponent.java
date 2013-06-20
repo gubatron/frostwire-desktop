@@ -16,6 +16,7 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.text.NumberFormat;
@@ -118,6 +119,27 @@ public final class StatusComponent extends JPanel {
      * Constructs the panel.
      */
     private void construct() {
+        //aka, on Splash screen
+        if (STEPPING) {
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.setMinimumSize(new Dimension(400,340));
+            panel.setPreferredSize(new Dimension(400,340));
+            panel.setMaximumSize(new Dimension(400,340));
+            panel.add(BAR, BorderLayout.SOUTH);
+            add(panel);
+            LABEL.setForeground(new Color(0x426a81));
+            LABEL.setMinimumSize(new Dimension(400,20));
+            LABEL.setPreferredSize(new Dimension(400,20));
+            LABEL.setMaximumSize(new Dimension(400,20));
+            LABEL.setAlignmentX(CENTER_ALIGNMENT); //not sure why this works
+            LABEL.setFont(LABEL.getFont().deriveFont(9f));
+            add(LABEL);
+        } else {
+            BAR.setStringPainted(true);
+            add(BAR);
+        }
+        /**
+        
         if (STEPPING || OSUtils.isMacOSX()) {
             JPanel panel = new JPanel(new BorderLayout());
             panel.setPreferredSize(new Dimension(400,375));
@@ -129,5 +151,6 @@ public final class StatusComponent extends JPanel {
             BAR.setStringPainted(true);
         }
         add(BAR);
+        */
     }
 }
