@@ -120,6 +120,8 @@ public final class StatusComponent extends JPanel {
     private void construct() {
         if (STEPPING || OSUtils.isMacOSX()) {
             JPanel panel = new JPanel(new BorderLayout());
+            panel.setPreferredSize(new Dimension(400,375));
+            panel.setMaximumSize(new Dimension(400,375));
             panel.add(LABEL, BorderLayout.SOUTH);
             add(panel);
             //add(Box.createVerticalStrut(9));
