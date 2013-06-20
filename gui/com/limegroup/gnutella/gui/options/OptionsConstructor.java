@@ -64,6 +64,7 @@ import com.limegroup.gnutella.gui.options.panes.PlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.PopupsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyLoginPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyPaneItem;
+import com.limegroup.gnutella.gui.options.panes.SearchEnginesPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ShowFrostWireRecommendationsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ShowPromoOverlaysPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ShutdownPaneItem;
@@ -277,7 +278,7 @@ public final class OptionsConstructor {
         addOption(OptionsMediator.ROOT_NODE_KEY, PLAYER_KEY, I18n.tr("Player"), PlayerPaneItem.class);
 
         // search options
-        addOption(OptionsMediator.ROOT_NODE_KEY, SEARCH_KEY, I18n.tr("Searching"), MaximumSearchesPaneItem.class, SmartSearchDBPaneItem.class, DetailsPaneItem.class);
+        addOption(OptionsMediator.ROOT_NODE_KEY, SEARCH_KEY, I18n.tr("Searching"), SearchEnginesPaneItem.class, MaximumSearchesPaneItem.class, SmartSearchDBPaneItem.class, DetailsPaneItem.class);
 
         //status bar
         addOption(OptionsMediator.ROOT_NODE_KEY, STATUS_BAR_KEY, I18n.tr("Status Bar"), StatusBarConnectionQualityPaneItem.class, StatusBarFirewallPaneItem.class, StatusBarBandwidthPaneItem.class); // Removed Lime Store

@@ -57,8 +57,6 @@ final class SearchOptionsPanel extends JPanel {
     private final Map<SearchEngine,JCheckBox> engineCheckboxes;
     
     private GeneralResultFilter generalFilter;
-    
-    
 
     public SearchOptionsPanel(SearchResultMediator resultPanel) {
         this.resultPanel = resultPanel;
