@@ -569,6 +569,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     void repeatSearch() {
         clearTable();
         resetFilters();
+        schemaBox.resetCounters();
 
         SearchMediator.setTabDisplayCount(this);
         SearchMediator.instance().repeatSearch(this, SEARCH_INFO);
@@ -717,7 +718,6 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
             @Override
             public void actionPerformed(ActionEvent e) {
                 scrollPaneSearchOptions.setVisible(!scrollPaneSearchOptions.isVisible());
-
                 buttonOptions.setText(scrollPaneSearchOptions.isVisible() ? strHideOpts : strShowOpts);
             }
         });

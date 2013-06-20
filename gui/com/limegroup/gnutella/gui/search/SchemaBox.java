@@ -25,6 +25,7 @@ import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -101,6 +102,14 @@ final class SchemaBox extends JPanel {
         if (nmt != null && buttonsMap.containsKey(nmt)) {
             JToggleButton button = buttonsMap.get(nmt);
             incrementText(button, nmt);
+        }
+    }
+    
+    public void resetCounters() {
+        Collection<JToggleButton> values = buttonsMap.values();
+        for (JToggleButton button : values) {
+            button.setText("0");
+            button.setToolTipText(I18n.tr("No results so far..."));
         }
     }
 

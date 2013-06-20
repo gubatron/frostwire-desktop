@@ -54,12 +54,17 @@ final class SearchOptionsPanel extends JPanel {
     private final LabeledTextField textFieldKeywords;
     private final LabeledRangeSlider sliderSize;
     private final LabeledRangeSlider sliderSeeds;
-
+    private final Map<SearchEngine,JCheckBox> engineCheckboxes;
+    
     private GeneralResultFilter generalFilter;
+    
+    
 
     public SearchOptionsPanel(SearchResultMediator resultPanel) {
         this.resultPanel = resultPanel;
 
+        engineCheckboxes = new HashMap<>();
+        
         setLayout(new MigLayout("insets 0, fillx"));
 
         add(createSearchEnginesFilter(), "wrap");
@@ -86,7 +91,7 @@ final class SearchOptionsPanel extends JPanel {
 
     public void updateFiltersPanel() {
         generalFilter = new GeneralResultFilter(resultPanel, sliderSeeds, sliderSize, textFieldKeywords);
-        resultPanel.filterChanged(new SearchEngineFilter(), 0);
+        resultPanel.filterChanged(new SearchEngineFilter(engineCheckboxes), 0);
         resultPanel.filterChanged(generalFilter, 1);
     }
 
@@ -176,12 +181,12 @@ final class SearchOptionsPanel extends JPanel {
                     ((JCheckBox) e.getItemSelectable()).setSelected(true);
                 }
 
-                for (JCheckBox cBox : cBoxes.keySet()) {
-                    cBoxes.get(cBox).setValue(cBox.isSelected());
-                }
+//                for (JCheckBox cBox : cBoxes.keySet()) {
+//                    cBoxes.get(cBox).setValue(cBox.isSelected());
+//                }
 
                 if (resultPanel != null) {
-                    resultPanel.filterChanged(new SearchEngineFilter(), 0);
+                    resultPanel.filterChanged(new SearchEngineFilter(engineCheckboxes), 0);
                 }
             }
         };
@@ -189,11 +194,18 @@ final class SearchOptionsPanel extends JPanel {
         for (SearchEngine se : searchEngines) {
             JCheckBox cBox = new JCheckBox(se.getName());
             cBox.setSelected(se.isEnabled());
-
+            cBox.setEnabled(se.isEnabled());
+            
+            if (!cBox.isEnabled()) {
+                cBox.setToolTipText(se.getName() + " " + I18n.tr("has been disabled on your FrostWire Search Options. (Go to Tools > Options > Search to enable)"));
+            }
+            
             parent.add(cBox);
 
             cBoxes.put(cBox, se.getEnabledSetting());
             cBox.addItemListener(listener);
+            
+            engineCheckboxes.put(se,cBox);
         }
     }
 
