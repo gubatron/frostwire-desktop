@@ -8,6 +8,7 @@ frostwire (5.6.1) stable; urgency=high
   * New Feature: Close search tabs with Ctrl/Cmd + 'w'.
   * New Feature: Switch search tabs with Ctrl+Tab, Ctrl+Shift+Tab
   * New Feature: Switch search tabs with Cmd+Shift+[, Cmd+Shift+]
+  * New Feature: Search engines can be disabled in global options.
   * Improved and optimized table rendering for search results and library files.
   * Refreshed presentation of search results.
   * Fixed issue related to smart search configuration.
