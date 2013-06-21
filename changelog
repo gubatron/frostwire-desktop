@@ -1,3 +1,8 @@
+frostwire (5.6.2) stable; urgency=high
+  * Improved readability of stream sources in player title.
+
+ -- FrostWire Team <contact@frostwire.com>  Fri, 21 Jun 2013 19:39:21 -0500
+
 frostwire (5.6.1) stable; urgency=high
   * New Feature: New simplified, more responsive, faster user interface.
   * New Feature: Audio player can detect Facebook and Twitter urls
