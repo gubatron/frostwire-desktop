@@ -19,6 +19,7 @@ package com.limegroup.gnutella.gui;
 
 import java.awt.Insets;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
@@ -52,11 +53,13 @@ public final class MediaButton extends JButton {
         setBorderPainted(false);
         setRolloverEnabled(true);
         if (upName != null) {
-            setIcon(GUIMediator.getThemeImage(upName));
+            ImageIcon upIcon = GUIMediator.getThemeImage(upName);
+            setIcon(upIcon);
         }
         setHorizontalAlignment(SwingConstants.CENTER);
         if (downName != null) {
-            setPressedIcon(GUIMediator.getThemeImage(downName));
+            ImageIcon downIcon = GUIMediator.getThemeImage(downName);
+            setPressedIcon(downIcon);
         }
         //        setPreferredSize(new Dimension(
         //            getIcon().getIconWidth(), getIcon().getIconHeight()));

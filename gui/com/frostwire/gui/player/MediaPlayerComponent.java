@@ -635,6 +635,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             showPlayButton();
         }
 
+        
         if (state == MediaPlaybackState.Stopped || state == MediaPlaybackState.Closed) {
             trackTitle.setText("");
             updateMediaSourceButton(null);
@@ -1054,10 +1055,13 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                     tooltipText = I18n.tr("Playing local Wi-Fi Stream from") + " " + deviceName;
                     iconUpName = iconDownName = "wifi_sharing_light_small";
                 }
+                
                 mediaSourceButton.init(tooltipText,iconUpName,iconDownName);
                 
                 //TODO: Add "isLocalFile || isPlaylistItem ||" on FrostWire 6.x when we have room for 3 buttons.
-                mediaSourceButton.setVisible((currentMedia != null) && (isYT || isSC || isInternetRadio || isWifiStream));
+                boolean mediaSourceButtonVisible = (currentMedia != null) && (isYT || isSC || isInternetRadio || isWifiStream);
+                //System.out.println("mediaSourceButton should be visible? " + mediaSourceButtonVisible);
+                mediaSourceButton.setVisible(mediaSourceButtonVisible);
             }
 
             private void setupDeviceName(final MediaSource currentMedia) {

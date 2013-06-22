@@ -258,7 +258,6 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
                 this.playlistFilesView = null;
             }
 
-            notifyOpened(source);
             if (play && currentMedia != null) {
                 durationInSeconds = -1;
 
@@ -280,6 +279,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
                     LibraryMediator.instance().getLibraryCoverArt().setDefault();
                     playMedia(((DeviceMediaSource) currentMedia).showPlayerWindow());
                 }
+                notifyOpened(source);
             }
         } catch (Throwable e) {
             // NPE from bug report
