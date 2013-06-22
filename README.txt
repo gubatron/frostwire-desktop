@@ -62,10 +62,10 @@ set correctly. If you are a Windows or Mac user the process is fairly similar.
 We recommend using Eclipse as your development environment.
 
 -=GET THE SOURCE=-
-hg clone https://bitbucket.org/frostwire/frostwire.desktop
+git clone https://github.com/frostwire/frostwire-desktop.git
 
 -=Get the latest updates from the main repository by issuing:=-
-hg pull -u
+git pull
 
 This will pull the latest changes and automatically merge them with your local
 copy of the repository. 
@@ -149,10 +149,31 @@ http://bit.ly/y0hdR4
 
 Basically, Keep it simple and try not to repeat yourself at all.
 
+-= CONTRIBUTE =-
+
+If you want to contribute code, start by looking at the open issues on github.com
+https://github.com/frostwire/frostwire-desktop/issue
+
+If you want to fix a new issue that's not listed there, create the issue, see if we can discuss
+a solution, if you already have one the best way to proceed is to:
+
+1. Fork the source.
+2. Clone it locally
+3. Create a branch with a descriptive name of the issue you are solving.
+4. Code, Commit, Push, Code, Commit, Push, until you are done with your branch.
+5. If you can add tests to demonstrate the issue and the fix, even better.
+6. Submit a pull request that's as descriptive as possible.
+7. We'll code review you, maybe ask you for some more changes, and after we've tested it we'll
+   merge your changes.
+
+Repeat and rinse, if you send enough patches to demonstrate you have a good coding skills,
+we'll just give you commit access on the real repo and you will be part of the development
+team.
+
 -=OFFICIAL FROSTWIRE SITES=-
 
 Main Website
-http://frostwire.com
+http://www.frostwire.com
 
 Forum
 http://forum.frostwire.com
@@ -160,5 +181,9 @@ http://forum.frostwire.com
 Git Repository at GitHub.com
 https://github.com/frostwire/frostwire-desktop.git
 
+Twitter @frostwire
+Facebook http://www.facebook.com/FrostWireOfficial
+Tumblr http://tumblr.frostwire.com
+
 -FrostWire Team
-Last updated - July 17th 2012 12:08:50 EST
+Last updated - June 21th 2013 11:58:29 EST
