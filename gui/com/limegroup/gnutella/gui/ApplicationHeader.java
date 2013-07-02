@@ -209,11 +209,40 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
             button.setFont(buttonFont);
 
             button.addActionListener(new ActionListener() {
-
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    onMainApplicationHeaderTabActionPerformed(tabs, lameFinalT);
+                }
+
+                private void onMainApplicationHeaderTabActionPerformed(final Map<Tabs, Tab> tabs, final Tabs lameFinalT) {
                     GUIMediator.instance().setWindow(lameFinalT);
+                    prepareSearchTabAsSearchTrigger(lameFinalT);
                     showSearchField(tabs.get(lameFinalT));
+                }
+
+                private void prepareSearchTabAsSearchTrigger(final Tabs lameFinalT) {
+                    boolean performInternetSearch = false;
+                    String query = null;
+                    
+                    if (lameFinalT == Tabs.SEARCH) {
+                        if (!cloudSearchField.getText().isEmpty()) {
+                            performInternetSearch = true;
+                            query = cloudSearchField.getText();
+                        } else if (cloudSearchField.getText().isEmpty() &&
+                                   !librarySearchField.getText().isEmpty()) {
+                            //they want internet search while on the library
+                            performInternetSearch = true;
+                            query = librarySearchField.getText();
+                            librarySearchField.setText(new String(""));
+                            cloudSearchField.setText(query);
+                        }
+
+                        if (query != null) {
+                            if (performInternetSearch) {
+                                cloudSearchField.getActionListeners()[0].actionPerformed(null);
+                            } 
+                        }
+                    } 
                 }
             });
 
