@@ -3,7 +3,7 @@ frostwire (5.6.2) stable; urgency=high
   * Fixed bug where media source icon for internet streams wouldn't be shown
     more than once on search result preview playback.
   * UX Patch: New 'Search' tab acts also as a search button.
- -- FrostWire Team <contact@frostwire.com>  Tue, 02 Jul 2013 03:40:14 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 04 Jul 2013 00:00:00 -0500
 
 frostwire (5.6.1) stable; urgency=high
   * New Feature: New simplified, more responsive, faster user interface.
