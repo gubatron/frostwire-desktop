@@ -24,6 +24,8 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.frostwire.search.AbstractCrawledSearchResult;
 import com.frostwire.search.HttpSearchResult;
+import com.frostwire.search.StreamableSearchResult;
+import com.limegroup.gnutella.MediaType;
 
 /**
  * 
@@ -31,7 +33,7 @@ import com.frostwire.search.HttpSearchResult;
  * @author aldenml
  *
  */
-public class ArchiveorgCrawledSearchResult extends AbstractCrawledSearchResult implements HttpSearchResult {
+public class ArchiveorgCrawledSearchResult extends AbstractCrawledSearchResult implements HttpSearchResult, StreamableSearchResult {
 
     private static final String DOWNLOAD_URL = "http://archive.org/download/%s/%s";
 
@@ -72,5 +74,17 @@ public class ArchiveorgCrawledSearchResult extends AbstractCrawledSearchResult i
     @Override
     public String getDownloadUrl() {
         return downloadUrl;
+    }
+
+    @Override
+    public String getStreamUrl() {
+        String streamUrl = null;
+        MediaType mt = MediaType.getMediaTypeForExtension(FilenameUtils.getExtension(downloadUrl));
+        
+        if (mt != null && mt.equals(MediaType.getAudioMediaType())) {
+            streamUrl = downloadUrl;
+        }
+        
+        return streamUrl;
     }
 }
