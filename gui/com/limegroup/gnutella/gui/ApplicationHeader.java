@@ -134,8 +134,6 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         JComponent player = new MediaPlayerComponent().getMediaPanel();
         add(player, "dock east, growy, gapright 7px");
 
-
-
         GUIMediator.addRefreshListener(this);
 
         final ActionListener schemaListener = new SchemaListener();

@@ -1,3 +1,7 @@
+frostwire (5.6.3) stable; urgency=high
+  * New Feature: Preview audio search results from Archive.org.
+ -- FrostWire Team <contact@frostwire.com>  Fri, 05 Jul 2013 23:52:00 -0500
+
 frostwire (5.6.2) stable; urgency=high
   * Improved readability of stream sources in player title.
   * Fixed bug where media source icon for internet streams wouldn't be shown

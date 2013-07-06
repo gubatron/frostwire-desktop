@@ -128,7 +128,13 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
         searchResult = actionsHolder.getSearchResult();
         showSolid = mouseIsOverRow(table, row);
         updatePlayButton();
-        labelPlay.setVisible(searchResult.getSearchResult() instanceof StreamableSearchResult);
+        boolean playable = false;
+        
+        if (searchResult.getSearchResult() instanceof StreamableSearchResult) {
+            playable = ((StreamableSearchResult) searchResult.getSearchResult()).getStreamUrl() != null;
+        }
+        
+        labelPlay.setVisible(playable);
         labelDownload.setIcon(showSolid ? download_solid : download_transparent);
         labelDownload.setVisible(true);
         labelPartialDownload.setIcon(showSolid ? details_solid : details_transparent);

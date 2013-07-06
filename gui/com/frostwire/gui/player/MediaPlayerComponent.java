@@ -992,6 +992,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             private boolean isPlaylistItem;
             private boolean isYT;
             private boolean isSC;
+            private boolean isAR;
             private boolean isInternetRadio;
             private boolean isWifiStream;
             
@@ -1017,6 +1018,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                     if (streamMedia.getDetailsUrl() != null) {
                         isYT = streamMedia.getDetailsUrl().contains("youtube");
                         isSC = streamMedia.getDetailsUrl().contains("soundcloud");
+                        isAR = streamMedia.getDetailsUrl().contains("archive");
                     }
                 } else {
                     isInternetRadio = currentMedia instanceof InternetRadioAudioSource;
@@ -1048,6 +1050,10 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                     tooltipText = I18n.tr("Open SoundCloud source page");
                     iconUpName = "soundcloud_off";
                     iconDownName = "soundcloud_on";
+                } else if (isAR) {
+                    tooltipText = I18n.tr("Open Archive.org source page");
+                    iconUpName = "archive_on";
+                    iconDownName = "archive_on";
                 } else if (isInternetRadio) {
                     tooltipText = I18n.tr("Playing Internet Radio");
                     iconUpName = iconDownName = "radio_light_small";
@@ -1059,7 +1065,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 mediaSourceButton.init(tooltipText,iconUpName,iconDownName);
                 
                 //TODO: Add "isLocalFile || isPlaylistItem ||" on FrostWire 6.x when we have room for 3 buttons.
-                boolean mediaSourceButtonVisible = (currentMedia != null) && (isYT || isSC || isInternetRadio || isWifiStream);
+                boolean mediaSourceButtonVisible = (currentMedia != null) && (isYT || isSC || isAR || isInternetRadio || isWifiStream);
                 //System.out.println("mediaSourceButton should be visible? " + mediaSourceButtonVisible);
                 mediaSourceButton.setVisible(mediaSourceButtonVisible);
             }
