@@ -60,6 +60,7 @@ public final class MediaButton extends JButton {
         if (downName != null) {
             ImageIcon downIcon = GUIMediator.getThemeImage(downName);
             setPressedIcon(downIcon);
+            setRolloverIcon(downIcon);
         }
         //        setPreferredSize(new Dimension(
         //            getIcon().getIconWidth(), getIcon().getIconHeight()));
