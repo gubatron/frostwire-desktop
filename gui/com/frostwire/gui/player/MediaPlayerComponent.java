@@ -1052,7 +1052,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                     iconDownName = "soundcloud_on";
                 } else if (isAR) {
                     tooltipText = I18n.tr("Open Archive.org source page");
-                    iconUpName = "archive_on";
+                    iconUpName = "archive_off";
                     iconDownName = "archive_on";
                 } else if (isInternetRadio) {
                     tooltipText = I18n.tr("Playing Internet Radio");
