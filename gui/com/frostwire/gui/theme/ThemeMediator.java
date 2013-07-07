@@ -37,9 +37,11 @@ import javax.swing.BorderFactory;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
@@ -91,6 +93,8 @@ public final class ThemeMediator {
     public static Color PLAYING_DATA_LINE_COLOR = new Color(7, 170, 0);
 
     public static Color FILE_NO_EXISTS_DATA_LINE_COLOR = Color.RED;
+
+    public static Color APPLICATION_HEADER_SEPARATOR_COLOR = new Color(0x295164);
 
     private static final int TABLE_FONT_SIZE_MIN = 10;
     private static final int TABLE_FONT_SIZE_MAX = 20;
@@ -144,6 +148,24 @@ public final class ThemeMediator {
 
     public static TitledBorder createTitledBorder(String title) {
         return new SkinTitledBorder(title);
+    }
+
+    public static JSeparator createSeparator(int orientation, int thickness, Color color) {
+        JSeparator sep = new JSeparator(orientation);
+        UIDefaults defaults = new UIDefaults();
+        defaults.put("Separator[Enabled].backgroundPainter", new SkinSeparatorBackgroundPainter(SkinSeparatorBackgroundPainter.State.Enabled, color));
+        defaults.put("Separator.thickness", 1);
+        sep.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
+        sep.putClientProperty("Nimbus.Overrides", defaults);
+        return sep;
+    }
+
+    public static JSeparator createVerticalSeparator(Color color) {
+        return createSeparator(SwingConstants.VERTICAL, 1, color);
+    }
+
+    public static JSeparator createAppHeaderSeparator() {
+        return createVerticalSeparator(APPLICATION_HEADER_SEPARATOR_COLOR);
     }
 
     public static Font getDefaultFont() {
@@ -243,14 +265,14 @@ public final class ThemeMediator {
                     case KeyEvent.VK_W:
                         closeCurrentSearchTab(e);
                     }
-                    
+
                     //Ctrl+Tab, Ctrl+Shift Tab to switch search tabs (Windows/Firefox Style)
                     if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_TAB) {
                         int offset = (e.isShiftDown()) ? -1 : 1;
                         SearchMediator.getSearchResultDisplayer().switchToTabByOffset(offset);
                         return true;
                     }
-                    
+
                     //Cmd+Shift+[, Cmd+Shift+] Chrome Style.
                     if (e.isMetaDown() && e.isShiftDown()) {
                         int offset = 0;
@@ -259,17 +281,14 @@ public final class ThemeMediator {
                         } else if (e.getKeyCode() == KeyEvent.VK_CLOSE_BRACKET) {
                             offset = 1;
                         }
-                        
+
                         if (offset != 0) {
                             SearchMediator.getSearchResultDisplayer().switchToTabByOffset(offset);
                             return true;
                         }
                     }
                 }
-                
-                
-                
-                
+
                 return false;
             }
         });

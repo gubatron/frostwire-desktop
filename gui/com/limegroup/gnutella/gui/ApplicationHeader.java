@@ -18,7 +18,6 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -40,10 +39,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.text.BadLocationException;
@@ -57,7 +54,6 @@ import com.frostwire.gui.searchfield.SearchField;
 import com.frostwire.gui.tabs.LibraryTab;
 import com.frostwire.gui.tabs.Tab;
 import com.frostwire.gui.theme.SkinApplicationHeaderUI;
-import com.frostwire.gui.theme.SkinSeparatorBackgroundPainter;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.gui.updates.UpdateMediator;
 import com.limegroup.gnutella.MediaType;
@@ -129,7 +125,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         //only one will be shown at the time.
         logoUpdateButtonsPanel.add(logoPanel);
         logoUpdateButtonsPanel.add(updateButton);
-        
+
         add(logoUpdateButtonsPanel, "growx, alignx center");
 
         JComponent player = new MediaPlayerComponent().getMediaPanel();
@@ -163,7 +159,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         Font origFont = cloudSearchField.getFont();
         Font newFont = origFont.deriveFont(origFont.getSize2D() + 2f);
         cloudSearchField.setFont(newFont);
-        cloudSearchField.setMargin(new Insets(0,2,0,0));
+        cloudSearchField.setMargin(new Insets(0, 2, 0, 0));
     }
 
     private void createUpdateButton() {
@@ -181,7 +177,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         updateButton.setMaximumSize(d);
         updateButton.setBorder(null);
         updateButton.setOpaque(false);
-        
+
         updateButtonAnimationStartedTimestamp = -1;
 
         updateButton.addMouseListener(new MouseAdapter() {
@@ -201,7 +197,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         ButtonGroup group = new ButtonGroup();
 
         Font buttonFont = new Font("Helvetica", Font.BOLD, 10);
-        buttonContainer.add(createHeaderButtonSeparator(),"growy");
+        buttonContainer.add(ThemeMediator.createAppHeaderSeparator(), "growy");
 
         for (Tabs t : GUIMediator.Tabs.values()) {
             final Tabs lameFinalT = t; //java...
@@ -223,13 +219,12 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
                 private void prepareSearchTabAsSearchTrigger(final Tabs lameFinalT) {
                     boolean performInternetSearch = false;
                     String query = null;
-                    
+
                     if (lameFinalT == Tabs.SEARCH) {
                         if (!cloudSearchField.getText().isEmpty()) {
                             performInternetSearch = true;
                             query = cloudSearchField.getText();
-                        } else if (cloudSearchField.getText().isEmpty() &&
-                                   !librarySearchField.getText().isEmpty()) {
+                        } else if (cloudSearchField.getText().isEmpty() && !librarySearchField.getText().isEmpty()) {
                             //they want internet search while on the library
                             performInternetSearch = true;
                             query = librarySearchField.getText();
@@ -240,32 +235,20 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
                         if (query != null) {
                             if (performInternetSearch) {
                                 cloudSearchField.getActionListeners()[0].actionPerformed(null);
-                            } 
+                            }
                         }
-                    } 
+                    }
                 }
             });
 
             group.add(button);
             buttonContainer.add(button);
-            buttonContainer.add(createHeaderButtonSeparator(),"growy, w 0px");
+            buttonContainer.add(ThemeMediator.createAppHeaderSeparator(), "growy, w 0px");
 
             button.setSelected(t.equals(GUIMediator.Tabs.SEARCH));
         }
 
         add(buttonContainer, "");
-    }
-
-    public static JSeparator createHeaderButtonSeparator() {
-        JSeparator sep1 = new JSeparator(SwingConstants.VERTICAL);
-        UIDefaults defaults = new UIDefaults();
-        defaults.put("Separator[Enabled].backgroundPainter", new SkinSeparatorBackgroundPainter(SkinSeparatorBackgroundPainter.State.Enabled, new Color(0x295164)));
-        sep1.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
-        sep1.putClientProperty("Nimbus.Overrides", defaults);
-        sep1.setMinimumSize(new Dimension(1,55));
-        sep1.setPreferredSize(new Dimension(1,55));
-        sep1.setMaximumSize(new Dimension(1,55));
-        return sep1;
     }
 
     /** Given a Tab mark that button as selected 
@@ -411,14 +394,14 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
 
         //start animation thread.
         Thread t = new Thread("update-button-animation") {
-            private final long  ANIMATION_DURATION = 30000;
+            private final long ANIMATION_DURATION = 30000;
             private final long ANIMATION_INTERVAL = 1000;
             private long updateButtonAnimationLastChange;
-            
+
             public void run() {
                 long now = System.currentTimeMillis();
                 updateButtonAnimationLastChange = now;
-                
+
                 boolean buttonState = true;
                 while (now - updateButtonAnimationStartedTimestamp < ANIMATION_DURATION) {
                     if (now - updateButtonAnimationLastChange >= ANIMATION_INTERVAL) {
@@ -433,7 +416,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
                 }
                 switchButtonImage(false);
             }
-            
+
             public void switchButtonImage(final boolean state) {
                 updateButtonAnimationLastChange = System.currentTimeMillis();
                 GUIMediator.safeInvokeLater(new Runnable() {

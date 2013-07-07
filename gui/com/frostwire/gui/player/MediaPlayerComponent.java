@@ -55,9 +55,9 @@ import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.library.tags.TagsData;
 import com.frostwire.gui.library.tags.TagsReader;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.util.StringUtils;
-import com.limegroup.gnutella.gui.ApplicationHeader;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MPlayerMediator;
@@ -76,7 +76,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     private static final int BOUND_TITLE_CHARS = 18;
 
     public static final String STREAMING_AUDIO = I18n.tr("Streaming Audio");
-    
+
     /**
      * Constant for the play button.
      */
@@ -146,15 +146,15 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     private MediaButton shareButton;
 
     private MediaButton socialButton;
-    
+
     private MediaButton mediaSourceButton;
-    
+
     private Pattern facebookURLPattern = Pattern.compile("http(s)?\\:\\/\\/(www\\.)?facebook\\.com\\/([\\w-]+)");
 
     private Pattern twitterURLPattern = Pattern.compile("http(s)?\\:\\/\\/(www\\.)?twitter\\.com\\/([\\w\\p{L}_]*[\\:|\\.]?\\s?)+");
 
     private Pattern twitterUsernamePattern = Pattern.compile("(@[\\w\\p{L}_]*[\\:|\\.]?\\s?)+");
-    
+
     /**
      * Constructs a new <tt>MediaPlayerComponent</tt>.
      */
@@ -198,13 +198,13 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         registerListeners();
 
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0, gap 0, filly",  //component constraints
-                                      "[][]"));
+        panel.setLayout(new MigLayout("insets 0, gap 0, filly", //component constraints
+                "[][]"));
         panel.setPreferredSize(new Dimension(130, 55));
 
         panel.add(createPlaybackButtonsPanel(), "span 1 2, growy, gapright 4px");
         panel.add(createTrackDetailPanel(), "wrap, growx");
-        panel.add(createProgressPanel(),"growx");
+        panel.add(createProgressPanel(), "growx");
 
         return panel;
     }
@@ -213,7 +213,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout("insets 0, filly"));
 
-        panel.add(ApplicationHeader.createHeaderButtonSeparator(), "growy");
+        panel.add(ThemeMediator.createAppHeaderSeparator(), "growy");
 
         panel.add(PREV_BUTTON, "w 30px!");
 
@@ -226,7 +226,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         panel.add(PLAY_PAUSE_BUTTON_CONTAINER, "w 36px!");
 
         panel.add(NEXT_BUTTON, "w 30px!");
-        panel.add(ApplicationHeader.createHeaderButtonSeparator(), "growy");
+        panel.add(ThemeMediator.createAppHeaderSeparator(), "growy");
 
         return panel;
     }
@@ -235,13 +235,13 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         JPanel panel = new JPanel();
         Cursor theHand = new Cursor(Cursor.HAND_CURSOR);
         panel.setLayout(new MigLayout("insets 0, gap 7px, w 355px!", //layout
-                                      "[][][grow][][][]", //columns
-                                      "")); //row
-        
-        socialButton = new MediaButton("",null,null);
+                "[][][grow][][][]", //columns
+                "")); //row
+
+        socialButton = new MediaButton("", null, null);
         socialButton.setCursor(theHand);
         socialButton.setVisible(false);
-        panel.add(socialButton,"w 18px!");
+        panel.add(socialButton, "w 18px!");
 
         //only one of these 2 buttons is shown at the time, that's why it's on the same container.
         JPanel shareAndSourceButtonPanel = new JPanel();
@@ -256,8 +256,8 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         mediaSourceButton.setVisible(false);
         shareAndSourceButtonPanel.add(shareButton);
         shareAndSourceButtonPanel.add(mediaSourceButton);
-        
-        panel.add(shareAndSourceButtonPanel,"w 18px!");
+
+        panel.add(shareAndSourceButtonPanel, "w 18px!");
 
         Font buttonFont = new Font("Helvetica", Font.BOLD, 10);
         trackTitle = new JLabel("");
@@ -284,17 +284,16 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         panel.add(trackTitle, "growx, wmax 186px");
 
         initPlaylistPlaybackModeControls();
-        panel.add(LOOP_BUTTON,"w 20px!");
-        panel.add(SHUFFLE_BUTTON,"w 20px!");
-        panel.add(VOLUME,"w 58px!");
+        panel.add(LOOP_BUTTON, "w 20px!");
+        panel.add(SHUFFLE_BUTTON, "w 20px!");
+        panel.add(VOLUME, "w 58px!");
 
         return panel;
     }
 
     private JPanel createProgressPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0 0 5px 0 4px, fillx",
-                    "[][grow][align right]"));
+        panel.setLayout(new MigLayout("insets 0 0 5px 0 4px, fillx", "[][grow][align right]"));
 
         Font f = panel.getFont();
         f = f.deriveFont(10f);
@@ -304,7 +303,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         progressSongLength.setForeground(Color.WHITE);
         progressSongLength.setFont(f);
 
-        panel.add(progressCurrentTime,"gap 2px!");
+        panel.add(progressCurrentTime, "gap 2px!");
         panel.add(PROGRESS, "growx");
         panel.add(progressSongLength, "align center");
 
@@ -490,14 +489,12 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             setProgressEnabled(false);
             progressSongLength.setText("--:--:--");
         }
-        
+
         updateTitle(mediaSource);
         updateSocialButton(mediaSource);
         updateMediaSourceButton(mediaSource);
     }
 
-
-    
     private void updateTitle(MediaSource mediaSource) {
         try {
             if (mediaSource == null) {
@@ -506,9 +503,9 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
             //update controls
             MediaSource currentMedia = mediaSource;
-            
+
             updateShareButtonVisibility(currentMedia);
-            
+
             PlaylistItem playlistItem = currentMedia.getPlaylistItem();
 
             String currentText = null;
@@ -546,8 +543,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             } else if (currentMedia != null && currentMedia instanceof InternetRadioAudioSource) {
                 InternetRadioAudioSource radioSource = (InternetRadioAudioSource) currentMedia;
                 currentText = radioSource.getInternetRadioStation().getDescription();
-            }
-            else if (currentMedia != null && currentMedia.getFile() == null && currentMedia.getURL() != null) {
+            } else if (currentMedia != null && currentMedia.getFile() == null && currentMedia.getURL() != null) {
                 //
                 //System.out.println("StreamURL: " + currentMedia.getURL().toString());
 
@@ -565,8 +561,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     }
 
     private void updateShareButtonVisibility(MediaSource currentMedia) {
-        boolean isLocalOrPlaylistFiles = (currentMedia.getFile() != null || (currentMedia.getPlaylistItem() != null && currentMedia.getPlaylistItem().getFilePath() != null && new File(
-                currentMedia.getPlaylistItem().getFilePath()).exists()));
+        boolean isLocalOrPlaylistFiles = (currentMedia.getFile() != null || (currentMedia.getPlaylistItem() != null && currentMedia.getPlaylistItem().getFilePath() != null && new File(currentMedia.getPlaylistItem().getFilePath()).exists()));
         boolean showShareButton = currentMedia != null && (isLocalOrPlaylistFiles);
         shareButton.setVisible(showShareButton);
     }
@@ -621,7 +616,6 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             showPlayButton();
         }
 
-        
         if (state == MediaPlaybackState.Stopped || state == MediaPlaybackState.Closed) {
             trackTitle.setText("");
             updateMediaSourceButton(null);
@@ -883,7 +877,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
             private boolean foundSocialLink;
             private String socialLink;
-            
+
             @Override
             protected Void doInBackground() throws Exception {
                 if (currentMedia != null && (currentMedia.getFile() != null || currentMedia.getPlaylistItem() != null)) {
@@ -898,13 +892,13 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 }
                 return null;
             }
-            
+
             @Override
             protected void done() {
                 if (foundSocialLink) {
                     setupSocialButtonAction();
                 }
-                
+
                 socialButton.setVisible(foundSocialLink);
             }
 
@@ -913,19 +907,19 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 if (artist.equals("")) {
                     artist = I18n.tr("this artist(s)");
                 }
-                
+
                 if (socialLink.contains("facebook")) {
-                    socialButton.init(I18n.tr("Open Facebook page of") + " " + artist,"FACEBOOK","FACEBOOK");
+                    socialButton.init(I18n.tr("Open Facebook page of") + " " + artist, "FACEBOOK", "FACEBOOK");
                 } else if (socialLink.contains("twitter")) {
-                    socialButton.init(I18n.tr("Open Twitter page of") + " " + artist,"TWITTER","TWITTER");
+                    socialButton.init(I18n.tr("Open Twitter page of") + " " + artist, "TWITTER", "TWITTER");
                 }
-                
+
                 removeSocialButtonActionListeners();
-                
+
                 socialButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent arg0) {
-                       GUIMediator.openURL(socialLink);
+                        GUIMediator.openURL(socialLink);
                     }
                 });
             }
@@ -938,42 +932,42 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                     }
                 }
             }
-            
+
             private void parseSocialLink(String commentToParse) {
                 if (!StringUtils.isNullOrEmpty(commentToParse)) {
                     String trimmedComment = commentToParse.toLowerCase().trim();
-                    
+
                     Matcher facebookMatcher = facebookURLPattern.matcher(trimmedComment);
 
                     if (facebookMatcher.find()) {
                         socialLink = facebookMatcher.group(0);
                     } else {
                         Matcher twitterURLMatcher = twitterURLPattern.matcher(trimmedComment);
-                        
+
                         if (twitterURLMatcher.find()) {
                             socialLink = twitterURLMatcher.group(0);
                         } else {
                             Matcher twitterUsernameMatcher = twitterUsernamePattern.matcher(trimmedComment);
-                            
+
                             if (twitterUsernameMatcher.find()) {
                                 String tweep = twitterUsernameMatcher.group(0).trim();
                                 socialLink = "https://twitter.com/" + tweep.substring(1);
                             }
                         }
                     }
-                    
+
                     foundSocialLink = !StringUtils.isNullOrEmpty(socialLink);
                 }
             }
 
         };
-        
+
         swingWorker.execute();
     }
-    
+
     private void updateMediaSourceButton(final MediaSource currentMedia) {
         SwingWorker<Void, Void> swingWorker = new SwingWorker<Void, Void>() {
-            
+
             private boolean isLocalFile;
             private boolean isPlaylistItem;
             private boolean isYT;
@@ -981,7 +975,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             private boolean isAR;
             private boolean isInternetRadio;
             private boolean isWifiStream;
-            
+
             private String playlistName;
             private String deviceName;
 
@@ -998,9 +992,10 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                     //won't be shown in 5.6.x, code here for 6.x
                     isPlaylistItem = true;
                     setupPlaylistName(currentMedia);
-                } if (currentMedia instanceof StreamMediaSource) {
+                }
+                if (currentMedia instanceof StreamMediaSource) {
                     StreamMediaSource streamMedia = (StreamMediaSource) currentMedia;
-                    
+
                     if (streamMedia.getDetailsUrl() != null) {
                         isYT = streamMedia.getDetailsUrl().contains("youtube");
                         isSC = streamMedia.getDetailsUrl().contains("soundcloud");
@@ -1009,14 +1004,14 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 } else {
                     isInternetRadio = currentMedia instanceof InternetRadioAudioSource;
                     isWifiStream = currentMedia instanceof DeviceMediaSource;
-                    
+
                     if (isWifiStream) {
                         setupDeviceName(currentMedia);
                     }
                 }
                 return null;
             }
-            
+
             @Override
             protected void done() {
                 String tooltipText = "";
@@ -1047,9 +1042,9 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                     tooltipText = I18n.tr("Playing local Wi-Fi Stream from") + " " + deviceName;
                     iconUpName = iconDownName = "wifi_sharing_light_small";
                 }
-                
-                mediaSourceButton.init(tooltipText,iconUpName,iconDownName);
-                
+
+                mediaSourceButton.init(tooltipText, iconUpName, iconDownName);
+
                 //TODO: Add "isLocalFile || isPlaylistItem ||" on FrostWire 6.x when we have room for 3 buttons.
                 boolean mediaSourceButtonVisible = (currentMedia != null) && (isYT || isSC || isAR || isInternetRadio || isWifiStream);
                 //System.out.println("mediaSourceButton should be visible? " + mediaSourceButtonVisible);
@@ -1059,24 +1054,23 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             private void setupDeviceName(final MediaSource currentMedia) {
                 DeviceMediaSource deviceMediaSource = (DeviceMediaSource) currentMedia;
                 deviceName = I18n.tr("unknown device");
-                if (deviceMediaSource.getDevice()!=null && deviceMediaSource.getDevice().getName()!=null) {
+                if (deviceMediaSource.getDevice() != null && deviceMediaSource.getDevice().getName() != null) {
                     deviceName = deviceMediaSource.getDevice().getName();
                 }
             }
 
             private void setupPlaylistName(final MediaSource currentMedia) {
                 Playlist playlist = currentMedia.getPlaylistItem().getPlaylist();
-                if (playlist!=null && playlist.getName()!=null) {
+                if (playlist != null && playlist.getName() != null) {
                     playlistName = playlist.getName();
                 } else {
                     playlistName = I18n.tr("playlist");
                 }
             }
         };
-        
+
         swingWorker.execute();
     }
-
 
     private String getCommentFromMP3(MediaSource currentMedia) {
         String comment = "";
@@ -1090,7 +1084,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         }
         return comment;
     }
-    
+
     private String getArtistFromMP3(MediaSource currentMedia) {
         String artist = "";
         if (currentMedia.getFile() != null) {
@@ -1140,8 +1134,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             }
         }
     }
-    
-    
+
     private final class ShowSourceActionListener implements ActionListener {
 
         @Override
@@ -1158,9 +1151,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 if (!StringUtils.isNullOrEmpty(streamMedia.getDetailsUrl())) {
                     GUIMediator.openURL(streamMedia.getDetailsUrl());
                 }
-            } else if (currentMedia instanceof InternetRadioAudioSource ||
-                       currentMedia instanceof DeviceMediaSource ||
-                       currentMedia.getFile() != null) {
+            } else if (currentMedia instanceof InternetRadioAudioSource || currentMedia instanceof DeviceMediaSource || currentMedia.getFile() != null) {
                 showCurrentMedia();
             }
         }
