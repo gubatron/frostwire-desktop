@@ -154,7 +154,7 @@ public final class ThemeMediator {
         JSeparator sep = new JSeparator(orientation);
         UIDefaults defaults = new UIDefaults();
         defaults.put("Separator[Enabled].backgroundPainter", new SkinSeparatorBackgroundPainter(SkinSeparatorBackgroundPainter.State.Enabled, color));
-        defaults.put("Separator.thickness", 1);
+        defaults.put("Separator.thickness", thickness);
         sep.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
         sep.putClientProperty("Nimbus.Overrides", defaults);
         return sep;
