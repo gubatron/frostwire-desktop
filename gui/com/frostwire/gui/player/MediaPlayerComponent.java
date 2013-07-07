@@ -36,12 +36,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
-import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
-import javax.swing.UIDefaults;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -58,9 +55,9 @@ import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.library.tags.TagsData;
 import com.frostwire.gui.library.tags.TagsReader;
-import com.frostwire.gui.theme.SkinSeparatorBackgroundPainter;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.util.StringUtils;
+import com.limegroup.gnutella.gui.ApplicationHeader;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MPlayerMediator;
@@ -216,14 +213,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout("insets 0, filly"));
 
-        JSeparator sep1 = new JSeparator(SwingConstants.VERTICAL);
-
-        UIDefaults defaults = new UIDefaults();
-        defaults.put("Separator[Enabled].backgroundPainter", new SkinSeparatorBackgroundPainter(SkinSeparatorBackgroundPainter.State.Enabled, new Color(0x295164)));
-        sep1.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
-        sep1.putClientProperty("Nimbus.Overrides", defaults);
-
-        panel.add(sep1, "growy");
+        panel.add(ApplicationHeader.createHeaderButtonSeparator(), "growy");
 
         panel.add(PREV_BUTTON, "w 30px!");
 
@@ -236,11 +226,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         panel.add(PLAY_PAUSE_BUTTON_CONTAINER, "w 36px!");
 
         panel.add(NEXT_BUTTON, "w 30px!");
-
-        JSeparator sep2 = new JSeparator(SwingConstants.VERTICAL);
-        sep2.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
-        sep2.putClientProperty("Nimbus.Overrides", defaults);
-        panel.add(sep2, "growy");
+        panel.add(ApplicationHeader.createHeaderButtonSeparator(), "growy");
 
         return panel;
     }

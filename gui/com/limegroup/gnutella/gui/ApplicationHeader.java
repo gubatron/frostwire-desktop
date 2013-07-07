@@ -201,7 +201,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         ButtonGroup group = new ButtonGroup();
 
         Font buttonFont = new Font("Helvetica", Font.BOLD, 10);
-        buttonContainer.add(createTabButtonSeparator(),"growy");
+        buttonContainer.add(createHeaderButtonSeparator(),"growy");
 
         for (Tabs t : GUIMediator.Tabs.values()) {
             final Tabs lameFinalT = t; //java...
@@ -248,7 +248,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
 
             group.add(button);
             buttonContainer.add(button);
-            buttonContainer.add(createTabButtonSeparator(),"growy");
+            buttonContainer.add(createHeaderButtonSeparator(),"growy, w 0px");
 
             button.setSelected(t.equals(GUIMediator.Tabs.SEARCH));
         }
@@ -256,12 +256,15 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         add(buttonContainer, "");
     }
 
-    private JSeparator createTabButtonSeparator() {
+    public static JSeparator createHeaderButtonSeparator() {
         JSeparator sep1 = new JSeparator(SwingConstants.VERTICAL);
         UIDefaults defaults = new UIDefaults();
         defaults.put("Separator[Enabled].backgroundPainter", new SkinSeparatorBackgroundPainter(SkinSeparatorBackgroundPainter.State.Enabled, new Color(0x295164)));
         sep1.putClientProperty("Nimbus.Overrides.InheritDefaults", Boolean.TRUE);
         sep1.putClientProperty("Nimbus.Overrides", defaults);
+        sep1.setMinimumSize(new Dimension(1,55));
+        sep1.setPreferredSize(new Dimension(1,55));
+        sep1.setMaximumSize(new Dimension(1,55));
         return sep1;
     }
 
