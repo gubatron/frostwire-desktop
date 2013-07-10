@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * Provides convenience functionality ranging from getting user information,
@@ -73,6 +74,12 @@ public class CommonUtils {
     public static final String FROSTWIRE_418_PREFS_DIR_NAME = ".frostwire4.18";
     
     public static final String FROSTWIRE_500_PREFS_DIR_NAME = ".frostwire5";
+    
+    public static final String META_SETTINGS_KEY_USER_SETTINGS_WINDOWS = "user.settings.dir.windows";
+    
+    public static final String META_SETTINGS_KEY_USER_SETTINGS_MAC = "user.settings.dir.mac";
+    
+    public static final String META_SETTINGS_KEY_USER_SETTINGS_POSIX = "user.settings.dir.posix";
     
     /**
      * Several arrays of illegal characters on various operating systems.
@@ -663,5 +670,63 @@ public class CommonUtils {
     
 	public static boolean isDebugMode() {
 		return ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
+	}
+	
+	/**
+	 * Looks for a ".meta" configuration file on the same folder as the FrostWire executable.
+	 * If found this file should contain the following configuration values:
+	 * 
+	 * user.settings.dir.windows = <relative path to frostwire settings directory for windows installation>
+	 * user.settings.dir.mac = <relative path to frostwire settings directory for windows installation>
+	 * user.settings.dir.posix = <relative path to frostwire settings directory for posix installation>
+	 * 
+	 * @return A Properties object, if the .meta file is not found returns an empty Properties object.
+	 */
+	public static Properties loadMetaConfiguration() {
+	    Properties meta = new Properties();
+	    
+	    File metaFile = new File(".meta");
+	    if (metaFile.exists() && metaFile.isFile() && metaFile.canRead()) {
+	        try {
+	            meta.load(new FileInputStream(metaFile));
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    return meta;
+	}
+	
+	/**
+	 * Looks for .meta config file portable settings dir File object for the current operating system.
+	 * 
+	 * @return File object, if not meta configured on .meta, returns null
+	 */
+	public static File getPortableSettingsDir() {
+        Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
+        
+        File portableSettingsDir = null;
+        String metaKey = null;
+        
+        if (OSUtils.isWindows() && metaConfiguration.containsKey(CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_WINDOWS)) {
+            metaKey = CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_WINDOWS;
+        } else if (OSUtils.isMacOSX() && metaConfiguration.containsKey(CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_MAC)) {
+            metaKey = CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_MAC;
+        } else if (OSUtils.isPOSIX() && metaConfiguration.containsKey(CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_POSIX)) {
+            metaKey = CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_POSIX;
+        }
+        
+        if (metaKey != null) {
+            portableSettingsDir = new File(metaConfiguration.getProperty(metaKey));
+
+            if (!portableSettingsDir.exists()) {
+                portableSettingsDir.mkdirs();
+            }
+            
+            if (!OSUtils.isPOSIX()) {
+                FileUtils.setWriteable(portableSettingsDir);
+            }
+        }
+        return portableSettingsDir;
 	}
 }

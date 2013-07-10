@@ -34,7 +34,9 @@ public class LimeCoreGlue {
      * @param userSettingsDir the preferred directory for user settings
      */
     public static void preinstall() throws InstallFailedException {
-        preinstall(CommonUtils.getUserSettingsDir());
+        File portableSettingsDir = CommonUtils.getPortableSettingsDir();
+        File userSettingsDir = (portableSettingsDir != null) ? portableSettingsDir : CommonUtils.getUserSettingsDir();
+        preinstall(userSettingsDir);
     }
     
     /**
