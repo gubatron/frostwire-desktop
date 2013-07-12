@@ -1029,7 +1029,7 @@ msgstr "Magnet copiado para a Área de Transferência."
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:23
 msgid "Downloading Torrent"
-msgstr "Bainxando Torrent"
+msgstr "Baixando Torrent"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:24
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:21
@@ -2345,7 +2345,7 @@ msgstr "Diferente de outros programas de amigos, FrostWire pode transferir arqui
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:39
 msgid "Want to share a large file? Send several hundred gigabytes with no problems at all, just make sure you leave your FrostWire running while your friend(s) are downloading. They can pause and resume the download all they want as long as you or somebody else is seeding the same content."
-msgstr "Quer compartilhar arquivos grandes? Envie várias centenas de gigabytes sem nenhum problema, apenas certifique-se de deixar o seu FrostWire funcionando enquanto o seu amigo(s) estão bainxando. Eles podem pausar e retomar o download desde que você ou outra pessoa esteja semenando o mesmo conteudo. "
+msgstr "Quer compartilhar arquivos grandes? Envie várias centenas de gigabytes sem nenhum problema, apenas certifique-se de deixar o seu FrostWire funcionando enquanto o seu amigo(s) estão baixando. Eles podem pausar e retomar o download desde que você ou outra pessoa esteja semenando o mesmo conteudo. "
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:40
 msgid "Magnet links allow users to download files through FrostWire from a web page. When you put a magnet link on your web page (in the 'href' attribute of anchor tags), and a user clicks the link, a download will start in FrostWire."
