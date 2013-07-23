@@ -701,13 +701,15 @@ public final class GUIMediator {
 
     /**
      * Sets the tab pane to display the given tab.
+     * Tip: Try to leave this method call last on your actions.
      * 
-     * @param index
-     *            the index of the tab to display
+     * @param the tab enum index of the tab to display
+     *            
      */
-    public void setWindow(GUIMediator.Tabs tab) {
-        getMainFrame().setSelectedTab(tab);
-        selectFinishedDownloadsOnLibraryFirstTime(tab);
+    public void setWindow(GUIMediator.Tabs tabEnum) {
+        getMainFrame().getApplicationHeader().showSearchField(getMainFrame().getTab(tabEnum));
+        getMainFrame().setSelectedTab(tabEnum);
+        selectFinishedDownloadsOnLibraryFirstTime(tabEnum);
     }
 
     /**
