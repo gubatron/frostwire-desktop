@@ -103,7 +103,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
     private ImageIcon updateImageButtonOff;
     private long updateButtonAnimationStartedTimestamp;
 
-    private GoogleSearchField cloudSearchField;
+    private final GoogleSearchField cloudSearchField;
     private SearchField librarySearchField;
     private final JPanel searchPanels;
 
@@ -114,6 +114,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         headerButtonBackgroundSelected = GUIMediator.getThemeImage("selected_header_button_background").getImage();
         headerButtonBackgroundUnselected = GUIMediator.getThemeImage("unselected_header_button_background").getImage();
 
+        cloudSearchField = new GoogleSearchField();
         searchPanels = createSearchPanel();
         add(searchPanels, "w 240px!, gapright 10px");
 
@@ -139,7 +140,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
 
     private JPanel createSearchPanel() {
         JPanel panel = new JPanel(new CardLayout());
-        createCloudSearchField();
+        initCloudSearchField();
         createLibrarySearchField();
 
         panel.add(cloudSearchField, CLOUD_SEARCH_FIELD);
@@ -152,8 +153,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         librarySearchField = LibraryMediator.instance().getLibrarySearch().getSearchField();
     }
 
-    private void createCloudSearchField() {
-        cloudSearchField = new GoogleSearchField();
+    private void initCloudSearchField() {
         cloudSearchField.addActionListener(new SearchListener());
         cloudSearchField.setPrompt(I18n.tr("Search or enter URL"));
         Font origFont = cloudSearchField.getFont();
@@ -211,15 +211,14 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
                 }
 
                 private void onMainApplicationHeaderTabActionPerformed(final Map<Tabs, Tab> tabs, final Tabs lameFinalT) {
-                    GUIMediator.instance().setWindow(lameFinalT);
                     prepareSearchTabAsSearchTrigger(lameFinalT);
                     showSearchField(tabs.get(lameFinalT));
+                    GUIMediator.instance().setWindow(lameFinalT);
                 }
-
-                private void prepareSearchTabAsSearchTrigger(final Tabs lameFinalT) {
+                
+                public void prepareSearchTabAsSearchTrigger(final Tabs lameFinalT) {
                     boolean performInternetSearch = false;
                     String query = null;
-
                     if (lameFinalT == Tabs.SEARCH) {
                         if (!cloudSearchField.getText().isEmpty()) {
                             performInternetSearch = true;
@@ -250,7 +249,9 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
 
         add(buttonContainer, "");
     }
-
+    
+    
+ 
     /** Given a Tab mark that button as selected 
      * 
      * Since we don't keep explicit references to the buttons this method
@@ -322,7 +323,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         return button;
     }
 
-    private void showSearchField(Tab t) {
+    public void showSearchField(Tab t) {
         cloudSearchField.setText("");
         librarySearchField.setText("");
         CardLayout cl = (CardLayout) (searchPanels.getLayout());
@@ -467,8 +468,9 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
 
     private class SearchListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
+            //keep the query if ther was one before switching to the search tab
             String query = cloudSearchField.getText();
+            GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);                
 
             //start a download from the search box by entering a URL.
             if (FileMenuActions.openMagnetOrTorrent(query)) {
