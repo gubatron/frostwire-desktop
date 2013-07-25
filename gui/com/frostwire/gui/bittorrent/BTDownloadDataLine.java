@@ -54,7 +54,7 @@ import com.limegroup.gnutella.settings.iTunesSettings;
  */
 final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
 
-    private static final String PARTIAL_DOWNLOAD_TEXT = I18n.tr(" (Partial)");
+    private static final String PARTIAL_DOWNLOAD_TEXT = I18n.tr(" (Handpicked)");
 
     /**
      * Variable for the status of the download.

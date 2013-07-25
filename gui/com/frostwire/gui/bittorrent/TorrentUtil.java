@@ -670,4 +670,9 @@ public final class TorrentUtil {
         set.addAll(TorrentUtil.getSkipedFiles());
         return set;
     }
+    
+    public static boolean isHandpicked(DownloadManager dm) {
+        Set<File> skippedFiles = getSkippedFiles(dm);
+        return skippedFiles.size() > 0;
+    }
 }

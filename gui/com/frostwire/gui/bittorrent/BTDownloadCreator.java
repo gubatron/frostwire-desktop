@@ -198,8 +198,9 @@ public class BTDownloadCreator {
                 if (state == DownloadManager.STATE_READY) {
                     manager.startDownload();
                 }
-
-                if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
+                
+                if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue() || 
+                    (TorrentUtil.isHandpicked(manager) && !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue())) {
                     if (manager.getAssumedComplete()) {
                         if (TorrentUtil.isStopable(manager)) {
                             TorrentUtil.stop(manager);

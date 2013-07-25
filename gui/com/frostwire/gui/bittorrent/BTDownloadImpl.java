@@ -350,7 +350,7 @@ public class BTDownloadImpl implements BTDownload {
 	@Override
 	public void updateDownloadManager(DownloadManager downloadManager) {
 		_downloadManager = downloadManager;		
-        _partialDownload = TorrentUtil.getSkippedFiles(downloadManager).size() > 0;
+        _partialDownload = TorrentUtil.isHandpicked(downloadManager);
         
         updateSize(downloadManager);
         

@@ -64,6 +64,8 @@ public class TorrentSeedingSettingPaneItem extends AbstractPaneItem {
         if (!COMPONENT.wantsSeeding()) {
             BTDownloadMediator.instance().stopCompleted();
         }
+        
+        SharingSettings.SEED_HANDPICKED_TORRENT_FILES.setValue(COMPONENT.wantsHandpickedSeeding());
 
         GUIMediator.instance().getStatusLine().refresh();
 

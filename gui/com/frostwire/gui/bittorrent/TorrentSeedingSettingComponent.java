@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
@@ -19,11 +20,13 @@ public class TorrentSeedingSettingComponent extends JPanel {
 	private boolean _precheck;
 	private boolean _border;
 	
-	private ButtonGroup _radioGroup;
+	private ButtonGroup radioGroup;
 
-	private JRadioButton _seedingRadioButton;
+	private JRadioButton seedingRadioButton;
 
-	private JRadioButton _notSeedingRadioButton;
+	private JRadioButton notSeedingRadioButton;
+	
+	private JCheckBox handPickedSeedingCheckbox;
 
 	/**
 	 * 
@@ -44,7 +47,7 @@ public class TorrentSeedingSettingComponent extends JPanel {
 		    setBorder(ThemeMediator.createTitledBorder(I18n.tr("Seeding Settings")));
 		}
 
-		initRadioButtons();
+		initOptionButtons();
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LINE_START;
@@ -53,35 +56,43 @@ public class TorrentSeedingSettingComponent extends JPanel {
 		c.insets = new Insets(5,5,5,5);
 		c.weightx = 1.0;
 		
-		add(_seedingRadioButton,c);
-		add(_notSeedingRadioButton,c);
+		add(seedingRadioButton,c);
+		add(notSeedingRadioButton,c);
+		add(handPickedSeedingCheckbox,c);
 		
 	}
 
-	private void initRadioButtons() {
-		_seedingRadioButton = new JRadioButton(I18n.tr("<html><strong>Seed finished torrent downloads.</strong> BitTorrent users on the internet will be able<br/>to download file chunks of the data your torrents seed. (Recommended)</html>"));
-		_notSeedingRadioButton = new JRadioButton(I18n.tr("<html><strong>Don't seed finished torrent downloads.</strong> BitTorrent users on the internet may<br/>only download file chunks of that torrent from you while you're downloading its<br/>data files. <strong>Some trackers will penalize this Leeching behavior</strong>.</html>"));
-		_radioGroup = new ButtonGroup();
-		_radioGroup.add(_seedingRadioButton);
-		_radioGroup.add(_notSeedingRadioButton);
+	private void initOptionButtons() {
+		seedingRadioButton = new JRadioButton(I18n.tr("<html><strong>Seed finished torrent downloads.</strong> BitTorrent users on the internet will be able<br/>to download file chunks of the data your torrents seed. (Recommended)</html>"));
+		notSeedingRadioButton = new JRadioButton(I18n.tr("<html><strong>Don't seed finished torrent downloads.</strong> BitTorrent users on the internet may<br/>only download file chunks of that torrent from you while you're downloading its<br/>data files. <strong>Some trackers will penalize this Leeching behavior</strong>.</html>"));
+		radioGroup = new ButtonGroup();
+		radioGroup.add(seedingRadioButton);
+		radioGroup.add(notSeedingRadioButton);
 		
 		if (_precheck) {
 			if (SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
-				_seedingRadioButton.setSelected(true);
-				_notSeedingRadioButton.setSelected(false);
+				seedingRadioButton.setSelected(true);
+				notSeedingRadioButton.setSelected(false);
 			} else {
-				_notSeedingRadioButton.setSelected(true);
-				_seedingRadioButton.setSelected(false);
+				notSeedingRadioButton.setSelected(true);
+				seedingRadioButton.setSelected(false);
 			}
 		}
+		
+		handPickedSeedingCheckbox = new JCheckBox(I18n.tr("<html><strong>Seed handpicked torrent files.</strong> Seeding handpicked files from torrents (a.k.a. \"Partial Downloads\") can result in seeding the chunks of neighboring incomplete files.<br/>This behavior can be confusing for users not familiar with how the BitTorrent protocol work.<br/>Recommended for advanced users only.</html>"));
+		handPickedSeedingCheckbox.setSelected(SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue());
 	}
 
 	public boolean wantsSeeding() {
-		return _seedingRadioButton.isSelected();
+		return seedingRadioButton.isSelected();
 	}
 
 	public boolean hasOneBeenSelected() {
-		return _seedingRadioButton.isSelected() || _notSeedingRadioButton.isSelected();
+		return seedingRadioButton.isSelected() || notSeedingRadioButton.isSelected();
+	}
+	
+	public boolean wantsHandpickedSeeding() {
+	    return handPickedSeedingCheckbox.isSelected();
 	}
 	
 }

@@ -44,6 +44,9 @@ public class SharingSettings extends LimeProps {
     public static final BooleanSetting SEED_FINISHED_TORRENTS =
     	FACTORY.createBooleanSetting("SEED_FINISHED_TORRENTS", true);
     
+    public static final BooleanSetting SEED_HANDPICKED_TORRENT_FILES =
+            FACTORY.createBooleanSetting("SEED_HANDPICKED_TORRENT_FILES", false);        
+    
     public static final File IMAGE_CACHE_DIR = 
         new File(CommonUtils.getUserSettingsDir(), "image_cache");
     

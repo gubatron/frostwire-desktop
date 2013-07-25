@@ -113,6 +113,7 @@ class BitTorrentSettingsWindow extends SetupWindow {
         }
 
         SharingSettings.SEED_FINISHED_TORRENTS.setValue(_torrentSeedingSettingComponent.wantsSeeding());
+        SharingSettings.SEED_HANDPICKED_TORRENT_FILES.setValue(_torrentSeedingSettingComponent.wantsHandpickedSeeding());
     }
 
     private void applyTorrentDataSaveFolderSettings(List<String> errors) {
