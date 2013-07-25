@@ -1,5 +1,7 @@
 frostwire (5.6.3) stable; urgency=high
   * New Feature: Preview audio search results from Archive.org.
+  * New Feature: Decide wether or not to seed handpicked files
+    of torrents (aka Partial Downloads).
   * Fixes bug where the internet search box would be disabled after
     sending file to friend.
  -- FrostWire Team <contact@frostwire.com>  Tue, 23 Jul 2013 15:11:47 -0500
