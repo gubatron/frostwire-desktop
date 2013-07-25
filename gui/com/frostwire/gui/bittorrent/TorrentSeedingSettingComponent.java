@@ -79,8 +79,6 @@ public class TorrentSeedingSettingComponent extends JPanel {
 		radioGroup.add(seedingRadioButton);
 		radioGroup.add(notSeedingRadioButton);
 		
-		notSeedingRadioButton.addChangeListener(new SeedingRadioButtonChangeListener());
-		
 		if (_precheck) {
 			if (SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
 				seedingRadioButton.setSelected(true);
@@ -91,8 +89,11 @@ public class TorrentSeedingSettingComponent extends JPanel {
 			}
 		}
 		
-		handPickedSeedingCheckbox = new JCheckBox(I18n.tr("<html><strong>Seed handpicked torrent files.</strong> Seeding handpicked files from torrents (a.k.a. \"Partial Downloads\") can result in seeding the chunks of neighboring incomplete files.<br/>This behavior can be confusing for users not familiar with how the BitTorrent protocol work.<br/>Recommended for advanced users only.</html>"));
+		handPickedSeedingCheckbox = new JCheckBox(I18n.tr("<html><strong>Seed handpicked torrent files.</strong> Handpicked file torrents downloads (Partial Downloads) can result in seeding data chunks of neighboring incomplete files.<br/>This feature is <strong>recommended for advanced users only</strong> as it can lead to downloading parts of files you may have not explicitly chosen for download.</html>"));
 		handPickedSeedingCheckbox.setSelected(SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue());
+		handPickedSeedingCheckbox.setEnabled(seedingRadioButton.isSelected());
+		
+	    notSeedingRadioButton.addChangeListener(new SeedingRadioButtonChangeListener());
 	}
 
 	public boolean wantsSeeding() {
@@ -106,5 +107,4 @@ public class TorrentSeedingSettingComponent extends JPanel {
 	public boolean wantsHandpickedSeeding() {
 	    return handPickedSeedingCheckbox.isSelected();
 	}
-	
 }
