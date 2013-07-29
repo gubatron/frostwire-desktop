@@ -24,6 +24,7 @@ import java.util.Set;
 
 import org.limewire.setting.SettingsFactory;
 import org.limewire.util.CommonUtils;
+import org.limewire.util.IOUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 import org.limewire.util.SystemUtils.SpecialLocations;
@@ -158,7 +159,9 @@ public final class FrostWireUtils {
         try {
             File settingFile = new File(CommonUtils.getFrostWire4UserSettingsDir(), "frostwire.props");
             Properties props = new Properties();
-            props.load(new FileInputStream(settingFile));
+            FileInputStream fis = new FileInputStream(settingFile);
+            props.load(fis);
+            IOUtils.closeQuietly(fis);
 
             if (props.containsKey("DIRECTORY_FOR_SAVING_FILES")) {
                 result.add(new File(props.getProperty("DIRECTORY_FOR_SAVING_FILES")));

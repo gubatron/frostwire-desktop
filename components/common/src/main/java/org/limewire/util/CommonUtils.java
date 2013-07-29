@@ -41,6 +41,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.limegroup.gnutella.LimeCoreGlue;
+
 /**
  * Provides convenience functionality ranging from getting user information,
  * copying files to getting the stack traces of all current threads.
@@ -601,6 +603,9 @@ public class CommonUtils {
      * Returns the directory where all user settings should be stored.  This
      * is where all application data should be stored.  If the directory is not
      * set, this returns the user's home directory.
+     * 
+     * settingsDirectory has already been set at this point as portable if we're on portable.
+     * @see LimeCoreGlue.preinstall()
      */
     public synchronized static File getUserSettingsDir() {  
         if(settingsDirectory != null)
@@ -699,10 +704,14 @@ public class CommonUtils {
 	    
 	    File metaFile = new File(".meta");
 	    if (metaFile.exists() && metaFile.isFile() && metaFile.canRead()) {
+	        FileInputStream fis = null;
 	        try {
-	            meta.load(new FileInputStream(metaFile));
+	            fis = new FileInputStream(metaFile);
+	            meta.load(fis);
 	        } catch (Exception e) {
 	            e.printStackTrace();
+	        } finally {
+	            IOUtils.closeQuietly(fis);
 	        }
 	    }
 	    

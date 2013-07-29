@@ -94,8 +94,4 @@ public class LibrarySettings extends LimeProps {
             AzureusStarter.revertToDefaultConfiguration();
         }
     }
-    
-    private static void setupPortableInitialLibraryFolders() {
-        
-    }
 }
