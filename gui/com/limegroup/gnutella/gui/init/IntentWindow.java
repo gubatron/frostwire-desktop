@@ -28,6 +28,7 @@ import javax.swing.JPanel;
 
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
+import org.limewire.util.IOUtils;
 
 import com.frostwire.gui.theme.ThemeMediator;
 
@@ -44,11 +45,15 @@ final class IntentWindow extends SetupWindow {
     private boolean isCurrentVersionChecked() {
         if (properties == null) {
             properties = new Properties();
+            FileInputStream fis = null;
             try {
-                properties.load(new FileInputStream(getPropertiesFile()));
+                fis = new FileInputStream(getPropertiesFile());
+                properties.load(fis);
             } catch (IOException iox) {
                 System.out.println("Could not load properties from property file.");
                 return false;
+            } finally {
+                IOUtils.closeQuietly(fis);
             }
         }
 

@@ -41,8 +41,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import com.limegroup.gnutella.LimeCoreGlue;
-
 /**
  * Provides convenience functionality ranging from getting user information,
  * copying files to getting the stack traces of all current threads.
@@ -83,12 +81,6 @@ public class CommonUtils {
     
     public static final String META_SETTINGS_KEY_USER_SETTINGS_POSIX = "user.settings.dir.posix";
     
-    public static final String META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_WINDOWS = "user.settings.from_device_data_dir.windows";
-
-    public static final String META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_MAC = "user.settings.from_device_data_dir.mac";
-
-    public static final String META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_POSIX = "user.settings.from_device_data_dir.posix";
-
     public static final String META_SETTINGS_KEY_ROOT_FOLDER_WINDOWS = "user.settings.root_folder.windows";
     
     public static final String META_SETTINGS_KEY_ROOT_FOLDER_MAC = "user.settings.root_folder.mac";
@@ -730,15 +722,6 @@ public class CommonUtils {
 	
 	public static File getPortableSettingsDir(Properties metaConfiguration) {
 	    return getPortableMetaFile(metaConfiguration, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_WINDOWS, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_MAC, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_POSIX);
-	}
-
-	public static File getPortableFromDeviceDataDir() {
-	    Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
-	    return getPortableFromDeviceDataDir(metaConfiguration);
-	}
-	
-	public static File getPortableFromDeviceDataDir(Properties metaConfiguration) {
-	    return getPortableMetaFile(metaConfiguration, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_WINDOWS, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_MAC, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_POSIX);
 	}
 	
 	/**
