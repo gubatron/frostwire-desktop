@@ -37,10 +37,12 @@ public class LibrarySettings extends LimeProps {
 
     private LibrarySettings() {
     }
+    
+    private static final File PORTABLE_ROOT_FOLDER = CommonUtils.getPortableRootFolder();
 
     public static final File LIBRARY_DATABASE = new File(CommonUtils.getUserSettingsDir(), "library_db");
 
-    public static final File DEFAULT_LIBRARY_FROM_DEVICE_DATA_DIR = new File(FrostWireUtils.getFrostWireRootFolder(), "From Device");
+    public static final File DEFAULT_LIBRARY_FROM_DEVICE_DATA_DIR = new File((PORTABLE_ROOT_FOLDER == null) ? FrostWireUtils.getFrostWireRootFolder() : PORTABLE_ROOT_FOLDER, "From Device");
 
     /**
      * The include directories. 
@@ -67,13 +69,15 @@ public class LibrarySettings extends LimeProps {
             LibrarySettings.DIRECTORIES_TO_INCLUDE.add(f);
             LibrarySettings.DIRECTORIES_TO_INCLUDE_FROM_FROSTWIRE4.add(f);
         }
-        
-        if (LibrarySettings.USER_MUSIC_FOLDER.getValue().exists()) {
-            LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.USER_MUSIC_FOLDER.getValue());
-        }
-        
-        if (LibrarySettings.USER_VIDEO_FOLDER.getValue().exists()) {
-            LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.USER_VIDEO_FOLDER.getValue());
+
+        if (PORTABLE_ROOT_FOLDER == null) {
+            if (LibrarySettings.USER_MUSIC_FOLDER.getValue().exists()) {
+                LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.USER_MUSIC_FOLDER.getValue());
+            }
+            
+            if (LibrarySettings.USER_VIDEO_FOLDER.getValue().exists()) {
+                LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.USER_VIDEO_FOLDER.getValue());
+            }
         }
         
         File fromDeviceFolder = LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.getValue();
@@ -89,5 +93,9 @@ public class LibrarySettings extends LimeProps {
             System.setProperty("azureus.install.path", azureusUserPath.getAbsolutePath());
             AzureusStarter.revertToDefaultConfiguration();
         }
+    }
+    
+    private static void setupPortableInitialLibraryFolders() {
+        
     }
 }

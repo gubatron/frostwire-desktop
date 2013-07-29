@@ -6,8 +6,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.limewire.util.CommonUtils;
 
-import com.limegroup.gnutella.settings.LibrarySettings;
-
 
 /**
  * This class is the glue that holds LimeWire together.
@@ -41,13 +39,8 @@ public class LimeCoreGlue {
         File portableSettingsDir = null;
         if (!metaConfiguration.isEmpty()) {
             portableSettingsDir = CommonUtils.getPortableSettingsDir(metaConfiguration);
-            File portableFromDeviceDataDir = CommonUtils.getPortableFromDeviceDataDir(metaConfiguration);
-            if (portableFromDeviceDataDir != null) {
-                LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.setValue(portableFromDeviceDataDir);
-            }
         }
-        
-        File userSettingsDir = (portableSettingsDir != null) ? portableSettingsDir : CommonUtils.getUserSettingsDir();
+        File userSettingsDir = (portableSettingsDir == null) ? CommonUtils.getUserSettingsDir() : portableSettingsDir ;
         preinstall(userSettingsDir);
     }
     

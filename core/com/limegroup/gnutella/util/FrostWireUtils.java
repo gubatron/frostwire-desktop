@@ -123,7 +123,7 @@ public final class FrostWireUtils {
         String root = null;
         
         if (OSUtils.isWindowsVista() || OSUtils.isWindows7()) {
-        	root = SystemUtils.getSpecialPath(SpecialLocations.DOWNLOADS);
+            root = SystemUtils.getSpecialPath(SpecialLocations.DOWNLOADS);
         } else if(OSUtils.isWindows()) {
             root = SystemUtils.getSpecialPath(SpecialLocations.DOCUMENTS);
         }

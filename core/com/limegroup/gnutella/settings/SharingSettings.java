@@ -19,19 +19,23 @@ public class SharingSettings extends LimeProps {
       
     private SharingSettings() {}
     
-    public static final File DEFAULT_TORRENTS_DIR = 
-    	new File(FrostWireUtils.getFrostWireRootFolder(), "Torrents");
+    private static final File PORTABLE_ROOT_FOLDER = CommonUtils.getPortableRootFolder();
     
+    public static final File DEFAULT_TORRENTS_DIR = new File((PORTABLE_ROOT_FOLDER == null) ? FrostWireUtils.getFrostWireRootFolder() : PORTABLE_ROOT_FOLDER ,"Torrents");
+            
     public static final FileSetting TORRENTS_DIR_SETTING =
-    	FACTORY.createFileSetting("TORRENTS_DIR_SETTING", 
-    			DEFAULT_TORRENTS_DIR).setAlwaysSave(true);
+            FACTORY.createFileSetting("TORRENTS_DIR_SETTING", DEFAULT_TORRENTS_DIR).setAlwaysSave(true);
     
     /**
      * The default folder where Torrent Data will be saved. This folder CANNOT BE SHARED
      * to avoid sharing inconsistencies. 
+     * 
+     * In the case of FrostWire Portable, we'll name the default torrent data folder "Downloads"
+     * In regular frostwire it's "Torrent Data"
      */
-    public static final File DEFAULT_TORRENT_DATA_DIR =
-    	new File(FrostWireUtils.getFrostWireRootFolder(), "Torrent Data");
+    public static final File DEFAULT_TORRENT_DATA_DIR = (PORTABLE_ROOT_FOLDER == null) ? 
+            new File(FrostWireUtils.getFrostWireRootFolder(), "Torrent Data") :
+            new File(PORTABLE_ROOT_FOLDER, "Downloads");
 
     /**
      * The folder value where Torrent Data will be saved. This folder CANNOT BE SHARED
@@ -52,7 +56,7 @@ public class SharingSettings extends LimeProps {
      */
     public static final FileSetting DIRECTORY_FOR_SAVING_FILES = 
         FACTORY.createFileSetting("DIRECTORY_FOR_SAVING_FILES", 
-                FrostWireUtils.getFrostWireRootFolder()).setAlwaysSave(true);
+                (PORTABLE_ROOT_FOLDER == null) ? FrostWireUtils.getFrostWireRootFolder() : PORTABLE_ROOT_FOLDER).setAlwaysSave(true);
     
     /**
      * Specifies whether or not completed downloads
@@ -60,13 +64,6 @@ public class SharingSettings extends LimeProps {
      */    
     public static final BooleanSetting CLEAR_DOWNLOAD =
         FACTORY.createBooleanSetting("CLEAR_DOWNLOAD", false);
-    
-    /**
-     * Initial directory for open desktop explorer.
-     */
-    public static final FileSetting DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER = 
-        FACTORY.createFileSetting("DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER", FrostWireUtils.getFrostWireRootFolder()).setAlwaysSave(true);
-        
     
     public static final File getImageCacheDirectory() {
         if (!IMAGE_CACHE_DIR.exists()) {

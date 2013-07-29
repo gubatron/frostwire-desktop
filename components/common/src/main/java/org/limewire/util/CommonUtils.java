@@ -87,6 +87,11 @@ public class CommonUtils {
 
     public static final String META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_POSIX = "user.settings.from_device_data_dir.posix";
 
+    public static final String META_SETTINGS_KEY_ROOT_FOLDER_WINDOWS = "user.settings.root_folder.windows";
+    
+    public static final String META_SETTINGS_KEY_ROOT_FOLDER_MAC = "user.settings.root_folder.mac";
+    
+    public static final String META_SETTINGS_KEY_ROOT_FOLDER_POSIX = "user.settings.root_folder.posix";
     
     /**
      * Several arrays of illegal characters on various operating systems.
@@ -725,6 +730,19 @@ public class CommonUtils {
 	
 	public static File getPortableFromDeviceDataDir(Properties metaConfiguration) {
 	    return getPortableMetaFile(metaConfiguration, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_WINDOWS, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_MAC, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_POSIX);
+	}
+	
+	/**
+	 * The root folder where all the default save directories exist.
+	 * @return
+	 */
+	public static File getPortableRootFolder() {
+	    Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
+	    return getPortableRootFolder(metaConfiguration);
+	}
+	
+	public static File getPortableRootFolder(Properties metaConfiguration) {
+	    return getPortableMetaFile(metaConfiguration, CommonUtils.META_SETTINGS_KEY_ROOT_FOLDER_WINDOWS, CommonUtils.META_SETTINGS_KEY_ROOT_FOLDER_MAC, CommonUtils.META_SETTINGS_KEY_ROOT_FOLDER_POSIX);
 	}
 	
 	/**
