@@ -535,12 +535,14 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         String parentString = defaultValue.getParent();
         if( parentString != null ) {
             File parent = new File(parentString);
-            if(!parent.isDirectory())
+            if(!parent.isDirectory()) {
                 parent.mkdirs();
+            }
         }
 
         FileSetting result = 
             new FileSetting(DEFAULT_PROPS, PROPS, key, defaultValue);
+        
         handleSettingInternal(result, null);
         return result;
     }

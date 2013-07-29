@@ -16,10 +16,10 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  * Settings for sharing
  */
 public class SharingSettings extends LimeProps {
-      
-    private SharingSettings() {}
     
     private static final File PORTABLE_ROOT_FOLDER = CommonUtils.getPortableRootFolder();
+    
+    private SharingSettings() {}
     
     public static final File DEFAULT_TORRENTS_DIR = new File((PORTABLE_ROOT_FOLDER == null) ? FrostWireUtils.getFrostWireRootFolder() : PORTABLE_ROOT_FOLDER ,"Torrents");
             

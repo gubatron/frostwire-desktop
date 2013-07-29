@@ -628,6 +628,13 @@ public class CommonUtils {
         // does, then c) is used.  Once a) or b) exist, they are used indefinitely.
         // If neither a), b) nor c) exist, then the former is created in preference of
         // of a), then b).        
+        
+        Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
+        if (!metaConfiguration.isEmpty()) {
+            //override this logic if it's been specified in .meta configuration file.
+            return CommonUtils.getPortableSettingsDir(metaConfiguration);
+        }
+        
         File userDir = CommonUtils.getUserHomeDir();
 
         // Changing permissions without permission in Unix is rude
@@ -770,6 +777,7 @@ public class CommonUtils {
                 FileUtils.setWriteable(portableMetaDir);
             }
         }
+        
         return portableMetaDir;	    
 	}
 }
