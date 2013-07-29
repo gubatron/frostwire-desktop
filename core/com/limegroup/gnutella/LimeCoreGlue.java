@@ -1,9 +1,12 @@
 package com.limegroup.gnutella;
 
 import java.io.File;
+import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.limewire.util.CommonUtils;
+
+import com.limegroup.gnutella.settings.LibrarySettings;
 
 
 /**
@@ -34,7 +37,16 @@ public class LimeCoreGlue {
      * @param userSettingsDir the preferred directory for user settings
      */
     public static void preinstall() throws InstallFailedException {
-        File portableSettingsDir = CommonUtils.getPortableSettingsDir();
+        Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
+        File portableSettingsDir = null;
+        if (!metaConfiguration.isEmpty()) {
+            portableSettingsDir = CommonUtils.getPortableSettingsDir(metaConfiguration);
+            File portableFromDeviceDataDir = CommonUtils.getPortableFromDeviceDataDir(metaConfiguration);
+            if (portableFromDeviceDataDir != null) {
+                LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.setValue(portableFromDeviceDataDir);
+            }
+        }
+        
         File userSettingsDir = (portableSettingsDir != null) ? portableSettingsDir : CommonUtils.getUserSettingsDir();
         preinstall(userSettingsDir);
     }

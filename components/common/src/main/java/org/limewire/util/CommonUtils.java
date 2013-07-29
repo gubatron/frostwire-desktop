@@ -81,6 +81,13 @@ public class CommonUtils {
     
     public static final String META_SETTINGS_KEY_USER_SETTINGS_POSIX = "user.settings.dir.posix";
     
+    public static final String META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_WINDOWS = "user.settings.from_device_data_dir.windows";
+
+    public static final String META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_MAC = "user.settings.from_device_data_dir.mac";
+
+    public static final String META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_POSIX = "user.settings.from_device_data_dir.posix";
+
+    
     /**
      * Several arrays of illegal characters on various operating systems.
      * Used by convertFileName
@@ -704,29 +711,55 @@ public class CommonUtils {
 	 */
 	public static File getPortableSettingsDir() {
         Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
-        
-        File portableSettingsDir = null;
+        return getPortableSettingsDir(metaConfiguration);
+	}
+	
+	public static File getPortableSettingsDir(Properties metaConfiguration) {
+	    return getPortableMetaFile(metaConfiguration, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_WINDOWS, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_MAC, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_POSIX);
+	}
+
+	public static File getPortableFromDeviceDataDir() {
+	    Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
+	    return getPortableFromDeviceDataDir(metaConfiguration);
+	}
+	
+	public static File getPortableFromDeviceDataDir(Properties metaConfiguration) {
+	    return getPortableMetaFile(metaConfiguration, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_WINDOWS, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_MAC, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_FROM_DEVICE_DIR_POSIX);
+	}
+	
+	/**
+	 * Get the file/dir pointed out by a configuration key form the .meta Properties object
+	 * depending on what operating system you are on.
+	 * 
+	 * @param metaConfiguration
+	 * @param windowsKey
+	 * @param macKey
+	 * @param posixKey
+	 * @return The file if the key has been specified, otherwise null.
+	 */
+	private static File getPortableMetaFile(Properties metaConfiguration, final String windowsKey, final String macKey, final String posixKey) {
+        File portableMetaDir = null;
         String metaKey = null;
         
-        if (OSUtils.isWindows() && metaConfiguration.containsKey(CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_WINDOWS)) {
-            metaKey = CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_WINDOWS;
-        } else if (OSUtils.isMacOSX() && metaConfiguration.containsKey(CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_MAC)) {
-            metaKey = CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_MAC;
-        } else if (OSUtils.isPOSIX() && metaConfiguration.containsKey(CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_POSIX)) {
-            metaKey = CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_POSIX;
+        if (OSUtils.isWindows() && metaConfiguration.containsKey(windowsKey)) {
+            metaKey = windowsKey;
+        } else if (OSUtils.isMacOSX() && metaConfiguration.containsKey(macKey)) {
+            metaKey = macKey;
+        } else if (OSUtils.isPOSIX() && metaConfiguration.containsKey(posixKey)) {
+            metaKey = posixKey;
         }
         
         if (metaKey != null) {
-            portableSettingsDir = new File(metaConfiguration.getProperty(metaKey));
+            portableMetaDir = new File(metaConfiguration.getProperty(metaKey));
 
-            if (!portableSettingsDir.exists()) {
-                portableSettingsDir.mkdirs();
+            if (!portableMetaDir.exists()) {
+                portableMetaDir.mkdirs();
             }
             
             if (!OSUtils.isPOSIX()) {
-                FileUtils.setWriteable(portableSettingsDir);
+                FileUtils.setWriteable(portableMetaDir);
             }
         }
-        return portableSettingsDir;
+        return portableMetaDir;	    
 	}
 }
