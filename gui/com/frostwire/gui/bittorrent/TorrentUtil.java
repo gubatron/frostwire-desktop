@@ -83,6 +83,7 @@ import com.aelitis.azureus.ui.UIFunctions;
 import com.aelitis.azureus.ui.UIFunctionsManager;
 import com.aelitis.azureus.ui.selectedcontent.SelectedContent;
 import com.frostwire.AzureusStarter;
+import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.iTunesImportSettings;
 
 public final class TorrentUtil {
@@ -570,6 +571,10 @@ public final class TorrentUtil {
         async.dispatch(new AERunnable() {
             public void runSupport() {
                 dm.stopIt(stateAfterStopped, false, false);
+                
+                if (isHandpicked(dm) && !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue()) {
+                    finalCleanup(dm);
+                }
             }
         });
     }
