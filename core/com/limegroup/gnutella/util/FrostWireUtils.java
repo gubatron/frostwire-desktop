@@ -24,6 +24,7 @@ import java.util.Set;
 
 import org.limewire.setting.SettingsFactory;
 import org.limewire.util.CommonUtils;
+import org.limewire.util.IOUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 import org.limewire.util.SystemUtils.SpecialLocations;
@@ -42,7 +43,7 @@ public final class FrostWireUtils {
 	/** 
 	 * Constant for the current version of FrostWire.
 	 */
-	private static final String FROSTWIRE_VERSION = "5.6.2";
+	private static final String FROSTWIRE_VERSION = "5.6.3";
 	
 	/** Build number for the current version, gets reset to 1 on every version bump*/
 	private static final int BUILD_NUMBER = 1;
@@ -123,7 +124,7 @@ public final class FrostWireUtils {
         String root = null;
         
         if (OSUtils.isWindowsVista() || OSUtils.isWindows7()) {
-        	root = SystemUtils.getSpecialPath(SpecialLocations.DOWNLOADS);
+            root = SystemUtils.getSpecialPath(SpecialLocations.DOWNLOADS);
         } else if(OSUtils.isWindows()) {
             root = SystemUtils.getSpecialPath(SpecialLocations.DOCUMENTS);
         }
@@ -158,7 +159,9 @@ public final class FrostWireUtils {
         try {
             File settingFile = new File(CommonUtils.getFrostWire4UserSettingsDir(), "frostwire.props");
             Properties props = new Properties();
-            props.load(new FileInputStream(settingFile));
+            FileInputStream fis = new FileInputStream(settingFile);
+            props.load(fis);
+            IOUtils.closeQuietly(fis);
 
             if (props.containsKey("DIRECTORY_FOR_SAVING_FILES")) {
                 result.add(new File(props.getProperty("DIRECTORY_FOR_SAVING_FILES")));
