@@ -45,6 +45,9 @@ package com.frostwire.gui.bittorrent;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributeView;
+import java.nio.file.attribute.FileTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -146,17 +149,46 @@ public final class TorrentUtil {
         }
     }
 
+    /** tries to get creation time, if it can't it returns -1 */
+    private static long getFileCreationTime(File f) {
+        long result = -1;
+        
+        try {
+            BasicFileAttributeView fileAttributeView = Files.getFileAttributeView(f.toPath(), BasicFileAttributeView.class);
+            FileTime creationTime = fileAttributeView.readAttributes().creationTime();
+            result = creationTime.toMillis();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("just printing exception, returning -1");
+        }
+        
+        return result;
+    }
+    
     /** Deletes incomplete files and the save location from the itunes import settings */
-    private static void finalCleanup(DownloadManager downloadManager) {
+    private static void finalCleanup(DownloadManager downloadManager, long timeDownloadManagerStarted) {
         Set<File> filesToDelete = getSkippedFiles(downloadManager);
-
+        
         for (File f : filesToDelete) {
             try {
+                
                 if (isSkippedFileComplete(f, downloadManager)) {
-                    //don't delete this one, it's probably downloaded from
-                    //a previous session that got removed from the transfer manager.
-                    continue;
+                    
+                    long fileCreationModificationTime = getFileCreationTime(f);
+                    
+                    //fallback to modified time
+                    if (fileCreationModificationTime == -1) {
+                        fileCreationModificationTime = f.lastModified();
+                    }
+
+                    //keep files from older sessions, or if you don't know when this
+                    //download manager started.
+                    if (fileCreationModificationTime < timeDownloadManagerStarted || 
+                        timeDownloadManagerStarted == -1) {
+                        continue;
+                    }
                 }
+                
                 if (f.exists() && !f.delete()) {
                     System.out.println("Can't delete file: " + f);
                 }
@@ -335,7 +367,7 @@ public final class TorrentUtil {
 
         async.dispatch(new AERunnable() {
             public void runSupport() {
-
+                long timeStarted = dm.getStats().getTimeStarted();
                 try {
                     // I would move the FLAG_DO_NOT_DELETE_DATA_ON_REMOVE even deeper
                     // but I fear what could possibly go wrong.
@@ -427,13 +459,14 @@ public final class TorrentUtil {
                     }
                 }
 
-                finalCleanup(dm);
+                finalCleanup(dm, timeStarted);
             }
         });
     }
 
     public static void blockingStopDelete(final DownloadManager dm, final int stateAfterStopped, final boolean bDeleteTorrent, final boolean bDeleteData, final AERunnable deleteFailed) {
-
+        long timeStarted = dm.getStats().getTimeStarted();
+        
         try {
             // I would move the FLAG_DO_NOT_DELETE_DATA_ON_REMOVE even deeper
             // but I fear what could possibly go wrong.
@@ -527,7 +560,7 @@ public final class TorrentUtil {
             }
         }
 
-        finalCleanup(dm);
+        finalCleanup(dm, timeStarted);
     }
 
     private static DownloadManager[] toDMS(Object[] objects) {
@@ -570,10 +603,10 @@ public final class TorrentUtil {
     public static void asyncStop(final DownloadManager dm, final int stateAfterStopped) {
         async.dispatch(new AERunnable() {
             public void runSupport() {
+                long timeStarted = dm.getStats().getTimeStarted(); //do this before stopping, otherwise returns -1.
                 dm.stopIt(stateAfterStopped, false, false);
-                
                 if (isHandpicked(dm) && !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue()) {
-                    finalCleanup(dm);
+                    finalCleanup(dm, timeStarted);
                 }
             }
         });
