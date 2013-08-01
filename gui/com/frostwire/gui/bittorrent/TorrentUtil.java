@@ -607,7 +607,7 @@ public final class TorrentUtil {
                 dm.stopIt(stateAfterStopped, false, false);
                 
                 if (isHandpicked(dm) && 
-                    !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue() &&
+                    (!SharingSettings.SEED_FINISHED_TORRENTS.getValue() || !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue()) &&
                     dm.getAssumedComplete()) {
                     finalCleanup(dm, timeStarted);
                 }
