@@ -605,7 +605,10 @@ public final class TorrentUtil {
             public void runSupport() {
                 long timeStarted = dm.getStats().getTimeStarted(); //do this before stopping, otherwise returns -1.
                 dm.stopIt(stateAfterStopped, false, false);
-                if (isHandpicked(dm) && !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue()) {
+                
+                if (isHandpicked(dm) && 
+                    !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue() &&
+                    dm.getAssumedComplete()) {
                     finalCleanup(dm, timeStarted);
                 }
             }
