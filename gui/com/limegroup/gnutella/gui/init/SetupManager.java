@@ -243,29 +243,27 @@ public class SetupManager {
 
         dialogFrame = new FramedDialog();
         dialogFrame.setTitle("FrostWire Setup");
-        dialogFrame.addWindowListener(new WindowAdapter() {
+        
+        WindowAdapter onCloseAdapter = new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 cancelSetup();
             }
-        });
+        };
+        
+        dialogFrame.addWindowListener(onCloseAdapter);
 
         JDialog dialog = dialogFrame.getDialog();
         dialog.setModal(true);
         dialog.setTitle(I18n.tr("FrostWire Setup Wizard"));
-        dialog.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                cancelSetup();
-            }
-        });
+        dialog.addWindowListener(onCloseAdapter);
 
         // set the layout of the content pane
         Container container = dialog.getContentPane();
         GUIUtils.addHideAction((JComponent) container);
+
         BoxLayout containerLayout = new BoxLayout(container, BoxLayout.Y_AXIS);
         container.setLayout(containerLayout);
 
-        // create the main panel
         JPanel setupPanel = new JPanel();
         setupPanel.setBorder(BorderFactory.createEmptyBorder(1, 0, 0, 0));
         BoxLayout layout = new BoxLayout(setupPanel, BoxLayout.Y_AXIS);
@@ -275,11 +273,13 @@ public class SetupManager {
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         dialog.setLocation((screenSize.width - d.width) / 2, (screenSize.height - d.height) / 2);
+        dialog.setSize((int) d.getWidth(),(int) d.getHeight());
 
         // create the setup buttons panel
         if (OSUtils.isGoodWindows()) {
             _setupWindowHolder.setPreferredSize(holderPreferredSize);
         }
+        
         setupPanel.add(_setupWindowHolder);
         setupPanel.add(Box.createVerticalStrut(17));
 
@@ -306,18 +306,19 @@ public class SetupManager {
         if (!OSUtils.isGoodWindows()) {
             ((JComponent) container).setPreferredSize(new Dimension(SetupWindow.SETUP_WIDTH, SetupWindow.SETUP_HEIGHT));
         }
+        
         dialog.pack();
         
         // hack to deal with paint issues, need to refactor the whole dialog/window creation
-        if (OSUtils.isLinux()) {
-        	dialog.setSize(dialog.getWidth() + 10, dialog.getHeight() + 60);
-        }
+        //if (OSUtils.isLinux()) {
+        	//    dialog.setSize(dialog.getWidth() + 10, dialog.getHeight() + 70);
+        //}
 
         SplashWindow.instance().setVisible(false);
         dialogFrame.showDialog();
         SplashWindow.instance().setVisible(true);
     }
-
+    
     /**
      * Enables the bitmask of specified actions, the other actions are
      * explicitly disabled.
@@ -379,10 +380,11 @@ public class SetupManager {
         SetupWindow newWindow = _currentWindow.getPrevious();
         try {
             _currentWindow.applySettings(false);
-            show(newWindow);
         } catch (ApplySettingsException ase) {
             // ignore errors when going backwards
         }
+        
+        show(newWindow);
     }
 
     /**
@@ -563,5 +565,10 @@ public class SetupManager {
             finishSetup();
         }
 
+    }
+    
+    public static void main(String[] args) {
+        final SetupManager setupManager = new SetupManager();
+        setupManager.createIfNeeded();
     }
 }
