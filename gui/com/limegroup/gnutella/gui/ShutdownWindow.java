@@ -3,17 +3,16 @@ package com.limegroup.gnutella.gui;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-
-import com.frostwire.gui.theme.ThemeMediator;
 
 class ShutdownWindow extends JDialog {
     
@@ -27,40 +26,47 @@ class ShutdownWindow extends JDialog {
         super(GUIMediator.getAppFrame());
         backgroundImage = ResourceManager.getImageFromResourcePath("org/limewire/gui/images/app_shutdown.jpg");
         setResizable(false);
+        
         setTitle(I18n.tr("Shutting down FrostWire..."));
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
-        JComponent pane = (JComponent)getContentPane();
+        JPanel backgroundPanel = new JPanel() {
+          @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(backgroundImage.getImage(),0,0,null);
+        }  
+        };
         
-        pane.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.anchor = GridBagConstraints.WEST;
+        backgroundPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                e.consume();
+                GUIMediator.openURL("http://www.frostwire.com/android/?from=shutdown");
+            }
+        });
+        
+        backgroundPanel.setLayout(null);
+        backgroundPanel.setSize(800, 500);
+        add(backgroundPanel);
+        
+        Insets insets = backgroundPanel.getInsets();
         JLabel label = new JLabel(I18n.tr("Please wait while FrostWire shuts down..."));
-        label.setFont(new Font("Dialog", Font.PLAIN, 12));
-        pane.add(new JLabel(backgroundImage),c);
-        pane.add(label, c);
-        
-        
-        
+        label.setFont(new Font("Dialog", Font.PLAIN, 16));
+        Dimension labelPrefSize = label.getPreferredSize();
+        backgroundPanel.add(label);
+        label.setBounds(65 + insets.left, 400 + insets.top, labelPrefSize.width, labelPrefSize.height);
         
         JProgressBar bar = new LimeJProgressBar();
         bar.setIndeterminate(true);
         bar.setStringPainted(false);
-        c.insets = new Insets(3, 3, 3, 3);
-        c.anchor = GridBagConstraints.CENTER;
-        pane.add(bar, c);
+        backgroundPanel.add(bar);
+        bar.setBounds(55 + insets.left, 428 + insets.top, 680, 30);
         
         ((JComponent)getContentPane()).setPreferredSize(new Dimension(800, 500));
         pack();
     }
     
-    @Override
-    public void paintComponents(Graphics g) {
-        System.out.println(backgroundImage.getImage());
-        g.drawImage(backgroundImage.getImage(),0,0,null);
-    }
     
     public static void main(String[] args) {
         ShutdownWindow window = new ShutdownWindow();
