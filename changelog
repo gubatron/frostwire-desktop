@@ -7,7 +7,9 @@ frostwire (5.6.3) stable; urgency=high
     you want to maintain settings and download states.
   * Fixes bug where the internet search box would be disabled after
     sending file to friend.
- -- FrostWire Team <contact@frostwire.com>  Wed, 31 Jul 2013 12:14:13 -0500
+  * Updated shutdown screen lets users know about Android app when they
+    might be headed outside.
+ -- FrostWire Team <contact@frostwire.com>  Sun, 04 Aug 2013 12:14:13 -0500
 
 frostwire (5.6.2) stable; urgency=high
   * Improved readability of stream sources in player title.
