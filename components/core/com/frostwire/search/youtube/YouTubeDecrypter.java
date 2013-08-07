@@ -125,7 +125,10 @@ public final class YouTubeDecrypter {
                 
                 if (flv.get() || best) {
                     if (q240p || best) {
+                        // video bit rate @ 0.25Mbit/second
                         this.put(5, new Object[] { DestinationFormat.VIDEOFLV, "H.263", "MP3", "Stereo", "240p" });
+                        // video bit rate @ 0.8Mbit/second
+                        this.put(6, new Object[] { DestinationFormat.VIDEOFLV, "H.263", "MP3", "Stereo", "240p" });
                     }
                     if (q360p || best) {
                         this.put(34, new Object[] { DestinationFormat.VIDEOFLV, "H.264", "AAC", "Stereo", "360p" });
@@ -137,19 +140,29 @@ public final class YouTubeDecrypter {
 
                 // **** 3GP *****
                 if ((threegp && q240p) || best) {
-                    this.put(13, new Object[] { DestinationFormat.VIDEO3GP, "H.263", "AMR", "Mono", "240p" });
-                    this.put(17, new Object[] { DestinationFormat.VIDEO3GP, "H.264", "AAC", "Stereo", "240p" });
+                    this.put(13, new Object[] { DestinationFormat.VIDEO3GP, "H.263", "AAC", "Mono", "240p" });
+                    this.put(36, new Object[] { DestinationFormat.VIDEO3GP, "H.264", "AAC", "Stereo", "240p" });
                 }
 
                 // **** MP4 *****
                 if (mp4 || best) {
+                    if (q240p || best) {
+                        this.put(133, new Object[] { DestinationFormat.VIDEOMP4, "H.264", "AAC", "Stereo", "240p" });
+                    }
+                    if (q480p || best) {
+                        this.put(135, new Object[] { DestinationFormat.VIDEOMP4, "H.264", "AAC", "Stereo", "480p" });
+                    }
                     if (q360p || best) {
+                        // 270p / 360p
                         this.put(18, new Object[] { DestinationFormat.VIDEOMP4, "H.264", "AAC", "Stereo", "360p" });
+                        this.put(134, new Object[] { DestinationFormat.VIDEOMP4, "H.264", "AAC", "Stereo", "360p" });
                     }
                     if (q720p || best) {
+                        this.put(136, new Object[] { DestinationFormat.VIDEOMP4, "H.264", "AAC", "Stereo", "720p" });
                         this.put(22, new Object[] { DestinationFormat.VIDEOMP4, "H.264", "AAC", "Stereo", "720p" });
                     }
                     if (q1080p || best) {
+                        this.put(137, new Object[] { DestinationFormat.VIDEOMP4, "H.264", "AAC", "Stereo", "1080p" });
                         this.put(37, new Object[] { DestinationFormat.VIDEOMP4, "H.264", "AAC", "Stereo", "1080" });
                     }
                     if (qOriginal || best) {
@@ -162,8 +175,14 @@ public final class YouTubeDecrypter {
                     if (q360p || best) {
                         this.put(43, new Object[] { DestinationFormat.VIDEOWEBM, "VP8", "Vorbis", "Stereo", "360p" });
                     }
+                    if (q480p || best) {
+                        this.put(44, new Object[] { DestinationFormat.VIDEOWEBM, "VP8", "Vorbis", "Stereo", "480p" });
+                    }
                     if (q720p || best) {
                         this.put(45, new Object[] { DestinationFormat.VIDEOWEBM, "VP8", "Vorbis", "Stereo", "720p" });
+                    }
+                    if (q1080p || best) {
+                        this.put(46, new Object[] { DestinationFormat.VIDEOWEBM, "VP8", "Vorbis", "Stereo", "1080p" });
                     }
                 }
             }
@@ -195,7 +214,7 @@ public final class YouTubeDecrypter {
                 }
                 if (LinksFound == null || LinksFound.isEmpty()) {
                     if (linkstodecrypt.size() == 1) {
-                        if (verifyAge || this.br.getURL().toLowerCase().indexOf("youtube.com/get_video_info?") != -1 && !prem) { 
+                        if (verifyAge || this.br.getURL().toLowerCase(Locale.US).indexOf("youtube.com/get_video_info?") != -1 && !prem) { 
                             throw new IOException("Can't download this video with FrostWire, age verification required from youtube."); 
                         }
                         LOG.info("Video unavailable: " + url);
@@ -363,6 +382,163 @@ public final class YouTubeDecrypter {
         return decryptedLinks;
     }
     
+    private String getVideoID(String URL) {
+        return new Regex(URL, "v=([a-z\\-_A-Z0-9]+)").getMatch(0);
+    }
+    
+    private HashMap<Integer, String[]> parseLinks(String html5_fmt_map, boolean allowVideoOnly) {
+        final HashMap<Integer, String[]> links = new HashMap<Integer, String[]>();
+        if (html5_fmt_map != null) {
+            if (html5_fmt_map.contains(UNSUPPORTEDRTMP)) { return links; }
+            String[] html5_hits = new Regex(html5_fmt_map, "(.*?)(,|$)").getColumn(0);
+            if (html5_hits != null) {
+                for (String hit : html5_hits) {
+                    hit = unescape(hit);
+                    String hitUrl = new Regex(hit, "url=(http.*?)(\\&|$)").getMatch(0);
+                    String sig = new Regex(hit, "url=http.*?(\\&|$)(sig|signature)=(.*?)(\\&|$)").getMatch(2);
+                    if (sig == null) sig = new Regex(hit, "(sig|signature)=(.*?)(\\&|$)").getMatch(1);
+                    if (sig == null) sig = new Regex(hit, "(sig|signature)%3D(.*?)%26").getMatch(1);
+                    if (sig == null) sig = decryptSignature(new Regex(hit, "s=(.*?)(\\&|$)").getMatch(0));
+                    String hitFmt = new Regex(hit, "itag=(\\d+)").getMatch(0);
+                    String hitQ = new Regex(hit, "quality=(.*?)(\\&|$)").getMatch(0);
+                    if (hitQ == null && allowVideoOnly) hitQ = "unknown";
+                    if (hitUrl != null && hitFmt != null && hitQ != null) {
+                        hitUrl = unescape(hitUrl.replaceAll("\\\\/", "/"));
+                        if (hitUrl.startsWith("http%253A")) {
+                            hitUrl = Encoding.htmlDecode(hitUrl);
+                        }
+                        String[] inst = null;
+                        if (hitUrl.contains("sig")) {
+                            inst = new String[] { Encoding.htmlDecode(Encoding.urlDecode(hitUrl, true)), hitQ };
+                        } else {
+                            inst = new String[] { Encoding.htmlDecode(Encoding.urlDecode(hitUrl, true) + "&signature=" + sig), hitQ };
+                        }
+                        links.put(Integer.parseInt(hitFmt), inst);
+                    }
+                }
+            }
+        }
+        return links;
+    }
+    
+    private HashMap<Integer, String[]> parseLinks(Browser br, final String videoURL, String YT_FILENAME, boolean ythack, boolean tryGetDetails) throws InterruptedException, IOException {
+        final HashMap<Integer, String[]> links = new HashMap<Integer, String[]>();
+        String html5_fmt_map = br.getRegex("\"html5_fmt_map\": \\[(.*?)\\]").getMatch(0);
+
+        if (html5_fmt_map != null) {
+            String[] html5_hits = new Regex(html5_fmt_map, "\\{(.*?)\\}").getColumn(0);
+            if (html5_hits != null) {
+                for (String hit : html5_hits) {
+                    String hitUrl = new Regex(hit, "url\": \"(http:.*?)\"").getMatch(0);
+                    String hitFmt = new Regex(hit, "itag\": (\\d+)").getMatch(0);
+                    String hitQ = new Regex(hit, "quality\": \"(.*?)\"").getMatch(0);
+                    if (hitUrl != null && hitFmt != null && hitQ != null) {
+                        hitUrl = unescape(hitUrl.replaceAll("\\\\/", "/"));
+                        links.put(Integer.parseInt(hitFmt), new String[] { Encoding.htmlDecode(Encoding.urlDecode(hitUrl, true)), hitQ });
+                    }
+                }
+            }
+        } else {
+            /* new format since ca. 1.8.2011 */
+            html5_fmt_map = br.getRegex("\"url_encoded_fmt_stream_map\": \"(.*?)\"").getMatch(0);
+            if (html5_fmt_map == null) {
+                html5_fmt_map = br.getRegex("url_encoded_fmt_stream_map=(.*?)(&|$)").getMatch(0);
+                if (html5_fmt_map != null) {
+                    html5_fmt_map = html5_fmt_map.replaceAll("%2C", ",");
+                    if (!html5_fmt_map.contains("url=")) {
+                        html5_fmt_map = html5_fmt_map.replaceAll("%3D", "=");
+                        html5_fmt_map = html5_fmt_map.replaceAll("%26", "&");
+                    }
+                }
+            }
+            if (html5_fmt_map != null && !html5_fmt_map.contains("signature") && !html5_fmt_map.contains("sig") && !html5_fmt_map.contains("s=")) {
+                Thread.sleep(5000);
+                br.clearCookies("youtube.com");
+                return null;
+            }
+            if (html5_fmt_map != null) {
+                HashMap<Integer, String[]> ret = parseLinks(html5_fmt_map, false);
+                if (ret.size() == 0) return links;
+                links.putAll(ret);
+//                if (false) {
+//                    /* not playable by vlc */
+//                    /* check for adaptive fmts */
+//                    String adaptive = br.getRegex("\"adaptive_fmts\": \"(.*?)\"").getMatch(0);
+//                    ret = parseLinks(adaptive, true);
+//                    links.putAll(ret);
+//                }
+            } else {
+                if (br.containsHTML("reason=Unfortunately")) return null;
+                if (tryGetDetails == true) {
+                    br.getPage("http://www.youtube.com/get_video_info?el=detailpage&video_id=" + getVideoID(videoURL));
+                    return parseLinks(br, videoURL, YT_FILENAME, ythack, false);
+                } else {
+                    return null;
+                }
+            }
+        }
+
+        /* normal links */
+        final HashMap<String, String> fmt_list = new HashMap<String, String>();
+        String fmt_list_str = "";
+        if (ythack) {
+            fmt_list_str = (br.getMatch("&fmt_list=(.+?)&") + ",").replaceAll("%2F", "/").replaceAll("%2C", ",");
+        } else {
+            fmt_list_str = (br.getMatch("\"fmt_list\":\\s+\"(.+?)\",") + ",").replaceAll("\\\\/", "/");
+        }
+        final String fmt_list_map[][] = new Regex(fmt_list_str, "(\\d+)/(\\d+x\\d+)/\\d+/\\d+/\\d+,").getMatches();
+        for (final String[] fmt : fmt_list_map) {
+            fmt_list.put(fmt[0], fmt[1]);
+        }
+        if (links.size() == 0 && ythack) {
+            /* try to find fallback links */
+            String urls[] = br.getRegex("url%3D(.*?)($|%2C)").getColumn(0);
+            int index = 0;
+            for (String vurl : urls) {
+                String hitUrl = new Regex(vurl, "(.*?)%26").getMatch(0);
+                String hitQ = new Regex(vurl, "%26quality%3D(.*?)%").getMatch(0);
+                if (hitUrl != null && hitQ != null) {
+                    hitUrl = unescape(hitUrl.replaceAll("\\\\/", "/"));
+                    if (fmt_list_map.length >= index) {
+                        links.put(Integer.parseInt(fmt_list_map[index][0]), new String[] { Encoding.htmlDecode(Encoding.urlDecode(hitUrl, false)), hitQ });
+                        index++;
+                    }
+                }
+            }
+        }
+        for (Integer fmt : links.keySet()) {
+            String fmt2 = fmt + "";
+            if (fmt_list.containsKey(fmt2)) {
+                String Videoq = links.get(fmt)[1];
+                final Integer q = Integer.parseInt(fmt_list.get(fmt2).split("x")[1]);
+                if (fmt == 17) {
+                    Videoq = "144p";
+                } else if (fmt == 40) {
+                    Videoq = "240p Light";
+                } else if (q > 1080) {
+                    Videoq = "Original";
+                } else if (q > 720) {
+                    Videoq = "1080p";
+                } else if (q > 576) {
+                    Videoq = "720p";
+                } else if (q > 480) {
+                    Videoq = "520p";
+                } else if (q > 360) {
+                    Videoq = "480p";
+                } else if (q > 240) {
+                    Videoq = "360p";
+                } else {
+                    Videoq = "240p";
+                }
+                links.get(fmt)[1] = Videoq;
+            }
+        }
+        if (YT_FILENAME != null && links != null && !links.isEmpty()) {
+            links.put(-1, new String[] { YT_FILENAME });
+        }
+        return links;
+    }
+
     public HashMap<Integer, String[]> getLinks(final String video, final boolean prem, Browser br, int retrycount) throws Exception {
         if (retrycount > 2) {
             // do not retry more often than 2 time
@@ -436,124 +612,143 @@ public final class YouTubeDecrypter {
             YT_FILENAME = Encoding.htmlDecode(br.getRegex(YT_FILENAME_PATTERN).getMatch(0).trim());
             fileNameFound = true;
         }
-        final HashMap<Integer, String[]> links = new HashMap<Integer, String[]>();
-        String html5_fmt_map = br.getRegex("\"html5_fmt_map\": \\[(.*?)\\]").getMatch(0);
-
-        if (html5_fmt_map != null) {
-            String[] html5_hits = new Regex(html5_fmt_map, "\\{(.*?)\\}").getColumn(0);
-            if (html5_hits != null) {
-                for (String hit : html5_hits) {
-                    String hitUrl = new Regex(hit, "url\": \"(http:.*?)\"").getMatch(0);
-                    String hitFmt = new Regex(hit, "itag\": (\\d+)").getMatch(0);
-                    String hitQ = new Regex(hit, "quality\": \"(.*?)\"").getMatch(0);
-                    if (hitUrl != null && hitFmt != null && hitQ != null) {
-                        hitUrl = unescape(hitUrl.replaceAll("\\\\/", "/"));
-                        links.put(Integer.parseInt(hitFmt), new String[] { Encoding.htmlDecode(Encoding.urlDecode(hitUrl, true)), hitQ });
-                    }
-                }
-            }
-        } else {
-            /* new format since ca. 1.8.2011 */
-            html5_fmt_map = br.getRegex("\"url_encoded_fmt_stream_map\": \"(.*?)\"").getMatch(0);
-            if (html5_fmt_map == null) {
-                html5_fmt_map = br.getRegex("url_encoded_fmt_stream_map=(.*?)(&|$)").getMatch(0);
-                if (html5_fmt_map != null) {
-                    html5_fmt_map = html5_fmt_map.replaceAll("%2C", ",");
-                    if (!html5_fmt_map.contains("url=")) {
-                        html5_fmt_map = html5_fmt_map.replaceAll("%3D", "=");
-                        html5_fmt_map = html5_fmt_map.replaceAll("%26", "&");
-                    }
-                }
-            }
-            if (html5_fmt_map != null && !html5_fmt_map.contains("signature") && !html5_fmt_map.contains("sig")) {
-                Thread.sleep(5000);
-                br.clearCookies("youtube.com");
-                return getLinks(video, prem, br, retrycount + 1);
-            }
-            if (html5_fmt_map != null) {
-                if (html5_fmt_map.contains(UNSUPPORTEDRTMP)) { return null; }
-                String[] html5_hits = new Regex(html5_fmt_map, "(.*?)(,|$)").getColumn(0);
-                if (html5_hits != null) {
-                    for (String hit : html5_hits) {
-                        hit = unescape(hit);
-                        String hitUrl = new Regex(hit, "url=(http.*?)(\\&|$)").getMatch(0);
-                        String sig = new Regex(hit, "url=http.*?(\\&|$)(sig|signature)=(.*?)(\\&|$)").getMatch(2);
-                        if (sig == null) sig = new Regex(hit, "(sig|signature)=(.*?)(\\&|$)").getMatch(1);
-                        String hitFmt = new Regex(hit, "itag=(\\d+)").getMatch(0);
-                        String hitQ = new Regex(hit, "quality=(.*?)(\\&|$)").getMatch(0);
-                        if (hitUrl != null && hitFmt != null && hitQ != null) {
-                            hitUrl = unescape(hitUrl.replaceAll("\\\\/", "/"));
-                            if (hitUrl.startsWith("http%253A")) {
-                                hitUrl = Encoding.htmlDecode(hitUrl);
-                            }
-                            String[] inst = null;
-                            if (hitUrl.contains("sig")) {
-                                inst = new String[] { Encoding.htmlDecode(Encoding.urlDecode(hitUrl, true)), hitQ };
-                            } else {
-                                inst = new String[] { Encoding.htmlDecode(Encoding.urlDecode(hitUrl, true) + "&signature=" + sig), hitQ };
-                            }
-                            links.put(Integer.parseInt(hitFmt), inst);
-                        }
-                    }
-                }
-            }
-        }
-
-        /* normal links */
-        final HashMap<String, String> fmt_list = new HashMap<String, String>();
-        String fmt_list_str = "";
-        if (ythack) {
-            fmt_list_str = (br.getMatch("&fmt_list=(.+?)&") + ",").replaceAll("%2F", "/").replaceAll("%2C", ",");
-        } else {
-            fmt_list_str = (br.getMatch("\"fmt_list\":\\s+\"(.+?)\",") + ",").replaceAll("\\\\/", "/");
-        }
-        final String fmt_list_map[][] = new Regex(fmt_list_str, "(\\d+)/(\\d+x\\d+)/\\d+/\\d+/\\d+,").getMatches();
-        for (final String[] fmt : fmt_list_map) {
-            fmt_list.put(fmt[0], fmt[1]);
-        }
-        if (links.size() == 0 && ythack) {
-            /* try to find fallback links */
-            String urls[] = br.getRegex("url%3D(.*?)($|%2C)").getColumn(0);
-            int index = 0;
-            for (String vurl : urls) {
-                String hitUrl = new Regex(vurl, "(.*?)%26").getMatch(0);
-                String hitQ = new Regex(vurl, "%26quality%3D(.*?)%").getMatch(0);
-                if (hitUrl != null && hitQ != null) {
-                    hitUrl = unescape(hitUrl.replaceAll("\\\\/", "/"));
-                    if (fmt_list_map.length >= index) {
-                        links.put(Integer.parseInt(fmt_list_map[index][0]), new String[] { Encoding.htmlDecode(Encoding.urlDecode(hitUrl, false)), hitQ });
-                        index++;
-                    }
-                }
-            }
-        }
-        for (Integer fmt : links.keySet()) {
-            String fmt2 = fmt + "";
-            if (fmt_list.containsKey(fmt2)) {
-                String Videoq = links.get(fmt)[1];
-                final Integer q = Integer.parseInt(fmt_list.get(fmt2).split("x")[1]);
-                if (fmt == 40) {
-                    Videoq = "240p Light";
-                } else if (q > 1080) {
-                    Videoq = "Original";
-                } else if (q > 720) {
-                    Videoq = "1080p";
-                } else if (q > 576) {
-                    Videoq = "720p";
-                } else if (q > 360) {
-                    Videoq = "480p";
-                } else if (q > 240) {
-                    Videoq = "360p";
-                } else {
-                    Videoq = "240p";
-                }
-                links.get(fmt)[1] = Videoq;
-            }
-        }
-        if (YT_FILENAME != null && links != null && !links.isEmpty()) {
-            links.put(-1, new String[] { YT_FILENAME });
-        }
+        HashMap<Integer, String[]> links = parseLinks(br, video, YT_FILENAME, ythack, false);
         return links;
+    }
+    
+    /**
+     * thx to youtube-dl
+     * 
+     * @param s
+     * @return
+     */
+    private String decryptSignature(String s) {
+        if (s == null) return s;
+        StringBuilder sb = new StringBuilder();
+        LOG.info("SigLength: " + s.length());
+        if (s.length() == 92) {
+            sb.append(s.charAt(25));
+            sb.append(s.substring(3, 25));
+            sb.append(s.charAt(0));
+            sb.append(s.substring(26, 42));
+            sb.append(s.charAt(79));
+            sb.append(s.substring(43, 79));
+            sb.append(s.charAt(91));
+            sb.append(s.substring(80, 83));
+        } else if (s.length() == 90) {
+            sb.append(s.charAt(25));
+            sb.append(s.substring(3, 25));
+            sb.append(s.charAt(2));
+            sb.append(s.substring(26, 40));
+            sb.append(s.charAt(77));
+            sb.append(s.substring(41, 77));
+            sb.append(s.charAt(89));
+            sb.append(s.substring(78, 81));
+        } else if (s.length() == 88) {
+            sb.append(s.charAt(48));
+            sb.append(new StringBuilder(s.substring(68, 82)).reverse());
+            sb.append(s.charAt(82));
+            sb.append(new StringBuilder(s.substring(63, 67)).reverse());
+            sb.append(s.charAt(85));
+            sb.append(new StringBuilder(s.substring(49, 62)).reverse());
+            sb.append(s.charAt(67));
+            sb.append(new StringBuilder(s.substring(13, 48)).reverse());
+            sb.append(s.charAt(3));
+            sb.append(new StringBuilder(s.substring(4, 12)).reverse());
+            sb.append(s.charAt(2));
+            sb.append(s.charAt(12));
+        } else if (s.length() == 87) {
+            //sb.append(s.substring(4, 23));
+            //sb.append(s.charAt(86));
+            //sb.append(s.substring(24, 85));
+            //s[83:53:-1] + s[3] + s[52:40:-1] + s[86] + s[39:10:-1] + s[0] + s[9:3:-1] + s[53]
+            sb.append(new StringBuilder(s.substring(54, 84)).reverse());
+            sb.append(s.charAt(3));
+            sb.append(new StringBuilder(s.substring(41, 53)).reverse());
+            sb.append(s.charAt(86));
+            sb.append(new StringBuilder(s.substring(11, 40)).reverse());
+            sb.append(s.charAt(0));
+            sb.append(new StringBuilder(s.substring(4, 10)).reverse());
+            sb.append(s.charAt(53));
+        } else if (s.length() == 86) {
+            sb.append(s.substring(83, 85));
+            sb.append(s.charAt(26));
+            sb.append(new StringBuilder(s.substring(47, 80)).reverse());
+            sb.append(s.charAt(85));
+            sb.append(new StringBuilder(s.substring(37, 46)).reverse());
+            sb.append(s.charAt(30));
+            sb.append(new StringBuilder(s.substring(31, 36)).reverse());
+            sb.append(s.charAt(46));
+            sb.append(new StringBuilder(s.substring(27, 30)).reverse());
+            sb.append(s.charAt(82));
+            sb.append(new StringBuilder(s.substring(2, 26)).reverse());
+        } else if (s.length() == 85) {
+            sb.append(s.substring(2, 8));
+            sb.append(s.charAt(0));
+            sb.append(s.substring(9, 21));
+            sb.append(s.charAt(65));
+            sb.append(s.substring(22, 65));
+            sb.append(s.charAt(84));
+            sb.append(s.substring(66, 82));
+            sb.append(s.charAt(21));
+        } else if (s.length() == 84) {
+            sb.append(new StringBuilder(s.substring(37, 84)).reverse());
+            sb.append(s.charAt(2));
+            sb.append(new StringBuilder(s.substring(27, 36)).reverse());
+            sb.append(s.charAt(3));
+            sb.append(new StringBuilder(s.substring(4, 26)).reverse());
+            sb.append(s.charAt(26));
+        } else if (s.length() == 83) {
+            sb.append(s.substring(0, 15));
+            sb.append(s.charAt(80));
+            sb.append(s.substring(16, 80));
+            sb.append(s.charAt(15));
+        } else if (s.length() == 82) {
+            sb.append(s.charAt(36));
+            sb.append(new StringBuilder(s.substring(68, 80)).reverse());
+            sb.append(s.charAt(81));
+            sb.append(new StringBuilder(s.substring(41, 67)).reverse());
+            sb.append(s.charAt(33));
+            sb.append(new StringBuilder(s.substring(37, 40)).reverse());
+            sb.append(s.charAt(40));
+            sb.append(s.charAt(35));
+            sb.append(s.charAt(0));
+            sb.append(s.charAt(67));
+            sb.append(new StringBuilder(s.substring(1, 33)).reverse());
+            sb.append(s.charAt(34));
+        } else if (s.length() == 81) {
+            sb.append(s.charAt(56));
+            sb.append(new StringBuilder(s.substring(57, 80)).reverse());
+            sb.append(s.charAt(41));
+            sb.append(new StringBuilder(s.substring(42, 56)).reverse());
+            sb.append(s.charAt(80));
+            sb.append(new StringBuilder(s.substring(35, 41)).reverse());
+            sb.append(s.charAt(0));
+            sb.append(new StringBuilder(s.substring(30, 34)).reverse());
+            sb.append(s.charAt(34));
+            sb.append(new StringBuilder(s.substring(10, 29)).reverse());
+            sb.append(s.charAt(29));
+            sb.append(new StringBuilder(s.substring(1, 9)).reverse());
+            sb.append(s.charAt(9));
+        } else if (s.length() == 79) {
+            sb.append(s.charAt(54));
+            sb.append(new StringBuilder(s.substring(55, 78)).reverse());
+            sb.append(s.charAt(39));
+            sb.append(new StringBuilder(s.substring(40, 54)).reverse());
+            sb.append(s.charAt(78));
+            sb.append(new StringBuilder(s.substring(35, 39)).reverse());
+            sb.append(s.charAt(0));
+            sb.append(new StringBuilder(s.substring(30, 34)).reverse());
+            sb.append(s.charAt(34));
+            sb.append(new StringBuilder(s.substring(10, 29)).reverse());
+            sb.append(s.charAt(29));
+            sb.append(new StringBuilder(s.substring(1, 9)).reverse());
+            sb.append(s.charAt(9));
+        } else {
+            LOG.info("Unsupported SigLength: " + s.length());
+            return null;
+        }
+        return sb.toString();
     }
     
     private void addtopos(final DestinationFormat mode, final String link, final long size, final String desc, final int fmt) {
