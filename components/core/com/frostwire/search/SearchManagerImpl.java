@@ -209,10 +209,6 @@ public class SearchManagerImpl implements SearchManager {
         public void onResults(SearchPerformer performer, List<? extends SearchResult> results) {
             List<SearchResult> list = new LinkedList<SearchResult>();
 
-            if (results == null) {
-                results = Collections.emptyList();
-            }
-            
             for (SearchResult sr : results) {
                 if (sr instanceof CrawlableSearchResult) {
                     CrawlableSearchResult csr = (CrawlableSearchResult) sr;
