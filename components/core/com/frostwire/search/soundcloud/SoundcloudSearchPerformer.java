@@ -63,7 +63,7 @@ public class SoundcloudSearchPerformer extends PagedRegexSearchPerformer<Soundcl
 
     @Override
     public String fetch(String url) {
-        return fetch(url, "enablev2=false");
+        return fetch(url, "web-ver=1");
     }
 
     @Override
