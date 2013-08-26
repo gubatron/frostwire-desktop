@@ -9064,7 +9064,7 @@ msgstr "helppage"
 #~ msgstr "Contenido"
 
 #~ msgid "Firewall Config"
-#~ msgstr "Configuracioón del Firewall"
+#~ msgstr "Configuración del Cortafuegos"
 
 #~ msgid "The Most Advanced File Sharing Program on the Planet!"
 #~ msgstr "El programa de archivos P2P más rápido del Mundo!"
