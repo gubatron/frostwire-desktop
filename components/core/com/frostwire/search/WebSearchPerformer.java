@@ -17,6 +17,8 @@
 
 package com.frostwire.search;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,13 +72,14 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
      * @return the web page (html)
      */
     public String fetch(String url) {
-        return fetch(url, null);
+        return fetch(url, null, null);
     }
 
-    public String fetch(String url, String cookie) {
-        return client.get(url, timeout, DEFAULT_USER_AGENT, null, cookie);
+    public String fetch(String url, String cookie, Map<String, String> customHeaders) {
+        return client.get(url, timeout, DEFAULT_USER_AGENT, null, cookie, customHeaders);
     }
 
+    
     /**
      * Allow to perform the HTTP operation using the same internal http client.
      * 
