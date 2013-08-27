@@ -59,7 +59,7 @@ public class FrostClickSearchPerformer extends PagedWebSearchPerformer {
     @Override
     protected List<? extends SearchResult> searchPage(int page) {
         String url = getUrl(page, getEncodedKeywords());
-        String text = fetch(url, CUSTOM_HEADERS);
+        String text = fetch(url, null, CUSTOM_HEADERS);
         if (text != null) {
             return searchPage(text);
         } else {
@@ -70,7 +70,7 @@ public class FrostClickSearchPerformer extends PagedWebSearchPerformer {
 
     @Override
     protected List<? extends SearchResult> searchPage(String page) {
-        // unused for this implementation since we still don't have search response ready.
+        // unused for this implementation since we still don't have search responses ready.
         return null;
     }
 }
