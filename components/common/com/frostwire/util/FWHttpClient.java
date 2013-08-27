@@ -27,9 +27,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -217,9 +217,8 @@ final class FWHttpClient implements HttpClient {
     }
 
     private void setCustomHeaders(final Map<String, String> customHeaders, URLConnection conn) {
-        Iterator<String> headerKeysIterator = customHeaders.keySet().iterator();
-        while (headerKeysIterator.hasNext()) {
-            final String key = headerKeysIterator.next();
+        Set<String> keySet = customHeaders.keySet();
+        for (String key : keySet) {
             final String value = customHeaders.get(key); //declaration for debug breakpoint convenience
             conn.setRequestProperty(key, value);
         }
