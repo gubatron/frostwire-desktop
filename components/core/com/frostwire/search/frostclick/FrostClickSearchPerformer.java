@@ -71,6 +71,6 @@ public class FrostClickSearchPerformer extends PagedWebSearchPerformer {
     @Override
     protected List<? extends SearchResult> searchPage(String page) {
         // unused for this implementation since we still don't have search responses ready.
-        return null;
+        return Collections.emptyList();
     }
 }
