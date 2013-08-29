@@ -1353,7 +1353,7 @@ msgstr "Ajouter"
 #: gui/com/frostwire/gui/library/Device.java:265
 msgid ""
 "The device is busy with another transfer or did not authorize your request"
-msgstr ""
+msgstr "L’appareil est déjà occupé par un autre transfert ou il n’a pas autorisé votre demande."
 
 #: gui/com/frostwire/gui/library/Device.java:265
 msgid "Transfer failed"
@@ -1361,11 +1361,11 @@ msgstr "Transferts"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
 msgid "Upload to device"
-msgstr "Limite de transferts atteinte"
+msgstr "Transfert vers l'appareil"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:117
 msgid "Waiting for device authorization..."
-msgstr ""
+msgstr "En attente de l’autorisation de l’appareil..."
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:70
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
@@ -1469,7 +1469,7 @@ msgid ""
 "Are you sure you want to delete the selected file(s), thus removing it from "
 "your computer?"
 msgstr ""
-"Êtes-vous sûr de vouloir effacer le(s) file(s) choisi(s), le(s) supprimant "
+"Êtes-vous sûr de vouloir effacer le(s) fichier(s) choisi(s), le(s) supprimant "
 "ainsi de votre ordinateur ?"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:480
@@ -1508,12 +1508,12 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:791
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:664
 msgid "Launch in "
-msgstr "Lancer avec"
+msgstr "Lancer avec "
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:792
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:665
 msgid "Launch Selected Files in "
-msgstr "Lancer les Fichiers Félectionnés avec"
+msgstr "Lancer les Fichiers Félectionnés avec "
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:834
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:707
@@ -1652,7 +1652,7 @@ msgstr "Importer un fichier .m3u dans la Liste de Lecture"
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:776
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:791
 msgid "Import a .m3u file into the selected playlist"
-msgstr "Importe un fichier .m3u dans la liste de lecture sélectionnée"
+msgstr "Importer un fichier .m3u dans la liste de lecture sélectionnée"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:790
 msgid "Import .m3u to New Playlist"
@@ -1660,7 +1660,7 @@ msgstr "Importer un .m3u dans une Nouvelle Liste de Lecture"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:791
 msgid "Import a .m3u file to a new playlist"
-msgstr "Importe un fichier .m3u dans une nouvelle liste de lecture"
+msgstr "Importer un fichier .m3u dans une nouvelle liste de lecture"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:805
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
@@ -1670,7 +1670,7 @@ msgstr "Exporter une liste de lecture en .m3u"
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:806
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:806
 msgid "Export this playlist into a .m3u file"
-msgstr "Exporte cette liste de lecture dans un fichier .m3u"
+msgstr "Exporter cette liste de lecture dans un fichier .m3u"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:39
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:40
@@ -1713,7 +1713,7 @@ msgstr "Résultats de la recherche"
 
 #: gui/com/frostwire/gui/library/LibrarySearch.java:673
 msgid "Search in "
-msgstr "Recherche"
+msgstr "Rechercher dans "
 
 #: gui/com/frostwire/gui/library/LibraryUtils.java:69
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:276
@@ -1741,7 +1741,7 @@ msgstr "Erreur en important la Station de Radio de"
 
 #: gui/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:60
 msgid "Holds the Results for "
-msgstr "Contient les résultats de"
+msgstr "Contient les résultats de "
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:178
 msgid "Library Folders"
@@ -1758,7 +1758,7 @@ msgstr "Le dossier et les sous-dossiers font partie de la Médiathèque."
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:382
 msgid "Folder is not included and no subfolders are included in the Library."
 msgstr ""
-"Le dossier ni aucun de ses sous-dossiers ne font pas partie de la "
+"Le dossier ni aucun de ses sous-dossiers ne font partie de la "
 "Médiathèque."
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
@@ -1842,9 +1842,8 @@ msgstr "Afficher le catalogue de vos fichiers enregistrés."
 
 #: gui/com/frostwire/gui/tabs/SearchDownloadTab.java:42
 msgid "Search and Download Files"
-msgstr ""
-"Recherchez et chargez des fichiers sur le réseau Gnutella, contrôlez l’état "
-"des transferts et chargements en cours."
+msgstr "Rechercher et télécharger des fichiers"
+
 
 #: gui/com/frostwire/gui/updates/InstallerUpdater.java:127
 msgid "Update"
@@ -2241,7 +2240,7 @@ msgstr "Appliquer l’Opération."
 #: gui/com/limegroup/gnutella/gui/InputFieldDialog.java:94
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:45
 msgid "Cancel Operation"
-msgstr "Annule l’opération."
+msgstr "Annuler l’opération."
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:70
 msgid ""
@@ -2264,7 +2263,7 @@ msgstr "Plus d’informations"
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:179
 #, java-format
 msgid "Visit {0}"
-msgstr "Visitez {0}."
+msgstr "Visiter {0}."
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:187
 msgid "Remind Me Later"
@@ -2281,7 +2280,7 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:198
 msgid "Change Language"
-msgstr "Choix de la &langue"
+msgstr "Choix de la Langue"
 
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:201
 msgid "Help Translate FrostWire"
@@ -2380,7 +2379,7 @@ msgstr "Ajouter..."
 
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:334
 msgid "Add New List Item"
-msgstr "Lister un nouvel élément."
+msgstr "Ajouter un nouvel élément."
 
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:372
 msgid "Remove Selected Item"
@@ -2437,9 +2436,8 @@ msgstr "Turbo-Chargée"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:566
 msgid "Your connection to the network is extremely strong"
-msgstr ""
-"Votre connexion au réseau est optimale et extrèmement fiable pour toutes "
-"sortes de recherches."
+msgstr "Votre connexion au réseau est extrèmement forte"
+
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:658
 msgid "Show Connection Quality"
