@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import com.frostwire.search.PagedWebSearchPerformer;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.UserAgent;
 
 /**
  * @author gubatron
@@ -39,15 +40,16 @@ public class FrostClickSearchPerformer extends PagedWebSearchPerformer {
     private Map<String, String> CUSTOM_HEADERS;
     private static final Logger LOG = LoggerFactory.getLogger(FrostClickSearchPerformer.class);
 
-    public FrostClickSearchPerformer(long token, String keywords, int timeout) {
+    public FrostClickSearchPerformer(long token, String keywords, int timeout, UserAgent userAgent) {
         super(token, keywords, timeout, MAX_RESULTS);
-        initCustomHeaders();
+        initCustomHeaders(userAgent);
     }
 
-    private void initCustomHeaders() {
+    private void initCustomHeaders(UserAgent userAgent) {
         if (CUSTOM_HEADERS == null) {
             CUSTOM_HEADERS = new HashMap<String, String>();
-            CUSTOM_HEADERS.put("User-Agent", "foo-agent");
+            CUSTOM_HEADERS.putAll(userAgent.getHeadersMap());
+            CUSTOM_HEADERS.put("User-Agent", userAgent.toString());
         }
     }
 
