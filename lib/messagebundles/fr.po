@@ -2571,7 +2571,7 @@ msgid ""
 "Passionate about digital rights? Visit the <a href=\"{0}\">Electronic "
 "Frontier Foundation</a> and see what you can do to help."
 msgstr ""
-"Vous êtes passionné sur la protection des droits relatifs aux technologies "
+"Vous êtes passionné par la protection des droits relatifs aux technologies "
 "de l’information ? Visitez l’<a href=\"{0}\">Electronic Frontier Foundation</"
 "a> et voyez ce que vous pouvez faire pour aider."
 
@@ -2777,7 +2777,7 @@ msgid ""
 "Are you unhappy with the small number of search results you received? Right-"
 "click a search result, then choose Search More, then Get More Results."
 msgstr ""
-"Êtes-vous insatisfait du petit nombre de résultats de recherche que vous "
+"Êtes-vous insatisfait(e) du petit nombre de résultats de recherche que vous "
 "avez reçu? Cliquez avec le bouton droit sur un résultat de recherche, puis "
 "sélectionnez Chercher Plus, puis Obtenir Plus de Résultats."
 
@@ -2951,7 +2951,7 @@ msgid ""
 "click the system tray icon (next to the time), and select Exit. You can "
 "change this behavior by going to Tools &gt; Options &gt; System Tray."
 msgstr ""
-"Quand voius fermez FrostWire, il est réduit dans la barre d'état du système. "
+"Quand vous fermez FrostWire, il est réduit dans la barre d'état du système. "
 "Pour quitter, cliquez avec le bouton droit sur l'icône de la berre d'état "
 "(juste à coté de l'heure), et sélectionnez Quitter. Vous pouvez changer ce "
 "comportement en allant dans Outils &gt; Options &gt; Barre d'État du Système."
@@ -3057,7 +3057,7 @@ msgstr "&Fermer"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:287
 msgid "Close the program's main window"
-msgstr "Fermer la fenêtre prinicpale du programme"
+msgstr "Fermer la fenêtre principale du programme"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:303
 msgid "E&xit"
@@ -3156,7 +3156,7 @@ msgid ""
 msgstr ""
 "FrostWire n’est pas parvenu à se connecter au serveur de suivi de bogues "
 "afin d’y enregistrer le rapport d’erreur ci-dessous. Pour aider au débogage, "
-"veuillez copier le texte suivant et l’envoyer par courriel à bugs@frostwire."
+"veuillez aller au www.frostwire.com et cliquez sur 'Support'."
 "com. Merci."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:528
@@ -3165,7 +3165,7 @@ msgstr "Copier le rapport"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:127
 msgid "Always Save As..."
-msgstr "Toujours souver sous..."
+msgstr "Toujours sauver sous..."
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:129
 msgid "Always Append (#)"
@@ -3205,7 +3205,7 @@ msgstr "Écraser"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:313
 msgid "Overwrite the Existing File"
-msgstr "Remplace le fichier existant."
+msgstr "Remplacer le fichier existant."
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:336
 msgid "Save As..."
@@ -3217,11 +3217,11 @@ msgstr "Choisissez un emplacement différent pour le chargement."
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:369
 msgid "Append (#)"
-msgstr "Rajouter “ (n°)”"
+msgstr "Rajouter (n°)"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:371
 msgid "Appends (#) to filename"
-msgstr "Ajoute “ (n°)” au nom de fichier."
+msgstr "Ajoute (n°) au nom de fichier."
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:390
 msgid "Cancel the Download"
@@ -3373,7 +3373,7 @@ msgstr "Langue :"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:60
 msgid "Miscellaneous Settings"
-msgstr "Preferences diverses"
+msgstr "Préférences diverses"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:62
 msgid "Below, are several options that affect the functionality of FrostWire."
@@ -3479,7 +3479,7 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:99
 msgid "FrostWire is free software, "
-msgstr "FrostWire un logiciel gratuit,"
+msgstr "FrostWire est un logiciel gratuit,"
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:109
 msgid "Do not pay for FrostWire."
@@ -3499,7 +3499,7 @@ msgstr "&Configurer le filtrage des médias"
 
 #: gui/com/limegroup/gnutella/gui/menu/FiltersMenu.java:19
 msgid "Configure FrostWire's Content Filtering Options"
-msgstr "Configure les options de FrostWire permettant le filtrage des médias."
+msgstr "Configurer les options de FrostWire permettant le filtrage des médias."
 
 #: gui/com/limegroup/gnutella/gui/menu/FiltersMenu.java:21
 msgid "&Learn More..."
@@ -3519,7 +3519,7 @@ msgstr "&FAQ"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:31
 msgid "Frequently Asked Questions for FrostWire"
-msgstr "Consulte la foire aux questions courantes sur FrostWire."
+msgstr "Consultez la foire aux questions courantes sur FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:33
 msgid "FrostWire for Android"
@@ -3777,7 +3777,7 @@ msgstr "Options par défaut"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:55
 msgid "Revert All Settings to the Factory Defaults"
-msgstr "Restaure toutes les options à leur valeurs par défaut."
+msgstr "Restaurer toutes les options à leur valeurs par défaut."
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:194
 msgid ""
@@ -4058,7 +4058,7 @@ msgstr "Toujours afficher le dialogue “Enregistrer sous...”"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DefaultActionPaneItem.java:50
 msgid "Always Append (#) to the Filename"
-msgstr "Toujours rajouter “ (n°)” au nom de fichier"
+msgstr "Toujours rajouter (n°) au nom de fichier"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DefaultActionPaneItem.java:51
 msgid "Always Ask What to do"
@@ -4391,7 +4391,7 @@ msgstr "Nom d’utilisateur :"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:49
 msgid "Password:"
-msgstr "Mot de passe[npsb]:"
+msgstr "Mot de passe:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:29
 msgid "Proxy Options"
@@ -4419,7 +4419,7 @@ msgstr "Socks v5"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:44
 msgid "HTTP"
-msgstr "Mandataire HTTP CONNECT"
+msgstr "HTTP"
 
 #. *
 #. * Constant for the key of the locale-specific <tt>String</tt> for the
@@ -4435,7 +4435,7 @@ msgstr "Hôte mandataire :"
 #.
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:56
 msgid "Port:"
-msgstr "Port :"
+msgstr "Port:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:18
 msgid "FrostClick Promotions"
@@ -4510,7 +4510,7 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:77
 msgid " torrents and "
-msgstr " torrents et"
+msgstr " torrents et "
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:77
 msgid ""
@@ -4556,7 +4556,7 @@ msgid ""
 "You can display a measurement of your connection quality in the status bar."
 msgstr ""
 "Vous pouvez afficher dans la barre d’état l’indicateur de la qualité de "
-"votre connexion au réseau Gnutella."
+"votre connexion."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:30
 msgid "Show Connection Quality Indicator:"
@@ -4615,7 +4615,7 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:22
 msgid "BitTorrent Global Tranfer Speeds"
-msgstr "Vitesse de Transfert Globale BitTorrent"
+msgstr "Vitesses de Transfert Globales BitTorrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:24
 msgid ""
@@ -4692,7 +4692,7 @@ msgstr "Lecteur vidéo"
 msgid "You can have FrostWire import newly downloaded songs into iTunes."
 msgstr ""
 "Vous pouvez indiquer à FrostWire d’importer automatiquement dans iTunes les "
-"nouveaux fichiers chargés."
+"nouvelles musiques chargées."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:20
 msgid "Enable iTunes importing:"
@@ -4745,7 +4745,7 @@ msgstr "Rechercher des produits liés sur Amazon"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:56
 msgid "Download All Selected Files"
-msgstr "Charge tous les fichiers sélectionnés."
+msgstr "Charger tous les fichiers sélectionnés."
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:57
 msgid ""
@@ -5230,7 +5230,7 @@ msgstr "userinforeply"
 
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:126
 msgid "mouse"
-msgstr "mouse"
+msgstr "souris"
 
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:234
 msgid "helppage"
@@ -5259,7 +5259,7 @@ msgstr "helppage"
 #~ msgstr "Vidéo"
 
 #~ msgid "Sort:"
-#~ msgstr "Port :"
+#~ msgstr "Tri :"
 
 #~ msgid "None"
 #~ msgstr "Non"
@@ -5280,7 +5280,7 @@ msgstr "helppage"
 #~ msgstr "Taille"
 
 #~ msgid "Open"
-#~ msgstr "Ouvrir :"
+#~ msgstr "Ouvrir"
 
 #~ msgid "Delete Files"
 #~ msgstr "&Effacer le(s) fichier(s)"
@@ -5289,7 +5289,7 @@ msgstr "helppage"
 #~ msgstr "Fermeture"
 
 #~ msgid "Error deleting file"
-#~ msgstr "Transfert du fichier"
+#~ msgstr "Erreur de suppression du fichier"
 
 #~ msgid "Connected"
 #~ msgstr "Connecté depuis le"
@@ -5301,7 +5301,7 @@ msgstr "helppage"
 #~ msgstr "Chargements"
 
 #~ msgid "Cancel All"
-#~ msgstr "Annuler"
+#~ msgstr "Tout Annuler"
 
 #~ msgid "Clear Finished"
 #~ msgstr "Purger les inactifs"
