@@ -25,7 +25,7 @@ msgid ""
 "full. To continue using FrostWire you must free up space on your hard drive."
 msgstr ""
 "لم يتمكن FrostWire من كتابة ملف ضروري نظراً لامتلاء القرص الصلب. لتستكمل "
-"استخدام FrostWire لا بد من تحرير مساحة على قرصك الصلب."
+"للاستمرار في استخدام FrostWire لا بد من تحرير مساحة على قرصك الصلب."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:52
 msgid ""
