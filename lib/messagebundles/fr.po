@@ -5364,13 +5364,13 @@ msgstr "helppage"
 #~ msgstr "Afficher le lecteur de médias"
 
 #~ msgid "Send File..."
-#~ msgstr "Sauvegarde du fichier..."
+#~ msgstr "Envoyer le fichier..."
 
 #~ msgid "Generate &Error"
 #~ msgstr "Génér&er une erreur"
 
 #~ msgid "Generate a Popup Error for Testing"
-#~ msgstr "Génère un dialogue d’erreur pour tests."
+#~ msgstr "Génèrer un dialogue d’erreur pour tests."
 
 #~ msgid "Player"
 #~ msgstr "Lecteur"
@@ -5594,7 +5594,7 @@ msgstr "helppage"
 #~ msgstr "Accès expérimental au disque"
 
 #~ msgid "Clear"
-#~ msgstr "Effacer tout"
+#~ msgstr "Tout Effacer"
 
 #~ msgid "Delay: "
 #~ msgstr "retard: "
@@ -5821,7 +5821,7 @@ msgstr "helppage"
 #~ msgstr "Veuillez patienter durant la connexion de votre agent au réseau."
 
 #~ msgid "Poor"
-#~ msgstr "Votre connexion au réseau est médiocre."
+#~ msgstr "Faible"
 
 #~ msgid ""
 #~ "You are connected to few hosts and have an unstable connection the network"
@@ -5830,7 +5830,7 @@ msgstr "helppage"
 #~ "peut être instable pour certaines recherches."
 
 #~ msgid "Fair"
-#~ msgstr "Votre connexion au réseau est correcte."
+#~ msgstr "Passable"
 
 #~ msgid "Your connection to the network is getting stronger"
 #~ msgstr ""
@@ -5838,7 +5838,7 @@ msgstr "helppage"
 #~ "quelques recherches."
 
 #~ msgid "Good"
-#~ msgstr "Votre connexion au réseau est bonne."
+#~ msgstr "Bonne."
 
 #~ msgid ""
 #~ "You are not yet fully connected to the network, but have a very good "
@@ -5849,10 +5849,10 @@ msgstr "helppage"
 #~ "recherches fructueuses."
 
 #~ msgid "Excellent"
-#~ msgstr "Votre connexion au réseau est excellente."
+#~ msgstr "Excellente"
 
 #~ msgid "Your connection to the network is very strong"
-#~ msgstr "Votre connexion au réseau est excellente."
+#~ msgstr "Forte"
 
 #~ msgid "Waking Up"
 #~ msgstr "Réveil en cours"
@@ -5861,7 +5861,7 @@ msgstr "helppage"
 #~ msgstr "Afficher le nombre de fichiers partagés"
 
 #~ msgid "Show Store Indicator"
-#~ msgstr "Afficher l’indicateur de pare-feu :"
+#~ msgstr "Afficher l’indicateur de pare-feu"
 
 #~ msgid "You are sharing {0} file"
 #~ msgid_plural "You are sharing {0} files"
@@ -5882,7 +5882,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "Vous pouvez changer l’apparence de FrostWire en allant sur “Affichage > "
 #~ "Appliquer un thème >” et en sélectionnant le nouveau thème. De tous "
-#~ "nouveaux thèmes sont sur le site web de FrostWire, accessible par "
+#~ "nouveaux thèmes sont sur le site web de FrostWire, accessibles par "
 #~ "l’option “Obtenir d’autres thèmes...”. Si vous téléchargez les thèmes en "
 #~ "utilisant les liens “Magnet” affichés sur le site, ils seront téléchargés "
 #~ "avec FrostWire et FrostWire vous demandera automatiquement si vous voulez "
@@ -6173,7 +6173,7 @@ msgstr "helppage"
 #~ "(terabyte)."
 #~ msgstr ""
 #~ "Vous voulez partager un très gros fichier ? FrostWire supporte des "
-#~ "tailles de fichiers jusqu’à 1 Tio (tébioctet, ou 1 024 Gio)."
+#~ "tailles de fichiers jusqu’à 1 Tio (téraoctet, ou 1 024 Gio)."
 
 #~ msgid ""
 #~ "Want to be an Ultrapeer? Leave FrostWire running as long as possible. If "
@@ -6268,10 +6268,10 @@ msgstr "helppage"
 #~ "de liste !"
 
 #~ msgid "Upgrade FrostWire"
-#~ msgstr "&Utilisation de FrostWire"
+#~ msgstr "Mettre à jour FrostWire"
 
 #~ msgid "Upgrade to FrostWire?"
-#~ msgstr "&Utilisation de FrostWire"
+#~ msgstr "Passer à FrostWire?"
 
 #~ msgid "Upgrade Your Java"
 #~ msgstr "Mettez à niveau votre Java"
@@ -6293,7 +6293,7 @@ msgstr "helppage"
 #~ msgstr "Voulez-vous obtenir votre mise à niveau gratuite de Java ?"
 
 #~ msgid "Get FrostWire Now"
-#~ msgstr "Utiliser FrostWire pour..."
+#~ msgstr "Obtenez FrostWire Maintenant"
 
 #~ msgid "Why"
 #~ msgstr "Pourquoi ?"
@@ -6315,7 +6315,7 @@ msgstr "helppage"
 #~ "html>"
 #~ msgstr ""
 #~ "<html><b>Votre version de FrostWire a été corrompue par un virus ou "
-#~ "troyen !</b><br/><br/>Veuillez visiter <a href=\"http://www.frostwire.com/"
+#~ "un cheval de troie !</b><br/><br/>Veuillez visiter <a href=\"http://www.frostwire.com/"
 #~ "corrupted\">www.frostwire.com</a> et chargez la dernière version "
 #~ "officielle de FrostWire.</html>"
 
@@ -6419,28 +6419,28 @@ msgstr "helppage"
 #~ msgstr "Messages (E/S)"
 
 #~ msgid "Messages In"
-#~ msgstr "Messages Dedans"
+#~ msgstr "Messages Entrants"
 
 #~ msgid "Messages Out"
-#~ msgstr "Messages Dehors"
+#~ msgstr "Messages Sortants"
 
 #~ msgid "Bandwidth (I/O)"
 #~ msgstr "Bande passante (E/S)"
 
 #~ msgid "Bandwidth In"
-#~ msgstr "Largeur de bande Dedans"
+#~ msgstr "Largeur de bande Entrante"
 
 #~ msgid "Bandwidth Out"
-#~ msgstr "Largeur de bande Dehors"
+#~ msgstr "Largeur de bande Sortante"
 
 #~ msgid "Dropped (I/O)"
-#~ msgstr "Écartés (E/S)"
+#~ msgstr "Perdus (E/S)"
 
 #~ msgid "Dropped In"
-#~ msgstr "Laissé tomber Dedans"
+#~ msgstr "Perdus Entrants"
 
 #~ msgid "Dropped Out"
-#~ msgstr "Lâché"
+#~ msgstr "Perdus Sortants"
 
 #~ msgid "Protocol"
 #~ msgstr "Protocole"
@@ -6452,19 +6452,19 @@ msgstr "helppage"
 #~ msgstr "Compression (E/S)"
 
 #~ msgid "Compressed In"
-#~ msgstr "Comprimé Dedans"
+#~ msgstr "Compressé Entrant"
 
 #~ msgid "Compressed Out"
-#~ msgstr "Comprimé Dehors"
+#~ msgstr "Compressé Sortant"
 
 #~ msgid "SSL Overhead (I/O)"
 #~ msgstr "Surcharge SSL (E/S)"
 
 #~ msgid "SSL Overhead In"
-#~ msgstr "SSL Aérien Dedans"
+#~ msgstr "Surcharge SSL Entrant"
 
 #~ msgid "SSL Overhead Out"
-#~ msgstr "SSL Aérien Dehors"
+#~ msgstr "Surcharge SSL Sortant"
 
 #~ msgid "QRP (%)"
 #~ msgstr "QRP (%/éléments)"
@@ -6518,7 +6518,7 @@ msgstr "helppage"
 #~ msgstr "Pair"
 
 #~ msgid "0.6"
-#~ msgstr "Basique"
+#~ msgstr "0.6"
 
 #~ msgid ""
 #~ "You dropped the following files/folders on LimeWire, please select the "
@@ -6713,13 +6713,13 @@ msgstr "helppage"
 #~ msgstr "Purger le fichier chargé"
 
 #~ msgid "Clear Selected Downloads"
-#~ msgstr "Purge les chargements sélectionnés de la liste."
+#~ msgstr "Purger les chargements sélectionnés de la liste."
 
 #~ msgid "Launch Download"
 #~ msgstr "Lancer le fichier chargé"
 
 #~ msgid "Launch Selected Downloads"
-#~ msgstr "Lance les chargements sélectionnés."
+#~ msgstr "Lancer les chargements sélectionnés."
 
 #~ msgid "Preview Download"
 #~ msgstr "Lancer un aperçu du chargement"
@@ -6993,7 +6993,7 @@ msgstr "helppage"
 #~ msgstr "Vérification des mises à jour..."
 
 #~ msgid "seconds left)"
-#~ msgstr "secondes"
+#~ msgstr "secondes restantes)"
 
 #~ msgid "Saving"
 #~ msgstr "Enregistrement"
@@ -7848,7 +7848,7 @@ msgstr "helppage"
 #~ "cours."
 
 #~ msgid "Test action!"
-#~ msgstr "Description"
+#~ msgstr "Action de test!"
 
 #~ msgid ""
 #~ "The skin file you selected does not exist or is invalid. Please choose "
@@ -8764,7 +8764,7 @@ msgstr "helppage"
 #~ msgstr "Requête de discussion (CHAT)"
 
 #~ msgid "You are sharing"
-#~ msgstr "Le nombre de fichiers que vous partagez actuellement."
+#~ msgstr "Vous partagez actuellement"
 
 #~ msgid "Please enter the copyright holder of the file you want to publish."
 #~ msgstr ""
@@ -9054,7 +9054,7 @@ msgstr "helppage"
 #~ msgid "There was an error while connecting to the internet archive."
 #~ msgstr ""
 #~ "Une erreur s’est produite lors de la tentative de connexion avec "
-#~ "“l’Internet Archive”."
+#~ "“l’Archive Internet”."
 
 #~ msgid ""
 #~ "There was an error while logging in to the Internet Archive. Please check "
@@ -9376,13 +9376,13 @@ msgstr "helppage"
 #~ msgstr "9 transits restants"
 
 #~ msgid "Pong Errors"
-#~ msgstr "Pong"
+#~ msgstr "Erreurs Pong"
 
 #~ msgid "Reply Errors"
-#~ msgstr "Résultats"
+#~ msgstr "Erreurs de Réponses"
 
 #~ msgid "Push Errors"
-#~ msgstr "Mandat de renvoi"
+#~ msgstr "Erreurs de renvoi"
 
 #~ msgid "No Route"
 #~ msgstr "Résultats non routables"
@@ -10392,10 +10392,10 @@ msgstr "helppage"
 #~ msgstr "Validation demandée"
 
 #~ msgid "Height:"
-#~ msgstr "Largeur :"
+#~ msgstr "Hauteur :"
 
 #~ msgid "Please press OK to permanently remove license."
-#~ msgstr "Veuillez cliquer OK pour ôeter la licence de façon permanente."
+#~ msgstr "Veuillez cliquer OK pour ôter la licence de façon permanente."
 
 #~ msgid "Vendor Messages"
 #~ msgstr "Message propriétaire"
