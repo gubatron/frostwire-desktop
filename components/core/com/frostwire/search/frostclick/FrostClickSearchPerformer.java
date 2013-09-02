@@ -42,7 +42,7 @@ public class FrostClickSearchPerformer extends PagedWebSearchPerformer {
 
     public FrostClickSearchPerformer(long token, String keywords, int timeout, UserAgent userAgent) {
         super(token, keywords, timeout, MAX_RESULTS);
-        initCustomHeaders(userAgent);
+        initCustomHeaders(userAgent);       
     }
 
     private void initCustomHeaders(UserAgent userAgent) {
@@ -50,6 +50,7 @@ public class FrostClickSearchPerformer extends PagedWebSearchPerformer {
             CUSTOM_HEADERS = new HashMap<String, String>();
             CUSTOM_HEADERS.putAll(userAgent.getHeadersMap());
             CUSTOM_HEADERS.put("User-Agent", userAgent.toString());
+            CUSTOM_HEADERS.put("sessionId", userAgent.getUUID());
         }
     }
 

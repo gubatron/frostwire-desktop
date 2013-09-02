@@ -19,6 +19,7 @@ package com.frostwire.search;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import com.frostwire.util.StringUtils;
 
@@ -30,9 +31,12 @@ public class UserAgent {
     private final String BUILD_KEY = "FWbuild";
 
     private final Map<String, String> headerMap;
+    
+    private final String uuid;
 
     public UserAgent(String operatingSystem, String fwVersion, String buildNumber) {
         headerMap = initHeadersMap(normalizeUnavailableString(operatingSystem), normalizeUnavailableString(fwVersion), normalizeUnavailableString(buildNumber));
+        uuid = UUID.randomUUID().toString();
     }
 
     public Map<String, String> getHeadersMap() {
@@ -56,5 +60,9 @@ public class UserAgent {
             str = "NA";
         }
         return str;
+    }
+
+    public String getUUID() {
+        return uuid;
     }
 }
