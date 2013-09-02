@@ -36,7 +36,7 @@ import com.frostwire.search.UserAgent;
  *
  */
 public class FrostClickSearchPerformer extends PagedWebSearchPerformer {
-    private static final int MAX_RESULTS = 25;
+    private static final int MAX_RESULTS = 1;
     private Map<String, String> CUSTOM_HEADERS;
     private static final Logger LOG = LoggerFactory.getLogger(FrostClickSearchPerformer.class);
 
