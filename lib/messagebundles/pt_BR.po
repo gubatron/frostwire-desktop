@@ -4659,14 +4659,13 @@ msgstr "helppage"
 #~ "want to do this?"
 #~ msgstr ""
 #~ "Se você cancelar o carregamento, o torrent também vai cancelar. Tem certeza "
-#~ "que quer fazer isso?
-"
+#~ "que quer fazer isso?"
 
 #~ msgid ""
 #~ "This upload is a torrent and it hasn't seeded enough. You should let it "
 #~ "upload some more. Are you sure you want to stop it?"
 #~ msgstr ""
-#~ "Este upload é um torrent e ele ainda não tem sementes suficientes. Você deve deixá-lo “ 
+#~ "Este upload é um torrent e ele ainda não tem sementes suficientes. Você deve deixá-lo "
 #~ "carregar um pouco mais. Tem certeza que deseja parar?"
 
 #~ msgid "Automatically start torrents"
@@ -5193,8 +5192,8 @@ msgstr "helppage"
 #~ "building your Library. A red oval means files are not being shared."
 #~ msgstr ""
 #~ "Quer saber quantos arquivos está compartilhando? Olhe na barra de status "
-#~ "do FrostWire, o número de oval verdes. Uma oval bege significa que ainda 
-#~ "está processando sua Biblioteca. A vermelha quer  dizer que nenhum arquivo está 
+#~ "do FrostWire, o número de oval verdes. Uma oval bege significa que ainda "
+#~ "está processando sua Biblioteca. A vermelha quer  dizer que nenhum arquivo está "
 #~ "sendo compartilhado."
 
 #~ msgid ""
