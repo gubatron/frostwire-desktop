@@ -74,7 +74,7 @@ msgid ""
 "is using the file. Please close the other program and retry the download."
 msgstr ""
 "FrostWire ne peut télécharger le fichier sélectionné car un autre programme "
-"utilise ce fichier. Veuillez terminer ce programme et réessayer le "
+"utilise ce fichier. Veuillez fermer ce programme et réessayez."
 "chargement."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:64
@@ -96,9 +96,9 @@ msgid ""
 "because the filename contains characters which are not supported by your "
 "operating system."
 msgstr ""
-"FrostWire n’a pas pu ouvrir le fichier incomplet pour le chargement "
+"FrostWire n’a pas pu ouvrir le fichier incomplet pour le téléchargement "
 "sélectionné car le nom de fichier contient des caractères non supportés par "
-"le système de fichiers de votre votre ordinateur."
+"le système d'exploitation de votre ordinateur."
 
 #: core/com/frostwire/mplayer/MPlayer.java:353
 msgid "azemp.failed.nocodec"
@@ -199,7 +199,7 @@ msgstr "Langue"
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:81
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:270
 msgid "Bitrate"
-msgstr "Débit binaire"
+msgstr "Débit"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:98
 #: core/com/limegroup/gnutella/LimeXMLNames.java:115
@@ -436,7 +436,7 @@ msgstr "Reprendre"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:182
 msgid "Reattempt Selected Downloads"
-msgstr "Essaye de nouveau le téléchargement des fichiers sélectionnés."
+msgstr "Essaie de nouveau le téléchargement des fichiers sélectionnés."
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:203
 msgid ""
@@ -448,7 +448,7 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:227
 msgid "Pause Download"
-msgstr "Suspendre le chargement"
+msgstr "Suspendre le téléchargement"
 
 #. *
 #. * Constant for the pause button.
@@ -549,7 +549,7 @@ msgstr "Envoyer à un ami"
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:394
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:395
 msgid "Hide Seeding Transfers"
-msgstr "Masquer les Transferts Ensemencés"
+msgstr "Masquer les Transferts en Ensemencement"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:396
 msgid "Don't show Seeding Transfers"
@@ -559,7 +559,7 @@ msgstr "Ne pas Afficher les Transferts en Ensemencement"
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:399
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:400
 msgid "Show Seeding Transfers"
-msgstr "Afficher les Transferts Ensemencés"
+msgstr "Afficher les Transferts en Ensemencement"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:419
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:195
@@ -578,7 +578,7 @@ msgstr "Ajouter à la liste de lecture"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:39
 msgid " (Partial)"
-msgstr "(Partiel)"
+msgstr " (Partiel)"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:97
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:328
@@ -779,7 +779,7 @@ msgstr "Définir la vitesse de transfert (émission)"
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:261
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:295
 msgid "Advanced"
-msgstr "Avancé"
+msgstr "Avancées"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:399
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:149
@@ -810,7 +810,7 @@ msgid ""
 "Click here to select a single file or a folder as the content indexed by "
 "your new .torrent"
 msgstr ""
-"Cliquer ici pour sélectionner un seul fichier ou un dossier comme contenu à "
+"Cliquez ici pour sélectionner un seul fichier ou un dossier comme contenu à "
 "indexer par votre nouveau .torrent"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:196
@@ -909,7 +909,7 @@ msgstr "Erreur inconnue. Veuillez réessayer."
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:849
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:722
 msgid "Error: You can't read on that file/folder."
-msgstr "Erreur: Vous ne pouvez lire ce fichier/dossier."
+msgstr "Erreur: Vous ne pouvez pas lire ce fichier/dossier."
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:480
 msgid ""
@@ -1135,7 +1135,7 @@ msgstr "Dossier de Sauvegarde des Données de Torrent"
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:63
 msgid "You forgot to enter a path for the Torrent Data Folder."
 msgstr ""
-"Vous avez oublié de saisir un chemin pour le Dossier des Données Torrent"
+"Vous avez oublié de saisir un chemin pour le Dossier des Données du Torrent"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:87
 msgid "Please enter a valid path for the Torrent Data Folder"
