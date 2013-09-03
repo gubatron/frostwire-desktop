@@ -28,7 +28,7 @@ msgstr "O FrostWire não conseguiu abrir o arquivo necessário pois um outro pro
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:54
 msgid "FrostWire was unable to write a necessary file because you do not have the necessary permissions. Your preferences may not be maintained the next time you start FrostWire, or FrostWire may behave in unexpected ways."
-msgstr "O FrostWire não conseguiu escrever um arquivo necessário por não possuir as permissões necessárias. As suas preferências podem não ser mantidas da próxima vez que iniciar o FrostWire, ou o FrostWire pode comportar-se de uma forma inesperada."
+msgstr "O FrostWire não conseguiu escrever um arquivo necessário porque você não possui as permissões necessárias. As suas preferências podem não ser mantidas da próxima vez que iniciar o FrostWire, ou o FrostWire pode comportar-se de forma inesperada."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:56
 msgid "FrostWire cannot open a necessary file because the filename contains characters which are not supported by your operating system. FrostWire may behave in unexpected ways."
@@ -44,11 +44,11 @@ msgstr "O FrostWire não consegue fazer o download do arquivo selecionado porque
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:64
 msgid "FrostWire was unable to create or continue writing an incomplete file for the selected download because you do not have permission to write files to the incomplete folder. To continue using FrostWire, please choose a different Save Folder."
-msgstr "O FrostWire não conseguiu criar ou continuar escrevendo um arquivo incompletodo para o download selecionado pois não possui permissão para escrever arquivos na pasta de arquivos incompletos. Para continuar a usar o FrostWire selecione uma pasta diferente."
+msgstr "O FrostWire não conseguiu criar ou continuar escrevendo um arquivo incompleto para o download selecionado pois não possui permissão para escrever arquivos na pasta de arquivos incompletos. Para continuar usando o FrostWire selecione uma pasta diferente."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:66
 msgid "FrostWire was unable to open the incomplete file for the selected download because the filename contains characters which are not supported by your operating system."
-msgstr "O FrostWire não conseguiu abrir o arquivo incompleto para o download selecionado, pois o nome do arquivo contém caracteres não suportados pelo seu sitema operacional."
+msgstr "O FrostWire não conseguiu abrir o arquivo incompleto para o download selecionado, pois o nome do arquivo contém caracteres não suportados pelo seu sistema operacional."
 
 #: core/com/frostwire/mplayer/MPlayer.java:353
 msgid "azemp.failed.nocodec"
@@ -290,11 +290,11 @@ msgstr "Comprar"
 #. HERE IS WHERE WE ADD THE PJIRC OBJECT.
 #: gui/com/frostwire/gui/ChatMediator.java:110
 msgid "Loading Community Chat..."
-msgstr "Carregando Bate-papo Comunitário..."
+msgstr "Carregando o Bate-papo Comunitário..."
 
 #: gui/com/frostwire/gui/ChatMediator.java:413
 msgid "Loading Community Chat Window..."
-msgstr "Carregando Janela do Bate-papo Comunitário..."
+msgstr "Carregando a Janela do Bate-papo Comunitário..."
 
 #: gui/com/frostwire/gui/HideExitDialog.java:39
 msgid "Do you want to hide FrostWire?"
@@ -302,7 +302,7 @@ msgstr "Você deseja esconder o FrostWire?"
 
 #: gui/com/frostwire/gui/HideExitDialog.java:54
 msgid "<html>Closing the FrostWire window will only hide the application<p>This way file transfers may continue in the background.</html>"
-msgstr "<html>Fechar a janela FrostWire, só irá esconder o programa<p>Assim, a tranferência de arquivos pode continuar na tela do fundo.</html>"
+msgstr "<html>Fechar a janela FrostWire, só irá esconder o programa<p>Assim, a transferência de arquivos pode continuar na tela do fundo.</html>"
 
 #: gui/com/frostwire/gui/HideExitDialog.java:61
 msgid "Don't show this again"
@@ -447,7 +447,7 @@ msgid ""
 "\n"
 "You won't be able to recover the files."
 msgstr ""
-"Você tem certeza deseja remover os dados dos arquivos do seu computador?\n"
+"Você tem certeza de que deseja remover os dados dos arquivos do seu computador?\n"
 "\n"
 "Os arquivos não poderão ser recuperados."
 
@@ -517,7 +517,7 @@ msgstr "Criar e adicionar uma Nova Lista de Reprodução"
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:450
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:213
 msgid "Add to playlist "
-msgstr "Adicionar para na Lista de Reprodução"
+msgstr "Adicionar para a Lista de Reprodução"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:39
 msgid " (Partial)"
@@ -551,7 +551,7 @@ msgstr "Baixado"
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:120
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:325
 msgid "Uploaded"
-msgstr "Upload Comleto"
+msgstr "Upload Completo"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:127
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:322
@@ -561,7 +561,7 @@ msgstr "Velocidade de Baixar"
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:131
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:323
 msgid "Up Speed"
-msgstr "Velocidade do Upload"
+msgstr "Velocidade de Carregar"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:138
 msgid "Time"
@@ -660,7 +660,7 @@ msgstr "Cancelar downloads selecionados."
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:675
 #, java-format
 msgid "FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file."
-msgstr "Frostwire não conseguiu carregar o arquivo  \"{0}\", - ele pode estar deformado  ou Frostwire não tem permissão para acessar esse arquivo."
+msgstr "O Frostwire não conseguiu carregar o arquivo  \"{0}\", - ele pode estar deformado ou o Frostwire não tem permissão para acessar esse arquivo."
 
 #. advanced > Download Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:56
@@ -745,14 +745,14 @@ msgstr "Selecionar Pasta ou Arquivo..."
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:181
 msgid "Click here to select a single file or a folder as the content indexed by your new .torrent"
-msgstr "Clique aqui para selecionar um arquivo ou pasta como conteúdoindexado pelo seu novo .torrent"
+msgstr "Clique aqui para selecionar um arquivo ou pasta como conteúdo indexado pelo seu novo .torrent"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:196
 msgid ""
 "These box shows the contents you've selected for your new .torrent.\n"
 "Either a file, or the contents of a folder."
 msgstr ""
-"Esses caixas mostram os consteúdos que você selecionou no seu novo .torrent.\n"
+"Esses caixas mostram os conteúdos que você selecionou no seu novo .torrent.\n"
 "Ou um arquivo ou os conteúdos de uma pasta."
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:228
@@ -765,7 +765,7 @@ msgstr "Trackerless Torrent (DHT)"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:238
 msgid "Select this option to create torrents that don't need trackers, completely descentralized. (Recommended)"
-msgstr "Selecione esta opção para criar torrents que não precisam de trackers, completamente desentralizados (Recomendado)"
+msgstr "Selecione esta opção para criar torrents que não precisam de trackers, completamente descentralizados (Recomendado)"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:248
 msgid "Start seeding"
@@ -776,8 +776,8 @@ msgid ""
 "Announce yourself as a seed for the content indexed by this torrent as soon as it's created.\n"
 "If nobody is seeding the torrent won't work. (Recommended)"
 msgstr ""
-"Anuncie-se como uma semente para o conteúdo indexado por esse torrentassique ele for criado.\n"
-"Se ninguem estiver semeando, o torrent não irá funcionar. (Recomendado)"
+"Anuncie-se como uma semente para o conteúdo indexado por esse torrent assim que ele for criado.\n"
+"Se ninguém estiver semeando, o torrent não irá funcionar. (Recomendado)"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:261
 msgid "<html><p>Tracker Announce URLs</p><p>(One tracker per line)</p></html>"
@@ -789,7 +789,7 @@ msgid ""
 "Your new torrent will be announced to these trackers if you start seeding the torrent."
 msgstr ""
 "Digite uma lista de URLs válida de BitTorrent Tracker.\n"
-"Seu novo torrent será anunciado para esses trackers se você começar a sementear o torrent."
+"Seu novo torrent será anunciado para esses trackers se você começar a semear o torrent."
 
 #. set up close button
 #. *
@@ -1099,11 +1099,11 @@ msgstr "Semeando configurações"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:64
 msgid "<html><strong>Seed finished torrent downloads.</strong> BitTorrent users on the internet will be able<br/>to download file chunks of the data your torrents seed. (Recommended)</html>"
-msgstr "<html><strong>A semente terminou os downloads torrent.</strong> Usuários BitTorrent na internet poderão <br/>baixar arquivos dos seus dados torrents.(Recomendado)</html>"
+msgstr "<html><strong>A semente terminou os downloads torrent.</strong> Usuários BitTorrent na internet poderão <br/>baixar arquivos dos seus dados torrents. (Recomendado)</html>"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:65
 msgid "<html><strong>Don't seed finished torrent downloads.</strong> BitTorrent users on the internet may<br/>only download file chunks of that torrent from you while you're downloading its<br/>data files. <strong>Some trackers will penalize this Leeching behavior</strong>.</html>"
-msgstr "<html><strong>Não semeie downloads torrent completos.</strong> Usuários BitTorrent na internet poderão <br/>baixar somente arquivos do torrents enquanto você está baixando<br/> os dados de arquivo. <strong>Alguns trackers irão penalizar esse comportamento leeching</strong>.</html>"
+msgstr "<html><strong>Não semeie downloads torrent concluídos.</strong> Usuários BitTorrent na internet só poderão <br/>baixar arquivos do torrents enquanto você estiver baixando<br/> os dados de arquivo. <strong>Alguns trackers irão penalizar esse comportamento leeching</strong>.</html>"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentUtil.java:389
 #: gui/com/frostwire/gui/bittorrent/TorrentUtil.java:489
@@ -1132,7 +1132,7 @@ msgstr "Terminou"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:46
 msgid "Crawling"
-msgstr "rastejando"
+msgstr "Rastejando"
 
 #: gui/com/frostwire/gui/components/GoogleSearchField.java:38
 msgid "Hints by Google"
@@ -1257,7 +1257,7 @@ msgstr "Adicionar"
 
 #: gui/com/frostwire/gui/library/Device.java:265
 msgid "The device is busy with another transfer or did not authorize your request"
-msgstr "O dispositivo está ocupado com outra transferência ou não autorizado o seu pedido"
+msgstr "O dispositivo está ocupado com outra transferência ou não autorizou o seu pedido"
 
 #: gui/com/frostwire/gui/library/Device.java:265
 msgid "Transfer failed"
@@ -1269,7 +1269,7 @@ msgstr "Limite de uploads atingido"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:117
 msgid "Waiting for device authorization..."
-msgstr "Aguardando autorização dispositivo..."
+msgstr "Aguardando autorização do dispositivo..."
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:70
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
@@ -1331,7 +1331,7 @@ msgstr "Dispositivos"
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:224
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:158
 msgid "Configure Options"
-msgstr "Configuar Opções"
+msgstr "Configurar Opções"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:224
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:159
@@ -1362,7 +1362,7 @@ msgstr "Modificado pela última vez"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:419
 msgid "Move to Recycle Bin"
-msgstr "Mover para o Lixo"
+msgstr "Mover para o Lixo de Reciclagem"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:419
 msgid "Move to Trash"
@@ -1370,7 +1370,7 @@ msgstr "Mover para o Lixo"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:474
 msgid "Are you sure you want to delete the selected file(s), thus removing it from your computer?"
-msgstr "Tem certeza de que deseja excluir o(s) arquivo(s) selecionado(s), o removendo do seu computador"
+msgstr "Tem certeza de que deseja excluir o(s) arquivo(s) selecionado(s), o removendo(s) do seu computador"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:480
 #: gui/com/limegroup/gnutella/gui/MessageService.java:174
@@ -1391,7 +1391,7 @@ msgstr "Mensagem"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:525
 msgid "The following files could not be deleted. They may be in use by another application or are currently being downloaded to."
-msgstr "Os seguintes arquivos não podem ser excluidos porque estão em uso por outro programa ou atualmente sendo baixando."
+msgstr "Os seguintes arquivos não podem ser excluídos porque estão em uso por outro programa ou atualmente sendo baixando."
 
 #. notify the user that renaming failed
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:583
@@ -1587,7 +1587,7 @@ msgstr "Limpar lista de reprodução"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:821
 msgid "Remove the deleted items"
-msgstr "Remover o ítem selecionado."
+msgstr "Remover o item selecionado."
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:837
 msgid "Refresh the audio properties based on ID3 tags"
@@ -1643,7 +1643,7 @@ msgstr "Pasta e subpastas estão inclusas na Biblioteca."
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:382
 msgid "Folder is not included and no subfolders are included in the Library."
-msgstr "Pasta não inclusa e nenhuma subpasta estão inclusas na Biblioteca."
+msgstr "Pasta não inclusa e nenhuma subpasta está inclusa na Biblioteca."
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
 msgid "Folder's files and some subfolders are included in the Library."
@@ -1667,7 +1667,7 @@ msgstr "Toques"
 
 #: gui/com/frostwire/gui/library/UITool.java:114
 msgid "Unkown file type"
-msgstr "Tipo de arquivo descohecido"
+msgstr "Tipo de arquivo desconhecido"
 
 #. *
 #. * Constant for the play button.
@@ -1767,7 +1767,7 @@ msgstr "<h1>Obrigado pelo bate papo da comunidade FrostWire</h1>"
 
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:201
 msgid "Thanks to everybody that has helped us everyday in the forums and chatrooms, you not only help new users but you also warn the FrostWire team of any problem that occur on our networks. Thank you all, without you this wouldn't be possible!"
-msgstr "Obrigada a todos que nos ajuda todos os dias nos fóruns e bate-papo, vocês ajudam novos usuários e também ajudam a equipe FrostWire caso aconteça algum problema na nossa rede. Obrigado a todos, sem vocês, nada seria possível!"
+msgstr "Obrigada a todos que nos ajudam todos os dias nos fóruns e bate-papo, vocês ajudam novos usuários e também ajudam a equipe FrostWire caso aconteça algum problema na nossa rede. Obrigado a todos, sem vocês, nada seria possível!"
 
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:204
 msgid "<br><br>In Special we give thanks to the Chatroom Operators and Forum Moderators"
@@ -1917,7 +1917,7 @@ msgstr "Ethernet"
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:105
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:1485
 msgid "Your machine does not appear to have an active Internet connection or a firewall is blocking FrostWire from accessing the internet. FrostWire will automatically keep trying to connect you to the network unless you select \"Disconnect\" from the File menu."
-msgstr "A sua máquina não parece possuir uma conexão à internet ativa, ou existe um firewall bloqueando o acesso do FrostWire à internet. O FrostWire vair continuar à tentar conectar à rede automaticamente, a não ser que vocêselecione \"Desconectar\" no menu arquivo."
+msgstr "A sua máquina não parece possuir uma conexão ativa com a internet, ou existe um firewall bloqueando o acesso do FrostWire à internet. O FrostWire vai continuar tentando conectar à rede automaticamente, a não ser que você selecione \"Desconectar\" no menu arquivo."
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:115
 #: gui/com/limegroup/gnutella/gui/menu/SearchMenu.java:25
@@ -2062,7 +2062,7 @@ msgstr "Cancelar operação."
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:70
 msgid "You are currently using a beta or pre-release version of Java 1.6.0. This version is known to have caused problems with FrostWire. Please upgrade to the final 1.6.0 release.\n"
-msgstr "Você está usando uam versão beta ou pre-lançamento do Java 1.6.0. Está versão deve ter causado problemas com o FrostWire. Porfavor atualize para a versão final do Java.\n"
+msgstr "Você está usando uma versão beta ou pré-lançamento do Java 1.6.0. Está versão deve ter causado problemas com o FrostWire. Por favor atualize para a versão final do Java.\n"
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:161
 msgid "Upgrade Java"
@@ -2135,7 +2135,7 @@ msgstr "Usar sempre esta resposta"
 #: gui/com/limegroup/gnutella/gui/SaveDirectoryHandler.java:111
 #, java-format
 msgid "Saving downloads to {0} may not function correctly.  To be sure downloads are saved properly you should save them to a sub-folder of {1}.  Would you like to choose another location?"
-msgstr "Salvar downloads em {0} talvez não funcione corretamente. Para ter certeza que os downloads serão salvos devidamente você deve salvá-los em uma sub-pasta de {1}. Você gostaria de escolher outra localidade?"
+msgstr "Salvar downloads em {0} talvez não funcione corretamente. Para ter certeza que os downloads serão salvos devidamente você deve salvá-los em uma subpasta de {1}. Você gostaria de escolher outro local?"
 
 #: gui/com/limegroup/gnutella/gui/SettingsWarningManager.java:20
 msgid "FrostWire was unable to create your settings folder and is using a temporary folder.  Your settings may be deleted when you close FrostWire. "
@@ -2168,7 +2168,7 @@ msgstr "Adicionar..."
 
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:334
 msgid "Add New List Item"
-msgstr "Adicionar novo ítem à lista."
+msgstr "Adicionar novo item à lista."
 
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:372
 msgid "Remove Selected Item"
@@ -2184,7 +2184,7 @@ msgstr "Segui-nos no @frostwire"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:179
 msgid "<html><b>Seeding</b><p>completed torrent downloads.</html>"
-msgstr "<html><b>Semeadura</b><p>termeinou os downloads torrent.</html>"
+msgstr "<html><b>Semeadura</b><p>terminou os downloads torrent.</html>"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:180
 msgid "<html><b>Not Seeding</b>.<p>File chunks might be shared only during<p>a torrent download.</html>"
@@ -2192,7 +2192,7 @@ msgstr "<html><b>Nenhuma semeadura</b>.<p>Partes do arquivo só podem ser compar
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:441
 msgid "<html><b>Seeding</b></html>"
-msgstr "<html><b>Sementeando</b></html>"
+msgstr "<html><b>Semeando</b></html>"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:441
 msgid "<html><b>Not Seeding</b></html>"
@@ -2212,7 +2212,7 @@ msgstr "Desconectado"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:562
 msgid "Check your internet connection, FrostWire can't connect."
-msgstr "Verifique a sua conexão de internet pois o frostWirre não consegue conectar."
+msgstr "Verifique a sua conexão de internet pois o FrostWirre não consegue conectar."
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:565
 msgid "Turbo-Charged"
@@ -2296,7 +2296,7 @@ msgstr "Cansado dos downloads que param na metade? Um dica é escolher resultado
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:25
 msgid "You can change the look and feel of FrostWire by going to View &gt; Apply Skins and choosing a new skin."
-msgstr "Você pode mudar a aparencia do FrostWire, vá em Visualizar &gt; Aplicar Tema e escolha o novo tema."
+msgstr "Você pode mudar a aparência do FrostWire, vá em Visualizar &gt; Aplicar Tema e escolha o novo tema."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:26
 msgid "You can sort your search results by clicking on a column. The most useful column to sort by is the 'Seeds' column, which represents an approximate number of computers that have the entire file and are online."
@@ -2321,7 +2321,7 @@ msgstr "FrostWire é traduzido em diversos idiomas, incluindo chinês, francês,
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:31
 msgid "Small variations in the search title will still work. For example, if your buddy is sharing 'Frosty' but you searched for 'My Frosty', your buddy's file will still be found."
-msgstr "Pequenas variações no título na busca ainda funcionar. Por exemplo, se seu amigo está compartilhando 'Frosty', mas você procurou por 'Meu Frosty', o arquivo do seu amigo ainda irá aparecer."
+msgstr "Pequenas variações no título na busca ainda funcionam. Por exemplo, se seu amigo está compartilhando 'Frosty', mas você procurou por 'Meu Frosty', o arquivo do seu amigo ainda irá aparecer."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:32
 msgid "Are you behind a firewall? At the bottom of FrostWire in the status bar, look for the globe. If there is a brick wall in front of it, your Internet connection is firewalled."
@@ -2345,11 +2345,11 @@ msgstr "Diferente de outros programas de amigos, FrostWire pode transferir arqui
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:39
 msgid "Want to share a large file? Send several hundred gigabytes with no problems at all, just make sure you leave your FrostWire running while your friend(s) are downloading. They can pause and resume the download all they want as long as you or somebody else is seeding the same content."
-msgstr "Quer compartilhar arquivos grandes? Envie várias centenas de gigabytes sem nenhum problema, apenas certifique-se de deixar o seu FrostWire funcionando enquanto o seu amigo(s) estão baixando. Eles podem pausar e retomar o download desde que você ou outra pessoa esteja semenando o mesmo conteudo. "
+msgstr "Quer compartilhar arquivos grandes? Envie várias centenas de gigabytes sem nenhum problema, apenas certifique-se de deixar o seu FrostWire funcionando enquanto o(s) seu(s) amigo(s) está(ão) baixando. Eles podem pausar e retomar o download desde que você ou outra pessoa esteja semeando o mesmo conteúdo. "
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:40
 msgid "Magnet links allow users to download files through FrostWire from a web page. When you put a magnet link on your web page (in the 'href' attribute of anchor tags), and a user clicks the link, a download will start in FrostWire."
-msgstr "Links magnet possibilitam o usuário a baixar arquivos via FrostWire pela web.  Quando você coloca um link magnet na seua página de web, e um usuário clica no link, o download inicia no FrostWire."
+msgstr "Links magnet possibilitam o usuário a baixar arquivos via FrostWire pela web.  Quando você coloca um link magnet na sua página de web, e um usuário clica no link, o download inicia no FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:41
 msgid "Don't want to seed? Go to Tools &gt; Options &gt; Bittorrent "
@@ -2362,15 +2362,15 @@ msgstr "Você pode descobrir qual versão do FrostWire você está usando, escol
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:53
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:71
 msgid "Be a good network participant, don't close FrostWire if someone is uploading from you."
-msgstr "Seja um bom participante, não feche o FrostWire  se alguem estiver carregando um arquivo seu."
+msgstr "Seja um bom participante, não feche o FrostWire  se alguém estiver carregando um arquivo seu."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:54
 msgid "You can turn autocomplete for searching on or off by choosing 'Options' from the 'Tools' menu, and changing the value of 'Autocomplete Text' under the 'View' option."
-msgstr "Você pode ativar ou desativer o recurso autocompletar para pesquisar, escolhendo 'Opções' no menu 'Ferramentas' e alterando o valor de 'Texto Autocompletar'. "
+msgstr "Você pode ativar ou desativar o recurso auto completar para pesquisar, escolhendo 'Opções' no menu 'Ferramentas' e alterando o valor de 'Texto Auto completar'. "
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:55
 msgid "Want to see dialogs for questions which you previously marked 'Do not display this message again' or 'Always Use This Answer'? Go to Tools &gt; Options, and check 'Revert To Default' under View &gt; Popups."
-msgstr "Quer ver diálogos das perguntas que você previamente marcau como 'Não mostrar essa mensagem novamente' ou 'Sempre usar essa resposta'? Vá para Ferramentas &gt; Opções, e marque 'Voltar para Padrão' em Vizualizar &gt; Popups."
+msgstr "Quer ver diálogos das perguntas que você previamente marcou como 'Não mostrar essa mensagem novamente' ou 'Sempre usar essa resposta'? Vá para Ferramentas &gt; Opções, e marque 'Voltar para Padrão' em Visualizar &gt; Popups."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:56
 msgid "You can ban certain words from appearing in your search results by choosing 'Options' from the 'Tools' menu and adding new words to those listed under Filters &gt; Keywords."
@@ -2382,7 +2382,7 @@ msgstr "Não gosta das dicas? Gosta das dicas? Você pode habilita-las ou não c
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:58
 msgid "You can sort uploads, downloads, etc..., by clicking on a column. The table keeps resorting as the information changes. You can turn this automatic-sorting behavior off by right-clicking on a column header, choosing 'More Options' and un-checking 'Sort Automatically'."
-msgstr "Você pode arrumar os uploads, downloads, etc..., clicando na coluna. A tabela rearruma as informações modificadas. Você pode desabilitar isso clicando com o botão direito na parte superior em 'Mais opções' e desclicar 'Arrumar Automaticamente'."
+msgstr "Você pode arrumar os uploads, downloads, etc..., clicando na coluna. A tabela rearruma as informações modificadas. Você pode desabilitar isso clicando com o botão direito na parte superior em 'Mais opções' e clicar 'Arrumar Automaticamente'."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:59
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:91
@@ -2392,7 +2392,7 @@ msgstr "FrostWire foi escrito em Jova, e tendo a versão mais recente da Java ir
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:60
 msgid "Are you unhappy with the small number of search results you received? Right-click a search result, then choose Search More, then Get More Results."
-msgstr "Você não está contente com o número pequeno de resultdos encontrados? Clique com o botão direito, depois escolha Pesquisar Mais, depois Obter Mais Resultados."
+msgstr "Você não está contente com o número pequeno de resultados encontrados? Clique com o botão direito, depois escolha Pesquisar Mais, depois Obter Mais Resultados."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:70
 msgid "You can find out which version of FrostWire you are using by choosing 'About FrostWire' from the FrostWire menu."
@@ -2400,15 +2400,15 @@ msgstr "Você pode descobrir qual versão do FrostWire você está usando, escol
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:72
 msgid "You can turn autocomplete for searching on or off by choosing 'Preferences' from the 'FrostWire' menu, and changing the value of 'Autocomplete Text' under the 'View' option."
-msgstr "Você pode ativar ou desativer o recurso autocompletar para pesquisar, escolhendo 'Preferências' no menu FrostWire, e alterando o valor de 'Texto Autocompletar' "
+msgstr "Você pode ativar ou desativar o recurso auto completar para pesquisar, escolhendo 'Preferências' no menu FrostWire, e alterando o valor de 'Texto Auto completar' "
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:73
 msgid "Want to see dialogs for questions which you previously marked 'Do not display this message again' or 'Always Use This Answer'? Go to FrostWire &gt; Preferences, and check 'Revert To Default' under View &gt; Popups."
-msgstr "Quer ver diálogos das perguntas que você previamente marcau como 'não mostrar essa mensagem novamente' ou 'Sempre usar essa resposta'? Vá para Ferramentas &gt; opções, e marque 'Voltar para Padrão' em Vizualizar &gt; Popups."
+msgstr "Quer ver diálogos das perguntas que você previamente marcou como 'não mostrar essa mensagem novamente' ou 'Sempre usar essa resposta'? Vá para Ferramentas &gt; opções, e marque 'Voltar para Padrão' em Visualizar &gt; Popups."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:74
 msgid "You can ban certain words from appearing in your search results by choosing 'Preferences' from the 'FrostWire' menu and adding new words to those listed under Filters &gt; Keywords."
-msgstr "Você pode banir certar palavras no busca, escolhendo 'Preferências' no menu FrostWire e adicionando novas palavras listradas no Filtro &gt; Palara-chave."
+msgstr "Você pode banir certar palavras no busca, escolhendo 'Preferências' no menu FrostWire e adicionando novas palavras listradas no Filtro &gt; Palavra-chave."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:75
 msgid "Hate tool tips? Love tool tips? You can turn them on or off in most tables by control-clicking on the column headers and choosing 'More Options'. You can toggle other options here too, like whether or not to sort tables automatically and if you prefer the rows to be striped."
@@ -2416,7 +2416,7 @@ msgstr "Não gosta das dicas? Gosta das dicas? Você pode habilita-las ou não c
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:76
 msgid "You can sort uploads, downloads, etc..., by clicking on a column. The table keeps resorting as the information changes. You can turn this automatic-sorting behavior off by control-clicking on a column header, choosing 'More Options' and un-checking 'Sort Automatically'."
-msgstr "Você pode arrumar os uploads, downloads, etc..., clicando na coluna. A tabela rearruma as informações modificadas. Você pode desabilitar isso clicando com o botão direito na parte superior em 'Mais opções' e desclicar 'Arrumar Automaticamente'."
+msgstr "Você pode arrumar os uploads, downloads, etc..., clicando na coluna. A tabela rearruma as informações modificadas. Você pode desabilitar isso clicando com o botão direito na parte superior em 'Mais opções' e clicar 'Arrumar Automaticamente'."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:77
 msgid "You can save individual downloads to custom locations. Control-click a search result and choose Download As. You can even change the location of a download in progress by control-clicking the download and choosing Change File Location."
@@ -2428,15 +2428,15 @@ msgstr "Você baixou um arquivo que você não quer compartilhar? Na Biblioteca,
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:79
 msgid "FrostWire's Library is a file manager, not just an MP3 Playlist. That means that when you delete a file from the Library, you have the option to either permanently delete the file from your computer or move it to the Trash."
-msgstr "A biblioteca frostWire é um gerenciamento de arquivo, não somente uma Lista de Reprodução MP3. Isso significa que você pode deletar arquivos da Biblioteca, você tem a opção de deletar permanentemente o arquivo do seu computador ou mover para o Lixo."
+msgstr "A biblioteca FrostWire é um gerenciamento de arquivo, não somente uma Lista de Reprodução MP3. Isso significa que você pode deletar arquivos da Biblioteca, você tem a opção de deletar permanentemente o arquivo do seu computador ou mover para o Lixo."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:80
 msgid "Want to play music in your default media player instead of in FrostWire? Control-click the FrostWire status bar and deselect 'Show Media Player'."
-msgstr "Quer tocar a música com seu programa padrão ao invés do FrostWire? Clique com o botão direito no menu de status do FrostWire e deselecione 'Mostrar Media Player'."
+msgstr "Quer tocar a música com seu programa padrão ao invés do FrostWire? Clique com o botão direito no menu de status do FrostWire e desmarque 'Mostrar Media Player'."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:81
 msgid "Did you know you can save different types of files, such as audio, video, or images, in different folders on your computer automatically? Just go to FrostWire &gt; Preferences &gt; Saving to choose the location for each type of file."
-msgstr "Você sabia que pode salvar automaticament diferentes tipos de arquivos,  tipo vídeo, áudio ou imagens, em pastar diferentes no seu computador? Vá para FrostWire &gt; Preferências &gt; escolher e salvar o local de caa tipo de arquivo."
+msgstr "Você sabia que pode salvar automaticamente diferentes tipos de arquivos,  tipo vídeo, áudio ou imagens, em pastar diferentes no seu computador? Vá para FrostWire &gt; Preferências &gt; escolher e salvar o local de cada tipo de arquivo."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:82
 msgid "Make FrostWire's Junk filter block more results by making the filter stricter. Adjust that and more by going to FrostWire &gt; Preferences &gt; Filters &gt; Junk."
@@ -2452,15 +2452,15 @@ msgstr "Os ícones que você vê ao lado das colunas de seus resultados de busca
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:94
 msgid "FrostWire's Library is a file manager, not just an MP3 Playlist. That means that when you delete a file from the Library, you have the option to either permanently delete the file from your computer or move it to the Recycle Bin."
-msgstr "A biblioteca frostWire é um gerenciamento de arquivo, não somente uma Lista de Reprodução MP3. Isso significa que você pode deletar arquivos da Biblioteca, você tem a opção de deletar permanentemente o arquivo do seu computador ou mover para o Lixo."
+msgstr "A biblioteca FrostWire é um gerenciamento de arquivo, não somente uma Lista de Reprodução MP3. Isso significa que você pode deletar arquivos da Biblioteca, você tem a opção de deletar permanentemente o arquivo do seu computador ou mover para o Lixo."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:95
 msgid "When you close FrostWire, it minimizes to the system tray. To exit, right-click the system tray icon (next to the time), and select Exit. You can change this behavior by going to Tools &gt; Options &gt; System Tray."
-msgstr "Quando você fecha o FrostWire, ele minimiza a barra do sistema. Para sair, clique com obotão direito no ícone do sistema (ao lado do relógio) e selecione Sair. Você pode modificar isso indo em Ferramentas &gt; Opções &gt; Barra do Sistema."
+msgstr "Quando você fecha o FrostWire, ele minimiza a barra do sistema. Para sair, clique com o botão direito no ícone do sistema (ao lado do relógio) e selecione Sair. Você pode modificar isso indo em Ferramentas &gt; Opções &gt; Barra do Sistema."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:105
 msgid "Want to play music in your preferred media player instead of in FrostWire? Right-click the FrostWire status bar and deselect 'Show Media Player'. Then go to Tools &gt; Options &gt; Helper Apps to set the program of your choice."
-msgstr "Quer tocar música no seu media player favorito ao invés do FrostWire? Clique com o botão direito na barra de status do FrostWire e deselecione 'Mostrar Media Player'. Depois vá para Ferramentas &gt: opções; Ajudante de Aplicativos para definir o seu programa."
+msgstr "Quer tocar música no seu media player favorito ao invés do FrostWire? Clique com o botão direito na barra de status do FrostWire e desmarque 'Mostrar Media Player'. Depois vá para Ferramentas &gt: opções; Ajudante de Aplicativos para definir o seu programa."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:122
 msgid "Thank you for using FrostWire"
@@ -2528,7 +2528,7 @@ msgstr "Abrir:"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:208
 msgid "FrostWire cannot download this address. Make sure you typed it correctly, and then try again."
-msgstr "FrostWire não pode baixar esse endereço. Certifique-se que foi digitado coretamente e tente novamente."
+msgstr "FrostWire não pode baixar esse endereço. Certifique-se que foi digitado corretamente e tente novamente."
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:286
 msgid "&Close"
@@ -2572,7 +2572,7 @@ msgstr "Erro interno"
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:319
 msgid "FrostWire has encountered an internal error. It is possible for FrostWire to recover and continue running normally. To aid with debugging, please click 'Send' to notify FrostWire about the problem. If desired, you can click 'Review' to look at the information that will be sent. Thank you."
-msgstr "O FrostWire encontrou um erro interno. O FrostWire pode se recuperar e continuar a funcionar normalmente. Para ajudar a eliminar erros clique em 'Enviar' para informar à FrostWire o problema. Se quiser, pode clicar em 'Rever' para ler a informação que vai ser enviada. Obrigado."
+msgstr "O FrostWire encontrou um erro interno. O FrostWire pode se recuperar e continuar a funcionar normalmente. Para ajudar a eliminar erros clique em 'Enviar' para informar ao FrostWire o problema. Se quiser, pode clicar em 'Rever' para ler a informação que vai ser enviada. Obrigado."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:321
 msgid "FrostWire has encountered an internal error. It is possible for FrostWire to recover and continue running normally. To continue using FrostWire, click 'Discard'. If desired, you can click 'Review' to look at the information about the error."
@@ -2584,7 +2584,7 @@ msgid ""
 "Thank you and please use English."
 msgstr ""
 "Por Favor adicione comentários (ex: o que causou o erro).\n"
-"Obrigado e por favor use inglês."
+"Obrigado e por favor escreva em inglês."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:368
 msgid "Review"
@@ -2611,7 +2611,7 @@ msgstr "Anular sempre todos os erros"
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:499
 msgid "FrostWire was unable to connect to the bug server in order to send the below bug report. For further help and to aid with debugging, please visit www.frostwire.com and click 'Support'. Thank you."
-msgstr "O FrostWire não conseguiu conectar ao servidor de erros para enviar o relatório de erro apresentado abaixo. Para ajudar a corrigir erros, copie o texto que se segue e envie-o por email para bugs@frostwire.com. Obrigado."
+msgstr "O FrostWire não conseguiu conectar ao servidor de erros para enviar o relatório de erro apresentado abaixo. Para ajudar a corrigir erros, copie o texto que se segue e envie-o por e-mail para bugs@frostwire.com. Obrigado."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:528
 msgid "Copy Report"
@@ -2714,7 +2714,7 @@ msgstr "Que tipos de recursos FrostWire deveria abrir?"
 #: gui/com/limegroup/gnutella/gui/init/AssociationsWindow.java:70
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:69
 msgid "What should FrostWire do with the selected associations on startup?"
-msgstr "Que deve FrostWire hacer com issas associações ao abrir?"
+msgstr "O que o deve FrostWire deve fazer com essas associações ao abrir?"
 
 #: gui/com/limegroup/gnutella/gui/init/AssociationsWindow.java:72
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:71
@@ -2741,7 +2741,7 @@ msgid ""
 "Please select if you want to \"Seed\" or to not \"Seed\" finished downloads. The link below has more information about \"Seeding\"."
 msgstr ""
 "Escolha uma pasta onde os arquivos baixados da rede BitTorrent deve ser salvos em .\n"
-"Por favor, selecione se você quiser \"Sementear\" ou não \"Sementear\" os downloads concluídos. O link abaixo tem mais informações sobre as \"Sementes\"."
+"Por favor, selecione se você quiser \"Semear\" ou não \"Semear\" os downloads concluídos. O link abaixo tem mais informações sobre as \"Sementes\"."
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:96
 #, java-format
@@ -2767,7 +2767,7 @@ msgstr "Declare sua intenção abaixo para começar a usar o FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:57
 msgid "FrostWire is a peer-to-peer program for sharing authorized files only.  Installing and using the program does not constitute a license for obtaining or distributing unauthorized content."
-msgstr "FrostWire é um programa amigável para o compartilhamento de arquivos somente autorizados. Instalar e usar o programa não consitute uma licença para a obtenção ou distribuição de conteúdo não autorizado."
+msgstr "FrostWire é um programa amigável para o compartilhamento de arquivos somente autorizados. Instalar e usar o programa não constitui uma licença para a obtenção ou distribuição de conteúdo não autorizado."
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:58
 msgid "Find out more..."
@@ -2810,11 +2810,11 @@ msgstr "Inicialização do Sistema"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:81
 msgid "Start Automatically"
-msgstr "Iníciar automáticamente"
+msgstr "Iníciar automaticamente"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:86
 msgid "Would you like FrostWire to start when you log into your computer? This will cause FrostWire to start faster when you use it later."
-msgstr "Gostaria de executar o FrostWire ao ligar o computador? isto vai permitir o FrostWire iniciar mais rápidamente quando você o utilizar posteriormente."
+msgstr "Gostaria de executar o FrostWire ao ligar o computador? isto vai permitir o FrostWire iniciar mais rapidamente quando você o utilizar posteriormente."
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:152
 msgid "Chat Community"
@@ -2856,7 +2856,7 @@ msgstr "FrostWire é um _ Aplicativo amigável que permite compartilhar arquivos
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:31
 msgid "Installing and using the program does not constitute a license for obtaining or distributing unauthorized content."
-msgstr "Instalar e usar o programa não consitute uma licença para a obtenção ou distribuição de conteúdo não autorizado."
+msgstr "Instalar e usar o programa não constitui uma licença para a obtenção ou distribuição de conteúdo não autorizado."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:39
 msgid "Welcome"
@@ -2908,7 +2908,7 @@ msgstr "Compartilhando &Ajuda"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:31
 msgid "&FAQ"
-msgstr "Perguntas &freqüentes respondidas"
+msgstr "Perguntas &frequentes respondidas"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:31
 msgid "Frequently Asked Questions for FrostWire"
@@ -3258,7 +3258,7 @@ msgstr "Vínculos e Tipos de Arquivos"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:31
 msgid "You can use FrostWire to open certain filetypes and protocols. You can also instruct FrostWire to always regain these associations if another program takes them."
-msgstr "Você pode abrir algum arquivos e portocolos com FrostWire. Pode também dar instruções para sempre assinar essas associações com o FrostWire."
+msgstr "Você pode abrir algum arquivos e protocolos com FrostWire. Pode também dar instruções para sempre assinar essas associações com o FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:59
 msgid "Use FrostWire for..."
@@ -3270,7 +3270,7 @@ msgstr "Opções de áudio"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:24
 msgid "You can choose which audio player to use."
-msgstr "Você pde selecionar o player de áudio que quer usar."
+msgstr "Você pode selecionar o player de áudio que quer usar."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -3283,15 +3283,15 @@ msgstr "Player de áudio"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:19
 msgid "Text Autocompletion"
-msgstr "Autocompletar de texto"
+msgstr "Auto completar de texto"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:21
 msgid "You can enable or disable autocompletion of text fields."
-msgstr "Pode ativar ou desativar a autocompletação de campos de texto."
+msgstr "Pode ativar ou desativar a auto completação de campos de texto."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:28
 msgid "Enable Autocompletion of Text Fields:"
-msgstr "Ativar autocompletar de campos de texto:"
+msgstr "Ativar auto completar de campos de texto:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
 msgid "Automatic Installer Download"
@@ -3332,7 +3332,7 @@ msgstr "Você pode selecionar a forma de enviar relatórios de erro. Para visual
 
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:99
 msgid "Send Errors Automatically if FrostWire is Frozen"
-msgstr "Enviar automáticamente erros se FrostWire se congelar"
+msgstr "Enviar automaticamente erros se FrostWire se congelar"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ChatCommunityPaneItem.java:22
 msgid "FrostWire's Community Chat Tab requires you to have a nickname to communicate with others in the chatrooms"
@@ -3421,7 +3421,8 @@ msgstr "Configuração do roteador"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:35
 msgid "FrostWire can configure itself to work from behind a firewall or router. Using Universal Plug 'n Play (UPnP) and other NAT traversal techniques FrostWire can automatically configure your router or firewall for optimal performance. If your router does not support UPnP, FrostWire can be set to advertise an external port manually. (You may also have to configure your router if you choose manual configuration, but FrostWire will try its best so you don't have to.)"
-msgstr "O FrostWire pode se auto-configurar para funcionar atrás de um firewall ou roteador. Usando o plug 'n play (UPnP) Universal, o FrostWire pode automaticamente configurar o seu roteador ou firewall para um desempenho ideal. Se o seu roteador não suportar uPnP é possível definir o FrostWire para indicar uma porta externa manualmente. (Se selecionar a configuração manual também tem de configurar o seu roteador.)"
+msgstr "O FrostWire pode se auto-
+configurar para funcionar atrás de um firewall ou roteador. Usando o plug 'n play (UPnP) Universal, o FrostWire pode automaticamente configurar o seu roteador ou firewall para um desempenho ideal. Se o seu roteador não suportar uPnP é possível definir o FrostWire para indicar uma porta externa manualmente. (Se selecionar a configuração manual também tem de configurar o seu roteador.)"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:49
 msgid "Use random port (Recommended)"
@@ -3534,7 +3535,7 @@ msgstr "Total de Estações de Rádio"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:19
 msgid "Locale Preferencing"
-msgstr "Preferenciamento local"
+msgstr "Preferência de  local"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:21
 msgid "You can choose to preference hosts using the same language as you."
@@ -3542,7 +3543,7 @@ msgstr "Você pode optar por dar preferência a usuários que estão utilizando 
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:24
 msgid "Turn preferencing on:"
-msgstr "Ativar o preferenciamento:"
+msgstr "Ativar a preferência:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:22
 msgid "Maximum Searches"
@@ -3815,7 +3816,7 @@ msgstr "Mostrar página web detalhes do torrent depois que o download começar. 
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:22
 msgid "BitTorrent Global Tranfer Speeds"
-msgstr "Velocidade Global de Tranferência BitTorrent"
+msgstr "Velocidade Global de Transferência BitTorrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:24
 msgid ""
@@ -3853,7 +3854,7 @@ msgstr "Escolha a pasta onde os dados torrent serão salvos"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:19
 msgid "Seeding is the process of connecting to a torrent when you have a complete file(s). Pieces of the seeded file(s) will be available to everybody. While downloading pieces are always available to other peers in the swarm."
-msgstr "A propagação é o processo de ligação a uma torrente quando você tem um arquivcompleto. Partes do arquivo semeado estarão disponíveis para todos. Enquanto outros partes de downloads estão sempre disponíveis para outros colegas"
+msgstr "A propagação é o processo de ligação a uma torrente quando você tem um arquivo completo. Partes do arquivo semeado estarão disponíveis para todos. Enquanto outros partes de downloads estão sempre disponíveis para outros colegas"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
 msgid "Video Options"
@@ -4424,7 +4425,7 @@ msgstr "helppage"
 #~ msgstr "Sistema"
 
 #~ msgid "Error deleting file"
-#~ msgstr "Erro ao deletar o arquivo"
+#~ msgstr "Erro ao excluir  o arquivo"
 
 #~ msgid "Connected"
 #~ msgstr "Conectado"
@@ -4560,7 +4561,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "Desculpe, o FrostWire não pôde ler seus antigos downloads. Você pode "
 #~ "reiniciá-los indo à sua Biblioteca, vendo seus 'Arquivos Incompletos', e "
-#~ "clicando em 'Continuar' seus downlaods"
+#~ "clicando em 'Continuar' seus downloads"
 
 #~ msgid ""
 #~ "Sorry, FrostWire couldn't read some of your old downloads.  You can "
@@ -4569,7 +4570,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "Desculpe, o FrostWire não pôde ler alguns de seus antigos downloads. Você "
 #~ "pode reiniciá-los indo à sua Biblioteca, vendo seus 'Arquivos "
-#~ "Incompletos', e clicando em 'Continuar' seus downlaods"
+#~ "Incompletos', e clicando em 'Continuar' seus downloads"
 
 #~ msgid "Loading TLS Encryption..."
 #~ msgstr "Carregando Criptografia TLS..."
@@ -4652,33 +4653,33 @@ msgstr "helppage"
 #~ "O arquivo .torrent selecionado poderia ser um risco para seu computador."
 
 #~ msgid "FrostWire could not download a .torrent file from the provided URL."
-#~ msgstr "O FrostWire no pode baixar o arquivo .torrent do endereço indicado."
+#~ msgstr "O FrostWire não pode baixar o arquivo .torrent do endereço indicado."
 
 #~ msgid ""
 #~ "If you stop this upload, the torrent download will stop. Are you sure you "
 #~ "want to do this?"
 #~ msgstr ""
-#~ "Se cancela o carregamento, o torrente também vai se cancelar. Tem certeza "
-#~ "de continuar?"
+#~ "Se você cancelar o carregamento, o torrent também vai cancelar. Tem certeza "
+#~ "que quer fazer isso?"
 
 #~ msgid ""
 #~ "This upload is a torrent and it hasn't seeded enough. You should let it "
 #~ "upload some more. Are you sure you want to stop it?"
 #~ msgstr ""
-#~ "Este torrent ainda não se tinha semeado suficiente. Deseja deixar-lo um "
-#~ "pouco mais tempo?"
+#~ "Este upload é um torrent e ele ainda não tem sementes suficientes. Você deve deixá-lo "
+#~ "carregar um pouco mais. Tem certeza que deseja parar?"
 
 #~ msgid "Automatically start torrents"
-#~ msgstr "Automáticamente iniciar torrentes"
+#~ msgstr "Automaticamente iniciar torrentes"
 
 #~ msgid ""
 #~ "You can choose whether to automatically start torrents downloaded from "
 #~ "Gnutella."
 #~ msgstr ""
-#~ "Escolhe se iniciar automáticamente os torrentes que baixou da Gnutella."
+#~ "Escolhe se iniciar automaticamente os torrentas que baixou da Gnutella."
 
 #~ msgid "Start automatically"
-#~ msgstr "Iniciar automáticamente"
+#~ msgstr "Iniciar automaticamente"
 
 #~ msgid ""
 #~ "You can choose whether or not FrostWire should manage your BitTorrent "
@@ -4687,29 +4688,30 @@ msgstr "helppage"
 #~ "and/or memory problems."
 #~ msgstr ""
 #~ "Você pode escolher se o FrostWire deve ou não gerenciar suas "
-#~ "configurações de protoclo BitTorrent. É extremamente recomendado que o "
+#~ "configurações de protocolo BitTorrent. É extremamente recomendado que o "
 #~ "FrostWire gerencie estas configurações. Valores inválidos ou "
-#~ "inapropriados podem causar graves problemas de performance e/ou memória."
+#~ "inapropriados podem causar graves problemas de desempenho e/ou memória."
 
 #~ msgid ""
 #~ "Invalid or inappropriate custom values may cause severe performance and/"
 #~ "or memory problems. Unless you really know what you're doing, it is "
 #~ "highly recommended that you let FrostWire manage these settings."
 #~ msgstr ""
-#~ "Valores inválidos ou impróprios poderian causar severas falhas ao "
-#~ "computador!"
+#~ "Valores inválidos ou impróprios podemn causar severas falhas ao "
+#~ "computador! A menos que você realmente saiba o que está fazendo, é "
+#~ "altamente recomendado que você deixe o FrostWire gerenciar essas configurações."
 
 #~ msgid "Let FrostWire manage my BitTorrent settings. (Recommended)"
 #~ msgstr "Deixar o FrostWire controlar seu protocolo de BitTorrent"
 
 #~ msgid "Minimum uploads per torrent"
-#~ msgstr "Subidas mínimas por torrente."
+#~ msgstr "Carregamentos mínimos  por torrent."
 
 #~ msgid "Safe chunk verification"
-#~ msgstr "portugues"
+#~ msgstr "Verificação segura do pedaço"
 
 #~ msgid "Experimental disk access"
-#~ msgstr "Acceso experimental de disco"
+#~ msgstr "Acesso experimental de disco"
 
 #~ msgid "Clear"
 #~ msgstr "Limpar"
@@ -4730,7 +4732,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "O FrostWire econtrou um erro no protocolo de acesso de Áudio digital "
 #~ "(para compartilhar arquivos em iTunes). Esta característica será "
-#~ "desligada. Você pode activá-la novamente nas opções, em iTunes -> "
+#~ "desligada. Você pode ativá-la novamente nas opções, em iTunes -> "
 #~ "compartilhar."
 
 #~ msgid ""
@@ -4769,7 +4771,7 @@ msgstr "helppage"
 #~ "indicates a potential security problem, so please review your \"My Shared "
 #~ "Files\" to ensure you aren't sharing any sensitive files."
 #~ msgstr ""
-#~ "Você está compartilhando muitas sub-pastas dentro de sua pasta "
+#~ "Você está compartilhando muitas subpastas dentro de sua pasta "
 #~ "compartilhada: {0}. Isto indica um potencial problema de segurança, por "
 #~ "favor verifique o \"Meus Arquivos Compartilhados\" para garantir que você "
 #~ "não está compartilhando nenhum arquivo privado."
@@ -4916,7 +4918,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "A sua pasta de destino não é válida. É possível que tenha sido apagada, "
 #~ "que você não tenha permissões para escrever nessa pasta ou pode existir "
-#~ "outro problema. Selecione um pasta diferente."
+#~ "outro problema. Selecione uma pasta diferente."
 
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "Neste momento, você não está conectando à Área VIP FrostWire."
@@ -5035,7 +5037,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "Precisa de ajuda? Visite <a href=\"{0}\">nosso fórum</a> e veja se outros "
 #~ "já responderam a sua pergunta! Você pode ainda ver o <a href=\"{1}\">FAQ</"
-#~ "a> para respostas a perguntas freqüentes ou o <a href=\"{2}\">Guia do "
+#~ "a> para respostas a perguntas frequentes ou o <a href=\"{2}\">Guia do "
 #~ "Usuário</a> para mais informações"
 
 #~ msgid ""
@@ -5045,7 +5047,7 @@ msgstr "helppage"
 #~ "search for that file and begin downloading it again."
 #~ msgstr ""
 #~ "Acidentalmente apagou seu download? Clique na aba Biblioteca, escolha a "
-#~ "pasta Arquivos Incompletos, e selecione o aquivo que você gostaria de "
+#~ "pasta Arquivos Incompletos, e selecione o arquivo que você gostaria de "
 #~ "continuar a baixar e clique Retomar. O FrostWire irá automaticamente "
 #~ "procurar o arquivo e começar a baixá-lo novamente."
 
@@ -5054,7 +5056,7 @@ msgstr "helppage"
 #~ "\">the wiki</a> and it may make it into future Tips of the Day!"
 #~ msgstr ""
 #~ "Você tem uma dia para o uso mais efetivo do FrostWire? Adicione-a a <a "
-#~ "href=\"{0}\">the wiki</a> e ela pode ser tornar uma Dica do Dia!"
+#~ "href=\"{0}\">wiki</a> e ela pode ser tornar uma Dica do Dia!"
 
 #~ msgid ""
 #~ "You can make your own FrostWire skins! Visit <a href=\"{0}\">FrostWire's "
@@ -5128,8 +5130,8 @@ msgstr "helppage"
 #~ "choose a new option from the menu."
 #~ msgstr ""
 #~ "Depois de iniciar uma busca, você pode customizar as três caixas da "
-#~ "direita com Media, Artista e Album. Você pode trocar o que quiser nesta "
-#~ "tr~es caixas. Clique no círculo no canto superior esquerdo de uma caixa e "
+#~ "direita com Media, Artista e Álbum. Você pode trocar o que quiser nesta "
+#~ "três caixas. Clique no círculo no canto superior esquerdo de uma caixa e "
 #~ "selecione uma nova opção para o menu."
 
 #~ msgid ""
@@ -5191,10 +5193,9 @@ msgstr "helppage"
 #~ "building your Library. A red oval means files are not being shared."
 #~ msgstr ""
 #~ "Quer saber quantos arquivos está compartilhando? Olhe na barra de status "
-#~ "do FrostWire, numa oval verde. O número dentro da oval é o número de "
-#~ "arquivos sendo compartilhados. A oval pode estar bege ou vermelha. Quano "
-#~ "está vermelha, o FrostWire está processando sua Biblioteca. Quando está "
-#~ "vermelho, quer  dizer que nenhum arquivo está sendo compartilhado."
+#~ "do FrostWire, o número de oval verdes. Uma oval bege significa que ainda "
+#~ "está processando sua Biblioteca. A vermelha quer  dizer que nenhum arquivo está "
+#~ "sendo compartilhado "
 
 #~ msgid ""
 #~ "Instead of putting all your files in a single folder, FrostWire can "
@@ -5331,7 +5332,7 @@ msgstr "helppage"
 #~ msgstr "Compartilhar"
 
 #~ msgid "The file \"{0}\" is already shared."
-#~ msgstr "O ficheiro \"{0}\" já está sendo compartilhado."
+#~ msgstr "O arquivo \"{0}\" já está sendo compartilhado."
 
 #~ msgid "FrostWire was unable to share the file \"{0}\"."
 #~ msgstr "O FrostWire não conseguiu compartilhar o arquivo \"{0}\"."
@@ -5410,7 +5411,7 @@ msgstr "helppage"
 #~ msgstr "QRP vazio"
 
 #~ msgid "Connecting..."
-#~ msgstr "Conectanto..."
+#~ msgstr "Conectando..."
 
 #~ msgid "Outgoing"
 #~ msgstr "Saindo"
@@ -5582,8 +5583,8 @@ msgstr "helppage"
 #~ "the network. To learn more, double-click on the download (or click "
 #~ "preview)."
 #~ msgstr ""
-#~ "O Host desse Índice requeriu que esse Arquivo fosse Removido da Rede. "
-#~ "Para saber mais, clique-duplo no download (ou previsualise)."
+#~ "O host desse Índice solicitou que esse arquivo fosse removido da rede. "
+#~ "Para saber mais, clique-duplo no download (ou visualizar)."
 
 #~ msgid "Possible Hosts"
 #~ msgstr "Hosts possíveis"
@@ -5768,7 +5769,7 @@ msgstr "helppage"
 #~ msgstr "Continuar a fazer o download do arquivo incompleto selecionado."
 
 #~ msgid "Stop Sharing File"
-#~ msgstr "Parar o compartilhameno do arquivo"
+#~ msgstr "Parar o compartilhamento do arquivo"
 
 #~ msgid "Share Folder"
 #~ msgstr "Compartilhar Pasta"
@@ -5945,7 +5946,7 @@ msgstr "helppage"
 #~ msgstr "Conectar ao iniciar:"
 
 #~ msgid "Connection Preferencing"
-#~ msgstr "Preferenciamento da conexão"
+#~ msgstr "Preferência de  conexão"
 
 #~ msgid ""
 #~ "You can limit who is able to connect to you based on the number of files "
@@ -6005,14 +6006,14 @@ msgstr "helppage"
 #~ "You can disable these if needed."
 #~ msgstr ""
 #~ "Se o seu computador tiver uma conexão de banda larga, FrostWire pode "
-#~ "actuar como um \"Ultrapeer\" paara usuários mais lentios e/ou conectar-se "
-#~ "ao Mojito DHT. Você pode desactivar isso de ser necesário."
+#~ "atuar como um \"Ultrapeer\" para usuários mais lentos e/ou conectar-se "
+#~ "ao Mojito DHT. Você pode desativar isso de ser necessário."
 
 #~ msgid "Disable Ultrapeer Capabilities:"
 #~ msgstr "Desativar capacidades de ultrapeer:"
 
 #~ msgid "Disable Mojito DHT Capabilities:"
-#~ msgstr "Desactivo capacidades de Mojito DHT:"
+#~ msgstr "Desativar capacidades de Mojito DHT:"
 
 #~ msgid "Disable TLS Capabilities:"
 #~ msgstr "Desativar Capacidades de TLS:"
@@ -6029,7 +6030,7 @@ msgstr "helppage"
 #~ "com esta característica."
 
 #~ msgid "Enable OOB Searching:"
-#~ msgstr "Activar pesquisa OOB:"
+#~ msgstr "Ativar pesquisa OOB:"
 
 #~ msgid "Download Bandwidth"
 #~ msgstr "Largura de banda para download"
@@ -6131,7 +6132,7 @@ msgstr "helppage"
 #~ msgstr "Porta indisponível. Selecione uma porta diferente."
 
 #~ msgid "Please enter a port between 1 and 65535."
-#~ msgstr "Indique uma uma porta entre 1 e 65535."
+#~ msgstr "Indique uma porta entre 1 e 65535."
 
 #~ msgid "You can automatically delete old incomplete download files."
 #~ msgstr ""
@@ -6205,7 +6206,7 @@ msgstr "helppage"
 #~ "compartilhadas."
 
 #~ msgid "You can automatically share .torrent files."
-#~ msgstr "Você pode automáticamente compartilhar arquivos .torrent"
+#~ msgstr "Você pode automaticamente compartilhar arquivos .torrent"
 
 #~ msgid "Start Upload Slots:"
 #~ msgstr "Iniciar quotas de upload:"
@@ -6626,7 +6627,7 @@ msgstr "helppage"
 #~ msgstr "O arquivo de verificação tem anfitrião nesse endereço:"
 
 #~ msgid "Please enter a verification URL for the license."
-#~ msgstr "Por favor insira o URL de verificação para a licença."
+#~ msgstr "Por favor, insira o URL de verificação para a licença."
 
 #~ msgid "License RDF Output"
 #~ msgstr "Saída da licença RDF"
@@ -6635,7 +6636,7 @@ msgstr "helppage"
 #~ "In order to publish your file, please insert the following code in your "
 #~ "verification page at:"
 #~ msgstr ""
-#~ "Para publicar o seu arquivo, por favor insira o código seguinte na sua "
+#~ "Para publicar o seu arquivo, por favor, insira o código seguinte na sua "
 #~ "página de verificação em:"
 
 #~ msgid "Size:"
@@ -6697,7 +6698,7 @@ msgstr "helppage"
 #~ msgstr "Preço:"
 
 #~ msgid "Link:"
-#~ msgstr "conexão:"
+#~ msgstr "Link:"
 
 #~ msgid "Action:"
 #~ msgstr "Ação:"
@@ -6712,7 +6713,7 @@ msgstr "helppage"
 #~ msgstr "Tipo de licença"
 
 #~ msgid "Director:"
-#~ msgstr "Director:"
+#~ msgstr "Diretor:"
 
 #~ msgid "Studio:"
 #~ msgstr "Estúdio:"
@@ -6736,7 +6737,7 @@ msgstr "helppage"
 #~ msgstr "Nome"
 
 #~ msgid "Publisher:"
-#~ msgstr "Publicator:"
+#~ msgstr "Editor:"
 
 #~ msgid "Platform:"
 #~ msgstr "Plataforma:"
@@ -6745,10 +6746,10 @@ msgstr "helppage"
 #~ msgstr "Descrição:"
 
 #~ msgid "MPEG-1 Audio Layer 3"
-#~ msgstr "MPEG-1 audio layer 3"
+#~ msgstr "MPEG-1 áudio layer 3"
 
 #~ msgid "MPEG-4 Audio"
-#~ msgstr "MPEG-4 audio"
+#~ msgstr "MPEG-4 áudio"
 
 #~ msgid "Ogg Vorbis"
 #~ msgstr "Ogg vorbis"
@@ -6860,7 +6861,7 @@ msgstr "helppage"
 #~ "Filters &gt; Junk. "
 #~ msgstr ""
 #~ "Faça o filtro de Lixo do FrostWire bloquear mais resultados tornando o "
-#~ "filtro mais rigoroso. Ajuste isso e mais indo em Ferramentas &gt; Opções "
+#~ "filtro mais rigoroso. Ajuste isso ao ir em Ferramentas &gt; Opções "
 #~ "&gt; Filtros &gt; Lixo. "
 
 #~ msgid ""
@@ -6915,8 +6916,8 @@ msgstr "helppage"
 #~ "and/or memory problems."
 #~ msgstr ""
 #~ "Pode eleger se FrostWire deveria controlar seu protocolo de BitTorrent. "
-#~ "Se recomenda que FrostWire controlo issas opções porque valores inválidos "
-#~ "ou impróprios poderian causar severas falhas ao computador."
+#~ "Recomenda-se  que FrostWire controle essas opções porque valores inválidos "
+#~ "ou impróprios podem causar severas falhas ao computador."
 
 #~ msgid ""
 #~ "FrostWire could not create a temporary preferences directory.\n"
@@ -6931,7 +6932,7 @@ msgstr "helppage"
 #~ "O FrostWire não pode criar un diretório preferências temporárias.\n"
 #~ "\n"
 #~ "Isto é geralmente causado por falta de permissões. Verifique que "
-#~ "FrostWire e você tenham acceso aos arquivos e pastas criados no seu "
+#~ "FrostWire e você tenham acesso aos arquivos e pastas criados no seu "
 #~ "computador. Se o problema persiste, visite www.frostwire.com e clique na "
 #~ "página de \"Supporte\"\n"
 #~ "\n"
@@ -6943,7 +6944,7 @@ msgstr "helppage"
 #~ "you like to choose another location?"
 #~ msgstr ""
 #~ "Guardando os downloads a {0} poderia não funcionar corretamente. "
-#~ "Verifique que os downloads são guardados corretamente num sub-diretório "
+#~ "Verifique que os downloads são guardados corretamente num subdiretório "
 #~ "de {1}. Quer escolher outra localização?"
 
 #~ msgid "Opens a .torrent file from your hard drive"
@@ -6965,8 +6966,8 @@ msgstr "helppage"
 #~ "FrostWire was unable to load the specified torrent file, - it may be "
 #~ "malformed or FrostWire does not have permission to access this file."
 #~ msgstr ""
-#~ "FrostWire não pode carregar esse arquivo porque pode estar danado o "
-#~ "simplesmetne por FrostWire não tem acceso a ele."
+#~ "FrostWire não pode carregar esse arquivo porque pode estar danificado ou "
+#~ "simplesmente porque o FrostWire não tem acesso a ele."
 
 #~ msgid ""
 #~ "One or more files or protocols that FrostWire uses are no longer "
@@ -6976,10 +6977,10 @@ msgstr "helppage"
 #~ "associados com o FrostWire já. Quer resolver esse problema?"
 
 #~ msgid "Add a Folder to the Selected Library Folder"
-#~ msgstr "Anhada uma Pasta a Biblioteca Desejada"
+#~ msgstr "Adicionar uma  Pasta a Biblioteca Desejada"
 
 #~ msgid "Stop Sharing the Selected Library Folder"
-#~ msgstr "Deixar de Compartilar a Biblioteca Desejada"
+#~ msgstr "Parar de Compartilhar a Biblioteca Desejada"
 
 #~ msgid "&Launch File(s)"
 #~ msgstr "&Carregar Arquivo(s)"
@@ -6997,7 +6998,7 @@ msgstr "helppage"
 #~ msgstr "Excluir o(s) Arquivo(s) Desejados"
 
 #~ msgid "Refre&sh"
-#~ msgstr "A&ctualizar"
+#~ msgstr "A&tualizar"
 
 #~ msgid "E&xplore"
 #~ msgstr "&Buscar"
@@ -7024,7 +7025,7 @@ msgstr "helppage"
 #~ msgstr "FrostWire não pode abrir o torrente nesse endereço:"
 
 #~ msgid "Check these associations when starting FrostWire:"
-#~ msgstr "Verifique issas associações quando inicia o FrostWire:"
+#~ msgstr "Verifique essas associações quando iniciar o FrostWire:"
 
 #~ msgid "Alt. Locations"
 #~ msgstr "Localizações alternativas"
@@ -7080,7 +7081,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "O FrostWire não conseguiu iniciar o protocolo de acesso de Áudio digital "
 #~ "(para compartilhar arquivos em iTunes) por existir um firewall bloqueando "
-#~ "o accesso. Para continuar a utilizar esta característica clique em 'Sim' "
+#~ "o acesso. Para continuar a utilizar esta característica clique em 'Sim' "
 #~ "e altere o seu firewall. Autorize acesso total do 'FrostWire.exe' as "
 #~ "conexões entradas e saídas. Para desativar esta característica clique em "
 #~ "'Não'."
@@ -7183,7 +7184,7 @@ msgstr "helppage"
 
 #~ msgid "The selected folders below (and their subfolders) will be shared."
 #~ msgstr ""
-#~ "As pastas selecionadas abaixo (e suas sub-pastas) serão compartilhadas."
+#~ "As pastas selecionadas abaixo (e suas subpastas) serão compartilhadas."
 
 #~ msgid "Scan for Files"
 #~ msgstr "Procurar arquivos"
@@ -7335,7 +7336,7 @@ msgstr "helppage"
 #~ "de usuário e a sua senha."
 
 #~ msgid "There was an error while trying to access the upload directory."
-#~ msgstr "Houve um erro accesando o diretório de carregamento."
+#~ msgstr "Houve um erro ao acessar  o diretório de carregamento."
 
 #~ msgid ""
 #~ "There was an error communicating with the Internet Archive. Please try "
@@ -7679,7 +7680,7 @@ msgstr "helppage"
 #~ msgstr "Get"
 
 #~ msgid "Head"
-#~ msgstr "Pedidos HEAD"
+#~ msgstr "Head"
 
 #~ msgid "Pushed Head"
 #~ msgstr "Pushed head"
@@ -7714,7 +7715,7 @@ msgstr "helppage"
 #~ "FrostWire."
 
 #~ msgid "Current"
-#~ msgstr "Actual"
+#~ msgstr "Atual"
 
 #~ msgid ". No line is available for output."
 #~ msgstr ". Não está disponível uma linha para saída."
@@ -7735,7 +7736,7 @@ msgstr "helppage"
 #~ msgstr "Erros genéricos"
 
 #~ msgid "Statistics for handshaking as an ultrapeer."
-#~ msgstr "Estatísticas para handshaking como ultrapeer."
+#~ msgstr "Estatísticas para aperto de mão como ultrapeer."
 
 #~ msgid "Flow Control"
 #~ msgstr "Controlo de fluxo"
@@ -7840,7 +7841,7 @@ msgstr "helppage"
 #~ msgstr "Payload inválido"
 
 #~ msgid "Unrecognized Vendor Message"
-#~ msgstr "Mensagem de fornecedor irreconhecida"
+#~ msgstr "Mensagem de fornecedor irreconhecível"
 
 #~ msgid "Route Table Patch"
 #~ msgstr "Patch de tabela de encaminhamento"
@@ -7882,7 +7883,7 @@ msgstr "helppage"
 #~ msgstr "Pedidos desconhecidos"
 
 #~ msgid "Banned Hosts"
-#~ msgstr "hosts banidos"
+#~ msgstr "Hosts banidos"
 
 #~ msgid "Closed Immediately"
 #~ msgstr "Fechado imediatamente"
@@ -7918,10 +7919,10 @@ msgstr "helppage"
 #~ msgstr "Falha do HTTP 1.0"
 
 #~ msgid "Retried Success"
-#~ msgstr "Nova tentativa efectuada com êxito"
+#~ msgstr "Nova tentativa efetuada com êxito"
 
 #~ msgid "Successful Direct Connection"
-#~ msgstr "Êxito da conexão directa"
+#~ msgstr "Êxito da conexão direta"
 
 #~ msgid "Successful Push Connection"
 #~ msgstr "Êxito da conexão push"
@@ -8481,13 +8482,13 @@ msgstr "helppage"
 #~ "Gnutella, versus outros usuários FrostWire."
 
 #~ msgid "Statistics for handshaking as a leaf."
-#~ msgstr "Estatísticas para hanshaking como leaf."
+#~ msgstr "Estatísticas para aperto de mão como leaf."
 
 #~ msgid "Statistics for outgoing Gnutella connection handshaking."
-#~ msgstr "Estatiscas para handshaking de conexão Gnutella saída."
+#~ msgstr "Estatísticas para aperto de mãode conexão Gnutella saída."
 
 #~ msgid "Statistics for incoming Gnutella connection handshaking."
-#~ msgstr "Estatiscas para handshaking de conexão Gnutella entrada."
+#~ msgstr "Estatísticass para aperto de mão de conexão Gnutella entrada."
 
 #~ msgid "Outgoing Server Reject"
 #~ msgstr "Rejeição do servidor saída"
@@ -8496,7 +8497,7 @@ msgstr "helppage"
 #~ "Statistics for outgoing Gnutella connection handshaking rejections from "
 #~ "the server."
 #~ msgstr ""
-#~ "Estatiscas para rejeições do handshaking de conexão Gnutella saída, por "
+#~ "Estatísticas para rejeições do aperto de mão de conexão Gnutella saída, por "
 #~ "parte do servidor."
 
 #~ msgid "Statistics for compressed upstream traffic in kilobytes."
@@ -8534,13 +8535,13 @@ msgstr "helppage"
 #~ "both direct connections and pushed requests."
 #~ msgstr ""
 #~ "Total de tentativas de conexão de download saídas. Inclui conexões "
-#~ "directas e pedidos pushed."
+#~ "diretas e pedidos pushed."
 
 #~ msgid ""
 #~ "Total responses received from downloaders over time. This includes Busy, "
 #~ "File Not Found, Not Sharing, Queued, misc. IO errors, and OK responses."
 #~ msgstr ""
-#~ "Respostas totais recebidas de usuários a efectuar download. Inclui as "
+#~ "Respostas totais recebidas de usuários a efetuar download. Inclui as "
 #~ "respostas ocupado, ficheiro não encontrado, não está a partilhar, em "
 #~ "fila, vários erros E/S, e OK."
 
@@ -8551,7 +8552,7 @@ msgstr "helppage"
 #~ "permanently from attempting to connect to."
 #~ msgstr ""
 #~ "Total de localizações alternativas recebidas e retiradas. Inclui "
-#~ "localizações para as quais houve tentativas activas para conectar, "
+#~ "localizações para as quais houve tentativas ativas para conectar, "
 #~ "localizações que vamos ignorar, localizações que não foi possível remover "
 #~ "e localizações removidas permanentemente das tentativas de conexão."
 
@@ -8598,7 +8599,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "Total de métodos de pedido entrados. Estes números são incrementados quer "
 #~ "para transferência HTTP/1.1 após o pedido de conexão inicial a entrar ou "
-#~ "para pedidos push, devpois de se enviar o GIV inicial."
+#~ "para pedidos push, depois de se enviar o GIV inicial."
 
 #~ msgid "General"
 #~ msgstr "Geral"
@@ -8608,9 +8609,9 @@ msgstr "helppage"
 #~ "are incremented per connection, not per chunk. (Stalled uploads will also "
 #~ "be counted as an interrupted upload.)"
 #~ msgstr ""
-#~ "Total de uploads tentados, concluídos, interrompidos ou inactivos. Estes "
-#~ "números são incrementados por conexão, não por bloco. (Os uploadas "
-#~ "inactivos também serão contabilizados como uploads interrompidos.)"
+#~ "Total de uploads tentados, concluídos, interrompidos ou inativos. Estes "
+#~ "números são incrementados por conexão, não por bloco. (Os uploads "
+#~ "inativos também serão contabilizados como uploads interrompidos.)"
 
 #~ msgid "Not Sharing Files"
 #~ msgstr "Não está a partilhar ficheiros"
@@ -8622,7 +8623,7 @@ msgstr "helppage"
 #~ msgstr "Número de respostas pedidas e recebidas através do protocolo OOB"
 
 #~ msgid "Update File"
-#~ msgstr "Actualizar o ficheiro"
+#~ msgstr "Atualizar o ficheiro"
 
 #~ msgid "Statistics"
 #~ msgstr "Estatísticas"
@@ -8634,7 +8635,7 @@ msgstr "helppage"
 #~ msgstr "Altura:"
 
 #~ msgid "Please press OK to permanently remove license."
-#~ msgstr "Por favor clique em OK para permantemente remover a licença."
+#~ msgstr "Por favor clique em OK para permanentemente remover a licença."
 
 #~ msgid "Vendor Messages"
 #~ msgstr "Mensagens do fornecedor"
@@ -8729,7 +8730,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "Finalmente, o FrostWire gostaria de expandir seus sinceros agradecimentos "
 #~ "aos desenvolvedores, usuários, e a todos os que contribuíram para o "
-#~ "projeto com suas idéias. Sem os usuários FrostWire, a rede FrostWire "
+#~ "projeto com suas ideias. Sem os usuários FrostWire, a rede FrostWire "
 #~ "nunca existiria."
 
 #~ msgid "FrostWire: Enabling Open Information Sharing"
@@ -8742,7 +8743,7 @@ msgstr "helppage"
 #~ "Please note: FrostWire cannot monitor or control the content of the "
 #~ "Gnutella network. Please respect your local copyright laws."
 #~ msgstr ""
-#~ "O FrostWire não conseguiu encontrar uma licensa para esse arquivo. Baixar "
+#~ "O FrostWire não conseguiu encontrar uma licença para esse arquivo. Baixar "
 #~ "assim mesmo?\n"
 #~ "\n"
 #~ "Atenção: O FrostWire não pode monitorar ou controlar o conteúdo da rede "
@@ -8754,7 +8755,7 @@ msgstr "helppage"
 #~ "are green (or blue!), FrostWire has completely connected."
 #~ msgstr ""
 #~ "Quando o FrostWire é iniciado ele tem que se conectar à rede. Nesse "
-#~ "período, a barrra no canto inferior esquerdo muda de cor; Quando todas as "
+#~ "período, a barra no canto inferior esquerdo muda de cor; Quando todas as "
 #~ "barras estão verdes (ou azuis!), o FrostWire está conectado completamente."
 
 #~ msgid ""
@@ -8768,8 +8769,8 @@ msgstr "helppage"
 #~ "Want to open this Tip Of The Day dialog after you've closed it? Go to the "
 #~ "Help menu and choose 'Tip of the Day'."
 #~ msgstr ""
-#~ "Quer abrir essa janela de Dica do Dia depois de ter fechado? Vá no menu "
-#~ "em ajuda e escolha 'Dica do Dia'."
+#~ "Quer abrir essa janela de Dica do Dia depois de ter fechado? Vá ao menu "
+#~ "de ajuda e escolha 'Dica do Dia'."
 
 #~ msgid ""
 #~ "Want to know more about the development of FrostWire? Visit <a href=\"{0}"
@@ -8797,7 +8798,7 @@ msgstr "helppage"
 #~ "Você está usando um roteador? Certifique-se de adicionar uma porta "
 #~ "especificada nas configurações do FrostWire ao firewall no roteador, UDP "
 #~ "e TCP, entrada e saída. Vá para Avançado &gt; Configurações de Firewall "
-#~ "na janela Opções do FrostWirepara achar a porta. Reveja a configuração do "
+#~ "na janela Opções do FrostWire para achar a porta. Reveja a configuração do "
 #~ "seu roteador para e as ajuste corretamente"
 
 #~ msgid ""
@@ -8852,12 +8853,11 @@ msgstr "helppage"
 #~ "any time by choosing Filters -> Configure Content Filters from the main "
 #~ "menu."
 #~ msgstr ""
-#~ "O FrostWire poder filtrar arquivos que tem direitos de autor e seus donos "
-#~ "tem reclamado que istos arquivos não sejam publicados. Se voce habilita a "
-#~ "função de filtro, você da instruções ao FrostWire para que confirme todos "
-#~ "os arquivos que você baixa o compartilha con uma lista de conteúdo "
-#~ "removido. Pode mudar isto em qualquer momento indo a Filtros -> "
-#~ "Configurar Conteúdo de Filtros no menu principal."
+#~ "O FrostWire poder filtrar arquivos com solicitação de não compartilhamento "
+#~ "de direitos autorais pelos seus donos. Se você habilitar a função de filtro, você "
+#~ "fornece instruções ao FrostWire para confirmar todos os arquivos que você baixar "
+#~ "ou compartilhar com uma lista de conteúdo removida. Você pode mudar isto "
+#~ "a qualquer momento indo a Filtros -> Configurar Conteúdo de Filtros no menu principal. "
 
 #~ msgid "Autocompletion"
 #~ msgstr "Autocompletar"
@@ -8869,7 +8869,7 @@ msgstr "helppage"
 #~ msgstr "Configuração do firewall"
 
 #~ msgid "The Most Advanced File Sharing Program on the Planet!"
-#~ msgstr "O programa de compatilhamento de arquivos mais avançado do planeta!"
+#~ msgstr "O programa de compartilhamento de arquivos mais avançado do planeta!"
 
 #~ msgid "More Info..."
 #~ msgstr "Mais informação..."
