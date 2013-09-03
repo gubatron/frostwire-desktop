@@ -46,12 +46,12 @@ public class DonationButtons extends JPanel {
         setLayout(new MigLayout("insets 0, nogrid, ltr, gapx 6", "", "[align center]"));
         add(createDonateLabel());
         //MigLayout lesson: Using px explicitly as the unit does make a big difference.
-        add(new DonationButton("$1", "http://www.frostwire.com/?id=donate&amt=1", I18n.tr("Support FrostWire development with a USD $1/mo donation")), "w 26px!, h 18px!");
-        add(new DonationButton("$5", "http://www.frostwire.com/?id=donate&amt=5", I18n.tr("Support FrostWire development with a USD $5/mo donation")), "w 26px!, h 18px!");
-        add(new DonationButton("$10", "http://www.frostwire.com/?id=donate&amt=10", I18n.tr("Support FrostWire development with a USD $10/mo donation")), "w 30px!, h 18px!");
-        add(new DonationButton("$25", "http://www.frostwire.com/?id=donate&amt=25", I18n.tr("Support FrostWire development with a USD $25/mo donation")), "w 30px!, h 18px!");
-        add(new DonationButton("฿", "bitcoin:14F6JPXK2fR5b4gZp3134qLRGgYtvabMWL", I18n.tr("Support FrostWire development with a ฿itcoin donation")), "w 26px!, h 18px!");
-        add(new DonationButton("Ł", "litecoin:LLW2rNAXbAt41SGjk8GZjbi3uYT2snjbq1", I18n.tr("Support FrostWire development with a Łitecoin donation")), "w 26px!, h 18px!");
+        add(new DonationButton("$1", "http://www.frostwire.com/?id=donate&amt=1", I18n.tr("Support FrostWire development with a USD $1 donation")), "w 26px!, h 18px!");
+        add(new DonationButton("$5", "http://www.frostwire.com/?id=donate&amt=5", I18n.tr("Support FrostWire development with a USD $5o donation")), "w 26px!, h 18px!");
+        add(new DonationButton("$10", "http://www.frostwire.com/?id=donate&amt=10", I18n.tr("Support FrostWire development with a USD $10 donation")), "w 30px!, h 18px!");
+        add(new DonationButton("$25", "http://www.frostwire.com/?id=donate&amt=25", I18n.tr("Support FrostWire development with a USD $25 donation")), "w 30px!, h 18px!");
+        add(new DonationButton("bitcoin", "bitcoin:14F6JPXK2fR5b4gZp3134qLRGgYtvabMWL", I18n.tr("Support FrostWire development with a Bitcoin donation")), "w 46px!, h 18px!");
+        add(new DonationButton("litecoin", "litecoin:LLW2rNAXbAt41SGjk8GZjbi3uYT2snjbq1", I18n.tr("Support FrostWire development with a Litecoin donation")), "w 46px!, h 18px!");
     }
 
     private JLabel createDonateLabel() {

@@ -375,7 +375,7 @@ msgstr "Muestra el contenido de esta transferencia en la etiqueta Biblioteca"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:180
 msgid "Resume Download"
-msgstr "Continue la descarga"
+msgstr "Continúe la descarga"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:181
 msgid "Resume"
@@ -662,7 +662,7 @@ msgstr "Detener las descargas seleccionadas."
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:675
 #, java-format
 msgid "FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file."
-msgstr "FrostWire fue incapaz de cargar el archivo torrent \"{0}\", - puede estar malformado o FrostWire no tiene permisos para acceder este archivo."
+msgstr "FrostWire fue incapaz de cargar el archivo torrent \"{0}\", - puede estar malformado o FrostWire no tiene permisos para acceder a este archivo."
 
 #. advanced > Download Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:56
@@ -949,7 +949,7 @@ msgstr "Archivo"
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:171
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:191
 msgid "Select/Unselect all files"
-msgstr "seleccionar/Des-seleccionar los todos los archivos"
+msgstr "seleccionar/Des-seleccionar todos los archivos"
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:70
 msgid "Preparing selection"
@@ -995,7 +995,7 @@ msgstr "Twitealo"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:427
 msgid "Send the message above to Twitter"
-msgstr "Envia este mensaje a Twitter"
+msgstr "Envía este mensaje a Twitter"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:444
 msgid "Copy Text"
@@ -1250,7 +1250,7 @@ msgstr "¿Deseas enviar este archivo a un amigo?"
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:136
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:65
 msgid "Send files with FrostWire"
-msgstr "Envia archivos con FrostWire."
+msgstr "Envía archivos con FrostWire."
 
 #: gui/com/frostwire/gui/library/AddLibraryDirectoryAction.java:45
 #: gui/com/limegroup/gnutella/gui/ListEditor.java:238
@@ -1320,7 +1320,7 @@ msgstr "Guardar archivos seleccionados en una carpeta"
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:144
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:287
 msgid "tracks"
-msgstr "Pista"
+msgstr "Pistas"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:200
 msgid "Finished Downloads"
@@ -1372,7 +1372,7 @@ msgstr "Mover a la Basura"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:474
 msgid "Are you sure you want to delete the selected file(s), thus removing it from your computer?"
-msgstr "Esta seguro que desea eliminar los archivos seleccionados, eliminandolos de su computadora?"
+msgstr "Está seguro que desea eliminar los archivos seleccionados, eliminándolos de su computadora?"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:480
 #: gui/com/limegroup/gnutella/gui/MessageService.java:174
@@ -1393,7 +1393,7 @@ msgstr "Mensaje"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:525
 msgid "The following files could not be deleted. They may be in use by another application or are currently being downloaded to."
-msgstr "Los siguientes archivos no pudieron ser eliminados. Puede que esten en uso por otra aplicacion o puede que esten siendo descargados."
+msgstr "Los siguientes archivos no pudieron ser eliminados. Puede que estén en uso por otra aplicación o puede que estén siendo descargados."
 
 #. notify the user that renaming failed
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:583
@@ -1701,7 +1701,7 @@ msgstr "Canciones Aleatorias"
 
 #: gui/com/frostwire/gui/player/AudioPlayerComponent.java:244
 msgid "Repeat songs"
-msgstr "Canciones repetidas"
+msgstr "Repetir Canciones"
 
 #. public ChatTab(final ChatMediator cm) {
 #: gui/com/frostwire/gui/tabs/ChatTab.java:29
@@ -1833,15 +1833,15 @@ msgstr "BitTorrent, el logo BitTorrent y Torrent son marcas registradas de BitTo
 
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:622
 msgid "Marks all Items as Selected"
-msgstr "Marcar todoslos Items como seleccionados"
+msgstr "Marcar todos los elementos como seleccionados"
 
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:645
 msgid "Deselect All"
-msgstr "Deseleccionarlo todo"
+msgstr "Des-seleccionarlo todo"
 
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:647
 msgid "Deselects all Items in the List"
-msgstr "Desseleccionar todos los Items en la lista"
+msgstr "Des-seleccionar todos los elementos en la lista"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:84
 msgid "Send this file to a friend"
@@ -1917,7 +1917,7 @@ msgstr "Ethernet"
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:105
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:1485
 msgid "Your machine does not appear to have an active Internet connection or a firewall is blocking FrostWire from accessing the internet. FrostWire will automatically keep trying to connect you to the network unless you select \"Disconnect\" from the File menu."
-msgstr "Su máquina parece no tener una conexión activa a Internet o un firewall está bloqueando el acceso de FrostWire a Internet. Automásicamente, FrostWire continuará intentando conectarse a la red a menos que seleccione \"desconectar\" desde el men \"archivo\"."
+msgstr "Su máquina parece no tener una conexión activa a Internet o un firewall está bloqueando el acceso de FrostWire a Internet. Automáticamente, FrostWire continuará intentando conectarse a la red a menos que seleccione \"desconectar\" desde el menú \"archivo\"."
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:115
 #: gui/com/limegroup/gnutella/gui/menu/SearchMenu.java:25
@@ -1948,7 +1948,7 @@ msgstr "FrostWire: BitTorrent más simple"
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:399
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:405
 msgid "FrostWire has encountered a problem during startup and cannot proceed. You may be able to fix this problem by changing FrostWire's Windows Compatibility. Right-click on the FrostWire icon on your Desktop and select 'Properties' from the popup menu. Click the 'Compatibility' tab at the top, then click the 'Run this program in compatibility mode for' check box, and then select 'Windows 2000' in the box below the check box. Then click the 'OK' button at the bottom and restart FrostWire."
-msgstr "FrostWire ha encontrado un problema durante el arranque y no puede proceder. Puede ser que pueda reparar este problema al cambiar la compatibilidad de FrostWire con Windows. Haga click derecho en el Ícono de su escritorio y seleccione 'Propiedades' del menu. Haga click en la pestaño 'Compatibilidad' en la parte superior, luego haga click en la caja 'Ejecutar este programa en modo de compatilidad para', y luego seleccione 'Windows 2000' en la caja inferior. Luego haga click en 'Aceptar' al fondo y reinicie FrostWire."
+msgstr "FrostWire ha encontrado un problema durante el arranque y no puede proceder. Puede ser que pueda reparar este problema al cambiar la compatibilidad de FrostWire con Windows. Haga click derecho en el icono de su escritorio y seleccione 'Propiedades' del menu. Haga click en la pestaño 'Compatibilidad' en la parte superior, luego haga click en la caja 'Ejecutar este programa en modo de compatilidad para', y luego seleccione 'Windows 2000' en la caja inferior. Luego haga click en 'Aceptar' al fondo y reinicie FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:1388
 #, java-format
@@ -2012,7 +2012,7 @@ msgstr "Cargando componentes centrales..."
 
 #: gui/com/limegroup/gnutella/gui/Initializer.java:422
 msgid "Loading Icons..."
-msgstr "Cargando Íconos..."
+msgstr "Cargando Iconos..."
 
 #. Touch the I18N stuff to ensure it loads properly.
 #: gui/com/limegroup/gnutella/gui/Initializer.java:429
@@ -2021,7 +2021,7 @@ msgstr "Cargando soporte de internacionalización..."
 
 #: gui/com/limegroup/gnutella/gui/Initializer.java:492
 msgid "This Alpha version has expired.  Press Ok to exit. "
-msgstr "Esta versión Alpha se ha expirado. Presione OK/ACEPTAR para salir. "
+msgstr "Esta versión Alpha ha expirado. Presione OK/ACEPTAR para salir. "
 
 #: gui/com/limegroup/gnutella/gui/Initializer.java:498
 msgid ""
@@ -2062,7 +2062,7 @@ msgstr "Cancelar operación."
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:70
 msgid "You are currently using a beta or pre-release version of Java 1.6.0. This version is known to have caused problems with FrostWire. Please upgrade to the final 1.6.0 release.\n"
-msgstr "Actualmente estas utilizando una version beta de Java 1.6.0. Se conoce que esta version puede causar problemas con FrostWire. Por favor actualize a la version final 1.6.0.\n"
+msgstr "Actualmente estás utilizando una versión beta de Java 1.6.0. Se conoce que esta versión puede causar problemas con FrostWire. Por favor actualice a la versión final 1.6.0.\n"
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:161
 msgid "Upgrade Java"
@@ -2277,7 +2277,7 @@ msgstr "Mostrar los consejos al iniciar"
 #.
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMediator.java:68
 msgid "Next Tip"
-msgstr "Consejo siguiente"
+msgstr "Siguiente consejo"
 
 #. *
 #. * 'Previous'.
@@ -2325,7 +2325,7 @@ msgstr "Pequeñas variaciones en el título de la búsqueda trabajarán todavía
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:32
 msgid "Are you behind a firewall? At the bottom of FrostWire in the status bar, look for the globe. If there is a brick wall in front of it, your Internet connection is firewalled."
-msgstr "¿Estas detrás de un Cortafuegos? En la parte inferior de FrostWire en la barra de estado, busca el globo. Si hay un muro en frente de este, tu conexión esta siendo restringida."
+msgstr "¿Estas detrás de un Cortafuegos? En la parte inferior de FrostWire en la barra de estado, busca el globo. Si hay un muro en frente de este, tu conexión está siendo restringida."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:33
 msgid "The numbers next to the up and down arrows in the status bar at the bottom of FrostWire show how fast all of your files are downloading or uploading combined."
@@ -2489,7 +2489,7 @@ msgstr "Vistie http://www.frostwire.com para actualizar!"
 
 #: gui/com/limegroup/gnutella/gui/UpdateDialog.java:174
 msgid "FrostWire needs to be restarted to install the update. If you choose not to update now, FrostWire will update automatically when you close. Would you like to update now?"
-msgstr "FrostWire necesita ser reiniciado para instalar la actualización. Si decide no actualizar ahora, FrostWire hara la actualización automaticamente cuando lo cierre. Le gustaría actualizar ahora?"
+msgstr "FrostWire necesita ser reiniciado para instalar la actualización. Si decide no actualizar ahora, FrostWire hará la actualización automáticamente cuando lo cierre. Le gustaría actualizar ahora?"
 
 #: gui/com/limegroup/gnutella/gui/UpdateDialog.java:175
 msgid "Update Ready"
@@ -2520,7 +2520,7 @@ msgstr "Descargar .Torrent, Magnet o enlace de YouTube"
 #. true), constraints);
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:108
 msgid "Type a magnet link, the file path or web address of a torrent file and FrostWire will start downloading it for you."
-msgstr "Escriba un enlace Magnet, la ruta o direccion web de un archivo torrent, y FrostWire lo descargará por Ud."
+msgstr "Escriba un enlace Magnet, la ruta o dirección web de un archivo torrent, y FrostWire lo descargará por Ud."
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:115
 msgid "Open:"
@@ -2528,7 +2528,7 @@ msgstr "Abrir:"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:208
 msgid "FrostWire cannot download this address. Make sure you typed it correctly, and then try again."
-msgstr "FrostWire no puede descargar esta direccion. Asegurese de que la haya escrito correctamente, e intente de nuevo."
+msgstr "FrostWire no puede descargar esta dirección. Asegúrese de que la haya escrito correctamente, e intente de nuevo."
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:286
 msgid "&Close"
@@ -2572,11 +2572,11 @@ msgstr "Error interno"
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:319
 msgid "FrostWire has encountered an internal error. It is possible for FrostWire to recover and continue running normally. To aid with debugging, please click 'Send' to notify FrostWire about the problem. If desired, you can click 'Review' to look at the information that will be sent. Thank you."
-msgstr "FrostWire encontró un error interno. Es posible que FrostWire se recupere y contine ejecutándose normalmente. Para ayudar a corregir los errores, haga clic en \"enviar\" para informar a FrostWire acerca del problema. Si lo desea, puede hacer clic en \"revisar\" para ver la información que se enviará.  Gracias."
+msgstr "FrostWire encontró un error interno. Es posible que FrostWire se recupere y continúe ejecutándose normalmente. Para ayudar a corregir los errores, haga clic en \"enviar\" para informar a FrostWire acerca del problema. Si lo desea, puede hacer clic en \"revisar\" para ver la información que se enviará.  Gracias."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:321
 msgid "FrostWire has encountered an internal error. It is possible for FrostWire to recover and continue running normally. To continue using FrostWire, click 'Discard'. If desired, you can click 'Review' to look at the information about the error."
-msgstr "FrostWire encontró un error interno. Es posible que FrostWire se recupere y contine ejecutándose normalmente. Para continuar utilizando FrostWire, haga clic en 'Descartar'. Si lo desea puede hacer clic en 'Revisar' para ver la información sobre el error."
+msgstr "FrostWire encontró un error interno. Es posible que FrostWire se recupere y continúe ejecutándose normalmente. Para continuar utilizando FrostWire, haga clic en 'Descartar'. Si lo desea puede hacer clic en 'Revisar' para ver la información sobre el error."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:339
 msgid ""
@@ -2584,7 +2584,7 @@ msgid ""
 "Thank you and please use English."
 msgstr ""
 "Por favor añada cualquier comentario que pueda tener (por ejemplo, qué causó el error).\n"
-"Gracias, y por favor use inglés o español."
+"Gracias, y por favor use Inglés o Español."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:368
 msgid "Review"
@@ -2611,7 +2611,7 @@ msgstr "Descartar siempre todos los errores"
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:499
 msgid "FrostWire was unable to connect to the bug server in order to send the below bug report. For further help and to aid with debugging, please visit www.frostwire.com and click 'Support'. Thank you."
-msgstr "FrostWire no pudo conectarse al servidor de errores para enviar el siguiente informe de error. Para ayudar a corregir los errores, por favor copie el siguiente texto y envíelo por correo electráfico a bugs@frostwire.com. Gracias."
+msgstr "FrostWire no pudo conectarse al servidor de errores para enviar el siguiente informe de error. Para ayudar a corregir los errores, por favor copie el siguiente texto y envíelo por correo electrónico a bugs@frostwire.com. Gracias."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:528
 msgid "Copy Report"
@@ -2627,12 +2627,12 @@ msgstr "Siempre añadir (#)"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:131
 msgid "Always Ask"
-msgstr "Siempre preguntar"
+msgstr "Preguntar siempre"
 
 #. default action settings panel
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:142
 msgid "Choose a Default Action:"
-msgstr "Escoge una accion predeterminada"
+msgstr "Escoge una acción predeterminada"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:213
 #, java-format
@@ -2680,7 +2680,7 @@ msgstr "Cancelar la Descarga"
 #: gui/com/limegroup/gnutella/gui/download/DownloaderUtils.java:123
 #, java-format
 msgid "You are already downloading this file to \"{0}\"."
-msgstr "Ya esta descargando este archivo a \"{0}\"."
+msgstr "Ya está descargando este archivo a \"{0}\"."
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderUtils.java:160
 #, java-format
@@ -2689,7 +2689,7 @@ msgstr "Ya tiene el mismo archivo en {0}"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderUtils.java:163
 msgid "Do you want to continue downloading anyway?"
-msgstr "Desea continuar la descarga de todos modos?"
+msgstr "¿Desea continuar la descarga de todos modos?"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderUtils.java:165
 msgid "Continue"
@@ -2697,7 +2697,7 @@ msgstr "Continuar"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderUtils.java:179
 msgid "Same File Already In Library"
-msgstr "El mismo Archivo ya esta en la Biblioteca"
+msgstr "El mismo Archivo ya está en la Biblioteca"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderUtils.java:192
 msgid "Save Download As"
@@ -2714,7 +2714,7 @@ msgstr "¿Qué tipo de recurso debería abrir FrostWire?"
 #: gui/com/limegroup/gnutella/gui/init/AssociationsWindow.java:70
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:69
 msgid "What should FrostWire do with the selected associations on startup?"
-msgstr "Que deberia hacer FrostWire con las asociaciones seleccionadas al arrancar?"
+msgstr "¿Queé debería hacer FrostWire con las asociaciones seleccionadas al arrancar?"
 
 #: gui/com/limegroup/gnutella/gui/init/AssociationsWindow.java:72
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:71
@@ -2729,7 +2729,7 @@ msgstr "Ignorar todas las asociaciones faltantes."
 #: gui/com/limegroup/gnutella/gui/init/AssociationsWindow.java:76
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:75
 msgid "Ask me what to do when an association is missing."
-msgstr "Preguntarme que hacer cuando falte una asociacion."
+msgstr "Preguntarme qué hacer cuando falte una asociación."
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:39
 msgid "BitTorrent Sharing Settings"
@@ -2749,7 +2749,7 @@ msgid ""
 "<html><p>You forgot to select your finished downloads \"Seeding\" setting.</p>\n"
 "<p></p><p align=\"right\"><a href=\"{0}\">What is \"Seeding\"?</a></p></html>"
 msgstr ""
-"<html><p>Has olvidado seleccionar la opción \"Seeding\" que se establecerá al finalizar las descargas.</p>\n"
+"<html><p>Has olvidado seleccionar la opción \"Sedding\" que se establecerá al finalizar las descargas.</p>\n"
 "<p></p><p align=\"right\"><a href=\"{0}\">¿Qué es \"Seeding\"?</a></p></html>"
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:109
@@ -2776,12 +2776,12 @@ msgstr "Acerca de..."
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:65
 #, java-format
 msgid "<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>will not</b> use FrostWire {0} for copyright infringement.</div></html>"
-msgstr "<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>No utilizaré</b> FrostWire {0} para infringir derechos de autor.</div></html>"
+msgstr "<html><div display=\"block\" color=\"#515151\" size=\"13\"> <b>No utilizaré</b> FrostWire {0} para infringir derechos de autor.</div></html>"
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:73
 #, java-format
 msgid "<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>might use</b> FrostWire {0} for copyright infringement.</div></html>"
-msgstr "<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>Puede que use</b> FrostWire {0} para infringir derechos de autor.</div></html>"
+msgstr "<html><div display=\"block\" color=\"#515151\" size=\"13\"> <b>Puede que use</b> FrostWire {0} para infringir derechos de autor.</div></html>"
 
 #: gui/com/limegroup/gnutella/gui/init/IntentWindow.java:29
 msgid "State Your Intent"
@@ -2814,7 +2814,7 @@ msgstr "Iniciar automáticamente"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:86
 msgid "Would you like FrostWire to start when you log into your computer? This will cause FrostWire to start faster when you use it later."
-msgstr "Desea que FrostWire se inicie cuando comienza la sesión de su computadora? Esto haría que FrostWire se inicie más rápido cuando lo utilice."
+msgstr "¿Desea que FrostWire se inicie cuando comienza la sesión de su computadora? Esto haría que FrostWire se inicie más rápido cuando lo utilice."
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:152
 msgid "Chat Community"
@@ -2936,7 +2936,7 @@ msgstr "Calcomanías gratis de FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:39
 msgid "Order free FrostWire stickers, we ship worldwide. Stickers are free, you pay cents for shipping."
-msgstr "Ordena pegatinas de FrostWire gratis, las enviamos a cualquier parte del mundo. Las pegatinas son gratis, solo pagas céntimos por el envío."
+msgstr "Ordena etiquetas adhesivas de FrostWire gratis, las enviamos a cualquier parte del mundo. Las etiquetas adhesivas son gratis, solo pagas céntimos por el envío."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:41
 msgid "FrostWire T-Shirts"
@@ -2944,7 +2944,7 @@ msgstr "Camisetas de FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:41
 msgid "Get a T-shirt, support the project. You'll get also 10 free stickers"
-msgstr "Obtén una camiseta, apoya el proyecto. También obtendrás 10 pegatinas gratis."
+msgstr "Obtén una camiseta, apoya el proyecto. También obtendrás 10 etiquetas adhesivas gratis."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
 msgid "FrostClick.com"
@@ -3024,7 +3024,7 @@ msgstr "Mostrar/Ocultar"
 
 #: gui/com/limegroup/gnutella/gui/menu/ThemeMenu.java:45
 msgid "&Apply Skins"
-msgstr "Aplicar Caratulas"
+msgstr "Aplicar Carátulas"
 
 #: gui/com/limegroup/gnutella/gui/menu/ThemeMenu.java:112
 msgid "Use &Default"
@@ -3080,19 +3080,19 @@ msgstr "&Ver"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:34
 msgid "Use &Small Icons"
-msgstr "Ícono&s pequeños"
+msgstr "Icono&s pequeños"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:34
 msgid "Use Small Icons"
-msgstr "Usar Íconos pequeños"
+msgstr "Usar Iconos pequeños"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:37
 msgid "Show Icon &Text"
-msgstr "Mos&trar texto de Ícono"
+msgstr "Mos&trar texto de Icono"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:37
 msgid "Show Text Below Icons"
-msgstr "Mostrar texto bajo Íconos"
+msgstr "Mostrar texto bajo Iconos"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:40
 msgid "Show Smi&leys"
@@ -3154,7 +3154,7 @@ msgstr "Revertir todas las configuraciones a los valores por defecto."
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:194
 msgid "You have made changes to some of FrostWire's settings. Would you like to save these changes?"
-msgstr "Ud. ha hecho cambios a algunas configuraciones de FrostWire, le gustaria guardar estos cambios?"
+msgstr "Ud. ha hecho cambios a algunas configuraciones de FrostWire, ¿le gustaría guardar estos cambios?"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:224
 msgid "Search here"
@@ -3241,7 +3241,7 @@ msgstr "Cerrar"
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:311
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:74
 msgid "Bug Reports"
-msgstr "Reporte de Bugs"
+msgstr "Reporte de Errores"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:70
 msgid "Loading Options Window..."
@@ -3250,7 +3250,7 @@ msgstr "Cargando ventana de opciones..."
 #: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:167
 #: gui/com/limegroup/gnutella/gui/options/OptionsPaneManager.java:115
 msgid "One or more options will take effect the next time FrostWire is restarted."
-msgstr "Una o más opciones tendran efecto la próxima vez que reinicie FrostWire."
+msgstr "Una o más opciones tendrán efecto la próxima vez que reinicie FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:29
 msgid "Links and File Types"
@@ -3332,11 +3332,11 @@ msgstr "Puede elegir cómo enviar los informes de error. Para visualizar un info
 
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:99
 msgid "Send Errors Automatically if FrostWire is Frozen"
-msgstr "Enviar errores automaticamente si FrostWire se congela"
+msgstr "Enviar errores automáticamente si FrostWire se congela"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ChatCommunityPaneItem.java:22
 msgid "FrostWire's Community Chat Tab requires you to have a nickname to communicate with others in the chatrooms"
-msgstr "La comunidad chat de FrostWire requiere un nick (seudónimo) para comunicarse con otras personas en los cuartos de charla"
+msgstr "La comunidad chat de FrostWire requiere un nick (seudónimo) para comunicarse con otras personas en el chat"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ChatCommunityPaneItem.java:93
 msgid "The chosen nickname is not allowed."
@@ -3352,7 +3352,7 @@ msgstr "Filtros de Contenido"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ContentFilterPaneItem.java:20
 msgid "You can tell FrostWire to filter files that copyright owners request not be shared. By enabling filtering, you are instructing FrostWire to confirm all files you download or share with a list of removed content."
-msgstr "Puede decirle a FrostWire que filtre aquellos archivos cuyo propietarios de sus Derechos de Autor (Copyright) hayan solicitado que no sean compartidos. Habilitando este Filtro le estara diciendo a FrostWire que confirme todos los archivos que descarga o comparte con una Lista de Contenido retirado."
+msgstr "Puede decirle a FrostWire que filtre aquellos archivos cuyos propietarios de los Derechos de Autor (Copyright) hayan solicitado que no sean compartidos. Habilitando este Filtro le estará diciendo a FrostWire que confirme todos los archivos que descarga o comparte con una Lista de Contenido retirado."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ContentFilterPaneItem.java:28
 msgid "Enable Content Filters"
@@ -3364,11 +3364,11 @@ msgstr "Comportamiento si el Archivo ya existe"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DefaultActionPaneItem.java:25
 msgid "You can choose the default action that FrostWire will perform when you try to download a file that already exists on disk."
-msgstr "Puede escoger la accion predeterminada para que FrostWire la haga cuando Usted trate de descargar un archivo que ya exista en el disco"
+msgstr "Puede escoger la acción predeterminada para que FrostWire la haga cuando Usted trate de descargar un archivo que ya exista en el disco"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DefaultActionPaneItem.java:49
 msgid "Always Show the 'Save As' Dialog"
-msgstr "Siempre mostrar el dialogo 'Guardar Como'"
+msgstr "Siempre mostrar el diálogo 'Guardar Como'"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DefaultActionPaneItem.java:50
 msgid "Always Append (#) to the Filename"
@@ -3421,7 +3421,7 @@ msgstr "Configuración del enrutador"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:35
 msgid "FrostWire can configure itself to work from behind a firewall or router. Using Universal Plug 'n Play (UPnP) and other NAT traversal techniques FrostWire can automatically configure your router or firewall for optimal performance. If your router does not support UPnP, FrostWire can be set to advertise an external port manually. (You may also have to configure your router if you choose manual configuration, but FrostWire will try its best so you don't have to.)"
-msgstr "FrostWire puede configurarse para funcionar detras de un cortafuegos o enrutador. Al utilizar Plug 'n Play Universal (UPnP), FrostWire puede configurar automáticamente su enrutador o cortafuegos para un desempeño óptimo. Si su enrutador no soporta UPnP, FrostWire puede ser configurado para anunciar un puerto externo manualmente. (Debe también configurar su enrutador si elige la configuración manual.)"
+msgstr "FrostWire puede configurarse para funcionar detrás de un cortafuegos o enrutador. Al utilizar Plug 'n Play Universal (UPnP), FrostWire puede configurar automáticamente su enrutador o cortafuegos para un desempeño óptimo. Si su enrutador no soporta UPnP, FrostWire puede ser configurado para anunciar un puerto externo manualmente. (Debe también configurar su enrutador si elige la configuración manual.)"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:49
 msgid "Use random port (Recommended)"
@@ -3550,7 +3550,7 @@ msgstr "Búsquedas máximas"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:24
 msgid "You can set the maximum number of simultaneous searches you can perform."
-msgstr "Puede establecer la cantidad másima de búsquedas simultáneas que puede realizar."
+msgstr "Puede establecer la cantidad máxima de búsquedas simultáneas que puede realizar."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -3567,7 +3567,7 @@ msgstr "El número máximo de búsquedas en paralelo que puedes hacer es"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:37
 msgid "You can tell FrostWire to bind outgoing connections to an IP address from a specific network interface. Listening sockets will still listen on all available interfaces. This is useful on multi-homed hosts. If you later disable this interface, FrostWire will revert to binding to an arbitrary address."
-msgstr "Puede decirle a FrostWire que asocie las conexiones salientes a una direccion IP de una Interfaz de Red especifica (Tjta de red). Los sockets activos aún seguirán escuchando en todas las interfaces disponibles. Esto es útil para instalaciones que funcionan en varios lugares (casa,oficina,universidad). Si desea desabilitar la interfaz, FrostWire revertirá la asociación a una dirección arbitraria."
+msgstr "Puede decirle a FrostWire que asocie las conexiones salientes a una dirección IP de una Interfaz de Red específica (Tjta de red). Los sockets activos aún seguirán escuchando en todas las interfaces disponibles. Esto es útil para instalaciones que funcionan en varios lugares (casa,oficina,universidad). Si desea desabilitar la interfaz, FrostWire revertirá la asociación a una dirección arbitraria."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:50
 msgid "Use a specific network interface."
@@ -3575,7 +3575,7 @@ msgstr "Utilizar una interfaz de red específica."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:110
 msgid "FrostWire was unable to determine which network interfaces are available on this machine. Outgoing connections will bind to any arbitrary interface."
-msgstr "FrostWire no fue capaz de determinar que interfaces de red (tjtas de red) estan disponibles en esta maquina. Las conexiones salientes se asociaran a una interfaz arbitraria"
+msgstr "FrostWire no fue capaz de determinar que interfaces de red (tjtas de red) están disponibles en esta máquina. Las conexiones salientes se asociarán a una interfaz arbitraria"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:20
 msgid "Notifications"
@@ -3583,7 +3583,7 @@ msgstr "Notificaciones"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:22
 msgid "FrostWire can display popups to notify you when certain things happen, such as a download completing. "
-msgstr "FrostWire puede mostrar popups para notificarle cuando ciertas cosas suceden, por ejemplo cuando se completa una descarga. "
+msgstr "FrostWire puede mostrar ventanas emergentes para notificarle cuando ciertas cosas suceden, por ejemplo cuando se completa una descarga. "
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:25
 msgid "Show Notifications:"
@@ -3603,7 +3603,7 @@ msgstr "Permitir compartir los archivos parciales"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:20
 msgid "FrostWire Popups"
-msgstr "FrostWire Popups"
+msgstr "FrostWire Pop-ups"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:22
 msgid "Redisplay messages for which you have chosen 'Do not display this message again' or 'Always use this answer'."
@@ -3803,7 +3803,7 @@ msgstr "Número máximo de usuarios conectados por torrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:28
 msgid "Number of upload slots per torrent"
-msgstr "Número de maquinas de subida por torrent"
+msgstr "Número de máquinas de subida por torrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentDetailsPaneItem.java:19
 msgid "Torrent Details Page"
@@ -3849,7 +3849,7 @@ msgstr "Velocidad Máxima"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:18
 msgid "Choose the folder where the torrent data will be saved"
-msgstr "Selecciona la carpeta donde se guardará la data de torrent"
+msgstr "Selecciona la carpeta donde se guardará la data del torrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:19
 msgid "Seeding is the process of connecting to a torrent when you have a complete file(s). Pieces of the seeded file(s) will be available to everybody. While downloading pieces are always available to other peers in the swarm."
@@ -3893,7 +3893,7 @@ msgstr "Seleccionar tipo de búsqueda"
 
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:182
 msgid "Search For Audio Files, Including mp3, wav, ogg, and More"
-msgstr "Buscar archivos de Audio, Incluyendo y más"
+msgstr "Buscar archivos de Audio, Incluyendo mp3, wav, ogg y más"
 
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:188
 msgid "Search For Image Files, Including jpg, gif, png and More"
@@ -4276,7 +4276,7 @@ msgstr "No se pudo asignar la ubicación del archivo debido a un error en el sis
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:119
 msgid "The same file is already being downloaded."
-msgstr "El mismo archivo ya esta siendo descargado."
+msgstr "El mismo archivo ya está siendo descargado."
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:121
 #, java-format
@@ -4397,13 +4397,13 @@ msgstr "helppage"
 #~ msgstr "Puerto:"
 
 #~ msgid "None"
-#~ msgstr "No"
+#~ msgstr "Ninguno"
 
 #~ msgid "Name Asc"
-#~ msgstr "Nombre"
+#~ msgstr "Nombre Asc"
 
 #~ msgid "Name Desc"
-#~ msgstr "Nombre"
+#~ msgstr "Nombre Desc"
 
 #~ msgid "Kind Asc"
 #~ msgstr "Clase:"
@@ -4430,7 +4430,7 @@ msgstr "helppage"
 #~ msgstr "Conectado a"
 
 #~ msgid "New Folder"
-#~ msgstr "Carpeta a guardar"
+#~ msgstr "Nueva Carpeta"
 
 #~ msgid "File Transfers"
 #~ msgstr "Transferencias"
@@ -4442,19 +4442,19 @@ msgstr "helppage"
 #~ msgstr "Borrar Inactivas"
 
 #~ msgid "Should I stop all transfers?"
-#~ msgstr "Cerrar luego de las transferencias"
+#~ msgstr "¿Debo detener todas las transferencias?"
 
 #~ msgid "one file"
-#~ msgstr "archivos .torrent"
+#~ msgstr "un archivo"
 
 #~ msgid "files"
 #~ msgstr "archivos"
 
 #~ msgid "pending"
-#~ msgstr "Sembrando"
+#~ msgstr "pendiente"
 
 #~ msgid "canceled"
-#~ msgstr "Analisis Cancelado"
+#~ msgstr "Análisis Cancelado"
 
 #~ msgid "error"
 #~ msgstr "Error"
@@ -4463,10 +4463,10 @@ msgstr "helppage"
 #~ msgstr "Cargar"
 
 #~ msgid "to"
-#~ msgstr "Detener"
+#~ msgstr "a"
 
 #~ msgid "Select a file..."
-#~ msgstr "Seleccionar directorio"
+#~ msgstr "Seleccionar un archivo"
 
 #~ msgid "Preparing selected folder"
 #~ msgstr "Vista preliminar de las descargas seleccionadas."
@@ -4496,13 +4496,13 @@ msgstr "helppage"
 #~ msgstr "Mostrar la ventana {0}"
 
 #~ msgid "Connection"
-#~ msgstr "."
+#~ msgstr "Conexión"
 
 #~ msgid "Show Media Player"
 #~ msgstr "Mostrar Reproductor"
 
 #~ msgid "Send File..."
-#~ msgstr "Guardando archivo..."
+#~ msgstr "Enviar archivo..."
 
 #~ msgid "Generate &Error"
 #~ msgstr "&Generar error"
@@ -4537,14 +4537,14 @@ msgstr "helppage"
 #~ "set. A restart will be required when enabling or disabling the media "
 #~ "controls."
 #~ msgstr ""
-#~ "Puede usar el reproductor interno o el predeterminado por su sistema. "
+#~ "Puede usar el reproductor interno o el predeterminado por su sistema. El reproductor y la lista de reproducción aparecerán solo si esta opción se establece."
 #~ "Debe reiniciar para activar/desactivar los controles del reproductor."
 
 #~ msgid "Use FrostWire Media Player:"
-#~ msgstr "Usar el reproductor de MP3 de FrostWire"
+#~ msgstr "Usar el reproductor de FrostWire"
 
 #~ msgid "Seeding Status"
-#~ msgstr "Sembrando"
+#~ msgstr "Estado Compartiendo"
 
 #~ msgid "Search Files"
 #~ msgstr "Búsquedas"
@@ -4567,7 +4567,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "Disculpe.  FrostWire no pudo leer sus descargas anteriores.  Puede "
 #~ "reiniciarlas viendo sus \"Archivos Incompletos\" y haciendo clic en "
-#~ "\"Continuar\" en la Librería."
+#~ "\"Continuar\" en la Biblioteca."
 
 #~ msgid ""
 #~ "Sorry, FrostWire couldn't read some of your old downloads.  You can "
@@ -4576,7 +4576,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "Disculpe.  FrostWire no pudo leer algunas de sus descargas anteriores.  "
 #~ "Puede reiniciarlas viendo sus \"Archivos Incompletos\" y haciendo clic en "
-#~ "\"Continuar\" en la Librería."
+#~ "\"Continuar\" en la Biblioteca."
 
 #~ msgid "Loading TLS Encryption..."
 #~ msgstr "Cargando Encriptación TLS..."
@@ -4717,7 +4717,7 @@ msgstr "helppage"
 #~ "(Recomendado)"
 
 #~ msgid "Minimum uploads per torrent"
-#~ msgstr "Cantidad mínima de cargas por torrent"
+#~ msgstr "Cantidad mínima de subidas por torrent"
 
 #~ msgid "Safe chunk verification"
 #~ msgstr "Verificación segura de paquete"
@@ -4756,8 +4756,8 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "Tu estas compartiendo algunas subcarpetas dentro de tu carpeta "
 #~ "compartida. {0}. Eso indica un potencial problema de seguridad, De modo "
-#~ "que por favor revise  su \"My Shared Files\" para asegurar que tu no "
-#~ "estas compartiendo algun fichero comprometido."
+#~ "que por favor revise  su \"My Shared Files\" para asegurar que no "
+#~ "estás compartiendo algún archivo comprometido."
 
 #~ msgid ""
 #~ "You are sharing a lot of files through FrostWire, {0} files and counting. "
@@ -4765,10 +4765,10 @@ msgstr "helppage"
 #~ "and which files are shared to ensure you aren't sharing any sensitive "
 #~ "files."
 #~ msgstr ""
-#~ "Tu estas compartiendo muchos ficheros a través de FrostWire, {0} ficheros "
-#~ "y contando. ¿Piensas compartir estos ficheros? Por favor revise su "
-#~ "configuración de compartir y que ficheros estan compartidos para asegurar "
-#~ "que tu no estas compartiendo ficheros comprometidos."
+#~ "Estás compartiendo muchos ficheros a través de FrostWire, {0} archivos "
+#~ "y contando. ¿Piensas compartir estos archivos? Por favor revise su "
+#~ "configuración de compartir y que archivos están compartidos para asegurar "
+#~ "que no estás compartiendo ficheros comprometidos."
 
 #~ msgid "Do not display this message again."
 #~ msgstr "No mostrar este mensajes otra ves."
@@ -4783,7 +4783,7 @@ msgstr "helppage"
 #~ msgstr "C&onsola"
 
 #~ msgid "Lo&gging"
-#~ msgstr "Bitacora"
+#~ msgstr "Bitácora"
 
 #~ msgid "Loading Digital Audio Access Protocol..."
 #~ msgstr "Cargando DAAP (Digital Audio Access Protocol)..."
@@ -4794,7 +4794,7 @@ msgstr "helppage"
 #~ "turn it back on in options, under iTunes -> Sharing."
 #~ msgstr ""
 #~ "FrostWire no fue capaz de iniciar el Protocolo de Acceso al Audio Digital "
-#~ "(para compartir archivos en iTunes). Esta funcionalidad sería apagada. "
+#~ "(para compartir archivos en iTunes). Esta funcionalidad será apagada. "
 #~ "Puede encenderla de nuevo en opciones, bajo iTunes -> Compartir."
 
 #~ msgid ""
@@ -4838,7 +4838,7 @@ msgstr "helppage"
 #~ "FrostWire has not yet verified this license.\n"
 #~ "Click 'verify' to locate the details of this Creative Commons license."
 #~ msgstr ""
-#~ "FrostWire no ha verificado aun esta licencia. Haga clic en 'Verificar' "
+#~ "FrostWire no ha verificado aún esta licencia. Haga clic en 'Verificar' "
 #~ "para localizar los detalles de esta Licencia 'Creative Commons'."
 
 #~ msgid "Creative Commons Details"
@@ -4861,14 +4861,14 @@ msgstr "helppage"
 #~ msgid ""
 #~ "FrostWire is contacting www.weedshare.com for the details of this file."
 #~ msgstr ""
-#~ "FrostWire esta contactando www.weedshare.com para los detalles de este "
+#~ "FrostWire está contactando www.weedshare.com para los detalles de este "
 #~ "archivo."
 
 #~ msgid ""
 #~ "FrostWire has not yet verified this license.\n"
 #~ "Click 'verify' to locate the details of this file."
 #~ msgstr ""
-#~ "FrostWire no ha verificado aun esta licencia.\n"
+#~ "FrostWire no ha verificado aún esta licencia.\n"
 #~ "Haga clic en 'verificar' vara ubicar los detalles de este archivo."
 
 #~ msgid "Weedshare Details"
@@ -4963,8 +4963,8 @@ msgstr "helppage"
 #~ msgid "You are sharing {0} file (Loading...)"
 
 #~ msgid_plural "You are sharing {0} files (Loading...)"
-#~ msgstr[0] "Usted esta compartiendo {0} archivo (Cargando...)"
-#~ msgstr[1] "Usted esta compartiendo {0} archivos (Cargando...)"
+#~ msgstr[0] "Usted está compartiendo {0} archivo (Cargando...)"
+#~ msgstr[1] "Usted está compartiendo {0} archivos (Cargando...)"
 
 #~ msgid ""
 #~ "When your downloads say <font color=\"185ea8\">Needs More Sources</font>, "
@@ -4974,8 +4974,8 @@ msgstr "helppage"
 #~ "matches."
 #~ msgstr ""
 #~ "Cuando tus descargas digan 'Necesita mas fuentes', trata de elegir esa "
-#~ "descarga y clickear 'Buscar Mas Fuentes'. FrostWire buscará en la red mas "
-#~ "lugares para descargar el archivo y automaticamente continuar la descarga "
+#~ "descarga y clicar 'Buscar Mas Fuentes'. FrostWire buscará en la red mas "
+#~ "lugares para descargar el archivo y automáticamente continuar la descarga "
 #~ "si encuentra alguna coincidencia."
 
 #~ msgid ""
@@ -5010,7 +5010,7 @@ msgstr "helppage"
 #~ "from someone searching for that file."
 #~ msgstr ""
 #~ "¿Quieres saber cuántas personas están buscando tus archivos? En la "
-#~ "Librería, la columna 'hits'  contará cuántas veces FrostWire ha detectado "
+#~ "Biblioteca, la columna 'hits'  contará cuántas veces FrostWire ha detectado "
 #~ "que alguien estaba buscando esos archivos."
 
 #~ msgid ""
@@ -5019,11 +5019,11 @@ msgstr "helppage"
 #~ "download. In order to successfully complete your download, wait while "
 #~ "your request advances in line and is eventually serviced."
 #~ msgstr ""
-#~ "Cuendo FrostWire dice tu descarga esta \"Esperando en linea\", significa "
-#~ "que la fuente que tu estas descargando esta temporamente ocupada y ha "
-#~ "colocado en cola tu descarga.Con el fin de que sea completada su descarga,"
-#~ "Espera mientras su solicitud avances en la línea y sea eventualmente "
-#~ "servido"
+#~ "Cuando FrostWire dice tu descarga está \"Esperando en linea\", significa "
+#~ "que la fuente que estás descargando está temporamente ocupada y ha "
+#~ "colocado en cola tu descarga. Con el fin de que sea completada su descarga,"
+#~ "Espere mientras su solicitud avanza en la línea y sea eventualmente "
+#~ "servida"
 
 #~ msgid ""
 #~ "Need more help? Visit <a href=\"{0}\">our message boards</a> and see if "
@@ -5031,10 +5031,10 @@ msgstr "helppage"
 #~ "href=\"{1}\">FAQ</a> for answers to commonly asked questions or the <a "
 #~ "href=\"{2}\">User Guide</a> for more information."
 #~ msgstr ""
-#~ "Necesita más ayuda? Visite <a herf=\"{0}\"> nuestros páneles de mensajes "
+#~ "¿Necesita más ayuda? Visite <a herf=\"{0}\"> nuestros páneles de mensajes "
 #~ "</a> y vea si otras personas han respondido a su pregunta! Puede también "
-#~ "revisar las <a href=\"{1}\">FAQa> para encontrar respuestas a preguntas "
-#~ "frecuentes ó el<a href=\"{2}\">Manuel del Usuario</a> para mayor "
+#~ "revisar las <a href=\"{1}\">Preguntas Frencuentesa> para encontrar respuestas a preguntas "
+#~ "frecuentes ó las<a href=\"{2}\">Guias de Usuarios</a> para mayor "
 #~ "información."
 
 #~ msgid ""
@@ -5045,7 +5045,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "¿Canceló su descarga por accidente? haga un click sobre la pestaña "
 #~ "'Biblioteca', elija la carpeta 'Incompleto', seleccione el nombre del "
-#~ "archivo que desea continuar descargando y de click en 'Continuar'. "
+#~ "archivo que desea continuar descargando y haga clic en 'Continuar'. "
 #~ "FrostWire buscará automáticamente el archivo y comenzará a descargarlo de "
 #~ "nuevo."
 
@@ -5053,7 +5053,7 @@ msgstr "helppage"
 #~ "Do you have a tip for effectively using FrostWire? Add it to <a href=\"{0}"
 #~ "\">the wiki</a> and it may make it into future Tips of the Day!"
 #~ msgstr ""
-#~ "¿Tiene un tip para usar FrostWire de manera efectiva? ¡Añadalo a <a href="
+#~ "¿Tiene un tip para usar FrostWire de manera efectiva? ¡Añádalo a <a href="
 #~ "\"{0}\">el wiki</a> y podrá pertenecer en un futuro a los Tips del Día !"
 
 #~ msgid ""
@@ -5061,7 +5061,7 @@ msgstr "helppage"
 #~ "Sources</font> by searching for that file again. FrostWire will "
 #~ "automatically restart the download if it finds any matching results."
 #~ msgstr ""
-#~ "Puede re-comenzar las descargas que indiquen <font color=\"185ea8"
+#~ "Puede re-iniciar las descargas que indiquen <font color=\"185ea8"
 #~ "\">Esperando fuentes</font> si busca nuevamente el archivo. FrostWire re-"
 #~ "comenzará la descarga automáticamente si encuentra resultados iguales."
 
@@ -5070,7 +5070,7 @@ msgstr "helppage"
 #~ "it on FrostWire's <a href=\"{0}\">forum</a> and it may be added to future "
 #~ "versions!"
 #~ msgstr ""
-#~ "Tiene alguna característica que le gustaría ver añadida en FrostWire? "
+#~ "¿Tiene alguna característica que le gustaría ver añadida en FrostWire? "
 #~ "Sugiérala en el <a href=\"{0}\">foro</a> de FrostWire y podría ser "
 #~ "agregada en versiones futuras."
 
@@ -5103,7 +5103,7 @@ msgstr "helppage"
 #~ "page and purchase a t-shirt or stickers!"
 #~ msgstr ""
 #~ "Vista con el estilo FrostWire! Visite nuestra página de <a href=\"{0}"
-#~ "\">FrostWire gear</a> y adquiera una camiseta o calcomanías!"
+#~ "\">FrostWire gear</a> y adquiera una camiseta o etiquetas adhesivas!"
 
 #~ msgid ""
 #~ "Try an audio genre search!<br>Click on the 'Audio' Metadata search "
@@ -5150,17 +5150,17 @@ msgstr "helppage"
 #~ "Shared Files to see your newly shared file in the Library."
 #~ msgstr ""
 #~ "¿Quieres compartir un archivo de tu escritorio con FrostWire? Símplemente "
-#~ "arrastra el archivo o carpeta desde tu escritorio hasta la Librería "
+#~ "arrastra el archivo o carpeta desde tu escritorio hasta la Biblioteca "
 #~ "FrostWire. Selecciona individualmente Archivos Compartidos para ver los "
-#~ "nuevos archivos compartidos añadidos a la Librería."
+#~ "nuevos archivos compartidos añadidos a la Biblioteca."
 
 #~ msgid ""
 #~ "Search results in FrostWire come from other users like you. Search "
 #~ "results marked with a blue frosty icon in the Quality column are official "
 #~ "communications from FrostWire, LLC."
 #~ msgstr ""
-#~ "La búsqueda tiene como resultado FrostWire viene de otros usuarios como "
-#~ "usted. La búsqueda resulta marcado con un icono azul de frostwire en la "
+#~ "Los resultados de búsqueda de FrostWire vienen de otros usuarios como "
+#~ "usted. Los resultados de búsqueda marcados con un icono azul de frostwire en la "
 #~ "columna de la Calidad son comunicaciones oficiales FrostWire, LLC."
 
 #~ msgid ""
@@ -5169,9 +5169,9 @@ msgstr "helppage"
 #~ "boxes show. Click the circle in the upper left corner of a box, and "
 #~ "choose a new option from the menu."
 #~ msgstr ""
-#~ "Después de que empezar una búsqueda, usted pueda personalizar las tres "
+#~ "Después de iniciar una búsqueda, usted pueda personalizar las tres "
 #~ "cajas a la izquierda con títulos como Medios, como el Artista, y como el "
-#~ "Album. Usted puede cambiar lo que estas cajas muestran. Haga clic el "
+#~ "Album. Usted puede cambiar lo que estas cajas muestran. Haga clic en el "
 #~ "círculo en el rincón izquierdo superior de una caja, y escoja una nueva "
 #~ "opción del menú."
 
@@ -5182,11 +5182,11 @@ msgstr "helppage"
 #~ "can be found in FrostWire's Options in the Advanced &gt; Firewall Config "
 #~ "section."
 #~ msgstr ""
-#~ "¿Do que usted quiere hojear su Biblioteca de amigo FrostWire? Vaya a "
-#~ "Buscar &gt; Dirija Conecte, entonces entre la dirección de ip y número de "
-#~ "puerto de su computadora de amigo en el formato siguiente: 'La dirección "
-#~ "de ip: el puerto'. El puerto puede ser encontrado en Opciones de "
-#~ "FrostWire en el Avanzado &gt; la sección de Cortafuegos Config."
+#~ "¿Quiere ojear la Biblioteca de FrostWire de un amigo? Vaya a "
+#~ "Buscar &gt; Conexioón Directa, entonces entre la dirección de ip y número de "
+#~ "puerto de la computadora de su amigo en el formato siguiente: 'Dirección "
+#~ "ip: el puerto'. El puerto puede ser encontrado en Opciones de "
+#~ "FrostWire en Avanzado &gt; la sección de Configuracioón de Cortafuegos."
 
 #~ msgid ""
 #~ "If you try to download a file that you already have, FrostWire lets you "
@@ -5213,7 +5213,7 @@ msgstr "helppage"
 #~ "color=\"185ea8\">Library</font> tab to find a file."
 #~ msgstr ""
 #~ "Tiene demasiados archivos en su carpeta de 'Guardados' o 'Compartidos'? "
-#~ "Intente <font color=\"185ea8\">una búsqueda en Shared files</font> en el "
+#~ "Intente <font color=\"185ea8\">una búsqueda en Archivos Compartidos</font> en el "
 #~ "tope de la pestaña <font color=\"185ea8\">Biblioteca</font> para "
 #~ "encontrar un archivo específico."
 
@@ -5224,9 +5224,9 @@ msgstr "helppage"
 #~ "commons website</a> for more information."
 #~ msgstr ""
 #~ "Usted puede publicar su trabajo original en la red de Gnutella con una "
-#~ "licencia Común Creadora. Escoja el. ogg o. mp3 compartió el archivo en la "
-#~ "Biblioteca y hace clic el Publica el botón. Visite el <a href=\"{0}"
-#~ "\">sitio web común creador</a> Para más información."
+#~ "licencia Creative Commons. Escoja el archivo compartido .ogg o .mp3 en la "
+#~ "Biblioteca y y haga clic en el botón Publicar. Visite el <a href=\"{0}"
+#~ "\">sitio web Creative Commonsr</a> para más información."
 
 #~ msgid ""
 #~ "Have you downloaded a file with incomplete or totally wrong information "
@@ -5234,8 +5234,8 @@ msgstr "helppage"
 #~ "Edit the file's metadata to your heart's content. You can even edit many "
 #~ "files at once by selecting more than one file before clicking Describe."
 #~ msgstr ""
-#~ "¿Has descargado un archivo que contiene incompleta o total información "
-#~ "errónea? Selecciona el archivo en la biblioteca y has click en describir. "
+#~ "¿Has descargado un archivo que contiene información incompleta o  "
+#~ "errónea? Selecciona el archivo en la Biblioteca y has click en describir. "
 #~ "Edita el archivo con datos de tu gusto.  Incluso puedes editar  varios "
 #~ "archivos  a la vez seleccionando mas de uno antes de hacer click en "
 #~ "describir."
@@ -5245,10 +5245,10 @@ msgstr "helppage"
 #~ "at the number in a green oval. A beige oval means FrostWire is still "
 #~ "building your Library. A red oval means files are not being shared."
 #~ msgstr ""
-#~ "¿Preguntándote cuantos archivos estas compartiendo?Mira en la barra de "
-#~ "estado de FrostWire el numero en un ovalo verde. Un ovalo beige significa "
-#~ "que FrostWire sigue cargando tu biblioteca. Si el ovalo es rojo significa "
-#~ "que no estas compartiendo."
+#~ "¿Preguntándote cuantos archivos estaás compartiendo? Mira en la barra de "
+#~ "estado de FrostWire el uú en un óvalo verde. Un ovalo beige significa "
+#~ "que FrostWire sigue cargando tu biblioteca. Si el óvalo es rojo significa "
+#~ "que no estás compartiendo."
 
 #~ msgid ""
 #~ "Instead of putting all your files in a single folder, FrostWire can "
@@ -5260,8 +5260,8 @@ msgstr "helppage"
 #~ "En vez de estar poniendo todos tus archivos en una sola carpeta, "
 #~ "FrostWire puede agruparlos automáticamente por tipo de archivo. En la "
 #~ "ventana Opciones > Guardar, selecciona  un tipo de archivo como de Audio, "
-#~ "y click en el botón Examinar. Puedes  agrupar archivos por tipo  "
-#~ "multimedia en la biblioteca incluso si todos están guardadados esta en un "
+#~ "y haz click en el botón Examinar. Puedes  agrupar archivos por tipo  "
+#~ "multimedia en la biblioteca incluso si todos están guardadados en "
 #~ "una sola carpeta."
 
 #~ msgid ""
@@ -5299,7 +5299,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "FrostWire usa una tecnología llamada DHT(Distributed Hash Table) para "
 #~ "ayudar a los usuarios a encontrar mejor archivos raros. Con el fin de ser "
-#~ "elegible para la inclusion en el DHT, asegúrese que no esta detrás de un "
+#~ "elegible para la inclusion en el DHT, asegúrese que no está detrás de un "
 #~ "cortafuegos, y deje correr FrostWire tanto como le sea posible."
 
 #~ msgid ""
@@ -5326,9 +5326,9 @@ msgstr "helppage"
 #~ "choosing Tools &gt; Advanced &gt; Statistics, choosing 'Advanced', and "
 #~ "opting to view Advanced Statistics."
 #~ msgstr ""
-#~ "La búsqueda tiene como resultado FrostWire viene de otros usuarios como "
-#~ "usted. La búsqueda resulta marcado con un icono de la cerradura en la "
-#~ "columna de la Calidad son comunicaciones oficiales del FrostWire, LLC."
+#~ "¿Quiere conocer mas acerca de cómo trabaja FrosTwire internamente? "
+#~ "Puede ver las mismas estadísticas que los desarrolladores "
+#~ "seleccionando Herramientas &gt; Avanzado &gt; Estadísticas Avanzadas."
 
 #~ msgid ""
 #~ "Wondering if someone browsed your shared library? Go to View &gt; Show/"
@@ -5374,18 +5374,18 @@ msgstr "helppage"
 #~ "Did you just download a file that you don't want to share? In the "
 #~ "Library, right-click it and choose Stop Sharing File."
 #~ msgstr ""
-#~ "¿Acabas de bajar un archivo que no quieres compartir? En la Librería, "
+#~ "¿Acabas de bajar un archivo que no quieres compartir? En la Biblioteca, "
 #~ "pulsa con el botón derecho del ratón sobre el archivo y selecciona Parar "
 #~ "Compartición de Archivo."
 
 #~ msgid "Upgrade FrostWire"
-#~ msgstr "&Uso de FrostWire"
+#~ msgstr "Actualice FrostWire"
 
 #~ msgid "Upgrade to FrostWire?"
-#~ msgstr "&Uso de FrostWire"
+#~ msgstr "Actualice FrostWire"
 
 #~ msgid "Upgrade Your Java"
-#~ msgstr "Actualize su Java"
+#~ msgstr "Actualice su Java"
 
 #~ msgid ""
 #~ "FrostWire has detected that you are using an out-of-date version of Java. "
@@ -5395,14 +5395,14 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "FrostWire ha detectado que está utilizando una versión desactualizada de "
 #~ "Java. FrostWire se ve y funciona mejor con versiones más nuevas de Java. "
-#~ "Funcionalidades incluyen soporte para la rueda del ratón, apariencia al "
+#~ "Las funcionalidades incluyen soporte para la rueda del ratón, apariencia al "
 #~ "estilo Windows XP, y muchas otras mejoras."
 
 #~ msgid "Would you like to get your free Java upgrade?"
 #~ msgstr "¿Desearía obtener su actualización gratuita de Java?"
 
 #~ msgid "Get FrostWire Now"
-#~ msgstr "&Usar FrostWire para..."
+#~ msgstr "Obtén FrostWire ahora"
 
 #~ msgid "Later"
 #~ msgstr "Luego"
@@ -5411,7 +5411,7 @@ msgstr "helppage"
 #~ "FrostWire has detected a corruption in the file {0}. Do you want to "
 #~ "continue the download?"
 #~ msgstr ""
-#~ "FrostWire detectó una falla en el archivo {0} Desea continuar con la "
+#~ "FrostWire detectó una falla en el archivo {0} ¿Desea continuar con la "
 #~ "descarga?"
 
 #~ msgid ""
@@ -5426,7 +5426,7 @@ msgstr "helppage"
 #~ "FrostWire.</html>"
 
 #~ msgid "Lookup File with Bitzi"
-#~ msgstr "Busque archivo en Bitzi Web..."
+#~ msgstr "Busque archivo con Bitzi"
 
 #~ msgid "Copy the Magnet Links of the Selected Files to the Clipboard"
 #~ msgstr ""
@@ -5470,15 +5470,15 @@ msgstr "helppage"
 #~ msgstr "Compartir"
 
 #~ msgid "The file \"{0}\" is already shared."
-#~ msgstr "El archivo \"{0}\" ya habia sido compartido."
+#~ msgstr "El archivo \"{0}\" ya ha sido compartido."
 
 #~ msgid "FrostWire was unable to share the file \"{0}\"."
 #~ msgstr "FrostWire no pudo compartir el archivo \"{0}\"."
 
 #~ msgid "Opens a Window and Lets You Choose a New Folder to Share"
 #~ msgstr ""
-#~ "Abre una nueva ventana y permite compartir una nueva carpeta para "
-#~ "compartir"
+#~ "Abre una ventana y permite Seleccionar una Nueva Carpeta para "
+#~ "Compartir"
 
 #~ msgid "Block Host"
 #~ msgstr "Bloquear computadora central"
@@ -5505,7 +5505,7 @@ msgstr "helppage"
 #~ msgstr "Ha ocurrido un error de conexión"
 
 #~ msgid "Could not send chat message"
-#~ msgstr "No se puede navegar por la computadora central {0} ."
+#~ msgstr "No se puede enviar mensaje de chat"
 
 #~ msgid "Browse Host"
 #~ msgstr "Ver Host"
@@ -5541,7 +5541,7 @@ msgstr "helppage"
 #~ msgstr "Ancho de Banda Saliente"
 
 #~ msgid "Dropped (I/O)"
-#~ msgstr "Eliminados (E/S)"
+#~ msgstr "Soltados (E/S)"
 
 #~ msgid "Dropped In"
 #~ msgstr "Aceptados"
@@ -5622,14 +5622,14 @@ msgstr "helppage"
 #~ msgstr "Si, Intentar de nuevo"
 
 #~ msgid "No, Share Nothing"
-#~ msgstr "No, compartir nada"
+#~ msgstr "No, no compartir nada"
 
 #~ msgid ""
 #~ "You clicked OK but did not select any files to be shared. Would you like "
 #~ "to try again?"
 #~ msgstr ""
-#~ "Hizo click en OK pero no selecciono ningun archivo para compartir, le "
-#~ "gustaria intentar de nuevo?"
+#~ "Hizo click en OK pero no seleccionó ningún archivo para compartir, ¿le "
+#~ "gustaría intentar de nuevo?"
 
 #~ msgid "Queue"
 #~ msgstr "En cola"
@@ -5638,7 +5638,7 @@ msgstr "helppage"
 #~ msgstr "En cola"
 
 #~ msgid "Connecting ({0} hosts tried)..."
-#~ msgstr "Conectando ({0} anfitriones tratados"
+#~ msgstr "Conectando ({0} hots probadoss"
 
 #~ msgid "Waiting On Busy Hosts"
 #~ msgstr "Esperando a las computadoras centrales ocupadas"
@@ -5779,7 +5779,7 @@ msgstr "helppage"
 #~ "You have downloaded a new skin titled {0}. Would you like to use this new "
 #~ "skin?"
 #~ msgstr ""
-#~ "Ha descargado una carátula nueva llamada \"{0}.\" Desea utilizar esta "
+#~ "Ha descargado una carátula nueva llamada \"{0}.\" ¿Desea utilizar esta "
 #~ "carátula nueva?"
 
 #~ msgid "Choose Save Location"
@@ -5845,7 +5845,7 @@ msgstr "helppage"
 #~ msgstr "Sin nombre de archivo"
 
 #~ msgid "Active"
-#~ msgstr "Activa"
+#~ msgstr "Activo"
 
 #~ msgid "Firewall Setup"
 #~ msgstr "Configuración del Corta-fuego (Firewall)"
@@ -5856,7 +5856,7 @@ msgstr "helppage"
 #~ "the setting. Your firewall software may look different than the below "
 #~ "picture."
 #~ msgstr ""
-#~ "FrostWire funciona mejor con total acceso a la Internet. Si su Corta-"
+#~ "FrostWire funciona mejor con total acceso a Internet. Si su Corta-"
 #~ "Fuego (Firewall), o cualquier Alerta de Seguridad,aparecen ,por favor "
 #~ "desbloquee FrostWire y escoja recordar en sus ajustes.La imagen de su "
 #~ "Corta-Fuego (Firewall)puede lucir diferente a la siguiente imagen."
@@ -5872,7 +5872,7 @@ msgstr "helppage"
 #~ "correctly is important for optimum network performance."
 #~ msgstr ""
 #~ "Por favor eliga la velocidad de su conexión de internet. Poner esto "
-#~ "correctamente es importante para tener un performance óptimo en la red."
+#~ "correctamente es importante para tener un rendimiento óptimo en la red."
 
 #~ msgid "Save Folder and Shared Folders"
 #~ msgstr "Guardar Carpeta y Carpetas compartidas"
@@ -5891,7 +5891,7 @@ msgstr "helppage"
 #~ "the folder where you would like your files to be downloaded. You can also "
 #~ "choose folders you would like to share with other users running FrostWire."
 #~ msgstr ""
-#~ "FrowtWire ahora descarga archivos a una carpeta nueva, diferente. Por "
+#~ "FrowtWire ahora descarga archivos a una carpeta nueva diferente. Por "
 #~ "favor confirme que esta carpeta es donde le gustaría que sus archivos "
 #~ "sean guardados. También puede elegir carpetas para compartir con otros "
 #~ "usuarios que corren FrostWire."
@@ -5938,13 +5938,13 @@ msgstr "helppage"
 #~ msgstr "Ubicaciones"
 
 #~ msgid "This file is not shared."
-#~ msgstr "Este archivo no esta compartido."
+#~ msgstr "Este archivo no está compartido."
 
 #~ msgid "This folder is shared."
-#~ msgstr "Esta carpeta esta compartida."
+#~ msgstr "Esta carpeta está compartida."
 
 #~ msgid "This folder is not shared."
-#~ msgstr "Esta carpeta no esta compartida."
+#~ msgstr "Esta carpeta no está compartida."
 
 #~ msgid ""
 #~ "FrostWire cannot publish this file because it was unable to find a schema "
@@ -5971,7 +5971,7 @@ msgstr "helppage"
 #~ msgstr "Publicar bajo Licencia Creative Commons"
 
 #~ msgid "Edit License..."
-#~ msgstr "Editar Licensia..."
+#~ msgstr "Editar Licencia..."
 
 #~ msgid "Continue Downloading Selected Incomplete File"
 #~ msgstr "Continuar la descarga del archivo incompleto seleccionado."
@@ -6001,14 +6001,14 @@ msgstr "helppage"
 #~ "FrostWire will not allow you delete to the folder reserved for incomplete "
 #~ "files."
 #~ msgstr ""
-#~ "FrostWire no le permitira eliminar la carpeta reservada para archivos "
+#~ "FrostWire no le permitirá eliminar la carpeta reservada para archivos "
 #~ "incompletos."
 
 #~ msgid "Shared Files"
 #~ msgstr "Archivos Compartidos"
 
 #~ msgid "Hide .torrent Files"
-#~ msgstr "Esconter archivos .torrent"
+#~ msgstr "Ocultar archivos .torrent"
 
 #~ msgid "Show .torrent Files"
 #~ msgstr "Mostrar archivos .torrent"
@@ -6029,7 +6029,7 @@ msgstr "helppage"
 #~ "compartidas en cualquier momento en la Bibloteca)"
 
 #~ msgid "Folder is fully shared including all subfolders."
-#~ msgstr "Carpeta está totalmente compartida incluyendo subcarpetas."
+#~ msgstr "La Carpeta está totalmente compartida incluyendo todas las subcarpetas."
 
 #~ msgid "Individually Shared Files"
 #~ msgstr "Archivos Compartidos Individualmente"
@@ -6041,7 +6041,7 @@ msgstr "helppage"
 #~ msgstr "Lista de archivos .torrent"
 
 #~ msgid "Logging"
-#~ msgstr "Bitacora"
+#~ msgstr "Bitácora"
 
 #~ msgid "Loading Logging Window..."
 #~ msgstr "Cargando ventana de opciones..."
@@ -6074,7 +6074,7 @@ msgstr "helppage"
 #~ msgstr "Buscando actualizaciones..."
 
 #~ msgid "seconds left)"
-#~ msgstr "segundos"
+#~ msgstr "segundos restantes"
 
 #~ msgid "Saving"
 #~ msgstr "Guardando"
@@ -6196,8 +6196,8 @@ msgstr "helppage"
 #~ "or other media players experience frequent rebuffering, increase this "
 #~ "value. A higher setting may use more memory."
 #~ msgstr ""
-#~ "Es possible configurar el tamaño del Buffer usado para el streaming de "
-#~ "los medios.Si Itunes u otro reproductor de medios experimenta "
+#~ "Es posible configurar el tamaño del Buffer usado para el streaming de "
+#~ "los medios. Si iTunes u otro reproductor de medios experimenta "
 #~ "frecuentemente rebuffering, incremente este valor. Un ajuste alto puede "
 #~ "usar mas memoria."
 
@@ -6223,7 +6223,7 @@ msgstr "helppage"
 #~ "problemas."
 
 #~ msgid "Share My Music:"
-#~ msgstr "Compartir mi música:"
+#~ msgstr "Compartir Mi Música:"
 
 #~ msgid "Shared Name:"
 #~ msgstr "Nombre de recurso compartido:"
@@ -6237,7 +6237,7 @@ msgstr "helppage"
 #~ "secure communications mode called TLS, which may use more CPU resources.  "
 #~ "You can disable these if needed."
 #~ msgstr ""
-#~ "Si su computadora tiene una conexión rapida al internet, FrostWire puede "
+#~ "Si su computadora tiene una conexión rápida de internet, FrostWire puede "
 #~ "actuar como un \"Ultrapeer\" y/o conectarse al DHT Mojito.  FrostWire "
 #~ "también puede utilizar una comunicación segura llamada TLS, la cual puede "
 #~ "utilizar mas recursos del CPU. Puede desabilitar estas si lo desea."
@@ -6252,7 +6252,7 @@ msgstr "helppage"
 #~ msgstr "Desactivar las capacidades de TLS:"
 
 #~ msgid "OOB Searching"
-#~ msgstr "Bsqueda OOB"
+#~ msgstr "Búsqueda OOB"
 
 #~ msgid ""
 #~ "Out-Of-Band Searching results in faster result delivery to your client, "
@@ -6283,7 +6283,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "Ud. puede deshabilitar el filtro de Basura de FrostWire y eliminar todos "
 #~ "los datos recolectados con respecto al filtraje aqui, si su puntuacion de "
-#~ "filtrado de basura esta marcando demasiados archivos como spam."
+#~ "filtrado de basura está marcando demasiados archivos como spam."
 
 #~ msgid "Display junk in place"
 #~ msgstr "Mostrar la basura recolectada"
@@ -6322,13 +6322,13 @@ msgstr "helppage"
 #~ msgstr "Utilizar la lista negra por defecto de FrostWire"
 
 #~ msgid "You can set the maximum number of simultaneous downloads."
-#~ msgstr "Puede establecer la cantidad másima de descargas simultáneas."
+#~ msgstr "Puede establecer la cantidad máxima de descargas simultáneas."
 
 #~ msgid "Maximum Downloads:"
 #~ msgstr "Descargas máximas:"
 
 #~ msgid "Max Upload Slots"
-#~ msgstr "Ranuras de carga másima"
+#~ msgstr "Ranuras de carga máxima"
 
 #~ msgid ""
 #~ "Never allow more than this many uploads. This value will only be reached "
@@ -6338,13 +6338,13 @@ msgstr "helppage"
 #~ "alcanzará si tiene el ancho de banda suficiente."
 
 #~ msgid "Max Upload Slots:"
-#~ msgstr "Ranuras de carga másima"
+#~ msgstr "Ranuras de carga máxima"
 
 #~ msgid "Media Type"
 #~ msgstr "Tipo de Archivo"
 
 #~ msgid "Open Dialog to Select a Folder"
-#~ msgstr "Abra el Dialogo para seleccionar una carpeta"
+#~ msgstr "Abra el Diálogo para seleccionar una carpeta"
 
 #~ msgid "Reset"
 #~ msgstr "Reiniciar"
@@ -6402,7 +6402,7 @@ msgstr "helppage"
 #~ "Would you like to share your new save folders? The following new folders "
 #~ "will be shared:"
 #~ msgstr ""
-#~ "Le gustaría compartor las nuevas carpetas? Las siguientes carpetas sería  "
+#~ "¿Le gustaría compartor las nuevas carpetas? Las siguientes carpetasán  "
 #~ "compartidas:"
 
 #~ msgid "Search Result Quality"
@@ -6413,7 +6413,7 @@ msgstr "helppage"
 #~ "results indicate that the host returning the result is not firewalled and "
 #~ "has free upload slots."
 #~ msgstr ""
-#~ "Puede seleccionar \"calidad\" de los resultados de búsqueda a mostrar. "
+#~ "Puede seleccionar la \"calidad\" de los resultados de búsqueda a mostrar. "
 #~ "Los resultados con cuatro estrellas indican que la computadora central "
 #~ "que envió el resultado no tiene firewalls y tiene ranuras de carga libres."
 
@@ -6434,7 +6434,7 @@ msgstr "helppage"
 
 #~ msgid "You can select the minimum speed of search results to display."
 #~ msgstr ""
-#~ "Puede seleccionar la velocidad másima de los resultados de búsqueda a "
+#~ "Puede seleccionar la velocidad máxima de los resultados de búsqueda a "
 #~ "mostrar."
 
 #~ msgid "Show Only Results of T3 Speed or Higher"
@@ -6464,13 +6464,13 @@ msgstr "helppage"
 #~ msgstr "Sólo se compartirán las descargas en carpetas compartidas."
 
 #~ msgid "You can automatically share .torrent files."
-#~ msgstr "Puedes automaticamente compartir archivos .torrent."
+#~ msgstr "Puedes compartir archivos .torrent automáticamente."
 
 #~ msgid "Start Upload Slots"
-#~ msgstr "Iniciar Upload Slots"
+#~ msgstr "Iniciar Subidas de Espacios"
 
 #~ msgid "Start Upload Slots:"
-#~ msgstr "Ranuras de carga másima"
+#~ msgstr "Iniciar Subidas de Espacios"
 
 #~ msgid "Sensitivity"
 #~ msgstr "Sensibilidad"
@@ -6505,7 +6505,7 @@ msgstr "helppage"
 
 #~ msgid "You can display how many files you are sharing in the status bar."
 #~ msgstr ""
-#~ "Puede mostrar cuantos archivos esta compartiendo en la barra de estado."
+#~ "Puede mostrar cuantos archivos está compartiendo en la barra de estado."
 
 #~ msgid "Show Shared Files Indicator:"
 #~ msgstr "Mostrar Indicador de Archivos Compartidos:"
@@ -6558,14 +6558,14 @@ msgstr "helppage"
 #~ msgstr "Únicamente las versiones mayores"
 
 #~ msgid "Upload Bandwidth"
-#~ msgstr "Ancho de banda de carga"
+#~ msgstr "Ancho de banda de subida"
 
 #~ msgid ""
 #~ "You can set the percentage of your bandwidth devoted to uploads. To turn "
 #~ "off uploads, reduce your upload slots to zero."
 #~ msgstr ""
 #~ "Puede establecer el porcentaje de su ancho de banda destinado a las "
-#~ "cargas. Para desactivar las cargas, reduzca las ranuras de carga a cero."
+#~ "subidas. Para desactivar las cargas, reduzca las ranuras de carga a cero."
 
 #~ msgid "Open..."
 #~ msgstr "Abrir..."
@@ -6604,7 +6604,7 @@ msgstr "helppage"
 #~ msgstr "Descargar Como..."
 
 #~ msgid "Would you like to start downloads from the following magnets?"
-#~ msgstr "Desea iniciar descargas desde los siguientes Enlaces Magnet?"
+#~ msgstr "¿Desea iniciar descargas desde los siguientes Enlaces Magnet?"
 
 #~ msgid ""
 #~ "You are sharing {0} files. You can control which files FrostWire shares."
@@ -6642,8 +6642,9 @@ msgstr "helppage"
 #~ msgid ""
 #~ "Do you want to block search results from the following list of hosts?"
 #~ msgstr ""
-#~ "Desea bloquear los resultados de búsquedas obtenidos de la computadora "
+#~ "¿Desea bloquear los resultados de búsquedas obtenidos de la computadora "
 #~ "central en"
+#~ msgstr ""
 
 #~ msgid "View All Files on Selected Computer"
 #~ msgstr "Ver todos los archivos de la computadora seleccionada."
@@ -6697,7 +6698,7 @@ msgstr "helppage"
 #~ "\"¿Qué hay Nuevo?\" busca archivos agregados recientemente a la red."
 
 #~ msgid "Hide Adult Content"
-#~ msgstr "Ocultar material para adultos"
+#~ msgstr "Ocultar contenido para adultos"
 
 #~ msgid "Filename"
 #~ msgstr "Nombre del archivo"
@@ -6723,7 +6724,7 @@ msgstr "helppage"
 #~ msgstr "Tener mas resultados"
 
 #~ msgid "Firewalled Host"
-#~ msgstr "Detras de Firewall"
+#~ msgstr "Detrás de Firewall"
 
 #~ msgid ""
 #~ "You are not connected to the network. To connect, select \"Connect\" from "
@@ -6731,7 +6732,7 @@ msgstr "helppage"
 #~ "connect."
 #~ msgstr ""
 #~ "No está conectado a la red. Para conectarse, seleccione \"conectar\" "
-#~ "desde el menu \"archivo\". Su búsqueda podría no arrojar ningn resultado "
+#~ "desde el menu \"archivo\". Su búsqueda podría no arrojar ningún resultado "
 #~ "hasta que se conecte."
 
 #~ msgid ""
@@ -6739,7 +6740,7 @@ msgstr "helppage"
 #~ "return many results until you are fully connected to the network."
 #~ msgstr ""
 #~ "FrostWire se está conectando a la red. Su búsqueda podría no devolver "
-#~ "muchos resultados mientras no este completamente conectado a la red."
+#~ "muchos resultados mientras no esté completamente conectado a la red."
 
 #~ msgid ""
 #~ "One of the selected files is an executable program and could contain a "
@@ -6757,7 +6758,7 @@ msgstr "helppage"
 #~ msgid ""
 #~ "This is a secure result. No information in this result has been tampered."
 #~ msgstr ""
-#~ "Este es un resultado seguro.Ninguna informacion en este resultado ha sido "
+#~ "Este es un resultado seguro. Ninguna información en este resultado ha sido "
 #~ "corrompida."
 
 #~ msgid "Sharing Extensions"
@@ -6778,11 +6779,11 @@ msgstr "helppage"
 
 #~ msgid "To allow selection enable sharing of sensitive types."
 #~ msgstr ""
-#~ "Para permitir la seleccion, permita compartir tipos de archivo sensitivos "
+#~ "Para permitir la selección, permita compartir tipos de archivo sensibles "
 #~ "(delicados)"
 
 #~ msgid "The extension name was not valid, could not add."
-#~ msgstr "El nombre de la extension no fue valido, no pudo agregarla"
+#~ msgstr "El nombre de la extensión no fue válido, no se pudo agregar"
 
 #~ msgid "Add New Extension"
 #~ msgstr "Agregar Nueva Extensión"
@@ -6803,7 +6804,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "Estas opciones borran cualquier cambio en las extensiones compartidas que "
 #~ "haya hecho y pone la configuración de extensiones compartidas en sus "
-#~ "valores originales. Desea continuar?"
+#~ "valores originales. ¿Desea continuar?"
 
 #~ msgid "Do Not Share Sensitive File Types"
 #~ msgstr "No compartir tipos de archivos delicados"
@@ -6846,8 +6847,8 @@ msgstr "helppage"
 #~ "</table></html>"
 #~ msgstr ""
 #~ "<html><table width=400>La carpeta <i>{0}</i><br> parece contener "
-#~ "información sensitiva o personal.<br><br>FrostWire le recomenda <b>NO</b> "
-#~ "compartir esta carpeta.<br><br>¿Está seguro que desea compartirla??</"
+#~ "información sensible o personal.<br><br>FrostWire le recomienda <b>NO</b> "
+#~ "compartir esta carpeta.<br><br>¿Está seguro que desea compartirla?</"
 #~ "table></html>"
 
 #~ msgid "Show Connections to Other Clients"
@@ -6857,10 +6858,10 @@ msgstr "helppage"
 #~ msgstr "Consola"
 
 #~ msgid "View Console Messages"
-#~ msgstr "Ver Mensajes de la bitacora"
+#~ msgstr "Ver Mensajes de la bitácora"
 
 #~ msgid "View Logging Messages"
-#~ msgstr "Ver Mensajes de la bitacora"
+#~ msgstr "Ver Mensajes de la bitácora"
 
 #~ msgid "Monitor"
 #~ msgstr "Monitor"
@@ -6888,7 +6889,7 @@ msgstr "helppage"
 #~ "The skin you selected is out of date. Please download the latest version "
 #~ "of the skin."
 #~ msgstr ""
-#~ "La carátula que seleccionó ha caducado. Por favor, descargue la ltima "
+#~ "La carátula que seleccionó ha caducado. Por favor, descargue la última "
 #~ "versión de la carátula."
 
 #~ msgid "Get New Skins"
@@ -6902,7 +6903,7 @@ msgstr "helppage"
 #~ "al tema por defecto."
 
 #~ msgid "Kill Upload"
-#~ msgstr "Cargar"
+#~ msgstr "Matar las Subidas"
 
 #~ msgid "Stop Selected Uploads"
 #~ msgstr "Detener las cargas seleccionadas."
@@ -6911,7 +6912,7 @@ msgstr "helppage"
 #~ msgstr "Quitar las cargas inactivas"
 
 #~ msgid "Freeloader Uploading"
-#~ msgstr "Carga de cargador gratuito"
+#~ msgstr "Subiendo cargador gratuito"
 
 #~ msgid "Transfer Interrupted"
 #~ msgstr "Transferencia Interrumpida"
@@ -6926,7 +6927,7 @@ msgstr "helppage"
 #~ msgstr "Rango no disponible"
 
 #~ msgid "Malformed Request"
-#~ msgstr "Petición erronea"
+#~ msgstr "Petición errónea"
 
 #~ msgid "Banned Greedy Servent"
 #~ msgstr "Servent especulador deportado"
@@ -6979,7 +6980,7 @@ msgstr "helppage"
 
 #~ msgid "Permanently remove the license from this file"
 #~ msgstr ""
-#~ "Está seguro de que desea eliminar permanentemente la licencia de su copia "
+#~ "¿Está seguro que desea eliminar permanentemente la licencia de su copia "
 #~ "local de este archivo?"
 
 #~ msgid "This tool helps you publish audio under a Creative Commons license."
@@ -6994,10 +6995,10 @@ msgstr "helppage"
 #~ msgstr "Compartido por Igual"
 
 #~ msgid "Allow commercial use of your work?"
-#~ msgstr "¿Permitirá el uso comercial de su trabajo?"
+#~ msgstr "¿Permitir el uso comercial de su trabajo?"
 
 #~ msgid "Allow modification of your work?"
-#~ msgstr "Permitira modificaciones de su trabajo?"
+#~ msgstr "¿Permitir modificaciones de su trabajo?"
 
 #~ msgid "Copyright Holder:"
 #~ msgstr "Dueños de derechos de copia:"
@@ -7011,10 +7012,10 @@ msgstr "helppage"
 #~ msgid "Comment:"
 #~ msgstr "Comentario:"
 
-#~ msgid "Please enter the copyright holder, copright year and title."
+#~ msgid "Please enter the copyright holder, copyright year and title."
 #~ msgstr ""
-#~ "Por favor introduzca el dueño de los derechos de copia del archivo que "
-#~ "desea publicar."
+#~ "Por favor introduzca el dueño de los derechos de autor del archivo, el año "
+#~ "y el título"
 
 #~ msgid "I want to use the Internet Archive to host the file."
 #~ msgstr "Deseo utilizar el Internet Archive para guardar el archivo."
@@ -7023,7 +7024,7 @@ msgstr "helppage"
 #~ msgstr "Deseo guardar el archivo de verificación en la siguiente URL:"
 
 #~ msgid "Where do you want to store the verification URL?"
-#~ msgstr "¿Donde desea guardar la URL de verificación?"
+#~ msgstr "¿Dónde desea guardar la URL de verificación?"
 
 #~ msgid "The verification file is hosted at the following URL:"
 #~ msgstr "El archivo de verificación está guardado en la siguiente URL:"
@@ -7074,7 +7075,7 @@ msgstr "helppage"
 #~ msgstr "Artista:"
 
 #~ msgid "Album:"
-#~ msgstr "Album:"
+#~ msgstr "Álbum:"
 
 #~ msgid "Genre:"
 #~ msgstr "Género:"
@@ -7125,7 +7126,7 @@ msgstr "helppage"
 #~ msgstr "Estudio:"
 
 #~ msgid "Stars: (Please separate with comma)"
-#~ msgstr "Estrellas:"
+#~ msgstr "Estrellas: (Por favor separar con comas)"
 
 #~ msgid "Producer: (Please separate with comma)"
 #~ msgstr "Productor: (Por favor separar con comas)"
@@ -7187,7 +7188,7 @@ msgstr "helppage"
 #~ "(para compartir archivos en iTunes) debido a que un CortaFuegos está "
 #~ "bloqueando el acceso. Para continuar utilizando está funcionalidad haga "
 #~ "clic en 'Si' y cambie su CortaFuegos para permitir acceso copmleto a "
-#~ "'FrostWire.exe' a conexiones entrantes y salientes.Para deshabilitar esta "
+#~ "'FrostWire.exe' a conexiones entrantes y salientes. Para deshabilitar esta "
 #~ "funcionalidad, haga clic en 'No'."
 
 #~ msgid "Modem"
@@ -7210,10 +7211,10 @@ msgstr "helppage"
 
 #~ msgid "You are sharing {0} files (Loading...)"
 #~ msgstr ""
-#~ "El numero de archivos que está compartiendo. {0} archivos (Cargando...)"
+#~ "Está compartiendo {0} archivos (Cargando...)"
 
 #~ msgid "You are sharing {0} files"
-#~ msgstr "El numero de archivos que está compartiendo. {0} archivos"
+#~ msgstr "Está compartiendo {0} archivos"
 
 #~ msgid ""
 #~ "You are attempting to share a folder that is likely to contain sensitive "
@@ -7228,7 +7229,7 @@ msgstr "helppage"
 #~ "\n"
 #~ "{0}\n"
 #~ "\n"
-#~ "Compartir esta Carpeta?"
+#~ "¿Compartir esta Carpeta?"
 
 #~ msgid "Paste from Clipboard"
 #~ msgstr "Pegar desde el Portapapeles"
@@ -7275,7 +7276,7 @@ msgstr "helppage"
 #~ "checkbox. Subfolders of shared folders will also be shared."
 #~ msgstr ""
 #~ "Identificamos los siguientes directorios como aquellos que desearía "
-#~ "compartir. Si desea compartir uno de estos directorios, simplemente tilde "
+#~ "compartir. Si desea compartir uno de estos directorios, simplemente marque "
 #~ "la casilla correspondiente. También se compartirán los subdirectorios de "
 #~ "los directorios compartidos."
 
@@ -7283,12 +7284,12 @@ msgstr "helppage"
 #~ "FrostWire was unable to locate any files that may be shared. To continue "
 #~ "configuring FrostWire, click \"Next\"."
 #~ msgstr ""
-#~ "FrostWire no pudo ubicar ningn archivo para compartir. Para continuar la "
+#~ "FrostWire no pudo ubicar ningún archivo para compartir. Para continuar la "
 #~ "configuración de FrostWire haga clic en \"siguiente\"."
 
 #~ msgid "The selected folders below (and their subfolders) will be shared."
 #~ msgstr ""
-#~ "Los Directorios seleccionados (y sus Sub-directorios) seran compartidos."
+#~ "Los Directorios seleccionados (y sus Sub-directorios) serán compartidos."
 
 #~ msgid "Scan for Files"
 #~ msgstr "Analizar archivos"
@@ -7298,8 +7299,8 @@ msgstr "helppage"
 #~ "files? You will have the opportunity to specify which folders you would "
 #~ "like to share when the scan is complete."
 #~ msgstr ""
-#~ "¿Desea que FrostWire analize rápidamente su disco para buscar otros "
-#~ "archivos multimedia? Tendría la posibilidad de especificar que "
+#~ "¿Desea que FrostWire analice rápidamente su disco para buscar otros "
+#~ "archivos multimedia? Tendrá la posibilidad de especificar que "
 #~ "directorios desea compartir cuando finalice la exploración."
 
 #~ msgid "Scan Hard Drive?"
@@ -7365,7 +7366,7 @@ msgstr "helppage"
 #~ "You have made changes to some settings. Would you like to save these "
 #~ "changes?"
 #~ msgstr ""
-#~ "Ha hecho cambios a algunas configuraciones. Desea guardar estos cambios?"
+#~ "Ha hecho cambios a algunas configuraciones. ¿Desea guardar estos cambios?"
 
 #~ msgid "MP3 Playlist"
 #~ msgstr "Lista de reproducción de MP3"
@@ -7374,7 +7375,7 @@ msgstr "helppage"
 #~ "You have some songs in the playlist.  Would you like to clear them and "
 #~ "start a new playlist?"
 #~ msgstr ""
-#~ "Tiene algunas canciones en la lista de reproducción. Desea limpiar la "
+#~ "Tiene algunas canciones en la lista de reproducción. ¿Desea limpiar la "
 #~ "lista y comenzar una nueva?"
 
 #~ msgid ""
@@ -7406,14 +7407,14 @@ msgstr "helppage"
 
 #~ msgid "Please enter your Internet Archive username and password."
 #~ msgstr ""
-#~ "Por favor introduzca su nombre de usuario y contraseña del Internet "
+#~ "Por favor introduzca su nombre de usuario y contraseña de Internet "
 #~ "Archive."
 
 #~ msgid ""
 #~ "The default Internet Archive identifier for this file and username is "
 #~ "allready taken. Please modify it below or press cancel to return."
 #~ msgstr ""
-#~ "El identificador por defecto para este archivo en el Internet Archive y "
+#~ "El identificador por defecto para este archivo en Internet Archive y "
 #~ "el nombre de usuario ya fueron tomados. Por favor modifique los datos de "
 #~ "abajo o presione cancelar para volver."
 
@@ -7421,7 +7422,7 @@ msgstr "helppage"
 #~ "There was an error communicating with the Internet Archive. Do you want "
 #~ "to try again?"
 #~ msgstr ""
-#~ "Hubo un error en la comunicación con el Internet Archive. Desea intentar "
+#~ "Hubo un error en la comunicación con el Internet Archive. ¿Desea intentarlo "
 #~ "de nuevo?"
 
 #~ msgid "Requesting Identifier..."
@@ -7431,7 +7432,7 @@ msgstr "helppage"
 #~ "Please wait while FrostWire is uploading your files to the Internet "
 #~ "Archive"
 #~ msgstr ""
-#~ "Por favor espere mientras FrostWire esta cargando sus archivos al "
+#~ "Por favor espere mientras FrostWire está cargando sus archivos al "
 #~ "Internte Archive"
 
 #~ msgid "Successfully uploaded files"
@@ -7445,9 +7446,9 @@ msgstr "helppage"
 #~ "There was an error while logging in to the Internet Archive. Please check "
 #~ "your username and password and try again."
 #~ msgstr ""
-#~ "Hubo un error mientras se hacia verificaba su identificación en el "
+#~ "Hubo un error mientras se verificaba su identificación en el "
 #~ "Internet Archive. Por favor revise su nombre de usuario y contraseña e "
-#~ "intente de nuevo."
+#~ "intentelo de nuevo."
 
 #~ msgid "There was an error while trying to access the upload directory."
 #~ msgstr "Hubo un error mientras intentaba acceder al directorio de carga."
@@ -7514,7 +7515,7 @@ msgstr "helppage"
 #~ msgstr "Resultados"
 
 #~ msgid "Files"
-#~ msgstr "archivos"
+#~ msgstr "Archivos"
 
 #~ msgid "Recovery Failed"
 #~ msgstr "Recuperación Fallida"
@@ -7558,8 +7559,8 @@ msgstr "helppage"
 #~ "Multicast pings received from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
-#~ "Multicast pings recibidos de todos los clientes de Gnutella en oposición "
-#~ "a los recibidos de otros clientes de FrostWire."
+#~ "Multicast pings recibidos de todos los clientes de Gnutella versus "
+#~ "los recibidos de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Multicast pongs received from all Gnutella clients versus other "
@@ -7572,50 +7573,50 @@ msgstr "helppage"
 #~ "Multicast queries received from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
-#~ "Consultas Multicast recibidas de todos los clientes de Gnutella en "
-#~ "oposición a las recibidas de otros clientes de FrostWire."
+#~ "Consultas Multicast recibidas de todos los clientes de Gnutella "
+#~ "versus las recibidas de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Multicast query hits received from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
 #~ "Aciertos de consultas Multicast recibidos de todos los clientes de "
-#~ "Gnutella en oposición a los recibidos de otros clientes de FrostWire."
+#~ "Gnutella versus los recibidos de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Multicast pushes received from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
 #~ "Mecanismos de empuje Multicast recibidos de todos los clientes de "
-#~ "Gnutella en oposición a los recibidos de otros clientes de FrostWire."
+#~ "Gnutella versus los recibidos de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for Multicast pings received from all Gnutella clients versus "
 #~ "other FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de Multicast pings recibidos de todos los clientes de Gnutella "
-#~ "en oposición a los recibidos de otros clientes de FrostWire."
+#~ "versus los recibidos de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for Multicast pongs received from all Gnutella clients versus "
 #~ "other FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de Multicast pongs recibidos de todos los clientes de Gnutella "
-#~ "en oposición a los recibidos de otros clientes de FrostWire."
+#~ "versus los recibidos de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for Multicast queries received from all Gnutella clients versus "
 #~ "other FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de consultas Multicast recibidas de todos los clientes de "
-#~ "Gnutella en oposición a las recibidas de otros clientes de FrostWire."
+#~ "Gnutella versus las recibidas de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for Multicast query hits received from all Gnutella clients "
 #~ "versus other FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de aciertos de consultas Multicast recibidos de todos los "
-#~ "clientes de Gnutella en oposición a los recibidos de otros clientes de "
+#~ "clientes de Gnutella versus los recibidos de otros clientes de "
 #~ "FrostWire."
 
 #~ msgid ""
@@ -7623,7 +7624,7 @@ msgstr "helppage"
 #~ "other FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de mecanismos de empuje Multicast recibidos de todos los "
-#~ "clientes de Gnutella en oposición a los recibidos de otros clientes de "
+#~ "clientes de Gnutella versus los recibidos de otros clientes de "
 #~ "FrostWire."
 
 #~ msgid "QRP"
@@ -7648,7 +7649,7 @@ msgstr "helppage"
 #~ msgstr "Pedidos"
 
 #~ msgid "Request Methods"
-#~ msgstr "Másodos de pedido"
+#~ msgstr "Métodosdos de pedido"
 
 #~ msgid "Average"
 #~ msgstr "Promedio"
@@ -7807,16 +7808,16 @@ msgstr "helppage"
 #~ msgstr "Normal"
 
 #~ msgid "Get"
-#~ msgstr "Get"
+#~ msgstr "Obtener"
 
 #~ msgid "Head"
-#~ msgstr "Head"
+#~ msgstr "Principal"
 
 #~ msgid "Pushed Head"
-#~ msgstr "Head empujado"
+#~ msgstr "Principal promocionado"
 
 #~ msgid "Orginal query"
-#~ msgstr "BÃºsqueda original"
+#~ msgstr "Consulta original"
 
 #~ msgid "Network"
 #~ msgstr "Red"
@@ -7854,13 +7855,13 @@ msgstr "helppage"
 #~ msgstr "Todas las consultas recibidas, por saltos."
 
 #~ msgid "Special Queries"
-#~ msgstr "Bsquedas especiales"
+#~ msgstr "Búsquedas especiales"
 
 #~ msgid "All of the special marked queries."
 #~ msgstr "Todas las búsquedas especiales marcadas."
 
 #~ msgid "False Positive"
-#~ msgstr "Positivo falso"
+#~ msgstr "Falso Positivo"
 
 #~ msgid "Generic Errors"
 #~ msgstr "Errores genéricos"
@@ -7887,7 +7888,7 @@ msgstr "helppage"
 #~ msgstr "Todos los errores"
 
 #~ msgid "Invalid Payload Length"
-#~ msgstr "Longitud de carga til inválida"
+#~ msgstr "Longitud de carga útil inválida"
 
 #~ msgid "Invalid Hops"
 #~ msgstr "Saltos inválidos"
@@ -7935,7 +7936,7 @@ msgstr "helppage"
 #~ msgstr "Errores en las respuestas de todos los ping"
 
 #~ msgid "Invalid Ping Reply Payload"
-#~ msgstr "Respuesta de carga til de ping inválida"
+#~ msgstr "Respuesta de carga útil de ping inválida"
 
 #~ msgid "Invalid Ping Reply Port"
 #~ msgstr "Puerto de respuesta de ping inválido"
@@ -7959,19 +7960,19 @@ msgstr "helppage"
 #~ msgstr "Dirección de empuje inválida"
 
 #~ msgid "Invalid Push Payload"
-#~ msgstr "Carga til de empuje inválida"
+#~ msgstr "Carga útil de empuje inválida"
 
 #~ msgid "All Vendor Message Errors"
 #~ msgstr "Errores en todos los mensajes del proveedor"
 
 #~ msgid "Invalid ID"
-#~ msgstr "ID inválida"
+#~ msgstr "ID inválido"
 
 #~ msgid "Invalid Selector"
 #~ msgstr "Selector inválido"
 
 #~ msgid "Invalid Payload"
-#~ msgstr "Carga til inválida"
+#~ msgstr "Carga útil inválida"
 
 #~ msgid "Unrecognized Vendor Message"
 #~ msgstr "Mensaje de proveedor no reconocido"
@@ -7986,22 +7987,22 @@ msgstr "helppage"
 #~ msgstr "Límite máximo"
 
 #~ msgid "Hard Limit (TTL 0)"
-#~ msgstr "Límite másimo (TTL 0)"
+#~ msgstr "Límite máximo (TTL 0)"
 
 #~ msgid "Hard Limit (TTL 1)"
-#~ msgstr "Límite másimo (TTL 1)"
+#~ msgstr "Límite máximo (TTL 1)"
 
 #~ msgid "Hard Limit (TTL 2)"
-#~ msgstr "Límite másimo (TTL 2)"
+#~ msgstr "Límite máximo (TTL 2)"
 
 #~ msgid "Hard Limit (TTL 3)"
-#~ msgstr "Límite másimo (TTL 3)"
+#~ msgstr "Límite máximo (TTL 3)"
 
 #~ msgid "Hard Limit (TTL 4)"
-#~ msgstr "Límite másimo (TTL 4)"
+#~ msgstr "Límite máximo (TTL 4)"
 
 #~ msgid "Hard Limit (TTL 5 or above)"
-#~ msgstr "Límite másimo (TTL 5 o más)"
+#~ msgstr "Límite máximo (TTL 5 o más)"
 
 #~ msgid "Connection Attempts"
 #~ msgstr "Intentos de conexión"
@@ -8055,10 +8056,10 @@ msgstr "helppage"
 #~ msgstr "Reintento exitoso"
 
 #~ msgid "Successful Direct Connection"
-#~ msgstr "conexión directa exitosa"
+#~ msgstr "Conexión directa exitosa"
 
 #~ msgid "Successful Push Connection"
-#~ msgstr "conexión por empuje exitosa"
+#~ msgstr "Empuje de conexioón exitosa"
 
 #~ msgid "Failed Push (Interrupted)"
 #~ msgstr "Falló empuje (interrumpido)"
@@ -8284,7 +8285,7 @@ msgstr "helppage"
 #~ "Number of duplicate queries received over TCP versus the total number of "
 #~ "queries."
 #~ msgstr ""
-#~ "Cantidad de consultas duplicadas recibidas por TCP en oposición a la "
+#~ "Cantidad de consultas duplicadas recibidas por TCP versus la "
 #~ "cantidad total de consultas."
 
 #~ msgid "All received queries, by time to live (TTL)."
@@ -8331,79 +8332,79 @@ msgstr "helppage"
 #~ "Total kilobytes in duplicate queries received over TCP versus the total "
 #~ "number of queries."
 #~ msgstr ""
-#~ "Kilobytes totales de consultas duplicadas recibidas por TCP en oposición "
-#~ "a la cantidad total de consultas."
+#~ "Kilobytes totales de consultas duplicadas recibidas por TCP versus "
+#~ " la cantidad total de consultas."
 
 #~ msgid ""
 #~ "UDP pings received from all Gnutella clients versus other FrostWires."
 #~ msgstr ""
-#~ "UDP pings recibidos de todos los clientes de Gnutella en oposición a los "
+#~ "UDP pings recibidos de todos los clientes de Gnutella versus los "
 #~ "recibidos de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "UDP pongs received from all Gnutella clients versus other FrostWires."
 #~ msgstr ""
-#~ "UDP pongs recibidos de todos los clientes de Gnutella en oposición a los "
+#~ "UDP pongs recibidos de todos los clientes de Gnutella versus los "
 #~ "recibidos de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "UDP queries received from all Gnutella clients versus other FrostWires."
 #~ msgstr ""
-#~ "Consultas UDP recibidas de todos los clientes de Gnutella en oposición a "
+#~ "Consultas UDP recibidas de todos los clientes de Gnutella versus "
 #~ "las recibidas de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "UDP query hits received from all Gnutella clients versus other FrostWires."
 #~ msgstr ""
-#~ "Aciertos de consultas TCP recibidos de todos los clientes de Gnutella en "
-#~ "oposición a los recibidos de otros clientes de FrostWire."
+#~ "Aciertos de consultas TCP recibidos de todos los clientes de Gnutella "
+#~ "versus los recibidos de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "UDP pushes received from all Gnutella clients versus other FrostWires."
 #~ msgstr ""
-#~ "Mecanismos de empuje UDP recibidos de todos los clientes de Gnutella en "
-#~ "oposición a los recibidos de otros clientes de FrostWire."
+#~ "Mecanismos de empuje UDP recibidos de todos los clientes de Gnutella "
+#~ "versus los recibidos de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for UDP pings received from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
-#~ "Kilobytes de UDP pings recibidos de todos los clientes de Gnutella en "
-#~ "oposición a los recibidos de otros clientes de FrostWire."
+#~ "Kilobytes de UDP pings recibidos de todos los clientes de Gnutella "
+#~ "versus los recibidos de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for UDP pongs received from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
-#~ "Kilobytes de UDP pongs recibidos de todos los clientes de Gnutella en "
-#~ "oposición a los recibidos de otros clientes de FrostWire."
+#~ "Kilobytes de UDP pongs recibidos de todos los clientes de Gnutella "
+#~ "versus los recibidos de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for UDP queries received from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
-#~ "Kilobytes de consultas UDP recibidas de todos los clientes de Gnutella en "
-#~ "oposición a las recibidas de otros clientes de FrostWire."
+#~ "Kilobytes de consultas UDP recibidas de todos los clientes de Gnutella "
+#~ "versus las recibidas de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for UDP query hits received from all Gnutella clients versus "
 #~ "other FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de aciertos de consultas UDP recibidos de todos los clientes de "
-#~ "Gnutella en oposición a los recibidos de otros clientes de FrostWire."
+#~ "Gnutella versus los recibidos de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for UDP pushes received from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de mecanismos de empuje UDP recibidos de todos los clientes de "
-#~ "Gnutella en oposición a los recibidos de otros clientes de FrostWire."
+#~ "Gnutella versus los recibidos de otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "All queries that were routed to other Ultrapeers for the last hop, using "
 #~ "query routing tables."
 #~ msgstr ""
-#~ "Todas las consultas dirigidas a otros Ultrapares para el ltimo salto, "
+#~ "Todas las consultas dirigidas a otros Ultrapares para el uúltimo salto, "
 #~ "mediante tablas de direccionamiento de consultas."
 
 #~ msgid "All queries that were routed to leaves, using query routing tables."
@@ -8478,60 +8479,60 @@ msgstr "helppage"
 
 #~ msgid "UDP pings sent from all Gnutella clients versus other FrostWires."
 #~ msgstr ""
-#~ "UDP pings enviados desde todos los clientes de Gnutella en oposición a "
+#~ "UDP pings enviados desde todos los clientes de Gnutella versus"
 #~ "los enviados desde otros clientes de FrostWire."
 
 #~ msgid "UDP pongs sent from all Gnutella clients versus other FrostWires."
 #~ msgstr ""
-#~ "UDP pongs enviados desde todos los clientes de Gnutella en oposición a "
+#~ "UDP pongs enviados desde todos los clientes de Gnutella versus "
 #~ "los enviados desde otros clientes de FrostWire."
 
 #~ msgid "UDP queries sent from all Gnutella clients versus other FrostWires."
 #~ msgstr ""
-#~ "Consultas UDP enviadas desde todos los clientes de Gnutella en oposición "
-#~ "a las enviadas desde otros clientes de FrostWire."
+#~ "Consultas UDP enviadas desde todos los clientes de Gnutella versus"
+#~ "las enviadas desde otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "UDP query hits sent from all Gnutella clients versus other FrostWires."
 #~ msgstr ""
 #~ "Aciertos de consultas UDP enviados desde todos los clientes de Gnutella "
-#~ "en oposición a los enviados desde otros clientes de FrostWire."
+#~ "versus los enviados desde otros clientes de FrostWire."
 
 #~ msgid "UDP pushes sent from all Gnutella clients versus other FrostWires."
 #~ msgstr ""
-#~ "Mecanismos de empuje UDP enviados desde todos los clientes de Gnutella en "
-#~ "oposición a los enviados desde otros clientes de FrostWire."
+#~ "Mecanismos de empuje UDP enviados desde todos los clientes de Gnutella "
+#~ "versus los enviados desde otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Multicast pings sent from all Gnutella clients versus other FrostWires."
 #~ msgstr ""
-#~ "Multicast pings enviados desde todos los clientes de Gnutella en "
-#~ "oposición a los enviados desde otros clientes de FrostWire."
+#~ "Multicast pings enviados desde todos los clientes de Gnutella "
+#~ "versus los enviados desde otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Multicast pongs sent from all Gnutella clients versus other FrostWires."
 #~ msgstr ""
-#~ "Multicast pongs enviados desde todos los clientes de Gnutella en "
-#~ "oposición a los enviados desde otros clientes de FrostWire."
+#~ "Multicast pongs enviados desde todos los clientes de Gnutella "
+#~ "versus los enviados desde otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Multicast queries sent from all Gnutella clients versus other FrostWires."
 #~ msgstr ""
-#~ "Consultas Multicast enviadas desde todos los clientes de Gnutella en "
-#~ "oposición a las enviadas desde otros clientes de FrostWire."
+#~ "Consultas Multicast enviadas desde todos los clientes de Gnutella "
+#~ "versus las enviadas desde otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Multicast query hits sent from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
 #~ "Aciertos de consultas Multicast enviados desde todos los clientes de "
-#~ "Gnutella en oposición a los enviados desde otros clientes de FrostWire."
+#~ "Gnutella versus los enviados desde otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Multicast pushes sent from all Gnutella clients versus other FrostWires."
 #~ msgstr ""
 #~ "Mecanismos de empuje Multicast enviados desde todos los clientes de "
-#~ "Gnutella en oposición a los enviados desde otros clientes de FrostWire."
+#~ "Gnutella versus los enviados desde otros clientes de FrostWire."
 
 #~ msgid "Total kilobytes sent by other FrostWires."
 #~ msgstr "Kilobytes totales enviados por otros clientes de FrostWire."
@@ -8540,64 +8541,64 @@ msgstr "helppage"
 #~ "Kilobytes for UDP pings sent from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
-#~ "Kilobytes de UDP pings enviados desde todos los clientes de Gnutella en "
-#~ "oposición a los enviados desde otros clientes de FrostWire."
+#~ "Kilobytes de UDP pings enviados desde todos los clientes de Gnutella "
+#~ "versus los enviados desde otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for UDP pongs sent from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
-#~ "Kilobytes de UDP pongs enviados desde todos los clientes de Gnutella en "
-#~ "oposición a los enviados desde otros clientes de FrostWire."
+#~ "Kilobytes de UDP pongs enviados desde todos los clientes de Gnutella "
+#~ "versus los enviados desde otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for UDP queries sent from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de consultas UDP enviadas desde todos los clientes de Gnutella "
-#~ "en oposición a las enviadas desde otros clientes de FrostWire."
+#~ "versus las enviadas desde otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for UDP query hits sent from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de aciertos de consultas UDP enviados desde todos los clientes "
-#~ "de Gnutella en oposición a los enviados desde otros clientes de FrostWire."
+#~ "de Gnutella versus los enviados desde otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for UDP pushes sent from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de mecanismos de empuje UDP enviados desde todos los clientes "
-#~ "de Gnutella en oposición a los enviados desde otros clientes de FrostWire."
+#~ "de Gnutella versus los enviados desde otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for Multicast pings sent from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de Multicast pings enviados desde todos los clientes de "
-#~ "Gnutella en oposición a los enviados desde otros clientes de FrostWire."
+#~ "Gnutella versus los enviados desde otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for Multicast pongs sent from all Gnutella clients versus other "
 #~ "FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de Multicast pongs enviados desde todos los clientes de "
-#~ "Gnutella en oposición a los enviados desde otros clientes de FrostWire."
+#~ "Gnutella versus los enviados desde otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for Multicast queries sent from all Gnutella clients versus "
 #~ "other FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de consultas Multicast enviadas desde todos los clientes de "
-#~ "Gnutella en oposición a las enviadas desde otros clientes de FrostWire."
+#~ "Gnutella versus las enviadas desde otros clientes de FrostWire."
 
 #~ msgid ""
 #~ "Kilobytes for Multicast query hits sent from all Gnutella clients versus "
 #~ "other FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de aciertos de consultas Multicast enviados desde todos los "
-#~ "clientes de Gnutella en oposición a los enviados desde otros clientes de "
+#~ "clientes de Gnutella versus los enviados desde otros clientes de "
 #~ "FrostWire."
 
 #~ msgid ""
@@ -8605,7 +8606,7 @@ msgstr "helppage"
 #~ "other FrostWires."
 #~ msgstr ""
 #~ "Kilobytes de mecanismos de empuje Multicast enviados desde todos los "
-#~ "clientes de Gnutella en oposición a los enviados desde otros clientes de "
+#~ "clientes de Gnutella versus los enviados desde otros clientes de "
 #~ "FrostWire."
 
 #~ msgid "Statistics for handshaking as a leaf."
@@ -8729,7 +8730,7 @@ msgstr "helppage"
 #~ "HTTP/1.1 transfer AFTER the initial incoming connection request or for "
 #~ "push requests, after we have sent the initial GIV."
 #~ msgstr ""
-#~ "Másodos de pedido entrantes totales. Esta cantidad aumenta ya sea por "
+#~ "Métodos de pedidos entrantes totales. Esta cantidad aumenta ya sea por "
 #~ "transferencia de HTTP/1.1 LUEGO del pedido de conexión entrante inicial o "
 #~ "por mecanismo de empuje, luego de que hayamos enviado el GIV inicial."
 
@@ -8764,7 +8765,7 @@ msgstr "helppage"
 #~ msgstr "Estadísticas"
 
 #~ msgid "Validation Required"
-#~ msgstr "Validacion Requerida"
+#~ msgstr "Validación Requerida"
 
 #~ msgid "Height:"
 #~ msgstr "Alto:"
@@ -8779,7 +8780,7 @@ msgstr "helppage"
 #~ msgstr "Contenido de HTTP"
 
 #~ msgid "Please enter the title of the file you want to publish."
-#~ msgstr "Por favor introduzca el titulo del archivo que desea publicar."
+#~ msgstr "Por favor introduzca el título del archivo que desea publicar."
 
 #~ msgid "Please enter the year of the file you want to publish."
 #~ msgstr "Por favor introduzca el año del archivo que desea publicar."
@@ -8806,7 +8807,7 @@ msgstr "helppage"
 #~ "innovative collection of protocols that is constantly improving -- a "
 #~ "testament to the power of open protocols and open standards."
 #~ msgstr ""
-#~ "Inspirado por el creador de FrostWire, Mark Gorton, el Projecto FrostWire "
+#~ "Inspirado por el creador de FrostWire, Mark Gorton, el Proyecto FrostWire "
 #~ "es un esfuerzo colaborativo de <a href=\"http://www.frostwire.com/"
 #~ "\">Código Abierto</a> que cuenta con la colaboración de programadores e "
 #~ "investigadores de todas partes del mundo. La naturaleza colaborativa de "
@@ -8886,7 +8887,7 @@ msgstr "helppage"
 #~ "Please note: FrostWire cannot monitor or control the content of the "
 #~ "Gnutella network. Please respect your local copyright laws."
 #~ msgstr ""
-#~ "FrostWire no puede encontrar licensia para este archivo. Continue "
+#~ "FrostWire no puede encontrar licencia para este archivo. Continúe "
 #~ "Descarga.\n"
 #~ "\n"
 #~ "Nota: FrostWire no puede controlar o monitorear el contenido de Gnutella, "
@@ -8898,8 +8899,8 @@ msgstr "helppage"
 #~ "are green (or blue!), FrostWire has completely connected."
 #~ msgstr ""
 #~ "Cuando FrostWire inicie, debe conectarse a una red. Durante este tiempo, "
-#~ "la barra de botones en la esquina cambiara de colores. Una vez que todas "
-#~ "las barras esten verdes (o azules!), FrostWire esta completamente "
+#~ "la barra de botones en la esquina cambiará de colores. Una vez que todas "
+#~ "las barras estén verdes (o azules!), FrostWire estaá completamente "
 #~ "conectado."
 
 #~ msgid ""
@@ -8913,14 +8914,14 @@ msgstr "helppage"
 #~ "Want to open this Tip Of The Day dialog after you've closed it? Go to the "
 #~ "Help menu and choose 'Tip of the Day'."
 #~ msgstr ""
-#~ "¿quieres abrir esta ventana de \"Consejo del día\" después de que la "
+#~ "¿Quieres abrir esta ventana de \"Consejo del día\" después de que la "
 #~ "hayas cerrado? Ve al menú Ayuda y escoge \"Consejo del día\""
 
 #~ msgid ""
 #~ "Want to know more about the development of FrostWire? Visit <a href=\"{0}"
 #~ "\">FrostWire's open-source website</a> and look around!"
 #~ msgstr ""
-#~ "Quiere conocer más sobre el desarrollo de FrostWire? visite el <a href="
+#~ "¿Quiere conocer más sobre el desarrollo de FrostWire? visite el <a href="
 #~ "\"{0}\">website de fuente-abierta de FrostWire </a> y eche un vistazo."
 
 #~ msgid ""
@@ -8943,14 +8944,14 @@ msgstr "helppage"
 #~ "especificado en los ajustes de FrostWire  al 'firewall' del ruteador, UDP "
 #~ "y TCP, entrante y saliente. Vaya a 'configuración de firewall avanzada' "
 #~ "dentro de la ventana de opciones de FrostWire para encontrar el puerto. "
-#~ "Revise la configuración de su ruter y ajústela adecuadamente."
+#~ "Revise la configuración de su enrutador y ajústela adecuadamente."
 
 #~ msgid ""
 #~ "Did you know FrostWire is completely open-source? Visit <a href=\"{0}"
 #~ "\">www.frostwire.com</a> for information on how to join developer mailing "
 #~ "lists or to review the code."
 #~ msgstr ""
-#~ "¿Sabia que FrostWire es completamente código abierto? Viste <a href=\"{0}"
+#~ "¿Sabia que FrostWire es completamente código abierto? Visite <a href=\"{0}"
 #~ "\">www.frostwire.com</a> para saber cómo unirse a la listas de correo de "
 #~ "desarrollo o para revisar el código."
 
@@ -8965,7 +8966,7 @@ msgstr "helppage"
 #~ "Have a lot of files? Try an instant search at the top of the Library "
 #~ "window."
 #~ msgstr ""
-#~ "¿Tiene muchos archivos? Trate una búsqueda instantánea a la cabeza de la "
+#~ "¿Tiene muchos archivos? Trate una búsqueda instantánea en la cabecera de la "
 #~ "ventana de la Biblioteca."
 
 #~ msgid ""
@@ -8992,8 +8993,8 @@ msgstr "helppage"
 #~ "You can change your network interface by going to Tools &gt; Options &gt; "
 #~ "Advanced &gt; Network Interface."
 #~ msgstr ""
-#~ "Ud. se connecta al Internet de modo alambrico e inalambrico al mismo "
-#~ "tiempo? Solo desea que FrostWire utilize una de estas conexiones? Facil! "
+#~ "¿Ud. se connecta al Internet de modo alámbrico e inalambrico al mismo "
+#~ "tiempo? Solo desea que FrostWire utilice una de estas conexiones? Fácil! "
 #~ "Puede cambiar su interfaz de red en Herramientas &gt; Opciones; Avanzado "
 #~ "&gt; Interfaces de Red."
 
@@ -9051,8 +9052,8 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "FrostWire puede filtrar aquellos archivos cuyos dueños de derechos de "
 #~ "autor (copyright) hayan requerido que no sean compartidos. Habilitando "
-#~ "este filtro, Usted le estara diciendo a FrostWire que confirme todos los "
-#~ "archivos que descargueo comparta con una lista de contenido removido. "
+#~ "este filtro, Usted le estará diciendo a FrostWire que confirme todos los "
+#~ "archivos que descargue o comparta con una lista de contenido removido. "
 #~ "Usted puede cambiar esto en cualquier momento escogiendo Filtro - "
 #~ ">Configuración de los Filtros de Contenido desde el menu principal"
 
@@ -9063,7 +9064,7 @@ msgstr "helppage"
 #~ msgstr "Contenido"
 
 #~ msgid "Firewall Config"
-#~ msgstr "Firewalls"
+#~ msgstr "Configuración del Cortafuegos"
 
 #~ msgid "The Most Advanced File Sharing Program on the Planet!"
 #~ msgstr "El programa de archivos P2P más rápido del Mundo!"
