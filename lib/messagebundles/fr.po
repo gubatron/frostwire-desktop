@@ -1353,7 +1353,7 @@ msgstr "Ajouter"
 #: gui/com/frostwire/gui/library/Device.java:265
 msgid ""
 "The device is busy with another transfer or did not authorize your request"
-msgstr ""
+msgstr "L’appareil est déjà occupé par un autre transfert ou il n’a pas autorisé votre demande."
 
 #: gui/com/frostwire/gui/library/Device.java:265
 msgid "Transfer failed"
@@ -1361,11 +1361,11 @@ msgstr "Transferts"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
 msgid "Upload to device"
-msgstr "Limite de transferts atteinte"
+msgstr "Transfert vers l'appareil"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:117
 msgid "Waiting for device authorization..."
-msgstr ""
+msgstr "En attente de l’autorisation de l’appareil..."
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:70
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
@@ -1469,7 +1469,7 @@ msgid ""
 "Are you sure you want to delete the selected file(s), thus removing it from "
 "your computer?"
 msgstr ""
-"Êtes-vous sûr de vouloir effacer le(s) file(s) choisi(s), le(s) supprimant "
+"Êtes-vous sûr de vouloir effacer le(s) fichier(s) choisi(s), le(s) supprimant "
 "ainsi de votre ordinateur ?"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:480
@@ -1508,12 +1508,12 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:791
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:664
 msgid "Launch in "
-msgstr "Lancer avec"
+msgstr "Lancer avec "
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:792
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:665
 msgid "Launch Selected Files in "
-msgstr "Lancer les Fichiers Félectionnés avec"
+msgstr "Lancer les Fichiers Félectionnés avec "
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:834
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:707
@@ -1652,7 +1652,7 @@ msgstr "Importer un fichier .m3u dans la Liste de Lecture"
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:776
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:791
 msgid "Import a .m3u file into the selected playlist"
-msgstr "Importe un fichier .m3u dans la liste de lecture sélectionnée"
+msgstr "Importer un fichier .m3u dans la liste de lecture sélectionnée"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:790
 msgid "Import .m3u to New Playlist"
@@ -1660,7 +1660,7 @@ msgstr "Importer un .m3u dans une Nouvelle Liste de Lecture"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:791
 msgid "Import a .m3u file to a new playlist"
-msgstr "Importe un fichier .m3u dans une nouvelle liste de lecture"
+msgstr "Importer un fichier .m3u dans une nouvelle liste de lecture"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:805
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
@@ -1670,7 +1670,7 @@ msgstr "Exporter une liste de lecture en .m3u"
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:806
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:806
 msgid "Export this playlist into a .m3u file"
-msgstr "Exporte cette liste de lecture dans un fichier .m3u"
+msgstr "Exporter cette liste de lecture dans un fichier .m3u"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:39
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:40
@@ -1713,7 +1713,7 @@ msgstr "Résultats de la recherche"
 
 #: gui/com/frostwire/gui/library/LibrarySearch.java:673
 msgid "Search in "
-msgstr "Recherche"
+msgstr "Rechercher dans "
 
 #: gui/com/frostwire/gui/library/LibraryUtils.java:69
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:276
@@ -1741,7 +1741,7 @@ msgstr "Erreur en important la Station de Radio de"
 
 #: gui/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:60
 msgid "Holds the Results for "
-msgstr "Contient les résultats de"
+msgstr "Contient les résultats de "
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:178
 msgid "Library Folders"
@@ -1758,7 +1758,7 @@ msgstr "Le dossier et les sous-dossiers font partie de la Médiathèque."
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:382
 msgid "Folder is not included and no subfolders are included in the Library."
 msgstr ""
-"Le dossier ni aucun de ses sous-dossiers ne font pas partie de la "
+"Le dossier ni aucun de ses sous-dossiers ne font partie de la "
 "Médiathèque."
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
@@ -1842,9 +1842,8 @@ msgstr "Afficher le catalogue de vos fichiers enregistrés."
 
 #: gui/com/frostwire/gui/tabs/SearchDownloadTab.java:42
 msgid "Search and Download Files"
-msgstr ""
-"Recherchez et chargez des fichiers sur le réseau Gnutella, contrôlez l’état "
-"des transferts et chargements en cours."
+msgstr "Rechercher et télécharger des fichiers"
+
 
 #: gui/com/frostwire/gui/updates/InstallerUpdater.java:127
 msgid "Update"
@@ -2241,7 +2240,7 @@ msgstr "Appliquer l’Opération."
 #: gui/com/limegroup/gnutella/gui/InputFieldDialog.java:94
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:45
 msgid "Cancel Operation"
-msgstr "Annule l’opération."
+msgstr "Annuler l’opération."
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:70
 msgid ""
@@ -2264,7 +2263,7 @@ msgstr "Plus d’informations"
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:179
 #, java-format
 msgid "Visit {0}"
-msgstr "Visitez {0}."
+msgstr "Visiter {0}."
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:187
 msgid "Remind Me Later"
@@ -2281,7 +2280,7 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:198
 msgid "Change Language"
-msgstr "Choix de la &langue"
+msgstr "Choix de la Langue"
 
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:201
 msgid "Help Translate FrostWire"
@@ -2380,7 +2379,7 @@ msgstr "Ajouter..."
 
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:334
 msgid "Add New List Item"
-msgstr "Lister un nouvel élément."
+msgstr "Ajouter un nouvel élément."
 
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:372
 msgid "Remove Selected Item"
@@ -2437,9 +2436,8 @@ msgstr "Turbo-Chargée"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:566
 msgid "Your connection to the network is extremely strong"
-msgstr ""
-"Votre connexion au réseau est optimale et extrèmement fiable pour toutes "
-"sortes de recherches."
+msgstr "Votre connexion au réseau est extrèmement forte"
+
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:658
 msgid "Show Connection Quality"
@@ -2573,7 +2571,7 @@ msgid ""
 "Passionate about digital rights? Visit the <a href=\"{0}\">Electronic "
 "Frontier Foundation</a> and see what you can do to help."
 msgstr ""
-"Vous êtes passionné sur la protection des droits relatifs aux technologies "
+"Vous êtes passionné par la protection des droits relatifs aux technologies "
 "de l’information ? Visitez l’<a href=\"{0}\">Electronic Frontier Foundation</"
 "a> et voyez ce que vous pouvez faire pour aider."
 
@@ -2779,7 +2777,7 @@ msgid ""
 "Are you unhappy with the small number of search results you received? Right-"
 "click a search result, then choose Search More, then Get More Results."
 msgstr ""
-"Êtes-vous insatisfait du petit nombre de résultats de recherche que vous "
+"Êtes-vous insatisfait(e) du petit nombre de résultats de recherche que vous "
 "avez reçu? Cliquez avec le bouton droit sur un résultat de recherche, puis "
 "sélectionnez Chercher Plus, puis Obtenir Plus de Résultats."
 
@@ -2953,7 +2951,7 @@ msgid ""
 "click the system tray icon (next to the time), and select Exit. You can "
 "change this behavior by going to Tools &gt; Options &gt; System Tray."
 msgstr ""
-"Quand voius fermez FrostWire, il est réduit dans la barre d'état du système. "
+"Quand vous fermez FrostWire, il est réduit dans la barre d'état du système. "
 "Pour quitter, cliquez avec le bouton droit sur l'icône de la berre d'état "
 "(juste à coté de l'heure), et sélectionnez Quitter. Vous pouvez changer ce "
 "comportement en allant dans Outils &gt; Options &gt; Barre d'État du Système."
@@ -3059,7 +3057,7 @@ msgstr "&Fermer"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:287
 msgid "Close the program's main window"
-msgstr "Fermer la fenêtre prinicpale du programme"
+msgstr "Fermer la fenêtre principale du programme"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:303
 msgid "E&xit"
@@ -3158,7 +3156,7 @@ msgid ""
 msgstr ""
 "FrostWire n’est pas parvenu à se connecter au serveur de suivi de bogues "
 "afin d’y enregistrer le rapport d’erreur ci-dessous. Pour aider au débogage, "
-"veuillez copier le texte suivant et l’envoyer par courriel à bugs@frostwire."
+"veuillez aller au www.frostwire.com et cliquez sur 'Support'."
 "com. Merci."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:528
@@ -3167,7 +3165,7 @@ msgstr "Copier le rapport"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:127
 msgid "Always Save As..."
-msgstr "Toujours souver sous..."
+msgstr "Toujours sauver sous..."
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:129
 msgid "Always Append (#)"
@@ -3207,7 +3205,7 @@ msgstr "Écraser"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:313
 msgid "Overwrite the Existing File"
-msgstr "Remplace le fichier existant."
+msgstr "Remplacer le fichier existant."
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:336
 msgid "Save As..."
@@ -3219,11 +3217,11 @@ msgstr "Choisissez un emplacement différent pour le chargement."
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:369
 msgid "Append (#)"
-msgstr "Rajouter “ (n°)”"
+msgstr "Rajouter (n°)"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:371
 msgid "Appends (#) to filename"
-msgstr "Ajoute “ (n°)” au nom de fichier."
+msgstr "Ajoute (n°) au nom de fichier."
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:390
 msgid "Cancel the Download"
@@ -3375,7 +3373,7 @@ msgstr "Langue :"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:60
 msgid "Miscellaneous Settings"
-msgstr "Preferences diverses"
+msgstr "Préférences diverses"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:62
 msgid "Below, are several options that affect the functionality of FrostWire."
@@ -3481,7 +3479,7 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:99
 msgid "FrostWire is free software, "
-msgstr "FrostWire un logiciel gratuit,"
+msgstr "FrostWire est un logiciel gratuit,"
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:109
 msgid "Do not pay for FrostWire."
@@ -3501,7 +3499,7 @@ msgstr "&Configurer le filtrage des médias"
 
 #: gui/com/limegroup/gnutella/gui/menu/FiltersMenu.java:19
 msgid "Configure FrostWire's Content Filtering Options"
-msgstr "Configure les options de FrostWire permettant le filtrage des médias."
+msgstr "Configurer les options de FrostWire permettant le filtrage des médias."
 
 #: gui/com/limegroup/gnutella/gui/menu/FiltersMenu.java:21
 msgid "&Learn More..."
@@ -3521,7 +3519,7 @@ msgstr "&FAQ"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:31
 msgid "Frequently Asked Questions for FrostWire"
-msgstr "Consulte la foire aux questions courantes sur FrostWire."
+msgstr "Consultez la foire aux questions courantes sur FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:33
 msgid "FrostWire for Android"
@@ -3779,7 +3777,7 @@ msgstr "Options par défaut"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:55
 msgid "Revert All Settings to the Factory Defaults"
-msgstr "Restaure toutes les options à leur valeurs par défaut."
+msgstr "Restaurer toutes les options à leur valeurs par défaut."
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:194
 msgid ""
@@ -4060,7 +4058,7 @@ msgstr "Toujours afficher le dialogue “Enregistrer sous...”"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DefaultActionPaneItem.java:50
 msgid "Always Append (#) to the Filename"
-msgstr "Toujours rajouter “ (n°)” au nom de fichier"
+msgstr "Toujours rajouter (n°) au nom de fichier"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DefaultActionPaneItem.java:51
 msgid "Always Ask What to do"
@@ -4393,7 +4391,7 @@ msgstr "Nom d’utilisateur :"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:49
 msgid "Password:"
-msgstr "Mot de passe[npsb]:"
+msgstr "Mot de passe:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:29
 msgid "Proxy Options"
@@ -4421,7 +4419,7 @@ msgstr "Socks v5"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:44
 msgid "HTTP"
-msgstr "Mandataire HTTP CONNECT"
+msgstr "HTTP"
 
 #. *
 #. * Constant for the key of the locale-specific <tt>String</tt> for the
@@ -4437,7 +4435,7 @@ msgstr "Hôte mandataire :"
 #.
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:56
 msgid "Port:"
-msgstr "Port :"
+msgstr "Port:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:18
 msgid "FrostClick Promotions"
@@ -4512,7 +4510,7 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:77
 msgid " torrents and "
-msgstr " torrents et"
+msgstr " torrents et "
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:77
 msgid ""
@@ -4558,7 +4556,7 @@ msgid ""
 "You can display a measurement of your connection quality in the status bar."
 msgstr ""
 "Vous pouvez afficher dans la barre d’état l’indicateur de la qualité de "
-"votre connexion au réseau Gnutella."
+"votre connexion."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:30
 msgid "Show Connection Quality Indicator:"
@@ -4617,7 +4615,7 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:22
 msgid "BitTorrent Global Tranfer Speeds"
-msgstr "Vitesse de Transfert Globale BitTorrent"
+msgstr "Vitesses de Transfert Globales BitTorrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:24
 msgid ""
@@ -4694,7 +4692,7 @@ msgstr "Lecteur vidéo"
 msgid "You can have FrostWire import newly downloaded songs into iTunes."
 msgstr ""
 "Vous pouvez indiquer à FrostWire d’importer automatiquement dans iTunes les "
-"nouveaux fichiers chargés."
+"nouvelles musiques chargées."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:20
 msgid "Enable iTunes importing:"
@@ -4747,7 +4745,7 @@ msgstr "Rechercher des produits liés sur Amazon"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:56
 msgid "Download All Selected Files"
-msgstr "Charge tous les fichiers sélectionnés."
+msgstr "Charger tous les fichiers sélectionnés."
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:57
 msgid ""
@@ -5232,7 +5230,7 @@ msgstr "userinforeply"
 
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:126
 msgid "mouse"
-msgstr "mouse"
+msgstr "souris"
 
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:234
 msgid "helppage"
@@ -5261,7 +5259,7 @@ msgstr "helppage"
 #~ msgstr "Vidéo"
 
 #~ msgid "Sort:"
-#~ msgstr "Port :"
+#~ msgstr "Tri :"
 
 #~ msgid "None"
 #~ msgstr "Non"
@@ -5282,7 +5280,7 @@ msgstr "helppage"
 #~ msgstr "Taille"
 
 #~ msgid "Open"
-#~ msgstr "Ouvrir :"
+#~ msgstr "Ouvrir"
 
 #~ msgid "Delete Files"
 #~ msgstr "&Effacer le(s) fichier(s)"
@@ -5291,7 +5289,7 @@ msgstr "helppage"
 #~ msgstr "Fermeture"
 
 #~ msgid "Error deleting file"
-#~ msgstr "Transfert du fichier"
+#~ msgstr "Erreur de suppression du fichier"
 
 #~ msgid "Connected"
 #~ msgstr "Connecté depuis le"
@@ -5303,7 +5301,7 @@ msgstr "helppage"
 #~ msgstr "Chargements"
 
 #~ msgid "Cancel All"
-#~ msgstr "Annuler"
+#~ msgstr "Tout Annuler"
 
 #~ msgid "Clear Finished"
 #~ msgstr "Purger les inactifs"
@@ -5366,13 +5364,13 @@ msgstr "helppage"
 #~ msgstr "Afficher le lecteur de médias"
 
 #~ msgid "Send File..."
-#~ msgstr "Sauvegarde du fichier..."
+#~ msgstr "Envoyer le fichier..."
 
 #~ msgid "Generate &Error"
 #~ msgstr "Génér&er une erreur"
 
 #~ msgid "Generate a Popup Error for Testing"
-#~ msgstr "Génère un dialogue d’erreur pour tests."
+#~ msgstr "Génèrer un dialogue d’erreur pour tests."
 
 #~ msgid "Player"
 #~ msgstr "Lecteur"
@@ -5596,7 +5594,7 @@ msgstr "helppage"
 #~ msgstr "Accès expérimental au disque"
 
 #~ msgid "Clear"
-#~ msgstr "Effacer tout"
+#~ msgstr "Tout Effacer"
 
 #~ msgid "Delay: "
 #~ msgstr "retard: "
@@ -5823,7 +5821,7 @@ msgstr "helppage"
 #~ msgstr "Veuillez patienter durant la connexion de votre agent au réseau."
 
 #~ msgid "Poor"
-#~ msgstr "Votre connexion au réseau est médiocre."
+#~ msgstr "Faible"
 
 #~ msgid ""
 #~ "You are connected to few hosts and have an unstable connection the network"
@@ -5832,7 +5830,7 @@ msgstr "helppage"
 #~ "peut être instable pour certaines recherches."
 
 #~ msgid "Fair"
-#~ msgstr "Votre connexion au réseau est correcte."
+#~ msgstr "Passable"
 
 #~ msgid "Your connection to the network is getting stronger"
 #~ msgstr ""
@@ -5840,7 +5838,7 @@ msgstr "helppage"
 #~ "quelques recherches."
 
 #~ msgid "Good"
-#~ msgstr "Votre connexion au réseau est bonne."
+#~ msgstr "Bonne."
 
 #~ msgid ""
 #~ "You are not yet fully connected to the network, but have a very good "
@@ -5851,10 +5849,10 @@ msgstr "helppage"
 #~ "recherches fructueuses."
 
 #~ msgid "Excellent"
-#~ msgstr "Votre connexion au réseau est excellente."
+#~ msgstr "Excellente"
 
 #~ msgid "Your connection to the network is very strong"
-#~ msgstr "Votre connexion au réseau est excellente."
+#~ msgstr "Forte"
 
 #~ msgid "Waking Up"
 #~ msgstr "Réveil en cours"
@@ -5863,7 +5861,7 @@ msgstr "helppage"
 #~ msgstr "Afficher le nombre de fichiers partagés"
 
 #~ msgid "Show Store Indicator"
-#~ msgstr "Afficher l’indicateur de pare-feu :"
+#~ msgstr "Afficher l’indicateur de pare-feu"
 
 #~ msgid "You are sharing {0} file"
 #~ msgid_plural "You are sharing {0} files"
@@ -5884,7 +5882,7 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "Vous pouvez changer l’apparence de FrostWire en allant sur “Affichage > "
 #~ "Appliquer un thème >” et en sélectionnant le nouveau thème. De tous "
-#~ "nouveaux thèmes sont sur le site web de FrostWire, accessible par "
+#~ "nouveaux thèmes sont sur le site web de FrostWire, accessibles par "
 #~ "l’option “Obtenir d’autres thèmes...”. Si vous téléchargez les thèmes en "
 #~ "utilisant les liens “Magnet” affichés sur le site, ils seront téléchargés "
 #~ "avec FrostWire et FrostWire vous demandera automatiquement si vous voulez "
@@ -6175,7 +6173,7 @@ msgstr "helppage"
 #~ "(terabyte)."
 #~ msgstr ""
 #~ "Vous voulez partager un très gros fichier ? FrostWire supporte des "
-#~ "tailles de fichiers jusqu’à 1 Tio (tébioctet, ou 1 024 Gio)."
+#~ "tailles de fichiers jusqu’à 1 Tio (téraoctet, ou 1 024 Gio)."
 
 #~ msgid ""
 #~ "Want to be an Ultrapeer? Leave FrostWire running as long as possible. If "
@@ -6270,10 +6268,10 @@ msgstr "helppage"
 #~ "de liste !"
 
 #~ msgid "Upgrade FrostWire"
-#~ msgstr "&Utilisation de FrostWire"
+#~ msgstr "Mettre à jour FrostWire"
 
 #~ msgid "Upgrade to FrostWire?"
-#~ msgstr "&Utilisation de FrostWire"
+#~ msgstr "Passer à FrostWire?"
 
 #~ msgid "Upgrade Your Java"
 #~ msgstr "Mettez à niveau votre Java"
@@ -6295,7 +6293,7 @@ msgstr "helppage"
 #~ msgstr "Voulez-vous obtenir votre mise à niveau gratuite de Java ?"
 
 #~ msgid "Get FrostWire Now"
-#~ msgstr "Utiliser FrostWire pour..."
+#~ msgstr "Obtenez FrostWire Maintenant"
 
 #~ msgid "Why"
 #~ msgstr "Pourquoi ?"
@@ -6317,7 +6315,7 @@ msgstr "helppage"
 #~ "html>"
 #~ msgstr ""
 #~ "<html><b>Votre version de FrostWire a été corrompue par un virus ou "
-#~ "troyen !</b><br/><br/>Veuillez visiter <a href=\"http://www.frostwire.com/"
+#~ "un cheval de troie !</b><br/><br/>Veuillez visiter <a href=\"http://www.frostwire.com/"
 #~ "corrupted\">www.frostwire.com</a> et chargez la dernière version "
 #~ "officielle de FrostWire.</html>"
 
@@ -6421,28 +6419,28 @@ msgstr "helppage"
 #~ msgstr "Messages (E/S)"
 
 #~ msgid "Messages In"
-#~ msgstr "Messages Dedans"
+#~ msgstr "Messages Entrants"
 
 #~ msgid "Messages Out"
-#~ msgstr "Messages Dehors"
+#~ msgstr "Messages Sortants"
 
 #~ msgid "Bandwidth (I/O)"
 #~ msgstr "Bande passante (E/S)"
 
 #~ msgid "Bandwidth In"
-#~ msgstr "Largeur de bande Dedans"
+#~ msgstr "Largeur de bande Entrante"
 
 #~ msgid "Bandwidth Out"
-#~ msgstr "Largeur de bande Dehors"
+#~ msgstr "Largeur de bande Sortante"
 
 #~ msgid "Dropped (I/O)"
-#~ msgstr "Écartés (E/S)"
+#~ msgstr "Perdus (E/S)"
 
 #~ msgid "Dropped In"
-#~ msgstr "Laissé tomber Dedans"
+#~ msgstr "Perdus Entrants"
 
 #~ msgid "Dropped Out"
-#~ msgstr "Lâché"
+#~ msgstr "Perdus Sortants"
 
 #~ msgid "Protocol"
 #~ msgstr "Protocole"
@@ -6454,19 +6452,19 @@ msgstr "helppage"
 #~ msgstr "Compression (E/S)"
 
 #~ msgid "Compressed In"
-#~ msgstr "Comprimé Dedans"
+#~ msgstr "Compressé Entrant"
 
 #~ msgid "Compressed Out"
-#~ msgstr "Comprimé Dehors"
+#~ msgstr "Compressé Sortant"
 
 #~ msgid "SSL Overhead (I/O)"
 #~ msgstr "Surcharge SSL (E/S)"
 
 #~ msgid "SSL Overhead In"
-#~ msgstr "SSL Aérien Dedans"
+#~ msgstr "Surcharge SSL Entrant"
 
 #~ msgid "SSL Overhead Out"
-#~ msgstr "SSL Aérien Dehors"
+#~ msgstr "Surcharge SSL Sortant"
 
 #~ msgid "QRP (%)"
 #~ msgstr "QRP (%/éléments)"
@@ -6520,7 +6518,7 @@ msgstr "helppage"
 #~ msgstr "Pair"
 
 #~ msgid "0.6"
-#~ msgstr "Basique"
+#~ msgstr "0.6"
 
 #~ msgid ""
 #~ "You dropped the following files/folders on LimeWire, please select the "
@@ -6715,13 +6713,13 @@ msgstr "helppage"
 #~ msgstr "Purger le fichier chargé"
 
 #~ msgid "Clear Selected Downloads"
-#~ msgstr "Purge les chargements sélectionnés de la liste."
+#~ msgstr "Purger les chargements sélectionnés de la liste."
 
 #~ msgid "Launch Download"
 #~ msgstr "Lancer le fichier chargé"
 
 #~ msgid "Launch Selected Downloads"
-#~ msgstr "Lance les chargements sélectionnés."
+#~ msgstr "Lancer les chargements sélectionnés."
 
 #~ msgid "Preview Download"
 #~ msgstr "Lancer un aperçu du chargement"
@@ -6995,7 +6993,7 @@ msgstr "helppage"
 #~ msgstr "Vérification des mises à jour..."
 
 #~ msgid "seconds left)"
-#~ msgstr "secondes"
+#~ msgstr "secondes restantes)"
 
 #~ msgid "Saving"
 #~ msgstr "Enregistrement"
@@ -7850,7 +7848,7 @@ msgstr "helppage"
 #~ "cours."
 
 #~ msgid "Test action!"
-#~ msgstr "Description"
+#~ msgstr "Action de test!"
 
 #~ msgid ""
 #~ "The skin file you selected does not exist or is invalid. Please choose "
@@ -8766,7 +8764,7 @@ msgstr "helppage"
 #~ msgstr "Requête de discussion (CHAT)"
 
 #~ msgid "You are sharing"
-#~ msgstr "Le nombre de fichiers que vous partagez actuellement."
+#~ msgstr "Vous partagez actuellement"
 
 #~ msgid "Please enter the copyright holder of the file you want to publish."
 #~ msgstr ""
@@ -9056,7 +9054,7 @@ msgstr "helppage"
 #~ msgid "There was an error while connecting to the internet archive."
 #~ msgstr ""
 #~ "Une erreur s’est produite lors de la tentative de connexion avec "
-#~ "“l’Internet Archive”."
+#~ "“l’Archive Internet”."
 
 #~ msgid ""
 #~ "There was an error while logging in to the Internet Archive. Please check "
@@ -9378,13 +9376,13 @@ msgstr "helppage"
 #~ msgstr "9 transits restants"
 
 #~ msgid "Pong Errors"
-#~ msgstr "Pong"
+#~ msgstr "Erreurs Pong"
 
 #~ msgid "Reply Errors"
-#~ msgstr "Résultats"
+#~ msgstr "Erreurs de Réponses"
 
 #~ msgid "Push Errors"
-#~ msgstr "Mandat de renvoi"
+#~ msgstr "Erreurs de renvoi"
 
 #~ msgid "No Route"
 #~ msgstr "Résultats non routables"
@@ -10394,10 +10392,10 @@ msgstr "helppage"
 #~ msgstr "Validation demandée"
 
 #~ msgid "Height:"
-#~ msgstr "Largeur :"
+#~ msgstr "Hauteur :"
 
 #~ msgid "Please press OK to permanently remove license."
-#~ msgstr "Veuillez cliquer OK pour ôeter la licence de façon permanente."
+#~ msgstr "Veuillez cliquer OK pour ôter la licence de façon permanente."
 
 #~ msgid "Vendor Messages"
 #~ msgstr "Message propriétaire"
