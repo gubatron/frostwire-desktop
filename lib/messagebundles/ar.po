@@ -1152,12 +1152,12 @@ msgid ""
 "users on the internet may<br/>only download file chunks of that torrent from "
 "you while you're downloading its<br/>data files. <strong>Some trackers will "
 "penalize this Leeching behavior</strong>.</html>"
-msgstr "
-< html><strong>لا ترفع تحميلات التورينت المنتهية .</strong> BitTorrent 
-ربما يستطيع مستخدمي الإنترنت <br/>من تحميل أجزاء الملف لهذا التورينت من  
-بينما تقوم بتحميل <br/>ملفات بياناته. <strong>سوف تقوم بعض المتتبعات ب 
-بحظر سلوك التحميل هذا </strong>.</html>
-"
+msgstr ""
+"< html><strong>لا ترفع تحميلات التورينت المنتهية .</strong> BitTorrent "
+"ربما يستطيع مستخدمي الإنترنت <br/>من تحميل أجزاء الملف لهذا التورينت من"  
+"بينما تقوم بتحميل <br/>ملفات بياناته. <strong>سوف تقوم بعض المتتبعات " 
+"بحظر سلوك التحميل هذا </strong>.</html>"
+
 
 #: gui/com/frostwire/gui/bittorrent/TorrentUtil.java:389
 #: gui/com/frostwire/gui/bittorrent/TorrentUtil.java:489
@@ -2238,22 +2238,23 @@ msgstr " حفظ التنزيلات حتى (0) ربما لا يعمل بفاعل�
 msgid ""
 "FrostWire was unable to create your settings folder and is using a temporary "
 "folder.  Your settings may be deleted when you close FrostWire. "
-msgstr "لم يتمكن فروست واير من إنشاء مجلد إعداداتك ويستخدم مجلد مؤقت
-". ربما تحذف إعداداتك عند إغلاق فروست واير.""
+msgstr "لم يتمكن فروست واير من إنشاء مجلد إعداداتك ويستخدم مجلد مؤقت"
+". ربما تحذف إعداداتك عند إغلاق فروست واير."
 
 #: gui/com/limegroup/gnutella/gui/SettingsWarningManager.java:35
 msgid ""
 "FrostWire has encountered problems in managing your settings.  Your settings "
 "changes may not be saved on shutdown."
-msgstr ""حدثت مشكلات لفروست واير خلال إدارة إعداداتك.
+msgstr "حدثت مشكلات لفروست واير خلال إدارة إعداداتك."
  "قد لا تحفظ إعداداتك عند الإغلاق."
+
 
 #: gui/com/limegroup/gnutella/gui/SettingsWarningManager.java:38
 msgid ""
 "FrostWire has encountered problems in loading your settings.  FrostWire will "
 "attempt to use the default values; however, may behave unexpectedly."
 msgstr "يواجه فروست واير مشكلات في تحميل إعداداتك. سوف يحاول فروست واير استخدام قيمك الإفتراضية"
-ومع هذا قد يعمل بطريقة غير منضبطة.""
+"ومع هذا قد يعمل بطريقة غير منضبطة."
 
 #: gui/com/limegroup/gnutella/gui/ShutdownWindow.java:25
 msgid "Shutting down FrostWire..."
@@ -2409,7 +2410,7 @@ msgid ""
 "FrostWire's junk filter."
 msgstr "هل سئمت من توقف التنزيلات في منتصف الطريق؟ إنها تساعد على التقاط نتائج البحث بعدد أكبر في عمود '#'.إن '#' هي كمية الأماكن الفريدة في الشبكة التي تستضيف ملفك. كلما زادت"
 "المصادر كلما كان  أفضل في الحصول على ملفك! في حالة ظهور نتيجة ملف تالف لديها الكثير من المصادر"
-استخدم<font color=\"185ea8\">Junk</font> "الزر لتدريب مرشح فروست واير"
+"استخدم<font color=\"185ea8\">Junk</font> "الزر لتدريب مرشح فروست واير"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:25
 msgid ""
@@ -2434,8 +2435,8 @@ msgid ""
 "completing successfully."
 msgstr "كلما كانت النتيجة عليها نجوم أكبر كلما زادت فرص التنزيل"
 "الكامل بنجاح! بعض نتائج البحث قد تظهر بأربعة نجوم"
-"زرقاء لـ'Ethernet'"هذه النتائج لها فرصة كبيرة في 
-""الإنتهاء بنجاح
+"زرقاء لـ'Ethernet'"هذه النتائج لها فرصة كبيرة في "
+"الانتهاء بنجاح"[
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:28
 msgid ""
@@ -2448,8 +2449,8 @@ msgstr "إنها تساعد الشبكة على إبقاء فروست واير �
 msgid ""
 "Passionate about digital rights? Visit the <a href=\"{0}\">Electronic "
 "Frontier Foundation</a> and see what you can do to help."
-msgstr "هل أنت متحمس للحقوق الرقمية؟
- قم بزيارة"<a href=\"{0}\">مؤسسة إلكترونيك فرونتير</a> "وشاهد ماذا يمكنك تقديمه للمساعدة""
+msgstr "هل أنت متحمس للحقوق الرقمية؟"
+ "قم بزيارة"<a href=\"{0}\">مؤسسة إلكترونيك فرونتير</a> "وشاهد ماذا يمكنك تقديمه للمساعدة"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:30
 msgid ""
@@ -2457,8 +2458,8 @@ msgid ""
 "French, German, Japanese, Italian, Spanish and many more. Visit FrostWire's "
 "<a href=\"{0}\">internationalization page</a> for information on how you can "
 "help translation efforts!"
-msgstr ""إن فروست واير مترجم للعديد من اللغات المختلفة. قم
-"بزيارة صفحة فروست واير العالمية للمزيد من المعلومات حول" كيفية" المساعدة في جهود الترجمة!""
+msgstr "إن فروست واير مترجم للعديد من اللغات المختلفة. قم"
+"بزيارة صفحة فروست واير العالمية للمزيد من المعلومات حول" كيفية" المساعدة في جهود الترجمة!"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:31
 msgid ""
@@ -4098,7 +4099,7 @@ msgid ""
 " files that FrostWire has learned to speed up your search results.\n"
 "Do you wish to continue?"
 msgstr "الملفات التي عرف عنها فروست واير بأنها ستزيد من نتائج بحثك..\n"
-"هل ترغب في الاستمرار؟""
+"هل ترغب في الاستمرار؟"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:24
 msgid ""
