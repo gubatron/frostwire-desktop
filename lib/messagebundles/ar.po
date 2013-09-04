@@ -1155,9 +1155,8 @@ msgid ""
 msgstr "
 < html><strong>لا ترفع تحميلات التورينت المنتهية .</strong> BitTorrent 
 ربما يستطيع مستخدمي الإنترنت <br/>من تحميل أجزاء الملف لهذا التورينت من  
-بينما تقوم بتحميل <br/>ملفات بياناته. <strong>سوف تقوم بعض المتتبعات ب 
-بحظر سلوك التحميل هذا </strong>.</html>
-"
+بينما تقوم بتحميل<br/>ملفات بياناته. <strong>سوف تقوم بعض المتتبعات ب 
+بحظر سلوك التحميل هذا</strong>.</html>"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentUtil.java:389
 #: gui/com/frostwire/gui/bittorrent/TorrentUtil.java:489
