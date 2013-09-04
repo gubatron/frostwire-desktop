@@ -43,10 +43,10 @@ public final class FrostWireUtils {
 	/** 
 	 * Constant for the current version of FrostWire.
 	 */
-	private static final String FROSTWIRE_VERSION = "5.6.3";
+	private static final String FROSTWIRE_VERSION = "5.6.4";
 	
 	/** Build number for the current version, gets reset to 1 on every version bump*/
-	private static final int BUILD_NUMBER = 5;
+	private static final int BUILD_NUMBER = 1;
 
         /** Whether or not a temporary directory is in use. */
         private static boolean temporaryDirectoryInUse;
