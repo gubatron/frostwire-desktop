@@ -1,6 +1,11 @@
 frostwire (5.6.4) stable; urgency=high
-  * Fixes issues parsing some youtube urls.
- -- FrostWire Team <contact@frostwire.com>  Wed, 07 Aug 2013 16:20:00 -0500
+  * Fixes issues parsing some cloud urls.
+  * Fixes issues with soundcloud meta search.
+  * Spanish translation updated.
+  * French translation updated. Thanks @jeromemorignot.
+  * Portuguese translation updated. Thanks @tati110.
+  * Brazilian Portuguese translation updated. Thanks @tati110.
+ -- FrostWire Team <contact@frostwire.com>  Tue, 03 Sep 2013 14:49:33 -0500
 
 frostwire (5.6.3) stable; urgency=high
   * New Feature: Preview audio search results from Archive.org.
