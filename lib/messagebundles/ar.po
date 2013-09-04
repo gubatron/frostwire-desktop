@@ -1302,7 +1302,7 @@ msgid ""
 "<html><strong>Seed finished torrent downloads.</strong> BitTorrent users on "
 "the internet will be able<br/>to download file chunks of the data your "
 "torrents seed. (Recommended)</html>"
-msgstr "< html><strong>تم الانتهاء من رفع الملفات .</strong>BitTorrent 
+msgstr "<html><strong>تم الانتهاء من رفع الملفات .</strong>BitTorrent 
 سوف يتمكن مستخدمي على الإنترنت من<br/> تحميل أجزاء الملفات من  
 مرفوعات تورينت. (موصى به) </html>
 "
@@ -1314,7 +1314,7 @@ msgid ""
 "you while you're downloading its<br/>data files. <strong>Some trackers will "
 "penalize this Leeching behavior</strong>.</html>"
 msgstr "
-< html><strong>لا ترفع تحميلات التورينت المنتهية .</strong> BitTorrent 
+<html><strong>لا ترفع تحميلات التورينت المنتهية .</strong> BitTorrent 
 ربما يستطيع مستخدمي الإنترنت <br/>من تحميل أجزاء الملف لهذا التورينت من  
 بينما تقوم بتحميل<br/>ملفات بياناته. <strong>سوف تقوم بعض المتتبعات ب 
 بحظر سلوك التحميل هذا</strong>.</html>"
