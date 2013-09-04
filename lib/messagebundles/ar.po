@@ -2238,19 +2238,22 @@ msgstr " حفظ التنزيلات حتى (0) ربما لا يعمل بفاعل�
 msgid ""
 "FrostWire was unable to create your settings folder and is using a temporary "
 "folder.  Your settings may be deleted when you close FrostWire. "
-msgstr "لم يتمكن فروست واير من إنشاء مجلد إعداداتك ويستخدم مجلد مؤقت. ربما تحذف إعداداتك عند إغلاق فروست واير."
+msgstr "لم يتمكن فروست واير من إنشاء مجلد إعداداتك ويستخدم مجلد مؤقت
+". ربما تحذف إعداداتك عند إغلاق فروست واير.""
 
 #: gui/com/limegroup/gnutella/gui/SettingsWarningManager.java:35
 msgid ""
 "FrostWire has encountered problems in managing your settings.  Your settings "
 "changes may not be saved on shutdown."
-msgstr "حدثت مشكلات لفروست واير خلال إدارة إعداداتك. قد لا تحفظ إعداداتك عند الإغلاق."
+msgstr ""حدثت مشكلات لفروست واير خلال إدارة إعداداتك.
+ "قد لا تحفظ إعداداتك عند الإغلاق."
 
 #: gui/com/limegroup/gnutella/gui/SettingsWarningManager.java:38
 msgid ""
 "FrostWire has encountered problems in loading your settings.  FrostWire will "
 "attempt to use the default values; however, may behave unexpectedly."
-msgstr "يواجه فروست واير مشكلات في تحميل إعداداتك. سوف يحاول فروست واير استخدام قيمك الإفتراضية، ومع هذا قد يعمل بطريقة غير منضبطة."
+msgstr "يواجه فروست واير مشكلات في تحميل إعداداتك. سوف يحاول فروست واير استخدام قيمك الإفتراضية"
+ومع هذا قد يعمل بطريقة غير منضبطة.""
 
 #: gui/com/limegroup/gnutella/gui/ShutdownWindow.java:25
 msgid "Shutting down FrostWire..."
@@ -2404,7 +2407,9 @@ msgid ""
 "chance of getting your file! In case a junk result appears to have a lot of "
 "sources, use the <font color=\"185ea8\">Junk</font> button to train "
 "FrostWire's junk filter."
-msgstr "هل سئمت من توقف التنزيلات في منتصف الطريق؟ إنها تساعد على التقاط نتائج البحث بعدد أكبر في عمود '#'.إن '#' هي كمية الأماكن الفريدة في الشبكة التي تستضيف ملفك. كلما زادت المصادر كلما كان  أفضل في الحصول على ملفك! في حالة ظهور نتيجة ملف تالف لديها الكثير من المصادر، استخدم<font color=\"185ea8\">Junk</font> الزر لتدريب مرشح فروست واير"
+msgstr "هل سئمت من توقف التنزيلات في منتصف الطريق؟ إنها تساعد على التقاط نتائج البحث بعدد أكبر في عمود '#'.إن '#' هي كمية الأماكن الفريدة في الشبكة التي تستضيف ملفك. كلما زادت"
+"المصادر كلما كان  أفضل في الحصول على ملفك! في حالة ظهور نتيجة ملف تالف لديها الكثير من المصادر"
+استخدم<font color=\"185ea8\">Junk</font> "الزر لتدريب مرشح فروست واير"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:25
 msgid ""
@@ -2417,7 +2422,9 @@ msgid ""
 "You can sort your search results by clicking on a column. The most useful "
 "column to sort by is the 'Seeds' column, which represents an approximate "
 "number of computers that have the entire file and are online."
-msgstr "يمكنك فرز نتائج بحثك بالضغط على عمود. العمود الأكثر فائدة للفرز هو عمود التحميلات الذي يعرض رقم تقريبي لأجهزة الحاسب التي لديها الملف بالكامل وتوجد على الشبكة"
+msgstr ""يمكنك فرز نتائج بحثك بالضغط على عمود.
+ "العمود الأكثر فائدة للفرز هو عمود التحميلات الذي يعرض"
+ "رقم تقريبي لأجهزة الحاسب التي لديها الملف بالكامل وتوجد على الشبكة"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:27
 msgid ""
@@ -2426,6 +2433,9 @@ msgid ""
 "stars and a speed of 'Ethernet'. These results have the greatest chance of "
 "completing successfully."
 msgstr "كلما كانت النتيجة عليها نجوم أكبر كلما زادت فرص التنزيل"
+"الكامل بنجاح! بعض نتائج البحث قد تظهر بأربعة نجوم"
+"زرقاء لـ'Ethernet'"هذه النتائج لها فرصة كبيرة في 
+""الإنتهاء بنجاح
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:28
 msgid ""
@@ -2438,7 +2448,8 @@ msgstr "إنها تساعد الشبكة على إبقاء فروست واير �
 msgid ""
 "Passionate about digital rights? Visit the <a href=\"{0}\">Electronic "
 "Frontier Foundation</a> and see what you can do to help."
-msgstr "هل أنت متحمس للحقوق الرقمية؟ قم بزيارة<a href=\"{0}\">مؤسسة إلكترونيك فرونتير</a> وشاهد ماذا يمكنك تقديمه للمساعدة   "
+msgstr "هل أنت متحمس للحقوق الرقمية؟
+ قم بزيارة"<a href=\"{0}\">مؤسسة إلكترونيك فرونتير</a> "وشاهد ماذا يمكنك تقديمه للمساعدة""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:30
 msgid ""
@@ -2446,48 +2457,49 @@ msgid ""
 "French, German, Japanese, Italian, Spanish and many more. Visit FrostWire's "
 "<a href=\"{0}\">internationalization page</a> for information on how you can "
 "help translation efforts!"
-msgstr "إن فروست واير مترجم للعديد من اللغات المختلفة. قم بزيارة صفحة فروست واير العالمية للمزيد من المعلومات حول كيفية المساعدة في جهود الترجمة!"
+msgstr ""إن فروست واير مترجم للعديد من اللغات المختلفة. قم
+"بزيارة صفحة فروست واير العالمية للمزيد من المعلومات حول" كيفية" المساعدة في جهود الترجمة!""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:31
 msgid ""
 "Small variations in the search title will still work. For example, if your "
 "buddy is sharing 'Frosty' but you searched for 'My Frosty', your buddy's "
 "file will still be found."
-msgstr ""
+msgstr "مازالت بعض التعديلات على عنوان البحث تعمل، مثلا، إذا كان صديقك يشارك كلمة Frost ولكنك بحثت عن My Frosty فإنك لا زلت تستطيع العثور على ملف صديقك"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:32
 msgid ""
 "Are you behind a firewall? At the bottom of FrostWire in the status bar, "
 "look for the globe. If there is a brick wall in front of it, your Internet "
 "connection is firewalled."
-msgstr ""
+msgstr "هل أنت محمي بجدار حماية؟ أنظر في أسفل فروست واير في شريط الحالة على شكل الكون. لو كان هناك حائط من الطوب أمامه فهذا يعني أن اتصالك بالإنترنت محمي بجدار ناري."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:33
 msgid ""
 "The numbers next to the up and down arrows in the status bar at the bottom "
 "of FrostWire show how fast all of your files are downloading or uploading "
 "combined."
-msgstr ""
+msgstr "الأرقام التي بجانب سهمي اعلى وأسفل في شريط الحالة لفروست واير توضح كم سرعة تحميل أو تنزيل ملفاتك مجتمعة."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:34
 msgid ""
 "You can increase the text size via <font color=\"185ea8\">View</font> &gt; "
 "<font color=\"185ea8\">Increase Font Size</font>."
-msgstr ""
+msgstr "يمكنك زيادة حجم النص من خلال<font color=\"185ea8\">قائمة عرض<font color=\"185ea8\">زيادة حجم الخط</font>."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:37
 msgid ""
 "Be careful not to share sensitive information like tax documents, passwords, "
 "etc. The torrents you are seeding are accesible by everyone on the network "
 "as long as they have the .torrent or a (magnet) link to it."
-msgstr ""
+msgstr "أحذر لا تشارك المعلومات الحساسة مثل ملفات الضرائب وكلمات المرور وغيرها. فملفات التورينت التي تحملها يصل إليها كل الناس على الشبكة طالما لديهم ملف .torrent او رابط (magnet( لها"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:38
 msgid ""
 "Unlike other peer-to-peer file-sharing programs, FrostWire can transfer "
 "files even if both parties are behind a firewall. You don't have to do "
 "anything extra because it happens automatically!"
-msgstr ""
+msgstr "وبعكس برامج مشاركة الملفات التي تعمل عن طريقة قرين لقرين، إن فروست واير يستطيع نقل الملفات حتى لو كان الطرفان خلف جدار ناري يحميهما. لا تحتاج لعمل أي شيء أكثر لأن ذلك ينفذ تلقائياً من قبل البرنامج!"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:39
 msgid ""
@@ -2495,7 +2507,7 @@ msgid ""
 "at all, just make sure you leave your FrostWire running while your friend(s) "
 "are downloading. They can pause and resume the download all they want as "
 "long as you or somebody else is seeding the same content."
-msgstr ""
+msgstr "هل ترغب في مشاركة ملفات ضخمة؟ ارسال مئات من الغيغابايت بلا مشكلات على الإطلاق، فقط تأكد من تركك لبرنامج فروست واير الخاص بك قيد التشغيل خلال قيام اصدقائك بالتنزيل. يسيطيعوا ان يوقفوا  التنزيل مؤقتنا أو يستأنفوه كما يرغبون طالما أنت أو أي شخص آخر يقوم بالتحميل نفس المحتوى."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:40
 msgid ""
@@ -2503,45 +2515,45 @@ msgid ""
 "page. When you put a magnet link on your web page (in the 'href' attribute "
 "of anchor tags), and a user clicks the link, a download will start in "
 "FrostWire."
-msgstr ""
+msgstr "إن روابط Magnet تسمح للمستخدمين بتنزيل الملفات خلال فروست واير من صفحات الويب. عندما تضع الرابط على صفحة الويب (في'href' attribute of anchor tags) ويضغط المستخدمين على هذا الرابط، سوف يبدأ التنزيل في فروست واير."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:41
 msgid "Don't want to seed? Go to Tools &gt; Options &gt; Bittorrent "
-msgstr ""
+msgstr "هل ترغب في تحميل ملفات ؟ اذهب إلى أدوات ثم خيارات ثم Bittorrent"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:52
 msgid ""
 "You can find out which version of FrostWire you are using by choosing 'About "
 "FrostWire' from the Help menu."
-msgstr ""
+msgstr "يمكنك معرفة أي النسخ من فروست واير التي تستخدمها عن طريق اختيار" عن فروست واير من قائمة المساعدة."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:53
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:71
 msgid ""
 "Be a good network participant, don't close FrostWire if someone is uploading "
 "from you."
-msgstr ""
+msgstr "كن شخصاً متعاونا على الشبكة، لا تغلق فروست واير إذا كان هناك شخصاً يحمل ملفات من لديك."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:54
 msgid ""
 "You can turn autocomplete for searching on or off by choosing 'Options' from "
 "the 'Tools' menu, and changing the value of 'Autocomplete Text' under the "
 "'View' option."
-msgstr ""
+msgstr "يمكنك تشغيل الاستكمال التلقائي للبحث أو لإيقا البحث من الخيارات من قائمة أدوات وتغيير القيمة الموجودة في نص الاستكمال التلقائي الموجودة تحت خيار عرض."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:55
 msgid ""
 "Want to see dialogs for questions which you previously marked 'Do not "
 "display this message again' or 'Always Use This Answer'? Go to Tools &gt; "
 "Options, and check 'Revert To Default' under View &gt; Popups."
-msgstr ""
+msgstr "هل ترغب في رؤية مربعات الحوار التي علمت عليها بعدم رؤيتها مرة أخرى أو دائما اختر هذه الإجابة؟ اذهب إلى أدوات وضع علامة على استعادة الإفتراضي تحت قائمة عرض الرسائل الإعتراضية"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:56
 msgid ""
 "You can ban certain words from appearing in your search results by choosing "
 "'Options' from the 'Tools' menu and adding new words to those listed under "
 "Filters &gt; Keywords."
-msgstr ""
+msgstr "يمكنك حظر كلمات معينة من الظهور في نتائج بحثك من خلال اختيار الخيارات من قائمة أدوات وإضافة الكلمات الجديدة إلى تلك المدرجة في المرشحات."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:57
 msgid ""
@@ -2549,7 +2561,7 @@ msgid ""
 "by right-clicking on the column headers and choosing 'More Options'. You can "
 "toggle other options here too, like whether or not to sort tables "
 "automatically and if you prefer the rows to be striped."
-msgstr ""
+msgstr "هل تحب نصائح الأدوات؟ أم تكره نصائح الأدوات؟ يمكنك تشغيلها أو تعطيلها في معظم الجداول من خلال الضغط على رأس العمود واختار المزيد من الخيارات. يمكنك التنقل بين الخيارات الأخرى هنا أيضاً. مثل إن كنت ترغب أو لا ترغب في فرز الجداول تلقائيا وإذا كنت تفضل أن تكون الأسهم مقلمة."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:58
 msgid ""
@@ -2557,7 +2569,7 @@ msgid ""
 "keeps resorting as the information changes. You can turn this automatic-"
 "sorting behavior off by right-clicking on a column header, choosing 'More "
 "Options' and un-checking 'Sort Automatically'."
-msgstr ""
+msgstr "يمكنك فرز التحميلات والتنزيلات وإلخ...، بالضغط على العمود. سوف يحتفظ الجدول بإعادة الفرز كلما تغيرت المعلومات. يمكنك تعطيل هذا الفرز التلقائي بالضغط يمينا بالماوس على رأس العمود واختيار المزيد من الخيارات وإزالة العلامة على الفزر التلقائي."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:59
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:91
@@ -2566,40 +2578,40 @@ msgid ""
 "FrostWire is written in Java, which means that having the latest version of "
 "Java will improve FrostWire's speed and stability. You can find the most "
 "recent Java release at <a href=\"{0}\">www.java.com</a>."
-msgstr ""
+msgstr "إن فروست واير مكتوب بلغة الجافا، وهذا يعني أن امتلاكك للنسخة الأحدث من جافا سوف يحسن من سرعة وثبات فروست واير. يمكنك الحصول على أحدث اصدارات جافا على<a href=\"{0}\">www.java.com</a>."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:60
 msgid ""
 "Are you unhappy with the small number of search results you received? Right-"
 "click a search result, then choose Search More, then Get More Results."
-msgstr ""
+msgstr "هل أنت حزين من العدد الصغير من نتائج البحث التي تحصل عليها؟ اضغط على نتيجة بحث ثم اختر مزيد من البحث ثم الحصول على المزيد من النتائج."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:70
 msgid ""
 "You can find out which version of FrostWire you are using by choosing 'About "
 "FrostWire' from the FrostWire menu."
-msgstr ""
+msgstr "يمكنك معرفة اي نسخ فروست واير تستخدمها أنت من خلال عن فروست واير من قائمة فروست واير"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:72
 msgid ""
 "You can turn autocomplete for searching on or off by choosing 'Preferences' "
 "from the 'FrostWire' menu, and changing the value of 'Autocomplete Text' "
 "under the 'View' option."
-msgstr ""
+msgstr "يمكنك تشغيل او تعطيل الاستكمال التلقائي من خلال اختيار التفضيلات من قائمة فروست واير وتغيير قيمة الاستكمال التلقائي تحت خيار عرض."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:73
 msgid ""
 "Want to see dialogs for questions which you previously marked 'Do not "
 "display this message again' or 'Always Use This Answer'? Go to FrostWire "
 "&gt; Preferences, and check 'Revert To Default' under View &gt; Popups."
-msgstr ""
+msgstr "هل ترغب في رؤية مربعات الحوار التي علمت عليها بعدم رؤيتها مرة أخرى أو دائما اختر هذه الإجابة؟ اذهب إلى أدوات وضع علامة على استعادة الإفتراضي تحت قائمة عرض الرسائل الإعتراضية"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:74
 msgid ""
 "You can ban certain words from appearing in your search results by choosing "
 "'Preferences' from the 'FrostWire' menu and adding new words to those listed "
 "under Filters &gt; Keywords."
-msgstr ""
+msgstr "يمكنك حظر كلمات معينة من الظهور في نتائج بحثك من خلال اختيار الخيارات من قائمة أدوات وإضافة الكلمات الجديدة إلى تلك المدرجة في المرشحات."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:75
 msgid ""
@@ -2607,7 +2619,7 @@ msgid ""
 "by control-clicking on the column headers and choosing 'More Options'. You "
 "can toggle other options here too, like whether or not to sort tables "
 "automatically and if you prefer the rows to be striped."
-msgstr ""
+msgstr "هل تحب نصائح الأدوات؟ أم تكره نصائح الأدوات؟ يمكنك تشغيلها أو تعطيلها في معظم الجداول من خلال الضغط على رأس العمود واختار المزيد من الخيارات. يمكنك التنقل بين الخيارات الأخرى هنا أيضاً. مثل إن كنت ترغب أو لا ترغب في فرز الجداول تلقائيا وإذا كنت تفضل أن تكون الأسهم مقلمة."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:76
 msgid ""
@@ -2615,7 +2627,7 @@ msgid ""
 "keeps resorting as the information changes. You can turn this automatic-"
 "sorting behavior off by control-clicking on a column header, choosing 'More "
 "Options' and un-checking 'Sort Automatically'."
-msgstr ""
+msgstr "يمكنك فرز التحميلات والتنزيلات وإلخ...، بالضغط على العمود. سوف يحتفظ الجدول بإعادة الفرز كلما تغيرت المعلومات. يمكنك تعطيل هذا الفرز التلقائي بالضغط يمينا بالماوس على رأس العمود واختيار المزيد من الخيارات وإزالة العلامة على الفزر التلقائي."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:77
 msgid ""
@@ -2623,26 +2635,26 @@ msgid ""
 "search result and choose Download As. You can even change the location of a "
 "download in progress by control-clicking the download and choosing Change "
 "File Location."
-msgstr ""
+msgstr "يمكنك حفظ التنزيلات الفردية إلى مواقع تختارها بنفسك من خلال الضغط على بكنترول على نتائج البحث واختيار تنزيل باسم. وتستطيع حتى تغيير موقع التنزيل الجاري من خلال الضغط بكنترول على التحميل واختيار تغيير موقع الملف."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:78
 msgid ""
 "Did you just download a file that you don't want to share? In the Library, "
 "control-click it and choose 'Stop Sharing File'."
-msgstr ""
+msgstr "هل قمت بتنزيل ملف لا ترغب في مشاركته؟ اضغط بكنترول عليه في المكتبة واختر توقف مشاركة الملف."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:79
 msgid ""
 "FrostWire's Library is a file manager, not just an MP3 Playlist. That means "
 "that when you delete a file from the Library, you have the option to either "
 "permanently delete the file from your computer or move it to the Trash."
-msgstr ""
+msgstr "إن مكتبة فروست واير هي مدير للملفات، وليس فقط قائمة لملفات MP3. وهذا يعني أنك تستطيع حذف ملف من المكتبة ولديك الخيار في الحذف الدائم للملف من الكمبيوتر أو نقله إلى سلة المحذوفات."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:80
 msgid ""
 "Want to play music in your default media player instead of in FrostWire? "
 "Control-click the FrostWire status bar and deselect 'Show Media Player'."
-msgstr ""
+msgstr "هل ترغب في تشغيل الموسيقى في مشغلك الافتراضي بدلا من فروست واير. اضغط بكنترول على شريط حالة فروست واير وقم بإزالة اختيار عرض مشغل الموسيقى."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:81
 msgid ""
@@ -2650,20 +2662,20 @@ msgid ""
 "images, in different folders on your computer automatically? Just go to "
 "FrostWire &gt; Preferences &gt; Saving to choose the location for each type "
 "of file."
-msgstr ""
+msgstr "هل تعرف أنك تستطيع حفظ الملفات المختلفة مثل الملفات الصوتية والفيديو أو الصور في مجلدات مختلفة على جهازك تلقائيا؟ فقط اذهب إلى تفضيلات فروست واير وحفظ لاختيار المكان لكل نوع من الملفات."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:82
 msgid ""
 "Make FrostWire's Junk filter block more results by making the filter "
 "stricter. Adjust that and more by going to FrostWire &gt; Preferences &gt; "
 "Filters &gt; Junk."
-msgstr ""
+msgstr "اجعل فروست واير يزيل المزيد من نتائج البحث عن طريق جعله أكثر صرامة. اضبط ذلك والمزيد بالذهاب إلى تفضيلات فروست واير ومرشحات الملفات."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:92
 msgid ""
 "Want FrostWire to look like your other Windows programs? Choose the Windows "
 "theme, available from the View &gt; Apply Skins menu."
-msgstr ""
+msgstr "هل ترغب في أن يكون مظهر فروست واير مثل برامج الويندوز الأخرى؟ اختر منظر ويندوز المتاح م قائمة عرض وتطبيق قائمة المظاهر."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:93
 msgid ""
@@ -2672,28 +2684,28 @@ msgid ""
 "the program associated with a file, go to the Folder Options in Windows "
 "Explorer (from the Tools menu). This is a Windows setting, not a FrostWire "
 "setting."
-msgstr ""
+msgstr "العمود '?'هي رموز للبرنامج المستخدم في فتح هذا النوع من الملفات. لتغيير البرنامج المرتبط بالملف، اذهب إلى خيارات المجلدات في الويندوز اكسبلورر (من قائمة أدوات). وهذا هو خيار من إعدادات ويندوز، وليس من إعدادات فروست واير." 
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:94
 msgid ""
 "FrostWire's Library is a file manager, not just an MP3 Playlist. That means "
 "that when you delete a file from the Library, you have the option to either "
 "permanently delete the file from your computer or move it to the Recycle Bin."
-msgstr ""
+msgstr "إن مكتبة فروست واير هي مدير للملفات، وليس فقط قائمة لملفات MP3. وهذا يعني أنك تستطيع حذف ملف من المكتبة ولديك الخيار في الحذف الدائم للملف من الكمبيوتر أو نقله إلى سلة المحذوفات."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:95
 msgid ""
 "When you close FrostWire, it minimizes to the system tray. To exit, right-"
 "click the system tray icon (next to the time), and select Exit. You can "
 "change this behavior by going to Tools &gt; Options &gt; System Tray."
-msgstr ""
+msgstr "عند إغلاق فروست واير، يحدث تصغير له إلى شريط النظام. لكي تخرج منه نهائياً. اضغط باليمين على الأيقونة في شريط النظام (الموجودة بجوار الوقت)ثم اختر الخروج. يمكنك تغيير هذا السلوك بالذهاب إلى أدوات وخيارات شريط النظام."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:105
 msgid ""
 "Want to play music in your preferred media player instead of in FrostWire? "
 "Right-click the FrostWire status bar and deselect 'Show Media Player'. Then "
 "go to Tools &gt; Options &gt; Helper Apps to set the program of your choice."
-msgstr ""
+msgstr "هل ترغب في تشغيل الموسيقى في مشغلك الافتراضي بدلا من فروست واير. اضغط بكنترول على شريط حالة فروست واير وقم بإزالة اختيار عرض مشغل الموسيقى."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:122
 msgid "Thank you for using FrostWire"
@@ -4661,7 +4673,7 @@ msgstr "ملف مشابه تم تنزيله مسبقاً"
 msgid ""
 "The path of the parent folder exceeds the maximum length of paths on the "
 "filesystem. {0} "
-msgstr ""
+msgstr "إن مسار المجلد الرئيسي يتعدى الحد الأقصى للطول المسموح لمسارات ملفات النظام"
 
 #: gui/irc/ConfigurationLoader.java:131
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:79
