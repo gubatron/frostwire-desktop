@@ -38,8 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.io.IOUtils;
-
 /**
  * Provides convenience functionality ranging from getting user information,
  * copying files to getting the stack traces of all current threads.
