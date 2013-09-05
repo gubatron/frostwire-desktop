@@ -83,13 +83,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     }
     
     /* (non-Javadoc)
-     * @see com.limegroup.gnutella.LifecycleManager#isShutdown()
-     */
-    public boolean isShutdown() {
-        return getCurrentState() == State.STOPPED;
-    }
-    
-    /* (non-Javadoc)
      * @see com.limegroup.gnutella.LifecycleManager#installListeners()
      */
     public void installListeners() {

@@ -6,8 +6,6 @@ public interface LifecycleManager {
 
     public boolean isStarted();
 
-    public boolean isShutdown();
-
     /** Phase 1 of the startup process -- wires listeners together. */
     public void installListeners();
 
