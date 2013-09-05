@@ -105,19 +105,19 @@
 	
 	    <!-- generate default bundle for complete messages -->
 	    <gettext-generate-default targetBundle="org.limewire.i18n.Messages"
-	    						  outputDirectory="lib/messagebundles" 
-	    						  potfile="lib/messagebundles/frostwire.pot"/>
+	    			      outputDirectory="lib/messagebundles" 
+	    			      potfile="lib/messagebundles/frostwire.pot"/>
 	
 	    <!-- generate complete bundles -->
 	    <gettext-dist targetBundle="org.limewire.i18n.Messages"
-	   				  poDirectory="lib/messagebundles"
-	    			  outputDirectory="lib/messagebundles"
-	   				  percentage="${translation.cutoff}"/>
+	   		  poDirectory="lib/messagebundles"
+	    		  outputDirectory="lib/messagebundles"
+	   		  percentage="${translation.cutoff}"/>
 	
 	    <!-- generate the empty en.po file without percentage  -->
 	    <gettext-dist targetBundle="org.limewire.i18n.Messages"
-				      outputDirectory="lib/messagebundles">
-			<fileset dir="lib/messagebundles" includes="en.po"/>
+			  outputDirectory="lib/messagebundles">
+	      <fileset dir="lib/messagebundles" includes="en.po"/>
 	    </gettext-dist>
 	    
 	    <!-- jar them -->
