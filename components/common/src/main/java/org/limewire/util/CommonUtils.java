@@ -15,6 +15,7 @@
 
 package org.limewire.util;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -618,7 +619,7 @@ public class CommonUtils {
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        } finally {
-	            IOUtils.closeQuietly(fis);
+	            closeQuietly(fis);
 	        }
 	    }
 	    
@@ -688,4 +689,14 @@ public class CommonUtils {
         
         return portableMetaDir;	    
 	}
+	
+    public static void closeQuietly(Closeable closeable) {
+        try {
+            if (closeable != null) {
+                closeable.close();
+            }
+        } catch (IOException ioe) {
+            // ignore
+        }
+    }
 }
