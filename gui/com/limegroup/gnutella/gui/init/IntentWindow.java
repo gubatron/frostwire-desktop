@@ -26,9 +26,9 @@ import java.util.Properties;
 
 import javax.swing.JPanel;
 
+import org.apache.commons.io.IOUtils;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
-import org.limewire.util.IOUtils;
 
 import com.frostwire.gui.theme.ThemeMediator;
 

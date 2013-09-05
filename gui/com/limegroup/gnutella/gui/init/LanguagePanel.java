@@ -36,7 +36,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.limewire.util.IOUtils;
+import org.apache.commons.io.IOUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 
@@ -153,8 +153,8 @@ public class LanguagePanel extends JPanel {
             code = reader.readLine();
         } catch (IOException ignored) {
         } finally {
-            IOUtils.close(in);
-            IOUtils.close(reader);
+            IOUtils.closeQuietly(in);
+            IOUtils.closeQuietly(reader);
         }
 
         String[] mapped = getLCID(code);

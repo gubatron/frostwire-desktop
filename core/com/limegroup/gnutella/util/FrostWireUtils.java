@@ -22,9 +22,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import org.apache.commons.io.IOUtils;
 import org.limewire.setting.SettingsFactory;
 import org.limewire.util.CommonUtils;
-import org.limewire.util.IOUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 import org.limewire.util.SystemUtils.SpecialLocations;
