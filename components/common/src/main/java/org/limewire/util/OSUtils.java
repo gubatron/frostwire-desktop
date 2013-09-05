@@ -52,6 +52,8 @@ public class OSUtils {
      * Variable for whether or not we're on Windows 7.
      */
     private static boolean _isWindows7;
+    
+    private static boolean _isWindows8;
 
     /** 
      * Variable for whether or not the operating system allows the 
@@ -104,6 +106,7 @@ public class OSUtils {
     public static void setOperatingSystems() {
     	_isWindows = false;
     	_isWindows7 = false;
+    	_isWindows8 = false;
     	_isWindowsVista = false;
     	_isWindowsNT = false;
     	_isWindowsXP = false;
@@ -126,12 +129,15 @@ public class OSUtils {
     	
     	if (os.indexOf("windows nt") != -1)
     		_isWindowsNT = true;
-    	if (os.indexOf("windows xp") != -1) 
-    		_isWindowsXP = true;
+        if (os.indexOf("windows xp") != -1)
+            _isWindowsXP = true;
         if (os.indexOf("windows vista") != -1)
             _isWindowsVista = true;
         if (os.indexOf("windows 7") != -1) {
-        	_isWindows7 = true;
+            _isWindows7 = true;
+        }
+        if (os.indexOf("windows 8") != -1) {
+            _isWindows8 = true;
         }
     	if(os.indexOf("windows 95") != -1)
     	   _isWindows95 = true;
@@ -256,6 +262,10 @@ public class OSUtils {
         return _isWindows7;
     }
     
+    public static boolean isWindows8() {
+        return _isWindows8;
+    }
+    
     /**
      * @return true if the application is running on a windows with
      * the 10 socket limit.
@@ -363,13 +373,6 @@ public class OSUtils {
      */
     public static boolean isUnix() {
     	return _isLinux || _isSolaris; 
-    }
-
-    /**
-     * Returns whether the OS is POSIX-like. 
-     */
-    public static boolean isPOSIX() {
-        return _isLinux || _isSolaris || _isMacOSX;
     }
 
     /**

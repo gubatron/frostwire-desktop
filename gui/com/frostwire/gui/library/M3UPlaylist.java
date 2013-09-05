@@ -26,8 +26,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.limewire.util.FileUtils;
-import org.limewire.util.IOUtils;
 
 public final class M3UPlaylist {
 
@@ -77,7 +77,7 @@ public final class M3UPlaylist {
                 }
             }
         } finally {
-            IOUtils.close(m3uFile);
+            IOUtils.closeQuietly(m3uFile);
         }
         return files;
     }
@@ -129,7 +129,7 @@ public final class M3UPlaylist {
                 }
             }
         } finally {
-            IOUtils.close(m3uFile);
+            IOUtils.closeQuietly(m3uFile);
         }
     }
 }

@@ -15,11 +15,8 @@
 
 package org.limewire.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -40,6 +37,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
+import org.apache.commons.io.IOUtils;
 
 /**
  * Provides convenience functionality ranging from getting user information,
@@ -182,95 +181,6 @@ public class CommonUtils {
             // The system should always have 8859_1
         }
         return result;
-    }
-
-    /**
-     * Copies the specified resource file into the current directory from
-     * the jar file. If the file already exists, no copy is performed.
-     *
-     * @param fileName the name of the file to copy, relative to the jar 
-     *  file -- such as "org/limewire/gui/images/image.gif"
-     * @param newFile the new <tt>File</tt> instance where the resource file
-     *  will be copied to -- if this argument is null, the file will be
-     *  copied to the current directory
-     * @param forceOverwrite specifies whether or not to overwrite the 
-     *  file if it already exists
-     */
-    public static void copyResourceFile(String fileName, File newFile,
-            boolean forceOverwrite) throws IOException {
-        if (newFile == null)
-    	    newFile = new File(".", fileName);
-    
-    	// return quickly if the file is already there, no copy necessary
-    	if( !forceOverwrite && newFile.exists() )
-            return;
-        
-    	String parentString = newFile.getParent();
-        if(parentString == null)
-            return;
-        
-    	File parentFile = new File(parentString);
-    	if(!parentFile.isDirectory())
-    		parentFile.mkdirs();
-    
-    	ClassLoader cl = CommonUtils.class.getClassLoader();			
-        //load resource using my class loader or system class loader
-        //Can happen if Launcher loaded by system class loader
-        URL resource = cl != null
-            ?  cl.getResource(fileName)
-            :  ClassLoader.getSystemResource(fileName);
-            
-        if(resource == null)
-            throw new IOException("resource: " + fileName + " doesn't exist.");
-        
-    	saveStream(resource.openStream(), newFile);
-    }
-    
-    /**
-     * Copies the src file to the destination file.
-     * This will always overwrite the destination.
-     */
-    public static void copyFile(File src, File dst) throws IOException {
-        saveStream(new FileInputStream(src), dst);
-    }
-    
-    /**
-     * Saves all data from the stream into the destination file.
-     * This will always overwrite the file.
-     */
-    public static void saveStream(InputStream inStream, File newFile) throws IOException {
-    	BufferedInputStream bis = null;
-    	BufferedOutputStream bos = null;            
-    	try {
-    		//buffer the streams to improve I/O performance
-    		final int bufferSize = 2048;
-            bis = new BufferedInputStream(inStream, bufferSize);
-            bos = new BufferedOutputStream(new FileOutputStream(newFile), bufferSize);
-            byte[] buffer = new byte[bufferSize];
-            int c = 0;
-    		
-    		do { //read and write in chunks of buffer size until EOF reached
-    			c = bis.read(buffer, 0, bufferSize);
-                if (c > 0)
-                    bos.write(buffer, 0, c);
-    		} while (c == bufferSize); //(# of bytes read)c will = bufferSize until EOF
-            
-            bos.flush();
-    	} catch(IOException e) {
-    		//if there is any error, delete any portion of file that did write
-    		newFile.delete();
-    	} finally {
-            if(bis != null) {
-                try {
-                    bis.close();
-                } catch(IOException ignored) {}
-            }
-            if(bos != null) {
-                try {
-                    bos.close();
-                } catch(IOException ignored) {}
-            }
-    	} 
     }
 
     /**
@@ -638,7 +548,7 @@ public class CommonUtils {
         File userDir = CommonUtils.getUserHomeDir();
 
         // Changing permissions without permission in Unix is rude
-        if(!OSUtils.isPOSIX() && userDir != null && userDir.exists())
+        if(OSUtils.isWindows() && userDir != null && userDir.exists())
             FileUtils.setWriteable(userDir);
         
         File settingsDir = new File(userDir, FROSTWIRE_500_PREFS_DIR_NAME);
@@ -762,7 +672,7 @@ public class CommonUtils {
             metaKey = windowsKey;
         } else if (OSUtils.isMacOSX() && metaConfiguration.containsKey(macKey)) {
             metaKey = macKey;
-        } else if (OSUtils.isPOSIX() && metaConfiguration.containsKey(posixKey)) {
+        } else if (OSUtils.isLinux() && metaConfiguration.containsKey(posixKey)) {
             metaKey = posixKey;
         }
         
@@ -773,7 +683,7 @@ public class CommonUtils {
                 portableMetaDir.mkdirs();
             }
             
-            if (!OSUtils.isPOSIX()) {
+            if (OSUtils.isWindows()) {
                 FileUtils.setWriteable(portableMetaDir);
             }
         }

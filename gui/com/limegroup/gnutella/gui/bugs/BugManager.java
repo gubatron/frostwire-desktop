@@ -38,12 +38,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.FileUtils;
-import org.limewire.util.IOUtils;
 import org.limewire.util.StringUtils;
 import org.limewire.util.Version;
 import org.limewire.util.VersionFormatException;
@@ -247,7 +247,7 @@ public final class BugManager {
             }
         } catch(IOException ignored) {
         } finally {
-            IOUtils.close(os);
+            IOUtils.closeQuietly(os);
         }
     }
     
