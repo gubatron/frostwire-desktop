@@ -548,7 +548,7 @@ public class CommonUtils {
         File userDir = CommonUtils.getUserHomeDir();
 
         // Changing permissions without permission in Unix is rude
-        if(!OSUtils.isPOSIX() && userDir != null && userDir.exists())
+        if(OSUtils.isWindows() && userDir != null && userDir.exists())
             FileUtils.setWriteable(userDir);
         
         File settingsDir = new File(userDir, FROSTWIRE_500_PREFS_DIR_NAME);
@@ -672,7 +672,7 @@ public class CommonUtils {
             metaKey = windowsKey;
         } else if (OSUtils.isMacOSX() && metaConfiguration.containsKey(macKey)) {
             metaKey = macKey;
-        } else if (OSUtils.isPOSIX() && metaConfiguration.containsKey(posixKey)) {
+        } else if (OSUtils.isLinux() && metaConfiguration.containsKey(posixKey)) {
             metaKey = posixKey;
         }
         
@@ -683,7 +683,7 @@ public class CommonUtils {
                 portableMetaDir.mkdirs();
             }
             
-            if (!OSUtils.isPOSIX()) {
+            if (OSUtils.isWindows()) {
                 FileUtils.setWriteable(portableMetaDir);
             }
         }
