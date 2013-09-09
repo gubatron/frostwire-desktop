@@ -51,6 +51,7 @@ import com.frostwire.gui.library.LibraryPlaylistsTableTransferable.Item;
 import com.frostwire.gui.library.tags.TagsData;
 import com.frostwire.gui.library.tags.TagsReader;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
@@ -191,20 +192,22 @@ public class LibraryUtils {
         createNewPlaylist(files, false);
     }
 
+    
+    
     public static void createNewPlaylist(final File[] files, final boolean starred) {
 
         final StringBuilder plBuilder = new StringBuilder();
 
-        GUIMediator.safeInvokeAndWait(new Runnable() {
-
-            @Override
-            public void run() {
-                String input = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(files));
+//        GUIMediator.safeInvokeAndWait(new Runnable() {
+//
+//            @Override
+//            public void run() {
+          String input = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(files));
                 if (!StringUtils.isNullOrEmpty(input, true)) {
                     plBuilder.append(input);
                 }
-            }
-        });
+//            }
+//        });
 
         String playlistName = plBuilder.toString();
 
