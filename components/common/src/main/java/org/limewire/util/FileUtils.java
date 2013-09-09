@@ -38,7 +38,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -51,10 +50,6 @@ public class FileUtils {
     
     private static final Log LOG = LogFactory.getLog(FileUtils.class);
     
-    private static final CopyOnWriteArrayList<FileLocker> fileLockers =
-        new CopyOnWriteArrayList<FileLocker>();
-    
-
     public static void writeObject(String fileName, Object obj) 
     throws IOException{
         writeObject(new File(fileName),obj);
@@ -296,61 +291,6 @@ public class FileUtils {
         }
         
 		return f.canWrite();
-    }
-    
-    /**
-     * Adds a new FileLocker to the list of FileLockers
-     * that are checked when a lock needs to be released
-     * on a file prior to deletion or renaming.
-     * 
-     * @param locker
-     */
-    public static void addFileLocker(FileLocker locker) {
-        fileLockers.addIfAbsent(locker);
-    }
-    
-    /**
-     * Removes <code>locker</code> from the list of FileLockers.
-     * 
-     * @see #addFileLocker(FileLocker) 
-     */
-    public static void removeFileLocker(FileLocker locker) {
-        fileLockers.remove(locker);
-    }
-
-    /**
-     * Forcibly renames a file, removing any locks that may
-     * be held from any FileLockers that were added.
-     * 
-     * @param src
-     * @param dst
-     * @return true if the rename succeeded
-     */
-    public static boolean forceRename(File src, File dst) {
-    	 // First attempt to rename it.
-        boolean success = src.renameTo(dst);
-        
-        // If that fails, try releasing the locks one by one.
-        if (!success) {
-            for(FileLocker locker : fileLockers) {
-                if(locker.releaseLock(src)) {
-                    success = src.renameTo(dst);
-                    if(success)
-                        break;
-                }
-            }
-        }
-        
-        // If that didn't work, try copying the file.
-        if (!success) {
-            success = copy(src, dst);
-            //if copying succeeded, get rid of the original
-            //at this point any active uploads will have been killed
-            if (success)
-            	src.delete();
-        }
-        
-        return success;
     }
     
     /**
