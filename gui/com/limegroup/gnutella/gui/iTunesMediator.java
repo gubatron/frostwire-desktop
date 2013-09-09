@@ -287,7 +287,7 @@ public final class iTunesMediator {
         scanForSongs(iTunesSettings.ITUNES_PLAYLIST.getValue(), file);
     }
 
-    public void scanForSongs(String playlist, File file) {
+    private void scanForSongs(String playlist, File file) {
         iTunesImportSettings.IMPORT_FILES.add(file);
         if (OSUtils.isMacOSX() || OSUtils.isWindows()) {
             addSongsITunes(playlist, file);
