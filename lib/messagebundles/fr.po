@@ -1250,8 +1250,8 @@ msgid ""
 "torrents seed. (Recommended)</html>"
 msgstr ""
 "<html><strong>Ensemencer les téléchargements de torrent terminés.</strong> "
-"Les utilisateurs BitTorrent sur Internet pourront<br/>télécharger des blocs "
-"de données de fichier de vos torrents ensemencés. (Recommandé)</html>"
+"Les utilisateurs BitTorrent sur Internet pourront télécharger des blocs "
+"de données de fichier de vos torrents ensemencés.<br/>(Recommandé)</html>"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:77
 msgid ""

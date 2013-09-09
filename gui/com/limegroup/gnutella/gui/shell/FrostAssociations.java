@@ -58,7 +58,12 @@ public class FrostAssociations {
 		return !getSupportedAssociations().isEmpty();
 	}
 	
-	private static Collection<LimeAssociationOption> getSupportedAssociationsImpl() {		
+	private static Collection<LimeAssociationOption> getSupportedAssociationsImpl() {
+	    if (CommonUtils.isPortable()) {
+	        return Collections.emptyList();
+	    }
+	    
+	    
 		Collection<LimeAssociationOption> ret = new ArrayList<LimeAssociationOption>();
 		
 		// strings that the shell will understand 

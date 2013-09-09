@@ -40,6 +40,7 @@ import javax.swing.JPanel;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.SettingsGroupManager;
+import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -101,8 +102,9 @@ public class SetupManager {
     private List<SetupWindow> windows;
 
     private boolean shouldShowAssociationsWindow() {
-        if (InstallSettings.ASSOCIATION_OPTION.getValue() == FrostAssociations.CURRENT_ASSOCIATIONS)
+        if (CommonUtils.isPortable() || (InstallSettings.ASSOCIATION_OPTION.getValue() == FrostAssociations.CURRENT_ASSOCIATIONS)) {
             return false;
+        }
 
         // display a window if silent grab failed. 
         return !GUIMediator.getAssociationManager().checkAndGrab(false);
