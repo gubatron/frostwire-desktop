@@ -30,6 +30,7 @@ import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.theme.ThemeMediator;
@@ -71,8 +72,12 @@ public final class TorrentSaveFolderComponent extends JPanel {
         gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.LINE_END;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
-
-        add(new ButtonRow(new Action[] { new DefaultAction(), new BrowseAction() }, ButtonRow.X_AXIS, ButtonRow.LEFT_GLUE), gbc);
+        
+        ButtonRow buttonRow = new ButtonRow(new Action[] { new DefaultAction(), new BrowseAction() }, ButtonRow.X_AXIS, ButtonRow.LEFT_GLUE);
+        boolean isPortable = CommonUtils.isPortable();
+        folderTextField.setEnabled(!isPortable);
+        buttonRow.setButtonsEnabled(!isPortable);
+        add(buttonRow, gbc);
     }
 
     public String getTorrentSaveFolderPath() {

@@ -155,6 +155,7 @@ final class MiscWindow extends SetupWindow {
         {
 
             JPanel chatCommunityPanel = new JPanel(new GridLayout(2, 0));
+            chatCommunityPanel.setMinimumSize(new Dimension(640,150));
 
             chatCommunityPanel.setBorder(ThemeMediator.createTitledBorder(I18n.tr("Chat Community")));
 
