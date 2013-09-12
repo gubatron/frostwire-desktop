@@ -22,6 +22,8 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.gudy.azureus2.core3.disk.DiskManager;
+import org.gudy.azureus2.core3.disk.DiskManagerFactory;
 import org.gudy.azureus2.core3.global.GlobalManager;
 import org.limewire.util.CommonUtils;
 
@@ -121,11 +123,16 @@ public class DownloadManagerImpl implements DownloadManager {
         String newLocationPrefix = SharingSettings.DEFAULT_TORRENT_DATA_DIR.getAbsolutePath();
 
         if (!previousSaveLocation.startsWith(newLocationPrefix)) {
+            //downloadManager.setForceStart(true);
+            downloadManager.setDataAlreadyAllocated(false);
+            
             File newSaveLocation = new File(SharingSettings.DEFAULT_TORRENT_DATA_DIR, downloadManager.getSaveLocation().getName());
             if (newSaveLocation.exists() && newSaveLocation.isDirectory()) {
+                DiskManager diskManager = DiskManagerFactory.create( downloadManager.getTorrent(), downloadManager);
+                diskManager.moveDataFiles(new File(SharingSettings.DEFAULT_TORRENT_DATA_DIR.getAbsolutePath()), downloadManager.getSaveLocation().getName());
                 downloadManager.setTorrentSaveDir(newSaveLocation.getAbsolutePath());
             } else if (downloadManager.getDiskManager().getFiles().length == 1) {
-                downloadManager.setTorrentSaveDir(SharingSettings.DEFAULT_TORRENT_DATA_DIR.getAbsolutePath());
+                //downloadManager.setTorrentSaveDir(SharingSettings.DEFAULT_TORRENT_DATA_DIR.getAbsolutePath());
             }
         }
         

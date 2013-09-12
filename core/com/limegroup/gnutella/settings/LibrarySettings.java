@@ -63,6 +63,8 @@ public class LibrarySettings extends LimeProps {
 
     
     public static void setupInitialLibraryFolders() {
+        SharingSettings.initTorrentDataDirSetting();
+        
         LibrarySettings.DIRECTORIES_TO_INCLUDE.add(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
         
         for (File f : FrostWireUtils.getFrostWire4SaveDirectories()) {
@@ -92,6 +94,15 @@ public class LibrarySettings extends LimeProps {
             System.setProperty("azureus.config.path", azureusUserPath.getAbsolutePath());
             System.setProperty("azureus.install.path", azureusUserPath.getAbsolutePath());
             AzureusStarter.revertToDefaultConfiguration();
+        }
+    }
+
+
+    public static void resetLibraryFoldersIfPortable() {
+        if (CommonUtils.isPortable()) {
+            LibrarySettings.DIRECTORIES_TO_INCLUDE.removeAll();
+            LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.setValue(DEFAULT_LIBRARY_FROM_DEVICE_DATA_DIR);
+            setupInitialLibraryFolders();
         }
     }
 }

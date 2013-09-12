@@ -698,7 +698,6 @@ public class CommonUtils {
     	        IS_PORTABLE = !metaConfiguration.isEmpty();
 	    }
 	    return IS_PORTABLE;
-
 	}
 	
     public static void closeQuietly(Closeable closeable) {

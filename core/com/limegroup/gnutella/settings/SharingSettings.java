@@ -55,13 +55,6 @@ public class SharingSettings extends LimeProps {
         new File(CommonUtils.getUserSettingsDir(), "image_cache");
     
     /**
-     * The directory for saving files.
-     */
-    public static final FileSetting DIRECTORY_FOR_SAVING_FILES = 
-        FACTORY.createFileSetting("DIRECTORY_FOR_SAVING_FILES", 
-                (PORTABLE_ROOT_FOLDER == null) ? FrostWireUtils.getFrostWireRootFolder() : PORTABLE_ROOT_FOLDER).setAlwaysSave(true);
-    
-    /**
      * Specifies whether or not completed downloads
      * should automatically be cleared from the download window.
      */    
@@ -94,6 +87,24 @@ public class SharingSettings extends LimeProps {
     private static final String DEFAULT_EXTENSIONS_TO_DISABLE =
         "au;doc;pdf;xls;rtf;bak;csv;dat;docx;xlsx;xlam;xltx;xltm;xlsm;xlsb;dotm;docm;dotx;dot;qdf;qtx;qph;qel;qdb;qsd;qif;mbf;mny;wma";
         
+    
+    public static void initTorrentDataDirSetting() {
+        if (CommonUtils.isPortable()) {
+            SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(SharingSettings.DEFAULT_TORRENT_DATA_DIR);
+        }
+    }
+
+    public static void initTorrentsDirSetting() {
+        //in case we changed locations, always reset.
+        if (CommonUtils.isPortable()) {
+            SharingSettings.TORRENTS_DIR_SETTING.setValue(SharingSettings.DEFAULT_TORRENTS_DIR);
+        }
+        
+        //in case it's first time
+        if (!SharingSettings.TORRENTS_DIR_SETTING.getValue().exists()) {
+            SharingSettings.TORRENTS_DIR_SETTING.getValue().mkdirs();
+        }
+    }
     
     /**
      * The list of extensions shared by default

@@ -21,6 +21,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.limewire.util.CommonUtils;
 
+import com.limegroup.gnutella.settings.LibrarySettings;
+
 
 /**
  * This class is the glue that holds LimeWire together.
@@ -82,6 +84,7 @@ public class LimeCoreGlue {
         //  - Otherwise, success.
         try {
             CommonUtils.setUserSettingsDir(userSettingsDir);
+            LibrarySettings.resetLibraryFoldersIfPortable();
         } catch(Exception e) {
             throw new InstallFailedException("Settings Directory Failure", e);
         }

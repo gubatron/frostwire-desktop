@@ -90,6 +90,9 @@ public final class AzureusStarter {
 	    if (!jdHome.exists()) {
 	        jdHome.mkdir();
 	    }
+	    
+	    SharingSettings.initTorrentDataDirSetting();
+	    
 	    JDUtilities.setJDHomeDirectory(jdHome);
 	    JDUtilities.getConfiguration().setProperty("DOWNLOAD_DIRECTORY", SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath());
 	    
@@ -108,9 +111,7 @@ public final class AzureusStarter {
 			
 			org.gudy.azureus2.core3.util.SystemProperties.setUserPath(azureusUserPath.getAbsolutePath());
 			
-			if (!SharingSettings.TORRENTS_DIR_SETTING.getValue().exists()) {
-			    SharingSettings.TORRENTS_DIR_SETTING.getValue().mkdirs();
-			}
+			SharingSettings.initTorrentsDirSetting();
 			
 			COConfigurationManager.setParameter( "Auto Adjust Transfer Defaults", false );
 			COConfigurationManager.setParameter("General_sDefaultTorrent_Directory", SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath());
@@ -189,6 +190,8 @@ public final class AzureusStarter {
 			} 
 		}
 	} //azureusInit
+
+    
 	
 	public static void revertToDefaultConfiguration() {
 	    COConfigurationManager.resetToDefaults();
