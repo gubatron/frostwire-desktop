@@ -57,6 +57,7 @@ import com.frostwire.util.HttpClientType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.UpdateSettings;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * @author gubatron
@@ -162,7 +163,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                     return;
                 }
 
-                int result = JOptionPane.showConfirmDialog(null, _updateMessage.getMessageInstallerReady(), I18n.tr("Update"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), _updateMessage.getMessageInstallerReady(), I18n.tr("Update"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
                 if (result == JOptionPane.YES_OPTION) {
                     try {
@@ -178,17 +179,32 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                                 throw new IOException("Unable to install update");
                             }
                         } else if (OSUtils.isMacOSX()) {
-                            String[] mountCommand = new String[] { "hdiutil", "attach", _executableFile.getAbsolutePath() };
+                            if (CommonUtils.isPortable()) {
+                                String zip = "/Volumes/FW/FrostWire.app.zip";//_executableFile.getAbsolutePath();
+                                String tempDir = _executableFile.getParent();
+                                String finalDir = "/Volumes/FW/";
+                                String command = "open " + finalDir + "FrostWire.app";
 
-                            String[] finderShowCommand = new String[] { "open", "/Volumes/" + FilenameUtils.getBaseName(_executableFile.getName()) };
+                                String java = finalDir + "Frostwire2.app/Contents/Plugins/jre/Contents/Home/bin/java";
+                                String jar = "/Volumes/FW/updater.jar";//new File(new File(FrostWireUtils.getFrostWireJarPath()).getParentFile(), "updater.jar").getAbsolutePath();
+                                String[] cmd = new String[] { java, "-Xbootclasspath/p:/Volumes/FW/Frostwire2.app/Contents/Jars/rt.jar", "-jar", jar, zip, tempDir, finalDir, command };
 
-                            ProcessBuilder pbuilder = new ProcessBuilder(mountCommand);
-                            Process mountingProcess = pbuilder.start();
+                                ProcessBuilder pbuilder = new ProcessBuilder(cmd);
+                                pbuilder.start();
 
-                            mountingProcess.waitFor();
+                            } else {
+                                String[] mountCommand = new String[] { "hdiutil", "attach", _executableFile.getAbsolutePath() };
 
-                            pbuilder = new ProcessBuilder(finderShowCommand);
-                            pbuilder.start();
+                                String[] finderShowCommand = new String[] { "open", "/Volumes/" + FilenameUtils.getBaseName(_executableFile.getName()) };
+
+                                ProcessBuilder pbuilder = new ProcessBuilder(mountCommand);
+                                Process mountingProcess = pbuilder.start();
+
+                                mountingProcess.waitFor();
+
+                                pbuilder = new ProcessBuilder(finderShowCommand);
+                                pbuilder.start();
+                            }
                         }
 
                         GUIMediator.shutdown();
