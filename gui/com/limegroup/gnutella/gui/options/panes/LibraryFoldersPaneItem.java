@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 
+import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 
 import com.frostwire.gui.Librarian;
@@ -46,6 +47,8 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
 	
 	private Set<File> initialFoldersToExclude;
 	
+	private final boolean  isPortable;
+	
 	/**
 	 * The constructor constructs all of the elements of this 
 	 * <tt>AbstractPaneItem</tt>.
@@ -55,25 +58,30 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
 	 */
 	public LibraryFoldersPaneItem() {
 	    super(TITLE, LABEL);
+	    isPortable = CommonUtils.isPortable();
 	    
 	    buttonAddLibraryDirectory = new JButton(new AddLibraryDirectoryAction(directoryPanel, directoryPanel));
 	    buttonRemoveLibraryDirectory = new JButton(new RemoveLibraryDirectoryAction(directoryPanel));
 	    
 		directoryPanel.getTree().setRootVisible(false);
 		directoryPanel.getTree().setShowsRootHandles(true);
-        directoryPanel.getTree().addTreeSelectionListener(new TreeSelectionListener() {
-            public void valueChanged(TreeSelectionEvent e) {
-                Object comp = e.getPath().getLastPathComponent();
-                if (comp instanceof File) {
-                    if (comp.equals(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue())) {
-                        buttonRemoveLibraryDirectory.setEnabled(false);
-                        return;
+		
+		if (!isPortable) {
+            directoryPanel.getTree().addTreeSelectionListener(new TreeSelectionListener() {
+                public void valueChanged(TreeSelectionEvent e) {
+                    Object comp = e.getPath().getLastPathComponent();
+                    if (comp instanceof File) {
+                        if (comp.equals(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue())) {
+                            buttonRemoveLibraryDirectory.setEnabled(false);
+                            return;
+                        }
                     }
+                    buttonRemoveLibraryDirectory.setEnabled(true);
                 }
-                
-                buttonRemoveLibraryDirectory.setEnabled(true);
-            }
-        });
+            });
+		} else {
+		    removeTreeSelectionListeners();
+		}
 		
 		JPanel buttonPanel = new JPanel(new BorderLayout());
 		buttonPanel.setBorder(new EmptyBorder(0, 4, 0, 0));
@@ -84,7 +92,18 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
 		buttonPanel.add(buttons, BorderLayout.NORTH);
 		directoryPanel.addEastPanel(buttonPanel);		
 		add(directoryPanel);
+		
+		directoryPanel.getTree().setEnabled(!isPortable);
+        buttonAddLibraryDirectory.setEnabled(!isPortable);
+        buttonRemoveLibraryDirectory.setEnabled(!isPortable);
 	}
+
+    private void removeTreeSelectionListeners() {
+        TreeSelectionListener[] treeSelectionListeners = directoryPanel.getTree().getTreeSelectionListeners();
+        for (TreeSelectionListener tsl : treeSelectionListeners) {
+            directoryPanel.getTree().removeTreeSelectionListener(tsl);
+        }
+    }
 
     /**
      * Adds a directory to the internal list, resetting 'dirty' only if it wasn't
