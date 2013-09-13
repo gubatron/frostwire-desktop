@@ -121,12 +121,15 @@ public class DownloadManagerImpl implements DownloadManager {
         String newLocationPrefix = SharingSettings.DEFAULT_TORRENT_DATA_DIR.getAbsolutePath();
 
         if (!previousSaveLocation.startsWith(newLocationPrefix)) {
-            downloadManager.setDataAlreadyAllocated(false);
-            
             File newSaveLocation = new File(SharingSettings.DEFAULT_TORRENT_DATA_DIR, downloadManager.getSaveLocation().getName());
             if (newSaveLocation.exists()) {
-                downloadManager.setTorrentSaveDir(newSaveLocation.getAbsolutePath());
-            } 
+                if (newSaveLocation.isDirectory()) {
+                    downloadManager.setDataAlreadyAllocated(false); //absolutely necessary
+                    downloadManager.setTorrentSaveDir(newSaveLocation.getAbsolutePath());
+                } else if (newSaveLocation.isFile()) {
+                    downloadManager.setTorrentSaveDir(SharingSettings.DEFAULT_TORRENT_DATA_DIR.getAbsolutePath());
+                }
+            }
         }
         
         if (hadToPauseIt) {
