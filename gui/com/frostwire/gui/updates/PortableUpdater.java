@@ -19,16 +19,14 @@
 package com.frostwire.gui.updates;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
-import org.apache.commons.io.FileUtils;
+import javax.swing.ProgressMonitor;
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
+
+import com.frostwire.util.ZipUtils;
+import com.frostwire.util.ZipUtils.ZipListener;
+import com.limegroup.gnutella.gui.GUIMediator;
 
 /**
  * @author gubatron
@@ -37,137 +35,26 @@ import org.apache.commons.io.FileUtils;
  */
 public final class PortableUpdater {
 
-    private static final int CLOSED_TEST_ATTEMPTS = 20;
-    private static final int CLOSED_TEST_WAIT_MILLIS = 2000;
-    private static final int TIMEOUT = 10000;
-    private static final int UNZIP_WAIT_MILLIS = 0;
-
     private static final String[] EXE_PATHS = { "MacOS", "Contents/Home/bin" };
 
-    private static final InetSocketAddress ADDRESS_V1 = new InetSocketAddress("127.0.0.1", 45099);
+    private final File zipFile;
+    private final File tempDir;
 
-    private final InetSocketAddress[] addresses;
-
-    public PortableUpdater() {
-        this.addresses = new InetSocketAddress[] { ADDRESS_V1 };
+    public PortableUpdater(File zipFile) {
+        this.zipFile = zipFile;
+        this.tempDir = new File("/Volumes/FW/temp_zip");
     }
 
-    public boolean waitFrostWireClosed() {
-        boolean closed = false;
-
-        for (int i = 0; !closed && i < CLOSED_TEST_ATTEMPTS; i++) {
-            if (isFrostWireRunning()) {
-                log("FrostWire is running, waiting...");
-                wait(CLOSED_TEST_WAIT_MILLIS);
-            } else {
-                closed = true;
-            }
-        }
-
-        return closed;
+    public void update() {
+        ProgressMonitor progressMonitor = new ProgressMonitor(GUIMediator.getAppFrame(), "test", "note", 0, 100);
+        progressMonitor.setMillisToDecideToPopup(0);
+        progressMonitor.setMillisToPopup(0);
+        progressMonitor.setProgress(0);
+        UncompressTask task = new UncompressTask(progressMonitor);
+        task.execute();
     }
 
-    public boolean unzip(String zipFile, File outputDir) {
-        boolean result = false;
-
-        try {
-
-            FileUtils.deleteDirectory(outputDir);
-
-            ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
-            try {
-                unzipEntries(outputDir, zis, System.currentTimeMillis());
-            } finally {
-                zis.close();
-            }
-
-            result = true;
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            result = false;
-        }
-
-        return result;
-    }
-
-    private boolean isFrostWireRunning() {
-        for (InetSocketAddress address : addresses) {
-            if (isFrostWireRunning(address)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isFrostWireRunning(InetSocketAddress address) {
-        boolean running = false;
-
-        Socket s = new Socket();
-
-        try {
-            s.setSoTimeout(TIMEOUT);
-            s.connect(address);
-            running = true;
-        } catch (Throwable e) {
-            running = false;
-        } finally {
-            try {
-                s.close();
-            } catch (Throwable e) {
-                // ignore
-            }
-        }
-
-        return running;
-    }
-
-    private void unzipEntries(File folder, ZipInputStream zis, long time) throws IOException, FileNotFoundException {
-        ZipEntry ze = null;
-
-        while ((ze = zis.getNextEntry()) != null) {
-
-            String fileName = ze.getName();
-            File newFile = new File(folder, fileName);
-
-            log("unzip: " + newFile.getAbsoluteFile());
-
-            if (ze.isDirectory()) {
-                if (!newFile.mkdirs()) {
-                    break;
-                }
-                continue;
-            }
-
-            FileOutputStream fos = new FileOutputStream(newFile);
-
-            try {
-                int n;
-                byte[] buffer = new byte[1024];
-                while ((n = zis.read(buffer)) > 0) {
-                    fos.write(buffer, 0, n);
-                    wait(UNZIP_WAIT_MILLIS);
-                }
-            } finally {
-                fos.close();
-                zis.closeEntry();
-            }
-
-            newFile.setLastModified(time);
-
-            fixPermissions(newFile);
-        }
-    }
-
-    private void wait(int millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            // ignore
-        }
-    }
-
-    private void fixPermissions(File newFile) throws IOException {
+    private void fixPermissions(File newFile) {
         for (String path : EXE_PATHS) {
             if (newFile.getPath().contains(path)) {
                 newFile.setExecutable(true);
@@ -175,7 +62,49 @@ public final class PortableUpdater {
         }
     }
 
-    private void log(String msg) {
-        System.out.println(msg);
+    private class UncompressTask extends SwingWorker<Void, Void> {
+
+        private final ProgressMonitor progressMonitor;
+
+        public UncompressTask(ProgressMonitor progressMonitor) {
+            this.progressMonitor = progressMonitor;
+        }
+
+        @Override
+        public Void doInBackground() {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    progressMonitor.setProgress(0);
+                }
+            });
+
+            ZipUtils.unzip(zipFile, tempDir, new ZipListener() {
+
+                @Override
+                public void onUnzipping(final File file, final int progress) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressMonitor.setNote(file.getAbsolutePath());
+                            progressMonitor.setProgress(progress);
+                        }
+                    });
+                }
+
+                @Override
+                public boolean isCanceled() {
+                    return progressMonitor.isCanceled();
+                }
+            });
+
+            return null;
+        }
+
+        @Override
+        public void done() {
+            progressMonitor.close();
+            fixPermissions(tempDir);
+        }
     }
 }

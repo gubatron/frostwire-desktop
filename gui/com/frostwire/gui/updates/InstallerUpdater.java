@@ -167,6 +167,13 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
                 if (result == JOptionPane.YES_OPTION) {
                     try {
+                        if (CommonUtils.isPortable()) {
+                            //PortableUpdater pu = new PortableUpdater(_executableFile);
+                            PortableUpdater pu = new PortableUpdater(new File("/Volumes/FW/FrostWire.app.zip"));
+                            pu.update();
+                            return; // pending refactor
+                        }
+
                         if (OSUtils.isWindows()) {
                             String[] commands = new String[] { "CMD.EXE", "/C", _executableFile.getAbsolutePath() };
 
@@ -179,32 +186,17 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                                 throw new IOException("Unable to install update");
                             }
                         } else if (OSUtils.isMacOSX()) {
-                            if (CommonUtils.isPortable()) {
-                                String zip = "/Volumes/FW/FrostWire.app.zip";//_executableFile.getAbsolutePath();
-                                String tempDir = _executableFile.getParent();
-                                String finalDir = "/Volumes/FW/";
-                                String command = "open " + finalDir + "FrostWire.app";
+                            String[] mountCommand = new String[] { "hdiutil", "attach", _executableFile.getAbsolutePath() };
 
-                                String java = finalDir + "Frostwire2.app/Contents/Plugins/jre/Contents/Home/bin/java";
-                                String jar = "/Volumes/FW/updater.jar";//new File(new File(FrostWireUtils.getFrostWireJarPath()).getParentFile(), "updater.jar").getAbsolutePath();
-                                String[] cmd = new String[] { java, "-Xbootclasspath/p:/Volumes/FW/Frostwire2.app/Contents/Jars/rt.jar", "-jar", jar, zip, tempDir, finalDir, command };
+                            String[] finderShowCommand = new String[] { "open", "/Volumes/" + FilenameUtils.getBaseName(_executableFile.getName()) };
 
-                                ProcessBuilder pbuilder = new ProcessBuilder(cmd);
-                                pbuilder.start();
+                            ProcessBuilder pbuilder = new ProcessBuilder(mountCommand);
+                            Process mountingProcess = pbuilder.start();
 
-                            } else {
-                                String[] mountCommand = new String[] { "hdiutil", "attach", _executableFile.getAbsolutePath() };
+                            mountingProcess.waitFor();
 
-                                String[] finderShowCommand = new String[] { "open", "/Volumes/" + FilenameUtils.getBaseName(_executableFile.getName()) };
-
-                                ProcessBuilder pbuilder = new ProcessBuilder(mountCommand);
-                                Process mountingProcess = pbuilder.start();
-
-                                mountingProcess.waitFor();
-
-                                pbuilder = new ProcessBuilder(finderShowCommand);
-                                pbuilder.start();
-                            }
+                            pbuilder = new ProcessBuilder(finderShowCommand);
+                            pbuilder.start();
                         }
 
                         GUIMediator.shutdown();
