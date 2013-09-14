@@ -623,16 +623,6 @@ public class CommonUtils {
         return meta;
     }
 
-    /**
-     * Looks for .meta config file portable settings dir File object for the current operating system.
-     * 
-     * @return File object, if not meta configured on .meta, returns null
-     */
-    public static File getPortableSettingsDir() {
-        Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
-        return getPortableSettingsDir(metaConfiguration);
-    }
-
     public static File getPortableSettingsDir(Properties metaConfiguration) {
         return getPortableMetaFile(metaConfiguration, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_WINDOWS, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_MAC, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_POSIX);
     }
@@ -692,7 +682,7 @@ public class CommonUtils {
             Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
             IS_PORTABLE = !metaConfiguration.isEmpty();
         }
-        return true;//IS_PORTABLE;
+        return IS_PORTABLE;
     }
 
     public static void closeQuietly(Closeable closeable) {

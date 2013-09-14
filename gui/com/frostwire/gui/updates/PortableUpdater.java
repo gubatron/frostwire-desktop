@@ -18,15 +18,29 @@
 
 package com.frostwire.gui.updates;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.limewire.util.CommonUtils;
+import org.limewire.util.OSUtils;
 
 import com.frostwire.util.ZipUtils;
 import com.frostwire.util.ZipUtils.ZipListener;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.ResourceManager;
 
 /**
  * @author gubatron
@@ -35,14 +49,19 @@ import com.limegroup.gnutella.gui.I18n;
  */
 public final class PortableUpdater {
 
-    private static final String[] EXE_PATHS = { "MacOS", "Contents/Home/bin" };
+    private static final Log LOG = LogFactory.getLog(PortableUpdater.class);
+
+    private static final String JS_PORTABLE_UPDATER = "portable_updater.js";
 
     private final File zipFile;
     private final File tempDir;
 
     public PortableUpdater(File zipFile) {
-        this.zipFile = zipFile;
-        this.tempDir = new File("/Volumes/FW/temp_zip");
+        if (OSUtils.isWindows()) {
+            createScript(JS_PORTABLE_UPDATER);
+        }
+        this.zipFile = new File("E:\\FrostWire.zip");//zipFile;
+        this.tempDir = new File("E:\\temp_zip");
     }
 
     public void update() {
@@ -54,12 +73,51 @@ public final class PortableUpdater {
         task.execute();
     }
 
-    private void fixPermissions(File newFile) {
-        for (String path : EXE_PATHS) {
+    private void fixOSXPermissions(File newFile) {
+        String[] exePaths = { "MacOS", "Contents/Home/bin" };
+
+        for (String path : exePaths) {
             if (newFile.getPath().contains(path)) {
                 newFile.setExecutable(true);
             }
         }
+    }
+
+    private static void createScript(String scriptName) {
+        File fileJS = new File(CommonUtils.getUserSettingsDir(), scriptName);
+        if (fileJS.exists()) {
+            return;
+        }
+
+        URL url = ResourceManager.getURLResource(scriptName);
+
+        InputStream is = null;
+        OutputStream out = null;
+
+        try {
+            if (url != null) {
+                is = new BufferedInputStream(url.openStream());
+                out = new FileOutputStream(fileJS);
+                IOUtils.copy(is, out);
+            }
+        } catch (IOException e) {
+            LOG.error("Error creating script", e);
+        } finally {
+            IOUtils.closeQuietly(is);
+            IOUtils.closeQuietly(out);
+        }
+    }
+
+    private static String[] createWSHScriptCommand(File source, File dest) {
+        ArrayList<String> command = new ArrayList<String>();
+        command.add("wscript");
+        command.add("//B");
+        command.add("//NoLogo");
+        command.add(new File(CommonUtils.getUserSettingsDir(), JS_PORTABLE_UPDATER).getAbsolutePath());
+        command.add(source.getAbsolutePath());
+        command.add(dest.getAbsolutePath());
+
+        return command.toArray(new String[0]);
     }
 
     private class UncompressTask extends SwingWorker<Void, Void> {
@@ -104,7 +162,17 @@ public final class PortableUpdater {
         @Override
         public void done() {
             progressMonitor.close();
-            fixPermissions(tempDir);
+            if (OSUtils.isWindows()) {
+                try {
+                    Runtime.getRuntime().exec(createWSHScriptCommand(tempDir, CommonUtils.getPortableRootFolder()));
+                } catch (IOException e) {
+                    LOG.error("Failed to execute update script", e);
+                }
+            } else if (OSUtils.isMacOSX()) {
+                fixOSXPermissions(tempDir);
+            }
+            
+            GUIMediator.shutdown();
         }
     }
 }

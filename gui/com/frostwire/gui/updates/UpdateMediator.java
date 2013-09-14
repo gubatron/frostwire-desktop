@@ -192,8 +192,7 @@ public final class UpdateMediator {
     }
 
     void installPortable(File executableFile) {
-        //PortableUpdater pu = new PortableUpdater(executableFile);
-        PortableUpdater pu = new PortableUpdater(new File("/Volumes/FW/FrostWire.app.zip"));
+        PortableUpdater pu = new PortableUpdater(executableFile);
         pu.update();
     }
 
