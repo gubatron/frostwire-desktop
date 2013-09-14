@@ -57,7 +57,6 @@ import com.frostwire.util.HttpClientType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.UpdateSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * @author gubatron
@@ -168,9 +167,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                 if (result == JOptionPane.YES_OPTION) {
                     try {
                         if (CommonUtils.isPortable()) {
-                            //PortableUpdater pu = new PortableUpdater(_executableFile);
-                            PortableUpdater pu = new PortableUpdater(new File("/Volumes/FW/FrostWire.app.zip"));
-                            pu.update();
+                            UpdateMediator.instance().installPortable(_executableFile);
                             return; // pending refactor
                         }
 
@@ -180,11 +177,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                             ProcessBuilder pbuilder = new ProcessBuilder(commands);
                             pbuilder.start();
                         } else if (OSUtils.isLinux() && OSUtils.isUbuntu()) {
-                            boolean success = trySoftwareCenter() || tryGdebiGtk();
-
-                            if (!success) {
-                                throw new IOException("Unable to install update");
-                            }
+                            UpdateMediator.instance().installUbuntu(_executableFile);
                         } else if (OSUtils.isMacOSX()) {
                             String[] mountCommand = new String[] { "hdiutil", "attach", _executableFile.getAbsolutePath() };
 
@@ -206,27 +199,6 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                 }
             }
         });
-    }
-
-    private boolean trySoftwareCenter() {
-        return tryUbuntuInstallCmd("/usr/bin/software-center");
-    }
-
-    private boolean tryGdebiGtk() {
-        return tryUbuntuInstallCmd("gdebi-gtk");
-    }
-
-    private boolean tryUbuntuInstallCmd(String cmd) {
-        try {
-            String[] commands = new String[] { cmd, _executableFile.getAbsolutePath() };
-
-            ProcessBuilder pbuilder = new ProcessBuilder(commands);
-            pbuilder.start();
-
-            return true;
-        } catch (Throwable e) {
-            return false;
-        }
     }
 
     private File downloadDotTorrent() {
