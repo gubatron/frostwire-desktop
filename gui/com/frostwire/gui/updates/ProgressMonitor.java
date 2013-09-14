@@ -33,6 +33,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.IllegalComponentStateException;
 import java.awt.Point;
@@ -201,6 +202,7 @@ class ProgressMonitor implements Accessible
 //                        SwingUtilities.getSharedOwnerFrameShutdownListener();
 //                dialog.addWindowListener(ownerShutdownListener);
 //            }
+            
             Container contentPane = dialog.getContentPane();
 
             contentPane.setLayout(new BorderLayout());
@@ -234,6 +236,12 @@ class ProgressMonitor implements Accessible
                     }
                 }
             });
+            
+            dialog.setResizable(false);
+            Dimension size = new Dimension(450, dialog.getSize().height);
+            dialog.setSize(size);
+            dialog.setPreferredSize(size);
+            dialog.setMaximumSize(size);
 
             return dialog;
         }
