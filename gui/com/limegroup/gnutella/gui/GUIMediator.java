@@ -407,25 +407,10 @@ public final class GUIMediator {
                     // just in case.
                     if (OSUtils.isNativeThemeWindows()) {
                         try {
-                            //                            if (ThemeSettings.isWindowsTheme()) {
-                            //                                // System.out.println("GUIMediator - setting frostwire theme for windows...");
-                            //                                //ThemeMediator.changeTheme(ThemeSettings.FROSTWIRE_THEME_FILE);
-                            //                                try {
-                            //                                    if (visible)
-                            //                                        getAppFrame().toFront();
-                            //                                    getAppFrame().setVisible(visible);
-                            //                                } catch (NullPointerException npe2) {
-                            //                                    GUIMediator
-                            //                                            .showError(I18n
-                            //                                                    .tr("FrostWire has encountered a problem during startup and cannot proceed. You may be able to fix this problem by changing FrostWire\'s Windows Compatibility. Right-click on the FrostWire icon on your Desktop and select \'Properties\' from the popup menu. Click the \'Compatibility\' tab at the top, then click the \'Run this program in compatibility mode for\' check box, and then select \'Windows 2000\' in the box below the check box. Then click the \'OK\' button at the bottom and restart FrostWire."));
-                            //                                    System.exit(0);
-                            //                                }
-                            //                            } else {
                             GUIMediator
                                     .showError(I18n
                                             .tr("FrostWire has encountered a problem during startup and cannot proceed. You may be able to fix this problem by changing FrostWire\'s Windows Compatibility. Right-click on the FrostWire icon on your Desktop and select \'Properties\' from the popup menu. Click the \'Compatibility\' tab at the top, then click the \'Run this program in compatibility mode for\' check box, and then select \'Windows 2000\' in the box below the check box. Then click the \'OK\' button at the bottom and restart FrostWire."));
                             System.exit(0);
-                            //}
                         } catch (Throwable t) {
                             if (visible)
                                 FatalBugManager.handleFatalBug(npe);
