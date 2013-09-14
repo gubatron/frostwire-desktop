@@ -91,7 +91,7 @@ public final class ZipUtils {
 
             if (listener != null) {
                 int progress = (item == itemCount) ? 100 : (int) (((double) (item * 100)) / (double) (itemCount));
-                listener.onUnzipping(newFile, progress);
+                listener.onUnzipping(fileName, progress);
             }
 
             FileOutputStream fos = new FileOutputStream(newFile);
@@ -128,7 +128,7 @@ public final class ZipUtils {
     }
 
     public static interface ZipListener {
-        public void onUnzipping(File file, int progress);
+        public void onUnzipping(String fileName, int progress);
 
         public boolean isCanceled();
     }
