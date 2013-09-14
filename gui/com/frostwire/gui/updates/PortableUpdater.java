@@ -26,6 +26,7 @@ import javax.swing.SwingWorker;
 import com.frostwire.util.ZipUtils;
 import com.frostwire.util.ZipUtils.ZipListener;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.I18n;
 
 /**
  * @author gubatron
@@ -45,7 +46,7 @@ public final class PortableUpdater {
     }
 
     public void update() {
-        ProgressMonitor progressMonitor = new ProgressMonitor(GUIMediator.getAppFrame(), "test", "note", 0, 100);
+        ProgressMonitor progressMonitor = new ProgressMonitor(GUIMediator.getAppFrame(), I18n.tr("Uncompressing files"), "", 0, 100);
         progressMonitor.setMillisToDecideToPopup(0);
         progressMonitor.setMillisToPopup(0);
         progressMonitor.setProgress(0);
