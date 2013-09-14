@@ -37,8 +37,6 @@ import jd.parser.html.Form.MethodType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frostwire.util.FileUtils;
-
 public final class YouTubeDecrypter {
     
     private static final Logger LOG = LoggerFactory.getLogger(YouTubeDecrypter.class);
@@ -352,7 +350,7 @@ public final class YouTubeDecrypter {
                         String name = null;
                         if (convertTo != DestinationFormat.AUDIOMP3) {
                             name = YT_FILENAME + info.desc + convertTo.getExtFirst();
-                            name = FileUtils.getValidFileName(name);
+                            name = getValidFileName(name);
                         } else {
                             /*
                              * because demuxer will fail when mp3 file already
@@ -860,5 +858,10 @@ public final class YouTubeDecrypter {
         public long   size;
         public int    fmt;
         public String desc;
+    }
+    
+    private static String getValidFileName(String fileName) {
+        String newFileName = fileName.replaceAll("[\\\\/:*?\"<>|\\[\\]]+", "_");
+        return newFileName;
     }
 }
