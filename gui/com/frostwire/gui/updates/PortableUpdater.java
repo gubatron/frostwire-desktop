@@ -20,7 +20,6 @@ package com.frostwire.gui.updates;
 
 import java.io.File;
 
-import javax.swing.ProgressMonitor;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
@@ -82,11 +81,11 @@ public final class PortableUpdater {
             ZipUtils.unzip(zipFile, tempDir, new ZipListener() {
 
                 @Override
-                public void onUnzipping(final File file, final int progress) {
+                public void onUnzipping(final String fileName, final int progress) {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            progressMonitor.setNote(file.getAbsolutePath());
+                            progressMonitor.setNote(fileName);
                             progressMonitor.setProgress(progress);
                         }
                     });
