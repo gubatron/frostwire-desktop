@@ -24,9 +24,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,11 +41,11 @@ public final class ZipUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZipUtils.class);
 
-    public boolean unzip(String zipFile, File outputDir) {
+    public static boolean unzip(File zipFile, File outputDir) {
         return unzip(zipFile, outputDir, null);
     }
 
-    public boolean unzip(String zipFile, File outputDir, ZipListener listener) {
+    public static boolean unzip(File zipFile, File outputDir, ZipListener listener) {
         boolean result = false;
 
         try {
@@ -52,7 +54,7 @@ public final class ZipUtils {
 
             ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
             try {
-                unzipEntries(outputDir, zis, System.currentTimeMillis(), listener);
+                unzipEntries(outputDir, zis, getItemCount(zipFile), System.currentTimeMillis(), listener);
             } finally {
                 zis.close();
             }
@@ -67,10 +69,13 @@ public final class ZipUtils {
         return result;
     }
 
-    private void unzipEntries(File folder, ZipInputStream zis, long time, ZipListener listener) throws IOException, FileNotFoundException {
+    private static void unzipEntries(File folder, ZipInputStream zis, int itemCount, long time, ZipListener listener) throws IOException, FileNotFoundException {
         ZipEntry ze = null;
 
+        int item = 0;
+
         while ((ze = zis.getNextEntry()) != null) {
+            item++;
 
             String fileName = ze.getName();
             File newFile = new File(folder, fileName);
@@ -85,7 +90,8 @@ public final class ZipUtils {
             }
 
             if (listener != null) {
-                listener.onUnzipping(newFile);
+                int progress = (item == itemCount) ? 100 : (int) (((double) (item * 100)) / (double) (itemCount));
+                listener.onUnzipping(newFile, progress);
             }
 
             FileOutputStream fos = new FileOutputStream(newFile);
@@ -95,6 +101,10 @@ public final class ZipUtils {
                 byte[] buffer = new byte[1024];
                 while ((n = zis.read(buffer)) > 0) {
                     fos.write(buffer, 0, n);
+
+                    if (listener != null && listener.isCanceled()) { // not the best way
+                        throw new IOException("Uncompress operation cancelled");
+                    }
                 }
             } finally {
                 fos.close();
@@ -105,7 +115,21 @@ public final class ZipUtils {
         }
     }
 
+    private static int getItemCount(File file) throws IOException {
+        ZipFile zip = null;
+        int count = 0;
+        try {
+            zip = new ZipFile(file);
+            count = zip.size();
+        } finally {
+            IOUtils.closeQuietly(zip);
+        }
+        return count;
+    }
+
     public static interface ZipListener {
-        public void onUnzipping(File file);
+        public void onUnzipping(File file, int progress);
+
+        public boolean isCanceled();
     }
 }
