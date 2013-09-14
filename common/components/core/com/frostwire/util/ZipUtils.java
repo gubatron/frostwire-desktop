@@ -40,6 +40,10 @@ public final class ZipUtils {
     private static final Logger LOG = LoggerFactory.getLogger(ZipUtils.class);
 
     public boolean unzip(String zipFile, File outputDir) {
+        return unzip(zipFile, outputDir, null);
+    }
+
+    public boolean unzip(String zipFile, File outputDir, ZipListener listener) {
         boolean result = false;
 
         try {
@@ -48,22 +52,22 @@ public final class ZipUtils {
 
             ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
             try {
-                unzipEntries(outputDir, zis, System.currentTimeMillis());
+                unzipEntries(outputDir, zis, System.currentTimeMillis(), listener);
             } finally {
                 zis.close();
             }
 
             result = true;
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException e) {
+            LOG.error("Unable to uncompress " + zipFile + " to " + outputDir, e);
             result = false;
         }
 
         return result;
     }
 
-    private void unzipEntries(File folder, ZipInputStream zis, long time) throws IOException, FileNotFoundException {
+    private void unzipEntries(File folder, ZipInputStream zis, long time, ZipListener listener) throws IOException, FileNotFoundException {
         ZipEntry ze = null;
 
         while ((ze = zis.getNextEntry()) != null) {
@@ -78,6 +82,10 @@ public final class ZipUtils {
                     break;
                 }
                 continue;
+            }
+
+            if (listener != null) {
+                listener.onUnzipping(newFile);
             }
 
             FileOutputStream fos = new FileOutputStream(newFile);
@@ -95,5 +103,9 @@ public final class ZipUtils {
 
             newFile.setLastModified(time);
         }
+    }
+
+    public static interface ZipListener {
+        public void onUnzipping(File file);
     }
 }
