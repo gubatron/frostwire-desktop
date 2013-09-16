@@ -64,7 +64,7 @@ public final class PortableUpdater {
         }
         File rootFolder = CommonUtils.getPortableRootFolder();
         
-        this.zipFile = new File("C:\\Users\\aldenml\\Downloads\\portable.zip");//zipFile;
+        this.zipFile = zipFile;
         this.tempDir = new File(rootFolder, TEMP_DIR);
         this.destDir = new File(rootFolder, getDestDirName());
     }
