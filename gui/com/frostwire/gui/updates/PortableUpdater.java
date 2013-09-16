@@ -52,16 +52,21 @@ public final class PortableUpdater {
     private static final Log LOG = LogFactory.getLog(PortableUpdater.class);
 
     private static final String JS_PORTABLE_UPDATER = "portable_updater.js";
-
+    private static final String TEMP_DIR = "FrostWire_temp";
+    
     private final File zipFile;
     private final File tempDir;
+    private final File destDir;
 
     public PortableUpdater(File zipFile) {
         if (OSUtils.isWindows()) {
             createScript(JS_PORTABLE_UPDATER);
         }
-        this.zipFile = new File("E:\\FrostWire.zip");//zipFile;
-        this.tempDir = new File("E:\\temp_zip");
+        File rootFolder = CommonUtils.getPortableRootFolder();
+        
+        this.zipFile = new File("C:\\Users\\aldenml\\Downloads\\portable.zip");//zipFile;
+        this.tempDir = new File(rootFolder, TEMP_DIR);
+        this.destDir = new File(rootFolder, getDestDirName());
     }
 
     public void update() {
@@ -71,6 +76,18 @@ public final class PortableUpdater {
         progressMonitor.setProgress(0);
         UncompressTask task = new UncompressTask(progressMonitor);
         task.execute();
+    }
+    
+    private String getDestDirName() {
+        String name = "FrostWire"; // default name?
+        
+        if (OSUtils.isWindows()) {
+            name = "FrostWire";
+        } else if (OSUtils.isMacOSX()) {
+            name = "FrostWire.app";
+        }
+        
+        return name;
     }
 
     private void fixOSXPermissions(File newFile) {
@@ -85,9 +102,9 @@ public final class PortableUpdater {
 
     private static void createScript(String scriptName) {
         File fileJS = new File(CommonUtils.getUserSettingsDir(), scriptName);
-        if (fileJS.exists()) {
-            return;
-        }
+//        if (fileJS.exists()) {
+//            return;
+//        }
 
         URL url = ResourceManager.getURLResource(scriptName);
 
@@ -111,9 +128,10 @@ public final class PortableUpdater {
     private static String[] createWSHScriptCommand(File source, File dest) {
         ArrayList<String> command = new ArrayList<String>();
         command.add("wscript");
-        command.add("//B");
+        //command.add("//B");
         command.add("//NoLogo");
-        command.add(new File(CommonUtils.getUserSettingsDir(), JS_PORTABLE_UPDATER).getAbsolutePath());
+        command.add("C:\\Users\\aldenml\\Development\\workspace\\frostwire-desktop\\components\\resources\\src\\main\\resources\\org\\limewire\\gui\\resources\\portable_updater.js");
+        //command.add(new File(CommonUtils.getUserSettingsDir(), JS_PORTABLE_UPDATER).getAbsolutePath());
         command.add(source.getAbsolutePath());
         command.add(dest.getAbsolutePath());
 
@@ -164,7 +182,7 @@ public final class PortableUpdater {
             progressMonitor.close();
             if (OSUtils.isWindows()) {
                 try {
-                    Runtime.getRuntime().exec(createWSHScriptCommand(tempDir, CommonUtils.getPortableRootFolder()));
+                    Runtime.getRuntime().exec(createWSHScriptCommand(tempDir, destDir));
                 } catch (IOException e) {
                     LOG.error("Failed to execute update script", e);
                 }

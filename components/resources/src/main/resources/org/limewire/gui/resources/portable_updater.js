@@ -1,8 +1,5 @@
-var portableSource;
-var portableTarget;
-
-portableSource = args(0);
-portableTarget = args(1);
+var portableSource = WScript.Arguments.Item(0);
+var portableTarget = WScript.Arguments.Item(1);
 
 function IsFrostWireRunning() {
     var wmi = GetObject("winmgmts://./root/cimv2");
@@ -33,12 +30,19 @@ function WaitFrostWireStopped() {
 }
 
 function CopyFrostWireFiles() {
-WScript.Echo("Moving " + portableSource + " " + portableTarget);
     var fso = WScript.CreateObject("Scripting.FileSystemObject");
-    fso.DeleteFolder(portableTarget);
+    if (fso.FolderExists(portableTarget)) {
+        fso.DeleteFolder(portableTarget, true);
+    }
     fso.MoveFolder(portableSource, portableTarget);
+}
+
+function LaunchFrostWire() {
+    var shell = WScript.CreateObject("WScript.Shell")
+    shell.Run(portableTarget + "\\FrostWire.exe")
 }
 
 if (WaitFrostWireStopped()) {
     CopyFrostWireFiles();
+    LaunchFrostWire();
 }
