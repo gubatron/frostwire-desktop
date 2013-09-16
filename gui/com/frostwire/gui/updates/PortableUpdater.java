@@ -128,10 +128,9 @@ public final class PortableUpdater {
     private static String[] createWSHScriptCommand(File source, File dest) {
         ArrayList<String> command = new ArrayList<String>();
         command.add("wscript");
-        //command.add("//B");
+        command.add("//B");
         command.add("//NoLogo");
-        command.add("C:\\Users\\aldenml\\Development\\workspace\\frostwire-desktop\\components\\resources\\src\\main\\resources\\org\\limewire\\gui\\resources\\portable_updater.js");
-        //command.add(new File(CommonUtils.getUserSettingsDir(), JS_PORTABLE_UPDATER).getAbsolutePath());
+        command.add(new File(CommonUtils.getUserSettingsDir(), JS_PORTABLE_UPDATER).getAbsolutePath());
         command.add(source.getAbsolutePath());
         command.add(dest.getAbsolutePath());
 
