@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -69,8 +70,8 @@ public final class PortableUpdater {
         File rootFolder = CommonUtils.getPortableRootFolder();
 
         this.zipFile = zipFile;
-        this.tempDir = new File(rootFolder, TEMP_DIR);
-        this.destDir = new File(rootFolder, getDestDirName());
+        this.tempDir = new File(FilenameUtils.normalize(new File(rootFolder, TEMP_DIR).getAbsolutePath()));
+        this.destDir = new File(FilenameUtils.normalize(new File(rootFolder, getDestDirName()).getAbsolutePath()));
     }
 
     public void update() {
@@ -94,12 +95,16 @@ public final class PortableUpdater {
         return name;
     }
 
-    private void fixOSXPermissions(File newFile) {
-        String[] exePaths = { "MacOS", "Contents/Home/bin" };
-
-        for (String path : exePaths) {
-            if (newFile.getPath().contains(path)) {
-                newFile.setExecutable(true);
+    private void fixExecutablePermissions(File file, String[] exePaths) {
+        if (file.isDirectory()) {
+            for (File child : file.listFiles()) {
+                fixExecutablePermissions(child, exePaths);
+            }
+        } else {
+            for (String path : exePaths) {
+                if (file.getPath().contains(path)) {
+                    file.setExecutable(true);
+                }
             }
         }
     }
@@ -120,6 +125,8 @@ public final class PortableUpdater {
                 is = new BufferedInputStream(url.openStream());
                 out = new FileOutputStream(fileJS);
                 IOUtils.copy(is, out);
+
+                fileJS.setExecutable(true);
             }
         } catch (IOException e) {
             LOG.error("Error creating script", e);
@@ -140,7 +147,7 @@ public final class PortableUpdater {
 
         return command.toArray(new String[0]);
     }
-    
+
     private static String[] createMacOSXScriptCommand(File source, File dest) {
         ArrayList<String> command = new ArrayList<String>();
         command.add(new File(CommonUtils.getUserSettingsDir(), PORTABLE_UPDATER_SCRIPT_MACOSX).getAbsolutePath());
@@ -197,7 +204,7 @@ public final class PortableUpdater {
                 if (OSUtils.isWindows()) {
                     Runtime.getRuntime().exec(createWSHScriptCommand(tempDir, destDir));
                 } else if (OSUtils.isMacOSX()) {
-                    fixOSXPermissions(tempDir);
+                    fixExecutablePermissions(tempDir, new String[] { "MacOS", "Home/bin" });
                     Runtime.getRuntime().exec(createMacOSXScriptCommand(tempDir, destDir));
                 }
             } catch (IOException e) {

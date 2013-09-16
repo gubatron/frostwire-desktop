@@ -4,7 +4,7 @@ portableSource=$1
 portableTarget=$2
 
 function IsFrostWireRunning() {
-    RESULT=`pgrep Finder`
+    RESULT=`ps acx | grep -i FrostWire | awk {'print $1'}`
     if [ "${RESULT:-null}" = null ]; then
         echo "0"
     else
@@ -27,8 +27,9 @@ function WaitFrostWireStopped() {
 }
 
 function CopyFrostWireFiles() {
-    `rm -rf $portableTarget`
+    `mv $portableTarget $portableTarget.bak`
     `mv $portableSource $portableTarget`
+    `rm -rf $portableTarget.bak`
 }
 
 function LaunchFrostWire() {
@@ -37,6 +38,7 @@ function LaunchFrostWire() {
 }
 
 if [ "$(WaitFrostWireStopped)" = "1" ]; then
+    sleep 1s
     CopyFrostWireFiles
     LaunchFrostWire
 fi
