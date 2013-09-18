@@ -10,6 +10,7 @@ import org.gudy.azureus2.core3.global.GlobalManager;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.util.TorrentUtils;
+import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.AzureusStarter;
@@ -232,6 +233,10 @@ public class BTDownloadCreator {
 
         if (downloadManager.getState() != DownloadManager.STATE_STOPPED) {
             downloadManager.initialize();
+        }
+        
+        if (CommonUtils.isPortable()) {
+            downloadManager.setPieceCheckingEnabled(false);
         }
 
         return new BTDownloadImpl(downloadManager);

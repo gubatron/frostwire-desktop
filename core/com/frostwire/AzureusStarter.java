@@ -72,6 +72,11 @@ public final class AzureusStarter {
 	    return AZUREUS_CORE != null && AZUREUS_CORE.isStarted();
 	}
 	
+    private static final Long ZERO = new Long(0);
+    private static final Long ONE = new Long(1);
+    private static final Long FALSE = ZERO;
+    private static final Long TRUE = ONE;
+	
 	/*
 	 * Initializes synchronously the azureus core
 	 */
@@ -83,6 +88,19 @@ public final class AzureusStarter {
                 return;
             }
         } catch (Exception ignore) {}
+       
+        if (CommonUtils.isPortable()) {
+            COConfigurationManager.setParameter("diskmanager.friendly.hashchecking", FALSE);
+            COConfigurationManager.setParameter("diskmanager.perf.cache.enable.read", TRUE);
+            COConfigurationManager.setParameter("diskmanager.perf.read.maxthreads", new Long(1));
+            COConfigurationManager.setParameter("diskmanager.perf.read.maxmb", new Long(1));
+            COConfigurationManager.setParameter("diskmanager.perf.write.maxthreads", new Long(1));
+            COConfigurationManager.setParameter("diskmanager.perf.write.maxmb", new Long(1));
+            COConfigurationManager.setParameter("diskmanager.perf.cache.flushpieces", FALSE);
+            COConfigurationManager.setParameter("diskmanager.perf.read.aggregate.enable", TRUE);
+            COConfigurationManager.setParameter("diskmanager.perf.write.aggregate.enable", TRUE);
+            COConfigurationManager.setParameter("diskmanager.perf.checking.fully.async", TRUE);
+        }
 
 	    
 	    Application.setApplication(CommonUtils.getUserSettingsDir().getAbsolutePath() + File.separator + "appwork" + File.separator);
