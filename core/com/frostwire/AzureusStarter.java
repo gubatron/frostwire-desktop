@@ -89,21 +89,7 @@ public final class AzureusStarter {
             }
         } catch (Exception ignore) {}
        
-        if (CommonUtils.isPortable()) {
-            COConfigurationManager.setParameter("diskmanager.friendly.hashchecking", FALSE);
-            COConfigurationManager.setParameter("diskmanager.perf.cache.enable.read", TRUE);
-            COConfigurationManager.setParameter("diskmanager.perf.read.maxthreads", new Long(1));
-            COConfigurationManager.setParameter("diskmanager.perf.read.maxmb", new Long(1));
-            COConfigurationManager.setParameter("diskmanager.perf.write.maxthreads", new Long(1));
-            COConfigurationManager.setParameter("diskmanager.perf.write.maxmb", new Long(1));
-            COConfigurationManager.setParameter("diskmanager.perf.cache.flushpieces", FALSE);
-            COConfigurationManager.setParameter("diskmanager.perf.read.aggregate.enable", TRUE);
-            COConfigurationManager.setParameter("diskmanager.perf.write.aggregate.enable", TRUE);
-            COConfigurationManager.setParameter("diskmanager.perf.checking.fully.async", TRUE);
-        }
-
-	    
-	    Application.setApplication(CommonUtils.getUserSettingsDir().getAbsolutePath() + File.separator + "appwork" + File.separator);
+        Application.setApplication(CommonUtils.getUserSettingsDir().getAbsolutePath() + File.separator + "appwork" + File.separator);
 	    File jdHome = new File(CommonUtils.getUserSettingsDir().getAbsolutePath() + File.separator + "jd_home" + File.separator);
 	    if (!jdHome.exists()) {
 	        jdHome.mkdir();
@@ -133,6 +119,19 @@ public final class AzureusStarter {
 			
 			COConfigurationManager.setParameter( "Auto Adjust Transfer Defaults", false );
 			COConfigurationManager.setParameter("General_sDefaultTorrent_Directory", SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath());
+			
+			if (CommonUtils.isPortable()) {
+	            COConfigurationManager.setParameter("diskmanager.friendly.hashchecking", FALSE);
+	            COConfigurationManager.setParameter("diskmanager.perf.cache.enable.read", TRUE);
+	            COConfigurationManager.setParameter("diskmanager.perf.read.maxthreads", new Long(1));
+	            COConfigurationManager.setParameter("diskmanager.perf.read.maxmb", new Long(1));
+	            COConfigurationManager.setParameter("diskmanager.perf.write.maxthreads", new Long(1));
+	            COConfigurationManager.setParameter("diskmanager.perf.write.maxmb", new Long(1));
+	            COConfigurationManager.setParameter("diskmanager.perf.cache.flushpieces", FALSE);
+	            COConfigurationManager.setParameter("diskmanager.perf.read.aggregate.enable", TRUE);
+	            COConfigurationManager.setParameter("diskmanager.perf.write.aggregate.enable", TRUE);
+	            COConfigurationManager.setParameter("diskmanager.perf.checking.fully.async", TRUE);
+	        }
 			
 			try {
 				AZUREUS_CORE = AzureusCoreFactory.create();
