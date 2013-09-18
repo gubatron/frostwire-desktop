@@ -137,7 +137,7 @@ public final class UpdateMediator {
 
                 try {
                     if (CommonUtils.isPortable()) {
-                        UpdateMediator.instance().installPortable(executableFile);
+                        //UpdateMediator.instance().installPortable(executableFile);
                         return; // pending refactor
                     }
 

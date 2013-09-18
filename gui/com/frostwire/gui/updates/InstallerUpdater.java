@@ -167,7 +167,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                 if (result == JOptionPane.YES_OPTION) {
                     try {
                         if (CommonUtils.isPortable()) {
-                            UpdateMediator.instance().installPortable(_executableFile);
+                            //UpdateMediator.instance().installPortable(_executableFile);
                             return; // pending refactor
                         }
 
