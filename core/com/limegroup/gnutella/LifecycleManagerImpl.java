@@ -211,7 +211,9 @@ public class LifecycleManagerImpl implements LifecycleManager {
         SettingsGroupManager.instance().save();
 		
         if (AzureusStarter.isAzureusCoreStarted()) {
+            System.out.println("Waiting for Vuze core to shutdown...");
             AzureusStarter.getAzureusCore().stop();
+            System.out.println("Vuze core shutdown.");
         }
         
         shutdownDone.set(true);
