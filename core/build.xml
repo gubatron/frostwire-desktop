@@ -42,7 +42,6 @@
             <src path="${limewire.home}/common/components/apache"/>
             <src path="${limewire.home}/common/components/seamless"/>
             <src path="${limewire.home}/common/components/cling"/>
-            <src path="${limewire.home}/common/components/common"/>
             <src path="${limewire.home}/common/components/core"/>
 	   	</javac>
 	</target>

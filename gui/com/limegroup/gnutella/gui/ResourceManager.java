@@ -254,7 +254,7 @@ public final class ResourceManager {
      * @return a new <tt>URL</tt> instance for the desired file, or
      *         <tt>null</tt> if the <tt>URL</tt> could not be loaded
      */
-    static URL getURLResource(final String FILE_NAME) {
+    public static URL getURLResource(final String FILE_NAME) {
         return ResourceManager.getURL(RESOURCES_PATH + FILE_NAME);
     }
 

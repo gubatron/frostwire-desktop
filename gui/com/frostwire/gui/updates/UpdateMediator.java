@@ -19,11 +19,13 @@
 package com.frostwire.gui.updates;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.limewire.util.CommonUtils;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
@@ -134,16 +136,18 @@ public final class UpdateMediator {
                 }
 
                 try {
+                    if (CommonUtils.isPortable()) {
+                        //UpdateMediator.instance().installPortable(executableFile);
+                        return; // pending refactor
+                    }
+
                     if (OSUtils.isWindows()) {
                         String[] commands = new String[] { "CMD.EXE", "/C", executableFile.getAbsolutePath() };
 
                         ProcessBuilder pbuilder = new ProcessBuilder(commands);
                         pbuilder.start();
                     } else if (OSUtils.isLinux() && OSUtils.isUbuntu()) {
-                        String[] commands = new String[] { "gdebi-gtk", executableFile.getAbsolutePath() };
-
-                        ProcessBuilder pbuilder = new ProcessBuilder(commands);
-                        pbuilder.start();
+                        installUbuntu(executableFile);
                     } else if (OSUtils.isMacOSX()) {
                         String[] mountCommand = new String[] { "hdiutil", "attach", executableFile.getAbsolutePath() };
 
@@ -174,16 +178,50 @@ public final class UpdateMediator {
     public void setUpdateMessage(UpdateMessage msg) {
         this.latestMsg = msg;
     }
-    
+
     public void showUpdateMessage() {
         if (latestMsg == null) {
             return;
         }
-        
+
         int result = JOptionPane.showConfirmDialog(null, latestMsg.getMessageInstallerReady(), I18n.tr("Update"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
         if (result == JOptionPane.YES_OPTION) {
             startUpdate();
+        }
+    }
+
+    void installPortable(File executableFile) {
+        PortableUpdater pu = new PortableUpdater(executableFile);
+        pu.update();
+    }
+
+    void installUbuntu(File executableFile) throws IOException {
+        boolean success = trySoftwareCenter(executableFile) || tryGdebiGtk(executableFile);
+
+        if (!success) {
+            throw new IOException("Unable to install update");
+        }
+    }
+
+    private boolean trySoftwareCenter(File executableFile) {
+        return tryUbuntuInstallCmd("/usr/bin/software-center", executableFile);
+    }
+
+    private boolean tryGdebiGtk(File executableFile) {
+        return tryUbuntuInstallCmd("gdebi-gtk", executableFile);
+    }
+
+    private boolean tryUbuntuInstallCmd(String cmd, File executableFile) {
+        try {
+            String[] commands = new String[] { cmd, executableFile.getAbsolutePath() };
+
+            ProcessBuilder pbuilder = new ProcessBuilder(commands);
+            pbuilder.start();
+
+            return true;
+        } catch (Throwable e) {
+            return false;
         }
     }
 }

@@ -145,11 +145,6 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
     private static TableCellRenderer PROGRESS_BAR_RENDERER;
 
     /**
-     * Variable for the ChatRenderer for all components.
-     */
-    private static TableCellRenderer CHAT_RENDERER;
-
-    /**
      * Variable for the ColorRenderer for all components.
      */
     private static TableCellRenderer COLOR_RENDERER;
@@ -392,7 +387,6 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      */
     protected void setDefaultRenderers() {
         TABLE.setDefaultRenderer(ProgressBarHolder.class, getProgressBarRenderer());
-        TABLE.setDefaultRenderer(ChatHolder.class, getChatRenderer());
         TABLE.setDefaultRenderer(ColoredCell.class, getColorRenderer());
         TABLE.setDefaultRenderer(Icon.class, getIconRenderer());
         TABLE.setDefaultRenderer(IconAndNameHolder.class, getIconAndNameRenderer());
@@ -951,13 +945,6 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
             PROGRESS_BAR_RENDERER = new ProgressBarRenderer();
         }
         return PROGRESS_BAR_RENDERER;
-    }
-
-    protected TableCellRenderer getChatRenderer() {
-        if (CHAT_RENDERER == null) {
-            CHAT_RENDERER = new ChatRenderer();
-        }
-        return CHAT_RENDERER;
     }
 
     protected TableCellRenderer getSpeedRenderer() {
