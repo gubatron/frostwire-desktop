@@ -28,7 +28,6 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,7 +121,11 @@ public final class ZipUtils {
             zip = new ZipFile(file);
             count = zip.size();
         } finally {
-            IOUtils.closeQuietly(zip);
+            try {
+                zip.close();
+            } catch (Throwable e) {
+                // ignore
+            }
         }
         return count;
     }
