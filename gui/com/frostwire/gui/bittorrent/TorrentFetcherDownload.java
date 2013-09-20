@@ -34,6 +34,7 @@ import org.gudy.azureus2.core3.util.UrlUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
@@ -65,7 +66,7 @@ public class TorrentFetcherDownload implements BTDownload {
 
     private boolean[] filesSelection;
 
-    public TorrentFetcherDownload(String uri, String referrer, String displayName, String hash, long size, boolean partialDownload, ActionListener postPartialDownloadAction) {
+    public TorrentFetcherDownload(String uri, String referrer, String displayName, String hash, long size, boolean partialDownload, ActionListener postPartialDownloadAction, final String relativePath) {
         _uri = uri;
         _torrentSaveDir = SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath();
         _torrentDownloader = TorrentDownloaderFactory.create(new TorrentDownloaderListener(), _uri, referrer, _torrentSaveDir);
@@ -75,32 +76,19 @@ public class TorrentFetcherDownload implements BTDownload {
         _partialDownload = partialDownload;
         _postPartialDownloadAction = postPartialDownloadAction;
         this.dateCreated = new Date();
+        this.relativePath = relativePath;
 
         _state = STATE_DOWNLOADING;
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (_hash.length() > 0) {
-                    if (!isDownloadingTorrent(_hash)) {
-                        _torrentDownloader.start();
-                    } else {
-                        File torrentFile = null;
-
-                        while ((torrentFile = getDownloadingTorrentReady(_hash)) == null) {
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                            }
-                        }
-
-                        onTorrentDownloaderFinished(torrentFile);
-                    }
-                } else { // best effort
-                    _torrentDownloader.start();
-                }
+        if (_hash.length() > 0 && relativePath != null) {
+            if (!isDownloadingTorrent(_hash)) {
+                _torrentDownloader.start();
+            } else {
+                BackgroundExecutorService.schedule(new WaitForTorrentReady());
             }
-        }).start();
+        } else { // best effort
+            _torrentDownloader.start();
+        }
     }
 
     private boolean isDownloadingTorrent(String hash) {
@@ -112,30 +100,28 @@ public class TorrentFetcherDownload implements BTDownload {
         return false;
     }
 
-    private File getDownloadingTorrentReady(String hash) {
+    private boolean isDownloadingTorrentReady(String hash) {
         for (BTDownload d : BTDownloadMediator.instance().getDownloads()) {
             if (d != this && d.getHash().equals(_hash)) {
                 DownloadManager dm = d.getDownloadManager();
-                if (dm != null && (dm.getState() == DownloadManager.STATE_DOWNLOADING || dm.getState() == DownloadManager.STATE_SEEDING)) {
-                    return new File(dm.getTorrentFileName());
+                if (dm != null) {
+                    return true;
                 }
             }
         }
-        return null;
+        return false;
     }
 
     public TorrentFetcherDownload(String uri, boolean partialDownload, ActionListener postPartialDownloadAction) {
-        this(uri, null, getDownloadNameFromMagnetURI(uri), "", -1, partialDownload, postPartialDownloadAction);
+        this(uri, null, getDownloadNameFromMagnetURI(uri), "", -1, partialDownload, postPartialDownloadAction, null);
     }
 
     public TorrentFetcherDownload(String uri, String relativePath, ActionListener postPartialDownloadAction) {
-        this(uri, null, getDownloadNameFromMagnetURI(uri), "", -1, true, postPartialDownloadAction);
-        this.relativePath = relativePath;
+        this(uri, null, getDownloadNameFromMagnetURI(uri), "", -1, true, postPartialDownloadAction, relativePath);
     }
 
     public TorrentFetcherDownload(String uri, String referrer, String relativePath, String hash, ActionListener postPartialDownloadAction) {
-        this(uri, referrer, getDownloadNameFromMagnetURI(uri), hash, -1, true, postPartialDownloadAction);
-        this.relativePath = relativePath;
+        this(uri, referrer, getDownloadNameFromMagnetURI(uri), hash, -1, true, postPartialDownloadAction, relativePath);
     }
 
     private static String getDownloadNameFromMagnetURI(String uri) {
@@ -396,6 +382,38 @@ public class TorrentFetcherDownload implements BTDownload {
         } catch (Exception e) {
             _state = STATE_ERROR;
             e.printStackTrace();
+        }
+    }
+
+    private final class WaitForTorrentReady implements Runnable {
+        @Override
+        public void run() {
+            while (!isDownloadingTorrentReady(_hash)) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                }
+            }
+
+            try {
+                BTDownloadCreator creator = new BTDownloadCreator(_hash, relativePath);
+                _delegate = creator.createDownload();
+
+                if (_delegate instanceof DuplicateDownload) {
+                    cancelDownload();
+                    GUIMediator.safeInvokeLater(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            BTDownloadMediator.instance().selectRowByDownload(_delegate);
+                        }
+                    });
+                }
+            } catch (Throwable e) {
+                _state = STATE_ERROR;
+                e.printStackTrace();
+            }
+
         }
     }
 }
