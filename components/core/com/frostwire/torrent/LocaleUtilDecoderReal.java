@@ -35,20 +35,21 @@ import java.nio.charset.CoderResult;
 import java.util.Arrays;
 
 final class LocaleUtilDecoderReal implements LocaleUtilDecoder {
-    protected CharsetDecoder decoder;
-    protected int index;
 
-    protected LocaleUtilDecoderReal(int _index, CharsetDecoder _decoder) {
-        index = _index;
-        decoder = _decoder;
+    private final CharsetDecoder decoder;
+    private final int index;
+
+    protected LocaleUtilDecoderReal(int index, CharsetDecoder decoder) {
+        this.index = index;
+        this.decoder = decoder;
     }
 
     public String getName() {
-        return (decoder.charset().name());
+        return decoder.charset().name();
     }
 
     public int getIndex() {
-        return (index);
+        return index;
     }
 
     public String tryDecode(byte[] array, boolean lax) {
@@ -69,8 +70,7 @@ final class LocaleUtilDecoderReal implements LocaleUtilDecoder {
                 // as opposed to strict which requires reverse-conversion equivalence
 
                 if (lax) {
-
-                    return (str);
+                    return str;
                 }
 
                 byte[] b2 = str.getBytes(getName());
@@ -87,28 +87,24 @@ final class LocaleUtilDecoderReal implements LocaleUtilDecoder {
                 */
 
                 if (Arrays.equals(array, b2)) {
-
-                    return (str);
+                    return str;
                 }
             }
 
-            return (null);
+            return null;
 
         } catch (Throwable e) {
 
             // Throwable here as we can get "classdefnotfound" + others if the decoder
             // isn't available
 
-            return (null);
+            return null;
         }
     }
 
-    public String decodeString(byte[] bytes)
-
-    throws UnsupportedEncodingException {
+    public String decodeString(byte[] bytes) throws UnsupportedEncodingException {
         if (bytes == null) {
-
-            return (null);
+            return null;
         }
 
         try {
@@ -138,8 +134,7 @@ final class LocaleUtilDecoderReal implements LocaleUtilDecoder {
                 */
 
                 if (Arrays.equals(bytes, b2)) {
-
-                    return (str);
+                    return str;
                 }
             }
         } catch (Throwable e) {
@@ -154,13 +149,13 @@ final class LocaleUtilDecoderReal implements LocaleUtilDecoder {
 
             // no joy, default
 
-            return (new String(bytes, Constants.DEFAULT_ENCODING));
+            return new String(bytes, Constants.DEFAULT_ENCODING);
 
         } catch (UnsupportedEncodingException e) {
 
             Debug.printStackTrace(e);
 
-            return (new String(bytes));
+            return new String(bytes);
         }
     }
 }
