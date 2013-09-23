@@ -51,6 +51,7 @@ import com.frostwire.search.SearchPerformer;
 import com.frostwire.search.SearchResult;
 import com.frostwire.search.VuzeMagnetDownloader;
 import com.frostwire.search.archiveorg.ArchiveorgCrawledSearchResult;
+import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube2.YouTubeCrawledSearchResult;
 import com.limegroup.gnutella.gui.ApplicationHeader;
@@ -384,8 +385,8 @@ public final class SearchMediator {
 
             if (sr instanceof YouTubeCrawledSearchResult) {
                 ui = new YouTubeUISearchResult((YouTubeCrawledSearchResult) sr, engine, query);
-            } else if (sr instanceof com.frostwire.search.soundcloud.SoundcloudSearchResult) {
-                ui = new SoundcloudUISearchResult((com.frostwire.search.soundcloud.SoundcloudSearchResult) sr, engine, query);
+            } else if (sr instanceof SoundcloudSearchResult) {
+                ui = new SoundcloudUISearchResult((SoundcloudSearchResult) sr, engine, query);
             } else if (sr instanceof TorrentSearchResult) {
                 ui = new TorrentUISearchResult((TorrentSearchResult) sr, engine, query);
             } else if (sr instanceof ArchiveorgCrawledSearchResult) {
