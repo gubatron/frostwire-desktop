@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import com.frostwire.search.AbstractFileSearchResult;
+import com.frostwire.search.HttpSearchResult;
 import com.frostwire.search.StreamableSearchResult;
 
 /**
@@ -30,7 +31,7 @@ import com.frostwire.search.StreamableSearchResult;
  * @author aldenml
  *
  */
-public class SoundcloudSearchResult extends AbstractFileSearchResult implements StreamableSearchResult {
+public class SoundcloudSearchResult extends AbstractFileSearchResult implements HttpSearchResult, StreamableSearchResult {
 
     private static final String DATE_FORMAT = "yyyy/mm/dd HH:mm:ss Z";
 
@@ -41,7 +42,7 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
     private final String source;
     private final String thumbnailUrl;
     private final long date;
-    private final String streamUrl;
+    private final String downloadUrl;
 
     public SoundcloudSearchResult(SoundcloudItem item, String clientId) {
         this.item = item;
@@ -51,7 +52,7 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
         this.source = buildSource(item);
         this.thumbnailUrl = buildThumbnailUrl(item.artwork_url);
         this.date = buildDate(item.created_at);
-        this.streamUrl = (item.download_url + "?client_id=" + clientId).replace("https://", "http://");
+        this.downloadUrl = (item.download_url + "?client_id=" + clientId).replace("https://", "http://");
     }
 
     public SoundcloudItem getItem() {
@@ -89,7 +90,7 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
     }
 
     public String getStreamUrl() {
-        return streamUrl;
+        return downloadUrl;
     }
 
     public String getThumbnailUrl() {
@@ -102,6 +103,11 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
 
     public String getUsername() {
         return item.user.username;
+    }
+
+    @Override
+    public String getDownloadUrl() {
+        return downloadUrl;
     }
 
     private String buildSource(SoundcloudItem item2) {

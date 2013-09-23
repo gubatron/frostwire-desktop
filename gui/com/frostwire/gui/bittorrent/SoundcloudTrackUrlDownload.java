@@ -349,6 +349,9 @@ public class SoundcloudTrackUrlDownload implements BTDownload {
                     links.add(dl);
                     /* set correct Parent node */
                     dl.setParentNode(ret);
+                    
+                    dl.setProperty("directlink", sr.getDownloadUrl());
+                    dl.setFinalFileName(sr.getFilename());
                 }
             }
             /* add all children to FilePackage */

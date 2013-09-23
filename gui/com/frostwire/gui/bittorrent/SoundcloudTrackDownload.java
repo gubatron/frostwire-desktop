@@ -76,6 +76,8 @@ public class SoundcloudTrackDownload implements BTDownload {
             link.setProperty("username", sr.getUsername());
             link.setProperty("title", sr.getDisplayName());
             link.setProperty("detailsUrl", sr.getDetailsUrl());
+            link.setProperty("directlink", sr.getDownloadUrl());
+            link.setFinalFileName(sr.getFilename());
         }
 
         this.started = false;
