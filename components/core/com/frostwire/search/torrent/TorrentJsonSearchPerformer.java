@@ -33,15 +33,15 @@ import com.frostwire.search.SearchResult;
 public abstract class TorrentJsonSearchPerformer<T extends ComparableTorrentJsonItem, R extends TorrentSearchResult> extends TorrentSearchPerformer {
 
     private final Comparator<T> itemComparator;
-    
+
     public TorrentJsonSearchPerformer(long token, String keywords, int timeout, int pages) {
         super(token, keywords, timeout, pages);
-        itemComparator = new Comparator<T>() {
+        
+        this.itemComparator = new Comparator<T>() {
             @Override
             public int compare(T a, T b) {
                 return b.getSeeds() - a.getSeeds();
             }
-            
         };
     }
 
@@ -52,8 +52,8 @@ public abstract class TorrentJsonSearchPerformer<T extends ComparableTorrentJson
         List<T> items = parseJson(page);
 
         if (items != null) {
-            Collections.sort(items,itemComparator);
-            
+            Collections.sort(items, itemComparator);
+
             for (T item : items) {
                 if (!isStopped()) {
                     SearchResult sr = fromItem(item);
