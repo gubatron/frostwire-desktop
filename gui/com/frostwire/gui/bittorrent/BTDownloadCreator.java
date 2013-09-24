@@ -216,6 +216,7 @@ public class BTDownloadCreator {
             }
 
             if (resume && TorrentUtil.isStartable(dm)) {
+                dm.requestAssumedCompleteMode();
                 TorrentUtil.start(dm);
             }
         }
