@@ -93,7 +93,7 @@ public class TorrentFetcherDownload implements BTDownload {
 
     private boolean isDownloadingTorrent(String hash) {
         for (BTDownload d : BTDownloadMediator.instance().getDownloads()) {
-            if (d != this && d.getHash().equals(_hash)) {
+            if (d != this && d.getHash() != null && d.getHash().equals(_hash)) {
                 return true;
             }
         }
@@ -102,7 +102,7 @@ public class TorrentFetcherDownload implements BTDownload {
 
     private boolean isDownloadingTorrentReady(String hash) {
         for (BTDownload d : BTDownloadMediator.instance().getDownloads()) {
-            if (d != this && d.getHash().equals(_hash)) {
+            if (d != this && d.getHash() != null && d.getHash().equals(_hash)) {
                 DownloadManager dm = d.getDownloadManager();
                 if (dm != null) {
                     return true;
