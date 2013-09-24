@@ -194,6 +194,8 @@ public class BTDownloadCreator {
 
             DiskManagerFileInfo[] fileInfos = dm.getDiskManagerFileInfoSet().getFiles();
 
+            boolean resume = false;
+
             try {
                 dm.getDownloadState().suppressStateSave(true);
 
@@ -204,6 +206,7 @@ public class BTDownloadCreator {
                     if (fDest.getAbsolutePath().endsWith(relativePath)) {
                         if (fileInfo.isSkipped()) {
                             fileInfo.setSkipped(false);
+                            resume = true;
                         }
                     }
                 }
@@ -212,6 +215,9 @@ public class BTDownloadCreator {
                 dm.getDownloadState().suppressStateSave(false);
             }
 
+            if (resume && TorrentUtil.isStartable(dm)) {
+                TorrentUtil.start(dm);
+            }
         }
     }
 
