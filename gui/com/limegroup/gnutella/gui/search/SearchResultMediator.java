@@ -239,14 +239,6 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     }
 
     /**
-     * Creates the specialized SearchColumnSelectionMenu menu,
-     * which groups XML columns together.
-     */
-    protected JPopupMenu createColumnSelectionMenu() {
-        return (new SearchColumnSelectionMenu(TABLE)).getComponent();
-    }
-
-    /**
      * Creates the specialized column preference handler for search columns.
      */
     protected ColumnPreferenceHandler createDefaultColumnPreferencesHandler() {

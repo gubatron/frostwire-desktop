@@ -1,8 +1,19 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella;
-
-import java.io.File;
-import java.net.Socket;
-
 
 
 /** 
@@ -23,56 +34,9 @@ import java.net.Socket;
  */
 public interface DownloadManager {
 
-    /** 
-     * Initializes this manager. <b>This method must be called before any other
-     * methods are used.</b> 
-     *     @uses RouterService.getCallback for the UI callback 
-     *       to notify of download changes
-     *     @uses RouterService.getMessageRouter for the message 
-     *       router to use for sending push requests
-     *     @uses RouterService.getFileManager for the FileManager
-     *       to check if files exist
-     */
-    public void initialize();
-
     /**
      * Performs the slow, low-priority initialization tasks: reading in
      * snapshots and scheduling snapshot checkpointing.
      */
     public void loadSavedDownloadsAndScheduleWriting();
-
-    public boolean acceptPushedSocket(String file, int index, byte[] clientGUID, Socket socket);
-
-    public int downloadsInProgress();
-
-    public int getNumIndividualDownloaders();
-
-    /**
-     * Inner network traffic don't count towards overall download activity.
-     */
-    public int getNumActiveDownloads();
-
-    public int getNumWaitingDownloads();
-
-    public boolean isGuidForQueryDownloading(GUID guid);
-
-    /**
-     * Returns <code>true</code> if there already is a download that is or
-     * will be saving to this file location.
-     * @param candidateFile the final file location.
-     * @return
-     */
-    public boolean isSaveLocationTaken(File candidateFile);
-
-
-    /** Calls measureBandwidth on each uploader. */
-    public void measureBandwidth();
-
-    /** Returns the total upload throughput, i.e., the sum over all uploads. */
-    public float getMeasuredBandwidth();
-
-    /**
-     * returns the summed average of the downloads
-     */
-    public float getAverageBandwidth();
 }

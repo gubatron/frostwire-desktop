@@ -30,7 +30,6 @@ import org.limewire.util.SystemUtils;
 import org.limewire.util.SystemUtils.SpecialLocations;
 import org.limewire.util.VersionUtils;
 
-import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 
