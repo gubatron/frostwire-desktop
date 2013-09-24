@@ -30,12 +30,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
-import org.limewire.util.IOUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.bittorrent.TorrentUtil;
@@ -287,7 +287,7 @@ public final class iTunesMediator {
         scanForSongs(iTunesSettings.ITUNES_PLAYLIST.getValue(), file);
     }
 
-    public void scanForSongs(String playlist, File file) {
+    private void scanForSongs(String playlist, File file) {
         iTunesImportSettings.IMPORT_FILES.add(file);
         if (OSUtils.isMacOSX() || OSUtils.isWindows()) {
             addSongsITunes(playlist, file);

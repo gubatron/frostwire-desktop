@@ -65,7 +65,7 @@ public class SoundcloudTrackUrlDownload implements BTDownload {
     private int progress;
 
     public SoundcloudTrackUrlDownload(String trackUrl, String title, SoundcloudUISearchResult sr) {
-        if (!trackUrl.startsWith("http://")) {
+        if (!trackUrl.startsWith("https://") && !trackUrl.startsWith("http://")) {
             trackUrl = "http://" + trackUrl;
         }
         this.trackUrl = trackUrl;
@@ -349,6 +349,11 @@ public class SoundcloudTrackUrlDownload implements BTDownload {
                     links.add(dl);
                     /* set correct Parent node */
                     dl.setParentNode(ret);
+                    
+                    if (sr != null) {
+                        dl.setProperty("directlink", sr.getDownloadUrl());
+                        dl.setFinalFileName(sr.getFilename());
+                    }
                 }
             }
             /* add all children to FilePackage */

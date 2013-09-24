@@ -22,9 +22,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import jd.PluginWrapper;
 import jd.config.Property;
+import jd.config.SubConfiguration;
 import jd.http.Browser;
 import jd.http.URLConnectionAdapter;
 import jd.nutils.encoding.Encoding;
@@ -46,6 +50,12 @@ import org.jaudiotagger.tag.images.ArtworkFactory;
 
 @HostPlugin(revision = "$Revision$", interfaceVersion = 2, names = { "soundcloud.com" }, urls = { "https://(www\\.)?soundclouddecrypted\\.com/[a-z\\-_0-9]+/[a-z\\-_0-9]+" }, flags = { 0 })
 public class SoundcloudCom extends PluginForHost {
+    
+    private static final String CUSTOM_DATE        = "CUSTOM_DATE";
+    private static final String CUSTOM_FILENAME    = "CUSTOM_FILENAME";
+    
+    private final static String defaultCustomFilename    = "*songtitle* - *channelname**ext*";
+    private final static String defaultCustomPackagename = "*channelname* - *playlistname*";
 
     private static final long MAX_ACCEPTABLE_SOUNDCLOUD_FILESIZE_FOR_COVERART_FETCH = 10485760; //10MB
 
@@ -107,27 +117,27 @@ public class SoundcloudCom extends PluginForHost {
         return AvailableStatus.TRUE;
     }
 
-    public AvailableStatus checkStatus(final DownloadLink parameter, final String source) {
+    public AvailableStatus checkStatus(final DownloadLink parameter, final String source) throws ParseException {
         String filename = getXML("title", source);
         if (filename == null) {
             parameter.getLinkStatus().setStatusText(JDL.L("plugins.hoster.SoundCloudCom.status.pluginBroken", "The host plugin is broken!"));
             return AvailableStatus.FALSE;
         }
+        filename = Encoding.htmlDecode(filename.trim().replace("\"", "'"));
         final String filesize = getXML("original-content-size", source);
-        if (filesize != null)
-            parameter.setDownloadSize(Integer.parseInt(filesize));
+        if (filesize != null) parameter.setDownloadSize(Long.parseLong(filesize));
         final String description = getXML("description", source);
-        if (description != null)
-            parameter.setComment(description);
+        if (description != null) {
+            try {
+                parameter.setComment(description);
+            } catch (Throwable e) {
+            }
+        }
+        String date = new Regex(source, "<created\\-at type=\"datetime\">([^<>\"]*?)</created-at>").getMatch(0);
         String username = getXML("username", source);
-        filename = Encoding.htmlDecode(filename.trim());
-        String type = getXML("original-format", source);
-        if (type == null)
-            type = "mp3";
-        username = username.trim();
-        if (username != null && !filename.contains(username))
-            filename += " - " + username;
-        filename += "." + type;
+        String type = null;//getXML("original-format", source);
+        if (type == null) type = "mp3";
+        username = Encoding.htmlDecode(username.trim());
         url = getXML("download-url", source);
         if (url != null) {
             parameter.getLinkStatus().setStatusText(JDL.L("plugins.hoster.SoundCloudCom.status.downloadavailable", "Original file is downloadable"));
@@ -139,26 +149,88 @@ public class SoundcloudCom extends PluginForHost {
             parameter.getLinkStatus().setStatusText(JDL.L("plugins.hoster.SoundCloudCom.status.pluginBroken", "The host plugin is broken!"));
             return AvailableStatus.FALSE;
         }
-        filename = cleanupFilename(filename);
-        parameter.setFinalFileName(filename);
-        parameter.setProperty("directlink", url + "?client_id=" + CLIENTID);
+
+        url = url + "?client_id=" + CLIENTID;
+        parameter.setProperty("directlink", url);
+        parameter.setProperty("channel", username);
+        parameter.setProperty("plainfilename", filename);
+        parameter.setProperty("originaldate", date);
+        parameter.setProperty("type", type);
+        final String formattedfilename = getFormattedFilename(parameter);
+        parameter.setFinalFileName(formattedfilename);
         return AvailableStatus.TRUE;
+    }
+    
+    public String getFormattedFilename(final DownloadLink downloadLink) throws ParseException {
+        String songTitle = downloadLink.getStringProperty("plainfilename", null);
+        final SubConfiguration cfg = SubConfiguration.getConfig("soundcloud.com");
+        String formattedFilename = cfg.getStringProperty(CUSTOM_FILENAME, defaultCustomFilename);
+        if (formattedFilename == null || formattedFilename.equals("")) formattedFilename = defaultCustomFilename;
+        if (!formattedFilename.contains("*songtitle*") || !formattedFilename.contains("*ext*")) formattedFilename = defaultCustomFilename;
+        String ext = downloadLink.getStringProperty("type", null);
+        if (ext != null)
+            ext = "." + ext;
+        else
+            ext = ".mp3";
+
+        String date = downloadLink.getStringProperty("originaldate", null);
+        final String channelName = downloadLink.getStringProperty("channel", null);
+
+        String formattedDate = null;
+        if (date != null && formattedFilename.contains("*date*")) {
+            // 2011-08-10T22:50:49Z
+            date = date.replace("T", ":");
+            final String userDefinedDateFormat = cfg.getStringProperty(CUSTOM_DATE, "dd.MM.yyyy_HH-mm-ss");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd:HH:mm");
+            Date dateStr = formatter.parse(date);
+
+            formattedDate = formatter.format(dateStr);
+            Date theDate = formatter.parse(formattedDate);
+
+            if (userDefinedDateFormat != null) {
+                try {
+                    formatter = new SimpleDateFormat(userDefinedDateFormat);
+                    formattedDate = formatter.format(theDate);
+                } catch (Exception e) {
+                    // prevent user error killing plugin.
+                    formattedDate = "";
+                }
+            }
+            if (formattedDate != null)
+                formattedFilename = formattedFilename.replace("*date*", formattedDate);
+            else
+                formattedFilename = formattedFilename.replace("*date*", "");
+        }
+        if (formattedFilename.contains("*channelname*") && channelName != null) {
+            formattedFilename = formattedFilename.replace("*channelname*", channelName);
+        }
+        formattedFilename = formattedFilename.replace("*ext*", ext);
+        // Insert filename at the end to prevent errors with tags
+        formattedFilename = formattedFilename.replace("*songtitle*", songTitle);
+
+        return formattedFilename;
     }
 
     private void checkDirectLink(final DownloadLink downloadLink, final String property) {
+        URLConnectionAdapter con = null;
         try {
             Browser br2 = br.cloneBrowser();
-            URLConnectionAdapter con = br2.openGetConnection(url);
-            if (con.getContentType().contains("html") || con.getLongContentLength() == -1) {
+            con = br2.openGetConnection(url);
+            if (con.getContentType().contains("html") || con.getLongContentLength() == -1 || con.getResponseCode() == 401) {
                 downloadLink.setProperty(property, Property.NULL);
                 url = null;
                 return;
             }
             downloadLink.setDownloadSize(con.getLongContentLength());
-            con.disconnect();
+
         } catch (Exception e) {
             downloadLink.setProperty(property, Property.NULL);
             url = null;
+        } finally {
+            try {
+                con.disconnect();
+            } catch (final Throwable e) {
+            }
         }
     }
 
@@ -167,7 +239,7 @@ public class SoundcloudCom extends PluginForHost {
     }
 
     public String getXML(final String parameter, final String source) {
-        return new Regex(source, "<" + parameter + "( type=\"[^<>\"/]*?\")?>([^<>\"]*?)</" + parameter + ">").getMatch(1);
+        return new Regex(source, "<" + parameter + "( type=\"[^<>\"/]*?\")?>([^<>]*?)</" + parameter + ">").getMatch(1);
     }
 
     @Override

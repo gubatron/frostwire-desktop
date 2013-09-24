@@ -61,6 +61,7 @@ import javax.swing.table.TableModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
@@ -519,7 +520,7 @@ public final class GUIUtils {
      */
     public static boolean shouldShowStartOnStartupWindow() {
 	//System.out.println("********START UP DEBUG: GUIUtils is going to verify mac or windows");
-        return OSUtils.isMacOSX() || WindowsUtils.isLoginStatusAvailable();
+        return !CommonUtils.isPortable() && (OSUtils.isMacOSX() || WindowsUtils.isLoginStatusAvailable());
     }
     
     /**

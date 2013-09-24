@@ -35,6 +35,7 @@ import javax.swing.WindowConstants;
 
 import org.limewire.setting.IntSetting;
 import org.limewire.setting.SettingsGroupManager;
+import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.searchfield.SearchField;
@@ -284,7 +285,7 @@ public final class OptionsConstructor {
         addOption(OptionsMediator.ROOT_NODE_KEY, STATUS_BAR_KEY, I18n.tr("Status Bar"), StatusBarConnectionQualityPaneItem.class, StatusBarFirewallPaneItem.class, StatusBarBandwidthPaneItem.class); // Removed Lime Store
 
         //itunes
-        if (OSUtils.isMacOSX() || OSUtils.isWindows()) {
+        if (isItunesSupported()) {
             addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, ITUNES_KEY, I18n.tr("iTunes"));
             addOption(ITUNES_KEY, ITUNES_IMPORT_KEY, I18n.tr("Importing"), iTunesPreferencePaneItem.class);
         }
@@ -317,7 +318,7 @@ public final class OptionsConstructor {
             addOption(ADVANCED_KEY, ASSOCIATIONS_KEY, I18n.tr("File Associations"), AssociationPreferencePaneItem.class);
         }
 
-        if (GUIUtils.shouldShowStartOnStartupWindow()) {
+        if (!CommonUtils.isPortable() && GUIUtils.shouldShowStartOnStartupWindow()) {
             addOption(ADVANCED_KEY, STARTUP_KEY, I18n.tr("System Boot"), StartupPaneItem.class);
         }
 
@@ -327,6 +328,10 @@ public final class OptionsConstructor {
         addOption(OptionsMediator.ROOT_NODE_KEY, BUGS_KEY, I18n.tr("Bug Reports"), BugsPaneItem.class);
 
         return node;
+    }
+
+    private boolean isItunesSupported() {
+        return !CommonUtils.isPortable() && (OSUtils.isMacOSX() || OSUtils.isWindows());
     }
 
     /**

@@ -93,7 +93,9 @@ public class TorrentSeedingSettingComponent extends JPanel {
 		handPickedSeedingCheckbox.setSelected(SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue());
 		handPickedSeedingCheckbox.setEnabled(seedingRadioButton.isSelected());
 		
-	    notSeedingRadioButton.addChangeListener(new SeedingRadioButtonChangeListener());
+		SeedingRadioButtonChangeListener seedingRadioButtonChangeListener = new SeedingRadioButtonChangeListener();
+		seedingRadioButton.addChangeListener(seedingRadioButtonChangeListener);
+	    notSeedingRadioButton.addChangeListener(seedingRadioButtonChangeListener);
 	}
 
 	public boolean wantsSeeding() {

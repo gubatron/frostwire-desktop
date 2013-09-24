@@ -84,6 +84,11 @@ public class FileSetSetting extends AbstractSetting {
 	        return false;
 	    }
 	}
+	
+	public synchronized void removeAll() {
+	    value.clear();
+	    setValue(value);
+	}
     
 	/** Returns true if the given file is contained in this array. */
 	public synchronized boolean contains(File file) {

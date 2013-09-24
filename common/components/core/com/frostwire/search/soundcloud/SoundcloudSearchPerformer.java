@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2013, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,12 +18,11 @@
 
 package com.frostwire.search.soundcloud;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.LinkedList;
+import java.util.List;
 
-import com.frostwire.search.PagedRegexSearchPerformer;
+import com.frostwire.search.PagedWebSearchPerformer;
+import com.frostwire.search.SearchResult;
 import com.frostwire.util.JsonUtils;
 
 /**
@@ -31,49 +30,32 @@ import com.frostwire.util.JsonUtils;
  * @author aldenml
  *
  */
-public class SoundcloudSearchPerformer extends PagedRegexSearchPerformer<SoundcloudSearchResult> {
+public class SoundcloudSearchPerformer extends PagedWebSearchPerformer {
 
-    private static final int MAX_RESULTS = 16;
-
-    private static final String DATE_FORMAT = "MMMM, dd yyyy HH:mm:ss Z";
-
-    private static final String REGEX = "(?is)<a href=\"http://i1.sndcdn.com/artworks-(.*?)\" class=\"artwork\".*?<abbr title='(.*?)'.*?window.SC.bufferTracks.push\\((.*?)\\);";
-    private static final Pattern PATTERN = Pattern.compile(REGEX);
+    private static final String CLIENT_ID = "b45b1aa10f1ac2941910a7f0d10f8e28";
 
     public SoundcloudSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, MAX_RESULTS / 4, MAX_RESULTS);
-    }
-
-    @Override
-    public Pattern getPattern() {
-        return PATTERN;
-    }
-
-    @Override
-    public SoundcloudSearchResult fromMatcher(Matcher matcher) {
-        SoundcloudItem item = JsonUtils.toObject(matcher.group(3), SoundcloudItem.class);
-        try {
-            item.thumbnailUrl = buildThumbnailUrl(matcher.group(1));
-            item.date = new SimpleDateFormat(DATE_FORMAT, Locale.US).parse(matcher.group(2)).getTime();
-        } catch (Throwable e) {
-            item.date = -1;
-        }
-        return new SoundcloudSearchResult(item);
-    }
-
-    @Override
-    public String fetch(String url) {
-        return fetch(url, "web-ver=1");
+        super(token, keywords, timeout, 1);
     }
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://soundcloud.com/tracks/search?page=" + page + "&q[fulltext]=" + encodedKeywords + "&q[downloadable]=true&advanced=1";
+        return "https://api.sndcdn.com/search/sounds?q=" + encodedKeywords + "&limit=50&offset=0&client_id=" + CLIENT_ID;
     }
 
-    private String buildThumbnailUrl(String str) {
-        //http://i1.sndcdn.com/artworks-000019588274-le8r71-crop.jpg?be0edad
-        //https://i1.sndcdn.com/artworks-000019588274-le8r71-t500x500.jpg
-        return "http://i1.sndcdn.com/artworks-" + str.substring(0, str.indexOf("-crop.")) + "-t300x300.jpg";
+    @Override
+    protected List<? extends SearchResult> searchPage(String page) {
+        List<SearchResult> result = new LinkedList<SearchResult>();
+
+        SoundcloudResponse response = JsonUtils.toObject(page, SoundcloudResponse.class);
+
+        for (SoundcloudItem item : response.collection) {
+            if (!isStopped() && item.downloadable) {
+                SoundcloudSearchResult sr = new SoundcloudSearchResult(item, CLIENT_ID);
+                result.add(sr);
+            }
+        }
+
+        return result;
     }
 }

@@ -38,8 +38,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import org.limewire.i18n.I18nMarker;
-import org.limewire.setting.FileSetting;
 import org.limewire.setting.SettingsGroupManager;
+import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -53,7 +53,6 @@ import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.InstallSettings;
-import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
@@ -101,8 +100,9 @@ public class SetupManager {
     private List<SetupWindow> windows;
 
     private boolean shouldShowAssociationsWindow() {
-        if (InstallSettings.ASSOCIATION_OPTION.getValue() == FrostAssociations.CURRENT_ASSOCIATIONS)
+        if (CommonUtils.isPortable() || (InstallSettings.ASSOCIATION_OPTION.getValue() == FrostAssociations.CURRENT_ASSOCIATIONS)) {
             return false;
+        }
 
         // display a window if silent grab failed. 
         return !GUIMediator.getAssociationManager().checkAndGrab(false);
@@ -116,20 +116,6 @@ public class SetupManager {
         // If it's not setup, definitely show it!
         if (!InstallSettings.SAVE_DIRECTORY.getValue()) {
             return SaveStatus.NEEDS;
-        }
-
-        // Otherwise, if it has been setup, it might need
-        // additional tweaking because defaults have changed,
-        // and we want to move the save directory to somewhere
-        // else.
-        FileSetting saveSetting = SharingSettings.DIRECTORY_FOR_SAVING_FILES;
-        if (saveSetting.isDefault()) {
-            //            // If the directory is default, it could be because older versions
-            //            // of LW didn't write out their save directory (if it was default).
-            //            // Check to see if the new one doesn't exist, but the old one does.
-            //            File oldDefaultDir = new File(CommonUtils.getUserHomeDir(), "Shared");
-            //            if(!saveSetting.getValue().exists() && oldDefaultDir.exists())
-            //                return SaveStatus.MIGRATE;
         }
 
         if (!InstallSettings.LAST_FROSTWIRE_VERSION_WIZARD_INVOKED.getValue().equals(FrostWireUtils.getFrostWireVersion())) {

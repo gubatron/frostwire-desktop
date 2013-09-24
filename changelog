@@ -1,3 +1,9 @@
+frostwire (5.6.5) stable; urgency=high
+  * Upgrades Soundcloud search, download, streaming.
+  * Fixes issue when starting downloads made of multiple single files
+    that belong to the same .torrent.
+ -- FrostWire Team <contact@frostwire.com>  Mon, 23 Sep 2013 14:53:53 -0500
+
 frostwire (5.6.4) stable; urgency=high
   * Fixes issues parsing some cloud urls.
   * Fixes issues with soundcloud meta search.
@@ -5,6 +11,8 @@ frostwire (5.6.4) stable; urgency=high
   * French translation updated. Thanks @jeromemorignot.
   * Portuguese translation updated. Thanks @tati110.
   * Brazilian Portuguese translation updated. Thanks @tati110.
+  * Arabic translation updated. Thanks @nisrmasr.
+  * Turkish translation updated. Thanks @Serrae.
  -- FrostWire Team <contact@frostwire.com>  Tue, 03 Sep 2013 14:49:33 -0500
 
 frostwire (5.6.3) stable; urgency=high

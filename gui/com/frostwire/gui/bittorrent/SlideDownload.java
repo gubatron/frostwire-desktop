@@ -26,10 +26,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.appwork.utils.encoding.Base64;
-import org.limewire.util.IOUtils;
 import org.limewire.util.SystemUtils;
 
 import com.frostwire.gui.components.slides.Slide;

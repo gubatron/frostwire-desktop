@@ -15,11 +15,9 @@
 
 package org.limewire.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -68,38 +66,36 @@ import java.util.Properties;
  * </DL>
  */
 public class CommonUtils {
-    
+
     public static final String FROSTWIRE_420_PREFS_DIR_NAME = ".frostwire4.20";
-    
+
     public static final String FROSTWIRE_418_PREFS_DIR_NAME = ".frostwire4.18";
-    
+
     public static final String FROSTWIRE_500_PREFS_DIR_NAME = ".frostwire5";
-    
+
     public static final String META_SETTINGS_KEY_USER_SETTINGS_WINDOWS = "user.settings.dir.windows";
-    
+
     public static final String META_SETTINGS_KEY_USER_SETTINGS_MAC = "user.settings.dir.mac";
-    
+
     public static final String META_SETTINGS_KEY_USER_SETTINGS_POSIX = "user.settings.dir.posix";
-    
+
     public static final String META_SETTINGS_KEY_ROOT_FOLDER_WINDOWS = "user.settings.root_folder.windows";
-    
+
     public static final String META_SETTINGS_KEY_ROOT_FOLDER_MAC = "user.settings.root_folder.mac";
-    
+
     public static final String META_SETTINGS_KEY_ROOT_FOLDER_POSIX = "user.settings.root_folder.posix";
-    
+
+    private static Boolean IS_PORTABLE = null;
+
     /**
      * Several arrays of illegal characters on various operating systems.
      * Used by convertFileName
      */
-    private static final char[] ILLEGAL_CHARS_ANY_OS = {
-        '/', '\n', '\r', '\t', '\0', '\f' 
-    };
-    private static final char[] ILLEGAL_CHARS_UNIX = {'`'};
-    private static final char[] ILLEGAL_CHARS_WINDOWS = { 
-        '?', '*', '\\', '<', '>', '|', '\"', ':'
-    };
-    private static final char[] ILLEGAL_CHARS_MACOS = {':'};
-    
+    private static final char[] ILLEGAL_CHARS_ANY_OS = { '/', '\n', '\r', '\t', '\0', '\f' };
+    private static final char[] ILLEGAL_CHARS_UNIX = { '`' };
+    private static final char[] ILLEGAL_CHARS_WINDOWS = { '?', '*', '\\', '<', '>', '|', '\"', ':' };
+    private static final char[] ILLEGAL_CHARS_MACOS = { ':' };
+
     /** The location where settings are stored. */
     private static volatile File settingsDirectory = null;
 
@@ -131,19 +127,18 @@ public class CommonUtils {
      * @throws IOException if the resource could not be located or there was
      *  another IO error accessing the resource
      */
-    public static InputStream getResourceStream(String location) 
-      throws IOException {
-       ClassLoader cl = CommonUtils.class.getClassLoader();            
-       URL resource = null;
-    
-        if(cl == null) {
+    public static InputStream getResourceStream(String location) throws IOException {
+        ClassLoader cl = CommonUtils.class.getClassLoader();
+        URL resource = null;
+
+        if (cl == null) {
             resource = ClassLoader.getSystemResource(location);
         } else {
             resource = cl.getResource(location);
         }
-        
-        if( resource == null) 
-            throw new IOException("null resource: "+location);
+
+        if (resource == null)
+            throw new IOException("null resource: " + location);
         else
             return resource.openStream();
     }
@@ -153,24 +148,23 @@ public class CommonUtils {
      */
     public static String decode(String s) {
         StringBuilder sb = new StringBuilder();
-        for(int i=0; i<s.length(); i++) {
+        for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             switch (c) {
-                case '+':
-                    sb.append(' ');
-                    break;
-                case '%':
-                    try {
-                        sb.append((char)Integer.parseInt(
-                                        s.substring(i+1,i+3),16));
-                    } catch (NumberFormatException e) {
-                        throw new IllegalArgumentException(s);
-                    }
-                    i += 2;
-                    break;
-                default:
-                    sb.append(c);
-                    break;
+            case '+':
+                sb.append(' ');
+                break;
+            case '%':
+                try {
+                    sb.append((char) Integer.parseInt(s.substring(i + 1, i + 3), 16));
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException(s);
+                }
+                i += 2;
+                break;
+            default:
+                sb.append(c);
+                break;
             }
         }
         // Undo conversion to external encoding
@@ -185,126 +179,36 @@ public class CommonUtils {
     }
 
     /**
-     * Copies the specified resource file into the current directory from
-     * the jar file. If the file already exists, no copy is performed.
-     *
-     * @param fileName the name of the file to copy, relative to the jar 
-     *  file -- such as "org/limewire/gui/images/image.gif"
-     * @param newFile the new <tt>File</tt> instance where the resource file
-     *  will be copied to -- if this argument is null, the file will be
-     *  copied to the current directory
-     * @param forceOverwrite specifies whether or not to overwrite the 
-     *  file if it already exists
-     */
-    public static void copyResourceFile(String fileName, File newFile,
-            boolean forceOverwrite) throws IOException {
-        if (newFile == null)
-    	    newFile = new File(".", fileName);
-    
-    	// return quickly if the file is already there, no copy necessary
-    	if( !forceOverwrite && newFile.exists() )
-            return;
-        
-    	String parentString = newFile.getParent();
-        if(parentString == null)
-            return;
-        
-    	File parentFile = new File(parentString);
-    	if(!parentFile.isDirectory())
-    		parentFile.mkdirs();
-    
-    	ClassLoader cl = CommonUtils.class.getClassLoader();			
-        //load resource using my class loader or system class loader
-        //Can happen if Launcher loaded by system class loader
-        URL resource = cl != null
-            ?  cl.getResource(fileName)
-            :  ClassLoader.getSystemResource(fileName);
-            
-        if(resource == null)
-            throw new IOException("resource: " + fileName + " doesn't exist.");
-        
-    	saveStream(resource.openStream(), newFile);
-    }
-    
-    /**
-     * Copies the src file to the destination file.
-     * This will always overwrite the destination.
-     */
-    public static void copyFile(File src, File dst) throws IOException {
-        saveStream(new FileInputStream(src), dst);
-    }
-    
-    /**
-     * Saves all data from the stream into the destination file.
-     * This will always overwrite the file.
-     */
-    public static void saveStream(InputStream inStream, File newFile) throws IOException {
-    	BufferedInputStream bis = null;
-    	BufferedOutputStream bos = null;            
-    	try {
-    		//buffer the streams to improve I/O performance
-    		final int bufferSize = 2048;
-            bis = new BufferedInputStream(inStream, bufferSize);
-            bos = new BufferedOutputStream(new FileOutputStream(newFile), bufferSize);
-            byte[] buffer = new byte[bufferSize];
-            int c = 0;
-    		
-    		do { //read and write in chunks of buffer size until EOF reached
-    			c = bis.read(buffer, 0, bufferSize);
-                if (c > 0)
-                    bos.write(buffer, 0, c);
-    		} while (c == bufferSize); //(# of bytes read)c will = bufferSize until EOF
-            
-            bos.flush();
-    	} catch(IOException e) {
-    		//if there is any error, delete any portion of file that did write
-    		newFile.delete();
-    	} finally {
-            if(bis != null) {
-                try {
-                    bis.close();
-                } catch(IOException ignored) {}
-            }
-            if(bos != null) {
-                try {
-                    bos.close();
-                } catch(IOException ignored) {}
-            }
-    	} 
-    }
-
-    /**
      * Returns the stack traces of all current Threads.
      */
     public static String getAllStackTraces() {
         try {
             Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
-            
-            List<Map.Entry<Thread, StackTraceElement[]>> sorted =
-                new ArrayList<Map.Entry<Thread, StackTraceElement[]>>(map.entrySet());
+
+            List<Map.Entry<Thread, StackTraceElement[]>> sorted = new ArrayList<Map.Entry<Thread, StackTraceElement[]>>(map.entrySet());
             Collections.sort(sorted, new Comparator<Map.Entry<Thread, StackTraceElement[]>>() {
                 public int compare(Map.Entry<Thread, StackTraceElement[]> a, Map.Entry<Thread, StackTraceElement[]> b) {
                     return a.getKey().getName().compareTo(b.getKey().getName());
                 }
             });
-            
+
             StringBuilder buffer = new StringBuilder();
-            for(Map.Entry<Thread, StackTraceElement[]> entry : sorted) {
+            for (Map.Entry<Thread, StackTraceElement[]> entry : sorted) {
                 Thread key = entry.getKey();
                 StackTraceElement[] value = entry.getValue();
-                
+
                 buffer.append(key.getName()).append("\n");
-                for(int i = 0; i < value.length; i++) {
+                for (int i = 0; i < value.length; i++) {
                     buffer.append("    ").append(value[i]).append("\n");
                 }
                 buffer.append("\n");
             }
-            
+
             // Remove the last '\n'
             if (buffer.length() > 0) {
-                buffer.setLength(buffer.length()-1);
+                buffer.setLength(buffer.length() - 1);
             }
-            
+
             return buffer.toString();
         } catch (Exception err) {
             StringWriter sw = new StringWriter();
@@ -334,16 +238,19 @@ public class CommonUtils {
         if (days != 0) {
             time.append(Long.toString(days));
             time.append(":");
-            if (hours < 10) time.append("0");
+            if (hours < 10)
+                time.append("0");
         }
         if (days != 0 || hours != 0) {
             time.append(Long.toString(hours));
             time.append(":");
-            if (minutes < 10) time.append("0");
+            if (minutes < 10)
+                time.append("0");
         }
         time.append(Long.toString(minutes));
         time.append(":");
-        if (seconds < 10) time.append("0");
+        if (seconds < 10)
+            time.append("0");
         time.append(Long.toString(seconds));
         return time.toString();
     }
@@ -369,7 +276,7 @@ public class CommonUtils {
         }
         return convertFileName(name, Math.min(OSUtils.getMaxPathLength() - parentLength - 1, 180));
     }
-    
+
     /**
      * Cleans up the filename and truncates it to length of 180 bytes by calling
      * {@link #convertFileName(String, int) convertFileName(String, 180)}. 
@@ -377,7 +284,7 @@ public class CommonUtils {
     public static String convertFileName(String name) {
         return convertFileName(name, 180);
     }
-        
+
     /**
      * Cleans up the filename from illegal characters and truncates it to the
      * length of bytes specified.
@@ -418,58 +325,57 @@ public class CommonUtils {
      * @throws IllegalArgumentException if maxBytes <= 0
      */
     public static String convertFileName(String name, int maxBytes, Charset charSet) throws CharacterCodingException {
-    	
+
         if (maxBytes <= 0) {
             throw new IllegalArgumentException("maxBytes must be > 0");
         }
-        
-    	// ensure that block-characters aren't in the filename.
+
+        // ensure that block-characters aren't in the filename.
         name = I18NConvert.instance().compose(name);
-    
-    	// if the name is too long, reduce it.  We don't go all the way
-    	// up to 255 because we don't know how long the directory name is
-    	// We want to keep the extension, though.
-    	if(name.length() > maxBytes || name.getBytes().length > maxBytes) {
-    	    int extStart = name.lastIndexOf('.');
-    	    if ( extStart == -1) { // no extension, weird, but possible
-    	        name = getPrefixWithMaxBytes(name, maxBytes, charSet);
-    	    } else {
-    	        // if extension is greater than 11, we truncate it.
-    	        // ( 11 = '.' + 10 extension bytes )
-    	        int extLength = name.length() - extStart;		        
-    	        int extEnd = extLength > 11 ? extStart + 11 : name.length();
-    	        byte[] extension = getMaxBytes(name.substring(extStart, extEnd), 16, charSet);
-    	        try {
-    	            // disregard extension if we lose too much of the name
-    	            // since the name is also used for searching
-    	            if (extension.length >= maxBytes - 10) {
-    	                name = getPrefixWithMaxBytes(name, maxBytes, charSet);
-    	            } else {
-    	                name = getPrefixWithMaxBytes(name, maxBytes - extension.length, charSet) 
-    	                + new String(extension, charSet.name());
-    	            }
-    	        } catch (UnsupportedEncodingException uee) {
-    	            throw new RuntimeException("Could not handle string", uee);
-    	        }
-            }          
-    	}
-        for (int i = 0; i < ILLEGAL_CHARS_ANY_OS.length; i++) 
+
+        // if the name is too long, reduce it.  We don't go all the way
+        // up to 255 because we don't know how long the directory name is
+        // We want to keep the extension, though.
+        if (name.length() > maxBytes || name.getBytes().length > maxBytes) {
+            int extStart = name.lastIndexOf('.');
+            if (extStart == -1) { // no extension, weird, but possible
+                name = getPrefixWithMaxBytes(name, maxBytes, charSet);
+            } else {
+                // if extension is greater than 11, we truncate it.
+                // ( 11 = '.' + 10 extension bytes )
+                int extLength = name.length() - extStart;
+                int extEnd = extLength > 11 ? extStart + 11 : name.length();
+                byte[] extension = getMaxBytes(name.substring(extStart, extEnd), 16, charSet);
+                try {
+                    // disregard extension if we lose too much of the name
+                    // since the name is also used for searching
+                    if (extension.length >= maxBytes - 10) {
+                        name = getPrefixWithMaxBytes(name, maxBytes, charSet);
+                    } else {
+                        name = getPrefixWithMaxBytes(name, maxBytes - extension.length, charSet) + new String(extension, charSet.name());
+                    }
+                } catch (UnsupportedEncodingException uee) {
+                    throw new RuntimeException("Could not handle string", uee);
+                }
+            }
+        }
+        for (int i = 0; i < ILLEGAL_CHARS_ANY_OS.length; i++)
             name = name.replace(ILLEGAL_CHARS_ANY_OS[i], '_');
-    	
-        if ( OSUtils.isWindows() || OSUtils.isOS2() ) {
-            for (int i = 0; i < ILLEGAL_CHARS_WINDOWS.length; i++) 
+
+        if (OSUtils.isWindows() || OSUtils.isOS2()) {
+            for (int i = 0; i < ILLEGAL_CHARS_WINDOWS.length; i++)
                 name = name.replace(ILLEGAL_CHARS_WINDOWS[i], '_');
-        } else if ( OSUtils.isLinux() || OSUtils.isSolaris() ) {
-            for (int i = 0; i < ILLEGAL_CHARS_UNIX.length; i++) 
+        } else if (OSUtils.isLinux() || OSUtils.isSolaris()) {
+            for (int i = 0; i < ILLEGAL_CHARS_UNIX.length; i++)
                 name = name.replace(ILLEGAL_CHARS_UNIX[i], '_');
         } else if (OSUtils.isMacOSX()) {
-            for(int i = 0; i < ILLEGAL_CHARS_MACOS.length; i++)
+            for (int i = 0; i < ILLEGAL_CHARS_MACOS.length; i++)
                 name = name.replace(ILLEGAL_CHARS_MACOS[i], '_');
         }
-        
+
         return name;
     }
-    
+
     /**
      * Returns the prefix of <code>string</code> which takes up a maximum
      * of <code>maxBytes</code>.
@@ -516,65 +422,65 @@ public class CommonUtils {
      *  instance, or <tt>null</tt> if the property is not set
      */
     public static File getCurrentDirectory() {
-    	return new File(System.getProperty("user.dir"));
+        return new File(System.getProperty("user.dir"));
     }
-    
+
     public static String getExecutableDirectory() {
-    	
-    	Class<?> clazz = null;
-    	String path;
-    	String defaultPath = "/Applications/FrostWire.app/";
-    	String decodedPath = defaultPath;
-    	
-    	try {
-    		clazz = Class.forName("com.limegroup.gnutella.gui.Main");
-    		
-    		if ( clazz != null ) {
-				path = clazz.getProtectionDomain().getCodeSource().getLocation().getPath();
-		    	decodedPath = URLDecoder.decode(path, "UTF-8");
+
+        Class<?> clazz = null;
+        String path;
+        String defaultPath = "/Applications/FrostWire.app/";
+        String decodedPath = defaultPath;
+
+        try {
+            clazz = Class.forName("com.limegroup.gnutella.gui.Main");
+
+            if (clazz != null) {
+                path = clazz.getProtectionDomain().getCodeSource().getLocation().getPath();
+                decodedPath = URLDecoder.decode(path, "UTF-8");
                 if (decodedPath != null && decodedPath.toLowerCase().lastIndexOf("frostwire.jar") != -1) {
                     decodedPath = decodedPath.substring(0, decodedPath.toLowerCase().lastIndexOf("frostwire.jar"));
                 }
-    		}
-    		
-    	} catch (Throwable t) {
-    	    decodedPath = defaultPath;
-    	}
-    	
-    	return decodedPath;
-    	
+            }
+
+        } catch (Throwable t) {
+            decodedPath = defaultPath;
+        }
+
+        return decodedPath;
+
     }
-    
+
     /**
      * Validates a potential settings directory.
      * This returns the validated directory, or throws an IOException
      * if it can't be validated.
      */
     public static File validateSettingsDirectory(File dir) throws IOException {
-        dir = dir.getAbsoluteFile();        
-        if(!dir.isDirectory()) {
+        dir = dir.getAbsoluteFile();
+        if (!dir.isDirectory()) {
             dir.delete(); // delete whatever it may have been
-            if(!dir.mkdirs()) 
+            if (!dir.mkdirs())
                 throw new IOException("could not create preferences directory: " + dir);
         }
 
-        if(!dir.canWrite())
+        if (!dir.canWrite())
             throw new IOException("settings dir not writable: " + dir);
 
-        if(!dir.canRead())
+        if (!dir.canRead())
             throw new IOException("settings dir not readable: " + dir);
-        
+
         // Validate that you can write a file into settings directory.
         //  catches vista problem where if settings directory is
         //  locked canRead and canWrite still return true
         File file = File.createTempFile("test", "test", dir);
-        if(!file.exists())
+        if (!file.exists())
             throw new IOException("can't write test file in directory: " + dir);
         file.delete();
-        
+
         return dir;
     }
-    
+
     /**
      * Sets the new settings directory.
      * The settings directory cannot be set more than once.
@@ -586,7 +492,7 @@ public class CommonUtils {
      * @throws IOException
      */
     public static void setUserSettingsDir(File settingsDir) throws IOException {
-        if(settingsDirectory != null)
+        if (settingsDirectory != null)
             throw new IllegalStateException("settings directory already set!");
         settingsDirectory = validateSettingsDirectory(settingsDir);
     }
@@ -599,24 +505,24 @@ public class CommonUtils {
      * settingsDirectory has already been set at this point as portable if we're on portable.
      * @see LimeCoreGlue.preinstall()
      */
-    public synchronized static File getUserSettingsDir() {  
-        if(settingsDirectory != null)
+    public synchronized static File getUserSettingsDir() {
+        if (settingsDirectory != null)
             return settingsDirectory;
         else
             return getUserSettingsDir2();
     }
-    
+
     /**
      * Returns the location where the user settings directory should be placed.
      */
     private static File getUserSettingsDir2() {
         // LOGIC:
-        
+
         // On all platforms other than Windows or OSX,
         // this will return <user-home>/.frostwire<versionMajor.versionMinor>
-        
+
         // On OSX, this will return <user-home>/Library/Preferences/FrostWire5
-        
+
         // On Windows, this first tries to find:
         // a) <user-home>/$LIMEWIRE_PREFS_DIR/.frostwire
         // b) <user-home>/$APPDATA/FrostWire
@@ -628,36 +534,36 @@ public class CommonUtils {
         // does, then c) is used.  Once a) or b) exist, they are used indefinitely.
         // If neither a), b) nor c) exist, then the former is created in preference of
         // of a), then b).        
-        
+
         Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
         if (!metaConfiguration.isEmpty()) {
             //override this logic if it's been specified in .meta configuration file.
             return CommonUtils.getPortableSettingsDir(metaConfiguration);
         }
-        
+
         File userDir = CommonUtils.getUserHomeDir();
 
         // Changing permissions without permission in Unix is rude
-        if(!OSUtils.isPOSIX() && userDir != null && userDir.exists())
+        if (OSUtils.isWindows() && userDir != null && userDir.exists())
             FileUtils.setWriteable(userDir);
-        
+
         File settingsDir = new File(userDir, FROSTWIRE_500_PREFS_DIR_NAME);
 
-        if(OSUtils.isMacOSX()) {
+        if (OSUtils.isMacOSX()) {
             settingsDir = new File(CommonUtils.getUserHomeDir(), "Library/Preferences/FrostWire5");
-        } 
-      
+        }
+
         return settingsDir;
     }
-    
+
     public static File getFrostWire4UserSettingsDir() {
         // LOGIC:
-        
+
         // On all platforms other than Windows or OSX,
         // this will return <user-home>/.frostwire<versionMajor.versionMinor>
-        
+
         // On OSX, this will return <user-home>/Library/Preferences/FrostWire
-        
+
         // On Windows, this first tries to find:
         // a) <user-home>/$LIMEWIRE_PREFS_DIR/.frostwire
         // b) <user-home>/$APPDATA/FrostWire
@@ -671,113 +577,121 @@ public class CommonUtils {
         // of a), then b).        
         File userDir = CommonUtils.getUserHomeDir();
 
-//        // Changing permissions without permission in Unix is rude
-//        if(!OSUtils.isPOSIX() && userDir != null && userDir.exists())
-//            FileUtils.setWriteable(userDir);
-        
+        //        // Changing permissions without permission in Unix is rude
+        //        if(!OSUtils.isPOSIX() && userDir != null && userDir.exists())
+        //            FileUtils.setWriteable(userDir);
+
         File settingsDir = new File(userDir, FROSTWIRE_420_PREFS_DIR_NAME);
 
-        if(OSUtils.isMacOSX()) {
+        if (OSUtils.isMacOSX()) {
             settingsDir = new File(CommonUtils.getUserHomeDir(), "Library/Preferences/FrostWire");
-        } 
-      
+        }
+
         return settingsDir;
     }
-    
-	public static boolean isDebugMode() {
-		return ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
-	}
-	
-	/**
-	 * Looks for a ".meta" configuration file on the same folder as the FrostWire executable.
-	 * If found this file should contain the following configuration values:
-	 * 
-	 * user.settings.dir.windows = <relative path to frostwire settings directory for windows installation>
-	 * user.settings.dir.mac = <relative path to frostwire settings directory for windows installation>
-	 * user.settings.dir.posix = <relative path to frostwire settings directory for posix installation>
-	 * 
-	 * @return A Properties object, if the .meta file is not found returns an empty Properties object.
-	 */
-	public static Properties loadMetaConfiguration() {
-	    Properties meta = new Properties();
-	    
-	    File metaFile = new File(".meta");
-	    if (metaFile.exists() && metaFile.isFile() && metaFile.canRead()) {
-	        FileInputStream fis = null;
-	        try {
-	            fis = new FileInputStream(metaFile);
-	            meta.load(fis);
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        } finally {
-	            IOUtils.closeQuietly(fis);
-	        }
-	    }
-	    
-	    return meta;
-	}
-	
-	/**
-	 * Looks for .meta config file portable settings dir File object for the current operating system.
-	 * 
-	 * @return File object, if not meta configured on .meta, returns null
-	 */
-	public static File getPortableSettingsDir() {
+
+    public static boolean isDebugMode() {
+        return ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
+    }
+
+    /**
+     * Looks for a ".meta" configuration file on the same folder as the FrostWire executable.
+     * If found this file should contain the following configuration values:
+     * 
+     * user.settings.dir.windows = <relative path to frostwire settings directory for windows installation>
+     * user.settings.dir.mac = <relative path to frostwire settings directory for windows installation>
+     * user.settings.dir.posix = <relative path to frostwire settings directory for posix installation>
+     * 
+     * @return A Properties object, if the .meta file is not found returns an empty Properties object.
+     */
+    public static Properties loadMetaConfiguration() {
+        Properties meta = new Properties();
+
+        File metaFile = new File(".meta");
+        if (metaFile.exists() && metaFile.isFile() && metaFile.canRead()) {
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(metaFile);
+                meta.load(fis);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                closeQuietly(fis);
+            }
+        }
+
+        return meta;
+    }
+
+    public static File getPortableSettingsDir(Properties metaConfiguration) {
+        return getPortableMetaFile(metaConfiguration, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_WINDOWS, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_MAC, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_POSIX);
+    }
+
+    /**
+     * The root folder where all the default save directories exist.
+     * @return
+     */
+    public static File getPortableRootFolder() {
         Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
-        return getPortableSettingsDir(metaConfiguration);
-	}
-	
-	public static File getPortableSettingsDir(Properties metaConfiguration) {
-	    return getPortableMetaFile(metaConfiguration, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_WINDOWS, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_MAC, CommonUtils.META_SETTINGS_KEY_USER_SETTINGS_POSIX);
-	}
-	
-	/**
-	 * The root folder where all the default save directories exist.
-	 * @return
-	 */
-	public static File getPortableRootFolder() {
-	    Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
-	    return getPortableRootFolder(metaConfiguration);
-	}
-	
-	public static File getPortableRootFolder(Properties metaConfiguration) {
-	    return getPortableMetaFile(metaConfiguration, CommonUtils.META_SETTINGS_KEY_ROOT_FOLDER_WINDOWS, CommonUtils.META_SETTINGS_KEY_ROOT_FOLDER_MAC, CommonUtils.META_SETTINGS_KEY_ROOT_FOLDER_POSIX);
-	}
-	
-	/**
-	 * Get the file/dir pointed out by a configuration key form the .meta Properties object
-	 * depending on what operating system you are on.
-	 * 
-	 * @param metaConfiguration
-	 * @param windowsKey
-	 * @param macKey
-	 * @param posixKey
-	 * @return The file if the key has been specified, otherwise null.
-	 */
-	private static File getPortableMetaFile(Properties metaConfiguration, final String windowsKey, final String macKey, final String posixKey) {
+        return getPortableRootFolder(metaConfiguration);
+    }
+
+    public static File getPortableRootFolder(Properties metaConfiguration) {
+        return getPortableMetaFile(metaConfiguration, CommonUtils.META_SETTINGS_KEY_ROOT_FOLDER_WINDOWS, CommonUtils.META_SETTINGS_KEY_ROOT_FOLDER_MAC, CommonUtils.META_SETTINGS_KEY_ROOT_FOLDER_POSIX);
+    }
+
+    /**
+     * Get the file/dir pointed out by a configuration key form the .meta Properties object
+     * depending on what operating system you are on.
+     * 
+     * @param metaConfiguration
+     * @param windowsKey
+     * @param macKey
+     * @param posixKey
+     * @return The file if the key has been specified, otherwise null.
+     */
+    private static File getPortableMetaFile(Properties metaConfiguration, final String windowsKey, final String macKey, final String posixKey) {
         File portableMetaDir = null;
         String metaKey = null;
-        
+
         if (OSUtils.isWindows() && metaConfiguration.containsKey(windowsKey)) {
             metaKey = windowsKey;
         } else if (OSUtils.isMacOSX() && metaConfiguration.containsKey(macKey)) {
             metaKey = macKey;
-        } else if (OSUtils.isPOSIX() && metaConfiguration.containsKey(posixKey)) {
+        } else if (OSUtils.isLinux() && metaConfiguration.containsKey(posixKey)) {
             metaKey = posixKey;
         }
-        
+
         if (metaKey != null) {
             portableMetaDir = new File(metaConfiguration.getProperty(metaKey));
 
             if (!portableMetaDir.exists()) {
                 portableMetaDir.mkdirs();
             }
-            
-            if (!OSUtils.isPOSIX()) {
+
+            if (OSUtils.isWindows()) {
                 FileUtils.setWriteable(portableMetaDir);
             }
         }
-        
-        return portableMetaDir;	    
-	}
+
+        return portableMetaDir;
+    }
+
+    public static boolean isPortable() {
+        if (IS_PORTABLE == null) {
+            Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
+            IS_PORTABLE = !metaConfiguration.isEmpty();
+        }
+        return IS_PORTABLE;
+    }
+
+    public static void closeQuietly(Closeable closeable) {
+        try {
+            if (closeable != null) {
+                closeable.close();
+            }
+        } catch (IOException ioe) {
+            // ignore
+        }
+    }
 }

@@ -3,6 +3,7 @@ package com.limegroup.gnutella.settings;
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.StringArraySetting;
 import org.limewire.setting.StringSetting;
+import org.limewire.util.CommonUtils;
 
 /**
  * Settings for iTunes
@@ -15,7 +16,7 @@ public class iTunesSettings extends LimeProps {
     /**
      * Whether or not player should be enabled.
      */
-    public static BooleanSetting ITUNES_SUPPORT_ENABLED = FACTORY.createBooleanSetting("ITUNES_SUPPORT_ENABLED", true);
+    public static BooleanSetting ITUNES_SUPPORT_ENABLED = FACTORY.createBooleanSetting("ITUNES_SUPPORT_ENABLED", !CommonUtils.isPortable());
 
     /**
      * The name of the Playlist where songs shall be imported

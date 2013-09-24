@@ -80,4 +80,8 @@ public final class SoundcloudUISearchResult extends AbstractUISearchResult {
     public String getUsername() {
         return sr.getUsername();
     }
+    
+    public String getDownloadUrl() {
+        return sr.getDownloadUrl();
+    }
 }

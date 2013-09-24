@@ -162,21 +162,22 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                     return;
                 }
 
-                int result = JOptionPane.showConfirmDialog(null, _updateMessage.getMessageInstallerReady(), I18n.tr("Update"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), _updateMessage.getMessageInstallerReady(), I18n.tr("Update"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
                 if (result == JOptionPane.YES_OPTION) {
                     try {
+                        if (CommonUtils.isPortable()) {
+                            //UpdateMediator.instance().installPortable(_executableFile);
+                            return; // pending refactor
+                        }
+
                         if (OSUtils.isWindows()) {
                             String[] commands = new String[] { "CMD.EXE", "/C", _executableFile.getAbsolutePath() };
 
                             ProcessBuilder pbuilder = new ProcessBuilder(commands);
                             pbuilder.start();
                         } else if (OSUtils.isLinux() && OSUtils.isUbuntu()) {
-                            boolean success = trySoftwareCenter() || tryGdebiGtk();
-
-                            if (!success) {
-                                throw new IOException("Unable to install update");
-                            }
+                            UpdateMediator.instance().installUbuntu(_executableFile);
                         } else if (OSUtils.isMacOSX()) {
                             String[] mountCommand = new String[] { "hdiutil", "attach", _executableFile.getAbsolutePath() };
 
@@ -198,27 +199,6 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                 }
             }
         });
-    }
-
-    private boolean trySoftwareCenter() {
-        return tryUbuntuInstallCmd("/usr/bin/software-center");
-    }
-
-    private boolean tryGdebiGtk() {
-        return tryUbuntuInstallCmd("gdebi-gtk");
-    }
-
-    private boolean tryUbuntuInstallCmd(String cmd) {
-        try {
-            String[] commands = new String[] { cmd, _executableFile.getAbsolutePath() };
-
-            ProcessBuilder pbuilder = new ProcessBuilder(commands);
-            pbuilder.start();
-
-            return true;
-        } catch (Throwable e) {
-            return false;
-        }
     }
 
     private File downloadDotTorrent() {

@@ -29,6 +29,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -66,13 +67,18 @@ final class FWHttpClient implements HttpClient {
     }
 
     public String get(String url, int timeout, String userAgent, String referrer, String cookie) {
+        return get(url, timeout, userAgent, referrer, cookie, null);
+    }
+    
+    @Override
+    public String get(String url, int timeout, String userAgent, String referrer, String cookie, Map<String, String> customHeaders) {
         String result = null;
 
         ByteArrayOutputStream baos = null;
 
         try {
             baos = new ByteArrayOutputStream();
-            get(url, baos, timeout, userAgent, referrer, cookie, -1);
+            get(url, baos, timeout, userAgent, referrer, cookie, -1, -1, customHeaders);
 
             result = new String(baos.toByteArray(), "UTF-8");
         } catch (Throwable e) {
@@ -84,6 +90,7 @@ final class FWHttpClient implements HttpClient {
         return result;
     }
 
+    
     public byte[] getBytes(String url, int timeout, String userAgent, String referrer) {
         byte[] result = null;
 
@@ -102,6 +109,7 @@ final class FWHttpClient implements HttpClient {
 
         return result;
     }
+
 
     public void save(String url, File file, boolean resume) throws IOException {
         save(url, file, resume, DEFAULT_TIMEOUT, DEFAULT_USER_AGENT);
@@ -136,17 +144,17 @@ final class FWHttpClient implements HttpClient {
     }
 
     private void get(String url, OutputStream out, int timeout, String userAgent, String referrer, String cookie, int rangeStart) throws IOException {
-        get(url, out, timeout, userAgent, referrer, cookie, rangeStart, -1);
+        get(url, out, timeout, userAgent, referrer, cookie, rangeStart, -1, null);
     }
 
-    private void get(String url, OutputStream out, int timeout, String userAgent, String referrer, String cookie, int rangeStart, int rangeLength) throws IOException {
+    private void get(String url, OutputStream out, int timeout, String userAgent, String referrer, String cookie, int rangeStart, int rangeLength, final Map<String, String> customHeaders) throws IOException {
         canceled = false;
-        URL u = new URL(url);
-        URLConnection conn = u.openConnection();
+        final URL u = new URL(url);
+        final URLConnection conn = u.openConnection();
 
         conn.setReadTimeout(timeout);
         conn.setRequestProperty("User-Agent", userAgent);
-
+        
         if (referrer != null) {
             conn.setRequestProperty("Referer", referrer);
         }
@@ -165,6 +173,11 @@ final class FWHttpClient implements HttpClient {
 
         if (rangeStart > 0) {
             conn.setRequestProperty("Range", buildRange(rangeStart, rangeLength));
+        }
+        
+        if (customHeaders != null && customHeaders.size() > 0) {
+            //put down here so it can overwrite any of the previous headers.
+            setCustomHeaders(customHeaders, conn);
         }
 
         InputStream in = conn.getInputStream();
@@ -200,6 +213,14 @@ final class FWHttpClient implements HttpClient {
         } finally {
             closeQuietly(in);
             closeQuietly(conn);
+        }
+    }
+
+    private void setCustomHeaders(final Map<String, String> customHeaders, URLConnection conn) {
+        Set<String> keySet = customHeaders.keySet();
+        for (String key : keySet) {
+            final String value = customHeaders.get(key); //declaration for debug breakpoint convenience
+            conn.setRequestProperty(key, value);
         }
     }
 

@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella;
 
 import java.io.File;
@@ -5,6 +20,8 @@ import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.limewire.util.CommonUtils;
+
+import com.limegroup.gnutella.settings.LibrarySettings;
 
 
 /**
@@ -67,6 +84,7 @@ public class LimeCoreGlue {
         //  - Otherwise, success.
         try {
             CommonUtils.setUserSettingsDir(userSettingsDir);
+            LibrarySettings.resetLibraryFoldersIfPortable();
         } catch(Exception e) {
             throw new InstallFailedException("Settings Directory Failure", e);
         }
@@ -74,12 +92,6 @@ public class LimeCoreGlue {
 
     /** Wires all various components together. */
     public void install() {
-    	//SIMPP 
-    	//if (!ApplicationSettings.USE_SIMPP.getValue()) {
-    	//	LOG.debug("No more SIMPP, turned off");
-    	//	return;
-    	//}
-    	
         // Only install once.
         if(!installed.compareAndSet(false, true))
             return;
@@ -89,11 +101,7 @@ public class LimeCoreGlue {
     
     /** Simple exception for failure to install. */
     public static class InstallFailedException extends RuntimeException {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 3989727284459714644L;
-
+        
         public InstallFailedException() {
             super();
         }
@@ -109,7 +117,5 @@ public class LimeCoreGlue {
         public InstallFailedException(Throwable cause) {
             super(cause);
         }
-        
     }
-
 }

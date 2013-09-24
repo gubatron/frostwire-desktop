@@ -83,13 +83,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     }
     
     /* (non-Javadoc)
-     * @see com.limegroup.gnutella.LifecycleManager#isShutdown()
-     */
-    public boolean isShutdown() {
-        return getCurrentState() == State.STOPPED;
-    }
-    
-    /* (non-Javadoc)
      * @see com.limegroup.gnutella.LifecycleManager#installListeners()
      */
     public void installListeners() {
@@ -218,7 +211,9 @@ public class LifecycleManagerImpl implements LifecycleManager {
         SettingsGroupManager.instance().save();
 		
         if (AzureusStarter.isAzureusCoreStarted()) {
+            System.out.println("Waiting for Vuze core to shutdown...");
             AzureusStarter.getAzureusCore().stop();
+            System.out.println("Vuze core shutdown.");
         }
         
         shutdownDone.set(true);

@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.global.GlobalManager;
+import org.limewire.util.CommonUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
@@ -95,14 +96,44 @@ public class DownloadManagerImpl implements DownloadManager {
                 LOG.info("Update download: " + downloadManager.getSaveLocation());
                 continue;
             }
-
+            
             if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
                 if (downloadManager.getAssumedComplete()) {
                     downloadManager.pause();
                 }
             }
+            
+            if (CommonUtils.isPortable()) {
+                updateDownloadManagerPortableSaveLocation(downloadManager);
+            }
 
             addDownloaderManager(downloadManager);
+        }
+    }
+
+    private void updateDownloadManagerPortableSaveLocation(org.gudy.azureus2.core3.download.DownloadManager downloadManager) {
+        boolean hadToPauseIt = false;
+        if (downloadManager.getState() != org.gudy.azureus2.core3.download.DownloadManager.STATE_STOPPED) {
+            downloadManager.pause();
+            hadToPauseIt = true;
+        }
+        String previousSaveLocation = downloadManager.getSaveLocation().getAbsolutePath();
+        String newLocationPrefix = SharingSettings.DEFAULT_TORRENT_DATA_DIR.getAbsolutePath();
+
+        if (!previousSaveLocation.startsWith(newLocationPrefix)) {
+            File newSaveLocation = new File(SharingSettings.DEFAULT_TORRENT_DATA_DIR, downloadManager.getSaveLocation().getName());
+            if (newSaveLocation.exists()) {
+                if (newSaveLocation.isDirectory()) {
+                    downloadManager.setDataAlreadyAllocated(false); //absolutely necessary
+                    downloadManager.setTorrentSaveDir(newSaveLocation.getAbsolutePath());
+                } else if (newSaveLocation.isFile()) {
+                    downloadManager.setTorrentSaveDir(SharingSettings.DEFAULT_TORRENT_DATA_DIR.getAbsolutePath());
+                }
+            }
+        }
+        
+        if (hadToPauseIt) {
+            downloadManager.resume();
         }
     }
 

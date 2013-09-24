@@ -16,7 +16,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.limewire.util.IOUtils;
+import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -74,7 +74,7 @@ public class LimeXMLSchema {
     public LimeXMLSchema(InputSource inputSource) throws IOException {
         //initialize schema
         Document document = getDocument(inputSource);
-        IOUtils.close(inputSource.getByteStream()); // make sure we closed the input source.
+        IOUtils.closeQuietly(inputSource.getByteStream()); // make sure we closed the input source.
         _canonicalizedFields = Collections.unmodifiableList(new LimeXMLSchemaFieldExtractor().getFields(document));
         _schemaURI = retrieveSchemaURI(document);
         _rootXMLName = getRootXMLName(document);

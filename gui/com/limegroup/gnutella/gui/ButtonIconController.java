@@ -12,7 +12,7 @@ import java.util.Properties;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import org.limewire.util.IOUtils;
+import org.apache.commons.io.IOUtils;
 
 import com.limegroup.gnutella.settings.UISettings;
 
@@ -153,7 +153,7 @@ public class ButtonIconController {
             }
         } catch(IOException ignored) {
         } finally {
-            IOUtils.close(is);
+            IOUtils.closeQuietly(is);
         }
         return p;
     }
