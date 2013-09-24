@@ -350,19 +350,6 @@ public class MediaType implements Serializable {
         return false;
     }
         
-    /*
-     * We canoncialize the default mediatypes, but since MediaType has
-     * a public constructor only 'equals' comparisons should be used.
-     */
-    Object readResolve() throws ObjectStreamException {
-        for (MediaType type : ALL_MEDIA_TYPES) {
-            if (equals(type)) {
-                return type;
-            }
-        }
-        return this;
-    }
- 
     /**
      * Retrieves the any media type.
      */
