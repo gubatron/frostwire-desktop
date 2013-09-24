@@ -79,7 +79,7 @@ public class LibrarySearch extends JPanel {
         setupUI();
     }
 
-    public void searchFor(final String query) {
+    public void searchFor(final String query, final boolean displayTextOnSearchBox) {
         GUIMediator.safeInvokeLater(new Runnable() {
 
             @Override
@@ -90,13 +90,17 @@ public class LibrarySearch extends JPanel {
                 if (searchField != null) {
                     SearchLibraryAction searchAction = new SearchLibraryAction();
 
-                    if (query.length() < 50) {
-                        searchField.setText(query);
+                    if (displayTextOnSearchBox) {
+                        if (query.length() < 50) {
+                            searchField.setText(query);
+                        } else {
+                            searchField.setText(query.substring(0, 49));
+                        }
+                        searchAction.actionPerformed(null);
                     } else {
-                        searchField.setText(query.substring(0, 49));
+                        searchAction.actionPerformed(null, query);
                     }
 
-                    searchAction.actionPerformed(null);
                 }
             }
         });
@@ -252,9 +256,12 @@ public class LibrarySearch extends JPanel {
             }
         }
 
-        public void actionPerformed(ActionEvent e) {
-            String query = searchField.getText().trim();
+        public void actionPerformed(ActionEvent e, String query) {
             perform(query);
+        }
+        
+        public void actionPerformed(ActionEvent e) {
+            actionPerformed(e,searchField.getText().trim());
         }
     }
 
