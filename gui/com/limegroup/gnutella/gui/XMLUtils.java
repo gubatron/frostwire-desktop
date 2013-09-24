@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -9,8 +8,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.limegroup.gnutella.LimeXMLNames;
-import com.limegroup.gnutella.LimeXMLSchema;
-import com.limegroup.gnutella.SchemaFieldInfo;
 import com.limegroup.gnutella.util.XMLStringUtils;
 
 /**
@@ -24,23 +21,6 @@ public class XMLUtils {
     private XMLUtils() {}
     
     /**
-     * Returns the value as a Comparable.
-     */
-    public static Comparable<?> getComparable(SchemaFieldInfo field, String value) {
-        if(field == null || value == null) {
-            return null;
-        } else if(field.getJavaType() == Integer.class || field.getJavaType() == Date.class) {
-            try {
-              return Integer.valueOf(value);  
-            } catch(NumberFormatException nfe) {
-                return null;
-            }
-        } else {
-            return value;
-        }
-    }
-	
-	/**
 	 * Gets the resource for the given string.
 	 */
 	public static String getResource(String field) {
@@ -65,13 +45,6 @@ public class XMLUtils {
         int idx1 = field.indexOf(XMLStringUtils.DELIMITER) + 2;
         int idx2 = field.indexOf(XMLStringUtils.DELIMITER, idx1);
         return getResource(field.substring(0, idx2));
-    }
-    
-    /**
-     * Gets the correct display name for the given schema.
-     */
-    public static String getTitleForSchema(LimeXMLSchema schema) {
-        return getResource(schema.getRootXMLName() + XMLStringUtils.DELIMITER + schema.getInnerXMLName());
     }
     
     /**
