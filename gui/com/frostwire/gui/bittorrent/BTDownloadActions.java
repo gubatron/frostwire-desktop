@@ -173,7 +173,7 @@ final class BTDownloadActions {
                     return;
                 }
 
-                LibraryMediator.instance().getLibrarySearch().searchFor(toExplore.replace("_", " ").replace("-", " ").replace(".", " "));
+                LibraryMediator.instance().getLibrarySearch().searchFor(toExplore.replace("_", " ").replace("-", " ").replace(".", " "), false);
             }
         }
     }
