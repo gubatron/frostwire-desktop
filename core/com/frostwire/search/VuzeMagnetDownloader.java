@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2013, FrostWire(R). All rights reserved.
  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@
 
 package com.frostwire.search;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -37,15 +39,19 @@ import com.limegroup.gnutella.settings.SharingSettings;
  */
 public class VuzeMagnetDownloader implements MagnetDownloader {
 
+    private final Random rnd;
+
+    public VuzeMagnetDownloader() {
+        rnd = new Random(System.currentTimeMillis());
+    }
+
     public byte[] download(String magnet, int timeout) {
 
         CountDownLatch signal = new CountDownLatch(1);
 
-        String saveDir = SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath();
-
         TorrentDownloaderListener listener = new TorrentDownloaderListener(signal);
 
-        TorrentDownloader td = TorrentDownloaderFactory.create(listener, magnet, null, saveDir);
+        TorrentDownloader td = TorrentDownloaderFactory.create(listener, magnet, null, newSaveFile());
 
         td.start();
 
@@ -60,6 +66,10 @@ public class VuzeMagnetDownloader implements MagnetDownloader {
         }
 
         return listener.getData();
+    }
+
+    private String newSaveFile() {
+        return new File(SharingSettings.TORRENTS_DIR_SETTING.getValue(), rnd.nextInt(Integer.MAX_VALUE) + ".dat").getAbsolutePath();
     }
 
     private final class TorrentDownloaderListener implements TorrentDownloaderCallBackInterface {
@@ -79,11 +89,16 @@ public class VuzeMagnetDownloader implements MagnetDownloader {
 
         public void TorrentDownloaderEvent(int state, final TorrentDownloader inf) {
             if (state == TorrentDownloader.STATE_FINISHED && finished.compareAndSet(false, true)) {
+                File dat = inf.getFile();
+
                 try {
-                    data = IOUtils.toByteArray(new FileInputStream(inf.getFile()));
+                    data = IOUtils.toByteArray(new FileInputStream(dat));
                 } catch (Throwable e) {
                     // ignore
                 }
+
+                dat.delete();
+
                 signal.countDown();
             } else if (state == TorrentDownloader.STATE_ERROR) {
                 signal.countDown();
