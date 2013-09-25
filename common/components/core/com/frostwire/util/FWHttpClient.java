@@ -136,6 +136,11 @@ final class FWHttpClient implements HttpClient {
         }
     }
 
+    @Override
+    public void post(String url, int timeout, String userAgent, String content) throws IOException {
+
+    }
+
     private String buildRange(int rangeStart, int rangeLength) {
         String prefix = "bytes=" + rangeStart + "-";
         return prefix + ((rangeLength > -1) ? (rangeStart + rangeLength) : "");
