@@ -273,19 +273,6 @@ public final class SearchSettings extends LimeProps {
         FACTORY.createIntSetting("MAX_QUERY_LENGTH", 512);
 
     /**
-     * Setting for the maximum number of bytes to allow in XML queries.
-     */
-    public static final IntSetting MAX_XML_QUERY_LENGTH =
-        FACTORY.createIntSetting("MAX_XML_QUERY_LENGTH", 500);
-    
-    /**
-	 * The minimum quality (number of stars) for search results to
-	 * display.
-	 */
-    public static final IntSetting MINIMUM_SEARCH_QUALITY =
-        FACTORY.createIntSetting("MINIMUM_SEARCH_QUALITY", 0);
-    
-    /**
 	 * The minimum speed for search results to display.
 	 */
     public static final IntSetting MINIMUM_SEARCH_SPEED =
