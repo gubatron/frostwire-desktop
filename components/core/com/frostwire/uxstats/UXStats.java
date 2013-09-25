@@ -19,7 +19,6 @@ package com.frostwire.uxstats;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 
 import org.slf4j.Logger;
@@ -43,13 +42,12 @@ public final class UXStats {
     private static final long HOUR_MILLIS = 1000 * 60 * 60;
     private static final int MAX_LOG_SIZE = 10000;
 
-    private final String guid;
     private final List<UXAction> actions;
     private final HttpClient httpClient;
     private final String httpUserAgent;
 
     private ExecutorService executor;
-    private boolean enabled;
+    private UXStatsContext context;
     private long time;
 
     private static final UXStats instance = new UXStats();
@@ -59,13 +57,12 @@ public final class UXStats {
     }
 
     private UXStats() {
-        this.guid = UUID.randomUUID().toString();
         this.actions = new LinkedList<UXAction>();
         this.httpClient = HttpClientFactory.newDefaultInstance();
         this.httpUserAgent = "FrostWire/UXStats";
 
         this.executor = null;
-        this.enabled = false;
+        this.context = null;
         this.time = System.currentTimeMillis();
     }
 
@@ -77,12 +74,12 @@ public final class UXStats {
         this.executor = executor;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public UXStatsContext getContext() {
+        return context;
     }
 
-    public void setEnabled(boolean enable) {
-        this.enabled = enable;
+    public void setContext(UXStatsContext context) {
+        this.context = context;
     }
 
     /**
@@ -92,11 +89,13 @@ public final class UXStats {
      * @param action
      */
     public void log(int action) {
-        if (actions.size() < MAX_LOG_SIZE) {
-            actions.add(new UXAction(action, System.currentTimeMillis()));
-        }
+        if (context != null) {
+            if (actions.size() < MAX_LOG_SIZE) {
+                actions.add(new UXAction(action, System.currentTimeMillis()));
+            }
 
-        sendData();
+            sendData();
+        }
     }
 
     private void sendData() {
