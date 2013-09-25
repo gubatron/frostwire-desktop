@@ -46,7 +46,7 @@ public final class FrostWireUtils {
 	private static final String FROSTWIRE_VERSION = "5.6.5";
 	
 	/** Build number for the current version, gets reset to 1 on every version bump*/
-	private static final int BUILD_NUMBER = 1;
+	private static final int BUILD_NUMBER = 5;
 
         /** Whether or not a temporary directory is in use. */
         private static boolean temporaryDirectoryInUse;
