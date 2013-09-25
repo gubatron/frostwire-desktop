@@ -20,6 +20,7 @@ package com.frostwire.uxstats;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author gubatron
@@ -32,10 +33,11 @@ public final class UXStats {
     private static final int MAX_LOG_SIZE = 10000;
 
     private final String guid;
-    private final long time;
     private final List<UXAction> actions;
 
+    private ExecutorService executor;
     private boolean enabled;
+    private long time;
 
     private static final UXStats instance = new UXStats();
 
@@ -45,9 +47,19 @@ public final class UXStats {
 
     private UXStats() {
         this.guid = UUID.randomUUID().toString();
-        this.time = System.currentTimeMillis();
         this.actions = new LinkedList<UXAction>();
+
+        this.executor = null;
         this.enabled = false;
+        this.time = System.currentTimeMillis();
+    }
+
+    public ExecutorService getExecutor() {
+        return executor;
+    }
+
+    public void setExecutor(ExecutorService executor) {
+        this.executor = executor;
     }
 
     public boolean isEnabled() {
@@ -73,8 +85,25 @@ public final class UXStats {
     }
 
     private void sendData() {
+        long now = System.currentTimeMillis();
         if (time - System.currentTimeMillis() > HOUR_MILLIS) {
-            // send data
+            time = now;
+
+            SendDataRunnable r = new SendDataRunnable();
+            if (executor != null) { // remember, not thread safe
+                executor.submit(r);
+            } else {
+                new Thread(r, "UXStats-sendData").start();
+            }
+        }
+    }
+
+    private final class SendDataRunnable implements Runnable {
+
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+
         }
     }
 }
