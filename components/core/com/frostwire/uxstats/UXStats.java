@@ -28,7 +28,7 @@ import java.util.UUID;
  */
 public final class UXStats {
 
-    private static final int HOUR_MILLIS = 1000 * 60 * 60;
+    private static final long HOUR_MILLIS = 1000 * 60 * 60;
     private static final int MAX_LOG_SIZE = 10000;
 
     private final String guid;
@@ -65,13 +65,15 @@ public final class UXStats {
      * @param action
      */
     public void log(int action) {
-        long now = System.currentTimeMillis();
-
         if (actions.size() < MAX_LOG_SIZE) {
-            actions.add(new UXAction(action, now));
+            actions.add(new UXAction(action, System.currentTimeMillis()));
         }
 
-        if (time - now > HOUR_MILLIS) {
+        sendData();
+    }
+
+    private void sendData() {
+        if (time - System.currentTimeMillis() > HOUR_MILLIS) {
             // send data
         }
     }
