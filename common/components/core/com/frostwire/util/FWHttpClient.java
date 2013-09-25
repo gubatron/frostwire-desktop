@@ -29,7 +29,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -69,7 +69,7 @@ final class FWHttpClient implements HttpClient {
     public String get(String url, int timeout, String userAgent, String referrer, String cookie) {
         return get(url, timeout, userAgent, referrer, cookie, null);
     }
-    
+
     @Override
     public String get(String url, int timeout, String userAgent, String referrer, String cookie, Map<String, String> customHeaders) {
         String result = null;
@@ -90,7 +90,6 @@ final class FWHttpClient implements HttpClient {
         return result;
     }
 
-    
     public byte[] getBytes(String url, int timeout, String userAgent, String referrer) {
         byte[] result = null;
 
@@ -109,7 +108,6 @@ final class FWHttpClient implements HttpClient {
 
         return result;
     }
-
 
     public void save(String url, File file, boolean resume) throws IOException {
         save(url, file, resume, DEFAULT_TIMEOUT, DEFAULT_USER_AGENT);
@@ -154,7 +152,7 @@ final class FWHttpClient implements HttpClient {
 
         conn.setReadTimeout(timeout);
         conn.setRequestProperty("User-Agent", userAgent);
-        
+
         if (referrer != null) {
             conn.setRequestProperty("Referer", referrer);
         }
@@ -174,10 +172,10 @@ final class FWHttpClient implements HttpClient {
         if (rangeStart > 0) {
             conn.setRequestProperty("Range", buildRange(rangeStart, rangeLength));
         }
-        
+
         if (customHeaders != null && customHeaders.size() > 0) {
             //put down here so it can overwrite any of the previous headers.
-            setCustomHeaders(customHeaders, conn);
+            setCustomHeaders(conn, customHeaders);
         }
 
         InputStream in = conn.getInputStream();
@@ -216,11 +214,9 @@ final class FWHttpClient implements HttpClient {
         }
     }
 
-    private void setCustomHeaders(final Map<String, String> customHeaders, URLConnection conn) {
-        Set<String> keySet = customHeaders.keySet();
-        for (String key : keySet) {
-            final String value = customHeaders.get(key); //declaration for debug breakpoint convenience
-            conn.setRequestProperty(key, value);
+    private void setCustomHeaders(URLConnection conn, Map<String, String> headers) {
+        for (Entry<String, String> e : headers.entrySet()) {
+            conn.setRequestProperty(e.getKey(), e.getValue());
         }
     }
 
