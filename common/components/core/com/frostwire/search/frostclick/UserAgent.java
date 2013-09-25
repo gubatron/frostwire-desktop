@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011 - 2013, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2013, FrostWire(R). All rights reserved.
  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.frostwire.search;
+package com.frostwire.search.frostclick;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,24 +23,33 @@ import java.util.UUID;
 
 import com.frostwire.util.StringUtils;
 
-public class UserAgent {
-    /** Should have both the name and vesion number of the Operating System*/
-    private final String OS_KEY = "OS";
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public final class UserAgent {
 
-    private final String FW_VERSION_KEY = "FWversion";
-    private final String BUILD_KEY = "FWbuild";
+    /** Should have both the name and vesion number of the Operating System*/
+    private static final String OS_KEY = "OS";
+
+    private static final String FW_VERSION_KEY = "FWversion";
+    private static final String BUILD_KEY = "FWbuild";
 
     private final Map<String, String> headerMap;
-    
     private final String uuid;
 
     public UserAgent(String operatingSystem, String fwVersion, String buildNumber) {
-        headerMap = initHeadersMap(normalizeUnavailableString(operatingSystem), normalizeUnavailableString(fwVersion), normalizeUnavailableString(buildNumber));
-        uuid = UUID.randomUUID().toString();
+        this.headerMap = initHeadersMap(normalizeUnavailableString(operatingSystem), normalizeUnavailableString(fwVersion), normalizeUnavailableString(buildNumber));
+        this.uuid = UUID.randomUUID().toString();
     }
 
     public Map<String, String> getHeadersMap() {
         return headerMap;
+    }
+
+    public String getUUID() {
+        return uuid;
     }
 
     public String toString() {
@@ -60,9 +69,5 @@ public class UserAgent {
             str = "NA";
         }
         return str;
-    }
-
-    public String getUUID() {
-        return uuid;
     }
 }

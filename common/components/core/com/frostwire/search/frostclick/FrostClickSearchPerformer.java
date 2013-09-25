@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
 
 import com.frostwire.search.PagedWebSearchPerformer;
 import com.frostwire.search.SearchResult;
-import com.frostwire.search.UserAgent;
 
 /**
  * @author gubatron
