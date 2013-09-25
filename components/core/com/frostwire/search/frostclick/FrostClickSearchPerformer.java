@@ -36,22 +36,16 @@ import com.frostwire.search.UserAgent;
  *
  */
 public class FrostClickSearchPerformer extends PagedWebSearchPerformer {
-    private static final int MAX_RESULTS = 1;
-    private Map<String, String> CUSTOM_HEADERS;
+
     private static final Logger LOG = LoggerFactory.getLogger(FrostClickSearchPerformer.class);
+
+    private static final int MAX_RESULTS = 1;
+
+    private final Map<String, String> customHeaders;
 
     public FrostClickSearchPerformer(long token, String keywords, int timeout, UserAgent userAgent) {
         super(token, keywords, timeout, MAX_RESULTS);
-        initCustomHeaders(userAgent);       
-    }
-
-    private void initCustomHeaders(UserAgent userAgent) {
-        if (CUSTOM_HEADERS == null) {
-            CUSTOM_HEADERS = new HashMap<String, String>();
-            CUSTOM_HEADERS.putAll(userAgent.getHeadersMap());
-            CUSTOM_HEADERS.put("User-Agent", userAgent.toString());
-            CUSTOM_HEADERS.put("sessionId", userAgent.getUUID());
-        }
+        this.customHeaders = buildCustomHeaders(userAgent);
     }
 
     @Override
@@ -62,7 +56,7 @@ public class FrostClickSearchPerformer extends PagedWebSearchPerformer {
     @Override
     protected List<? extends SearchResult> searchPage(int page) {
         String url = getUrl(page, getEncodedKeywords());
-        String text = fetch(url, null, CUSTOM_HEADERS);
+        String text = fetch(url, null, customHeaders);
         if (text != null) {
             return searchPage(text);
         } else {
@@ -75,5 +69,14 @@ public class FrostClickSearchPerformer extends PagedWebSearchPerformer {
     protected List<? extends SearchResult> searchPage(String page) {
         // unused for this implementation since we still don't have search responses ready.
         return Collections.emptyList();
+    }
+
+    private Map<String, String> buildCustomHeaders(UserAgent userAgent) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.putAll(userAgent.getHeadersMap());
+        map.put("User-Agent", userAgent.toString());
+        map.put("sessionId", userAgent.getUUID());
+
+        return map;
     }
 }
