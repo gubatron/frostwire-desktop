@@ -17,6 +17,8 @@
 
 package com.frostwire.uxstats;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -27,9 +29,11 @@ import java.util.UUID;
 public final class UXStats {
 
     private static final int HOUR_MILLIS = 1000 * 60 * 60;
+    private static final int MAX_LOG_SIZE = 10000;
 
     private final String guid;
     private final long time;
+    private final List<UXAction> actions;
 
     private boolean enabled;
 
@@ -42,6 +46,7 @@ public final class UXStats {
     private UXStats() {
         this.guid = UUID.randomUUID().toString();
         this.time = System.currentTimeMillis();
+        this.actions = new LinkedList<UXAction>();
         this.enabled = false;
     }
 
@@ -60,8 +65,12 @@ public final class UXStats {
      * @param action
      */
     public void log(int action) {
-        // log and
         long now = System.currentTimeMillis();
+
+        if (actions.size() < MAX_LOG_SIZE) {
+            actions.add(new UXAction(action, now));
+        }
+
         if (time - now > HOUR_MILLIS) {
             // send data
         }
