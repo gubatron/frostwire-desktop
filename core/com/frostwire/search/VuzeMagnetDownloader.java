@@ -51,7 +51,9 @@ public class VuzeMagnetDownloader implements MagnetDownloader {
 
         TorrentDownloaderListener listener = new TorrentDownloaderListener(signal);
 
-        TorrentDownloader td = TorrentDownloaderFactory.create(listener, magnet, null, newSaveFile());
+        String saveFile = newSaveFile();
+
+        TorrentDownloader td = TorrentDownloaderFactory.create(listener, magnet, null, saveFile);
 
         td.start();
 
@@ -64,6 +66,8 @@ public class VuzeMagnetDownloader implements MagnetDownloader {
         if (listener.getData() == null) {
             td.cancel();
         }
+
+        new File(saveFile).delete(); // one more intent
 
         return listener.getData();
     }
@@ -97,7 +101,9 @@ public class VuzeMagnetDownloader implements MagnetDownloader {
                     // ignore
                 }
 
-                dat.delete();
+                if (!dat.delete()) {
+                    dat.deleteOnExit(); // can't do anymore due to windows os lock issues
+                }
 
                 signal.countDown();
             } else if (state == TorrentDownloader.STATE_ERROR) {
