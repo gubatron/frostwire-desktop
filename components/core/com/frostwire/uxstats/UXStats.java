@@ -22,6 +22,12 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClientFactory;
+
 /**
  * @author gubatron
  * @author aldenml
@@ -29,11 +35,18 @@ import java.util.concurrent.ExecutorService;
  */
 public final class UXStats {
 
+    private static final Logger LOG = LoggerFactory.getLogger(UXStats.class);
+
+    private static final String HTTP_SERVER = "usage.frostwire.com";
+    private static final int HTTP_TIMEOUT = 4000;
+
     private static final long HOUR_MILLIS = 1000 * 60 * 60;
     private static final int MAX_LOG_SIZE = 10000;
 
     private final String guid;
     private final List<UXAction> actions;
+    private final HttpClient httpClient;
+    private final String httpUserAgent;
 
     private ExecutorService executor;
     private boolean enabled;
@@ -48,6 +61,8 @@ public final class UXStats {
     private UXStats() {
         this.guid = UUID.randomUUID().toString();
         this.actions = new LinkedList<UXAction>();
+        this.httpClient = HttpClientFactory.newDefaultInstance();
+        this.httpUserAgent = "FrostWire/UXStats";
 
         this.executor = null;
         this.enabled = false;
@@ -98,12 +113,20 @@ public final class UXStats {
         }
     }
 
+    private String buildData() {
+        return "";
+    }
+
     private final class SendDataRunnable implements Runnable {
 
         @Override
         public void run() {
-            // TODO Auto-generated method stub
-
+            String data = buildData();
+            try {
+                httpClient.post(HTTP_SERVER, HTTP_TIMEOUT, httpUserAgent, data);
+            } catch (Throwable e) {
+                LOG.error("Unable to send ux stats", e);
+            }
         }
     }
 }
