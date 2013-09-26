@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -29,7 +28,8 @@ import org.apache.commons.io.IOUtils;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
-import org.limewire.concurrent.ExecutorsHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -41,8 +41,10 @@ import com.limegroup.gnutella.settings.SharingSettings;
  */
 public class VuzeMagnetDownloader implements MagnetDownloader {
 
+    private static final Logger LOG = LoggerFactory.getLogger(VuzeMagnetDownloader.class);
+
     private final Random rnd;
-    
+
     public VuzeMagnetDownloader() {
         rnd = new Random(System.currentTimeMillis());
     }
@@ -102,36 +104,39 @@ public class VuzeMagnetDownloader implements MagnetDownloader {
                 } catch (Throwable e) {
                     // ignore
                 }
-                cleanupTemporaryTorrent(tempTorrent, 5);   
+
+                cleanupTemporaryTorrent(tempTorrent, 5);
+
+                signal.countDown();
+
             } else if (state == TorrentDownloader.STATE_ERROR) {
                 signal.countDown();
             }
         }
-        
-        private void cleanupTemporaryTorrent(File torrent,final int attempts) {
-        	int attempt = 0;
-			while (torrent.exists() && attempt < attempts) {
-				if (!torrent.delete()) {
-					attempt++;
-                	System.out.println("Warning! (attempt " + attempt + "/" + attempts + ") VuzeMagnetDownloader could not delete .torrent -> " + torrent.getAbsolutePath() + "...");
-                	try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						
-					}
+
+        private void cleanupTemporaryTorrent(File torrent, final int attempts) {
+            int attempt = 0;
+
+            while (torrent.exists() && attempt < attempts) {
+                if (!torrent.delete()) {
+                    attempt++;
+                    LOG.warn("Attempt " + attempt + "/" + attempts + ", VuzeMagnetDownloader could not delete .torrent -> " + torrent.getAbsolutePath() + "...");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        // ignore
+                    }
                 }
-				//exists might not change since files are immutable.
-				torrent = new File(torrent.getAbsolutePath());
-			}
-			
-			if (torrent.exists()) {
-				System.out.println("Warning! Mission failed, could not delete " + torrent.getAbsolutePath());
-				torrent.deleteOnExit();
-			} else {
-				System.out.println("VuzeMagnetDownloader deleted temporary .torrent " + torrent.getAbsolutePath()); 
-			}
-			
-			signal.countDown();
+                //exists might not change since files are immutable.
+                torrent = new File(torrent.getAbsolutePath());
+            }
+
+            if (torrent.exists()) {
+                LOG.warn("Mission failed, could not delete " + torrent.getAbsolutePath());
+                torrent.deleteOnExit();
+            } else {
+                LOG.debug("VuzeMagnetDownloader deleted temporary .torrent " + torrent.getAbsolutePath());
+            }
         }
     }
 }
