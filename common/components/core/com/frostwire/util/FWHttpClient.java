@@ -17,6 +17,7 @@
 
 package com.frostwire.util;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
@@ -138,7 +139,60 @@ final class FWHttpClient implements HttpClient {
 
     @Override
     public void post(String url, int timeout, String userAgent, String content) throws IOException {
-        System.out.println(content);
+        canceled = false;
+        final URL u = new URL(url);
+        final HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
+        conn.setReadTimeout(timeout);
+        conn.setRequestProperty("User-Agent", userAgent);
+        conn.setInstanceFollowRedirects(false);
+
+        if (conn instanceof HttpsURLConnection) {
+            setHostnameVerifier((HttpsURLConnection) conn);
+        }
+
+        byte[] data = content.getBytes("UTF-8");
+
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "text/plain");
+        conn.setRequestProperty("charset", "utf-8");
+        conn.setRequestProperty("Content-Length", "" + data.length);
+        conn.setUseCaches(false);
+
+        int httpResponseCode = conn.getResponseCode();
+
+        if (httpResponseCode != HttpURLConnection.HTTP_OK) {
+            throw new ResponseCodeNotSupportedException(httpResponseCode);
+        }
+
+        ByteArrayInputStream in = new ByteArrayInputStream(data);
+
+        try {
+            OutputStream out = conn.getOutputStream();
+
+            byte[] b = new byte[4096];
+            int n = 0;
+            while (!canceled && (n = in.read(b, 0, b.length)) != -1) {
+                if (!canceled) {
+                    out.write(b, 0, n);
+                    onData(b, 0, n);
+                }
+            }
+
+            closeQuietly(out);
+
+            if (canceled) {
+                onCancel();
+            } else {
+                onComplete();
+            }
+        } catch (Exception e) {
+            onError(e);
+        } finally {
+            closeQuietly(in);
+            closeQuietly(conn);
+        }
     }
 
     private String buildRange(int rangeStart, int rangeLength) {
