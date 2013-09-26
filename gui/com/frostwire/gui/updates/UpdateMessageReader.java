@@ -34,6 +34,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import com.frostwire.uxstats.UXStats;
+import com.frostwire.uxstats.UXStatsContext;
 import com.limegroup.gnutella.gui.search.SearchEngine;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ChatSettings;
@@ -508,10 +510,27 @@ public final class UpdateMessageReader implements ContentHandler {
 					// System.out.println("UpdateMessageReader.startElement overlay intro=false");
 				}
 			} // overlays
+			
+            if (_bufferMessage.getMessageType().equals("uxstats")) {
+                processUXStatsMsg(_bufferMessage, atts);
+            }
 		}
 
 	}
 
+	@Override
 	public void startPrefixMapping(String prefix, String uri) throws SAXException {
 	}
+	
+	private void processUXStatsMsg(UpdateMessage msg, Attributes atts) {
+        String enabled = atts.getValue("enabled");
+
+        if (enabled != null && enabled.equals("true")) {
+            String os = OSUtils.getFullOS();
+            String fwversion = FrostWireUtils.getFrostWireVersion();
+
+            UXStatsContext context = new UXStatsContext(os, fwversion);
+            UXStats.instance().setContext(context);
+        }
+    }
 }
