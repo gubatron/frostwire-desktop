@@ -24,9 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Properties;
 
 import org.limewire.util.FileUtils;
@@ -88,7 +86,7 @@ With the call sf.save(), setting.txt now includes:
  * If setting.txt didn't have the key MAX_MESSAGE_SIZE prior to the 
  * <code>createIntSetting</code> call, then the MAX_MESSAGE_SIZE is 0.
  */
-public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteSettingController {
+public final class SettingsFactory implements Iterable<AbstractSetting> {
     
     /** Marked true in the event of an error in the load/save of any settings file */ 
     private static boolean loadSaveFailureEncountered = false;   
@@ -116,19 +114,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
      * LOCKING: must hold this monitor
      */
     private ArrayList<AbstractSetting> settings = new ArrayList<AbstractSetting>(10);
-
-    /**
-     * A mapping of remoteKeys to Settings. Only remote Enabled settings will be
-     * added to this list. As setting are created, they are added to this map so
-     * that when remote settings are loaded, it's easy to find the targeted
-     * settings.
-     */
-    private Map<String, AbstractSetting> remoteKeyToSetting = new HashMap<String, AbstractSetting>();
-    
-    /**
-     * The RemoteSettingsManager being used to control remote settings.
-     */
-    private RemoteSettingManager remoteManager = new NullRemoteManager();
     
     /** Whether or not expirable settings have expired. */
     private boolean expired = false;
@@ -360,23 +345,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
     	return DEFAULT_PROPS;
     }
     
-    /** Sets a new RemoteSettingManager to control remote settings. 
-     * */
-    public synchronized void setRemoteSettingManager(RemoteSettingManager manager) {
-        this.remoteManager = manager;
-        manager.setRemoteSettingController(this);
-    }
-    
-    public synchronized boolean updateSetting(String remoteKey, String value) {
-        AbstractSetting setting = remoteKeyToSetting.get(remoteKey);                    
-        if(setting != null) {
-            setting.setValueInternal(value);
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
     /**
      * Creates a new <tt>StringSetting</tt> instance with the specified
      * key and default value.
@@ -392,13 +360,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         return result;
     }
 
-    public synchronized StringSetting createRemoteStringSetting(String key,
-                String defaultValue, String remoteKey) {
-        StringSetting result =  new StringSetting(DEFAULT_PROPS, PROPS, key, defaultValue);
-        handleSettingInternal(result, remoteKey);
-        return result;
-    }
-
     /**
      * Creates a new <tt>BooleanSetting</tt> instance with the specified
      * key and default value.
@@ -411,16 +372,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         BooleanSetting result =
           new BooleanSettingImpl(DEFAULT_PROPS, PROPS, key, defaultValue);
         handleSettingInternal((AbstractSetting)result, null);
-        return result;
-    }
-
-    /**
-     * if max != min, the setting becomes unsettable
-     */
-    public synchronized BooleanSetting createRemoteBooleanSetting(String key, 
-              boolean defaultValue, String remoteKey) {
-        BooleanSetting result = new BooleanSettingImpl(DEFAULT_PROPS, PROPS, key, defaultValue);
-        handleSettingInternal((AbstractSetting)result, remoteKey);
         return result;
     }
 
@@ -445,14 +396,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         return result;
     }
 
-    public synchronized IntSetting createRemoteIntSetting(String key, 
-                        int defaultValue, String remoteKey, int min, int max) {
-        IntSetting result = new IntSetting(DEFAULT_PROPS, PROPS, key, defaultValue, min, max);
-        handleSettingInternal(result, remoteKey);
-        return result;
-    }
-
-
     /**
      * Creates a new <tt>ByteSetting</tt> instance with the specified
      * key and default value.
@@ -468,14 +411,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         return result;
     }
   
-    public synchronized ByteSetting createRemoteByteSetting(String key, 
-                      byte defaultValue, String remoteKey, byte min, byte max) {
-        ByteSetting result = new ByteSetting(DEFAULT_PROPS, PROPS, key, defaultValue, min, max);
-        handleSettingInternal(result, remoteKey);
-        return result;
-    }
-
-
     /**
      * Creates a new <tt>LongSetting</tt> instance with the specified
      * key and default value.
@@ -488,14 +423,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
          LongSetting result = 
              new LongSetting(DEFAULT_PROPS, PROPS, key, defaultValue);
          handleSettingInternal(result, null);
-         return result;
-    }
-
-    public synchronized LongSetting createRemoteLongSetting(String key,
-                       long defaultValue, String remoteKey, long min, long max) {
-         LongSetting result = 
-             new LongSetting(DEFAULT_PROPS, PROPS, key, defaultValue, min, max);
-         handleSettingInternal(result, remoteKey);
          return result;
     }
 
@@ -515,14 +442,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         return result;
     }
 
-    public synchronized PowerOfTwoSetting createRemotePowerOfTwoSetting(String key,
-            long defaultValue, String remoteKey, long min, long max) {
-        PowerOfTwoSetting result = 
-            new PowerOfTwoSetting(DEFAULT_PROPS, PROPS, key, defaultValue, min, max);
-        handleSettingInternal(result, remoteKey);
-        return result;
-    }
-    
     /**
      * Creates a new <tt>FileSetting</tt> instance with the specified
      * key and default value.
@@ -570,14 +489,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         return result;
     }
 
-    public synchronized ColorSetting createRemoteColorSetting(String key, 
-                   Color defaultValue, String remoteKey) {
-        ColorSetting result = 
-        ColorSetting.createColorSetting(DEFAULT_PROPS, PROPS, key, defaultValue);
-        handleSettingInternal(result, remoteKey);
-        return result;
-    }
-
     /**
      * Creates a new <tt>CharArraySetting</tt> instance for a character array 
      * setting with the specified key and default value.
@@ -592,13 +503,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         return result;
     }
    
-    public synchronized CharArraySetting createRemoteCharArraySetting(
-                            String key, char[] defaultValue, String remoteKey) {
-        CharArraySetting result =new CharArraySetting(DEFAULT_PROPS, PROPS, key, defaultValue);
-        handleSettingInternal(result, remoteKey);
-        return result;
-    }
-    
     /**
      * Creates a new <tt>FloatSetting</tt> instance with the specified
      * key and default value.
@@ -614,13 +518,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         return result;
     }
 
-    public synchronized FloatSetting createRemoteFloatSetting(String key, 
-                   float defaultValue, String remoteKey, float min, float max) {
-        FloatSetting result = new FloatSetting(DEFAULT_PROPS, PROPS, key, defaultValue, min, max);
-        handleSettingInternal(result, remoteKey);
-        return result;
-    }
-    
     /**
      * Creates a new <tt>StringArraySetting</tt> instance for a String array 
      * setting with the specified key and default value.
@@ -637,14 +534,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         return result;
     }
    
-    public synchronized StringArraySetting createRemoteStringArraySetting(
-              String key, String[] defaultValue, String remoteKey) {
-        StringArraySetting result = 
-        new StringArraySetting(DEFAULT_PROPS, PROPS, key, defaultValue);
-        handleSettingInternal(result, remoteKey);
-        return result;
-    }
-    
     public synchronized StringSetSetting
         createStringSetSetting(String key, String defaultValue) {
         StringSetSetting result =
@@ -668,14 +557,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         return result;
     }
    
-    public synchronized FileArraySetting createRemoteFileArraySetting(
-                             String key, File[] defaultValue, String remoteKey) {
-        FileArraySetting result = 
-        new FileArraySetting(DEFAULT_PROPS, PROPS, key, defaultValue);
-        handleSettingInternal(result, remoteKey);
-        return result;
-    }
-
     /**
      * Creates a new <tt>FileSetSetting</tt> instance for a File array 
      * setting with the specified key and default value.
@@ -689,13 +570,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         return result;
     }
    
-    public synchronized FileSetSetting createRemoteFileSetSetting(
-                             String key, File[] defaultValue, String remoteKey) {
-        FileSetSetting result = new FileSetSetting(DEFAULT_PROPS, PROPS, key, defaultValue);
-        handleSettingInternal(result, remoteKey);
-        return result;
-    }
-    
     /**
      * Creates a new expiring <tt>BooleanSetting</tt> instance with the
      * specified key and default value.
@@ -761,41 +635,10 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         return result;
     }
 
-    public synchronized FontNameSetting createRemoteFontNameSetting(
-            String key, String defaultValue, String remoteKey) {
-        FontNameSetting result = 
-        new FontNameSetting(DEFAULT_PROPS, PROPS, key, defaultValue);
-        handleSettingInternal(result, remoteKey);
-        return result;
-    }
-    
-    public synchronized ProbabilisticBooleanSetting createProbabilisticBooleanSetting(
-            String key, float defaultValue) {
-        ProbabilisticBooleanSetting result =
-            new ProbabilisticBooleanSetting(DEFAULT_PROPS, PROPS, key, defaultValue);
-        handleSettingInternal(result, null);
-        return result;
-    }
-    
-    public synchronized ProbabilisticBooleanSetting createRemoteProbabilisticBooleanSetting(
-            String key, float defaultValue, String remoteKey, float min, float max) {
-        ProbabilisticBooleanSetting result =
-            new ProbabilisticBooleanSetting(DEFAULT_PROPS, PROPS, key, defaultValue, min, max);
-        handleSettingInternal(result, remoteKey);
-        return result;
-    }
-    
     public synchronized PBooleanArraySetting createPBooleanArraySetting(
             String key, String [] defaultValue) {
         PBooleanArraySetting result = new PBooleanArraySetting(DEFAULT_PROPS, PROPS, key, defaultValue);
         handleSettingInternal(result, null);
-        return result;
-    }
-    
-    public synchronized PBooleanArraySetting createRemotePBooleanArraySetting(
-            String key, String [] defaultValue, String remoteKey) {
-        PBooleanArraySetting result = new PBooleanArraySetting(DEFAULT_PROPS, PROPS, key, defaultValue);
-        handleSettingInternal(result, remoteKey);
         return result;
     }
     
@@ -814,22 +657,8 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         return result;
     }
     
-    private synchronized void handleSettingInternal(AbstractSetting setting, 
-                                                           String remoteKey) {
+    private synchronized void handleSettingInternal(AbstractSetting setting, String remoteKey) {
         settings.add(setting);
         setting.reload();
-        //remote related checks...
-        if(remoteKey != null) {
-            if (remoteKeyToSetting.containsKey(remoteKey)) {
-                throw new IllegalArgumentException("(SettingsFactory.handleSettingInsternal) duplicate setting remoteKey: " + remoteKey);
-            }
-            
-            String remoteValue = remoteManager.getUnloadedValueFor(remoteKey);
-            if(remoteValue != null)
-                setting.setValueInternal(remoteValue);
-            //update the mapping of the remote key to the setting.
-            remoteKeyToSetting.put(remoteKey, setting);
-        }
     }
-
 }

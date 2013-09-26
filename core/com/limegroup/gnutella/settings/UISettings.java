@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.settings;
 
 import java.awt.Dimension;
@@ -5,7 +20,6 @@ import java.awt.Toolkit;
 
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.IntSetting;
-import org.limewire.setting.StringSetting;
 
 /**
  * Settings to deal with UI.
@@ -112,159 +126,6 @@ public final class UISettings extends LimeProps {
      */
     public static final BooleanSetting SHOW_NOTIFICATIONS = 
         FACTORY.createBooleanSetting("SHOW_NOTIFICATIONS", true);
-    
-    /** Whether or not to use network-based images, or just always use built-in ones. */
-    private static final BooleanSetting USE_NETWORK_IMAGES = FACTORY.createRemoteBooleanSetting("USE_NETWORK_IMAGES",
-            true, "UI.useNetworkImages"); // WE DO NOT USE REMOTE IMAGES, IT SHOULD BE FALSE
-    
-    /** Collection of info for the 'Getting Started' image. */
-    public static ImageInfo INTRO_IMAGE_INFO = new ImageInfoImpl(true);
-
-    /** Holds the home remote url */
-    public static final StringSetting HOME_URL = null;
-
-    /** Collection of info for the 'After Search' image. */
-    public static ImageInfo AFTER_SEARCH_IMAGE_INFO = new ImageInfoImpl(false);
-    
-    public static interface ImageInfo {     
-        /** The URL to pull the image from. */
-        public String getImageUrl();
-        /** Whether or not this pic can have an outgoing link. */
-        public boolean canLink();
-        /** The outgoing link if triggered from the backup image. */
-        public String getLocalLinkUrl();
-        /** The outgoing link if triggered from the network image. */
-        public String getNetworkLinkUrl();
-        /** True if network images should be used. */
-        public boolean useNetworkImage();
-        /** True if this is the 'Into' pic. */
-        boolean isIntro();
-        /** Returns the URL of a torrent related to this ImageInfo if available, otherwise returns null */
-        public String getTorrentUrl();
-    }
-    
-    public static class ImageInfoImpl implements ImageInfo {
-        private final boolean intro;
-
-        //private static final BooleanSetting USE_NETWORK_IMAGES = 
-        //	FACTORY.createRemoteBooleanSetting("USE_NETWORK_IMAGES",true, "UI.useNetworkImages");
-
-        //SETTINGS FOR INTRO IMAGE
-        
-        private static final StringSetting INTRO_URL = 
-        	FACTORY.createRemoteStringSetting("INTRO_URL", 
-        			"http://www.frostwire.com/fwclient_welcome_image.php", "UI.introUrl");
-        
-        private static final BooleanSetting INTRO_PRO_SHOW = 
-        	FACTORY.createRemoteBooleanSetting("INTRO_PRO_SHOW",false,"UI.introProShow");
-        
-        private static final BooleanSetting INTRO_HAS_LINK = 
-        	FACTORY.createRemoteBooleanSetting("INTRO_HAS_LINK", true, "UI.introCanLink");
-        
-        private static final StringSetting INTRO_LOCAL_LINK = 
-        	FACTORY.createRemoteStringSetting("INTRO_LOCAL_LINK","http://www.frostwire.com/?", "UI.introClickLinkLocal");
-        
-        private static final StringSetting INTRO_NETWORK_LINK = 
-        	FACTORY.createRemoteStringSetting("INTRO_NETWORK_LINK","http://www.frostwire.com/?", "UI.introClickLink");
-        
-        private static final StringSetting INTRO_TORRENT_LINK =
-        	FACTORY.createRemoteStringSetting("INTRO_TORRENT_LINK","","UI.introTorrentLink");
-        
-        //SETTINGS FOR AFTER SEARCH IMAGE
-        private static final StringSetting AFTER_SEARCH_URL = 
-        	FACTORY.createRemoteStringSetting("AFTER_SEARCH_URL", "http://static.frostwire.com/images/overlays/default.png", "UI.afterSearchUrl");
-        
-        private static final BooleanSetting AFTER_SEARCH_PRO_SHOW = 
-        	FACTORY.createRemoteBooleanSetting("AFTER_SEARCH_PRO_SHOW",false,"UI.afterSearchProShow");
-        
-        private static final BooleanSetting AFTER_SEARCH_HAS_LINK = 
-        	FACTORY.createRemoteBooleanSetting("AFTER_SEARCH_HAS_LINK", true, "UI.afterSearchCanLink");
-        
-        private static final StringSetting AFTER_SEARCH_LOCAL_LINK = 
-        	FACTORY.createRemoteStringSetting("AFTER_SEARCH_LOCAL_LINK","http://www.frostwire.com/?", "UI.afterSearchClickLinkLocal");
-        
-        private static final StringSetting AFTER_SEARCH_NETWORK_LINK = 
-        	FACTORY.createRemoteStringSetting("AFTER_SEARCH_NETWORK_LINK","http://www.frostwire.com/?", "UI.afterSearchClickLink");
-
-        private static final StringSetting AFTER_SEARCH_TORRENT_LINK =
-        	FACTORY.createRemoteStringSetting("AFTER_SEARCH_TORRENT_LINK","","UI.afterSearchTorrentLink");
-        
-        ImageInfoImpl(boolean intro) {
-        	this.intro = intro;
-        }
-        
-        /**
-         * Pass intro False, to edit the properties of the afterSearch Image.
-         * @param intro
-         * @param imgUrl
-         * @param canLink (In case you don't want this image to link anywhere, just display a message)
-         * @param linkUrl
-         * @param torrentUrl
-         */
-        public ImageInfoImpl(boolean intro, 
-        		             String imgUrl,
-        		             boolean canLink,
-        		             String linkUrl,
-        		             String torrentUrl) {
-        	this.intro = intro;
-        	INTRO_PRO_SHOW.setValue(false);
-        	AFTER_SEARCH_PRO_SHOW.setValue(false);
-        	
-        	if (torrentUrl == null) {
-        		torrentUrl = "";
-        	}
-
-        	if (linkUrl == null) {
-        		linkUrl = "";
-        	}
-        	
-        	if (intro) {
-	        	INTRO_URL.setValue(imgUrl);
-	        	INTRO_HAS_LINK.setValue(linkUrl != null);
-	        	INTRO_LOCAL_LINK.setValue(linkUrl);
-	        	INTRO_NETWORK_LINK.setValue(linkUrl);
-	        	INTRO_TORRENT_LINK.setValue(torrentUrl);
-        	} else {
-        		AFTER_SEARCH_PRO_SHOW.setValue(false);
-        		AFTER_SEARCH_URL.setValue(imgUrl);
-        		AFTER_SEARCH_HAS_LINK.setValue(linkUrl != null);
-        		AFTER_SEARCH_LOCAL_LINK.setValue(linkUrl);
-        		AFTER_SEARCH_NETWORK_LINK.setValue(linkUrl);
-        		AFTER_SEARCH_TORRENT_LINK.setValue(torrentUrl);
-        	}
-        }
-
-        public boolean canLink() {
-            return intro ? INTRO_HAS_LINK.getValue() : AFTER_SEARCH_HAS_LINK.getValue();
-        }
-
-        public String getImageUrl() {
-            return intro ? INTRO_URL.getValue() : AFTER_SEARCH_URL.getValue();
-        }
-
-        public String getLocalLinkUrl() {
-            return intro ? INTRO_LOCAL_LINK.getValue() : AFTER_SEARCH_LOCAL_LINK.getValue();
-        }
-
-        public String getNetworkLinkUrl() {
-            return intro ? INTRO_NETWORK_LINK.getValue() : AFTER_SEARCH_NETWORK_LINK.getValue();
-        }
-        
-        public boolean useNetworkImage() {
-            return USE_NETWORK_IMAGES.getValue();
-        }
-        
-        public boolean isIntro() {
-            return intro;
-        }
-        
-        public String getTorrentUrl() {
-        	String result = intro ? INTRO_TORRENT_LINK.getValue() : AFTER_SEARCH_TORRENT_LINK.getValue();
-        	if (result.equals(""))
-        		return null;
-        	return result;
-        }
-    }
     
 
 
