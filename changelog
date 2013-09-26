@@ -1,10 +1,11 @@
 frostwire (5.6.6) stable; urgency=high
   * Fixes ExtraTorrent meta search.
-  * Polish translation 100% updated.
+  * Polish translation updated.
   * New support for anonymous user experience statistics.
- -- FrostWire Team <contact@frostwire.com>  Fri, Oct 11 2013 15:38:32 -0500
+ -- FrostWire Team <contact@frostwire.com>  Fri, 11 Oct 2013 15:38:32 -0500
 
 frostwire (5.6.5) stable; urgency=high
+
   * Upgrades Soundcloud search, download, streaming.
   * Fixes issue when starting downloads made of multiple single files
     that belong to the same .torrent.
@@ -51,7 +52,7 @@ frostwire (5.6.1) stable; urgency=high
   * New Feature: Audio player can detect Facebook and Twitter urls
     inside .mp3 ID3 Tags to display Facebook and Twitter icons of the
     the corresponding artists.
-  * fwplayer.exe improved unicode and HLS (Http Live Streaming) support. 
+  * fwplayer.exe improved unicode and HLS (Http Live Streaming) support.
   * New Feature: Change font size with Ctrl/Cmd + '+', Ctrl/Cmd + '-'.
   * New Feature: Close search tabs with Ctrl/Cmd + 'w'.
   * New Feature: Switch search tabs with Ctrl+Tab, Ctrl+Shift+Tab
@@ -71,8 +72,8 @@ frostwire (5.6.1) stable; urgency=high
  -- FrostWire Team <contact@frostwire.com>  Thu, 20 Jun 2013 00:12:08 -0500
 
 frostwire (5.5.6) stable; urgency=high
-  * New Feature: Includes search results from archive.org, which indexes 
-    millions of public domain and creative commons works from all over the 
+  * New Feature: Includes search results from archive.org, which indexes
+    millions of public domain and creative commons works from all over the
     internet.
   * New Feature: playlist songs can be re-ordered with drag and drop.
   * New Feature: all songs in a playlist can now be exported to a folder.
@@ -94,7 +95,7 @@ frostwire (5.5.6) stable; urgency=high
     being seeded.
   * Bug fix: Library search issues related to unicode characters.
   * Bug fix: Multiple null pointer exceptions and crashes fixed.
-  * Bug fix: Fixed rendering issue related to wrong parsing of bitrate 
+  * Bug fix: Fixed rendering issue related to wrong parsing of bitrate
     string data.
   * Upgrade: (Developers) ant compilation scripts cleanup.
   * Upgrade: (Developers) use of 'frostwire-commons' repository to share
@@ -112,7 +113,7 @@ frostwire (5.5.5) stable; urgency=high
 frostwire (5.5.4) stable; urgency=high
   * New Feature: extract audio (.m4a) from (.mp4) videos on right click.
   * New Core Feature: HTTP resumeable large transfer support.
-  * Upgrade: Default save folder for cloud downloads is updated without 
+  * Upgrade: Default save folder for cloud downloads is updated without
     restarting.
   * Upgrade: 'Repeat song' playback mode now available.
   * Upgrade: Enriched promotion display, now with audio and video previews and
@@ -133,7 +134,7 @@ frostwire (5.5.4) stable; urgency=high
 frostwire (5.5.3) stable; urgency=high
   * Bug fix: freeze on Windows XP. (Windows release only)
  -- FrostWire Team <contact@frostwire.com>  Tue, 05 Feb 2013 19:00:00 -0500
-	
+
 frostwire (5.5.2) stable; urgency=high
   * Upgrade: Now 'Movies' or 'My Videos' folder is included by default on new
     installs since we now have a built-in video player.
