@@ -95,14 +95,19 @@ public class VuzeMagnetDownloader implements MagnetDownloader {
             return data;
         }
 
+        @Override
         public void TorrentDownloaderEvent(int state, final TorrentDownloader inf) {
             if (state == TorrentDownloader.STATE_FINISHED && finished.compareAndSet(false, true)) {
                 File tempTorrent = inf.getFile();
 
+                FileInputStream is = null;
                 try {
-                    data = IOUtils.toByteArray(new FileInputStream(tempTorrent));
+                    is = new FileInputStream(tempTorrent);
+                    data = IOUtils.toByteArray(is);
                 } catch (Throwable e) {
                     // ignore
+                } finally {
+                    IOUtils.closeQuietly(is);
                 }
 
                 cleanupTemporaryTorrent(tempTorrent, 5);
