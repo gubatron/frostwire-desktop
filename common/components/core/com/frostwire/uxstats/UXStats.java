@@ -40,11 +40,11 @@ public final class UXStats {
     private static final int HTTP_TIMEOUT = 4000;
 
     private static final long HOUR_MILLIS = 1000 * 60 * 60;
+    private static final int MIN_LOG_SIZE = 10;
     private static final int MAX_LOG_SIZE = 10000;
 
     private final List<UXAction> actions;
     private final HttpClient httpClient;
-    private final String httpUserAgent;
 
     private ExecutorService executor;
     private UXStatsContext context;
@@ -59,7 +59,6 @@ public final class UXStats {
     private UXStats() {
         this.actions = new LinkedList<UXAction>();
         this.httpClient = HttpClientFactory.newDefaultInstance();
-        this.httpUserAgent = "FrostWire/UXStats";
 
         this.executor = null;
         this.context = null;
@@ -94,21 +93,24 @@ public final class UXStats {
                 actions.add(new UXAction(action, System.currentTimeMillis()));
             }
 
-            sendData();
+            if (isReadyToSend()) {
+                sendData();
+            }
         }
     }
 
-    private void sendData() {
-        long now = System.currentTimeMillis();
-        if (time - System.currentTimeMillis() > HOUR_MILLIS) {
-            time = now;
+    private boolean isReadyToSend() {
+        return actions.size() >= MIN_LOG_SIZE && (time - System.currentTimeMillis() > HOUR_MILLIS);
+    }
 
-            SendDataRunnable r = new SendDataRunnable();
-            if (executor != null) { // remember, not thread safe
-                executor.submit(r);
-            } else {
-                new Thread(r, "UXStats-sendData").start();
-            }
+    private void sendData() {
+        time = System.currentTimeMillis();
+
+        SendDataRunnable r = new SendDataRunnable();
+        if (executor != null) { // remember, not thread safe
+            executor.submit(r);
+        } else {
+            new Thread(r, "UXStats-sendData").start();
         }
     }
 
@@ -122,7 +124,7 @@ public final class UXStats {
         public void run() {
             String data = buildData();
             try {
-                httpClient.post(HTTP_SERVER, HTTP_TIMEOUT, httpUserAgent, data);
+                httpClient.post(HTTP_SERVER, HTTP_TIMEOUT, "FrostWire/UXStats", data);
             } catch (Throwable e) {
                 LOG.error("Unable to send ux stats", e);
             }
