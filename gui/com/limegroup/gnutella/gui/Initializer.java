@@ -145,7 +145,6 @@ public final class Initializer {
         startAzureusCore();
         
         // Run any after-init tasks.
-        //System.out.println("Initializer.initialize() post init");
         postinit();
     }
     

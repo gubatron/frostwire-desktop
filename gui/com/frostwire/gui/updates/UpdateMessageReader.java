@@ -508,14 +508,10 @@ public final class UpdateMessageReader implements ContentHandler {
 					// System.out.println("UpdateMessageReader.startElement overlay intro=false");
 				}
 			} // overlays
-
-			
 		}
 
 	}
 
-	public void startPrefixMapping(String arg0, String arg1)
-			throws SAXException {
+	public void startPrefixMapping(String prefix, String uri) throws SAXException {
 	}
-
-} // UpdateMessageReader class
+}
