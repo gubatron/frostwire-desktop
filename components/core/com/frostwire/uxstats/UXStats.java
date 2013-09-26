@@ -41,7 +41,7 @@ public final class UXStats {
     private static final String HTTP_SERVER = "usage.frostwire.com";
     private static final int HTTP_TIMEOUT = 4000;
 
-    private static final long HOUR_MILLIS = 1000 * 60 * 60;
+    private static final long HOUR_MILLIS = 20000;//1000 * 60 * 60;
     private static final int MIN_LOG_SIZE = 10;
     private static final int MAX_LOG_SIZE = 10000;
 
@@ -118,9 +118,9 @@ public final class UXStats {
 
     private String buildData() {
         UXData data = new UXData();
-        data.guid = context.guid;
-        data.os = context.os;
-        data.fwversion = context.fwversion;
+        data.guid = context.getGuid();
+        data.os = context.getOS();
+        data.fwversion = context.getFwversion();
         data.time = time;
         data.actions = actions;
 
