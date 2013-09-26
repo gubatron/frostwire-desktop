@@ -45,19 +45,11 @@ public final class UXAction {
     public static final int PARTIAL_SEEDING_ENABLED = 18;
     public static final int PARTIAL_SEEDING_DISABLED = 19;
 
-    private final int code;
-    private final long time;
-
     UXAction(int code, long time) {
         this.code = code;
         this.time = time;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public long getTime() {
-        return time;
-    }
+    public final int code;
+    public final long time;
 }

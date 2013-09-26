@@ -17,6 +17,7 @@
 
 package com.frostwire.uxstats;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -26,6 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.JsonUtils;
 
 /**
  * @author gubatron
@@ -57,7 +59,7 @@ public final class UXStats {
     }
 
     private UXStats() {
-        this.actions = new LinkedList<UXAction>();
+        this.actions = Collections.synchronizedList(new LinkedList<UXAction>());
         this.httpClient = HttpClientFactory.newDefaultInstance();
 
         this.executor = null;
@@ -115,16 +117,25 @@ public final class UXStats {
     }
 
     private String buildData() {
-        return "";
+        UXData data = new UXData();
+        data.guid = context.guid;
+        data.os = context.os;
+        data.fwversion = context.fwversion;
+        data.time = time;
+        data.actions = actions;
+
+        return JsonUtils.toJson(data); // possible concurrent modification exception, not critical
     }
 
     private final class SendDataRunnable implements Runnable {
 
         @Override
         public void run() {
-            String data = buildData();
             try {
+                String data = buildData();
                 httpClient.post(HTTP_SERVER, HTTP_TIMEOUT, "FrostWire/UXStats", data);
+
+                actions.clear();
             } catch (Throwable e) {
                 LOG.error("Unable to send ux stats", e);
             }

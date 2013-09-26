@@ -29,6 +29,7 @@ public class UXData {
     public String guid;
     public String os;
     public String fwversion;
+    public long time;
 
     public List<UXAction> actions;
 }
