@@ -53,7 +53,9 @@ public class VuzeMagnetDownloader implements MagnetDownloader {
 
         TorrentDownloaderListener listener = new TorrentDownloaderListener(signal);
 
-        TorrentDownloader td = TorrentDownloaderFactory.create(listener, magnet, null, newSaveFile());
+        String saveFile = newSaveFile();
+
+        TorrentDownloader td = TorrentDownloaderFactory.create(listener, magnet, null, saveFile);
 
         td.start();
 
@@ -66,6 +68,8 @@ public class VuzeMagnetDownloader implements MagnetDownloader {
         if (listener.getData() == null) {
             td.cancel();
         }
+
+        new File(saveFile).delete(); // one more intent
 
         return listener.getData();
     }
@@ -98,7 +102,6 @@ public class VuzeMagnetDownloader implements MagnetDownloader {
                 } catch (Throwable e) {
                     // ignore
                 }
-                                
                 cleanupTemporaryTorrent(tempTorrent, 5);   
             } else if (state == TorrentDownloader.STATE_ERROR) {
                 signal.countDown();
@@ -123,6 +126,7 @@ public class VuzeMagnetDownloader implements MagnetDownloader {
 			
 			if (torrent.exists()) {
 				System.out.println("Warning! Mission failed, could not delete " + torrent.getAbsolutePath());
+				torrent.deleteOnExit();
 			} else {
 				System.out.println("VuzeMagnetDownloader deleted temporary .torrent " + torrent.getAbsolutePath()); 
 			}
