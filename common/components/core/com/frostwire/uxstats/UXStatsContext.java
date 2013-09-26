@@ -26,13 +26,25 @@ import java.util.UUID;
  */
 public final class UXStatsContext {
 
-    public final String guid;
-    public final String os;
-    public final String fwversion;
+    private final String guid;
+    private final String os;
+    private final String fwversion;
 
     public UXStatsContext(String os, String fwversion) {
         this.guid = UUID.randomUUID().toString();
         this.os = os;
         this.fwversion = fwversion;
+    }
+
+    public String getGuid() {
+        return guid;
+    }
+
+    public String getOS() {
+        return os;
+    }
+
+    public String getFwversion() {
+        return fwversion;
     }
 }

@@ -138,7 +138,7 @@ final class FWHttpClient implements HttpClient {
 
     @Override
     public void post(String url, int timeout, String userAgent, String content) throws IOException {
-
+        System.out.println(content);
     }
 
     private String buildRange(int rangeStart, int rangeLength) {
