@@ -23,9 +23,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.util.OSUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
@@ -35,7 +35,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import com.frostwire.uxstats.UXStats;
-import com.frostwire.uxstats.UXStatsContext;
+import com.frostwire.uxstats.UXStatsConf;
 import com.limegroup.gnutella.gui.search.SearchEngine;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ChatSettings;
@@ -48,7 +48,7 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  */
 public final class UpdateMessageReader implements ContentHandler {
 	
-	private static final Log LOG = LogFactory.getLog(UpdateMessageReader.class);
+	private static final Logger LOG = LoggerFactory.getLogger(UpdateMessageReader.class);
 
 	public HashSet<UpdateMessage> _announcements = null;
 
@@ -522,15 +522,22 @@ public final class UpdateMessageReader implements ContentHandler {
 	public void startPrefixMapping(String prefix, String uri) throws SAXException {
 	}
 	
-	private void processUXStatsMsg(UpdateMessage msg, Attributes atts) {
-        String enabled = atts.getValue("enabled");
+    private void processUXStatsMsg(UpdateMessage msg, Attributes atts) {
+        try {
+            String enabled = atts.getValue("enabled");
 
-        if (enabled != null && enabled.equals("true")) {
-            String os = OSUtils.getFullOS();
-            String fwversion = FrostWireUtils.getFrostWireVersion();
+            if (enabled != null && enabled.equals("true")) {
+                String os = OSUtils.getFullOS();
+                String fwversion = FrostWireUtils.getFrostWireVersion();
+                int period = Integer.parseInt(atts.getValue("period"));
+                int minEntries = Integer.parseInt(atts.getValue("minEntries"));
+                int maxEntries = Integer.parseInt(atts.getValue("maxEntries"));
 
-            UXStatsContext context = new UXStatsContext(os, fwversion);
-            UXStats.instance().setContext(context);
+                UXStatsConf context = new UXStatsConf(os, fwversion, period, minEntries, maxEntries);
+                UXStats.instance().setContext(context);
+            }
+        } catch (Throwable e) {
+            LOG.warn("Unable to process uxstats message from server", e);
         }
     }
 }

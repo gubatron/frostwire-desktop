@@ -24,16 +24,22 @@ import java.util.UUID;
  * @author aldenml
  *
  */
-public final class UXStatsContext {
+public final class UXStatsConf {
 
     private final String guid;
     private final String os;
     private final String fwversion;
+    private final int period;
+    private final int minEntries;
+    private final int maxEntries;
 
-    public UXStatsContext(String os, String fwversion) {
+    public UXStatsConf(String os, String fwversion, int period, int minEntries, int maxEntries) {
         this.guid = UUID.randomUUID().toString();
         this.os = os;
         this.fwversion = fwversion;
+        this.period = period;
+        this.minEntries = minEntries;
+        this.maxEntries = maxEntries;
     }
 
     public String getGuid() {
@@ -46,5 +52,17 @@ public final class UXStatsContext {
 
     public String getFwversion() {
         return fwversion;
+    }
+
+    public int getPeriod() {
+        return period;
+    }
+
+    public int getMinEntries() {
+        return minEntries;
+    }
+
+    public int getMaxEntries() {
+        return maxEntries;
     }
 }
