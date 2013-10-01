@@ -49,7 +49,7 @@ public final class UXStats {
     private final HttpClient httpClient;
 
     private ExecutorService executor;
-    private UXStatsContext context;
+    private UXStatsConf context;
     private long time;
 
     private static final UXStats instance = new UXStats();
@@ -75,11 +75,11 @@ public final class UXStats {
         this.executor = executor;
     }
 
-    public UXStatsContext getContext() {
+    public UXStatsConf getContext() {
         return context;
     }
 
-    public void setContext(UXStatsContext context) {
+    public void setContext(UXStatsConf context) {
         this.context = context;
     }
 
