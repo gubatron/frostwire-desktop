@@ -50,7 +50,7 @@ public interface HttpClient {
 
     public void save(String url, File file, boolean resume, int timeout, String userAgent) throws IOException;
 
-    public void post(String url, int timeout, String userAgent, String content) throws IOException;
+    public void post(String url, int timeout, String userAgent, String content, boolean gzip) throws IOException;
 
     public void cancel();
 

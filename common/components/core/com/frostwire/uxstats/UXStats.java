@@ -35,7 +35,7 @@ public final class UXStats {
 
     private static final Logger LOG = LoggerFactory.getLogger(UXStats.class);
 
-    private static final String HTTP_SERVER = "usage.frostwire.com";
+    private static final String HTTP_SERVER = "http://ux.frostwire.com/ux";
     private static final int HTTP_TIMEOUT = 4000;
 
     private final HttpClient httpClient;
@@ -134,7 +134,7 @@ public final class UXStats {
         public void run() {
             try {
                 String json = JsonUtils.toJson(data);
-                httpClient.post(HTTP_SERVER, HTTP_TIMEOUT, "FrostWire/UXStats", json);
+                httpClient.post(HTTP_SERVER, HTTP_TIMEOUT, "FrostWire/UXStats", json, true);
             } catch (Throwable e) {
                 LOG.error("Unable to send ux stats", e);
             }

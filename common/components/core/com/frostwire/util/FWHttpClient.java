@@ -31,6 +31,7 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.zip.GZIPOutputStream;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -138,7 +139,7 @@ final class FWHttpClient implements HttpClient {
     }
 
     @Override
-    public void post(String url, int timeout, String userAgent, String content) throws IOException {
+    public void post(String url, int timeout, String userAgent, String content, boolean gzip) throws IOException {
         canceled = false;
         final URL u = new URL(url);
         final HttpURLConnection conn = (HttpURLConnection) u.openConnection();
@@ -160,27 +161,33 @@ final class FWHttpClient implements HttpClient {
         conn.setRequestProperty("Content-Length", "" + data.length);
         conn.setUseCaches(false);
 
-        int httpResponseCode = conn.getResponseCode();
-
-        if (httpResponseCode != HttpURLConnection.HTTP_OK) {
-            throw new ResponseCodeNotSupportedException(httpResponseCode);
-        }
-
         ByteArrayInputStream in = new ByteArrayInputStream(data);
 
         try {
-            OutputStream out = conn.getOutputStream();
+            OutputStream out = null;
+            if (gzip) {
+                out = new GZIPOutputStream(conn.getOutputStream());
+            } else {
+                out = conn.getOutputStream();
+            }
 
             byte[] b = new byte[4096];
             int n = 0;
             while (!canceled && (n = in.read(b, 0, b.length)) != -1) {
                 if (!canceled) {
                     out.write(b, 0, n);
+                    out.flush();
                     onData(b, 0, n);
                 }
             }
 
             closeQuietly(out);
+
+            int httpResponseCode = getResponseCode(conn);
+
+            if (httpResponseCode != HttpURLConnection.HTTP_OK && httpResponseCode != HttpURLConnection.HTTP_PARTIAL) {
+                throw new ResponseCodeNotSupportedException(httpResponseCode);
+            }
 
             if (canceled) {
                 onCancel();
