@@ -17,9 +17,6 @@
 
 package com.frostwire.uxstats;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 import org.slf4j.Logger;
@@ -41,16 +38,11 @@ public final class UXStats {
     private static final String HTTP_SERVER = "usage.frostwire.com";
     private static final int HTTP_TIMEOUT = 4000;
 
-    private static final long HOUR_MILLIS = 1000 * 60 * 60;
-    private static final int MIN_LOG_SIZE = 10;
-    private static final int MAX_LOG_SIZE = 10000;
-
-    private final List<UXAction> actions;
     private final HttpClient httpClient;
 
     private ExecutorService executor;
-    private UXStatsConf context;
-    private long time;
+    private UXStatsConf conf;
+    private UXData data;
 
     private static final UXStats instance = new UXStats();
 
@@ -59,12 +51,11 @@ public final class UXStats {
     }
 
     private UXStats() {
-        this.actions = Collections.synchronizedList(new LinkedList<UXAction>());
         this.httpClient = HttpClientFactory.newDefaultInstance();
 
         this.executor = null;
-        this.context = null;
-        this.time = System.currentTimeMillis();
+        this.conf = null;
+        this.data = null;
     }
 
     public ExecutorService getExecutor() {
@@ -76,11 +67,17 @@ public final class UXStats {
     }
 
     public UXStatsConf getContext() {
-        return context;
+        return conf;
     }
 
-    public void setContext(UXStatsConf context) {
-        this.context = context;
+    public void setContext(UXStatsConf conf) {
+        this.conf = conf;
+
+        if (conf != null) {
+            this.data = newData();
+        } else {
+            this.data = null;
+        }
     }
 
     /**
@@ -90,25 +87,30 @@ public final class UXStats {
      * @param action
      */
     public void log(int action) {
-        if (context != null) {
-            if (actions.size() < MAX_LOG_SIZE) {
-                actions.add(new UXAction(action, System.currentTimeMillis()));
-            }
+        try {
+            if (conf != null && data != null) {
+                if (data.actions.size() < conf.getMaxEntries()) {
+                    data.actions.add(new UXAction(action, System.currentTimeMillis()));
+                }
 
-            if (isReadyToSend()) {
-                sendData();
+                if (isReadyToSend()) {
+                    sendData();
+                }
             }
+        } catch (Throwable e) {
+            // ignore, not important
         }
     }
 
     private boolean isReadyToSend() {
-        return actions.size() >= MIN_LOG_SIZE && (System.currentTimeMillis() - time > HOUR_MILLIS);
+        return data.actions.size() >= conf.getMinEntries() && (System.currentTimeMillis() - data.time > conf.getPeriod() * 1000);
     }
 
     private void sendData() {
-        time = System.currentTimeMillis();
+        SendDataRunnable r = new SendDataRunnable(data);
 
-        SendDataRunnable r = new SendDataRunnable();
+        this.data = newData();
+
         if (executor != null) { // remember, not thread safe
             executor.submit(r);
         } else {
@@ -116,26 +118,23 @@ public final class UXStats {
         }
     }
 
-    private String buildData() {
-        UXData data = new UXData();
-        data.guid = context.getGuid();
-        data.os = context.getOS();
-        data.fwversion = context.getFwversion();
-        data.time = time;
-        data.actions = actions;
-
-        return JsonUtils.toJson(data); // possible concurrent modification exception, not critical
+    private UXData newData() {
+        return new UXData(conf.getGuid(), conf.getOS(), conf.getFwversion());
     }
 
     private final class SendDataRunnable implements Runnable {
 
+        private final UXData data;
+
+        public SendDataRunnable(UXData data) {
+            this.data = data;
+        }
+
         @Override
         public void run() {
             try {
-                String data = buildData();
-                httpClient.post(HTTP_SERVER, HTTP_TIMEOUT, "FrostWire/UXStats", data);
-
-                actions.clear();
+                String json = JsonUtils.toJson(data);
+                httpClient.post(HTTP_SERVER, HTTP_TIMEOUT, "FrostWire/UXStats", json);
             } catch (Throwable e) {
                 LOG.error("Unable to send ux stats", e);
             }

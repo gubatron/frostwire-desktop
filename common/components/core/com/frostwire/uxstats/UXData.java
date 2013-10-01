@@ -17,6 +17,8 @@
 
 package com.frostwire.uxstats;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,4 +34,12 @@ public class UXData {
     public long time;
 
     public List<UXAction> actions;
+
+    public UXData(String guid, String os, String fwversion) {
+        this.guid = guid;
+        this.os = os;
+        this.fwversion = fwversion;
+        this.time = System.currentTimeMillis();
+        this.actions = Collections.synchronizedList(new LinkedList<UXAction>());
+    }
 }
