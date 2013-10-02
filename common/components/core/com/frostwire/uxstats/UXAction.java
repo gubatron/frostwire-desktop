@@ -43,12 +43,15 @@ public final class UXAction {
     public static final int DOWNLOAD_FULL_TORRENT_FILE = DOWNLOAD_BASE + 1;
     public static final int DOWNLOAD_PARTIAL_TORRENT_FILE = DOWNLOAD_BASE + 2;
     public static final int DOWNLOAD_CLOUD_FILE = DOWNLOAD_BASE + 3;
-    public static final int DOWNLOAD_CLOUD_URL = DOWNLOAD_BASE + 4;
-    public static final int DOWNLOAD_TORRENT_URL = DOWNLOAD_BASE + 5;
-    public static final int DOWNLOAD_MAGNET_URL = DOWNLOAD_BASE + 6;
-    public static final int DOWNLOAD_PAUSED = DOWNLOAD_BASE + 7;
-    public static final int DOWNLOAD_RESUMED = DOWNLOAD_BASE + 8;
-    public static final int DOWNLOAD_CANCELLED = DOWNLOAD_BASE + 9;
+    public static final int DOWNLOAD_CLOUD_URL_FROM_FILE_ACTION = DOWNLOAD_BASE + 4;
+    public static final int DOWNLOAD_CLOUD_URL_FROM_SEARCH_FIELD = DOWNLOAD_BASE + 5;    
+    public static final int DOWNLOAD_TORRENT_URL_FROM_FILE_ACTION = DOWNLOAD_BASE + 6;
+    public static final int DOWNLOAD_TORRENT_URL_FROM_SEARCH_FIELD = DOWNLOAD_BASE + 7;
+    public static final int DOWNLOAD_MAGNET_URL_FROM_FILE_ACTION = DOWNLOAD_BASE + 8;
+    public static final int DOWNLOAD_MAGNET_URL_FROM_SEARCH_FIELD = DOWNLOAD_BASE + 9;
+    public static final int DOWNLOAD_PAUSE = DOWNLOAD_BASE + 10;
+    public static final int DOWNLOAD_RESUME = DOWNLOAD_BASE + 11;
+    public static final int DOWNLOAD_REMOVE = DOWNLOAD_BASE + 12;
 
     public static final int SHARING_BASE = 3000;
     public static final int SHARING_TORRENT_CREATED_FORMALLY = SHARING_BASE + 1;

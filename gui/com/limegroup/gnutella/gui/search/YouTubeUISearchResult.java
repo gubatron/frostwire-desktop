@@ -24,6 +24,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JPopupMenu;
 
 import com.frostwire.search.youtube2.YouTubeCrawledSearchResult;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -53,6 +55,7 @@ public final class YouTubeUISearchResult extends AbstractUISearchResult {
             GUIMediator.instance().openYouTubeItem(sr.getFilePackage());
         }
         showDetails(false);
+        UXStats.instance().log(UXAction.DOWNLOAD_CLOUD_FILE);
     }
 
     @Override

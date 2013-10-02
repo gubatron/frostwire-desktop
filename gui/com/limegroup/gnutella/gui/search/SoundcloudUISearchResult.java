@@ -24,6 +24,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JPopupMenu;
 
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -45,6 +47,7 @@ public final class SoundcloudUISearchResult extends AbstractUISearchResult {
     public void download(boolean partial) {
         GUIMediator.instance().openSoundcloudTrackUrl(sr.getDetailsUrl(), sr.getDisplayName(), this);
         showDetails(false);
+        UXStats.instance().log(UXAction.DOWNLOAD_CLOUD_FILE);
     }
 
     @Override

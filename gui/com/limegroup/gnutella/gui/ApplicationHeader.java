@@ -473,7 +473,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
             GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);                
 
             //start a download from the search box by entering a URL.
-            if (FileMenuActions.openMagnetOrTorrent(query)) {
+            if (FileMenuActions.openMagnetOrTorrent(query,FileMenuActions.ActionInvocationSource.FROM_SEARCH_FIELD)) {
                 cloudSearchField.setText("");
                 cloudSearchField.hidePopup();
                 return;
