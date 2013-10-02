@@ -78,10 +78,12 @@ public final class UXAction {
     
     
     public static final int WIFI_SHARING_BASE = 5000;
-    public static final int WIFI_SHARING_PREVIEW = WIFI_SHARING_BASE + 1;
-    public static final int WIFI_SHARING_DOWNLOAD = WIFI_SHARING_BASE + 2;
-    public static final int WIFI_SHARING_DND_UPLOAD_TO_DEVICE = WIFI_SHARING_BASE + 3;
-    //public static final int WIFI_SHARING_MENU_UPLOAD_TO_DEVICE = WIFI_SHARING_BASE + 4;
+    public static final int WIFI_SHARING_SHARED = WIFI_SHARING_BASE + 1;
+    public static final int WIFI_SHARING_UNSHARED = WIFI_SHARING_BASE + 2;
+    public static final int WIFI_SHARING_PREVIEW = WIFI_SHARING_BASE + 3;
+    public static final int WIFI_SHARING_DOWNLOAD = WIFI_SHARING_BASE + 4;
+    public static final int WIFI_SHARING_DND_UPLOAD_TO_DEVICE = WIFI_SHARING_BASE + 5;
+    //public static final int WIFI_SHARING_MENU_UPLOAD_TO_DEVICE = WIFI_SHARING_BASE + 6;
 
     UXAction(int code, long time) {
         this.code = code;
