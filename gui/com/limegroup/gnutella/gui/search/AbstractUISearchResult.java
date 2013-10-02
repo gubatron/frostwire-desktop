@@ -115,8 +115,10 @@ public abstract class AbstractUISearchResult implements UISearchResult {
             StreamableSearchResult ssr = (StreamableSearchResult) sr;
             String streamUrl = ssr.getStreamUrl();
             MediaType mediaType = MediaType.getMediaTypeForExtension(extension);
-            boolean showPlayerWindow = mediaType.equals(MediaType.getVideoMediaType());
-            GUIMediator.instance().launchMedia(new StreamMediaSource(streamUrl, sr.getDisplayName(), sr.getDetailsUrl(), showPlayerWindow));
+            if (mediaType != null) {
+                boolean showPlayerWindow = mediaType.equals(MediaType.getVideoMediaType());
+                GUIMediator.instance().launchMedia(new StreamMediaSource(streamUrl, sr.getDisplayName(), sr.getDetailsUrl(), showPlayerWindow));
+            }
         }
     }
 }

@@ -32,6 +32,9 @@ import com.frostwire.gui.AlphaIcon;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.search.CrawlableSearchResult;
 import com.frostwire.search.StreamableSearchResult;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
@@ -152,6 +155,16 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
                 searchResult.play();
                 updatePlayButton();
             }
+            
+            uxLogMediaPreview();
+        }
+    }
+
+    private void uxLogMediaPreview() {
+        MediaType mediaType = MediaType.getMediaTypeForExtension(searchResult.getExtension());
+        if (mediaType != null) {
+            boolean isVideo = mediaType.equals(MediaType.getVideoMediaType());
+            UXStats.instance().log(isVideo ? UXAction.SEARCH_RESULT_VIDEO_PREVIEW : UXAction.SEARCH_RESULT_AUDIO_PREVIEW);
         }
     }
 
@@ -159,6 +172,7 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
         if (e.getButton() == MouseEvent.BUTTON1) {
             if (searchResult.getSearchResult() instanceof CrawlableSearchResult) {
                 searchResult.download(true);
+                UXStats.instance().log(UXAction.SEARCH_RESULT_DETAIL_VIEW);
             }
         }
     }
@@ -166,6 +180,7 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
     private void labelDownload_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
             searchResult.download(false);
+            UXStats.instance().log(UXAction.SEARCH_RESULT_ROW_BUTTON_DOWNLOAD);
         }
     }
  

@@ -1,6 +1,7 @@
 package com.limegroup.gnutella.gui;
 
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.bugs.BugManager;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.search.SearchMediator;
@@ -55,6 +56,8 @@ final class Finalizer {
      * @param toExecute a string to try to execute after shutting down.
      */
     static void shutdown() {
+        UXStats.instance().flush();
+        
         SearchMediator.instance().shutdown();
 
         MediaPlayer.instance().stop();

@@ -16,6 +16,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
 import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
 
 public class SourceRenderer extends DefaultTableCellRenderer implements TableCellRenderer {
@@ -57,6 +59,7 @@ public class SourceRenderer extends DefaultTableCellRenderer implements TableCel
                 if (getSourceHolder() != null) {
                     getSourceHolder().getUISearchResult().showDetails(true);
                     e.consume();
+                    UXStats.instance().log(UXAction.SEARCH_RESULT_SOURCE_VIEW);
                 }
             }
         };

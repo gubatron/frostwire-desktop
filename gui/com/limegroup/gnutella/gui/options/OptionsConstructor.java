@@ -321,7 +321,7 @@ public final class OptionsConstructor {
         if (!CommonUtils.isPortable() && GUIUtils.shouldShowStartOnStartupWindow()) {
             addOption(ADVANCED_KEY, STARTUP_KEY, I18n.tr("System Boot"), StartupPaneItem.class);
         }
-        addOption(ADVANCED_KEY, STARTUP_KEY, I18n.tr("UX Stats????"), UXStatsPaneItem.class);
+        addOption(ADVANCED_KEY, STARTUP_KEY, I18n.tr("Usage Statistics"), UXStatsPaneItem.class);
 
         addOption(OptionsMediator.ROOT_NODE_KEY, SHUTDOWN_KEY, I18n.tr("System Tray"), ShutdownPaneItem.class);
 

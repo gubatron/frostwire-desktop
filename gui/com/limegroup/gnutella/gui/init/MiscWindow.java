@@ -39,6 +39,7 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.SizedTextField;
 import com.limegroup.gnutella.gui.WindowsUtils;
+import com.limegroup.gnutella.gui.options.panes.UXStatsPaneItem;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ChatSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
@@ -113,7 +114,7 @@ final class MiscWindow extends SetupWindow {
             //create multiline to describe why the chat needs a nick (descChat)
             JLabel descChat = new JLabel("<html>" + I18n.tr("FrostWire's Community Chat Tab requires you to have a nickname to communicate with others in the chatrooms.") + "</html>");
             //descChat.setOpaque(false);
-            descChat.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 5));
+            descChat.setBorder(BorderFactory.createEmptyBorder(0, 10, 2, 5));
             descChat.setForeground(Color.BLACK);
             descChat.setFont(descChat.getFont().deriveFont(Font.PLAIN));
 
@@ -144,13 +145,13 @@ final class MiscWindow extends SetupWindow {
         {
             JPanel panelUXStats = new JPanel(new GridLayout(2, 0));
 
-            panelUXStats.setBorder(ThemeMediator.createTitledBorder(I18n.tr("UX Stats????")));
+            panelUXStats.setBorder(ThemeMediator.createTitledBorder(UXStatsPaneItem.TITLE));
 
-            checkBoxUXStats = new JCheckBox(I18n.tr("UX Stats????"));
+            checkBoxUXStats = new JCheckBox(UXStatsPaneItem.CHECK_BOX_LABEL);
             checkBoxUXStats.setSelected(ApplicationSettings.UX_STATS_ENABLED.getValue());
 
-            JLabel desc = new JLabel("<html>" + I18n.tr("Would you like FrostWire to ????") + "</html>");
-            desc.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 5));
+            JLabel desc = new JLabel("<html>" + UXStatsPaneItem.LABEL + "</html>");
+            desc.setBorder(BorderFactory.createEmptyBorder(0, 10, 2, 5));
             desc.setForeground(Color.BLACK);
             desc.setFont(desc.getFont().deriveFont(Font.PLAIN));
 

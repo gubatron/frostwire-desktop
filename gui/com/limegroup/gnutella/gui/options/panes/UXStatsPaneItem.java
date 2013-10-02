@@ -33,11 +33,11 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  */
 public final class UXStatsPaneItem extends AbstractPaneItem {
 
-    public final static String TITLE = I18n.tr("UX Stats????");
+    public final static String TITLE = I18n.tr("Anonymous Usage Statistics");
 
-    public final static String LABEL = I18n.tr("You can choose whether or not????");
+    public final static String LABEL = I18n.tr("Send anonymous usage statistics so that FrostWire can be improved more effectively. No information regarding content searched, shared or played nor any information that can personally identify you will be stored on disk or sent through the network.");
 
-    private final String CHECK_BOX_LABEL = I18nMarker.marktr("UX Stats????");
+    public final static String CHECK_BOX_LABEL = I18nMarker.marktr("Send anonymous usage statistics");
 
     private final JCheckBox CHECK_BOX = new JCheckBox();
 

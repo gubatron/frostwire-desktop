@@ -45,6 +45,8 @@ import javax.swing.plaf.synth.SynthRadioButtonUI;
 import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.theme.AbstractSkinPainter;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ImageManipulator;
@@ -265,6 +267,7 @@ final class SchemaBox extends JPanel {
 
             if (resultPanel != null) {
                 resultPanel.filterChanged(filter, 2);
+                UXStats.instance().log(UXAction.SEARCH_RESULT_FILE_TYPE_CLICK);
             }
         }
     }
