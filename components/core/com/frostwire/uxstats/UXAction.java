@@ -17,6 +17,8 @@
 
 package com.frostwire.uxstats;
 
+import java.lang.reflect.Field;
+
 /**
  * @author gubatron
  * @author aldenml
@@ -24,26 +26,56 @@ package com.frostwire.uxstats;
  */
 public final class UXAction {
 
-    public static final int SEARCH_STARTED = 0;
-    public static final int SEARCH_RESULT_CLICKED = 1;
-    public static final int SEARCH_RESULT_AUDIO_PREVIEW = 2;
-    public static final int SEARCH_RESULT_VIDEO_PREVIEW = 3;
-    public static final int SEARCH_RESULT_DETAIL_VIEW = 4;
-    public static final int PARTIAL_DOWNLOAD_CLICKED = 5;
-    public static final int DOWNLOAD_PAUSED = 6;
-    public static final int DOWNLOAD_RESUMED = 7;
-    public static final int DOWNLOAD_CANCELLED = 8;
-    public static final int PLAY_AUDIO_FROM_LIBRARY = 9;
-    public static final int PLAY_AUDIO_FROM_PLAYLIST = 10;
-    public static final int PLAYLIST_CREATED = 11;
-    public static final int PLAYLIST_REMOVED = 12;
-    public static final int PLAYLIST_RENAMED = 13;
-    public static final int TORRENT_CREATED_FORMALLY = 14;
-    public static final int TORRENT_CREATED_WITH_SEND_TO_FRIEND = 15;
-    public static final int SEEDING_ENABLED = 16;
-    public static final int SEEDING_DISABLED = 17;
-    public static final int PARTIAL_SEEDING_ENABLED = 18;
-    public static final int PARTIAL_SEEDING_DISABLED = 19;
+    public static final int SEARCH_BASE = 1000;
+    public static final int SEARCH_STARTED = SEARCH_BASE + 1;
+    public static final int SEARCH_RESULT_CLICK_DOWNLOAD = SEARCH_BASE + 2;
+    public static final int SEARCH_RESULT_ENTER_KEY_DOWNLOAD = SEARCH_BASE + 3;
+    public static final int SEARCH_RESULT_BIG_BUTTON_DOWNLOAD = SEARCH_BASE + 4;
+    public static final int SEARCH_RESULT_ROW_BUTTON_DOWNLOAD = SEARCH_BASE + 5;
+    public static final int SEARCH_RESULT_CLICKED = SEARCH_BASE + 6;
+    public static final int SEARCH_RESULT_AUDIO_PREVIEW = SEARCH_BASE + 7;
+    public static final int SEARCH_RESULT_VIDEO_PREVIEW = SEARCH_BASE + 8;
+    public static final int SEARCH_RESULT_DETAIL_VIEW = SEARCH_BASE + 9;
+    public static final int SEARCH_RESULT_SOURCE_VIEW = SEARCH_BASE + 10;
+    public static final int SEARCH_RESULT_FILE_TYPE_CLICK = SEARCH_BASE + 11;
+
+    public static final int DOWNLOAD_BASE = 2000;
+    public static final int DOWNLOAD_FULL_TORRENT_FILE = DOWNLOAD_BASE + 1;
+    public static final int DOWNLOAD_PARTIAL_TORRENT_FILE = DOWNLOAD_BASE + 2;
+    public static final int DOWNLOAD_CLOUD_FILE = DOWNLOAD_BASE + 3;
+    public static final int DOWNLOAD_CLOUD_URL = DOWNLOAD_BASE + 4;
+    public static final int DOWNLOAD_TORRENT_URL = DOWNLOAD_BASE + 5;
+    public static final int DOWNLOAD_MAGNET_URL = DOWNLOAD_BASE + 6;
+    public static final int DOWNLOAD_PAUSED = DOWNLOAD_BASE + 7;
+    public static final int DOWNLOAD_RESUMED = DOWNLOAD_BASE + 8;
+    public static final int DOWNLOAD_CANCELLED = DOWNLOAD_BASE + 9;
+
+    public static final int SHARING_BASE = 3000;
+    public static final int SHARING_TORRENT_CREATED_FORMALLY = SHARING_BASE + 1;
+    public static final int SHARING_TORRENT_CREATED_WITH_SEND_TO_FRIEND_FROM_LIBRARY = SHARING_BASE + 2;
+    public static final int SHARING_TORRENT_CREATED_WITH_SEND_TO_FRIEND_FROM_MENU = SHARING_BASE + 3;
+    public static final int SHARING_SEEDING_ENABLED = SHARING_BASE + 4;
+    public static final int SHARING_SEEDING_DISABLED = SHARING_BASE + 5;
+    public static final int SHARING_PARTIAL_SEEDING_ENABLED = SHARING_BASE + 6;
+    public static final int SHARING_PARTIAL_SEEDING_DISABLED = SHARING_BASE + 7;
+    
+    public static final int LIBRARY_BASE = 4000;
+    public static final int LIBRARY_PLAY_AUDIO_FROM_FILE = LIBRARY_BASE + 1;
+    public static final int LIBRARY_PLAY_AUDIO_FROM_PLAYLIST = LIBRARY_BASE + 2;
+    public static final int LIBRARY_PLAY_AUDIO_FROM_STARRED_PLAYLIST = LIBRARY_BASE + 3;
+    public static final int LIBRARY_STARRED_AUDIO_FROM_PLAYLIST = LIBRARY_BASE + 4;
+    public static final int LIBRARY_PLAYLIST_CREATED = LIBRARY_BASE + 5;
+    public static final int LIBRARY_PLAYLIST_REMOVED = LIBRARY_BASE + 6;
+    public static final int LIBRARY_PLAYLIST_RENAMED = LIBRARY_BASE + 7;
+    public static final int LIBRARY_VIDEO_PLAY = LIBRARY_BASE + 8;
+    public static final int LIBRARY_VIDEO_PLAY_FULLSCREEN = LIBRARY_BASE + 9;
+    public static final int LIBRARY_RADIO_PLAY = LIBRARY_BASE + 10;
+    
+    public static final int WIFI_SHARING_BASE = 5000;
+    public static final int WIFI_SHARING_PREVIEW = WIFI_SHARING_BASE + 1;
+    public static final int WIFI_SHARING_DOWNLOAD = WIFI_SHARING_BASE + 2;
+    public static final int WIFI_SHARING_DND_UPLOAD_TO_DEVICE = WIFI_SHARING_BASE + 3;
+    //public static final int WIFI_SHARING_MENU_UPLOAD_TO_DEVICE = WIFI_SHARING_BASE + 4;
 
     UXAction(int code, long time) {
         this.code = code;
@@ -52,4 +84,18 @@ public final class UXAction {
 
     public final int code;
     public final long time;
+    
+    public static String getActionName(int code) {
+        Field[] declaredFields = UXAction.class.getDeclaredFields();
+        for (Field f : declaredFields) {
+            try {
+                if (f.getInt(null) == code) {
+                    return f.getName();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return "UNKNOWN_ACTION";
+    }
 }

@@ -89,6 +89,8 @@ public final class UXStats {
     public void log(int action) {
         try {
             if (conf != null && data != null) {
+                System.out.println(UXAction.getActionName(action));
+                
                 if (data.actions.size() < conf.getMaxEntries()) {
                     data.actions.add(new UXAction(action, System.currentTimeMillis()));
                 }
@@ -101,11 +103,21 @@ public final class UXStats {
             // ignore, not important
         }
     }
+    
+    public void flush() {
+        try {
+            if (conf != null && data != null) {
+                sendData();
+            }
+        } catch (Throwable e) {
+            // ignore, not important
+        }
+    }
 
     private boolean isReadyToSend() {
         return data.actions.size() >= conf.getMinEntries() && (System.currentTimeMillis() - data.time > conf.getPeriod() * 1000);
     }
-
+    
     private void sendData() {
         SendDataRunnable r = new SendDataRunnable(data);
 
