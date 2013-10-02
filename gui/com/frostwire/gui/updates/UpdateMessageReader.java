@@ -494,11 +494,12 @@ public final class UpdateMessageReader implements ContentHandler {
             if (enabled != null && enabled.equals("true") && ApplicationSettings.UX_STATS_ENABLED.getValue()) {
                 String os = OSUtils.getFullOS();
                 String fwversion = FrostWireUtils.getFrostWireVersion();
+                String fwbuild = String.valueOf(FrostWireUtils.getBuildNumber());
                 int period = Integer.parseInt(atts.getValue("period"));
                 int minEntries = Integer.parseInt(atts.getValue("minEntries"));
                 int maxEntries = Integer.parseInt(atts.getValue("maxEntries"));
 
-                UXStatsConf context = new UXStatsConf(os, fwversion, period, minEntries, maxEntries);
+                UXStatsConf context = new UXStatsConf(os, fwversion, fwbuild, period, minEntries, maxEntries);
                 UXStats.instance().setContext(context);
             }
         } catch (Throwable e) {
