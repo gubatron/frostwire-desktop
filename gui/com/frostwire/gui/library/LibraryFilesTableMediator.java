@@ -1270,7 +1270,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             }
 
             UPnPManager.instance().refreshPing();
+            UXStats.instance().log(share ? UXAction.WIFI_SHARING_SHARED : UXAction.WIFI_SHARING_UNSHARED);
         }
+        
         
         private void actualShare(LibraryFilesTableDataLine dataLine, File file) {
             dataLine.setShared(share);

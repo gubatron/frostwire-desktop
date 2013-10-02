@@ -29,6 +29,8 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import com.frostwire.gui.Librarian;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.search.GenericCellEditor;
 
 /**
@@ -62,6 +64,7 @@ public final class FileShareCellEditor extends GenericCellEditor {
                     cell.getDataLine().setShared(true);
                     Librarian.instance().shareFile(path, true);
                     component.setIcon(LibraryUtils.FILE_SHARING_ICON);
+                    UXStats.instance().log(UXAction.WIFI_SHARING_SHARED);
                     break;
                 case Librarian.FILE_STATE_SHARING: //nothing to do for now
                     break;
@@ -69,6 +72,7 @@ public final class FileShareCellEditor extends GenericCellEditor {
                     cell.getDataLine().setShared(false);
                     Librarian.instance().shareFile(path, false);
                     component.setIcon(LibraryUtils.FILE_UNSHARED_ICON);
+                    UXStats.instance().log(UXAction.WIFI_SHARING_UNSHARED);
                 }
 
                 if (table.isEditing()) {
