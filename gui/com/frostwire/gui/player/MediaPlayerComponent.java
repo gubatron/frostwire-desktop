@@ -62,7 +62,6 @@ import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.limegroup.gnutella.gui.MediaButton;
 import com.limegroup.gnutella.gui.RefreshListener;
 
@@ -437,13 +436,6 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 LibraryMediator.instance().playCurrentSelection();
             }
         }
-    }
-
-    /**
-     * Toggles full screen view
-     */
-    public void toggleFullScreen() {
-        MPlayerMediator.instance().showPlayerWindow(true);
     }
 
     /**
