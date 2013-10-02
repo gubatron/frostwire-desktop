@@ -131,7 +131,7 @@ public final class UXStats {
     }
 
     private UXData newData() {
-        return new UXData(conf.getGuid(), conf.getOS(), conf.getFwversion());
+        return new UXData(conf.getGuid(), conf.getOS(), conf.getFwversion(), conf.getFwbuild());
     }
 
     private final class SendDataRunnable implements Runnable {

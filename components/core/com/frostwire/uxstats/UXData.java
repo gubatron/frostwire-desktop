@@ -31,14 +31,19 @@ public class UXData {
     public String guid;
     public String os;
     public String fwversion;
+    public String build;
     public long time;
 
     public List<UXAction> actions;
+    
+    public UXData() {
+    }
 
-    public UXData(String guid, String os, String fwversion) {
+    public UXData(String guid, String os, String fwversion, String build) {
         this.guid = guid;
         this.os = os;
         this.fwversion = fwversion;
+        this.build = build;
         this.time = System.currentTimeMillis();
         this.actions = Collections.synchronizedList(new LinkedList<UXAction>());
     }
