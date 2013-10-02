@@ -337,7 +337,7 @@ public final class FileMenuActions {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             CreateTorrentDialog dlg = new CreateTorrentDialog(GUIMediator.getAppFrame());
-            dlg.setVisible(true);
+            dlg.setVisible(true);            
         }
 
     }
@@ -353,6 +353,7 @@ public final class FileMenuActions {
         public void actionPerformed(ActionEvent e) {
             SendFileProgressDialog dlg = new SendFileProgressDialog(GUIMediator.getAppFrame());
             dlg.setVisible(true);
+            UXStats.instance().log(UXAction.SHARING_TORRENT_CREATED_WITH_SEND_TO_FRIEND_FROM_MENU);
         }
     }
     

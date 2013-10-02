@@ -22,6 +22,8 @@ import java.io.IOException;
 
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.bittorrent.TorrentSeedingSettingComponent;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -68,6 +70,9 @@ public class TorrentSeedingSettingPaneItem extends AbstractPaneItem {
         SharingSettings.SEED_HANDPICKED_TORRENT_FILES.setValue(COMPONENT.wantsHandpickedSeeding());
 
         GUIMediator.instance().getStatusLine().refresh();
+        
+        UXStats.instance().log(SharingSettings.SEED_FINISHED_TORRENTS.getValue() ? UXAction.SHARING_SEEDING_ENABLED : UXAction.SHARING_SEEDING_DISABLED);
+        UXStats.instance().log(SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue() ? UXAction.SHARING_PARTIAL_SEEDING_ENABLED : UXAction.SHARING_PARTIAL_SEEDING_DISABLED);
 
         return false;
     }

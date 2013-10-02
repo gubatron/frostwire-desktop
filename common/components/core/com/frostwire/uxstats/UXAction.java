@@ -57,10 +57,12 @@ public final class UXAction {
     public static final int SHARING_TORRENT_CREATED_FORMALLY = SHARING_BASE + 1;
     public static final int SHARING_TORRENT_CREATED_WITH_SEND_TO_FRIEND_FROM_LIBRARY = SHARING_BASE + 2;
     public static final int SHARING_TORRENT_CREATED_WITH_SEND_TO_FRIEND_FROM_MENU = SHARING_BASE + 3;
-    public static final int SHARING_SEEDING_ENABLED = SHARING_BASE + 4;
-    public static final int SHARING_SEEDING_DISABLED = SHARING_BASE + 5;
-    public static final int SHARING_PARTIAL_SEEDING_ENABLED = SHARING_BASE + 6;
-    public static final int SHARING_PARTIAL_SEEDING_DISABLED = SHARING_BASE + 7;
+    public static final int SHARING_TORRENT_CREATED_WITH_SEND_TO_FRIEND_FROM_PLAYER = SHARING_BASE + 4;
+    public static final int SHARING_TORRENT_CREATED_WITH_SEND_TO_FRIEND_FROM_DND = SHARING_BASE + 5;
+    public static final int SHARING_SEEDING_ENABLED = SHARING_BASE + 6;
+    public static final int SHARING_SEEDING_DISABLED = SHARING_BASE + 7;
+    public static final int SHARING_PARTIAL_SEEDING_ENABLED = SHARING_BASE + 8;
+    public static final int SHARING_PARTIAL_SEEDING_DISABLED = SHARING_BASE + 9;
     
     public static final int LIBRARY_BASE = 4000;
     public static final int LIBRARY_PLAY_AUDIO_FROM_FILE = LIBRARY_BASE + 1;
