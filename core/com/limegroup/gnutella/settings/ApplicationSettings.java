@@ -206,6 +206,8 @@ public class ApplicationSettings extends LimeProps {
 
     public static final IntSetting GUI_TABLES_FONT_SIZE = (IntSetting) FACTORY.createIntSetting("GUI_TABLES_FONT_SIZE", 0).setAlwaysSave(true);
 
+    public static final BooleanSetting UX_STATS_ENABLED = FACTORY.createBooleanSetting("UX_STATS_ENABLED", true);
+
     /**
      * Gets the current language setting.
      */
