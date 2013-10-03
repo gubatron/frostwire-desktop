@@ -54,8 +54,6 @@ import com.frostwire.search.archiveorg.ArchiveorgCrawledSearchResult;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube2.YouTubeCrawledSearchResult;
-import com.frostwire.uxstats.UXAction;
-import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.ApplicationHeader;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -252,8 +250,6 @@ public final class SearchMediator {
         if (StringUtils.isNullOrEmpty(query, true)) {
             return;
         }
-
-        UXStats.instance().log(UXAction.SEARCH_STARTED);
 
         manager.stop(token);
 

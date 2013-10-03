@@ -25,6 +25,8 @@ import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -216,6 +218,12 @@ final class SchemaBox extends JPanel {
         panel.add(button);
 
         button.addActionListener(new SchemaButtonActionListener(type));
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                UXStats.instance().log(UXAction.SEARCH_RESULT_FILE_TYPE_CLICK);
+            }
+        });
         button.setSelected(isMediaTypeSelected(type));
 
         buttonsMap.put(type, button);
@@ -267,7 +275,6 @@ final class SchemaBox extends JPanel {
 
             if (resultPanel != null) {
                 resultPanel.filterChanged(filter, 2);
-                UXStats.instance().log(UXAction.SEARCH_RESULT_FILE_TYPE_CLICK);
             }
         }
     }
