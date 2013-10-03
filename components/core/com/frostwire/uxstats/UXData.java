@@ -20,6 +20,7 @@ package com.frostwire.uxstats;
 import java.util.List;
 
 /**
+ * Temporary session.
  * @author gubatron
  * @author aldenml
  *

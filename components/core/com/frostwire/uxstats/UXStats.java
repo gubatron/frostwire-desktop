@@ -115,6 +115,8 @@ public final class UXStats {
             new Thread(r, "UXStats-sendData").start();
         }
     }
+    
+    
 
     private String buildData() {
         UXData data = new UXData();
