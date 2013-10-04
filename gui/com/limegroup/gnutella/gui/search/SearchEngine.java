@@ -180,7 +180,8 @@ public abstract class SearchEngine {
     }
 
     public static List<SearchEngine> getEngines() {
-        return Arrays.asList(FROSTCLICK, ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, VERTOR, TPB, MONOVA, SOUNDCLOUD, ARCHIVEORG);
+        return Arrays.asList(FROSTCLICK, ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, TPB, MONOVA, SOUNDCLOUD, ARCHIVEORG);
+        //return Arrays.asList(FROSTCLICK, ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, VERTOR, TPB, MONOVA, SOUNDCLOUD, ARCHIVEORG);
     }
 
     public abstract SearchPerformer getPerformer(long token, String keywords);
