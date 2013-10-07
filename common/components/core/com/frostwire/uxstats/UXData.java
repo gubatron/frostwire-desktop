@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Temporary session.
  * @author gubatron
  * @author aldenml
  *

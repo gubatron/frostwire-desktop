@@ -144,7 +144,6 @@ final class FWHttpClient implements HttpClient {
         final URL u = new URL(url);
         final HttpURLConnection conn = (HttpURLConnection) u.openConnection();
         conn.setDoOutput(true);
-        conn.setDoInput(true);
         conn.setReadTimeout(timeout);
         conn.setRequestProperty("User-Agent", userAgent);
         conn.setInstanceFollowRedirects(false);
@@ -158,7 +157,6 @@ final class FWHttpClient implements HttpClient {
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "text/plain");
         conn.setRequestProperty("charset", "utf-8");
-        conn.setRequestProperty("Content-Length", "" + data.length);
         conn.setUseCaches(false);
 
         ByteArrayInputStream in = new ByteArrayInputStream(data);
@@ -183,6 +181,7 @@ final class FWHttpClient implements HttpClient {
 
             closeQuietly(out);
 
+            conn.connect();
             int httpResponseCode = getResponseCode(conn);
 
             if (httpResponseCode != HttpURLConnection.HTTP_OK && httpResponseCode != HttpURLConnection.HTTP_PARTIAL) {
