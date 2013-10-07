@@ -492,7 +492,7 @@ public final class UpdateMessageReader implements ContentHandler {
             String enabled = atts.getValue("enabled");
 
             if (enabled != null && enabled.equals("true") && ApplicationSettings.UX_STATS_ENABLED.getValue()) {
-                String url = "uxstats.frostwire.com/dux";
+                String url = "http://ux.frostwire.com/dux";
                 String os = OSUtils.getFullOS();
                 String fwversion = FrostWireUtils.getFrostWireVersion();
                 String fwbuild = String.valueOf(FrostWireUtils.getBuildNumber());
