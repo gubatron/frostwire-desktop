@@ -27,17 +27,19 @@ import java.lang.reflect.Field;
 public final class UXAction {
 
     public static final int SEARCH_BASE = 1000;
-    public static final int SEARCH_STARTED = SEARCH_BASE + 1;
-    public static final int SEARCH_RESULT_CLICK_DOWNLOAD = SEARCH_BASE + 2;
-    public static final int SEARCH_RESULT_ENTER_KEY_DOWNLOAD = SEARCH_BASE + 3;
-    public static final int SEARCH_RESULT_BIG_BUTTON_DOWNLOAD = SEARCH_BASE + 4;
-    public static final int SEARCH_RESULT_ROW_BUTTON_DOWNLOAD = SEARCH_BASE + 5;
-    public static final int SEARCH_RESULT_CLICKED = SEARCH_BASE + 6;
-    public static final int SEARCH_RESULT_AUDIO_PREVIEW = SEARCH_BASE + 7;
-    public static final int SEARCH_RESULT_VIDEO_PREVIEW = SEARCH_BASE + 8;
-    public static final int SEARCH_RESULT_DETAIL_VIEW = SEARCH_BASE + 9;
-    public static final int SEARCH_RESULT_SOURCE_VIEW = SEARCH_BASE + 10;
-    public static final int SEARCH_RESULT_FILE_TYPE_CLICK = SEARCH_BASE + 11;
+    public static final int SEARCH_STARTED_ENTER_KEY = SEARCH_BASE + 1;
+    public static final int SEARCH_STARTED_SMALL_SEARCH_ICON_CLICK = SEARCH_BASE + 2;
+    public static final int SEARCH_STARTED_SEARCH_TAB_BUTTON = SEARCH_BASE + 3;
+    public static final int SEARCH_RESULT_CLICK_DOWNLOAD = SEARCH_BASE + 4;
+    public static final int SEARCH_RESULT_ENTER_KEY_DOWNLOAD = SEARCH_BASE + 5;
+    public static final int SEARCH_RESULT_BIG_BUTTON_DOWNLOAD = SEARCH_BASE + 6;
+    public static final int SEARCH_RESULT_ROW_BUTTON_DOWNLOAD = SEARCH_BASE + 7;
+    public static final int SEARCH_RESULT_CLICKED = SEARCH_BASE + 8;
+    public static final int SEARCH_RESULT_AUDIO_PREVIEW = SEARCH_BASE + 9;
+    public static final int SEARCH_RESULT_VIDEO_PREVIEW = SEARCH_BASE + 10;
+    public static final int SEARCH_RESULT_DETAIL_VIEW = SEARCH_BASE + 11;
+    public static final int SEARCH_RESULT_SOURCE_VIEW = SEARCH_BASE + 12;
+    public static final int SEARCH_RESULT_FILE_TYPE_CLICK = SEARCH_BASE + 13;
 
     public static final int DOWNLOAD_BASE = 2000;
     public static final int DOWNLOAD_FULL_TORRENT_FILE = DOWNLOAD_BASE + 1;
