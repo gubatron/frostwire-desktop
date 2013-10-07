@@ -88,7 +88,7 @@ public final class UXStats {
     public void log(int action) {
         try {
             if (conf != null && data != null) {
-                System.out.println(UXAction.getActionName(action));
+                //System.out.println(UXAction.getActionName(action));
 
                 if (data.actions.size() < conf.getMaxEntries()) {
                     data.actions.add(new UXAction(action, System.currentTimeMillis()));
