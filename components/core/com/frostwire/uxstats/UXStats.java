@@ -35,7 +35,6 @@ public final class UXStats {
 
     private static final Logger LOG = LoggerFactory.getLogger(UXStats.class);
 
-    private static final String HTTP_SERVER = "http://ux.frostwire.com/ux";
     private static final int HTTP_TIMEOUT = 4000;
 
     private final HttpClient httpClient;
@@ -90,7 +89,7 @@ public final class UXStats {
         try {
             if (conf != null && data != null) {
                 System.out.println(UXAction.getActionName(action));
-                
+
                 if (data.actions.size() < conf.getMaxEntries()) {
                     data.actions.add(new UXAction(action, System.currentTimeMillis()));
                 }
@@ -103,7 +102,7 @@ public final class UXStats {
             // ignore, not important
         }
     }
-    
+
     public void flush() {
         try {
             if (conf != null && data != null) {
@@ -117,7 +116,7 @@ public final class UXStats {
     private boolean isReadyToSend() {
         return data.actions.size() >= conf.getMinEntries() && (System.currentTimeMillis() - data.time > conf.getPeriod() * 1000);
     }
-    
+
     private void sendData() {
         SendDataRunnable r = new SendDataRunnable(data);
 
@@ -146,7 +145,7 @@ public final class UXStats {
         public void run() {
             try {
                 String json = JsonUtils.toJson(data);
-                httpClient.post(HTTP_SERVER, HTTP_TIMEOUT, "FrostWire/UXStats", json, true);
+                httpClient.post(conf.getUrl(), HTTP_TIMEOUT, "FrostWire/UXStats", json, true);
             } catch (Throwable e) {
                 LOG.error("Unable to send ux stats", e);
             }
