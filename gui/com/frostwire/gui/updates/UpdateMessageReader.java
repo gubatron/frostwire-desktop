@@ -492,6 +492,7 @@ public final class UpdateMessageReader implements ContentHandler {
             String enabled = atts.getValue("enabled");
 
             if (enabled != null && enabled.equals("true") && ApplicationSettings.UX_STATS_ENABLED.getValue()) {
+                String url = "uxstats.frostwire.com/dux";
                 String os = OSUtils.getFullOS();
                 String fwversion = FrostWireUtils.getFrostWireVersion();
                 String fwbuild = String.valueOf(FrostWireUtils.getBuildNumber());
@@ -499,7 +500,7 @@ public final class UpdateMessageReader implements ContentHandler {
                 int minEntries = Integer.parseInt(atts.getValue("minEntries"));
                 int maxEntries = Integer.parseInt(atts.getValue("maxEntries"));
 
-                UXStatsConf context = new UXStatsConf(os, fwversion, fwbuild, period, minEntries, maxEntries);
+                UXStatsConf context = new UXStatsConf(url, os, fwversion, fwbuild, period, minEntries, maxEntries);
                 UXStats.instance().setContext(context);
             }
         } catch (Throwable e) {
