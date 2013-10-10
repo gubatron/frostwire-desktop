@@ -36,12 +36,16 @@ public class ExtratorrentSearchPerformer extends TorrentJsonSearchPerformer<Extr
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://extratorrent.com/json/?search=" + encodedKeywords;
+        return "http://extratorrent.cc/json/?search=" + encodedKeywords;
     }
 
     @Override
     protected List<ExtratorrentItem> parseJson(String json) {
         ExtratorrentResponse response = JsonUtils.toObject(json, ExtratorrentResponse.class);
+        for (ExtratorrentItem item : response.list) {
+            item.link = item.link.replaceAll("extratorrent.com", "extratorrent.cc");
+            item.torrentLink = item.torrentLink.replaceAll("extratorrent.com","extratorrent.cc");
+        }
         return response.list;
     }
 
