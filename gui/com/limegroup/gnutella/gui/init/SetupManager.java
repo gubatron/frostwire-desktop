@@ -42,6 +42,8 @@ import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FramedDialog;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -155,6 +157,8 @@ public class SetupManager {
         IntentWindow intentWindow = new IntentWindow(this);
         if (!intentWindow.isConfirmedWillNot()) {
             windows.add(intentWindow);
+        } else {
+            UXStats.instance().log(UXAction.CONFIGURATION_WIZARD_AFTER_UPDATE);
         }
 
         // Nothing to install?.. Begone.
@@ -436,6 +440,7 @@ public class SetupManager {
                 System.exit(1);
             }
             intent.applySettings(true);
+            UXStats.instance().log(UXAction.CONFIGURATION_WIZARD_FIRST_TIME);
         }
 
         dialogFrame.getDialog().dispose();

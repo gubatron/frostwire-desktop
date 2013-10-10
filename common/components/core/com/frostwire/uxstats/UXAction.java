@@ -25,6 +25,9 @@ import java.lang.reflect.Field;
  *
  */
 public final class UXAction {
+    public static final int CONFIGURATION_WIZARD_BASE = 0;
+    public static final int CONFIGURATION_WIZARD_FIRST_TIME = CONFIGURATION_WIZARD_BASE + 1;
+    public static final int CONFIGURATION_WIZARD_AFTER_UPDATE = CONFIGURATION_WIZARD_BASE + 2;
 
     public static final int SEARCH_BASE = 1000;
     public static final int SEARCH_STARTED_ENTER_KEY = SEARCH_BASE + 1;
