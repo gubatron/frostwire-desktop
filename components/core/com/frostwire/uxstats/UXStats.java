@@ -32,7 +32,7 @@ import com.frostwire.util.JsonUtils;
  *
  */
 public final class UXStats {
-    private static final boolean IS_TESTING = true;
+    private static final boolean IS_TESTING = false;
     
     private static final Logger LOG = LoggerFactory.getLogger(UXStats.class);
 
