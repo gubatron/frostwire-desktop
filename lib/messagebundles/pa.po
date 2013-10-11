@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-03 15:11-0400\n"
+"POT-Creation-Date: 2013-10-11 16:05-0400\n"
 "PO-Revision-Date: 2007-08-23 13:53+0000\n"
 "Last-Translator: FTA <saintrecall@gmail.com>\n"
 "Language-Team: none\n"
@@ -19,226 +19,36 @@ msgstr ""
 "X-Launchpad-Export-Date: 2008-02-26 04:53+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: core/com/limegroup/gnutella/LimeXMLNames.java:87
-#: core/com/limegroup/gnutella/MediaType.java:48
+#. These are used as resource keys to retreive descriptions in the GUI
+#: core/com/limegroup/gnutella/MediaType.java:43
+msgid "All Types"
+msgstr "ਸਾਰੇ ਪ੍ਰਕਾਰ"
+
+#: core/com/limegroup/gnutella/MediaType.java:45
+msgid "Books/Docs"
+msgstr ""
+
+#: core/com/limegroup/gnutella/MediaType.java:46
+msgid "Programs"
+msgstr "ਪ੍ਰੋਗ੍ਰੈੰਜ਼"
+
+#: core/com/limegroup/gnutella/MediaType.java:47
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:509
 #: gui/com/frostwire/gui/library/UITool.java:104
 msgid "Audio"
 msgstr "ਔਡ੍ਯੋ"
 
-#: core/com/limegroup/gnutella/LimeXMLNames.java:88
-#: core/com/limegroup/gnutella/LimeXMLNames.java:104
-#: core/com/limegroup/gnutella/LimeXMLNames.java:124
-#: core/com/limegroup/gnutella/LimeXMLNames.java:131
-#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:63
-#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:245
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:56
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:272
-msgid "Title"
-msgstr "ਫ਼ਾਇਲ(&F)"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:89
-#: core/com/limegroup/gnutella/LimeXMLNames.java:126
-#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:69
-#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:249
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:62
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:281
-msgid "Artist"
-msgstr ""
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:90
-#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:75
-#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:252
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:74
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:284
-msgid "Album"
-msgstr "ਲਾਇਸਵਾਇਰ ਬਾਰੇ"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:91
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:55
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:204
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:86
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:287
-msgid "Genre"
-msgstr ""
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:92
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:80
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:275
-msgid "Track"
-msgstr ""
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:93
-#: core/com/limegroup/gnutella/LimeXMLNames.java:109
-#: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:217
-#: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:219
-#: gui/com/frostwire/gui/library/LibraryFilesTableDataLine.java:280
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:64
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:198
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:110
-#: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:41
-msgid "Type"
-msgstr "ਤਰਹ"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:94
-#: core/com/limegroup/gnutella/LimeXMLNames.java:110
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:68
-msgid "Length"
-msgstr ""
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:95
-#: core/com/limegroup/gnutella/LimeXMLNames.java:111
-#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:81
-#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:255
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:116
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:290
-msgid "Year"
-msgstr ""
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:96
-#: core/com/limegroup/gnutella/LimeXMLNames.java:112
-msgid "Language"
-msgstr "ਭਾਸ਼ਾ ਬਦਲੋ(Language)(&H)"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:97
-#: core/com/limegroup/gnutella/LimeXMLNames.java:121
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:58
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:195
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:92
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:304
-msgid "Bitrate"
-msgstr ""
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:98
-#: core/com/limegroup/gnutella/LimeXMLNames.java:115
-msgid "Comments"
-msgstr "ਦਸਤਾਵੇਜ਼"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:99
-#: core/com/limegroup/gnutella/LimeXMLNames.java:116
-msgid "Action"
-msgstr "ਥਾਂ"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:100
-#: core/com/limegroup/gnutella/LimeXMLNames.java:117
-msgid "Copyright"
-msgstr "ਕੌਪੀ ਕਰੋ"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:101
-#: core/com/limegroup/gnutella/LimeXMLNames.java:118
-#: core/com/limegroup/gnutella/LimeXMLNames.java:128
-#: core/com/limegroup/gnutella/LimeXMLNames.java:135
-#: core/com/limegroup/gnutella/LimeXMLNames.java:141
-msgid "License Type"
-msgstr "ਲਾਇਸੈੰਸ"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:103
-#: core/com/limegroup/gnutella/MediaType.java:49
+#: core/com/limegroup/gnutella/MediaType.java:48
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:511
 #: gui/com/frostwire/gui/library/UITool.java:112
 msgid "Video"
 msgstr "ਵਿਡ੍ਯੋ"
 
-#: core/com/limegroup/gnutella/LimeXMLNames.java:105
-msgid "Director"
-msgstr ""
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:106
-msgid "Producer"
-msgstr ""
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:107
-msgid "Studio"
-msgstr "ਔਡ੍ਯੋ"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:108
-msgid "Stars"
-msgstr "ਵਂਡੋ"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:113
-msgid "Subtitles"
-msgstr ""
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:114
-msgid "Rating"
-msgstr "ਜੰਕ ਰੇਟਿੰਗ"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:119
-msgid "Height"
-msgstr ""
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:120
-msgid "Width"
-msgstr ""
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:123
-msgid "Image"
-msgstr "ਚਿੱਤਰ"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:125
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:70
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:189
-msgid "Description"
-msgstr ""
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:127
-#: core/com/limegroup/gnutella/LimeXMLNames.java:134
-#: core/com/limegroup/gnutella/LimeXMLNames.java:142
-msgid "License"
-msgstr "ਲਾਇਸੈੰਸ"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:130
-msgid "Document"
-msgstr "ਦਸਤਾਵੇਜ਼"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:132
-msgid "Topic"
-msgstr ""
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:133
-msgid "Author"
-msgstr ""
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:137
-msgid "Application"
-msgstr "ਥਾਂ"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:138
-#: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:108
-#: gui/com/frostwire/gui/library/LibraryFilesTableDataLine.java:276
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:52
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:186
-#: gui/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:127
-#: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:44
-msgid "Name"
-msgstr "ਨਾਂ"
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:139
-msgid "Publisher"
-msgstr "ਪਬਲਿਸ਼..."
-
-#: core/com/limegroup/gnutella/LimeXMLNames.java:140
-msgid "Platform"
-msgstr ""
-
-#. These are used as resource keys to retreive descriptions in the GUI
-#: core/com/limegroup/gnutella/MediaType.java:44
-msgid "All Types"
-msgstr "ਸਾਰੇ ਪ੍ਰਕਾਰ"
-
-#: core/com/limegroup/gnutella/MediaType.java:46
-msgid "Books/Docs"
-msgstr ""
-
-#: core/com/limegroup/gnutella/MediaType.java:47
-msgid "Programs"
-msgstr "ਪ੍ਰੋਗ੍ਰੈੰਜ਼"
-
-#: core/com/limegroup/gnutella/MediaType.java:50
+#: core/com/limegroup/gnutella/MediaType.java:49
 msgid "Images"
 msgstr "ਚਿੱਤਰ"
 
-#: core/com/limegroup/gnutella/MediaType.java:51
+#: core/com/limegroup/gnutella/MediaType.java:50
 msgid "Torrents"
 msgstr "ਦਸਤਾਵੇਜ਼"
 
@@ -247,27 +57,27 @@ msgid "Buy"
 msgstr ""
 
 #. HERE IS WHERE WE ADD THE PJIRC OBJECT.
-#: gui/com/frostwire/gui/ChatMediator.java:132
+#: gui/com/frostwire/gui/ChatMediator.java:113
 msgid "Loading Community Chat..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#: gui/com/frostwire/gui/ChatMediator.java:168
+#: gui/com/frostwire/gui/ChatMediator.java:149
 msgid "Enter your desired chat Nickname"
 msgstr ""
 
-#: gui/com/frostwire/gui/ChatMediator.java:168
+#: gui/com/frostwire/gui/ChatMediator.java:149
 msgid "Nickname required to connect"
 msgstr ""
 
-#: gui/com/frostwire/gui/ChatMediator.java:180
+#: gui/com/frostwire/gui/ChatMediator.java:161
 msgid "The nickname"
 msgstr ""
 
-#: gui/com/frostwire/gui/ChatMediator.java:180
+#: gui/com/frostwire/gui/ChatMediator.java:161
 msgid "can't be accepted"
 msgstr ""
 
-#: gui/com/frostwire/gui/ChatMediator.java:416
+#: gui/com/frostwire/gui/ChatMediator.java:397
 msgid "Loading Community Chat Window..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
@@ -311,221 +121,239 @@ msgstr "ਵਿਡ੍ਯੋ"
 msgid "Exit"
 msgstr "ਬੰਦ ਕਰੋ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:72
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1005
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:736
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:74
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1009
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:746
 msgid "Send to iTunes"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:73
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:75
 #, fuzzy
 msgid "Send files to iTunes"
 msgstr "ਇਸ ਪਲੇਲਿਸਟ ਨੂੰ ਸੇਵ ਕਰੋ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:116
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:118
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:44
 #: gui/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:50
 msgid "Details"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:117
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:415
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:119
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:421
 msgid "Show Details"
 msgstr "ਮੈਗਨੇਟ ਬਾਰੇ ਹੋਰ ਜਾਨਕਾਰੀ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:118
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:416
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:120
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:422
 msgid "Show Torrent Details"
 msgstr "ਮੈਗਨੇਟ ਬਾਰੇ ਹੋਰ ਜਾਨਕਾਰੀ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:134
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:135
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:136
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:137
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:692
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:913
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:914
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:680
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:681
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:917
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:918
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:690
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:691
 msgid "Explore"
 msgstr "ਖੋਲੋ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:136
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:915
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:682
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:138
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:919
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:692
 msgid "Open Folder Containing the File"
 msgstr "ਇਹ ਫ਼ਾਇਲ ਦਾ ਫ਼ੋਲਡਰ ਖੋੱਲੋ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:161
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:162
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:163
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:164
 msgid "Show"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:163
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:165
 msgid "Shows the contents of this transfer in the Library Tab"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:189
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:191
 msgid "Resume Download"
 msgstr "ਡਾਉੰਲੋਡ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:190
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:192
 msgid "Resume"
 msgstr "ਨਾਂ ਬਦਲੋ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:191
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:193
 msgid "Reattempt Selected Downloads"
 msgstr "ਫੇਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਡਾਉੰਲੋਡ ਦੀ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:212
 msgid ""
-"\n"
-"\n"
+"One of the transfers is complete and resuming will cause it to start seeding"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:236
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:212
+msgid ""
+"This transfer is already complete, resuming it will cause it to start seeding"
+msgstr ""
+
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:213
+#, fuzzy
+msgid "Do you want to enable torrent seeding?"
+msgstr "ਇਸ ਪਲੇਲਿਸਟ ਨੂੰ ਸੇਵ ਕਰੋ"
+
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:240
 msgid "Pause Download"
 msgstr "ਚਲਾਓ"
 
 #. *
 #. * Constant for the pause button.
 #.
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:237
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:88
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:241
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:89
 msgid "Pause"
 msgstr "ਚਿਪਕਾਓ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:238
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:242
 msgid "Pause Selected Downloads"
 msgstr "ਇਹਨਾਂ ਨੂੰ ਪੌਜ਼ ਕਰੋ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:262
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:263
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:267
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:268
 msgid "Remove Torrent and Data"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:264
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:269
 msgid "Remove Torrent and Data from selected downloads"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:266
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:267
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:271
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:272
 msgid "Remove Torrent"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:268
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:273
 msgid "Remove Torrent from selected downloads"
 msgstr "ਫੇਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਡਾਉੰਲੋਡ ਦੀ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:270
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:275
 msgid "Remove Download"
 msgstr "ਡਾਉੰਲੋਡ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:271
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:276
 #: gui/com/frostwire/gui/library/RemoveLibraryDirectoryAction.java:39
 #: gui/com/limegroup/gnutella/gui/ListEditor.java:296
 msgid "Remove"
 msgstr "ਹਟਾਓ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:272
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:277
 msgid "Remove Selected Downloads"
 msgstr "ਇਹਨਾਂ ਨੂੰ ਚਲਾਓ(Preview)"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:282
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:287
 msgid ""
 "Are you sure you want to remove the data files from your computer?\n"
 "\n"
 "You won't be able to recover the files."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:282
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:740
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:287
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:379
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:744
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:80
 msgid "Are you sure?"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:304
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:305
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:310
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:311
 msgid "Remove Download and Data"
 msgstr "ਡਾਉੰਲੋਡ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:306
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:312
 msgid "Remove Download and Data from selected downloads"
 msgstr "ਫੇਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਡਾਉੰਲੋਡ ਦੀ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:315
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:316
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:321
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:322
 #, fuzzy
 msgid "Clear Inactive"
 msgstr "ਸਭ ਸੁਸਤ ਡਾਉੰਲੋਡ ਮਿਟਾਓ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:317
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:323
 msgid "Clear Inactive (completed) transfers from the Transfers list."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:336
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:337
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:338
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:342
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:343
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:344
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:504
-#: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:358
+#: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:356
 msgid "Copy Magnet"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:364
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:365
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:366
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:370
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:371
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:372
 msgid "Copy Infohash"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:391
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:392
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:393
-#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:397
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:398
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:399
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:245
+#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:247
 msgid "Send to friend"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:421
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:422
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:427
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:428
 msgid "Hide Seeding Transfers"
 msgstr "ਟਰਾੰਸਫ਼ਰਾਂ ਦੇ ਬਾਦ ਬੰਦ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:423
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:429
 msgid "Don't show Seeding Transfers"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:425
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:426
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:427
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:431
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:432
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:433
 msgid "Show Seeding Transfers"
 msgstr "ਟਰਾੰਸਫ਼ਰਾਂ ਦੇ ਬਾਦ ਬੰਦ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:446
-#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:210
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:452
+#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:212
 msgid "Create New Playlist"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:447
-#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:211
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:453
+#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:213
 msgid "Create and add to a new playlist"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:474
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:480
 #, fuzzy
 msgid "Play file"
 msgstr "ਚਲਾਓ"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:475
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:481
 msgid "Play media file"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:496
-#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:228
+#: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:502
+#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:230
 msgid "Add to playlist "
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:57
 msgid " (Handpicked)"
 msgstr ""
+
+#: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:108
+#: gui/com/frostwire/gui/library/LibraryFilesTableDataLine.java:276
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:52
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:186
+#: gui/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:127
+#: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:44
+msgid "Name"
+msgstr "ਨਾਂ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:114
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:336
@@ -602,17 +430,17 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:450
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:422
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:869
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:513
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:636
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:873
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:517
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:646
 msgid "Launch"
 msgstr "ਕੰਮ ਸ਼ੁਰੂ ਕਰੋ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:451
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:423
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:870
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:514
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:637
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:874
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:518
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:647
 msgid "Launch Selected Files"
 msgstr "ਇਹਨਾਂ ਨੂੰ ਚਲਾਓ"
 
@@ -645,13 +473,13 @@ msgstr "ਡਾਉੰਲੋਡ ਨੂੰ ਹਟਾਓ"
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:153
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:128
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:89
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:526
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:528
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:530
 #: gui/com/limegroup/gnutella/gui/DialogOption.java:26
 #: gui/com/limegroup/gnutella/gui/InputFieldDialog.java:89
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:213
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:232
-#: gui/com/limegroup/gnutella/gui/init/SetupManager.java:513
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:234
+#: gui/com/limegroup/gnutella/gui/init/SetupManager.java:504
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:39
 msgid "Cancel"
 msgstr ""
@@ -721,77 +549,77 @@ msgstr "ਖੋਜ ਦਾ ਢੰਗ"
 
 #. advanced options
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:339
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:272
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:311
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:274
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:313
 msgid "Advanced"
 msgstr "ਹੋਰ ਜਾਨਕਾਰੀ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:399
-#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:164
+#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:166
 msgid "Add to playlist"
 msgstr "ਪਲੇਲਿਸਟ’ਚ ਪਾਓ"
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:108
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:110
 msgid "Torrent File Created with FrostWire"
 msgstr "ਕਨੈੱਕਟ ਹੋ ਰਹੇ ਹੋ"
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:172
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:937
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:704
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:327
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:174
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:941
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:714
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:333
 msgid "Create New Torrent"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:202
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:204
 msgid "Torrent Contents"
 msgstr "ਵਯਸਕ ਮਾਲ ਲੁਕਾਓ"
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:208
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:210
 msgid "Select File or Folder..."
 msgstr "ਫ਼ੋਲਡਰ ਵਂਡੋ"
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:209
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:211
 msgid ""
 "Click here to select a single file or a folder as the content indexed by "
 "your new .torrent"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:224
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:226
 msgid ""
 "These box shows the contents you've selected for your new .torrent.\n"
 "Either a file, or the contents of a folder."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:256
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:258
 msgid "Torrent Properties"
 msgstr "ਤੁਸੀਂ ਵੰਡ ਰਹੇ ਹੋ"
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:269
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:271
 msgid "Trackerless Torrent (DHT)"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:270
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:272
 msgid ""
 "Select this option to create torrents that don't need trackers, completely "
 "descentralized. (Recommended)"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:280
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:282
 msgid "Start seeding"
 msgstr "ਸ਼ੁਰੂ ਹੋਯਾ"
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:281
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:283
 msgid ""
 "Announce yourself as a seed for the content indexed by this torrent as soon "
 "as it's created.\n"
 "If nobody is seeding the torrent won't work. (Recommended)"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:293
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:295
 msgid "<html><p>Tracker Announce URLs</p><p>(One tracker per line)</p></html>"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:294
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:296
 msgid ""
 "Enter a list of valid BitTorrent Tracker Server URLs.\n"
 "Your new torrent will be announced to these trackers if you start seeding "
@@ -802,18 +630,18 @@ msgstr ""
 #. *
 #. * 'Close'.
 #.
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:338
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:340
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:92
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMediator.java:96
 msgid "Close"
 msgstr "ਬੰਦ ਕਰੋ(&C)"
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:346
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:913
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:348
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:918
 msgid "Save torrent as..."
 msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:427
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:429
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:181
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:100
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:122
@@ -830,55 +658,55 @@ msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 msgid "Select"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:446
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:448
 msgid "Unkown error. Try again please."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:455
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:953
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:720
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:457
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:957
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:730
 msgid "Error: You can't read on that file/folder."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:514
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:516
 msgid ""
 "Please select a file or a folder.\n"
 "Your new torrent will need content to index."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:514
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:516
 msgid "Something's missing"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:520
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:947
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:714
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:522
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:951
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:724
 msgid "The folder you selected is empty."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:520
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:947
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:714
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:522
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:951
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:724
 msgid "Invalid Folder"
 msgstr "ਫ਼ਾਇਲ ਦਾ ਨਾਂ"
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:531
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:533
 msgid "Check again your tracker URL(s).\n"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:531
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:533
 msgid "Invalid Tracker URL\n"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:555
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:557
 msgid "Torrent Created."
 msgstr "ਬਣੀ"
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:581
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:586
 msgid "Torrent File"
 msgstr "ਖੋਜ ਦੇ ਪਰਿਣਾਮ ਦੇ ਫ਼ਿਲਟਰਾਂ ਨੂੰ ਦੇਖੋ"
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:783
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:788
 msgid "wizard.addingmt"
 msgstr ""
 
@@ -912,20 +740,20 @@ msgstr ""
 #. }
 #.
 #. }
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:818
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:823
 msgid "wizard.savingfile"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:823
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:828
 msgid "wizard.filesaved"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:895
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:900
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:905
 msgid "wizard.operationfailed"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:924
+#: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:929
 msgid "Saving Torrent..."
 msgstr "ਫ਼ਾਇਲ ਵਂਡਣਾਂ ਬੰਦ ਕਰੋ"
 
@@ -944,14 +772,14 @@ msgstr "ਡਾਉੰਲੋਡ"
 #: gui/com/frostwire/gui/bittorrent/HttpDownload.java:54
 #: gui/com/frostwire/gui/bittorrent/SoundcloudTrackDownload.java:47
 #: gui/com/frostwire/gui/bittorrent/SoundcloudTrackUrlDownload.java:55
-#: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:48
+#: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:49
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:45
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:53
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:627
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:953
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:720
-#: gui/com/frostwire/gui/library/LibraryUtils.java:715
-#: gui/com/limegroup/gnutella/gui/Initializer.java:511
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:629
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:957
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:730
+#: gui/com/frostwire/gui/library/LibraryUtils.java:725
+#: gui/com/limegroup/gnutella/gui/Initializer.java:507
 #: gui/com/limegroup/gnutella/gui/MessageService.java:103
 #: gui/com/limegroup/gnutella/gui/MessageService.java:123
 #: gui/com/limegroup/gnutella/gui/MessageService.java:243
@@ -981,7 +809,7 @@ msgid "Canceling"
 msgstr "ਕੰਮ ਰੱਦ ਕਰੋ"
 
 #: gui/com/frostwire/gui/bittorrent/HttpDownload.java:60
-#: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:49
+#: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:50
 msgid "Canceled"
 msgstr "ਕੰਮ ਰੱਦ ਕਰੋ"
 
@@ -1001,7 +829,7 @@ msgstr "ਕਨੈਕਸ਼ੰਜ਼"
 #: gui/com/frostwire/gui/bittorrent/SoundcloudTrackUrlDownload.java:54
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:48
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:52
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1135
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1139
 msgid "Finished"
 msgstr "ਖ਼ਤਮ"
 
@@ -1022,6 +850,16 @@ msgstr "ਸਾਰੀ ਫ਼ਾਇਲਾਂ ਡਾਉੰਲੋਡ"
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:298
 msgid "File"
 msgstr "ਫ਼ਾਇਲ(&F)"
+
+#: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:217
+#: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:219
+#: gui/com/frostwire/gui/library/LibraryFilesTableDataLine.java:280
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:64
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:198
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:110
+#: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:41
+msgid "Type"
+msgstr "ਤਰਹ"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:218
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:220
@@ -1072,8 +910,8 @@ msgstr "ਇਹਨਾਂ ਨੂੰ ਮਿਟਾਓ"
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:210
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:211
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:43
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:92
-#: gui/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:93
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:93
+#: gui/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:96
 #: gui/com/limegroup/gnutella/gui/tables/AbstractActionsRenderer.java:98
 msgid "Download"
 msgstr "ਡਾਉੰਲੋਡ"
@@ -1155,54 +993,54 @@ msgstr "ਰੋਕੋ"
 msgid "Crawling"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:47
+#: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:48
 msgid "Downloading Torrent"
 msgstr "ਡਾਉੰਲੋਡ"
 
-#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:57
+#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:58
 msgid "Torrent Data Save Folder"
 msgstr "ਫ਼ੋਲਡਰ ਵਂਡੋ"
 
-#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:85
+#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:90
 msgid "You forgot to enter a path for the Torrent Data Folder."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:109
+#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:114
 msgid "Please enter a valid path for the Torrent Data Folder"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:127
+#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:132
 msgid "The Torrent Data Folder cannot be inside the "
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:131
-#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:142
+#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:136
+#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:147
 msgid "Could not resolve folder path."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:138
+#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:143
 msgid "The Torrent Data Folder cannot be a parent folder of the "
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:155
+#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:160
 msgid "Use Default"
 msgstr "ਡਿਫ਼ੌਲਟ ਇਸਤਮਾਲ ਕਰੋ"
 
-#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:156
+#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:161
 msgid "Use the Default Folder"
 msgstr "ਡਿਫ਼ੌਲਟ ਇਸਤਮਾਲ ਕਰੋ"
 
-#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:169
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:193
+#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:174
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:195
 msgid "Browse..."
 msgstr "ਬਰਾਓਜ਼..."
 
-#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:170
+#: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:175
 msgid "Choose Another Folder"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:49
-#: gui/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:36
+#: gui/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:38
 msgid "Seeding Settings"
 msgstr "ਗਤਿ"
 
@@ -1266,30 +1104,30 @@ msgstr "ਚਲਾਓ(Preview)"
 msgid "Play Audio preview of"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:160
+#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:162
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:231
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:183
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:185
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:42
-#: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:310
+#: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:308
 msgid "Options"
 msgstr "ਓਪਸ਼ੰਜ਼(&O)"
 
-#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:160
+#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:162
 msgid "You can configure the folders you share in FrostWire's Options."
 msgstr "ਤੁਸੀ ਅਪਣੇ ਵੰਡੇ ਫ਼ੋਲਡਰ ਲਾਇੰਵਾਇਰ ਦੇ ਓਪਸ਼ੰਜ਼ ਵਿੱਚ ਕੰਫ਼ਿਗਰ ਕਰ ਸਕਦੇ ਹੋ"
 
-#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:244
+#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:246
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:362
 msgid "Send"
 msgstr "ਗਤਿ"
 
-#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:258
+#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:260
 msgid "Do you want to send this file to a friend?"
 msgstr "ਇਸ ਪਲੇਲਿਸਟ ਨੂੰ ਸੇਵ ਕਰੋ"
 
-#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:258
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1129
-#: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:65
+#: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:260
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1123
+#: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:67
 msgid "Send files with FrostWire"
 msgstr "ਲਾਇਸਵਾਇਰ ਦੇ ਇਸਤਿਮਾਲ ਤੇ ਮਦਦ"
 
@@ -1346,6 +1184,34 @@ msgstr "ਥਾਂ"
 msgid "Icon"
 msgstr "ਆਇਕੰ"
 
+#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:63
+#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:245
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:56
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:272
+msgid "Title"
+msgstr "ਫ਼ਾਇਲ(&F)"
+
+#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:69
+#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:249
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:62
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:281
+msgid "Artist"
+msgstr ""
+
+#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:75
+#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:252
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:74
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:284
+msgid "Album"
+msgstr "ਲਾਇਸਵਾਇਰ ਬਾਰੇ"
+
+#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:81
+#: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:255
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:116
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:290
+msgid "Year"
+msgstr ""
+
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:90
 msgid "Date Added"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
@@ -1356,10 +1222,10 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:146
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:145
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:325
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:164
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:271
-#: gui/com/frostwire/gui/library/LibrarySearch.java:195
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:327
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:166
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:273
+#: gui/com/frostwire/gui/library/LibrarySearch.java:199
 #: gui/com/frostwire/gui/tabs/SearchDownloadTab.java:51
 msgid "Search"
 msgstr "ਹੋਰ ਲਭੋ"
@@ -1384,7 +1250,7 @@ msgid "'s "
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:162
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:315
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:317
 msgid "tracks"
 msgstr ""
 
@@ -1400,22 +1266,22 @@ msgid "Wi-Fi Sharing"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:246
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:182
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:184
 msgid "Configure Options"
 msgstr "ਵੰਡਣ ਦੇ ਓਪਸ਼ੰਜ਼ ਕੰਫ਼ਿਗਰ ਕਰੋ"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:246
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:182
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:184
 msgid "You can configure the FrostWire's Options."
 msgstr "ਤੁਸੀ ਅਪਣੇ ਵੰਡੇ ਫ਼ੋਲਡਰ ਲਾਇੰਵਾਇਰ ਦੇ ਓਪਸ਼ੰਜ਼ ਵਿੱਚ ਕੰਫ਼ਿਗਰ ਕਰ ਸਕਦੇ ਹੋ"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:675
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:696
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:700
 msgid "Refresh"
 msgstr "ਰਿਫ਼੍ਰੈੱਸ਼"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:676
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:697
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
 msgid "Refresh selected"
 msgstr "ਕਨੈਕਸ਼ੰਜ਼"
 
@@ -1435,36 +1301,36 @@ msgstr "ਚਿਪਕਾਓ"
 msgid "Last Modified"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:525
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:527
 msgid "Move to Recycle Bin"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:525
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:527
 msgid "Move to Trash"
 msgstr ""
 
 #. *
 #. * The delete action.
 #.
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:526
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:528
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:972
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:550
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:729
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:760
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:530
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:976
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:554
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:733
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:770
 #: gui/com/frostwire/gui/searchfield/SearchField.java:272
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:93
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:108
 msgid "Delete"
 msgstr ""
 
 #. display list of files that should be deleted
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:578
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:580
 msgid ""
 "Are you sure you want to delete the selected file(s), thus removing it from "
 "your computer?"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:583
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:585
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:197
 #: gui/com/limegroup/gnutella/gui/MessageService.java:173
 #: gui/com/limegroup/gnutella/gui/MessageService.java:187
@@ -1483,104 +1349,118 @@ msgid "Message"
 msgstr ""
 
 #. display list of files that could not be deleted
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:625
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:627
 msgid ""
 "The following files could not be deleted. They may be in use by another "
 "application or are currently being downloaded to."
 msgstr ""
 
 #. notify the user that renaming failed
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:682
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:684
 msgid ""
 "Unable to rename the file '{0}'. It may be in use by another application."
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:895
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:662
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:899
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:672
 msgid "Launch in "
 msgstr "ਕੰਮ ਸ਼ੁਰੂ ਕਰੋ"
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:896
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:663
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:900
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:673
 msgid "Launch Selected Files in "
 msgstr "ਇਹਨਾਂ ਨੂੰ ਚਲਾਓ"
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:938
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:705
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:328
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:942
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:715
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:334
 msgid "Create a new .torrent file"
 msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:973
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:977
 msgid "Delete Selected Files"
 msgstr "ਇਹਨਾਂ ਨੂੰ ਉੜਾਓ"
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:990
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:777
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:994
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:782
 msgid "Rename"
 msgstr "ਨਾਂ ਬਦਲੋ"
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1006
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:737
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1010
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:747
 msgid "Send audio files to iTunes"
 msgstr "ਇਸ ਪਲੇਲਿਸਟ ਨੂੰ ਸੇਵ ਕਰੋ"
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1029
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1033
 msgid "Extract Audio"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1030
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1034
 msgid "Extract .m4a Audio from this .mp4 video"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1063
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1067
 msgid "Extracting audio from "
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1063
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1067
 #, fuzzy
 msgid " selected videos..."
 msgstr "ਫ਼ੋਲਡਰ ਵਂਡੋ"
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1065
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1069
 msgid "Extracting audio from selected video..."
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1083
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1087
 #, fuzzy
 msgid "failed"
 msgstr "ਫ਼ਾਇਲਾਂ"
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1084
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1088
 msgid "Done extracting audio."
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1135
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1136
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1139
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1140
 msgid "out  of "
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1138
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1142
 msgid "Could not extract audio from"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1233
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1235
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1237
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1239
 msgid "Share"
 msgstr "ਵਂਡੋ"
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1233
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1235
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1237
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1239
 #, fuzzy
 msgid "Unshare"
 msgstr "ਵਂਡੋ"
 
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1238
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1242
 msgid "file on local Wi-Fi network"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:49
 msgid "Bookmarked"
+msgstr ""
+
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:55
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:204
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:86
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:287
+msgid "Genre"
+msgstr ""
+
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:58
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:195
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:92
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:304
+msgid "Bitrate"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:61
@@ -1593,37 +1473,42 @@ msgstr ""
 msgid "Url"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:70
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:189
+msgid "Description"
+msgstr ""
+
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:379
 msgid "Are you sure you want to remove the selected radio station?"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:379
 msgid "Are you sure you want to remove the selected radio stations?"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:528
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:532
 msgid "Add Radio"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:529
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:533
 msgid "Add a new Radio Station. You must enter the Stream's URL"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:535
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:539
 msgid "Radio Station's stream URL"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:535
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:539
 msgid "Add Radio Station"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:551
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:555
 msgid "Delete Radio Station"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:607
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:608
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:609
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:611
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:612
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:613
 msgid "Copy Stream URL"
 msgstr ""
 
@@ -1631,114 +1516,114 @@ msgstr ""
 msgid "Loading Library Window..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:188
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:190
 msgid "New Playlist"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:188
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:190
 msgid "Creates a new Playlist"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:429
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:433
 msgid "Open Playlist (.m3u)"
 msgstr "ਪਲੇਲਿਸਟ ਫ਼ਾਇਲਾਂ (*.m3u)"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:501
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:505
 msgid "Save Playlist As"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:512
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:516
 #, java-format
 msgid ""
 "Warning: a file with the name {0} already exists in the folder. Overwrite "
 "this file?"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:711
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:834
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:715
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:844
 msgid "Refresh Audio Properties"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:712
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:716
 msgid "Refresh the audio properties based on ID3 tags of selected items"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:730
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:734
 msgid "Delete Playlist"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:740
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:744
 msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:758
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:818
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:763
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:828
 msgid "Cleanup playlist"
 msgstr "ਮਿਟਾਓ ਡਾਉੰਲੋਡ"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:759
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:819
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:764
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:829
 msgid "Remove the deleted items"
 msgstr "ਇਸ ਫ਼ਾਇਲ ਨੂੰ ਪਲੇਲਿਸਟ ਤੋਂ ਹਟਾਓ"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:778
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:783
 msgid "Rename Playlist"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:806
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:811
 msgid "Playlist Files (*.m3u)"
 msgstr "ਪਲੇਲਿਸਟ ਫ਼ਾਇਲਾਂ (*.m3u)"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:815
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:788
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:820
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:798
 msgid "Import .m3u to Playlist"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:816
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:789
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:821
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:799
 msgid "Import a .m3u file into the selected playlist"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:830
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:835
 msgid "Import .m3u to New Playlist"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:831
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:836
 msgid "Import a .m3u file to a new playlist"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:843
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:848
 #, fuzzy
 msgid "Export playlist files to folder"
 msgstr "ਪਲੇਲਿਸਟ ਫ਼ਾਇਲਾਂ (*.m3u)"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:844
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:849
 msgid "Copy all playlist files to a folder of your choosing"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:862
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:867
 #, fuzzy
 msgid "Where do you want the playlist files copied to?"
 msgstr "ਇਸ ਪਲੇਲਿਸਟ ਨੂੰ ਸੇਵ ਕਰੋ"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:916
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:803
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:921
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:813
 msgid "Export Playlist to .m3u"
 msgstr "ਪਲੇਲਿਸਟ ਫ਼ਾਇਲਾਂ (*.m3u)"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:917
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:804
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:922
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:814
 msgid "Export this playlist into a .m3u file"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:931
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:936
 #, fuzzy
 msgid "Export Playlist to iTunes"
 msgstr "ਪਲੇਲਿਸਟ ਫ਼ਾਇਲਾਂ (*.m3u)"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:932
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:937
 msgid "Export this playlist into an iTunes playlist"
 msgstr ""
 
@@ -1751,6 +1636,15 @@ msgstr ""
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:51
 msgid "Starred"
 msgstr "ਸ਼ੁਰੂ ਹੋਯਾ"
+
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:68
+msgid "Length"
+msgstr ""
+
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:80
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:275
+msgid "Track"
+msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:98
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:293
@@ -1765,44 +1659,48 @@ msgstr "ਥਾਂ"
 msgid "Folder"
 msgstr "ਸਾਰੇ ਫ਼ੋਲਡਰ"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:761
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:771
 msgid "Delete Selected Files from this playlist"
 msgstr "ਇਸ ਫ਼ਾਇਲ ਨੂੰ ਪਲੇਲਿਸਟ ਤੋਂ ਹਟਾਓ"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:835
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:845
 msgid "Refresh the audio properties based on ID3 tags"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibrarySearch.java:111
+#: gui/com/frostwire/gui/library/LibrarySearch.java:115
 msgid "search results"
 msgstr "ਖੋਜ ਦੇ ਪਰਿਣਾਮ ਦੇ ਫ਼ਿਲਟਰਾਂ ਨੂੰ ਦੇਖੋ"
 
-#: gui/com/frostwire/gui/library/LibrarySearch.java:154
+#: gui/com/frostwire/gui/library/LibrarySearch.java:158
 #, fuzzy
 msgid "Search in Library"
 msgstr "ਲਾਇਬਰੇਰੀ"
 
-#: gui/com/frostwire/gui/library/LibraryUtils.java:88
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:289
+#: gui/com/frostwire/gui/library/LibraryUtils.java:91
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
 #: gui/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:38
 msgid "Importing"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryUtils.java:171
-#: gui/com/frostwire/gui/library/LibraryUtils.java:202
-#: gui/com/frostwire/gui/library/LibraryUtils.java:266
+#. GUIMediator.safeInvokeAndWait(new Runnable() {
+#.
+#. @Override
+#. public void run() {
+#: gui/com/frostwire/gui/library/LibraryUtils.java:174
+#: gui/com/frostwire/gui/library/LibraryUtils.java:208
+#: gui/com/frostwire/gui/library/LibraryUtils.java:274
 msgid "Playlist name"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
-#: gui/com/frostwire/gui/library/LibraryUtils.java:641
+#: gui/com/frostwire/gui/library/LibraryUtils.java:651
 msgid "Refreshing"
 msgstr "ਰਿਫ਼੍ਰੈੱਸ਼"
 
-#: gui/com/frostwire/gui/library/LibraryUtils.java:697
+#: gui/com/frostwire/gui/library/LibraryUtils.java:707
 msgid "Importing from"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryUtils.java:715
+#: gui/com/frostwire/gui/library/LibraryUtils.java:725
 msgid "Error importing Radio Station from"
 msgstr ""
 
@@ -1863,114 +1761,114 @@ msgstr ""
 msgid "azemp.failed.d3dbad"
 msgstr ""
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:78
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:79
 msgid "Streaming Audio"
 msgstr ""
 
 #. *
 #. * Constant for the play button.
 #.
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:83
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:84
 msgid "Play"
 msgstr "ਚਲਾਓ"
 
 #. *
 #. * Constant for the forward button.
 #.
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:95
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:96
 msgid "Next"
 msgstr "ਅਗਲਾ"
 
 #. *
 #. * Constant for the rewind button.
 #.
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:100
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:101
 msgid "Previous"
 msgstr "ਪਿੱਛਲਾ"
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:195
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:196
 msgid "Volume"
 msgstr ""
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:248
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:249
 msgid "Send this file to a friend"
 msgstr "ਇਸ ਪਲੇਲਿਸਟ ਨੂੰ ਸੇਵ ਕਰੋ"
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:253
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:254
 msgid "Show the source of this media"
 msgstr ""
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:319
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:320
 msgid "Shuffle songs"
 msgstr ""
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:326
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:327
 msgid "Repeat songs"
 msgstr ""
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:908
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:902
 msgid "this artist(s)"
 msgstr ""
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:912
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:906
 msgid "Open Facebook page of"
 msgstr ""
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:914
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:908
 msgid "Open Twitter page of"
 msgstr ""
 
 #. won't be shown in 5.6.x, code here for 6.x
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1021
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1015
 msgid "Playing local file"
 msgstr ""
 
 #. won't be shown in 5.6.x, code here for 6.x
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1024
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1018
 msgid "Playing track from"
 msgstr ""
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1027
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1021
 msgid "Open YouTube source page"
 msgstr ""
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1031
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1025
 msgid "Open SoundCloud source page"
 msgstr ""
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1035
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1029
 msgid "Open Archive.org source page"
 msgstr ""
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1039
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1033
 msgid "Playing Internet Radio"
 msgstr ""
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1042
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1036
 msgid "Playing local Wi-Fi Stream from"
 msgstr ""
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1056
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1050
 msgid "unknown device"
 msgstr ""
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1067
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1061
 #, fuzzy
 msgid "playlist"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1128
-#: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1122
+#: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:66
 msgid "file"
 msgstr "ਫ਼ਾਇਲਾਂ"
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1128
-#: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1122
+#: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:66
 msgid "folder"
 msgstr "ਸਾਰੇ ਫ਼ੋਲਡਰ"
 
-#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1129
-#: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:65
+#: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1123
+#: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:67
 #, java-format
 msgid "Do you want to send this {0} to a friend?"
 msgstr ""
@@ -2014,7 +1912,7 @@ msgstr ""
 #. * The undo action.
 #.
 #: gui/com/frostwire/gui/searchfield/SearchField.java:232
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:37
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:52
 msgid "Undo"
 msgstr "ਅੰਡੂ ਕਰੋ"
 
@@ -2022,7 +1920,7 @@ msgstr "ਅੰਡੂ ਕਰੋ"
 #. * The cut action
 #.
 #: gui/com/frostwire/gui/searchfield/SearchField.java:242
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:51
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:66
 msgid "Cut"
 msgstr "ਕੱਟੋ"
 
@@ -2030,7 +1928,7 @@ msgstr "ਕੱਟੋ"
 #. * The copy action.
 #.
 #: gui/com/frostwire/gui/searchfield/SearchField.java:252
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:65
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:80
 msgid "Copy"
 msgstr "ਕੌਪੀ ਕਰੋ"
 
@@ -2038,8 +1936,8 @@ msgstr "ਕੌਪੀ ਕਰੋ"
 #. * The paste action.
 #.
 #: gui/com/frostwire/gui/searchfield/SearchField.java:262
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:79
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:177
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:94
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:179
 msgid "Paste"
 msgstr "ਚਿਪਕਾਓ"
 
@@ -2048,7 +1946,7 @@ msgstr "ਚਿਪਕਾਓ"
 #.
 #: gui/com/frostwire/gui/searchfield/SearchField.java:282
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:603
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:107
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:122
 msgid "Select All"
 msgstr "ਸਾਰਾ ਅੰਚੁਣੋ"
 
@@ -2072,7 +1970,7 @@ msgstr ""
 
 #. library
 #: gui/com/frostwire/gui/tabs/LibraryTab.java:55
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:275
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:277
 msgid "Library"
 msgstr "ਲਾਇਬਰੇਰੀ"
 
@@ -2206,8 +2104,21 @@ msgid "Cancelled"
 msgstr "ਕੰਮ ਰੱਦ ਕਰੋ"
 
 #: gui/com/frostwire/gui/updates/InstallerUpdater.java:165
-#: gui/com/frostwire/gui/updates/UpdateMediator.java:183
+#: gui/com/frostwire/gui/updates/UpdateMediator.java:187
 msgid "Update"
+msgstr ""
+
+#: gui/com/frostwire/gui/updates/PortableUpdater.java:78
+#, fuzzy
+msgid "Uncompressing files"
+msgstr "ਇਹਨਾਂ ਨੂੰ ਚਲਾਓ"
+
+#: gui/com/frostwire/gui/updates/ProgressMonitor.java:155
+msgid "OptionPane.cancelButtonText"
+msgstr ""
+
+#: gui/com/frostwire/gui/updates/ProgressMonitor.java:314
+msgid "ProgressMonitor.progressText"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:58
@@ -2324,12 +2235,12 @@ msgid ""
 "Inc."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/ApplicationHeader.java:158
+#: gui/com/limegroup/gnutella/gui/ApplicationHeader.java:182
 #, fuzzy
 msgid "Search or enter URL"
 msgstr "ਹੋਰ ਲਭੋ"
 
-#: gui/com/limegroup/gnutella/gui/ApplicationHeader.java:170
+#: gui/com/limegroup/gnutella/gui/ApplicationHeader.java:194
 msgid "A new update has been downloaded."
 msgstr ""
 
@@ -2368,7 +2279,7 @@ msgid "Support FrostWire development with a USD $1 donation"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/DonationButtons.java:50
-msgid "Support FrostWire development with a USD $5o donation"
+msgid "Support FrostWire development with a USD $5 donation"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/DonationButtons.java:51
@@ -2431,7 +2342,7 @@ msgid "Ethernet"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:120
-#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1459
+#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1444
 msgid ""
 "Your machine does not appear to have an active Internet connection or a "
 "firewall is blocking FrostWire from accessing the internet. FrostWire will "
@@ -2465,7 +2376,7 @@ msgstr ""
 msgid "FrostWire: Share Big Files"
 msgstr "ਲਾਇਸਵਾਇਰ PRO"
 
-#: gui/com/limegroup/gnutella/gui/GUIMediator.java:426
+#: gui/com/limegroup/gnutella/gui/GUIMediator.java:412
 msgid ""
 "FrostWire has encountered a problem during startup and cannot proceed. You "
 "may be able to fix this problem by changing FrostWire's Windows "
@@ -2476,20 +2387,20 @@ msgid ""
 "'OK' button at the bottom and restart FrostWire."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1365
+#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1350
 #, java-format
 msgid ""
 "FrostWire could not locate your web browser to display the following "
 "webpage: {0}."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1387
-#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1412
+#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1372
+#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1397
 msgid "FrostWire will not launch the specified file for security reasons."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1389
-#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1414
+#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1374
+#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1399
 #, java-format
 msgid ""
 "FrostWire could not launch the specified file.\n"
@@ -2497,62 +2408,58 @@ msgid ""
 "Executed command: {0}."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1391
-#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1416
+#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1376
+#: gui/com/limegroup/gnutella/gui/GUIMediator.java:1401
 msgid "FrostWire could not launch the specified file."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/GUIUtils.java:150
+#: gui/com/limegroup/gnutella/gui/GUIUtils.java:151
 msgid "KB"
 msgstr "ਕੇਬੀ"
 
-#: gui/com/limegroup/gnutella/gui/GUIUtils.java:152
+#: gui/com/limegroup/gnutella/gui/GUIUtils.java:153
 msgid "MB"
 msgstr "ਏੰਬੀ"
 
-#: gui/com/limegroup/gnutella/gui/GUIUtils.java:154
+#: gui/com/limegroup/gnutella/gui/GUIUtils.java:155
 msgid "GB"
 msgstr "ਜੀਬੀ"
 
-#: gui/com/limegroup/gnutella/gui/GUIUtils.java:156
+#: gui/com/limegroup/gnutella/gui/GUIUtils.java:157
 msgid "TB"
 msgstr "ਟੀਬੀ"
 
-#: gui/com/limegroup/gnutella/gui/GUIUtils.java:158
+#: gui/com/limegroup/gnutella/gui/GUIUtils.java:159
 msgid "KB/s"
 msgstr "ਕੇਬੀ/ਸੈਕਿੰਡ"
 
 #. Load up the HTML engine.
-#: gui/com/limegroup/gnutella/gui/Initializer.java:308
+#: gui/com/limegroup/gnutella/gui/Initializer.java:315
 msgid "Loading HTML Engine..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#: gui/com/limegroup/gnutella/gui/Initializer.java:356
+#: gui/com/limegroup/gnutella/gui/Initializer.java:363
 msgid "Loading User Interface..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#: gui/com/limegroup/gnutella/gui/Initializer.java:367
+#: gui/com/limegroup/gnutella/gui/Initializer.java:374
 msgid "Loading Core Components..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#: gui/com/limegroup/gnutella/gui/Initializer.java:423
+#: gui/com/limegroup/gnutella/gui/Initializer.java:429
 msgid "Loading Icons..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
 #. Touch the I18N stuff to ensure it loads properly.
-#: gui/com/limegroup/gnutella/gui/Initializer.java:430
+#: gui/com/limegroup/gnutella/gui/Initializer.java:436
 msgid "Loading Internationalization Support..."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/Initializer.java:445
+#: gui/com/limegroup/gnutella/gui/Initializer.java:451
 msgid "Loading Old Downloads..."
 msgstr "ਇਹਨਾਂ ਨੂੰ ਸ਼ੁਰੂ ਕਰਾਓ"
 
-#: gui/com/limegroup/gnutella/gui/Initializer.java:495
-msgid "This Alpha version has expired.  Press Ok to exit. "
-msgstr ""
-
-#: gui/com/limegroup/gnutella/gui/Initializer.java:501
+#: gui/com/limegroup/gnutella/gui/Initializer.java:497
 msgid ""
 "FrostWire could not create a temporary preferences folder.\n"
 "\n"
@@ -2570,7 +2477,7 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/InputFieldDialog.java:88
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:212
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:211
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:213
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:539
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:38
 msgid "OK"
@@ -2631,18 +2538,6 @@ msgstr "Help Translate FrostWire"
 msgid "Show Language in status bar"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/MessageResourceHandler.java:10
-msgid "Download Page"
-msgstr "ਡਾਉੰਲੋਡ"
-
-#: gui/com/limegroup/gnutella/gui/MessageResourceHandler.java:14
-msgid "File Listing for"
-msgstr ""
-
-#: gui/com/limegroup/gnutella/gui/MessageResourceHandler.java:18
-msgid "Magnet Links for Fast Downloads (if you have FrostWire installed)"
-msgstr ""
-
 #: gui/com/limegroup/gnutella/gui/MessageService.java:67
 msgid "Loading Messages..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
@@ -2662,18 +2557,12 @@ msgstr ""
 msgid "Always use this answer"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/SaveDirectoryHandler.java:111
+#: gui/com/limegroup/gnutella/gui/SaveDirectoryHandler.java:126
 #, java-format
 msgid ""
 "Saving downloads to {0} may not function correctly.  To be sure downloads "
 "are saved properly you should save them to a sub-folder of {1}.  Would you "
 "like to choose another location?"
-msgstr ""
-
-#: gui/com/limegroup/gnutella/gui/SettingsWarningManager.java:20
-msgid ""
-"FrostWire was unable to create your settings folder and is using a temporary "
-"folder.  Your settings may be deleted when you close FrostWire. "
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/SettingsWarningManager.java:35
@@ -3226,62 +3115,62 @@ msgstr ""
 msgid "A newer version is available, update?"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:58
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:60
 msgid "O&pen .Torrent or Magnet"
 msgstr "...ਵੰਗ ਡਾਉੰਲੋਡ"
 
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:60
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:62
 msgid "Opens a magnet link or torrent file"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:84
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:86
 msgid "Download .Torrent or Magnet or YouTube video link"
 msgstr "...ਵੰਗ ਡਾਉੰਲੋਡ"
 
 #. panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, the file path or web address of a torrent file, or a YouTube Web address and FrostWire will start downloading it for you."),
 #. true), constraints);
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:119
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:121
 msgid ""
 "Type a magnet link, the file path or web address of a torrent file and "
 "FrostWire will start downloading it for you."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:125
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:127
 msgid "Open:"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:219
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:221
 msgid ""
 "FrostWire cannot download this address. Make sure you typed it correctly, "
 "and then try again."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:302
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:308
 msgid "&Close"
 msgstr "ਬੰਦ ਕਰੋ(&C)"
 
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:303
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:309
 msgid "Close the program's main window"
 msgstr "ਪਰੋਗਰੈਮ ਬੰਦ ਕਰੋ"
 
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:314
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:320
 msgid "E&xit"
 msgstr "ਬੰਦ ਕਰੋ"
 
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:315
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:321
 msgid "Close and exit the program"
 msgstr "ਪਰੋਗਰੈਮ ਬੰਦ ਕਰੋ"
 
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:342
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:348
 msgid "Send File or Folder..."
 msgstr "ਨਵਾ ਫ਼ੋਲਡਰ ਵਂਡੋ...(R)"
 
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:343
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:349
 msgid "Send a file or a folder to a friend"
 msgstr "ਇਸ ਪਲੇਲਿਸਟ ਨੂੰ ਸੇਵ ਕਰੋ"
 
 #: gui/com/limegroup/gnutella/gui/actions/SearchAction.java:40
-#: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:385
+#: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:383
 #, java-format
 msgid "Search for Keywords: {0}"
 msgstr "{0} ਮੁੱਖ ਸ਼ਬਦ ਲੱਭੋ"
@@ -3502,58 +3391,58 @@ msgstr ""
 msgid "Language:"
 msgstr "ਭਾਸ਼ਾ ਬਦਲੋ(Language)(&H)"
 
-#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:72
+#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:69
 msgid "Miscellaneous Settings"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:72
+#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:69
 msgid "Below, are several options that affect the functionality of FrostWire."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:86
+#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:82
 #: gui/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:22
 msgid "System Startup"
 msgstr "ਸ਼ੁਰੂ ਹੋਣ ਤੇ ਸੁਝਾਵ ਦਿਖਾਊਂ"
 
-#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:88
+#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:84
 msgid "Start Automatically"
 msgstr "ਖ਼ੁਦ’ਬਖ਼ੁਦ ਕ੍ਮ ਬਣੇ"
 
-#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:92
+#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:87
 msgid ""
 "Would you like FrostWire to start when you log into your computer? This will "
 "cause FrostWire to start faster when you use it later."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:159
+#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:112
 msgid "Chat Community"
 msgstr ""
 
 #. create multiline to describe why the chat needs a nick (descChat)
-#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:162
+#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:115
 msgid ""
 "FrostWire's Community Chat Tab requires you to have a nickname to "
 "communicate with others in the chatrooms."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:170
+#: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:123
 #: gui/com/limegroup/gnutella/gui/options/panes/ChatCommunityPaneItem.java:25
 msgid "Type your chat nickname here (any name):"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/init/SetupManager.java:257
+#: gui/com/limegroup/gnutella/gui/init/SetupManager.java:247
 msgid "FrostWire Setup Wizard"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/init/SetupManager.java:529
+#: gui/com/limegroup/gnutella/gui/init/SetupManager.java:520
 msgid "Next >>"
 msgstr "ਅਗਲਾ >>"
 
-#: gui/com/limegroup/gnutella/gui/init/SetupManager.java:545
+#: gui/com/limegroup/gnutella/gui/init/SetupManager.java:536
 msgid "<< Back"
 msgstr "<< ਪਿਛਲਾ"
 
-#: gui/com/limegroup/gnutella/gui/init/SetupManager.java:561
+#: gui/com/limegroup/gnutella/gui/init/SetupManager.java:552
 msgid "Finish"
 msgstr "ਖ਼ਤਮ"
 
@@ -3849,100 +3738,105 @@ msgstr "ਡਿਫ਼ੌਲਟ ਓਪਸ਼ੰਜ਼ ਅਪਨਾਓ"
 msgid "Revert All Settings to the Factory Defaults"
 msgstr "ਸਾਰੀ ਸੈੱਟਿੰਗਾਂ ਨੂੰ ਸ਼ੁਰੁਆਤੀ ਡਿਫ਼ੌਲਟ ਵੰਗ ਕਰੋ"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:207
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:209
 msgid ""
 "You have made changes to some of FrostWire's settings. Would you like to "
 "save these changes?"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:235
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:237
 msgid "Search here"
 msgstr "ਹੋਰ ਲਭੋ"
 
 #. bittorrent
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:270
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:272
 msgid "BitTorrent"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:271
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:273
 msgid "Basic"
 msgstr ""
 
 #. player
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:278
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:280
 msgid "Player"
 msgstr "ਚਲਾਓ"
 
 #. search options
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:281
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:283
 msgid "Searching"
 msgstr "ਹੋਰ ਲਭੋ"
 
 #. status bar
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:284
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:286
 msgid "Status Bar"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:288
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:290
 msgid "iTunes"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:293
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:295
 msgid "Helper Apps"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:298
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:300
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:302
 msgid "View"
 msgstr "ਵਿਊ(&V)"
 
 #. community chat
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:304
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:306
 #: gui/com/limegroup/gnutella/gui/options/panes/ChatCommunityPaneItem.java:20
 msgid "Community Chat"
 msgstr ""
 
 #. filter options
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:307
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:309
 msgid "Filters"
 msgstr "ਫ਼ਿਲਟਰ(&S)"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:308
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:310
 msgid "Keywords"
 msgstr "ਮੁਖਿਅ ਸ਼ਬਦ"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:312
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:314
 msgid "Updates"
 msgstr "ਹੋਰ ਓਪਸ਼ੰਜ਼"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:313
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:315
 msgid "Firewall"
 msgstr "ਫ਼ਾਯਰਵਾਲ ਦੀ ਹਾਲਤ ਦੇਖੋ"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:314
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:316
 msgid "Proxy"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:315
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:317
 #: gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:35
 msgid "Network Interface"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:317
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:319
 #: gui/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:58
 msgid "File Associations"
 msgstr "ਫ਼ਾਇਲ ਦੀ ਲੋਕੇਸ਼ਨ ਬਦਲੋ"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:322
 msgid "System Boot"
 msgstr "ਸ਼ੁਰੂ ਹੋਣ ਤੇ ਸੁਝਾਵ ਦਿਖਾਊਂ"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:324
+#, fuzzy
+msgid "Usage Statistics"
+msgstr "ਆਂਕੜੇ(&S)"
+
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:326
 msgid "System Tray"
 msgstr ""
 
 #. debug
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:327
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:329
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:74
 msgid "Bug Reports"
 msgstr ""
@@ -4066,21 +3960,6 @@ msgstr ""
 msgid "Warning: Forbidden name!"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/options/panes/ContentFilterPaneItem.java:18
-msgid "Content Filters"
-msgstr "ਫ਼ਿਲਟਰ(&Config.)"
-
-#: gui/com/limegroup/gnutella/gui/options/panes/ContentFilterPaneItem.java:20
-msgid ""
-"You can tell FrostWire to filter files that copyright owners request not be "
-"shared. By enabling filtering, you are instructing FrostWire to confirm all "
-"files you download or share with a list of removed content."
-msgstr ""
-
-#: gui/com/limegroup/gnutella/gui/options/panes/ContentFilterPaneItem.java:28
-msgid "Enable Content Filters"
-msgstr "ਫ਼ਿਲਟਰ(&Config.)"
-
 #: gui/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:40
 #, fuzzy
 msgid "Details Page"
@@ -4102,31 +3981,6 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:30
 msgid "Show License Warning:"
-msgstr ""
-
-#: gui/com/limegroup/gnutella/gui/options/panes/ExtensionsPaneItem.java:25
-msgid "Shared Extensions"
-msgstr ""
-
-#: gui/com/limegroup/gnutella/gui/options/panes/ExtensionsPaneItem.java:27
-msgid "You can choose which file extensions you would like to share."
-msgstr ""
-
-#. *
-#. * Constant for the key of the locale-specific <code>String</code> for the
-#. * label on the component that allows to user to change the setting for
-#. * this <tt>PaneItem</tt>.
-#.
-#: gui/com/limegroup/gnutella/gui/options/panes/ExtensionsPaneItem.java:34
-msgid "Extensions:"
-msgstr ""
-
-#: gui/com/limegroup/gnutella/gui/options/panes/ExtensionsPaneItem.java:60
-msgid "Use Defaults"
-msgstr "ਡਿਫ਼ੌਲਟ ਇਸਤਮਾਲ ਕਰੋ"
-
-#: gui/com/limegroup/gnutella/gui/options/panes/ExtensionsPaneItem.java:62
-msgid "Share the Default File Extensions"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:33
@@ -4205,11 +4059,11 @@ msgstr ""
 msgid "Image Viewer"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:36
+#: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:37
 msgid "Library Included Folders"
 msgstr "ਲਾਇਬ੍ਰੈਰੀ ਫ਼ੋਲਡਰ ਖੋਲੋ"
 
-#: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:38
+#: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:39
 msgid "You can choose the folders for include files when browsing the library."
 msgstr "ਤੁਸੀ ਅਪਣੇ ਵੰਡੇ ਫ਼ੋਲਡਰ ਲਾਇੰਵਾਇਰ ਦੇ ਓਪਸ਼ੰਜ਼ ਵਿੱਚ ਕੰਫ਼ਿਗਰ ਕਰ ਸਕਦੇ ਹੋ"
 
@@ -4596,11 +4450,27 @@ msgstr ""
 msgid "Choose the folder where downloads will be saved to"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:38
+#: gui/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:40
 msgid ""
 "Seeding is the process of connecting to a torrent when you have a complete "
 "file(s). Pieces of the seeded file(s) will be available to everybody. While "
 "downloading pieces are always available to other peers in the swarm."
+msgstr ""
+
+#: gui/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:36
+msgid "Anonymous Usage Statistics"
+msgstr ""
+
+#: gui/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:38
+msgid ""
+"Send anonymous usage statistics so that FrostWire can be improved more "
+"effectively. No information regarding content searched, shared or played nor "
+"any information that can personally identify you will be stored on disk or "
+"sent through the network."
+msgstr ""
+
+#: gui/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:40
+msgid "Send anonymous usage statistics"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
@@ -4642,36 +4512,36 @@ msgstr ""
 msgid "Max"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:112
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:116
 msgid "No results so far..."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:146
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:150
 #, fuzzy
 msgid "%s Audio files found (including .mp3, .wav, .ogg, and more)"
 msgstr "ਓਡਿਓ ਫ਼ਾਇਲਾਂ ਲਭੋ, ਜਿੱਦਾਂ ਏੰਪੀਥ੍ਰੀ, ਵੇਵ, ਓੱਗ ਵਰਗੀਆਂ."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:151
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:155
 #, fuzzy
 msgid "%s Image files found (including .jpg, .gif, .png and more)"
 msgstr "ਚਿੱਤਰ ਫ਼ਾਇਲਾਂ ਲਭੋ, ਜਿੱਦਾਂ ਜੇ ਪੀ ਜੀ, ਜਿਫ਼, ਪੀ ਏੰਜੀ ਵਰਗੀਆਂ."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:156
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:160
 #, fuzzy
 msgid "%s Video files found (including .avi, .mpg, .wmv, and more)"
 msgstr "ਵਿਡਿਓ ਫ਼ਾਇਲਾਂ ਲਭੋ, ਜਿੱਦਾਂ ੲ ਵੀ ਆਇ, ਏੰਪੀ ਜੀ, ਡਬਲ੍ਯੂ ਏੰਵੀ ਵਰਗੀਆਂ."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:161
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:165
 #, fuzzy
 msgid "%s Document files found (including .html, .txt, .pdf, and more)"
 msgstr "ਫ਼ਾਇਲਾਂ ਲਭੋ, ਜਿੱਦਾਂ ਏੱਚ ਟੀ ੲਮ ੲਲ, ਟੀ ਏਕਸ ਟੀ, ਪੀ ਡੀ ਏਫ਼ ਵਰਗੀਆਂ."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:166
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:170
 #, fuzzy
 msgid "%s Program files found (including .exe, .zip, .gz, and more)"
 msgstr "ਪ੍ਰੋਗ੍ਰੈਮ ਫ਼ਾਇਲਾਂ ਲਭੋ, ਜਿੱਦਾਂ ਜ਼ਿੱਪ, ਈ ਏਕਸ ਈ, ਜੀਜ਼ੈੱਡ ਵਰਗੀਆਂ."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:171
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:175
 msgid ""
 "%s Torrent files found (includes only .torrent files. Torrent files point to "
 "collections of files shared on the BitTorrent network.)"
@@ -4698,50 +4568,50 @@ msgstr ""
 msgid "Stop current search"
 msgstr "ਤਾਜ਼ਾ ਖੋਜ:"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:94
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:95
 msgid "Close Search"
 msgstr "ਖੋਜ ਨੂੰ ਬੰਦ ਕਰੋ"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:96
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:97
 msgid "Launch Action"
 msgstr "ਕੰਮ ਸ਼ੁਰੂ ਕਰੋ"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:98
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:99
 msgid "Repeat Search"
 msgstr "ਖੋਜ ਦੁਹਰਾਓ"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:100
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:101
 msgid "Download Partial Files"
 msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:102
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:103
 msgid "Torrent Details"
 msgstr "ਮੈਗਨੇਟ ਬਾਰੇ ਹੋਰ ਜਾਨਕਾਰੀ"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:104
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:105
 msgid "View in YouTube"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:106
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:107
 msgid "View in Soundcloud"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:108
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:109
 msgid "View in Archive.org"
 msgstr ""
 
 #. Set the splash screen text...
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:134
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:135
 msgid "Loading Search Window..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:217
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:218
 msgid ""
 "Your search must be at least three characters to avoid congesting the "
 "network."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:220
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:221
 msgid "Your search is too long. Please make your search smaller and try again."
 msgstr ""
 
@@ -4756,13 +4626,13 @@ msgid ""
 "Search to enable)"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:80
+#: gui/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:83
 #: gui/com/limegroup/gnutella/gui/tables/AbstractActionsRenderer.java:85
 #, fuzzy
 msgid "Play/Preview"
 msgstr "ਚਲਾਓ(Preview)"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:106
+#: gui/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:109
 #, fuzzy
 msgid "Select content to download from this torrent."
 msgstr "ਇਹਨਾਂ ਨੂੰ ਮਿਟਾਓ"
@@ -4772,16 +4642,16 @@ msgstr "ਇਹਨਾਂ ਨੂੰ ਮਿਟਾਓ"
 msgid "results"
 msgstr "ਨਤੀੱਜੇ"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:359
+#: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:357
 msgid "Copy Hash"
 msgstr "ਕੌਪੀ ਕਰੋ"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:373
+#: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:371
 msgid "Search More"
 msgstr "ਹੋਰ ਲਭੋ"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:699
-#: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:700
+#: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:704
+#: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:705
 #, fuzzy
 msgid "Search tools"
 msgstr "ਹੋਰ ਲਭੋ"
@@ -4794,12 +4664,12 @@ msgstr "ਦਾਤਾਰ ਲਭੋ"
 msgid "Created"
 msgstr "ਬਣੀ"
 
-#: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:99
-#: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:111
+#: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:104
+#: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:116
 msgid "\".torrent\" files"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:124
+#: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:129
 msgid "\"magnet:\" links"
 msgstr ""
 
@@ -5020,6 +4890,57 @@ msgstr ""
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:234
 msgid "helppage"
 msgstr ""
+
+#~ msgid "Language"
+#~ msgstr "ਭਾਸ਼ਾ ਬਦਲੋ(Language)(&H)"
+
+#~ msgid "Comments"
+#~ msgstr "ਦਸਤਾਵੇਜ਼"
+
+#~ msgid "Action"
+#~ msgstr "ਥਾਂ"
+
+#~ msgid "Copyright"
+#~ msgstr "ਕੌਪੀ ਕਰੋ"
+
+#~ msgid "License Type"
+#~ msgstr "ਲਾਇਸੈੰਸ"
+
+#~ msgid "Studio"
+#~ msgstr "ਔਡ੍ਯੋ"
+
+#~ msgid "Stars"
+#~ msgstr "ਵਂਡੋ"
+
+#~ msgid "Rating"
+#~ msgstr "ਜੰਕ ਰੇਟਿੰਗ"
+
+#~ msgid "Image"
+#~ msgstr "ਚਿੱਤਰ"
+
+#~ msgid "License"
+#~ msgstr "ਲਾਇਸੈੰਸ"
+
+#~ msgid "Document"
+#~ msgstr "ਦਸਤਾਵੇਜ਼"
+
+#~ msgid "Application"
+#~ msgstr "ਥਾਂ"
+
+#~ msgid "Publisher"
+#~ msgstr "ਪਬਲਿਸ਼..."
+
+#~ msgid "Download Page"
+#~ msgstr "ਡਾਉੰਲੋਡ"
+
+#~ msgid "Content Filters"
+#~ msgstr "ਫ਼ਿਲਟਰ(&Config.)"
+
+#~ msgid "Enable Content Filters"
+#~ msgstr "ਫ਼ਿਲਟਰ(&Config.)"
+
+#~ msgid "Use Defaults"
+#~ msgstr "ਡਿਫ਼ੌਲਟ ਇਸਤਮਾਲ ਕਰੋ"
 
 #~ msgid "Send audio to iTunes"
 #~ msgstr "ਇਸ ਪਲੇਲਿਸਟ ਨੂੰ ਸੇਵ ਕਰੋ"
@@ -5594,9 +5515,6 @@ msgstr ""
 #~ msgid "Shared Folders"
 #~ msgstr "ਫ਼ੋਲਡਰ ਵਂਡੋ"
 
-#~ msgid "Incomplete Files"
-#~ msgstr "ਇਹਨਾਂ ਨੂੰ ਚਲਾਓ"
-
 #~ msgid "Configure..."
 #~ msgstr "ਕੰਫ਼ਿਗਰ..."
 
@@ -6051,9 +5969,6 @@ msgstr ""
 
 #~ msgid "Show or Hide individual tabs"
 #~ msgstr "ਅਪਨੇ ਟੈਬਾਂ ਨੂੰ ਦਿਖਾਓ ਯਾਂ ਛੁਪਾਓ"
-
-#~ msgid "&Statistics"
-#~ msgstr "ਆਂਕੜੇ(&S)"
 
 #~ msgid "Display the Statistics Screen"
 #~ msgstr "ਆਂਕੜੇਆਂ ਦੀ ਸਕਰੀਨ ਦਿਖਾਈ ਜਾਏ"
