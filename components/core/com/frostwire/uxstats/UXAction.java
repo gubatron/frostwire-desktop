@@ -94,6 +94,15 @@ public final class UXAction {
     public static final int WIFI_SHARING_DOWNLOAD = WIFI_SHARING_BASE + 4;
     public static final int WIFI_SHARING_DND_UPLOAD_TO_DEVICE = WIFI_SHARING_BASE + 5;
     //public static final int WIFI_SHARING_MENU_UPLOAD_TO_DEVICE = WIFI_SHARING_BASE + 6;
+    
+    public static final int PLAYER_BASE = 6000;
+    public static final int PLAYER_GESTURE_SWIPE_SONG = PLAYER_BASE + 1;
+    public static final int PLAYER_GESTURE_PAUSE_RESUME = PLAYER_BASE + 2;
+    public static final int PLAYER_MENU_SHARE = PLAYER_BASE + 3;
+    public static final int PLAYER_MENU_UNSHARE = PLAYER_BASE + 4;
+    public static final int PLAYER_MENU_STOP = PLAYER_BASE + 5;
+    public static final int PLAYER_MENU_DELETE_TRACK = PLAYER_BASE + 6;
+    public static final int PLAYER_STOP_PRESS_AND_HOLD = PLAYER_BASE + 7;
 
     UXAction(int code, long time) {
         this.code = code;
