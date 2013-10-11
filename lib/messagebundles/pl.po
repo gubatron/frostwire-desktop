@@ -1413,7 +1413,6 @@ msgstr "Szukaj w swoim "
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:145
 msgid "'s "
-#this way of making things plural does not exist in polish
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:162
@@ -4857,8 +4856,7 @@ msgstr "Łączna Ilość Zindeksowanych Torrentów"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:79
 msgid "If you continue you will erase all the information related to\n"
-msgstr "Jeżeli będziesz kontynuować to usuniesz wszystkie informacje "
-"dotyczące "
+msgstr "Jeżeli będziesz kontynuować to usuniesz wszystkie informacje dotyczące\n"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:79
 msgid ""
