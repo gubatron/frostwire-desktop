@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui;
 
 import com.limegroup.gnutella.gui.notify.Notification;
@@ -10,39 +25,22 @@ import com.limegroup.gnutella.util.FrostWireUtils;
 public class SettingsWarningManager {
 
     /**
-     *  Warn about temporary directories 
-     */
-    public static void checkTemporaryDirectoryUsage() {
-        
-        if(FrostWireUtils.isTemporaryDirectoryInUse()) {
-            NotifyUserProxy.instance().showMessage(
-                    new Notification(I18n.tr(
-                    "FrostWire was unable to create your settings folder and is using a temporary folder.  Your settings may be deleted when you close FrostWire. ")
-                    ));
-        }
-        
-    }
-    
-    
-    /**
      * Warn about load/save problems
-     */ 
-    public static void checkSettingsLoadSaveFailure() { 
+     */
+    public static void checkSettingsLoadSaveFailure() {
 
         String msg = null;
-        
-        if(FrostWireUtils.hasSettingsLoadSaveFailures()) {
+
+        if (FrostWireUtils.hasSettingsLoadSaveFailures()) {
             msg = I18n.tr("FrostWire has encountered problems in managing your settings.  Your settings changes may not be saved on shutdown.");
             FrostWireUtils.resetSettingsLoadSaveFailures();
         } else if (ResourceManager.hasLoadFailure()) {
             msg = I18n.tr("FrostWire has encountered problems in loading your settings.  FrostWire will attempt to use the default values; however, may behave unexpectedly.");
             ResourceManager.resetLoadFailure();
         }
-        
+
         if (msg != null) {
             NotifyUserProxy.instance().showMessage(new Notification(msg));
         }
-        
     }
-    
 }

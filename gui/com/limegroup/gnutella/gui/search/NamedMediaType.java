@@ -25,12 +25,10 @@ import java.util.MissingResourceException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import com.limegroup.gnutella.LimeXMLSchema;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.XMLUtils;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
 
 /**
@@ -66,22 +64,16 @@ public class NamedMediaType implements IconAndNameHolder, Comparable<NamedMediaT
     private final Icon _icon;
 
     /**
-     * The (possibly null) LimeXMLSchema.
-     */
-    private final LimeXMLSchema _schema;
-
-    /**
      * Constructs a new NamedMediaType, associating the MediaType with the
      * LimeXMLSchema.
      */
-    public NamedMediaType(MediaType mt, LimeXMLSchema schema) {
+    public NamedMediaType(MediaType mt) {
         if (mt == null)
             throw new NullPointerException("Null media type.");
 
         this._mediaType = mt;
-        this._schema = schema;
-        this._name = constructName(_mediaType, _schema);
-        this._icon = getIcon(_mediaType, _schema);
+        this._name = constructName(_mediaType);
+        this._icon = getIcon(_mediaType);
     }
 
     /**
@@ -119,13 +111,6 @@ public class NamedMediaType implements IconAndNameHolder, Comparable<NamedMediaT
         return _mediaType;
     }
 
-    /**
-     * Returns the schema this is wrapping.
-     */
-    public LimeXMLSchema getSchema() {
-        return _schema;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -149,14 +134,7 @@ public class NamedMediaType implements IconAndNameHolder, Comparable<NamedMediaT
         if (type != null)
             return type;
 
-        MediaType mt;
-        // If it's not a default type, the MediaType is constructed.
-        if (!MediaType.isDefaultType(description)) {
-            mt = new MediaType(description);
-        } else {
-            // Otherwise, the default MediaType is used.
-            mt = MediaType.getMediaTypeForSchema(description);
-        }
+        MediaType mt = MediaType.getMediaTypeForSchema(description);
 
         return getFromMediaType(mt);
     }
@@ -201,7 +179,7 @@ public class NamedMediaType implements IconAndNameHolder, Comparable<NamedMediaT
         if (type != null)
             return type;
 
-        type = new NamedMediaType(media, null);
+        type = new NamedMediaType(media);
         CACHED_TYPES.put(description, type);
         return type;
     }
@@ -221,7 +199,7 @@ public class NamedMediaType implements IconAndNameHolder, Comparable<NamedMediaT
     /**
      * Retrieves the icon representing the MediaType/Schema.
      */
-    private Icon getIcon(MediaType type, LimeXMLSchema schema) {
+    private Icon getIcon(MediaType type) {
         final ImageIcon icon;
 
         if (type == MediaType.getAnyTypeMediaType())
@@ -241,25 +219,22 @@ public class NamedMediaType implements IconAndNameHolder, Comparable<NamedMediaT
     /**
      * Returns the human-readable description of this MediaType/Schema.
      */
-    private static String constructName(MediaType type, LimeXMLSchema schema) {
+    private static String constructName(MediaType type) {
         // If we can act off the MediaType.
         String name = null;
-        if (type.isDefault()) {
-            String key = type.getDescriptionKey();
-            try {
-                if (key != null)
-                    name = I18n.tr(key);
-            } catch (MissingResourceException mre) {
-                // oh well, will capitalize the mime-type
-            }
 
-            // If still no name, capitalize the mime-type.
-            if (name == null) {
-                name = type.getMimeType();
-                name = name.substring(0, 1).toUpperCase(Locale.US) + name.substring(1);
-            }
-        } else {
-            name = XMLUtils.getTitleForSchema(schema);
+        String key = type.getDescriptionKey();
+        try {
+            if (key != null)
+                name = I18n.tr(key);
+        } catch (MissingResourceException mre) {
+            // oh well, will capitalize the mime-type
+        }
+
+        // If still no name, capitalize the mime-type.
+        if (name == null) {
+            name = type.getMimeType();
+            name = name.substring(0, 1).toUpperCase(Locale.US) + name.substring(1);
         }
 
         return name;

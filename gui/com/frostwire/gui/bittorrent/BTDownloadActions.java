@@ -32,6 +32,8 @@ import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -207,9 +209,9 @@ final class BTDownloadActions {
             boolean allowedToResume = true;
             DialogOption answer = null;
             if (oneIsCompleted && !SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
-                String message1 = (downloaders.length > 1) ? "One of the transfers is complete and resuming will cause it to start seeding" : "This transfer is already complete, resuming it will cause it to start seeding";
-                String message2 = "Do you want to enable torrent seeding?";
-                answer = GUIMediator.showYesNoMessage(I18n.tr(message1 + "\n\n" + message2), DialogOption.YES);
+                String message1 = (downloaders.length > 1) ? I18n.tr("One of the transfers is complete and resuming will cause it to start seeding") : I18n.tr("This transfer is already complete, resuming it will cause it to start seeding");
+                String message2 = I18n.tr("Do you want to enable torrent seeding?");
+                answer = GUIMediator.showYesNoMessage(message1 + "\n\n" + message2, DialogOption.YES);
                 allowedToResume = answer.equals(DialogOption.YES);
 
                 if (allowedToResume) {
@@ -222,6 +224,8 @@ final class BTDownloadActions {
                     downloaders[i].resume();
                 }
             }
+            
+            UXStats.instance().log(UXAction.DOWNLOAD_RESUME);
         }
     }
 
@@ -244,6 +248,7 @@ final class BTDownloadActions {
             for (int i = 0; i < downloaders.length; i++) {
                 downloaders[i].pause();
             }
+            UXStats.instance().log(UXAction.DOWNLOAD_PAUSE);
         }
     }
 
@@ -292,6 +297,7 @@ final class BTDownloadActions {
                 downloaders[i].setDeleteDataWhenRemove(_deleteData);
             }
             BTDownloadMediator.instance().removeSelection();
+            UXStats.instance().log(UXAction.DOWNLOAD_REMOVE);
         }
     }
 

@@ -72,6 +72,8 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
@@ -555,7 +557,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 					_progressBar.setString(I18n.tr("Torrent Created."));
 					
 					SwingUtilities.invokeLater(new Runnable() {
-						public void run() { CreateTorrentDialog.this.dispose(); }
+						public void run() { 
+						    CreateTorrentDialog.this.dispose();
+						    UXStats.instance().log(UXAction.SHARING_TORRENT_CREATED_FORMALLY);
+						}
 					});
 					
 					

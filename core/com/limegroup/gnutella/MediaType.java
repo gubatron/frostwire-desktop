@@ -1,6 +1,5 @@
 package com.limegroup.gnutella;
 
-import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
@@ -206,25 +205,6 @@ public class MediaType implements Serializable {
     private final String[] extsArray;
     
     /**
-     * Whether or not this is one of the default media types.
-     */
-    private final boolean isDefault;
-    
-    /**
-     * Constructs a MediaType with only a MIME-Type.
-     */
-    public MediaType(String schema) {
-    	if (schema == null) {
-    		throw new NullPointerException("schema must not be null");
-    	}
-        this.schema = schema;
-        this.descriptionKey = null;
-        this.exts = Collections.emptySet();
-        this.extsArray = new String[0];
-        this.isDefault = false;
-    }
-    
-    /**
      * @param schema a MIME compliant non-localizable identifier,
      *  that matches file categories (and XSD schema names).
      * @param descriptionKey a media identifier that can be used
@@ -240,7 +220,6 @@ public class MediaType implements Serializable {
     	}
         this.schema = schema;
         this.descriptionKey = descriptionKey;
-        this.isDefault = true;
         if(extensions == null) {
             this.exts = Collections.emptySet();
             this.extsArray = new String[0];
@@ -289,13 +268,6 @@ public class MediaType implements Serializable {
     }
     
     /**
-     * Determines whether or not this is a default media type.
-     */
-    public boolean isDefault() {
-        return isDefault;
-    }
-    
-    /**
      * Returns the extensions for this media type.
      */
     public Set<String> getExtensions() {
@@ -328,41 +300,17 @@ public class MediaType implements Serializable {
                 return ALL_MEDIA_TYPES[i];
         return null;
     }
-    
-    /**
-     * Determines whether or not the specified schema is a default.
-     */
-    public static boolean isDefaultType(String schema) {
-        for (int i = ALL_MEDIA_TYPES.length; --i >= 0;)
-            if (schema.equals(ALL_MEDIA_TYPES[i].schema))
-                return true;
-        return false;
-    }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof MediaType) {
             MediaType type = (MediaType)obj;
             return schema.equals(type.schema) 
-            && exts.equals(type.exts)
-            && isDefault == type.isDefault;
+            && exts.equals(type.exts);
         }
         return false;
     }
         
-    /*
-     * We canoncialize the default mediatypes, but since MediaType has
-     * a public constructor only 'equals' comparisons should be used.
-     */
-    Object readResolve() throws ObjectStreamException {
-        for (MediaType type : ALL_MEDIA_TYPES) {
-            if (equals(type)) {
-                return type;
-            }
-        }
-        return this;
-    }
- 
     /**
      * Retrieves the any media type.
      */

@@ -58,6 +58,8 @@ import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.search.torrent.TorrentSearchResult;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -239,14 +241,6 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     }
 
     /**
-     * Creates the specialized SearchColumnSelectionMenu menu,
-     * which groups XML columns together.
-     */
-    protected JPopupMenu createColumnSelectionMenu() {
-        return (new SearchColumnSelectionMenu(TABLE)).getComponent();
-    }
-
-    /**
      * Creates the specialized column preference handler for search columns.
      */
     protected ColumnPreferenceHandler createDefaultColumnPreferencesHandler() {
@@ -264,6 +258,10 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
 
         DOWNLOAD_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                if (e!= null && e.getSource() instanceof JButton) {
+                    UXStats.instance().log(UXAction.SEARCH_RESULT_BIG_BUTTON_DOWNLOAD);
+                }
+                
                 SearchMediator.doDownload(SearchResultMediator.this);
             }
         };
@@ -424,10 +422,17 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, allSelectedLines != null && allSelectedLines.length == 1);
     }
 
+    @Override
+    public void handleMouseDoubleClick(MouseEvent e) {
+        UXStats.instance().log(UXAction.SEARCH_RESULT_CLICK_DOWNLOAD);
+        DOWNLOAD_LISTENER.actionPerformed(null);
+    }
+    
     /**
      * Forwards the event to DOWNLOAD_LISTENER.
      */
     public void handleActionKey() {
+        UXStats.instance().log(UXAction.SEARCH_RESULT_ENTER_KEY_DOWNLOAD);
         DOWNLOAD_LISTENER.actionPerformed(null);
     }
 

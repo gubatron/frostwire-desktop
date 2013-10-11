@@ -25,6 +25,8 @@ import javax.swing.JPopupMenu;
 
 import com.frostwire.search.torrent.TorrentCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 
@@ -56,6 +58,7 @@ public class TorrentUISearchResult extends AbstractUISearchResult {
             GUIMediator.instance().openTorrentSearchResult(sr, partial);
         }
         showDetails(false);
+        UXStats.instance().log((sr instanceof TorrentCrawledSearchResult) ? UXAction.DOWNLOAD_PARTIAL_TORRENT_FILE : UXAction.DOWNLOAD_FULL_TORRENT_FILE);
     }
 
     @Override

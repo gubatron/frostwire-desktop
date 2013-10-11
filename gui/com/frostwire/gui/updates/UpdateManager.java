@@ -73,7 +73,6 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  */
 public final class UpdateManager implements Serializable {
 
-    private static final long serialVersionUID = -3312314587704399041L;
     private static final int OPTION_OPEN_URL = 1;
     private static final int OPTION_LATER = 0;
     private static final int OPTION_DOWNLOAD_TORRENT = 2;

@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2013, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,20 +30,22 @@ import com.frostwire.util.JsonUtils;
  */
 public class ExtratorrentSearchPerformer extends TorrentJsonSearchPerformer<ExtratorrentItem, ExtratorrentSearchResult> {
 
-
-    
     public ExtratorrentSearchPerformer(long token, String keywords, int timeout) {
         super(token, keywords, timeout, 1);
     }
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://extratorrent.com/json/?search=" + encodedKeywords;
+        return "http://extratorrent.cc/json/?search=" + encodedKeywords;
     }
 
     @Override
     protected List<ExtratorrentItem> parseJson(String json) {
         ExtratorrentResponse response = JsonUtils.toObject(json, ExtratorrentResponse.class);
+        for (ExtratorrentItem item : response.list) {
+            item.link = item.link.replaceAll("extratorrent.com", "extratorrent.cc");
+            item.torrentLink = item.torrentLink.replaceAll("extratorrent.com","extratorrent.cc");
+        }
         return response.list;
     }
 
@@ -51,6 +53,4 @@ public class ExtratorrentSearchPerformer extends TorrentJsonSearchPerformer<Extr
     protected ExtratorrentSearchResult fromItem(ExtratorrentItem item) {
         return new ExtratorrentSearchResult(item);
     }
-    
-    
 }

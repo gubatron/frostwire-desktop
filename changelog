@@ -2,7 +2,12 @@ frostwire (5.6.5) stable; urgency=high
   * Upgrades Soundcloud search, download, streaming.
   * Fixes issue when starting downloads made of multiple single files
     that belong to the same .torrent.
- -- FrostWire Team <contact@frostwire.com>  Mon, 23 Sep 2013 14:53:53 -0500
+  * When opening finished transfers on the library with a double click
+    FrostWire will no longer type the name of the file on the library
+    search box.
+  * Fixes bugs where magnets crawled would leave .torrent files behind
+    inside default torrents folder.
+ -- FrostWire Team <contact@frostwire.com>  Wed, 25 Sep 2013 15:16:32 -0500
 
 frostwire (5.6.4) stable; urgency=high
   * Fixes issues parsing some cloud urls.

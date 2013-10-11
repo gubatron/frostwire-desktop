@@ -386,14 +386,15 @@ public class TorrentFetcherDownload implements BTDownload {
     }
 
     private final class WaitForTorrentReady implements Runnable {
+
         @Override
         public void run() {
-            while (!isDownloadingTorrentReady(_hash)) {
+            do {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                 }
-            }
+            } while (!isDownloadingTorrentReady(_hash));
 
             try {
                 BTDownloadCreator creator = new BTDownloadCreator(_hash, relativePath);
@@ -413,7 +414,6 @@ public class TorrentFetcherDownload implements BTDownload {
                 _state = STATE_ERROR;
                 e.printStackTrace();
             }
-
         }
     }
 }

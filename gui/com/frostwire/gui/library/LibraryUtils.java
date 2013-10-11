@@ -41,10 +41,10 @@ import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.IcyInputStream;
+import com.frostwire.alexandria.IcyInputStream.Track;
 import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
-import com.frostwire.alexandria.IcyInputStream.Track;
 import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.library.LibraryPlaylistsTableTransferable.Item;
@@ -52,6 +52,8 @@ import com.frostwire.gui.library.tags.TagsData;
 import com.frostwire.gui.library.tags.TagsReader;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
@@ -185,6 +187,7 @@ public class LibraryUtils {
             }, "createNewPlaylist");
             t.setDaemon(true);
             t.start();
+            UXStats.instance().log(UXAction.LIBRARY_PLAYLIST_CREATED);
         }
     }
 
@@ -238,6 +241,8 @@ public class LibraryUtils {
             }, "createNewPlaylist");
             t.setDaemon(true);
             t.start();
+            
+            UXStats.instance().log(UXAction.LIBRARY_PLAYLIST_CREATED);
         }
     }
 
@@ -291,6 +296,7 @@ public class LibraryUtils {
                 t.start();
             }
         }
+        UXStats.instance().log(UXAction.LIBRARY_PLAYLIST_CREATED);
     }
 
     public static void createNewPlaylist(File m3uFile) {
@@ -301,6 +307,7 @@ public class LibraryUtils {
         try {
             List<File> files = M3UPlaylist.load(m3uFile.getAbsolutePath());
             createNewPlaylist(files.toArray(new File[0]), starred);
+            UXStats.instance().log(UXAction.LIBRARY_PLAYLIST_CREATED);
         } catch (Exception e) {
             e.printStackTrace();
         }

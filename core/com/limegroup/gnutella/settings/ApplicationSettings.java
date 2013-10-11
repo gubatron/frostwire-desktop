@@ -21,25 +21,18 @@ import java.util.UUID;
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.IntSetting;
-import org.limewire.setting.LongSetting;
 import org.limewire.setting.StringSetting;
 import org.limewire.util.ByteUtils;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
 /**
- * Settings for LimeWire application
+ * Settings for FrostWire application
  */
 public class ApplicationSettings extends LimeProps {
-    public static BooleanSetting SEARCH_OPTIONS_COLLAPSED = FACTORY.createBooleanSetting("SEARCH_OPTIONS_COLLAPSED", true);
 
     private ApplicationSettings() {
     }
-
-    /**
-     * The Client ID number
-     */
-    public static final StringSetting CLIENT_ID = FACTORY.createStringSetting("CLIENT_ID", "");
 
     /**
      * The average time this user leaves the application running.
@@ -52,31 +45,11 @@ public class ApplicationSettings extends LimeProps {
     public static final IntSetting TOTAL_UPTIME = FACTORY.createIntSetting("TOTAL_UPTIME", 0);
 
     /**
-     * The average time this user is connected to the network per session (in seconds).
-     */
-    public static final LongSetting AVERAGE_CONNECTION_TIME = FACTORY.createExpirableLongSetting("AVERAGE_CONNECTION_TIME", 0L);
-
-    /**
-     * The total time this user has been connected to the network (in seconds).
-     */
-    public static final LongSetting TOTAL_CONNECTION_TIME = FACTORY.createLongSetting("TOTAL_CONNECTION_TIME", 0L);
-
-    /**
-     * The total number of times this user has connected-disconnected from the network.
-     */
-    public static final IntSetting TOTAL_CONNECTIONS = FACTORY.createIntSetting("TOTAL_CONNECTIONS", 0);
-
-    /**
      * The total number of times the application  has been run --
      * used in calculating the average amount of time this user
      * leaves the application on.
      */
     public static final IntSetting SESSIONS = FACTORY.createIntSetting("SESSIONS", 1);
-
-    /**
-     * The time that this was last shutdown (system time in milliseconds).
-     */
-    public static final LongSetting LAST_SHUTDOWN_TIME = FACTORY.createLongSetting("LAST_SHUTDOWN_TIME", 0);
 
     /**
      * Specifies whether or not the program has been installed, either by
@@ -139,34 +112,9 @@ public class ApplicationSettings extends LimeProps {
     public static final StringSetting LOCALE_VARIANT = FACTORY.createStringSetting("LOCALE_VARIANT", System.getProperty("user.variant", ""));
 
     /**
-     * Sets whether or not Monitor Tab should be enabled.
-     */
-    public static final BooleanSetting MONITOR_VIEW_ENABLED = FACTORY.createBooleanSetting("MONITOR_VIEW_ENABLED", true);
-
-    /**
-     * Sets whether or not Connection Tab should be enabled.
-     */
-    public static final BooleanSetting CONNECTION_VIEW_ENABLED = FACTORY.createBooleanSetting("CONNECTION_VIEW_ENABLED", true);
-
-    /**
-     * Sets whether or not Console Tab should be enabled.
-     */
-    public static final BooleanSetting CONSOLE_VIEW_ENABLED = FACTORY.createBooleanSetting("CONSOLE_VIEW_ENABLED", false);
-
-    /** Whether or not the logging tab is enabled / visible. */
-    public static final BooleanSetting LOGGING_VIEW_ENABLED = FACTORY.createBooleanSetting("LOGGING_VIEW_ENABLED", false);
-
-    /**
      * Setting for whether or not to create an additional manual GC thread.
      */
     public static final BooleanSetting AUTOMATIC_MANUAL_GC = FACTORY.createBooleanSetting("AUTOMATIC_MANUAL_GC", OSUtils.isMacOSX());
-
-    /**
-     * the default locale to use if not specified
-     * used to set the locale for connections which don't have X_LOCALE_PREF
-     * header or pings and pongs that don't advertise locale preferences.
-     */
-    public static final StringSetting DEFAULT_LOCALE = FACTORY.createStringSetting("DEFAULT_LOCALE", "en");
 
     /**
      * Enable the MagnetClipboardListener on non Windows and Mac OS
@@ -205,6 +153,8 @@ public class ApplicationSettings extends LimeProps {
     public static final FileSetting APP_DATABASES_PATH = FACTORY.createFileSetting("APP_DATABASES_PATH", new File(CommonUtils.getUserSettingsDir(), "dbs"));
 
     public static final IntSetting GUI_TABLES_FONT_SIZE = (IntSetting) FACTORY.createIntSetting("GUI_TABLES_FONT_SIZE", 0).setAlwaysSave(true);
+
+    public static final BooleanSetting UX_STATS_ENABLED = FACTORY.createBooleanSetting("UX_STATS_ENABLED", true);
 
     /**
      * Gets the current language setting.

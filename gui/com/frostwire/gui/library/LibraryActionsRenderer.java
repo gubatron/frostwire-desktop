@@ -24,6 +24,8 @@ import com.frostwire.gui.player.DeviceMediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.tables.AbstractActionsRenderer;
 
 /**
@@ -65,6 +67,7 @@ public final class LibraryActionsRenderer extends AbstractActionsRenderer {
                     filesView = LibraryDeviceTableMediator.instance().getFilesView();
                     playNextSong = true;
                 }
+                UXStats.instance().log(UXAction.WIFI_SHARING_PREVIEW);
             }
 
             if (mediaSource != null && !actionsHolder.isPlaying()) {
@@ -82,6 +85,7 @@ public final class LibraryActionsRenderer extends AbstractActionsRenderer {
                 Device device = LibraryMediator.instance().getLibraryExplorer().getSelectedDeviceFiles();
                 if (device != null) {
                     LibraryDeviceTableMediator.instance().downloadSelectedItems();
+                    UXStats.instance().log(UXAction.WIFI_SHARING_DOWNLOAD);
                 }
             }
         }

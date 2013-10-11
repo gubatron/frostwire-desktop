@@ -78,6 +78,7 @@ import com.limegroup.gnutella.gui.options.panes.TorrentConnectionPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentGlobalSpeedPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentSaveFolderPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentSeedingSettingPaneItem;
+import com.limegroup.gnutella.gui.options.panes.UXStatsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.VideoPlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.WiFiSharingPaneItem;
 import com.limegroup.gnutella.gui.options.panes.iTunesPreferencePaneItem;
@@ -224,7 +225,7 @@ public final class OptionsConstructor {
         });
 
         PaddedPanel mainPanel = new PaddedPanel();
-        
+
         Box splitBox = new Box(BoxLayout.X_AXIS);
 
         BoxPanel treePanel = new BoxPanel(BoxLayout.Y_AXIS);
@@ -280,7 +281,7 @@ public final class OptionsConstructor {
 
         // search options
         addOption(OptionsMediator.ROOT_NODE_KEY, SEARCH_KEY, I18n.tr("Searching"), SearchEnginesPaneItem.class, MaximumSearchesPaneItem.class, SmartSearchDBPaneItem.class, DetailsPaneItem.class);
-
+        
         //status bar
         addOption(OptionsMediator.ROOT_NODE_KEY, STATUS_BAR_KEY, I18n.tr("Status Bar"), StatusBarConnectionQualityPaneItem.class, StatusBarFirewallPaneItem.class, StatusBarBandwidthPaneItem.class); // Removed Lime Store
 
@@ -299,8 +300,8 @@ public final class OptionsConstructor {
             addOption(OptionsMediator.ROOT_NODE_KEY, GUI_KEY, I18n.tr("View"), PopupsPaneItem.class, ShowPromoOverlaysPaneItem.class, ShowFrostWireRecommendationsPaneItem.class, AutoCompletePaneItem.class);
         } else {
             addOption(OptionsMediator.ROOT_NODE_KEY, GUI_KEY, I18n.tr("View"), PopupsPaneItem.class, ShowPromoOverlaysPaneItem.class, AutoCompletePaneItem.class);
-        }        
-        
+        }
+
         //community chat
         addOption(OptionsMediator.ROOT_NODE_KEY, CHAT_KEY, I18n.tr("Community Chat"), ChatCommunityPaneItem.class);
 
@@ -317,10 +318,10 @@ public final class OptionsConstructor {
         if (FrostAssociations.anyAssociationsSupported()) {
             addOption(ADVANCED_KEY, ASSOCIATIONS_KEY, I18n.tr("File Associations"), AssociationPreferencePaneItem.class);
         }
-
         if (!CommonUtils.isPortable() && GUIUtils.shouldShowStartOnStartupWindow()) {
             addOption(ADVANCED_KEY, STARTUP_KEY, I18n.tr("System Boot"), StartupPaneItem.class);
         }
+        addOption(ADVANCED_KEY, STARTUP_KEY, I18n.tr("Usage Statistics"), UXStatsPaneItem.class);
 
         addOption(OptionsMediator.ROOT_NODE_KEY, SHUTDOWN_KEY, I18n.tr("System Tray"), ShutdownPaneItem.class);
 

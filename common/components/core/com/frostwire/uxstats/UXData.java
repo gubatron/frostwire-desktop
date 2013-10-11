@@ -15,25 +15,37 @@
  * limitations under the License.
  */
 
-package com.frostwire.search;
+package com.frostwire.uxstats;
 
-import java.util.concurrent.TimeUnit;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
- * 
+ * Temporary session.
  * @author gubatron
  * @author aldenml
  *
  */
-public interface SearchManager {
+public class UXData {
 
-    public void registerListener(SearchManagerListener listener);
+    public String guid;
+    public String os;
+    public String fwversion;
+    public String build;
+    public long time;
 
-    public void perform(SearchPerformer performer);
+    public List<UXAction> actions;
+    
+    public UXData() {
+    }
 
-    public void stop();
-
-    public void stop(long token);
-
-    public boolean shutdown(long timeout, TimeUnit unit);
+    public UXData(String guid, String os, String fwversion, String build) {
+        this.guid = guid;
+        this.os = os;
+        this.fwversion = fwversion;
+        this.build = build;
+        this.time = System.currentTimeMillis();
+        this.actions = Collections.synchronizedList(new LinkedList<UXAction>());
+    }
 }

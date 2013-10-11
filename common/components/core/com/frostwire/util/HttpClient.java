@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2013, FrostWire(R). All rights reserved.
  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ public interface HttpClient {
     public String get(String url, int timeout, String userAgent);
 
     public String get(String url, int timeout, String userAgent, String referrer, String cookie);
-    
+
     public String get(String url, int timeout, String userAgent, String referrer, String cookie, Map<String, String> customHeaders);
 
     public byte[] getBytes(String url, int timeout, String userAgent, String referrer);
@@ -50,11 +50,14 @@ public interface HttpClient {
 
     public void save(String url, File file, boolean resume, int timeout, String userAgent) throws IOException;
 
+    public void post(String url, int timeout, String userAgent, String content, boolean gzip) throws IOException;
+
     public void cancel();
 
     public boolean isCanceled();
 
     public interface HttpClientListener {
+
         public void onError(HttpClient client, Exception e);
 
         public void onData(HttpClient client, byte[] buffer, int offset, int length);

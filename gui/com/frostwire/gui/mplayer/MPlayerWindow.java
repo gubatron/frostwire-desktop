@@ -55,6 +55,8 @@ import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.ScreenSaverDisabler;
 import com.frostwire.mplayer.MediaPlaybackState;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.LimeJFrame;
 
 public class MPlayerWindow extends JFrame {
@@ -270,6 +272,7 @@ public class MPlayerWindow extends JFrame {
             overlayControls.setIsFullscreen(isFullscreen);
 
             positionOverlayControls();
+            UXStats.instance().log(UXAction.LIBRARY_VIDEO_TOGGLE_FULLSCREEN);
         }
     }
 

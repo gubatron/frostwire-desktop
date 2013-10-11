@@ -116,17 +116,17 @@ public final class UpdateMessage extends Object implements Serializable {
     // "announcement" : For important announcements to the community
     // "overlay" : For overlay promotions
     // "hostiles" : For an update of the hostiles.txt file
-    public void setMessageType(String mt) {
-        String type = mt.toLowerCase().trim();
+    private void setMessageType(String mt) {
+        String type = mt != null ? mt.toLowerCase().trim() : "";
         boolean typeIsValid = (type.equals("update") ||
                 type.equals("announcement") || type.equals("overlay") ||
-                type.equals("chat_server"));
+                type.equals("chat_server") || type.equals("uxstats"));
         
         if (mt == null || !typeIsValid) {
-            _messageType = new String("update");
+            _messageType = "update";
             return;
         }
-        _messageType = mt.toLowerCase();
+        _messageType = mt.toLowerCase().trim();
     }
 
     public Date getExpiration() { return _expiration; }

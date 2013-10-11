@@ -24,11 +24,11 @@ import java.util.List;
 import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.search.SearchPerformer;
-import com.frostwire.search.UserAgent;
 import com.frostwire.search.archiveorg.ArchiveorgSearchPerformer;
 import com.frostwire.search.clearbits.ClearBitsSearchPerformer;
 import com.frostwire.search.extratorrent.ExtratorrentSearchPerformer;
 import com.frostwire.search.frostclick.FrostClickSearchPerformer;
+import com.frostwire.search.frostclick.UserAgent;
 import com.frostwire.search.isohunt.ISOHuntSearchPerformer;
 import com.frostwire.search.kat.KATSearchPerformer;
 import com.frostwire.search.mininova.MininovaSearchPerformer;
@@ -180,7 +180,8 @@ public abstract class SearchEngine {
     }
 
     public static List<SearchEngine> getEngines() {
-        return Arrays.asList(FROSTCLICK, ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, VERTOR, TPB, MONOVA, SOUNDCLOUD, ARCHIVEORG);
+        return Arrays.asList(FROSTCLICK, ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, TPB, MONOVA, SOUNDCLOUD, ARCHIVEORG);
+        //return Arrays.asList(FROSTCLICK, ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, VERTOR, TPB, MONOVA, SOUNDCLOUD, ARCHIVEORG);
     }
 
     public abstract SearchPerformer getPerformer(long token, String keywords);

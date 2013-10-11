@@ -26,6 +26,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -56,6 +57,8 @@ import com.frostwire.gui.tabs.Tab;
 import com.frostwire.gui.theme.SkinApplicationHeaderUI;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.gui.updates.UpdateMediator;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 import com.limegroup.gnutella.gui.actions.FileMenuActions;
@@ -114,7 +117,28 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         headerButtonBackgroundSelected = GUIMediator.getThemeImage("selected_header_button_background").getImage();
         headerButtonBackgroundUnselected = GUIMediator.getThemeImage("unselected_header_button_background").getImage();
 
-        cloudSearchField = new GoogleSearchField();
+        cloudSearchField = new GoogleSearchField() {
+            {
+                super.getFindButton().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        UXStats.instance().log(UXAction.SEARCH_STARTED_SMALL_SEARCH_ICON_CLICK);
+                    }
+                    
+                });
+            }
+            
+            @Override
+            public void processKeyEvent(KeyEvent evt) {
+                if ((evt.getID()  == KeyEvent.KEY_PRESSED) && 
+                    evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    UXStats.instance().log(UXAction.SEARCH_STARTED_ENTER_KEY);
+                }
+                super.processKeyEvent(evt);
+            }
+        };
+
+        
         searchPanels = createSearchPanel();
         add(searchPanels, "w 240px!, gapright 10px");
 
@@ -233,6 +257,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
 
                         if (query != null) {
                             if (performInternetSearch) {
+                                UXStats.instance().log(UXAction.SEARCH_STARTED_SEARCH_TAB_BUTTON);
                                 cloudSearchField.getActionListeners()[0].actionPerformed(null);
                             }
                         }
@@ -473,7 +498,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
             GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);                
 
             //start a download from the search box by entering a URL.
-            if (FileMenuActions.openMagnetOrTorrent(query)) {
+            if (FileMenuActions.openMagnetOrTorrent(query,FileMenuActions.ActionInvocationSource.FROM_SEARCH_FIELD)) {
                 cloudSearchField.setText("");
                 cloudSearchField.hidePopup();
                 return;

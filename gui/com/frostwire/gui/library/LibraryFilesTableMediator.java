@@ -64,6 +64,8 @@ import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.upnp.UPnPManager;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.CheckBoxList;
@@ -692,6 +694,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
         if (getMediaType().equals(MediaType.getAudioMediaType()) && MediaPlayer.isPlayableFile(line.getFile())) {
             MediaPlayer.instance().asyncLoadMedia(new MediaSource(line.getFile()), true, true, null, getFilesView());
+            UXStats.instance().log(UXAction.LIBRARY_PLAY_AUDIO_FROM_FILE);
             return;
         }
 
@@ -752,6 +755,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         if (playAudio) {
             GUILauncher.launch(providers);
+            UXStats.instance().log(stopAudio ? UXAction.LIBRARY_VIDEO_PLAY : UXAction.LIBRARY_PLAY_AUDIO_FROM_FILE);
         } else {
             GUIMediator.launchFile(selectedFile);
         }
@@ -1266,7 +1270,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             }
 
             UPnPManager.instance().refreshPing();
+            UXStats.instance().log(share ? UXAction.WIFI_SHARING_SHARED : UXAction.WIFI_SHARING_UNSHARED);
         }
+        
         
         private void actualShare(LibraryFilesTableDataLine dataLine, File file) {
             dataLine.setShared(share);

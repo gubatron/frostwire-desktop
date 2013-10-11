@@ -1,3 +1,18 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui;
 
 import java.awt.Frame;
@@ -6,7 +21,6 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicHTML;
 
 import org.apache.commons.logging.Log;
@@ -35,10 +49,7 @@ import com.limegroup.gnutella.util.MacOSXUtils;
 /** Initializes (creates, starts, & displays) the LimeWire Core & UI. */
 public final class Initializer {
     private final Log LOG;
-    
-    /** Refuse to start after this date */
-    private final long EXPIRATION_DATE = Long.MAX_VALUE;
-    
+        
     /** True if is running from a system startup. */
     private volatile boolean isStartup = false;
     
@@ -134,7 +145,6 @@ public final class Initializer {
         startAzureusCore();
         
         // Run any after-init tasks.
-        //System.out.println("Initializer.initialize() post init");
         postinit();
     }
     
@@ -182,10 +192,7 @@ public final class Initializer {
      * Ensures this should continue running, by checking
      * for expiration failures or startup settings. 
      */
-    private void validateStartup(String[] args) {        
-        // check if this version has expired.
-        if (System.currentTimeMillis() > EXPIRATION_DATE) 
-            failExpired();
+    private void validateStartup(String[] args) {
         
         // Yield so any other events can be run to determine
         // startup status, but only if we're going to possibly
@@ -384,7 +391,6 @@ public final class Initializer {
                     if (!ApplicationSettings.DISPLAY_TRAY_ICON.getValue())
                         NotifyUserProxy.instance().hideTrayIcon();
                     
-                    SettingsWarningManager.checkTemporaryDirectoryUsage();
                     SettingsWarningManager.checkSettingsLoadSaveFailure();
                     
                     //stopwatch.resetAndLog("end notify runner");
@@ -469,12 +475,7 @@ public final class Initializer {
         // Tell the GUI that loading is all done.
         GUIMediator.instance().loadFinished();
         stopwatch.resetAndLog("load finished");
-        
-        // update the repaintInterval after the Splash is created,
-        // so that the splash gets the smooth animation.
-        if(OSUtils.isMacOSX())
-            UIManager.put("ProgressBar.repaintInterval", new Integer(500));
-        
+                
         if(LOG.isTraceEnabled()) {
             long stopMemory = Runtime.getRuntime().totalMemory()
                             - Runtime.getRuntime().freeMemory();
@@ -489,12 +490,7 @@ public final class Initializer {
     void setStartup() {
         isStartup = true;
     }
-    
-    /** Fails because alpha expired. */
-    private void failExpired() {
-        fail(I18nMarker.marktr("This Alpha version has expired.  Press Ok to exit. "));
-    }
-    
+        
     /** Fails because preferences can't be set. */
     private void failPreferencesPermissions() {
         fail(I18nMarker

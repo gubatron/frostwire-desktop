@@ -30,7 +30,6 @@ import org.limewire.util.SystemUtils;
 import org.limewire.util.SystemUtils.SpecialLocations;
 import org.limewire.util.VersionUtils;
 
-import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 
@@ -46,10 +45,7 @@ public final class FrostWireUtils {
 	private static final String FROSTWIRE_VERSION = "5.6.5";
 	
 	/** Build number for the current version, gets reset to 1 on every version bump*/
-	private static final int BUILD_NUMBER = 1;
-
-        /** Whether or not a temporary directory is in use. */
-        private static boolean temporaryDirectoryInUse;
+	private static final int BUILD_NUMBER = 6;
 
 	/**
 	 * Make sure the constructor can never be called.
@@ -86,21 +82,10 @@ public final class FrostWireUtils {
                
         return url;
     }
-
-    /** Returns whether or not a temporary directory is in use. */
-    public static boolean isTemporaryDirectoryInUse() {
-        return temporaryDirectoryInUse;
-    }
     
     /** Returns whether or not failures were encountered in load/save settings on startup. */
     public static boolean hasSettingsLoadSaveFailures() {
         return SettingsFactory.hasLoadSaveFailure();
-    }
-
-
-    /** Sets whether or not a temporary directory is in use. */
-    public static void setTemporaryDirectoryInUse(boolean inUse) {
-        temporaryDirectoryInUse = inUse;
     }
     
     public static void resetSettingsLoadSaveFailures() {

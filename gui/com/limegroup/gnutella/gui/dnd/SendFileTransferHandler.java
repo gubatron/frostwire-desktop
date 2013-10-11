@@ -10,6 +10,8 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
@@ -67,6 +69,7 @@ public class SendFileTransferHandler extends LimeTransferHandler {
 		if (result == JOptionPane.YES_OPTION) {
 			new SendFileProgressDialog(GUIMediator.getAppFrame(), files[0]).setVisible(true);
 			GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
+			UXStats.instance().log(UXAction.SHARING_TORRENT_CREATED_WITH_SEND_TO_FRIEND_FROM_DND);
 			return true;
 		}
 		

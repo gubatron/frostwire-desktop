@@ -35,6 +35,8 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
@@ -177,6 +179,7 @@ final class LibraryFilesTransferHandler extends TransferHandler {
                     
                     if (device != null) {
                         device.upload(files);
+                        UXStats.instance().log(UXAction.WIFI_SHARING_DND_UPLOAD_TO_DEVICE);
                     }
                 }
 

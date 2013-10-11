@@ -53,6 +53,8 @@ import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -405,6 +407,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         try {
             MediaSource audioSource = new InternetRadioAudioSource(line.getInitializeObject().getUrl(), line.getInitializeObject());
             MediaPlayer.instance().asyncLoadMedia(audioSource, true, false, null, getFilesView());
+            UXStats.instance().log(UXAction.LIBRARY_PLAY_AUDIO_FROM_RADIO);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -438,6 +441,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
             providers[i] = new FileProvider(DATA_MODEL.getFile(rows[i]));
         }
         GUILauncher.launch(providers);
+        UXStats.instance().log(UXAction.LIBRARY_PLAY_AUDIO_FROM_RADIO);
     }
 
     /**

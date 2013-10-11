@@ -32,6 +32,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.ClearableAutoCompleteTextField;
@@ -212,7 +214,7 @@ public final class FileMenuActions {
             }
 
             public void actionPerformed(ActionEvent a) {
-                if (openMagnetOrTorrent(PATH_FIELD.getText())) {
+                if (openMagnetOrTorrent(PATH_FIELD.getText(),FileMenuActions.ActionInvocationSource.FROM_FILE_MENU)) {
                     dialog.setVisible(false);
                     dialog.dispose();
                 } else {
@@ -248,21 +250,25 @@ public final class FileMenuActions {
      * @param userText The text of the path, link, or address the user entered
      * @return true if it was valid and we opened it
      */
-    public static boolean openMagnetOrTorrent(final String userText) {
+    public static boolean openMagnetOrTorrent(final String userText, ActionInvocationSource invokedFrom) {
 
         if (userText.startsWith("magnet:?xt=urn:btih")) {
             GUIMediator.instance().openTorrentURI(userText, true);
+            UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_MAGNET_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_MAGNET_URL_FROM_SEARCH_FIELD);
             return true;
         } else if (userText.matches(".*youtube.com.*")) {
             GUIMediator.instance().openYouTubeVideoUrl(userText);
+            UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_CLOUD_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_CLOUD_URL_FROM_SEARCH_FIELD);
             return true;
         } else if (userText.matches(".*soundcloud.com.*")) {
             //the new soundcloud redirects to what seems to be an ajax page
             String soundCloudURL = userText.replace("soundcloud.com/#", "soundcloud.com/");
             GUIMediator.instance().openSoundcloudTrackUrl(soundCloudURL, null);
+            UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_CLOUD_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_CLOUD_URL_FROM_SEARCH_FIELD);
             return true;
         } else if (userText.startsWith("http://")) {
             GUIMediator.instance().openTorrentURI(userText, true);
+            UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_TORRENT_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_TORRENT_URL_FROM_SEARCH_FIELD);
             return true;
         } else {
 
@@ -331,7 +337,7 @@ public final class FileMenuActions {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             CreateTorrentDialog dlg = new CreateTorrentDialog(GUIMediator.getAppFrame());
-            dlg.setVisible(true);
+            dlg.setVisible(true);            
         }
 
     }
@@ -347,6 +353,12 @@ public final class FileMenuActions {
         public void actionPerformed(ActionEvent e) {
             SendFileProgressDialog dlg = new SendFileProgressDialog(GUIMediator.getAppFrame());
             dlg.setVisible(true);
+            UXStats.instance().log(UXAction.SHARING_TORRENT_CREATED_WITH_SEND_TO_FRIEND_FROM_MENU);
         }
+    }
+    
+    public enum ActionInvocationSource {
+        FROM_FILE_MENU,
+        FROM_SEARCH_FIELD
     }
 }

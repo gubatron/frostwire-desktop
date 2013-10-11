@@ -39,6 +39,8 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.SizedTextField;
 import com.limegroup.gnutella.gui.WindowsUtils;
+import com.limegroup.gnutella.gui.options.panes.UXStatsPaneItem;
+import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ChatSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.MacOSXUtils;
@@ -47,13 +49,7 @@ import com.limegroup.gnutella.util.MacOSXUtils;
  * This class displays a window to the user allowing them to specify
  * their connection speed.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class MiscWindow extends SetupWindow {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 7123281955288276885L;
 
     /**
      * The chat Community nickname field.
@@ -64,6 +60,7 @@ final class MiscWindow extends SetupWindow {
      * System Startup
      */
     private JCheckBox _startup;
+    private JCheckBox checkBoxUXStats;
 
     /**
      * Creates the window and its components.
@@ -77,7 +74,6 @@ final class MiscWindow extends SetupWindow {
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
 
-        //System.out.println("*******STARTUP DEBUG: initializing verification System Startup...");
         // System Startup
         if (GUIUtils.shouldShowStartOnStartupWindow()) {
             GridBagConstraints gbc = new GridBagConstraints();
@@ -87,12 +83,10 @@ final class MiscWindow extends SetupWindow {
 
             _startup = new JCheckBox(I18n.tr("Start Automatically"));
             _startup.setSelected(StartupSettings.RUN_ON_STARTUP.getValue());
-            System.out.println("********START UP AUTOMAGICALLY?: ******" + StartupSettings.RUN_ON_STARTUP.getValue());
 
             JLabel desc = new JLabel("<html>" + I18n.tr("Would you like FrostWire to start when you log into your computer? This will cause FrostWire to start faster when you use it later.") + "</html>");
-            //desc.setOpaque(false);
             desc.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 5));
-            desc.setForeground(Color.black);
+            desc.setForeground(Color.BLACK);
             desc.setFont(desc.getFont().deriveFont(Font.PLAIN));
 
             gbc.anchor = GridBagConstraints.NORTHWEST;
@@ -105,65 +99,23 @@ final class MiscWindow extends SetupWindow {
 
             gbc.insets = new Insets(0, 0, 10, 0);
             mainPanel.add(startupPanel, gbc);
-            
+
             startupPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
         }
-
-        // Content Filtering
-        /** No content filtering for FrostWire
-        {
-            GridBagConstraints gbc = new GridBagConstraints();
-            JPanel filterPanel = new JPanel(new GridBagLayout());
-            
-            filterPanel.setBorder(new TitledBorder(I18n.tr("Content Filtering")));
-            
-            _filter = new JCheckBox(I18n.tr("Enable Content Filtering"));
-            _filter.setSelected(ContentSettings.USER_WANTS_MANAGEMENTS.getValue());
-            
-            MultiLineLabel desc = new MultiLineLabel(
-                    I18n.tr("FrostWire can filter files that copyright owners request not be shared. By enabling filtering, you are telling FrostWire to confirm all files you download or share with a list of removed content. You can change this at any time by choosing Filters -> Configure Content Filters from the main menu."));
-            desc.setOpaque(false);
-            desc.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 5));
-            desc.setForeground(Color.black);
-            desc.setFont(desc.getFont().deriveFont(Font.PLAIN));
-            
-            gbc.anchor = GridBagConstraints.NORTHWEST;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.gridwidth = GridBagConstraints.REMAINDER;
-            gbc.weightx = 1.0;
-            
-            JLabel url= new URLLabel(ContentSettings.LEARN_MORE_URL, I18n.tr("Learn more about this option..."));
-            url.setOpaque(false);
-            url.setBorder(BorderFactory.createEmptyBorder(5, 8, 5, 8));
-            url.setForeground(Color.black);
-            url.setOpaque(false);
-            url.setAlignmentY( 1.0f );
-
-            
-            filterPanel.add(desc, gbc);
-            gbc.insets = new Insets(0, 0, 5, 0);
-            filterPanel.add(url, gbc);
-            gbc.insets = new Insets(0, 0, 0, 0);
-            filterPanel.add(_filter, gbc);
-            
-            gbc.insets = new Insets(0, 0, 10, 0);
-            mainPanel.add(filterPanel, gbc);
-        }
-        */
 
         // Chat Community
         {
 
             JPanel chatCommunityPanel = new JPanel(new GridLayout(2, 0));
-            chatCommunityPanel.setMinimumSize(new Dimension(640,150));
+            chatCommunityPanel.setMinimumSize(new Dimension(640, 150));
 
             chatCommunityPanel.setBorder(ThemeMediator.createTitledBorder(I18n.tr("Chat Community")));
 
             //create multiline to describe why the chat needs a nick (descChat)
             JLabel descChat = new JLabel("<html>" + I18n.tr("FrostWire's Community Chat Tab requires you to have a nickname to communicate with others in the chatrooms.") + "</html>");
             //descChat.setOpaque(false);
-            descChat.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 5));
-            descChat.setForeground(Color.black);
+            descChat.setBorder(BorderFactory.createEmptyBorder(0, 10, 2, 5));
+            descChat.setForeground(Color.BLACK);
             descChat.setFont(descChat.getFont().deriveFont(Font.PLAIN));
 
             _ircNickField = new SizedTextField(new Dimension(100, SizedTextField.STANDARD_HEIGHT));
@@ -178,15 +130,43 @@ final class MiscWindow extends SetupWindow {
             chatCommunityPanel.add(textField.getComponent());
 
             //when we add the panel, its part of a bigger layout so we need to set its GridBagConstraints
-            GridBagConstraints outerLayoutConstraints = new GridBagConstraints();
-            //outerLayoutConstraints.anchor = GridBagConstraints.NORWEST;
-            outerLayoutConstraints.gridwidth = GridBagConstraints.REMAINDER;
-            outerLayoutConstraints.fill = GridBagConstraints.HORIZONTAL;
-            outerLayoutConstraints.gridy = GridBagConstraints.RELATIVE;
-            mainPanel.add(chatCommunityPanel, outerLayoutConstraints);
-            
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.gridy = GridBagConstraints.RELATIVE;
+            gbc.insets = new Insets(0, 0, 10, 0);
+            mainPanel.add(chatCommunityPanel, gbc);
+
             chatCommunityPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
             chatCommunityPanel.updateUI();
+        }
+
+        // UX Stats
+        {
+            JPanel panelUXStats = new JPanel(new GridLayout(2, 0));
+
+            panelUXStats.setBorder(ThemeMediator.createTitledBorder(UXStatsPaneItem.TITLE));
+
+            checkBoxUXStats = new JCheckBox(UXStatsPaneItem.CHECK_BOX_LABEL);
+            checkBoxUXStats.setSelected(ApplicationSettings.UX_STATS_ENABLED.getValue());
+
+            JLabel desc = new JLabel("<html>" + UXStatsPaneItem.LABEL + "</html>");
+            desc.setBorder(BorderFactory.createEmptyBorder(0, 10, 2, 5));
+            desc.setForeground(Color.BLACK);
+            desc.setFont(desc.getFont().deriveFont(Font.PLAIN));
+
+            panelUXStats.add(desc);
+            panelUXStats.add(checkBoxUXStats);
+
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.gridy = GridBagConstraints.RELATIVE;
+            
+            mainPanel.add(panelUXStats, gbc);
+
+            panelUXStats.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
+            panelUXStats.updateUI();
         }
 
         // Vertical Filler
@@ -224,5 +204,7 @@ final class MiscWindow extends SetupWindow {
             //if this happens, so we try to reinitialize the IRCApplication.
             ChatMediator.instance().reloadConfiguration();
         }
+        
+        ApplicationSettings.UX_STATS_ENABLED.setValue(checkBoxUXStats.isSelected());
     }
 }

@@ -60,6 +60,8 @@ import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -513,6 +515,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         MediaSource mediaSource = new MediaSource(line.getPlayListItem());
         if (MediaPlayer.isPlayableFile(mediaSource)) {
             MediaPlayer.instance().asyncLoadMedia(mediaSource, true, true, currentPlaylist, getFilesView());
+            uxLogPlayFromPlaylists();
         }
     }
 
@@ -549,8 +552,15 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         if (playMedia) {
             GUILauncher.launch(providers);
+            uxLogPlayFromPlaylists();
         } else {
             GUIMediator.launchFile(selectedFile);
+        }
+    }
+
+    private void uxLogPlayFromPlaylists() {
+        if (currentPlaylist != null) {
+            UXStats.instance().log(currentPlaylist.isStarred() ? UXAction.LIBRARY_PLAY_AUDIO_FROM_STARRED_PLAYLIST : UXAction.LIBRARY_PLAY_AUDIO_FROM_PLAYLIST);
         }
     }
 

@@ -58,9 +58,10 @@ import com.frostwire.gui.library.tags.TagsReader;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.util.StringUtils;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.limegroup.gnutella.gui.MediaButton;
 import com.limegroup.gnutella.gui.RefreshListener;
 
@@ -435,13 +436,6 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 LibraryMediator.instance().playCurrentSelection();
             }
         }
-    }
-
-    /**
-     * Toggles full screen view
-     */
-    public void toggleFullScreen() {
-        MPlayerMediator.instance().showPlayerWindow(true);
     }
 
     /**
@@ -1131,7 +1125,10 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             if (result == JOptionPane.YES_OPTION) {
                 new SendFileProgressDialog(GUIMediator.getAppFrame(), file).setVisible(true);
                 GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
+                UXStats.instance().log(UXAction.SHARING_TORRENT_CREATED_WITH_SEND_TO_FRIEND_FROM_PLAYER);
             }
+            
+            
         }
     }
 
