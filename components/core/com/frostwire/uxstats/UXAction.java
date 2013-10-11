@@ -73,14 +73,19 @@ public final class UXAction {
     public static final int LIBRARY_PLAY_AUDIO_FROM_FILE = LIBRARY_BASE + 1;
     public static final int LIBRARY_PLAY_AUDIO_FROM_PLAYLIST = LIBRARY_BASE + 2;
     public static final int LIBRARY_PLAY_AUDIO_FROM_STARRED_PLAYLIST = LIBRARY_BASE + 3;
-    public static final int LIBRARY_PLAY_AUDIO_FROM_RADIO = LIBRARY_BASE + 10;
-    public static final int LIBRARY_STARRED_AUDIO_FROM_PLAYLIST = LIBRARY_BASE + 4;
-    public static final int LIBRARY_PLAYLIST_CREATED = LIBRARY_BASE + 5;
-    public static final int LIBRARY_PLAYLIST_REMOVED = LIBRARY_BASE + 6;
-    public static final int LIBRARY_PLAYLIST_RENAMED = LIBRARY_BASE + 7;
-    public static final int LIBRARY_VIDEO_PLAY = LIBRARY_BASE + 8;
-    public static final int LIBRARY_VIDEO_TOGGLE_FULLSCREEN = LIBRARY_BASE + 9;
-    
+    public static final int LIBRARY_PLAY_AUDIO_FROM_RADIO = LIBRARY_BASE + 4;
+    public static final int LIBRARY_STARRED_AUDIO_FROM_PLAYLIST = LIBRARY_BASE + 5;
+    public static final int LIBRARY_PLAYLIST_CREATED = LIBRARY_BASE + 6;
+    public static final int LIBRARY_PLAYLIST_REMOVED = LIBRARY_BASE + 7;
+    public static final int LIBRARY_PLAYLIST_RENAMED = LIBRARY_BASE + 8;
+    public static final int LIBRARY_VIDEO_PLAY = LIBRARY_BASE + 9;
+    public static final int LIBRARY_VIDEO_TOGGLE_FULLSCREEN = LIBRARY_BASE + 10;
+    public static final int LIBRARY_BROWSE_AUDIO_FILES = LIBRARY_BASE + 11;
+    public static final int LIBRARY_BROWSE_RINGTONE_FILES = LIBRARY_BASE + 12;
+    public static final int LIBRARY_BROWSE_VIDEO_FILES = LIBRARY_BASE + 13;
+    public static final int LIBRARY_BROWSE_PICTURE_FILES = LIBRARY_BASE + 14;
+    public static final int LIBRARY_BROWSE_APP_FILES = LIBRARY_BASE + 15;
+    public static final int LIBRARY_BROWSE_DOC_FILES = LIBRARY_BASE + 16;    
     
     public static final int WIFI_SHARING_BASE = 5000;
     public static final int WIFI_SHARING_SHARED = WIFI_SHARING_BASE + 1;
