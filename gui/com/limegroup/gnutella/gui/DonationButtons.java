@@ -50,8 +50,8 @@ public class DonationButtons extends JPanel {
         add(new DonationButton("$5", "http://www.frostwire.com/?id=donate&amt=5", I18n.tr("Support FrostWire development with a USD $5 donation")), "w 26px!, h 18px!");
         add(new DonationButton("$10", "http://www.frostwire.com/?id=donate&amt=10", I18n.tr("Support FrostWire development with a USD $10 donation")), "w 30px!, h 18px!");
         add(new DonationButton("$25", "http://www.frostwire.com/?id=donate&amt=25", I18n.tr("Support FrostWire development with a USD $25 donation")), "w 30px!, h 18px!");
+        add(new DonationButton("paypal", "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XNBZ6GMVTDWQQ", I18n.tr("Support FrostWire development with a Paypal donation")), "w 46px!, h 18px!");
         add(new DonationButton("bitcoin", "bitcoin:14F6JPXK2fR5b4gZp3134qLRGgYtvabMWL", I18n.tr("Support FrostWire development with a Bitcoin donation")), "w 46px!, h 18px!");
-        add(new DonationButton("litecoin", "litecoin:LLW2rNAXbAt41SGjk8GZjbi3uYT2snjbq1", I18n.tr("Support FrostWire development with a Litecoin donation")), "w 46px!, h 18px!");
     }
 
     private JLabel createDonateLabel() {
