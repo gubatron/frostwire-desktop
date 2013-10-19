@@ -160,6 +160,7 @@ public final class OptionsConstructor {
     static final String GUI_KEY = "OPTIONS_GUI_MAIN_TITLE";
     static final String AUTOCOMPLETE_KEY = "OPTIONS_AUTOCOMPLETE_MAIN_TITLE";
     static final String STARTUP_KEY = "OPTIONS_STARTUP_MAIN_TITLE";
+    static final String UXSTATS_KEY = "OPTIONS_UXSTATS_MAIN_TITLE";
     static final String PROXY_KEY = "OPTIONS_PROXY_MAIN_TITLE";
     static final String NETWORK_INTERFACE_KEY = "OPTIONS_NETWORK_INTERFACE_MAIN_TITLE";
     static final String ASSOCIATIONS_KEY = "OPTIONS_ASSOCIATIONS_MAIN_TITLE";
@@ -281,7 +282,7 @@ public final class OptionsConstructor {
 
         // search options
         addOption(OptionsMediator.ROOT_NODE_KEY, SEARCH_KEY, I18n.tr("Searching"), SearchEnginesPaneItem.class, MaximumSearchesPaneItem.class, SmartSearchDBPaneItem.class, DetailsPaneItem.class);
-        
+
         //status bar
         addOption(OptionsMediator.ROOT_NODE_KEY, STATUS_BAR_KEY, I18n.tr("Status Bar"), StatusBarConnectionQualityPaneItem.class, StatusBarFirewallPaneItem.class, StatusBarBandwidthPaneItem.class); // Removed Lime Store
 
@@ -321,7 +322,7 @@ public final class OptionsConstructor {
         if (!CommonUtils.isPortable() && GUIUtils.shouldShowStartOnStartupWindow()) {
             addOption(ADVANCED_KEY, STARTUP_KEY, I18n.tr("System Boot"), StartupPaneItem.class);
         }
-        addOption(ADVANCED_KEY, STARTUP_KEY, I18n.tr("Usage Statistics"), UXStatsPaneItem.class);
+        addOption(ADVANCED_KEY, UXSTATS_KEY, I18n.tr("Usage Statistics"), UXStatsPaneItem.class);
 
         addOption(OptionsMediator.ROOT_NODE_KEY, SHUTDOWN_KEY, I18n.tr("System Tray"), ShutdownPaneItem.class);
 
