@@ -32,7 +32,8 @@ import com.frostwire.util.JsonUtils;
  *
  */
 public final class UXStats {
-
+    private static final boolean IS_TESTING = false;
+    
     private static final Logger LOG = LoggerFactory.getLogger(UXStats.class);
 
     private static final int HTTP_TIMEOUT = 4000;
@@ -147,7 +148,13 @@ public final class UXStats {
         public void run() {
             try {
                 String json = JsonUtils.toJson(data);
-                httpClient.post(conf.getUrl(), HTTP_TIMEOUT, "FrostWire/UXStats", json, true);
+                String postURL = conf.getUrl();
+                
+                if (IS_TESTING) {
+                    postURL += "?test=1";
+                }
+                
+                httpClient.post(postURL, HTTP_TIMEOUT, "FrostWire/UXStats", json, true);
             } catch (Throwable e) {
                 LOG.error("Unable to send ux stats", e);
             }
