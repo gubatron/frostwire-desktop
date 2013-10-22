@@ -46,11 +46,156 @@ import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.limegroup.gnutella.gui.I18n;
 
-public class BTDownloadMediatorAdvancedMenuFactory {
-	
-    private static void addSpeedMenu(SkinMenu menuAdvanced, boolean isTorrentContext, boolean hasSelection, boolean downSpeedDisabled,
-            boolean downSpeedUnlimited, long totalDownSpeed, long downSpeedSetMax, long maxDownload, boolean upSpeedDisabled, boolean upSpeedUnlimited,
-            long totalUpSpeed, long upSpeedSetMax, long maxUpload, final int num_entries, final SpeedAdapter adapter) {
+final class BTDownloadMediatorAdvancedMenuFactory {
+
+    public static SkinMenu createAdvancedSubMenu() {
+
+        BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+
+        if (downloaders.length != 1) {
+            return null;
+        }
+
+        ArrayList<DownloadManager> list = new ArrayList<DownloadManager>(downloaders.length);
+        for (BTDownload downloader : downloaders) {
+            DownloadManager dm = downloader.getDownloadManager();
+            if (dm != null) {
+                list.add(dm);
+            }
+        }
+
+        if (list.size() == 0) {
+            return null;
+        }
+
+        final DownloadManager[] dms = list.toArray(new DownloadManager[0]);
+
+        boolean upSpeedDisabled = false;
+        long totalUpSpeed = 0;
+        boolean upSpeedUnlimited = false;
+        long upSpeedSetMax = 0;
+
+        boolean downSpeedDisabled = false;
+        long totalDownSpeed = 0;
+        boolean downSpeedUnlimited = false;
+        long downSpeedSetMax = 0;
+
+        for (int i = 0; i < dms.length; i++) {
+            DownloadManager dm = (DownloadManager) dms[i];
+
+            try {
+                int maxul = dm.getStats().getUploadRateLimitBytesPerSecond();
+                if (maxul == 0) {
+                    upSpeedUnlimited = true;
+                } else {
+                    if (maxul > upSpeedSetMax) {
+                        upSpeedSetMax = maxul;
+                    }
+                }
+                if (maxul == -1) {
+                    maxul = 0;
+                    upSpeedDisabled = true;
+                }
+                totalUpSpeed += maxul;
+
+                int maxdl = dm.getStats().getDownloadRateLimitBytesPerSecond();
+                if (maxdl == 0) {
+                    downSpeedUnlimited = true;
+                } else {
+                    if (maxdl > downSpeedSetMax) {
+                        downSpeedSetMax = maxdl;
+                    }
+                }
+                if (maxdl == -1) {
+                    maxdl = 0;
+                    downSpeedDisabled = true;
+                }
+                totalDownSpeed += maxdl;
+
+            } catch (Exception ex) {
+                Debug.printStackTrace(ex);
+            }
+        }
+
+        final SkinMenu menuAdvanced = new SkinMenu(I18n.tr("Advanced"));
+
+        // advanced > Download Speed Menu //
+
+        long maxDownload = COConfigurationManager.getIntParameter("Max Download Speed KBs", 0) * 1024;
+        long maxUpload = COConfigurationManager.getIntParameter("Max Upload Speed KBs", 0) * 1024;
+
+        addSpeedMenu(menuAdvanced, true, true, downSpeedDisabled, downSpeedUnlimited, totalDownSpeed, downSpeedSetMax, maxDownload, upSpeedDisabled, upSpeedUnlimited, totalUpSpeed, upSpeedSetMax, maxUpload, dms.length, new SpeedAdapter() {
+            public void setDownSpeed(final int speed) {
+                for (int i = 0; i < dms.length; i++) {
+                    dms[i].getStats().setDownloadRateLimitBytesPerSecond(speed);
+                }
+                //                        DMTask task = new DMTask(dms) {
+                //                            public void run(DownloadManager dm) {
+                //                                dm.getStats().setDownloadRateLimitBytesPerSecond(speed);
+                //                            }
+                //                        };
+                //                        task.go();
+            }
+
+            public void setUpSpeed(final int speed) {
+                for (int i = 0; i < dms.length; i++) {
+                    dms[i].getStats().setUploadRateLimitBytesPerSecond(speed);
+                }
+                //                        DMTask task = new DMTask(dms) {
+                //                            public void run(DownloadManager dm) {
+                //                                dm.getStats().setUploadRateLimitBytesPerSecond(speed);
+                //                            }
+                //                        };
+                //                        task.go();
+            }
+        });
+
+        return menuAdvanced;
+    }
+
+    public static SkinMenu createAddToPlaylistSubMenu() {
+        BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+        if (downloaders.length == 0) {
+            return null;
+        }
+
+        for (BTDownload dler : downloaders) {
+            if (!dler.isCompleted()) {
+                return null;
+            }
+
+            File saveLocation = dler.getSaveLocation();
+
+            if (saveLocation.isDirectory()) {
+                //If the file(s) is(are) inside a folder
+                if (!LibraryUtils.directoryContainsAudio(saveLocation)) {
+                    return null;
+                }
+            } else if (!MediaPlayer.isPlayableFile(saveLocation)) {
+                return null;
+            }
+        }
+
+        SkinMenu menu = new SkinMenu(I18n.tr("Add to playlist"));
+
+        menu.add(new SkinMenuItem(new CreateNewPlaylistAction()));
+
+        Library library = LibraryMediator.getLibrary();
+        List<Playlist> playlists = library.getPlaylists();
+
+        if (playlists.size() > 0) {
+            menu.addSeparator();
+
+            for (Playlist playlist : library.getPlaylists()) {
+                menu.add(new SkinMenuItem(new AddToPlaylistAction(playlist)));
+            }
+        }
+
+        return menu;
+    }
+
+    private static void addSpeedMenu(SkinMenu menuAdvanced, boolean isTorrentContext, boolean hasSelection, boolean downSpeedDisabled, boolean downSpeedUnlimited, long totalDownSpeed, long downSpeedSetMax, long maxDownload, boolean upSpeedDisabled, boolean upSpeedUnlimited, long totalUpSpeed,
+            long upSpeedSetMax, long maxUpload, final int num_entries, final SpeedAdapter adapter) {
         // advanced > Download Speed Menu //
 
         final SkinMenu menuDownSpeed = new SkinMenu(I18n.tr("Set Down Speed"));
@@ -135,17 +280,17 @@ public class BTDownloadMediatorAdvancedMenuFactory {
         }
 
         // ---
-//        menuDownSpeed.addSeparator();
-//
-//        final SkinMenuItem itemDownSpeedManualSingle = new SkinMenuItem();
-//        itemDownSpeedManualSingle.setText(I18n.tr("Manual..."));
-//        itemDownSpeedManualSingle.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                //int speed_value = getManualSpeedValue(shell, true);
-//                //if (speed_value > 0) {adapter.setDownSpeed(speed_value);}
-//            }
-//        });
-//        menuDownSpeed.add(itemDownSpeedManualSingle);
+        //        menuDownSpeed.addSeparator();
+        //
+        //        final SkinMenuItem itemDownSpeedManualSingle = new SkinMenuItem();
+        //        itemDownSpeedManualSingle.setText(I18n.tr("Manual..."));
+        //        itemDownSpeedManualSingle.addActionListener(new ActionListener() {
+        //            public void actionPerformed(ActionEvent e) {
+        //                //int speed_value = getManualSpeedValue(shell, true);
+        //                //if (speed_value > 0) {adapter.setDownSpeed(speed_value);}
+        //            }
+        //        });
+        //        menuDownSpeed.add(itemDownSpeedManualSingle);
 
         //        if (num_entries > 1) {
         //            final MenuItem itemDownSpeedManualShared = new MenuItem(menuDownSpeed, SWT.PUSH);
@@ -242,17 +387,17 @@ public class BTDownloadMediatorAdvancedMenuFactory {
             }
         }
 
-//        menuUpSpeed.addSeparator();
-//
-//        final SkinMenuItem itemUpSpeedManualSingle = new SkinMenuItem();
-//        itemUpSpeedManualSingle.setText(I18n.tr("Manual..."));
-//        itemUpSpeedManualSingle.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                //int speed_value = getManualSpeedValue(shell, false);
-//                //if (speed_value > 0) {adapter.setUpSpeed(speed_value);}
-//            }
-//        });
-//        menuUpSpeed.add(itemUpSpeedManualSingle);
+        //        menuUpSpeed.addSeparator();
+        //
+        //        final SkinMenuItem itemUpSpeedManualSingle = new SkinMenuItem();
+        //        itemUpSpeedManualSingle.setText(I18n.tr("Manual..."));
+        //        itemUpSpeedManualSingle.addActionListener(new ActionListener() {
+        //            public void actionPerformed(ActionEvent e) {
+        //                //int speed_value = getManualSpeedValue(shell, false);
+        //                //if (speed_value > 0) {adapter.setUpSpeed(speed_value);}
+        //            }
+        //        });
+        //        menuUpSpeed.add(itemUpSpeedManualSingle);
 
         //        if (num_entries > 1) {
         //            final MenuItem itemUpSpeedManualShared = new MenuItem(menuUpSpeed, SWT.PUSH);
@@ -265,153 +410,6 @@ public class BTDownloadMediatorAdvancedMenuFactory {
         //            });
         //        }
 
-    }
-
-    public static SkinMenu createAdvancedSubMenu() {
-
-        BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
-
-        if (downloaders.length != 1) {
-            return null;
-        }
-
-        ArrayList<DownloadManager> list = new ArrayList<DownloadManager>(downloaders.length);
-        for (BTDownload downloader : downloaders) {
-            DownloadManager dm = downloader.getDownloadManager();
-            if (dm != null) {
-                list.add(dm);
-            }
-        }
-        
-        if (list.size() == 0) {
-            return null;
-        }
-
-        final DownloadManager[] dms = list.toArray(new DownloadManager[0]);
-
-        boolean upSpeedDisabled = false;
-        long totalUpSpeed = 0;
-        boolean upSpeedUnlimited = false;
-        long upSpeedSetMax = 0;
-
-        boolean downSpeedDisabled = false;
-        long totalDownSpeed = 0;
-        boolean downSpeedUnlimited = false;
-        long downSpeedSetMax = 0;
-
-        for (int i = 0; i < dms.length; i++) {
-            DownloadManager dm = (DownloadManager) dms[i];
-
-            try {
-                int maxul = dm.getStats().getUploadRateLimitBytesPerSecond();
-                if (maxul == 0) {
-                    upSpeedUnlimited = true;
-                } else {
-                    if (maxul > upSpeedSetMax) {
-                        upSpeedSetMax = maxul;
-                    }
-                }
-                if (maxul == -1) {
-                    maxul = 0;
-                    upSpeedDisabled = true;
-                }
-                totalUpSpeed += maxul;
-
-                int maxdl = dm.getStats().getDownloadRateLimitBytesPerSecond();
-                if (maxdl == 0) {
-                    downSpeedUnlimited = true;
-                } else {
-                    if (maxdl > downSpeedSetMax) {
-                        downSpeedSetMax = maxdl;
-                    }
-                }
-                if (maxdl == -1) {
-                    maxdl = 0;
-                    downSpeedDisabled = true;
-                }
-                totalDownSpeed += maxdl;
-
-            } catch (Exception ex) {
-                Debug.printStackTrace(ex);
-            }
-        }
-
-        final SkinMenu menuAdvanced = new SkinMenu(I18n.tr("Advanced"));
-        
-        // advanced > Download Speed Menu //
-
-        long maxDownload = COConfigurationManager.getIntParameter("Max Download Speed KBs", 0) * 1024;
-        long maxUpload = COConfigurationManager.getIntParameter("Max Upload Speed KBs", 0) * 1024;
-
-        addSpeedMenu(menuAdvanced, true, true, downSpeedDisabled, downSpeedUnlimited, totalDownSpeed, downSpeedSetMax, maxDownload, upSpeedDisabled,
-                upSpeedUnlimited, totalUpSpeed, upSpeedSetMax, maxUpload, dms.length, new SpeedAdapter() {
-                    public void setDownSpeed(final int speed) {
-                        for (int i = 0; i < dms.length; i++) {
-                            dms[i].getStats().setDownloadRateLimitBytesPerSecond(speed);
-                        }
-                        //                        DMTask task = new DMTask(dms) {
-                        //                            public void run(DownloadManager dm) {
-                        //                                dm.getStats().setDownloadRateLimitBytesPerSecond(speed);
-                        //                            }
-                        //                        };
-                        //                        task.go();
-                    }
-
-                    public void setUpSpeed(final int speed) {
-                        for (int i = 0; i < dms.length; i++) {
-                            dms[i].getStats().setUploadRateLimitBytesPerSecond(speed);
-                        }
-                        //                        DMTask task = new DMTask(dms) {
-                        //                            public void run(DownloadManager dm) {
-                        //                                dm.getStats().setUploadRateLimitBytesPerSecond(speed);
-                        //                            }
-                        //                        };
-                        //                        task.go();
-                    }
-                });
-
-        return menuAdvanced;
-    }
-    
-    static SkinMenu createAddToPlaylistSubMenu() {
-        BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
-        if (downloaders.length == 0) {
-            return null;
-        }
-
-        for (BTDownload dler : downloaders) {
-            if (!dler.isCompleted()) {
-                return null;
-            }
-
-            File saveLocation = dler.getSaveLocation();
-
-            if (saveLocation.isDirectory()) {
-                //If the file(s) is(are) inside a folder
-                if (!LibraryUtils.directoryContainsAudio(saveLocation)) {
-                    return null;
-                }
-            } else if (!MediaPlayer.isPlayableFile(saveLocation)) {
-                return null;
-            }
-        }
-
-        SkinMenu menu = new SkinMenu(I18n.tr("Add to playlist"));
-
-        menu.add(new SkinMenuItem(new CreateNewPlaylistAction()));
-
-        Library library = LibraryMediator.getLibrary();
-        List<Playlist> playlists = library.getPlaylists();
-
-        if (playlists.size() > 0) {
-            menu.addSeparator();
-
-            for (Playlist playlist : library.getPlaylists()) {
-                menu.add(new SkinMenuItem(new AddToPlaylistAction(playlist)));
-            }
-        }
-
-        return menu;
     }
 
     public interface SpeedAdapter {
