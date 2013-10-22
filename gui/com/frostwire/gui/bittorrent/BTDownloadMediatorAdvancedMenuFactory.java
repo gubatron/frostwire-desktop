@@ -27,6 +27,7 @@ package com.frostwire.gui.bittorrent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +37,11 @@ import javax.swing.JOptionPane;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.gudy.azureus2.core3.torrent.TOTorrent;
+import org.gudy.azureus2.core3.tracker.client.TRTrackerAnnouncer;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
+import org.gudy.azureus2.core3.util.TorrentUtils;
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
@@ -461,8 +465,55 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String s = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Add tracker url"), I18n.tr("Add tracker"), JOptionPane.PLAIN_MESSAGE, null, null, "");
-            System.out.println(s);
+            String urlInput = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Add tracker url"), I18n.tr("Add tracker"), JOptionPane.PLAIN_MESSAGE, null, null, "");
+
+            try {
+                String[] _urls = urlInput.split(",");
+
+                List<String> urls = new ArrayList<String>();
+
+                for (String url : _urls) {
+
+                    url = url.trim();
+
+                    if (url.length() > 0) {
+
+                        try {
+                            new URL(url);
+
+                            urls.add(0, url);
+
+                        } catch (Throwable ex) {
+
+                            Debug.out("Invalid URL: " + url);
+                        }
+                    }
+                }
+
+                //for ( DownloadManager dm: dms ){
+
+                TOTorrent torrent = dm.getTorrent();
+
+                if (torrent != null) {
+
+                    for (String url : urls) {
+
+                        TorrentUtils.announceGroupsInsertFirst(torrent, url);
+                    }
+
+                    TorrentUtils.writeToFile(torrent);
+
+                    TRTrackerAnnouncer announcer = dm.getTrackerClient();
+
+                    if (announcer != null) {
+
+                        announcer.resetTrackerUrl(false);
+                    }
+                }
+                //}
+            } catch (Exception ex) {
+                Debug.printStackTrace(ex);
+            }
         }
     }
 
