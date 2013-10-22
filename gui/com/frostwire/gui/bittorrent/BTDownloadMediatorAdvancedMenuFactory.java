@@ -32,6 +32,7 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JOptionPane;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.download.DownloadManager;
@@ -47,6 +48,8 @@ import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
+import com.frostwire.gui.theme.ThemeMediator;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
 final class BTDownloadMediatorAdvancedMenuFactory {
@@ -458,6 +461,8 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            String s = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Add tracker url"), I18n.tr("Add tracker"), JOptionPane.PLAIN_MESSAGE, null, null, "");
+            System.out.println(s);
         }
     }
 

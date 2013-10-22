@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, 2013, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2013, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -694,7 +694,7 @@ public final class ThemeMediator {
 
         return f;
     }
-    
+
     // code copied from JOptionPane, since I need to override
     // the UI resetInputValue to handle a bug in the Chat nickname
     // dialog. A problem with safeInvokeAndWait.
@@ -729,9 +729,10 @@ public final class ThemeMediator {
         if (value == JOptionPane.UNINITIALIZED_VALUE) {
             return null;
         }
+        
         return value;
     }
-    
+
     private static JDialog createDialog(JOptionPane pane, Component parentComponent, String title, int style) throws HeadlessException {
 
         final JDialog dialog;
@@ -757,7 +758,7 @@ public final class ThemeMediator {
             return (Window) parentComponent;
         return getWindowForComponent(parentComponent.getParent());
     }
-    
+
     private static void initDialog(final JOptionPane pane, final JDialog dialog, int style, Component parentComponent) {
         dialog.setComponentOrientation(pane.getComponentOrientation());
         Container contentPane = dialog.getContentPane();

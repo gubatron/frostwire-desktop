@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2013, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import javax.swing.Action;
 import javax.swing.DropMode;
 import javax.swing.JComponent;
@@ -53,6 +52,7 @@ import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
@@ -536,7 +536,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            String input = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Radio Station's stream URL"), I18n.tr("Add Radio Station"), JOptionPane.PLAIN_MESSAGE, null, null, "");
+            String input = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Radio Station's stream URL"), I18n.tr("Add Radio Station"), JOptionPane.PLAIN_MESSAGE, null, null, "");
             if (!StringUtils.isNullOrEmpty(input, true)) {
                 LibraryUtils.asyncAddRadioStation(input);
             }
