@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2013, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -492,8 +492,6 @@ final class BTDownloadActions {
     }
 
     static class AddToPlaylistAction extends AbstractAction {
-
-        private static final long serialVersionUID = 2785648153922643785L;
 
         private Playlist playlist;
 

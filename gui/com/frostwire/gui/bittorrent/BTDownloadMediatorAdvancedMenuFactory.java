@@ -30,6 +30,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.util.Debug;
@@ -50,25 +53,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
     public static SkinMenu createAdvancedSubMenu() {
 
-        BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
-
-        if (downloaders.length != 1) {
-            return null;
-        }
-
-        ArrayList<DownloadManager> list = new ArrayList<DownloadManager>(downloaders.length);
-        for (BTDownload downloader : downloaders) {
-            DownloadManager dm = downloader.getDownloadManager();
-            if (dm != null) {
-                list.add(dm);
-            }
-        }
-
-        if (list.size() == 0) {
-            return null;
-        }
-
-        final DownloadManager[] dms = list.toArray(new DownloadManager[0]);
+        final DownloadManager[] dms = getSingleSelectedDownloadManagers();
 
         boolean upSpeedDisabled = false;
         long totalUpSpeed = 0;
@@ -150,6 +135,11 @@ final class BTDownloadMediatorAdvancedMenuFactory {
             }
         });
 
+        SkinMenu menuTracker = createTrackerMenu();
+        if (menuTracker != null) {
+            menuAdvanced.add(menuTracker);
+        }
+
         return menuAdvanced;
     }
 
@@ -192,6 +182,44 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         }
 
         return menu;
+    }
+
+    public static SkinMenu createTrackerMenu() {
+        DownloadManager[] dms = getSingleSelectedDownloadManagers();
+        if (dms == null) {
+            return null;
+        }
+
+        SkinMenu menu = new SkinMenu(I18n.tr("Trackers"));
+
+        menu.add(new SkinMenuItem(new AddTrackerAction(dms[0])));
+        menu.add(new SkinMenuItem(new EditTrackersAction(dms[0])));
+        menu.add(new SkinMenuItem(new UpdateTrackerAction(dms[0])));
+        menu.add(new SkinMenuItem(new ScrapeTrackerAction(dms[0])));
+
+        return menu;
+    }
+
+    private static DownloadManager[] getSingleSelectedDownloadManagers() {
+        BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+
+        if (downloaders.length != 1) {
+            return null;
+        }
+
+        ArrayList<DownloadManager> list = new ArrayList<DownloadManager>(downloaders.length);
+        for (BTDownload downloader : downloaders) {
+            DownloadManager dm = downloader.getDownloadManager();
+            if (dm != null) {
+                list.add(dm);
+            }
+        }
+
+        if (list.size() == 0) {
+            return null;
+        }
+
+        return list.toArray(new DownloadManager[0]);
     }
 
     private static void addSpeedMenu(SkinMenu menuAdvanced, boolean isTorrentContext, boolean hasSelection, boolean downSpeedDisabled, boolean downSpeedUnlimited, long totalDownSpeed, long downSpeedSetMax, long maxDownload, boolean upSpeedDisabled, boolean upSpeedUnlimited, long totalUpSpeed,
@@ -416,5 +444,67 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         public void setUpSpeed(int val);
 
         public void setDownSpeed(int val);
+    }
+
+    public static class AddTrackerAction extends AbstractAction {
+
+        private final DownloadManager dm;
+
+        public AddTrackerAction(DownloadManager dm) {
+            this.dm = dm;
+
+            putValue(Action.NAME, I18n.tr("Add Tracker"));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    public static class EditTrackersAction extends AbstractAction {
+
+        private final DownloadManager dm;
+
+        public EditTrackersAction(DownloadManager dm) {
+            this.dm = dm;
+
+            putValue(Action.NAME, I18n.tr("Edit Trackers"));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    public static class UpdateTrackerAction extends AbstractAction {
+
+        private final DownloadManager dm;
+
+        public UpdateTrackerAction(DownloadManager dm) {
+            this.dm = dm;
+
+            putValue(Action.NAME, I18n.tr("Update Tracker"));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dm.requestTrackerAnnounce(false);
+        }
+    }
+
+    public static class ScrapeTrackerAction extends AbstractAction {
+
+        private final DownloadManager dm;
+
+        public ScrapeTrackerAction(DownloadManager dm) {
+            this.dm = dm;
+
+            putValue(Action.NAME, I18n.tr("Scrape Tracker"));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dm.requestTrackerScrape(true);
+        }
     }
 }
