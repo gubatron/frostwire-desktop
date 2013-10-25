@@ -40,10 +40,10 @@ public class MonovaSearchPerformer extends CrawlRegexSearchPerformer<MonovaTempS
         super(token, keywords, timeout, 1, MAX_RESULTS, MAX_RESULTS);
     }
 
-    private static final String REGEX = "(?is)<a href=\"http://www.mnova.eu/torrent/([0-9]*)/";
+    private static final String REGEX = "(?is)<a href=\"http://www.monova.org/torrent/([0-9]*)/([a-z_.0-9]*).html";
     private static final Pattern PATTERN = Pattern.compile(REGEX);
 
-    private static final String HTML_REGEX = "(?is).*<div id=\"downloadbox\"><h2><a href=\"(.*)\" rel=\"nofollow\"><img src=\"http://www.mnova.eu/images/download.png\".*<a href=\"magnet:\\?xt=urn:btih:(.*)\"><b>Magnet</b></a>.*<font color=\"[A-Za-z]*\">(.*)</font> seeds,.*<strong>Total size:</strong>(.*)<br /><strong>Pieces:.*";
+    private static final String HTML_REGEX = "(?is).*<div id=\"downloadbox\"><h2><a href=\"(.*)\" rel=\"nofollow\"><img src=\"http://www.monova.org/images/download.png\".*<a href=\"magnet:\\?xt=urn:btih:(.*)\"><b>Magnet</b></a>.*<font color=\"[A-Za-z]*\">(.*)</font> seeds,.*<strong>Total size:</strong>(.*)<br /><strong>Pieces:.*";
     private static final Pattern HTML_PATTERN = Pattern.compile(HTML_REGEX);
 
     @Override
@@ -54,12 +54,13 @@ public class MonovaSearchPerformer extends CrawlRegexSearchPerformer<MonovaTempS
     @Override
     public MonovaTempSearchResult fromMatcher(Matcher matcher) {
         String itemId = matcher.group(1);
-        return new MonovaTempSearchResult(itemId);
+        String fileName = matcher.group(2);
+        return new MonovaTempSearchResult(itemId, fileName);
     }
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://www.mnova.eu/search.php?sort=5&term=" + encodedKeywords;
+        return "http://www.monova.org/search.php?sort=5&term=" + encodedKeywords;
     }
 
     @Override

@@ -32,9 +32,9 @@ public class MonovaTempSearchResult extends AbstractSearchResult implements Craw
     private final String itemId;
     private final String detailsUrl;
 
-    public MonovaTempSearchResult(String itemId) {
+    public MonovaTempSearchResult(String itemId, String filename) {
         this.itemId = itemId;
-        this.detailsUrl = "http://www.mnova.eu/torrent/" + itemId + "/";
+        this.detailsUrl = "http://www.monova.org/torrent/" + itemId + "/"+filename+".html";
     }
 
     public String getItemId() {
