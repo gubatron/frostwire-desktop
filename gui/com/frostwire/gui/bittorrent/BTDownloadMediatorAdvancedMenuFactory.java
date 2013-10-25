@@ -593,14 +593,15 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         private void changeTrackers(String text) {
             List<String> urls = Arrays.asList(text.split(System.lineSeparator()));
 
-            if (!validateTrackersURLS(urls)) {
+            if (!validateTrackersUrls(urls)) {
                 JOptionPane.showMessageDialog(this, I18n.tr("Check again your tracker URL(s).\n"), I18n.tr("Invalid Tracker URL\n"), JOptionPane.ERROR_MESSAGE);
             } else {
-
+                setTrackersUrls(urls);
+                dispose();
             }
         }
 
-        private boolean validateTrackersURLS(List<String> urls) {
+        private boolean validateTrackersUrls(List<String> urls) {
             if (urls == null || urls.size() == 0) {
                 return false;
             }
@@ -622,9 +623,24 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
             return true;
         }
-    }
 
-    public static void main(String[] argd) {
-        new EditTrackerDialog(null, null).setVisible(true);
+        private void setTrackersUrls(List<String> urls) {
+            List<List<String>> group = new ArrayList<List<String>>();
+            group.add(urls);
+
+            TOTorrent torrent = dm.getTorrent();
+
+            TorrentUtils.listToAnnounceGroups(group, torrent);
+
+            try {
+                TorrentUtils.writeToFile(torrent);
+            } catch (Throwable e) {
+                Debug.printStackTrace(e);
+            }
+
+            if (dm.getTrackerClient() != null) {
+                dm.getTrackerClient().resetTrackerUrl(true);
+            }
+        }
     }
 }
