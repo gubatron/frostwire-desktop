@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@ import com.frostwire.search.clearbits.ClearBitsSearchPerformer;
 import com.frostwire.search.extratorrent.ExtratorrentSearchPerformer;
 import com.frostwire.search.frostclick.FrostClickSearchPerformer;
 import com.frostwire.search.frostclick.UserAgent;
-import com.frostwire.search.isohunt.ISOHuntSearchPerformer;
 import com.frostwire.search.kat.KATSearchPerformer;
 import com.frostwire.search.mininova.MininovaSearchPerformer;
 import com.frostwire.search.monova.MonovaSearchPerformer;
@@ -79,13 +78,6 @@ public abstract class SearchEngine {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
             return new MininovaSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
-        }
-    };
-
-    public static final SearchEngine ISOHUNT = new SearchEngine(ISOHUNT_ID, "ISOHunt", SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED) {
-        @Override
-        public SearchPerformer getPerformer(long token, String keywords) {
-            return new ISOHuntSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
@@ -180,7 +172,7 @@ public abstract class SearchEngine {
     }
 
     public static List<SearchEngine> getEngines() {
-        return Arrays.asList(FROSTCLICK, ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, TPB, MONOVA, SOUNDCLOUD, ARCHIVEORG);
+        return Arrays.asList(FROSTCLICK, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, TPB, MONOVA, SOUNDCLOUD, ARCHIVEORG);
         //return Arrays.asList(FROSTCLICK, ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, VERTOR, TPB, MONOVA, SOUNDCLOUD, ARCHIVEORG);
     }
 
