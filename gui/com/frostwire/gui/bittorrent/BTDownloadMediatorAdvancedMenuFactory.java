@@ -29,8 +29,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -39,6 +43,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -542,7 +547,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
             JLabel labelTitle = new JLabel(I18n.tr("Edit trackers, one by line"));
             panel.add(labelTitle, "cell 0 0");
 
-            JTextArea textTrackers = new JTextArea();
+            final JTextArea textTrackers = new JTextArea();
             JScrollPane scrollPane = new JScrollPane(textTrackers);
             scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
             fillTrackers(textTrackers);
@@ -552,7 +557,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
             buttonAccept.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
+                    changeTrackers(textTrackers.getText());
                 }
             });
             panel.add(buttonAccept, "cell 0 2, split 2, right");
@@ -572,13 +577,50 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         private void fillTrackers(JTextArea textTrackers) {
             TOTorrent torrent = dm.getTorrent();
             List<List<String>> list = TorrentUtils.announceGroupsToList(torrent);
-            List<String> set = new LinkedList<>();
+            Set<String> set = new HashSet<String>();
             for (List<String> group : list) {
-                set.addAll(group);
+                for (String tracker : group) {
+                    set.add(tracker.trim());
+                }
             }
             for (String tracker : set) {
-                textTrackers.append(tracker + "\n\r");
+                if (!StringUtils.isNullOrEmpty(tracker, true)) {
+                    textTrackers.append(tracker.trim() + System.lineSeparator());
+                }
             }
+        }
+
+        private void changeTrackers(String text) {
+            List<String> urls = Arrays.asList(text.split(System.lineSeparator()));
+
+            if (!validateTrackersURLS(urls)) {
+                JOptionPane.showMessageDialog(this, I18n.tr("Check again your tracker URL(s).\n"), I18n.tr("Invalid Tracker URL\n"), JOptionPane.ERROR_MESSAGE);
+            } else {
+
+            }
+        }
+
+        private boolean validateTrackersURLS(List<String> urls) {
+            if (urls == null || urls.size() == 0) {
+                return false;
+            }
+
+            String patternStr = "^(https?|udp)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+            Pattern pattern = Pattern.compile(patternStr);
+
+            for (String tracker_url : urls) {
+
+                if (tracker_url.trim().equals("")) {
+                    continue;
+                }
+
+                Matcher matcher = pattern.matcher(tracker_url.trim());
+                if (!matcher.matches()) {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 
