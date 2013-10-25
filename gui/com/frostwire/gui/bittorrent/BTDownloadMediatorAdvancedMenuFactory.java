@@ -24,21 +24,30 @@
 
 package com.frostwire.gui.bittorrent;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JOptionPane;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+import net.miginfocom.swing.MigLayout;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.tracker.client.TRTrackerAnnouncer;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
 import org.gudy.azureus2.core3.util.TorrentUtils;
@@ -52,8 +61,9 @@ import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
-import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.util.StringUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 
 final class BTDownloadMediatorAdvancedMenuFactory {
@@ -199,7 +209,6 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
         SkinMenu menu = new SkinMenu(I18n.tr("Trackers"));
 
-        menu.add(new SkinMenuItem(new AddTrackerAction(dms[0])));
         menu.add(new SkinMenuItem(new EditTrackersAction(dms[0])));
         menu.add(new SkinMenuItem(new UpdateTrackerAction(dms[0])));
         menu.add(new SkinMenuItem(new ScrapeTrackerAction(dms[0])));
@@ -453,70 +462,6 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         public void setDownSpeed(int val);
     }
 
-    public static class AddTrackerAction extends AbstractAction {
-
-        private final DownloadManager dm;
-
-        public AddTrackerAction(DownloadManager dm) {
-            this.dm = dm;
-
-            putValue(Action.NAME, I18n.tr("Add Tracker"));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String urlInput = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Add tracker url"), I18n.tr("Add tracker"), JOptionPane.PLAIN_MESSAGE, null, null, "");
-
-            try {
-                String[] _urls = urlInput.split(",");
-
-                List<String> urls = new ArrayList<String>();
-
-                for (String url : _urls) {
-
-                    url = url.trim();
-
-                    if (url.length() > 0) {
-
-                        try {
-                            new URL(url);
-
-                            urls.add(0, url);
-
-                        } catch (Throwable ex) {
-
-                            Debug.out("Invalid URL: " + url);
-                        }
-                    }
-                }
-
-                //for ( DownloadManager dm: dms ){
-
-                TOTorrent torrent = dm.getTorrent();
-
-                if (torrent != null) {
-
-                    for (String url : urls) {
-
-                        TorrentUtils.announceGroupsInsertFirst(torrent, url);
-                    }
-
-                    TorrentUtils.writeToFile(torrent);
-
-                    TRTrackerAnnouncer announcer = dm.getTrackerClient();
-
-                    if (announcer != null) {
-
-                        announcer.resetTrackerUrl(false);
-                    }
-                }
-                //}
-            } catch (Exception ex) {
-                Debug.printStackTrace(ex);
-            }
-        }
-    }
-
     public static class EditTrackersAction extends AbstractAction {
 
         private final DownloadManager dm;
@@ -529,6 +474,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            new EditTrackerDialog(GUIMediator.getAppFrame(), dm).setVisible(true);
         }
     }
 
@@ -562,5 +508,81 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         public void actionPerformed(ActionEvent e) {
             dm.requestTrackerScrape(true);
         }
+    }
+
+    private static final class EditTrackerDialog extends JDialog {
+
+        private final DownloadManager dm;
+
+        public EditTrackerDialog(JFrame frame, DownloadManager dm) {
+            super(frame);
+            this.dm = dm;
+            setupUI();
+            setLocationRelativeTo(frame);
+        }
+
+        protected void setupUI() {
+            setTitle("Edit trackers");
+
+            Dimension dim = new Dimension(512, 400);
+
+            setSize(dim);
+            setMinimumSize(dim);
+            setPreferredSize(dim);
+            setResizable(false);
+
+            setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            setModalityType(ModalityType.APPLICATION_MODAL);
+            GUIUtils.addHideAction((JComponent) getContentPane());
+
+            JPanel panel = new JPanel();
+            panel.setLayout(new MigLayout("", "[grow]", //columns
+                    "[top][center, grow][bottom]")); //rows
+
+            JLabel labelTitle = new JLabel(I18n.tr("Edit trackers, one by line"));
+            panel.add(labelTitle, "cell 0 0");
+
+            JTextArea textTrackers = new JTextArea();
+            JScrollPane scrollPane = new JScrollPane(textTrackers);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            fillTrackers(textTrackers);
+            panel.add(scrollPane, "cell 0 1, growx, growy");
+
+            JButton buttonAccept = new JButton(I18n.tr("Accept"));
+            buttonAccept.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+            panel.add(buttonAccept, "cell 0 2, split 2, right");
+
+            JButton buttonCancel = new JButton(I18n.tr("Cancel"));
+            buttonCancel.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    EditTrackerDialog.this.dispose();
+                }
+            });
+            panel.add(buttonCancel);
+
+            setContentPane(panel);
+        }
+
+        private void fillTrackers(JTextArea textTrackers) {
+            TOTorrent torrent = dm.getTorrent();
+            List<List<String>> list = TorrentUtils.announceGroupsToList(torrent);
+            List<String> set = new LinkedList<>();
+            for (List<String> group : list) {
+                set.addAll(group);
+            }
+            for (String tracker : set) {
+                textTrackers.append(tracker + "\n\r");
+            }
+        }
+    }
+
+    public static void main(String[] argd) {
+        new EditTrackerDialog(null, null).setVisible(true);
     }
 }
