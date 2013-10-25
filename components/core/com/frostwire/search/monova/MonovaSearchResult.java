@@ -26,7 +26,7 @@ import java.util.regex.Matcher;
 import org.apache.commons.io.FilenameUtils;
 
 import com.frostwire.search.AbstractFileSearchResult;
-import com.frostwire.search.torrent.TorrentSearchResult;
+import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
 import com.frostwire.util.HtmlManipulator;
 
 /**
@@ -35,7 +35,7 @@ import com.frostwire.util.HtmlManipulator;
  * @author aldenml
  *
  */
-public class MonovaSearchResult extends AbstractFileSearchResult implements TorrentSearchResult {
+public class MonovaSearchResult extends AbstractFileSearchResult implements TorrentCrawlableSearchResult {
 
     private final static long[] BYTE_MULTIPLIERS = new long[] { 1, 2 << 9, 2 << 19, 2 << 29, 2 << 39, 2 << 49 };
 
@@ -71,7 +71,7 @@ public class MonovaSearchResult extends AbstractFileSearchResult implements Torr
         this.detailsUrl = detailsUrl;
         this.torrentUrl = matcher.group(1);
         this.filename = FilenameUtils.getName(torrentUrl);
-        this.displayName = HtmlManipulator.replaceHtmlEntities(filename);
+        this.displayName = HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename));
         this.infoHash = matcher.group(2).split("&")[0];
         this.creationTime = parseCreationTime(torrentUrl);
         this.size = parseSize(matcher.group(4));
@@ -166,5 +166,10 @@ public class MonovaSearchResult extends AbstractFileSearchResult implements Torr
     @Override
     public String getTorrentUrl() {
         return torrentUrl;
+    }
+
+    @Override
+    public boolean isComplete() {
+        return true;
     }
 }
