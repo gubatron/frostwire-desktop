@@ -18,16 +18,10 @@
 
 package com.frostwire.search.bitsnoop;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import com.frostwire.search.CrawlRegexSearchPerformer;
 import com.frostwire.search.CrawlableSearchResult;
-import com.frostwire.search.PerformersHelper;
-import com.frostwire.search.SearchResult;
-import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
+import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
 
 /**
  * 
@@ -35,23 +29,19 @@ import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
  * @author aldenml
  *
  */
-public class BitSnoopSearchPerformer extends CrawlRegexSearchPerformer<CrawlableSearchResult> {
+public class BitSnoopSearchPerformer extends TorrentRegexSearchPerformer<BitSnoopSearchResult> {
 
     private static final int MAX_RESULTS = 10;
+    private static final String REGEX = "(?is)<span class=\"icon cat.*?</span> <a href=\"(.*?)\">.*?<div class=\"torInfo\"";
+    private static final String HTML_REGEX = "(?is).*?Help</a>, <a href=\"magnet:.*?urn:btih:(.*?)&dn=(.*?)\" onclick=\".*?Magnet</a>.*?<a href=\"(.*?)\" title=\".*?\" class=\"dlbtn.*?title=\"Torrent Size\"><strong>(.*?)</strong>.*?<span class=\"seeders\" title=\"Seeders\">(.*?)</span>.*?<li>Added to index &#8212; (.*?) \\(.*? ago\\)</li>.*?";
 
     public BitSnoopSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS);
+        super(token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX);
     }
 
-    private static final String REGEX = "(?is)<span class=\"icon cat.*?href=\"(.*?)\">.*?<div class=\"torInfo\"";
-    private static final Pattern PATTERN = Pattern.compile(REGEX);
-
-    private static final String HTML_REGEX = "(?is).*?Help</a>, <a href=\"magnet:.*?urn:btih:(.*?)&dn=(.*?)\" onclick=\".*?Magnet</a>.*?<a href=\"(.*?)\" title=\".*?\" class=\"dlbtn.*?title=\"Torrent Size\"><strong>(.*?)</strong>.*?<span class=\"seeders\" title=\"Seeders\">(.*?)</span>.*?<li>Added to index &#8212; (.*?) \\(.*? ago\\)</li>.*?";
-    private static final Pattern HTML_PATTERN = Pattern.compile(HTML_REGEX);
-
     @Override
-    public Pattern getPattern() {
-        return PATTERN;
+    protected String getUrl(int page, String encodedKeywords) {
+        return "http://bitsnoop.com/search/all/" + encodedKeywords + "/c/d/" + page + "/";
     }
 
     @Override
@@ -61,39 +51,7 @@ public class BitSnoopSearchPerformer extends CrawlRegexSearchPerformer<Crawlable
     }
 
     @Override
-    protected String getUrl(int page, String encodedKeywords) {
-        return "http://bitsnoop.com/search/all/" + encodedKeywords + "/c/d/" + page + "/";
-    }
-
-    @Override
-    protected String getCrawlUrl(CrawlableSearchResult sr) {
-        String crawlUrl = null;
-
-        if (sr instanceof BitSnoopTempSearchResult) {
-            crawlUrl = sr.getDetailsUrl();
-        } else if (sr instanceof BitSnoopSearchResult) {
-            crawlUrl = ((BitSnoopSearchResult) sr).getTorrentUrl();
-        }
-
-        return crawlUrl;
-    }
-
-    @Override
-    protected List<? extends SearchResult> crawlResult(CrawlableSearchResult sr, byte[] data) throws Exception {
-        List<SearchResult> list = new LinkedList<SearchResult>();
-
-        if (sr instanceof BitSnoopTempSearchResult) {
-            String html = new String(data, "UTF-8");
-
-            Matcher matcher = HTML_PATTERN.matcher(html);
-
-            if (matcher.find()) {
-                list.add(new BitSnoopSearchResult(sr.getDetailsUrl(), matcher));
-            }
-        } else if (sr instanceof BitSnoopSearchResult) {
-            list.addAll(PerformersHelper.crawlTorrent(this, (TorrentCrawlableSearchResult) sr, data));
-        }
-
-        return list;
+    protected BitSnoopSearchResult fromHtmlMatcher(CrawlableSearchResult sr, Matcher matcher) {
+        return new BitSnoopSearchResult(sr.getDetailsUrl(), matcher);
     }
 }
