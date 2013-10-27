@@ -25,8 +25,7 @@ import java.util.regex.Matcher;
 
 import org.apache.commons.io.FilenameUtils;
 
-import com.frostwire.search.AbstractFileSearchResult;
-import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
+import com.frostwire.search.torrent.AbstractTorrentSearchResult;
 import com.frostwire.util.HtmlManipulator;
 
 /**
@@ -35,7 +34,7 @@ import com.frostwire.util.HtmlManipulator;
  * @author aldenml
  *
  */
-public class MonovaSearchResult extends AbstractFileSearchResult implements TorrentCrawlableSearchResult {
+public class MonovaSearchResult extends AbstractTorrentSearchResult {
 
     private final static long[] BYTE_MULTIPLIERS = new long[] { 1, 2 << 9, 2 << 19, 2 << 29, 2 << 39, 2 << 49 };
 
@@ -166,10 +165,5 @@ public class MonovaSearchResult extends AbstractFileSearchResult implements Torr
     @Override
     public String getTorrentUrl() {
         return torrentUrl;
-    }
-
-    @Override
-    public boolean isComplete() {
-        return true;
     }
 }
