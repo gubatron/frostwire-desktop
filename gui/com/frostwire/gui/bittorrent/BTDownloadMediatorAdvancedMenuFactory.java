@@ -76,6 +76,9 @@ final class BTDownloadMediatorAdvancedMenuFactory {
     public static SkinMenu createAdvancedSubMenu() {
 
         final DownloadManager[] dms = getSingleSelectedDownloadManagers();
+        if (dms == null) {
+            return null;
+        }
 
         boolean upSpeedDisabled = false;
         long totalUpSpeed = 0;

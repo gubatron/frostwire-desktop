@@ -35,6 +35,7 @@ import com.frostwire.search.mininova.MininovaSearchPerformer;
 import com.frostwire.search.monova.MonovaSearchPerformer;
 import com.frostwire.search.soundcloud.SoundcloudSearchPerformer;
 import com.frostwire.search.tbp.TPBSearchPerformer;
+import com.frostwire.search.torlock.TorLockSearchPerformer;
 import com.frostwire.search.youtube2.YouTubeSearchPerformer;
 import com.limegroup.gnutella.settings.SearchEnginesSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -65,7 +66,8 @@ public abstract class SearchEngine {
     public static final int ARCHIVEORG_ID = 11;
     public static final int FROSTCLICK_ID = 12;
     public static final int BITSNOOP_ID = 13;
-    
+    public static final int TORLOCK_ID = 14;
+
     public static final SearchEngine CLEARBITS = new SearchEngine(CLEARBITS_ID, "ClearBits", SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
@@ -128,8 +130,7 @@ public abstract class SearchEngine {
             return new ArchiveorgSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
         }
     };
-    
-    
+
     public static final SearchEngine FROSTCLICK = new SearchEngine(FROSTCLICK_ID, "FrostClick", SearchEnginesSettings.FROSTCLICK_SEARCH_ENABLED) {
         private final UserAgent userAgent = new UserAgent(org.limewire.util.OSUtils.getFullOS(), FrostWireUtils.getFrostWireVersion(), String.valueOf(FrostWireUtils.getBuildNumber()));
 
@@ -138,14 +139,20 @@ public abstract class SearchEngine {
             return new FrostClickSearchPerformer(token, keywords, DEFAULT_TIMEOUT, userAgent);
         }
     };
-    
+
     public static final SearchEngine BITSNOOP = new SearchEngine(BITSNOOP_ID, "BitSnoop", SearchEnginesSettings.BITSNOOP_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
             return new BitSnoopSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
         }
-    };    
-        
+    };
+
+    public static final SearchEngine TORLOCK = new SearchEngine(TORLOCK_ID, "TorLock", SearchEnginesSettings.TORLOCK_SEARCH_ENABLED) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            return new TorLockSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
 
     private SearchEngine(int id, String name, BooleanSetting setting) {
         _id = id;
@@ -171,8 +178,7 @@ public abstract class SearchEngine {
     }
 
     public static List<SearchEngine> getEngines() {
-        return Arrays.asList(FROSTCLICK, YOUTUBE, BITSNOOP, CLEARBITS, MININOVA, KAT, EXTRATORRENT, TPB, MONOVA, SOUNDCLOUD, ARCHIVEORG);
-        //return Arrays.asList(FROSTCLICK, ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, VERTOR, TPB, MONOVA, SOUNDCLOUD, ARCHIVEORG);
+        return Arrays.asList(FROSTCLICK, YOUTUBE, BITSNOOP, CLEARBITS, MININOVA, KAT, EXTRATORRENT, TPB, MONOVA, SOUNDCLOUD, ARCHIVEORG, TORLOCK);
     }
 
     public abstract SearchPerformer getPerformer(long token, String keywords);
