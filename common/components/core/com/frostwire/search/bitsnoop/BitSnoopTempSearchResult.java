@@ -16,51 +16,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.search.vertor;
+package com.frostwire.search.bitsnoop;
 
-import com.frostwire.search.torrent.ComparableTorrentJsonItem;
+import com.frostwire.search.AbstractSearchResult;
+import com.frostwire.search.CrawlableSearchResult;
 
-/*
-{ "results":[
-   {"name":"...",
-   "cdate":"8 Jun 11",
-   "seeds":"733",
-   "leechers":"287",
-   "size":"105166808",
-   "url":"...",
-   "download":"...",
-   "category":"Music"},
-*/
 /**
+ * 
  * @author gubatron
  * @author aldenml
  *
  */
-public class VertorItem implements ComparableTorrentJsonItem {
+public class BitSnoopTempSearchResult extends AbstractSearchResult implements CrawlableSearchResult {
 
-    public String name;
+    private final String itemId;
+    private final String detailsUrl;
 
-    public String cdate;
+    public BitSnoopTempSearchResult(String itemId) {
+        this.itemId = itemId;
+        this.detailsUrl = "http://bitsnoop.com" + itemId;
+    }
 
-    public String seeds;
-
-    public String leechers;
-
-    public String size;
-
-    public String url;
-
-    public String download;
-
-    public String category;
+    public String getItemId() {
+        return itemId;
+    }
 
     @Override
-    public int getSeeds() {
-        int result = 0;
-        try {
-            result = Integer.valueOf(seeds);
-        } catch (Exception e) {
-        }
-        return result;
+    public String getDisplayName() {
+        return null;
+    }
+
+    @Override
+    public String getDetailsUrl() {
+        return detailsUrl;
+    }
+
+    @Override
+    public String getSource() {
+        return null;
+    }
+
+    @Override
+    public boolean isComplete() {
+        return false;
     }
 }

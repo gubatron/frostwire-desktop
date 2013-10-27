@@ -16,9 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.search.monova;
+package com.frostwire.search.bitsnoop;
 
-import java.util.Calendar;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -27,6 +29,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.frostwire.search.torrent.AbstractTorrentSearchResult;
 import com.frostwire.util.HtmlManipulator;
+import com.frostwire.util.StringUtils;
 
 /**
  * 
@@ -34,7 +37,7 @@ import com.frostwire.util.HtmlManipulator;
  * @author aldenml
  *
  */
-public class MonovaSearchResult extends AbstractTorrentSearchResult {
+public class BitSnoopSearchResult extends AbstractTorrentSearchResult {
 
     private final static long[] BYTE_MULTIPLIERS = new long[] { 1, 2 << 9, 2 << 19, 2 << 29, 2 << 39, 2 << 49 };
 
@@ -59,67 +62,15 @@ public class MonovaSearchResult extends AbstractTorrentSearchResult {
     private long creationTime;
     private int seeds;
 
-    public MonovaSearchResult(String detailsUrl, Matcher matcher) {
-        /*
-         * Matcher groups cheatsheet
-         * 1 -> .torrent URL
-         * 2 -> infoHash
-         * 3 -> seeds
-         * 4 -> SIZE (B|KiB|MiBGiB)
-         */
+    public BitSnoopSearchResult(String detailsUrl, Matcher matcher) {
         this.detailsUrl = detailsUrl;
-        this.torrentUrl = matcher.group(1);
-        this.filename = FilenameUtils.getName(torrentUrl);
-        this.displayName = HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename));
-        this.infoHash = matcher.group(2).split("&")[0];
-        this.creationTime = parseCreationTime(torrentUrl);
+        this.infoHash = matcher.group(1);
+        this.filename = parseFileName(matcher.group(2), FilenameUtils.getBaseName(detailsUrl));
+        this.torrentUrl = matcher.group(3);
         this.size = parseSize(matcher.group(4));
-        this.seeds = parseSeeds(matcher.group(3));
-
-        // Monova can't handle direct download of torrents without some sort of cookie
-        // torrentURI = "magnet:?xt=urn:btih:" + infoHash;
-    }
-
-    private long parseSize(String group) {
-        String[] size = group.trim().split(" ");
-        String amount = size[0].trim();
-        String unit = size[1].trim();
-
-        long multiplier = BYTE_MULTIPLIERS[UNIT_TO_BYTE_MULTIPLIERS_MAP.get(unit)];
-
-        //fractional size
-        if (amount.indexOf(".") > 0) {
-            float floatAmount = Float.parseFloat(amount);
-            return (long) (floatAmount * multiplier);
-        }
-        //integer based size
-        else {
-            int intAmount = Integer.parseInt(amount);
-            return (long) (intAmount * multiplier);
-        }
-    }
-
-    private int parseSeeds(String group) {
-        try {
-            return Integer.parseInt(group);
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-    private long parseCreationTime(String torrentDetailsUrl) {
-
-        String[] arr = torrentDetailsUrl.split("/");
-        arr = arr[6].split("-");
-
-        int year = Integer.parseInt(arr[0]);
-        int month = Integer.parseInt(arr[1]);
-        int date = Integer.parseInt(arr[2]);
-
-        Calendar instance = Calendar.getInstance();
-        instance.clear();
-        instance.set(year, month, date);
-        return instance.getTimeInMillis();
+        this.seeds = parseSeeds(matcher.group(5));
+        this.creationTime = parseCreationTime(matcher.group(6));
+        this.displayName = HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename));
     }
 
     @Override
@@ -134,7 +85,7 @@ public class MonovaSearchResult extends AbstractTorrentSearchResult {
 
     @Override
     public String getSource() {
-        return "Monova";
+        return "BitSnoop";
     }
 
     @Override
@@ -165,5 +116,54 @@ public class MonovaSearchResult extends AbstractTorrentSearchResult {
     @Override
     public String getTorrentUrl() {
         return torrentUrl;
+    }
+
+    private String parseFileName(String urlEncodedFileName, String fallbackName) {
+        String decodedFileName = fallbackName;
+        try {
+            if (!StringUtils.isNullOrEmpty(urlEncodedFileName)) {
+                decodedFileName = URLDecoder.decode(urlEncodedFileName, "UTF-8");
+            }
+        } catch (UnsupportedEncodingException e) {
+        }
+        return decodedFileName + ".torrent";
+    }
+
+    private long parseSize(String group) {
+        String[] size = group.trim().split(" ");
+        String amount = size[0].trim();
+        String unit = size[1].trim();
+
+        long multiplier = BYTE_MULTIPLIERS[UNIT_TO_BYTE_MULTIPLIERS_MAP.get(unit)];
+
+        //fractional size
+        if (amount.indexOf(".") > 0) {
+            float floatAmount = Float.parseFloat(amount);
+            return (long) (floatAmount * multiplier);
+        }
+        //integer based size
+        else {
+            int intAmount = Integer.parseInt(amount);
+            return (long) (intAmount * multiplier);
+        }
+    }
+
+    private int parseSeeds(String group) {
+        try {
+            return Integer.parseInt(group);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    //dateString looks like 25-OCT-13
+    private long parseCreationTime(String dateString) {
+        long result = System.currentTimeMillis();
+        try {
+            SimpleDateFormat myFormat = new SimpleDateFormat("dd-MMM-yy");
+            result = myFormat.parse(dateString).getTime();
+        } catch (Throwable t) {
+        }
+        return result;
     }
 }

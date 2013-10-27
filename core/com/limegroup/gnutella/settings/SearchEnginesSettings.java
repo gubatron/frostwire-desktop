@@ -37,8 +37,6 @@ public class SearchEnginesSettings extends LimeProps {
 
     public static final BooleanSetting EXTRATORRENT_SEARCH_ENABLED = FACTORY.createBooleanSetting("EXTRATORRENT_SEARCH2_ENABLED", true);
 
-    public static final BooleanSetting VERTOR_SEARCH_ENABLED = FACTORY.createBooleanSetting("VERTOR_SEARCH2_ENABLED", true);
-
     public static final BooleanSetting TPB_SEARCH_ENABLED = FACTORY.createBooleanSetting("TPB_SEARCH2_ENABLED", true);
 
     public static final BooleanSetting MONOVA_SEARCH_ENABLED = FACTORY.createBooleanSetting("MONOVA_SEARCH2_ENABLED", true);
@@ -50,4 +48,7 @@ public class SearchEnginesSettings extends LimeProps {
     public static final BooleanSetting ARCHIVEORG_SEARCH_ENABLED = FACTORY.createBooleanSetting("ARCHIVEORG_SEARCH2_ENABLED", true);
 
     public static final BooleanSetting FROSTCLICK_SEARCH_ENABLED = FACTORY.createBooleanSetting("FROSTCLICK_SEARCH_ENABLED", true);
+
+    public static final BooleanSetting BITSNOOP_SEARCH_ENABLED = FACTORY.createBooleanSetting("BITSNOOP_SEARCH_ENABLED", true);
+    
 }
