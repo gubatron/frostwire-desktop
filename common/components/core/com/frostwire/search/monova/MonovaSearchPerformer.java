@@ -24,7 +24,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.frostwire.search.CrawlRegexSearchPerformer;
+import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.PerformersHelper;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
 
 /**
  * 
@@ -32,15 +35,15 @@ import com.frostwire.search.SearchResult;
  * @author aldenml
  *
  */
-public class MonovaSearchPerformer extends CrawlRegexSearchPerformer<MonovaTempSearchResult> {
+public class MonovaSearchPerformer extends CrawlRegexSearchPerformer<CrawlableSearchResult> {
 
     private static final int MAX_RESULTS = 10;
 
     public MonovaSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1, MAX_RESULTS, MAX_RESULTS);
+        super(token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS);
     }
 
-    private static final String REGEX = "(?is)<a href=\"http://www.monova.org/torrent/([0-9]*)/([a-z_.0-9]*).html";
+    private static final String REGEX = "(?is)<a href=\"http://www.monova.org/torrent/([0-9]*?)/(.*?).html";
     private static final Pattern PATTERN = Pattern.compile(REGEX);
 
     private static final String HTML_REGEX = "(?is).*<div id=\"downloadbox\"><h2><a href=\"(.*)\" rel=\"nofollow\"><img src=\"http://www.monova.org/images/download.png\".*<a href=\"magnet:\\?xt=urn:btih:(.*)\"><b>Magnet</b></a>.*<font color=\"[A-Za-z]*\">(.*)</font> seeds,.*<strong>Total size:</strong>(.*)<br /><strong>Pieces:.*";
@@ -52,7 +55,7 @@ public class MonovaSearchPerformer extends CrawlRegexSearchPerformer<MonovaTempS
     }
 
     @Override
-    public MonovaTempSearchResult fromMatcher(Matcher matcher) {
+    public CrawlableSearchResult fromMatcher(Matcher matcher) {
         String itemId = matcher.group(1);
         String fileName = matcher.group(2);
         return new MonovaTempSearchResult(itemId, fileName);
@@ -64,20 +67,33 @@ public class MonovaSearchPerformer extends CrawlRegexSearchPerformer<MonovaTempS
     }
 
     @Override
-    protected String getCrawlUrl(MonovaTempSearchResult sr) {
-        return sr.getDetailsUrl();
+    protected String getCrawlUrl(CrawlableSearchResult sr) {
+        String crawlUrl = null;
+
+        if (sr instanceof MonovaTempSearchResult) {
+            crawlUrl = sr.getDetailsUrl();
+        } else if (sr instanceof MonovaSearchResult) {
+            crawlUrl = ((MonovaSearchResult) sr).getTorrentUrl();
+        }
+
+        return crawlUrl;
     }
 
     @Override
-    protected List<? extends SearchResult> crawlResult(MonovaTempSearchResult sr, byte[] data) throws Exception {
-        List<MonovaSearchResult> list = new LinkedList<MonovaSearchResult>();
+    protected List<? extends SearchResult> crawlResult(CrawlableSearchResult sr, byte[] data) throws Exception {
+        List<SearchResult> list = new LinkedList<SearchResult>();
 
-        String html = new String(data, "UTF-8");
+        if (sr instanceof MonovaTempSearchResult) {
+            String html = new String(data, "UTF-8");
 
-        Matcher matcher = HTML_PATTERN.matcher(html);
+            Matcher matcher = HTML_PATTERN.matcher(html);
 
-        if (matcher.find()) {
-            list.add(new MonovaSearchResult(sr.getDetailsUrl(), matcher));
+            if (matcher.find()) {
+                list.add(new MonovaSearchResult(sr.getDetailsUrl(), matcher));
+            }
+
+        } else if (sr instanceof MonovaSearchResult) {
+            list.addAll(PerformersHelper.crawlTorrent(this, (TorrentCrawlableSearchResult) sr, data));
         }
 
         return list;
