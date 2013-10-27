@@ -34,7 +34,7 @@ public class MonovaTempSearchResult extends AbstractSearchResult implements Craw
 
     public MonovaTempSearchResult(String itemId, String filename) {
         this.itemId = itemId;
-        this.detailsUrl = "http://www.monova.org/torrent/" + itemId + "/"+filename+".html";
+        this.detailsUrl = "http://www.monova.org/torrent/" + itemId + "/" + filename + ".html";
     }
 
     public String getItemId() {
@@ -53,7 +53,7 @@ public class MonovaTempSearchResult extends AbstractSearchResult implements Craw
 
     @Override
     public String getSource() {
-        return "Monova";
+        return null;
     }
 
     @Override
