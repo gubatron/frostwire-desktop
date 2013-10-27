@@ -27,8 +27,7 @@ import java.util.regex.Matcher;
 
 import org.apache.commons.io.FilenameUtils;
 
-import com.frostwire.search.AbstractFileSearchResult;
-import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
+import com.frostwire.search.torrent.AbstractTorrentSearchResult;
 import com.frostwire.util.HtmlManipulator;
 import com.frostwire.util.StringUtils;
 
@@ -38,7 +37,7 @@ import com.frostwire.util.StringUtils;
  * @author aldenml
  *
  */
-public class BitSnoopSearchResult extends AbstractFileSearchResult implements TorrentCrawlableSearchResult {
+public class BitSnoopSearchResult extends AbstractTorrentSearchResult {
 
     private final static long[] BYTE_MULTIPLIERS = new long[] { 1, 2 << 9, 2 << 19, 2 << 29, 2 << 39, 2 << 49 };
 
@@ -72,6 +71,51 @@ public class BitSnoopSearchResult extends AbstractFileSearchResult implements To
         this.seeds = parseSeeds(matcher.group(5));
         this.creationTime = parseCreationTime(matcher.group(6));
         this.displayName = HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename));
+    }
+
+    @Override
+    public long getSize() {
+        return size;
+    }
+
+    @Override
+    public long getCreationTime() {
+        return creationTime;
+    }
+
+    @Override
+    public String getSource() {
+        return "BitSnoop";
+    }
+
+    @Override
+    public String getHash() {
+        return infoHash;
+    }
+
+    @Override
+    public int getSeeds() {
+        return seeds;
+    }
+
+    @Override
+    public String getDetailsUrl() {
+        return detailsUrl;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    @Override
+    public String getFilename() {
+        return filename;
+    }
+
+    @Override
+    public String getTorrentUrl() {
+        return torrentUrl;
     }
 
     private String parseFileName(String urlEncodedFileName, String fallbackName) {
@@ -121,55 +165,5 @@ public class BitSnoopSearchResult extends AbstractFileSearchResult implements To
         } catch (Throwable t) {
         }
         return result;
-    }
-
-    @Override
-    public long getSize() {
-        return size;
-    }
-
-    @Override
-    public long getCreationTime() {
-        return creationTime;
-    }
-
-    @Override
-    public String getSource() {
-        return "BitSnoop";
-    }
-
-    @Override
-    public String getHash() {
-        return infoHash;
-    }
-
-    @Override
-    public int getSeeds() {
-        return seeds;
-    }
-
-    @Override
-    public String getDetailsUrl() {
-        return detailsUrl;
-    }
-
-    @Override
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    @Override
-    public String getFilename() {
-        return filename;
-    }
-
-    @Override
-    public String getTorrentUrl() {
-        return torrentUrl;
-    }
-
-    @Override
-    public boolean isComplete() {
-        return true;
     }
 }

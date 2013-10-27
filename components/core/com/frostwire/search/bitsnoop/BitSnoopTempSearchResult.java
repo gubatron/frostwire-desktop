@@ -34,7 +34,7 @@ public class BitSnoopTempSearchResult extends AbstractSearchResult implements Cr
 
     public BitSnoopTempSearchResult(String itemId) {
         this.itemId = itemId;
-        this.detailsUrl = "http://bitsnoop.com" + itemId ;
+        this.detailsUrl = "http://bitsnoop.com" + itemId;
     }
 
     public String getItemId() {
@@ -53,7 +53,7 @@ public class BitSnoopTempSearchResult extends AbstractSearchResult implements Cr
 
     @Override
     public String getSource() {
-        return "BitSnoop";
+        return null;
     }
 
     @Override

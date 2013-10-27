@@ -31,6 +31,7 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import javax.net.ssl.HostnameVerifier;
@@ -244,6 +245,9 @@ final class FWHttpClient implements HttpClient {
         }
 
         InputStream in = conn.getInputStream();
+        if ("gzip".equals(conn.getContentEncoding())) {
+            in = new GZIPInputStream(in);
+        }
 
         int httpResponseCode = getResponseCode(conn);
 

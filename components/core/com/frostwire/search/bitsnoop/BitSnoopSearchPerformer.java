@@ -24,7 +24,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.frostwire.search.CrawlRegexSearchPerformer;
+import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.PerformersHelper;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
 
 /**
  * 
@@ -32,15 +35,14 @@ import com.frostwire.search.SearchResult;
  * @author aldenml
  *
  */
-public class BitSnoopSearchPerformer extends CrawlRegexSearchPerformer<BitSnoopTempSearchResult> {
+public class BitSnoopSearchPerformer extends CrawlRegexSearchPerformer<CrawlableSearchResult> {
 
     private static final int MAX_RESULTS = 10;
 
     public BitSnoopSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1, MAX_RESULTS, MAX_RESULTS);
+        super(token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS);
     }
 
-    
     private static final String REGEX = "(?is)<span class=\"icon cat.*?href=\"(.*?)\">.*?<div class=\"torInfo\"";
     private static final Pattern PATTERN = Pattern.compile(REGEX);
 
@@ -53,31 +55,43 @@ public class BitSnoopSearchPerformer extends CrawlRegexSearchPerformer<BitSnoopT
     }
 
     @Override
-    public BitSnoopTempSearchResult fromMatcher(Matcher matcher) {
+    public CrawlableSearchResult fromMatcher(Matcher matcher) {
         String itemId = matcher.group(1);
         return new BitSnoopTempSearchResult(itemId);
     }
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://bitsnoop.com/search/all/"+encodedKeywords+"/c/d/"+page+"/";
+        return "http://bitsnoop.com/search/all/" + encodedKeywords + "/c/d/" + page + "/";
     }
 
     @Override
-    protected String getCrawlUrl(BitSnoopTempSearchResult sr) {
-        return sr.getDetailsUrl();
+    protected String getCrawlUrl(CrawlableSearchResult sr) {
+        String crawlUrl = null;
+
+        if (sr instanceof BitSnoopTempSearchResult) {
+            crawlUrl = sr.getDetailsUrl();
+        } else if (sr instanceof BitSnoopSearchResult) {
+            crawlUrl = ((BitSnoopSearchResult) sr).getTorrentUrl();
+        }
+
+        return crawlUrl;
     }
 
     @Override
-    protected List<? extends SearchResult> crawlResult(BitSnoopTempSearchResult sr, byte[] data) throws Exception {
-        List<BitSnoopSearchResult> list = new LinkedList<BitSnoopSearchResult>();
+    protected List<? extends SearchResult> crawlResult(CrawlableSearchResult sr, byte[] data) throws Exception {
+        List<SearchResult> list = new LinkedList<SearchResult>();
 
-        String html = new String(data, "UTF-8");
+        if (sr instanceof BitSnoopTempSearchResult) {
+            String html = new String(data, "UTF-8");
 
-        Matcher matcher = HTML_PATTERN.matcher(html);
+            Matcher matcher = HTML_PATTERN.matcher(html);
 
-        if (matcher.find()) {
-            list.add(new BitSnoopSearchResult(sr.getDetailsUrl(), matcher));
+            if (matcher.find()) {
+                list.add(new BitSnoopSearchResult(sr.getDetailsUrl(), matcher));
+            }
+        } else if (sr instanceof BitSnoopSearchResult) {
+            list.addAll(PerformersHelper.crawlTorrent(this, (TorrentCrawlableSearchResult) sr, data));
         }
 
         return list;
