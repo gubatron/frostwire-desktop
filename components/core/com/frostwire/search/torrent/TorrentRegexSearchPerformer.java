@@ -53,7 +53,7 @@ public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResul
     protected String getCrawlUrl(CrawlableSearchResult sr) {
         String crawlUrl = null;
 
-        if (TorrentCrawlableSearchResult.class.isAssignableFrom(sr.getClass())) {
+        if (sr instanceof TorrentCrawlableSearchResult) {
             crawlUrl = ((TorrentCrawlableSearchResult) sr).getTorrentUrl();
         } else {
             crawlUrl = sr.getDetailsUrl();
@@ -66,7 +66,7 @@ public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResul
     protected List<? extends SearchResult> crawlResult(CrawlableSearchResult sr, byte[] data) throws Exception {
         List<SearchResult> list = new LinkedList<SearchResult>();
 
-        if (TorrentCrawlableSearchResult.class.isAssignableFrom(sr.getClass())) {
+        if (sr instanceof TorrentCrawlableSearchResult) {
             list.addAll(PerformersHelper.crawlTorrent(this, (TorrentCrawlableSearchResult) sr, data));
         } else {
             String html = new String(data, "UTF-8");
