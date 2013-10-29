@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,9 +32,9 @@ public class MonovaTempSearchResult extends AbstractSearchResult implements Craw
     private final String itemId;
     private final String detailsUrl;
 
-    public MonovaTempSearchResult(String itemId) {
+    public MonovaTempSearchResult(String itemId, String filename) {
         this.itemId = itemId;
-        this.detailsUrl = "http://www.mnova.eu/torrent/" + itemId + "/";
+        this.detailsUrl = "http://www.monova.org/torrent/" + itemId + "/" + filename + ".html";
     }
 
     public String getItemId() {
@@ -53,7 +53,7 @@ public class MonovaTempSearchResult extends AbstractSearchResult implements Craw
 
     @Override
     public String getSource() {
-        return "Monova";
+        return null;
     }
 
     @Override

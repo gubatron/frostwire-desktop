@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -171,7 +171,7 @@ public class LibraryUtils {
     }
 
     public static void createNewPlaylist(final List<? extends AbstractLibraryTableDataLine<?>> lines) {
-        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(lines));
+        String playlistName = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(lines));
 
         if (playlistName != null && playlistName.length() > 0) {
             final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
@@ -195,22 +195,20 @@ public class LibraryUtils {
         createNewPlaylist(files, false);
     }
 
-    
-    
     public static void createNewPlaylist(final File[] files, final boolean starred) {
 
         final StringBuilder plBuilder = new StringBuilder();
 
-//        GUIMediator.safeInvokeAndWait(new Runnable() {
-//
-//            @Override
-//            public void run() {
-          String input = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(files));
-                if (!StringUtils.isNullOrEmpty(input, true)) {
-                    plBuilder.append(input);
-                }
-//            }
-//        });
+        //        GUIMediator.safeInvokeAndWait(new Runnable() {
+        //
+        //            @Override
+        //            public void run() {
+        String input = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(files));
+        if (!StringUtils.isNullOrEmpty(input, true)) {
+            plBuilder.append(input);
+        }
+        //            }
+        //        });
 
         String playlistName = plBuilder.toString();
 
@@ -241,7 +239,7 @@ public class LibraryUtils {
             }, "createNewPlaylist");
             t.setDaemon(true);
             t.start();
-            
+
             UXStats.instance().log(UXAction.LIBRARY_PLAYLIST_CREATED);
         }
     }
@@ -271,7 +269,7 @@ public class LibraryUtils {
             t.setDaemon(true);
             t.start();
         } else {
-            String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(playlistItems));
+            String playlistName = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(playlistItems));
 
             if (playlistName != null && playlistName.length() > 0) {
                 final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);

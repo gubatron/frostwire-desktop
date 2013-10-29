@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,13 +18,10 @@
 
 package com.frostwire.search.monova;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import com.frostwire.search.CrawlRegexSearchPerformer;
-import com.frostwire.search.SearchResult;
+import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
 
 /**
  * 
@@ -32,53 +29,30 @@ import com.frostwire.search.SearchResult;
  * @author aldenml
  *
  */
-public class MonovaSearchPerformer extends CrawlRegexSearchPerformer<MonovaTempSearchResult> {
+public class MonovaSearchPerformer extends TorrentRegexSearchPerformer<MonovaSearchResult> {
 
     private static final int MAX_RESULTS = 10;
+    private static final String REGEX = "(?is)<a href=\"http://www.monova.org/torrent/([0-9]*?)/(.*?).html";
+    private static final String HTML_REGEX = "(?is).*<div id=\"downloadbox\"><h2><a href=\"(.*)\" rel=\"nofollow\"><img src=\"http://www.monova.org/images/download.png\".*<a href=\"magnet:\\?xt=urn:btih:(.*)\"><b>Magnet</b></a>.*<font color=\"[A-Za-z]*\">(.*)</font> seeds,.*<strong>Total size:</strong>(.*)<br /><strong>Pieces:.*";
 
     public MonovaSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1, MAX_RESULTS, MAX_RESULTS);
-    }
-
-    private static final String REGEX = "(?is)<a href=\"http://www.mnova.eu/torrent/([0-9]*)/";
-    private static final Pattern PATTERN = Pattern.compile(REGEX);
-
-    private static final String HTML_REGEX = "(?is).*<div id=\"downloadbox\"><h2><a href=\"(.*)\" rel=\"nofollow\"><img src=\"http://www.mnova.eu/images/download.png\".*<a href=\"magnet:\\?xt=urn:btih:(.*)\"><b>Magnet</b></a>.*<font color=\"[A-Za-z]*\">(.*)</font> seeds,.*<strong>Total size:</strong>(.*)<br /><strong>Pieces:.*";
-    private static final Pattern HTML_PATTERN = Pattern.compile(HTML_REGEX);
-
-    @Override
-    public Pattern getPattern() {
-        return PATTERN;
-    }
-
-    @Override
-    public MonovaTempSearchResult fromMatcher(Matcher matcher) {
-        String itemId = matcher.group(1);
-        return new MonovaTempSearchResult(itemId);
+        super(token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX);
     }
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://www.mnova.eu/search.php?sort=5&term=" + encodedKeywords;
+        return "http://www.monova.org/search.php?sort=5&term=" + encodedKeywords;
     }
 
     @Override
-    protected String getCrawlUrl(MonovaTempSearchResult sr) {
-        return sr.getDetailsUrl();
+    public CrawlableSearchResult fromMatcher(Matcher matcher) {
+        String itemId = matcher.group(1);
+        String fileName = matcher.group(2);
+        return new MonovaTempSearchResult(itemId, fileName);
     }
 
     @Override
-    protected List<? extends SearchResult> crawlResult(MonovaTempSearchResult sr, byte[] data) throws Exception {
-        List<MonovaSearchResult> list = new LinkedList<MonovaSearchResult>();
-
-        String html = new String(data, "UTF-8");
-
-        Matcher matcher = HTML_PATTERN.matcher(html);
-
-        if (matcher.find()) {
-            list.add(new MonovaSearchResult(sr.getDetailsUrl(), matcher));
-        }
-
-        return list;
+    protected MonovaSearchResult fromHtmlMatcher(CrawlableSearchResult sr, Matcher matcher) {
+        return new MonovaSearchResult(sr.getDetailsUrl(), matcher);
     }
 }

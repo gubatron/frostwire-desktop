@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,27 +16,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.search.vertor;
+package com.frostwire.concurrent;
 
-import java.util.List;
+import java.util.concurrent.ThreadFactory;
 
-/*
-{ "results":[
-   {"name":"...",
-   "cdate":"8 Jun 11",
-   "seeds":"733",
-   "leechers":"287",
-   "size":"105166808",
-   "url":"...",
-   "download":"...",
-   "category":"Music"},
-*/
 /**
  * @author gubatron
  * @author aldenml
  *
  */
-public class VertorResponse {
+public final class DefaultThreadFactory implements ThreadFactory {
 
-    public List<VertorItem> results;
+    private final String name;
+    private final boolean daemon;
+
+    public DefaultThreadFactory(String name, boolean daemon) {
+        this.name = name;
+        this.daemon = daemon;
+    }
+
+    @Override
+    public Thread newThread(Runnable r) {
+        Thread t = new Thread(r, name);
+
+        if (daemon) {
+            t.setDaemon(true);
+        }
+
+        return t;
+    }
 }

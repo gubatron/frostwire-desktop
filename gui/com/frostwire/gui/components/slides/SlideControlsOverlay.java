@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ import com.limegroup.gnutella.gui.actions.LimeAction;
  * @author aldenml
  *
  */
-class SlideControlsOverlay extends JPanel {
+final class SlideControlsOverlay extends JPanel {
 
     private static final Color BACKGROUND = new Color(45, 52, 58); // 2d343a
     private static final float BACKGROUND_ALPHA = 0.7f;

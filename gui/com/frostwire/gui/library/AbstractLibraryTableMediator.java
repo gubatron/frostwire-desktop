@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.Toolkit;
@@ -49,10 +50,18 @@ import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.DataLineModel;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ * @param <T>
+ * @param <E>
+ * @param <I>
+ */
 abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E extends AbstractLibraryTableDataLine<I>, I> extends AbstractTableMediator<T, E, I> {
 
     private MediaType mediaType;
-    
+
     private static final LibraryActionsRenderer ACTION_RENDERER = new LibraryActionsRenderer();
 
     protected Action SEND_TO_FRIEND_ACTION;
@@ -72,7 +81,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     @Override
     protected void setupConstants() {
     }
-    
+
     @Override
     protected TableCellRenderer getAbstractActionsRenderer() {
         return ACTION_RENDERER;
@@ -86,9 +95,9 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         }
         return lines;
     }
-    
+
     public int[] getSelectedIndexes() {
-        if(TABLE != null) {
+        if (TABLE != null) {
             return TABLE.getSelectedRows();
         } else {
             return null;

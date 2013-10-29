@@ -24,16 +24,38 @@
 
 package com.frostwire.gui.bittorrent;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+import net.miginfocom.swing.MigLayout;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
+import org.gudy.azureus2.core3.util.TorrentUtils;
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
@@ -44,13 +66,188 @@ import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
+import com.frostwire.util.StringUtils;
+import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 
-public class BTDownloadMediatorAdvancedMenuFactory {
-	
-    private static void addSpeedMenu(SkinMenu menuAdvanced, boolean isTorrentContext, boolean hasSelection, boolean downSpeedDisabled,
-            boolean downSpeedUnlimited, long totalDownSpeed, long downSpeedSetMax, long maxDownload, boolean upSpeedDisabled, boolean upSpeedUnlimited,
-            long totalUpSpeed, long upSpeedSetMax, long maxUpload, final int num_entries, final SpeedAdapter adapter) {
+final class BTDownloadMediatorAdvancedMenuFactory {
+
+    public static SkinMenu createAdvancedSubMenu() {
+
+        final DownloadManager[] dms = getSingleSelectedDownloadManagers();
+        if (dms == null) {
+            return null;
+        }
+
+        boolean upSpeedDisabled = false;
+        long totalUpSpeed = 0;
+        boolean upSpeedUnlimited = false;
+        long upSpeedSetMax = 0;
+
+        boolean downSpeedDisabled = false;
+        long totalDownSpeed = 0;
+        boolean downSpeedUnlimited = false;
+        long downSpeedSetMax = 0;
+
+        for (int i = 0; i < dms.length; i++) {
+            DownloadManager dm = (DownloadManager) dms[i];
+
+            try {
+                int maxul = dm.getStats().getUploadRateLimitBytesPerSecond();
+                if (maxul == 0) {
+                    upSpeedUnlimited = true;
+                } else {
+                    if (maxul > upSpeedSetMax) {
+                        upSpeedSetMax = maxul;
+                    }
+                }
+                if (maxul == -1) {
+                    maxul = 0;
+                    upSpeedDisabled = true;
+                }
+                totalUpSpeed += maxul;
+
+                int maxdl = dm.getStats().getDownloadRateLimitBytesPerSecond();
+                if (maxdl == 0) {
+                    downSpeedUnlimited = true;
+                } else {
+                    if (maxdl > downSpeedSetMax) {
+                        downSpeedSetMax = maxdl;
+                    }
+                }
+                if (maxdl == -1) {
+                    maxdl = 0;
+                    downSpeedDisabled = true;
+                }
+                totalDownSpeed += maxdl;
+
+            } catch (Exception ex) {
+                Debug.printStackTrace(ex);
+            }
+        }
+
+        final SkinMenu menuAdvanced = new SkinMenu(I18n.tr("Advanced"));
+
+        // advanced > Download Speed Menu //
+
+        long maxDownload = COConfigurationManager.getIntParameter("Max Download Speed KBs", 0) * 1024;
+        long maxUpload = COConfigurationManager.getIntParameter("Max Upload Speed KBs", 0) * 1024;
+
+        addSpeedMenu(menuAdvanced, true, true, downSpeedDisabled, downSpeedUnlimited, totalDownSpeed, downSpeedSetMax, maxDownload, upSpeedDisabled, upSpeedUnlimited, totalUpSpeed, upSpeedSetMax, maxUpload, dms.length, new SpeedAdapter() {
+            public void setDownSpeed(final int speed) {
+                for (int i = 0; i < dms.length; i++) {
+                    dms[i].getStats().setDownloadRateLimitBytesPerSecond(speed);
+                }
+                //                        DMTask task = new DMTask(dms) {
+                //                            public void run(DownloadManager dm) {
+                //                                dm.getStats().setDownloadRateLimitBytesPerSecond(speed);
+                //                            }
+                //                        };
+                //                        task.go();
+            }
+
+            public void setUpSpeed(final int speed) {
+                for (int i = 0; i < dms.length; i++) {
+                    dms[i].getStats().setUploadRateLimitBytesPerSecond(speed);
+                }
+                //                        DMTask task = new DMTask(dms) {
+                //                            public void run(DownloadManager dm) {
+                //                                dm.getStats().setUploadRateLimitBytesPerSecond(speed);
+                //                            }
+                //                        };
+                //                        task.go();
+            }
+        });
+
+        SkinMenu menuTracker = createTrackerMenu();
+        if (menuTracker != null) {
+            menuAdvanced.add(menuTracker);
+        }
+
+        return menuAdvanced;
+    }
+
+    public static SkinMenu createAddToPlaylistSubMenu() {
+        BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+        if (downloaders.length == 0) {
+            return null;
+        }
+
+        for (BTDownload dler : downloaders) {
+            if (!dler.isCompleted()) {
+                return null;
+            }
+
+            File saveLocation = dler.getSaveLocation();
+
+            if (saveLocation.isDirectory()) {
+                //If the file(s) is(are) inside a folder
+                if (!LibraryUtils.directoryContainsAudio(saveLocation)) {
+                    return null;
+                }
+            } else if (!MediaPlayer.isPlayableFile(saveLocation)) {
+                return null;
+            }
+        }
+
+        SkinMenu menu = new SkinMenu(I18n.tr("Add to playlist"));
+
+        menu.add(new SkinMenuItem(new CreateNewPlaylistAction()));
+
+        Library library = LibraryMediator.getLibrary();
+        List<Playlist> playlists = library.getPlaylists();
+
+        if (playlists.size() > 0) {
+            menu.addSeparator();
+
+            for (Playlist playlist : library.getPlaylists()) {
+                menu.add(new SkinMenuItem(new AddToPlaylistAction(playlist)));
+            }
+        }
+
+        return menu;
+    }
+
+    public static SkinMenu createTrackerMenu() {
+        DownloadManager[] dms = getSingleSelectedDownloadManagers();
+        if (dms == null) {
+            return null;
+        }
+
+        SkinMenu menu = new SkinMenu(I18n.tr("Trackers"));
+
+        menu.add(new SkinMenuItem(new EditTrackersAction(dms[0])));
+        menu.add(new SkinMenuItem(new UpdateTrackerAction(dms[0])));
+        menu.add(new SkinMenuItem(new ScrapeTrackerAction(dms[0])));
+
+        return menu;
+    }
+
+    private static DownloadManager[] getSingleSelectedDownloadManagers() {
+        BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+
+        if (downloaders.length != 1) {
+            return null;
+        }
+
+        ArrayList<DownloadManager> list = new ArrayList<DownloadManager>(downloaders.length);
+        for (BTDownload downloader : downloaders) {
+            DownloadManager dm = downloader.getDownloadManager();
+            if (dm != null) {
+                list.add(dm);
+            }
+        }
+
+        if (list.size() == 0) {
+            return null;
+        }
+
+        return list.toArray(new DownloadManager[0]);
+    }
+
+    private static void addSpeedMenu(SkinMenu menuAdvanced, boolean isTorrentContext, boolean hasSelection, boolean downSpeedDisabled, boolean downSpeedUnlimited, long totalDownSpeed, long downSpeedSetMax, long maxDownload, boolean upSpeedDisabled, boolean upSpeedUnlimited, long totalUpSpeed,
+            long upSpeedSetMax, long maxUpload, final int num_entries, final SpeedAdapter adapter) {
         // advanced > Download Speed Menu //
 
         final SkinMenu menuDownSpeed = new SkinMenu(I18n.tr("Set Down Speed"));
@@ -135,17 +332,17 @@ public class BTDownloadMediatorAdvancedMenuFactory {
         }
 
         // ---
-//        menuDownSpeed.addSeparator();
-//
-//        final SkinMenuItem itemDownSpeedManualSingle = new SkinMenuItem();
-//        itemDownSpeedManualSingle.setText(I18n.tr("Manual..."));
-//        itemDownSpeedManualSingle.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                //int speed_value = getManualSpeedValue(shell, true);
-//                //if (speed_value > 0) {adapter.setDownSpeed(speed_value);}
-//            }
-//        });
-//        menuDownSpeed.add(itemDownSpeedManualSingle);
+        //        menuDownSpeed.addSeparator();
+        //
+        //        final SkinMenuItem itemDownSpeedManualSingle = new SkinMenuItem();
+        //        itemDownSpeedManualSingle.setText(I18n.tr("Manual..."));
+        //        itemDownSpeedManualSingle.addActionListener(new ActionListener() {
+        //            public void actionPerformed(ActionEvent e) {
+        //                //int speed_value = getManualSpeedValue(shell, true);
+        //                //if (speed_value > 0) {adapter.setDownSpeed(speed_value);}
+        //            }
+        //        });
+        //        menuDownSpeed.add(itemDownSpeedManualSingle);
 
         //        if (num_entries > 1) {
         //            final MenuItem itemDownSpeedManualShared = new MenuItem(menuDownSpeed, SWT.PUSH);
@@ -242,17 +439,17 @@ public class BTDownloadMediatorAdvancedMenuFactory {
             }
         }
 
-//        menuUpSpeed.addSeparator();
-//
-//        final SkinMenuItem itemUpSpeedManualSingle = new SkinMenuItem();
-//        itemUpSpeedManualSingle.setText(I18n.tr("Manual..."));
-//        itemUpSpeedManualSingle.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                //int speed_value = getManualSpeedValue(shell, false);
-//                //if (speed_value > 0) {adapter.setUpSpeed(speed_value);}
-//            }
-//        });
-//        menuUpSpeed.add(itemUpSpeedManualSingle);
+        //        menuUpSpeed.addSeparator();
+        //
+        //        final SkinMenuItem itemUpSpeedManualSingle = new SkinMenuItem();
+        //        itemUpSpeedManualSingle.setText(I18n.tr("Manual..."));
+        //        itemUpSpeedManualSingle.addActionListener(new ActionListener() {
+        //            public void actionPerformed(ActionEvent e) {
+        //                //int speed_value = getManualSpeedValue(shell, false);
+        //                //if (speed_value > 0) {adapter.setUpSpeed(speed_value);}
+        //            }
+        //        });
+        //        menuUpSpeed.add(itemUpSpeedManualSingle);
 
         //        if (num_entries > 1) {
         //            final MenuItem itemUpSpeedManualShared = new MenuItem(menuUpSpeed, SWT.PUSH);
@@ -267,156 +464,186 @@ public class BTDownloadMediatorAdvancedMenuFactory {
 
     }
 
-    public static SkinMenu createAdvancedSubMenu() {
-
-        BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
-
-        if (downloaders.length != 1) {
-            return null;
-        }
-
-        ArrayList<DownloadManager> list = new ArrayList<DownloadManager>(downloaders.length);
-        for (BTDownload downloader : downloaders) {
-            DownloadManager dm = downloader.getDownloadManager();
-            if (dm != null) {
-                list.add(dm);
-            }
-        }
-        
-        if (list.size() == 0) {
-            return null;
-        }
-
-        final DownloadManager[] dms = list.toArray(new DownloadManager[0]);
-
-        boolean upSpeedDisabled = false;
-        long totalUpSpeed = 0;
-        boolean upSpeedUnlimited = false;
-        long upSpeedSetMax = 0;
-
-        boolean downSpeedDisabled = false;
-        long totalDownSpeed = 0;
-        boolean downSpeedUnlimited = false;
-        long downSpeedSetMax = 0;
-
-        for (int i = 0; i < dms.length; i++) {
-            DownloadManager dm = (DownloadManager) dms[i];
-
-            try {
-                int maxul = dm.getStats().getUploadRateLimitBytesPerSecond();
-                if (maxul == 0) {
-                    upSpeedUnlimited = true;
-                } else {
-                    if (maxul > upSpeedSetMax) {
-                        upSpeedSetMax = maxul;
-                    }
-                }
-                if (maxul == -1) {
-                    maxul = 0;
-                    upSpeedDisabled = true;
-                }
-                totalUpSpeed += maxul;
-
-                int maxdl = dm.getStats().getDownloadRateLimitBytesPerSecond();
-                if (maxdl == 0) {
-                    downSpeedUnlimited = true;
-                } else {
-                    if (maxdl > downSpeedSetMax) {
-                        downSpeedSetMax = maxdl;
-                    }
-                }
-                if (maxdl == -1) {
-                    maxdl = 0;
-                    downSpeedDisabled = true;
-                }
-                totalDownSpeed += maxdl;
-
-            } catch (Exception ex) {
-                Debug.printStackTrace(ex);
-            }
-        }
-
-        final SkinMenu menuAdvanced = new SkinMenu(I18n.tr("Advanced"));
-        
-        // advanced > Download Speed Menu //
-
-        long maxDownload = COConfigurationManager.getIntParameter("Max Download Speed KBs", 0) * 1024;
-        long maxUpload = COConfigurationManager.getIntParameter("Max Upload Speed KBs", 0) * 1024;
-
-        addSpeedMenu(menuAdvanced, true, true, downSpeedDisabled, downSpeedUnlimited, totalDownSpeed, downSpeedSetMax, maxDownload, upSpeedDisabled,
-                upSpeedUnlimited, totalUpSpeed, upSpeedSetMax, maxUpload, dms.length, new SpeedAdapter() {
-                    public void setDownSpeed(final int speed) {
-                        for (int i = 0; i < dms.length; i++) {
-                            dms[i].getStats().setDownloadRateLimitBytesPerSecond(speed);
-                        }
-                        //                        DMTask task = new DMTask(dms) {
-                        //                            public void run(DownloadManager dm) {
-                        //                                dm.getStats().setDownloadRateLimitBytesPerSecond(speed);
-                        //                            }
-                        //                        };
-                        //                        task.go();
-                    }
-
-                    public void setUpSpeed(final int speed) {
-                        for (int i = 0; i < dms.length; i++) {
-                            dms[i].getStats().setUploadRateLimitBytesPerSecond(speed);
-                        }
-                        //                        DMTask task = new DMTask(dms) {
-                        //                            public void run(DownloadManager dm) {
-                        //                                dm.getStats().setUploadRateLimitBytesPerSecond(speed);
-                        //                            }
-                        //                        };
-                        //                        task.go();
-                    }
-                });
-
-        return menuAdvanced;
-    }
-    
-    static SkinMenu createAddToPlaylistSubMenu() {
-        BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
-        if (downloaders.length == 0) {
-            return null;
-        }
-
-        for (BTDownload dler : downloaders) {
-            if (!dler.isCompleted()) {
-                return null;
-            }
-
-            File saveLocation = dler.getSaveLocation();
-
-            if (saveLocation.isDirectory()) {
-                //If the file(s) is(are) inside a folder
-                if (!LibraryUtils.directoryContainsAudio(saveLocation)) {
-                    return null;
-                }
-            } else if (!MediaPlayer.isPlayableFile(saveLocation)) {
-                return null;
-            }
-        }
-
-        SkinMenu menu = new SkinMenu(I18n.tr("Add to playlist"));
-
-        menu.add(new SkinMenuItem(new CreateNewPlaylistAction()));
-
-        Library library = LibraryMediator.getLibrary();
-        List<Playlist> playlists = library.getPlaylists();
-
-        if (playlists.size() > 0) {
-            menu.addSeparator();
-
-            for (Playlist playlist : library.getPlaylists()) {
-                menu.add(new SkinMenuItem(new AddToPlaylistAction(playlist)));
-            }
-        }
-
-        return menu;
-    }
-
     public interface SpeedAdapter {
         public void setUpSpeed(int val);
 
         public void setDownSpeed(int val);
+    }
+
+    public static class EditTrackersAction extends AbstractAction {
+
+        private final DownloadManager dm;
+
+        public EditTrackersAction(DownloadManager dm) {
+            this.dm = dm;
+
+            putValue(Action.NAME, I18n.tr("Edit Trackers"));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new EditTrackerDialog(GUIMediator.getAppFrame(), dm).setVisible(true);
+        }
+    }
+
+    public static class UpdateTrackerAction extends AbstractAction {
+
+        private final DownloadManager dm;
+
+        public UpdateTrackerAction(DownloadManager dm) {
+            this.dm = dm;
+
+            putValue(Action.NAME, I18n.tr("Update Tracker"));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dm.requestTrackerAnnounce(false);
+        }
+    }
+
+    public static class ScrapeTrackerAction extends AbstractAction {
+
+        private final DownloadManager dm;
+
+        public ScrapeTrackerAction(DownloadManager dm) {
+            this.dm = dm;
+
+            putValue(Action.NAME, I18n.tr("Scrape Tracker"));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dm.requestTrackerScrape(true);
+        }
+    }
+
+    private static final class EditTrackerDialog extends JDialog {
+
+        private final DownloadManager dm;
+
+        public EditTrackerDialog(JFrame frame, DownloadManager dm) {
+            super(frame);
+            this.dm = dm;
+            setupUI();
+            setLocationRelativeTo(frame);
+        }
+
+        protected void setupUI() {
+            setTitle("Edit trackers");
+
+            Dimension dim = new Dimension(512, 400);
+
+            setSize(dim);
+            setMinimumSize(dim);
+            setPreferredSize(dim);
+            setResizable(false);
+
+            setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            setModalityType(ModalityType.APPLICATION_MODAL);
+            GUIUtils.addHideAction((JComponent) getContentPane());
+
+            JPanel panel = new JPanel();
+            panel.setLayout(new MigLayout("", "[grow]", //columns
+                    "[top][center, grow][bottom]")); //rows
+
+            JLabel labelTitle = new JLabel(I18n.tr("Edit trackers, one by line"));
+            panel.add(labelTitle, "cell 0 0");
+
+            final JTextArea textTrackers = new JTextArea();
+            JScrollPane scrollPane = new JScrollPane(textTrackers);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            fillTrackers(textTrackers);
+            panel.add(scrollPane, "cell 0 1, growx, growy");
+
+            JButton buttonAccept = new JButton(I18n.tr("Accept"));
+            buttonAccept.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    changeTrackers(textTrackers.getText());
+                }
+            });
+            panel.add(buttonAccept, "cell 0 2, split 2, right");
+
+            JButton buttonCancel = new JButton(I18n.tr("Cancel"));
+            buttonCancel.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    EditTrackerDialog.this.dispose();
+                }
+            });
+            panel.add(buttonCancel);
+
+            setContentPane(panel);
+        }
+
+        private void fillTrackers(JTextArea textTrackers) {
+            TOTorrent torrent = dm.getTorrent();
+            List<List<String>> list = TorrentUtils.announceGroupsToList(torrent);
+            Set<String> set = new HashSet<String>();
+            for (List<String> group : list) {
+                for (String tracker : group) {
+                    set.add(tracker.trim());
+                }
+            }
+            for (String tracker : set) {
+                if (!StringUtils.isNullOrEmpty(tracker, true)) {
+                    textTrackers.append(tracker.trim() + System.lineSeparator());
+                }
+            }
+        }
+
+        private void changeTrackers(String text) {
+            List<String> urls = Arrays.asList(text.split(System.lineSeparator()));
+
+            if (!validateTrackersUrls(urls)) {
+                JOptionPane.showMessageDialog(this, I18n.tr("Check again your tracker URL(s).\n"), I18n.tr("Invalid Tracker URL\n"), JOptionPane.ERROR_MESSAGE);
+            } else {
+                setTrackersUrls(urls);
+                dispose();
+            }
+        }
+
+        private boolean validateTrackersUrls(List<String> urls) {
+            if (urls == null || urls.size() == 0) {
+                return false;
+            }
+
+            String patternStr = "^(https?|udp)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+            Pattern pattern = Pattern.compile(patternStr);
+
+            for (String tracker_url : urls) {
+
+                if (tracker_url.trim().equals("")) {
+                    continue;
+                }
+
+                Matcher matcher = pattern.matcher(tracker_url.trim());
+                if (!matcher.matches()) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void setTrackersUrls(List<String> urls) {
+            List<List<String>> group = new ArrayList<List<String>>();
+            group.add(urls);
+
+            TOTorrent torrent = dm.getTorrent();
+
+            TorrentUtils.listToAnnounceGroups(group, torrent);
+
+            try {
+                TorrentUtils.writeToFile(torrent);
+            } catch (Throwable e) {
+                Debug.printStackTrace(e);
+            }
+
+            if (dm.getTrackerClient() != null) {
+                dm.getTrackerClient().resetTrackerUrl(true);
+            }
+        }
     }
 }
