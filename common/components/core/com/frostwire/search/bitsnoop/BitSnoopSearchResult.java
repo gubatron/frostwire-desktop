@@ -150,7 +150,14 @@ public class BitSnoopSearchResult extends AbstractTorrentSearchResult {
 
     private int parseSeeds(String group) {
         try {
-            group = group.replace(",", "");
+            
+            if (group.indexOf("0 / 0")==-1) {
+                group = group.split("\"Seeders\">")[1];
+                group = group.split("</span>")[0];
+                group = group.replace(",", "");
+            } else {
+                group = "0";
+            }
             return Integer.parseInt(group);
         } catch (Exception e) {
             return 0;
