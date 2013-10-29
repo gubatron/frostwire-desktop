@@ -29,6 +29,8 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.frostwire.concurrent.DefaultThreadFactory;
+
 /**
  * 
  * @author gubatron
@@ -194,7 +196,7 @@ public class SearchManagerImpl implements SearchManager {
     }
 
     private static ExecutorService newFixedThreadPool(int nThreads) {
-        return new ThreadPoolExecutor(nThreads, nThreads, 0L, TimeUnit.MILLISECONDS, new PriorityBlockingQueue<Runnable>());
+        return new ThreadPoolExecutor(nThreads, nThreads, 0L, TimeUnit.MILLISECONDS, new PriorityBlockingQueue<Runnable>(), new DefaultThreadFactory("SearchManager", false));
     }
 
     private static final class PerformerResultListener implements SearchListener {
