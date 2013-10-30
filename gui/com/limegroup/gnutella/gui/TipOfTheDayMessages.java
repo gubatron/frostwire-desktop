@@ -4,7 +4,7 @@ import org.limewire.i18n.I18nMarker;
 
 public class TipOfTheDayMessages {
     
-    private static final String FIRST_MESSAGE = I18nMarker.marktr("Tired of downloads stopping halfway through? It helps to pick search results with a higher number in the '#' column. The # is the amount of unique places on the network that are hosting the file. The more sources, the better the chance of getting your file! In case a junk result appears to have a lot of sources, use the <font color=\"185ea8\">Junk</font> button to train FrostWire's junk filter.");
+    private static final String FIRST_MESSAGE = I18nMarker.marktr("Tired of downloads stopping halfway through? It helps to pick search results with a higher number in the 'Seeds' column. The Seeds are the amount of unique places on the network that are hosting the file. The more sources, the better the chance of getting your torrent file!");
 
     /**
      * Determines whether or not the current locale language is English. Note
@@ -22,9 +22,8 @@ public class TipOfTheDayMessages {
     public static String[] getGeneralMessages() {
         return new String[] {
                 I18n.tr(FIRST_MESSAGE),
-                I18n.tr("You can change the look and feel of FrostWire by going to View &gt; Apply Skins and choosing a new skin."),
-                I18n.tr("You can sort your search results by clicking on a column. The most useful column to sort by is the 'Seeds' column, which represents an approximate number of computers that have the entire file and are online."),
-                I18n.tr("The more stars a search result has, the better the chances of the download completing successfully! Some search results may even appear with four blue stars and a speed of 'Ethernet'. These results have the greatest chance of completing successfully."),
+                I18n.tr("You can change the look and feel of FrostWire by going to View &gt; Use Small Icons, Show Icon Text and Increase-Decrease the Font Size."),
+                I18n.tr("You can sort your search results by clicking on a column. The most useful column to sort by is the 'Seeds' column if you are looking for a torrent, Seeds represents an approximate number of computers that have the entire file and are online."),
                 I18n.tr("It helps the network if you keep your FrostWire running. Others will connect to the network easier and searches will perform better."),
                 I18n.tr("Passionate about digital rights? Visit the <a href=\"{0}\">Electronic Frontier Foundation</a> and see what you can do to help."),
                 I18n.tr("FrostWire is translated into many different languages including Chinese, French, German, Japanese, Italian, Spanish and many more. Visit FrostWire's <a href=\"{0}\">internationalization page</a> for information on how you can help translation efforts!"),
@@ -36,27 +35,26 @@ public class TipOfTheDayMessages {
                         "color=\"185ea8\">Increase Font Size</font>."),
                 I18n.tr("Be careful not to share sensitive information like tax documents, passwords, etc. The torrents you are seeding are accesible by everyone on the network as long as they have the .torrent or a (magnet) link to it."),                        
                 I18n.tr("Unlike other peer-to-peer file-sharing programs, FrostWire can transfer files even if both parties are behind a firewall. You don't have to do anything extra because it happens automatically!"),
-                I18n.tr("Want to share a large file? Send several hundred gigabytes with no problems at all, just make sure you leave your FrostWire running while your friend(s) are downloading. They can pause and resume the download all they want as long as you or somebody else is seeding the same content."), 
+                I18n.tr("Want to share a large file? Send several hundred gigabytes with no problems at all, just make sure you leave your FrostWire running and seeding while your friend(s) are downloading. They can pause and resume the download all they want as long as you or somebody else is seeding the same content."), 
                 I18n.tr("Magnet links allow users to download files through FrostWire from a web page. When you put a magnet link on your web page (in the 'href' attribute of anchor tags), and a user clicks the link, a download will start in FrostWire."),
-                I18n.tr("Don't want to seed? Go to Tools &gt; Options &gt; Bittorrent ")
+                I18n.tr("Don't want to seed? Go to Tools &gt; Options &gt; Bittorrent or select the Seeding - No Seeding icon at the bottom bar")
         };
     }
     
     /**
      * Returns general tips that are shown on operating systems that are <b>not</b>
      * Mac OS X. Useful for tips that reference the About Window or the
-     * Preferences Window, or right-clicking
+     * Tools Window, or right-clicking
      */
     public static String[] getNonMacOSXMessages() {
         return new String[] {
                 I18n.tr("You can find out which version of FrostWire you are using by choosing 'About FrostWire' from the Help menu."),
                 I18n.tr("Be a good network participant, don't close FrostWire if someone is uploading from you."),
-                I18n.tr("You can turn autocomplete for searching on or off by choosing 'Options' from the 'Tools' menu, and changing the value of 'Autocomplete Text' under the 'View' option."),
-                I18n.tr("Want to see dialogs for questions which you previously marked 'Do not display this message again' or 'Always Use This Answer'? Go to Tools &gt; Options, and check 'Revert To Default' under View &gt; Popups."),
+                I18n.tr("You can turn autocomplete for searching on or off by choosing 'Options' from the 'Tools' menu, and selecting the option 'Text Autocompletion'."),
+                I18n.tr("Want to see dialogs for questions which you previously marked 'Do not display this message again' or 'Always Use This Answer'? Go to Tools &gt; Options, and check 'Revert To Default' under View &gt; FrostWire Popups."),
                 I18n.tr("You can ban certain words from appearing in your search results by choosing 'Options' from the 'Tools' menu and adding new words to those listed under Filters &gt; Keywords."),
                 I18n.tr("Hate tool tips? Love tool tips? You can turn them on or off in most tables by right-clicking on the column headers and choosing 'More Options'. You can toggle other options here too, like whether or not to sort tables automatically and if you prefer the rows to be striped."),
                 I18n.tr("You can sort uploads, downloads, etc..., by clicking on a column. The table keeps resorting as the information changes. You can turn this automatic-sorting behavior off by right-clicking on a column header, choosing 'More Options' and un-checking 'Sort Automatically'."),
-                I18n.tr("FrostWire is written in Java, which means that having the latest version of Java will improve FrostWire's speed and stability. You can find the most recent Java release at <a href=\"{0}\">www.java.com</a>.", "http://www.java.com/"),
                 I18n.tr("Are you unhappy with the small number of search results you received? Right-click a search result, then choose Search More, then Get More Results."),
         };
     }
@@ -69,17 +67,14 @@ public class TipOfTheDayMessages {
         return new String[] {
                 I18n.tr("You can find out which version of FrostWire you are using by choosing 'About FrostWire' from the FrostWire menu."),
                 I18n.tr("Be a good network participant, don't close FrostWire if someone is uploading from you."),
-                I18n.tr("You can turn autocomplete for searching on or off by choosing 'Preferences' from the 'FrostWire' menu, and changing the value of 'Autocomplete Text' under the 'View' option."),
-                I18n.tr("Want to see dialogs for questions which you previously marked 'Do not display this message again' or 'Always Use This Answer'? Go to FrostWire &gt; Preferences, and check 'Revert To Default' under View &gt; Popups."),                                           
-                I18n.tr("You can ban certain words from appearing in your search results by choosing 'Preferences' from the 'FrostWire' menu and adding new words to those listed under Filters &gt; Keywords."),
+                I18n.tr("You can turn autocomplete for searching on or off by choosing 'Tools' from the 'FrostWire' menu, and changing the value of 'Autocomplete Text' under the 'View' option."),
+                I18n.tr("Want to see dialogs for questions which you previously marked 'Do not display this message again' or 'Always Use This Answer'? Go to FrostWire &gt; Tools, Options and check 'Revert To Default' under View &gt; FrostWire Popups."),                                           
+                I18n.tr("You can ban certain words from appearing in your search results by choosing 'Tools' from the 'FrostWire' menu and adding new words to those listed under Filters &gt; Keywords."),
                 I18n.tr("Hate tool tips? Love tool tips? You can turn them on or off in most tables by control-clicking on the column headers and choosing 'More Options'. You can toggle other options here too, like whether or not to sort tables automatically and if you prefer the rows to be striped."),
                 I18n.tr("You can sort uploads, downloads, etc..., by clicking on a column. The table keeps resorting as the information changes. You can turn this automatic-sorting behavior off by control-clicking on a column header, choosing 'More Options' and un-checking 'Sort Automatically'."),
-                I18n.tr("You can save individual downloads to custom locations. Control-click a search result and choose Download As. You can even change the location of a download in progress by control-clicking the download and choosing Change File Location."),
-                I18n.tr("Did you just download a file that you don't want to share? In the Library, control-click it and choose 'Stop Sharing File'."),
                 I18n.tr("FrostWire's Library is a file manager, not just an MP3 Playlist. That means that when you delete a file from the Library, you have the option to either permanently delete the file from your computer or move it to the Trash."),
-                I18n.tr("Want to play music in your default media player instead of in FrostWire? Control-click the FrostWire status bar and deselect 'Show Media Player'."),
-                I18n.tr("Did you know you can save different types of files, such as audio, video, or images, in different folders on your computer automatically? Just go to FrostWire &gt; Preferences &gt; Saving to choose the location for each type of file."),
-                I18n.tr("Make FrostWire's Junk filter block more results by making the filter stricter. Adjust that and more by going to FrostWire &gt; Preferences &gt; Filters &gt; Junk."),               
+                I18n.tr("Want to play music in your default media player instead of in FrostWire? go to 'Tools' on FrostWire menu and select the option 'Play with native media player'."),
+                I18n.tr("Make FrostWire's block more results by making the filter stricter. Adjust that and more by going to FrostWire &gt; Tools &gt; Filters &gt;"),               
         };
     }
 
@@ -88,9 +83,7 @@ public class TipOfTheDayMessages {
      */
     public static String[] getWindowsMessages() {
         return new String[] {       
-                I18n.tr("FrostWire is written in Java, which means that having the latest version of Java will improve FrostWire's speed and stability. You can find the most recent Java release at <a href=\"{0}\">www.java.com</a>.","http://www.java.com"),
-                I18n.tr("Want FrostWire to look like your other Windows programs? Choose the Windows theme, available from the View &gt; Apply Skins menu."),
-                I18n.tr("The icons that you see next to your search results in the '?' column are symbols of the program used to open that particular type of file. To change the program associated with a file, go to the Folder Options in Windows Explorer (from the Tools menu). This is a Windows setting, not a FrostWire setting."),
+                I18n.tr("The icons that you see next to your search results in the '?' column are symbols of the program used to open that particular type of file. To change the program associated with a file, go to the 'Folder Options' in Windows Control Panel. This is a Windows setting, not a FrostWire setting."),
                 I18n.tr("FrostWire's Library is a file manager, not just an MP3 Playlist. That means that when you delete a file from the Library, you have the option to either permanently delete the file from your computer or move it to the Recycle Bin."),
                 I18n.tr("When you close FrostWire, it minimizes to the system tray. To exit, right-click the system tray icon (next to the time), and select Exit. You can change this behavior by going to Tools &gt; Options &gt; System Tray."),
         };
@@ -101,8 +94,7 @@ public class TipOfTheDayMessages {
      */
     public static String[] getLinuxMessages() {
         return new String[] {
-                I18n.tr("FrostWire is written in Java, which means that having the latest version of Java will improve FrostWire's speed and stability. You can find the most recent Java release at <a href=\"{0}\">www.java.com</a>.","http://www.java.com"),
-                I18n.tr("Want to play music in your preferred media player instead of in FrostWire? Right-click the FrostWire status bar and deselect 'Show Media Player'. Then go to Tools &gt; Options &gt; Helper Apps to set the program of your choice."),
+                I18n.tr("Want to play music in your default media player instead of in FrostWire? go to 'Tools' on FrostWire menu and select the option 'Play with native media player'."),
         };
     }
 
