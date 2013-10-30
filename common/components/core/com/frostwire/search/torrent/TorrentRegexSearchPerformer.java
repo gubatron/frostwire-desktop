@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 
 import com.frostwire.search.CrawlRegexSearchPerformer;
 import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.MaxIterCharSequence;
 import com.frostwire.search.PerformersHelper;
 import com.frostwire.search.SearchResult;
 
@@ -71,7 +72,7 @@ public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResul
         } else {
             String html = new String(data, "UTF-8");
 
-            Matcher matcher = htmlPattern.matcher(html);
+            Matcher matcher = htmlPattern.matcher(new MaxIterCharSequence(html, 2 * html.length()));
 
             if (matcher.find()) {
                 list.add(fromHtmlMatcher(sr, matcher));
