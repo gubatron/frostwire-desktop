@@ -131,18 +131,24 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
         searchResult = actionsHolder.getSearchResult();
         showSolid = mouseIsOverRow(table, row);
         updatePlayButton();
-        boolean playable = false;
-        
-        if (searchResult.getSearchResult() instanceof StreamableSearchResult) {
-            playable = ((StreamableSearchResult) searchResult.getSearchResult()).getStreamUrl() != null;
-        }
-        
-        labelPlay.setVisible(playable);
+        labelPlay.setVisible(isSearchResultPlayable());
         labelDownload.setIcon(showSolid ? download_solid : download_transparent);
         labelDownload.setVisible(true);
         labelPartialDownload.setIcon(showSolid ? details_solid : details_transparent);
         labelPartialDownload.setVisible(searchResult.getSearchResult() instanceof CrawlableSearchResult);
     }
+
+	private boolean isSearchResultPlayable() {
+		boolean playable = false;
+		if (searchResult.getSearchResult() instanceof StreamableSearchResult) {
+            playable = ((StreamableSearchResult) searchResult.getSearchResult()).getStreamUrl() != null;
+            if (searchResult.getExtension()!=null) {
+            	MediaType mediaType = MediaType.getMediaTypeForExtension(searchResult.getExtension());
+            	playable = mediaType != null && (mediaType.equals(MediaType.getAudioMediaType())) || mediaType.equals(MediaType.getVideoMediaType());
+            }
+        }
+		return playable;
+	}
 
     private void updatePlayButton() {
         labelPlay.setIcon((isStreamableSourceBeingPlayed(searchResult)) ? GUIMediator.getThemeImage("speaker") : (showSolid) ? play_solid : play_transparent);
