@@ -82,6 +82,10 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         return client.get(url, timeout, DEFAULT_USER_AGENT, null, cookie, customHeaders);
     }
 
+    public String post(String url, Map<String, String> formData) {
+        return client.post(url, timeout, DEFAULT_USER_AGENT, formData);
+    }
+
     /**
      * Allow to perform the HTTP operation using the same internal http client.
      * 

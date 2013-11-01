@@ -52,6 +52,8 @@ public interface HttpClient {
 
     public void post(String url, int timeout, String userAgent, String content, boolean gzip) throws IOException;
 
+    public String post(String url, int timeout, String userAgent, Map<String, String> formData);
+
     public void cancel();
 
     public boolean isCanceled();
