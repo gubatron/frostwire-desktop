@@ -28,6 +28,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -202,6 +203,26 @@ final class FWHttpClient implements HttpClient {
         }
     }
 
+    @Override
+    public String post(String url, int timeout, String userAgent, Map<String, String> formData) {
+        String result = null;
+
+        ByteArrayOutputStream baos = null;
+
+        try {
+            baos = new ByteArrayOutputStream();
+            post(url, baos, timeout, userAgent, formData);
+
+            result = new String(baos.toByteArray(), "UTF-8");
+        } catch (Throwable e) {
+            LOG.error("Error getting string from http body response: " + e.getMessage(), e);
+        } finally {
+            closeQuietly(baos);
+        }
+
+        return result;
+    }
+
     private String buildRange(int rangeStart, int rangeLength) {
         String prefix = "bytes=" + rangeStart + "-";
         return prefix + ((rangeLength > -1) ? (rangeStart + rangeLength) : "");
@@ -261,6 +282,85 @@ final class FWHttpClient implements HttpClient {
         try {
             byte[] b = new byte[4096];
             int n = 0;
+            while (!canceled && (n = in.read(b, 0, b.length)) != -1) {
+                if (!canceled) {
+                    out.write(b, 0, n);
+                    onData(b, 0, n);
+                }
+            }
+
+            closeQuietly(out);
+
+            if (canceled) {
+                onCancel();
+            } else {
+                onComplete();
+            }
+        } catch (Exception e) {
+            onError(e);
+        } finally {
+            closeQuietly(in);
+            closeQuietly(conn);
+        }
+    }
+
+    private void post(String url, OutputStream out, int timeout, String userAgent, Map<String, String> formData) throws IOException {
+        canceled = false;
+        final URL u = new URL(url);
+        final HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+        conn.setDoOutput(true);
+        conn.setReadTimeout(timeout);
+        conn.setRequestProperty("User-Agent", userAgent);
+        conn.setInstanceFollowRedirects(false);
+
+        if (conn instanceof HttpsURLConnection) {
+            setHostnameVerifier((HttpsURLConnection) conn);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (Entry<String, String> kv : formData.entrySet()) {
+            sb.append(kv.getKey());
+            sb.append("=");
+            sb.append(kv.getValue());
+        }
+
+        byte[] data = URLEncoder.encode(sb.toString(), "UTF-8").getBytes("UTF-8");
+
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty("Content-Length", String.valueOf(data.length));
+        conn.setRequestProperty("charset", "utf-8");
+        conn.setUseCaches(false);
+
+        InputStream in = new ByteArrayInputStream(data);
+
+        try {
+            OutputStream postOut = conn.getOutputStream();
+
+            byte[] b = new byte[4096];
+            int n = 0;
+            while (!canceled && (n = in.read(b, 0, b.length)) != -1) {
+                if (!canceled) {
+                    postOut.write(b, 0, n);
+                    postOut.flush();
+                    onData(b, 0, n);
+                }
+            }
+
+            closeQuietly(postOut);
+            closeQuietly(in);
+
+            conn.connect();
+
+            in = conn.getInputStream();
+            int httpResponseCode = getResponseCode(conn);
+
+            if (httpResponseCode != HttpURLConnection.HTTP_OK && httpResponseCode != HttpURLConnection.HTTP_PARTIAL) {
+                throw new ResponseCodeNotSupportedException(httpResponseCode);
+            }
+
+            b = new byte[4096];
+            n = 0;
             while (!canceled && (n = in.read(b, 0, b.length)) != -1) {
                 if (!canceled) {
                     out.write(b, 0, n);
