@@ -30,6 +30,7 @@ import jd.controlling.linkcrawler.PackageInfo;
 import jd.plugins.DownloadLink;
 import jd.plugins.FilePackage;
 
+import org.apache.commons.io.FilenameUtils;
 import org.jdownloader.controlling.filter.LinkFilterController;
 
 import com.frostwire.search.CrawlPagedWebSearchPerformer;
@@ -84,7 +85,12 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
                 continue;
             }
 
-            list.add(new YouTubeCrawledSearchResult(sr, p));
+            String filename = readFilename(p);
+            if (isStreamable(filename)) {
+                list.add(new YouTubeCrawledStreamableSearchResult(sr, p, filename));
+            } else {
+                list.add(new YouTubeCrawledSearchResult(sr, p, filename));
+            }
         }
 
         return list;
@@ -154,5 +160,14 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
             ret.getChildren().addAll(links);
         }
         return ret;
+    }
+
+    private String readFilename(FilePackage filePackage) {
+        DownloadLink dl = filePackage.getChildren().get(0);
+        if (dl.getStringProperty("convertto", "").equals("AUDIOMP3")) {
+            return FilenameUtils.getBaseName(dl.getName()) + ".mp3";
+        }
+
+        return dl.getName();
     }
 }

@@ -18,21 +18,19 @@
 
 package com.frostwire.search.youtube2;
 
-import jd.plugins.DownloadLink;
 import jd.plugins.FilePackage;
 
 import org.apache.commons.io.FilenameUtils;
 
 import com.frostwire.search.AbstractCrawledSearchResult;
 import com.frostwire.search.HttpSearchResult;
-import com.frostwire.search.StreamableSearchResult;
 
 /**
  * @author gubatron
  * @author aldenml
  *
  */
-public final class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult implements HttpSearchResult, StreamableSearchResult {
+public class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult implements HttpSearchResult {
 
     public static final String AAC_LOW_QUALITY = "(AAC)";
     public static final String AAC_HIGH_QUALITY = "(AAC-High Quality)";
@@ -41,17 +39,17 @@ public final class YouTubeCrawledSearchResult extends AbstractCrawledSearchResul
     private final String filename;
     private final String displayName;
     private final long size;
-    private final String streamUrl;
+    private final String downloadUrl;
 
-    public YouTubeCrawledSearchResult(YouTubeSearchResult sr, FilePackage filePackage) {
+    public YouTubeCrawledSearchResult(YouTubeSearchResult sr, FilePackage filePackage, String filename) {
         super(sr);
 
         this.filePackage = filePackage;
 
-        this.filename = readFilename(filePackage);
+        this.filename = filename;
         this.displayName = buildDisplayName(this.filename);
         this.size = filePackage.getChildren().get(0).getLongProperty("size", -1);
-        this.streamUrl = filePackage.getChildren().get(0).getDownloadURL();
+        this.downloadUrl = filePackage.getChildren().get(0).getDownloadURL();
     }
 
     public FilePackage getFilePackage() {
@@ -74,22 +72,8 @@ public final class YouTubeCrawledSearchResult extends AbstractCrawledSearchResul
     }
 
     @Override
-    public String getStreamUrl() {
-        return streamUrl;
-    }
-
-    @Override
     public String getDownloadUrl() {
-        return streamUrl;
-    }
-
-    private String readFilename(FilePackage filePackage) {
-        DownloadLink dl = filePackage.getChildren().get(0);
-        if (dl.getStringProperty("convertto", "").equals("AUDIOMP3")) {
-            return FilenameUtils.getBaseName(dl.getName()) + ".mp3";
-        }
-
-        return dl.getName();
+        return downloadUrl;
     }
 
     private String buildDisplayName(String filename2) {
