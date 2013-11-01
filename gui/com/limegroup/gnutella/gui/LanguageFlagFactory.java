@@ -48,7 +48,7 @@ public class LanguageFlagFactory {
         lc2cc.put("br", "FR"); //Brezhoneg, spoken in france
         lc2cc.put("bs", "BA"); //Bosanski, Bosnia
         lc2cc.put("bu", "MM"); //Burmese, Myanmar
-        lc2cc.put("ca", "ES"); //Catala, Spain
+        lc2cc.put("ca", "CAT"); //Catala, Cataluña
         lc2cc.put("cs", "CZ"); //Cestina, Czech Republic
         lc2cc.put("cy", "WE"); //Welsh (Cymraeg) part of GB, part of UK 
         //Wales has a dragon on it we need more flags
