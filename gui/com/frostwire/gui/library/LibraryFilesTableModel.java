@@ -101,29 +101,6 @@ final class LibraryFilesTableModel extends HashBasedDataLineModel<LibraryFilesTa
         return -1;
     }
 
-//    /**
-//     * Reinitializes a dataline that is using the given initialize object.
-//     */
-//    void reinitialize(File f) {
-//        if (contains(f)) {
-//            int row = getRow(f);
-//            get(row).initialize(f);
-//            fireTableRowsUpdated(row, row);
-//        }
-//    }
-
-//    /**
-//     * Reinitializes a dataline from using one file to use another.
-//     */
-//    void reinitialize(File old, File now) {
-//        if (contains(old)) {
-//            int row = getRow(old);
-//            get(row).initialize(now);
-//            initializeObjectChanged(old, now);
-//            fireTableRowsUpdated(row, row);
-//        }
-//    }
-
     /**
      * Returns the file object stored in the given row.
      *
