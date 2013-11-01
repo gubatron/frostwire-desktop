@@ -486,6 +486,10 @@ public class LibrarySearch extends JPanel {
          * @return
          */
         public boolean accept(File pathname, boolean includeAllDirectories) {
+        	if (!pathname.exists()) {
+        		return false;
+        	}
+        	
             if (pathname.isDirectory() && includeAllDirectories) {
                 return true;
             }

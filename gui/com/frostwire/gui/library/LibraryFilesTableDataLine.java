@@ -216,6 +216,9 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
             case NAME_IDX:
                 return nameCell;
             case SIZE_IDX:
+            	if (_sizeHolder == null) {
+            		_sizeHolder = new SizeHolder(0,"");
+            	}
                 return new PlayableCell(this, _sizeHolder, _sizeHolder.toString(), isPlaying, idx);
             case TYPE_IDX:
                 return new PlayableCell(this, _type, isPlaying, idx);
