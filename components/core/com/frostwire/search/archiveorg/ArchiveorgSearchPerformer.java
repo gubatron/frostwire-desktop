@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.io.FilenameUtils;
 import org.json.JSONObject;
 
 import com.frostwire.search.CrawlPagedWebSearchPerformer;
@@ -35,10 +34,6 @@ import com.frostwire.util.JsonUtils;
  *
  */
 public class ArchiveorgSearchPerformer extends CrawlPagedWebSearchPerformer<ArchiveorgSearchResult> {
-
-    // TODO: Move this extensions to a common place
-    // remove some not so stream friendly extensions
-    private static final String[] STREAMABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wma", "wmv", "m4a", "aac", "flac", "mp4", "flv", "mov", "mpg", "mpeg", "3gp", "m4v", "webm" };
 
     public ArchiveorgSearchPerformer(long token, String keywords, int timeout) {
         super(token, keywords, timeout, 1, 12);
@@ -115,16 +110,5 @@ public class ArchiveorgSearchPerformer extends CrawlPagedWebSearchPerformer<Arch
         }
 
         return true;
-    }
-
-    private boolean isStreamable(String filename) {
-        String ext = FilenameUtils.getExtension(filename);
-        for (String s : STREAMABLE_EXTENSIONS) {
-            if (s.equals(ext)) {
-                return true; // fast return
-            }
-        }
-
-        return false;
     }
 }
