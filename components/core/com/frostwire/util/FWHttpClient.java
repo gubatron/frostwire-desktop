@@ -318,17 +318,20 @@ final class FWHttpClient implements HttpClient {
         }
 
         StringBuilder sb = new StringBuilder();
-        for (Entry<String, String> kv : formData.entrySet()) {
-            sb.append(kv.getKey());
-            sb.append("=");
-            sb.append(kv.getValue());
+        if (formData != null && formData.size() > 0) {
+            for (Entry<String, String> kv : formData.entrySet()) {
+                sb.append("&");
+                sb.append(kv.getKey());
+                sb.append("=");
+                sb.append(URLEncoder.encode(kv.getValue(), "UTF-8"));
+            }
+            sb.deleteCharAt(0);
         }
 
-        byte[] data = URLEncoder.encode(sb.toString(), "UTF-8").getBytes("UTF-8");
+        byte[] data = sb.toString().getBytes("UTF-8");
 
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        conn.setRequestProperty("Content-Length", String.valueOf(data.length));
         conn.setRequestProperty("charset", "utf-8");
         conn.setUseCaches(false);
 

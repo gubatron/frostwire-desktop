@@ -49,13 +49,17 @@ public abstract class PagedWebSearchPerformer extends WebSearchPerformer {
 
     protected List<? extends SearchResult> searchPage(int page) {
         String url = getUrl(page, getEncodedKeywords());
-        String text = fetch(url);
+        String text = fetchSearchPage(url);
         if (text != null) {
             return searchPage(text);
         } else {
             LOG.warn("Page content empty for url: " + url);
             return Collections.emptyList();
         }
+    }
+
+    protected String fetchSearchPage(String url) {
+        return fetch(url);
     }
 
     protected abstract String getUrl(int page, String encodedKeywords);
