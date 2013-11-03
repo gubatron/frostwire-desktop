@@ -33,7 +33,7 @@ public class MonovaSearchPerformer extends TorrentRegexSearchPerformer<MonovaSea
 
     private static final int MAX_RESULTS = 10;
     private static final String REGEX = "(?is)<a href=\"http://www.monova.org/torrent/([0-9]*?)/(.*?).html";
-    private static final String HTML_REGEX = "(?is).*<div id=\"downloadbox\"><h2><a href=\"(.*)\" rel=\"nofollow\"><img src=\"http://www.monova.org/images/download.png\".*<a href=\"magnet:\\?xt=urn:btih:(.*)\"><b>Magnet</b></a>.*<font color=\"[A-Za-z]*\">(.*)</font> seeds,.*<strong>Total size:</strong>(.*)<br /><strong>Pieces:.*";
+    private static final String HTML_REGEX = "(?is)<div id=\"downloadbox\"><h2><a href=\"(.*?)\" rel=\"nofollow\">.*?<a href=\"magnet:\\?xt=urn:btih:(.*?)\"><b>Magnet</b></a>.*?<font color=\"[A-Za-z]*?\">(.*?)</font> seeds,.*?<strong>Total size:</strong>(.*?)<br /><strong>Pieces:.*?";
 
     public MonovaSearchPerformer(long token, String keywords, int timeout) {
         super(token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX);
@@ -42,6 +42,11 @@ public class MonovaSearchPerformer extends TorrentRegexSearchPerformer<MonovaSea
     @Override
     protected String getUrl(int page, String encodedKeywords) {
         return "http://www.monova.org/search.php?sort=5&term=" + encodedKeywords;
+    }
+
+    @Override
+    protected String fetchSearchPage(String url) {
+        return fetch(url, "MONOVA=1; MONOVA-ADULT=0; MONOVA-NON-ADULT=1;", null);
     }
 
     @Override
