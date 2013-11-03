@@ -16,8 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.search.bitsnoop;
+package com.frostwire.search.eztv;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 
 import com.frostwire.search.CrawlableSearchResult;
@@ -29,29 +31,38 @@ import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
  * @author aldenml
  *
  */
-public class BitSnoopSearchPerformer extends TorrentRegexSearchPerformer<BitSnoopSearchResult> {
+public class EztvSearchPerformer extends TorrentRegexSearchPerformer<EztvSearchResult> {
 
     private static final int MAX_RESULTS = 10;
-    private static final String REGEX = "(?is)<span class=\"icon cat.*?</span> <a href=\"(.*?)\">.*?<div class=\"torInfo\"";
-    private static final String HTML_REGEX = "(?is).*?Help</a>, <a href=\"magnet:\\?xt=urn:btih:([0-9a-fA-F]{40})&dn=(.*?)\" onclick=\".*?Magnet</a>.*?<a href=\"(.*?)\" title=\".*?\" class=\"dlbtn.*?title=\"Torrent Size\"><strong>(.*?)</strong>.*?title=\"Availability\"></span>(.*?)</span></td>.*?<li>Added to index &#8212; (.*?) \\(.{0,50}?\\)</li>.*?";
+    private static final String REGEX = "(?is)<a href=\"(/ep/.*?)\"";
+    private static final String HTML_REGEX = "(?is)<td class=\"section_post_header\" colspan=\"2\"><b>(.*?)</b></td>.*?<a href=\"(http://torrent.zoink.it/.*?torrent)\".*?<a href=\"magnet:\\?xt=urn:btih:(.*?)&.*?\".*?<b>Released:</b> (.*?)<br />.*?<b>Filesize:</b> (.*?)<br />";
 
-    public BitSnoopSearchPerformer(long token, String keywords, int timeout) {
+    public EztvSearchPerformer(long token, String keywords, int timeout) {
         super(token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX);
     }
 
     @Override
+    protected String fetchSearchPage(String url) {
+        Map<String, String> formData = new HashMap<String, String>();
+        formData.put("SearchString1", getEncodedKeywords());
+        formData.put("SearchString", "");
+        formData.put("search", "Search");
+        return post(url, formData);
+    }
+
+    @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://bitsnoop.com/search/all/" + encodedKeywords + "/c/d/" + page + "/";
+        return "http://eztv.it/search/";
     }
 
     @Override
     public CrawlableSearchResult fromMatcher(Matcher matcher) {
         String itemId = matcher.group(1);
-        return new BitSnoopTempSearchResult(itemId);
+        return new EztvTempSearchResult(itemId);
     }
 
     @Override
-    protected BitSnoopSearchResult fromHtmlMatcher(CrawlableSearchResult sr, Matcher matcher) {
-        return new BitSnoopSearchResult(sr.getDetailsUrl(), matcher);
+    protected EztvSearchResult fromHtmlMatcher(CrawlableSearchResult sr, Matcher matcher) {
+        return new EztvSearchResult(sr.getDetailsUrl(), matcher);
     }
 }
