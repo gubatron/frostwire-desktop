@@ -4,11 +4,12 @@ frostwire (5.6.7) stable; urgency=high
   * New Advanced Feature: Update Trackers.
   * New BitSnoop meta search.
   * New TorLock meta search.
+  * New EZTV meta search.
   * Fixes Monova meta search.
   * Removes ISOHunt meta search.
   * Tips of the day updated.
   * Updated Catalonian flag.
- -- FrostWire Team <contact@frostwire.com>  Tue, 29 Oct 2013 14:51:35 -0500
+ -- FrostWire Team <contact@frostwire.com>  Mon, 4 Nov 2013 11:06:30 -0500
 
 frostwire (5.6.6) stable; urgency=high
   * Fixes ExtraTorrent meta search.
