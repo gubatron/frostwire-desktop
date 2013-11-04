@@ -28,7 +28,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -323,7 +322,7 @@ final class FWHttpClient implements HttpClient {
                 sb.append("&");
                 sb.append(kv.getKey());
                 sb.append("=");
-                sb.append(URLEncoder.encode(kv.getValue(), "UTF-8"));
+                sb.append(kv.getValue());
             }
             sb.deleteCharAt(0);
         }
