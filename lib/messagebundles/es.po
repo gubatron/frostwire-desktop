@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-10-11 16:05-0400\n"
-"PO-Revision-Date: 2013-11-04 09:27-0400\n"
+"PO-Revision-Date: 2013-11-05 09:32-0400\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: FTA <saintrecall@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -277,7 +277,7 @@ msgstr "Eliminar el Torrent y los datos de las descargas seleccionadas"
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:321
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:322
 msgid "Clear Inactive"
-msgstr "Eliminar inactivas"
+msgstr "Eliminar descargas inactivas"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:323
 msgid "Clear Inactive (completed) transfers from the Transfers list."
@@ -419,7 +419,7 @@ msgstr "Tasa de compartición"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:162
 msgid "Seeds/Peers"
-msgstr "Compartidos/Pares"
+msgstr "Compartidos/Usuarios"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:165
 msgid "Started On"
@@ -964,11 +964,11 @@ msgstr "Copiar texto"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:463
 msgid "Copy entire message to Clipboard"
-msgstr "Copiar el mensaje completo al Portapapeles"
+msgstr "Copiar el mensaje completo al portapapeles"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:470
 msgid "Message copied to clipboard."
-msgstr "Mensaje copiado en el portapapeles"
+msgstr "Mensaje copiado al portapapeles"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:482
 msgid "Copy Link"
@@ -976,19 +976,19 @@ msgstr "Copiar enlace"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:483
 msgid "Copy Link to Clipboard"
-msgstr "Copiar enlace en el Portapapeles"
+msgstr "Copiar enlace al portapapeles"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:490
 msgid "Link copied to clipboard."
-msgstr "Enlace copiado en el Portapapeles."
+msgstr "Enlace copiado al portapapeles."
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:505
 msgid "Copy Magnet URL to Clipboard"
-msgstr "Copiar Enlaces Magnet al Portapapeles"
+msgstr "Copiar URL de Magnet al portapapeles"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:512
 msgid "Magnet copied to clipboard."
-msgstr "Enlaces Magnet copiados al Portapapeles"
+msgstr "Enlaces Magnet copiados al portapapeles"
 
 #: gui/com/frostwire/gui/bittorrent/SlideDownload.java:44
 msgid "Error: Corrupted download"
@@ -1155,7 +1155,7 @@ msgstr "¿Deseas enviar este archivo a un amigo?"
 #: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1123
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:67
 msgid "Send files with FrostWire"
-msgstr "Enviar archivos con FrostWire."
+msgstr "Envía archivos con FrostWire"
 
 #: gui/com/frostwire/gui/library/AddLibraryDirectoryAction.java:45
 #: gui/com/limegroup/gnutella/gui/ListEditor.java:238
@@ -1284,7 +1284,7 @@ msgstr "Pistas"
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:222
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:42
 msgid "Default Save Folder"
-msgstr "Carpeta de almacenamiento por defecto"
+msgstr "Carpeta de descarga predeteminada"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:224
 #: gui/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:36
@@ -1458,7 +1458,7 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1142
 msgid "Could not extract audio from"
-msgstr ""
+msgstr "No se puede extraer audio de"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1237
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1239
@@ -1473,7 +1473,7 @@ msgstr "Compartir"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1242
 msgid "file on local Wi-Fi network"
-msgstr ""
+msgstr "archivo en una red Wi-Fi local"
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:49
 msgid "Bookmarked"
@@ -1867,7 +1867,7 @@ msgstr "Reproduciendo archivo local"
 #. won't be shown in 5.6.x, code here for 6.x
 #: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1018
 msgid "Playing track from"
-msgstr ""
+msgstr "Reproduciendo pista de"
 
 #: gui/com/frostwire/gui/player/MediaPlayerComponent.java:1021
 msgid "Open YouTube source page"
@@ -1924,7 +1924,7 @@ msgstr ""
 
 #: gui/com/frostwire/gui/player/MediaPlayerLinux.java:25
 msgid "</font></b>"
-msgstr ""
+msgstr "</font></b>"
 
 #: gui/com/frostwire/gui/player/MediaPlayerLinux.java:31
 msgid ""
@@ -3053,7 +3053,7 @@ msgid ""
 msgstr ""
 "¿Deseas ver los diálogos de las preguntas que se han marcado previamente "
 "como 'No mostrar este mensaje de nuevo' o 'Usar siempre esta respuesta'? Ve "
-"a Herramientas &gt; y haz clic en 'Volver a la configuración por defecto' "
+"a Herramientas &gt; y haz clic en 'Volver a la configuración predeterminada' "
 "debajo de Vista &gt; Pop-ups."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:56
@@ -3138,8 +3138,8 @@ msgid ""
 msgstr ""
 "¿Deseas ver los diálogos de las preguntas que se han marcado previamente "
 "como 'No mostrar este mensaje de nuevo' o 'Usar siempre esta respuesta'? Ve "
-"a FrostWire &gt; Preferencias y haz clic en 'Volver a la configuración por "
-"defecto' debajo de Vista &gt; Pop-ups."
+"a FrostWire &gt; Preferencias y haz clic en 'Volver a la configuración "
+"predeterminada' debajo de Vista &gt; Pop-ups."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:74
 msgid ""
@@ -3213,7 +3213,7 @@ msgid ""
 "Want to play music in your default media player instead of in FrostWire? "
 "Control-click the FrostWire status bar and deselect 'Show Media Player'."
 msgstr ""
-"¿Quieres escuchar música en tu reproductor por defecto en lugar de "
+"¿Quieres escuchar música en tu reproductor predeterminado en lugar de "
 "FrostWire? Haz control-clic en la barra de estado de FrostWire y des-"
 "selecciona 'Mostrar Media Player'."
 
@@ -3318,7 +3318,7 @@ msgstr "Actualizar ahora"
 #: gui/com/limegroup/gnutella/gui/UpdateDialog.java:164
 #: gui/com/limegroup/gnutella/gui/UpdateDialog.java:197
 msgid "Visit http://www.frostwire.com to update!"
-msgstr "¡Vistie http://www.frostwire.com para actualizar!"
+msgstr "¡Visite http://www.frostwire.com para actualizar!"
 
 #: gui/com/limegroup/gnutella/gui/UpdateDialog.java:174
 msgid ""
@@ -4058,7 +4058,7 @@ msgstr "Restablecer los valores predeterminados"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:55
 msgid "Revert All Settings to the Factory Defaults"
-msgstr "Revertir todas las configuraciones a los valores por defecto"
+msgstr "Revertir todas las configuraciones a los valores predeterminados"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:209
 msgid ""
@@ -4429,7 +4429,7 @@ msgstr "Estaciones de radio de Internet"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:20
 msgid "You can restore the default internet radio stations."
-msgstr "Puedes restaurar las estaciones de radio de internet por defecto."
+msgstr "Puedes restaurar las estaciones de radio de internet predeterminadas."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:42
 msgid "Total Radio Stations"
@@ -4441,7 +4441,7 @@ msgstr "Preferencias de internacionalización"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:21
 msgid "You can choose to preference hosts using the same language as you."
-msgstr "Puede eligir que prefiera hots que usan el mismo idioma que usted."
+msgstr "Puede eligir que prefiera hosts que usan el mismo idioma que usted."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:24
 msgid "Turn preferencing on:"
