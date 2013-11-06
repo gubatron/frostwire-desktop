@@ -1,5 +1,7 @@
 package com.frostwire.search.extractors;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.io.FileUtils;
 
 public class YoutubeBaseInfoExtractor {
 
@@ -25,7 +29,7 @@ public class YoutubeBaseInfoExtractor {
         }
 
         for (int i = 0; i < str.length(); i++) {
-            if (!Character.isDigit(str.charAt(0))) {
+            if (!Character.isDigit(str.charAt(i))) {
                 return false;
             }
         }
@@ -39,7 +43,7 @@ public class YoutubeBaseInfoExtractor {
         }
 
         for (int i = 0; i < str.length(); i++) {
-            if (!Character.isLetter(str.charAt(0))) {
+            if (!Character.isLetter(str.charAt(i))) {
                 return false;
             }
         }
@@ -102,8 +106,12 @@ public class YoutubeBaseInfoExtractor {
         throw new IllegalArgumentException("Not supported type");
     }
 
-    public String jscode;
-    public Map<String, LambdaN> functions = new HashMap<String, LambdaN>();
+    public final String jscode;
+    public final Map<String, LambdaN> functions = new HashMap<String, LambdaN>();
+
+    public YoutubeBaseInfoExtractor(String jscode) {
+        this.jscode = jscode;
+    }
 
     public Object interpret_statement(String stmt, final Map<String, Object> local_vars, final int allow_recursion) {
         if (allow_recursion < 0) {
@@ -114,7 +122,7 @@ public class YoutubeBaseInfoExtractor {
             stmt = stmt.substring("var ".length());
         }
 
-        final Matcher ass_m = Pattern.compile("^(?P<out>[a-z]+)(?:\\[(?P<index>[^\\]]+)\\])?=(?P<expr>.*)$").matcher(stmt);
+        final Matcher ass_m = Pattern.compile("^(?<out>[a-z]+)(:\\[(?<index>[^\\]]+)\\])?=(?<expr>.*)$").matcher(stmt);
         Lambda1 assign;
         String expr;
         if (ass_m.find()) {
@@ -165,7 +173,7 @@ public class YoutubeBaseInfoExtractor {
             return local_vars.get(expr);
         }
 
-        Matcher m = Pattern.compile("^(?P<in>[a-z]+)\\.(?P<member>.*)$").matcher(expr);
+        Matcher m = Pattern.compile("^(?<in>[a-z]+)\\.(?<member>.*)$").matcher(expr);
         if (m.find()) {
             String member = m.group("member");
             Object val = local_vars.get(m.group("in"));
@@ -222,7 +230,7 @@ public class YoutubeBaseInfoExtractor {
     }
 
     public LambdaN extract_function(String funcname) {
-        final Matcher func_m = Pattern.compile("function " + Pattern.quote(funcname) + "\\((?P<args>[a-z,]+)\\){(?P<code>[^}]+)}").matcher(jscode);
+        final Matcher func_m = Pattern.compile("function " + Pattern.quote(funcname) + "\\((?<args>[a-z,]+)\\)\\{(?<code>[^\\}]+)\\}").matcher(jscode);
         func_m.find();
         final String[] argnames = func_m.group("args").split(",");
 
@@ -242,5 +250,28 @@ public class YoutubeBaseInfoExtractor {
         };
 
         return resf;
+    }
+
+    public Lambda1 parse_sig_js(String jscode) {
+        Matcher m = Pattern.compile("signature=([a-zA-Z]+)").matcher(jscode);
+        m.find();
+        String funcname = m.group(1);
+
+        final LambdaN initial_function = extract_function(funcname);
+
+        return new Lambda1() {
+            @Override
+            public Object run(Object s) {
+                return initial_function.run(new Object[] { s });
+            }
+        };
+    }
+
+    public static void main(String[] args) throws Exception {
+        String jscode = FileUtils.readFileToString(new File("/Users/aldenml/Downloads/html5player.js"));
+        YoutubeBaseInfoExtractor ie = new YoutubeBaseInfoExtractor(jscode);
+        Lambda1 f = ie.parse_sig_js(jscode);
+        System.out.println(f);
+        System.out.println(f.run("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
     }
 }
