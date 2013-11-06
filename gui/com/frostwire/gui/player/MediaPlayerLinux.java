@@ -29,7 +29,7 @@ public class MediaPlayerLinux extends MediaPlayer {
                     }
                     
                     GUIMediator.showError(I18n.tr("<html><b>FrostWire requires Mplayer to play your media</b> but I could not find it in your computer.<br><br>If you want to use FrostWire as a media player <b>Please install mplayer and restart FrostWire.</b>")
-                            + I18n.tr(instructions));
+                            + I18n.tr(instructions) + "</html>");
                             
                 }
             });
