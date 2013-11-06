@@ -87,6 +87,10 @@ public class OSUtils {
      */
     private static boolean _isUbuntu;
     
+    /**
+     * Variable for whether or not we're on Fedora
+     */
+    private static boolean _isFedora;
 
     /** 
      * Variable for whether or not we're on Solaris.
@@ -115,6 +119,7 @@ public class OSUtils {
     	_isWindowsMe = false;
     	_isSolaris = false;
     	_isUbuntu = false;
+    	_isFedora = false;
     	_isLinux = false;
     	_isOS2 = false;
     	_isMacOSX = false;
@@ -153,6 +158,7 @@ public class OSUtils {
         if (_isLinux) {
         	String unameStr = UnameReader.read();
         	_isUbuntu = unameStr.contains("buntu") || unameStr.contains("ebian");
+        	_isFedora = unameStr.contains("edora") || unameStr.contains("ed Hat");
         }
         
         if(_isWindows || _isLinux)
@@ -363,10 +369,26 @@ public class OSUtils {
     	return _isLinux;
     }
     
+    /** 
+     * Returns whether or not the Linux distribution is Ubuntu or Debian.
+     *
+     * @return <tt>true</tt> if the application is running on Ubuntu or Debian distributions, 
+     *         <tt>false</tt> otherwise
+     */
     public static boolean isUbuntu() {
     	return _isUbuntu;
     }
 
+    /** 
+     * Returns whether or not the Linux distribution is Fedora or Red Hat
+     *
+     * @return <tt>true</tt> if the application is running on Fedora or Red Hat distributions, 
+     *         <tt>false</tt> otherwise
+     */
+    public static boolean isFedora() {
+    	return _isFedora;
+    }
+    
     /** 
      * Returns whether or not the OS is some version of
      * Unix, defined here as only Solaris or Linux.
