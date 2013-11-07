@@ -29,7 +29,7 @@ public final class JsFunction<T> {
 
     @SuppressWarnings("unchecked")
     public T eval(Object[] args) {
-        return (T) initial_function.run(args);
+        return (T) initial_function.eval(args);
     }
 
     public T eval(Object s) {
@@ -52,7 +52,7 @@ public final class JsFunction<T> {
             if (ass_m.group("index") != null) {
                 assign = new Lambda1() {
                     @Override
-                    public Object run(Object val) {
+                    public Object eval(Object val) {
                         Object lvar = local_vars.get(ass_m.group("out"));
                         Object idx = interpret_expression(ass_m.group("index"), local_vars, allow_recursion);
                         assert idx instanceof Integer;
@@ -64,7 +64,7 @@ public final class JsFunction<T> {
             } else {
                 assign = new Lambda1() {
                     @Override
-                    public Object run(Object val) {
+                    public Object eval(Object val) {
                         local_vars.put(ass_m.group("out"), val);
                         return val;
                     }
@@ -74,7 +74,7 @@ public final class JsFunction<T> {
         } else if (stmt.startsWith("return ")) {
             assign = new Lambda1() {
                 @Override
-                public Object run(Object v) {
+                public Object eval(Object v) {
                     return v;
                 }
             };
@@ -84,7 +84,7 @@ public final class JsFunction<T> {
         }
 
         Object v = interpret_expression(expr, local_vars, allow_recursion);
-        return assign.run(v);
+        return assign.eval(v);
     }
 
     private Object interpret_expression(String expr, Map<String, Object> local_vars, int allow_recursion) {
@@ -147,7 +147,7 @@ public final class JsFunction<T> {
                     argvals.add(local_vars.get(v));
                 }
             }
-            return functions.get(fname).run(argvals.toArray());
+            return functions.get(fname).eval(argvals.toArray());
         }
         throw new JsError(String.format("Unsupported JS expression %s", expr));
     }
@@ -159,7 +159,7 @@ public final class JsFunction<T> {
 
         LambdaN resf = new LambdaN() {
             @Override
-            public Object run(Object[] args) {
+            public Object eval(Object[] args) {
                 Map<String, Object> local_vars = new HashMap<String, Object>();
                 for (int i = 0; i < argnames.length; i++) {
                     local_vars.put(argnames[i], args[i]);
