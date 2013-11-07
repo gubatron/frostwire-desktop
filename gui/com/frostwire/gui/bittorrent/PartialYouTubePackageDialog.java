@@ -517,7 +517,7 @@ public class PartialYouTubePackageDialog extends JDialog {
                 if (filename.contains("High Quality") || filename.contains("(720p_") || filename.contains("(1080p_")) {
                     humanType.append(I18n.tr("(High Quality)"));
                 } else if (filename.contains("(AAC)") || filename.contains("(480p_")) {
-                    humanType.append(I18n.tr("(Medium Quality"));
+                    humanType.append(I18n.tr("(Medium Quality)"));
                 } else {
                     humanType.append(I18n.tr("(Poor Quality)"));
                 }
