@@ -43,7 +43,7 @@ public final class LibraryInternetRadioPaneItem extends AbstractPaneItem {
 
         add(getVerticalSeparator());
 
-        JButton resetButton = new JButton("Restore default Radio Stations");
+        JButton resetButton = new JButton(I18n.tr("Restore default Radio Stations"));
         resetButton.addActionListener(new ActionListener() {
 
             @Override

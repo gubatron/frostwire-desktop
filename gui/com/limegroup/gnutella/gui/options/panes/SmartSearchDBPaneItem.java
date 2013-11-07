@@ -49,7 +49,7 @@ public final class SmartSearchDBPaneItem extends AbstractPaneItem {
 
         add(getVerticalSeparator());
 
-        JButton resetButton = new JButton("Reset Smart Search Database");
+        JButton resetButton = new JButton(I18n.tr("Reset Smart Search Database"));
         resetButton.addActionListener(new ActionListener() {
 
             @Override
