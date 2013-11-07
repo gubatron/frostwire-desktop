@@ -17,6 +17,7 @@
 package jd.plugins.decrypter;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -92,6 +93,9 @@ import com.coremedia.iso.boxes.apple.AppleCoverBox;
 import com.coremedia.iso.boxes.apple.AppleItemListBox;
 import com.coremedia.iso.boxes.apple.AppleMediaTypeBox;
 import com.coremedia.iso.boxes.apple.AppleTrackTitleBox;
+import com.frostwire.search.extractors.YouTubeSig;
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClientFactory;
 import com.googlecode.mp4parser.AbstractBox;
 import com.googlecode.mp4parser.authoring.Movie;
 import com.googlecode.mp4parser.authoring.Mp4TrackImpl;
@@ -976,7 +980,7 @@ public class TbCm extends PluginForDecrypt {
         return dlink;
     }
     
-    private HashMap<Integer, String[]> parseLinks(String html5_fmt_map, boolean allowVideoOnly) {
+    private HashMap<Integer, String[]> parseLinks(String html5_fmt_map, boolean allowVideoOnly, YouTubeSig ytSig) {
         final HashMap<Integer, String[]> links = new HashMap<Integer, String[]>();
         if (html5_fmt_map != null) {
             if (html5_fmt_map.contains(UNSUPPORTEDRTMP)) { return links; }
@@ -988,7 +992,10 @@ public class TbCm extends PluginForDecrypt {
                     String sig = new Regex(hit, "url=http.*?(\\&|$)(sig|signature)=(.*?)(\\&|$)").getMatch(2);
                     if (sig == null) sig = new Regex(hit, "(sig|signature)=(.*?)(\\&|$)").getMatch(1);
                     if (sig == null) sig = new Regex(hit, "(sig|signature)%3D(.*?)%26").getMatch(1);
-                    if (sig == null) sig = decryptSignature(new Regex(hit, "s=(.*?)(\\&|$)").getMatch(0));
+                    
+                    String t = new Regex(hit, "s=(.*?)(\\&|$)").getMatch(0);
+                    if (sig == null) sig = ytSig != null && t != null ? ytSig.calc(t) : decryptSignature(t);
+                    
                     String hitFmt = new Regex(hit, "itag=(\\d+)").getMatch(0);
                     String hitQ = new Regex(hit, "quality=(.*?)(\\&|$)").getMatch(0);
                     if (hitQ == null && allowVideoOnly) hitQ = "unknown";
@@ -1011,7 +1018,7 @@ public class TbCm extends PluginForDecrypt {
         return links;
     }
     
-    private HashMap<Integer, String[]> parseLinks(Browser br, final String videoURL, String YT_FILENAME, boolean ythack, boolean tryGetDetails) throws InterruptedException, IOException {
+    private HashMap<Integer, String[]> parseLinks(Browser br, final String videoURL, String YT_FILENAME, boolean ythack, boolean tryGetDetails, YouTubeSig sig) throws InterruptedException, IOException {
         final HashMap<Integer, String[]> links = new HashMap<Integer, String[]>();
         String html5_fmt_map = br.getRegex("\"html5_fmt_map\": \\[(.*?)\\]").getMatch(0);
 
@@ -1047,21 +1054,21 @@ public class TbCm extends PluginForDecrypt {
                 return null;
             }
             if (html5_fmt_map != null) {
-                HashMap<Integer, String[]> ret = parseLinks(html5_fmt_map, false);
+                HashMap<Integer, String[]> ret = parseLinks(html5_fmt_map, false, sig);
                 if (ret.size() == 0) return links;
                 links.putAll(ret);
                 if (false) {
                     /* not playable by vlc */
                     /* check for adaptive fmts */
                     String adaptive = br.getRegex("\"adaptive_fmts\": \"(.*?)\"").getMatch(0);
-                    ret = parseLinks(adaptive, true);
+                    ret = parseLinks(adaptive, true, sig);
                     links.putAll(ret);
                 }
             } else {
                 if (br.containsHTML("reason=Unfortunately")) return null;
                 if (tryGetDetails == true) {
                     br.getPage("http://www.youtube.com/get_video_info?el=detailpage&video_id=" + getVideoID(videoURL));
-                    return parseLinks(br, videoURL, YT_FILENAME, ythack, false);
+                    return parseLinks(br, videoURL, YT_FILENAME, ythack, false, sig);
                 } else {
                     return null;
                 }
@@ -1197,12 +1204,16 @@ public class TbCm extends PluginForDecrypt {
                 }
             }
         }
+        
+        String html5player = br.getRegex("(?s)\"js\": \"(http:.+?html5player\\-.+?\\.js)").getMatch(0);
+        YouTubeSig sig = getYouTubeSig(html5player);
+        
         /* html5_fmt_map */
         if (br.getRegex(TbCm.YT_FILENAME_PATTERN).count() != 0 && fileNameFound == false) {
             YT_FILENAME = Encoding.htmlDecode(br.getRegex(TbCm.YT_FILENAME_PATTERN).getMatch(0).trim());
             fileNameFound = true;
         }
-        HashMap<Integer, String[]> links = parseLinks(br, video, YT_FILENAME, ythack, false);
+        HashMap<Integer, String[]> links = parseLinks(br, video, YT_FILENAME, ythack, false, sig);
         return links;
     }
     
@@ -1215,8 +1226,12 @@ public class TbCm extends PluginForDecrypt {
     private String decryptSignature(String s) {
         if (s == null) return s;
         StringBuilder sb = new StringBuilder();
-        logger.info("SigLength: " + s.length());
-        if (s.length() == 92) {
+        LOG.info("SigLength: " + s.length());
+        if (s.length() == 93) {
+            sb.append(new StringBuilder(s.substring(30, 87)).reverse());
+            sb.append(s.charAt(88));
+            sb.append(new StringBuilder(s.substring(6, 29)).reverse());
+        } else if (s.length() == 92) {
             sb.append(s.charAt(25));
             sb.append(s.substring(3, 25));
             sb.append(s.charAt(0));
@@ -1225,6 +1240,10 @@ public class TbCm extends PluginForDecrypt {
             sb.append(s.substring(43, 79));
             sb.append(s.charAt(91));
             sb.append(s.substring(80, 83));
+        } else if (s.length() == 91) {
+            sb.append(new StringBuilder(s.substring(28, 85)).reverse());
+            sb.append(s.charAt(86));
+            sb.append(new StringBuilder(s.substring(6, 27)).reverse());
         } else if (s.length() == 90) {
             sb.append(s.charAt(25));
             sb.append(s.substring(3, 25));
@@ -1234,78 +1253,63 @@ public class TbCm extends PluginForDecrypt {
             sb.append(s.substring(41, 77));
             sb.append(s.charAt(89));
             sb.append(s.substring(78, 81));
+        } else if (s.length() == 89) {
+            sb.append(new StringBuilder(s.substring(79, 85)).reverse());
+            sb.append(s.charAt(87));
+            sb.append(new StringBuilder(s.substring(61, 78)).reverse());
+            sb.append(s.charAt(0));
+            sb.append(new StringBuilder(s.substring(4, 60)).reverse());
         } else if (s.length() == 88) {
-            sb.append(s.charAt(48));
-            sb.append(new StringBuilder(s.substring(68, 82)).reverse());
-            sb.append(s.charAt(82));
-            sb.append(new StringBuilder(s.substring(63, 67)).reverse());
-            sb.append(s.charAt(85));
-            sb.append(new StringBuilder(s.substring(49, 62)).reverse());
-            sb.append(s.charAt(67));
-            sb.append(new StringBuilder(s.substring(13, 48)).reverse());
-            sb.append(s.charAt(3));
-            sb.append(new StringBuilder(s.substring(4, 12)).reverse());
+            sb.append(s.substring(7, 28));
+            sb.append(s.charAt(87));
+            sb.append(s.substring(29, 45));
+            sb.append(s.charAt(55));
+            sb.append(s.substring(46, 55));
             sb.append(s.charAt(2));
-            sb.append(s.charAt(12));
+            sb.append(s.substring(56, 87));
+            sb.append(s.charAt(28));
         } else if (s.length() == 87) {
-            //sb.append(s.substring(4, 23));
-            //sb.append(s.charAt(86));
-            //sb.append(s.substring(24, 85));
-            //s[83:53:-1] + s[3] + s[52:40:-1] + s[86] + s[39:10:-1] + s[0] + s[9:3:-1] + s[53]
-            sb.append(new StringBuilder(s.substring(54, 84)).reverse());
-            sb.append(s.charAt(3));
-            sb.append(new StringBuilder(s.substring(41, 53)).reverse());
-            sb.append(s.charAt(86));
-            sb.append(new StringBuilder(s.substring(11, 40)).reverse());
-            sb.append(s.charAt(0));
-            sb.append(new StringBuilder(s.substring(4, 10)).reverse());
-            sb.append(s.charAt(53));
-        } else if (s.length() == 86) {
-            sb.append(s.substring(83, 85));
-            sb.append(s.charAt(26));
-            sb.append(new StringBuilder(s.substring(47, 80)).reverse());
-            sb.append(s.charAt(85));
-            sb.append(new StringBuilder(s.substring(37, 46)).reverse());
-            sb.append(s.charAt(30));
-            sb.append(new StringBuilder(s.substring(31, 36)).reverse());
-            sb.append(s.charAt(46));
-            sb.append(new StringBuilder(s.substring(27, 30)).reverse());
-            sb.append(s.charAt(82));
-            sb.append(new StringBuilder(s.substring(2, 26)).reverse());
-        } else if (s.length() == 85) {
-            sb.append(s.substring(2, 8));
-            sb.append(s.charAt(0));
-            sb.append(s.substring(9, 21));
-            sb.append(s.charAt(65));
-            sb.append(s.substring(22, 65));
-            sb.append(s.charAt(84));
-            sb.append(s.substring(66, 82));
-            sb.append(s.charAt(21));
-        } else if (s.length() == 84) {
-            sb.append(new StringBuilder(s.substring(37, 84)).reverse());
+            sb.append(s.substring(6, 27));
+            sb.append(s.charAt(4));
+            sb.append(s.substring(28, 39));
+            sb.append(s.charAt(27));
+            sb.append(s.substring(40, 59));
             sb.append(s.charAt(2));
-            sb.append(new StringBuilder(s.substring(27, 36)).reverse());
-            sb.append(s.charAt(3));
-            sb.append(new StringBuilder(s.substring(4, 26)).reverse());
-            sb.append(s.charAt(26));
-        } else if (s.length() == 83) {
-            sb.append(s.substring(0, 15));
-            sb.append(s.charAt(80));
-            sb.append(s.substring(16, 80));
-            sb.append(s.charAt(15));
-        } else if (s.length() == 82) {
-            sb.append(s.charAt(36));
-            sb.append(new StringBuilder(s.substring(68, 80)).reverse());
-            sb.append(s.charAt(81));
-            sb.append(new StringBuilder(s.substring(41, 67)).reverse());
-            sb.append(s.charAt(33));
-            sb.append(new StringBuilder(s.substring(37, 40)).reverse());
-            sb.append(s.charAt(40));
-            sb.append(s.charAt(35));
+            sb.append(s.substring(60));
+        } else if (s.length() == 86) {
+            sb.append(new StringBuilder(s.substring(73, 81)).reverse());
+            sb.append(s.charAt(16));
+            sb.append(new StringBuilder(s.substring(40, 72)).reverse());
+            sb.append(s.charAt(72));
+            sb.append(new StringBuilder(s.substring(17, 39)).reverse());
+            sb.append(s.charAt(82));
+            sb.append(new StringBuilder(s.substring(0, 16)).reverse());
+        } else if (s.length() == 85) {
+            sb.append(s.substring(3, 11));
             sb.append(s.charAt(0));
-            sb.append(s.charAt(67));
-            sb.append(new StringBuilder(s.substring(1, 33)).reverse());
-            sb.append(s.charAt(34));
+            sb.append(s.substring(12, 55));
+            sb.append(s.charAt(84));
+            sb.append(s.substring(56, 84));
+        } else if (s.length() == 84) {
+            sb.append(new StringBuilder(s.substring(71, 79)).reverse());
+            sb.append(s.charAt(14));
+            sb.append(new StringBuilder(s.substring(38, 70)).reverse());
+            sb.append(s.charAt(70));
+            sb.append(new StringBuilder(s.substring(15, 37)).reverse());
+            sb.append(s.charAt(80));
+            sb.append(new StringBuilder(s.substring(0, 13)).reverse());
+        } else if (s.length() == 83) {
+            sb.append(new StringBuilder(s.substring(64, 81)).reverse());
+            sb.append(s.charAt(0));
+            sb.append(new StringBuilder(s.substring(1, 63)).reverse());
+            sb.append(s.charAt(63));
+        } else if (s.length() == 82) {
+            sb.append(new StringBuilder(s.substring(38, 81)).reverse());
+            sb.append(s.charAt(7));
+            sb.append(new StringBuilder(s.substring(8, 37)).reverse());
+            sb.append(s.charAt(0));
+            sb.append(new StringBuilder(s.substring(1, 7)).reverse());
+            sb.append(s.charAt(37));
         } else if (s.length() == 81) {
             sb.append(s.charAt(56));
             sb.append(new StringBuilder(s.substring(57, 80)).reverse());
@@ -1320,6 +1324,12 @@ public class TbCm extends PluginForDecrypt {
             sb.append(s.charAt(29));
             sb.append(new StringBuilder(s.substring(1, 9)).reverse());
             sb.append(s.charAt(9));
+        } else if (s.length() == 80) {
+            sb.append(s.substring(1, 19));
+            sb.append(s.charAt(0));
+            sb.append(s.substring(20, 68));
+            sb.append(s.charAt(19));
+            sb.append(s.substring(69, 80));
         } else if (s.length() == 79) {
             sb.append(s.charAt(54));
             sb.append(new StringBuilder(s.substring(55, 78)).reverse());
@@ -1335,7 +1345,7 @@ public class TbCm extends PluginForDecrypt {
             sb.append(new StringBuilder(s.substring(1, 9)).reverse());
             sb.append(s.charAt(9));
         } else {
-            logger.info("Unsupported SigLength: " + s.length());
+            LOG.info("Unsupported SigLength: " + s.length());
             return null;
         }
         return sb.toString();
@@ -1626,6 +1636,30 @@ public class TbCm extends PluginForDecrypt {
         }
     }
     
+    static String simpleHTTP(String url) throws Throwable {
+        URL u = new URL(url);
+        URLConnection con = u.openConnection();
+        con.setConnectTimeout(3000);
+        con.setReadTimeout(3000);
+        con.setRequestProperty("User-Agent", "Wget/1.12");
+        InputStream in = con.getInputStream();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        try {
+            
+            byte[] b = new byte[1024];
+            int n = 0;
+            while ((n = in.read(b, 0, b.length)) != -1) {
+                out.write(b, 0, n);
+            }
+            
+            return out.toString("UTF-8");
+        } finally {
+            closeQuietly(out);
+            closeQuietly(in);
+        }
+    }
+    
     static void simpleHTTP(String url, String jpgFilename) throws Throwable {
         URL u = new URL(url);
         URLConnection con = u.openConnection();
@@ -1735,5 +1769,11 @@ public class TbCm extends PluginForDecrypt {
         } catch (IOException ioe) {
             // ignore
         }
+    }
+    
+    private YouTubeSig getYouTubeSig(String html5player) {
+        HttpClient httpClient = HttpClientFactory.newDefaultInstance();
+        String jscode = httpClient.get(html5player.replace("\\", ""));
+        return new YouTubeSig(jscode);
     }
 }
