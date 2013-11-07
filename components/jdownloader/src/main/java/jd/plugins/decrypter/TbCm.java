@@ -28,6 +28,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -93,9 +95,6 @@ import com.coremedia.iso.boxes.apple.AppleCoverBox;
 import com.coremedia.iso.boxes.apple.AppleItemListBox;
 import com.coremedia.iso.boxes.apple.AppleMediaTypeBox;
 import com.coremedia.iso.boxes.apple.AppleTrackTitleBox;
-import com.frostwire.search.extractors.YouTubeSig;
-import com.frostwire.util.HttpClient;
-import com.frostwire.util.HttpClientFactory;
 import com.googlecode.mp4parser.AbstractBox;
 import com.googlecode.mp4parser.authoring.Movie;
 import com.googlecode.mp4parser.authoring.Mp4TrackImpl;
@@ -980,7 +979,7 @@ public class TbCm extends PluginForDecrypt {
         return dlink;
     }
     
-    private HashMap<Integer, String[]> parseLinks(String html5_fmt_map, boolean allowVideoOnly, YouTubeSig ytSig) {
+    private HashMap<Integer, String[]> parseLinks(String html5_fmt_map, boolean allowVideoOnly, Object ytSig) {
         final HashMap<Integer, String[]> links = new HashMap<Integer, String[]>();
         if (html5_fmt_map != null) {
             if (html5_fmt_map.contains(UNSUPPORTEDRTMP)) { return links; }
@@ -994,7 +993,7 @@ public class TbCm extends PluginForDecrypt {
                     if (sig == null) sig = new Regex(hit, "(sig|signature)%3D(.*?)%26").getMatch(1);
                     
                     String t = new Regex(hit, "s=(.*?)(\\&|$)").getMatch(0);
-                    if (sig == null) sig = ytSig != null && t != null ? ytSig.calc(t) : decryptSignature(t);
+                    if (sig == null) sig = ytSig != null && t != null ? calc(ytSig, t) : decryptSignature(t);
                     
                     String hitFmt = new Regex(hit, "itag=(\\d+)").getMatch(0);
                     String hitQ = new Regex(hit, "quality=(.*?)(\\&|$)").getMatch(0);
@@ -1018,7 +1017,7 @@ public class TbCm extends PluginForDecrypt {
         return links;
     }
     
-    private HashMap<Integer, String[]> parseLinks(Browser br, final String videoURL, String YT_FILENAME, boolean ythack, boolean tryGetDetails, YouTubeSig sig) throws InterruptedException, IOException {
+    private HashMap<Integer, String[]> parseLinks(Browser br, final String videoURL, String YT_FILENAME, boolean ythack, boolean tryGetDetails, Object sig) throws InterruptedException, IOException {
         final HashMap<Integer, String[]> links = new HashMap<Integer, String[]>();
         String html5_fmt_map = br.getRegex("\"html5_fmt_map\": \\[(.*?)\\]").getMatch(0);
 
@@ -1206,7 +1205,7 @@ public class TbCm extends PluginForDecrypt {
         }
         
         String html5player = br.getRegex("(?s)\"js\": \"(http:.+?html5player\\-.+?\\.js)").getMatch(0);
-        YouTubeSig sig = getYouTubeSig(html5player);
+        Object sig = getYouTubeSig(html5player);
         
         /* html5_fmt_map */
         if (br.getRegex(TbCm.YT_FILENAME_PATTERN).count() != 0 && fileNameFound == false) {
@@ -1771,9 +1770,29 @@ public class TbCm extends PluginForDecrypt {
         }
     }
     
-    private YouTubeSig getYouTubeSig(String html5player) {
-        HttpClient httpClient = HttpClientFactory.newDefaultInstance();
-        String jscode = httpClient.get(html5player.replace("\\", ""));
-        return new YouTubeSig(jscode);
+    private Object getYouTubeSig(String html5player) {
+        try {
+            String jscode = simpleHTTP(html5player.replace("\\", ""));
+            Class<?> clazz = Class.forName("com.frostwire.search.extractors.YouTubeSig");
+            Constructor<?> c = clazz.getDeclaredConstructor(String.class);
+            return c.newInstance(jscode);
+        } catch (Throwable e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    
+    private String calc(Object obj, String s) {
+        try {
+            Method m = obj.getClass().getDeclaredMethod("calc", String.class);
+            return (String) m.invoke(obj, s);
+        } catch (Throwable e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
