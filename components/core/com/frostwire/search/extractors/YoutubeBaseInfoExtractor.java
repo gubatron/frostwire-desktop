@@ -1,7 +1,5 @@
 package com.frostwire.search.extractors;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.io.FileUtils;
 
 public class YoutubeBaseInfoExtractor {
 
@@ -96,7 +92,7 @@ public class YoutubeBaseInfoExtractor {
 
     public static Object splice(Object obj, int fromIndex) {
         if (obj instanceof Object[]) {
-            return Arrays.asList((Object[]) obj).subList(fromIndex, ((Object[]) obj).length - 1).toArray();
+            return Arrays.asList((Object[]) obj).subList(fromIndex, ((Object[]) obj).length).toArray();
         }
 
         if (obj instanceof String) {
@@ -122,7 +118,7 @@ public class YoutubeBaseInfoExtractor {
             stmt = stmt.substring("var ".length());
         }
 
-        final Matcher ass_m = Pattern.compile("^(?<out>[a-z]+)(:\\[(?<index>[^\\]]+)\\])?=(?<expr>.*)$").matcher(stmt);
+        final Matcher ass_m = Pattern.compile("^(?<out>[a-z]+)(\\[(?<index>.+?)\\])?=(?<expr>.*)$").matcher(stmt);
         Lambda1 assign;
         String expr;
         if (ass_m.find()) {
@@ -189,28 +185,28 @@ public class YoutubeBaseInfoExtractor {
             if (member.equals("reverse()")) {
                 return reverse(val);
             }
-            Matcher slice_m = Pattern.compile("slice\\((?P<idx>.*)\\)").matcher(member);
+            Matcher slice_m = Pattern.compile("slice\\((?<idx>.*)\\)").matcher(member);
             if (slice_m.find()) {
                 Object idx = interpret_expression(slice_m.group("idx"), local_vars, allow_recursion - 1);
                 return splice(val, (Integer) idx);
             }
         }
 
-        m = Pattern.compile("^(?P<in>[a-z]+)\\[(?P<idx>.+)\\]$").matcher(expr);
+        m = Pattern.compile("^(?<in>[a-z]+)\\[(?<idx>.+)\\]$").matcher(expr);
         if (m.find()) {
             Object val = local_vars.get(m.group("in"));
             Object idx = interpret_expression(m.group("idx"), local_vars, allow_recursion - 1);
             return ((Object[]) val)[(Integer) idx];
         }
 
-        m = Pattern.compile("^(?P<a>.+?)(?P<op>[%])(?P<b>.+?)$").matcher(expr);
+        m = Pattern.compile("^(?<a>.+?)(?<op>[%])(?<b>.+?)$").matcher(expr);
         if (m.find()) {
-            Object a = interpret_expression(m.group('a'), local_vars, allow_recursion);
-            Object b = interpret_expression(m.group('b'), local_vars, allow_recursion);
+            Object a = interpret_expression(m.group("a"), local_vars, allow_recursion);
+            Object b = interpret_expression(m.group("b"), local_vars, allow_recursion);
             return (Integer) a % (Integer) b;
         }
 
-        m = Pattern.compile("^(?P<func>[a-zA-Z]+)\\((?P<args>[a-z0-9,]+)\\)$").matcher(expr);
+        m = Pattern.compile("^(?<func>[a-zA-Z]+)\\((?<args>[a-z0-9,]+)\\)$").matcher(expr);
         if (m.find()) {
             String fname = m.group("func");
             if (!functions.containsKey(fname)) {
@@ -244,6 +240,10 @@ public class YoutubeBaseInfoExtractor {
                 Object res = null;
                 for (String stmt : func_m.group("code").split(";")) {
                     res = interpret_statement(stmt, local_vars, 20);
+                    System.out.println(stmt);
+                    if (res instanceof Object[]) {
+                        System.out.println(join((Object[])res));
+                    }
                 }
                 return res;
             }
@@ -265,13 +265,5 @@ public class YoutubeBaseInfoExtractor {
                 return initial_function.run(new Object[] { s });
             }
         };
-    }
-
-    public static void main(String[] args) throws Exception {
-        String jscode = FileUtils.readFileToString(new File("/Users/aldenml/Downloads/html5player.js"));
-        YoutubeBaseInfoExtractor ie = new YoutubeBaseInfoExtractor(jscode);
-        Lambda1 f = ie.parse_sig_js(jscode);
-        System.out.println(f);
-        System.out.println(f.run("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
     }
 }
