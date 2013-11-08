@@ -235,7 +235,7 @@ final class FWHttpClient implements HttpClient {
         canceled = false;
         final URL u = new URL(url);
         final URLConnection conn = u.openConnection();
-
+        conn.setConnectTimeout(timeout);
         conn.setReadTimeout(timeout);
         conn.setRequestProperty("User-Agent", userAgent);
 
@@ -308,6 +308,7 @@ final class FWHttpClient implements HttpClient {
         final URL u = new URL(url);
         final HttpURLConnection conn = (HttpURLConnection) u.openConnection();
         conn.setDoOutput(true);
+        conn.setConnectTimeout(timeout);
         conn.setReadTimeout(timeout);
         conn.setRequestProperty("User-Agent", userAgent);
         conn.setInstanceFollowRedirects(false);
