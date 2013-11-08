@@ -182,7 +182,7 @@ public class ShareTorrentDialog extends JDialog {
 			@Override
 			public void run() {
 				_textArea.setText(I18n.tr("Download") + " \"" + _torrent_name.replace("_", " ") + "\" " + I18n.tr("at") + " "
-						+ getLink() + " "+ I18n.tr("via FrostWire"));
+						+ getLink().trim() + " "+ I18n.tr("via FrostWire"));
 			}
 		});
 	}
@@ -207,9 +207,9 @@ public class ShareTorrentDialog extends JDialog {
 		boolean folderTorrent = files.length > 1;
 		_introLabel = new JLabel(folderTorrent ? String.format(
 				I18n.tr("Use the following text to share the \"%s\" folder"),
-				_torrent_name) : String.format(String.format(
-				"Use the following text to share the \"%s\" file",
-				_torrent_name)));
+				_torrent_name) : String.format(I18n.tr(
+				"Use the following text to share the \"%s\" file"),
+				_torrent_name));
 		_introLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
 		_container.add(_introLabel, c);
 
@@ -259,8 +259,10 @@ public class ShareTorrentDialog extends JDialog {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.weightx = 1.0;
 		c.insets = new Insets(10, 10, 10, 10);
-		_tipsLabel = new JLabel(
-				"<html><p> > <strong>Keep FrostWire Open</strong> until the file has been downloaded by at least one other friend.</p><p>&nbsp;</p><p> > <strong>The more, the merrier.</strong> The more people sharing the faster it can be downloaded by others.</p><p>&nbsp;</p><p> > <strong>Your files can be discovered by others.</strong> Once you share this link and you seed the files they will be available to everybody on the BitTorrent network.</p></html>");
+		_tipsLabel = new JLabel("<html><p> > "+
+				I18n.tr("<strong>Keep FrostWire Open</strong> until the file has been downloaded by at least one other friend.")+"</p><p>&nbsp;</p><p> >"+
+				I18n.tr("<strong>The more, the merrier.</strong> The more people sharing the faster it can be downloaded by others.")+"</p><p>&nbsp;</p><p> >"+
+				I18n.tr("<strong>Your files can be discovered by others.</strong> Once you share this link and you seed the files they will be available to everybody on the BitTorrent network.")+"</p></html>");
 		_tipsLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
 		_tipsLabel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Tips")));
 		_container.add(_tipsLabel, c);

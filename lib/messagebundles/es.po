@@ -4,13 +4,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FTA <saintrecall@gmail.com>, 2007.
 #
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:46
 msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 00:02-0300\n"
-"PO-Revision-Date: 2013-11-06 23:55-0300\n"
+"POT-Creation-Date: 2013-11-07 14:05-0300\n"
+"PO-Revision-Date: 2013-11-07 14:19-0300\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: FTA <saintrecall@gmail.com>\n"
 "Language: es\n"
@@ -283,7 +282,7 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:342
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:343
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:344
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:504
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:506
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:356
 msgid "Copy Magnet"
 msgstr "Copiar Magnet"
@@ -927,8 +926,8 @@ msgid "(High Quality)"
 msgstr "(Calidad Alta)"
 
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:520
-msgid "(Medium Quality"
-msgstr "(Calidad Media"
+msgid "(Medium Quality)"
+msgstr "(Calidad Media)"
 
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:522
 msgid "(Poor Quality)"
@@ -969,51 +968,81 @@ msgstr "vía FrostWire"
 msgid "Use the following text to share the \"%s\" folder"
 msgstr "Usa el siguiente texto para compartir la carpeta \"%s\" "
 
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:211
+msgid "Use the following text to share the \"%s\" file"
+msgstr "Usa el siguiente texto para compartir el archivo \"%s\" "
+
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:263
+msgid ""
+"<strong>Keep FrostWire Open</strong> until the file has been downloaded by "
+"at least one other friend."
+msgstr ""
+"<strong>Mantén FrostWire abierto</strong> hasta que el archivo haya sido "
+"descargado por todos tus amigos."
+
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:264
+msgid ""
+"<strong>The more, the merrier.</strong> The more people sharing the faster "
+"it can be downloaded by others."
+msgstr ""
+"<strong>Cuánto más, mejor.</strong> Mientras más gente esté compartiendo, la "
+"descarga será más rápida."
+
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:265
+msgid ""
+"<strong>Your files can be discovered by others.</strong> Once you share this "
+"link and you seed the files they will be available to everybody on the "
+"BitTorrent network."
+msgstr ""
+"<strong>Tus archivos pueden ser encontrados por otros.</strong> Una vez que "
+"compartas este enlace y compartas los archivos, estarán disponibles para "
+"cualquiera en la red BitTorrent."
+
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:267
 msgid "Tips"
 msgstr "Consejos"
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:333
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:335
 msgid "All done! Now share the link"
-msgstr "¡Terminado! Ahora comparte el enlace"
+msgstr "¡Hecho! Ahora comparte el enlace"
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:444
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:446
 msgid "Twitter it"
 msgstr "Twitealo"
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:445
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:447
 msgid "Send the message above to Twitter"
 msgstr "Envía este mensaje a Twitter"
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:462
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:464
 msgid "Copy Text"
 msgstr "Copiar texto"
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:463
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:465
 msgid "Copy entire message to Clipboard"
 msgstr "Copiar el mensaje completo al portapapeles"
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:470
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:472
 msgid "Message copied to clipboard."
 msgstr "Mensaje copiado al portapapeles"
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:482
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:484
 msgid "Copy Link"
 msgstr "Copiar enlace"
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:483
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:485
 msgid "Copy Link to Clipboard"
 msgstr "Copiar enlace al portapapeles"
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:490
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:492
 msgid "Link copied to clipboard."
 msgstr "Enlace copiado al portapapeles."
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:505
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:507
 msgid "Copy Magnet URL to Clipboard"
 msgstr "Copiar URL de Magnet al portapapeles"
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:512
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:514
 msgid "Magnet copied to clipboard."
 msgstr "Enlaces Magnet copiados al portapapeles"
 
@@ -1142,7 +1171,7 @@ msgstr "Instalar"
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:228
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:229
 msgid "Video Preview"
-msgstr "Vista previa de vídeo"
+msgstr "Vista previa del vídeo"
 
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:230
 msgid "Play Video preview of"
@@ -1151,7 +1180,7 @@ msgstr ""
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:247
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:248
 msgid "Audio Preview"
-msgstr "Vista previa de audio"
+msgstr "Vista previa del audio"
 
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:249
 msgid "Play Audio preview of"
@@ -2752,6 +2781,8 @@ msgid ""
 "Like FrostWire on Facebook and stay in touch with the community. Get Help "
 "and Help Others."
 msgstr ""
+"Haz clic en \"Me gusta\" en Facebook y únete a la comunidad. Obtén ayuda y "
+"ayuda a otros."
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:200
 msgid "Circle FrostWire on G+"
@@ -4500,7 +4531,7 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:42
 msgid "Play with the native media player:"
-msgstr "Reproducir con el reproductor nativo:"
+msgstr "Utilizar el reproductor nativo:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:20
 msgid "FrostWire Popups"
@@ -4662,7 +4693,7 @@ msgstr "Habilitar Búsqueda Inteligente (Smart Search)"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:48
 msgid "Total torrents indexed"
-msgstr "Total torrentes indexados"
+msgstr "Total torrents indexados"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:52
 msgid "Reset Smart Search Database"
