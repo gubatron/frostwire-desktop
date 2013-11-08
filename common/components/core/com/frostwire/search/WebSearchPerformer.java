@@ -47,6 +47,8 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     private final int timeout;
     private final HttpClient client;
 
+    protected String domainName;
+    
     public WebSearchPerformer(long token, String keywords, int timeout) {
         super(token);
         this.keywords = keywords;
@@ -113,5 +115,30 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         }
 
         return false;
+    }
+    
+    public String getDomainName() {
+        return domainName;
+    }
+    
+    public void setDomainName(String domainName) {
+        this.domainName = domainName;
+    }
+    
+    protected void checkDomainIsAccesible() {
+        //TODO: Asynchronously checks if domain name is accesible from this peer, with a HEAD request.
+        //If it fails, it talks to its DomainAliasManager to hand over the next domain.
+        //When it asks for a new domain alias, it will tell the DomainAliasManager
+        //the current domain.
+        //The DomainAliasManager is in charge of trying the next one on the list.
+        //The DomainAliasManager will use implementations of DomainAliasListFetchers
+        //These can be local, http based, torrent based, or DHT+Torrent based.
+        //To keep things simple:
+        // - We'll instantiate DomainAliasManager's per search performer.
+        // - We'll instantiate DomainAliasManager objects only if necessary.
+        //This way we avoid keeping states for all search performers, and unnecessary
+        //objects in memory.
+        //this method is to be called whenever a search performer is failing due to
+        //timeouts or connectivity issues.
     }
 }

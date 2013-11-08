@@ -37,11 +37,12 @@ public class BitSnoopSearchPerformer extends TorrentRegexSearchPerformer<BitSnoo
 
     public BitSnoopSearchPerformer(long token, String keywords, int timeout) {
         super(token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX);
+        domainName = "bitsnoop.com";
     }
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://bitsnoop.com/search/all/" + encodedKeywords + "/c/d/" + page + "/";
+        return "http://"+getDomainName()+"/search/all/" + encodedKeywords + "/c/d/" + page + "/";
     }
 
     @Override

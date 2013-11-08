@@ -38,7 +38,7 @@ public class EztvSearchPerformer extends TorrentRegexSearchPerformer<EztvSearchR
     private static final String HTML_REGEX = "(?is)<td class=\"section_post_header\" colspan=\"2\"><b>(.*?)</b></td>.*?<a href=\"(http://torrent.zoink.it/.*?torrent)\".*?<a href=\"magnet:\\?xt=urn:btih:(.*?)&.*?\".*?<b>Released:</b> (.*?)<br />.*?<b>Filesize:</b> (.*?)<br />";
 
     public EztvSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX);
+        super(token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX); 
     }
 
     @Override
