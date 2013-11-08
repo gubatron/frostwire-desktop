@@ -49,7 +49,6 @@ public class DomainAlias {
             long timeSinceLastCheck = System.currentTimeMillis() - lastChecked;
 
             if (timeSinceLastCheck > DOMAIN_ALIAS_CHECK_INTERVAL_MILLISECONDS) {
-                state = DomainAliasState.CHECKING;
                 Thread r = new Thread("DomainAlias-Pinger (" + original + "=>" + alias + ")") {
                     @Override
                     public void run() {
@@ -62,6 +61,7 @@ public class DomainAlias {
     }
 
     private void ping() {
+        state = DomainAliasState.CHECKING;
         lastChecked = System.currentTimeMillis();
         final HttpClient client = HttpClientFactory.newDefaultInstance();
         final String result = client.get("http://" + alias, DOMAIN_ALIAS_CHECK_TIMEOUT_SECONDS);
