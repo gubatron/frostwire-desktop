@@ -206,8 +206,8 @@ CONTRIBUTE
 
 If you want to contribute code, start by looking at the open issues on
 github.com 
-[https://github.com/frostwire/frostwire-desktop/issue][4]
-[4]: <https://github.com/frostwire/frostwire-desktop/issue>
+[https://github.com/frostwire/frostwire-desktop/issues][4]
+[4]: <https://github.com/frostwire/frostwire-desktop/issues>
 
 If you want to fix a new issue that's not listed there, create the issue, see if
 we can discuss a solution, if you already have one the best way to proceed is
