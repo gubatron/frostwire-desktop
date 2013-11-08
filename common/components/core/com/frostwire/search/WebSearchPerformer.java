@@ -83,6 +83,7 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     }
 
     public String fetch(String url, String cookie, Map<String, String> customHeaders) {
+        System.out.println("fetch " + url);
         return client.get(url, timeout, DEFAULT_USER_AGENT, null, cookie, customHeaders);
     }
 
@@ -119,11 +120,15 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         return false;
     }
     
-    public String getDefaultDomainName() {
+    private String getDefaultDomainName() {
         return defaultDomainName;
     }
     
     public String getDomainName() {
+        if (domainName==null){
+            domainName = defaultDomainName;
+            
+        }
         return domainName;
     }
     
@@ -132,7 +137,7 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     }
     
     protected void checkDomainIsAccesible() {
-        //TODO: Asynchronously checks if domain name is accesible from this peer, with a HEAD request.
+        //TODO (BUT PROBABLY NOT HERE): Asynchronously checks if domain name is accesible from this peer, with a HEAD request.
         //If it fails, it talks to its DomainAliasManager to hand over the next domain.
         //When it asks for a new domain alias, it will tell the DomainAliasManager
         //the current domain.
