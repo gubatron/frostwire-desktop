@@ -30,8 +30,8 @@ import com.frostwire.util.JsonUtils;
  */
 public class ClearBitsSearchPerformer extends TorrentJsonSearchPerformer<ClearBitsItem, ClearBitsSearchResult> {
 
-    public ClearBitsSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1);
+    public ClearBitsSearchPerformer(String defaultDomain, long token, String keywords, int timeout) {
+        super(defaultDomain, token, keywords, timeout, 1);
     }
 
     @Override

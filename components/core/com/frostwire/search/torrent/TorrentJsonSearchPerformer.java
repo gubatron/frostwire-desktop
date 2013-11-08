@@ -34,8 +34,8 @@ public abstract class TorrentJsonSearchPerformer<T extends ComparableTorrentJson
 
     private final Comparator<T> itemComparator;
 
-    public TorrentJsonSearchPerformer(long token, String keywords, int timeout, int pages) {
-        super(token, keywords, timeout, pages);
+    public TorrentJsonSearchPerformer(String defaultDomain, long token, String keywords, int timeout, int pages) {
+        super(defaultDomain, token, keywords, timeout, pages);
         
         this.itemComparator = new Comparator<T>() {
             @Override

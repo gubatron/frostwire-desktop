@@ -34,8 +34,8 @@ public class SoundcloudSearchPerformer extends PagedWebSearchPerformer {
 
     private static final String CLIENT_ID = "b45b1aa10f1ac2941910a7f0d10f8e28";
 
-    public SoundcloudSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1);
+    public SoundcloudSearchPerformer(String defaultDomain, long token, String keywords, int timeout) {
+        super(defaultDomain, token, keywords, timeout, 1);
     }
 
     @Override

@@ -30,8 +30,8 @@ public abstract class PagedRegexSearchPerformer<T extends SearchResult> extends 
 
     private final int regexMaxResults;
 
-    public PagedRegexSearchPerformer(long token, String keywords, int timeout, int pages, int regexMaxResults) {
-        super(token, keywords, timeout, pages);
+    public PagedRegexSearchPerformer(String defaultDomain, long token, String keywords, int timeout, int pages, int regexMaxResults) {
+        super(defaultDomain, token, keywords, timeout, pages);
         this.regexMaxResults = regexMaxResults;
     }
 

@@ -42,8 +42,8 @@ public class FrostClickSearchPerformer extends PagedWebSearchPerformer {
 
     private final Map<String, String> customHeaders;
 
-    public FrostClickSearchPerformer(long token, String keywords, int timeout, UserAgent userAgent) {
-        super(token, keywords, timeout, MAX_RESULTS);
+    public FrostClickSearchPerformer(String defaultDomain, long token, String keywords, int timeout, UserAgent userAgent) {
+        super(defaultDomain ,token, keywords, timeout, MAX_RESULTS);
         this.customHeaders = buildCustomHeaders(userAgent);
     }
 

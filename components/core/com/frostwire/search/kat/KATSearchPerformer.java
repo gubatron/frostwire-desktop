@@ -31,8 +31,8 @@ import com.frostwire.util.JsonUtils;
  */
 public class KATSearchPerformer extends TorrentJsonSearchPerformer<KATItem, KATSearchResult> {
 
-    public KATSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1);
+    public KATSearchPerformer(String defaultDomain, long token, String keywords, int timeout) {
+        super(defaultDomain, token, keywords, timeout, 1);
     }
 
     @Override

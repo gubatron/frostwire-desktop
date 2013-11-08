@@ -30,8 +30,8 @@ public abstract class CrawlRegexSearchPerformer<T extends CrawlableSearchResult>
 
     private final int regexMaxResults;
 
-    public CrawlRegexSearchPerformer(long token, String keywords, int timeout, int pages, int numCrawls, int regexMaxResults) {
-        super(token, keywords, timeout, pages, numCrawls);
+    public CrawlRegexSearchPerformer(String defaultDomain, long token, String keywords, int timeout, int pages, int numCrawls, int regexMaxResults) {
+        super(defaultDomain, token, keywords, timeout, pages, numCrawls);
         this.regexMaxResults = regexMaxResults;
     }
 
