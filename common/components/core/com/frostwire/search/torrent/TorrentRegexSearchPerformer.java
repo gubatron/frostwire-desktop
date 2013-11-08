@@ -39,8 +39,8 @@ public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResul
     private final Pattern pattern;
     private final Pattern htmlPattern;
 
-    public TorrentRegexSearchPerformer(long token, String keywords, int timeout, int pages, int numCrawls, int regexMaxResults, String regex, String htmlRegex) {
-        super(token, keywords, timeout, pages, numCrawls, regexMaxResults);
+    public TorrentRegexSearchPerformer(String defaultDomain, long token, String keywords, int timeout, int pages, int numCrawls, int regexMaxResults, String regex, String htmlRegex) {
+        super(defaultDomain, token, keywords, timeout, pages, numCrawls, regexMaxResults);
         this.pattern = Pattern.compile(regex);
         this.htmlPattern = Pattern.compile(htmlRegex);
     }

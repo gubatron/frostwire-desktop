@@ -73,63 +73,63 @@ public abstract class SearchEngine {
     public static final SearchEngine CLEARBITS = new SearchEngine(CLEARBITS_ID, "ClearBits", SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new ClearBitsSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+            return new ClearBitsSearchPerformer("www.clearbits.net", token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine MININOVA = new SearchEngine(MININOVA_ID, "Mininova", SearchEnginesSettings.MININOVA_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new MininovaSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+            return new MininovaSearchPerformer("www.mininova.org", token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine KAT = new SearchEngine(KAT_ID, "KAT", SearchEnginesSettings.KAT_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new KATSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+            return new KATSearchPerformer("www.kat.ph", token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine EXTRATORRENT = new SearchEngine(EXTRATORRENT_ID, "Extratorrent", SearchEnginesSettings.EXTRATORRENT_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new ExtratorrentSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+            return new ExtratorrentSearchPerformer("extratorrent.cc", token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine TPB = new SearchEngine(TPB_ID, "TPB", SearchEnginesSettings.TPB_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new TPBSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+            return new TPBSearchPerformer("thepiratebay.se", token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine MONOVA = new SearchEngine(MONOVA_ID, "Monova", SearchEnginesSettings.MONOVA_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new MonovaSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+            return new MonovaSearchPerformer("www.monova.org", token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine YOUTUBE = new SearchEngine(YOUTUBE_ID, "YouTube", SearchEnginesSettings.YOUTUBE_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new YouTubeSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+            return new YouTubeSearchPerformer("gdata.youtube.com",token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine SOUNDCLOUD = new SearchEngine(SOUNDCLOUD_ID, "Soundcloud", SearchEnginesSettings.SOUNDCLOUD_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new SoundcloudSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+            return new SoundcloudSearchPerformer("api.sndcdn.com",token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine ARCHIVEORG = new SearchEngine(ARCHIVEORG_ID, "Archive.org", SearchEnginesSettings.ARCHIVEORG_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new ArchiveorgSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+            return new ArchiveorgSearchPerformer("archive.org",token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
@@ -138,28 +138,28 @@ public abstract class SearchEngine {
 
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new FrostClickSearchPerformer(token, keywords, DEFAULT_TIMEOUT, userAgent);
+            return new FrostClickSearchPerformer("api.frostclick.com", token, keywords, DEFAULT_TIMEOUT, userAgent);
         }
     };
 
     public static final SearchEngine BITSNOOP = new SearchEngine(BITSNOOP_ID, "BitSnoop", SearchEnginesSettings.BITSNOOP_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new BitSnoopSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+            return new BitSnoopSearchPerformer("bitsnoop.com", token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine TORLOCK = new SearchEngine(TORLOCK_ID, "TorLock", SearchEnginesSettings.TORLOCK_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new TorLockSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+            return new TorLockSearchPerformer("www.torlock.com", token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine EZTV = new SearchEngine(EZTV_ID, "Eztv", SearchEnginesSettings.EZTV_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new EztvSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+            return new EztvSearchPerformer("eztv.it", token, keywords, DEFAULT_TIMEOUT);
         }
     };
 

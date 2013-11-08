@@ -47,10 +47,12 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     private final int timeout;
     private final HttpClient client;
 
+    private final String defaultDomainName;
     protected String domainName;
     
-    public WebSearchPerformer(long token, String keywords, int timeout) {
+    public WebSearchPerformer(String defaultDomainName, long token, String keywords, int timeout) {
         super(token);
+        this.defaultDomainName = defaultDomainName;
         this.keywords = keywords;
         this.encodedKeywords = URLUtils.encode(keywords);
         this.timeout = timeout;
@@ -115,6 +117,10 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         }
 
         return false;
+    }
+    
+    public String getDefaultDomainName() {
+        return defaultDomainName;
     }
     
     public String getDomainName() {

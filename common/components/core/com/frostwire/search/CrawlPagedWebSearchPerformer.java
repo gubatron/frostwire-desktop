@@ -41,13 +41,13 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
 
     private int numCrawls;
 
-    public CrawlPagedWebSearchPerformer(long token, String keywords, int timeout, int pages, int numCrawls) {
-        super(token, keywords, timeout, pages);
+    public CrawlPagedWebSearchPerformer(String defaultDomain, long token, String keywords, int timeout, int pages, int numCrawls) {
+        super(defaultDomain, token, keywords, timeout, pages);
         this.numCrawls = numCrawls;
     }
 
-    public CrawlPagedWebSearchPerformer(long token, String keywords, int timeout, int pages) {
-        this(token, keywords, timeout, pages, DEFAULT_NUM_CRAWLS);
+    public CrawlPagedWebSearchPerformer(String defaultDomain, long token, String keywords, int timeout, int pages) {
+        this(defaultDomain, token, keywords, timeout, pages, DEFAULT_NUM_CRAWLS);
     }
 
     public static void setCache(CrawlCache cache) {

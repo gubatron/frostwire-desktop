@@ -30,8 +30,8 @@ import com.frostwire.util.JsonUtils;
  */
 public class MininovaSearchPerformer extends TorrentJsonSearchPerformer<MininovaVuzeItem, MininovaVuzeSearchResult> {
 
-    public MininovaSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1);
+    public MininovaSearchPerformer(String defaultDomain, long token, String keywords, int timeout) {
+        super(defaultDomain, token, keywords, timeout, 1);
     }
 
     @Override

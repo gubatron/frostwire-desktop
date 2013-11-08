@@ -31,8 +31,8 @@ import com.frostwire.search.SearchResult;
  */
 public abstract class TorrentSearchPerformer extends CrawlPagedWebSearchPerformer<TorrentCrawlableSearchResult> {
 
-    public TorrentSearchPerformer(long token, String keywords, int timeout, int pages) {
-        super(token, keywords, timeout, pages);
+    public TorrentSearchPerformer(String defaultDomain, long token, String keywords, int timeout, int pages) {
+        super(defaultDomain, token, keywords, timeout, pages);
     }
 
     @Override

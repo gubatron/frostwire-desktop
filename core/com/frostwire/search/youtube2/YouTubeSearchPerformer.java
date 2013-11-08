@@ -49,8 +49,8 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
 
     private static final int MAX_RESULTS = 15;
 
-    public YouTubeSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1, MAX_RESULTS);
+    public YouTubeSearchPerformer(String defaultDomain, long token, String keywords, int timeout) {
+        super(defaultDomain, token, keywords, timeout, 1, MAX_RESULTS);
     }
 
     @Override
