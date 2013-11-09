@@ -47,7 +47,7 @@ public class BitSnoopSearchPerformer extends TorrentRegexSearchPerformer<BitSnoo
     @Override
     public CrawlableSearchResult fromMatcher(Matcher matcher) {
         String itemId = matcher.group(1);
-        return new BitSnoopTempSearchResult(itemId);
+        return new BitSnoopTempSearchResult(getDomainName(), itemId);
     }
 
     @Override

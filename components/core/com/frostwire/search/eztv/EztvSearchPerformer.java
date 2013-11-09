@@ -52,13 +52,13 @@ public class EztvSearchPerformer extends TorrentRegexSearchPerformer<EztvSearchR
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://eztv.it/search/";
+        return "http://"+getDomainName()+"/search/";
     }
 
     @Override
     public CrawlableSearchResult fromMatcher(Matcher matcher) {
         String itemId = matcher.group(1);
-        return new EztvTempSearchResult(itemId);
+        return new EztvTempSearchResult(getDomainName(),itemId);
     }
 
     @Override

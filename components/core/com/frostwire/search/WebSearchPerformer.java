@@ -129,7 +129,13 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     public String getDomainName() {
         if (domainName==null){
             DomainAliasManager domainAliasManager = getDomainAliasManager();
-            domainName = domainAliasManager.getDomainNameToUse();
+            
+            if (domainAliasManager != null) {
+                domainName = domainAliasManager.getDomainNameToUse();
+            } else {
+                //should not happen, but just in case.
+                domainName = defaultDomainName;
+            }
         }
         return domainName;
     }

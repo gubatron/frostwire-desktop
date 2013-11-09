@@ -48,11 +48,11 @@ public class TorLockSearchPerformer extends TorrentRegexSearchPerformer<TorLockS
     @Override
     public CrawlableSearchResult fromMatcher(Matcher matcher) {
         String itemId = matcher.group(1);
-        return new TorLockTempSearchResult(itemId);
+        return new TorLockTempSearchResult(getDomainName(),itemId);
     }
 
     @Override
     protected TorLockSearchResult fromHtmlMatcher(CrawlableSearchResult sr, Matcher matcher) {
-        return new TorLockSearchResult(sr.getDetailsUrl(), matcher);
+        return new TorLockSearchResult(getDomainName(),sr.getDetailsUrl(), matcher);
     }
 }

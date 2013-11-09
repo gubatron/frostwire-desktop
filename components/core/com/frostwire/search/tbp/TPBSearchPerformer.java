@@ -50,7 +50,7 @@ public class TPBSearchPerformer extends CrawlRegexSearchPerformer<TPBSearchResul
 
     @Override
     public TPBSearchResult fromMatcher(Matcher matcher) {
-        return new TPBSearchResult(matcher);
+        return new TPBSearchResult(getDomainName(), matcher);
     }
 
     @Override

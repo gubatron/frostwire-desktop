@@ -36,7 +36,7 @@ public class ClearBitsSearchPerformer extends TorrentJsonSearchPerformer<ClearBi
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://www.clearbits.net/home/search/index.json?query=" + encodedKeywords;
+        return "http://"+getDomainName()+"/home/search/index.json?query=" + encodedKeywords;
     }
 
     @Override

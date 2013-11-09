@@ -36,7 +36,7 @@ public class ExtratorrentSearchPerformer extends TorrentJsonSearchPerformer<Extr
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://extratorrent.cc/json/?search=" + encodedKeywords;
+        return "http://"+getDomainName()+"/json/?search=" + encodedKeywords;
     }
 
     @Override

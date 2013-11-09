@@ -63,11 +63,12 @@ public class TPBSearchResult extends AbstractTorrentSearchResult {
     private final String detailsUrl;
     private final String torrentUrl;
     private final String infoHash;
+    private final String domainName;
     private final long size;
     private final long creationTime;
     private final int seeds;
 
-    public TPBSearchResult(Matcher matcher) {
+    public TPBSearchResult(String domainName, Matcher matcher) {
         /*
          * Matcher groups cheatsheet
          * 1 -> Category (useless)
@@ -80,7 +81,7 @@ public class TPBSearchResult extends AbstractTorrentSearchResult {
          * 8 -> seeds
          */
         this.detailsUrl = matcher.group(2);
-
+        this.domainName = domainName;
         String temp = HtmlManipulator.replaceHtmlEntities(matcher.group(3));
         temp = HtmlManipulator.replaceHtmlEntities(temp); // because of input
         this.filename = buildFilename(temp);
@@ -129,7 +130,7 @@ public class TPBSearchResult extends AbstractTorrentSearchResult {
 
     @Override
     public String getDetailsUrl() {
-        return "http://thepiratebay.org" + detailsUrl;
+        return "http://" + domainName + detailsUrl;
     }
 
     @Override

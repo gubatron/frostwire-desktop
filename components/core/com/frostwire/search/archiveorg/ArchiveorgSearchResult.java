@@ -35,12 +35,14 @@ public class ArchiveorgSearchResult extends AbstractSearchResult implements Craw
 
     private final ArchiveorgItem item;
     private final String detailsUrl;
+    private final String domainName;
     private final License licence;
     private final long creationTime;
 
-    public ArchiveorgSearchResult(ArchiveorgItem item) {
+    public ArchiveorgSearchResult(String domainName, ArchiveorgItem item) {
         this.item = item;
-        this.detailsUrl = "http://archive.org/details/" + item.identifier;
+        this.domainName = domainName;
+        this.detailsUrl = "http://"+domainName+"/details/" + item.identifier;
         this.licence = License.creativeCommonsByUrl(item.licenseurl);
         this.creationTime = parsePublicDate(item.publicdate);
     }
@@ -89,5 +91,9 @@ public class ArchiveorgSearchResult extends AbstractSearchResult implements Craw
         } catch (ParseException e) {
         }
         return result;
+    }
+
+    public String getDomainName() {
+        return domainName;
     }
 }
