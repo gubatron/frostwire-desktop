@@ -2,6 +2,8 @@ package com.frostwire.search.domainalias;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.nio.channels.SocketChannel;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
@@ -22,8 +24,8 @@ public class DomainAlias {
     private long lastChecked;
     private int failedAttempts;
 
-    private final long DOMAIN_ALIAS_CHECK_INTERVAL_MILLISECONDS = 8000;//test with one minute //600000; //10 minutes in production.
-    private final int DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS = 10000;
+    private final static long DOMAIN_ALIAS_CHECK_INTERVAL_MILLISECONDS = 8000;//test with one minute //600000; //10 minutes in production.
+    private final static int DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS = 4000;
 
     public DomainAlias(String original, String alias) {
         this.original = original;
@@ -73,20 +75,38 @@ public class DomainAlias {
         aliasState = DomainAliasState.CHECKING;
         lastChecked = System.currentTimeMillis();
         System.out.println("DomainAlias.pingAlias(): Checking " + original + " alias -> " + alias);
+
+        if (ping(alias)) {
+            aliasState = DomainAliasState.ONLINE;  
+            failedAttempts = 0;
+            System.out.println("Domain " + alias + " is reacheable!");
+        } else {
+            pingFailed();
+        }
+    }
+    
+    private static boolean ping(String domainName) {
+        boolean connected = false;
         try {
-            InetAddress address = InetAddress.getByName(alias);
-            boolean reachable = address.isReachable(DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS);
+            //try reacheability test first (this tries a ICMP ping and a tcp connection to echo port.
+            InetAddress address = InetAddress.getByName(domainName);
+            boolean reachable = address.isReachable(DomainAlias.DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS);
+            
             if (reachable) {
-                aliasState = DomainAliasState.ONLINE;  
-                failedAttempts = 0;
-                System.out.println("Domain " + alias + " is reacheable!");
+                connected = true;
             } else {
-                pingFailed();
+                //but the server may not attend to pings or have echo port on.
+                //so we then try a TCP connection with port 80.
+                InetSocketAddress inetSocketAddress = new InetSocketAddress(domainName, 80);
+                SocketChannel sc = SocketChannel.open();
+                sc.configureBlocking(true);
+                connected = sc.connect(inetSocketAddress);
+                sc.close();
             }
         } catch (IOException e) {
-            pingFailed();
-            e.printStackTrace();
+            connected = false;
         }
+        return connected;
     }
     
     private void pingFailed() {

@@ -34,7 +34,7 @@ public class MockDomainAliasManifestFetcher extends AbstractDomainAliasManifestF
         katAliases.add("www.kat.ph");
         katAliases.add("kickass.pw");
         katAliases.add("katproxy.pw");
-        katAliases.add("thepiratebay.sx");
+        //katAliases.add("thepiratebay.sx");
         
         manifest.aliases.put("kickass.to", katAliases);
 
