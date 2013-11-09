@@ -23,6 +23,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.frostwire.search.domainalias.DomainAliasManager;
+import com.frostwire.search.domainalias.DomainAliasManagerBroker;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.URLUtils;
@@ -83,7 +85,6 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     }
 
     public String fetch(String url, String cookie, Map<String, String> customHeaders) {
-        System.out.println("fetch " + url);
         return client.get(url, timeout, DEFAULT_USER_AGENT, null, cookie, customHeaders);
     }
 
@@ -126,30 +127,28 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     
     public String getDomainName() {
         if (domainName==null){
-            domainName = defaultDomainName;
-            
+            DomainAliasManager domainAliasManager = getDomainAliasManager();
+            domainName = domainAliasManager.getDomainNameToUse();
+            System.out.println("DomainAliasManager told me to use: " + domainName);
         }
         return domainName;
+    }
+
+    protected DomainAliasManager getDomainAliasManager() {
+        return DomainAliasManagerBroker.getDomainAliasManager(getDefaultDomainName());
     }
     
     public void setDomainName(String domainName) {
         this.domainName = domainName;
     }
     
-    protected void checkDomainIsAccesible() {
-        //TODO (BUT PROBABLY NOT HERE): Asynchronously checks if domain name is accesible from this peer, with a HEAD request.
-        //If it fails, it talks to its DomainAliasManager to hand over the next domain.
-        //When it asks for a new domain alias, it will tell the DomainAliasManager
-        //the current domain.
-        //The DomainAliasManager is in charge of trying the next one on the list.
-        //The DomainAliasManager will use implementations of DomainAliasListFetchers
-        //These can be local, http based, torrent based, or DHT+Torrent based.
-        //To keep things simple:
-        // - We'll instantiate DomainAliasManager's per search performer.
-        // - We'll instantiate DomainAliasManager objects only if necessary.
-        //This way we avoid keeping states for all search performers, and unnecessary
-        //objects in memory.
-        //this method is to be called whenever a search performer is failing due to
-        //timeouts or connectivity issues.
+    protected void checkAccesibleDomains() {
+        //a search has failed, let's ask the domain alias manager to check
+        //if the current domain is accesible.
+        //This measure won't save the current search, it'll get things ready for the next one.
+        System.out.println("WebSeachPerformer.checkAccesibleDomains()!");
+        DomainAliasManager domainAliasManager = getDomainAliasManager();
+        domainAliasManager.markDomainOffline(getDefaultDomainName());
+        domainAliasManager.checkStatuses();
     }
 }

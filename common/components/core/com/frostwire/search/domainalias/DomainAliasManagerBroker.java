@@ -26,7 +26,7 @@ public class DomainAliasManagerBroker implements DomainAliasManifestFetcherListe
 
     private DomainAliasManagerBroker() {
         managers = new HashMap<String, DomainAliasManager>();
-        executor = ExecutorsHelper.newFixedSizeThreadPool(1, "DomainAliasMockFetcherExecutorHelper");
+        executor = ExecutorsHelper.newThreadPool("DomainAliasMockFetcherExecutorHelper");
         fetchDomainAliasManifest();
     }
 
@@ -34,7 +34,8 @@ public class DomainAliasManagerBroker implements DomainAliasManifestFetcherListe
         executor.submit(new Runnable() {
             @Override
             public void run() {
-                MockDomainAliasManifestFetcher fetcher = new MockDomainAliasManifestFetcher(INSTANCE);            
+                MockDomainAliasManifestFetcher fetcher = new MockDomainAliasManifestFetcher(INSTANCE); 
+                fetcher.fetchManifest();
             }
         });
     }
@@ -48,13 +49,14 @@ public class DomainAliasManagerBroker implements DomainAliasManifestFetcherListe
 
     @Override
     public void onManifestFetched(DomainAliasManifest aliasManifest) {
+        System.out.println("DomainAliasManagerBroker: Got the manifest!!!");
         updateManagers(aliasManifest);
         manifest = aliasManifest;
     }
 
     @Override
     public void onManifestNotFetched() {
-        System.err.println("Could not fetch alias list, should we try again later? attempts left");
+        System.err.println("DomainAliasManagerBroker:  Could not fetch alias list, should we try again later? attempts left");
         manifest = null;
         //attempts++;?? timestamp, to try again later. etc.
     }

@@ -37,7 +37,7 @@ public class KATSearchPerformer extends TorrentJsonSearchPerformer<KATItem, KATS
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://www.kat.ph/json.php?q=" + encodedKeywords;
+        return "http://"+getDomainName()+"/json.php?q=" + encodedKeywords;
     }
 
     @Override
