@@ -87,7 +87,7 @@ public abstract class SearchEngine {
     public static final SearchEngine KAT = new SearchEngine(KAT_ID, "KAT", SearchEnginesSettings.KAT_SEARCH_ENABLED) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new KATSearchPerformer("kickass.to", token, keywords, 500);//DEFAULT_TIMEOUT);
+            return new KATSearchPerformer("kickass.to", token, keywords, DEFAULT_TIMEOUT);
         }
     };
 

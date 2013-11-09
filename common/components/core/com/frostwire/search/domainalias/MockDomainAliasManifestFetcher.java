@@ -18,23 +18,16 @@ public class MockDomainAliasManifestFetcher extends AbstractDomainAliasManifestF
 
     @Override
     public void fetchManifest() {
-        try {
-            System.out.println("Mock-fetching domain alias manifest... wait 2 secs..");
-            Thread.sleep(2000);
-        } catch (Throwable t) {
-            notifyManifestNotFetched();
-        }
-        
         DomainAliasManifest manifest = new DomainAliasManifest();
         manifest.lastUpdated = System.currentTimeMillis();
         manifest.version = 0;
         manifest.aliases = new HashMap<String, List<String>>();
         
         List<String> katAliases = new ArrayList<String>();
-        katAliases.add("www.kat.ph");
-        katAliases.add("kickass.pw");
-        katAliases.add("katproxy.pw");
-        //katAliases.add("thepiratebay.sx");
+        katAliases.add("kickasstorrents.come.in");
+        //katAliases.add("www.kat.ph");
+        //katAliases.add("kickass.pw");
+        //katAliases.add("katproxy.pw");
         
         manifest.aliases.put("kickass.to", katAliases);
 

@@ -63,23 +63,16 @@ public class DomainAlias {
                     }
                 };
                 executor.execute(r);
-            } else {
-                System.out.println("DomainAlias.checkStatus() - not checking " + alias + ", too soon.");
             }
-        } else {
-            System.out.println("DomainAlias.checkStatus(): skipping still checking...");
         }
     }
 
     private void pingAlias() {
         aliasState = DomainAliasState.CHECKING;
         lastChecked = System.currentTimeMillis();
-        System.out.println("DomainAlias.pingAlias(): Checking " + original + " alias -> " + alias);
-
         if (ping(alias)) {
             aliasState = DomainAliasState.ONLINE;  
             failedAttempts = 0;
-            System.out.println("Domain " + alias + " is reacheable!");
         } else {
             pingFailed();
         }
@@ -112,7 +105,6 @@ public class DomainAlias {
     private void pingFailed() {
         aliasState = DomainAliasState.OFFLINE;
         failedAttempts++;
-        System.out.println("Ping to " + alias + " failed. (" + failedAttempts + " failures)");
     }
     
     public void markOffline() {
@@ -138,5 +130,11 @@ public class DomainAlias {
     @Override
     public String toString() {
         return "("+original+" => "+alias + " [" + aliasState + "])";
+    }
+
+    public void reset() {
+        this.aliasState = DomainAliasState.UNCHECKED;
+        this.failedAttempts = 0;
+        this.lastChecked = -1;
     }
 }

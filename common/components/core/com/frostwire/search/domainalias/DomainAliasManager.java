@@ -41,9 +41,7 @@ public class DomainAliasManager {
         List<DomainAlias> newAliasList = new ArrayList<DomainAlias>();
         
         if (aliasNames != null && aliasNames.size() > 0) {
-            System.out.println("DomainAliasManager.updateAliases() received "+aliasNames.size()+" alias names.");
             for (String alias : aliasNames) {
-                //add new aliases if new are to be found.
                 DomainAlias domainAlias = new DomainAlias(defaultDomain, alias);
                 if (!aliases.contains(domainAlias)) {
                     newAliasList.add(domainAlias);
@@ -116,7 +114,6 @@ public class DomainAliasManager {
      */
     public void checkStatuses() {
         if (aliases != null && !aliases.isEmpty()) {
-            System.out.println("DomainAliasManager.checkStatuses() About to check statuses for aliases of " + defaultDomain);
             List<DomainAlias> toRemove = new ArrayList<DomainAlias>();
             
             synchronized(aliases) {
@@ -124,7 +121,6 @@ public class DomainAliasManager {
                     if (alias.getFailedAttempts() <= 3) {
                         alias.checkStatus();
                     } else {
-                        System.out.println(alias.alias + " failed too much, removing");
                         toRemove.add(alias);
                     }
                 }
@@ -134,7 +130,17 @@ public class DomainAliasManager {
                 aliases.removeAll(toRemove);
             }
         } else {
-            System.out.println("DomainAliasManager.checkStatuses() No aliases to check for " + defaultDomain);
+            //be borne again.
+            resetAliases();
+        }
+    }
+
+    private void resetAliases() {
+        defaultDomainOnline = true;
+        if (aliases != null && aliases.size() > 0) {
+            for (DomainAlias alias : aliases) {
+                alias.reset();
+            }
         }
     }
 }
