@@ -37,10 +37,11 @@ public class DomainAliasManager {
         return aliases;
     }
 
-    public void updateAliases(List<String> aliasNames) {
+    public void updateAliases(final List<String> aliasNames) {
         List<DomainAlias> newAliasList = new ArrayList<DomainAlias>();
         
         if (aliasNames != null && aliasNames.size() > 0) {
+            System.out.println("DomainAliasManager.updateAliases() received "+aliasNames.size()+" alias names.");
             for (String alias : aliasNames) {
                 //add new aliases if new are to be found.
                 DomainAlias domainAlias = new DomainAlias(defaultDomain, alias);
@@ -50,11 +51,13 @@ public class DomainAliasManager {
                     newAliasList.add(aliases.get(aliases.indexOf(domainAlias)));
                 }
             }
-        }
-        Collections.shuffle(newAliasList);
-        
-        synchronized (aliases) {
-            aliases = Collections.synchronizedList(newAliasList);
+            Collections.shuffle(newAliasList);
+
+            if (newAliasList.size() > 0) {
+                synchronized (aliases) {
+                    aliases = Collections.synchronizedList(newAliasList);
+                }
+            }
         }
     }
 
@@ -113,19 +116,25 @@ public class DomainAliasManager {
      */
     public void checkStatuses() {
         if (aliases != null && !aliases.isEmpty()) {
+            System.out.println("DomainAliasManager.checkStatuses() About to check statuses for aliases of " + defaultDomain);
             List<DomainAlias> toRemove = new ArrayList<DomainAlias>();
-            for (DomainAlias alias : aliases) {
-                if (alias.getFailedAttempts() <= 3) {
-                    alias.checkStatus();
-                } else {
-                    System.out.println(alias.alias + " failed too much, removing");
-                    toRemove.add(alias);
+            
+            synchronized(aliases) {
+                for (DomainAlias alias : aliases) {
+                    if (alias.getFailedAttempts() <= 3) {
+                        alias.checkStatus();
+                    } else {
+                        System.out.println(alias.alias + " failed too much, removing");
+                        toRemove.add(alias);
+                    }
                 }
             }
             
             if (!toRemove.isEmpty()) {
                 aliases.removeAll(toRemove);
             }
+        } else {
+            System.out.println("DomainAliasManager.checkStatuses() No aliases to check for " + defaultDomain);
         }
     }
 }

@@ -60,8 +60,9 @@ public class DomainAliasManagerBroker implements DomainAliasManifestFetcherListe
         Map<String, List<String>> aliases = aliasManifest.aliases;
         Set<Entry<String, List<String>>> aliasSet = aliases.entrySet();
         for (Entry<String, List<String>> entry : aliasSet) {
-            List<String> aliasNames = entry.getValue();
+            final List<String> aliasNames = entry.getValue();
             DomainAliasManager domainAliasManager = getDomainAliasManager(entry.getKey());
+            System.out.println("DomainAliasManagerBroker.updateManagers() About to update aliases for " + entry.getKey());
             domainAliasManager.updateAliases(aliasNames);
         }
     }

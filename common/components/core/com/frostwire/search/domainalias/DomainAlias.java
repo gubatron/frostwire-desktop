@@ -114,4 +114,9 @@ public class DomainAlias {
     public int hashCode() {
         return (this.original.hashCode() * 29) + (this.alias.hashCode() * 13);
     }
+    
+    @Override
+    public String toString() {
+        return "("+original+" => "+alias + " [" + aliasState + "])";
+    }
 }
