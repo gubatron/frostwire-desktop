@@ -7,14 +7,15 @@ import com.frostwire.search.SearchManagerImpl;
 import com.frostwire.search.SearchManagerListener;
 import com.frostwire.search.SearchPerformer;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.WebSearchPerformer;
 import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.domainalias.DomainAliasManagerBroker;
 import com.limegroup.gnutella.gui.search.SearchEngine;
 
 public class DomainAliasManagerTest{
     public static void main(String[] args) throws InterruptedException {
-        DomainAliasManager domainAliasManager = DomainAliasManagerBroker.getDomainAliasManager("www.kat.ph");
-        assert(domainAliasManager.getDefaultDomain().equals("www.kat.ph"));
+        DomainAliasManager domainAliasManager = DomainAliasManagerBroker.getDomainAliasManager("kickass.pw");//www.kat.ph");
+        //assert(domainAliasManager.getDefaultDomain().equals("www.kat.ph"));
         
         SearchEngine kat = SearchEngine.KAT;
         SearchManager manager = new SearchManagerImpl();
@@ -22,7 +23,7 @@ public class DomainAliasManagerTest{
             
             @Override
             public void onResults(SearchPerformer performer, List<? extends SearchResult> results) {                
-                System.out.println(performer.getToken() + " got results -> " + results.size());
+                System.out.println(performer.getToken() + " got results -> " + results.size() + " (from "+ ((WebSearchPerformer) performer).getDomainName() +")");
                 for (SearchResult r : results) {
                     System.out.println(r.getDisplayName());
                 }
@@ -41,6 +42,7 @@ public class DomainAliasManagerTest{
             Thread.sleep(10000);
             tokenId += 2312389382l;
             manager.perform(kat.getPerformer(tokenId, "frostwire"));
+            
         }
     }
 }

@@ -31,8 +31,11 @@ public class MockDomainAliasManifestFetcher extends AbstractDomainAliasManifestF
         manifest.aliases = new HashMap<String, List<String>>();
         
         List<String> katAliases = new ArrayList<String>();
+        katAliases.add("www.kat.ph");
         katAliases.add("kickass.pw");
         katAliases.add("katproxy.pw");
+        katAliases.add("thepiratebay.sx");
+        
         manifest.aliases.put("kickass.to", katAliases);
 
         System.out.println("Mock manifest built! update managers.");
