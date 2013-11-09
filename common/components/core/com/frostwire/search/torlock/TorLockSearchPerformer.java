@@ -41,7 +41,8 @@ public class TorLockSearchPerformer extends TorrentRegexSearchPerformer<TorLockS
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://www.torlock.com/?sort=seeds&c=&search=Search&q=" + encodedKeywords;
+        String transformedKeywords = encodedKeywords.replace("0%20", "-");
+        return "http://" + getDomainName() + "/all/torrents/" + transformedKeywords + ".html";
     }
 
     @Override
