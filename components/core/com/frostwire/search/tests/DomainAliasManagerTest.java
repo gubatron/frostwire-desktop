@@ -1,22 +1,21 @@
 package com.frostwire.search.tests;
 
-import java.util.List;
-
-import com.frostwire.search.SearchManager;
-import com.frostwire.search.SearchManagerImpl;
-import com.frostwire.search.SearchManagerListener;
-import com.frostwire.search.SearchPerformer;
-import com.frostwire.search.SearchResult;
-import com.frostwire.search.WebSearchPerformer;
 import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.domainalias.DomainAliasManagerBroker;
-import com.limegroup.gnutella.gui.search.SearchEngine;
 
 public class DomainAliasManagerTest{
     public static void main(String[] args) throws InterruptedException {
-        DomainAliasManager domainAliasManager = DomainAliasManagerBroker.getDomainAliasManager("kickass.pw");//www.kat.ph");
+        DomainAliasManager domainAliasManager = DomainAliasManagerBroker.getDomainAliasManager("kickass.to");//www.kat.ph");
+        
         //assert(domainAliasManager.getDefaultDomain().equals("www.kat.ph"));
         
+        while (true) {
+            domainAliasManager.checkStatuses();
+            System.out.println("...");
+            Thread.sleep(5000);
+        }
+        
+        /**
         SearchEngine kat = SearchEngine.KAT;
         SearchManager manager = new SearchManagerImpl();
         manager.registerListener(new SearchManagerListener() {
@@ -44,5 +43,6 @@ public class DomainAliasManagerTest{
             manager.perform(kat.getPerformer(tokenId, "frostwire"));
             
         }
+        */
     }
 }
