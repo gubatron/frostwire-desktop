@@ -42,7 +42,7 @@ public class MonovaSearchPerformer extends TorrentRegexSearchPerformer<MonovaSea
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://www.monova.org/search.php?sort=5&term=" + encodedKeywords;
+        return "http://"+getDomainName()+"/search.php?sort=5&term=" + encodedKeywords;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class MonovaSearchPerformer extends TorrentRegexSearchPerformer<MonovaSea
     public CrawlableSearchResult fromMatcher(Matcher matcher) {
         String itemId = matcher.group(1);
         String fileName = matcher.group(2);
-        return new MonovaTempSearchResult(itemId, fileName);
+        return new MonovaTempSearchResult(getDomainName(),itemId, fileName);
     }
 
     @Override

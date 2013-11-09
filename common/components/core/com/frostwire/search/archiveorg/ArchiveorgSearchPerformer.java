@@ -56,7 +56,7 @@ public class ArchiveorgSearchPerformer extends CrawlPagedWebSearchPerformer<Arch
 
         for (ArchiveorgItem item : response.response.docs) {
             if (!isStopped()) {
-                ArchiveorgSearchResult sr = new ArchiveorgSearchResult(item);
+                ArchiveorgSearchResult sr = new ArchiveorgSearchResult(getDomainName(), item);
                 result.add(sr);
             }
         }
@@ -66,7 +66,7 @@ public class ArchiveorgSearchPerformer extends CrawlPagedWebSearchPerformer<Arch
 
     @Override
     protected String getCrawlUrl(ArchiveorgSearchResult sr) {
-        return "http://archive.org/details/" + sr.getItem().identifier + "?output=json";
+        return "http://" + getDomainName() + "/details/" + sr.getItem().identifier + "?output=json";
     }
 
     @Override
