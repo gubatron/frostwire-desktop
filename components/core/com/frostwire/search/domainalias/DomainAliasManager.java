@@ -118,6 +118,7 @@ public class DomainAliasManager {
                 if (alias.getFailedAttempts() <= 3) {
                     alias.checkStatus();
                 } else {
+                    System.out.println(alias.alias + " failed too much, removing");
                     toRemove.add(alias);
                 }
             }

@@ -18,6 +18,7 @@
 
 package com.frostwire.search.frostclick;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +56,14 @@ public class FrostClickSearchPerformer extends PagedWebSearchPerformer {
     @Override
     protected List<? extends SearchResult> searchPage(int page) {
         String url = getUrl(page, getEncodedKeywords());
-        String text = fetch(url, null, customHeaders);
+        String text = null;
+        try {
+            text = fetch(url, null, customHeaders);
+        } catch (IOException e) {
+            checkAccesibleDomains();
+            return Collections.emptyList();
+        }
+        
         if (text != null) {
             return searchPage(text);
         } else {

@@ -18,6 +18,7 @@
 
 package com.frostwire.search;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,8 +54,6 @@ public abstract class PagedWebSearchPerformer extends WebSearchPerformer {
             String text = fetchSearchPage(url);
             if (text != null) {
                 return searchPage(text);
-            } else {
-                checkAccesibleDomains();
             }
         } catch (Throwable e) {
             checkAccesibleDomains();
@@ -62,7 +61,7 @@ public abstract class PagedWebSearchPerformer extends WebSearchPerformer {
         return Collections.emptyList();
     }
 
-    protected String fetchSearchPage(String url) {
+    protected String fetchSearchPage(String url) throws IOException {
         return fetch(url);
     }
 

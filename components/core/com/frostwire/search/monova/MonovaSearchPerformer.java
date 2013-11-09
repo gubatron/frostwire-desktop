@@ -18,6 +18,7 @@
 
 package com.frostwire.search.monova;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 
 import com.frostwire.search.CrawlableSearchResult;
@@ -45,7 +46,7 @@ public class MonovaSearchPerformer extends TorrentRegexSearchPerformer<MonovaSea
     }
 
     @Override
-    protected String fetchSearchPage(String url) {
+    protected String fetchSearchPage(String url) throws IOException {
         return fetch(url, "MONOVA=1; MONOVA-ADULT=0; MONOVA-NON-ADULT=1;", null);
     }
 
