@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.limewire.concurrent.ExecutorsHelper;
 
@@ -22,11 +21,6 @@ public class DomainAliasManagerBroker implements DomainAliasManifestFetcherListe
     private final ExecutorService executor;
     private final HashMap<String, DomainAliasManager> managers;
     
-    private AtomicBoolean updatingManagers = new AtomicBoolean(false);
-    
-    //might not be necessary... or maybe to know if we got something or not...
-    private DomainAliasManifest manifest;
-
     private DomainAliasManagerBroker() {
         managers = new HashMap<String, DomainAliasManager>();
         executor = ExecutorsHelper.newThreadPool("DomainAliasMockFetcherExecutorHelper");
@@ -54,13 +48,11 @@ public class DomainAliasManagerBroker implements DomainAliasManifestFetcherListe
     public void onManifestFetched(DomainAliasManifest aliasManifest) {
         System.out.println("DomainAliasManagerBroker: Got the manifest!!!");
         updateManagers(aliasManifest);
-        manifest = aliasManifest;
     }
 
     @Override
     public void onManifestNotFetched() {
         System.err.println("DomainAliasManagerBroker:  Could not fetch alias list, should we try again later? attempts left");
-        manifest = null;
         //attempts++;?? timestamp, to try again later. etc.
     }
 

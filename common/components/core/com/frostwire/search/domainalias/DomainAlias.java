@@ -1,16 +1,20 @@
 package com.frostwire.search.domainalias;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.TimeUnit;
 
 import org.limewire.concurrent.ExecutorsHelper;
-
-import com.frostwire.util.HttpClient;
-import com.frostwire.util.HttpClientFactory;
+import org.limewire.concurrent.ThreadPoolExecutor;
 
 public class DomainAlias {
 
-    public static final ExecutorService executor = ExecutorsHelper.newThreadPool("DomainAliasCheckers");
+    public static final ExecutorService executor = new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+            30L, TimeUnit.SECONDS,
+            new SynchronousQueue<Runnable>(),
+            ExecutorsHelper.daemonThreadFactory("DomainAliasCheckers"));//ExecutorsHelper.newThreadPool("DomainAliasCheckers");
 
     public final String original;
     public final String alias; 
@@ -19,7 +23,7 @@ public class DomainAlias {
     private int failedAttempts;
 
     private final long DOMAIN_ALIAS_CHECK_INTERVAL_MILLISECONDS = 8000;//test with one minute //600000; //10 minutes in production.
-    private final int DOMAIN_ALIAS_CHECK_TIMEOUT_SECONDS = 30;
+    private final int DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS = 10000;
 
     public DomainAlias(String original, String alias) {
         this.original = original;
@@ -69,16 +73,15 @@ public class DomainAlias {
         aliasState = DomainAliasState.CHECKING;
         lastChecked = System.currentTimeMillis();
         System.out.println("DomainAlias.pingAlias(): Checking " + original + " alias -> " + alias);
-        final HttpClient client = HttpClientFactory.newDefaultInstance();
-        String result;
         try {
-            result = client.get("http://" + alias, DOMAIN_ALIAS_CHECK_TIMEOUT_SECONDS);
-            aliasState = DomainAliasState.ONLINE;
-            if (result == null) {
-                pingFailed();
-            } else {
-                System.out.println("Domain " + alias + " is up, ping success!");
+            InetAddress address = InetAddress.getByName(alias);
+            boolean reachable = address.isReachable(DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS);
+            if (reachable) {
+                aliasState = DomainAliasState.ONLINE;  
                 failedAttempts = 0;
+                System.out.println("Domain " + alias + " is reacheable!");
+            } else {
+                pingFailed();
             }
         } catch (IOException e) {
             pingFailed();
