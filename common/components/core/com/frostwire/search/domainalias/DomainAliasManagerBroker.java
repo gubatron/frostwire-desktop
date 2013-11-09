@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.limewire.concurrent.ExecutorsHelper;
 
@@ -20,6 +21,8 @@ public class DomainAliasManagerBroker implements DomainAliasManifestFetcherListe
     private final static DomainAliasManagerBroker INSTANCE = new DomainAliasManagerBroker();
     private final ExecutorService executor;
     private final HashMap<String, DomainAliasManager> managers;
+    
+    private AtomicBoolean updatingManagers = new AtomicBoolean(false);
     
     //might not be necessary... or maybe to know if we got something or not...
     private DomainAliasManifest manifest;

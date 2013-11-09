@@ -19,7 +19,7 @@ public class MockDomainAliasManifestFetcher extends AbstractDomainAliasManifestF
     @Override
     public void fetchManifest() {
         try {
-            System.out.println("Mock-fetching domain alias manifest...");
+            System.out.println("Mock-fetching domain alias manifest... wait 5 secs..");
             Thread.sleep(5000);
         } catch (Throwable t) {
             notifyManifestNotFetched();

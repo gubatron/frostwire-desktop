@@ -17,6 +17,7 @@
 
 package com.frostwire.search;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
@@ -80,11 +81,11 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
      * @param url
      * @return the web page (html)
      */
-    public String fetch(String url) {
+    public String fetch(String url) throws IOException {
         return fetch(url, null, null);
     }
 
-    public String fetch(String url, String cookie, Map<String, String> customHeaders) {
+    public String fetch(String url, String cookie, Map<String, String> customHeaders) throws IOException {
         return client.get(url, timeout, DEFAULT_USER_AGENT, null, cookie, customHeaders);
     }
 

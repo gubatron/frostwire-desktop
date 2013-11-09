@@ -877,7 +877,12 @@ public final class YouTubeDecrypter {
     
     private YouTubeSig getYouTubeSig(String html5player) {
         HttpClient httpClient = HttpClientFactory.newDefaultInstance();
-        String jscode = httpClient.get(html5player.replace("\\", ""));
+        String jscode=null;
+        try {
+            jscode = httpClient.get(html5player.replace("\\", ""));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new YouTubeSig(jscode);
     }
 }
