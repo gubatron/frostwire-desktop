@@ -130,7 +130,6 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         if (domainName==null){
             DomainAliasManager domainAliasManager = getDomainAliasManager();
             domainName = domainAliasManager.getDomainNameToUse();
-            System.out.println("DomainAliasManager told me to use: " + domainName);
         }
         return domainName;
     }
@@ -142,14 +141,13 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     public void setDomainName(String domainName) {
         this.domainName = domainName;
     }
-    
+
+    /**
+     * The current domain has failed, mark it offline and let's try check if other mirrors are alive.
+     */
     protected void checkAccesibleDomains() {
-        //a search has failed, let's ask the domain alias manager to check
-        //if the current domain is accesible.
-        //This measure won't save the current search, it'll get things ready for the next one.
-        System.out.println("WebSeachPerformer.checkAccesibleDomains()!");
         DomainAliasManager domainAliasManager = getDomainAliasManager();
-        domainAliasManager.markDomainOffline(getDefaultDomainName());
+        domainAliasManager.markDomainOffline(domainAliasManager.getDomainNameToUse());
         domainAliasManager.checkStatuses();
     }
 }
