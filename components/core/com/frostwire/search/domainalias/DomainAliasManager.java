@@ -15,6 +15,8 @@ public class DomainAliasManager {
 
     private final String defaultDomain;
 
+    private boolean defaultDomainOnline;
+    
     private List<DomainAlias> aliases;
 
     public DomainAliasManager(String defaultDomain) {
@@ -23,7 +25,8 @@ public class DomainAliasManager {
 
     public DomainAliasManager(String defaultDomain, List<DomainAlias> aliases) {
         this.defaultDomain = defaultDomain;
-        this.aliases = aliases;
+        this.aliases = Collections.synchronizedList(aliases);
+        this.defaultDomainOnline = true;
     }
 
     public String getDefaultDomain() {
@@ -35,24 +38,52 @@ public class DomainAliasManager {
     }
 
     public void updateAliases(List<String> aliasNames) {
+        List<DomainAlias> newAliasList = new ArrayList<DomainAlias>();
+        
         if (aliasNames != null && aliasNames.size() > 0) {
             for (String alias : aliasNames) {
                 //add new aliases if new are to be found.
                 DomainAlias domainAlias = new DomainAlias(defaultDomain, alias);
                 if (!aliases.contains(domainAlias)) {
-                    aliases.add(domainAlias);
+                    newAliasList.add(domainAlias);
+                } else {
+                    newAliasList.add(aliases.get(aliases.indexOf(domainAlias)));
                 }
             }
         }
-        Collections.shuffle(aliases);
+        Collections.shuffle(newAliasList);
+        
+        synchronized (aliases) {
+            aliases = Collections.synchronizedList(newAliasList);
+        }
     }
 
-    public void markAliasOffline(String offlineAlias) {
-        for (DomainAlias domainAlias : aliases) {
-            if (domainAlias.alias.equals(offlineAlias)) {
-                domainAlias.markOffline();
+    public void markDomainOffline(String offlineDomain) {
+        if (offlineDomain.equals(defaultDomain)) {
+            defaultDomainOnline = false;
+        } else {
+            for (DomainAlias domainAlias : aliases) {
+                if (domainAlias.alias.equals(offlineDomain)) {
+                    domainAlias.markOffline();
+                }
             }
         }
+    }
+    
+    /**
+     * Until it doesn't know the default domain name is not accesible
+     * it will keep re
+     * @return
+     */
+    public String getDomainNameToUse() {
+        String result = defaultDomain;
+        if (!defaultDomainOnline) {
+            String onlineAlias = getNextOnlineAlias();
+            if (onlineAlias != null) {
+                result = onlineAlias;
+            }
+        }
+        return result;
     }
 
     /**
@@ -63,7 +94,7 @@ public class DomainAliasManager {
      * 
      * @return
      */
-    public String getOnlineAlias() {
+    private String getNextOnlineAlias() {
         String result = null;
         if (aliases != null && !aliases.isEmpty()) {
             for (DomainAlias alias : aliases) {

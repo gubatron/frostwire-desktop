@@ -12,8 +12,8 @@ public class DomainAlias {
     public static final ExecutorService executor = ExecutorsHelper.newFixedSizeThreadPool(5, "DomainAliasCheckers");
 
     public final String original;
-    public final String alias;
-    private DomainAliasState state;
+    public final String alias; 
+    private DomainAliasState aliasState;
     private long lastChecked;
     private int failedAttempts;
 
@@ -24,7 +24,7 @@ public class DomainAlias {
         this.original = original;
         this.alias = alias;
         lastChecked = -1;
-        state = DomainAliasState.UNCHECKED;
+        aliasState = DomainAliasState.UNCHECKED;
         failedAttempts = 0;
     }
 
@@ -33,7 +33,7 @@ public class DomainAlias {
     }
 
     public DomainAliasState getState() {
-        return state;
+        return aliasState;
     }
 
     public String getOriginal() {
@@ -45,35 +45,38 @@ public class DomainAlias {
     }
 
     public void checkStatus() {
-        if (state != DomainAliasState.CHECKING) {
+        if (aliasState != DomainAliasState.CHECKING) {
+            System.out.println("DomainAlias.checkStatus(): Checking " + original + " alias -> " + alias);
             long timeSinceLastCheck = System.currentTimeMillis() - lastChecked;
 
             if (timeSinceLastCheck > DOMAIN_ALIAS_CHECK_INTERVAL_MILLISECONDS) {
                 Thread r = new Thread("DomainAlias-Pinger (" + original + "=>" + alias + ")") {
                     @Override
                     public void run() {
-                        ping();
+                        pingAlias();
                     }
                 };
                 executor.execute(r);
             }
+        } else {
+            System.out.println("DomainAlias.checkStatus(): skipping still checking...");
         }
     }
 
-    private void ping() {
-        state = DomainAliasState.CHECKING;
+    private void pingAlias() {
+        aliasState = DomainAliasState.CHECKING;
         lastChecked = System.currentTimeMillis();
         final HttpClient client = HttpClientFactory.newDefaultInstance();
         final String result = client.get("http://" + alias, DOMAIN_ALIAS_CHECK_TIMEOUT_SECONDS);
-        state = DomainAliasState.ONLINE;
+        aliasState = DomainAliasState.ONLINE;
         if (result == null) {
-            state = DomainAliasState.OFFLINE;
+            aliasState = DomainAliasState.OFFLINE;
             failedAttempts++;
         }
     }
-
+    
     public void markOffline() {
-        state = DomainAliasState.OFFLINE;
+        aliasState = DomainAliasState.OFFLINE;
         lastChecked = System.currentTimeMillis();
     }
     
