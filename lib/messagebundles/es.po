@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 14:05-0300\n"
-"PO-Revision-Date: 2013-11-07 14:19-0300\n"
+"POT-Creation-Date: 2013-11-09 22:12-0300\n"
+"PO-Revision-Date: 2013-11-09 22:13-0300\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: FTA <saintrecall@gmail.com>\n"
 "Language: es\n"
@@ -575,6 +575,10 @@ msgstr "Actualizar tracker"
 msgid "Scrape Tracker"
 msgstr ""
 
+#: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:533
+msgid "Edit trackers"
+msgstr "Editar trackers"
+
 #. columns
 #. rows
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:550
@@ -582,9 +586,8 @@ msgid "Edit trackers, one by line"
 msgstr "Editar trackers, uno por línea"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:559
-#, fuzzy
 msgid "Accept"
-msgstr "Aceptado"
+msgstr "Aceptar"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:600
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:533
@@ -920,6 +923,10 @@ msgstr "Seleccionar/Des-seleccionar todos los archivos"
 #: gui/com/frostwire/gui/transfers/PeerHttpUpload.java:162
 msgid "Unknown"
 msgstr "Desconocido"
+
+#: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:268
+msgid "Filter files"
+msgstr "Filtrar archivos"
 
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:518
 msgid "(High Quality)"
@@ -1443,7 +1450,7 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:864
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:672
 msgid "Launch in "
-msgstr "Ejecutar en"
+msgstr "Ejecutar en "
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:865
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:673
@@ -1951,7 +1958,7 @@ msgstr "Carpeta"
 msgid "Do you want to send this {0} to a friend?"
 msgstr "¿Quieres enviar este {0} a un amigo?"
 
-#: gui/com/frostwire/gui/player/MediaPlayerLinux.java:24
+#: gui/com/frostwire/gui/player/MediaPlayerLinux.java:27
 msgid ""
 "<br><br>To Install <b>mplayer</b> in Ubuntu open a terminal window and type "
 "\"<b>sudo apt-get install mplayer</b>\".<br><br>If you have installed "

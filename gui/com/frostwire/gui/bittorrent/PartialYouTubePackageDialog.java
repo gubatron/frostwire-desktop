@@ -265,7 +265,7 @@ public class PartialYouTubePackageDialog extends JDialog {
 
     private void setupTextFilter() {
         GridBagConstraints c;
-        _filter = new LabeledTextField("Filter files", 30);
+        _filter = new LabeledTextField(I18n.tr("Filter files"), 30);
         _filter.setMinimumSize(_filter.getPreferredSize()); // fix odd behavior
         textBasedFilter = new RowFilterExtension(_filter, 2);
 
