@@ -3,6 +3,7 @@ package com.frostwire.search.domainalias;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Simply responsible for maintaining the list of domain aliases and their states for
@@ -17,7 +18,7 @@ public class DomainAliasManager {
 
     private boolean defaultDomainOnline;
     
-    private List<DomainAlias> aliases;
+    private final AtomicReference<List<DomainAlias>> aliases;
 
     public DomainAliasManager(String defaultDomain) {
         this(defaultDomain, Collections.<DomainAlias> emptyList());
@@ -25,7 +26,8 @@ public class DomainAliasManager {
 
     public DomainAliasManager(String defaultDomain, List<DomainAlias> aliases) {
         this.defaultDomain = defaultDomain;
-        this.aliases = Collections.synchronizedList(aliases);
+        this.aliases = new AtomicReference<List<DomainAlias>>();
+        this.aliases.set(Collections.synchronizedList(aliases));
         this.defaultDomainOnline = true;
     }
 
@@ -34,7 +36,7 @@ public class DomainAliasManager {
     }
 
     public List<DomainAlias> getAliases() {
-        return aliases;
+        return aliases.get();
     }
 
     public void updateAliases(final List<String> aliasNames) {
@@ -43,17 +45,17 @@ public class DomainAliasManager {
         if (aliasNames != null && aliasNames.size() > 0) {
             for (String alias : aliasNames) {
                 DomainAlias domainAlias = new DomainAlias(defaultDomain, alias);
-                if (!aliases.contains(domainAlias)) {
+                if (!aliases.get().contains(domainAlias)) {
                     newAliasList.add(domainAlias);
                 } else {
-                    newAliasList.add(aliases.get(aliases.indexOf(domainAlias)));
+                    newAliasList.add(aliases.get().get(aliases.get().indexOf(domainAlias)));
                 }
             }
             Collections.shuffle(newAliasList);
 
             if (newAliasList.size() > 0) {
                 synchronized (aliases) {
-                    aliases = Collections.synchronizedList(newAliasList);
+                    aliases.set(Collections.synchronizedList(newAliasList));
                 }
             }
         }
@@ -63,7 +65,7 @@ public class DomainAliasManager {
         if (offlineDomain.equals(defaultDomain)) {
             defaultDomainOnline = false;
         } else {
-            for (DomainAlias domainAlias : aliases) {
+            for (DomainAlias domainAlias : aliases.get()) {
                 if (domainAlias.alias.equals(offlineDomain)) {
                     domainAlias.markOffline();
                 }
@@ -97,8 +99,8 @@ public class DomainAliasManager {
      */
     private String getNextOnlineAlias() {
         String result = null;
-        if (aliases != null && !aliases.isEmpty()) {
-            for (DomainAlias alias : aliases) {
+        if (aliases != null && !aliases.get().isEmpty()) {
+            for (DomainAlias alias : aliases.get()) {
                 if (alias.getState() == DomainAliasState.ONLINE) {
                     result = alias.getAlias();
                     break;
@@ -113,11 +115,11 @@ public class DomainAliasManager {
      * their statuses.
      */
     public void checkStatuses() {
-        if (aliases != null && !aliases.isEmpty()) {
+        if (aliases != null && !aliases.get().isEmpty()) {
             List<DomainAlias> toRemove = new ArrayList<DomainAlias>();
             
             synchronized(aliases) {
-                for (DomainAlias alias : aliases) {
+                for (DomainAlias alias : aliases.get()) {
                     if (alias.getFailedAttempts() <= 3) {
                         alias.checkStatus();
                     } else {
@@ -127,7 +129,7 @@ public class DomainAliasManager {
             }
             
             if (!toRemove.isEmpty()) {
-                aliases.removeAll(toRemove);
+                aliases.get().removeAll(toRemove);
             }
         } else {
             //be borne again.
@@ -137,8 +139,8 @@ public class DomainAliasManager {
 
     private void resetAliases() {
         defaultDomainOnline = true;
-        if (aliases != null && aliases.size() > 0) {
-            for (DomainAlias alias : aliases) {
+        if (aliases != null && aliases.get().size() > 0) {
+            for (DomainAlias alias : aliases.get()) {
                 alias.reset();
             }
         }
