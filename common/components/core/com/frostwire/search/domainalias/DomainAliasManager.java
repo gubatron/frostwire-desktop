@@ -54,9 +54,7 @@ public class DomainAliasManager {
             Collections.shuffle(newAliasList);
 
             if (newAliasList.size() > 0) {
-                synchronized (aliases) {
-                    aliases.set(Collections.synchronizedList(newAliasList));
-                }
+                aliases.set(Collections.synchronizedList(newAliasList));
             }
         }
     }
