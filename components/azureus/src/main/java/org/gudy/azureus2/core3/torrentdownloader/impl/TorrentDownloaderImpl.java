@@ -459,11 +459,11 @@ public class TorrentDownloaderImpl extends AEThread2 implements TorrentDownloade
       
     	notifyListener();
   
-        Thread	status_reader = 
-        	new AEThread( "TorrentDownloader:statusreader" )
+        AEThread2 status_reader = 
+        	new AEThread2( "TorrentDownloader:statusreader" )
 			{
         		public void
-				runSupport()
+				run()
         		{
         			boolean changed_status	= false;
         			String	last_status		= "";
@@ -584,7 +584,7 @@ public class TorrentDownloaderImpl extends AEThread2 implements TorrentDownloade
         		}
 			};
 			
-		status_reader.setDaemon( true );
+		//status_reader.setDaemon( true );
 		
 		status_reader.start();
   
