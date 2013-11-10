@@ -213,7 +213,7 @@ If you want to fix a new issue that's not listed there, create the issue, see if
 we can discuss a solution, if you already have one the best way to proceed is
 to:
 
-*  Fork the source. 
+* Fork the source. 
 * Clone it locally 
 * Create a branch with a descriptive name of the issue you are solving. 
 * Code, Commit, Push, Code, Commit, Push, until you are done with your branch. 
