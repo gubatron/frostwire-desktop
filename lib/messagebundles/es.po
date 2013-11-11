@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-09 22:12-0300\n"
-"PO-Revision-Date: 2013-11-09 22:13-0300\n"
+"POT-Creation-Date: 2013-11-10 21:33-0300\n"
+"PO-Revision-Date: 2013-11-10 21:35-0300\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: FTA <saintrecall@gmail.com>\n"
 "Language: es\n"
@@ -2637,9 +2637,41 @@ msgstr ""
 "esta versión puede causar problemas con FrostWire. Por favor actualice a la "
 "versión final 1.6.0.\n"
 
+#: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:85
+#: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:107
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:161
 msgid "Upgrade Java"
 msgstr "Actualice Java"
+
+#: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:94
+msgid ""
+"FrostWire requires Java %s or higher in order to run. You are currently "
+"running an out-of-date version of Java \n"
+"Please visit %s in order to upgrade your version of Java"
+msgstr ""
+"FrostWire requiere la versión de Java %s o superior para funcionar. Estás "
+"ejecutando una versión desactualizada de Java\n"
+"Visita %s para actualizar tu versión de Java"
+
+#: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:97
+msgid "Current Java Version : "
+msgstr "Versión actual de Java :"
+
+#: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:98
+msgid "Required Java Version: "
+msgstr "Versión de Java requerida:"
+
+#: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:108
+msgid "Visit "
+msgstr "Visitar"
+
+#: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:120
+msgid "Upgrade Later"
+msgstr "Actualizar después"
+
+#: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:121
+msgid "Exit FrostWire"
+msgstr "Salir de FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:178
 msgid "More Information"
@@ -2759,15 +2791,15 @@ msgstr "Jugando con los pixeles para el indicador de cortafuegos..."
 #. make the social buttons
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:160
 msgid "Learning to socialize on Facebook..."
-msgstr ""
+msgstr "Aprende a socializar en Facebook..."
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:162
 msgid "Learning to socialize on Twitter..."
-msgstr ""
+msgstr "Aprende a socializar en Twitter..."
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:164
 msgid "Learning to socialize on G+..."
-msgstr ""
+msgstr "Aprende a socializar en G++"
 
 #. male Seeding status label
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:168
@@ -4535,6 +4567,8 @@ msgid ""
 "You can play your media with the native operating system player if the "
 "format is supported."
 msgstr ""
+"Puede utilizar el reproductor nativo de su sistema operativo si el formato "
+"del archivo es soportado."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:42
 msgid "Play with the native media player:"
