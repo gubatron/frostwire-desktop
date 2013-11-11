@@ -530,7 +530,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         }
 
         protected void setupUI() {
-            setTitle("Edit trackers");
+            setTitle(I18n.tr("Edit trackers"));
 
             Dimension dim = new Dimension(512, 400);
 
