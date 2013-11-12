@@ -20,6 +20,7 @@ package com.frostwire.search.extratorrent;
 
 import java.util.List;
 
+import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.torrent.TorrentJsonSearchPerformer;
 import com.frostwire.util.JsonUtils;
 
@@ -30,8 +31,8 @@ import com.frostwire.util.JsonUtils;
  */
 public class ExtratorrentSearchPerformer extends TorrentJsonSearchPerformer<ExtratorrentItem, ExtratorrentSearchResult> {
 
-    public ExtratorrentSearchPerformer(String defaultDomain, long token, String keywords, int timeout) {
-        super(defaultDomain, token, keywords, timeout, 1);
+    public ExtratorrentSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
+        super(domainAliasManager, token, keywords, timeout, 1);
     }
 
     @Override

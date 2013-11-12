@@ -25,7 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.frostwire.search.domainalias.DomainAliasManager;
-import com.frostwire.search.domainalias.DomainAliasManagerBroker;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.URLUtils;
@@ -49,13 +48,13 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     private final String encodedKeywords;
     private final int timeout;
     private final HttpClient client;
-
-    private final String defaultDomainName;
     protected String domainName;
+
+    private final DomainAliasManager domainAliasManager;
     
-    public WebSearchPerformer(String defaultDomainName, long token, String keywords, int timeout) {
+    public WebSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
         super(token);
-        this.defaultDomainName = defaultDomainName;
+        this.domainAliasManager  = domainAliasManager;
         this.keywords = keywords;
         this.encodedKeywords = URLUtils.encode(keywords);
         this.timeout = timeout;
@@ -122,26 +121,12 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         return false;
     }
     
-    private String getDefaultDomainName() {
-        return defaultDomainName;
-    }
-    
     public String getDomainName() {
-        if (domainName==null){
-            DomainAliasManager domainAliasManager = getDomainAliasManager();
-            
-            if (domainAliasManager != null) {
-                domainName = domainAliasManager.getDomainNameToUse();
-            } else {
-                //should not happen, but just in case.
-                domainName = defaultDomainName;
-            }
-        }
-        return domainName;
+        return domainAliasManager.getDomainNameToUse();
     }
 
     protected DomainAliasManager getDomainAliasManager() {
-        return DomainAliasManagerBroker.getDomainAliasManager(getDefaultDomainName());
+        return domainAliasManager;
     }
     
     public void setDomainName(String domainName) {

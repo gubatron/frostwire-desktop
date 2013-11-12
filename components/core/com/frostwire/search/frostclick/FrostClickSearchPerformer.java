@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import com.frostwire.search.PagedWebSearchPerformer;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.domainalias.DomainAliasManager;
 
 /**
  * @author gubatron
@@ -43,8 +44,8 @@ public class FrostClickSearchPerformer extends PagedWebSearchPerformer {
 
     private final Map<String, String> customHeaders;
 
-    public FrostClickSearchPerformer(String defaultDomain, long token, String keywords, int timeout, UserAgent userAgent) {
-        super(defaultDomain ,token, keywords, timeout, MAX_RESULTS);
+    public FrostClickSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout, UserAgent userAgent) {
+        super(domainAliasManager ,token, keywords, timeout, MAX_RESULTS);
         this.customHeaders = buildCustomHeaders(userAgent);
     }
 

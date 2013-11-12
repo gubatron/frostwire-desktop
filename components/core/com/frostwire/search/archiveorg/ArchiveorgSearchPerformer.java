@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import com.frostwire.search.CrawlPagedWebSearchPerformer;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.util.JsonUtils;
 
 /**
@@ -35,8 +36,8 @@ import com.frostwire.util.JsonUtils;
  */
 public class ArchiveorgSearchPerformer extends CrawlPagedWebSearchPerformer<ArchiveorgSearchResult> {
 
-    public ArchiveorgSearchPerformer(String defaultDomain, long token, String keywords, int timeout) {
-        super(defaultDomain, token, keywords, timeout, 1, 12);
+    public ArchiveorgSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
+        super(domainAliasManager, token, keywords, timeout, 1, 12);
     }
 
     @Override

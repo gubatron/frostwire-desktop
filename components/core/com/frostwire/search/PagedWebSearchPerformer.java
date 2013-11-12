@@ -25,6 +25,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.frostwire.search.domainalias.DomainAliasManager;
+
 /**
  * @author gubatron
  * @author aldenml
@@ -32,12 +34,13 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class PagedWebSearchPerformer extends WebSearchPerformer {
 
+    @SuppressWarnings("unused")
     private static final Logger LOG = LoggerFactory.getLogger(PagedWebSearchPerformer.class);
 
     private final int pages;
 
-    public PagedWebSearchPerformer(String defaultDomain, long token, String keywords, int timeout, int pages) {
-        super(defaultDomain, token, keywords, timeout);
+    public PagedWebSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout, int pages) {
+        super(domainAliasManager, token, keywords, timeout);
         this.pages = pages;
     }
 
