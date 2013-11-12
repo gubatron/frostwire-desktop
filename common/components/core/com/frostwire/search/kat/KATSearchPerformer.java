@@ -20,6 +20,7 @@ package com.frostwire.search.kat;
 
 import java.util.List;
 
+import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.torrent.TorrentJsonSearchPerformer;
 import com.frostwire.util.JsonUtils;
 
@@ -31,8 +32,8 @@ import com.frostwire.util.JsonUtils;
  */
 public class KATSearchPerformer extends TorrentJsonSearchPerformer<KATItem, KATSearchResult> {
 
-    public KATSearchPerformer(String defaultDomain, long token, String keywords, int timeout) {
-        super(defaultDomain, token, keywords, timeout, 1);
+    public KATSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
+        super(domainAliasManager, token, keywords, timeout, 1);
     }
 
     @Override

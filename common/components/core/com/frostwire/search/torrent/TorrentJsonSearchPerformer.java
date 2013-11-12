@@ -23,6 +23,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.SearchResult;
 
 /**
@@ -34,8 +35,8 @@ public abstract class TorrentJsonSearchPerformer<T extends ComparableTorrentJson
 
     private final Comparator<T> itemComparator;
 
-    public TorrentJsonSearchPerformer(String defaultDomain, long token, String keywords, int timeout, int pages) {
-        super(defaultDomain, token, keywords, timeout, pages);
+    public TorrentJsonSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout, int pages) {
+        super(domainAliasManager, token, keywords, timeout, pages);
         
         this.itemComparator = new Comparator<T>() {
             @Override

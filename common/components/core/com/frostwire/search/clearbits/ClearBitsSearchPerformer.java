@@ -20,6 +20,7 @@ package com.frostwire.search.clearbits;
 
 import java.util.List;
 
+import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.torrent.TorrentJsonSearchPerformer;
 import com.frostwire.util.JsonUtils;
 
@@ -30,8 +31,8 @@ import com.frostwire.util.JsonUtils;
  */
 public class ClearBitsSearchPerformer extends TorrentJsonSearchPerformer<ClearBitsItem, ClearBitsSearchResult> {
 
-    public ClearBitsSearchPerformer(String defaultDomain, long token, String keywords, int timeout) {
-        super(defaultDomain, token, keywords, timeout, 1);
+    public ClearBitsSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
+        super(domainAliasManager, token, keywords, timeout, 1);
     }
 
     @Override

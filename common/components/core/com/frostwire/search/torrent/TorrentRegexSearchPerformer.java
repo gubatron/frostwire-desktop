@@ -27,6 +27,7 @@ import com.frostwire.search.CrawlableSearchResult;
 import com.frostwire.search.MaxIterCharSequence;
 import com.frostwire.search.PerformersHelper;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.domainalias.DomainAliasManager;
 
 /**
  * 
@@ -39,8 +40,8 @@ public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResul
     private final Pattern pattern;
     private final Pattern htmlPattern;
 
-    public TorrentRegexSearchPerformer(String defaultDomain, long token, String keywords, int timeout, int pages, int numCrawls, int regexMaxResults, String regex, String htmlRegex) {
-        super(defaultDomain, token, keywords, timeout, pages, numCrawls, regexMaxResults);
+    public TorrentRegexSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout, int pages, int numCrawls, int regexMaxResults, String regex, String htmlRegex) {
+        super(domainAliasManager, token, keywords, timeout, pages, numCrawls, regexMaxResults);
         this.pattern = Pattern.compile(regex);
         this.htmlPattern = Pattern.compile(htmlRegex);
     }

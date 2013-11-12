@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 
 import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
 
 /**
@@ -36,8 +37,8 @@ public class MonovaSearchPerformer extends TorrentRegexSearchPerformer<MonovaSea
     private static final String REGEX = "(?is)<a href=\"http://www.monova.org/torrent/([0-9]*?)/(.*?).html";
     private static final String HTML_REGEX = "(?is)<div id=\"downloadbox\"><h2><a href=\"(.*?)\" rel=\"nofollow\">.*?<a href=\"magnet:\\?xt=urn:btih:(.*?)\"><b>Magnet</b></a>.*?<font color=\"[A-Za-z]*?\">(.*?)</font> seeds,.*?<strong>Total size:</strong>(.*?)<br /><strong>Pieces:.*?";
 
-    public MonovaSearchPerformer(String defaultDomain, long token, String keywords, int timeout) {
-        super(defaultDomain, token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX);
+    public MonovaSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
+        super(domainAliasManager, token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX);
     }
 
     @Override

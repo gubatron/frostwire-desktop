@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-
-import org.limewire.concurrent.ExecutorsHelper;
 
 /** This guy is in charge of managing DomainAliasManager instances
  * fetching the domain list files and updating each of the domain alias managers it has.
@@ -17,31 +14,29 @@ import org.limewire.concurrent.ExecutorsHelper;
  */
 public class DomainAliasManagerBroker implements DomainAliasManifestFetcherListener {
 
-    private final static DomainAliasManagerBroker INSTANCE = new DomainAliasManagerBroker();
-    private final ExecutorService executor;
     private final HashMap<String, DomainAliasManager> managers;
     
-    private DomainAliasManagerBroker() {
+    public DomainAliasManagerBroker() {
         managers = new HashMap<String, DomainAliasManager>();
-        executor = ExecutorsHelper.newThreadPool("DomainAliasMockFetcherExecutorHelper");
         fetchDomainAliasManifest();
     }
 
     private void fetchDomainAliasManifest() {
-        executor.submit(new Runnable() {
+        new Thread("DomainAliasManagerBroker-domain-alias-manifest-fetcher") {
             @Override
             public void run() {
-                MockDomainAliasManifestFetcher fetcher = new MockDomainAliasManifestFetcher(INSTANCE); 
+                MockDomainAliasManifestFetcher fetcher = new MockDomainAliasManifestFetcher(DomainAliasManagerBroker.this); 
                 fetcher.fetchManifest();
             }
-        });
+
+        }.start();
     }
 
-    public static DomainAliasManager getDomainAliasManager(String defaultDomainKey) {
-        if (!INSTANCE.managers.containsKey(defaultDomainKey)) {
-            INSTANCE.managers.put(defaultDomainKey, new DomainAliasManager(defaultDomainKey));
+    public DomainAliasManager getDomainAliasManager(String defaultDomainKey) {
+        if (!managers.containsKey(defaultDomainKey)) {
+            managers.put(defaultDomainKey, new DomainAliasManager(defaultDomainKey));
         }
-        return INSTANCE.managers.get(defaultDomainKey);
+        return managers.get(defaultDomainKey);
     }
 
     @Override

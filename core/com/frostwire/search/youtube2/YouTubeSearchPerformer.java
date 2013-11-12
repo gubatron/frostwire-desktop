@@ -35,6 +35,7 @@ import org.jdownloader.controlling.filter.LinkFilterController;
 
 import com.frostwire.search.CrawlPagedWebSearchPerformer;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.youtube.YouTubeEntry;
 import com.frostwire.search.youtube.YouTubeResponse;
 import com.frostwire.util.JsonUtils;
@@ -49,8 +50,8 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
 
     private static final int MAX_RESULTS = 15;
 
-    public YouTubeSearchPerformer(String defaultDomain, long token, String keywords, int timeout) {
-        super(defaultDomain, token, keywords, timeout, 1, MAX_RESULTS);
+    public YouTubeSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
+        super(domainAliasManager, token, keywords, timeout, 1, MAX_RESULTS);
     }
 
     @Override
