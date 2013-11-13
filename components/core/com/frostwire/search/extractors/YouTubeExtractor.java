@@ -1,10 +1,14 @@
 package com.frostwire.search.extractors;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
-import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import jd.http.Browser;
@@ -16,10 +20,117 @@ import jd.parser.html.Form.MethodType;
 
 public class YouTubeExtractor {
 
+    static class Info {
+        public String filename;
+        public Date date;
+        public String link;
+        public long size;
+        public int fmt;
+        public String desc;
+        public ThumbnailLinks thumbnails;
+        public String videoId;
+        public String user;
+        public String channel;
+    }
+
+    public static class ThumbnailLinks {
+        public String normal;
+        public String mq;
+        public String hq;
+        public String maxres;
+    }
+
     private final Pattern YT_FILENAME_PATTERN = Pattern.compile("<meta name=\"title\" content=\"(.*?)\">", Pattern.CASE_INSENSITIVE);
     private final String UNSUPPORTEDRTMP = "itag%2Crtmpe%2";
 
-    public HashMap<Integer, String[]> getLinks(final String video, final boolean prem, Browser br) throws Exception {
+    public List<Info> extract(String videoUrl) throws Exception {
+        // Make an little sleep to prevent DDoS
+        Thread.sleep(200);
+
+        Browser br = new Browser();
+        String currentVideoUrl = videoUrl;
+
+        HashMap<Integer, String> LinksFound = this.getLinks(currentVideoUrl, false, br);
+        String error = br.getRegex("<div id=\"unavailable\\-message\" class=\"\">[\t\n\r ]+<span class=\"yt\\-alert\\-vertical\\-trick\"></span>[\t\n\r ]+<div class=\"yt\\-alert\\-message\">([^<>\"]*?)</div>").getMatch(0);
+        // Removed due wrong offline detection
+        // if (error == null) error = br.getRegex("<div class=\"yt\\-alert\\-message\">(.*?)</div>").getMatch(0);
+        if (error == null)
+            error = br.getRegex("reason=([^<>\"/]*?)(\\&|$)").getMatch(0);
+        if (br.containsHTML(UNSUPPORTEDRTMP))
+            error = "RTMP video download isn't supported yet!";
+        if ((LinksFound == null || LinksFound.isEmpty()) && error != null) {
+            error = Encoding.urlDecode(error, false);
+            log("Video unavailable: " + currentVideoUrl);
+            if (error != null)
+                log("Reason: " + error.trim());
+            return Collections.emptyList();
+        }
+        String videoId = getVideoID(currentVideoUrl);
+
+        /** FILENAME PART1 START */
+        String YT_FILENAME = "";
+        if (LinksFound.containsKey(-1)) {
+            YT_FILENAME = LinksFound.get(-1);
+            LinksFound.remove(-1);
+        }
+        // replacing default Locate to be compatible with page language
+        Locale locale = Locale.ENGLISH;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", locale);
+        String date = br.getRegex("id=\"eow-date\" class=\"watch-video-date\" >(\\d{2}\\.\\d{2}\\.\\d{4})</span>").getMatch(0);
+        if (date == null) {
+            formatter = new SimpleDateFormat("dd MMM yyyy", locale);
+            date = br.getRegex("class=\"watch-video-date\" >([ ]+)?(\\d{1,2} [A-Za-z]{3} \\d{4})</span>").getMatch(1);
+        }
+        final String channelName = br.getRegex("feature=watch\"[^>]+dir=\"ltr[^>]+>(.*?)</a>(\\s+)?<span class=\"yt-user").getMatch(0);
+        // userName != channelName
+        final String userName = br.getRegex("temprop=\"url\" href=\"http://(www\\.)?youtube\\.com/user/([^<>\"]*?)\"").getMatch(1);
+
+        ThumbnailLinks thumbnailLinks = createThumbnailLink(videoId);
+
+        List<Info> infos = new LinkedList<Info>();
+
+        for (final Integer format : LinksFound.keySet()) {
+            String dlLink = LinksFound.get(format);
+
+            try {
+                if (br.openGetConnection(dlLink).getResponseCode() == 200) {
+                    Thread.sleep(200);
+                    final Info tmp = new Info();
+                    tmp.filename = YT_FILENAME;
+                    tmp.date = date != null ? formatter.parse(date) : null;
+                    tmp.link = dlLink;
+                    tmp.size = br.getHttpConnection().getLongContentLength();
+                    //tmp.desc = desc;
+                    tmp.fmt = format;
+                    tmp.thumbnails = thumbnailLinks;
+                    tmp.videoId = videoId;
+                    tmp.user = userName;
+                    tmp.channel = channelName;
+                    infos.add(tmp);
+                }
+            } catch (final Throwable e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    br.getHttpConnection().disconnect();
+                } catch (final Throwable e) {
+                }
+            }
+        }
+
+        return infos;
+    }
+
+    private ThumbnailLinks createThumbnailLink(String videoId) {
+        ThumbnailLinks links = new ThumbnailLinks();
+        links.normal = "http://img.youtube.com/vi/" + videoId + "/default.jpg";
+        links.mq = "http://img.youtube.com/vi/" + videoId + "/mqdefault.jpg";
+        links.hq = "http://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
+        links.maxres = "http://img.youtube.com/vi/" + videoId + "/maxresdefault.jpg";
+        return links;
+    }
+
+    public HashMap<Integer, String> getLinks(final String video, final boolean prem, Browser br) throws Exception {
         br.setFollowRedirects(true);
         /* this cookie makes html5 available and skip controversy check */
         br.setCookie("youtube.com", "PREF", "f2=40100000&hl=en-GB");
@@ -83,12 +194,12 @@ public class YouTubeExtractor {
             YT_FILENAME = Encoding.htmlDecode(br.getRegex(YT_FILENAME_PATTERN).getMatch(0).trim());
             fileNameFound = true;
         }
-        HashMap<Integer, String[]> links = parseLinks(br, video, YT_FILENAME, ythack, false);
+        HashMap<Integer, String> links = parseLinks(br, video, YT_FILENAME, ythack, false);
         return links;
     }
 
-    private HashMap<Integer, String[]> parseLinks(Browser br, final String videoURL, String YT_FILENAME, boolean ythack, boolean tryGetDetails) throws InterruptedException, IOException {
-        final HashMap<Integer, String[]> links = new HashMap<Integer, String[]>();
+    private HashMap<Integer, String> parseLinks(Browser br, final String videoURL, String YT_FILENAME, boolean ythack, boolean tryGetDetails) throws InterruptedException, IOException {
+        final HashMap<Integer, String> links = new HashMap<Integer, String>();
         String html5_fmt_map = br.getRegex("\"html5_fmt_map\": \\[(.*?)\\]").getMatch(0);
 
         if (html5_fmt_map != null) {
@@ -97,10 +208,9 @@ public class YouTubeExtractor {
                 for (String hit : html5_hits) {
                     String hitUrl = new Regex(hit, "url\": \"(http:.*?)\"").getMatch(0);
                     String hitFmt = new Regex(hit, "itag\": (\\d+)").getMatch(0);
-                    String hitQ = new Regex(hit, "quality\": \"(.*?)\"").getMatch(0);
-                    if (hitUrl != null && hitFmt != null && hitQ != null) {
+                    if (hitUrl != null && hitFmt != null) {
                         hitUrl = unescape(hitUrl.replaceAll("\\\\/", "/"));
-                        links.put(Integer.parseInt(hitFmt), new String[] { Encoding.htmlDecode(Encoding.urlDecode(hitUrl, true)), hitQ });
+                        links.put(Integer.parseInt(hitFmt), Encoding.htmlDecode(Encoding.urlDecode(hitUrl, true)));
                     }
                 }
             }
@@ -123,7 +233,7 @@ public class YouTubeExtractor {
                 return null;
             }
             if (html5_fmt_map != null) {
-                HashMap<Integer, String[]> ret = parseLinks(html5_fmt_map, false);
+                HashMap<Integer, String> ret = parseLinks(html5_fmt_map);
                 if (ret.size() == 0)
                     return links;
                 links.putAll(ret);
@@ -131,7 +241,7 @@ public class YouTubeExtractor {
                     /* not playable by vlc */
                     /* check for adaptive fmts */
                     String adaptive = br.getRegex("\"adaptive_fmts\": \"(.*?)\"").getMatch(0);
-                    ret = parseLinks(adaptive, true);
+                    ret = parseLinks(adaptive);
                     links.putAll(ret);
                 }
             } else {
@@ -168,47 +278,20 @@ public class YouTubeExtractor {
                 if (hitUrl != null && hitQ != null) {
                     hitUrl = unescape(hitUrl.replaceAll("\\\\/", "/"));
                     if (fmt_list_map.length >= index) {
-                        links.put(Integer.parseInt(fmt_list_map[index][0]), new String[] { Encoding.htmlDecode(Encoding.urlDecode(hitUrl, false)), hitQ });
+                        links.put(Integer.parseInt(fmt_list_map[index][0]), Encoding.htmlDecode(Encoding.urlDecode(hitUrl, false)));
                         index++;
                     }
                 }
             }
         }
-        for (Integer fmt : links.keySet()) {
-            String fmt2 = fmt + "";
-            if (fmt_list.containsKey(fmt2)) {
-                String Videoq = links.get(fmt)[1];
-                final Integer q = Integer.parseInt(fmt_list.get(fmt2).split("x")[1]);
-                if (fmt == 17) {
-                    Videoq = "144p";
-                } else if (fmt == 40) {
-                    Videoq = "240p Light";
-                } else if (q > 1080) {
-                    Videoq = "Original";
-                } else if (q > 720) {
-                    Videoq = "1080p";
-                } else if (q > 576) {
-                    Videoq = "720p";
-                } else if (q > 480) {
-                    Videoq = "520p";
-                } else if (q > 360) {
-                    Videoq = "480p";
-                } else if (q > 240) {
-                    Videoq = "360p";
-                } else {
-                    Videoq = "240p";
-                }
-                links.get(fmt)[1] = Videoq;
-            }
-        }
         if (YT_FILENAME != null && links != null && !links.isEmpty()) {
-            links.put(-1, new String[] { YT_FILENAME });
+            links.put(-1, YT_FILENAME);
         }
         return links;
     }
 
-    private HashMap<Integer, String[]> parseLinks(String html5_fmt_map, boolean allowVideoOnly) {
-        final HashMap<Integer, String[]> links = new HashMap<Integer, String[]>();
+    private HashMap<Integer, String> parseLinks(String html5_fmt_map) {
+        final HashMap<Integer, String> links = new HashMap<Integer, String>();
         if (html5_fmt_map != null) {
             if (html5_fmt_map.contains(UNSUPPORTEDRTMP)) {
                 return links;
@@ -226,19 +309,16 @@ public class YouTubeExtractor {
                     if (sig == null)
                         sig = decryptSignature(new Regex(hit, "s=(.*?)(\\&|$)").getMatch(0));
                     String hitFmt = new Regex(hit, "itag=(\\d+)").getMatch(0);
-                    String hitQ = new Regex(hit, "quality=(.*?)(\\&|$)").getMatch(0);
-                    if (hitQ == null && allowVideoOnly)
-                        hitQ = "unknown";
-                    if (hitUrl != null && hitFmt != null && hitQ != null) {
+                    if (hitUrl != null && hitFmt != null) {
                         hitUrl = unescape(hitUrl.replaceAll("\\\\/", "/"));
                         if (hitUrl.startsWith("http%253A")) {
                             hitUrl = Encoding.htmlDecode(hitUrl);
                         }
-                        String[] inst = null;
+                        String inst = null;
                         if (hitUrl.contains("sig")) {
-                            inst = new String[] { Encoding.htmlDecode(Encoding.urlDecode(hitUrl, true)), hitQ };
+                            inst = Encoding.htmlDecode(Encoding.urlDecode(hitUrl, true));
                         } else {
-                            inst = new String[] { Encoding.htmlDecode(Encoding.urlDecode(hitUrl, true) + "&signature=" + sig), hitQ };
+                            inst = Encoding.htmlDecode(Encoding.urlDecode(hitUrl, true) + "&signature=" + sig);
                         }
                         links.put(Integer.parseInt(hitFmt), inst);
                     }
@@ -453,13 +533,10 @@ public class YouTubeExtractor {
 
     public static void main(String[] args) throws Exception {
         YouTubeExtractor yt = new YouTubeExtractor();
-        HashMap<Integer, String[]> links = yt.getLinks(, false, new Browser());
+        List<Info> list = yt.extract();
 
-        for (Entry<Integer, String[]> e : links.entrySet()) {
-            System.out.println(e.getKey());
-            for (String s : e.getValue()) {
-                //System.out.println("\t" + s);
-            }
+        for (Info inf : list) {
+            System.out.println(inf.fmt);
         }
     }
 }
