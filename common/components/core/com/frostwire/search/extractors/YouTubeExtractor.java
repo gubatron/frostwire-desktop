@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClientFactory;
+
 import jd.http.Browser;
 import jd.http.Request;
 import jd.nutils.encoding.Encoding;
@@ -189,16 +192,20 @@ public class YouTubeExtractor {
                 }
             }
         }
+
+        String html5player = br.getRegex("(?s)\"js\": \"(http:.+?html5player\\-.+?\\.js)").getMatch(0);
+        YouTubeSig ytSig = getYouTubeSig(html5player);
+
         /* html5_fmt_map */
         if (br.getRegex(YT_FILENAME_PATTERN).count() != 0 && fileNameFound == false) {
             YT_FILENAME = Encoding.htmlDecode(br.getRegex(YT_FILENAME_PATTERN).getMatch(0).trim());
             fileNameFound = true;
         }
-        HashMap<Integer, String> links = parseLinks(br, video, YT_FILENAME, ythack, false);
+        HashMap<Integer, String> links = parseLinks(br, video, YT_FILENAME, ythack, false, ytSig);
         return links;
     }
 
-    private HashMap<Integer, String> parseLinks(Browser br, final String videoURL, String YT_FILENAME, boolean ythack, boolean tryGetDetails) throws InterruptedException, IOException {
+    private HashMap<Integer, String> parseLinks(Browser br, final String videoURL, String YT_FILENAME, boolean ythack, boolean tryGetDetails, YouTubeSig ytSig) throws InterruptedException, IOException {
         final HashMap<Integer, String> links = new HashMap<Integer, String>();
         String html5_fmt_map = br.getRegex("\"html5_fmt_map\": \\[(.*?)\\]").getMatch(0);
 
@@ -233,7 +240,7 @@ public class YouTubeExtractor {
                 return null;
             }
             if (html5_fmt_map != null) {
-                HashMap<Integer, String> ret = parseLinks(html5_fmt_map);
+                HashMap<Integer, String> ret = parseLinks(html5_fmt_map, ytSig);
                 if (ret.size() == 0)
                     return links;
                 links.putAll(ret);
@@ -241,7 +248,7 @@ public class YouTubeExtractor {
                     /* not playable by vlc */
                     /* check for adaptive fmts */
                     String adaptive = br.getRegex("\"adaptive_fmts\": \"(.*?)\"").getMatch(0);
-                    ret = parseLinks(adaptive);
+                    ret = parseLinks(adaptive, ytSig);
                     links.putAll(ret);
                 }
             } else {
@@ -249,7 +256,7 @@ public class YouTubeExtractor {
                     return null;
                 if (tryGetDetails == true) {
                     br.getPage("http://www.youtube.com/get_video_info?el=detailpage&video_id=" + getVideoID(videoURL));
-                    return parseLinks(br, videoURL, YT_FILENAME, ythack, false);
+                    return parseLinks(br, videoURL, YT_FILENAME, ythack, false, ytSig);
                 } else {
                     return null;
                 }
@@ -290,7 +297,7 @@ public class YouTubeExtractor {
         return links;
     }
 
-    private HashMap<Integer, String> parseLinks(String html5_fmt_map) {
+    private HashMap<Integer, String> parseLinks(String html5_fmt_map, YouTubeSig ytSig) {
         final HashMap<Integer, String> links = new HashMap<Integer, String>();
         if (html5_fmt_map != null) {
             if (html5_fmt_map.contains(UNSUPPORTEDRTMP)) {
@@ -306,8 +313,10 @@ public class YouTubeExtractor {
                         sig = new Regex(hit, "(sig|signature)=(.*?)(\\&|$)").getMatch(1);
                     if (sig == null)
                         sig = new Regex(hit, "(sig|signature)%3D(.*?)%26").getMatch(1);
-                    if (sig == null)
-                        sig = decryptSignature(new Regex(hit, "s=(.*?)(\\&|$)").getMatch(0));
+                    if (sig == null) {
+                        String temp = new Regex(hit, "s=(.*?)(\\&|$)").getMatch(0);
+                        sig = ytSig != null && temp != null ? ytSig.calc(temp) : decryptSignature(temp);
+                    }
                     String hitFmt = new Regex(hit, "itag=(\\d+)").getMatch(0);
                     if (hitUrl != null && hitFmt != null) {
                         hitUrl = unescape(hitUrl.replaceAll("\\\\/", "/"));
@@ -529,6 +538,12 @@ public class YouTubeExtractor {
 
     private void log(String message) {
         //System.out.println(message);
+    }
+
+    private YouTubeSig getYouTubeSig(String html5player) {
+        HttpClient httpClient = HttpClientFactory.newDefaultInstance();
+        String jscode = httpClient.get(html5player.replace("\\", ""));
+        return new YouTubeSig(jscode);
     }
 
     public static void main(String[] args) throws Exception {
