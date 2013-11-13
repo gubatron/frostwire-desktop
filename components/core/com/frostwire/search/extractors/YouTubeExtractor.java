@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import jd.http.Browser;
@@ -39,7 +40,7 @@ public class YouTubeExtractor {
         if (url != null && !url.equals(video)) {
             /* age verify with activated premium? */
             if (url.toLowerCase(Locale.ENGLISH).indexOf("youtube.com/verify_age?next_url=") != -1) {
-                verifyAge = true;
+                //verifyAge = true;
             }
             if (url.toLowerCase(Locale.ENGLISH).indexOf("youtube.com/verify_age?next_url=") != -1 && prem) {
                 final String session_token = br.getRegex("onLoadFunc.*?gXSRF_token = '(.*?)'").getMatch(0);
@@ -126,7 +127,7 @@ public class YouTubeExtractor {
                 if (ret.size() == 0)
                     return links;
                 links.putAll(ret);
-                if (false) {
+                if (true) {
                     /* not playable by vlc */
                     /* check for adaptive fmts */
                     String adaptive = br.getRegex("\"adaptive_fmts\": \"(.*?)\"").getMatch(0);
@@ -447,6 +448,18 @@ public class YouTubeExtractor {
     }
 
     private void log(String message) {
-        System.out.println(message);
+        //System.out.println(message);
+    }
+
+    public static void main(String[] args) throws Exception {
+        YouTubeExtractor yt = new YouTubeExtractor();
+        HashMap<Integer, String[]> links = yt.getLinks(, false, new Browser());
+
+        for (Entry<Integer, String[]> e : links.entrySet()) {
+            System.out.println(e.getKey());
+            for (String s : e.getValue()) {
+                //System.out.println("\t" + s);
+            }
+        }
     }
 }
