@@ -26,6 +26,8 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.frostwire.search.CrawlPagedWebSearchPerformer;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.extractors.YouTubeExtractor;
+import com.frostwire.search.extractors.YouTubeExtractor.LinkInfo;
 import com.frostwire.util.JsonUtils;
 
 /**
@@ -50,7 +52,13 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
     @Override
     protected List<? extends SearchResult> crawlResult(YouTubeSearchResult sr, byte[] data) throws Exception {
         List<YouTubeCrawledSearchResult> list = new LinkedList<YouTubeCrawledSearchResult>();
-        List<YouTubeDownloadLink> ytLinks = new YouTubeDecrypter().decrypt(sr.getDetailsUrl());
+
+        List<LinkInfo> infos = new YouTubeExtractor().extract(sr.getDetailsUrl());
+        List<YouTubeDownloadLink> ytLinks = new LinkedList<YouTubeDownloadLink>();
+        for (LinkInfo inf : infos) {
+            YouTubeDownloadLink dl = new YouTubeDownloadLink(inf.filename, inf.size, inf.link, inf.fmt);
+            ytLinks.add(dl);
+        }
 
         for (YouTubeDownloadLink link : ytLinks) {
             list.add(new YouTubeCrawledSearchResult(sr, link));

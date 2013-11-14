@@ -138,6 +138,8 @@ public final class YouTubeExtractor {
             filename = Encoding.htmlDecode(br.getRegex("&title=([^&$]+)").getMatch(0).replaceAll("\\+", " ").trim());
             fileNameFound = true;
         }
+        // clean up
+        filename = filename.replaceAll("[\\\\/:*?\"<>|\\[\\]]+;,", "_");
 
         String url = br.getURL();
         boolean ythack = false;
