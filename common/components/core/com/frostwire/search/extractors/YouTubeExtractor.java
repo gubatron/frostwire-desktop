@@ -29,6 +29,9 @@ public final class YouTubeExtractor {
     private static final Pattern FILENAME_PATTERN = Pattern.compile("<meta name=\"title\" content=\"(.*?)\">", Pattern.CASE_INSENSITIVE);
     private static final String UNSUPPORTEDRTMP = "itag%2Crtmpe%2";
 
+    // using the signature decoding per running session
+    private static YouTubeSig YT_SIG;
+
     public List<LinkInfo> extract(String videoUrl) {
         try {
             Thread.sleep(200);
@@ -461,9 +464,14 @@ public final class YouTubeExtractor {
     }
 
     private YouTubeSig getYouTubeSig(String html5player) {
-        HttpClient httpClient = HttpClientFactory.newDefaultInstance();
-        String jscode = httpClient.get(html5player.replace("\\", ""));
-        return new YouTubeSig(jscode);
+        // concurrency issues are not important in this point
+        if (YT_SIG == null) {
+            HttpClient httpClient = HttpClientFactory.newDefaultInstance();
+            String jscode = httpClient.get(html5player.replace("\\", ""));
+            YT_SIG = new YouTubeSig(jscode);
+        }
+
+        return YT_SIG;
     }
 
     private ThumbnailLinks createThumbnailLink(String videoId) {
