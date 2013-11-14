@@ -636,14 +636,14 @@ public final class YouTubeExtractor {
 
     public static final class Format {
 
-        private Format(String type, String video, String audio, String quality) {
-            this.type = type;
+        private Format(String ext, String video, String audio, String quality) {
+            this.ext = ext;
             this.video = video;
             this.audio = audio;
             this.quality = quality;
         }
 
-        public final String type;
+        public final String ext;
         public final String video;
         public final String audio;
         public final String quality;
