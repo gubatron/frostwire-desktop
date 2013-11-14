@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import jd.http.Browser;
@@ -28,6 +29,8 @@ public final class YouTubeExtractor {
 
     private static final Pattern FILENAME_PATTERN = Pattern.compile("<meta name=\"title\" content=\"(.*?)\">", Pattern.CASE_INSENSITIVE);
     private static final String UNSUPPORTEDRTMP = "itag%2Crtmpe%2";
+
+    private static final Map<Integer, Format> FORMATS = buildFormats();
 
     // using the signature decoding per running session
     private static YouTubeSig YT_SIG;
@@ -61,6 +64,11 @@ public final class YouTubeExtractor {
             List<LinkInfo> infos = new LinkedList<LinkInfo>();
 
             for (int fmt : LinksFound.keySet()) {
+                Format format = FORMATS.get(fmt);
+                if (format == null) {
+                    continue;
+                }
+
                 String link = LinksFound.get(fmt);
 
                 try {
@@ -69,7 +77,7 @@ public final class YouTubeExtractor {
 
                         long size = br.getHttpConnection().getLongContentLength();
 
-                        LinkInfo info = new LinkInfo(link, fmt, filename, size, date, videoId, userName, channelName, thumbnailLinks);
+                        LinkInfo info = new LinkInfo(link, fmt, filename, size, date, videoId, userName, channelName, thumbnailLinks, format);
                         infos.add(info);
                     }
                 } catch (Throwable e) {
@@ -543,9 +551,48 @@ public final class YouTubeExtractor {
         LOG.info(message);
     }
 
-    public static class LinkInfo {
+    private static Map<Integer, Format> buildFormats() {
 
-        private LinkInfo(String link, int fmt, String filename, long size, Date date, String videoId, String user, String channel, ThumbnailLinks thumbnails) {
+        Map<Integer, Format> formats = new HashMap<Integer, Format>();
+
+        formats.put(5, new Format("flv", "H263", "MP3", "240p"));
+        formats.put(6, new Format("flv", "H263", "MP3", "270p"));
+        formats.put(17, new Format("3gp", "H264", "AAC", "144p"));
+        formats.put(18, new Format("mp4", "H264", "AAC", "360p"));
+        formats.put(22, new Format("mp4", "H264", "AAC", "720p"));
+        formats.put(34, new Format("flv", "H264", "AAC", "360p"));
+        formats.put(35, new Format("flv", "H264", "AAC", "480p"));
+        formats.put(36, new Format("3gp", "H264", "AAC", "240p"));
+        formats.put(37, new Format("mp4", "H264", "AAC", "1080p"));
+        formats.put(38, new Format("mp4", "H264", "AAC", "3072p"));
+        formats.put(43, new Format("webm", "VP8", "Vorbis", "360p"));
+        formats.put(44, new Format("webm", "VP8", "Vorbis", "480p"));
+        formats.put(45, new Format("webm", "VP8", "Vorbis", "720p"));
+        formats.put(46, new Format("webm", "VP8", "Vorbis", "1080p"));
+        formats.put(82, new Format("mp4", "H264", "AAC", "360p"));
+        formats.put(83, new Format("mp4", "H264", "AAC", "240p"));
+        formats.put(84, new Format("mp4", "H264", "AAC", "720p"));
+        formats.put(85, new Format("mp4", "H264", "AAC", "520p"));
+        formats.put(100, new Format("webm", "VP8", "Vorbis", "360p"));
+        formats.put(101, new Format("webm", "VP8", "Vorbis", "360p"));
+        formats.put(102, new Format("webm", "VP8", "Vorbis", "720p"));
+        // dash video
+        formats.put(133, new Format("m4v", "H264", "", "240p"));
+        formats.put(134, new Format("m4v", "H264", "", "360p"));
+        formats.put(135, new Format("m4v", "H264", "", "480p"));
+        formats.put(136, new Format("m4v", "H264", "", "720p"));
+        formats.put(137, new Format("m4v", "H264", "", "1080p"));
+        // dash audio
+        formats.put(137, new Format("m4a", "", "AAC", "48k"));
+        formats.put(140, new Format("m4a", "", "AAC", "128k"));
+        formats.put(141, new Format("m4a", "", "AAC", "256k"));
+
+        return formats;
+    }
+
+    public static final class LinkInfo {
+
+        private LinkInfo(String link, int fmt, String filename, long size, Date date, String videoId, String user, String channel, ThumbnailLinks thumbnails, Format format) {
             this.link = link;
             this.fmt = fmt;
             this.filename = filename;
@@ -555,6 +602,7 @@ public final class YouTubeExtractor {
             this.user = user;
             this.channel = channel;
             this.thumbnails = thumbnails;
+            this.format = format;
         }
 
         public final String link;
@@ -566,9 +614,10 @@ public final class YouTubeExtractor {
         public final String user;
         public final String channel;
         public final ThumbnailLinks thumbnails;
+        public final Format format;
     }
 
-    public static class ThumbnailLinks {
+    public static final class ThumbnailLinks {
 
         private ThumbnailLinks(String normal, String mq, String hq, String maxres) {
             this.normal = normal;
@@ -581,5 +630,20 @@ public final class YouTubeExtractor {
         public final String mq;
         public final String hq;
         public final String maxres;
+    }
+
+    public static final class Format {
+
+        private Format(String type, String video, String audio, String quality) {
+            this.type = type;
+            this.video = video;
+            this.audio = audio;
+            this.quality = quality;
+        }
+
+        public final String type;
+        public final String video;
+        public final String audio;
+        public final String quality;
     }
 }
