@@ -1,9 +1,6 @@
 package com.frostwire.search.extractors;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -19,112 +16,119 @@ import jd.parser.Regex;
 import jd.parser.html.Form;
 import jd.parser.html.Form.MethodType;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 
-public class YouTubeExtractor {
+public final class YouTubeExtractor {
 
-    private final Pattern YT_FILENAME_PATTERN = Pattern.compile("<meta name=\"title\" content=\"(.*?)\">", Pattern.CASE_INSENSITIVE);
-    private final String UNSUPPORTEDRTMP = "itag%2Crtmpe%2";
+    private static final Logger LOG = LoggerFactory.getLogger(YouTubeExtractor.class);
 
-    public List<LinkInfo> extract(String videoUrl) throws Exception {
-        // Make an little sleep to prevent DDoS
-        Thread.sleep(200);
+    private static final Pattern FILENAME_PATTERN = Pattern.compile("<meta name=\"title\" content=\"(.*?)\">", Pattern.CASE_INSENSITIVE);
+    private static final String UNSUPPORTEDRTMP = "itag%2Crtmpe%2";
 
-        Browser br = new Browser();
-        String currentVideoUrl = videoUrl;
+    public List<LinkInfo> extract(String videoUrl) {
+        try {
+            Thread.sleep(200);
 
-        HashMap<Integer, String> LinksFound = this.getLinks(currentVideoUrl, false, br);
-        String error = br.getRegex("<div id=\"unavailable\\-message\" class=\"\">[\t\n\r ]+<span class=\"yt\\-alert\\-vertical\\-trick\"></span>[\t\n\r ]+<div class=\"yt\\-alert\\-message\">([^<>\"]*?)</div>").getMatch(0);
-        // Removed due wrong offline detection
-        // if (error == null) error = br.getRegex("<div class=\"yt\\-alert\\-message\">(.*?)</div>").getMatch(0);
-        if (error == null)
-            error = br.getRegex("reason=([^<>\"/]*?)(\\&|$)").getMatch(0);
-        if (br.containsHTML(UNSUPPORTEDRTMP))
-            error = "RTMP video download isn't supported yet!";
-        if ((LinksFound == null || LinksFound.isEmpty()) && error != null) {
-            error = Encoding.urlDecode(error, false);
-            log("Video unavailable: " + currentVideoUrl);
-            if (error != null)
-                log("Reason: " + error.trim());
-            return Collections.emptyList();
-        }
-        String videoId = getVideoID(currentVideoUrl);
+            Browser br = new Browser();
 
-        /** FILENAME PART1 START */
-        String YT_FILENAME = "";
-        if (LinksFound.containsKey(-1)) {
-            YT_FILENAME = LinksFound.get(-1);
-            LinksFound.remove(-1);
-        }
-        // replacing default Locate to be compatible with page language
-        Locale locale = Locale.ENGLISH;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", locale);
-        String date = br.getRegex("id=\"eow-date\" class=\"watch-video-date\" >(\\d{2}\\.\\d{2}\\.\\d{4})</span>").getMatch(0);
-        if (date == null) {
-            formatter = new SimpleDateFormat("dd MMM yyyy", locale);
-            date = br.getRegex("class=\"watch-video-date\" >([ ]+)?(\\d{1,2} [A-Za-z]{3} \\d{4})</span>").getMatch(1);
-        }
-        final String channelName = br.getRegex("feature=watch\"[^>]+dir=\"ltr[^>]+>(.*?)</a>(\\s+)?<span class=\"yt-user").getMatch(0);
-        // userName != channelName
-        final String userName = br.getRegex("temprop=\"url\" href=\"http://(www\\.)?youtube\\.com/user/([^<>\"]*?)\"").getMatch(1);
+            HashMap<Integer, String> LinksFound = getLinks(videoUrl, false, br);
 
-        ThumbnailLinks thumbnailLinks = createThumbnailLink(videoId);
+            checkError(videoUrl, br, LinksFound);
 
-        List<LinkInfo> infos = new LinkedList<LinkInfo>();
+            String filename = LinksFound.remove(-1);
 
-        for (final int fmt : LinksFound.keySet()) {
-            String link = LinksFound.get(fmt);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
+            String dateStr = br.getRegex("id=\"eow-date\" class=\"watch-video-date\" >(\\d{2}\\.\\d{2}\\.\\d{4})</span>").getMatch(0);
+            if (dateStr == null) {
+                formatter = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
+                dateStr = br.getRegex("class=\"watch-video-date\" >([ ]+)?(\\d{1,2} [A-Za-z]{3} \\d{4})</span>").getMatch(1);
+            }
+            Date date = dateStr != null ? formatter.parse(dateStr) : new Date();
 
-            try {
-                if (br.openGetConnection(link).getResponseCode() == 200) {
-                    Thread.sleep(200);
+            String videoId = getVideoID(videoUrl);
+            String channelName = br.getRegex("feature=watch\"[^>]+dir=\"ltr[^>]+>(.*?)</a>(\\s+)?<span class=\"yt-user").getMatch(0);
+            String userName = br.getRegex("temprop=\"url\" href=\"http://(www\\.)?youtube\\.com/user/([^<>\"]*?)\"").getMatch(1);
 
-                    long size = br.getHttpConnection().getLongContentLength();
-                    Date linkDate = date != null ? formatter.parse(date) : null;
+            ThumbnailLinks thumbnailLinks = createThumbnailLink(videoId);
 
-                    LinkInfo info = new LinkInfo(link, fmt, YT_FILENAME, size, linkDate, videoId, userName, channelName, thumbnailLinks);
-                    infos.add(info);
-                }
-            } catch (final Throwable e) {
-                e.printStackTrace();
-            } finally {
+            List<LinkInfo> infos = new LinkedList<LinkInfo>();
+
+            for (int fmt : LinksFound.keySet()) {
+                String link = LinksFound.get(fmt);
+
                 try {
-                    br.getHttpConnection().disconnect();
-                } catch (final Throwable e) {
+                    if (br.openGetConnection(link).getResponseCode() == 200) {
+                        Thread.sleep(200);
+
+                        long size = br.getHttpConnection().getLongContentLength();
+
+                        LinkInfo info = new LinkInfo(link, fmt, filename, size, date, videoId, userName, channelName, thumbnailLinks);
+                        infos.add(info);
+                    }
+                } catch (Throwable e) {
+                    log("Failed link url: " + link);
+                } finally {
+                    try {
+                        br.getHttpConnection().disconnect();
+                    } catch (final Throwable e) {
+                    }
                 }
             }
+
+            return infos;
+
+        } catch (Throwable e) {
+            throw new ExtractorException("General extractor error", e);
+        }
+    }
+
+    private void checkError(String videoUrl, Browser br, HashMap<Integer, String> LinksFound) {
+
+        String error = br.getRegex("<div id=\"unavailable\\-message\" class=\"\">[\t\n\r ]+<span class=\"yt\\-alert\\-vertical\\-trick\"></span>[\t\n\r ]+<div class=\"yt\\-alert\\-message\">([^<>\"]*?)</div>").getMatch(0);
+
+        if (error == null) {
+            error = br.getRegex("reason=([^<>\"/]*?)(\\&|$)").getMatch(0);
         }
 
-        return infos;
+        if (br.containsHTML(UNSUPPORTEDRTMP)) {
+            error = "RTMP video download isn't supported yet!";
+        }
+
+        if ((LinksFound == null || LinksFound.isEmpty()) && error != null) {
+            error = Encoding.urlDecode(error, false);
+            if (error != null) {
+                error = error.trim();
+            }
+            throw new ExtractorException("Reasig: " + error.trim());
+        }
     }
 
-    private ThumbnailLinks createThumbnailLink(String videoId) {
-        String normal = "http://img.youtube.com/vi/" + videoId + "/default.jpg";
-        String mq = "http://img.youtube.com/vi/" + videoId + "/mqdefault.jpg";
-        String hq = "http://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
-        String maxres = "http://img.youtube.com/vi/" + videoId + "/maxresdefault.jpg";
+    private HashMap<Integer, String> getLinks(final String video, final boolean prem, Browser br) throws Exception {
 
-        return new ThumbnailLinks(normal, mq, hq, maxres);
-    }
-
-    public HashMap<Integer, String> getLinks(final String video, final boolean prem, Browser br) throws Exception {
         br.setFollowRedirects(true);
         /* this cookie makes html5 available and skip controversy check */
         br.setCookie("youtube.com", "PREF", "f2=40100000&hl=en-GB");
         br.getHeaders().put("User-Agent", "Wget/1.12");
         br.getPage(video);
+
         if (br.containsHTML("id=\"unavailable-submessage\" class=\"watch-unavailable-submessage\"")) {
             return null;
         }
-        final String VIDEOID = new Regex(video, "watch\\?v=([\\w_\\-]+)").getMatch(0);
+
+        String videoId = new Regex(video, "watch\\?v=([\\w_\\-]+)").getMatch(0);
+
         boolean fileNameFound = false;
-        String YT_FILENAME = VIDEOID;
+        String filename = videoId;
         if (br.containsHTML("&title=")) {
-            YT_FILENAME = Encoding.htmlDecode(br.getRegex("&title=([^&$]+)").getMatch(0).replaceAll("\\+", " ").trim());
+            filename = Encoding.htmlDecode(br.getRegex("&title=([^&$]+)").getMatch(0).replaceAll("\\+", " ").trim());
             fileNameFound = true;
         }
-        final String url = br.getURL();
+
+        String url = br.getURL();
         boolean ythack = false;
         if (url != null && !url.equals(video)) {
             /* age verify with activated premium? */
@@ -147,9 +151,9 @@ public class YouTubeExtractor {
                 }
             } else if (url.toLowerCase(Locale.ENGLISH).indexOf("youtube.com/index?ytsession=") != -1 || url.toLowerCase(Locale.ENGLISH).indexOf("youtube.com/verify_age?next_url=") != -1 && !prem) {
                 ythack = true;
-                br.getPage("http://www.youtube.com/get_video_info?video_id=" + VIDEOID);
+                br.getPage("http://www.youtube.com/get_video_info?video_id=" + videoId);
                 if (br.containsHTML("&title=") && fileNameFound == false) {
-                    YT_FILENAME = Encoding.htmlDecode(br.getRegex("&title=([^&$]+)").getMatch(0).replaceAll("\\+", " ").trim());
+                    filename = Encoding.htmlDecode(br.getRegex("&title=([^&$]+)").getMatch(0).replaceAll("\\+", " ").trim());
                     fileNameFound = true;
                 }
             } else if (url.toLowerCase(Locale.ENGLISH).indexOf("google.com/accounts/servicelogin?") != -1) {
@@ -157,6 +161,7 @@ public class YouTubeExtractor {
                 return null;
             }
         }
+
         Form forms[] = br.getForms();
         if (forms != null) {
             for (Form form : forms) {
@@ -172,15 +177,15 @@ public class YouTubeExtractor {
         YouTubeSig ytSig = getYouTubeSig(html5player);
 
         /* html5_fmt_map */
-        if (br.getRegex(YT_FILENAME_PATTERN).count() != 0 && fileNameFound == false) {
-            YT_FILENAME = Encoding.htmlDecode(br.getRegex(YT_FILENAME_PATTERN).getMatch(0).trim());
+        if (br.getRegex(FILENAME_PATTERN).count() != 0 && fileNameFound == false) {
+            filename = Encoding.htmlDecode(br.getRegex(FILENAME_PATTERN).getMatch(0).trim());
             fileNameFound = true;
         }
-        HashMap<Integer, String> links = parseLinks(br, video, YT_FILENAME, ythack, false, ytSig);
-        return links;
+
+        return parseLinks(br, video, filename, ythack, false, ytSig);
     }
 
-    private HashMap<Integer, String> parseLinks(Browser br, final String videoURL, String YT_FILENAME, boolean ythack, boolean tryGetDetails, YouTubeSig ytSig) throws InterruptedException, IOException {
+    private HashMap<Integer, String> parseLinks(Browser br, final String videoURL, String filename, boolean ythack, boolean tryGetDetails, YouTubeSig ytSig) throws Exception {
         final HashMap<Integer, String> links = new HashMap<Integer, String>();
         String html5_fmt_map = br.getRegex("\"html5_fmt_map\": \\[(.*?)\\]").getMatch(0);
 
@@ -231,7 +236,7 @@ public class YouTubeExtractor {
                     return null;
                 if (tryGetDetails == true) {
                     br.getPage("http://www.youtube.com/get_video_info?el=detailpage&video_id=" + getVideoID(videoURL));
-                    return parseLinks(br, videoURL, YT_FILENAME, ythack, false, ytSig);
+                    return parseLinks(br, videoURL, filename, ythack, false, ytSig);
                 } else {
                     return null;
                 }
@@ -266,8 +271,8 @@ public class YouTubeExtractor {
                 }
             }
         }
-        if (YT_FILENAME != null && links != null && !links.isEmpty()) {
-            links.put(-1, YT_FILENAME);
+        if (filename != null && links != null && !links.isEmpty()) {
+            links.put(-1, filename);
         }
         return links;
     }
@@ -455,7 +460,22 @@ public class YouTubeExtractor {
         return sb.toString();
     }
 
-    public static String unescape(final String s) {
+    private YouTubeSig getYouTubeSig(String html5player) {
+        HttpClient httpClient = HttpClientFactory.newDefaultInstance();
+        String jscode = httpClient.get(html5player.replace("\\", ""));
+        return new YouTubeSig(jscode);
+    }
+
+    private ThumbnailLinks createThumbnailLink(String videoId) {
+        String normal = "http://img.youtube.com/vi/" + videoId + "/default.jpg";
+        String mq = "http://img.youtube.com/vi/" + videoId + "/mqdefault.jpg";
+        String hq = "http://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
+        String maxres = "http://img.youtube.com/vi/" + videoId + "/maxresdefault.jpg";
+
+        return new ThumbnailLinks(normal, mq, hq, maxres);
+    }
+
+    private String unescape(final String s) {
         char ch;
         char ch2;
         final StringBuilder sb = new StringBuilder();
@@ -512,13 +532,7 @@ public class YouTubeExtractor {
     }
 
     private void log(String message) {
-        //System.out.println(message);
-    }
-
-    private YouTubeSig getYouTubeSig(String html5player) {
-        HttpClient httpClient = HttpClientFactory.newDefaultInstance();
-        String jscode = httpClient.get(html5player.replace("\\", ""));
-        return new YouTubeSig(jscode);
+        LOG.info(message);
     }
 
     public static class LinkInfo {
