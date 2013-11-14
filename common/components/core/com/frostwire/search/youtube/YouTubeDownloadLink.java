@@ -18,6 +18,8 @@
 
 package com.frostwire.search.youtube;
 
+import com.frostwire.search.extractors.YouTubeExtractor.Format;
+
 /**
  * 
  * @author gubatron
@@ -33,12 +35,12 @@ public class YouTubeDownloadLink {
     /** http://en.wikipedia.org/wiki/YouTube */
     private final boolean audio;
 
-    public YouTubeDownloadLink(String filename, long size, String downloadUrl, int iTag) {
-        this(filename, size, downloadUrl, iTag, false);
+    public YouTubeDownloadLink(String filename, Format format, long size, String downloadUrl, int iTag) {
+        this(filename, format, size, downloadUrl, iTag, false);
     }
 
-    public YouTubeDownloadLink(String filename, long size, String downloadUrl, int iTag, boolean audio) {
-        this.filename = filename;
+    public YouTubeDownloadLink(String filename, Format format, long size, String downloadUrl, int iTag, boolean audio) {
+        this.filename = String.format("%s_%s_%s_%s.%s", filename, format.video, format.audio, format.quality, format.ext);
         this.size = size;
         this.downloadUrl = downloadUrl;
         this.iTag = iTag;
