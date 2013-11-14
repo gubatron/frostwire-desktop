@@ -22,53 +22,40 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.frostwire.search.AbstractCrawledSearchResult;
 import com.frostwire.search.HttpSearchResult;
-import com.frostwire.search.StreamableSearchResult;
+import com.frostwire.search.extractors.YouTubeExtractor.LinkInfo;
 
 /**
  * @author gubatron
  * @author aldenml
  *
  */
-public final class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult implements HttpSearchResult, StreamableSearchResult {
+public class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult implements HttpSearchResult {
 
-    private final YouTubeDownloadLink dl;
+    private final LinkInfo video;
+    private final LinkInfo audio;
     private final String filename;
     private final String displayName;
     private final long size;
-    private final String streamUrl;
-    private final MediaQuality mediaQuality;
-    
-    public enum MediaQuality {
-        LOW_QUALITY("Low Quality"),
-        HIGH_QUALITY("High Quality"),
-        UNKNOWN("");
-        
-        private final String name;
-        
-        MediaQuality(String str) {
-            name = str;
-        }
-        
-        @Override
-        public String toString() {
-            return name;
-        }
-    }
+    private final String downloadUrl;
 
-    public YouTubeCrawledSearchResult(YouTubeSearchResult sr, YouTubeDownloadLink dl) {
+    public YouTubeCrawledSearchResult(YouTubeSearchResult sr, LinkInfo video, LinkInfo audio) {
         super(sr);
 
-        this.dl = dl;
+        this.video = video;
+        this.audio = audio;
 
-        this.filename = dl.getFilename();
+        this.filename = buildFilename(video, audio);
         this.displayName = FilenameUtils.getBaseName(this.filename);
-        this.size = dl.getSize();
-        this.streamUrl = dl.getDownloadUrl();
-        this.mediaQuality = buildQuality(dl);
+        this.size = buildSize(video, audio);
+        this.downloadUrl = buildDownloadUrl(video, audio);
     }
 
-    public YouTubeDownloadLink getYouTubeDownloadLink() {
-        return dl;
+    public LinkInfo getVideo() {
+        return video;
+    }
+
+    public LinkInfo getAudio() {
+        return audio;
     }
 
     @Override
@@ -87,27 +74,52 @@ public final class YouTubeCrawledSearchResult extends AbstractCrawledSearchResul
     }
 
     @Override
-    public String getStreamUrl() {
-        return streamUrl;
-    }
-
-    @Override
     public String getDownloadUrl() {
-        return streamUrl;
-    }
-    
-    public MediaQuality getMediaQuality() {
-        return mediaQuality;
+        return downloadUrl;
     }
 
-    private MediaQuality buildQuality(YouTubeDownloadLink dl) {
-        MediaQuality result = MediaQuality.UNKNOWN;
-        if (dl.getITag() == 22 || dl.getITag() == 37) {
-            result = MediaQuality.HIGH_QUALITY;            
-        } else if (dl.getITag() == 18) {
-            result = MediaQuality.LOW_QUALITY;
+    private String buildFilename(LinkInfo video, LinkInfo audio) {
+        String filename;
+        if (video != null && audio == null) {
+            filename = String.format("%s_%s_%s_%s.%s", video.filename, video.format.video, video.format.audio, video.format.quality, video.format.ext);
+        } else if (video == null && audio != null) {
+            filename = String.format("%s_%s_%s_%s.%s", audio.filename, audio.format.video, audio.format.audio, audio.format.quality, audio.format.ext);
+        } else if (video != null && audio != null) {
+            filename = String.format("%s_%s_%s_%s.%s", video.filename, video.format.video, audio.format.audio, video.format.quality, "mp4");
+        } else {
+            throw new IllegalArgumentException("No track defined");
         }
-        return result;
+
+        return filename;
     }
-    
+
+    private long buildSize(LinkInfo video, LinkInfo audio) {
+        long size;
+        if (video != null && audio == null) {
+            size = video.size;
+        } else if (video == null && audio != null) {
+            size = audio.size;
+        } else if (video != null && audio != null) {
+            size = video.size + video.size;
+        } else {
+            throw new IllegalArgumentException("No track defined");
+        }
+
+        return size;
+    }
+
+    private String buildDownloadUrl(LinkInfo video, LinkInfo audio) {
+        String downloadUrl;
+        if (video != null && audio == null) {
+            downloadUrl = video.link;
+        } else if (video == null && audio != null) {
+            downloadUrl = audio.link;
+        } else if (video != null && audio != null) {
+            downloadUrl = null;
+        } else {
+            throw new IllegalArgumentException("No track defined");
+        }
+
+        return downloadUrl;
+    }
 }

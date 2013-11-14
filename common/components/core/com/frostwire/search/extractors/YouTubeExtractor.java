@@ -585,7 +585,7 @@ public final class YouTubeExtractor {
         formats.put(136, new Format("m4v", "H264", "", "720p"));
         formats.put(137, new Format("m4v", "H264", "", "1080p"));
         // dash audio
-        formats.put(137, new Format("m4a", "", "AAC", "48k"));
+        formats.put(139, new Format("m4a", "", "AAC", "48k"));
         formats.put(140, new Format("m4a", "", "AAC", "128k"));
         formats.put(141, new Format("m4a", "", "AAC", "256k"));
 
