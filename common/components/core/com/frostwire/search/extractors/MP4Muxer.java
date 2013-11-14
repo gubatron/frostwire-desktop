@@ -1,4 +1,4 @@
-package com.frostwire.mp4;
+package com.frostwire.search.extractors;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

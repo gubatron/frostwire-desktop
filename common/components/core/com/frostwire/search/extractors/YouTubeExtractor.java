@@ -1,5 +1,6 @@
 package com.frostwire.search.extractors;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -11,9 +12,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-import com.frostwire.util.HttpClient;
-import com.frostwire.util.HttpClientFactory;
-
 import jd.http.Browser;
 import jd.http.Request;
 import jd.nutils.encoding.Encoding;
@@ -21,32 +19,15 @@ import jd.parser.Regex;
 import jd.parser.html.Form;
 import jd.parser.html.Form.MethodType;
 
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClientFactory;
+
 public class YouTubeExtractor {
-
-    static class Info {
-        public String filename;
-        public Date date;
-        public String link;
-        public long size;
-        public int fmt;
-        public String desc;
-        public ThumbnailLinks thumbnails;
-        public String videoId;
-        public String user;
-        public String channel;
-    }
-
-    public static class ThumbnailLinks {
-        public String normal;
-        public String mq;
-        public String hq;
-        public String maxres;
-    }
 
     private final Pattern YT_FILENAME_PATTERN = Pattern.compile("<meta name=\"title\" content=\"(.*?)\">", Pattern.CASE_INSENSITIVE);
     private final String UNSUPPORTEDRTMP = "itag%2Crtmpe%2";
 
-    public List<Info> extract(String videoUrl) throws Exception {
+    public List<LinkInfo> extract(String videoUrl) throws Exception {
         // Make an little sleep to prevent DDoS
         Thread.sleep(200);
 
@@ -90,26 +71,20 @@ public class YouTubeExtractor {
 
         ThumbnailLinks thumbnailLinks = createThumbnailLink(videoId);
 
-        List<Info> infos = new LinkedList<Info>();
+        List<LinkInfo> infos = new LinkedList<LinkInfo>();
 
-        for (final Integer format : LinksFound.keySet()) {
-            String dlLink = LinksFound.get(format);
+        for (final int fmt : LinksFound.keySet()) {
+            String link = LinksFound.get(fmt);
 
             try {
-                if (br.openGetConnection(dlLink).getResponseCode() == 200) {
+                if (br.openGetConnection(link).getResponseCode() == 200) {
                     Thread.sleep(200);
-                    final Info tmp = new Info();
-                    tmp.filename = YT_FILENAME;
-                    tmp.date = date != null ? formatter.parse(date) : null;
-                    tmp.link = dlLink;
-                    tmp.size = br.getHttpConnection().getLongContentLength();
-                    //tmp.desc = desc;
-                    tmp.fmt = format;
-                    tmp.thumbnails = thumbnailLinks;
-                    tmp.videoId = videoId;
-                    tmp.user = userName;
-                    tmp.channel = channelName;
-                    infos.add(tmp);
+
+                    long size = br.getHttpConnection().getLongContentLength();
+                    Date linkDate = date != null ? formatter.parse(date) : null;
+
+                    LinkInfo info = new LinkInfo(link, fmt, YT_FILENAME, size, linkDate, videoId, userName, channelName, thumbnailLinks);
+                    infos.add(info);
                 }
             } catch (final Throwable e) {
                 e.printStackTrace();
@@ -125,12 +100,12 @@ public class YouTubeExtractor {
     }
 
     private ThumbnailLinks createThumbnailLink(String videoId) {
-        ThumbnailLinks links = new ThumbnailLinks();
-        links.normal = "http://img.youtube.com/vi/" + videoId + "/default.jpg";
-        links.mq = "http://img.youtube.com/vi/" + videoId + "/mqdefault.jpg";
-        links.hq = "http://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
-        links.maxres = "http://img.youtube.com/vi/" + videoId + "/maxresdefault.jpg";
-        return links;
+        String normal = "http://img.youtube.com/vi/" + videoId + "/default.jpg";
+        String mq = "http://img.youtube.com/vi/" + videoId + "/mqdefault.jpg";
+        String hq = "http://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
+        String maxres = "http://img.youtube.com/vi/" + videoId + "/maxresdefault.jpg";
+
+        return new ThumbnailLinks(normal, mq, hq, maxres);
     }
 
     public HashMap<Integer, String> getLinks(final String video, final boolean prem, Browser br) throws Exception {
@@ -546,12 +521,43 @@ public class YouTubeExtractor {
         return new YouTubeSig(jscode);
     }
 
-    public static void main(String[] args) throws Exception {
-        YouTubeExtractor yt = new YouTubeExtractor();
-        List<Info> list = yt.extract();
+    public static class LinkInfo {
 
-        for (Info inf : list) {
-            System.out.println(inf.fmt);
+        private LinkInfo(String link, int fmt, String filename, long size, Date date, String videoId, String user, String channel, ThumbnailLinks thumbnails) {
+            this.link = link;
+            this.fmt = fmt;
+            this.filename = filename;
+            this.size = size;
+            this.date = date;
+            this.videoId = videoId;
+            this.user = user;
+            this.channel = channel;
+            this.thumbnails = thumbnails;
         }
+
+        public final String link;
+        public final int fmt;
+        public final String filename;
+        public final long size;
+        public final Date date;
+        public final String videoId;
+        public final String user;
+        public final String channel;
+        public final ThumbnailLinks thumbnails;
+    }
+
+    public static class ThumbnailLinks {
+
+        private ThumbnailLinks(String normal, String mq, String hq, String maxres) {
+            this.normal = normal;
+            this.mq = mq;
+            this.hq = hq;
+            this.maxres = maxres;
+        }
+
+        public final String normal;
+        public final String mq;
+        public final String hq;
+        public final String maxres;
     }
 }
