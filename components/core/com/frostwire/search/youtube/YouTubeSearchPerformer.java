@@ -52,20 +52,41 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
         List<YouTubeCrawledSearchResult> list = new LinkedList<YouTubeCrawledSearchResult>();
 
         List<LinkInfo> infos = new YouTubeExtractor().extract(sr.getDetailsUrl());
-        List<YouTubeDownloadLink> ytLinks = new LinkedList<YouTubeDownloadLink>();
+
+        LinkInfo dashVideo = null;
+        LinkInfo dashAudio = null;
+        LinkInfo demuxVideo = null;
+
         for (LinkInfo inf : infos) {
-            YouTubeDownloadLink dl = new YouTubeDownloadLink(inf.filename, inf.format, inf.size, inf.link, inf.fmt);
-            ytLinks.add(dl);
+            if (!isDash(inf)) {
+                list.add(new YouTubeCrawledStreamableSearchResult(sr, inf, null));
+            } else {
+                if (inf.fmt == 137) {// 1080p
+                    dashVideo = inf;
+                }
+                if (inf.fmt == 141) {// 256k
+                    dashAudio = inf;
+                }
+                if (inf.fmt == 140 && dashAudio == null) {// 128k
+                    dashAudio = inf;
+                }
+                if (inf.fmt == 22 || inf.fmt == 84) {
+                    demuxVideo = inf;
+                }
+            }
         }
 
-        for (YouTubeDownloadLink link : ytLinks) {
-            list.add(new YouTubeCrawledSearchResult(sr, link));
+        if (dashVideo != null && dashAudio != null) {
+            list.add(new YouTubeCrawledSearchResult(sr, dashVideo, dashAudio));
         }
 
-        //        YouTubeDownloadLink audioLink = getAudioLink(ytLinks);
-        //        if (audioLink != null) {
-        //            list.add(new YouTubeCrawledSearchResult(sr, audioLink));
-        //        }
+        if (dashAudio != null) {
+            list.add(new YouTubeCrawledStreamableSearchResult(sr, null, dashAudio));
+        } else {
+            if (demuxVideo != null) {
+                list.add(new YouTubeCrawledStreamableSearchResult(sr, null, demuxVideo));
+            }
+        }
 
         return list;
     }
@@ -96,52 +117,19 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
         return json.replace("\"$t\"", "\"title\"").replace("\"yt$userId\"", "\"ytuserId\"");
     }
 
-    /**
-     * Picks the highest quality audio link at the lowest size possible.
-     * @param list
-     * @return
-     */
-    //    private YouTubeDownloadLink getAudioLink(List<YouTubeDownloadLink> list) {
-    //
-    //        YouTubeDownloadLink result = null;
-    //        YouTubeDownloadLink result1 = null;
-    //        YouTubeDownloadLink result2 = null;
-    //        YouTubeDownloadLink result3 = null;
-    //        String qualityStr = null;
-    //
-    //        for (YouTubeDownloadLink link : list) {
-    //            int iTag = link.getITag();
-    //            if (iTag == 22) {
-    //                result1 = link;
-    //            }
-    //
-    //            if (iTag == 37) {
-    //                result2 = link;
-    //            }
-    //
-    //            if (iTag == 18) {
-    //                result3 = link;
-    //            }
-    //        }
-    //
-    //        if (result1 != null) {
-    //            result = result1;
-    //            qualityStr = "_192k.m4a";
-    //        } else if (result2 != null) {
-    //            result = result2;
-    //            qualityStr = "_192k.m4a";
-    //
-    //        } else if (result3 != null) {
-    //            result = result3;
-    //            qualityStr = "_96k.m4a";
-    //        }
-    //
-    //        if (result != null) {
-    //            String filename = FilenameUtils.getBaseName(result.getFilename()) + qualityStr;
-    //            result = new YouTubeDownloadLink(filename, result.getSize(), result.getDownloadUrl(), result.getITag(), true);
-    //        }
-    //
-    //        return result;
-    //    }
-
+    private boolean isDash(LinkInfo info) {
+        switch (info.fmt) {
+        case 133:
+        case 134:
+        case 135:
+        case 136:
+        case 137:
+        case 139:
+        case 140:
+        case 141:
+            return true;
+        default:
+            return false;
+        }
+    }
 }
