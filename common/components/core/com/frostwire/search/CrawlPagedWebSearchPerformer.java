@@ -32,7 +32,6 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
 
     private static final Logger LOG = LoggerFactory.getLogger(CrawlPagedWebSearchPerformer.class);
 
-    private static final int DEFAULT_NUM_CRAWLS = 6;
     private static final int DEFAULT_CRAWL_TIMEOUT = 10000; // 10 seconds
     private static final int DEFAULT_MAGNET_DOWNLOAD_TIMEOUT = 4000; // 4 seconds
 
@@ -44,10 +43,6 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
     public CrawlPagedWebSearchPerformer(long token, String keywords, int timeout, int pages, int numCrawls) {
         super(token, keywords, timeout, pages);
         this.numCrawls = numCrawls;
-    }
-
-    public CrawlPagedWebSearchPerformer(long token, String keywords, int timeout, int pages) {
-        this(token, keywords, timeout, pages, DEFAULT_NUM_CRAWLS);
     }
 
     public static void setCache(CrawlCache cache) {

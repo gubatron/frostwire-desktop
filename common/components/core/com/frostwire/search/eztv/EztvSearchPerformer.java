@@ -33,7 +33,7 @@ import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
  */
 public class EztvSearchPerformer extends TorrentRegexSearchPerformer<EztvSearchResult> {
 
-    private static final int MAX_RESULTS = 10;
+    private static final int MAX_RESULTS = 20;
     private static final String REGEX = "(?is)<a href=\"(/ep/.*?)\"";
     private static final String HTML_REGEX = "(?is)<td class=\"section_post_header\" colspan=\"2\"><b>(.*?)</b></td>.*?<td class=\"section_post_header\">Download Links</td>.*?<a href=\"(http://.*?torrent)\".*?<a href=\"magnet:\\?xt=urn:btih:(.*?)&.*?\".*?<b>Released:</b> (.*?)<br />.*?<b>Filesize:</b> (.*?)<br />";
 
