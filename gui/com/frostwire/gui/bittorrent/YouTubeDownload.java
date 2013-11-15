@@ -35,6 +35,7 @@ import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.HttpClientType;
+import com.frostwire.util.MP4Muxer;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -407,6 +408,21 @@ public class YouTubeDownload implements BTDownload {
                     state = STATE_FINISHED;
                     cleanupIncomplete();
                     YouTubeDownload.this.onComplete();
+                }
+            } else if (downloadType == DownloadType.DEMUX) {
+                try {
+                    new MP4Muxer().demuxAudio(tempAudio.getAbsolutePath(), completeFile.getAbsolutePath());
+
+                    if (!completeFile.exists()) {
+                        state = STATE_ERROR_MOVING_INCOMPLETE;
+                    } else {
+                        state = STATE_FINISHED;
+                        cleanupIncomplete();
+                        YouTubeDownload.this.onComplete();
+                    }
+
+                } catch (Exception e) {
+                    state = STATE_ERROR_MOVING_INCOMPLETE;
                 }
             }
         }
