@@ -101,7 +101,7 @@ public class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult impl
         } else if (video == null && audio != null) {
             size = audio.size;
         } else if (video != null && audio != null) {
-            size = video.size + video.size;
+            size = video.size + audio.size;
         } else {
             throw new IllegalArgumentException("No track defined");
         }

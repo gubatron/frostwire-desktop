@@ -407,7 +407,6 @@ public class YouTubeDownload implements BTDownload {
                 } else {
                     state = STATE_FINISHED;
                     cleanupIncomplete();
-                    YouTubeDownload.this.onComplete();
                 }
             } else if (downloadType == DownloadType.DEMUX) {
                 try {
@@ -418,12 +417,38 @@ public class YouTubeDownload implements BTDownload {
                     } else {
                         state = STATE_FINISHED;
                         cleanupIncomplete();
-                        YouTubeDownload.this.onComplete();
                     }
 
                 } catch (Exception e) {
                     state = STATE_ERROR_MOVING_INCOMPLETE;
+                    cleanupIncomplete();
                 }
+            } else if (downloadType == DownloadType.DASH) {
+                if (tempVideo.exists() && !tempAudio.exists()) {
+                    start(sr.getAudio(), tempAudio);
+                } else if (tempVideo.exists() && tempAudio.exists()) {
+                    try {
+                        new MP4Muxer().mux(tempVideo.getAbsolutePath(), tempAudio.getAbsolutePath(), completeFile.getAbsolutePath());
+
+                        if (!completeFile.exists()) {
+                            state = STATE_ERROR_MOVING_INCOMPLETE;
+                        } else {
+                            state = STATE_FINISHED;
+                            cleanupIncomplete();
+                        }
+
+                    } catch (Exception e) {
+                        state = STATE_ERROR_MOVING_INCOMPLETE;
+                        cleanupIncomplete();
+                    }
+                } else {
+                    state = STATE_ERROR_MOVING_INCOMPLETE;
+                    cleanupIncomplete();
+                }
+            } else {
+                // warning!!! if this point is reached review the logic
+                state = STATE_ERROR_MOVING_INCOMPLETE;
+                cleanupIncomplete();
             }
         }
 
@@ -442,12 +467,6 @@ public class YouTubeDownload implements BTDownload {
         @Override
         public void onHeaders(HttpClient httpClient, Map<String, List<String>> headerFields) {
         }
-    }
-
-    /** Meant to be overwritten by children classes that want to do something special
-     * after the download is completed. */
-    protected void onComplete() {
-
     }
 
     @Override
