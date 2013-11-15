@@ -54,7 +54,6 @@ public class YouTubeDownload implements BTDownload {
     private static final String STATE_CANCELING = I18n.tr("Canceling");
     private static final String STATE_CANCELED = I18n.tr("Canceled");
     private static final String STATE_WAITING = I18n.tr("Waiting");
-    private static final String STATE_CHECKING = I18n.tr("Checking");
     private static final String STATE_FINISHED = I18n.tr("Finished");
 
     private static final int SPEED_AVERAGE_CALCULATION_INTERVAL_MILLISECONDS = 1000;
@@ -62,9 +61,9 @@ public class YouTubeDownload implements BTDownload {
     private final YouTubeCrawledSearchResult sr;
     private final String saveAs;
 
-    private File saveFile;
     private final File completeFile;
     private final File incompleteFile;
+    private final DownloadType downloadType;
 
     private final HttpClient httpClient;
     private final HttpClientListener httpClientListener;
@@ -79,8 +78,6 @@ public class YouTubeDownload implements BTDownload {
     private long speedMarkTimestamp;
     private long totalReceivedSinceLastSpeedStamp;
 
-    private int md5CheckingProgress;
-
     public YouTubeDownload(YouTubeCrawledSearchResult sr) {
         this.sr = sr;
         this.size = sr.getSize();
@@ -89,6 +86,7 @@ public class YouTubeDownload implements BTDownload {
 
         completeFile = buildFile(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), saveAs);
         incompleteFile = buildIncompleteFile(completeFile);
+        this.downloadType = buildDownloadType(sr);
 
         bytesReceived = 0;
         dateCreated = new Date();
@@ -99,6 +97,22 @@ public class YouTubeDownload implements BTDownload {
         httpClient.setListener(httpClientListener);
 
         start();
+    }
+
+    private DownloadType buildDownloadType(YouTubeCrawledSearchResult sr) {
+        DownloadType dt;
+
+        if (sr.getVideo() != null && sr.getAudio() == null) {
+            dt = DownloadType.VIDEO;
+        } else if (sr.getVideo() != null && sr.getAudio() != null) {
+            dt = DownloadType.DASH;
+        } else if (sr.getVideo() == null && sr.getAudio() != null) {
+            dt = DownloadType.DEMUX;
+        } else {
+            throw new IllegalArgumentException("Not track specified");
+        }
+
+        return dt;
     }
 
     @Override
@@ -161,7 +175,7 @@ public class YouTubeDownload implements BTDownload {
 
     @Override
     public File getSaveLocation() {
-        return saveFile;
+        return completeFile;
     }
 
     @Override
@@ -171,10 +185,6 @@ public class YouTubeDownload implements BTDownload {
 
     @Override
     public int getProgress() {
-        if (state == STATE_CHECKING) {
-            return md5CheckingProgress;
-        }
-
         if (size <= 0) {
             return -1;
         }
@@ -280,8 +290,6 @@ public class YouTubeDownload implements BTDownload {
 
     private void start() {
         state = STATE_WAITING;
-
-        saveFile = completeFile;
 
         YOUTUBE_THREAD_POOL.execute(new Runnable() {
             @Override
@@ -421,6 +429,9 @@ public class YouTubeDownload implements BTDownload {
 
     @Override
     public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove) {
+    }
 
+    private static enum DownloadType {
+        VIDEO, DASH, DEMUX
     }
 }
