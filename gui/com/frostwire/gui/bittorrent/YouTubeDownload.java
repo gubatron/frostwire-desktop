@@ -60,7 +60,6 @@ public class YouTubeDownload implements BTDownload {
     private static final int SPEED_AVERAGE_CALCULATION_INTERVAL_MILLISECONDS = 1000;
 
     private final YouTubeCrawledSearchResult sr;
-    private final String url;
     private final String saveAs;
 
     private File saveFile;
@@ -84,12 +83,9 @@ public class YouTubeDownload implements BTDownload {
 
     public YouTubeDownload(YouTubeCrawledSearchResult sr) {
         this.sr = sr;
-        this.url = null;
         this.size = sr.getSize();
-        
-        saveAs = null;
 
-        
+        saveAs = sr.getVideo().videoId;
 
         completeFile = buildFile(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), saveAs);
         incompleteFile = buildIncompleteFile(completeFile);
@@ -291,7 +287,7 @@ public class YouTubeDownload implements BTDownload {
             @Override
             public void run() {
                 try {
-                    httpClient.save(url, incompleteFile, false);
+                    httpClient.save(sr.getVideo().link, incompleteFile, false);
                 } catch (IOException e) {
                     e.printStackTrace();
                     httpClientListener.onError(httpClient, e);

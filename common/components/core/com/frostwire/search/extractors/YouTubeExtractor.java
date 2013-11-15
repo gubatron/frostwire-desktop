@@ -186,8 +186,8 @@ public final class YouTubeExtractor {
             }
         }
 
-        String html5player = br.getRegex("(?s)\"js\": \"(http:.+?html5player\\-.+?\\.js)").getMatch(0);
-        YouTubeSig ytSig = getYouTubeSig(html5player);
+        String html5player = br.getRegex("(?s)(html5player\\-.+?\\.js)").getMatch(0);
+        YouTubeSig ytSig = getYouTubeSig("http://s.ytimg.com/yts/jsbin/" + html5player);
 
         /* html5_fmt_map */
         if (br.getRegex(FILENAME_PATTERN).count() != 0 && fileNameFound == false) {
