@@ -26,9 +26,10 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import org.apache.commons.io.FilenameUtils;
 import org.gudy.azureus2.core3.download.DownloadManager;
-import org.limewire.util.FilenameUtils;
 
+import com.frostwire.search.extractors.YouTubeExtractor.LinkInfo;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
@@ -59,11 +60,11 @@ public class YouTubeDownload implements BTDownload {
     private static final int SPEED_AVERAGE_CALCULATION_INTERVAL_MILLISECONDS = 1000;
 
     private final YouTubeCrawledSearchResult sr;
-    private final String saveAs;
+    private final DownloadType downloadType;
 
     private final File completeFile;
-    private final File incompleteFile;
-    private final DownloadType downloadType;
+    private final File tempVideo;
+    private final File tempAudio;
 
     private final HttpClient httpClient;
     private final HttpClientListener httpClientListener;
@@ -80,13 +81,14 @@ public class YouTubeDownload implements BTDownload {
 
     public YouTubeDownload(YouTubeCrawledSearchResult sr) {
         this.sr = sr;
+        this.downloadType = buildDownloadType(sr);
         this.size = sr.getSize();
 
-        saveAs = sr.getVideo().videoId;
+        String filename = sr.getFilename();
 
-        completeFile = buildFile(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), saveAs);
-        incompleteFile = buildIncompleteFile(completeFile);
-        this.downloadType = buildDownloadType(sr);
+        completeFile = buildFile(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), filename);
+        tempVideo = buildTempFile(FilenameUtils.getBaseName(filename), "video");
+        tempAudio = buildTempFile(FilenameUtils.getBaseName(filename), "audio");
 
         bytesReceived = 0;
         dateCreated = new Date();
@@ -289,13 +291,21 @@ public class YouTubeDownload implements BTDownload {
     }
 
     private void start() {
+        if (downloadType == DownloadType.DEMUX) {
+            start(sr.getAudio(), tempAudio);
+        } else {
+            start(sr.getVideo(), tempVideo);
+        }
+    }
+
+    private void start(final LinkInfo inf, final File temp) {
         state = STATE_WAITING;
 
         YOUTUBE_THREAD_POOL.execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    httpClient.save(sr.getVideo().link, incompleteFile, false);
+                    httpClient.save(inf.link, temp, false);
                 } catch (IOException e) {
                     e.printStackTrace();
                     httpClientListener.onError(httpClient, e);
@@ -314,7 +324,8 @@ public class YouTubeDownload implements BTDownload {
     }
 
     private void cleanupIncomplete() {
-        cleanupFile(incompleteFile);
+        cleanupFile(tempVideo);
+        cleanupFile(tempAudio);
     }
 
     private void cleanupComplete() {
@@ -343,10 +354,8 @@ public class YouTubeDownload implements BTDownload {
         return incompleteFolder;
     }
 
-    private static File buildIncompleteFile(File file) {
-        String prefix = FilenameUtils.getBaseName(file.getName());
-        String ext = FilenameUtils.getExtension(file.getAbsolutePath());
-        return new File(getIncompleteFolder(), prefix + ".incomplete." + ext);
+    private static File buildTempFile(String name, String ext) {
+        return new File(getIncompleteFolder(), name + "." + ext);
     }
 
     public boolean isComplete() {
@@ -389,14 +398,16 @@ public class YouTubeDownload implements BTDownload {
 
         @Override
         public void onComplete(HttpClient client) {
-            boolean renameTo = incompleteFile.renameTo(completeFile);
+            if (downloadType == DownloadType.VIDEO) {
+                boolean renameTo = tempVideo.renameTo(completeFile);
 
-            if (!renameTo) {
-                state = STATE_ERROR_MOVING_INCOMPLETE;
-            } else {
-                state = STATE_FINISHED;
-                cleanupIncomplete();
-                YouTubeDownload.this.onComplete();
+                if (!renameTo) {
+                    state = STATE_ERROR_MOVING_INCOMPLETE;
+                } else {
+                    state = STATE_FINISHED;
+                    cleanupIncomplete();
+                    YouTubeDownload.this.onComplete();
+                }
             }
         }
 
