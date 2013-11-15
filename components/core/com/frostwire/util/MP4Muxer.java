@@ -1,4 +1,4 @@
-package com.frostwire.search.extractors;
+package com.frostwire.util;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
