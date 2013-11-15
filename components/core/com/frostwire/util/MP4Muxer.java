@@ -90,6 +90,72 @@ public class MP4Muxer {
         IOUtils.closeQuietly(audioIn);
     }
 
+    public void demuxAudio(String video, String output) throws Exception {
+
+        FileInputStream videoIn = new FileInputStream(video);
+        FileChannel videoChannel = videoIn.getChannel();
+        Movie videoMovie = buildMovie(videoChannel);
+
+        Track audioTrack = null;
+
+        for (Track trk : videoMovie.getTracks()) {
+            if (trk.getHandler().equals("soun")) {
+                audioTrack = trk;
+                break;
+            }
+        }
+
+        if (audioTrack == null) {
+            //TbCm.LOG.info("No Audio track in MP4 file!!! - " + filename);
+            IOUtils.closeQuietly(videoIn);
+            return;
+        }
+
+        Movie outMovie = new Movie();
+        outMovie.addTrack(audioTrack);
+
+        IsoFile out = new DefaultMp4Builder() {
+            protected FileTypeBox createFileTypeBox(Movie movie) {
+                List<String> minorBrands = new LinkedList<String>();
+                minorBrands.add("iso6");
+                minorBrands.add("avc1");
+                minorBrands.add("mp41");
+                minorBrands.add("\0\0\0\0");
+
+                return new FileTypeBox("MP4 ", 0, minorBrands);
+            };
+
+            protected MovieBox createMovieBox(Movie movie, Map<Track, int[]> chunks) {
+                MovieBox moov = super.createMovieBox(movie, chunks);
+                moov.getMovieHeaderBox().setVersion(0);
+                return moov;
+            };
+
+            protected TrackBox createTrackBox(Track track, Movie movie, Map<Track, int[]> chunks) {
+                TrackBox trak = super.createTrackBox(track, movie, chunks);
+
+                trak.getTrackHeaderBox().setVersion(0);
+                trak.getTrackHeaderBox().setVolume(1.0f);
+
+                return trak;
+            };
+
+            //            protected Box createUdta(Movie movie) {
+            //                //String videoLink = (String) dl.getProperty("videolink", "YouTube.com");
+            //                String vidLink = (youTubeVideoLink != null) ? youTubeVideoLink : "YouTube.com";
+            //
+            //                return addUserDataBox(FilenameUtils.getBaseName(filename), vidLink, jpgFilename);
+            //            };
+        }.build(outMovie);
+
+        FileOutputStream fos = new FileOutputStream(output);
+        out.getBox(fos.getChannel());
+
+        IOUtils.closeQuietly(fos);
+
+        IOUtils.closeQuietly(videoIn);
+    }
+
     public static Movie buildMovie(ReadableByteChannel channel) throws IOException {
         BoxParser parser = new PropertyBoxParserImpl() {
             @Override

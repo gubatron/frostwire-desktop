@@ -83,7 +83,8 @@ public class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult impl
         if (video != null && audio == null) {
             filename = String.format("%s_%s_%s_%s.%s", video.filename, video.format.video, video.format.audio, video.format.quality, video.format.ext);
         } else if (video == null && audio != null) {
-            filename = String.format("%s_%s_%s_%s.%s", audio.filename, audio.format.video, audio.format.audio, audio.format.quality, audio.format.ext);
+            String ext = audio.format.ext.equals("mp4") ? "m4a" : audio.format.ext;
+            filename = String.format("%s_%s_%s_%s.%s", audio.filename, audio.format.video, audio.format.audio, audio.format.quality, ext);
         } else if (video != null && audio != null) {
             filename = String.format("%s_%s_%s_%s.%s", video.filename, video.format.video, audio.format.audio, video.format.quality, "mp4");
         } else {
