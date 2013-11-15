@@ -117,9 +117,9 @@ public class MP4Muxer {
         IsoFile out = new DefaultMp4Builder() {
             protected FileTypeBox createFileTypeBox(Movie movie) {
                 List<String> minorBrands = new LinkedList<String>();
-                minorBrands.add("iso6");
-                minorBrands.add("avc1");
-                minorBrands.add("mp41");
+                minorBrands.add("M4A ");
+                minorBrands.add("mp42");
+                minorBrands.add("isom");
                 minorBrands.add("\0\0\0\0");
 
                 return new FileTypeBox("MP4 ", 0, minorBrands);
