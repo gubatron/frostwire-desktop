@@ -122,7 +122,7 @@ public class MP4Muxer {
                 minorBrands.add("isom");
                 minorBrands.add("\0\0\0\0");
 
-                return new FileTypeBox("MP4 ", 0, minorBrands);
+                return new FileTypeBox("M4A ", 0, minorBrands);
             };
 
             protected MovieBox createMovieBox(Movie movie, Map<Track, int[]> chunks) {
