@@ -48,8 +48,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import jd.plugins.FilePackage;
-
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.service.ErrorService;
@@ -72,6 +70,7 @@ import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.tabs.Tab;
 import com.frostwire.search.torrent.TorrentSearchResult;
+import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
@@ -1774,8 +1773,8 @@ public final class GUIMediator {
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
-    public void openYouTubeItem(FilePackage filePackage) {
-        getBTDownloadMediator().openYouTubeItem(filePackage);
+    public void openYouTubeItem(YouTubeCrawledSearchResult sr) {
+        getBTDownloadMediator().openYouTubeItem(sr);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
