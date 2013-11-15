@@ -46,6 +46,7 @@ public final class YouTubeExtractor {
             checkError(videoUrl, br, LinksFound);
 
             String filename = LinksFound.remove(-1);
+            filename = cleanupFilename(filename);
 
             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
             String dateStr = br.getRegex("id=\"eow-date\" class=\"watch-video-date\" >(\\d{2}\\.\\d{2}\\.\\d{4})</span>").getMatch(0);
@@ -138,8 +139,6 @@ public final class YouTubeExtractor {
             filename = Encoding.htmlDecode(br.getRegex("&title=([^&$]+)").getMatch(0).replaceAll("\\+", " ").trim());
             fileNameFound = true;
         }
-        // clean up
-        filename = filename.replaceAll("[\\\\/:*?\"<>|\\[\\]]+;,", "_");
 
         String url = br.getURL();
         boolean ythack = false;
@@ -547,6 +546,10 @@ public final class YouTubeExtractor {
         }
 
         return sb.toString();
+    }
+
+    private String cleanupFilename(String filename) {
+        return filename.replaceAll("[\\\\/:*?\"<>|\\[\\];,]+", "_");
     }
 
     private void log(String message) {
