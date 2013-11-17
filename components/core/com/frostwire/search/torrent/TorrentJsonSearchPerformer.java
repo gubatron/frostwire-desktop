@@ -33,10 +33,12 @@ import com.frostwire.search.SearchResult;
  */
 public abstract class TorrentJsonSearchPerformer<T extends ComparableTorrentJsonItem, R extends TorrentSearchResult> extends TorrentSearchPerformer {
 
+    private static final int DEFAULT_NUM_CRAWLS = 10;
+
     private final Comparator<T> itemComparator;
 
-    public TorrentJsonSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout, int pages) {
-        super(domainAliasManager, token, keywords, timeout, pages);
+    public TorrentJsonSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout, int pages, int numCrawls) {
+        super(domainAliasManager, token, keywords, timeout, pages, numCrawls);
         
         this.itemComparator = new Comparator<T>() {
             @Override
@@ -44,6 +46,10 @@ public abstract class TorrentJsonSearchPerformer<T extends ComparableTorrentJson
                 return b.getSeeds() - a.getSeeds();
             }
         };
+    }
+
+    public TorrentJsonSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout, int pages) {
+        this(domainAliasManager, token, keywords, timeout, pages, DEFAULT_NUM_CRAWLS);
     }
 
     @Override

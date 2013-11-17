@@ -14,7 +14,9 @@ import com.limegroup.gnutella.gui.search.SearchEngine;
 
 public class DomainAliasManagerTest{
     public static void main(String[] args) throws InterruptedException {
-        DomainAliasManager domainAliasManager = DomainAliasManagerBroker.getDomainAliasManager("kickass.to");//www.kat.ph");
+        DomainAliasManagerBroker DOMAIN_ALIAS_MANAGER_BROKER = new DomainAliasManagerBroker();
+        @SuppressWarnings("unused")
+        DomainAliasManager domainAliasManager = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("kickass.to");//www.kat.ph");
 
         SearchEngine kat = SearchEngine.KAT;
         SearchManager manager = new SearchManagerImpl();

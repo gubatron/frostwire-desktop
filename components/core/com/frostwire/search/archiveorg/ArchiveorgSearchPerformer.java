@@ -35,9 +35,10 @@ import com.frostwire.util.JsonUtils;
  *
  */
 public class ArchiveorgSearchPerformer extends CrawlPagedWebSearchPerformer<ArchiveorgSearchResult> {
+    private static final int MAX_RESULTS = 12;
 
     public ArchiveorgSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
-        super(domainAliasManager, token, keywords, timeout, 1, 12);
+        super(domainAliasManager, token, keywords, timeout, 1, MAX_RESULTS);
     }
 
     @Override

@@ -22,10 +22,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.io.FilenameUtils;
-
 import com.frostwire.search.CrawlPagedWebSearchPerformer;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.domainalias.DomainAliasManager;
+import com.frostwire.search.extractors.YouTubeExtractor;
+import com.frostwire.search.extractors.YouTubeExtractor.LinkInfo;
 import com.frostwire.util.JsonUtils;
 
 /**
@@ -38,8 +39,8 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
 
     private static final int MAX_RESULTS = 15;
 
-    public YouTubeSearchPerformer(String defaultDomain, long token, String keywords, int timeout) {
-        super(defaultDomain, token, keywords, timeout, 1, MAX_RESULTS);
+    public YouTubeSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
+        super(domainAliasManager, token, keywords, timeout, 1, MAX_RESULTS);
     }
 
     @Override
@@ -50,15 +51,42 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
     @Override
     protected List<? extends SearchResult> crawlResult(YouTubeSearchResult sr, byte[] data) throws Exception {
         List<YouTubeCrawledSearchResult> list = new LinkedList<YouTubeCrawledSearchResult>();
-        List<YouTubeDownloadLink> ytLinks = new YouTubeDecrypter().decrypt(sr.getDetailsUrl());
 
-        for (YouTubeDownloadLink link : ytLinks) {
-            list.add(new YouTubeCrawledSearchResult(sr, link));
+        List<LinkInfo> infos = new YouTubeExtractor().extract(sr.getDetailsUrl());
+
+        LinkInfo dashVideo = null;
+        LinkInfo dashAudio = null;
+        LinkInfo demuxVideo = null;
+
+        for (LinkInfo inf : infos) {
+            if (!isDash(inf)) {
+                list.add(new YouTubeCrawledStreamableSearchResult(sr, inf, null));
+            } else {
+                if (inf.fmt == 137) {// 1080p
+                    dashVideo = inf;
+                }
+                if (inf.fmt == 141) {// 256k
+                    dashAudio = inf;
+                }
+                if (inf.fmt == 140 && dashAudio == null) {// 128k
+                    dashAudio = inf;
+                }
+                if (inf.fmt == 22 || inf.fmt == 84) {
+                    demuxVideo = inf;
+                }
+            }
         }
 
-        YouTubeDownloadLink audioLink = getAudioLink(ytLinks);
-        if (audioLink != null) {
-            list.add(new YouTubeCrawledSearchResult(sr, audioLink));
+        if (dashVideo != null && dashAudio != null) {
+            list.add(new YouTubeCrawledSearchResult(sr, dashVideo, dashAudio));
+        }
+
+        if (dashAudio != null) {
+            list.add(new YouTubeCrawledStreamableSearchResult(sr, null, dashAudio));
+        } else {
+            if (demuxVideo != null) {
+                list.add(new YouTubeCrawledStreamableSearchResult(sr, null, demuxVideo));
+            }
         }
 
         return list;
@@ -90,52 +118,19 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
         return json.replace("\"$t\"", "\"title\"").replace("\"yt$userId\"", "\"ytuserId\"");
     }
 
-    /**
-     * Picks the highest quality audio link at the lowest size possible.
-     * @param list
-     * @return
-     */
-    private YouTubeDownloadLink getAudioLink(List<YouTubeDownloadLink> list) {
-
-        YouTubeDownloadLink result = null;
-        YouTubeDownloadLink result1 = null;
-        YouTubeDownloadLink result2 = null;
-        YouTubeDownloadLink result3 = null;
-        String qualityStr = null;
-
-        for (YouTubeDownloadLink link : list) {
-            int iTag = link.getITag();
-            if (iTag == 22) {
-                result1 = link;
-            }
-
-            if (iTag == 37) {
-                result2 = link;
-            }
-
-            if (iTag == 18) {
-                result3 = link;
-            }
+    private boolean isDash(LinkInfo info) {
+        switch (info.fmt) {
+        case 133:
+        case 134:
+        case 135:
+        case 136:
+        case 137:
+        case 139:
+        case 140:
+        case 141:
+            return true;
+        default:
+            return false;
         }
-
-        if (result1 != null) {
-            result = result1;
-            qualityStr = "_192k.m4a";
-        } else if (result2 != null) {
-            result = result2;
-            qualityStr = "_192k.m4a";
-
-        } else if (result3 != null) {
-            result = result3;
-            qualityStr = "_96k.m4a";
-        }
-
-        if (result != null) {
-            String filename = FilenameUtils.getBaseName(result.getFilename()) + qualityStr;
-            result = new YouTubeDownloadLink(filename, result.getSize(), result.getDownloadUrl(), result.getITag(), true);
-        }
-
-        return result;
     }
-
 }
