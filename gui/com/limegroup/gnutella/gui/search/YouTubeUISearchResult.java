@@ -23,7 +23,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPopupMenu;
 
-import com.frostwire.search.youtube2.YouTubeCrawledSearchResult;
+import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -43,8 +43,7 @@ public final class YouTubeUISearchResult extends AbstractUISearchResult {
     public YouTubeUISearchResult(YouTubeCrawledSearchResult sr, SearchEngine se, String query) {
         super(sr, se, query);
         this.sr = sr;
-
-        seeds = sr.getDisplayName().indexOf(YouTubeCrawledSearchResult.AAC_HIGH_QUALITY) == 0 ? 2000 : 1000;
+        this.seeds = 2000;
     }
 
     @Override
@@ -52,7 +51,7 @@ public final class YouTubeUISearchResult extends AbstractUISearchResult {
         if (partial) {
             GUIMediator.instance().openYouTubeVideoUrl(sr.getDetailsUrl());
         } else {
-            GUIMediator.instance().openYouTubeItem(sr.getFilePackage());
+            GUIMediator.instance().openYouTubeItem(sr);
         }
         showDetails(false);
         UXStats.instance().log(UXAction.DOWNLOAD_CLOUD_FILE);

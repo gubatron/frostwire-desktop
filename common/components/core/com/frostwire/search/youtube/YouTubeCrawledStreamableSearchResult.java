@@ -16,29 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.search;
+package com.frostwire.search.youtube;
 
-import java.util.List;
-
-import com.frostwire.search.domainalias.DomainAliasManager;
+import com.frostwire.search.StreamableSearchResult;
+import com.frostwire.search.extractors.YouTubeExtractor.LinkInfo;
 
 /**
- * 
  * @author gubatron
  * @author aldenml
  *
  */
-public abstract class PagedRegexSearchPerformer<T extends SearchResult> extends PagedWebSearchPerformer implements RegexSearchPerformer<T> {
+public final class YouTubeCrawledStreamableSearchResult extends YouTubeCrawledSearchResult implements StreamableSearchResult {
 
-    private final int regexMaxResults;
-
-    public PagedRegexSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout, int pages, int regexMaxResults) {
-        super(domainAliasManager, token, keywords, timeout, pages);
-        this.regexMaxResults = regexMaxResults;
+    public YouTubeCrawledStreamableSearchResult(YouTubeSearchResult sr, LinkInfo video, LinkInfo audio) {
+        super(sr, video, audio);
     }
 
     @Override
-    protected final List<? extends SearchResult> searchPage(String page) {
-        return PerformersHelper.searchPageHelper(this, page, regexMaxResults);
+    public String getStreamUrl() {
+        return getDownloadUrl();
     }
 }

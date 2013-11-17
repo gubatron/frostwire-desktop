@@ -267,7 +267,7 @@ public class YouTubeVideoUrlDownload implements BTDownload {
                                 dlg.setVisible(true);
                                 if (dlg.getFilesSelection() != null) {
                                     for (FilePackage filePackage : dlg.getFilesSelection()) {
-                                        BTDownloadMediator.instance().openYouTubeItem(filePackage);
+                                        //BTDownloadMediator.instance().openYouTubeItem(filePackage);
                                     }
                                 }
                             } catch (Throwable e) {
