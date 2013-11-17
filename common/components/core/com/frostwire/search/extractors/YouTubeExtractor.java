@@ -475,9 +475,13 @@ public final class YouTubeExtractor {
     private YouTubeSig getYouTubeSig(String html5player) {
         // concurrency issues are not important in this point
         if (YT_SIG == null) {
-            HttpClient httpClient = HttpClientFactory.newDefaultInstance();
-            String jscode = httpClient.get(html5player.replace("\\", ""));
-            YT_SIG = new YouTubeSig(jscode);
+            try {
+                HttpClient httpClient = HttpClientFactory.newDefaultInstance();
+                String jscode = httpClient.get(html5player.replace("\\", ""));
+                YT_SIG = new YouTubeSig(jscode);
+            } catch (Throwable t) {
+                LOG.error("Could not getYouTubeSig", t);
+            }
         }
 
         return YT_SIG;
