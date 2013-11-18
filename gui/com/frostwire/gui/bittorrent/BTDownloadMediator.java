@@ -49,6 +49,7 @@ import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.transfers.PeerHttpUpload;
+import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -924,10 +925,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         });
     }
 
-    public void openSoundcloudTrackUrl(final String trackUrl, final String title, final SoundcloudUISearchResult sr) {
+    public void openSoundcloudTrackUrl(final String trackUrl, final String title, final SoundcloudSearchResult sr) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new SoundcloudTrackUrlDownload(trackUrl, title, sr);
+                BTDownload downloader = new SoundcloudDownload(sr);
                 add(downloader);
             }
         });

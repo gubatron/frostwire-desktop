@@ -45,7 +45,7 @@ public final class SoundcloudUISearchResult extends AbstractUISearchResult {
 
     @Override
     public void download(boolean partial) {
-        GUIMediator.instance().openSoundcloudTrackUrl(sr.getDetailsUrl(), sr.getDisplayName(), this);
+        GUIMediator.instance().openSoundcloudTrackUrl(sr.getDetailsUrl(), sr.getDisplayName(), sr);
         showDetails(false);
         UXStats.instance().log(UXAction.DOWNLOAD_CLOUD_FILE);
     }
@@ -83,7 +83,7 @@ public final class SoundcloudUISearchResult extends AbstractUISearchResult {
     public String getUsername() {
         return sr.getUsername();
     }
-    
+
     public String getDownloadUrl() {
         return sr.getDownloadUrl();
     }
