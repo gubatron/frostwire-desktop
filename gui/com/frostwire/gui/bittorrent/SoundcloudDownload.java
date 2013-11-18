@@ -150,7 +150,7 @@ public class SoundcloudDownload implements BTDownload {
 
     @Override
     public void pause() {
-        state = STATE_PAUSING;
+        state = STATE_CANCELING;
         httpClient.cancel();
     }
 
