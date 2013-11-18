@@ -46,10 +46,10 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import org.apache.commons.io.FilenameUtils;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.collection.CollectionUtils;
 import org.limewire.util.FileUtils;
-import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.alexandria.Playlist;
@@ -62,6 +62,7 @@ import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.upnp.UPnPManager;
+import com.frostwire.util.MP4Muxer;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
@@ -166,12 +167,12 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         super.setupConstants();
         MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryFilesTableModel();
-        
+
         //sort by modification time in descending order by default
         //so user can quickly find newest files.
         DATA_MODEL.sort(LibraryFilesTableDataLine.MODIFICATION_TIME_IDX);
         DATA_MODEL.sort(LibraryFilesTableDataLine.MODIFICATION_TIME_IDX);
-        
+
         TABLE = new LimeJTable(DATA_MODEL);
         DATA_MODEL.setTable(TABLE);
         Action[] aa = new Action[] { LAUNCH_ACTION, OPEN_IN_FOLDER_ACTION, SEND_TO_FRIEND_ACTION, DELETE_ACTION, OPTIONS_ACTION };
@@ -194,7 +195,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (hasExploreAction()) {
             menu.add(new SkinMenuItem(OPEN_IN_FOLDER_ACTION));
         }
-        
+
         if (areAllSelectedFilesMP4s()) {
             menu.add(DEMUX_MP4_AUDIO_ACTION);
             DEMUX_MP4_AUDIO_ACTION.setEnabled(!((DemuxMP4AudioAction) DEMUX_MP4_AUDIO_ACTION).isDemuxing());
@@ -210,18 +211,18 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         //there's an in between state while the file is changing from
         //unshare to shared, this is "being shared"
         boolean noneSharing = !isAnyBeingShared();
-        boolean allShared  = areAllSelectedFilesShared();
-        
+        boolean allShared = areAllSelectedFilesShared();
+
         WIFI_SHARE_ACTION.setEnabled(noneSharing && !allShared);
-        
+
         //unsharing is immediate.
         WIFI_UNSHARE_ACTION.setEnabled(noneSharing && allShared);
-        
+
         //menu.add(new SkinMenuItem(areAllSelectedFilesShared() ? WIFI_UNSHARE_ACTION : WIFI_SHARE_ACTION));
         if (WIFI_SHARE_ACTION.isEnabled()) {
             menu.add(WIFI_SHARE_ACTION);
         }
-        
+
         if (WIFI_UNSHARE_ACTION.isEnabled()) {
             menu.add(WIFI_UNSHARE_ACTION);
         }
@@ -294,7 +295,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
         return allAreShared;
     }
-    
+
     private boolean areAllSelectedFilesMP4s() {
         boolean selectionIsAllMP4 = true;
         int[] selectedRows = TABLE.getSelectedRows();
@@ -304,11 +305,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 break;
             }
         }
-        
+
         return selectionIsAllMP4;
     }
 
-    
     private boolean areAllSelectedFilesPlayable() {
         boolean selectionIsAllAudio = true;
         int[] selectedRows = TABLE.getSelectedRows();
@@ -364,7 +364,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         TABLE.setDragEnabled(true);
         TABLE.setTransferHandler(new LibraryFilesTableTransferHandler(this));
     }
-    
+
     @Override
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
@@ -378,10 +378,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      */
     protected void setDefaultEditors() {
         TableColumnModel model = TABLE.getColumnModel();
-        
+
         TableColumn tc = model.getColumn(LibraryFilesTableDataLine.SHARE_IDX);
         tc.setCellEditor(new FileShareCellEditor(new FileShareCellRenderer()));
-        
+
         tc = model.getColumn(LibraryFilesTableDataLine.ACTIONS_IDX);
         tc.setCellEditor(new GenericCellEditor(new LibraryActionsRenderer()));
     }
@@ -438,7 +438,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                             }
                         });
                     }
-                    
+
                     GUIMediator.safeInvokeLater(new Runnable() {
                         public void run() {
                             LibraryMediator.instance().getLibrarySearch().addResults(fPartition.size());
@@ -593,22 +593,22 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         for (File file : selected) {
             DownloadManager dm = null;
-            
-        	// stop seeding if seeding
-        	if ((dm = TorrentUtil.getDownloadManager(file)) != null) {
-        		dm.stopIt(DownloadManager.STATE_STOPPED, false, false);
-        	}
-        	
-        	// close media player if still playing
-        	if (MediaPlayer.instance().isThisBeingPlayed(file)) {
+
+            // stop seeding if seeding
+            if ((dm = TorrentUtil.getDownloadManager(file)) != null) {
+                dm.stopIt(DownloadManager.STATE_STOPPED, false, false);
+            }
+
+            // close media player if still playing
+            if (MediaPlayer.instance().isThisBeingPlayed(file)) {
                 MediaPlayer.instance().stop();
                 MPlayerMediator.instance().showPlayerWindow(false);
             }
-        	
-        	// removeOptions > 2 => OS offers trash options
+
+            // removeOptions > 2 => OS offers trash options
             boolean removed = FileUtils.delete(file, removeOptions.length > 2 && option == 0 /* "move to trash" option index */);
             if (removed) {
-                
+
                 DATA_MODEL.remove(DATA_MODEL.getRow(file));
             } else {
                 undeletedFileNames.add(getCompleteFileName(file));
@@ -757,7 +757,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
                 for (int i : sel) {
                     File f = getFile(i);
-                    if (MediaPlayer.isPlayableFile(f) || FilenameUtils.hasExtension(f.getAbsolutePath(), "mp4")) {
+                    if (MediaPlayer.isPlayableFile(f) || hasExtension(f.getAbsolutePath(), "mp4")) {
                         atLeastOneIsPlayable = true;
                         break;
                     }
@@ -765,7 +765,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
                 SEND_TO_ITUNES_ACTION.setEnabled(atLeastOneIsPlayable);
             } else {
-                SEND_TO_ITUNES_ACTION.setEnabled(getMediaType().equals(MediaType.getAudioMediaType()) || FilenameUtils.hasExtension(selectedFile.getAbsolutePath(), "mp4"));
+                SEND_TO_ITUNES_ACTION.setEnabled(getMediaType().equals(MediaType.getAudioMediaType()) || hasExtension(selectedFile.getAbsolutePath(), "mp4"));
             }
         }
 
@@ -984,24 +984,24 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             }
         }
     }
-    
+
     private class DemuxMP4AudioAction extends AbstractAction {
 
         private static final long serialVersionUID = 2994040746359495494L;
         private final ArrayList<File> demuxedFiles;
-        
+
         private boolean isDemuxing = false;
-        
+
         public DemuxMP4AudioAction() {
             putValue(Action.NAME, I18n.tr("Extract Audio"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Extract .m4a Audio from this .mp4 video"));
             demuxedFiles = new ArrayList<File>();
         }
-        
+
         public boolean isDemuxing() {
             return isDemuxing;
         }
-        
+
         private List<File> getSelectedFiles() {
             int[] rows = TABLE.getSelectedRows();
             List<File> files = new ArrayList<File>(rows.length);
@@ -1016,24 +1016,23 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         @Override
         public void actionPerformed(ActionEvent e) {
             final short videoCount = (short) TABLE.getSelectedRows().length;
-            
+
             //can't happen, but just in case.
             if (videoCount < 1) {
                 return;
             }
-            
+
             //get selected files before we switch to audio and loose the selection
             final List<File> selectedFiles = getSelectedFiles();
-            
+
             selectAudio();
-            
-            String status =I18n.tr("Extracting audio from " + videoCount + " selected videos...");
+
+            String status = I18n.tr("Extracting audio from " + videoCount + " selected videos...");
             if (videoCount == 1) {
                 status = I18n.tr("Extracting audio from selected video...");
             }
             LibraryMediator.instance().getLibrarySearch().pushStatus(status);
 
-            
             SwingWorker<Void, Void> demuxWorker = new SwingWorker<Void, Void>() {
 
                 @Override
@@ -1043,14 +1042,14 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                     isDemuxing = false;
                     return null;
                 }
-                
+
                 @Override
                 protected void done() {
                     int failed = videoCount - demuxedFiles.size();
-                    String failedStr = (failed > 0) ? " (" + failed + " " + I18n.tr("failed")+")" : "";
+                    String failedStr = (failed > 0) ? " (" + failed + " " + I18n.tr("failed") + ")" : "";
                     LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Done extracting audio.") + failedStr);
                 }
-                
+
             };
             demuxWorker.execute();
         }
@@ -1072,14 +1071,16 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
                 try {
                     System.out.println("Demuxing file " + file.getAbsolutePath());
-                    
-//                    if (TbCm.demuxMP4Audio(file.getAbsolutePath(), null, false)) {
-//                        final File demuxed = new File(file.getAbsolutePath().replace(".mp4", ".m4a"));
-//                        demuxedFiles.add(demuxed);
-//                        updateDemuxingStatus(demuxed,files.size(),true);
-//                    } else {
-//                        updateDemuxingStatus(file,files.size(),false);
-//                    }
+
+                    String mp4 = file.getAbsolutePath();
+                    String m4a = new File(file.getParentFile(), FilenameUtils.getBaseName(mp4) + ".m4a").getAbsolutePath();
+                    try {
+                        new MP4Muxer().demuxAudio(mp4, m4a, null);
+                        demuxedFiles.add(new File(m4a));
+                        updateDemuxingStatus(new File(m4a), files.size(), true);
+                    } catch (Throwable e) {
+                        updateDemuxingStatus(file, files.size(), false);
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -1105,9 +1106,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                                 LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Could not extract audio from") + " " + demuxed.getName());
                             }
                         }
-                        
+
                     });
-                    explorer.executePendingRunnables();                            
+                    explorer.executePendingRunnables();
                 }
             });
         }
@@ -1203,8 +1204,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
             putValue(LimeAction.SHORT_NAME, actionName);
             putValue(Action.LONG_DESCRIPTION, actionName + " " + I18n.tr("file on local Wi-Fi network"));
-            putValue(Action.SMALL_ICON, GUIMediator.getThemeImage(share ? "file_shared":"file_unshared"));
-            putValue(LimeAction.ICON_NAME, share ? "WIFI_SHARED":"WIFI_UNSHARED");
+            putValue(Action.SMALL_ICON, GUIMediator.getThemeImage(share ? "file_shared" : "file_unshared"));
+            putValue(LimeAction.ICON_NAME, share ? "WIFI_SHARED" : "WIFI_UNSHARED");
         }
 
         @Override
@@ -1221,10 +1222,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                         if (!Librarian.instance().isFileShared(file.getAbsolutePath())) {
                             actualShare(dataLine, file);
                         }
-                    } 
+                    }
                     //this happens only when.
                     else {
-                        actualShare(dataLine,file);
+                        actualShare(dataLine, file);
                     }
 
                 } catch (Exception ex) {
@@ -1235,11 +1236,23 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             UPnPManager.instance().refreshPing();
             UXStats.instance().log(share ? UXAction.WIFI_SHARING_SHARED : UXAction.WIFI_SHARING_UNSHARED);
         }
-        
-        
+
         private void actualShare(LibraryFilesTableDataLine dataLine, File file) {
             dataLine.setShared(share);
             Librarian.instance().shareFile(file.getAbsolutePath(), share, false);
         }
+    }
+
+    public static boolean hasExtension(String filename, String... extensionsWithoutDot) {
+
+        String extension = FilenameUtils.getExtension(filename).toLowerCase();
+
+        for (String ext : extensionsWithoutDot) {
+            if (ext.equalsIgnoreCase(extension)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
