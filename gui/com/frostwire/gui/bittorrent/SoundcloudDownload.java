@@ -29,6 +29,10 @@ import java.util.concurrent.Executors;
 import org.apache.commons.io.FilenameUtils;
 import org.gudy.azureus2.core3.download.DownloadManager;
 
+import com.frostwire.mp3.ID3Wrapper;
+import com.frostwire.mp3.ID3v1Tag;
+import com.frostwire.mp3.ID3v23Tag;
+import com.frostwire.mp3.Mp3File;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
@@ -372,13 +376,18 @@ public class SoundcloudDownload implements BTDownload {
 
         @Override
         public void onComplete(HttpClient client) {
-            boolean renameTo = tempAudio.renameTo(completeFile);
-
-            if (!renameTo) {
-                state = STATE_ERROR_MOVING_INCOMPLETE;
-            } else {
+            if (setAlbumArt(tempAudio.getAbsolutePath(), completeFile.getAbsolutePath())) {
                 state = STATE_FINISHED;
                 cleanupIncomplete();
+            } else {
+                boolean renameTo = tempAudio.renameTo(completeFile);
+
+                if (!renameTo) {
+                    state = STATE_ERROR_MOVING_INCOMPLETE;
+                } else {
+                    state = STATE_FINISHED;
+                    cleanupIncomplete();
+                }
             }
         }
 
@@ -414,5 +423,31 @@ public class SoundcloudDownload implements BTDownload {
         }
 
         return sr.getDownloadUrl().equals(((SoundcloudDownload) obj).sr.getDownloadUrl());
+    }
+
+    private boolean setAlbumArt(String mp3Filename, String mp3outputFilename) {
+        try {
+            byte[] imageBytes = HttpClientFactory.newDefaultInstance().getBytes(sr.getThumbnailUrl());
+
+            Mp3File mp3 = new Mp3File(mp3Filename);
+
+            ID3Wrapper newId3Wrapper = new ID3Wrapper(new ID3v1Tag(), new ID3v23Tag());
+
+            newId3Wrapper.setAlbum(sr.getUsername() + ": " + sr.getTitle() + " via SoundCloud.com");
+            newId3Wrapper.setArtist(sr.getUsername());
+            newId3Wrapper.setTitle(sr.getTitle());
+            newId3Wrapper.setAlbumImage(imageBytes, "image/jpg");
+            newId3Wrapper.setUrl(sr.getDetailsUrl());
+            newId3Wrapper.getId3v2Tag().setPadding(true);
+
+            mp3.setId3v1Tag(newId3Wrapper.getId3v1Tag());
+            mp3.setId3v2Tag(newId3Wrapper.getId3v2Tag());
+
+            mp3.save(mp3outputFilename);
+
+            return true;
+        } catch (Throwable e) {
+            return false;
+        }
     }
 }
