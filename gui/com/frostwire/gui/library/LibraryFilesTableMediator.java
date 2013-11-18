@@ -46,8 +46,6 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import jd.plugins.decrypter.TbCm;
-
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.collection.CollectionUtils;
 import org.limewire.util.FileUtils;
@@ -1075,13 +1073,13 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 try {
                     System.out.println("Demuxing file " + file.getAbsolutePath());
                     
-                    if (TbCm.demuxMP4Audio(file.getAbsolutePath(), null, false)) {
-                        final File demuxed = new File(file.getAbsolutePath().replace(".mp4", ".m4a"));
-                        demuxedFiles.add(demuxed);
-                        updateDemuxingStatus(demuxed,files.size(),true);
-                    } else {
-                        updateDemuxingStatus(file,files.size(),false);
-                    }
+//                    if (TbCm.demuxMP4Audio(file.getAbsolutePath(), null, false)) {
+//                        final File demuxed = new File(file.getAbsolutePath().replace(".mp4", ".m4a"));
+//                        demuxedFiles.add(demuxed);
+//                        updateDemuxingStatus(demuxed,files.size(),true);
+//                    } else {
+//                        updateDemuxingStatus(file,files.size(),false);
+//                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
