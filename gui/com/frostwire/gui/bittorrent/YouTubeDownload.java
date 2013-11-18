@@ -263,7 +263,7 @@ public class YouTubeDownload implements BTDownload {
 
     @Override
     public String getHash() {
-        return null;
+        return sr.getDownloadUrl();
     }
 
     @Override
@@ -479,5 +479,14 @@ public class YouTubeDownload implements BTDownload {
 
     private static enum DownloadType {
         VIDEO, DASH, DEMUX
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof YouTubeDownload)) {
+            return false;
+        }
+
+        return sr.getDownloadUrl().equals(((YouTubeDownload) obj).sr.getDownloadUrl());
     }
 }

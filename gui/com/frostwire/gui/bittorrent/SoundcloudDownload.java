@@ -241,7 +241,7 @@ public class SoundcloudDownload implements BTDownload {
 
     @Override
     public String getHash() {
-        return null;
+        return sr.getDownloadUrl();
     }
 
     @Override
@@ -405,5 +405,14 @@ public class SoundcloudDownload implements BTDownload {
 
     @Override
     public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove) {
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof SoundcloudDownload)) {
+            return false;
+        }
+
+        return sr.getDownloadUrl().equals(((SoundcloudDownload) obj).sr.getDownloadUrl());
     }
 }
