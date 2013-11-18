@@ -45,6 +45,8 @@ public interface HttpClient {
     public String get(String url, int timeout, String userAgent, String referrer, String cookie, Map<String, String> customHeaders);
 
     public byte[] getBytes(String url, int timeout, String userAgent, String referrer);
+    
+    public byte[] getBytes(String url);
 
     public void save(String url, File file, boolean resume) throws IOException;
 
