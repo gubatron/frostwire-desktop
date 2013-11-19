@@ -63,7 +63,7 @@ public class SecurityUtils {
     }
 
     public static boolean verify(SignedMessage signedMessage, final PublicKey publicKey) {
-        return verify(signedMessage.signedData, 0, signedMessage.signedData.length, signedMessage.signature, publicKey);
+        return verify(signedMessage.signedHashBytes, 0, signedMessage.signedHashBytes.length, signedMessage.signature, publicKey);
     }
     
     public static boolean verify(byte[] data, int offset, int len, byte[] signature, final PublicKey publicKey) {
@@ -134,7 +134,7 @@ public class SecurityUtils {
             e.printStackTrace();
         }
         
-        System.out.println("Signed String:\n" + signedMessage.signedString);
+        System.out.println("Signed String:\n" + signedMessage.signedHashString);
         System.out.println("Signature:\n" + Base32.encode(signedMessage.signature));
         
         boolean verified = verify(signedMessage, publicKey);
