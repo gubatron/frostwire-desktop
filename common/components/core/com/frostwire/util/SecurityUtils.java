@@ -48,14 +48,10 @@ public class SecurityUtils {
     public static SignedMessage sign(byte[] unsignedData, int offset, int len, final PrivateKey privateKey) {
         SignedMessage signedMessage = null;
         try {
-            byte[] signatureBytes = new byte[unsignedData.length];
-            System.arraycopy(unsignedData, 0, signatureBytes, 0, unsignedData.length);
-            
             Signature signature = Signature.getInstance(ENCRYPTION_ALGORITHM);
             signature.initSign(privateKey);
-            signature.update(signatureBytes, offset, len);
-            
-            signedMessage = new SignedMessage(unsignedData, signatureBytes, signature.sign());
+            signature.update(unsignedData, offset, len);
+            signedMessage = new SignedMessage(unsignedData, signature.sign());
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -63,14 +59,12 @@ public class SecurityUtils {
     }
 
     public static boolean verify(SignedMessage signedMessage, final PublicKey publicKey) {
-        return verify(signedMessage.signedHashBytes, 0, signedMessage.signedHashBytes.length, signedMessage.signature, publicKey);
+        return verify(signedMessage.unsignedData, 0, signedMessage.unsignedData.length, signedMessage.signature, publicKey);
     }
     
     public static boolean verify(byte[] data, int offset, int len, byte[] signature, final PublicKey publicKey) {
         boolean verified = false;
         try {
-            byte[] signatureBytes = new byte[data.length];
-            System.arraycopy(data, 0, signatureBytes, 0, data.length);
             Signature verifier = Signature.getInstance(ENCRYPTION_ALGORITHM);
             verifier.initVerify(publicKey);
             verifier.update(data,offset,len);
@@ -134,11 +128,20 @@ public class SecurityUtils {
             e.printStackTrace();
         }
         
-        System.out.println("Signed String:\n" + signedMessage.signedHashString);
+        System.out.println("Signed String:\n" + signedMessage.base32DataString);
         System.out.println("Signature:\n" + Base32.encode(signedMessage.signature));
         
         boolean verified = verify(signedMessage, publicKey);
         System.out.println("Verify? " + verified);
+        
+        //hack the message, verification must fail
+        signedMessage.signature[10] = 0x23;
+        signedMessage.signature[11] = 1;
+        signedMessage.signature[12] = 2;
+        signedMessage.signature[18] = 3;
+        boolean integrityFail = verify(signedMessage, publicKey);
+        System.out.println("Verify tainted message? " + integrityFail);
+        
         return verified;
     }
 
