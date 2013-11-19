@@ -13,6 +13,8 @@ import java.security.spec.X509EncodedKeySpec;
 
 public class SecurityUtils {
 
+    public static final String DHT_PUBLIC_KEY = "GCBADOBQQIASYBQHFKDERTRYAQATBAQBD4BIDAIA7V7VHAI5OUJCSUW7JKOC53HE473BDN2SHTXUIAGDDY7YBNSREZUUKXKAEJI7WWJ5RVMPVP6F6W5DB5WLTNKWZV4BHOAB2NDP6JTGBN3LTFIKLJE7T7UAI6YQELBE7O5J277LPRQ37A5VPZ6GVCTBKDYE7OB7NU6FD3BQENKUCNNBNEJS6Z27HLRLMHLSV37SEIBRTHORJAA4OAQVACLWAUEPCURQXTFSSK4YFIXLQQF7AWA46UBIDAIA67Q2BBOWTM655S54VNODNOCXXF4ZJL537I5OVAXZK5GAWPIHQJTVCWKXR25NIWKP4ZYQOEEBQC2ESFTREPUEYKAWCO346CJSRTEKNYJ4CZ5IWVD4RUUOBI5ODYV3HJTVSFXKG7YL7IQTKYXR7NRHUAJEHPGKJ4N6VBIZBCNIQPP6CWXFT4DJFC3GL2AHWVJFMQAUYO76Z5ESUA4BQUAAFAMBADY564OTTNZX2KTYE4D3FK7BYVK5WH2OAOP3XG5W5NY3KHIAJYE5L2JL4QJS3EN2FU6L6NE56Z2S5C4KWM2YSJNFMRKJ7SIPPTIOGK4PLKRI26EGH62CVSP266NBCF4GOMYRZDUZHVDALYE2QR7QZ4Z2ODG6LF45PQS5YRISNHA4L7UIRC76OKGLBXT45HGWC5MZCKJTC2QHPPQ";
+
     private static final String ENCRYPTION_ALGORITHM = "DSA";
     private static String testBase32PKCS8PrivateKey = "GCBACSYCAEADBAQBFQDAOKUGJDHDQBABGCBACHYCQGAQB7L7KOAR25ISFFJN6SU4F3WOJZ7WCG3VEPHPIQAMGHR7QC3FCJTJIVOUAISR7NMT3DKY7K74L5N2GD3MXG2VNTLYCO4ADU2G74TGMC3WXGKQUWSJ7H7IAR5RAIWCJ652TV76W7DBX6B3K7T4NKFGCUHQJ64D63J4KHWDAI2VIE22C2ITF5TV6OXCWYOXFLX7EIQDDGO5CSABY4BBKAEXMBII6FJDBPGLFEVZQKROXBAL6BMBZ5ICQGAQB57BUCC5NGZ533F3ZK24G24FPOLZSSX3X6R25KBPSV2MBM6QPATHKFMVPDV22RMU7ZTRA4IIDAFUJELHCI7IJQUBME5XZ4ETFDGIU3QTYFT2RNKHZDJI4CR24HRLWOTHLELOUN7QX6RBGVRPD63CPIASIO6MUTY35KCRSCE2RA674FNOLHYGSKFWMXUAPNKSKZABJQ575T2JFICBMAQUFLOU5ZQ7SIHYASFZQVSXWDHKASBXQELR";
     private static String testBase32X509PublicKey = "GCBADNZQQIASYBQHFKDERTRYAQATBAQBD4BIDAIA7V7VHAI5OUJCSUW7JKOC53HE473BDN2SHTXUIAGDDY7YBNSREZUUKXKAEJI7WWJ5RVMPVP6F6W5DB5WLTNKWZV4BHOAB2NDP6JTGBN3LTFIKLJE7T7UAI6YQELBE7O5J277LPRQ37A5VPZ6GVCTBKDYE7OB7NU6FD3BQENKUCNNBNEJS6Z27HLRLMHLSV37SEIBRTHORJAA4OAQVACLWAUEPCURQXTFSSK4YFIXLQQF7AWA46UBIDAIA67Q2BBOWTM655S54VNODNOCXXF4ZJL537I5OVAXZK5GAWPIHQJTVCWKXR25NIWKP4ZYQOEEBQC2ESFTREPUEYKAWCO346CJSRTEKNYJ4CZ5IWVD4RUUOBI5ODYV3HJTVSFXKG7YL7IQTKYXR7NRHUAJEHPGKJ4N6VBIZBCNIQPP6CWXFT4DJFC3GL2AHWVJFMQAUYO76Z5ESUA4BQQAAFAMAPOSFUHKE7LZUBIODLBCGDKQ7MDNEANEPIEIDOKUTIJZHXVAALXH52CEFBTO56O7AGRF75BNV7HEULWRWL46NTLBCBZAILDXV2DLTNRUCCJFCTT4UGUII42WIFSH3JGQ6M6EWTLWA4ZEJ7C46LSFY2GBQCNSWP5LUG423DFZRS3SO5XZMOD274ANXANJP5T2FPCCQJOYXF74US";
@@ -61,13 +63,13 @@ public class SecurityUtils {
     public static boolean verify(SignedMessage signedMessage, final PublicKey publicKey) {
         return verify(signedMessage.unsignedData, 0, signedMessage.unsignedData.length, signedMessage.signature, publicKey);
     }
-    
+
     public static boolean verify(byte[] data, int offset, int len, byte[] signature, final PublicKey publicKey) {
         boolean verified = false;
         try {
             Signature verifier = Signature.getInstance(ENCRYPTION_ALGORITHM);
             verifier.initVerify(publicKey);
-            verifier.update(data,offset,len);
+            verifier.update(data, offset, len);
             verified = verifier.verify(signature, 0, signature.length);
         } catch (Throwable t) {
             t.printStackTrace();
@@ -80,7 +82,8 @@ public class SecurityUtils {
      * The Private Key comes in PKCS#8 format.
      * The Public Key comes in X.509 format.
      */
-    public static void generateKeyPairInBase32() {
+    @SuppressWarnings("unused")
+    private static void generateKeyPairInBase32() {
         try {
             KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance(ENCRYPTION_ALGORITHM);
             keyGenerator.initialize(1024);
@@ -108,14 +111,16 @@ public class SecurityUtils {
         }
     }
 
-    public static boolean testKeyInstantiationFromBase32Strings(String privKey, String pubKey) {
+    @SuppressWarnings("unused")
+    private static boolean testKeyInstantiationFromBase32Strings(String privKey, String pubKey) {
         PrivateKey privateKey = getPrivateKey(privKey);
         PublicKey publicKey = getPublicKey(pubKey);
 
         return Base32.encode(privateKey.getEncoded()).equals(testBase32PKCS8PrivateKey) && Base32.encode(publicKey.getEncoded()).equals(testBase32X509PublicKey);
     }
 
-    public static boolean testSignatureAndVerification(String signThis, String privKey, String pubKey) {
+    @SuppressWarnings("unused")
+    private static boolean testSignatureAndVerification(String signThis, String privKey, String pubKey) {
         PrivateKey privateKey = getPrivateKey(privKey);
         PublicKey publicKey = getPublicKey(pubKey);
 
@@ -127,27 +132,29 @@ public class SecurityUtils {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        
-        System.out.println("Signed String:\n" + signedMessage.base32DataString);
-        System.out.println("Signature:\n" + Base32.encode(signedMessage.signature));
-        
+
+        //System.out.println("Signed String in base32:\n" + signedMessage.base32DataString);
+        //System.out.println("Base 32 decoded String: " + new String(Base32.decode(signedMessage.base32DataString)));
+        //System.out.println("Signature:\n" + Base32.encode(signedMessage.signature));
+
         boolean verified = verify(signedMessage, publicKey);
-        System.out.println("Verify? " + verified);
-        
+        //System.out.println("Verify? " + verified);
+
         //hack the message, verification must fail
         signedMessage.signature[10] = 0x23;
         signedMessage.signature[11] = 1;
         signedMessage.signature[12] = 2;
         signedMessage.signature[18] = 3;
         boolean integrityFail = verify(signedMessage, publicKey);
-        System.out.println("Verify tainted message? " + integrityFail);
-        
-        return verified;
+        //System.out.println("Verify tainted message? " + integrityFail);
+
+        return verified && !integrityFail;
     }
 
     public static void main(String[] args) {
         //tests
-        System.out.println("testKeyInstantiationFromBase32Strings -> " + testKeyInstantiationFromBase32Strings(testBase32PKCS8PrivateKey, testBase32X509PublicKey));
-        System.out.println("testSignatureAndVerification -> " + testSignatureAndVerification("The quick brown fox jump over the lazy dog.", testBase32PKCS8PrivateKey, testBase32X509PublicKey));
+        //System.out.println("testKeyInstantiationFromBase32Strings -> " + testKeyInstantiationFromBase32Strings(testBase32PKCS8PrivateKey, testBase32X509PublicKey));
+        //System.out.println("testSignatureAndVerification -> " + testSignatureAndVerification("The quick brown fox jump over the lazy dog.", testBase32PKCS8PrivateKey, testBase32X509PublicKey));
+        //generateKeyPairInBase32();
     }
 }
