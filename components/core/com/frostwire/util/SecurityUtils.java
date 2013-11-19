@@ -79,14 +79,14 @@ public class SecurityUtils {
         }
     }
 
-    public static boolean testKeyInstantiationFromBase32Strings() {
-        PrivateKey privateKey = getPrivateKey(testBase32PKCS8PrivateKey);
-        PublicKey publicKey = getPublicKey(testBase32X509PublicKey);
+    public static boolean testKeyInstantiationFromBase32Strings(String privKey, String pubKey) {
+        PrivateKey privateKey = getPrivateKey(privKey);
+        PublicKey publicKey = getPublicKey(pubKey);
 
         return Base32.encode(privateKey.getEncoded()).equals(testBase32PKCS8PrivateKey) && Base32.encode(publicKey.getEncoded()).equals(testBase32X509PublicKey);
     }
 
     public static void main(String[] args) {
-        System.out.println("testKeyInstantiationFromBase32Strings -> " + testKeyInstantiationFromBase32Strings());
+        System.out.println("testKeyInstantiationFromBase32Strings -> " + testKeyInstantiationFromBase32Strings(testBase32PKCS8PrivateKey,testBase32X509PublicKey));
     }
 }
