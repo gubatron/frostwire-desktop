@@ -1,4 +1,4 @@
-package com.frostwire.search.tests;
+package com.limegroup.gnutella.gui.search.tests;
 
 import java.util.List;
 
