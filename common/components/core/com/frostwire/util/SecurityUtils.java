@@ -41,26 +41,29 @@ public class SecurityUtils {
         return publicKey;
     }
 
-    public static String sign(byte[] data, PrivateKey privateKey) {
+    public static SignedMessage sign(byte[] data, PrivateKey privateKey) {
         return sign(data, 0, data.length, privateKey);
     }
 
-    public static String sign(byte[] data, int offset, int len, final PrivateKey privateKey) {
-        String signedData = null;
+    public static SignedMessage sign(byte[] unsignedData, int offset, int len, final PrivateKey privateKey) {
+        SignedMessage signedMessage = null;
         try {
+            byte[] signatureBytes = new byte[unsignedData.length];
+            System.arraycopy(unsignedData, 0, signatureBytes, 0, unsignedData.length);
+            
             Signature signature = Signature.getInstance(ENCRYPTION_ALGORITHM);
             signature.initSign(privateKey);
-            signature.update(data, offset, len);
-            signedData = Base32.encode(signature.sign());
+            signature.update(signatureBytes, offset, len);
+            
+            signedMessage = new SignedMessage(unsignedData, signatureBytes, signature.sign());
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        return signedData;
+        return signedMessage;
     }
 
-    public static boolean verify(byte[] signedData, String base32Signature, final PublicKey publicKey) {
-        byte[] decodedSignature = Base32.decode(base32Signature);
-        return verify(signedData, 0, signedData.length, decodedSignature, publicKey);
+    public static boolean verify(SignedMessage signedMessage, final PublicKey publicKey) {
+        return verify(signedMessage.signedData, 0, signedMessage.signedData.length, signedMessage.signature, publicKey);
     }
     
     public static boolean verify(byte[] data, int offset, int len, byte[] signature, final PublicKey publicKey) {
@@ -72,7 +75,6 @@ public class SecurityUtils {
             verifier.initVerify(publicKey);
             verifier.update(data,offset,len);
             verified = verifier.verify(signature, 0, signature.length);
-
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -123,17 +125,19 @@ public class SecurityUtils {
         PrivateKey privateKey = getPrivateKey(privKey);
         PublicKey publicKey = getPublicKey(pubKey);
 
-        String signature = null;
+        SignedMessage signedMessage = null;
         byte[] bytesToSign = null;
         try {
             bytesToSign = signThis.getBytes("utf8");
-            signature = sign(bytesToSign, privateKey);
+            signedMessage = sign(bytesToSign, privateKey);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        System.out.println("Signature:\n" + signature);
         
-        boolean verified = verify(bytesToSign, signature, publicKey);
+        System.out.println("Signed String:\n" + signedMessage.signedString);
+        System.out.println("Signature:\n" + Base32.encode(signedMessage.signature));
+        
+        boolean verified = verify(signedMessage, publicKey);
         System.out.println("Verify? " + verified);
         return verified;
     }
