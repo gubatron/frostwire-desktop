@@ -34,7 +34,7 @@ public class TorLockSearchPerformer extends TorrentRegexSearchPerformer<TorLockS
 
     private static final int MAX_RESULTS = 10;
     private static final String REGEX = "(?is)<a href=/torrent/([0-9]*?/.*?\\.html)>";
-    private static final String HTML_REGEX = "(?is).*?<td><b>Name:</b></td><td>(.*?).torrent</td>.*?<td><b>Size:</b></td><td>(.*?) in .*? files</td>.*?<td><b>Added:</b></td><td>Uploaded on (.*?) by .*?</td>.*?<font color=#FF5400><b>(.*?)</b></font> seeders.*?<td align=center><a href=\"/tor/(.*?).torrent\"><img src=http://www.torlock.com/images/dlbutton2.png></a></td>.*?";
+    private static final String HTML_REGEX = "(?is).*?<td><b>Name:</b></td><td>(.*?).torrent</td>.*?<td><b>Size:</b></td><td>(.*?) in .*? file.*?</td>.*?<td><b>Added:</b></td><td>Uploaded on (.*?) by .*?</td>.*?<font color=#FF5400><b>(.*?)</b></font> seeders.*?<td align=center><a href=\"/tor/(.*?).torrent\"><img.*?";
 
     public TorLockSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
         super(domainAliasManager, token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX);
@@ -56,4 +56,18 @@ public class TorLockSearchPerformer extends TorrentRegexSearchPerformer<TorLockS
     protected TorLockSearchResult fromHtmlMatcher(CrawlableSearchResult sr, Matcher matcher) {
         return new TorLockSearchResult(getDomainName(),sr.getDetailsUrl(), matcher);
     }
+    
+    /*
+    public static void main(String[] args) throws Exception {
+        DomainAliasManagerBroker domainBroker = new DomainAliasManagerBroker();
+        DomainAliasManager aliasManager = domainBroker.getDomainAliasManager("www.torlock.net");
+        TorLockSearchPerformer performer = new TorLockSearchPerformer(aliasManager, 21312, "whatever", 5000);
+        TorLockTempSearchResult tempSearchResult = new TorLockTempSearchResult(performer.getDomainName(), "2457897");
+        
+        byte[] data = FileUtils.readFileToByteArray(new File("/Users/gubatron/Desktop/torlocktest.html"));
+        performer.crawlResult(tempSearchResult, data);
+        
+        //new TorLockTempSearchResult(performer.getDomainName(), tempSearchResult.getDetailsUrl(), )
+    }
+    */
 }
