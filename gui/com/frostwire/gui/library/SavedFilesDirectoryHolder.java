@@ -77,10 +77,12 @@ public class SavedFilesDirectoryHolder extends FileSettingDirectoryHolder {
         Set<File> results = new HashSet<File>();
 
         for (File f : listFiles) {
-            if (!f.isDirectory() && !_hideFiles.contains(f) && !f.getName().toLowerCase().contains(".ds_store")) {
-                results.add(f);
-            } else if (f.isDirectory() && !excludeFolders.contains(f)) {
-                results.addAll(getFilesRecursively(f, excludeFolders));
+            if (f.exists()) {
+                if (!f.isDirectory() && !_hideFiles.contains(f) && !f.getName().toLowerCase().contains(".ds_store")) {
+                    results.add(f);
+                } else if (f.isDirectory() && !excludeFolders.contains(f)) {
+                    results.addAll(getFilesRecursively(f, excludeFolders));
+                }
             }
         }
 

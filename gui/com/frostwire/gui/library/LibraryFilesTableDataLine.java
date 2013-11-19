@@ -177,6 +177,8 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
             shared = Librarian.instance().isFileShared(initializer.getAbsolutePath());
         } else if (initializer.isDirectory()) {
             _sizeHolder = ZERO_SIZED_HOLDER;
+        } else {
+            _sizeHolder = ZERO_SIZED_HOLDER;
         }
 
         this.lastModified = new Date(initializer.lastModified());

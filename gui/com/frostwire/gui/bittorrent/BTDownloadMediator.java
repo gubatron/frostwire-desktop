@@ -27,10 +27,6 @@ import java.util.List;
 import javax.swing.Action;
 import javax.swing.JPopupMenu;
 
-import jd.controlling.downloadcontroller.DownloadController;
-import jd.controlling.downloadcontroller.DownloadWatchDog;
-import jd.plugins.FilePackage;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.download.DownloadManager;
@@ -49,13 +45,14 @@ import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.transfers.PeerHttpUpload;
+import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
+import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
-import com.limegroup.gnutella.gui.search.SoundcloudUISearchResult;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
@@ -346,13 +343,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         return (download) ? azureusCore.getGlobalManager().getStats().getDataReceiveRate() : azureusCore.getGlobalManager().getStats().getDataSendRate();
     }
 
-    /** bytes/sec */
-    private int getCloudDownloadsBandwidth() {
-        return DownloadWatchDog.getInstance().getDownloadSpeedManager().getSpeed();
-    }
-
     public double getDownloadsBandwidth() {
-        return (getBandwidth(true) + getCloudDownloadsBandwidth()) / 1000;
+        return (getBandwidth(true)) / 1000;
     }
 
     public double getUploadsBandwidth() {
@@ -651,7 +643,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     private boolean selectionHasMediaFiles(BTDownload d) {
-        if (d instanceof SoundcloudTrackDownload) {
+        if (d instanceof SoundcloudDownload) {
             return true;
         }
         File saveLocation = d.getSaveLocation();
@@ -660,11 +652,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     private boolean isHttpTransfer(BTDownload d) {
-        return isYouTubeTransfer(d) || d instanceof SoundcloudTrackUrlDownload || d instanceof SoundcloudTrackDownload || d instanceof BTPeerHttpUpload;
+        return isYouTubeTransfer(d) || d instanceof SoundcloudDownload || d instanceof SoundcloudDownload || d instanceof BTPeerHttpUpload;
     }
 
     private boolean isYouTubeTransfer(BTDownload d) {
-        return d instanceof YouTubeVideoUrlDownload || d instanceof YouTubeItemDownload;
+        return d instanceof YouTubeDownload;
     }
 
     /**
@@ -914,60 +906,33 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
     }
 
-    public void openYouTubeVideoUrl(final String videoUrl) {
-        GUIMediator.safeInvokeLater(new Runnable() {
-            public void run() {
-                BTDownload downloader = new YouTubeVideoUrlDownload(videoUrl);
-                add(downloader);
-            }
-        });
-    }
+    //    public void openYouTubeVideoUrl(final String videoUrl) {
+    //        GUIMediator.safeInvokeLater(new Runnable() {
+    //            public void run() {
+    //                BTDownload downloader = new YouTubeVideoUrlDownload(videoUrl);
+    //                add(downloader);
+    //            }
+    //        });
+    //    }
 
-    public void openSoundcloudTrackUrl(final String trackUrl, final String title, final SoundcloudUISearchResult sr) {
+    public void openSoundcloudTrackUrl(final String trackUrl, final String title, final SoundcloudSearchResult sr) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new SoundcloudTrackUrlDownload(trackUrl, title, sr);
-                add(downloader);
-            }
-        });
-    }
-
-    public void openYouTubeItem(final FilePackage filePackage) {
-        GUIMediator.safeInvokeLater(new Runnable() {
-            public void run() {
-                try {
-                    List<FilePackage> pks = new ArrayList<FilePackage>(DownloadController.getInstance().getPackages());
-                    for (FilePackage p : pks) {
-                        if (p.getChildren().get(0).getName().equals(filePackage.getChildren().get(0).getName())) {
-                            System.out.println("YouTube download duplicated");
-                            return;
-                        }
-                    }
-                } catch (Throwable e) {
-                    // ignore
+                if (!isDownloading(sr.getDownloadUrl())) {
+                    BTDownload downloader = new SoundcloudDownload(sr);
+                    add(downloader);
                 }
-                BTDownload downloader = new YouTubeItemDownload(filePackage);
-                add(downloader);
             }
         });
     }
 
-    public void openSoundcloudItem(final FilePackage filePackage, final String title, final SoundcloudUISearchResult sr) {
+    public void openYouTubeItem(final YouTubeCrawledSearchResult sr) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                try {
-                    List<FilePackage> pks = new ArrayList<FilePackage>(DownloadController.getInstance().getPackages());
-                    for (FilePackage p : pks) {
-                        if (p.getChildren().get(0).getName().equals(filePackage.getChildren().get(0).getName())) {
-                            System.out.println("Soundcloud download duplicated");
-                            return;
-                        }
-                    }
-                } catch (Throwable e) {
-                    // ignore
+                if (!isDownloading(sr.getDownloadUrl())) {
+                    BTDownload downloader = new YouTubeDownload(sr);
+                    add(downloader);
                 }
-                BTDownload downloader = new SoundcloudTrackDownload(filePackage, title, sr);
-                add(downloader);
             }
         });
     }

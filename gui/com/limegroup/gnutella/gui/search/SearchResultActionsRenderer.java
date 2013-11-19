@@ -63,18 +63,18 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
     static {
         play_solid = GUIMediator.getThemeImage("search_result_play_over");
         play_transparent = new AlphaIcon(play_solid, BUTTONS_TRANSPARENCY);
-        
+
         download_solid = GUIMediator.getThemeImage("search_result_download_over");
         download_transparent = new AlphaIcon(download_solid, BUTTONS_TRANSPARENCY);
-        
+
         details_solid = GUIMediator.getThemeImage("search_result_details_over");
         details_transparent = new AlphaIcon(details_solid, BUTTONS_TRANSPARENCY);
     }
-    
+
     public SearchResultActionsRenderer() {
         setupUI();
     }
-    
+
     private void setupUI() {
         setLayout(new GridBagLayout());
         GridBagConstraints c;
@@ -104,7 +104,7 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
         c.gridx = GridBagConstraints.RELATIVE;
         c.ipadx = 3;
         add(labelDownload, c);
-        
+
         labelPartialDownload = new JLabel(details_solid);
         labelPartialDownload.setToolTipText(I18n.tr("Select content to download from this torrent."));
         labelPartialDownload.addMouseListener(new MouseAdapter() {
@@ -117,37 +117,42 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
         c.gridx = GridBagConstraints.RELATIVE;
         c.ipadx = 3;
         add(labelPartialDownload, c);
-        
+
         setEnabled(true);
     }
-    
+
     @Override
     protected void updateUIData(Object dataHolder, JTable table, int row, int column) {
         updateUIData((SearchResultActionsHolder) dataHolder, table, row, column);
     }
-    
+
     private void updateUIData(SearchResultActionsHolder value, JTable table, int row, int column) {
         actionsHolder = value;
         searchResult = actionsHolder.getSearchResult();
         showSolid = mouseIsOverRow(table, row);
         updatePlayButton();
-        boolean playable = false;
-        
-        if (searchResult.getSearchResult() instanceof StreamableSearchResult) {
-            playable = ((StreamableSearchResult) searchResult.getSearchResult()).getStreamUrl() != null;
-        }
-        
-        labelPlay.setVisible(playable);
+        labelPlay.setVisible(isSearchResultPlayable());
         labelDownload.setIcon(showSolid ? download_solid : download_transparent);
         labelDownload.setVisible(true);
         labelPartialDownload.setIcon(showSolid ? details_solid : details_transparent);
         labelPartialDownload.setVisible(searchResult.getSearchResult() instanceof CrawlableSearchResult);
     }
 
+    private boolean isSearchResultPlayable() {
+        boolean playable = false;
+        if (searchResult.getSearchResult() instanceof StreamableSearchResult) {
+            playable = ((StreamableSearchResult) searchResult.getSearchResult()).getStreamUrl() != null;
+            if (playable && searchResult.getExtension() != null) {
+                MediaType mediaType = MediaType.getMediaTypeForExtension(searchResult.getExtension());
+                playable = mediaType != null && (mediaType.equals(MediaType.getAudioMediaType())) || mediaType.equals(MediaType.getVideoMediaType());
+            }
+        }
+        return playable;
+    }
+
     private void updatePlayButton() {
         labelPlay.setIcon((isStreamableSourceBeingPlayed(searchResult)) ? GUIMediator.getThemeImage("speaker") : (showSolid) ? play_solid : play_transparent);
     }
-
 
     private void labelPlay_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
@@ -155,7 +160,7 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
                 searchResult.play();
                 updatePlayButton();
             }
-            
+
             uxLogMediaPreview();
         }
     }
@@ -183,7 +188,7 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
             UXStats.instance().log(UXAction.SEARCH_RESULT_ROW_BUTTON_DOWNLOAD);
         }
     }
- 
+
     private boolean isStreamableSourceBeingPlayed(UISearchResult sr) {
         if (!(sr instanceof StreamableSearchResult)) {
             return false;
@@ -192,7 +197,7 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
         StreamableSearchResult ssr = (StreamableSearchResult) sr;
         return MediaPlayer.instance().isThisBeingPlayed(ssr.getStreamUrl());
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

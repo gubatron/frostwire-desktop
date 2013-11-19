@@ -19,6 +19,7 @@ package com.frostwire.search;
 
 import java.util.Map;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +39,8 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     private static final Logger LOG = LoggerFactory.getLogger(WebSearchPerformer.class);
 
     private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();
+
+    private static final String[] STREAMABLE_EXTENSIONS = new String[] { "mp3", "ogg", "wma", "wmv", "m4a", "aac", "flac", "mp4", "flv", "mov", "mpg", "mpeg", "3gp", "m4v", "webm" };
 
     private final String keywords;
     private final String encodedKeywords;
@@ -79,7 +82,10 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         return client.get(url, timeout, DEFAULT_USER_AGENT, null, cookie, customHeaders);
     }
 
-    
+    public String post(String url, Map<String, String> formData) {
+        return client.post(url, timeout, DEFAULT_USER_AGENT, formData);
+    }
+
     /**
      * Allow to perform the HTTP operation using the same internal http client.
      * 
@@ -96,5 +102,16 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         } else {
             return null;
         }
+    }
+
+    protected final boolean isStreamable(String filename) {
+        String ext = FilenameUtils.getExtension(filename);
+        for (String s : STREAMABLE_EXTENSIONS) {
+            if (s.equals(ext)) {
+                return true; // fast return
+            }
+        }
+
+        return false;
     }
 }

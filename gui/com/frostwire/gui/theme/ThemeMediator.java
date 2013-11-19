@@ -131,12 +131,12 @@ public final class ThemeMediator {
 
                         setupGlobalKeyManager();
 
-                    } catch (Exception e) {
+                    } catch (Throwable e) {
                         LOG.error("Unable to change the L&F", e);
                     }
                 }
             });
-        } catch (Exception e) {
+        } catch (Throwable e) {
             LOG.error("Unable to change the L&F", e);
         }
     }

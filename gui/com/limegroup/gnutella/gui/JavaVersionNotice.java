@@ -82,7 +82,7 @@ class JavaVersionNotice {
         private static final long serialVersionUID = 6248367339958751670L;
 
         private UpgradeRequiredDialog() {
-            setTitle("Upgrade Java");
+            setTitle(I18n.tr("Upgrade Java"));
             setSize(new Dimension(100, 300));
             setModal(true);
 
@@ -91,11 +91,11 @@ class JavaVersionNotice {
                     .setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-            String text = "FrostWire requires Java " + REQUIRED + " or higher in order to run. " +
-            "You are currently running an out-of-date version of Java.  " +
-            "Please visit " + URL + " in order to upgrade your version of Java.\n\n" +
-            "Current Java Version : " + VersionUtils.getJavaVersion() + "\n" +
-            "Required Java Version: " + REQUIRED + "\n\n";
+            String text = String.format(I18n.tr("FrostWire requires Java %s or higher in order to run. " +
+            "You are currently running an out-of-date version of Java \n" +
+            "Please visit %s in order to upgrade your version of Java"), REQUIRED, URL)+ "\n\n" +
+            I18n.tr("Current Java Version : ") + VersionUtils.getJavaVersion() + "\n" +
+            I18n.tr("Required Java Version: ") + REQUIRED + "\n\n";
             MultiLineLabel label = new MultiLineLabel(text, 500);
 
             JPanel labelPanel = new JPanel();
@@ -104,8 +104,8 @@ class JavaVersionNotice {
             labelPanel.add(label);
 
             JPanel buttonPanel = new JPanel();
-            JButton now = new JButton("Upgrade Java");
-            now.setToolTipText("Visit " + URL);
+            JButton now = new JButton(I18n.tr("Upgrade Java"));
+            now.setToolTipText(I18n.tr("Visit ") + URL);
             now.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     try {
@@ -117,8 +117,8 @@ class JavaVersionNotice {
                 }
             });
 
-            JButton later = new JButton("Upgrade Later");
-            later.setToolTipText("Exit FrostWire");
+            JButton later = new JButton(I18n.tr("Upgrade Later"));
+            later.setToolTipText(I18n.tr("Exit FrostWire"));
             later.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     System.exit(1);

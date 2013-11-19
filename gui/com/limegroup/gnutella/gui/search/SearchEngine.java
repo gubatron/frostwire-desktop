@@ -28,6 +28,7 @@ import com.frostwire.search.archiveorg.ArchiveorgSearchPerformer;
 import com.frostwire.search.bitsnoop.BitSnoopSearchPerformer;
 import com.frostwire.search.clearbits.ClearBitsSearchPerformer;
 import com.frostwire.search.extratorrent.ExtratorrentSearchPerformer;
+import com.frostwire.search.eztv.EztvSearchPerformer;
 import com.frostwire.search.frostclick.FrostClickSearchPerformer;
 import com.frostwire.search.frostclick.UserAgent;
 import com.frostwire.search.kat.KATSearchPerformer;
@@ -36,7 +37,7 @@ import com.frostwire.search.monova.MonovaSearchPerformer;
 import com.frostwire.search.soundcloud.SoundcloudSearchPerformer;
 import com.frostwire.search.tbp.TPBSearchPerformer;
 import com.frostwire.search.torlock.TorLockSearchPerformer;
-import com.frostwire.search.youtube2.YouTubeSearchPerformer;
+import com.frostwire.search.youtube.YouTubeSearchPerformer;
 import com.limegroup.gnutella.settings.SearchEnginesSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
@@ -67,6 +68,7 @@ public abstract class SearchEngine {
     public static final int FROSTCLICK_ID = 12;
     public static final int BITSNOOP_ID = 13;
     public static final int TORLOCK_ID = 14;
+    public static final int EZTV_ID = 14;
 
     public static final SearchEngine CLEARBITS = new SearchEngine(CLEARBITS_ID, "ClearBits", SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED) {
         @Override
@@ -154,6 +156,13 @@ public abstract class SearchEngine {
         }
     };
 
+    public static final SearchEngine EZTV = new SearchEngine(EZTV_ID, "Eztv", SearchEnginesSettings.EZTV_SEARCH_ENABLED) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            return new EztvSearchPerformer(token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
+
     private SearchEngine(int id, String name, BooleanSetting setting) {
         _id = id;
         _name = name;
@@ -178,7 +187,7 @@ public abstract class SearchEngine {
     }
 
     public static List<SearchEngine> getEngines() {
-        return Arrays.asList(FROSTCLICK, YOUTUBE, BITSNOOP, CLEARBITS, MININOVA, KAT, EXTRATORRENT, TPB, MONOVA, SOUNDCLOUD, ARCHIVEORG, TORLOCK);
+        return Arrays.asList(EXTRATORRENT, BITSNOOP, SOUNDCLOUD, YOUTUBE, FROSTCLICK, CLEARBITS, MININOVA, KAT, TPB, MONOVA, ARCHIVEORG, TORLOCK, EZTV);
     }
 
     public abstract SearchPerformer getPerformer(long token, String keywords);

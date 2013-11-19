@@ -22,9 +22,7 @@ import java.io.File;
 
 import javax.swing.JTable;
 
-import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
 import com.limegroup.gnutella.gui.tables.HashBasedDataLineModel;
-import com.limegroup.gnutella.gui.tables.SizeHolder;
 
 /**
  * Library specific DataLineModel.
@@ -104,40 +102,6 @@ final class LibraryFilesTableModel extends HashBasedDataLineModel<LibraryFilesTa
     }
 
     /**
-     * Reinitializes a dataline that is using the given initialize object.
-     */
-    void reinitialize(File f) {
-        if (contains(f)) {
-            int row = getRow(f);
-            get(row).initialize(f);
-            fireTableRowsUpdated(row, row);
-        }
-    }
-
-    /**
-     * Reinitializes a dataline from using one file to use another.
-     */
-    void reinitialize(File old, File now) {
-        if (contains(old)) {
-            int row = getRow(old);
-            get(row).initialize(now);
-            initializeObjectChanged(old, now);
-            fireTableRowsUpdated(row, row);
-        }
-    }
-
-    /**
-     * Returns the file extension for the given row.
-     *
-     * @param row  The row of the file
-     *
-     * @return  A <code>String</code> object containing the file extension
-     */
-    String getType(int row) {
-        return (String) ((ColoredCellImpl) get(row).getValueAt(LibraryFilesTableDataLine.TYPE_IDX)).getValue();
-    }
-
-    /**
      * Returns the file object stored in the given row.
      *
      * @param row  The row of the file
@@ -146,28 +110,6 @@ final class LibraryFilesTableModel extends HashBasedDataLineModel<LibraryFilesTa
      */
     File getFile(int row) {
         return get(row).getInitializeObject();
-    }
-
-    /**
-     * Returns the name of the file at the given row.
-     *
-     * @param row  The row of the file
-     *
-     * @return  A <code>String</code> object containing the name of the file
-     */
-    String getName(int row) {
-        return (String) ((ColoredCellImpl) get(row).getValueAt(LibraryFilesTableDataLine.NAME_IDX)).getValue();
-    }
-
-    /**
-     * Returns the name of the file at the given row.
-     *
-     * @param row  The row of the file
-     *
-     * @return  An <code>int</code> containing the size of the file
-     */
-    long getSize(int row) {
-        return ((SizeHolder) ((ColoredCellImpl) get(row).getValueAt(LibraryFilesTableDataLine.SIZE_IDX)).getValue()).getSize();
     }
 
     /**

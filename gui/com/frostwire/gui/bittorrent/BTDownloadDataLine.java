@@ -359,8 +359,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
                 // ignore error
                 return IconManager.instance().getIconForFile(initializer.getSaveLocation());
             }
-        } else if (initializer instanceof YouTubeItemDownload || initializer instanceof SoundcloudTrackDownload) {
-            return IconManager.instance().getIconForFile(new File(initializer.getDisplayName()));
+        } else if (initializer instanceof YouTubeDownload || initializer instanceof SoundcloudDownload) {
+            return IconManager.instance().getIconForFile(initializer.getSaveLocation());
         } else {
             return IconManager.instance().getIconForFile(initializer.getSaveLocation());
         }
@@ -433,7 +433,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
      * @param file
      */
     private void iTunesScanIfNecessaryForNonTorrentDownloadItem(BTDownload theDownload, File file) {
-        if ((OSUtils.isMacOSX() || OSUtils.isWindows()) && (theDownload instanceof YouTubeItemDownload || theDownload instanceof SoundcloudTrackDownload) && iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(file)) {
+        if ((OSUtils.isMacOSX() || OSUtils.isWindows()) && (theDownload instanceof YouTubeDownload || theDownload instanceof SoundcloudDownload) && iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(file)) {
             iTunesMediator.instance().scanForSongs(file);
         }
     }

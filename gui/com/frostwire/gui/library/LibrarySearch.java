@@ -259,9 +259,9 @@ public class LibrarySearch extends JPanel {
         public void actionPerformed(ActionEvent e, String query) {
             perform(query);
         }
-        
+
         public void actionPerformed(ActionEvent e) {
-            actionPerformed(e,searchField.getText().trim());
+            actionPerformed(e, searchField.getText().trim());
         }
     }
 
@@ -486,6 +486,10 @@ public class LibrarySearch extends JPanel {
          * @return
          */
         public boolean accept(File pathname, boolean includeAllDirectories) {
+            if (!pathname.exists()) {
+                return false;
+            }
+
             if (pathname.isDirectory() && includeAllDirectories) {
                 return true;
             }

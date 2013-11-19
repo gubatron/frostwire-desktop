@@ -23,21 +23,20 @@ import org.limewire.util.CommonUtils;
 
 import com.limegroup.gnutella.util.FrostWireUtils;
 
-
 /**
  * Settings for sharing
  */
 public class SharingSettings extends LimeProps {
-    
+
     private static final File PORTABLE_ROOT_FOLDER = CommonUtils.getPortableRootFolder();
-    
-    private SharingSettings() {}
-    
-    public static final File DEFAULT_TORRENTS_DIR = new File((PORTABLE_ROOT_FOLDER == null) ? FrostWireUtils.getFrostWireRootFolder() : PORTABLE_ROOT_FOLDER ,"Torrents");
-            
-    public static final FileSetting TORRENTS_DIR_SETTING =
-            FACTORY.createFileSetting("TORRENTS_DIR_SETTING", DEFAULT_TORRENTS_DIR).setAlwaysSave(true);
-    
+
+    private SharingSettings() {
+    }
+
+    public static final File DEFAULT_TORRENTS_DIR = new File((PORTABLE_ROOT_FOLDER == null) ? FrostWireUtils.getFrostWireRootFolder() : PORTABLE_ROOT_FOLDER, "Torrents");
+
+    public static final FileSetting TORRENTS_DIR_SETTING = FACTORY.createFileSetting("TORRENTS_DIR_SETTING", DEFAULT_TORRENTS_DIR).setAlwaysSave(true);
+
     /**
      * The default folder where Torrent Data will be saved. This folder CANNOT BE SHARED
      * to avoid sharing inconsistencies. 
@@ -45,41 +44,33 @@ public class SharingSettings extends LimeProps {
      * In the case of FrostWire Portable, we'll name the default torrent data folder "Downloads"
      * In regular frostwire it's "Torrent Data"
      */
-    public static final File DEFAULT_TORRENT_DATA_DIR = (PORTABLE_ROOT_FOLDER == null) ? 
-            new File(FrostWireUtils.getFrostWireRootFolder(), "Torrent Data") :
-            new File(PORTABLE_ROOT_FOLDER, "Downloads");
+    public static final File DEFAULT_TORRENT_DATA_DIR = (PORTABLE_ROOT_FOLDER == null) ? new File(FrostWireUtils.getFrostWireRootFolder(), "Torrent Data") : new File(PORTABLE_ROOT_FOLDER, "Downloads");
 
     /**
      * The folder value where Torrent Data will be saved. This folder CANNOT BE SHARED
      * to avoid sharing inconsistencies. 
      */
-    public static final FileSetting TORRENT_DATA_DIR_SETTING = 
-    	FACTORY.createFileSetting("DEFAULT_TORRENT_DATA_DIR_SETTING", 
-    			DEFAULT_TORRENT_DATA_DIR).setAlwaysSave(true);
-    
-    public static final BooleanSetting SEED_FINISHED_TORRENTS =
-    	FACTORY.createBooleanSetting("SEED_FINISHED_TORRENTS", true);
-    
-    public static final BooleanSetting SEED_HANDPICKED_TORRENT_FILES =
-            FACTORY.createBooleanSetting("SEED_HANDPICKED_TORRENT_FILES", false);        
-    
-    public static final File IMAGE_CACHE_DIR = 
-        new File(CommonUtils.getUserSettingsDir(), "image_cache");
-    
+    public static final FileSetting TORRENT_DATA_DIR_SETTING = FACTORY.createFileSetting("DEFAULT_TORRENT_DATA_DIR_SETTING", DEFAULT_TORRENT_DATA_DIR).setAlwaysSave(true);
+
+    public static final BooleanSetting SEED_FINISHED_TORRENTS = FACTORY.createBooleanSetting("SEED_FINISHED_TORRENTS", true);
+
+    public static final BooleanSetting SEED_HANDPICKED_TORRENT_FILES = FACTORY.createBooleanSetting("SEED_HANDPICKED_TORRENT_FILES", false);
+
+    public static final File IMAGE_CACHE_DIR = new File(CommonUtils.getUserSettingsDir(), "image_cache");
+
     /**
      * Specifies whether or not completed downloads
      * should automatically be cleared from the download window.
-     */    
-    public static final BooleanSetting CLEAR_DOWNLOAD =
-        FACTORY.createBooleanSetting("CLEAR_DOWNLOAD", false);
-    
+     */
+    public static final BooleanSetting CLEAR_DOWNLOAD = FACTORY.createBooleanSetting("CLEAR_DOWNLOAD", false);
+
     public static final File getImageCacheDirectory() {
         if (!IMAGE_CACHE_DIR.exists()) {
             IMAGE_CACHE_DIR.mkdirs();
         }
         return IMAGE_CACHE_DIR;
     }
-    
+
     public static void initTorrentDataDirSetting() {
         if (CommonUtils.isPortable()) {
             SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(SharingSettings.DEFAULT_TORRENT_DATA_DIR);
@@ -91,16 +82,15 @@ public class SharingSettings extends LimeProps {
         if (CommonUtils.isPortable()) {
             SharingSettings.TORRENTS_DIR_SETTING.setValue(SharingSettings.DEFAULT_TORRENTS_DIR);
         }
-        
+
         //in case it's first time
         if (!SharingSettings.TORRENTS_DIR_SETTING.getValue().exists()) {
             SharingSettings.TORRENTS_DIR_SETTING.getValue().mkdirs();
         }
     }
-    
+
     /**
      * Setting for whether or not to allow partial files to be shared.
      */
-    public static final BooleanSetting ALLOW_PARTIAL_SHARING =
-        FACTORY.createBooleanSetting("ALLOW_PARTIAL_SHARING", false);
+    public static final BooleanSetting ALLOW_PARTIAL_SHARING = FACTORY.createBooleanSetting("ALLOW_PARTIAL_SHARING", false);
 }

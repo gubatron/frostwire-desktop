@@ -45,12 +45,16 @@ public interface HttpClient {
     public String get(String url, int timeout, String userAgent, String referrer, String cookie, Map<String, String> customHeaders);
 
     public byte[] getBytes(String url, int timeout, String userAgent, String referrer);
+    
+    public byte[] getBytes(String url);
 
     public void save(String url, File file, boolean resume) throws IOException;
 
     public void save(String url, File file, boolean resume, int timeout, String userAgent) throws IOException;
 
     public void post(String url, int timeout, String userAgent, String content, boolean gzip) throws IOException;
+
+    public String post(String url, int timeout, String userAgent, Map<String, String> formData);
 
     public void cancel();
 
