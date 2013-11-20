@@ -22,11 +22,11 @@ package com.frostwire.torrent;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
-import java.util.*;
-
-import com.frostwire.torrent.Constants;
-import com.frostwire.torrent.Debug;
-import com.frostwire.torrent.TorrentUtils;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Locale functions specific to Torrents.
