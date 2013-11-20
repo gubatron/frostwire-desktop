@@ -115,6 +115,10 @@ final class FWHttpClient implements HttpClient {
         return result;
     }
 
+    public byte[] getBytes(String url) {
+        return getBytes(url, DEFAULT_TIMEOUT, DEFAULT_USER_AGENT, null);
+    }
+
     public void save(String url, File file, boolean resume) throws IOException {
         save(url, file, resume, DEFAULT_TIMEOUT, DEFAULT_USER_AGENT);
     }

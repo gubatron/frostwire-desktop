@@ -30,8 +30,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import com.google.code.regexp.Matcher;
+import com.google.code.regexp.Pattern;
 
 /**
  * @author gubatron
@@ -176,7 +177,7 @@ public final class JsFunction<T> {
     }
 
     private LambdaN extract_function(String funcname) {
-        final Matcher func_m = Pattern.compile("function " + Pattern.quote(funcname) + "\\((?<args>[a-z,]+)\\)\\{(?<code>[^\\}]+)\\}").matcher(jscode);
+        final Matcher func_m = Pattern.compile("function " + java.util.regex.Pattern.quote(funcname) + "\\((?<args>[a-z,]+)\\)\\{(?<code>[^\\}]+)\\}").matcher(jscode);
         func_m.find();
         final String[] argnames = func_m.group("args").split(",");
 

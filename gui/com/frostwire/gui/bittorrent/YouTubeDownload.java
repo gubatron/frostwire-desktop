@@ -36,6 +36,7 @@ import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.HttpClientType;
 import com.frostwire.util.MP4Muxer;
+import com.frostwire.util.MP4Muxer.MP4Metadata;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -172,7 +173,7 @@ public class YouTubeDownload implements BTDownload {
 
     @Override
     public void pause() {
-        state = STATE_PAUSING;
+        state = STATE_CANCELING;
         httpClient.cancel();
     }
 
@@ -263,7 +264,7 @@ public class YouTubeDownload implements BTDownload {
 
     @Override
     public String getHash() {
-        return null;
+        return sr.getDownloadUrl();
     }
 
     @Override
@@ -410,7 +411,7 @@ public class YouTubeDownload implements BTDownload {
                 }
             } else if (downloadType == DownloadType.DEMUX) {
                 try {
-                    new MP4Muxer().demuxAudio(tempAudio.getAbsolutePath(), completeFile.getAbsolutePath());
+                    new MP4Muxer().demuxAudio(tempAudio.getAbsolutePath(), completeFile.getAbsolutePath(), buildMetadata());
 
                     if (!completeFile.exists()) {
                         state = STATE_ERROR_MOVING_INCOMPLETE;
@@ -428,7 +429,7 @@ public class YouTubeDownload implements BTDownload {
                     start(sr.getAudio(), tempAudio);
                 } else if (tempVideo.exists() && tempAudio.exists()) {
                     try {
-                        new MP4Muxer().mux(tempVideo.getAbsolutePath(), tempAudio.getAbsolutePath(), completeFile.getAbsolutePath());
+                        new MP4Muxer().mux(tempVideo.getAbsolutePath(), tempAudio.getAbsolutePath(), completeFile.getAbsolutePath(), buildMetadata());
 
                         if (!completeFile.exists()) {
                             state = STATE_ERROR_MOVING_INCOMPLETE;
@@ -479,5 +480,29 @@ public class YouTubeDownload implements BTDownload {
 
     private static enum DownloadType {
         VIDEO, DASH, DEMUX
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof YouTubeDownload)) {
+            return false;
+        }
+
+        return sr.getDownloadUrl().equals(((YouTubeDownload) obj).sr.getDownloadUrl());
+    }
+
+    private MP4Metadata buildMetadata() {
+        String title = sr.getDisplayName();
+        String author = sr.getDetailsUrl();
+        String source = "YouTube.com";
+
+        String jpgUrl = sr.getVideo() != null ? sr.getVideo().thumbnails.normal : null;
+        if (jpgUrl == null && sr.getAudio() != null) {
+            jpgUrl = sr.getAudio() != null ? sr.getAudio().thumbnails.normal : null;
+        }
+
+        byte[] jpg = jpgUrl != null ? HttpClientFactory.newDefaultInstance().getBytes(jpgUrl) : null;
+
+        return new MP4Metadata(title, author, source, jpg);
     }
 }

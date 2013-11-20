@@ -14,11 +14,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="components/alexandria/src/main/java"/>
-	<classpathentry kind="src" path="components/jdownloader/src/main/java">
-		<attributes>
-			<attribute name="ignore_optional_problems" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="src" path="common/components/json"/>
 	<classpathentry kind="src" path="common/components/xml">
 		<attributes>
@@ -45,6 +40,7 @@
 			<attribute name="ignore_optional_problems" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="common/components/jdownloader"/>
 	<classpathentry kind="src" path="common/components/core"/>
 	<classpathentry excluding="build.xml" kind="src" path="core">
 		<attributes>

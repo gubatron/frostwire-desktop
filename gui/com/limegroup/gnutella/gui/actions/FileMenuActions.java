@@ -257,7 +257,7 @@ public final class FileMenuActions {
             UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_MAGNET_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_MAGNET_URL_FROM_SEARCH_FIELD);
             return true;
         } else if (userText.matches(".*youtube.com.*")) {
-            GUIMediator.instance().openYouTubeVideoUrl(userText);
+            //GUIMediator.instance().openYouTubeVideoUrl(userText);
             UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_CLOUD_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_CLOUD_URL_FROM_SEARCH_FIELD);
             return true;
         } else if (userText.matches(".*soundcloud.com.*")) {

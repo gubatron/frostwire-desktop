@@ -69,6 +69,7 @@ import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.tabs.Tab;
+import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.limegroup.gnutella.MediaType;
@@ -78,7 +79,6 @@ import com.limegroup.gnutella.gui.bugs.FatalBugManager;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.search.SearchMediator;
-import com.limegroup.gnutella.gui.search.SoundcloudUISearchResult;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.gui.shell.ShellAssociationManager;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -1758,17 +1758,17 @@ public final class GUIMediator {
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
-    public void openYouTubeVideoUrl(String videoUrl) {
-        getBTDownloadMediator().openYouTubeVideoUrl(videoUrl);
-        setWindow(GUIMediator.Tabs.SEARCH);
-    }
+//    public void openYouTubeVideoUrl(String videoUrl) {
+//        getBTDownloadMediator().openYouTubeVideoUrl(videoUrl);
+//        setWindow(GUIMediator.Tabs.SEARCH);
+//    }
 
     public void openSoundcloudTrackUrl(String trackUrl, String title) {
         getBTDownloadMediator().openSoundcloudTrackUrl(trackUrl, title, null);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
-    public void openSoundcloudTrackUrl(String trackUrl, String title, SoundcloudUISearchResult sr) {
+    public void openSoundcloudTrackUrl(String trackUrl, String title, SoundcloudSearchResult sr) {
         getBTDownloadMediator().openSoundcloudTrackUrl(trackUrl, title, sr);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
