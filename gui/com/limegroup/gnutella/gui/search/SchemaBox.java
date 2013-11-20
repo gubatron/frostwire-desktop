@@ -150,15 +150,16 @@ final class SchemaBox extends JPanel {
         tooltipPlaceHolders.put(nmt, I18n.tr("%s Audio files found (including .mp3, .wav, .ogg, and more)"));
         addMediaType(panel, nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
 
+        // Then add 'Video'
+        nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_VIDEO);
+        tooltipPlaceHolders.put(nmt, I18n.tr("%s Video files found (including .avi, .mpg, .wmv, and more)"));
+        addMediaType(panel, nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
+        
         // Then add 'Images'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_IMAGES);
         tooltipPlaceHolders.put(nmt, I18n.tr("%s Image files found (including .jpg, .gif, .png and more)"));
         addMediaType(panel, nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
 
-        // Then add 'Video'
-        nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_VIDEO);
-        tooltipPlaceHolders.put(nmt, I18n.tr("%s Video files found (including .avi, .mpg, .wmv, and more)"));
-        addMediaType(panel, nmt, String.format(tooltipPlaceHolders.get(nmt), 0));
 
         // Then add 'Documents'
         nmt = NamedMediaType.getFromDescription(MediaType.SCHEMA_DOCUMENTS);
