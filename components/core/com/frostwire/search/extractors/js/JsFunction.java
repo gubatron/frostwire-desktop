@@ -74,22 +74,27 @@ public final class JsFunction<T> {
         String expr;
         if (ass_m.find()) {
             if (ass_m.group("index") != null) {
+
+                final Object lvar = local_vars.get(ass_m.group("out"));
+                final Object idx = interpret_expression(ass_m.group("index"), local_vars, allow_recursion);
+                assert idx instanceof Integer;
+
                 assign = new Lambda1() {
                     @Override
                     public Object eval(Object val) {
-                        Object lvar = local_vars.get(ass_m.group("out"));
-                        Object idx = interpret_expression(ass_m.group("index"), local_vars, allow_recursion);
-                        assert idx instanceof Integer;
                         ((Object[]) lvar)[(Integer) idx] = val;
                         return val;
                     }
                 };
                 expr = ass_m.group("expr");
             } else {
+
+                final String var = ass_m.group("out");
+
                 assign = new Lambda1() {
                     @Override
                     public Object eval(Object val) {
-                        local_vars.put(ass_m.group("out"), val);
+                        local_vars.put(var, val);
                         return val;
                     }
                 };
