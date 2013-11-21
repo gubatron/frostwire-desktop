@@ -89,14 +89,16 @@ public class DomainAliasManagerTest {
             return;
         }
         
-        DHTPlugin dhtPlugin = (DHTPlugin)
-                defaultPluginInterface.getPluginManager().getPluginInterfaceByClass(
-                            DHTPlugin.class);
+        PluginInterface pi = defaultPluginInterface.getPluginManager().getPluginInterfaceByClass(
+                DHTPlugin.class);
+        
+        DHTPlugin dhtPlugin = (DHTPlugin) pi.getPlugin();
+                
         
         if (dhtPlugin != null) {
             String dhtKey = "http://update.frostwire.com/|2013-11-20|19:00";
             byte[] value = FileUtils.readFileToByteArray(new File("/Users/gubatron/Desktop/update.xml"));
-            PrivateKey privateKey = SecurityUtils.getPrivateKey(FileUtils.readFileToString(new File("/Users/gubatron/Desktop/private.key")));
+            PrivateKey privateKey = SecurityUtils.getPrivateKey(FileUtils.readFileToString(new File("/Users/gubatron/Desktop/private.key")).trim());
             SignedMessage signedUpdateMessage = SecurityUtils.sign(value, privateKey);
             dhtPlugin.put(dhtKey.getBytes(), "frostwire-desktop update.xml file", signedUpdateMessage.toBytes(), DHTPlugin.FLAG_SINGLE_VALUE, new DomainAliasManagerTest.DHTUpdateMessagePublishListener());
         } else {
