@@ -179,9 +179,11 @@ public final class JsFunction<T> {
     private LambdaN extract_function(String funcname) {
         final Matcher func_m = Pattern.compile("function " + java.util.regex.Pattern.quote(funcname) + "\\((?<args>[a-z,]+)\\)\\{(?<code>[^\\}]+)\\}").matcher(jscode);
         func_m.find();
-        final String[] argnames = func_m.group("args").split(",");
 
-        LambdaN resf = new LambdaN() {
+        final String[] argnames = func_m.group("args").split(",");
+        final String[] stmts = func_m.group("code").split(";");
+
+        return new LambdaN() {
             @Override
             public Object eval(Object[] args) {
                 Map<String, Object> local_vars = new HashMap<String, Object>();
@@ -189,13 +191,11 @@ public final class JsFunction<T> {
                     local_vars.put(argnames[i], args[i]);
                 }
                 Object res = null;
-                for (String stmt : func_m.group("code").split(";")) {
+                for (String stmt : stmts) {
                     res = interpret_statement(stmt, local_vars, 20);
                 }
                 return res;
             }
         };
-
-        return resf;
     }
 }
