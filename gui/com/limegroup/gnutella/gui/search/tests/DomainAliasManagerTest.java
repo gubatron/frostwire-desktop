@@ -34,8 +34,7 @@ public class DomainAliasManagerTest {
 
         @Override
         public void starts(byte[] key) {
-            // TODO Auto-generated method stub
-
+            System.out.println("Started DHT action with key: ["+ new String(key)+ "]!");
         }
 
         @Override
@@ -84,9 +83,11 @@ public class DomainAliasManagerTest {
         PluginManager pluginManager = azureusCore.getPluginManager();
 
         if (pluginManager == null) {
-            System.out.println("Could not get plugin manage.");
+            System.out.println("Could not get plugin manager.");
             return;
         }
+        
+        System.out.println("Got plugin manager...");
 
         //PluginInterface defaultPluginInterface = pluginManager.getDefaultPluginInterface();
 
@@ -98,17 +99,20 @@ public class DomainAliasManagerTest {
         PluginInterface pi = pluginManager.getPluginInterfaceByClass(DHTPlugin.class);
 
         DHTPlugin dhtPlugin = (DHTPlugin) pi.getPlugin();
+        
+        System.out.println("Got DHTPlugin...");
 
         if (dhtPlugin != null) {
             String dhtKey = "http://update.frostwire.com/|2013-11-20|19:00";
-            /**
+            
             byte[] value = FileUtils.readFileToByteArray(new File("/Users/gubatron/Desktop/update.xml"));
             PrivateKey privateKey = SecurityUtils.getPrivateKey(FileUtils.readFileToString(new File("/Users/gubatron/Desktop/private.key")).trim());
             SignedMessage signedUpdateMessage = SecurityUtils.sign(value, privateKey);
             dhtPlugin.put(dhtKey.getBytes(), "frostwire-desktop update.xml file", signedUpdateMessage.toBytes(), DHTPlugin.FLAG_SINGLE_VALUE, new DomainAliasManagerTest.DHTUpdateMessagePublishListener());
-            */
+            
+            System.out.println("invoked put.");
 
-            dhtPlugin.get(dhtKey.getBytes(), "frostwire-desktop update.xml file", DHTPlugin.FLAG_SINGLE_VALUE, 1, 180000, true, true, new DomainAliasManagerTest.DHTUpdateMessagePublishListener());
+            //dhtPlugin.get(dhtKey.getBytes(), "frostwire-desktop update.xml file", DHTPlugin.FLAG_SINGLE_VALUE, 1, 180000, true, true, new DomainAliasManagerTest.DHTUpdateMessagePublishListener());
         } else {
             System.out.println("Could not get DHTPlugin.");
             return;
