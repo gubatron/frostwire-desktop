@@ -23,30 +23,42 @@ import com.frostwire.search.SearchResult;
 import com.frostwire.search.WebSearchPerformer;
 import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.domainalias.DomainAliasManagerBroker;
+import com.frostwire.util.Base32;
 import com.frostwire.util.SecurityUtils;
 import com.frostwire.util.SignedMessage;
 import com.limegroup.gnutella.gui.search.SearchEngine;
 
 public class DomainAliasManagerTest {
-    
+
     private static class DHTUpdateMessagePublishListener implements DHTPluginOperationListener {
 
         @Override
         public void starts(byte[] key) {
             // TODO Auto-generated method stub
-            
+
         }
 
         @Override
         public void diversified() {
             // TODO Auto-generated method stub
-            
+
         }
 
         @Override
         public void valueRead(DHTPluginContact originator, DHTPluginValue value) {
-            // TODO Auto-generated method stub
-            
+            System.out.println("Read value from " + originator.getAddress().getHostString());
+            byte[] data = value.getValue();
+            SignedMessage signedMessage = SignedMessage.fromBytes(data);
+            boolean verify = SecurityUtils.verify(signedMessage, SecurityUtils.getPublicKey(SecurityUtils.DHT_PUBLIC_KEY));
+            System.out.println("Is it our signed message? " + verify);
+
+            if (signedMessage.base32DataString != null) {
+                String updateMessageXML = Base32.decode(signedMessage.base32DataString).toString();
+                System.out.println("-----");
+                System.out.println(updateMessageXML);
+                System.out.println("-----");
+            }
+
         }
 
         @Override
@@ -57,57 +69,53 @@ public class DomainAliasManagerTest {
         @Override
         public void complete(byte[] key, boolean timeout_occurred) {
             System.out.println(new String(key) + " key complete!");
-            
+
             if (timeout_occurred) {
                 System.out.println("DHT publish completed due to time out.");
             }
         }
-        
+
     }
 
     public static void dhtInitializationTest() throws InterruptedException, IOException {
+        System.out.println("Starting Azureus core...");
         AzureusStarter.start();
-        AzureusCore azureusCore = null;
-
-        while (!AzureusStarter.isAzureusCoreStarted()) {
-            System.out.println("Waiting for azureus core to start...");
-            Thread.sleep(1000);
-        }
-
-        azureusCore = AzureusStarter.getAzureusCore();
+        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
         PluginManager pluginManager = azureusCore.getPluginManager();
-        
+
         if (pluginManager == null) {
             System.out.println("Could not get plugin manage.");
             return;
         }
 
-        PluginInterface defaultPluginInterface = pluginManager.getDefaultPluginInterface();
-        
-        if (defaultPluginInterface == null) {
-            System.out.println("Could not get default plugin interface.");
-            return;
-        }
-        
-        PluginInterface pi = defaultPluginInterface.getPluginManager().getPluginInterfaceByClass(
-                DHTPlugin.class);
-        
+        //PluginInterface defaultPluginInterface = pluginManager.getDefaultPluginInterface();
+
+//        if (defaultPluginInterface == null) {
+//            System.out.println("Could not get default plugin interface.");
+ //           return;
+  //      }
+
+        PluginInterface pi = pluginManager.getPluginInterfaceByClass(DHTPlugin.class);
+
         DHTPlugin dhtPlugin = (DHTPlugin) pi.getPlugin();
-                
-        
+
         if (dhtPlugin != null) {
             String dhtKey = "http://update.frostwire.com/|2013-11-20|19:00";
+            /**
             byte[] value = FileUtils.readFileToByteArray(new File("/Users/gubatron/Desktop/update.xml"));
             PrivateKey privateKey = SecurityUtils.getPrivateKey(FileUtils.readFileToString(new File("/Users/gubatron/Desktop/private.key")).trim());
             SignedMessage signedUpdateMessage = SecurityUtils.sign(value, privateKey);
             dhtPlugin.put(dhtKey.getBytes(), "frostwire-desktop update.xml file", signedUpdateMessage.toBytes(), DHTPlugin.FLAG_SINGLE_VALUE, new DomainAliasManagerTest.DHTUpdateMessagePublishListener());
+            */
+
+            dhtPlugin.get(dhtKey.getBytes(), "frostwire-desktop update.xml file", DHTPlugin.FLAG_SINGLE_VALUE, 1, 180000, true, true, new DomainAliasManagerTest.DHTUpdateMessagePublishListener());
         } else {
             System.out.println("Could not get DHTPlugin.");
             return;
         }
-        
+
     }
-    
+
     public static void testDomainAliasManager() throws InterruptedException {
         DomainAliasManagerBroker DOMAIN_ALIAS_MANAGER_BROKER = new DomainAliasManagerBroker();
         @SuppressWarnings("unused")
@@ -143,11 +151,12 @@ public class DomainAliasManagerTest {
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        
+
         dhtInitializationTest();
-        
+        int seconds = 1;
         while (true) {
-            System.out.println("...");
+            System.out.println("... " + seconds);
+            seconds++;
             Thread.sleep(1000);
         }
     }
