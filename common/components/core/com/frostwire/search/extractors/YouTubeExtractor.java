@@ -57,7 +57,7 @@ public final class YouTubeExtractor {
 
     public List<LinkInfo> extract(String videoUrl) {
         try {
-            Thread.sleep(200);
+            //Thread.sleep(200);
 
             Browser br = new Browser();
 
