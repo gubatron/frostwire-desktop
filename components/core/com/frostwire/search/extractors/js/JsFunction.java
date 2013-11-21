@@ -41,12 +41,15 @@ import com.google.code.regexp.Pattern;
  */
 public final class JsFunction<T> {
 
-    private final String jscode;
+    // special mutable variable
+    private String jscode;
+
     private final Map<String, LambdaN> functions;
     private final LambdaN initial_function;
 
     public JsFunction(String jscode, String funcname) {
         this.jscode = jscode;
+
         this.functions = new HashMap<String, LambdaN>();
         this.initial_function = extract_function(funcname);
     }
@@ -165,7 +168,7 @@ public final class JsFunction<T> {
         m = Pattern.compile("^(?<func>[a-zA-Z]+)\\((?<args>[a-z0-9,]+)\\)$").matcher(expr);
         if (m.find()) {
             String fname = m.group("func");
-            if (!functions.containsKey(fname)) {
+            if (!functions.containsKey(fname) && jscode != null) {
                 functions.put(fname, extract_function(fname));
             }
             List<Object> argvals = new ArrayList<Object>();
@@ -199,6 +202,10 @@ public final class JsFunction<T> {
                 for (String stmt : stmts) {
                     res = interpret_statement(stmt, local_vars, 20);
                 }
+
+                // at this point we know that jscode is no longer necessary
+                jscode = null;
+
                 return res;
             }
         };
