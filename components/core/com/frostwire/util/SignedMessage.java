@@ -9,6 +9,12 @@ public class SignedMessage {
     
     public final String base32DataString;
     
+    public SignedMessage() {
+        unsignedData = null;
+        signature = null;
+        base32DataString = null;
+    }
+    
     public SignedMessage(final byte[] unsignedData, final byte[] signature) {
         this.unsignedData = unsignedData;
         this.signature = signature;
