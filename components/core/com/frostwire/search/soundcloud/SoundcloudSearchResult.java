@@ -35,7 +35,8 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
 
     private static final String DATE_FORMAT = "yyyy/mm/dd HH:mm:ss Z";
 
-    private final SoundcloudItem item;
+    private final String displayName;
+    private final String username;
     private final String trackUrl;
     private final String filename;
     private final long duration;
@@ -45,7 +46,8 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
     private final String downloadUrl;
 
     public SoundcloudSearchResult(SoundcloudItem item, String clientId) {
-        this.item = item;
+        this.displayName = item.title;
+        this.username = buildUsername(item);
         this.trackUrl = item.permalink_url;
         this.filename = item.permalink + "-soundcloud.mp3";
         this.duration = Math.round((item.duration * 128f) / 8f);
@@ -53,10 +55,6 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
         this.thumbnailUrl = buildThumbnailUrl(item.artwork_url);
         this.date = buildDate(item.created_at);
         this.downloadUrl = (item.download_url + "?client_id=" + clientId).replace("https://", "http://");
-    }
-
-    public SoundcloudItem getItem() {
-        return item;
     }
 
     @Override
@@ -86,7 +84,7 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
 
     @Override
     public String getDisplayName() {
-        return item.title;
+        return displayName;
     }
 
     public String getStreamUrl() {
@@ -97,12 +95,8 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
         return thumbnailUrl;
     }
 
-    public String getTitle() {
-        return item.title;
-    }
-
     public String getUsername() {
-        return item.user.username;
+        return username;
     }
 
     @Override
@@ -110,7 +104,15 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
         return downloadUrl;
     }
 
-    private String buildSource(SoundcloudItem item2) {
+    private String buildUsername(SoundcloudItem item) {
+        if (item.user != null && item.user.username != null) {
+            return item.user.username;
+        } else {
+            return "";
+        }
+    }
+
+    private String buildSource(SoundcloudItem item) {
         if (item.user != null && item.user.username != null) {
             return "Soundcloud - " + item.user.username;
         } else {
