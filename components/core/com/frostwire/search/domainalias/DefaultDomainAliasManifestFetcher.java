@@ -5,14 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Dummy Manifest fetcher, that has a fake delay, and creates a Manifest in memory.
+ * Default Domain Alias Manifest "fetcher", creates and holds a Domain Alias manifest in memory
+ * that can be used while we fetch a signed one from another source.
  * @author gubatron
  *
  */
-public class MockDomainAliasManifestFetcher extends AbstractDomainAliasManifestFetcher {
+public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManifestFetcher {
 
     
-    public MockDomainAliasManifestFetcher(DomainAliasManifestFetcherListener listener) {
+    public DefaultDomainAliasManifestFetcher(DomainAliasManifestFetcherListener listener) {
         super(listener);
     }
 
@@ -22,14 +23,16 @@ public class MockDomainAliasManifestFetcher extends AbstractDomainAliasManifestF
         manifest.lastUpdated = System.currentTimeMillis();
         manifest.version = 0;
         manifest.aliases = new HashMap<String, List<String>>();
-        
+
+        //KAT
         List<String> katAliases = new ArrayList<String>();
         katAliases.add("kickasstorrents.come.in");
-        //katAliases.add("www.kat.ph");
-        //katAliases.add("kickass.pw");
-        //katAliases.add("katproxy.pw");
-        
+        katAliases.add("www.kat.ph");
+        katAliases.add("kickass.pw");
+        katAliases.add("katproxy.pw");
         manifest.aliases.put("kickass.to", katAliases);
+        
+        //TPB
 
         System.out.println("Mock manifest built! update managers.");
         notifyManifestFetched(manifest);

@@ -25,7 +25,7 @@ public class DomainAliasManagerBroker implements DomainAliasManifestFetcherListe
         new Thread("DomainAliasManagerBroker-domain-alias-manifest-fetcher") {
             @Override
             public void run() {
-                MockDomainAliasManifestFetcher fetcher = new MockDomainAliasManifestFetcher(DomainAliasManagerBroker.this); 
+                DefaultDomainAliasManifestFetcher fetcher = new DefaultDomainAliasManifestFetcher(DomainAliasManagerBroker.this); 
                 fetcher.fetchManifest();
             }
 
