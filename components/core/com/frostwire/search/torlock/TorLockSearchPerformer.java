@@ -18,9 +18,8 @@
 
 package com.frostwire.search.torlock;
 
-import java.util.regex.Matcher;
-
 import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
 
 /**
@@ -45,13 +44,13 @@ public class TorLockSearchPerformer extends TorrentRegexSearchPerformer<TorLockS
     }
 
     @Override
-    public CrawlableSearchResult fromMatcher(Matcher matcher) {
+    public CrawlableSearchResult fromMatcher(SearchMatcher matcher) {
         String itemId = matcher.group(1);
         return new TorLockTempSearchResult(itemId);
     }
 
     @Override
-    protected TorLockSearchResult fromHtmlMatcher(CrawlableSearchResult sr, Matcher matcher) {
+    protected TorLockSearchResult fromHtmlMatcher(CrawlableSearchResult sr, SearchMatcher matcher) {
         return new TorLockSearchResult(sr.getDetailsUrl(), matcher);
     }
 }

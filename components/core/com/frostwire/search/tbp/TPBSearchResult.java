@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
 
+import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.torrent.AbstractTorrentSearchResult;
 import com.frostwire.util.HtmlManipulator;
 
@@ -67,7 +68,7 @@ public class TPBSearchResult extends AbstractTorrentSearchResult {
     private final long creationTime;
     private final int seeds;
 
-    public TPBSearchResult(Matcher matcher) {
+    public TPBSearchResult(SearchMatcher matcher) {
         /*
          * Matcher groups cheatsheet
          * 1 -> Category (useless)

@@ -20,9 +20,9 @@ package com.frostwire.search.eztv;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
 
 import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
 
 /**
@@ -56,13 +56,13 @@ public class EztvSearchPerformer extends TorrentRegexSearchPerformer<EztvSearchR
     }
 
     @Override
-    public CrawlableSearchResult fromMatcher(Matcher matcher) {
+    public CrawlableSearchResult fromMatcher(SearchMatcher matcher) {
         String itemId = matcher.group(1);
         return new EztvTempSearchResult(itemId);
     }
 
     @Override
-    protected EztvSearchResult fromHtmlMatcher(CrawlableSearchResult sr, Matcher matcher) {
+    protected EztvSearchResult fromHtmlMatcher(CrawlableSearchResult sr, SearchMatcher matcher) {
         return new EztvSearchResult(sr.getDetailsUrl(), matcher);
     }
 }

@@ -18,9 +18,8 @@
 
 package com.frostwire.search.monova;
 
-import java.util.regex.Matcher;
-
 import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
 
 /**
@@ -50,14 +49,14 @@ public class MonovaSearchPerformer extends TorrentRegexSearchPerformer<MonovaSea
     }
 
     @Override
-    public CrawlableSearchResult fromMatcher(Matcher matcher) {
+    public CrawlableSearchResult fromMatcher(SearchMatcher matcher) {
         String itemId = matcher.group(1);
         String fileName = matcher.group(2);
         return new MonovaTempSearchResult(itemId, fileName);
     }
 
     @Override
-    protected MonovaSearchResult fromHtmlMatcher(CrawlableSearchResult sr, Matcher matcher) {
+    protected MonovaSearchResult fromHtmlMatcher(CrawlableSearchResult sr, SearchMatcher matcher) {
         return new MonovaSearchResult(sr.getDetailsUrl(), matcher);
     }
 }
