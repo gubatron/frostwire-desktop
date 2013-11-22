@@ -28,13 +28,13 @@ public class DHTTest {
     private static final int MAX_VALUE_SIZE = 512;
     public static int seconds = 1;
     
-    private static class DHTUpdateMessagePublishListener implements DHTOperationListener {
+    private static class DHTTestOperationListener implements DHTOperationListener {
 
         private final DHT dht;
         private boolean writeComplete = false;
         private ByteBuffer readBuffer;
         
-        public DHTUpdateMessagePublishListener(DHT dht) {
+        public DHTTestOperationListener(DHT dht) {
             this.dht = dht;
             readBuffer = ByteBuffer.allocate(1024*256);
         }
@@ -45,6 +45,7 @@ public class DHTTest {
 
         @Override
         public void diversified(String desc) {
+            System.out.println("diversified desc: " + desc);
         }
 
         @Override
@@ -157,7 +158,7 @@ public class DHTTest {
         System.out.println("...");
         
         
-        DHTUpdateMessagePublishListener dhtUpdateMessagePublishListener = new DHTUpdateMessagePublishListener(dht);
+        DHTTestOperationListener dhtUpdateMessagePublishListener = new DHTTestOperationListener(dht);
         if (signedMessageData.length > MAX_VALUE_SIZE) {
             int offset = 0;
             boolean lastChunk = false;
@@ -176,20 +177,20 @@ public class DHTTest {
                 }
             }
         } else {
-            dht.put(dhtKey.getBytes(), "", signedMessageData, (byte) 0 ,new DHTUpdateMessagePublishListener(dht));
+            dht.put(dhtKey.getBytes(), "", signedMessageData, (byte) 0 ,new DHTTestOperationListener(dht));
         }
         System.out.println("invoked put...");
     }
     
-    public static void readTest(final DHT dht, DHTUpdateMessagePublishListener dumpl) throws InterruptedException, IOException {
+    public static void readTest(final DHT dht, DHTTestOperationListener dumpl) throws InterruptedException, IOException {
         String dhtKey = TEST_KEY;
         System.out.println("readTest: about to send get");
-        dht.get(dhtKey.getBytes(), "", (byte) DHT.FLAG_SINGLE_VALUE, 30, 60000*3, true, true, dumpl);
+        dht.get(dhtKey.getBytes(), "", (byte) DHT.FLAG_SINGLE_VALUE, 30, 60000*3, false, false, dumpl);
         System.out.println("readTest: get invocation finished.");
         DHTTest.seconds = 1;
     }
     
-    private static void onValueRead(DHTTransportContact originator, DHTTransportValue value,final DHTUpdateMessagePublishListener dumpl) throws InterruptedException, IOException {
+    private static void onValueRead(DHTTransportContact originator, DHTTransportValue value,final DHTTestOperationListener dumpl) throws InterruptedException, IOException {
         System.out.println("Read value from " + originator.getAddress().getHostString());
         System.out.println("[" + getString(value) + "]");
         ByteBuffer readBuffer = dumpl.getReadingByteBuffer();
@@ -227,7 +228,7 @@ public class DHTTest {
     public static void main(String[] args ) throws InterruptedException, IOException {
         final AzureusCore azureusCore = initAzureusCore();
         final DHT dht = getDHT(azureusCore);
-        DHTUpdateMessagePublishListener dhtUpdateMessagePublishListener = new DHTUpdateMessagePublishListener(dht);
+        DHTTestOperationListener dhtUpdateMessagePublishListener = new DHTTestOperationListener(dht);
         //writeTest(dht);
         readTest(dht,dhtUpdateMessagePublishListener);
         //removeTest(dht);
