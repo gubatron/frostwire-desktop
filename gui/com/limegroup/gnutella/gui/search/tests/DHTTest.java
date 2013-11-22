@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui.search.tests;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.security.PrivateKey;
 import java.util.concurrent.CountDownLatch;
 
@@ -23,16 +24,19 @@ import com.frostwire.util.SecurityUtils;
 import com.frostwire.util.SignedMessage;
 
 public class DHTTest {
-    private static final String TEST_KEY = "http://update.frostwire.com/|2013-11-21|19:01";
+    private static final String TEST_KEY = "http://update.frostwire.com/|2013-11-21|21:55";
+    private static final int MAX_VALUE_SIZE = 512;
     public static int seconds = 1;
     
     private static class DHTUpdateMessagePublishListener implements DHTOperationListener {
 
-        private final DHT dhtPlugin;
+        private final DHT dht;
         private boolean writeComplete = false;
+        private ByteBuffer readBuffer;
         
         public DHTUpdateMessagePublishListener(DHT dht) {
-            this.dhtPlugin = dht;
+            this.dht = dht;
+            readBuffer = ByteBuffer.allocate(1024*256);
         }
 
         @Override
@@ -49,17 +53,26 @@ public class DHTTest {
 
         @Override
         public void read(DHTTransportContact contact, DHTTransportValue value) {
-            onValueRead(contact, value);
+            try {
+                onValueRead(contact, value, this);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+        }
+        
+        public ByteBuffer getReadingByteBuffer() {
+            return readBuffer;
         }
 
         @Override
         public void wrote(DHTTransportContact contact, DHTTransportValue value) {
             System.out.println("Update Message Written at " + contact.getName() + " " + contact.getAddress().getHostString());
             
-            if (!writeComplete) {
+            if (!writeComplete && value.getFlags() == 0) {
                 writeComplete=true;
                 try {
-                    readTest(dhtPlugin);
+                    System.out.println("Looks like last piece has been written, read test here we go.");
+                    readTest(dht,this);
                 } catch (Throwable e) {
 
                     e.printStackTrace();
@@ -75,6 +88,10 @@ public class DHTTest {
                 System.out.println("DHT publish completed due to time out.");
             }
         }
+
+        public DHT getDHT() {
+            return dht;
+        }
     }
     
     public static class DHTPluginLoadingListener implements PluginEventListener {
@@ -87,8 +104,7 @@ public class DHTTest {
         
         @Override
         public void handleEvent(PluginEvent ev) {
-            if (ev.getType() == DHTPlugin.EVENT_DHT_AVAILABLE) {
-                System.out.println(ev.getValue());
+            if (ev.getType() == DHTPlugin.EVENT_DHT_AVAILABLE && ev.getValue() instanceof DHT) {
                 dht = (DHT) ev.getValue();
                 latch.countDown();
             }
@@ -122,7 +138,7 @@ public class DHTTest {
         System.out.println("Wait for DHT...");
         latch.await();
         
-        return pel.getDHT();//dhtPlugin.getDHT(DHT.NW_MAIN);
+        return pel.getDHT();//dht.getDHT(DHT.NW_MAIN);
     }
 
     public static void writeTest(final DHT dht) throws InterruptedException, IOException {
@@ -132,7 +148,7 @@ public class DHTTest {
         }
         
         String dhtKey = TEST_KEY;
-        byte[] value = new String("Hello World, this should be easy to read and write.").getBytes();//FileUtils.readFileToByteArray(new File("/Users/gubatron/Desktop/update.xml"));
+        byte[] value = new String("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001").getBytes();//FileUtils.readFileToByteArray(new File("/Users/gubatron/Desktop/update.xml"));
         PrivateKey privateKey = SecurityUtils.getPrivateKey(FileUtils.readFileToString(new File("/Users/gubatron/Desktop/private.key")).trim());
         SignedMessage signedUpdateMessage = SecurityUtils.sign(value, privateKey);
         byte[] signedMessageData = signedUpdateMessage.toBytes();
@@ -140,30 +156,63 @@ public class DHTTest {
         System.out.println(new String(signedMessageData));
         System.out.println("...");
         
-        dht.put(dhtKey.getBytes(), "", signedMessageData, (byte) (DHT.FLAG_MULTI_VALUE | DHT.FLAG_PRECIOUS),new DHTUpdateMessagePublishListener(dht));
+        
+        DHTUpdateMessagePublishListener dhtUpdateMessagePublishListener = new DHTUpdateMessagePublishListener(dht);
+        if (signedMessageData.length > MAX_VALUE_SIZE) {
+            int offset = 0;
+            boolean lastChunk = false;
+            while (!lastChunk) {
+                byte[] tempData = new byte[Math.min(MAX_VALUE_SIZE, signedMessageData.length - offset)];
+                System.arraycopy(signedMessageData, offset, tempData, 0, tempData.length);
+                offset += tempData.length;
+
+                if ((signedMessageData.length - offset) > MAX_VALUE_SIZE) {
+                    dht.put(dhtKey.getBytes(), "", tempData, (byte) DHT.FLAG_MULTI_VALUE ,dhtUpdateMessagePublishListener);                   
+                    System.out.println("offset="+offset+" dht.put part of " + tempData.length);
+                } else {
+                    dht.put(dhtKey.getBytes(), "", tempData, (byte) 0 , dhtUpdateMessagePublishListener); 
+                    System.out.println("offset="+offset+" dht.put LAST part of " + tempData.length);
+                    lastChunk = true;
+                }
+            }
+        } else {
+            dht.put(dhtKey.getBytes(), "", signedMessageData, (byte) 0 ,new DHTUpdateMessagePublishListener(dht));
+        }
         System.out.println("invoked put...");
     }
     
-    public static void readTest(final DHT dht) throws InterruptedException, IOException {
+    public static void readTest(final DHT dht, DHTUpdateMessagePublishListener dumpl) throws InterruptedException, IOException {
         String dhtKey = TEST_KEY;
         System.out.println("readTest: about to send get");
-        dht.get(dhtKey.getBytes(), "", DHTPlugin.FLAG_MULTI_VALUE, 30, 60000*3, true, true, new DHTUpdateMessagePublishListener(dht));
+        dht.get(dhtKey.getBytes(), "", (byte) DHT.FLAG_SINGLE_VALUE, 30, 60000*3, true, true, dumpl);
         System.out.println("readTest: get invocation finished.");
         DHTTest.seconds = 1;
     }
     
-    private static void onValueRead(DHTTransportContact originator, DHTTransportValue value) {
+    private static void onValueRead(DHTTransportContact originator, DHTTransportValue value,final DHTUpdateMessagePublishListener dumpl) throws InterruptedException, IOException {
         System.out.println("Read value from " + originator.getAddress().getHostString());
+        System.out.println("[" + getString(value) + "]");
+        ByteBuffer readBuffer = dumpl.getReadingByteBuffer();
         byte[] data = value.getValue();
-        SignedMessage signedMessage = SignedMessage.fromBytes(data);
-        boolean verify = SecurityUtils.verify(signedMessage, SecurityUtils.getPublicKey(SecurityUtils.DHT_PUBLIC_KEY));
-        System.out.println("Is it our signed message? " + verify);
-
-        if (signedMessage.base32DataString != null) {
-            String updateMessageXML = new String(Base32.decode(signedMessage.base32DataString));
-            System.out.println("-----");
-            System.out.println(updateMessageXML);
-            System.out.println("-----");
+        readBuffer.put(data);
+        
+        if (value.getFlags() == 0) {
+            data = new byte[readBuffer.position()];
+            readBuffer.get(data);
+            
+            SignedMessage signedMessage = SignedMessage.fromBytes(data);
+            boolean verify = SecurityUtils.verify(signedMessage, SecurityUtils.getPublicKey(SecurityUtils.DHT_PUBLIC_KEY));
+            System.out.println("Is it our signed message? " + verify);
+    
+            if (signedMessage.base32DataString != null) {
+                String updateMessageXML = new String(Base32.decode(signedMessage.base32DataString));
+                System.out.println("-----");
+                System.out.println(getString(value));
+                System.out.println(updateMessageXML);
+                System.out.println("-----");
+            }
+        } else {
+            readTest(dumpl.getDHT(), dumpl);
         }
     }
     
@@ -178,13 +227,16 @@ public class DHTTest {
     public static void main(String[] args ) throws InterruptedException, IOException {
         final AzureusCore azureusCore = initAzureusCore();
         final DHT dht = getDHT(azureusCore);
-        writeTest(dht);
-        readTest(dht);
+        DHTUpdateMessagePublishListener dhtUpdateMessagePublishListener = new DHTUpdateMessagePublishListener(dht);
+        //writeTest(dht);
+        readTest(dht,dhtUpdateMessagePublishListener);
+        //removeTest(dht);
         
         while (true) {
             System.out.println("... " + seconds);
             seconds++;
             Thread.sleep(1000);
+            //readTest(dht);
         }
     }
 }
