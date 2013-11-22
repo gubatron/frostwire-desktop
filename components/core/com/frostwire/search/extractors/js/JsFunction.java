@@ -188,8 +188,8 @@ public final class JsFunction<T> {
         final Matcher func_m = Pattern.compile("function " + java.util.regex.Pattern.quote(funcname) + "\\((?<args>[a-z,]+)\\)\\{(?<code>[^\\}]+)\\}").matcher(ctx.jscode);
         func_m.find();
 
-        final String[] argnames = func_m.group("args").split(",");
-        final String[] stmts = func_m.group("code").split(";");
+        final String[] argnames = mscpy(func_m.group("args").split(","));
+        final String[] stmts = mscpy(func_m.group("code").split(";"));
 
         return new LambdaN() {
             @Override
@@ -205,5 +205,15 @@ public final class JsFunction<T> {
                 return res;
             }
         };
+    }
+
+    private static String[] mscpy(String[] arr) {
+        String[] r = new String[arr.length];
+
+        for (int i = 0; i < arr.length; i++) {
+            r[i] = new String(arr[i].toCharArray());
+        }
+
+        return r;
     }
 }
