@@ -73,7 +73,7 @@ public abstract class SearchEngine {
     public static final int TORLOCK_ID = 14;
     public static final int EZTV_ID = 14;
     
-    private static final DomainAliasManagerBroker DOMAIN_ALIAS_MANAGER_BROKER = new DomainAliasManagerBroker();
+    public static final DomainAliasManagerBroker DOMAIN_ALIAS_MANAGER_BROKER = new DomainAliasManagerBroker();
 
     public static final SearchEngine CLEARBITS = new SearchEngine(CLEARBITS_ID, "ClearBits", SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("www.clearbits.net")) {
         @Override
@@ -175,7 +175,7 @@ public abstract class SearchEngine {
         _domainAliasManager = domainAliasManager;
     }
 
-    protected DomainAliasManager getDomainAliasManager() {
+    public DomainAliasManager getDomainAliasManager() {
         return _domainAliasManager;
     }
 
@@ -185,6 +185,10 @@ public abstract class SearchEngine {
 
     public String getName() {
         return _name;
+    }
+    
+    public String getDefaultDomain() {
+        return _domainAliasManager.getDefaultDomain();
     }
 
     public boolean isEnabled() {
@@ -211,6 +215,20 @@ public abstract class SearchEngine {
             }
         }
 
+        return null;
+    }
+    
+    /**
+     * Used in Domain Alias Manifest QA test, don't delete.
+     */
+    public static SearchEngine getSearchEngineByDefaultDomainName(String domainName) {
+        List<SearchEngine> searchEngines = getEngines();
+
+        for (SearchEngine engine : searchEngines) {
+            if (domainName.equalsIgnoreCase(engine.getDefaultDomain())) {
+                return engine;
+            }
+        }
         return null;
     }
 

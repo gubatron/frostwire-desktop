@@ -45,7 +45,6 @@ public class DomainAliasManagerTest {
             Thread.sleep(10000);
             tokenId += 2312389382l;
             manager.perform(kat.getPerformer(tokenId, "frostwire"));
-
         }
     }
 
