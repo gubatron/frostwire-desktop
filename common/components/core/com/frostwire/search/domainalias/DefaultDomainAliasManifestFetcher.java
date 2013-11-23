@@ -33,8 +33,21 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         manifest.aliases.put("kickass.to", katAliases);
         
         //TPB
+        List<String> tpbAliases = new ArrayList<String>();
+        tpbAliases.add("pirateproxy.se");
+        tpbAliases.add("tpb.unblocked.co");
+        tpbAliases.add("thelitebay.com");
+        tpbAliases.add("www.proxybay.eu");
+        tpbAliases.add("pirateproxy.net");
+        tpbAliases.add("tpbunion.com");
+        tpbAliases.add("pirate-bay.pw");
+        tpbAliases.add("quluxingba.info");
+        tpbAliases.add("welovetpb.co.uk");
+        tpbAliases.add("tpb.pirati.cz");
+        manifest.aliases.put("thepiratebay.sx", tpbAliases);
+        
+        
 
-        System.out.println("Mock manifest built! update managers.");
         notifyManifestFetched(manifest);
     }
 }

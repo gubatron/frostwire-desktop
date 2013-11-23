@@ -26,7 +26,7 @@ public class DomainAliasManagerTest {
 
             @Override
             public void onResults(SearchPerformer performer, List<? extends SearchResult> results) {
-                System.out.println(performer.getToken() + " got results -> " + results.size() + " (from " + ((WebSearchPerformer) performer).getDomainName() + ")");
+                System.out.println(performer.getToken() + " got results -> " + results.size() + " (from " + ((WebSearchPerformer) performer).getDomainNameToUse() + ")");
                 for (SearchResult r : results) {
                     System.out.println(r.getDisplayName());
                 }
