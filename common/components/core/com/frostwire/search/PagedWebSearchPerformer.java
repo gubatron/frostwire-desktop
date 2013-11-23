@@ -59,8 +59,9 @@ public abstract class PagedWebSearchPerformer extends WebSearchPerformer {
                 return searchPage(text);
             }
         } catch (Throwable e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             checkAccesibleDomains();
+            onNoData(this);
         }
         checkAccesibleDomains();
         return Collections.emptyList();

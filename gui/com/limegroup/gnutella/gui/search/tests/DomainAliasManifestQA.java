@@ -152,7 +152,7 @@ public class DomainAliasManifestQA {
             this.testScores = testScores;
             this.testScore = testScore;
             this.latch = latch;
-            //new Thread(this).start();
+            new Thread(this).start();
         }
 
         @Override
@@ -175,7 +175,7 @@ public class DomainAliasManifestQA {
         public void run() {
             System.out.println("SearchTestListener waiting for searches to finish...");
             try {
-                latch.await(30,TimeUnit.SECONDS);
+                latch.await(10,TimeUnit.SECONDS);
             } catch (Throwable e) {
                 e.printStackTrace();
             }
