@@ -41,7 +41,7 @@ public class DomainAliasManagerBroker implements DomainAliasManifestFetcherListe
 
     @Override
     public void onManifestFetched(DomainAliasManifest aliasManifest) {
-        System.out.println("DomainAliasManagerBroker: Got the manifest!!!");
+        System.out.println("DomainAliasManagerBroker: Got the manifest, updating DomainAliasManagers!!!");
         updateManagers(aliasManifest);
     }
 
