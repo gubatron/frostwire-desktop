@@ -121,22 +121,23 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         return false;
     }
     
-    public String getDomainName() {
+    public String getDomainNameToUse() {
         return domainAliasManager.getDomainNameToUse();
     }
+    
+    public String getDefaultDomainName() {
+        return domainAliasManager.getDefaultDomain();
+    }
 
-    protected DomainAliasManager getDomainAliasManager() {
+    public DomainAliasManager getDomainAliasManager() {
         return domainAliasManager;
     }
     
-    public void setDomainName(String domainName) {
-        this.domainName = domainName;
-    }
-
     /**
      * The current domain has failed, mark it offline and let's try check if other mirrors are alive.
      */
     protected void checkAccesibleDomains() {
+        System.out.println("WebSearchPerformer.checkAccesibleDomains()! " + getDefaultDomainName() + " Performer failed, marking " + getDomainNameToUse() + " offline, checking domains.");
         DomainAliasManager domainAliasManager = getDomainAliasManager();
         domainAliasManager.markDomainOffline(domainAliasManager.getDomainNameToUse());
         domainAliasManager.checkStatuses();

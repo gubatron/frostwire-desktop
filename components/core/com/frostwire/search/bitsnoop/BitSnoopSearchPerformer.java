@@ -42,13 +42,13 @@ public class BitSnoopSearchPerformer extends TorrentRegexSearchPerformer<BitSnoo
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://"+getDomainName()+"/search/all/" + encodedKeywords + "/c/d/" + page + "/";
+        return "http://"+getDomainNameToUse()+"/search/all/" + encodedKeywords + "/c/d/" + page + "/";
     }
 
     @Override
     public CrawlableSearchResult fromMatcher(Matcher matcher) {
         String itemId = matcher.group(1);
-        return new BitSnoopTempSearchResult(getDomainName(), itemId);
+        return new BitSnoopTempSearchResult(getDomainNameToUse(), itemId);
     }
 
     @Override

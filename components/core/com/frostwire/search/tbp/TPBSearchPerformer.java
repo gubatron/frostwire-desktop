@@ -51,12 +51,12 @@ public class TPBSearchPerformer extends CrawlRegexSearchPerformer<TPBSearchResul
 
     @Override
     public TPBSearchResult fromMatcher(Matcher matcher) {
-        return new TPBSearchResult(getDomainName(), matcher);
+        return new TPBSearchResult(getDomainNameToUse(), matcher);
     }
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://"+getDomainName()+"/search/" + encodedKeywords + "/0/7/0";
+        return "http://"+getDomainNameToUse()+"/search/" + encodedKeywords + "/0/7/0";
     }
 
     @Override

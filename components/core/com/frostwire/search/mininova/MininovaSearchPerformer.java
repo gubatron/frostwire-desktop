@@ -37,7 +37,7 @@ public class MininovaSearchPerformer extends TorrentJsonSearchPerformer<Mininova
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://"+getDomainName()+"/vuze.php?search=" + encodedKeywords;
+        return "http://"+getDomainNameToUse()+"/vuze.php?search=" + encodedKeywords;
     }
 
     @Override
