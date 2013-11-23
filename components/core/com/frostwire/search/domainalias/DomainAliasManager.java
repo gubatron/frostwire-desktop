@@ -3,6 +3,7 @@ package com.frostwire.search.domainalias;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -117,6 +118,8 @@ public class DomainAliasManager {
                 if (getCurrentDomainAlias() != null) {
                     result = getCurrentDomainAlias().getAlias();
                 }
+            } else {
+                result = getCurrentDomainAlias().alias;
             }
         }
         return result;
@@ -186,14 +189,13 @@ public class DomainAliasManager {
     private DomainAliasPongListener createPongListener() {
         final DomainAliasPongListener pongListener = new DomainAliasPongListener() {
             
-            private boolean firstDomainReportedPong = false;
+            private AtomicBoolean firstDomainReportedPong = new AtomicBoolean(false);
             
             @Override
             public void onDomainAliasPong(DomainAlias domainAlias) {
                 //as soon as the first one of the aliases reports he's online
                 //we'll try to update our active/current domain alias.
-                if (!firstDomainReportedPong) {
-                    firstDomainReportedPong = true;
+                if (firstDomainReportedPong.compareAndSet(false, true)) {
                     getNextOnlineDomainAlias();
                 }
             }
