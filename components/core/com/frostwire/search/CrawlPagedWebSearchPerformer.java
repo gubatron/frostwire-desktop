@@ -18,7 +18,6 @@
 
 package com.frostwire.search;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -90,7 +89,7 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
                         if (data != null) {
                             cachePut(url, data);
                         } else {
-                            //LOG.warn("Failed to download data: " + url);
+                            onNoData(this);
                         }
                     }
 
@@ -100,8 +99,6 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
                             if (results != null) {
                                 onResults(this, results);
                             }
-                        } else {
-                            onResults(this, Collections.EMPTY_LIST);
                         }
                     } catch (Throwable e) {
                         LOG.warn("Error creating crawled results from downloaded data: " + e.getMessage());

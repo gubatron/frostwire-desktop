@@ -33,6 +33,7 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         manifest.aliases.put("kickass.to", katAliases);
         
         //TPB
+        /**
         List<String> tpbAliases = new ArrayList<String>();
         tpbAliases.add("pirateproxy.se");
         tpbAliases.add("tpb.unblocked.co");
@@ -45,8 +46,7 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         tpbAliases.add("welovetpb.co.uk");
         tpbAliases.add("tpb.pirati.cz");
         manifest.aliases.put("thepiratebay.sx", tpbAliases);
-        
-        
+        */
 
         notifyManifestFetched(manifest);
     }

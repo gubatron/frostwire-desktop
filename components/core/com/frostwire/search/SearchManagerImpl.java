@@ -229,6 +229,11 @@ public class SearchManagerImpl implements SearchManager {
                 manager.onResults(performer, list);
             }
         }
+
+        @Override
+        public void onNoData(SearchPerformer performer) {
+            manager.onFinished(performer.getToken());
+        }
     }
 
     private static abstract class SearchTask implements Runnable, Comparable<SearchTask> {
