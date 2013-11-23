@@ -28,4 +28,6 @@ import java.util.List;
 public interface SearchListener {
 
     public void onResults(SearchPerformer performer, List<? extends SearchResult> results);
+    
+    public void onNoData(SearchPerformer performer);
 }

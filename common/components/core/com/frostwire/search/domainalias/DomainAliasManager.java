@@ -162,11 +162,12 @@ public class DomainAliasManager {
     public void checkStatuses() {
         if (aliases != null && !aliases.get().isEmpty()) {
             List<DomainAlias> toRemove = new ArrayList<DomainAlias>();
+            final DomainAliasPongListener pongListener = createPongListener();
             
             synchronized(aliases) {
                 for (DomainAlias alias : aliases.get()) {
                     if (alias.getFailedAttempts() <= 3) {
-                        alias.checkStatus();
+                        alias.checkStatus(pongListener);
                     } else {
                         toRemove.add(alias);
                     }
@@ -180,6 +181,29 @@ public class DomainAliasManager {
             //be borne again.
             resetAliases();
         }
+    }
+    
+    private DomainAliasPongListener createPongListener() {
+        final DomainAliasPongListener pongListener = new DomainAliasPongListener() {
+            
+            private boolean firstDomainReportedPong = false;
+            
+            @Override
+            public void onDomainAliasPong(DomainAlias domainAlias) {
+                //as soon as the first one of the aliases reports he's online
+                //we'll try to update our active/current domain alias.
+                if (!firstDomainReportedPong) {
+                    firstDomainReportedPong = true;
+                    getNextOnlineDomainAlias();
+                }
+            }
+            
+            @Override
+            public void onDomainAliasPingFailed(DomainAlias domainAlias) {
+                DomainAliasManager.this.markDomainOffline(domainAlias.getAlias());
+            }
+        };
+        return pongListener;
     }
 
     private void resetAliases() {

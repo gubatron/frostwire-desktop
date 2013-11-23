@@ -70,4 +70,15 @@ public abstract class AbstractSearchPerformer implements SearchPerformer {
             LOG.warn("Error sending results back to receiver: " + e.getMessage());
         }
     }
+    
+    protected void onNoData(SearchPerformer performer) {
+        try {
+            if (listener != null) {
+                listener.onNoData(performer);
+            }
+        } catch (Throwable t) {
+            LOG.warn("Error reporting no data from search performer.", t);
+        }
+        
+    }
 }

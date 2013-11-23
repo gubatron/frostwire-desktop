@@ -51,7 +51,7 @@ public class DomainAlias {
         return alias;
     }
 
-    public void checkStatus() {
+    public void checkStatus(final DomainAliasPongListener pongListener) {
         if (aliasState != DomainAliasState.CHECKING) {
             long timeSinceLastCheck = System.currentTimeMillis() - lastChecked;
 
@@ -59,7 +59,7 @@ public class DomainAlias {
                 Thread r = new Thread("DomainAlias-Pinger (" + original + "=>" + alias + ")") {
                     @Override
                     public void run() {
-                        pingAlias();
+                        pingAlias(pongListener);
                     }
                 };
                 executor.execute(r);
@@ -67,21 +67,23 @@ public class DomainAlias {
         }
     }
 
-    private void pingAlias() {
+    private void pingAlias(final DomainAliasPongListener pongListener) {
         aliasState = DomainAliasState.CHECKING;
         lastChecked = System.currentTimeMillis();
         if (ping(alias)) {
             aliasState = DomainAliasState.ONLINE;  
             failedAttempts = 0;
+            pongListener.onDomainAliasPong(this);
         } else {
             pingFailed();
+            pongListener.onDomainAliasPingFailed(this);
         }
     }
     
     private static boolean ping(String domainName) {
         boolean connected = false;
         try {
-            //try reacheability test first (this tries a ICMP ping and a tcp connection to echo port.
+            //try reachability test first (this tries a ICMP ping and a tcp connection to echo port.
             InetAddress address = InetAddress.getByName(domainName);
             boolean reachable = address.isReachable(DomainAlias.DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS);
             
