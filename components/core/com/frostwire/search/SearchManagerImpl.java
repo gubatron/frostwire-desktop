@@ -227,6 +227,8 @@ public class SearchManagerImpl implements SearchManager {
 
             if (!list.isEmpty()) {
                 manager.onResults(performer, list);
+            } else {
+                manager.checkIfFinished(performer);
             }
         }
 

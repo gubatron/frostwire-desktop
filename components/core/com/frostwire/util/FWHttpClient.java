@@ -89,6 +89,7 @@ final class FWHttpClient implements HttpClient {
         }
         catch (Throwable e) {
             LOG.error("Error getting string from http body response: " + e.getMessage(), e);
+            throw e;
         } finally {
             closeQuietly(baos);
         }
