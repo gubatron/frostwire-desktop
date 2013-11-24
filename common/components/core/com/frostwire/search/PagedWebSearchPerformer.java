@@ -62,7 +62,6 @@ public abstract class PagedWebSearchPerformer extends WebSearchPerformer {
             checkAccesibleDomains();
             onNoData(this);
         }
-        checkAccesibleDomains();
         return Collections.emptyList();
     }
 

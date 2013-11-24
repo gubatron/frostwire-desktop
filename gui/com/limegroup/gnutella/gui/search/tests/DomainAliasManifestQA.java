@@ -40,6 +40,8 @@ import com.limegroup.gnutella.gui.search.SearchEngine;
  */
 public class DomainAliasManifestQA {
     
+    private static long searchTokenCounter = 1;
+    
     public static void main(String[] args) {
         //Change here for a different manifest fetcher, or if you have a manifest object, just pass it to the test() method
         //to begin your test.
@@ -53,12 +55,16 @@ public class DomainAliasManifestQA {
             
             @Override
             public void onManifestFetched(DomainAliasManifest manifest) {
-                test(manifest);
+                try {
+                    test(manifest);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }).fetchManifest();
     }
 
-    public static void test(DomainAliasManifest manifest) {
+    public static void test(DomainAliasManifest manifest) throws InterruptedException {
         Map<String, List<String>> aliases = manifest.aliases;
         Set<Entry<String, List<String>>> entrySet = aliases.entrySet();
         List<DomainTestScore> testScores = (List<DomainTestScore>) Collections.synchronizedList(new ArrayList<DomainTestScore>());
@@ -73,27 +79,31 @@ public class DomainAliasManifestQA {
         }
     }
 
-    private static void testDomainAliases(String domainName, List<String> domainAliases,List<DomainTestScore> testScores) {
+    private static void testDomainAliases(String domainName, List<String> domainAliases,List<DomainTestScore> testScores) throws InterruptedException {
         SearchEngine SEARCH_ENGINE = SearchEngine.getSearchEngineByDefaultDomainName(domainName);
         SEARCH_ENGINE.getDomainAliasManager().setAliases(domainAliases);
         
         DomainTestScore testScore = new DomainTestScore(domainName, domainAliases);
         
-        CountDownLatch latch = new CountDownLatch(domainAliases.size());
+        CountDownLatch latch = new CountDownLatch(1);//domainAliases.size()+1);
         SearchManager searchManager = new SearchManagerImpl();
         searchManager.registerListener(new SearchTestListener(testScores, testScore, latch));
         
         
         //first search should be with default domain.
-        searchManager.perform(SEARCH_ENGINE.getPerformer(System.currentTimeMillis(),"love"));
+        searchManager.perform(SEARCH_ENGINE.getPerformer(searchTokenCounter++,"love"));
         System.out.println("Started search on domain " + SEARCH_ENGINE.getDomainAliasManager().getDomainNameToUse());
         
+        /**
         for (int i=0; i < domainAliases.size(); i++) {
             SEARCH_ENGINE.getDomainAliasManager().getNextOnlineDomainAlias();
             System.out.println("Started search on alias: " + SEARCH_ENGINE.getDomainAliasManager().getDomainNameToUse());
-            searchManager.perform(SEARCH_ENGINE.getPerformer(System.currentTimeMillis(),"love"));
+            searchManager.perform(SEARCH_ENGINE.getPerformer(searchTokenCounter++,"love"));
+            Thread.sleep(1000);
         }
         
+        searchTokenCounter *= 10;
+        */
     }
     
     private static class DomainTestScore {
@@ -168,7 +178,7 @@ public class DomainAliasManifestQA {
         @Override
         public void onFinished(long token) {
             latch.countDown();
-            System.out.println("Search " + token + " finished. (latch for "+ testScore.originalDomainName + " has " + latch.getCount() + " counts left)");
+            System.out.println("Search #" + token + " finished. (latch for "+ testScore.originalDomainName + " has " + latch.getCount() + " counts left)");
         }
 
         @Override

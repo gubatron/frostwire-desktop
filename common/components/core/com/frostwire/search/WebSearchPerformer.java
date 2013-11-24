@@ -140,6 +140,6 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         System.out.println("WebSearchPerformer.checkAccesibleDomains()! " + getDefaultDomainName() + " Performer failed, marking " + getDomainNameToUse() + " offline, checking domains.");
         DomainAliasManager domainAliasManager = getDomainAliasManager();
         domainAliasManager.markDomainOffline(domainAliasManager.getDomainNameToUse());
-        domainAliasManager.checkStatuses();
+        domainAliasManager.checkStatuses(this);
     }
 }
