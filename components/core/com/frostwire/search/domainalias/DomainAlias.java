@@ -1,15 +1,14 @@
 package com.frostwire.search.domainalias;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.nio.channels.SocketChannel;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.concurrent.ThreadPoolExecutor;
+
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClientFactory;
 
 public class DomainAlias {
 
@@ -85,27 +84,15 @@ public class DomainAlias {
     }
     
     private static boolean ping(String domainName) {
-        boolean connected = false;
+        boolean pong = false;
         try {
-            //try ICMP ping and a tcp connection to echo port first.
-            InetAddress address = InetAddress.getByName(domainName);
-            boolean reachable = address.isReachable(DomainAlias.DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS);
-            
-            if (reachable) {
-                connected = true;
-            } else {
-                //but the server may not attend to pings or have echo port on.
-                //so we then try a TCP connection with port 80.
-                InetSocketAddress inetSocketAddress = new InetSocketAddress(domainName, 80);
-                SocketChannel sc = SocketChannel.open();
-                sc.configureBlocking(true);
-                connected = sc.connect(inetSocketAddress);
-                sc.close();
-            }
-        } catch (IOException e) {
-            connected = false;
+            HttpClient httpClient = HttpClientFactory.newDefaultInstance();
+            String string = httpClient.get("http://"+domainName, 4000);
+            pong = string != null && string.length()> 0;
+        } catch (Throwable t) {
+            System.out.println("No pong from " + domainName + ".");
         }
-        return connected;
+        return pong;
     }
     
     private void pingFailed() {
