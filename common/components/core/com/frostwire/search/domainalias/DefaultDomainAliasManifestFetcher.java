@@ -27,13 +27,13 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         //KAT
         List<String> katAliases = new ArrayList<String>();
         katAliases.add("kickasstorrents.come.in");
-        katAliases.add("www.kat.ph");
-        katAliases.add("kickass.pw");
-        katAliases.add("katproxy.pw");
+        //katAliases.add("www.kat.ph");
+        //katAliases.add("kickass.pw");
+        //katAliases.add("katproxy.pw");
         manifest.aliases.put("kickass.to", katAliases);
         
         //TPB
-        
+        /*
         List<String> tpbAliases = new ArrayList<String>();
         tpbAliases.add("pirateproxy.se");
         tpbAliases.add("tpb.unblocked.co");
@@ -43,9 +43,9 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         tpbAliases.add("tpbunion.com");
         tpbAliases.add("pirate-bay.pw");
         tpbAliases.add("quluxingba.info");
-        tpbAliases.add("welovetpb.co.uk");
         tpbAliases.add("tpb.pirati.cz");
         manifest.aliases.put("thepiratebay.sx", tpbAliases);
+        */
 
         notifyManifestFetched(manifest);
     }

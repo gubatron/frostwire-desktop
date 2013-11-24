@@ -24,7 +24,7 @@ public class DomainAlias {
     private int failedAttempts;
 
     private final static long DOMAIN_ALIAS_CHECK_INTERVAL_MILLISECONDS = 5000;//time to wait before we check again this domain alias after it's been marked offline.
-    private final static int DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS = 2000;
+    private final static int DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS = 3500;
 
     public DomainAlias(String original, String alias) {
         this.original = original;
@@ -87,10 +87,10 @@ public class DomainAlias {
         boolean pong = false;
         try {
             HttpClient httpClient = HttpClientFactory.newDefaultInstance();
-            String string = httpClient.get("http://"+domainName, 4000);
+            String string = httpClient.get("http://"+domainName, DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS);
             pong = string != null && string.length()> 0;
         } catch (Throwable t) {
-            System.out.println("No pong from " + domainName + ".");
+            System.out.println("No pong from " + domainName + ".\n");
         }
         return pong;
     }

@@ -85,7 +85,7 @@ public class DomainAliasManifestQA {
         
         DomainTestScore testScore = new DomainTestScore(domainName, domainAliases);
         
-        CountDownLatch latch = new CountDownLatch(1);//domainAliases.size()+1);
+        CountDownLatch latch = new CountDownLatch(domainAliases.size()+1);
         SearchManager searchManager = new SearchManagerImpl();
         searchManager.registerListener(new SearchTestListener(testScores, testScore, latch));
         
@@ -94,16 +94,16 @@ public class DomainAliasManifestQA {
         searchManager.perform(SEARCH_ENGINE.getPerformer(searchTokenCounter++,"love"));
         System.out.println("Started search on domain " + SEARCH_ENGINE.getDomainAliasManager().getDomainNameToUse());
         
-        /**
-        for (int i=0; i < domainAliases.size(); i++) {
-            SEARCH_ENGINE.getDomainAliasManager().getNextOnlineDomainAlias();
+
+        for (String alias : domainAliases) {
+            SEARCH_ENGINE.getDomainAliasManager().setDomainNameToUse(alias);
             System.out.println("Started search on alias: " + SEARCH_ENGINE.getDomainAliasManager().getDomainNameToUse());
             searchManager.perform(SEARCH_ENGINE.getPerformer(searchTokenCounter++,"love"));
             Thread.sleep(1000);
         }
         
         searchTokenCounter *= 10;
-        */
+
     }
     
     private static class DomainTestScore {
@@ -177,8 +177,10 @@ public class DomainAliasManifestQA {
 
         @Override
         public void onFinished(long token) {
-            latch.countDown();
-            System.out.println("Search #" + token + " finished. (latch for "+ testScore.originalDomainName + " has " + latch.getCount() + " counts left)");
+            if (latch.getCount() > 0) {
+                latch.countDown();
+                System.out.println("Search #" + token + " finished. (latch for "+ testScore.originalDomainName + " has " + latch.getCount() + " counts left)");
+            }
         }
 
         @Override
@@ -186,8 +188,9 @@ public class DomainAliasManifestQA {
             System.out.println("SearchTestListener waiting for searches to finish...");
             try {
                 latch.await(10,TimeUnit.SECONDS);
+                System.out.println("SearchTestListener done waiting...");
             } catch (Throwable e) {
-                e.printStackTrace();
+                System.out.println("SearchTestListener latch timed out!");
             }
             System.out.println("Searches for " + testScore.originalDomainName + " are finished, calculating test scores:");
             System.out.println("----------------------------------------------------------------------------------------");
