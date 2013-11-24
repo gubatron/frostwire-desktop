@@ -60,7 +60,7 @@ public abstract class AbstractSearchPerformer implements SearchPerformer {
     public boolean isStopped() {
         return stopped;
     }
-
+    
     protected void onResults(SearchPerformer performer, List<? extends SearchResult> results) {
         try {
             if (listener != null) {

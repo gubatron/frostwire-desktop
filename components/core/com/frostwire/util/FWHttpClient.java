@@ -88,7 +88,8 @@ final class FWHttpClient implements HttpClient {
             throw timeoutException;
         }
         catch (Throwable e) {
-            LOG.error("Error getting string from http body response: " + e.getMessage(), e);
+            //LOG.error("Error getting string from http body response: " + e.getMessage(), e);
+            e.printStackTrace();
             throw e;
         } finally {
             closeQuietly(baos);

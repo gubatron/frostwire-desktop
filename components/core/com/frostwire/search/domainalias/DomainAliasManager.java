@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
+import com.frostwire.search.SearchPerformer;
+
 /**
  * Simply responsible for maintaining the list of domain aliases and their states for
  * a single domain.
@@ -96,6 +98,7 @@ public class DomainAliasManager {
             for (DomainAlias domainAlias : aliases.get()) {
                 if (domainAlias.alias.equals(offlineDomain)) {
                     domainAlias.markOffline();
+                    return;
                 }
             }
         }
@@ -135,7 +138,7 @@ public class DomainAliasManager {
      * 
      * @return
      */
-    public DomainAlias getNextOnlineDomainAlias() {
+    private DomainAlias getNextOnlineDomainAlias() {
         List<DomainAlias> aliasesList = aliases.get();
         DomainAlias result = null;
 
@@ -162,16 +165,17 @@ public class DomainAliasManager {
      * Will try to ping all DomainAliases that have not been pinged recently to update
      * their statuses.
      */
-    public void checkStatuses() {
+    public void checkStatuses(SearchPerformer performer) {
         if (aliases != null && !aliases.get().isEmpty()) {
             List<DomainAlias> toRemove = new ArrayList<DomainAlias>();
-            final DomainAliasPongListener pongListener = createPongListener();
+            final DomainAliasPongListener pongListener = createPongListener(performer);
             
             synchronized(aliases) {
                 for (DomainAlias alias : aliases.get()) {
                     if (alias.getFailedAttempts() <= 3) {
                         alias.checkStatus(pongListener);
                     } else {
+                        System.out.println("Removing alias " + alias.alias);
                         toRemove.add(alias);
                     }
                 }
@@ -186,7 +190,7 @@ public class DomainAliasManager {
         }
     }
     
-    private DomainAliasPongListener createPongListener() {
+    private DomainAliasPongListener createPongListener(final SearchPerformer performer) {
         final DomainAliasPongListener pongListener = new DomainAliasPongListener() {
             
             private AtomicBoolean firstDomainReportedPong = new AtomicBoolean(false);
@@ -195,8 +199,9 @@ public class DomainAliasManager {
             public void onDomainAliasPong(DomainAlias domainAlias) {
                 //as soon as the first one of the aliases reports he's online
                 //we'll try to update our active/current domain alias.
-                if (firstDomainReportedPong.compareAndSet(false, true)) {
-                    getNextOnlineDomainAlias();
+                if (domainAlias.getState() == DomainAliasState.ONLINE && firstDomainReportedPong.compareAndSet(false, true)) {
+                    currentDomainAlias = domainAlias;
+                    System.out.println("We've selected a new domain alias: New " + getCurrentDomainAlias().alias + " for " + getDefaultDomain() + " (STATE: "+ getCurrentDomainAlias().getState() +")");
                 }
             }
             

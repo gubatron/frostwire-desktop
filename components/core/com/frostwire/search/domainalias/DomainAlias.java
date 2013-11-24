@@ -24,8 +24,8 @@ public class DomainAlias {
     private long lastChecked;
     private int failedAttempts;
 
-    private final static long DOMAIN_ALIAS_CHECK_INTERVAL_MILLISECONDS = 8000;//test with one minute //600000; //10 minutes in production.
-    private final static int DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS = 4000;
+    private final static long DOMAIN_ALIAS_CHECK_INTERVAL_MILLISECONDS = 5000;//time to wait before we check again this domain alias after it's been marked offline.
+    private final static int DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS = 2000;
 
     public DomainAlias(String original, String alias) {
         this.original = original;
@@ -63,7 +63,11 @@ public class DomainAlias {
                     }
                 };
                 executor.execute(r);
+            } else {
+                System.out.println("DomainAlias.checkStatus: Too early to ping again " + alias);
             }
+        } else {
+            System.out.println("DomainAlias.checkStatus: Not checking " + alias +" because it's still CHECKING");
         }
     }
 
@@ -83,7 +87,7 @@ public class DomainAlias {
     private static boolean ping(String domainName) {
         boolean connected = false;
         try {
-            //try reachability test first (this tries a ICMP ping and a tcp connection to echo port.
+            //try ICMP ping and a tcp connection to echo port first.
             InetAddress address = InetAddress.getByName(domainName);
             boolean reachable = address.isReachable(DomainAlias.DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS);
             
