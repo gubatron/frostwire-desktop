@@ -128,6 +128,19 @@ public class DomainAliasManager {
         return result;
     }
 
+    public void setDomainNameToUse(String alias) {
+        List<DomainAlias> aliasList = aliases.get();
+        
+        synchronized (aliasList) {
+            for (DomainAlias domainAlias : aliasList) {
+                if (domainAlias.getAlias().equals(alias)) {
+                    currentDomainAlias = domainAlias;
+                    return;
+                }
+            }
+        }
+    }
+    
     /**
      * Returns the next domain considered as online on the manager's list.
      * null if the current list is empty, null or nobody is online.
