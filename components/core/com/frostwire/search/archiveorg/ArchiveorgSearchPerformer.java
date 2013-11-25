@@ -68,7 +68,7 @@ public class ArchiveorgSearchPerformer extends CrawlPagedWebSearchPerformer<Arch
 
     @Override
     protected String getCrawlUrl(ArchiveorgSearchResult sr) {
-        return "http://archive.org/details/" + sr.getItem().identifier + "?output=json";
+        return "http://archive.org/details/" + sr.getIdentifier() + "?output=json";
     }
 
     @Override
