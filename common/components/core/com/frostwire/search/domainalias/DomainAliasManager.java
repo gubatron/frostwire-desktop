@@ -6,6 +6,12 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
+import javax.xml.bind.Marshaller.Listener;
+
+import com.frostwire.search.PerformerResultListener;
+import com.frostwire.search.SearchListener;
+import com.frostwire.search.SearchManager;
+import com.frostwire.search.SearchManagerImpl;
 import com.frostwire.search.SearchPerformer;
 
 /**
@@ -181,7 +187,11 @@ public class DomainAliasManager {
     public void checkStatuses(SearchPerformer performer) {
         if (aliases != null && !aliases.get().isEmpty()) {
             List<DomainAlias> toRemove = new ArrayList<DomainAlias>();
+            
+            
             final DomainAliasPongListener pongListener = createPongListener(performer);
+
+            reviveSearchTask(performer, pongListener);
             
             synchronized(aliases) {
                 for (DomainAlias alias : aliases.get()) {
@@ -202,6 +212,27 @@ public class DomainAliasManager {
             resetAliases();
         }
     }
+
+    /**
+     * We get a hold of the search manager for our search performer through its
+     * PerformerResultListener object :)
+     * 
+     * Then we create a DomainAliasSwitching task, which keeps tabs on our pong listener.
+     * That task waits for the pong to succeed and it's responsible then for telling the performer
+     * to try again, with what should now be a new domain alias. oh yeah.
+     * 
+     * @param performer
+     * @param pongListener
+     */
+    private void reviveSearchTask(SearchPerformer performer, final DomainAliasPongListener pongListener) {
+        final SearchListener listener = performer.getSearchListener();
+        if (listener instanceof PerformerResultListener) {
+            final PerformerResultListener prListener = (PerformerResultListener) listener;
+            final SearchManagerImpl searchManager = (SearchManagerImpl) prListener.getSearchManager();
+            final SearchManagerImpl.DomainAliasSwitchingTask domainAliasSwitchingTask = new SearchManagerImpl.DomainAliasSwitchingTask(searchManager,performer,0,pongListener);
+            searchManager.submitSearchTask(domainAliasSwitchingTask);
+        }
+    }
     
     private DomainAliasPongListener createPongListener(final SearchPerformer performer) {
         final DomainAliasPongListener pongListener = new DomainAliasPongListener() {
@@ -213,7 +244,7 @@ public class DomainAliasManager {
                 //as soon as the first one of the aliases reports he's online
                 //we'll try to update our active/current domain alias.
                 if (domainAlias.getState() == DomainAliasState.ONLINE && firstDomainReportedPong.compareAndSet(false, true)) {
-                    currentDomainAlias = domainAlias;
+                    currentDomainAlias = domainAlias; //the magic moment
                     System.out.println("We've selected a new domain alias: New " + getCurrentDomainAlias().alias + " for " + getDefaultDomain() + " (STATE: "+ getCurrentDomainAlias().getState() +")");
                 }
             }
