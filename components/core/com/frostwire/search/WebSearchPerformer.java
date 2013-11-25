@@ -50,7 +50,6 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     private final HttpClient client;
     protected String domainName;
 
-    private SearchManager searchManager;
     private final DomainAliasManager domainAliasManager;
     
     public WebSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
@@ -134,14 +133,6 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         return domainAliasManager;
     }
  
-    public void setSearchSearchManager(final SearchManager searchManager) {
-        this.searchManager = searchManager;
-    }
-    
-    public SearchManager getSearchManager() {
-        return searchManager;
-    }
-    
     /**
      * The current domain has failed, mark it offline and let's try check if other mirrors are alive.
      */
