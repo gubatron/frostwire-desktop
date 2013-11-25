@@ -81,4 +81,8 @@ public abstract class AbstractSearchPerformer implements SearchPerformer {
         }
         
     }
+    
+    public SearchListener getSearchListener() {
+        return this.listener;
+    }
 }
