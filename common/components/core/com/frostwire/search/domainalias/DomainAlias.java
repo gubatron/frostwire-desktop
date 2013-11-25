@@ -74,6 +74,7 @@ public class DomainAlias {
         aliasState = DomainAliasState.CHECKING;
         lastChecked = System.currentTimeMillis();
         if (ping(alias)) {
+            System.out.println(alias + " Domain alias pong! ");
             aliasState = DomainAliasState.ONLINE;  
             failedAttempts = 0;
             pongListener.onDomainAliasPong(this);

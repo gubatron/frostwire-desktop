@@ -259,7 +259,7 @@ public class SearchManagerImpl implements SearchManager {
     
     public static class DomainAliasSwitchingTask extends SearchTask implements DomainAliasPongListener {
         private boolean isStopped = false;
-        private boolean pongFailed = false;
+        private boolean pongFailed = false; //maybe we should assume these will fail.
         private final DomainAliasPongListener pongListenerRelay;
         private final CountDownLatch latch;
         
@@ -271,6 +271,8 @@ public class SearchManagerImpl implements SearchManager {
 
         @Override
         public void onDomainAliasPong(DomainAlias domainAlias) {
+            System.out.println("DomainAliasSwitchingTask.onDomainAliasPong from " + domainAlias.alias);
+            
             //let the original pong listener do what he's supposed to do
             try {
                 pongListenerRelay.onDomainAliasPong(domainAlias);
@@ -293,17 +295,23 @@ public class SearchManagerImpl implements SearchManager {
 
             pongFailed = true;
             isStopped = true;
-            latch.countDown();
         }
 
         @Override
         public void run() {
             try {
                 System.out.println("DomainAliasSwitchingTask waiting for pong...");
-                latch.await(30, TimeUnit.SECONDS);
+                latch.await(10, TimeUnit.SECONDS);
                 
                 if (!pongFailed) {
-                    performer.perform();
+                    System.out.println("Telling performer to perform again from the submitted DomainAliasSwitchingTask.");
+                    System.out.println("Was the performer stopped before performing? " + performer.isStopped());
+                    /** None of these reflect the new search results in the UI, gotta keep reading,
+                     * even though we are inside a task that's been submitted to the search manager. */
+                    //performer.perform();
+                    //manager.perform(performer);
+                    
+                    System.out.println("And after? " + performer.isStopped());
                 }
                 
                 isStopped = true;

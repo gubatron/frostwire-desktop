@@ -188,9 +188,7 @@ public class DomainAliasManager {
         if (aliases != null && !aliases.get().isEmpty()) {
             List<DomainAlias> toRemove = new ArrayList<DomainAlias>();
             
-            
             final DomainAliasPongListener pongListener = createPongListener(performer);
-
             reviveSearchTask(performer, pongListener);
             
             synchronized(aliases) {
@@ -244,8 +242,9 @@ public class DomainAliasManager {
                 //as soon as the first one of the aliases reports he's online
                 //we'll try to update our active/current domain alias.
                 if (domainAlias.getState() == DomainAliasState.ONLINE && firstDomainReportedPong.compareAndSet(false, true)) {
+                    System.out.println("DomainAliasManager.DomainAliasPongListener.onDomainAliasPong(): got pong from " + domainAlias.alias);
                     currentDomainAlias = domainAlias; //the magic moment
-                    System.out.println("We've selected a new domain alias: New " + getCurrentDomainAlias().alias + " for " + getDefaultDomain() + " (STATE: "+ getCurrentDomainAlias().getState() +")");
+                    System.out.println("DomainAliasManager.DomainAliasPongListener.onDomainAliasPong(): We've selected a new domain alias: New " + getCurrentDomainAlias().alias + " for " + getDefaultDomain() + " (STATE: "+ getCurrentDomainAlias().getState() +")");
                 }
             }
             
