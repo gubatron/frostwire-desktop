@@ -27,6 +27,7 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         //KAT
         List<String> katAliases = new ArrayList<String>();
         katAliases.add("kickasstorrents.come.in");
+        katAliases.add("kickass.pw");
         //katAliases.add("www.kat.ph");
         //katAliases.add("kickass.pw");
         //katAliases.add("katproxy.pw");
