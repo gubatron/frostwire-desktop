@@ -33,25 +33,27 @@ import com.frostwire.search.CrawlableSearchResult;
  */
 public class ArchiveorgSearchResult extends AbstractSearchResult implements CrawlableSearchResult {
 
-    private final ArchiveorgItem item;
+    private final String identifier;
+    private final String title;
     private final String detailsUrl;
     private final License licence;
     private final long creationTime;
 
     public ArchiveorgSearchResult(ArchiveorgItem item) {
-        this.item = item;
+        this.identifier = item.identifier;
+        this.title = item.title;
         this.detailsUrl = "http://archive.org/details/" + item.identifier;
         this.licence = License.creativeCommonsByUrl(item.licenseurl);
         this.creationTime = parsePublicDate(item.publicdate);
     }
 
-    public ArchiveorgItem getItem() {
-        return item;
+    public String getIdentifier() {
+        return identifier;
     }
 
     @Override
     public String getDisplayName() {
-        return item.title;
+        return title;
     }
 
     @Override
