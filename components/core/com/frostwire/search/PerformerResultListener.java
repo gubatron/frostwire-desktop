@@ -31,8 +31,6 @@ public final class PerformerResultListener implements SearchListener {
 
         if (!list.isEmpty()) {
             manager.onResults(performer, list);
-        } else {
-            manager.checkIfFinished(performer);
         }
     }
 
