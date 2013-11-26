@@ -28,6 +28,9 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         List<String> katAliases = new ArrayList<String>();
         katAliases.add("kickasstorrents.come.in");
         katAliases.add("kickass.pw");
+        katAliases.add("katproxy.co"); //*
+        katAliases.add("kickass.to.proxy.piratenpartij.nl"); //*
+        
         //katAliases.add("www.kat.ph");
         //katAliases.add("kickass.pw");
         //katAliases.add("katproxy.pw");
@@ -36,11 +39,14 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         //TPB
         /*
         List<String> tpbAliases = new ArrayList<String>();
+        tpbAliases.add("pirateproxy.net"); //*
+        tbpAliases.add("proxybay.de"); //*
+        
         tpbAliases.add("pirateproxy.se");
         tpbAliases.add("tpb.unblocked.co");
         tpbAliases.add("thelitebay.com");
         tpbAliases.add("www.proxybay.eu");
-        tpbAliases.add("pirateproxy.net");
+        
         tpbAliases.add("tpbunion.com");
         tpbAliases.add("pirate-bay.pw");
         tpbAliases.add("quluxingba.info");

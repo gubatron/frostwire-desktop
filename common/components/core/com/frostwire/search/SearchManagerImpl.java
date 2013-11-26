@@ -305,13 +305,10 @@ public class SearchManagerImpl implements SearchManager {
                 
                 if (!pongFailed) {
                     System.out.println("Telling performer to perform again from the submitted DomainAliasSwitchingTask.");
-                    System.out.println("Was the performer stopped before performing? " + performer.isStopped());
                     /** None of these reflect the new search results in the UI, gotta keep reading,
                      * even though we are inside a task that's been submitted to the search manager. */
-                    //performer.perform();
+                    performer.perform();
                     //manager.perform(performer);
-                    
-                    System.out.println("And after? " + performer.isStopped());
                 }
                 
                 isStopped = true;

@@ -6,11 +6,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.xml.bind.Marshaller.Listener;
-
 import com.frostwire.search.PerformerResultListener;
 import com.frostwire.search.SearchListener;
-import com.frostwire.search.SearchManager;
 import com.frostwire.search.SearchManagerImpl;
 import com.frostwire.search.SearchPerformer;
 
@@ -189,7 +186,7 @@ public class DomainAliasManager {
             List<DomainAlias> toRemove = new ArrayList<DomainAlias>();
             
             final DomainAliasPongListener pongListener = createPongListener(performer);
-            reviveSearchTask(performer, pongListener);
+            //reviveSearchTask(performer, pongListener);
             
             synchronized(aliases) {
                 for (DomainAlias alias : aliases.get()) {
@@ -244,6 +241,7 @@ public class DomainAliasManager {
                 if (domainAlias.getState() == DomainAliasState.ONLINE && firstDomainReportedPong.compareAndSet(false, true)) {
                     System.out.println("DomainAliasManager.DomainAliasPongListener.onDomainAliasPong(): got pong from " + domainAlias.alias);
                     currentDomainAlias = domainAlias; //the magic moment
+                    performer.perform();
                     System.out.println("DomainAliasManager.DomainAliasPongListener.onDomainAliasPong(): We've selected a new domain alias: New " + getCurrentDomainAlias().alias + " for " + getDefaultDomain() + " (STATE: "+ getCurrentDomainAlias().getState() +")");
                 }
             }
