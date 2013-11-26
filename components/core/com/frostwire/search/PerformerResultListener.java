@@ -38,7 +38,8 @@ public final class PerformerResultListener implements SearchListener {
 
     @Override
     public void onNoData(SearchPerformer performer) {
-        manager.onFinished(performer.getToken());
+        //don't notify the manager since the performer
+        //might be trying to switch domains and continue the search
     }
     
     public SearchManager getSearchManager() {
