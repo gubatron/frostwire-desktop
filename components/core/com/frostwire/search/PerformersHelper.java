@@ -50,7 +50,7 @@ public final class PerformersHelper {
         int i = 0;
 
         while (matcher.find() && i < max && !performer.isStopped()) {
-            SearchResult sr = performer.fromMatcher(matcher);
+            SearchResult sr = performer.fromMatcher(new SearchMatcher(matcher));
             if (sr != null) {
                 result.add(sr);
                 i++;

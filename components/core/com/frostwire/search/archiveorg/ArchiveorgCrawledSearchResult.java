@@ -45,7 +45,7 @@ public class ArchiveorgCrawledSearchResult extends AbstractCrawledSearchResult i
         super(sr);
         this.filename = filename;
         this.displayName = FilenameUtils.getBaseName(filename) + " (" + sr.getDisplayName() + ")";
-        this.downloadUrl = String.format(Locale.US, DOWNLOAD_URL, sr.getDomainName(), sr.getItem().identifier, filename);
+        this.downloadUrl = String.format(Locale.US, DOWNLOAD_URL, sr.getDomainName(), sr.getIdentifier(), filename);
         this.size = calcSize(file);
     }
 

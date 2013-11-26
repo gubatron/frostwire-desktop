@@ -19,11 +19,11 @@
 package com.frostwire.search.tbp;
 
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.frostwire.search.CrawlRegexSearchPerformer;
 import com.frostwire.search.PerformersHelper;
+import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.SearchResult;
 import com.frostwire.search.domainalias.DomainAliasManager;
 
@@ -50,7 +50,7 @@ public class TPBSearchPerformer extends CrawlRegexSearchPerformer<TPBSearchResul
     }
 
     @Override
-    public TPBSearchResult fromMatcher(Matcher matcher) {
+    public TPBSearchResult fromMatcher(SearchMatcher matcher) {
         return new TPBSearchResult(getDomainNameToUse(), matcher);
     }
 

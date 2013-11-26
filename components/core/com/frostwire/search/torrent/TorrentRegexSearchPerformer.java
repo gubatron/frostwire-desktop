@@ -26,6 +26,7 @@ import com.frostwire.search.CrawlRegexSearchPerformer;
 import com.frostwire.search.CrawlableSearchResult;
 import com.frostwire.search.MaxIterCharSequence;
 import com.frostwire.search.PerformersHelper;
+import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.SearchResult;
 import com.frostwire.search.domainalias.DomainAliasManager;
 
@@ -77,15 +78,15 @@ public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResul
 
             try {
                 if (matcher.find()) {
-                    list.add(fromHtmlMatcher(sr, matcher));
+                    list.add(fromHtmlMatcher(sr, new SearchMatcher(matcher)));
                 }
             } catch (Exception e) {
-              throw new Exception("URL:" + sr.getDetailsUrl(), e);  
+                throw new Exception("URL:" + sr.getDetailsUrl(), e);
             }
         }
 
         return list;
     }
 
-    protected abstract T fromHtmlMatcher(CrawlableSearchResult sr, Matcher matcher);
+    protected abstract T fromHtmlMatcher(CrawlableSearchResult sr, SearchMatcher matcher);
 }

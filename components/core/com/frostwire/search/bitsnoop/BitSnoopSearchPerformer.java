@@ -18,9 +18,8 @@
 
 package com.frostwire.search.bitsnoop;
 
-import java.util.regex.Matcher;
-
 import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
 
@@ -46,13 +45,13 @@ public class BitSnoopSearchPerformer extends TorrentRegexSearchPerformer<BitSnoo
     }
 
     @Override
-    public CrawlableSearchResult fromMatcher(Matcher matcher) {
+    public CrawlableSearchResult fromMatcher(SearchMatcher matcher) {
         String itemId = matcher.group(1);
         return new BitSnoopTempSearchResult(getDomainNameToUse(), itemId);
     }
 
     @Override
-    protected BitSnoopSearchResult fromHtmlMatcher(CrawlableSearchResult sr, Matcher matcher) {
+    protected BitSnoopSearchResult fromHtmlMatcher(CrawlableSearchResult sr, SearchMatcher matcher) {
         return new BitSnoopSearchResult(sr.getDetailsUrl(), matcher);
     }
 }

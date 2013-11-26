@@ -20,6 +20,7 @@ package com.frostwire.search.youtube;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -33,27 +34,18 @@ import com.frostwire.search.CrawlableSearchResult;
  */
 public class YouTubeSearchResult extends AbstractFileSearchResult implements CrawlableSearchResult {
 
-    //2010-07-15T16:02:42
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-
-    private final YouTubeEntry entry;
-
     private final String filename;
     private final String displayName;
     private final long creationTime;
     private final String videoUrl;
+    private final String source;
 
     public YouTubeSearchResult(YouTubeEntry entry) {
-        this.entry = entry;
-
         this.filename = entry.title.title + ".youtube";
         this.displayName = FilenameUtils.getBaseName(filename);
         this.creationTime = readCreationTime(entry);
         this.videoUrl = readVideoUrl(entry);
-    }
-
-    public YouTubeEntry getYouTubeEntry() {
-        return entry;
+        this.source = buildSource(entry);
     }
 
     @Override
@@ -78,11 +70,7 @@ public class YouTubeSearchResult extends AbstractFileSearchResult implements Cra
 
     @Override
     public String getSource() {
-        if (entry.author != null && entry.author.size() > 0 && entry.author.get(0).name != null && entry.author.get(0).name.title != null) {
-            return "YouTube - " + entry.author.get(0).name.title;
-        } else {
-            return "YouTube";
-        }
+        return source;
     }
 
     @Override
@@ -94,10 +82,12 @@ public class YouTubeSearchResult extends AbstractFileSearchResult implements Cra
     public boolean isComplete() {
         return true;
     }
-    
+
     private long readCreationTime(YouTubeEntry entry) {
         try {
-            return DATE_FORMAT.parse(entry.published.title.replace("000Z", "")).getTime();
+            //2010-07-15T16:02:42
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+            return dateFormat.parse(entry.published.title.replace("000Z", "")).getTime();
         } catch (ParseException e) {
             return System.currentTimeMillis();
         }
@@ -115,5 +105,13 @@ public class YouTubeSearchResult extends AbstractFileSearchResult implements Cra
         url = url.replace("https://", "http://").replace("&feature=youtube_gdata", "");
 
         return url;
+    }
+
+    private String buildSource(YouTubeEntry entry) {
+        if (entry.author != null && entry.author.size() > 0 && entry.author.get(0).name != null && entry.author.get(0).name.title != null) {
+            return "YouTube - " + entry.author.get(0).name.title;
+        } else {
+            return "YouTube";
+        }
     }
 }

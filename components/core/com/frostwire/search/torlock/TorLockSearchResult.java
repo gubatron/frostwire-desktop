@@ -22,11 +22,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
 
 import org.apache.commons.io.FilenameUtils;
 
+import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.torrent.AbstractTorrentSearchResult;
 import com.frostwire.util.HtmlManipulator;
 import com.frostwire.util.StringUtils;
@@ -62,7 +63,7 @@ public class TorLockSearchResult extends AbstractTorrentSearchResult {
     private long creationTime;
     private int seeds;
 
-    public TorLockSearchResult(String domainName, String detailsUrl, Matcher matcher) {
+    public TorLockSearchResult(String domainName, String detailsUrl, SearchMatcher matcher) {
         this.detailsUrl = detailsUrl;
         this.infoHash = null;
         this.filename = parseFileName(matcher.group(1), FilenameUtils.getBaseName(detailsUrl));
@@ -160,7 +161,7 @@ public class TorLockSearchResult extends AbstractTorrentSearchResult {
     private long parseCreationTime(String dateString) {
         long result = System.currentTimeMillis();
         try {
-            SimpleDateFormat myFormat = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat myFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
             result = myFormat.parse(dateString).getTime();
         } catch (Throwable t) {
         }

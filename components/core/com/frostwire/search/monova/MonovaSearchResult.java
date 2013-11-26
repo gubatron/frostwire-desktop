@@ -21,10 +21,10 @@ package com.frostwire.search.monova;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
 
 import org.apache.commons.io.FilenameUtils;
 
+import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.torrent.AbstractTorrentSearchResult;
 import com.frostwire.util.HtmlManipulator;
 
@@ -59,7 +59,7 @@ public class MonovaSearchResult extends AbstractTorrentSearchResult {
     private long creationTime;
     private int seeds;
 
-    public MonovaSearchResult(String detailsUrl, Matcher matcher) {
+    public MonovaSearchResult(String detailsUrl, SearchMatcher matcher) {
         /*
          * Matcher groups cheatsheet
          * 1 -> .torrent URL

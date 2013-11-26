@@ -16,19 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.search;
+package com.frostwire.search.extractors.js;
 
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * 
  * @author gubatron
  * @author aldenml
  *
  */
-public interface RegexSearchPerformer<T extends SearchResult> extends SearchPerformer {
+class JsContext {
 
-    public Pattern getPattern();
+    public JsContext(String jscode) {
+        this.jscode = new StringBuilder(jscode);
+        this.functions = new HashMap<String, LambdaN>();
+    }
 
-    public T fromMatcher(SearchMatcher matcher);
+    public final StringBuilder jscode;
+    public final Map<String, LambdaN> functions;
+
+    public void free() {
+        jscode.setLength(0);
+        jscode.trimToSize();
+    }
 }
