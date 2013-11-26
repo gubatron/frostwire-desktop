@@ -41,26 +41,29 @@ import com.google.code.regexp.Pattern;
  */
 public final class JsFunction<T> {
 
-    private final String jscode;
-    private final Map<String, LambdaN> functions;
+    private final JsContext ctx;
     private final LambdaN initial_function;
 
     public JsFunction(String jscode, String funcname) {
-        this.jscode = jscode;
-        this.functions = new HashMap<String, LambdaN>();
-        this.initial_function = extract_function(funcname);
+        this.ctx = new JsContext(jscode);
+        this.initial_function = extract_function(ctx, funcname);
     }
 
     @SuppressWarnings("unchecked")
     public T eval(Object[] args) {
-        return (T) initial_function.eval(args);
+        try {
+            return (T) initial_function.eval(args);
+        } finally {
+            // at this point we know that jscode is no longer necessary
+            ctx.free();
+        }
     }
 
     public T eval(Object s) {
         return eval(new Object[] { s });
     }
 
-    private Object interpret_statement(String stmt, final Map<String, Object> local_vars, final int allow_recursion) {
+    private static Object interpret_statement(final JsContext ctx, String stmt, final Map<String, Object> local_vars, final int allow_recursion) {
         if (allow_recursion < 0) {
             throw new JsError("Recursion limit reached");
         }
@@ -74,22 +77,27 @@ public final class JsFunction<T> {
         String expr;
         if (ass_m.find()) {
             if (ass_m.group("index") != null) {
+
+                final Object lvar = local_vars.get(ass_m.group("out"));
+                final Object idx = interpret_expression(ctx, ass_m.group("index"), local_vars, allow_recursion);
+                assert idx instanceof Integer;
+
                 assign = new Lambda1() {
                     @Override
                     public Object eval(Object val) {
-                        Object lvar = local_vars.get(ass_m.group("out"));
-                        Object idx = interpret_expression(ass_m.group("index"), local_vars, allow_recursion);
-                        assert idx instanceof Integer;
                         ((Object[]) lvar)[(Integer) idx] = val;
                         return val;
                     }
                 };
                 expr = ass_m.group("expr");
             } else {
+
+                final String var = ass_m.group("out");
+
                 assign = new Lambda1() {
                     @Override
                     public Object eval(Object val) {
-                        local_vars.put(ass_m.group("out"), val);
+                        local_vars.put(var, val);
                         return val;
                     }
                 };
@@ -107,11 +115,11 @@ public final class JsFunction<T> {
             throw new JsError(String.format("Cannot determine left side of statement in %s", stmt));
         }
 
-        Object v = interpret_expression(expr, local_vars, allow_recursion);
+        Object v = interpret_expression(ctx, expr, local_vars, allow_recursion);
         return assign.eval(v);
     }
 
-    private Object interpret_expression(String expr, Map<String, Object> local_vars, int allow_recursion) {
+    private static Object interpret_expression(final JsContext ctx, String expr, Map<String, Object> local_vars, int allow_recursion) {
         if (isdigit(expr)) {
             return Integer.valueOf(expr);
         }
@@ -138,7 +146,7 @@ public final class JsFunction<T> {
             }
             Matcher slice_m = Pattern.compile("slice\\((?<idx>.*)\\)").matcher(member);
             if (slice_m.find()) {
-                Object idx = interpret_expression(slice_m.group("idx"), local_vars, allow_recursion - 1);
+                Object idx = interpret_expression(ctx, slice_m.group("idx"), local_vars, allow_recursion - 1);
                 return splice(val, (Integer) idx);
             }
         }
@@ -146,22 +154,22 @@ public final class JsFunction<T> {
         m = Pattern.compile("^(?<in>[a-z]+)\\[(?<idx>.+)\\]$").matcher(expr);
         if (m.find()) {
             Object val = local_vars.get(m.group("in"));
-            Object idx = interpret_expression(m.group("idx"), local_vars, allow_recursion - 1);
+            Object idx = interpret_expression(ctx, m.group("idx"), local_vars, allow_recursion - 1);
             return ((Object[]) val)[(Integer) idx];
         }
 
         m = Pattern.compile("^(?<a>.+?)(?<op>[%])(?<b>.+?)$").matcher(expr);
         if (m.find()) {
-            Object a = interpret_expression(m.group("a"), local_vars, allow_recursion);
-            Object b = interpret_expression(m.group("b"), local_vars, allow_recursion);
+            Object a = interpret_expression(ctx, m.group("a"), local_vars, allow_recursion);
+            Object b = interpret_expression(ctx, m.group("b"), local_vars, allow_recursion);
             return (Integer) a % (Integer) b;
         }
 
         m = Pattern.compile("^(?<func>[a-zA-Z]+)\\((?<args>[a-z0-9,]+)\\)$").matcher(expr);
         if (m.find()) {
             String fname = m.group("func");
-            if (!functions.containsKey(fname)) {
-                functions.put(fname, extract_function(fname));
+            if (!ctx.functions.containsKey(fname) && ctx.jscode.length() > 0) {
+                ctx.functions.put(fname, extract_function(ctx, fname));
             }
             List<Object> argvals = new ArrayList<Object>();
             for (String v : m.group("args").split(",")) {
@@ -171,17 +179,19 @@ public final class JsFunction<T> {
                     argvals.add(local_vars.get(v));
                 }
             }
-            return functions.get(fname).eval(argvals.toArray());
+            return ctx.functions.get(fname).eval(argvals.toArray());
         }
         throw new JsError(String.format("Unsupported JS expression %s", expr));
     }
 
-    private LambdaN extract_function(String funcname) {
-        final Matcher func_m = Pattern.compile("function " + java.util.regex.Pattern.quote(funcname) + "\\((?<args>[a-z,]+)\\)\\{(?<code>[^\\}]+)\\}").matcher(jscode);
+    private static LambdaN extract_function(final JsContext ctx, String funcname) {
+        final Matcher func_m = Pattern.compile("function " + java.util.regex.Pattern.quote(funcname) + "\\((?<args>[a-z,]+)\\)\\{(?<code>[^\\}]+)\\}").matcher(ctx.jscode);
         func_m.find();
-        final String[] argnames = func_m.group("args").split(",");
 
-        LambdaN resf = new LambdaN() {
+        final String[] argnames = mscpy(func_m.group("args").split(","));
+        final String[] stmts = mscpy(func_m.group("code").split(";"));
+
+        return new LambdaN() {
             @Override
             public Object eval(Object[] args) {
                 Map<String, Object> local_vars = new HashMap<String, Object>();
@@ -189,13 +199,21 @@ public final class JsFunction<T> {
                     local_vars.put(argnames[i], args[i]);
                 }
                 Object res = null;
-                for (String stmt : func_m.group("code").split(";")) {
-                    res = interpret_statement(stmt, local_vars, 20);
+                for (String stmt : stmts) {
+                    res = interpret_statement(ctx, stmt, local_vars, 20);
                 }
                 return res;
             }
         };
+    }
 
-        return resf;
+    private static String[] mscpy(String[] arr) {
+        String[] r = new String[arr.length];
+
+        for (int i = 0; i < arr.length; i++) {
+            r[i] = new String(arr[i].toCharArray());
+        }
+
+        return r;
     }
 }

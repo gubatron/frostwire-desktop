@@ -18,17 +18,22 @@
 
 package com.frostwire.search;
 
-import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
- * 
  * @author gubatron
  * @author aldenml
  *
  */
-public interface RegexSearchPerformer<T extends SearchResult> extends SearchPerformer {
+public class SearchMatcher {
 
-    public Pattern getPattern();
+    private final Matcher matcher;
 
-    public T fromMatcher(SearchMatcher matcher);
+    public SearchMatcher(Matcher matcher) {
+        this.matcher = matcher;
+    }
+
+    public String group(int group) {
+        return new String(matcher.group(group).toCharArray());
+    }
 }

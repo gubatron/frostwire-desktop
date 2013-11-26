@@ -22,11 +22,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
 
 import org.apache.commons.io.FilenameUtils;
 
+import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.torrent.AbstractTorrentSearchResult;
 import com.frostwire.util.HtmlManipulator;
 import com.frostwire.util.StringUtils;
@@ -62,7 +63,7 @@ public class BitSnoopSearchResult extends AbstractTorrentSearchResult {
     private long creationTime;
     private int seeds;
 
-    public BitSnoopSearchResult(String detailsUrl, Matcher matcher) {
+    public BitSnoopSearchResult(String detailsUrl, SearchMatcher matcher) {
         this.detailsUrl = detailsUrl;
         this.infoHash = matcher.group(1);
         this.filename = parseFileName(matcher.group(2), FilenameUtils.getBaseName(detailsUrl));
@@ -150,8 +151,8 @@ public class BitSnoopSearchResult extends AbstractTorrentSearchResult {
 
     private int parseSeeds(String group) {
         try {
-            
-            if (group.indexOf("0 / 0")==-1) {
+
+            if (group.indexOf("0 / 0") == -1) {
                 group = group.split("\"Seeders\">")[1];
                 group = group.split("</span>")[0];
                 group = group.replace(",", "");
@@ -168,7 +169,7 @@ public class BitSnoopSearchResult extends AbstractTorrentSearchResult {
     private long parseCreationTime(String dateString) {
         long result = System.currentTimeMillis();
         try {
-            SimpleDateFormat myFormat = new SimpleDateFormat("dd-MMM-yy");
+            SimpleDateFormat myFormat = new SimpleDateFormat("dd-MMM-yy", Locale.US);
             result = myFormat.parse(dateString).getTime();
         } catch (Throwable t) {
         }

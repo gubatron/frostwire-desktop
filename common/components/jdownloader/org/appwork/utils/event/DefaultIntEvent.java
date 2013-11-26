@@ -18,7 +18,7 @@ package org.appwork.utils.event;
  */
 
 @Deprecated
-public abstract class DefaultIntEvent<T> extends DefaultEvent {
+public abstract class DefaultIntEvent extends DefaultEvent {
     /**
      * ID of this Event
      */
@@ -27,7 +27,7 @@ public abstract class DefaultIntEvent<T> extends DefaultEvent {
     /**
      * Parameters of this event.
      */
-    private T[]       parameters = null;
+    private Object[]       parameters = null;
 
     /**
      * Creates a new Event
@@ -53,7 +53,7 @@ public abstract class DefaultIntEvent<T> extends DefaultEvent {
      *            a parameter object
      */
 
-    public DefaultIntEvent(final Object caller, final int eventID, @SuppressWarnings("unchecked") final T... parameters) {
+    public DefaultIntEvent(final Object caller, final int eventID, final Object... parameters) {
         this(caller, eventID);
         this.parameters = parameters;
     }
@@ -70,12 +70,12 @@ public abstract class DefaultIntEvent<T> extends DefaultEvent {
      * @return the {@link DefaultIntEvent#parameters}
      * @see DefaultIntEvent#parameters
      */
-    public T getParameter() {
+    public Object getParameter() {
         if (this.parameters == null || this.parameters.length == 0) { return null; }
         return this.parameters[0];
     }
 
-    public T[] getParameters() {
+    public Object[] getParameters() {
 
         return this.parameters;
     }
