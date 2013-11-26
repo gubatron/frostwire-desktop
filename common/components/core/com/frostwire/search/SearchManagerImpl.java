@@ -21,7 +21,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -31,8 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.frostwire.concurrent.DefaultThreadFactory;
-import com.frostwire.search.domainalias.DomainAlias;
-import com.frostwire.search.domainalias.DomainAliasPongListener;
 
 /**
  * 
@@ -254,73 +251,6 @@ public class SearchManagerImpl implements SearchManager {
                     manager.checkIfFinished(performer);
                 }
             }
-        }
-    }
-    
-    public static class DomainAliasSwitchingTask extends SearchTask implements DomainAliasPongListener {
-        private boolean isStopped = false;
-        private boolean pongFailed = false; //maybe we should assume these will fail.
-        private final DomainAliasPongListener pongListenerRelay;
-        private final CountDownLatch latch;
-        
-        public DomainAliasSwitchingTask(SearchManagerImpl manager, SearchPerformer performer, int order, DomainAliasPongListener pongListener) {
-            super(manager,performer,order);
-            this.pongListenerRelay = pongListener;
-            latch = new CountDownLatch(1);
-        }
-
-        @Override
-        public void onDomainAliasPong(DomainAlias domainAlias) {
-            System.out.println("DomainAliasSwitchingTask.onDomainAliasPong from " + domainAlias.alias);
-            
-            //let the original pong listener do what he's supposed to do
-            try {
-                pongListenerRelay.onDomainAliasPong(domainAlias);
-            } catch (Throwable t) {
-                
-            }
-
-            //restart the search on this task
-            latch.countDown();
-            //run method should kick in after latch is decreased.
-        }
-
-        @Override
-        public void onDomainAliasPingFailed(DomainAlias domainAlias) {
-            try {
-                pongListenerRelay.onDomainAliasPingFailed(domainAlias);
-            } catch (Throwable t) {
-                //we're not responsible for the original pongListener's behavior.
-            }
-
-            pongFailed = true;
-            isStopped = true;
-        }
-
-        @Override
-        public void run() {
-            try {
-                System.out.println("DomainAliasSwitchingTask waiting for pong...");
-                latch.await(10, TimeUnit.SECONDS);
-                
-                if (!pongFailed) {
-                    System.out.println("Telling performer to perform again from the submitted DomainAliasSwitchingTask.");
-                    /** None of these reflect the new search results in the UI, gotta keep reading,
-                     * even though we are inside a task that's been submitted to the search manager. */
-                    performer.perform();
-                    //manager.perform(performer);
-                }
-                
-                isStopped = true;
-                
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        
-        @Override
-        public boolean isStopped() {
-            return isStopped;
         }
     }
 

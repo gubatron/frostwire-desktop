@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import com.frostwire.search.PerformerResultListener;
-import com.frostwire.search.SearchListener;
-import com.frostwire.search.SearchManagerImpl;
 import com.frostwire.search.SearchPerformer;
 
 /**
@@ -196,6 +193,10 @@ public class DomainAliasManager {
                         System.out.println("Removing alias " + alias.alias);
                         toRemove.add(alias);
                     }
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                    }
                 }
             }
             
@@ -208,27 +209,6 @@ public class DomainAliasManager {
         }
     }
 
-    /**
-     * We get a hold of the search manager for our search performer through its
-     * PerformerResultListener object :)
-     * 
-     * Then we create a DomainAliasSwitching task, which keeps tabs on our pong listener.
-     * That task waits for the pong to succeed and it's responsible then for telling the performer
-     * to try again, with what should now be a new domain alias. oh yeah.
-     * 
-     * @param performer
-     * @param pongListener
-     */
-    private void reviveSearchTask(SearchPerformer performer, final DomainAliasPongListener pongListener) {
-        final SearchListener listener = performer.getSearchListener();
-        if (listener instanceof PerformerResultListener) {
-            final PerformerResultListener prListener = (PerformerResultListener) listener;
-            final SearchManagerImpl searchManager = (SearchManagerImpl) prListener.getSearchManager();
-            final SearchManagerImpl.DomainAliasSwitchingTask domainAliasSwitchingTask = new SearchManagerImpl.DomainAliasSwitchingTask(searchManager,performer,0,pongListener);
-            searchManager.submitSearchTask(domainAliasSwitchingTask);
-        }
-    }
-    
     private DomainAliasPongListener createPongListener(final SearchPerformer performer) {
         final DomainAliasPongListener pongListener = new DomainAliasPongListener() {
             
