@@ -720,6 +720,10 @@ public final class ThemeMediator {
         int style = JRootPane.INFORMATION_DIALOG;
         JDialog dialog = createDialog(pane, parentComponent, title, style);
 
+        if (initialSelectionValue != null) {
+            pane.setInputValue(initialSelectionValue);
+        }
+        
         pane.selectInitialValue();
         dialog.setVisible(true);
         dialog.dispose();
