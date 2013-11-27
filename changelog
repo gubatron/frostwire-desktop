@@ -1,3 +1,12 @@
+frostwire (5.6.9) stable; urgency=high
+  * More robust search. Now FrostWire can use mirror servers if the original
+    search servers are not reachable.
+  * Cloud audio downloads are much smaller, no audio demuxing necessary from
+    video services.
+  * Cloud video DASH download support.
+  * Fixes bug where new playlists wouldn't be saved if default name was used.
+ -- FrostWire Team <contact@frostwire.com>  Wed, 27 Nov 2013 16:42:43 -0500
+
 frostwire (5.6.8) stable; urgency=high
   * Fixes cloud search issues.
   * Considerable Spanish translation updates by @dennistobar.
