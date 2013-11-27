@@ -250,24 +250,7 @@ public class LibraryUtils {
 
     public static void createNewPlaylist(final PlaylistItem[] playlistItems, boolean starred) {
         if (starred) {
-            Thread t = new Thread(new Runnable() {
-                public void run() {
-                    Playlist playlist = LibraryMediator.getLibrary().getStarredPlaylist();
-                    addToPlaylist(playlist, playlistItems, true, -1);
-                    GUIMediator.safeInvokeLater(new Runnable() {
-                        public void run() {
-                            DirectoryHolder dh = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
-                            if (dh instanceof StarredDirectoryHolder) {
-                                LibraryMediator.instance().getLibraryExplorer().refreshSelection();
-                            } else {
-                                LibraryMediator.instance().getLibraryExplorer().selectStarred();
-                            }
-                        }
-                    });
-                }
-            }, "createNewPlaylist");
-            t.setDaemon(true);
-            t.start();
+            createStarredPlaylist(playlistItems);
         } else {
             String playlistName = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(playlistItems));
 
@@ -295,6 +278,27 @@ public class LibraryUtils {
             }
         }
         UXStats.instance().log(UXAction.LIBRARY_PLAYLIST_CREATED);
+    }
+
+    private static void createStarredPlaylist(final PlaylistItem[] playlistItems) {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                Playlist playlist = LibraryMediator.getLibrary().getStarredPlaylist();
+                addToPlaylist(playlist, playlistItems, true, -1);
+                GUIMediator.safeInvokeLater(new Runnable() {
+                    public void run() {
+                        DirectoryHolder dh = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
+                        if (dh instanceof StarredDirectoryHolder) {
+                            LibraryMediator.instance().getLibraryExplorer().refreshSelection();
+                        } else {
+                            LibraryMediator.instance().getLibraryExplorer().selectStarred();
+                        }
+                    }
+                });
+            }
+        }, "createNewPlaylist");
+        t.setDaemon(true);
+        t.start();
     }
 
     public static void createNewPlaylist(File m3uFile) {
