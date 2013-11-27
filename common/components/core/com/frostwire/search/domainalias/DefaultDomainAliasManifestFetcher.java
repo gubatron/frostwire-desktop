@@ -1,6 +1,7 @@
 package com.frostwire.search.domainalias;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,10 +39,10 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         manifest.aliases.put("kickass.to", katAliases);
         
         //TPB
-        /*
+        
         List<String> tpbAliases = new ArrayList<String>();
         tpbAliases.add("pirateproxy.net"); //*
-        tbpAliases.add("proxybay.de"); //*
+        tpbAliases.add("proxybay.de"); //*
         
         tpbAliases.add("pirateproxy.se");
         tpbAliases.add("tpb.unblocked.co");
@@ -53,7 +54,7 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         tpbAliases.add("quluxingba.info");
         tpbAliases.add("tpb.pirati.cz");
         manifest.aliases.put("thepiratebay.sx", tpbAliases);
-        */
+        
         
         //ISOHUNT
         /*
@@ -61,7 +62,8 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         isoHuntAliases.add("isohunt.come.in");
         manifest.aliases.put("isohunt.to",isoHuntAliases);
         */
-
+        
+        manifest.aliases.put("extratorrent.cc", Collections.EMPTY_LIST);
         notifyManifestFetched(manifest);
     }
 }

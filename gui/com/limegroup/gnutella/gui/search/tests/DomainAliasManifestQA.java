@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import com.frostwire.AzureusStarter;
 import com.frostwire.search.CrawlPagedWebSearchPerformer;
 import com.frostwire.search.SearchManager;
 import com.frostwire.search.SearchManagerImpl;
@@ -49,8 +50,6 @@ public class DomainAliasManifestQA {
             
             @Override
             public void onManifestNotFetched() {
-                // TODO Auto-generated method stub
-                
             }
             
             @Override
@@ -65,6 +64,7 @@ public class DomainAliasManifestQA {
     }
 
     public static void test(DomainAliasManifest manifest) throws InterruptedException {
+        AzureusStarter.start();
         Map<String, List<String>> aliases = manifest.aliases;
         Set<Entry<String, List<String>>> entrySet = aliases.entrySet();
         List<DomainTestScore> testScores = (List<DomainTestScore>) Collections.synchronizedList(new ArrayList<DomainTestScore>());
@@ -77,6 +77,8 @@ public class DomainAliasManifestQA {
             List<String> domainAliases = domainEntry.getValue();
             testDomainAliases(domainName, domainAliases, testScores);
         }
+        
+        AzureusStarter.getAzureusCore().stop();
     }
 
     private static void testDomainAliases(String domainName, List<String> domainAliases,List<DomainTestScore> testScores) throws InterruptedException {
@@ -89,21 +91,17 @@ public class DomainAliasManifestQA {
         SearchManager searchManager = new SearchManagerImpl();
         searchManager.registerListener(new SearchTestListener(testScores, testScore, latch));
         
-        
         //first search should be with default domain.
         searchManager.perform(SEARCH_ENGINE.getPerformer(searchTokenCounter++,"love"));
-        System.out.println("Started search on domain " + SEARCH_ENGINE.getDomainAliasManager().getDomainNameToUse());
-        
 
         for (String alias : domainAliases) {
             SEARCH_ENGINE.getDomainAliasManager().setDomainNameToUse(alias);
-            System.out.println("Started search on alias: " + SEARCH_ENGINE.getDomainAliasManager().getDomainNameToUse());
+            System.out.println("Started search on " + SEARCH_ENGINE.getDomainAliasManager().getDomainNameToUse() + " in alias: " + alias);
             searchManager.perform(SEARCH_ENGINE.getPerformer(searchTokenCounter++,"love"));
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         }
         
         searchTokenCounter *= 10;
-
     }
     
     private static class DomainTestScore {
@@ -187,7 +185,7 @@ public class DomainAliasManifestQA {
         public void run() {
             System.out.println("SearchTestListener waiting for searches to finish...");
             try {
-                latch.await(10,TimeUnit.SECONDS);
+                latch.await(20,TimeUnit.SECONDS);
                 System.out.println("SearchTestListener done waiting...");
             } catch (Throwable e) {
                 System.out.println("SearchTestListener latch timed out!");
