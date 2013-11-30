@@ -727,10 +727,18 @@ public final class ThemeMediator {
                 if (evt.getPropertyName().equals("value")) {
                     Object oldValue = evt.getOldValue();
                     Object newValue = evt.getNewValue();
-
-                    if (oldValue == JOptionPane.UNINITIALIZED_VALUE && newValue instanceof Integer && ((Integer) newValue).intValue() == JOptionPane.CLOSED_OPTION
-                            || ((Integer) newValue).intValue() == JOptionPane.CANCEL_OPTION) {
+                    
+                    //clicked on the close button on the window
+                    if (newValue == null) {
                         onInputDialogCancelledOrClosed(pane);
+                    } else {
+                    //pressed esc key, or Cancel button in the dialog.
+                        boolean onCancelButtonOrEscapeKeyPressed = newValue != null && newValue instanceof Integer && ((Integer) newValue).intValue() == JOptionPane.CLOSED_OPTION
+                                || ((Integer) newValue).intValue() == JOptionPane.CANCEL_OPTION;
+                        
+                        if (oldValue == JOptionPane.UNINITIALIZED_VALUE && (onCancelButtonOrEscapeKeyPressed || newValue==null)) {
+                            onInputDialogCancelledOrClosed(pane);
+                        }
                     }
                 }
             }
