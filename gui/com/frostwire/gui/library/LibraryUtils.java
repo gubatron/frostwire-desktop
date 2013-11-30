@@ -173,7 +173,7 @@ public class LibraryUtils {
     }
 
     public static void createNewPlaylist(final List<? extends AbstractLibraryTableDataLine<?>> lines) {
-        String playlistName = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(lines));
+        String playlistName = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, suggestPlaylistName(lines));
 
         if (playlistName != null && playlistName.length() > 0) {
             final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
@@ -254,7 +254,7 @@ public class LibraryUtils {
         if (starred) {
             createStarredPlaylist(playlistItems);
         } else {
-            String playlistName = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(playlistItems));
+            String playlistName = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, suggestPlaylistName(playlistItems));
 
             if (playlistName != null && playlistName.length() > 0) {
                 final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
@@ -637,7 +637,7 @@ public class LibraryUtils {
         return suggestedPlaylistName;
     }
 
-    private static String calculateName(List<? extends AbstractLibraryTableDataLine<?>> lines) {
+    private static String suggestPlaylistName(List<? extends AbstractLibraryTableDataLine<?>> lines) {
         File[] files = new File[lines.size()];
         for (int i = 0; i < lines.size(); i++) {
             files[i] = lines.get(i).getFile();
@@ -645,7 +645,7 @@ public class LibraryUtils {
         return suggestPlaylistName(files);
     }
 
-    private static String calculateName(PlaylistItem[] playlistItems) {
+    private static String suggestPlaylistName(PlaylistItem[] playlistItems) {
         File[] files = new File[playlistItems.length];
         for (int i = 0; i < files.length; i++) {
             files[i] = new File(playlistItems[i].getFilePath());
