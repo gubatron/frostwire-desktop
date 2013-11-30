@@ -753,7 +753,7 @@ public final class ThemeMediator {
         return value;
     }
     
-    protected static void onInputDialogCancelledOrClosed(JOptionPane pane) {
+    private static void onInputDialogCancelledOrClosed(JOptionPane pane) {
         pane.setInputValue(JOptionPane.UNINITIALIZED_VALUE);
     }
 
