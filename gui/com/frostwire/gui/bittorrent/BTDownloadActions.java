@@ -491,16 +491,26 @@ final class BTDownloadActions {
         }
     }
 
+    /**
+     * NOTE: Make sure to check out AbstractLibraryTableMediator.AddToPlaylistAction, which is a similar action to this one.
+     * @author gubatron
+     *
+     */
     static class AddToPlaylistAction extends AbstractAction {
-
-        private Playlist playlist;
+        private static final int MAX_VISIBLE_PLAYLIST_NAME_LENGTH_IN_MENU = 80;
+        private Playlist playlist; 
 
         public AddToPlaylistAction(Playlist playlist) {
-            super(playlist.getName());
-            putValue(Action.LONG_DESCRIPTION, I18n.tr("Add to playlist ") + "\"" + playlist.getName() + "\"");
+            super(getTruncatedString(playlist.getName(),MAX_VISIBLE_PLAYLIST_NAME_LENGTH_IN_MENU));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Add to playlist ") + "\"" + getValue(Action.NAME) + "\"");
+            System.out.println("Truncated playlist name was: " + getValue(Action.NAME));
             this.playlist = playlist;
         }
-
+        
+        private static String getTruncatedString(String string, int MAX_LENGTH) {
+            return string.length() > MAX_LENGTH ? (string.substring(0, MAX_LENGTH-1) + "...") : string;            
+        }
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();

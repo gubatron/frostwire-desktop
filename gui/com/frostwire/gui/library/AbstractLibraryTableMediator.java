@@ -228,24 +228,32 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         }
     }
 
+    /**
+     * NOTE: Make sure to check out BTDownloadActions.AddToPlaylistAction, which is a similar action to this one.
+     * @author gubatron
+     *
+     */
     private final class AddToPlaylistAction extends AbstractAction {
-
         private static final long serialVersionUID = 4658698262279334616L;
-
+        private static final int MAX_VISIBLE_PLAYLIST_NAME_LENGTH_IN_MENU = 80;
         private Playlist playlist;
 
         public AddToPlaylistAction(Playlist playlist) {
-            super(playlist.getName());
+            super(getTruncatedString(playlist.getName(),MAX_VISIBLE_PLAYLIST_NAME_LENGTH_IN_MENU));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Add to playlist ") + "\"" + playlist.getName() + "\"");
             this.playlist = playlist;
         }
-
+        
         @Override
         public void actionPerformed(ActionEvent e) {
             LibraryUtils.asyncAddToPlaylist(playlist, getSelectedLines());
         }
     }
 
+    public static String getTruncatedString(String string, int MAX_LENGTH) {
+        return string.length() > MAX_LENGTH ? (string.substring(0, MAX_LENGTH-1) + "...") : string;            
+    }
+    
     static class SendToFriendAction extends AbstractAction {
 
         private static final long serialVersionUID = 1329472129818371471L;
