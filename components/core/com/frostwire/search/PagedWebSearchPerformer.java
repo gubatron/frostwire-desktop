@@ -39,7 +39,7 @@ public abstract class PagedWebSearchPerformer extends WebSearchPerformer {
 
     private final int pages;
 
-    public PagedWebSearchPerformer (DomainAliasManager domainAliasManager, long token, String keywords, int timeout, int pages) {
+    public PagedWebSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout, int pages) {
         super(domainAliasManager, token, keywords, timeout);
         this.pages = pages;
     }
@@ -60,7 +60,6 @@ public abstract class PagedWebSearchPerformer extends WebSearchPerformer {
             }
         } catch (Throwable e) {
             checkAccesibleDomains();
-            onNoData(this);
         }
         return Collections.emptyList();
     }

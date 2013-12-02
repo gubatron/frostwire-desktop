@@ -89,7 +89,7 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
                         if (data != null) {
                             cachePut(url, data);
                         } else {
-                            onNoData(this);
+                            LOG.warn("Failed to download data: " + url);
                         }
                     }
 
