@@ -35,6 +35,7 @@ import jd.parser.html.Form.MethodType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.frostwire.search.FileSearchResult;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 
@@ -55,9 +56,9 @@ public final class YouTubeExtractor {
     // using the signature decoding per running session
     private static YouTubeSig YT_SIG;
 
-    public List<LinkInfo> extract(String videoUrl) {
+    public List<LinkInfo> extract(String videoUrl, boolean testConnection) {
         try {
-            //Thread.sleep(200);
+            Thread.sleep(100);
 
             Browser br = new Browser();
 
@@ -83,31 +84,16 @@ public final class YouTubeExtractor {
             ThumbnailLinks thumbnailLinks = createThumbnailLink(videoId);
 
             List<LinkInfo> infos = new LinkedList<LinkInfo>();
-
-            for (int fmt : LinksFound.keySet()) {
-                Format format = FORMATS.get(fmt);
-                if (format == null) {
-                    continue;
-                }
-
-                String link = LinksFound.get(fmt);
-
-                try {
-                    if (br.openGetConnection(link).getResponseCode() == 200) {
-                        Thread.sleep(200);
-
-                        long size = br.getHttpConnection().getLongContentLength();
-
-                        LinkInfo info = new LinkInfo(link, fmt, filename, size, date, videoId, userName, channelName, thumbnailLinks, format);
-                        infos.add(info);
+            
+            if (!testConnection || testConnection(br, getFirstLink(LinksFound))) {
+                for (int fmt : LinksFound.keySet()) {
+                    Format format = FORMATS.get(fmt);
+                    if (format == null) {
+                        continue;
                     }
-                } catch (Throwable e) {
-                    log("Failed link url: " + link);
-                } finally {
-                    try {
-                        br.getHttpConnection().disconnect();
-                    } catch (final Throwable e) {
-                    }
+                    String link = LinksFound.get(fmt);
+                    LinkInfo info = new LinkInfo(link, fmt, filename, FileSearchResult.UNKNOWN_SIZE, date, videoId, userName, channelName, thumbnailLinks, format);
+                    infos.add(info);
                 }
             }
 
@@ -116,6 +102,36 @@ public final class YouTubeExtractor {
         } catch (Throwable e) {
             throw new ExtractorException("General extractor error", e);
         }
+    }
+    
+    private boolean testConnection(Browser br, String link) {
+        boolean connected = false;
+        try {
+            if (br.openGetConnection(link).getResponseCode() == 200) {
+                br.getHttpConnection().getLongContentLength();
+                connected = true;
+            }
+        } catch (Throwable e) {
+            log("Failed link url: " + link);
+        } finally {
+            try {
+                br.getHttpConnection().disconnect();
+            } catch (final Throwable e) {
+            }
+        }
+        return connected;
+    }
+
+    private String getFirstLink(Map<Integer, String> linksFound){
+        for (int fmt : linksFound.keySet()) {
+            Format format = FORMATS.get(fmt);
+            if (format == null) {
+                continue;
+            }
+
+            return linksFound.get(fmt);
+        }
+        return null;
     }
 
     private void checkError(String videoUrl, Browser br, HashMap<Integer, String> LinksFound) {

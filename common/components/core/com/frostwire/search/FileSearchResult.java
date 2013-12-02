@@ -25,6 +25,8 @@ package com.frostwire.search;
  */
 public interface FileSearchResult extends SearchResult {
 
+    public static final long UNKNOWN_SIZE = -1;
+    
     public String getFilename();
 
     public long getSize();
