@@ -60,7 +60,7 @@ public abstract class AbstractSearchPerformer implements SearchPerformer {
     public boolean isStopped() {
         return stopped;
     }
-    
+
     protected void onResults(SearchPerformer performer, List<? extends SearchResult> results) {
         try {
             if (listener != null) {
@@ -70,18 +70,7 @@ public abstract class AbstractSearchPerformer implements SearchPerformer {
             LOG.warn("Error sending results back to receiver: " + e.getMessage());
         }
     }
-    
-    protected void onNoData(SearchPerformer performer) {
-        try {
-            if (listener != null) {
-                listener.onNoData(performer);
-            }
-        } catch (Throwable t) {
-            LOG.warn("Error reporting no data from search performer.", t);
-        }
-        
-    }
-    
+
     public SearchListener getSearchListener() {
         return this.listener;
     }
