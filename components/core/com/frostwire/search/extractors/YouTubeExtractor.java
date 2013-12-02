@@ -56,7 +56,7 @@ public final class YouTubeExtractor {
     // using the signature decoding per running session
     private static YouTubeSig YT_SIG;
 
-    public List<LinkInfo> extract(String videoUrl) {
+    public List<LinkInfo> extract(String videoUrl, boolean testConnection) {
         try {
             Thread.sleep(100);
 
@@ -85,7 +85,7 @@ public final class YouTubeExtractor {
 
             List<LinkInfo> infos = new LinkedList<LinkInfo>();
             
-            if (testConnection(br, getFirstLink(LinksFound))) {
+            if (!testConnection || testConnection(br, getFirstLink(LinksFound))) {
                 for (int fmt : LinksFound.keySet()) {
                     Format format = FORMATS.get(fmt);
                     if (format == null) {

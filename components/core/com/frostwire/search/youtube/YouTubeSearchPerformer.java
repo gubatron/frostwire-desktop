@@ -51,7 +51,7 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
     protected List<? extends SearchResult> crawlResult(YouTubeSearchResult sr, byte[] data) throws Exception {
         List<YouTubeCrawledSearchResult> list = new LinkedList<YouTubeCrawledSearchResult>();
 
-        List<LinkInfo> infos = new YouTubeExtractor().extract(sr.getDetailsUrl());
+        List<LinkInfo> infos = new YouTubeExtractor().extract(sr.getDetailsUrl(), sr.testConnection());
 
         LinkInfo dashVideo = null;
         LinkInfo dashAudio = null;
@@ -103,10 +103,15 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
         String json = fixJson(page);
         YouTubeResponse response = JsonUtils.toObject(json, YouTubeResponse.class);
 
+        boolean testConnection = true;
         for (YouTubeEntry entry : response.feed.entry) {
             if (!isStopped()) {
-                YouTubeSearchResult sr = new YouTubeSearchResult(entry);
+                YouTubeSearchResult sr = new YouTubeSearchResult(entry, testConnection);
                 result.add(sr);
+                
+                if (testConnection) {
+                    testConnection = false;
+                }
             }
         }
 

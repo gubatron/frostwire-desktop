@@ -41,14 +41,16 @@ public class YouTubeSearchResult extends AbstractFileSearchResult implements Cra
     private final String videoUrl;
     private final String source;
     private final long size;
+    private final boolean testConnection;
 
-    public YouTubeSearchResult(YouTubeEntry entry) {
+    public YouTubeSearchResult(YouTubeEntry entry, boolean testConnection) {
         this.filename = entry.title.title + ".youtube";
         this.displayName = FilenameUtils.getBaseName(filename);
         this.creationTime = readCreationTime(entry);
         this.videoUrl = readVideoUrl(entry);
         this.source = buildSource(entry);
         this.size = buildSize(entry);
+        this.testConnection = testConnection;
     }
 
     @Override
@@ -85,6 +87,11 @@ public class YouTubeSearchResult extends AbstractFileSearchResult implements Cra
     public boolean isComplete() {
         return true;
     }
+    
+    boolean testConnection() {
+        return testConnection;
+    }
+
 
     private long readCreationTime(YouTubeEntry entry) {
         try {
