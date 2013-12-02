@@ -17,7 +17,6 @@
 
 package com.frostwire.search;
 
-
 /**
  * 
  * @author gubatron
@@ -37,6 +36,4 @@ public interface SearchPerformer {
     public void stop();
 
     public boolean isStopped();
-
-    public SearchListener getSearchListener();
 }
