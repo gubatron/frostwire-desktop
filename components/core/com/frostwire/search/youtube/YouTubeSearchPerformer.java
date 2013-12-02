@@ -114,7 +114,10 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
     }
 
     private String fixJson(String json) {
-        return json.replace("\"$t\"", "\"title\"").replace("\"yt$userId\"", "\"ytuserId\"");
+        return json.replace("\"$t\"", "\"title\"").
+                replace("\"yt$userId\"", "\"ytuserId\"").
+                replace("\"media$group\"", "\"mediagroup\"").
+                replace("\"media$content\"", "\"mediacontent\"");
     }
 
     private boolean isDash(LinkInfo info) {
