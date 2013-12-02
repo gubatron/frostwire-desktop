@@ -27,6 +27,8 @@ import com.frostwire.search.FileSearchResult;
  */
 public interface TorrentSearchResult extends FileSearchResult {
 
+    public static final int UNKOWN_SEEDS = -1;
+    
     public long getCreationTime();
 
     public String getTorrentUrl();
