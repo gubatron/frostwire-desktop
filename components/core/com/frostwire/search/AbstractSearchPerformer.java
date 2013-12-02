@@ -70,8 +70,4 @@ public abstract class AbstractSearchPerformer implements SearchPerformer {
             LOG.warn("Error sending results back to receiver: " + e.getMessage());
         }
     }
-
-    public SearchListener getSearchListener() {
-        return this.listener;
-    }
 }
