@@ -5,6 +5,7 @@ frostwire (5.6.9) stable; urgency=high
   * Cloud audio downloads are much smaller, no audio demuxing necessary from
     video services.
   * Cloud video DASH download support.
+  * Smarter playlist name suggestion algorithm takes into account ID3 tags.
   * Fixes bug where new playlists wouldn't be saved if default name was used.
  -- FrostWire Team <contact@frostwire.com>  Mon, 2 Dec 2013 17:49:38 -0500
 
