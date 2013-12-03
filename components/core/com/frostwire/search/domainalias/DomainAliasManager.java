@@ -20,9 +20,9 @@ public class DomainAliasManager {
     private final String defaultDomain;
 
     private DomainAlias currentDomainAlias;
-    
+
     private boolean defaultDomainOnline;
-    
+
     private final AtomicReference<List<DomainAlias>> aliases;
 
     public DomainAliasManager(String defaultDomain) {
@@ -41,17 +41,13 @@ public class DomainAliasManager {
         return defaultDomain;
     }
 
-    public List<DomainAlias> getAliases() {
-        return aliases.get();
-    }
-
     /**
      * Adds new Domain Aliases, keeps the old DomainAlias objects as they were.
      * @param aliasNames
      */
     public void updateAliases(final List<String> aliasNames) {
         List<DomainAlias> newAliasList = new ArrayList<DomainAlias>();
-        
+
         if (aliasNames != null && aliasNames.size() > 0) {
             for (String alias : aliasNames) {
                 DomainAlias domainAlias = new DomainAlias(defaultDomain, alias);
@@ -70,14 +66,14 @@ public class DomainAliasManager {
             }
         }
     }
-    
+
     /**
      * Resets the Domain Aliases list.
      * @param aliasNames
      */
     public void setAliases(final List<String> aliasNames) {
         List<DomainAlias> newAliasList = new ArrayList<DomainAlias>();
-        
+
         if (aliasNames != null && aliasNames.size() > 0) {
             for (String alias : aliasNames) {
                 DomainAlias domainAlias = new DomainAlias(defaultDomain, alias);
@@ -88,7 +84,7 @@ public class DomainAliasManager {
             if (newAliasList.size() > 0) {
                 aliases.set(Collections.synchronizedList(newAliasList));
             }
-        }      
+        }
     }
 
     public void markDomainOffline(String offlineDomain) {
@@ -103,11 +99,11 @@ public class DomainAliasManager {
             }
         }
     }
-    
+
     public DomainAlias getCurrentDomainAlias() {
         return currentDomainAlias;
     }
-    
+
     /**
      * Until it doesn't know the default domain name is not accesible
      * it will keep returning the next domain cosidered to be online.
@@ -130,7 +126,7 @@ public class DomainAliasManager {
 
     public void setDomainNameToUse(String alias) {
         List<DomainAlias> aliasList = aliases.get();
-        
+
         synchronized (aliasList) {
             for (DomainAlias domainAlias : aliasList) {
                 if (domainAlias.getAlias().equals(alias)) {
@@ -140,7 +136,7 @@ public class DomainAliasManager {
             }
         }
     }
-    
+
     /**
      * Returns the next domain considered as online on the manager's list.
      * null if the current list is empty, null or nobody is online.
@@ -181,11 +177,11 @@ public class DomainAliasManager {
     public void checkStatuses(SearchPerformer performer) {
         if (aliases != null && !aliases.get().isEmpty()) {
             List<DomainAlias> toRemove = new ArrayList<DomainAlias>();
-            
+
             final DomainAliasPongListener pongListener = createPongListener(performer);
             //reviveSearchTask(performer, pongListener);
-            
-            synchronized(aliases) {
+
+            synchronized (aliases) {
                 for (DomainAlias alias : aliases.get()) {
                     if (alias.getFailedAttempts() <= 3) {
                         alias.checkStatus(pongListener);
@@ -199,7 +195,7 @@ public class DomainAliasManager {
                     }
                 }
             }
-            
+
             if (!toRemove.isEmpty()) {
                 aliases.get().removeAll(toRemove);
             }
@@ -211,9 +207,9 @@ public class DomainAliasManager {
 
     private DomainAliasPongListener createPongListener(final SearchPerformer performer) {
         final DomainAliasPongListener pongListener = new DomainAliasPongListener() {
-            
+
             private AtomicBoolean firstDomainReportedPong = new AtomicBoolean(false);
-            
+
             @Override
             public void onDomainAliasPong(DomainAlias domainAlias) {
                 //as soon as the first one of the aliases reports he's online
@@ -222,10 +218,10 @@ public class DomainAliasManager {
                     System.out.println("DomainAliasManager.DomainAliasPongListener.onDomainAliasPong(): got pong from " + domainAlias.alias);
                     currentDomainAlias = domainAlias; //the magic moment
                     performer.perform();
-                    System.out.println("DomainAliasManager.DomainAliasPongListener.onDomainAliasPong(): We've selected a new domain alias: New " + getCurrentDomainAlias().alias + " for " + getDefaultDomain() + " (STATE: "+ getCurrentDomainAlias().getState() +")");
+                    System.out.println("DomainAliasManager.DomainAliasPongListener.onDomainAliasPong(): We've selected a new domain alias: New " + getCurrentDomainAlias().alias + " for " + getDefaultDomain() + " (STATE: " + getCurrentDomainAlias().getState() + ")");
                 }
             }
-            
+
             @Override
             public void onDomainAliasPingFailed(DomainAlias domainAlias) {
                 DomainAliasManager.this.markDomainOffline(domainAlias.getAlias());
