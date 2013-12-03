@@ -1,4 +1,4 @@
-package com.frostwire.util;
+package com.limegroup.gnutella.gui.search.tests;
 
 /**
  * Provides methods to encode bytes in Base32 and decode Base32 encoded Strings 

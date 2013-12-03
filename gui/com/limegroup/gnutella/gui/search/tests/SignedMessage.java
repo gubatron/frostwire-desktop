@@ -1,4 +1,4 @@
-package com.frostwire.util;
+package com.limegroup.gnutella.gui.search.tests;
 
 import com.frostwire.JsonEngine;
 

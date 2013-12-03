@@ -19,9 +19,6 @@ import com.aelitis.azureus.core.dht.transport.DHTTransportContact;
 import com.aelitis.azureus.core.dht.transport.DHTTransportValue;
 import com.aelitis.azureus.plugins.dht.DHTPlugin;
 import com.frostwire.AzureusStarter;
-import com.frostwire.util.Base32;
-import com.frostwire.util.SecurityUtils;
-import com.frostwire.util.SignedMessage;
 
 public class DHTTest {
     private static final String TEST_KEY = "http://update.frostwire.com/|2013-11-21|21:55";

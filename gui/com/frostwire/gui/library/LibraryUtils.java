@@ -53,7 +53,6 @@ import com.frostwire.gui.library.tags.TagsData;
 import com.frostwire.gui.library.tags.TagsReader;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.util.HistoHashMap;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
