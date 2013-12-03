@@ -48,7 +48,6 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     private final String encodedKeywords;
     private final int timeout;
     private final HttpClient client;
-    protected String domainName;
 
     private final DomainAliasManager domainAliasManager;
     
