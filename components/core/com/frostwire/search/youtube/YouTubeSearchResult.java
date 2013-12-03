@@ -34,18 +34,23 @@ import com.frostwire.search.CrawlableSearchResult;
  */
 public class YouTubeSearchResult extends AbstractFileSearchResult implements CrawlableSearchResult {
 
+
     private final String filename;
     private final String displayName;
     private final long creationTime;
     private final String videoUrl;
     private final String source;
+    private final long size;
+    private final boolean testConnection;
 
-    public YouTubeSearchResult(YouTubeEntry entry) {
+    public YouTubeSearchResult(YouTubeEntry entry, boolean testConnection) {
         this.filename = entry.title.title + ".youtube";
         this.displayName = FilenameUtils.getBaseName(filename);
         this.creationTime = readCreationTime(entry);
         this.videoUrl = readVideoUrl(entry);
         this.source = buildSource(entry);
+        this.size = buildSize(entry);
+        this.testConnection = testConnection;
     }
 
     @Override
@@ -60,7 +65,7 @@ public class YouTubeSearchResult extends AbstractFileSearchResult implements Cra
 
     @Override
     public long getSize() {
-        return -1;
+        return size;
     }
 
     @Override
@@ -82,6 +87,11 @@ public class YouTubeSearchResult extends AbstractFileSearchResult implements Cra
     public boolean isComplete() {
         return true;
     }
+    
+    boolean testConnection() {
+        return testConnection;
+    }
+
 
     private long readCreationTime(YouTubeEntry entry) {
         try {
@@ -112,6 +122,14 @@ public class YouTubeSearchResult extends AbstractFileSearchResult implements Cra
             return "YouTube - " + entry.author.get(0).name.title;
         } else {
             return "YouTube";
+        }
+    }
+    
+    private long buildSize(YouTubeEntry entry) {
+        try {
+            return entry.mediagroup.mediacontent.get(0).duration;
+        } catch (Throwable t) {
+            return UNKNOWN_SIZE;
         }
     }
 }

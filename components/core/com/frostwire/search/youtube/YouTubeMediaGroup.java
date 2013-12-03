@@ -26,11 +26,6 @@ import java.util.List;
  * @author aldenml
  *
  */
-public class YouTubeEntry {
-
-    public YouTubeEntryTitleDate published;
-    public YouTubeEntryTitle title;
-    public YouTubeMediaGroup mediagroup;
-    public List<YouTubeEntryLink> link;
-    public List<YouTubeAuthor> author;
+public class YouTubeMediaGroup {
+    public List<YouTubeMediaContent> mediacontent;
 }
