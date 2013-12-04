@@ -2,11 +2,10 @@ package com.frostwire.search.domainalias;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.limewire.concurrent.ExecutorsHelper;
-import org.limewire.concurrent.ThreadPoolExecutor;
-
+import com.frostwire.concurrent.DefaultThreadFactory;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 
@@ -15,7 +14,7 @@ public class DomainAlias {
     public static final ExecutorService executor = new ThreadPoolExecutor(0, Integer.MAX_VALUE,
             30L, TimeUnit.SECONDS,
             new SynchronousQueue<Runnable>(),
-            ExecutorsHelper.daemonThreadFactory("DomainAliasCheckers"));//ExecutorsHelper.newThreadPool("DomainAliasCheckers");
+            new DefaultThreadFactory("DomainAliasCheckers", true));
 
     public final String original;
     public final String alias; 
