@@ -86,10 +86,8 @@ final class FWHttpClient implements HttpClient {
             result = new String(baos.toByteArray(), "UTF-8");
         } catch (java.net.SocketTimeoutException timeoutException) {
             throw timeoutException;
-        }
-        catch (Throwable e) {
-            //LOG.error("Error getting string from http body response: " + e.getMessage(), e);
-            e.printStackTrace();
+        } catch (IOException e) {
+            LOG.error("Error getting string from http body response: " + e.getMessage(), e);
             throw e;
         } finally {
             closeQuietly(baos);
@@ -154,7 +152,7 @@ final class FWHttpClient implements HttpClient {
         final URL u = new URL(url);
         final HttpURLConnection conn = (HttpURLConnection) u.openConnection();
         conn.setDoOutput(true);
-        
+
         conn.setConnectTimeout(timeout);
         conn.setReadTimeout(timeout);
         conn.setRequestProperty("User-Agent", userAgent);
@@ -320,7 +318,7 @@ final class FWHttpClient implements HttpClient {
         final URL u = new URL(url);
         final HttpURLConnection conn = (HttpURLConnection) u.openConnection();
         conn.setDoOutput(true);
-        
+
         conn.setConnectTimeout(timeout);
         conn.setReadTimeout(timeout);
         conn.setRequestProperty("User-Agent", userAgent);
