@@ -134,31 +134,32 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         long maxDownload = COConfigurationManager.getIntParameter("Max Download Speed KBs", 0) * 1024;
         long maxUpload = COConfigurationManager.getIntParameter("Max Upload Speed KBs", 0) * 1024;
 
-        addSpeedMenu(menuAdvanced, true, true, downSpeedDisabled, downSpeedUnlimited, totalDownSpeed, downSpeedSetMax, maxDownload, upSpeedDisabled, upSpeedUnlimited, totalUpSpeed, upSpeedSetMax, maxUpload, dms.length, new SpeedAdapter() {
-            public void setDownSpeed(final int speed) {
-                for (int i = 0; i < dms.length; i++) {
-                    dms[i].getStats().setDownloadRateLimitBytesPerSecond(speed);
-                }
-                //                        DMTask task = new DMTask(dms) {
-                //                            public void run(DownloadManager dm) {
-                //                                dm.getStats().setDownloadRateLimitBytesPerSecond(speed);
-                //                            }
-                //                        };
-                //                        task.go();
-            }
+        addSpeedMenu(menuAdvanced, true, true, downSpeedDisabled, downSpeedUnlimited, totalDownSpeed, downSpeedSetMax, maxDownload, upSpeedDisabled, upSpeedUnlimited, totalUpSpeed, upSpeedSetMax,
+                maxUpload, dms.length, new SpeedAdapter() {
+                    public void setDownSpeed(final int speed) {
+                        for (int i = 0; i < dms.length; i++) {
+                            dms[i].getStats().setDownloadRateLimitBytesPerSecond(speed);
+                        }
+                        //                        DMTask task = new DMTask(dms) {
+                        //                            public void run(DownloadManager dm) {
+                        //                                dm.getStats().setDownloadRateLimitBytesPerSecond(speed);
+                        //                            }
+                        //                        };
+                        //                        task.go();
+                    }
 
-            public void setUpSpeed(final int speed) {
-                for (int i = 0; i < dms.length; i++) {
-                    dms[i].getStats().setUploadRateLimitBytesPerSecond(speed);
-                }
-                //                        DMTask task = new DMTask(dms) {
-                //                            public void run(DownloadManager dm) {
-                //                                dm.getStats().setUploadRateLimitBytesPerSecond(speed);
-                //                            }
-                //                        };
-                //                        task.go();
-            }
-        });
+                    public void setUpSpeed(final int speed) {
+                        for (int i = 0; i < dms.length; i++) {
+                            dms[i].getStats().setUploadRateLimitBytesPerSecond(speed);
+                        }
+                        //                        DMTask task = new DMTask(dms) {
+                        //                            public void run(DownloadManager dm) {
+                        //                                dm.getStats().setUploadRateLimitBytesPerSecond(speed);
+                        //                            }
+                        //                        };
+                        //                        task.go();
+                    }
+                });
 
         SkinMenu menuTracker = createTrackerMenu();
         if (menuTracker != null) {
@@ -246,8 +247,9 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         return list.toArray(new DownloadManager[0]);
     }
 
-    private static void addSpeedMenu(SkinMenu menuAdvanced, boolean isTorrentContext, boolean hasSelection, boolean downSpeedDisabled, boolean downSpeedUnlimited, long totalDownSpeed, long downSpeedSetMax, long maxDownload, boolean upSpeedDisabled, boolean upSpeedUnlimited, long totalUpSpeed,
-            long upSpeedSetMax, long maxUpload, final int num_entries, final SpeedAdapter adapter) {
+    private static void addSpeedMenu(SkinMenu menuAdvanced, boolean isTorrentContext, boolean hasSelection, boolean downSpeedDisabled, boolean downSpeedUnlimited, long totalDownSpeed,
+            long downSpeedSetMax, long maxDownload, boolean upSpeedDisabled, boolean upSpeedUnlimited, long totalUpSpeed, long upSpeedSetMax, long maxUpload, final int num_entries,
+            final SpeedAdapter adapter) {
         // advanced > Download Speed Menu //
 
         final SkinMenu menuDownSpeed = new SkinMenu(I18n.tr("Set Down Speed"));
@@ -498,7 +500,12 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            dm.requestTrackerAnnounce(false);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    dm.requestTrackerAnnounce(false);
+                }
+            }).start();
         }
     }
 
@@ -514,7 +521,12 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            dm.requestTrackerScrape(true);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    dm.requestTrackerScrape(true);
+                }
+            }).start();
         }
     }
 
