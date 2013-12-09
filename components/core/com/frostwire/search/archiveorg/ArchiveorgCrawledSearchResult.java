@@ -33,7 +33,7 @@ import com.frostwire.search.HttpSearchResult;
  */
 public class ArchiveorgCrawledSearchResult extends AbstractCrawledSearchResult implements HttpSearchResult {
 
-    private static final String DOWNLOAD_URL = "http://%d/download/%s/%s";
+    private static final String DOWNLOAD_URL = "http://%s/download/%s/%s";
 
     private final String filename;
 
