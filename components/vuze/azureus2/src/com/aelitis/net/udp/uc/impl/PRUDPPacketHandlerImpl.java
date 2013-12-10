@@ -31,7 +31,7 @@ import java.net.*;
 import java.nio.channels.UnsupportedAddressTypeException;
 import java.util.*;
 
-import org.bouncycastle.util.encoders.Base64;
+import org.minicastle.util.encoders.Base64;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.config.ParameterListener;
 import org.gudy.azureus2.core3.logging.LogAlert;

@@ -41,9 +41,9 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.bouncycastle.crypto.agreement.srp.SRP6Server;
-import org.bouncycastle.crypto.agreement.srp.SRP6VerifierGenerator;
-import org.bouncycastle.crypto.digests.SHA256Digest;
+import org.minicastle.crypto.agreement.srp.SRP6Server;
+import org.minicastle.crypto.agreement.srp.SRP6VerifierGenerator;
+import org.minicastle.crypto.digests.SHA256Digest;
 import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.util.Base32;
 import org.gudy.azureus2.core3.util.ByteFormatter;

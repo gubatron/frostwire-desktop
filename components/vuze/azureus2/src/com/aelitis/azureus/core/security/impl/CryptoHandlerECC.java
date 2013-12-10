@@ -37,9 +37,9 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 
-import org.bouncycastle.jce.provider.JCEIESCipher;
-import org.bouncycastle.jce.spec.IEKeySpec;
-import org.bouncycastle.jce.spec.IESParameterSpec;
+import org.minicastle.jce.provider.JCEIESCipher;
+import org.minicastle.jce.spec.IEKeySpec;
+import org.minicastle.jce.spec.IESParameterSpec;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.util.Base32;
 import org.gudy.azureus2.core3.util.Debug;
