@@ -18,7 +18,16 @@
 
 package com.frostwire.util;
 
-public class Condition {
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public final class Condition {
+
+    private Condition() {
+    }
 
     /**
      * Useful to shorten long "or" boolean expressions.
@@ -27,14 +36,17 @@ public class Condition {
      * @return true if needle is in any of the args.
      */
     public static <T> boolean in(T needle, T... args) {
-        boolean in = false;
+        if (args == null) {
+            throw new IllegalArgumentException("args on in operation can't be null");
+        }
+
         for (T t : args) {
-            if (t.equals(needle)) {
-                in = true;
-                break;
+            if (t != null && t.equals(needle)) {
+                return true;
             }
         }
-        return in;
+
+        return false;
     }
 
 }
