@@ -50,10 +50,15 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     private final HttpClient client;
 
     private final DomainAliasManager domainAliasManager;
-    
+
     public WebSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
         super(token);
-        this.domainAliasManager  = domainAliasManager;
+
+        if (domainAliasManager == null) {
+            throw new IllegalArgumentException("domainAliasManager can't be null");
+        }
+
+        this.domainAliasManager = domainAliasManager;
         this.keywords = keywords;
         this.encodedKeywords = URLUtils.encode(keywords);
         this.timeout = timeout;
@@ -119,11 +124,11 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
 
         return false;
     }
-    
+
     public String getDomainNameToUse() {
         return domainAliasManager.getDomainNameToUse();
     }
-    
+
     public String getDefaultDomainName() {
         return domainAliasManager.getDefaultDomain();
     }
@@ -131,14 +136,14 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     public DomainAliasManager getDomainAliasManager() {
         return domainAliasManager;
     }
- 
+
     /**
      * The current domain has failed, mark it offline and let's try check if other mirrors are alive.
      */
-    protected void checkAccesibleDomains() {
-        System.out.println("WebSearchPerformer.checkAccesibleDomains()! " + getDefaultDomainName() + " Performer failed, marking " + getDomainNameToUse() + " offline, checking domains.");
-        DomainAliasManager domainAliasManager = getDomainAliasManager();
-        domainAliasManager.markDomainOffline(domainAliasManager.getDomainNameToUse());
+    protected final void checkAccesibleDomains() {
+        LOG.debug("WebSearchPerformer.checkAccesibleDomains()! " + getDefaultDomainName() + " Performer failed, marking " + getDomainNameToUse() + " offline, checking domains.");
+
+        domainAliasManager.markDomainOffline(getDomainNameToUse());
         domainAliasManager.checkStatuses(this);
     }
 }
