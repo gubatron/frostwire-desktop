@@ -21,7 +21,6 @@ package com.frostwire.vuze;
 import java.util.List;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
-import org.gudy.azureus2.core3.download.DownloadManagerStats;
 import org.gudy.azureus2.core3.util.AERunStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +44,7 @@ public final class VuzeManager {
     public VuzeManager(AzureusCore core) {
         this.core = core;
 
-        //new ActivityMonitor().start();
+        new ActivityMonitor().start();
     }
 
     public AzureusCore getCore() {
