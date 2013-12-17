@@ -6,7 +6,7 @@ import java.security.Provider;
  * To add the provider at runtime use:
  * <pre>
  * import java.security.Security;
- * import org.bouncycastle.jce.provider.BouncyCastleProvider;
+ * import org.minicastle.jce.provider.BouncyCastleProvider;
  *
  * Security.addProvider(new BouncyCastleProvider());
  * </pre>

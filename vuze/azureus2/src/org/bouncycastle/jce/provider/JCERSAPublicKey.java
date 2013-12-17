@@ -6,14 +6,14 @@ import java.math.BigInteger;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.RSAPublicKeySpec;
 
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DERNull;
-import org.bouncycastle.asn1.DEROutputStream;
-import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
-import org.bouncycastle.asn1.x509.RSAPublicKeyStructure;
-import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
-import org.bouncycastle.crypto.params.RSAKeyParameters;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DERNull;
+import org.minicastle.asn1.DEROutputStream;
+import org.minicastle.asn1.pkcs.PKCSObjectIdentifiers;
+import org.minicastle.asn1.x509.AlgorithmIdentifier;
+import org.minicastle.asn1.x509.RSAPublicKeyStructure;
+import org.minicastle.asn1.x509.SubjectPublicKeyInfo;
+import org.minicastle.crypto.params.RSAKeyParameters;
 
 public class JCERSAPublicKey
     implements RSAPublicKey

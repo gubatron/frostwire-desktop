@@ -2,7 +2,7 @@ package org.bouncycastle.jce.interfaces;
 
 import java.security.PublicKey;
 
-import org.bouncycastle.math.ec.ECPoint;
+import org.minicastle.math.ec.ECPoint;
 
 /**
  * interface for elliptic curve public keys.

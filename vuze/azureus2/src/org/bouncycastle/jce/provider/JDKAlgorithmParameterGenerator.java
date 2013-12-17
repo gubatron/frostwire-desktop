@@ -12,13 +12,13 @@ import javax.crypto.spec.DHParameterSpec;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.RC2ParameterSpec;
 
-import org.bouncycastle.crypto.generators.DHParametersGenerator;
-import org.bouncycastle.crypto.generators.DSAParametersGenerator;
-import org.bouncycastle.crypto.generators.ElGamalParametersGenerator;
-import org.bouncycastle.crypto.params.DHParameters;
-import org.bouncycastle.crypto.params.DSAParameters;
-import org.bouncycastle.crypto.params.ElGamalParameters;
-import org.bouncycastle.jce.spec.ElGamalParameterSpec;
+import org.minicastle.crypto.generators.DHParametersGenerator;
+import org.minicastle.crypto.generators.DSAParametersGenerator;
+import org.minicastle.crypto.generators.ElGamalParametersGenerator;
+import org.minicastle.crypto.params.DHParameters;
+import org.minicastle.crypto.params.DSAParameters;
+import org.minicastle.crypto.params.ElGamalParameters;
+import org.minicastle.jce.spec.ElGamalParameterSpec;
 
 public abstract class JDKAlgorithmParameterGenerator
     extends AlgorithmParameterGeneratorSpi

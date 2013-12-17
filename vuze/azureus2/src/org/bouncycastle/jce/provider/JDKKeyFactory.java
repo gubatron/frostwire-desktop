@@ -52,16 +52,16 @@ import java.security.spec.X509EncodedKeySpec;
 import javax.crypto.interfaces.DHPrivateKey;
 import javax.crypto.interfaces.DHPublicKey;
 
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DERInputStream;
-import org.bouncycastle.asn1.x509.*;
-import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
-import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
-import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
-import org.bouncycastle.jce.interfaces.ElGamalPrivateKey;
-import org.bouncycastle.jce.interfaces.ElGamalPublicKey;
-import org.bouncycastle.jce.spec.ECPrivateKeySpec;
-import org.bouncycastle.jce.spec.ECPublicKeySpec;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DERInputStream;
+import org.minicastle.asn1.x509.*;
+import org.minicastle.asn1.x9.X9ObjectIdentifiers;
+import org.minicastle.asn1.pkcs.PKCSObjectIdentifiers;
+import org.minicastle.asn1.pkcs.PrivateKeyInfo;
+import org.minicastle.jce.interfaces.ElGamalPrivateKey;
+import org.minicastle.jce.interfaces.ElGamalPublicKey;
+import org.minicastle.jce.spec.ECPrivateKeySpec;
+import org.minicastle.jce.spec.ECPublicKeySpec;
 import org.gudy.azureus2.core3.util.Debug;
 
 public abstract class 

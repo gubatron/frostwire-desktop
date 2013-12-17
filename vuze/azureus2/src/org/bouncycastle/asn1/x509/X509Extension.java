@@ -1,8 +1,8 @@
 package org.bouncycastle.asn1.x509;
 
-import org.bouncycastle.asn1.ASN1Object;
-import org.bouncycastle.asn1.ASN1OctetString;
-import org.bouncycastle.asn1.DERBoolean;
+import org.minicastle.asn1.ASN1Object;
+import org.minicastle.asn1.ASN1OctetString;
+import org.minicastle.asn1.DERBoolean;
 
 import java.io.IOException;
 

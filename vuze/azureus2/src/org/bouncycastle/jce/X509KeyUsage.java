@@ -1,8 +1,8 @@
 package org.bouncycastle.jce;
 
-import org.bouncycastle.asn1.DEREncodable;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.x509.KeyUsage;
+import org.minicastle.asn1.DEREncodable;
+import org.minicastle.asn1.DERObject;
+import org.minicastle.asn1.x509.KeyUsage;
 
 /**
  * A holding class for constructing an X509 Key Usage extension.

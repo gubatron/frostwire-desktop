@@ -2,15 +2,15 @@ package org.bouncycastle.asn1.pkcs;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.ASN1OctetString;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DEREncodable;
-import org.bouncycastle.asn1.DERInteger;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.DEROctetString;
-import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.x509.DigestInfo;
+import org.minicastle.asn1.ASN1EncodableVector;
+import org.minicastle.asn1.ASN1OctetString;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DEREncodable;
+import org.minicastle.asn1.DERInteger;
+import org.minicastle.asn1.DERObject;
+import org.minicastle.asn1.DEROctetString;
+import org.minicastle.asn1.DERSequence;
+import org.minicastle.asn1.x509.DigestInfo;
 
 public class MacData
     implements DEREncodable

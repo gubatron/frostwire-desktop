@@ -1,18 +1,18 @@
 package org.bouncycastle.asn1.pkcs;
 
-import org.bouncycastle.asn1.ASN1Encodable;
-import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.ASN1InputStream;
-import org.bouncycastle.asn1.ASN1OctetString;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.ASN1Set;
-import org.bouncycastle.asn1.ASN1TaggedObject;
-import org.bouncycastle.asn1.DERInteger;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.DEROctetString;
-import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.DERTaggedObject;
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.minicastle.asn1.ASN1Encodable;
+import org.minicastle.asn1.ASN1EncodableVector;
+import org.minicastle.asn1.ASN1InputStream;
+import org.minicastle.asn1.ASN1OctetString;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.ASN1Set;
+import org.minicastle.asn1.ASN1TaggedObject;
+import org.minicastle.asn1.DERInteger;
+import org.minicastle.asn1.DERObject;
+import org.minicastle.asn1.DEROctetString;
+import org.minicastle.asn1.DERSequence;
+import org.minicastle.asn1.DERTaggedObject;
+import org.minicastle.asn1.x509.AlgorithmIdentifier;
 
 import java.io.IOException;
 import java.math.BigInteger;

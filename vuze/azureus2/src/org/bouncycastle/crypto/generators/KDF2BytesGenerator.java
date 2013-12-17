@@ -1,6 +1,6 @@
 package org.bouncycastle.crypto.generators;
 
-import org.bouncycastle.crypto.Digest;
+import org.minicastle.crypto.Digest;
 
 /**
  * KFD2 generator for derived keys and ivs as defined by IEEE P1363a/ISO 18033

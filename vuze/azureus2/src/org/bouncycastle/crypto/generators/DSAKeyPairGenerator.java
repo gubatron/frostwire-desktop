@@ -3,13 +3,13 @@ package org.bouncycastle.crypto.generators;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
-import org.bouncycastle.crypto.AsymmetricCipherKeyPairGenerator;
-import org.bouncycastle.crypto.KeyGenerationParameters;
-import org.bouncycastle.crypto.params.DSAKeyGenerationParameters;
-import org.bouncycastle.crypto.params.DSAParameters;
-import org.bouncycastle.crypto.params.DSAPrivateKeyParameters;
-import org.bouncycastle.crypto.params.DSAPublicKeyParameters;
+import org.minicastle.crypto.AsymmetricCipherKeyPair;
+import org.minicastle.crypto.AsymmetricCipherKeyPairGenerator;
+import org.minicastle.crypto.KeyGenerationParameters;
+import org.minicastle.crypto.params.DSAKeyGenerationParameters;
+import org.minicastle.crypto.params.DSAParameters;
+import org.minicastle.crypto.params.DSAPrivateKeyParameters;
+import org.minicastle.crypto.params.DSAPublicKeyParameters;
 
 /**
  * a DSA key pair generator.

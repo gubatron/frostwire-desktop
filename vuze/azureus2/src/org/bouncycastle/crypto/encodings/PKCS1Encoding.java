@@ -2,11 +2,11 @@ package org.bouncycastle.crypto.encodings;
 
 import java.security.SecureRandom;
 
-import org.bouncycastle.crypto.AsymmetricBlockCipher;
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.InvalidCipherTextException;
-import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
-import org.bouncycastle.crypto.params.ParametersWithRandom;
+import org.minicastle.crypto.AsymmetricBlockCipher;
+import org.minicastle.crypto.CipherParameters;
+import org.minicastle.crypto.InvalidCipherTextException;
+import org.minicastle.crypto.params.AsymmetricKeyParameter;
+import org.minicastle.crypto.params.ParametersWithRandom;
 
 /**
  * this does your basic PKCS 1 v1.5 padding - whether or not you should be using this

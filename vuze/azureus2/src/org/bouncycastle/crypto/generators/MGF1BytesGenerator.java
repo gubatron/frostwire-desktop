@@ -1,10 +1,10 @@
 package org.bouncycastle.crypto.generators;
 
-import org.bouncycastle.crypto.DataLengthException;
-import org.bouncycastle.crypto.DerivationFunction;
-import org.bouncycastle.crypto.DerivationParameters;
-import org.bouncycastle.crypto.Digest;
-import org.bouncycastle.crypto.params.MGFParameters;
+import org.minicastle.crypto.DataLengthException;
+import org.minicastle.crypto.DerivationFunction;
+import org.minicastle.crypto.DerivationParameters;
+import org.minicastle.crypto.Digest;
+import org.minicastle.crypto.params.MGFParameters;
 
 /**
  * Generator for MGF1 as defined in PKCS 1v2

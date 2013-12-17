@@ -1,6 +1,6 @@
 package org.bouncycastle.asn1;
 
-import org.bouncycastle.util.encoders.Hex;
+import org.minicastle.util.encoders.Hex;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

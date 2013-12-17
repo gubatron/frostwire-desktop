@@ -43,7 +43,7 @@ import org.gudy.azureus2.core3.util.*;
 import org.gudy.azureus2.core3.config.*;
 import org.gudy.azureus2.core3.security.*;
 
-import org.bouncycastle.util.encoders.Base64;
+import org.minicastle.util.encoders.Base64;
 
 import com.aelitis.azureus.core.networkmanager.admin.NetworkAdmin;
 import com.aelitis.azureus.ui.common.RememberedDecisionsManager;

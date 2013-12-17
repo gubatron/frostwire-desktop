@@ -2,11 +2,11 @@ package org.bouncycastle.crypto.engines;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.crypto.AsymmetricBlockCipher;
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.DataLengthException;
-import org.bouncycastle.crypto.params.RSAKeyParameters;
-import org.bouncycastle.crypto.params.RSAPrivateCrtKeyParameters;
+import org.minicastle.crypto.AsymmetricBlockCipher;
+import org.minicastle.crypto.CipherParameters;
+import org.minicastle.crypto.DataLengthException;
+import org.minicastle.crypto.params.RSAKeyParameters;
+import org.minicastle.crypto.params.RSAPrivateCrtKeyParameters;
 
 /**
  * this does your basic RSA algorithm. 

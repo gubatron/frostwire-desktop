@@ -2,7 +2,7 @@ package org.bouncycastle.crypto.params;
 
 import java.security.SecureRandom;
 
-import org.bouncycastle.crypto.KeyGenerationParameters;
+import org.minicastle.crypto.KeyGenerationParameters;
 
 public class ECKeyGenerationParameters
     extends KeyGenerationParameters

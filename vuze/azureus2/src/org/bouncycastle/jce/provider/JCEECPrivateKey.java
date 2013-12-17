@@ -7,26 +7,26 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DEREncodable;
-import org.bouncycastle.asn1.DERInteger;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.asn1.DEROutputStream;
-import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
-import org.bouncycastle.asn1.sec.ECPrivateKeyStructure;
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
-import org.bouncycastle.asn1.x9.X962NamedCurves;
-import org.bouncycastle.asn1.x9.X962Parameters;
-import org.bouncycastle.asn1.x9.X9ECParameters;
-import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
-import org.bouncycastle.crypto.params.ECDomainParameters;
-import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
-import org.bouncycastle.jce.interfaces.ECPrivateKey;
-import org.bouncycastle.jce.interfaces.PKCS12BagAttributeCarrier;
-import org.bouncycastle.jce.spec.ECNamedCurveParameterSpec;
-import org.bouncycastle.jce.spec.ECParameterSpec;
-import org.bouncycastle.jce.spec.ECPrivateKeySpec;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DEREncodable;
+import org.minicastle.asn1.DERInteger;
+import org.minicastle.asn1.DERObject;
+import org.minicastle.asn1.DERObjectIdentifier;
+import org.minicastle.asn1.DEROutputStream;
+import org.minicastle.asn1.pkcs.PrivateKeyInfo;
+import org.minicastle.asn1.sec.ECPrivateKeyStructure;
+import org.minicastle.asn1.x509.AlgorithmIdentifier;
+import org.minicastle.asn1.x9.X962NamedCurves;
+import org.minicastle.asn1.x9.X962Parameters;
+import org.minicastle.asn1.x9.X9ECParameters;
+import org.minicastle.asn1.x9.X9ObjectIdentifiers;
+import org.minicastle.crypto.params.ECDomainParameters;
+import org.minicastle.crypto.params.ECPrivateKeyParameters;
+import org.minicastle.jce.interfaces.ECPrivateKey;
+import org.minicastle.jce.interfaces.PKCS12BagAttributeCarrier;
+import org.minicastle.jce.spec.ECNamedCurveParameterSpec;
+import org.minicastle.jce.spec.ECParameterSpec;
+import org.minicastle.jce.spec.ECPrivateKeySpec;
 
 public class JCEECPrivateKey
     implements ECPrivateKey, PKCS12BagAttributeCarrier

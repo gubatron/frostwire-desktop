@@ -14,12 +14,12 @@ import javax.crypto.SecretKey;
 import javax.crypto.ShortBufferException;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.bouncycastle.crypto.BasicAgreement;
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.agreement.ECDHBasicAgreement;
-//import org.bouncycastle.crypto.agreement.ECDHCBasicAgreement;
-import org.bouncycastle.jce.interfaces.ECPrivateKey;
-import org.bouncycastle.jce.interfaces.ECPublicKey;
+import org.minicastle.crypto.BasicAgreement;
+import org.minicastle.crypto.CipherParameters;
+import org.minicastle.crypto.agreement.ECDHBasicAgreement;
+//import org.minicastle.crypto.agreement.ECDHCBasicAgreement;
+import org.minicastle.jce.interfaces.ECPrivateKey;
+import org.minicastle.jce.interfaces.ECPublicKey;
 
 /**
  * Diffie-Hellman key agreement using elliptic curve keys, ala IEEE P1363

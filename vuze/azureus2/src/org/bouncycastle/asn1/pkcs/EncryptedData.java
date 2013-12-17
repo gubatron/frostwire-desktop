@@ -1,7 +1,7 @@
 package org.bouncycastle.asn1.pkcs;
 
-import org.bouncycastle.asn1.*;
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.minicastle.asn1.*;
+import org.minicastle.asn1.x509.AlgorithmIdentifier;
 
 /**
  * The EncryptedData object.

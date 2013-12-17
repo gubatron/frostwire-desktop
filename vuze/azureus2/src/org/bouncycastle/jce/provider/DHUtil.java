@@ -7,10 +7,10 @@ import java.security.PublicKey;
 import javax.crypto.interfaces.DHPrivateKey;
 import javax.crypto.interfaces.DHPublicKey;
 
-import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
-import org.bouncycastle.crypto.params.DHParameters;
-import org.bouncycastle.crypto.params.DHPrivateKeyParameters;
-import org.bouncycastle.crypto.params.DHPublicKeyParameters;
+import org.minicastle.crypto.params.AsymmetricKeyParameter;
+import org.minicastle.crypto.params.DHParameters;
+import org.minicastle.crypto.params.DHPrivateKeyParameters;
+import org.minicastle.crypto.params.DHPublicKeyParameters;
 
 /**
  * utility class for converting jce/jca DH objects

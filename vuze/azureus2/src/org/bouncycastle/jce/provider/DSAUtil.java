@@ -6,10 +6,10 @@ import java.security.PublicKey;
 import java.security.interfaces.DSAPrivateKey;
 import java.security.interfaces.DSAPublicKey;
 
-import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
-import org.bouncycastle.crypto.params.DSAParameters;
-import org.bouncycastle.crypto.params.DSAPrivateKeyParameters;
-import org.bouncycastle.crypto.params.DSAPublicKeyParameters;
+import org.minicastle.crypto.params.AsymmetricKeyParameter;
+import org.minicastle.crypto.params.DSAParameters;
+import org.minicastle.crypto.params.DSAPrivateKeyParameters;
+import org.minicastle.crypto.params.DSAPublicKeyParameters;
 
 /**
  * utility class for converting jce/jca DSA objects

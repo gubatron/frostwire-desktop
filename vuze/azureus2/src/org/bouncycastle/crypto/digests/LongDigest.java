@@ -1,6 +1,6 @@
 package org.bouncycastle.crypto.digests;
 
-import org.bouncycastle.crypto.Digest;
+import org.minicastle.crypto.Digest;
 
 /**
  * Base class for SHA-384 and SHA-512.

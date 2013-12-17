@@ -1,6 +1,6 @@
 package org.bouncycastle.asn1;
 
-import org.bouncycastle.util.Strings;
+import org.minicastle.util.Strings;
 
 import java.io.IOException;
 

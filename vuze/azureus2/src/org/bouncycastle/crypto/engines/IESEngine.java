@@ -2,16 +2,16 @@ package org.bouncycastle.crypto.engines;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.crypto.BasicAgreement;
-import org.bouncycastle.crypto.BufferedBlockCipher;
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.DerivationFunction;
-import org.bouncycastle.crypto.InvalidCipherTextException;
-import org.bouncycastle.crypto.Mac;
-import org.bouncycastle.crypto.params.IESParameters;
-import org.bouncycastle.crypto.params.IESWithCipherParameters;
-import org.bouncycastle.crypto.params.KDFParameters;
-import org.bouncycastle.crypto.params.KeyParameter;
+import org.minicastle.crypto.BasicAgreement;
+import org.minicastle.crypto.BufferedBlockCipher;
+import org.minicastle.crypto.CipherParameters;
+import org.minicastle.crypto.DerivationFunction;
+import org.minicastle.crypto.InvalidCipherTextException;
+import org.minicastle.crypto.Mac;
+import org.minicastle.crypto.params.IESParameters;
+import org.minicastle.crypto.params.IESWithCipherParameters;
+import org.minicastle.crypto.params.KDFParameters;
+import org.minicastle.crypto.params.KeyParameter;
 
 /**
  * support class for constructing intergrated encryption ciphers

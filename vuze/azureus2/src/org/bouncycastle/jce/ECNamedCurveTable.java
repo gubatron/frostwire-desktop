@@ -2,9 +2,9 @@ package org.bouncycastle.jce;
 
 import java.util.Enumeration;
 
-import org.bouncycastle.asn1.x9.X962NamedCurves;
-import org.bouncycastle.asn1.x9.X9ECParameters;
-import org.bouncycastle.jce.spec.ECNamedCurveParameterSpec;
+import org.minicastle.asn1.x9.X962NamedCurves;
+import org.minicastle.asn1.x9.X9ECParameters;
+import org.minicastle.jce.spec.ECNamedCurveParameterSpec;
 
 /**
  * a table of locally supported named curves.

@@ -1,9 +1,9 @@
 package org.bouncycastle.crypto.modes;
 
-import org.bouncycastle.crypto.BlockCipher;
-import org.bouncycastle.crypto.BufferedBlockCipher;
-import org.bouncycastle.crypto.DataLengthException;
-import org.bouncycastle.crypto.InvalidCipherTextException;
+import org.minicastle.crypto.BlockCipher;
+import org.minicastle.crypto.BufferedBlockCipher;
+import org.minicastle.crypto.DataLengthException;
+import org.minicastle.crypto.InvalidCipherTextException;
 
 /**
  * A wrapper class that allows block ciphers to be used to process data in

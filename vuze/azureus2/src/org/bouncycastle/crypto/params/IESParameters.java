@@ -1,6 +1,6 @@
 package org.bouncycastle.crypto.params;
 
-import org.bouncycastle.crypto.CipherParameters;
+import org.minicastle.crypto.CipherParameters;
 
 /**
  * parameters for using an integrated cipher in stream mode.

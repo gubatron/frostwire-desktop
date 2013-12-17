@@ -33,9 +33,9 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.engines.RC4Engine;
-import org.bouncycastle.crypto.params.KeyParameter;
+import org.minicastle.crypto.CipherParameters;
+import org.minicastle.crypto.engines.RC4Engine;
+import org.minicastle.crypto.params.KeyParameter;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.security.SESecurityManager;
 import org.gudy.azureus2.core3.util.ByteFormatter;

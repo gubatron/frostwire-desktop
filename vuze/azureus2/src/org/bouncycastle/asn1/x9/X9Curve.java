@@ -2,15 +2,15 @@ package org.bouncycastle.asn1.x9;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.ASN1OctetString;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DERBitString;
-import org.bouncycastle.asn1.DEREncodable;
-import org.bouncycastle.asn1.DERInteger;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.math.ec.ECCurve;
+import org.minicastle.asn1.ASN1EncodableVector;
+import org.minicastle.asn1.ASN1OctetString;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DERBitString;
+import org.minicastle.asn1.DEREncodable;
+import org.minicastle.asn1.DERInteger;
+import org.minicastle.asn1.DERObject;
+import org.minicastle.asn1.DERSequence;
+import org.minicastle.math.ec.ECCurve;
 
 /**
  * ASN.1 def for Elliptic-Curve Curve structure. See

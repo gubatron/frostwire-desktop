@@ -32,8 +32,8 @@ import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.Signature;
 
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.jce.provider.JCEECDHKeyAgreement;
+import org.minicastle.jce.provider.BouncyCastleProvider;
+import org.minicastle.jce.provider.JCEECDHKeyAgreement;
 
 import com.aelitis.azureus.core.security.CryptoECCUtils;
 import com.aelitis.azureus.core.security.CryptoManagerException;

@@ -1,6 +1,6 @@
 package org.bouncycastle.crypto.digests;
 
-import org.bouncycastle.crypto.Digest;
+import org.minicastle.crypto.Digest;
 
 /**
  * implementation of Tiger based on:

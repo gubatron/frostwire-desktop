@@ -1,11 +1,11 @@
 package org.bouncycastle.asn1.x509;
 
-import org.bouncycastle.asn1.ASN1Choice;
-import org.bouncycastle.asn1.ASN1Encodable;
-import org.bouncycastle.asn1.ASN1TaggedObject;
-import org.bouncycastle.asn1.DERGeneralizedTime;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.DERUTCTime;
+import org.minicastle.asn1.ASN1Choice;
+import org.minicastle.asn1.ASN1Encodable;
+import org.minicastle.asn1.ASN1TaggedObject;
+import org.minicastle.asn1.DERGeneralizedTime;
+import org.minicastle.asn1.DERObject;
+import org.minicastle.asn1.DERUTCTime;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -1,6 +1,6 @@
 package org.bouncycastle.crypto.digests;
 
-import org.bouncycastle.crypto.Digest;
+import org.minicastle.crypto.Digest;
 
 /**
  * base implementation of MD4 family style digest as outlined in

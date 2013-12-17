@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Set;
 
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.math.ec.ECCurve;
-import org.bouncycastle.util.encoders.Hex;
+import org.minicastle.asn1.DERObjectIdentifier;
+import org.minicastle.math.ec.ECCurve;
+import org.minicastle.util.encoders.Hex;
 
 
 /**

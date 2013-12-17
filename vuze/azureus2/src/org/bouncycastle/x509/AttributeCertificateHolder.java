@@ -1,20 +1,20 @@
 package org.bouncycastle.x509;
 
-import org.bouncycastle.asn1.ASN1Encodable;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DERInteger;
-import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
-import org.bouncycastle.asn1.x509.GeneralName;
-import org.bouncycastle.asn1.x509.GeneralNames;
-import org.bouncycastle.asn1.x509.Holder;
-import org.bouncycastle.asn1.x509.IssuerSerial;
-import org.bouncycastle.asn1.x509.ObjectDigestInfo;
-import org.bouncycastle.jce.PrincipalUtil;
-import org.bouncycastle.jce.X509Principal;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.util.Arrays;
-import org.bouncycastle.util.Selector;
+import org.minicastle.asn1.ASN1Encodable;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DERInteger;
+import org.minicastle.asn1.DERSequence;
+import org.minicastle.asn1.x509.AlgorithmIdentifier;
+import org.minicastle.asn1.x509.GeneralName;
+import org.minicastle.asn1.x509.GeneralNames;
+import org.minicastle.asn1.x509.Holder;
+import org.minicastle.asn1.x509.IssuerSerial;
+import org.minicastle.asn1.x509.ObjectDigestInfo;
+import org.minicastle.jce.PrincipalUtil;
+import org.minicastle.jce.X509Principal;
+import org.minicastle.jce.provider.BouncyCastleProvider;
+import org.minicastle.util.Arrays;
+import org.minicastle.util.Selector;
 
 import javax.security.auth.x500.X500Principal;
 import java.io.IOException;

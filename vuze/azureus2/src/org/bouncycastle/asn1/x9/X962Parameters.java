@@ -1,8 +1,8 @@
 package org.bouncycastle.asn1.x9;
 
-import org.bouncycastle.asn1.DEREncodable;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.DERObjectIdentifier;
+import org.minicastle.asn1.DEREncodable;
+import org.minicastle.asn1.DERObject;
+import org.minicastle.asn1.DERObjectIdentifier;
 
 public class X962Parameters
     implements DEREncodable

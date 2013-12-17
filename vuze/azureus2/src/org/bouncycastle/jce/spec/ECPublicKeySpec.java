@@ -1,6 +1,6 @@
 package org.bouncycastle.jce.spec;
 
-import org.bouncycastle.math.ec.ECPoint;
+import org.minicastle.math.ec.ECPoint;
 
 /**
  * Elliptic Curve public key specification

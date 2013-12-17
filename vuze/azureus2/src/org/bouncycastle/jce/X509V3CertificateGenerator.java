@@ -17,18 +17,18 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.bouncycastle.asn1.*;
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
-import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
-import org.bouncycastle.asn1.x509.TBSCertificateStructure;
-import org.bouncycastle.asn1.x509.Time;
-import org.bouncycastle.asn1.x509.V3TBSCertificateGenerator;
-import org.bouncycastle.asn1.x509.X509CertificateStructure;
-import org.bouncycastle.asn1.x509.X509Extension;
-import org.bouncycastle.asn1.x509.X509Extensions;
-import org.bouncycastle.asn1.x509.X509Name;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.jce.provider.X509CertificateObject;
+import org.minicastle.asn1.*;
+import org.minicastle.asn1.x509.AlgorithmIdentifier;
+import org.minicastle.asn1.x509.SubjectPublicKeyInfo;
+import org.minicastle.asn1.x509.TBSCertificateStructure;
+import org.minicastle.asn1.x509.Time;
+import org.minicastle.asn1.x509.V3TBSCertificateGenerator;
+import org.minicastle.asn1.x509.X509CertificateStructure;
+import org.minicastle.asn1.x509.X509Extension;
+import org.minicastle.asn1.x509.X509Extensions;
+import org.minicastle.asn1.x509.X509Name;
+import org.minicastle.jce.provider.BouncyCastleProvider;
+import org.minicastle.jce.provider.X509CertificateObject;
 
 /**
  * class to produce an X.509 Version 3 certificate.

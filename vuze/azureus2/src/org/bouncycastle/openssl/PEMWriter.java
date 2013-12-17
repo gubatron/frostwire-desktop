@@ -1,21 +1,21 @@
 package org.bouncycastle.openssl;
 
-import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.ASN1Object;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DERInteger;
-import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.cms.ContentInfo;
-import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
-import org.bouncycastle.asn1.pkcs.RSAPrivateKeyStructure;
-import org.bouncycastle.asn1.x509.DSAParameter;
-import org.bouncycastle.jce.PKCS10CertificationRequest;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.util.Strings;
-import org.bouncycastle.util.encoders.Base64;
-import org.bouncycastle.util.encoders.Hex;
-import org.bouncycastle.x509.X509AttributeCertificate;
-import org.bouncycastle.x509.X509V2AttributeCertificate;
+import org.minicastle.asn1.ASN1EncodableVector;
+import org.minicastle.asn1.ASN1Object;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DERInteger;
+import org.minicastle.asn1.DERSequence;
+import org.minicastle.asn1.cms.ContentInfo;
+import org.minicastle.asn1.pkcs.PrivateKeyInfo;
+import org.minicastle.asn1.pkcs.RSAPrivateKeyStructure;
+import org.minicastle.asn1.x509.DSAParameter;
+import org.minicastle.jce.PKCS10CertificationRequest;
+import org.minicastle.jce.provider.BouncyCastleProvider;
+import org.minicastle.util.Strings;
+import org.minicastle.util.encoders.Base64;
+import org.minicastle.util.encoders.Hex;
+import org.minicastle.x509.X509AttributeCertificate;
+import org.minicastle.x509.X509V2AttributeCertificate;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

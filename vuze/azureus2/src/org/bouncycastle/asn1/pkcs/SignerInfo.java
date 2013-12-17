@@ -2,8 +2,8 @@ package org.bouncycastle.asn1.pkcs;
 
 import java.util.Enumeration;
 
-import org.bouncycastle.asn1.*;
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.minicastle.asn1.*;
+import org.minicastle.asn1.x509.AlgorithmIdentifier;
 
 /**
  * a PKCS#7 signer info object.

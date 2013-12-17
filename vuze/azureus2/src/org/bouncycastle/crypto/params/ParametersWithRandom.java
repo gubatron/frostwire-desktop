@@ -2,7 +2,7 @@ package org.bouncycastle.crypto.params;
 
 import java.security.SecureRandom;
 
-import org.bouncycastle.crypto.CipherParameters;
+import org.minicastle.crypto.CipherParameters;
 
 public class ParametersWithRandom
     implements CipherParameters

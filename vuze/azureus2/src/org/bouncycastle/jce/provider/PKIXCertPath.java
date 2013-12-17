@@ -17,12 +17,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DERInputStream;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.DEROutputStream;
-import org.bouncycastle.asn1.DERSequence;
+import org.minicastle.asn1.ASN1EncodableVector;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DERInputStream;
+import org.minicastle.asn1.DERObject;
+import org.minicastle.asn1.DEROutputStream;
+import org.minicastle.asn1.DERSequence;
 
 /**
  * CertPath implementation for X.509 certificates.

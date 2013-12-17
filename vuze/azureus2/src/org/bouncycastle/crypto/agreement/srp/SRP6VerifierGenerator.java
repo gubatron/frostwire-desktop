@@ -2,7 +2,7 @@ package org.bouncycastle.crypto.agreement.srp;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.crypto.Digest;
+import org.minicastle.crypto.Digest;
 
 /**
  * Generates new SRP verifier for user

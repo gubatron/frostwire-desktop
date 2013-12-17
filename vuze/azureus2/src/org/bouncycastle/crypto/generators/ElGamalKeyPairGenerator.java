@@ -2,13 +2,13 @@ package org.bouncycastle.crypto.generators;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
-import org.bouncycastle.crypto.AsymmetricCipherKeyPairGenerator;
-import org.bouncycastle.crypto.KeyGenerationParameters;
-import org.bouncycastle.crypto.params.ElGamalKeyGenerationParameters;
-import org.bouncycastle.crypto.params.ElGamalParameters;
-import org.bouncycastle.crypto.params.ElGamalPrivateKeyParameters;
-import org.bouncycastle.crypto.params.ElGamalPublicKeyParameters;
+import org.minicastle.crypto.AsymmetricCipherKeyPair;
+import org.minicastle.crypto.AsymmetricCipherKeyPairGenerator;
+import org.minicastle.crypto.KeyGenerationParameters;
+import org.minicastle.crypto.params.ElGamalKeyGenerationParameters;
+import org.minicastle.crypto.params.ElGamalParameters;
+import org.minicastle.crypto.params.ElGamalPrivateKeyParameters;
+import org.minicastle.crypto.params.ElGamalPublicKeyParameters;
 
 /**
  * a ElGamal key pair generator.

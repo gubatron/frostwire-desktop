@@ -3,7 +3,7 @@ package org.bouncycastle.crypto.generators;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-import org.bouncycastle.crypto.params.ElGamalParameters;
+import org.minicastle.crypto.params.ElGamalParameters;
 
 public class ElGamalParametersGenerator
 {

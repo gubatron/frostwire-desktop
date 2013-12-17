@@ -1,13 +1,13 @@
 package org.bouncycastle.crypto.generators;
 
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.Digest;
-import org.bouncycastle.crypto.PBEParametersGenerator;
-import org.bouncycastle.crypto.digests.MD5Digest;
-import org.bouncycastle.crypto.digests.RIPEMD160Digest;
-import org.bouncycastle.crypto.digests.SHA1Digest;
-import org.bouncycastle.crypto.params.KeyParameter;
-import org.bouncycastle.crypto.params.ParametersWithIV;
+import org.minicastle.crypto.CipherParameters;
+import org.minicastle.crypto.Digest;
+import org.minicastle.crypto.PBEParametersGenerator;
+import org.minicastle.crypto.digests.MD5Digest;
+import org.minicastle.crypto.digests.RIPEMD160Digest;
+import org.minicastle.crypto.digests.SHA1Digest;
+import org.minicastle.crypto.params.KeyParameter;
+import org.minicastle.crypto.params.ParametersWithIV;
 
 /**
  * Generator for PBE derived keys and ivs as defined by PKCS 12 V1.0.

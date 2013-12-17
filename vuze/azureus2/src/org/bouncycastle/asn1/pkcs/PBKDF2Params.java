@@ -3,13 +3,13 @@ package org.bouncycastle.asn1.pkcs;
 import java.math.BigInteger;
 import java.util.Enumeration;
 
-import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.ASN1OctetString;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DERInteger;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.asn1.DERSequence;
+import org.minicastle.asn1.ASN1EncodableVector;
+import org.minicastle.asn1.ASN1OctetString;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DERInteger;
+import org.minicastle.asn1.DERObject;
+import org.minicastle.asn1.DERObjectIdentifier;
+import org.minicastle.asn1.DERSequence;
 
 public class PBKDF2Params
     extends KeyDerivationFunc

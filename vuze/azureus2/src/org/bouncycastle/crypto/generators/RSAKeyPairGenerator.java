@@ -2,12 +2,12 @@ package org.bouncycastle.crypto.generators;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
-import org.bouncycastle.crypto.AsymmetricCipherKeyPairGenerator;
-import org.bouncycastle.crypto.KeyGenerationParameters;
-import org.bouncycastle.crypto.params.RSAKeyGenerationParameters;
-import org.bouncycastle.crypto.params.RSAKeyParameters;
-import org.bouncycastle.crypto.params.RSAPrivateCrtKeyParameters;
+import org.minicastle.crypto.AsymmetricCipherKeyPair;
+import org.minicastle.crypto.AsymmetricCipherKeyPairGenerator;
+import org.minicastle.crypto.KeyGenerationParameters;
+import org.minicastle.crypto.params.RSAKeyGenerationParameters;
+import org.minicastle.crypto.params.RSAKeyParameters;
+import org.minicastle.crypto.params.RSAPrivateCrtKeyParameters;
 
 /**
  * an RSA key pair generator.

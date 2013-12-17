@@ -7,10 +7,10 @@ import java.security.Principal;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.bouncycastle.asn1.ASN1InputStream;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DEROutputStream;
-import org.bouncycastle.asn1.x509.X509Name;
+import org.minicastle.asn1.ASN1InputStream;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DEROutputStream;
+import org.minicastle.asn1.x509.X509Name;
 
 public class X509Principal
     extends X509Name

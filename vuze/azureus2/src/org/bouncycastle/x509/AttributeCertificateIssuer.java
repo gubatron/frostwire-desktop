@@ -1,13 +1,13 @@
 package org.bouncycastle.x509;
 
-import org.bouncycastle.asn1.ASN1Encodable;
-import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.x509.AttCertIssuer;
-import org.bouncycastle.asn1.x509.GeneralName;
-import org.bouncycastle.asn1.x509.GeneralNames;
-import org.bouncycastle.asn1.x509.V2Form;
-import org.bouncycastle.jce.X509Principal;
-import org.bouncycastle.util.Selector;
+import org.minicastle.asn1.ASN1Encodable;
+import org.minicastle.asn1.DERSequence;
+import org.minicastle.asn1.x509.AttCertIssuer;
+import org.minicastle.asn1.x509.GeneralName;
+import org.minicastle.asn1.x509.GeneralNames;
+import org.minicastle.asn1.x509.V2Form;
+import org.minicastle.jce.X509Principal;
+import org.minicastle.util.Selector;
 
 import javax.security.auth.x500.X500Principal;
 import java.io.IOException;

@@ -1,9 +1,9 @@
 package org.bouncycastle.crypto.macs;
 
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.Digest;
-import org.bouncycastle.crypto.Mac;
-import org.bouncycastle.crypto.params.KeyParameter;
+import org.minicastle.crypto.CipherParameters;
+import org.minicastle.crypto.Digest;
+import org.minicastle.crypto.Mac;
+import org.minicastle.crypto.params.KeyParameter;
 
 /**
  * HMAC implementation based on RFC2104

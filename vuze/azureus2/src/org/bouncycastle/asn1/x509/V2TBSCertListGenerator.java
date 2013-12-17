@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DERGeneralizedTime;
-import org.bouncycastle.asn1.DERInteger;
-import org.bouncycastle.asn1.DEROctetString;
-import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.DERTaggedObject;
-import org.bouncycastle.asn1.DERUTCTime;
+import org.minicastle.asn1.ASN1EncodableVector;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DERGeneralizedTime;
+import org.minicastle.asn1.DERInteger;
+import org.minicastle.asn1.DEROctetString;
+import org.minicastle.asn1.DERSequence;
+import org.minicastle.asn1.DERTaggedObject;
+import org.minicastle.asn1.DERUTCTime;
 
 /**
  * Generator for Version 2 TBSCertList structures.

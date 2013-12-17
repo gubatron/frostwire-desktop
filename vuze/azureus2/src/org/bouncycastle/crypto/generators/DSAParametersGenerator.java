@@ -3,9 +3,9 @@ package org.bouncycastle.crypto.generators;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-import org.bouncycastle.crypto.digests.SHA1Digest;
-import org.bouncycastle.crypto.params.DSAParameters;
-import org.bouncycastle.crypto.params.DSAValidationParameters;
+import org.minicastle.crypto.digests.SHA1Digest;
+import org.minicastle.crypto.params.DSAParameters;
+import org.minicastle.crypto.params.DSAValidationParameters;
 
 /**
  * generate suitable parameters for DSA, in line with FIPS 186-2.

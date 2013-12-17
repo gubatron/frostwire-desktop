@@ -3,7 +3,7 @@ package org.bouncycastle.crypto.generators;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-import org.bouncycastle.crypto.params.DHParameters;
+import org.minicastle.crypto.params.DHParameters;
 
 public class DHParametersGenerator
 {

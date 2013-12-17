@@ -1,8 +1,8 @@
 package org.bouncycastle.openssl;
 
-import org.bouncycastle.crypto.PBEParametersGenerator;
-import org.bouncycastle.crypto.generators.OpenSSLPBEParametersGenerator;
-import org.bouncycastle.crypto.params.KeyParameter;
+import org.minicastle.crypto.PBEParametersGenerator;
+import org.minicastle.crypto.generators.OpenSSLPBEParametersGenerator;
+import org.minicastle.crypto.params.KeyParameter;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;

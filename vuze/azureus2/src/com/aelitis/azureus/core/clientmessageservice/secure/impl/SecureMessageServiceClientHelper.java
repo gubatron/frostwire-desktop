@@ -32,11 +32,11 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.encodings.PKCS1Encoding;
-import org.bouncycastle.crypto.engines.RSAEngine;
-import org.bouncycastle.crypto.params.ParametersWithRandom;
-import org.bouncycastle.jce.provider.RSAUtil;
+import org.minicastle.crypto.CipherParameters;
+import org.minicastle.crypto.encodings.PKCS1Encoding;
+import org.minicastle.crypto.engines.RSAEngine;
+import org.minicastle.crypto.params.ParametersWithRandom;
+import org.minicastle.jce.provider.RSAUtil;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.RandomUtils;
 import org.gudy.azureus2.plugins.utils.StaticUtilities;

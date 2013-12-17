@@ -12,26 +12,26 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.AlgorithmParameterSpec;
 
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DERInputStream;
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.asn1.DEROutputStream;
-import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
-import org.bouncycastle.asn1.teletrust.TeleTrusTObjectIdentifiers;
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
-import org.bouncycastle.asn1.x509.DigestInfo;
-import org.bouncycastle.asn1.x509.X509ObjectIdentifiers;
-import org.bouncycastle.crypto.AsymmetricBlockCipher;
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.Digest;
-import org.bouncycastle.crypto.digests.MD2Digest;
-import org.bouncycastle.crypto.digests.MD5Digest;
-import org.bouncycastle.crypto.digests.RIPEMD128Digest;
-import org.bouncycastle.crypto.digests.RIPEMD160Digest;
-import org.bouncycastle.crypto.digests.RIPEMD256Digest;
-import org.bouncycastle.crypto.digests.SHA1Digest;
-import org.bouncycastle.crypto.encodings.PKCS1Encoding;
-import org.bouncycastle.crypto.engines.RSAEngine;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DERInputStream;
+import org.minicastle.asn1.DERObjectIdentifier;
+import org.minicastle.asn1.DEROutputStream;
+import org.minicastle.asn1.pkcs.PKCSObjectIdentifiers;
+import org.minicastle.asn1.teletrust.TeleTrusTObjectIdentifiers;
+import org.minicastle.asn1.x509.AlgorithmIdentifier;
+import org.minicastle.asn1.x509.DigestInfo;
+import org.minicastle.asn1.x509.X509ObjectIdentifiers;
+import org.minicastle.crypto.AsymmetricBlockCipher;
+import org.minicastle.crypto.CipherParameters;
+import org.minicastle.crypto.Digest;
+import org.minicastle.crypto.digests.MD2Digest;
+import org.minicastle.crypto.digests.MD5Digest;
+import org.minicastle.crypto.digests.RIPEMD128Digest;
+import org.minicastle.crypto.digests.RIPEMD160Digest;
+import org.minicastle.crypto.digests.RIPEMD256Digest;
+import org.minicastle.crypto.digests.SHA1Digest;
+import org.minicastle.crypto.encodings.PKCS1Encoding;
+import org.minicastle.crypto.engines.RSAEngine;
 
 public class JDKDigestSignature
     extends Signature implements PKCSObjectIdentifiers, X509ObjectIdentifiers

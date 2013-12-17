@@ -1,6 +1,6 @@
 package org.bouncycastle.jce.interfaces;
 
-import org.bouncycastle.jce.spec.ECParameterSpec;
+import org.minicastle.jce.spec.ECParameterSpec;
 
 /**
  * generic interface for an Elliptic Curve Key.

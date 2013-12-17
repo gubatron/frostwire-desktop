@@ -1,15 +1,15 @@
 package org.bouncycastle.x509;
 
-import org.bouncycastle.asn1.ASN1Encodable;
-import org.bouncycastle.asn1.ASN1InputStream;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DERBitString;
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.asn1.DEROutputStream;
-import org.bouncycastle.asn1.x509.AttributeCertificate;
-import org.bouncycastle.asn1.x509.X509Extension;
-import org.bouncycastle.asn1.x509.X509Extensions;
-import org.bouncycastle.util.Arrays;
+import org.minicastle.asn1.ASN1Encodable;
+import org.minicastle.asn1.ASN1InputStream;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DERBitString;
+import org.minicastle.asn1.DERObjectIdentifier;
+import org.minicastle.asn1.DEROutputStream;
+import org.minicastle.asn1.x509.AttributeCertificate;
+import org.minicastle.asn1.x509.X509Extension;
+import org.minicastle.asn1.x509.X509Extensions;
+import org.minicastle.util.Arrays;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

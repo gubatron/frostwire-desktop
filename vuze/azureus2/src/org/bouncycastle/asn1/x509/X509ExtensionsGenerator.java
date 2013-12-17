@@ -1,9 +1,9 @@
 package org.bouncycastle.asn1.x509;
 
-import org.bouncycastle.asn1.DEREncodable;
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.asn1.DEROctetString;
-import org.bouncycastle.asn1.DEROutputStream;
+import org.minicastle.asn1.DEREncodable;
+import org.minicastle.asn1.DERObjectIdentifier;
+import org.minicastle.asn1.DEROctetString;
+import org.minicastle.asn1.DEROutputStream;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

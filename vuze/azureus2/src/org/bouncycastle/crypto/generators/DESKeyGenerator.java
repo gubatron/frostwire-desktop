@@ -1,7 +1,7 @@
 package org.bouncycastle.crypto.generators;
 
-import org.bouncycastle.crypto.CipherKeyGenerator;
-import org.bouncycastle.crypto.params.DESParameters;
+import org.minicastle.crypto.CipherKeyGenerator;
+import org.minicastle.crypto.params.DESParameters;
 
 public class DESKeyGenerator
     extends CipherKeyGenerator

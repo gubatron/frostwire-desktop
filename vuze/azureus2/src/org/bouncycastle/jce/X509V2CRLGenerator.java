@@ -17,24 +17,24 @@ import java.util.Hashtable;
 import java.util.SimpleTimeZone;
 import java.util.Vector;
 
-import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.DERBitString;
-import org.bouncycastle.asn1.DEREncodable;
-import org.bouncycastle.asn1.DERInteger;
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.asn1.DEROctetString;
-import org.bouncycastle.asn1.DEROutputStream;
-import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.DERUTCTime;
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
-import org.bouncycastle.asn1.x509.CertificateList;
-import org.bouncycastle.asn1.x509.TBSCertList;
-import org.bouncycastle.asn1.x509.V2TBSCertListGenerator;
-import org.bouncycastle.asn1.x509.X509Extension;
-import org.bouncycastle.asn1.x509.X509Extensions;
-import org.bouncycastle.asn1.x509.X509Name;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.jce.provider.X509CRLObject;
+import org.minicastle.asn1.ASN1EncodableVector;
+import org.minicastle.asn1.DERBitString;
+import org.minicastle.asn1.DEREncodable;
+import org.minicastle.asn1.DERInteger;
+import org.minicastle.asn1.DERObjectIdentifier;
+import org.minicastle.asn1.DEROctetString;
+import org.minicastle.asn1.DEROutputStream;
+import org.minicastle.asn1.DERSequence;
+import org.minicastle.asn1.DERUTCTime;
+import org.minicastle.asn1.x509.AlgorithmIdentifier;
+import org.minicastle.asn1.x509.CertificateList;
+import org.minicastle.asn1.x509.TBSCertList;
+import org.minicastle.asn1.x509.V2TBSCertListGenerator;
+import org.minicastle.asn1.x509.X509Extension;
+import org.minicastle.asn1.x509.X509Extensions;
+import org.minicastle.asn1.x509.X509Name;
+import org.minicastle.jce.provider.BouncyCastleProvider;
+import org.minicastle.jce.provider.X509CRLObject;
 
 /**
  * class to produce an X.509 Version 2 CRL.

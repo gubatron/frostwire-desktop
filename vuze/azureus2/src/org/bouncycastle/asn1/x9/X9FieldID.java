@@ -2,13 +2,13 @@ package org.bouncycastle.asn1.x9;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DEREncodable;
-import org.bouncycastle.asn1.DERInteger;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.asn1.DERSequence;
+import org.minicastle.asn1.ASN1EncodableVector;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DEREncodable;
+import org.minicastle.asn1.DERInteger;
+import org.minicastle.asn1.DERObject;
+import org.minicastle.asn1.DERObjectIdentifier;
+import org.minicastle.asn1.DERSequence;
 
 /**
  * ASN.1 def for Elliptic-Curve Field ID structure. See

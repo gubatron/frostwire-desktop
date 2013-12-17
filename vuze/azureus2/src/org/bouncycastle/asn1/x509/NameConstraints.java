@@ -3,13 +3,13 @@ package org.bouncycastle.asn1.x509;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.bouncycastle.asn1.ASN1Encodable;
-import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.ASN1TaggedObject;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.DERTaggedObject;
+import org.minicastle.asn1.ASN1Encodable;
+import org.minicastle.asn1.ASN1EncodableVector;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.ASN1TaggedObject;
+import org.minicastle.asn1.DERObject;
+import org.minicastle.asn1.DERSequence;
+import org.minicastle.asn1.DERTaggedObject;
 
 public class NameConstraints
     extends ASN1Encodable

@@ -36,9 +36,9 @@ import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Calendar;
 
-import org.bouncycastle.jce.*;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.asn1.x509.X509Name;
+import org.minicastle.jce.*;
+import org.minicastle.jce.provider.BouncyCastleProvider;
+import org.minicastle.asn1.x509.X509Name;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.RandomUtils;
@@ -51,7 +51,7 @@ SESecurityManagerBC
 	initialise()
 	{		
 		try{
-			Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+			Security.addProvider(new org.minicastle.jce.provider.BouncyCastleProvider());
 
 			KeyFactory kf = KeyFactory.getInstance( "ECDSA", BouncyCastleProvider.PROVIDER_NAME );
 			

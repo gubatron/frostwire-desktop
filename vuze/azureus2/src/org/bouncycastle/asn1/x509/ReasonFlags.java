@@ -1,6 +1,6 @@
 package org.bouncycastle.asn1.x509;
 
-import org.bouncycastle.asn1.DERBitString;
+import org.minicastle.asn1.DERBitString;
 
 /**
  * The ReasonFlags object.

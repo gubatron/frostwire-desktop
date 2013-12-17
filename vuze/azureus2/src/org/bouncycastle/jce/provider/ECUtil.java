@@ -4,13 +4,13 @@ import java.security.InvalidKeyException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
-import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
-import org.bouncycastle.crypto.params.ECDomainParameters;
-import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
-import org.bouncycastle.crypto.params.ECPublicKeyParameters;
-import org.bouncycastle.jce.interfaces.ECPrivateKey;
-import org.bouncycastle.jce.interfaces.ECPublicKey;
-import org.bouncycastle.jce.spec.ECParameterSpec;
+import org.minicastle.crypto.params.AsymmetricKeyParameter;
+import org.minicastle.crypto.params.ECDomainParameters;
+import org.minicastle.crypto.params.ECPrivateKeyParameters;
+import org.minicastle.crypto.params.ECPublicKeyParameters;
+import org.minicastle.jce.interfaces.ECPrivateKey;
+import org.minicastle.jce.interfaces.ECPublicKey;
+import org.minicastle.jce.spec.ECParameterSpec;
 
 /**
  * utility class for converting jce/jca ECDSA, ECDH, and ECDHC

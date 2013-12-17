@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.eclipse.swt.widgets.Shell;
 
-import org.bouncycastle.util.encoders.Base64;
+import org.minicastle.util.encoders.Base64;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.util.*;

@@ -15,18 +15,18 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Hashtable;
 
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.ASN1Set;
-import org.bouncycastle.asn1.DERBitString;
-import org.bouncycastle.asn1.DERInputStream;
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.asn1.DEROutputStream;
-import org.bouncycastle.asn1.pkcs.CertificationRequest;
-import org.bouncycastle.asn1.pkcs.CertificationRequestInfo;
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
-import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
-import org.bouncycastle.asn1.x509.X509Name;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.ASN1Set;
+import org.minicastle.asn1.DERBitString;
+import org.minicastle.asn1.DERInputStream;
+import org.minicastle.asn1.DERObjectIdentifier;
+import org.minicastle.asn1.DEROutputStream;
+import org.minicastle.asn1.pkcs.CertificationRequest;
+import org.minicastle.asn1.pkcs.CertificationRequestInfo;
+import org.minicastle.asn1.x509.AlgorithmIdentifier;
+import org.minicastle.asn1.x509.SubjectPublicKeyInfo;
+import org.minicastle.asn1.x509.X509Name;
+import org.minicastle.jce.provider.BouncyCastleProvider;
 
 /**
  * A class for verifying and creating PKCS10 Certification requests. 

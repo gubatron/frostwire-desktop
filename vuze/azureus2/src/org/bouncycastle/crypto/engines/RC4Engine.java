@@ -1,8 +1,8 @@
 package org.bouncycastle.crypto.engines;
 
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.StreamCipher;
-import org.bouncycastle.crypto.params.KeyParameter;
+import org.minicastle.crypto.CipherParameters;
+import org.minicastle.crypto.StreamCipher;
+import org.minicastle.crypto.params.KeyParameter;
 
 public class RC4Engine implements StreamCipher
 {

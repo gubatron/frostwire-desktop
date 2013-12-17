@@ -27,20 +27,20 @@ import java.util.Vector;
 
 import javax.security.auth.x500.X500Principal;
 
-import org.bouncycastle.asn1.*;
-import org.bouncycastle.asn1.misc.MiscObjectIdentifiers;
-import org.bouncycastle.asn1.misc.NetscapeCertType;
-import org.bouncycastle.asn1.misc.NetscapeRevocationURL;
-import org.bouncycastle.asn1.misc.VerisignCzagExtension;
-import org.bouncycastle.asn1.util.ASN1Dump;
-import org.bouncycastle.asn1.x509.BasicConstraints;
-import org.bouncycastle.asn1.x509.KeyUsage;
-import org.bouncycastle.asn1.x509.X509CertificateStructure;
-import org.bouncycastle.asn1.x509.X509Extension;
-import org.bouncycastle.asn1.x509.X509Extensions;
-import org.bouncycastle.jce.X509Principal;
-import org.bouncycastle.jce.interfaces.PKCS12BagAttributeCarrier;
-import org.bouncycastle.util.encoders.Hex;
+import org.minicastle.asn1.*;
+import org.minicastle.asn1.misc.MiscObjectIdentifiers;
+import org.minicastle.asn1.misc.NetscapeCertType;
+import org.minicastle.asn1.misc.NetscapeRevocationURL;
+import org.minicastle.asn1.misc.VerisignCzagExtension;
+import org.minicastle.asn1.util.ASN1Dump;
+import org.minicastle.asn1.x509.BasicConstraints;
+import org.minicastle.asn1.x509.KeyUsage;
+import org.minicastle.asn1.x509.X509CertificateStructure;
+import org.minicastle.asn1.x509.X509Extension;
+import org.minicastle.asn1.x509.X509Extensions;
+import org.minicastle.jce.X509Principal;
+import org.minicastle.jce.interfaces.PKCS12BagAttributeCarrier;
+import org.minicastle.util.encoders.Hex;
 
 public class X509CertificateObject
     extends X509Certificate

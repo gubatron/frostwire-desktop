@@ -2,8 +2,8 @@ package org.bouncycastle.asn1.util;
 
 import java.util.Enumeration;
 
-import org.bouncycastle.asn1.*;
-import org.bouncycastle.util.encoders.Hex;
+import org.minicastle.asn1.*;
+import org.minicastle.util.encoders.Hex;
 
 public class ASN1Dump
 {

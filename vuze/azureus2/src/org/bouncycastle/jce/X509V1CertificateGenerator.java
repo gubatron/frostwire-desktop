@@ -15,24 +15,24 @@ import java.security.cert.X509Certificate;
 import java.util.Date;
 import java.util.Hashtable;
 
-import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DERBitString;
-import org.bouncycastle.asn1.DERInputStream;
-import org.bouncycastle.asn1.DERInteger;
-import org.bouncycastle.asn1.DERNull;
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.asn1.DEROutputStream;
-import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
-import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
-import org.bouncycastle.asn1.x509.TBSCertificateStructure;
-import org.bouncycastle.asn1.x509.Time;
-import org.bouncycastle.asn1.x509.V1TBSCertificateGenerator;
-import org.bouncycastle.asn1.x509.X509CertificateStructure;
-import org.bouncycastle.asn1.x509.X509Name;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.jce.provider.X509CertificateObject;
+import org.minicastle.asn1.ASN1EncodableVector;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DERBitString;
+import org.minicastle.asn1.DERInputStream;
+import org.minicastle.asn1.DERInteger;
+import org.minicastle.asn1.DERNull;
+import org.minicastle.asn1.DERObjectIdentifier;
+import org.minicastle.asn1.DEROutputStream;
+import org.minicastle.asn1.DERSequence;
+import org.minicastle.asn1.x509.AlgorithmIdentifier;
+import org.minicastle.asn1.x509.SubjectPublicKeyInfo;
+import org.minicastle.asn1.x509.TBSCertificateStructure;
+import org.minicastle.asn1.x509.Time;
+import org.minicastle.asn1.x509.V1TBSCertificateGenerator;
+import org.minicastle.asn1.x509.X509CertificateStructure;
+import org.minicastle.asn1.x509.X509Name;
+import org.minicastle.jce.provider.BouncyCastleProvider;
+import org.minicastle.jce.provider.X509CertificateObject;
 
 /**
  * class to produce an X.509 Version 1 certificate.

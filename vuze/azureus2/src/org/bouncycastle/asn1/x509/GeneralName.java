@@ -1,18 +1,18 @@
 package org.bouncycastle.asn1.x509;
 
-import org.bouncycastle.asn1.ASN1Choice;
-import org.bouncycastle.asn1.ASN1Encodable;
-import org.bouncycastle.asn1.ASN1OctetString;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.ASN1TaggedObject;
-import org.bouncycastle.asn1.DEREncodable;
-import org.bouncycastle.asn1.DERIA5String;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.asn1.DEROctetString;
-import org.bouncycastle.asn1.DERTaggedObject;
-import org.bouncycastle.util.IPAddress;
-import org.bouncycastle.util.Strings;
+import org.minicastle.asn1.ASN1Choice;
+import org.minicastle.asn1.ASN1Encodable;
+import org.minicastle.asn1.ASN1OctetString;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.ASN1TaggedObject;
+import org.minicastle.asn1.DEREncodable;
+import org.minicastle.asn1.DERIA5String;
+import org.minicastle.asn1.DERObject;
+import org.minicastle.asn1.DERObjectIdentifier;
+import org.minicastle.asn1.DEROctetString;
+import org.minicastle.asn1.DERTaggedObject;
+import org.minicastle.util.IPAddress;
+import org.minicastle.util.Strings;
 
 /**
  * The GeneralName object.

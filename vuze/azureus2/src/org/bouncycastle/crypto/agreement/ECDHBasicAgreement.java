@@ -2,12 +2,12 @@ package org.bouncycastle.crypto.agreement;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.math.ec.ECPoint;
+import org.minicastle.math.ec.ECPoint;
 
-import org.bouncycastle.crypto.BasicAgreement;
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.params.ECPublicKeyParameters;
-import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
+import org.minicastle.crypto.BasicAgreement;
+import org.minicastle.crypto.CipherParameters;
+import org.minicastle.crypto.params.ECPublicKeyParameters;
+import org.minicastle.crypto.params.ECPrivateKeyParameters;
 
 /**
  * P1363 7.2.1 ECSVDP-DH

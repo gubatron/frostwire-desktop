@@ -4,8 +4,8 @@ import java.security.interfaces.RSAPrivateCrtKey;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
-import org.bouncycastle.crypto.params.RSAKeyParameters;
-import org.bouncycastle.crypto.params.RSAPrivateCrtKeyParameters;
+import org.minicastle.crypto.params.RSAKeyParameters;
+import org.minicastle.crypto.params.RSAPrivateCrtKeyParameters;
 
 /**
  * utility class for converting java.security RSA objects into their

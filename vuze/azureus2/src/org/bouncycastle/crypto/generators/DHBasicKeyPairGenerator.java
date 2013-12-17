@@ -2,13 +2,13 @@ package org.bouncycastle.crypto.generators;
 
 import java.math.BigInteger;
 
-import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
-import org.bouncycastle.crypto.AsymmetricCipherKeyPairGenerator;
-import org.bouncycastle.crypto.KeyGenerationParameters;
-import org.bouncycastle.crypto.params.DHKeyGenerationParameters;
-import org.bouncycastle.crypto.params.DHParameters;
-import org.bouncycastle.crypto.params.DHPrivateKeyParameters;
-import org.bouncycastle.crypto.params.DHPublicKeyParameters;
+import org.minicastle.crypto.AsymmetricCipherKeyPair;
+import org.minicastle.crypto.AsymmetricCipherKeyPairGenerator;
+import org.minicastle.crypto.KeyGenerationParameters;
+import org.minicastle.crypto.params.DHKeyGenerationParameters;
+import org.minicastle.crypto.params.DHParameters;
+import org.minicastle.crypto.params.DHPrivateKeyParameters;
+import org.minicastle.crypto.params.DHPublicKeyParameters;
 
 /**
  * a basic Diffie-Helman key pair generator.

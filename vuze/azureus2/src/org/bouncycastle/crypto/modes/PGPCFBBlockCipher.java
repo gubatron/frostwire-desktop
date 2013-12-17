@@ -1,9 +1,9 @@
 package org.bouncycastle.crypto.modes;
 
-import org.bouncycastle.crypto.BlockCipher;
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.DataLengthException;
-import org.bouncycastle.crypto.params.ParametersWithIV;
+import org.minicastle.crypto.BlockCipher;
+import org.minicastle.crypto.CipherParameters;
+import org.minicastle.crypto.DataLengthException;
+import org.minicastle.crypto.params.ParametersWithIV;
 
 /**
  * Implements OpenPGP's rather strange version of Cipher-FeedBack (CFB) mode on top of a simple cipher. For further info see <a href="http://www.ietf.org/rfc/rfc2440.html">RFC 2440</a>.

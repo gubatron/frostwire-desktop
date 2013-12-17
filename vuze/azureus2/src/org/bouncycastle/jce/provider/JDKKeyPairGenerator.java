@@ -7,11 +7,11 @@ import java.security.SecureRandom;
 import java.security.spec.AlgorithmParameterSpec;
 import java.util.Hashtable;
 
-import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
-import org.bouncycastle.crypto.generators.ECKeyPairGenerator;
-import org.bouncycastle.crypto.params.*;
-import org.bouncycastle.jce.ECNamedCurveTable;
-import org.bouncycastle.jce.spec.ECParameterSpec;
+import org.minicastle.crypto.AsymmetricCipherKeyPair;
+import org.minicastle.crypto.generators.ECKeyPairGenerator;
+import org.minicastle.crypto.params.*;
+import org.minicastle.jce.ECNamedCurveTable;
+import org.minicastle.jce.spec.ECParameterSpec;
 
 public abstract class JDKKeyPairGenerator
     extends KeyPairGenerator

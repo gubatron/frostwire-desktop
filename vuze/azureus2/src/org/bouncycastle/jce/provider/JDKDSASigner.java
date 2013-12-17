@@ -13,22 +13,22 @@ import java.security.SignatureException;
 import java.security.interfaces.DSAKey;
 import java.security.spec.AlgorithmParameterSpec;
 
-import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.DERInputStream;
-import org.bouncycastle.asn1.DERInteger;
-import org.bouncycastle.asn1.DEROutputStream;
-import org.bouncycastle.asn1.DERSequence;
-import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
-import org.bouncycastle.asn1.x509.X509ObjectIdentifiers;
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.DSA;
-import org.bouncycastle.crypto.Digest;
-import org.bouncycastle.crypto.digests.SHA1Digest;
-import org.bouncycastle.crypto.params.ParametersWithRandom;
-//import org.bouncycastle.crypto.signers.DSASigner;
-import org.bouncycastle.crypto.signers.ECDSASigner;
-import org.bouncycastle.jce.interfaces.ECKey;
+import org.minicastle.asn1.ASN1EncodableVector;
+import org.minicastle.asn1.ASN1Sequence;
+import org.minicastle.asn1.DERInputStream;
+import org.minicastle.asn1.DERInteger;
+import org.minicastle.asn1.DEROutputStream;
+import org.minicastle.asn1.DERSequence;
+import org.minicastle.asn1.pkcs.PKCSObjectIdentifiers;
+import org.minicastle.asn1.x509.X509ObjectIdentifiers;
+import org.minicastle.crypto.CipherParameters;
+import org.minicastle.crypto.DSA;
+import org.minicastle.crypto.Digest;
+import org.minicastle.crypto.digests.SHA1Digest;
+import org.minicastle.crypto.params.ParametersWithRandom;
+//import org.minicastle.crypto.signers.DSASigner;
+import org.minicastle.crypto.signers.ECDSASigner;
+import org.minicastle.jce.interfaces.ECKey;
 
 public class JDKDSASigner
     extends Signature implements PKCSObjectIdentifiers, X509ObjectIdentifiers

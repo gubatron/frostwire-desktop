@@ -14,18 +14,18 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.interfaces.DHPrivateKey;
 
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.InvalidCipherTextException;
-//import org.bouncycastle.crypto.agreement.DHBasicAgreement;
-import org.bouncycastle.crypto.agreement.ECDHBasicAgreement;
-import org.bouncycastle.crypto.digests.SHA1Digest;
-import org.bouncycastle.crypto.engines.IESEngine;
-import org.bouncycastle.crypto.generators.KDF2BytesGenerator;
-import org.bouncycastle.crypto.macs.HMac;
-import org.bouncycastle.crypto.params.IESParameters;
-import org.bouncycastle.jce.interfaces.ECPrivateKey;
-import org.bouncycastle.jce.interfaces.IESKey;
-import org.bouncycastle.jce.spec.IESParameterSpec;
+import org.minicastle.crypto.CipherParameters;
+import org.minicastle.crypto.InvalidCipherTextException;
+//import org.minicastle.crypto.agreement.DHBasicAgreement;
+import org.minicastle.crypto.agreement.ECDHBasicAgreement;
+import org.minicastle.crypto.digests.SHA1Digest;
+import org.minicastle.crypto.engines.IESEngine;
+import org.minicastle.crypto.generators.KDF2BytesGenerator;
+import org.minicastle.crypto.macs.HMac;
+import org.minicastle.crypto.params.IESParameters;
+import org.minicastle.jce.interfaces.ECPrivateKey;
+import org.minicastle.jce.interfaces.IESKey;
+import org.minicastle.jce.spec.IESParameterSpec;
 
 public class JCEIESCipher //extends WrapCipherSpi
 {

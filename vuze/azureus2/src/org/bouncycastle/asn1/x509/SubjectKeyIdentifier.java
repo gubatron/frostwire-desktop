@@ -1,12 +1,12 @@
 package org.bouncycastle.asn1.x509;
 
-import org.bouncycastle.asn1.ASN1Encodable;
-import org.bouncycastle.asn1.ASN1OctetString;
-import org.bouncycastle.asn1.ASN1TaggedObject;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.DEROctetString;
-import org.bouncycastle.crypto.Digest;
-import org.bouncycastle.crypto.digests.SHA1Digest;
+import org.minicastle.asn1.ASN1Encodable;
+import org.minicastle.asn1.ASN1OctetString;
+import org.minicastle.asn1.ASN1TaggedObject;
+import org.minicastle.asn1.DERObject;
+import org.minicastle.asn1.DEROctetString;
+import org.minicastle.crypto.Digest;
+import org.minicastle.crypto.digests.SHA1Digest;
 
 /**
  * The SubjectKeyIdentifier object.

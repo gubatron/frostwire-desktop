@@ -23,19 +23,19 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.bouncycastle.asn1.*;
-import org.bouncycastle.asn1.pkcs.ContentInfo;
-import org.bouncycastle.asn1.pkcs.IssuerAndSerialNumber;
-import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
-import org.bouncycastle.asn1.pkcs.SignedData;
-import org.bouncycastle.asn1.pkcs.SignerInfo;
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
-import org.bouncycastle.asn1.x509.CertificateList;
-import org.bouncycastle.asn1.x509.X509CertificateStructure;
-import org.bouncycastle.asn1.x509.X509Name;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.jce.provider.X509CRLObject;
-import org.bouncycastle.jce.provider.X509CertificateObject;
+import org.minicastle.asn1.*;
+import org.minicastle.asn1.pkcs.ContentInfo;
+import org.minicastle.asn1.pkcs.IssuerAndSerialNumber;
+import org.minicastle.asn1.pkcs.PKCSObjectIdentifiers;
+import org.minicastle.asn1.pkcs.SignedData;
+import org.minicastle.asn1.pkcs.SignerInfo;
+import org.minicastle.asn1.x509.AlgorithmIdentifier;
+import org.minicastle.asn1.x509.CertificateList;
+import org.minicastle.asn1.x509.X509CertificateStructure;
+import org.minicastle.asn1.x509.X509Name;
+import org.minicastle.jce.provider.BouncyCastleProvider;
+import org.minicastle.jce.provider.X509CRLObject;
+import org.minicastle.jce.provider.X509CertificateObject;
 
 /**
  * Represents a PKCS#7 object - specifically the "Signed Data"

@@ -1,11 +1,11 @@
 package org.bouncycastle.asn1.x509;
 
-import org.bouncycastle.asn1.DERGeneralizedTime;
-import org.bouncycastle.asn1.DERIA5String;
-import org.bouncycastle.asn1.DERObject;
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.asn1.DERPrintableString;
-import org.bouncycastle.asn1.DERUTF8String;
+import org.minicastle.asn1.DERGeneralizedTime;
+import org.minicastle.asn1.DERIA5String;
+import org.minicastle.asn1.DERObject;
+import org.minicastle.asn1.DERObjectIdentifier;
+import org.minicastle.asn1.DERPrintableString;
+import org.minicastle.asn1.DERUTF8String;
 
 import java.io.IOException;
 

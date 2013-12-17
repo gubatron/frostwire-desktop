@@ -3,8 +3,8 @@ package org.bouncycastle.jce;
 import java.io.*;
 import java.security.cert.*;
 
-import org.bouncycastle.asn1.*;
-import org.bouncycastle.asn1.x509.*;
+import org.minicastle.asn1.*;
+import org.minicastle.asn1.x509.*;
 
 /**
  * a utility class that will extract X509Principal objects from X.509 certificates.
