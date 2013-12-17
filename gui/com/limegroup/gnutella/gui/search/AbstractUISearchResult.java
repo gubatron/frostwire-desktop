@@ -24,8 +24,10 @@ import com.frostwire.gui.player.StreamMediaSource;
 import com.frostwire.search.FileSearchResult;
 import com.frostwire.search.SearchResult;
 import com.frostwire.search.StreamableSearchResult;
+import com.frostwire.search.youtube.YouTubeCrawledStreamableSearchResult;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.settings.PlayerSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /**
@@ -116,8 +118,18 @@ public abstract class AbstractUISearchResult implements UISearchResult {
             String streamUrl = ssr.getStreamUrl();
             MediaType mediaType = MediaType.getMediaTypeForExtension(extension);
             if (mediaType != null) {
-                boolean showPlayerWindow = mediaType.equals(MediaType.getVideoMediaType());
-                GUIMediator.instance().launchMedia(new StreamMediaSource(streamUrl, sr.getDisplayName(), sr.getDetailsUrl(), showPlayerWindow));
+                boolean isVideo = mediaType.equals(MediaType.getVideoMediaType());
+                if (isVideo) {
+                    boolean videoPreviewInBrowser = !PlayerSettings.USE_FW_PLAYER_FOR_CLOUD_VIDEO_PREVIEWS.getValue() && sr instanceof YouTubeCrawledStreamableSearchResult;
+                    
+                    if (videoPreviewInBrowser) {
+                        GUIMediator.instance().launchYouTubePreviewInBrowser(((YouTubeCrawledStreamableSearchResult) sr));
+                    } else {
+                        GUIMediator.instance().launchMedia(new StreamMediaSource(streamUrl, sr.getDisplayName(), sr.getDetailsUrl(), true));
+                    }
+                } else {
+                    GUIMediator.instance().launchMedia(new StreamMediaSource(streamUrl, sr.getDisplayName(), sr.getDetailsUrl(), false));
+                }
             }
         }
     }

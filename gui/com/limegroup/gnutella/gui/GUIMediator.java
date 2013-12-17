@@ -32,9 +32,11 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.NetworkInterface;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -72,6 +74,7 @@ import com.frostwire.gui.tabs.Tab;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
+import com.frostwire.search.youtube.YouTubeCrawledStreamableSearchResult;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
@@ -1786,5 +1789,17 @@ public final class GUIMediator {
     public void openHttp(final String httpUrl, final String title, final String saveFileAs, final long fileSize) {
         getBTDownloadMediator().openHttp(httpUrl, title, saveFileAs, fileSize);
         setWindow(GUIMediator.Tabs.SEARCH);
+    }
+
+    public void launchYouTubePreviewInBrowser(YouTubeCrawledStreamableSearchResult sr) {
+        try {
+            String displayName = URLEncoder.encode(sr.getDisplayName(), "UTF-8");
+            String source = URLEncoder.encode(sr.getSource(), "UTF-8");
+            String detailsUrl = URLEncoder.encode(sr.getDetailsUrl(), "UTF-8");
+            String previewUrl = String.format("http://www.frostclick.com/cloudplayer/?type=yt&displayName=%s&source=%s&detailsUrl=%s", displayName, source, detailsUrl);
+            openURL(previewUrl);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }

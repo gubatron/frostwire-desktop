@@ -40,12 +40,12 @@ public final class PlayerPaneItem extends AbstractPaneItem {
     public final static String LABEL = I18n.tr("You can play your media with the native operating system player if the format is supported.");
 
     private final String CHECK_BOX_LABEL = I18nMarker.marktr("Play with the native media player:");
+    
+    private final String VIDEO_PREVIEW_WITH_INTERNAL_PLAYER_CHECK_BOX_LABEL = I18n.tr("Play search result video previews with internal player");
 
-    /**
-     * Constant for the check box that specifies whether or not downloads 
-     * should be automatically cleared.
-     */
     private final JCheckBox CHECK_BOX = new JCheckBox();
+    
+    private final JCheckBox VIDEO_PREVIEW_WITH_INTERNAL_PLAYER_CHECK_BOX = new JCheckBox();
 
     /**
      * The constructor constructs all of the elements of this
@@ -59,6 +59,8 @@ public final class PlayerPaneItem extends AbstractPaneItem {
 
         LabeledComponent comp = new LabeledComponent(CHECK_BOX_LABEL, CHECK_BOX, LabeledComponent.LEFT_GLUE, LabeledComponent.LEFT);
         add(comp.getComponent());
+        
+        add(new LabeledComponent(VIDEO_PREVIEW_WITH_INTERNAL_PLAYER_CHECK_BOX_LABEL, VIDEO_PREVIEW_WITH_INTERNAL_PLAYER_CHECK_BOX, LabeledComponent.LEFT_GLUE, LabeledComponent.LEFT).getComponent());
     }
 
     /**
@@ -70,6 +72,7 @@ public final class PlayerPaneItem extends AbstractPaneItem {
      */
     public void initOptions() {
         CHECK_BOX.setSelected(PlayerSettings.USE_OS_DEFAULT_PLAYER.getValue());
+        VIDEO_PREVIEW_WITH_INTERNAL_PLAYER_CHECK_BOX.setSelected(PlayerSettings.USE_FW_PLAYER_FOR_CLOUD_VIDEO_PREVIEWS.getValue());
     }
 
     /**
@@ -82,10 +85,12 @@ public final class PlayerPaneItem extends AbstractPaneItem {
      */
     public boolean applyOptions() throws IOException {
         PlayerSettings.USE_OS_DEFAULT_PLAYER.setValue(CHECK_BOX.isSelected());
+        PlayerSettings.USE_FW_PLAYER_FOR_CLOUD_VIDEO_PREVIEWS.setValue(VIDEO_PREVIEW_WITH_INTERNAL_PLAYER_CHECK_BOX.isSelected());
         return false;
     }
 
     public boolean isDirty() {
-        return PlayerSettings.USE_OS_DEFAULT_PLAYER.getValue() != CHECK_BOX.isSelected();
+        return PlayerSettings.USE_OS_DEFAULT_PLAYER.getValue() != CHECK_BOX.isSelected() ||
+               PlayerSettings.USE_FW_PLAYER_FOR_CLOUD_VIDEO_PREVIEWS.getValue() != VIDEO_PREVIEW_WITH_INTERNAL_PLAYER_CHECK_BOX.isSelected();
     }
 }
