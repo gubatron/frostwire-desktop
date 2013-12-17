@@ -26,6 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aelitis.azureus.core.AzureusCore;
+import com.aelitis.azureus.core.dht.speed.DHTSpeedTester;
+import com.aelitis.azureus.core.dht.speed.DHTSpeedTesterListener;
 import com.frostwire.util.Condition;
 
 /**
@@ -44,6 +46,44 @@ public final class VuzeManager {
     public VuzeManager(AzureusCore core) {
         this.core = core;
 
+        core.getSpeedManager().setEnabled(false);
+        DHTSpeedTester oldTester = core.getSpeedManager().getSpeedTester();
+        
+        core.getSpeedManager().setSpeedTester(new DHTSpeedTester() {
+            
+            @Override
+            public void setContactNumber(int number) {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public void removeListener(DHTSpeedTesterListener listener) {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public int getContactNumber() {
+                // TODO Auto-generated method stub
+                return 0;
+            }
+            
+            @Override
+            public void destroy() {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public void addListener(DHTSpeedTesterListener listener) {
+                // TODO Auto-generated method stub
+                
+            }
+        });
+        
+        oldTester.destroy();
+        
         new ActivityMonitor().start();
     }
 
@@ -104,13 +144,10 @@ public final class VuzeManager {
 
         private void checkActivity() {
             try {
-                System.out.println("checkActivity");
                 if (isDownloading()) {
                     setDHTSleeping(false);
-                    System.out.println("setDHTSleeping(false)");
                 } else {
                     setDHTSleeping(true);
-                    System.out.println("setDHTSleeping(true)");
                 }
             } catch (Throwable e) {
                 LOG.error("Error checking vuze activity", e);
