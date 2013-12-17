@@ -18,9 +18,16 @@
 
 package com.frostwire.vuze;
 
+import java.util.List;
+
+import org.gudy.azureus2.core3.download.DownloadManager;
+import org.gudy.azureus2.core3.download.DownloadManagerStats;
 import org.gudy.azureus2.core3.util.AERunStateHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.aelitis.azureus.core.AzureusCore;
+import com.frostwire.util.Condition;
 
 /**
  * Class to initialize the azureus core.
@@ -31,10 +38,14 @@ import com.aelitis.azureus.core.AzureusCore;
  */
 public final class VuzeManager {
 
+    private static final Logger LOG = LoggerFactory.getLogger(VuzeManager.class);
+
     private final AzureusCore core;
 
     public VuzeManager(AzureusCore core) {
         this.core = core;
+
+        //new ActivityMonitor().start();
     }
 
     public AzureusCore getCore() {
@@ -54,6 +65,74 @@ public final class VuzeManager {
             } else {
                 AERunStateHandler.setResourceMode(rm & ~AERunStateHandler.RS_DHT_SLEEPING);
             }
+        }
+    }
+
+    private final class ActivityMonitor extends Thread {
+
+        private boolean running;
+
+        public ActivityMonitor() {
+            super("Vuze Activity Monitor");
+
+            this.setDaemon(true);
+
+            Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    running = false;
+                }
+            }));
+        }
+
+        @Override
+        public void run() {
+            running = true;
+
+            while (running) {
+                sleep();
+                checkActivity();
+            }
+        }
+
+        private void sleep() {
+            try {
+                Thread.sleep(30 * 1000);
+            } catch (InterruptedException e) {
+            }
+        }
+
+        private void checkActivity() {
+            try {
+                System.out.println("checkActivity");
+                if (isDownloading()) {
+                    setDHTSleeping(false);
+                    System.out.println("setDHTSleeping(false)");
+                } else {
+                    setDHTSleeping(true);
+                    System.out.println("setDHTSleeping(true)");
+                }
+            } catch (Throwable e) {
+                LOG.error("Error checking vuze activity", e);
+            }
+        }
+
+        private boolean isDownloading() {
+            List<DownloadManager> dms = core.getGlobalManager().getDownloadManagers();
+
+            boolean downloading = false;
+
+            for (DownloadManager dm : dms) {
+
+                int state = dm.getState();
+
+                if (Condition.in(state, DownloadManager.STATE_ALLOCATING, DownloadManager.STATE_DOWNLOADING, DownloadManager.STATE_WAITING)) {
+                    downloading = true;
+                }
+            }
+
+            return downloading;
         }
     }
 }
