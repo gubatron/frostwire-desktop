@@ -490,11 +490,17 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
             }
         });
     }
+    
+    public void startSearch(String query) {
+        cloudSearchField.setText(query);
+        cloudSearchField.getActionListeners()[0].actionPerformed(null);
+    }
 
     private class SearchListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            //keep the query if ther was one before switching to the search tab
+            //keep the query if there was one before switching to the search tab
             String query = cloudSearchField.getText();
+            String queryTitle = query;
             GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);                
 
             //start a download from the search box by entering a URL.
@@ -503,8 +509,13 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
                 cloudSearchField.hidePopup();
                 return;
             }
+            
+            if (query.contains("youtube.com/watch?v=")) {
+                query = query.split("v=")[1];
+                queryTitle = "youtube:"+query;
+            }
 
-            final SearchInformation info = SearchInformation.createTitledKeywordSearch(query, null, MediaType.getTorrentMediaType(), query);
+            final SearchInformation info = SearchInformation.createTitledKeywordSearch(query, null, MediaType.getTorrentMediaType(), queryTitle);
 
             // If the search worked, store & clear it.
             if (SearchMediator.instance().triggerSearch(info) != 0) {

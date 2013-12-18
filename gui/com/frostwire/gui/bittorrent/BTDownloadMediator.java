@@ -906,14 +906,14 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
     }
 
-    //    public void openYouTubeVideoUrl(final String videoUrl) {
-    //        GUIMediator.safeInvokeLater(new Runnable() {
-    //            public void run() {
-    //                BTDownload downloader = new YouTubeVideoUrlDownload(videoUrl);
-    //                add(downloader);
-    //            }
-    //        });
-    //    }
+//        public void openYouTubeVideoUrl(final String videoUrl) {
+//            GUIMediator.safeInvokeLater(new Runnable() {
+//                public void run() {
+//                    BTDownload downloader = new YouTubeVideoUrlDownload(videoUrl);
+//                    add(downloader);
+//                }
+//            });
+//        }
 
     public void openSoundcloudTrackUrl(final String trackUrl, final String title, final SoundcloudSearchResult sr) {
         GUIMediator.safeInvokeLater(new Runnable() {

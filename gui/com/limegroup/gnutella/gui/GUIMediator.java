@@ -1787,4 +1787,8 @@ public final class GUIMediator {
         getBTDownloadMediator().openHttp(httpUrl, title, saveFileAs, fileSize);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
+
+    public void startSearch(String query) {
+        getMainFrame().getApplicationHeader().startSearch(query);
+    }
 }
