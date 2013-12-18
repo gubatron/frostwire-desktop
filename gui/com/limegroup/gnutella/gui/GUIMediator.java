@@ -1780,6 +1780,18 @@ public final class GUIMediator {
         getBTDownloadMediator().openYouTubeItem(sr);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
+    
+    public void launchYouTubePreviewInBrowser(YouTubeCrawledStreamableSearchResult sr) {
+        try {
+            String displayName = URLEncoder.encode(sr.getDisplayName(), "UTF-8");
+            String source = URLEncoder.encode(sr.getSource(), "UTF-8");
+            String detailsUrl = URLEncoder.encode(sr.getDetailsUrl(), "UTF-8");
+            String previewUrl = String.format("http://www.frostclick.com/cloudplayer/?type=yt&displayName=%s&source=%s&detailsUrl=%s", displayName, source, detailsUrl);
+            openURL(previewUrl);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void openSlide(Slide slide) {
         getBTDownloadMediator().openSlide(slide);
@@ -1791,15 +1803,7 @@ public final class GUIMediator {
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
-    public void launchYouTubePreviewInBrowser(YouTubeCrawledStreamableSearchResult sr) {
-        try {
-            String displayName = URLEncoder.encode(sr.getDisplayName(), "UTF-8");
-            String source = URLEncoder.encode(sr.getSource(), "UTF-8");
-            String detailsUrl = URLEncoder.encode(sr.getDetailsUrl(), "UTF-8");
-            String previewUrl = String.format("http://www.frostclick.com/cloudplayer/?type=yt&displayName=%s&source=%s&detailsUrl=%s", displayName, source, detailsUrl);
-            openURL(previewUrl);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+    public void startSearch(String query) {
+        getMainFrame().getApplicationHeader().startSearch(query);
     }
 }

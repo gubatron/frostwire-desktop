@@ -167,6 +167,11 @@ public final class FileMenuActions {
             dialog.getRootPane().setDefaultButton(row.getButtonAtIndex(0));
             dialog.setMinimumSize(new Dimension(250, 150));
         }
+        
+        private void dismissDialog() {
+            dialog.setVisible(false);
+            dialog.dispose();
+        }
 
         private class PasteAction extends AbstractAction {
 
@@ -215,8 +220,10 @@ public final class FileMenuActions {
 
             public void actionPerformed(ActionEvent a) {
                 if (openMagnetOrTorrent(PATH_FIELD.getText(),FileMenuActions.ActionInvocationSource.FROM_FILE_MENU)) {
-                    dialog.setVisible(false);
-                    dialog.dispose();
+                    dismissDialog();
+                } if (PATH_FIELD.getText().contains("youtube.com/watch?v=")) {
+                    GUIMediator.instance().startSearch(PATH_FIELD.getText());
+                    dismissDialog();
                 } else {
                     GUIMediator.showError(I18n.tr("FrostWire cannot download this address. Make sure you typed it correctly, and then try again."));
                 }
@@ -259,7 +266,7 @@ public final class FileMenuActions {
         } else if (userText.matches(".*youtube.com.*")) {
             //GUIMediator.instance().openYouTubeVideoUrl(userText);
             UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_CLOUD_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_CLOUD_URL_FROM_SEARCH_FIELD);
-            return true;
+            return false;
         } else if (userText.matches(".*soundcloud.com.*")) {
             //the new soundcloud redirects to what seems to be an ajax page
             String soundCloudURL = userText.replace("soundcloud.com/#", "soundcloud.com/");
