@@ -18,15 +18,11 @@
 
 package com.frostwire.search.torrents;
 
-import java.io.File;
 import java.util.List;
-
-import org.apache.commons.io.FileUtils;
 
 import com.frostwire.search.CrawlableSearchResult;
 import com.frostwire.search.PerformersHelper;
 import com.frostwire.search.SearchMatcher;
-import com.frostwire.search.SearchResult;
 import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.domainalias.DomainAliasManagerBroker;
 import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
@@ -41,7 +37,13 @@ public class TorrentsSearchPerformer extends TorrentRegexSearchPerformer<Torrent
 
     private static final int MAX_RESULTS = 20;
     private static final String REGEX = "(?is)><td><span class=\"icon-.*?\"></span></td><td><a title=\"(.*?)\" href=\'(.*?)\'>.*?</a><a title=\"Share on Facebook\".*?<a title=\"Download magnet\".*?</td></tr>";
-    private static final String HTML_REGEX = "(?is)<td class=\"section_post_header\" colspan=\"2\"><b>(.*?)</b></td>.*?<td class=\"section_post_header\">Download Links</td>.*?<a href=\"(http://.*?torrent)\".*?<a href=\"magnet:\\?xt=urn:btih:(.*?)&.*?\".*?<b>Released:</b> (.*?)<br />.*?<b>Filesize:</b> (.*?)<br />";
+    private static final String HTML_REGEX = "(?is)alpha omega\"><h1>(.*?)</h1></h1></div><div class=.*?<div class=\"size\">(.*?)</div>.*?<span title=\"([0-9]*) seeds / [0-9]* leechers\">.*?<dl class=\"date\"><dt>Created</dt><dd>(.*?)</dd></dl>";
+    // matcher groups: 1 -> title
+    //                 2 -> file size (needs parsing)
+    //                 3 -> seeds
+    //                 4 -> creation date, e.g. 2013-10-17 11:53:27
+    //
+    
 
     public TorrentsSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
         super(domainAliasManager, token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX); 
