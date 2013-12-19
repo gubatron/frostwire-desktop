@@ -39,6 +39,7 @@ import com.frostwire.search.monova.MonovaSearchPerformer;
 import com.frostwire.search.soundcloud.SoundcloudSearchPerformer;
 import com.frostwire.search.tbp.TPBSearchPerformer;
 import com.frostwire.search.torlock.TorLockSearchPerformer;
+import com.frostwire.search.torrents.TorrentsSearchPerformer;
 import com.frostwire.search.youtube.YouTubeSearchPerformer;
 import com.limegroup.gnutella.settings.SearchEnginesSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -71,7 +72,8 @@ public abstract class SearchEngine {
     public static final int FROSTCLICK_ID = 12;
     public static final int BITSNOOP_ID = 13;
     public static final int TORLOCK_ID = 14;
-    public static final int EZTV_ID = 14;
+    public static final int EZTV_ID = 15;
+    public static final int TORRENTS_ID = 16; 
     
     public static final DomainAliasManagerBroker DOMAIN_ALIAS_MANAGER_BROKER = new DomainAliasManagerBroker();
 
@@ -103,7 +105,7 @@ public abstract class SearchEngine {
         }
     };
 
-    public static final SearchEngine TPB = new SearchEngine(TPB_ID, "TPB", SearchEnginesSettings.TPB_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("thepiratebay.gy")) {
+    public static final SearchEngine TPB = new SearchEngine(TPB_ID, "TPB", SearchEnginesSettings.TPB_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("thepiratebay.se")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
             return new TPBSearchPerformer(SearchEngine.TPB.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
@@ -168,6 +170,14 @@ public abstract class SearchEngine {
         }
     };
 
+    public static final SearchEngine TORRENTS = new SearchEngine(TORRENTS_ID, "Torrents", SearchEnginesSettings.TORRENTS_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("torrents.fm")) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            return new TorrentsSearchPerformer(SearchEngine.TORRENTS.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
+
+    
     private SearchEngine(int id, String name, BooleanSetting setting, DomainAliasManager domainAliasManager) {
         _id = id;
         _name = name;
