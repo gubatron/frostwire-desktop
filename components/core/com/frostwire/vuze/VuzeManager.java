@@ -20,14 +20,17 @@ package com.frostwire.vuze;
 
 import java.util.List;
 
+import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.util.AERunStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aelitis.azureus.core.AzureusCore;
+import com.aelitis.azureus.core.dht.DHT;
 import com.aelitis.azureus.core.dht.speed.DHTSpeedTester;
 import com.aelitis.azureus.core.dht.speed.DHTSpeedTesterListener;
+import com.aelitis.azureus.plugins.dht.DHTPlugin;
 import com.frostwire.util.Condition;
 
 /**
@@ -46,44 +49,46 @@ public final class VuzeManager {
     public VuzeManager(AzureusCore core) {
         this.core = core;
 
+        COConfigurationManager.setParameter("network.max.simultaneous.connect.attempts", 1);
+
         core.getSpeedManager().setEnabled(false);
         DHTSpeedTester oldTester = core.getSpeedManager().getSpeedTester();
-        
+
         core.getSpeedManager().setSpeedTester(new DHTSpeedTester() {
-            
+
             @Override
             public void setContactNumber(int number) {
                 // TODO Auto-generated method stub
-                
+
             }
-            
+
             @Override
             public void removeListener(DHTSpeedTesterListener listener) {
                 // TODO Auto-generated method stub
-                
+
             }
-            
+
             @Override
             public int getContactNumber() {
                 // TODO Auto-generated method stub
                 return 0;
             }
-            
+
             @Override
             public void destroy() {
                 // TODO Auto-generated method stub
-                
+
             }
-            
+
             @Override
             public void addListener(DHTSpeedTesterListener listener) {
                 // TODO Auto-generated method stub
-                
+
             }
         });
-        
+
         oldTester.destroy();
-        
+
         new ActivityMonitor().start();
     }
 
@@ -104,6 +109,17 @@ public final class VuzeManager {
             } else {
                 AERunStateHandler.setResourceMode(rm & ~AERunStateHandler.RS_DHT_SLEEPING);
             }
+
+            suspendedDHTs(sleeping);
+        }
+    }
+
+    private void suspendedDHTs(boolean suspended) {
+
+        DHTPlugin plugin = (DHTPlugin) core.getPluginManager().getPluginInterfaceByClass(DHTPlugin.class);
+
+        for (DHT dht : plugin.getDHTs()) {
+            dht.setSuspended(suspended);
         }
     }
 
