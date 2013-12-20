@@ -53,8 +53,14 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         tpbAliases.add("pirate-bay.pw");
         tpbAliases.add("quluxingba.info");
         tpbAliases.add("tpb.pirati.cz");
-        manifest.aliases.put("thepiratebay.sx", tpbAliases);
+        manifest.aliases.put("thepiratebay.se", tpbAliases);
         
+        //TORRENTS
+        /*
+        List<String> torrentsAliases = new ArrayList<String>();
+        torrentsAliases.add("torrents.fm");
+        manifest.aliases.put("torrents.com", torrentsAliases);
+        */
         
         //ISOHUNT
         /*
@@ -63,7 +69,7 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         manifest.aliases.put("isohunt.to",isoHuntAliases);
         */
         
-        manifest.aliases.put("extratorrent.cc", Collections.EMPTY_LIST);
+        manifest.aliases.put("extratorrent.cc", Collections.<String> emptyList());
         notifyManifestFetched(manifest);
     }
 }
