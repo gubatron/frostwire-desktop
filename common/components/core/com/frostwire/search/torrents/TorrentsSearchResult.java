@@ -18,19 +18,13 @@
 
 package com.frostwire.search.torrents;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.commons.io.FilenameUtils;
-
 import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.torrent.AbstractTorrentSearchResult;
-import com.frostwire.util.HtmlManipulator;
-import com.frostwire.util.StringUtils;
 
 public class TorrentsSearchResult extends AbstractTorrentSearchResult {
 
@@ -41,11 +35,11 @@ public class TorrentsSearchResult extends AbstractTorrentSearchResult {
     static {
         UNIT_TO_BYTE_MULTIPLIERS_MAP = new HashMap<String, Integer>();
         UNIT_TO_BYTE_MULTIPLIERS_MAP.put("B", 0);
-        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("KB", 1);
-        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("MB", 2);
-        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("GB", 3);
-        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("TB", 4);
-        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("PB", 5);
+        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("KiB", 1);
+        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("MiB", 2);
+        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("GiB", 3);
+        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("TiB", 4);
+        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("PiB", 5);
     }
 
     private String filename;
@@ -59,13 +53,19 @@ public class TorrentsSearchResult extends AbstractTorrentSearchResult {
 
     public TorrentsSearchResult(String domainName, String detailsUrl, SearchMatcher matcher) {
         this.detailsUrl = detailsUrl;
-        this.infoHash = null;
-        this.filename = parseFileName(matcher.group(1), FilenameUtils.getBaseName(detailsUrl));
+        this.filename = matcher.group(1);//parseFileName(matcher.group(1), FilenameUtils.getBaseName(detailsUrl));
         this.size = parseSize(matcher.group(2));
-        this.creationTime = parseCreationTime(matcher.group(3));
-        this.seeds = parseSeeds(matcher.group(4));
-        this.torrentUrl = "http://" + domainName + "/tor/" + matcher.group(5) + ".torrent";
-        this.displayName = HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename));
+        this.creationTime = parseCreationTime(matcher.group(4));
+        this.seeds = parseSeeds(matcher.group(3));
+        //a magnet
+        this.torrentUrl = matcher.group(5);//"http://" + domainName + "/tor/" + matcher.group(5) + ".torrent";
+        this.displayName = matcher.group(1);//HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename));
+        this.infoHash = parseInfoHash(torrentUrl);
+    }
+
+    private String parseInfoHash(String url) {
+        //magnet:?xt=urn:btih:e3811b9539cacff680e418124272177c47477157&amp;
+        return url.substring("magnet:?xt=urn:btih:".length(),url.indexOf("&amp"));
     }
 
     @Override
@@ -80,7 +80,7 @@ public class TorrentsSearchResult extends AbstractTorrentSearchResult {
 
     @Override
     public String getSource() {
-        return "TorLock";
+        return "Torrents.fm";
     }
 
     @Override
@@ -113,20 +113,20 @@ public class TorrentsSearchResult extends AbstractTorrentSearchResult {
         return torrentUrl;
     }
 
-    private String parseFileName(String urlEncodedFileName, String fallbackName) {
-        String decodedFileName = fallbackName;
-        try {
-            if (!StringUtils.isNullOrEmpty(urlEncodedFileName)) {
-                decodedFileName = URLDecoder.decode(urlEncodedFileName, "UTF-8");
-                decodedFileName.replace("&amp;", "and");
-            }
-        } catch (UnsupportedEncodingException e) {
-        }
-        return decodedFileName + ".torrent";
-    }
+//    private String parseFileName(String urlEncodedFileName, String fallbackName) {
+//        String decodedFileName = fallbackName;
+//        try {
+//            if (!StringUtils.isNullOrEmpty(urlEncodedFileName)) {
+//                decodedFileName = URLDecoder.decode(urlEncodedFileName, "UTF-8");
+//                decodedFileName.replace("&amp;", "and");
+//            }
+//        } catch (UnsupportedEncodingException e) {
+//        }
+//        return decodedFileName + ".torrent";
+//    }
 
     private long parseSize(String group) {
-        String[] size = group.trim().split(" ");
+        String[] size = group.split(" ");
         String amount = size[0].trim();
         String unit = size[1].trim();
 

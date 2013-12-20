@@ -18,13 +18,9 @@
 
 package com.frostwire.search.torrents;
 
-import java.util.List;
-
 import com.frostwire.search.CrawlableSearchResult;
-import com.frostwire.search.PerformersHelper;
 import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.domainalias.DomainAliasManager;
-import com.frostwire.search.domainalias.DomainAliasManagerBroker;
 import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
 
 /**
@@ -37,12 +33,12 @@ public class TorrentsSearchPerformer extends TorrentRegexSearchPerformer<Torrent
 
     private static final int MAX_RESULTS = 20;
     private static final String REGEX = "(?is)><td><span class=\"icon-.*?\"></span></td><td><a title=\"(.*?)\" href=\'(.*?)\'>.*?</a><a title=\"Share on Facebook\".*?<a title=\"Download magnet\".*?</td></tr>";
-    private static final String HTML_REGEX = "(?is)alpha omega\"><h1>(.*?)</h1></h1></div><div class=.*?<div class=\"size\">(.*?)</div>.*?<span title=\"([0-9]*) seeds / [0-9]* leechers\">.*?<dl class=\"date\"><dt>Created</dt><dd>(.*?)</dd></dl>";
+    private static final String HTML_REGEX = "(?is)alpha omega\"><h1>(.*?)</h1></div><div class=.*?<div class=\"size\">(.*?)</div>.*?<span title=\"([0-9]*) seeds / [0-9]* leechers\">.*?<dl class=\"date\"><dt>Created</dt><dd>(.*?)</dd></dl>.*?<a class=\"download\" data-track=\"Download,Magnet,File / Big Button\" data-downloader=\"1\" href=\"(.*?)\"><span class=\"icon-download_button\">";
     // matcher groups: 1 -> title
     //                 2 -> file size (needs parsing)
     //                 3 -> seeds
     //                 4 -> creation date, e.g. 2013-10-17 11:53:27
-    //
+    //                 5 -> magnet url
     
 
     public TorrentsSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
@@ -66,16 +62,14 @@ public class TorrentsSearchPerformer extends TorrentRegexSearchPerformer<Torrent
     protected TorrentsSearchResult fromHtmlMatcher(CrawlableSearchResult sr, SearchMatcher matcher) {
         return new TorrentsSearchResult(getDomainNameToUse(), sr.getDetailsUrl(), matcher);
     }
-    
+
+    /**
     public static void main(String[] args) throws Exception {
         //TEST
-        
         DomainAliasManagerBroker broker = new DomainAliasManagerBroker();
         TorrentsSearchPerformer performer = new TorrentsSearchPerformer(broker.getDomainAliasManager("torrents.fm"),0,"frostclick",5000);
 
-        String htmlSearchPage = performer.fetch("http://torrents.fm/search/ubuntu");
-        //String htmlSearchPage = FileUtils.readFileToString(new File("/Users/gubatron/Desktop/torrents.html"));
-        //System.out.println("\n" + htmlSearchPage);
+        String htmlSearchPage = performer.fetch("http://torrents.fm/search/frostclick");
         
         @SuppressWarnings("unchecked")
         List<TorrentsTempSearchResult> searchResults = (List<TorrentsTempSearchResult>) PerformersHelper.searchPageHelper(performer, htmlSearchPage, 20);
@@ -85,11 +79,22 @@ public class TorrentsSearchPerformer extends TorrentRegexSearchPerformer<Torrent
         } else {
             int n = 1;
             for (TorrentsTempSearchResult sr : searchResults) {
-                System.out.println(n + ". [" + sr.getDisplayName() + "] => " + sr.getDetailsUrl());
-                n++;
-                //byte[] detailsData = performer.fetchBytes(sr.getDetailsUrl());
-                //List<? extends SearchResult> crawlResult = performer.crawlResult(sr, detailsData);
+                byte[] detailsData = performer.fetchBytes(sr.getDetailsUrl());
+                try {
+                    List<TorrentsSearchResult> crawlResult = (List<TorrentsSearchResult>) performer.crawlResult(sr, detailsData);
+                    
+                    if (crawlResult != null && crawlResult.size() > 0) {
+                        System.out.println(n + ". [" + sr.getDisplayName() + "] => " + sr.getDetailsUrl());
+                        n++;
+                        for (TorrentsSearchResult tsr : crawlResult) {
+                            System.out.println(tsr.getFilename() + " : " + tsr.getHash() + " " + tsr.getTorrentUrl() + " " + tsr.getSource() + " " + tsr.getSeeds() + " seeds. ");
+                        }
+                    }
+                } catch (Exception e) {
+                    
+                }
             }
         }
     }
+    */
 }
