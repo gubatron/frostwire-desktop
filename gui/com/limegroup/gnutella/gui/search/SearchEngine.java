@@ -211,7 +211,7 @@ public abstract class SearchEngine {
     }
 
     public static List<SearchEngine> getEngines() {
-        return Arrays.asList(EXTRATORRENT, BITSNOOP, SOUNDCLOUD, YOUTUBE, FROSTCLICK, CLEARBITS, MININOVA, KAT, TPB, MONOVA, ARCHIVEORG, TORLOCK, EZTV);
+        return Arrays.asList(TORRENTS, EXTRATORRENT, BITSNOOP, SOUNDCLOUD, YOUTUBE, FROSTCLICK, CLEARBITS, MININOVA, KAT, TPB, MONOVA, ARCHIVEORG, TORLOCK, EZTV);
     }
 
     public abstract SearchPerformer getPerformer(long token, String keywords);
