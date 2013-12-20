@@ -155,7 +155,7 @@ public class TorrentsSearchResult extends AbstractTorrentSearchResult {
     private long parseCreationTime(String dateString) {
         long result = System.currentTimeMillis();
         try {
-            SimpleDateFormat myFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+            SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
             result = myFormat.parse(dateString).getTime();
         } catch (Throwable t) {
         }
