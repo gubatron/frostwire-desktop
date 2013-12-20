@@ -1,4 +1,5 @@
 frostwire (5.7.0) stable; urgency=high
+  * New Torrents.fm meta search.
   * Brings back cloud downloads by entering url on search box or open dialog.
  -- FrostWire Team <contact@frostwire.com>  Wed, 18 Dec 2013 18:29:10 -0500
 
