@@ -26,7 +26,12 @@ import java.util.Map;
 import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.torrent.AbstractTorrentSearchResult;
 
-public class TorrentsSearchResult extends AbstractTorrentSearchResult {
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public class TorrentsfmSearchResult extends AbstractTorrentSearchResult {
 
     private final static long[] BYTE_MULTIPLIERS = new long[] { 1, 2 << 9, 2 << 19, 2 << 29, 2 << 39, 2 << 49 };
 
@@ -42,16 +47,16 @@ public class TorrentsSearchResult extends AbstractTorrentSearchResult {
         UNIT_TO_BYTE_MULTIPLIERS_MAP.put("PiB", 5);
     }
 
-    private String filename;
-    private String displayName;
-    private String detailsUrl;
-    private String torrentUrl;
-    private String infoHash;
-    private long size;
-    private long creationTime;
-    private int seeds;
+    private final String filename;
+    private final String displayName;
+    private final String detailsUrl;
+    private final String torrentUrl;
+    private final String infoHash;
+    private final long size;
+    private final long creationTime;
+    private final int seeds;
 
-    public TorrentsSearchResult(String domainName, String detailsUrl, SearchMatcher matcher) {
+    public TorrentsfmSearchResult(String domainName, String detailsUrl, SearchMatcher matcher) {
         this.detailsUrl = detailsUrl;
         this.filename = matcher.group(1);//parseFileName(matcher.group(1), FilenameUtils.getBaseName(detailsUrl));
         this.size = parseSize(matcher.group(2));
@@ -61,11 +66,6 @@ public class TorrentsSearchResult extends AbstractTorrentSearchResult {
         this.torrentUrl = matcher.group(5);//"http://" + domainName + "/tor/" + matcher.group(5) + ".torrent";
         this.displayName = matcher.group(1);//HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename));
         this.infoHash = parseInfoHash(torrentUrl);
-    }
-
-    private String parseInfoHash(String url) {
-        //magnet:?xt=urn:btih:e3811b9539cacff680e418124272177c47477157&amp;
-        return url.substring("magnet:?xt=urn:btih:".length(),url.indexOf("&amp"));
     }
 
     @Override
@@ -113,18 +113,6 @@ public class TorrentsSearchResult extends AbstractTorrentSearchResult {
         return torrentUrl;
     }
 
-//    private String parseFileName(String urlEncodedFileName, String fallbackName) {
-//        String decodedFileName = fallbackName;
-//        try {
-//            if (!StringUtils.isNullOrEmpty(urlEncodedFileName)) {
-//                decodedFileName = URLDecoder.decode(urlEncodedFileName, "UTF-8");
-//                decodedFileName.replace("&amp;", "and");
-//            }
-//        } catch (UnsupportedEncodingException e) {
-//        }
-//        return decodedFileName + ".torrent";
-//    }
-
     private long parseSize(String group) {
         String[] size = group.split(" ");
         String amount = size[0].trim();
@@ -160,5 +148,10 @@ public class TorrentsSearchResult extends AbstractTorrentSearchResult {
         } catch (Throwable t) {
         }
         return result;
+    }
+
+    private String parseInfoHash(String url) {
+        //magnet:?xt=urn:btih:e3811b9539cacff680e418124272177c47477157&amp;
+        return url.substring("magnet:?xt=urn:btih:".length(), url.indexOf("&amp"));
     }
 }

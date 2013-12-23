@@ -27,13 +27,13 @@ import com.frostwire.search.CrawlableSearchResult;
  * @author aldenml
  *
  */
-public class TorrentsTempSearchResult extends AbstractSearchResult implements CrawlableSearchResult {
+public class TorrentsfmTempSearchResult extends AbstractSearchResult implements CrawlableSearchResult {
 
     private final String itemId;
     private final String detailsUrl;
     private final String displayName;
 
-    public TorrentsTempSearchResult(String domainName, String itemId, String displayName) {
+    public TorrentsfmTempSearchResult(String domainName, String itemId, String displayName) {
         this.itemId = itemId;
         this.detailsUrl = "http://" + domainName + itemId;
         this.displayName = displayName;
