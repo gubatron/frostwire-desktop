@@ -1,3 +1,21 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.frostwire.search.domainalias;
 
 import java.util.ArrayList;
@@ -53,8 +71,14 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         tpbAliases.add("pirate-bay.pw");
         tpbAliases.add("quluxingba.info");
         tpbAliases.add("tpb.pirati.cz");
-        manifest.aliases.put("thepiratebay.sx", tpbAliases);
+        manifest.aliases.put("thepiratebay.se", tpbAliases);
         
+        //TORRENTS
+        /*
+        List<String> torrentsAliases = new ArrayList<String>();
+        torrentsAliases.add("torrents.fm");
+        manifest.aliases.put("torrents.com", torrentsAliases);
+        */
         
         //ISOHUNT
         /*
@@ -63,7 +87,7 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         manifest.aliases.put("isohunt.to",isoHuntAliases);
         */
         
-        manifest.aliases.put("extratorrent.cc", Collections.EMPTY_LIST);
+        manifest.aliases.put("extratorrent.cc", Collections.<String> emptyList());
         notifyManifestFetched(manifest);
     }
 }
