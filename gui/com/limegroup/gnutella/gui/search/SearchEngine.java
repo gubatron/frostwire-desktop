@@ -39,7 +39,7 @@ import com.frostwire.search.monova.MonovaSearchPerformer;
 import com.frostwire.search.soundcloud.SoundcloudSearchPerformer;
 import com.frostwire.search.tbp.TPBSearchPerformer;
 import com.frostwire.search.torlock.TorLockSearchPerformer;
-import com.frostwire.search.torrentsfm.TorrentsSearchPerformer;
+import com.frostwire.search.torrentsfm.TorrentsfmSearchPerformer;
 import com.frostwire.search.youtube.YouTubeSearchPerformer;
 import com.limegroup.gnutella.settings.SearchEnginesSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -173,7 +173,7 @@ public abstract class SearchEngine {
     public static final SearchEngine TORRENTS = new SearchEngine(TORRENTS_ID, "Torrents", SearchEnginesSettings.TORRENTS_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("torrents.fm")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new TorrentsSearchPerformer(SearchEngine.TORRENTS.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
+            return new TorrentsfmSearchPerformer(SearchEngine.TORRENTS.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
