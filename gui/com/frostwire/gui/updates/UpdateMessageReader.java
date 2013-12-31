@@ -38,7 +38,6 @@ import com.frostwire.uxstats.UXStats;
 import com.frostwire.uxstats.UXStatsConf;
 import com.limegroup.gnutella.gui.search.SearchEngine;
 import com.limegroup.gnutella.settings.ApplicationSettings;
-import com.limegroup.gnutella.settings.ChatSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
@@ -455,11 +454,6 @@ public final class UpdateMessageReader implements ContentHandler {
 
             if (_bufferMessage.getMessageType().equalsIgnoreCase("announcement")) {
                 _bufferMessage.setExpiration(atts.getValue("expiration"));
-            }
-
-            if (_bufferMessage.getMessageType().equalsIgnoreCase("chat_server")) {
-                ChatSettings.CHAT_SERVER.setValue(message);
-                ChatSettings.instance().save();
             }
 
             // deal with overlay messages specific properties

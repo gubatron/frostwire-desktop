@@ -62,7 +62,6 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.limewire.util.VersionUtils;
 
-import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.HideExitDialog;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.components.slides.Slide;
@@ -129,7 +128,7 @@ public final class GUIMediator {
     private boolean _remoteDownloadsAllowed;
 
     public static enum Tabs {
-        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library")), CHAT(I18n.tr("C&hat"));
+        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library"));
 
         private Action navAction;
 
@@ -232,7 +231,7 @@ public final class GUIMediator {
 
         public static Tabs[] getOptionalTabs() {
             if (OPTIONAL_TABS == null) {
-                OPTIONAL_TABS = new Tabs[] { LIBRARY, CHAT };
+                OPTIONAL_TABS = new Tabs[] { LIBRARY };
             }
 
             return OPTIONAL_TABS;
@@ -293,12 +292,6 @@ public final class GUIMediator {
      * for displaying files in the user's repository.
      */
     private LibraryMediator LIBRARY_MEDIATOR;
-
-    /**
-     * Constant handle to the <tt>ChatMediator</tt> class that is responsible
-     * for displaying the user chat.
-     */
-    private ChatMediator CHAT_MEDIATOR;
 
     /**
      * Media Player Mediator
@@ -1588,14 +1581,6 @@ public final class GUIMediator {
         updateButtonView(getAppFrame());
     }
 
-    /**
-     * Notification that the smileys state has been changed.
-     */
-    public void smileysChanged(boolean newstatus) {
-        ChatMediator.instance().changesmileys(newstatus);
-        updateButtonView(getAppFrame());
-    }
-
     private void updateButtonView(Component c) {
         if (c instanceof IconButton) {
             ((IconButton) c).updateUI();
@@ -1643,16 +1628,6 @@ public final class GUIMediator {
             SwingUtilities.invokeLater(runnable);
     }
 
-    /** Tells CHAT_MEDIATOR to try to start the IRC Chat */
-    public void tryToStartAndAddChat() {
-        getChatMediator().tryToStartAndAddChat();
-    }
-
-    /** Changes the nick on the Chat */
-    public void setIRCNick(String newNick) {
-        getChatMediator().nick(newNick);
-    }
-
     /**
      * Sets the cursor on limewire's frame.
      * 
@@ -1694,13 +1669,6 @@ public final class GUIMediator {
             LIBRARY_MEDIATOR = getMainFrame().getLibraryMediator();
         }
         return LIBRARY_MEDIATOR;
-    }
-
-    private ChatMediator getChatMediator() {
-        if (CHAT_MEDIATOR == null) {
-            CHAT_MEDIATOR = getMainFrame().getChatMediator();
-        }
-        return CHAT_MEDIATOR;
     }
 
     public static void setClipboardContent(String str) {

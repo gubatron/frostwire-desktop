@@ -47,9 +47,6 @@ final class ViewMenu extends AbstractMenu {
         toggleAction = new ToggleIconSettingAction(UISettings.TEXT_WITH_ICONS, I18n.tr("Show Icon &Text"), I18n.tr("Show Text Below Icons"));
         addToggleMenuItem(toggleAction);
 
-        toggleAction = new ToggleSmileySettingAction(UISettings.SMILEYS_IN_CHAT, I18n.tr("Show Smi&leys"), I18n.tr("Show emoticons in chat"));
-        addToggleMenuItem(toggleAction);
-
         MENU.addSeparator();
 
         addMenuItem(new ChangeFontSizeAction(1, I18n.tr("&Increase Font Size"), I18n.tr("Increases the Table Font Size")),KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, (OSUtils.isMacOSX() ? KeyEvent.META_MASK : KeyEvent.CTRL_MASK)));
@@ -86,22 +83,6 @@ final class ViewMenu extends AbstractMenu {
         public void actionPerformed(ActionEvent e) {
             super.actionPerformed(e);
             GUIMediator.instance().buttonViewChanged();
-        }
-    }
-
-    private static class ToggleSmileySettingAction extends ToggleSettingAction {
-
-        public static BooleanSetting newsetting;
-
-        public ToggleSmileySettingAction(BooleanSetting setting, String name, String description) {
-            super(setting, name, description);
-            newsetting = setting;
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            super.actionPerformed(e);
-            System.out.println("new smiley setting from menu: " + newsetting.getValue());
-            GUIMediator.instance().smileysChanged((boolean) newsetting.getValue());
         }
     }
 

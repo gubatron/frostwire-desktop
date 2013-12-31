@@ -22,7 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import com.frostwire.gui.ChatMediator;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.settings.StatusBarSettings;
 
@@ -203,8 +202,6 @@ public class LanguageWindow extends JDialog {
         }
         GUIMediator.instance().getStatusLine().refresh();
         dispose();
-        
-        ChatMediator.instance().reloadConfiguration();
     }
 
     private void updateLabels(Locale locale) {
