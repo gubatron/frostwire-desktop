@@ -251,6 +251,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 GUIMediator.openURL("http://www.frostwire.com/chat");
+                UXStats.instance().log(UXAction.MISC_CHAT_OPENED_IN_BROWSER);
             }
         });
         
