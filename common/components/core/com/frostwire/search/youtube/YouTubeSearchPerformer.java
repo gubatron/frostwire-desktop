@@ -24,6 +24,7 @@ import java.util.Locale;
 
 import com.frostwire.search.CrawlPagedWebSearchPerformer;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.extractors.YouTubeExtractor;
 import com.frostwire.search.extractors.YouTubeExtractor.LinkInfo;
 import com.frostwire.util.JsonUtils;
@@ -38,8 +39,8 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
 
     private static final int MAX_RESULTS = 15;
 
-    public YouTubeSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1, MAX_RESULTS);
+    public YouTubeSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
+        super(domainAliasManager, token, keywords, timeout, 1, MAX_RESULTS);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
     protected List<? extends SearchResult> crawlResult(YouTubeSearchResult sr, byte[] data) throws Exception {
         List<YouTubeCrawledSearchResult> list = new LinkedList<YouTubeCrawledSearchResult>();
 
-        List<LinkInfo> infos = new YouTubeExtractor().extract(sr.getDetailsUrl());
+        List<LinkInfo> infos = new YouTubeExtractor().extract(sr.getDetailsUrl(), sr.testConnection());
 
         LinkInfo dashVideo = null;
         LinkInfo dashAudio = null;
@@ -103,10 +104,15 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
         String json = fixJson(page);
         YouTubeResponse response = JsonUtils.toObject(json, YouTubeResponse.class);
 
+        boolean testConnection = true;
         for (YouTubeEntry entry : response.feed.entry) {
             if (!isStopped()) {
-                YouTubeSearchResult sr = new YouTubeSearchResult(entry);
+                YouTubeSearchResult sr = new YouTubeSearchResult(entry, testConnection);
                 result.add(sr);
+                
+                if (testConnection) {
+                    testConnection = false;
+                }
             }
         }
 
@@ -114,7 +120,10 @@ public class YouTubeSearchPerformer extends CrawlPagedWebSearchPerformer<YouTube
     }
 
     private String fixJson(String json) {
-        return json.replace("\"$t\"", "\"title\"").replace("\"yt$userId\"", "\"ytuserId\"");
+        return json.replace("\"$t\"", "\"title\"").
+                replace("\"yt$userId\"", "\"ytuserId\"").
+                replace("\"media$group\"", "\"mediagroup\"").
+                replace("\"media$content\"", "\"mediacontent\"");
     }
 
     private boolean isDash(LinkInfo info) {

@@ -103,6 +103,9 @@ public final class UXAction {
     public static final int PLAYER_MENU_STOP = PLAYER_BASE + 5;
     public static final int PLAYER_MENU_DELETE_TRACK = PLAYER_BASE + 6;
     public static final int PLAYER_STOP_ON_LONG_CLICK = PLAYER_BASE + 7;
+    
+    public static final int MISC_BASE = 7000;
+    public static final int MISC_CHAT_OPENED_IN_BROWSER = MISC_BASE + 1;
 
     UXAction(int code, long time) {
         this.code = code;

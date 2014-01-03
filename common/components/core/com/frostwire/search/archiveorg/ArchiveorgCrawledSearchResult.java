@@ -33,7 +33,7 @@ import com.frostwire.search.HttpSearchResult;
  */
 public class ArchiveorgCrawledSearchResult extends AbstractCrawledSearchResult implements HttpSearchResult {
 
-    private static final String DOWNLOAD_URL = "http://archive.org/download/%s/%s";
+    private static final String DOWNLOAD_URL = "http://%s/download/%s/%s";
 
     private final String filename;
 
@@ -44,9 +44,8 @@ public class ArchiveorgCrawledSearchResult extends AbstractCrawledSearchResult i
     public ArchiveorgCrawledSearchResult(ArchiveorgSearchResult sr, String filename, ArchiveorgFile file) {
         super(sr);
         this.filename = filename;
-
         this.displayName = FilenameUtils.getBaseName(filename) + " (" + sr.getDisplayName() + ")";
-        this.downloadUrl = String.format(Locale.US, DOWNLOAD_URL, sr.getItem().identifier, filename);
+        this.downloadUrl = String.format(Locale.US, DOWNLOAD_URL, sr.getDomainName(), sr.getIdentifier(), filename);
         this.size = calcSize(file);
     }
 

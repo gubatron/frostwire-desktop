@@ -32,9 +32,9 @@ public class TorLockTempSearchResult extends AbstractSearchResult implements Cra
     private final String itemId;
     private final String detailsUrl;
 
-    public TorLockTempSearchResult(String itemId) {
+    public TorLockTempSearchResult(String domainName, String itemId) {
         this.itemId = itemId;
-        this.detailsUrl = "http://www.torlock.com/torrent/" + itemId;
+        this.detailsUrl = "http://"+ domainName +"/torrent/" + itemId;
     }
 
     public String getItemId() {

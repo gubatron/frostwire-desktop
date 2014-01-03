@@ -26,7 +26,9 @@ import com.frostwire.search.CrawlRegexSearchPerformer;
 import com.frostwire.search.CrawlableSearchResult;
 import com.frostwire.search.MaxIterCharSequence;
 import com.frostwire.search.PerformersHelper;
+import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.domainalias.DomainAliasManager;
 
 /**
  * 
@@ -39,8 +41,8 @@ public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResul
     private final Pattern pattern;
     private final Pattern htmlPattern;
 
-    public TorrentRegexSearchPerformer(long token, String keywords, int timeout, int pages, int numCrawls, int regexMaxResults, String regex, String htmlRegex) {
-        super(token, keywords, timeout, pages, numCrawls, regexMaxResults);
+    public TorrentRegexSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout, int pages, int numCrawls, int regexMaxResults, String regex, String htmlRegex) {
+        super(domainAliasManager, token, keywords, timeout, pages, numCrawls, regexMaxResults);
         this.pattern = Pattern.compile(regex);
         this.htmlPattern = Pattern.compile(htmlRegex);
     }
@@ -76,15 +78,15 @@ public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResul
 
             try {
                 if (matcher.find()) {
-                    list.add(fromHtmlMatcher(sr, matcher));
+                    list.add(fromHtmlMatcher(sr, new SearchMatcher(matcher)));
                 }
             } catch (Exception e) {
-              throw new Exception("URL:" + sr.getDetailsUrl(), e);  
+                throw new Exception("URL:" + sr.getDetailsUrl(), e);
             }
         }
 
         return list;
     }
 
-    protected abstract T fromHtmlMatcher(CrawlableSearchResult sr, Matcher matcher);
+    protected abstract T fromHtmlMatcher(CrawlableSearchResult sr, SearchMatcher matcher);
 }

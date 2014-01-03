@@ -40,7 +40,7 @@ public final class PerformersHelper {
     private PerformersHelper() {
     }
 
-    static List<? extends SearchResult> searchPageHelper(RegexSearchPerformer<?> performer, String page, int regexMaxResults) {
+    public static List<? extends SearchResult> searchPageHelper(RegexSearchPerformer<?> performer, String page, int regexMaxResults) {
         List<SearchResult> result = new LinkedList<SearchResult>();
 
         Matcher matcher = performer.getPattern().matcher(new MaxIterCharSequence(page, 2 * page.length()));
@@ -50,7 +50,7 @@ public final class PerformersHelper {
         int i = 0;
 
         while (matcher.find() && i < max && !performer.isStopped()) {
-            SearchResult sr = performer.fromMatcher(matcher);
+            SearchResult sr = performer.fromMatcher(new SearchMatcher(matcher));
             if (sr != null) {
                 result.add(sr);
                 i++;

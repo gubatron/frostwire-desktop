@@ -17,12 +17,14 @@
 
 package com.frostwire.search;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.URLUtils;
@@ -47,8 +49,11 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
     private final int timeout;
     private final HttpClient client;
 
-    public WebSearchPerformer(long token, String keywords, int timeout) {
+    private final DomainAliasManager domainAliasManager;
+    
+    public WebSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
         super(token);
+        this.domainAliasManager  = domainAliasManager;
         this.keywords = keywords;
         this.encodedKeywords = URLUtils.encode(keywords);
         this.timeout = timeout;
@@ -74,11 +79,11 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
      * @param url
      * @return the web page (html)
      */
-    public String fetch(String url) {
+    public String fetch(String url) throws IOException {
         return fetch(url, null, null);
     }
 
-    public String fetch(String url, String cookie, Map<String, String> customHeaders) {
+    public String fetch(String url, String cookie, Map<String, String> customHeaders) throws IOException {
         return client.get(url, timeout, DEFAULT_USER_AGENT, null, cookie, customHeaders);
     }
 
@@ -113,5 +118,27 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         }
 
         return false;
+    }
+    
+    public String getDomainNameToUse() {
+        return domainAliasManager.getDomainNameToUse();
+    }
+    
+    public String getDefaultDomainName() {
+        return domainAliasManager.getDefaultDomain();
+    }
+
+    public DomainAliasManager getDomainAliasManager() {
+        return domainAliasManager;
+    }
+ 
+    /**
+     * The current domain has failed, mark it offline and let's try check if other mirrors are alive.
+     */
+    protected void checkAccesibleDomains() {
+        System.out.println("WebSearchPerformer.checkAccesibleDomains()! " + getDefaultDomainName() + " Performer failed, marking " + getDomainNameToUse() + " offline, checking domains.");
+        DomainAliasManager domainAliasManager = getDomainAliasManager();
+        domainAliasManager.markDomainOffline(domainAliasManager.getDomainNameToUse());
+        domainAliasManager.checkStatuses(this);
     }
 }

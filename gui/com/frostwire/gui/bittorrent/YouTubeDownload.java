@@ -189,13 +189,18 @@ public class YouTubeDownload implements BTDownload {
 
     @Override
     public int getProgress() {
-        if (size <= 0) {
-            return -1;
+        int progress = -1;
+        
+        if (size > 0) {
+            if (isComplete()) {
+                progress = 100;
+            } else {
+                progress = (int) ((bytesReceived * 100) / size);
+                progress = Math.min(100, progress);
+            }
         }
 
-        int progress = (int) ((bytesReceived * 100) / size);
-
-        return Math.min(100, progress);
+        return progress;
     }
 
     @Override

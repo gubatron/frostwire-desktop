@@ -24,8 +24,11 @@
 
 package org.gudy.azureus2.core3.torrentdownloader.impl;
 
-import java.io.*;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -37,22 +40,34 @@ import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 
-import javax.net.ssl.*;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLSession;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.security.SESecurityManager;
-import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
+import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
-import org.gudy.azureus2.core3.util.*;
+import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
+import org.gudy.azureus2.core3.util.AEMonitor;
+import org.gudy.azureus2.core3.util.AEThread;
+import org.gudy.azureus2.core3.util.AEThread2;
+import org.gudy.azureus2.core3.util.AddressUtils;
+import org.gudy.azureus2.core3.util.Constants;
+import org.gudy.azureus2.core3.util.Debug;
+import org.gudy.azureus2.core3.util.FileUtil;
+import org.gudy.azureus2.core3.util.SystemTime;
+import org.gudy.azureus2.core3.util.TorrentUtils;
+import org.gudy.azureus2.core3.util.UrlUtils;
 import org.gudy.azureus2.core3.util.protocol.magnet.MagnetConnection;
 import org.gudy.azureus2.core3.util.protocol.magnet.MagnetConnection2;
-import org.gudy.azureus2.core3.torrent.*;
 
 
 /**
  * @author Tobias Minich
  */
-public class TorrentDownloaderImpl extends AEThread implements TorrentDownloader {
+public class TorrentDownloaderImpl extends AEThread2 implements TorrentDownloader {
 
   private String	original_url; 
   private String 	url_str;
@@ -82,7 +97,6 @@ public class TorrentDownloaderImpl extends AEThread implements TorrentDownloader
 
   public TorrentDownloaderImpl() {
     super("Torrent Downloader");
-     setDaemon(true);
   }
 
   public void 
@@ -140,7 +154,7 @@ public class TorrentDownloaderImpl extends AEThread implements TorrentDownloader
   }
 
   public void 
-  runSupport() {
+  run() {
 
   	try{
   		new URL( url_str );  //determine if this is already a proper URL
@@ -445,11 +459,11 @@ public class TorrentDownloaderImpl extends AEThread implements TorrentDownloader
       
     	notifyListener();
   
-        Thread	status_reader = 
-        	new AEThread( "TorrentDownloader:statusreader" )
+        AEThread2 status_reader = 
+        	new AEThread2( "TorrentDownloader:statusreader" )
 			{
         		public void
-				runSupport()
+				run()
         		{
         			boolean changed_status	= false;
         			String	last_status		= "";
@@ -570,7 +584,7 @@ public class TorrentDownloaderImpl extends AEThread implements TorrentDownloader
         		}
 			};
 			
-		status_reader.setDaemon( true );
+		//status_reader.setDaemon( true );
 		
 		status_reader.start();
   
@@ -872,8 +886,7 @@ public class TorrentDownloaderImpl extends AEThread implements TorrentDownloader
 		return ignoreReponseCode;
 	}
 
-	public void setIgnoreReponseCode(boolean ignoreReponseCode) {
-		this.ignoreReponseCode = ignoreReponseCode;
-	}
-
+    public void setIgnoreReponseCode(boolean ignoreReponseCode) {
+    	this.ignoreReponseCode = ignoreReponseCode;
+    }
 }

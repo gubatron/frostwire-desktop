@@ -18,7 +18,6 @@
 
 package com.frostwire.search;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -31,5 +30,5 @@ public interface RegexSearchPerformer<T extends SearchResult> extends SearchPerf
 
     public Pattern getPattern();
 
-    public T fromMatcher(Matcher matcher);
+    public T fromMatcher(SearchMatcher matcher);
 }

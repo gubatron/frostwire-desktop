@@ -27,6 +27,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
@@ -171,7 +172,7 @@ public class LibraryUtils {
     }
 
     public static void createNewPlaylist(final List<? extends AbstractLibraryTableDataLine<?>> lines) {
-        String playlistName = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(lines));
+        String playlistName = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, suggestPlaylistName(lines));
 
         if (playlistName != null && playlistName.length() > 0) {
             final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
@@ -203,7 +204,7 @@ public class LibraryUtils {
         //
         //            @Override
         //            public void run() {
-        String input = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(files));
+        String input = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, suggestPlaylistName(files));
         if (!StringUtils.isNullOrEmpty(input, true)) {
             plBuilder.append(input);
         }
@@ -250,26 +251,9 @@ public class LibraryUtils {
 
     public static void createNewPlaylist(final PlaylistItem[] playlistItems, boolean starred) {
         if (starred) {
-            Thread t = new Thread(new Runnable() {
-                public void run() {
-                    Playlist playlist = LibraryMediator.getLibrary().getStarredPlaylist();
-                    addToPlaylist(playlist, playlistItems, true, -1);
-                    GUIMediator.safeInvokeLater(new Runnable() {
-                        public void run() {
-                            DirectoryHolder dh = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
-                            if (dh instanceof StarredDirectoryHolder) {
-                                LibraryMediator.instance().getLibraryExplorer().refreshSelection();
-                            } else {
-                                LibraryMediator.instance().getLibraryExplorer().selectStarred();
-                            }
-                        }
-                    });
-                }
-            }, "createNewPlaylist");
-            t.setDaemon(true);
-            t.start();
+            createStarredPlaylist(playlistItems);
         } else {
-            String playlistName = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(playlistItems));
+            String playlistName = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, suggestPlaylistName(playlistItems));
 
             if (playlistName != null && playlistName.length() > 0) {
                 final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
@@ -295,6 +279,27 @@ public class LibraryUtils {
             }
         }
         UXStats.instance().log(UXAction.LIBRARY_PLAYLIST_CREATED);
+    }
+
+    private static void createStarredPlaylist(final PlaylistItem[] playlistItems) {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                Playlist playlist = LibraryMediator.getLibrary().getStarredPlaylist();
+                addToPlaylist(playlist, playlistItems, true, -1);
+                GUIMediator.safeInvokeLater(new Runnable() {
+                    public void run() {
+                        DirectoryHolder dh = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
+                        if (dh instanceof StarredDirectoryHolder) {
+                            LibraryMediator.instance().getLibraryExplorer().refreshSelection();
+                        } else {
+                            LibraryMediator.instance().getLibraryExplorer().selectStarred();
+                        }
+                    }
+                });
+            }
+        }, "createNewPlaylist");
+        t.setDaemon(true);
+        t.start();
     }
 
     public static void createNewPlaylist(File m3uFile) {
@@ -582,44 +587,69 @@ public class LibraryUtils {
         return false;
     }
 
-    private static String calculateName(File[] files) {
-        List<String> names = new ArrayList<String>(150);
-        findNames(names, files);
-        return new NameCalculator(names).getName();
+    private static String suggestPlaylistName(File[] mediaFiles) {
+        HistoHashMap<String> artistNames = new HistoHashMap<String>();
+        HistoHashMap<String> artistsAlbums = new HistoHashMap<String>();
+        HistoHashMap<String> albumNames = new HistoHashMap<String>();
+        HistoHashMap<String> genres = new HistoHashMap<String>();
+        
+        for (File mf : mediaFiles) {
+            if (MediaPlayer.isPlayableFile(mf)) {
+                TagsData mt = new TagsReader(mf).parse();
+                artistNames.update(mt.getArtist());
+                artistsAlbums.update(mt.getArtist() + " - " + mt.getAlbum());
+                albumNames.update(mt.getAlbum());
+                genres.update("(" + mt.getGenre() + ")");
+            }
+        }
+        
+        Entry<String, Integer>[] histogramArtistNames = artistNames.histogram();
+        Entry<String, Integer>[] histogramArtistsAlbums = artistsAlbums.histogram();
+        Entry<String, Integer>[] histogramAlbumNames = albumNames.histogram();
+        Entry<String, Integer>[] histogramGenres = genres.histogram();
+        
+        String topArtistName = histogramArtistNames[histogramArtistNames.length-1].getKey();
+        int topArtistNameCount = histogramArtistNames[histogramArtistNames.length-1].getValue();
+        
+        String topArtistAlbum = histogramArtistsAlbums[histogramArtistsAlbums.length-1].getKey();
+        int topArtistAlbumCount = histogramArtistsAlbums[histogramArtistsAlbums.length-1].getValue();
+
+        String topAlbumName = histogramAlbumNames[histogramAlbumNames.length-1].getKey();
+        int topAlbumNameCount = histogramAlbumNames[histogramAlbumNames.length-1].getValue();
+
+        String topGenre = histogramGenres[histogramGenres.length-1].getKey();
+
+        String suggestedPlaylistName = topArtistName;
+        if (topArtistAlbumCount >= topArtistNameCount) {
+            suggestedPlaylistName = topArtistAlbum;
+        } else if (topAlbumNameCount >= topArtistNameCount) {
+            suggestedPlaylistName = topAlbumName;
+            if (topArtistNameCount > 3) {
+                suggestedPlaylistName = topArtistName + " - " + suggestedPlaylistName;
+            }
+        }
+        
+        if (!topGenre.equals("()")) {
+            suggestedPlaylistName = suggestedPlaylistName + " " + topGenre;
+        }
+        
+        return suggestedPlaylistName;
     }
 
-    private static String calculateName(List<? extends AbstractLibraryTableDataLine<?>> lines) {
+    private static String suggestPlaylistName(List<? extends AbstractLibraryTableDataLine<?>> lines) {
         File[] files = new File[lines.size()];
         for (int i = 0; i < lines.size(); i++) {
             files[i] = lines.get(i).getFile();
         }
-        return calculateName(files);
+        return suggestPlaylistName(files);
     }
 
-    private static String calculateName(PlaylistItem[] playlistItems) {
+    private static String suggestPlaylistName(PlaylistItem[] playlistItems) {
         File[] files = new File[playlistItems.length];
         for (int i = 0; i < files.length; i++) {
             files[i] = new File(playlistItems[i].getFilePath());
         }
-        return calculateName(files);
-    }
-
-    private static void findNames(List<String> names, File[] files) {
-        if (names.size() > 100) {
-            return;
-        }
-
-        for (File file : files) {
-            if (file.isDirectory()) {
-                //String fullPathNoEndSeparator = FilenameUtils.getFullPathNoEndSeparator(file.getAbsolutePath());
-                String baseName = FilenameUtils.getBaseName(file.getAbsolutePath());
-                names.add(baseName);
-                findNames(names, file.listFiles());
-            } else if (MediaPlayer.isPlayableFile(file)) {
-                String baseName = FilenameUtils.getBaseName(file.getAbsolutePath());
-                names.add(baseName);
-            }
-        }
+        return suggestPlaylistName(files);
     }
 
     public static void cleanup(Playlist playlist) {

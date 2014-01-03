@@ -57,24 +57,24 @@ final class FWHttpClient implements HttpClient {
 
     private boolean canceled;
 
-    public String get(String url) {
+    public String get(String url) throws IOException {
         return get(url, DEFAULT_TIMEOUT, DEFAULT_USER_AGENT);
     }
 
-    public String get(String url, int timeout) {
+    public String get(String url, int timeout) throws IOException {
         return get(url, timeout, DEFAULT_USER_AGENT);
     }
 
-    public String get(String url, int timeout, String userAgent) {
+    public String get(String url, int timeout, String userAgent) throws IOException {
         return get(url, timeout, userAgent, null, null);
     }
 
-    public String get(String url, int timeout, String userAgent, String referrer, String cookie) {
+    public String get(String url, int timeout, String userAgent, String referrer, String cookie) throws IOException {
         return get(url, timeout, userAgent, referrer, cookie, null);
     }
 
     @Override
-    public String get(String url, int timeout, String userAgent, String referrer, String cookie, Map<String, String> customHeaders) {
+    public String get(String url, int timeout, String userAgent, String referrer, String cookie, Map<String, String> customHeaders) throws IOException {
         String result = null;
 
         ByteArrayOutputStream baos = null;
@@ -84,8 +84,13 @@ final class FWHttpClient implements HttpClient {
             get(url, baos, timeout, userAgent, referrer, cookie, -1, -1, customHeaders);
 
             result = new String(baos.toByteArray(), "UTF-8");
-        } catch (Throwable e) {
-            LOG.error("Error getting string from http body response: " + e.getMessage(), e);
+        } catch (java.net.SocketTimeoutException timeoutException) {
+            throw timeoutException;
+        }
+        catch (Throwable e) {
+            //LOG.error("Error getting string from http body response: " + e.getMessage(), e);
+            e.printStackTrace();
+            throw e;
         } finally {
             closeQuietly(baos);
         }
@@ -149,6 +154,8 @@ final class FWHttpClient implements HttpClient {
         final URL u = new URL(url);
         final HttpURLConnection conn = (HttpURLConnection) u.openConnection();
         conn.setDoOutput(true);
+        
+        conn.setConnectTimeout(timeout);
         conn.setReadTimeout(timeout);
         conn.setRequestProperty("User-Agent", userAgent);
         conn.setInstanceFollowRedirects(false);
@@ -240,6 +247,7 @@ final class FWHttpClient implements HttpClient {
         final URL u = new URL(url);
         final URLConnection conn = u.openConnection();
 
+        conn.setConnectTimeout(timeout);
         conn.setReadTimeout(timeout);
         conn.setRequestProperty("User-Agent", userAgent);
 
@@ -312,6 +320,8 @@ final class FWHttpClient implements HttpClient {
         final URL u = new URL(url);
         final HttpURLConnection conn = (HttpURLConnection) u.openConnection();
         conn.setDoOutput(true);
+        
+        conn.setConnectTimeout(timeout);
         conn.setReadTimeout(timeout);
         conn.setRequestProperty("User-Agent", userAgent);
         conn.setInstanceFollowRedirects(false);

@@ -548,33 +548,35 @@ public final class SearchMediator {
                 final long token = performer.getToken();
                 final SearchResultMediator rp = getResultPanelForGUID(token);
 
-                @SuppressWarnings("unchecked")
-                List<SearchResult> filtered = filter(performer, (List<SearchResult>) results, rp.getSearchTokens());
+                if (rp != null && !rp.isStopped()) {
+                    @SuppressWarnings("unchecked")
+                    List<SearchResult> filtered = filter(performer, (List<SearchResult>) results, rp.getSearchTokens());
 
-                if (rp != null && !rp.isStopped() && filtered != null && !filtered.isEmpty()) {
+                    if (filtered != null && !filtered.isEmpty()) {
 
-                    SearchEngine se = SearchEngine.getSearchEngineByName(filtered.get(0).getSource());
-                    if (se == null) {
-                        return;
-                    }
-
-                    final List<UISearchResult> uiResults = convertResults(filtered, se, rp.getQuery());
-
-                    GUIMediator.safeInvokeAndWait(new Runnable() {
-                        public void run() {
-                            try {
-                                SearchFilter filter = getSearchFilterFactory().createFilter();
-                                for (UISearchResult sr : uiResults) {
-                                    if (filter.allow(sr)) {
-                                        getSearchResultDisplayer().addQueryResult(token, sr, rp);
-                                    }
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                        SearchEngine se = SearchEngine.getSearchEngineByName(filtered.get(0).getSource());
+                        if (se == null) {
+                            return;
                         }
 
-                    });
+                        final List<UISearchResult> uiResults = convertResults(filtered, se, rp.getQuery());
+
+                        GUIMediator.safeInvokeAndWait(new Runnable() {
+                            public void run() {
+                                try {
+                                    SearchFilter filter = getSearchFilterFactory().createFilter();
+                                    for (UISearchResult sr : uiResults) {
+                                        if (filter.allow(sr)) {
+                                            getSearchResultDisplayer().addQueryResult(token, sr, rp);
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        });
+                    }
                 }
             }
         }

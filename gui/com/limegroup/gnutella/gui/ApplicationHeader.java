@@ -100,6 +100,9 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
     private final Image headerButtonBackgroundUnselected;
 
     private LogoPanel logoPanel;
+    
+    private ImageIcon chatButtonImage;
+    private JRadioButton chatButton;
 
     private JLabel updateButton;
     private ImageIcon updateImageButtonOn;
@@ -142,6 +145,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         searchPanels = createSearchPanel();
         add(searchPanels, "w 240px!, gapright 10px");
 
+        //The Chat Tab is not a real Tab, it's a button, it's creation is done inside this method.
         addTabButtons(tabs);
 
         createUpdateButton();
@@ -161,6 +165,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         final ActionListener schemaListener = new SchemaListener();
         schemaListener.actionPerformed(null);
     }
+
 
     private JPanel createSearchPanel() {
         JPanel panel = new JPanel(new CardLayout());
@@ -211,6 +216,47 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
             }
         });
     }
+    
+    private void createChatButton() {
+        chatButtonImage = GUIMediator.getThemeImage("chat_tab");
+
+
+        chatButton = new JRadioButton(I18n.tr("Chat"));
+        Dimension d = new Dimension(65, 55);
+        Font buttonFont = new Font("Helvetica", Font.BOLD, 10);
+        
+        chatButton.setFont(buttonFont);
+        chatButton.setIcon(chatButtonImage);
+        chatButton.setPressedIcon(chatButtonImage);
+        chatButton.setSelectedIcon(chatButtonImage);
+        chatButton.setRolloverIcon(chatButtonImage);
+        chatButton.setRolloverSelectedIcon(chatButtonImage);
+        chatButton.setVisible(true);
+        chatButton.setSize(d);
+        chatButton.setPreferredSize(d);
+        chatButton.setMinimumSize(d);
+        chatButton.setMaximumSize(d);
+        chatButton.setBorder(null);
+        chatButton.setBorderPainted(false);
+        chatButton.setFocusPainted(false);
+        chatButton.setContentAreaFilled(false);
+        chatButton.setOpaque(false);
+        chatButton.setToolTipText(I18n.tr("Show our community chat"));
+        chatButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        chatButton.setVerticalTextPosition(JLabel.BOTTOM);
+        chatButton.setHorizontalAlignment(SwingConstants.CENTER);
+        chatButton.setForeground(ThemeMediator.TAB_BUTTON_FOREGROUND_COLOR);
+
+        chatButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                GUIMediator.openURL("http://www.frostwire.com/chat");
+                UXStats.instance().log(UXAction.MISC_CHAT_OPENED_IN_BROWSER);
+            }
+        });
+        
+    }
+
 
     public LogoPanel getLogoPanel() {
         return logoPanel;
@@ -271,6 +317,11 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
 
             button.setSelected(t.equals(GUIMediator.Tabs.SEARCH));
         }
+        
+        //CHAT BUTTON
+        createChatButton();
+        buttonContainer.add(chatButton);
+        buttonContainer.add(ThemeMediator.createAppHeaderSeparator(), "growy, w 0px");
 
         add(buttonContainer, "");
     }
@@ -490,11 +541,17 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
             }
         });
     }
+    
+    public void startSearch(String query) {
+        cloudSearchField.setText(query);
+        cloudSearchField.getActionListeners()[0].actionPerformed(null);
+    }
 
     private class SearchListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            //keep the query if ther was one before switching to the search tab
+            //keep the query if there was one before switching to the search tab
             String query = cloudSearchField.getText();
+            String queryTitle = query;
             GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);                
 
             //start a download from the search box by entering a URL.
@@ -503,8 +560,13 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
                 cloudSearchField.hidePopup();
                 return;
             }
+            
+            if (query.contains("youtube.com/watch?v=")) {
+                query = query.split("v=")[1];
+                queryTitle = "youtube:"+query;
+            }
 
-            final SearchInformation info = SearchInformation.createTitledKeywordSearch(query, null, MediaType.getTorrentMediaType(), query);
+            final SearchInformation info = SearchInformation.createTitledKeywordSearch(query, null, MediaType.getTorrentMediaType(), queryTitle);
 
             // If the search worked, store & clear it.
             if (SearchMediator.instance().triggerSearch(info) != 0) {

@@ -23,6 +23,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.frostwire.search.domainalias.DomainAliasManager;
+
 /**
  * @author gubatron
  * @author aldenml
@@ -40,8 +42,8 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
 
     private int numCrawls;
 
-    public CrawlPagedWebSearchPerformer(long token, String keywords, int timeout, int pages, int numCrawls) {
-        super(token, keywords, timeout, pages);
+    public CrawlPagedWebSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout, int pages, int numCrawls) {
+        super(domainAliasManager, token, keywords, timeout, pages);
         this.numCrawls = numCrawls;
     }
 

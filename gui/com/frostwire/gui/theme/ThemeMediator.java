@@ -699,7 +699,7 @@ public final class ThemeMediator {
     // the UI resetInputValue to handle a bug in the Chat nickname
     // dialog. A problem with safeInvokeAndWait.
     public static Object showInputDialog(Component parentComponent, Object message, String title, int messageType, Icon icon, Object[] selectionValues, Object initialSelectionValue) throws HeadlessException {
-        JOptionPane pane = new JOptionPane(message, messageType, JOptionPane.OK_CANCEL_OPTION, icon, null, null);
+        final JOptionPane pane = new JOptionPane(message, messageType, JOptionPane.OK_CANCEL_OPTION, icon, null, initialSelectionValue);
 
         pane.setUI(new SkinOptionPaneUI() {
             @Override
@@ -711,27 +711,60 @@ public final class ThemeMediator {
                 }
             }
         });
-
+        
         pane.setWantsInput(true);
         pane.setSelectionValues(selectionValues);
         pane.setInitialSelectionValue(initialSelectionValue);
         pane.setComponentOrientation(parentComponent.getComponentOrientation());
-
+        
         int style = JRootPane.INFORMATION_DIALOG;
+        
         JDialog dialog = createDialog(pane, parentComponent, title, style);
+        
+        pane.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals("value")) {
+                    Object oldValue = evt.getOldValue();
+                    Object newValue = evt.getNewValue();
+                    
+                    //clicked on the close button on the window
+                    if (newValue == null) {
+                        onInputDialogCancelledOrClosed(pane);
+                    } else {
+                    //pressed esc key, or Cancel button in the dialog.
+                        boolean onCancelButtonOrEscapeKeyPressed = newValue != null && newValue instanceof Integer && ((Integer) newValue).intValue() == JOptionPane.CLOSED_OPTION
+                                || ((Integer) newValue).intValue() == JOptionPane.CANCEL_OPTION;
+                        
+                        if (oldValue == JOptionPane.UNINITIALIZED_VALUE && (onCancelButtonOrEscapeKeyPressed || newValue==null)) {
+                            onInputDialogCancelledOrClosed(pane);
+                        }
+                    }
+                }
+            }
+        });
 
+        if (initialSelectionValue != null) {
+            pane.setInputValue(initialSelectionValue);
+        }
+        
         pane.selectInitialValue();
         dialog.setVisible(true);
         dialog.dispose();
 
         Object value = pane.getInputValue();
-
+        
         if (value == JOptionPane.UNINITIALIZED_VALUE) {
-            return null;
+            value = null;
         }
         
         return value;
     }
+    
+    private static void onInputDialogCancelledOrClosed(JOptionPane pane) {
+        pane.setInputValue(JOptionPane.UNINITIALIZED_VALUE);
+    }
+
 
     private static JDialog createDialog(JOptionPane pane, Component parentComponent, String title, int style) throws HeadlessException {
 
@@ -794,12 +827,7 @@ public final class ThemeMediator {
                 pane.setValue(null);
             }
 
-            public void windowClosed(WindowEvent e) {
-                pane.removePropertyChangeListener(listener);
-                dialog.getContentPane().removeAll();
-            }
-
-            public void windowGainedFocus(WindowEvent we) {
+           public void windowGainedFocus(WindowEvent we) {
                 // Once window gets focus, set initial focus
                 if (!gotFocus) {
                     pane.selectInitialValue();
@@ -807,6 +835,7 @@ public final class ThemeMediator {
                 }
             }
         };
+        
         dialog.addWindowListener(adapter);
         dialog.addWindowFocusListener(adapter);
         dialog.addComponentListener(new ComponentAdapter() {
@@ -818,5 +847,4 @@ public final class ThemeMediator {
 
         pane.addPropertyChangeListener(listener);
     }
-
 }

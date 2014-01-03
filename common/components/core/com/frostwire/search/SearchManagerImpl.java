@@ -73,11 +73,15 @@ public class SearchManagerImpl implements SearchManager {
 
             SearchTask task = new PerformTask(this, performer, getOrder(performer.getToken()));
 
-            tasks.add(task);
-            executor.execute(task);
+            submitSearchTask(task);
         } else {
             LOG.warn("Search performer is null, review your logic");
         }
+    }
+
+    public void submitSearchTask(SearchTask task) {
+        tasks.add(task);
+        executor.execute(task);
     }
 
     @Override
@@ -145,12 +149,11 @@ public class SearchManagerImpl implements SearchManager {
         }
     }
 
-    private void crawl(SearchPerformer performer, CrawlableSearchResult sr) {
+    public void crawl(SearchPerformer performer, CrawlableSearchResult sr) {
         if (performer != null && !performer.isStopped()) {
             try {
                 SearchTask task = new CrawlTask(this, performer, sr, getOrder(performer.getToken()));
-                tasks.add(task);
-                executor.execute(task);
+                submitSearchTask(task);
             } catch (Throwable e) {
                 LOG.warn("Error scheduling crawling of search result: " + sr);
             }
@@ -159,7 +162,7 @@ public class SearchManagerImpl implements SearchManager {
         }
     }
 
-    private void checkIfFinished(SearchPerformer performer) {
+    void checkIfFinished(SearchPerformer performer) {
         SearchTask pendingTask = null;
 
         synchronized (tasks) {
@@ -197,38 +200,6 @@ public class SearchManagerImpl implements SearchManager {
 
     private static ExecutorService newFixedThreadPool(int nThreads) {
         return new ThreadPoolExecutor(nThreads, nThreads, 0L, TimeUnit.MILLISECONDS, new PriorityBlockingQueue<Runnable>(), new DefaultThreadFactory("SearchManager", false));
-    }
-
-    private static final class PerformerResultListener implements SearchListener {
-
-        private final SearchManagerImpl manager;
-
-        public PerformerResultListener(SearchManagerImpl manager) {
-            this.manager = manager;
-        }
-
-        @Override
-        public void onResults(SearchPerformer performer, List<? extends SearchResult> results) {
-            List<SearchResult> list = new LinkedList<SearchResult>();
-
-            for (SearchResult sr : results) {
-                if (sr instanceof CrawlableSearchResult) {
-                    CrawlableSearchResult csr = (CrawlableSearchResult) sr;
-
-                    if (csr.isComplete()) {
-                        list.add(sr);
-                    }
-
-                    manager.crawl(performer, csr);
-                } else {
-                    list.add(sr);
-                }
-            }
-
-            if (!list.isEmpty()) {
-                manager.onResults(performer, list);
-            }
-        }
     }
 
     private static abstract class SearchTask implements Runnable, Comparable<SearchTask> {

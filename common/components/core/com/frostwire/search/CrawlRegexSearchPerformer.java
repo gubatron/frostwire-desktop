@@ -20,6 +20,8 @@ package com.frostwire.search;
 
 import java.util.List;
 
+import com.frostwire.search.domainalias.DomainAliasManager;
+
 /**
  * 
  * @author gubatron
@@ -30,8 +32,8 @@ public abstract class CrawlRegexSearchPerformer<T extends CrawlableSearchResult>
 
     private final int regexMaxResults;
 
-    public CrawlRegexSearchPerformer(long token, String keywords, int timeout, int pages, int numCrawls, int regexMaxResults) {
-        super(token, keywords, timeout, pages, numCrawls);
+    public CrawlRegexSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout, int pages, int numCrawls, int regexMaxResults) {
+        super(domainAliasManager, token, keywords, timeout, pages, numCrawls);
         this.regexMaxResults = regexMaxResults;
     }
 

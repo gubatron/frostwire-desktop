@@ -32,9 +32,9 @@ public class BitSnoopTempSearchResult extends AbstractSearchResult implements Cr
     private final String itemId;
     private final String detailsUrl;
 
-    public BitSnoopTempSearchResult(String itemId) {
+    public BitSnoopTempSearchResult(String domainName, String itemId) {
         this.itemId = itemId;
-        this.detailsUrl = "http://bitsnoop.com" + itemId;
+        this.detailsUrl = "http://" + domainName + itemId;
     }
 
     public String getItemId() {

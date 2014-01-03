@@ -22,11 +22,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
 
 import org.apache.commons.io.FilenameUtils;
 
+import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.torrent.AbstractTorrentSearchResult;
 import com.frostwire.util.HtmlManipulator;
 import com.frostwire.util.StringUtils;
@@ -62,13 +63,13 @@ public class EztvSearchResult extends AbstractTorrentSearchResult {
     private long creationTime;
     private int seeds;
 
-    public EztvSearchResult(String detailsUrl, Matcher matcher) {
+    public EztvSearchResult(String detailsUrl, SearchMatcher matcher) {
         this.detailsUrl = detailsUrl;
         this.displayName = HtmlManipulator.replaceHtmlEntities(matcher.group(1));
         this.torrentUrl = matcher.group(2);
         this.filename = parseFileName(FilenameUtils.getName(torrentUrl));
         this.infoHash = matcher.group(3);
-        this.seeds = 0;
+        this.seeds = UNKOWN_SEEDS;
         this.creationTime = parseCreationTime(matcher.group(4));
         this.size = parseSize(matcher.group(5));
     }
@@ -152,7 +153,7 @@ public class EztvSearchResult extends AbstractTorrentSearchResult {
         long result = System.currentTimeMillis();
         try {
             dateString = dateString.replaceAll("(st|nd|rd|th)", "");
-            SimpleDateFormat myFormat = new SimpleDateFormat("d MMM yyyy");
+            SimpleDateFormat myFormat = new SimpleDateFormat("d MMM yyyy", Locale.US);
             result = myFormat.parse(dateString).getTime();
         } catch (Throwable t) {
         }

@@ -52,7 +52,6 @@ import com.limegroup.gnutella.gui.options.panes.AutoCompletePaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutomaticInstallerDownloadPaneItem;
 import com.limegroup.gnutella.gui.options.panes.BrowserPaneItem;
 import com.limegroup.gnutella.gui.options.panes.BugsPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ChatCommunityPaneItem;
 import com.limegroup.gnutella.gui.options.panes.DetailsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ForceIPPaneItem;
 import com.limegroup.gnutella.gui.options.panes.IgnoreResultsPaneItem;
@@ -302,9 +301,6 @@ public final class OptionsConstructor {
         } else {
             addOption(OptionsMediator.ROOT_NODE_KEY, GUI_KEY, I18n.tr("View"), PopupsPaneItem.class, ShowPromoOverlaysPaneItem.class, AutoCompletePaneItem.class);
         }
-
-        //community chat
-        addOption(OptionsMediator.ROOT_NODE_KEY, CHAT_KEY, I18n.tr("Community Chat"), ChatCommunityPaneItem.class);
 
         // filter options
         addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, FILTERS_KEY, I18n.tr("Filters"));

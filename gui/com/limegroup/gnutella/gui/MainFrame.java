@@ -45,10 +45,8 @@ import net.miginfocom.swing.MigLayout;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.library.LibraryMediator;
-import com.frostwire.gui.tabs.ChatTab;
 import com.frostwire.gui.tabs.LibraryTab;
 import com.frostwire.gui.tabs.SearchDownloadTab;
 import com.frostwire.gui.tabs.Tab;
@@ -78,8 +76,6 @@ public final class MainFrame {
      * responsible for displaying files in the user's repository.
      */
     private LibraryMediator LIBRARY_MEDIATOR;
-
-    private ChatMediator CHAT_MEDIATOR;
 
     /**
      * Constant handle to the <tt>OptionsMediator</tt> class that is
@@ -280,14 +276,14 @@ public final class MainFrame {
 
         TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(getBTDownloadMediator()));
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryTab(getLibraryMediator()));
-        TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(getChatMediator()));
+        //TABS.put(GUIMediator.Tabs.CHAT, new ChatTab());
 
         TABBED_PANE.setPreferredSize(new Dimension(10000, 10000));
 
         // add all tabs initially....
         for (GUIMediator.Tabs tab : GUIMediator.Tabs.values()) {
             Tab t = TABS.get(tab);
-            if (t != null) {
+            if (t != null && t.getComponent() != null) {
                 this.addTab(t);
             }
         }
@@ -387,13 +383,6 @@ public final class MainFrame {
             LIBRARY_MEDIATOR = LibraryMediator.instance();
         }
         return LIBRARY_MEDIATOR;
-    }
-
-    final ChatMediator getChatMediator() {
-        if (CHAT_MEDIATOR == null) {
-            CHAT_MEDIATOR = ChatMediator.instance();
-        }
-        return CHAT_MEDIATOR;
     }
 
     /**

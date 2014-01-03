@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import com.frostwire.search.CrawlPagedWebSearchPerformer;
 import com.frostwire.search.SearchResult;
+import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.util.JsonUtils;
 
 /**
@@ -37,13 +38,15 @@ public class ArchiveorgSearchPerformer extends CrawlPagedWebSearchPerformer<Arch
 
     private static final int MAX_RESULTS = 12;
 
-    public ArchiveorgSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1, MAX_RESULTS);
+    public ArchiveorgSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
+        super(domainAliasManager, token, keywords, timeout, 1, MAX_RESULTS);
     }
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://archive.org/advancedsearch.php?q="
+        return "http://"
+                + getDomainNameToUse()
+                + "/advancedsearch.php?q="
                 + encodedKeywords
                 + "&fl[]=avg_rating&fl[]=call_number&fl[]=collection&fl[]=contributor&fl[]=coverage&fl[]=creator&fl[]=date&fl[]=description&fl[]=downloads&fl[]=foldoutcount&fl[]=format&fl[]=headerImage&fl[]=identifier&fl[]=imagecount&fl[]=language&fl[]=licenseurl&fl[]=mediatype&fl[]=month&fl[]=num_reviews&fl[]=oai_updatedate&fl[]=publicdate&fl[]=publisher&fl[]=rights&fl[]=scanningcentre&fl[]=source&fl[]=subject&fl[]=title&fl[]=type&fl[]=volume&fl[]=week&fl[]=year&rows=50&page=1&indent=yes&output=json";
         //sort[]=downloads+desc&sort[]=createdate+desc
@@ -58,7 +61,7 @@ public class ArchiveorgSearchPerformer extends CrawlPagedWebSearchPerformer<Arch
 
         for (ArchiveorgItem item : response.response.docs) {
             if (!isStopped()) {
-                ArchiveorgSearchResult sr = new ArchiveorgSearchResult(item);
+                ArchiveorgSearchResult sr = new ArchiveorgSearchResult(getDomainNameToUse(), item);
                 result.add(sr);
             }
         }
@@ -68,7 +71,7 @@ public class ArchiveorgSearchPerformer extends CrawlPagedWebSearchPerformer<Arch
 
     @Override
     protected String getCrawlUrl(ArchiveorgSearchResult sr) {
-        return "http://archive.org/details/" + sr.getItem().identifier + "?output=json";
+        return "http://" + getDomainNameToUse() + "/details/" + sr.getIdentifier() + "?output=json";
     }
 
     @Override

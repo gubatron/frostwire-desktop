@@ -18,9 +18,11 @@
 
 package com.frostwire.search.monova;
 
-import java.util.regex.Matcher;
+import java.io.IOException;
 
 import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.SearchMatcher;
+import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
 
 /**
@@ -35,29 +37,29 @@ public class MonovaSearchPerformer extends TorrentRegexSearchPerformer<MonovaSea
     private static final String REGEX = "(?is)<a href=\"http://www.monova.org/torrent/([0-9]*?)/(.*?).html";
     private static final String HTML_REGEX = "(?is)<div id=\"downloadbox\"><h2><a href=\"(.*?)\" rel=\"nofollow\">.*?<a href=\"magnet:\\?xt=urn:btih:(.*?)\"><b>Magnet</b></a>.*?<font color=\"[A-Za-z]*?\">(.*?)</font> seeds,.*?<strong>Total size:</strong>(.*?)<br /><strong>Pieces:.*?";
 
-    public MonovaSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX);
+    public MonovaSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
+        super(domainAliasManager, token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX);
     }
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://www.monova.org/search.php?sort=5&term=" + encodedKeywords;
+        return "http://"+getDomainNameToUse()+"/search.php?sort=5&term=" + encodedKeywords;
     }
 
     @Override
-    protected String fetchSearchPage(String url) {
+    protected String fetchSearchPage(String url) throws IOException {
         return fetch(url, "MONOVA=1; MONOVA-ADULT=0; MONOVA-NON-ADULT=1;", null);
     }
 
     @Override
-    public CrawlableSearchResult fromMatcher(Matcher matcher) {
+    public CrawlableSearchResult fromMatcher(SearchMatcher matcher) {
         String itemId = matcher.group(1);
         String fileName = matcher.group(2);
-        return new MonovaTempSearchResult(itemId, fileName);
+        return new MonovaTempSearchResult(getDomainNameToUse(),itemId, fileName);
     }
 
     @Override
-    protected MonovaSearchResult fromHtmlMatcher(CrawlableSearchResult sr, Matcher matcher) {
+    protected MonovaSearchResult fromHtmlMatcher(CrawlableSearchResult sr, SearchMatcher matcher) {
         return new MonovaSearchResult(sr.getDetailsUrl(), matcher);
     }
 }

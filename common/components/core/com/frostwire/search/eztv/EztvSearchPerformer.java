@@ -20,9 +20,10 @@ package com.frostwire.search.eztv;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
 
 import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.SearchMatcher;
+import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
 
 /**
@@ -37,8 +38,8 @@ public class EztvSearchPerformer extends TorrentRegexSearchPerformer<EztvSearchR
     private static final String REGEX = "(?is)<a href=\"(/ep/.*?)\"";
     private static final String HTML_REGEX = "(?is)<td class=\"section_post_header\" colspan=\"2\"><b>(.*?)</b></td>.*?<td class=\"section_post_header\">Download Links</td>.*?<a href=\"(http://.*?torrent)\".*?<a href=\"magnet:\\?xt=urn:btih:(.*?)&.*?\".*?<b>Released:</b> (.*?)<br />.*?<b>Filesize:</b> (.*?)<br />";
 
-    public EztvSearchPerformer(long token, String keywords, int timeout) {
-        super(token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX);
+    public EztvSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
+        super(domainAliasManager, token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX); 
     }
 
     @Override
@@ -52,17 +53,17 @@ public class EztvSearchPerformer extends TorrentRegexSearchPerformer<EztvSearchR
 
     @Override
     protected String getUrl(int page, String encodedKeywords) {
-        return "http://eztv.it/search/";
+        return "http://"+getDomainNameToUse()+"/search/";
     }
 
     @Override
-    public CrawlableSearchResult fromMatcher(Matcher matcher) {
+    public CrawlableSearchResult fromMatcher(SearchMatcher matcher) {
         String itemId = matcher.group(1);
-        return new EztvTempSearchResult(itemId);
+        return new EztvTempSearchResult(getDomainNameToUse(),itemId);
     }
 
     @Override
-    protected EztvSearchResult fromHtmlMatcher(CrawlableSearchResult sr, Matcher matcher) {
+    protected EztvSearchResult fromHtmlMatcher(CrawlableSearchResult sr, SearchMatcher matcher) {
         return new EztvSearchResult(sr.getDetailsUrl(), matcher);
     }
 }

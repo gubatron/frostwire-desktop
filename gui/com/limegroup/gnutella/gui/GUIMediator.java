@@ -32,9 +32,11 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.NetworkInterface;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -60,7 +62,6 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.limewire.util.VersionUtils;
 
-import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.HideExitDialog;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.components.slides.Slide;
@@ -72,6 +73,7 @@ import com.frostwire.gui.tabs.Tab;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
+import com.frostwire.search.youtube.YouTubeCrawledStreamableSearchResult;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
@@ -126,7 +128,7 @@ public final class GUIMediator {
     private boolean _remoteDownloadsAllowed;
 
     public static enum Tabs {
-        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library")), CHAT(I18n.tr("C&hat"));
+        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library"));
 
         private Action navAction;
 
@@ -229,7 +231,7 @@ public final class GUIMediator {
 
         public static Tabs[] getOptionalTabs() {
             if (OPTIONAL_TABS == null) {
-                OPTIONAL_TABS = new Tabs[] { LIBRARY, CHAT };
+                OPTIONAL_TABS = new Tabs[] { LIBRARY };
             }
 
             return OPTIONAL_TABS;
@@ -290,12 +292,6 @@ public final class GUIMediator {
      * for displaying files in the user's repository.
      */
     private LibraryMediator LIBRARY_MEDIATOR;
-
-    /**
-     * Constant handle to the <tt>ChatMediator</tt> class that is responsible
-     * for displaying the user chat.
-     */
-    private ChatMediator CHAT_MEDIATOR;
 
     /**
      * Media Player Mediator
@@ -1585,14 +1581,6 @@ public final class GUIMediator {
         updateButtonView(getAppFrame());
     }
 
-    /**
-     * Notification that the smileys state has been changed.
-     */
-    public void smileysChanged(boolean newstatus) {
-        ChatMediator.instance().changesmileys(newstatus);
-        updateButtonView(getAppFrame());
-    }
-
     private void updateButtonView(Component c) {
         if (c instanceof IconButton) {
             ((IconButton) c).updateUI();
@@ -1640,16 +1628,6 @@ public final class GUIMediator {
             SwingUtilities.invokeLater(runnable);
     }
 
-    /** Tells CHAT_MEDIATOR to try to start the IRC Chat */
-    public void tryToStartAndAddChat() {
-        getChatMediator().tryToStartAndAddChat();
-    }
-
-    /** Changes the nick on the Chat */
-    public void setIRCNick(String newNick) {
-        getChatMediator().nick(newNick);
-    }
-
     /**
      * Sets the cursor on limewire's frame.
      * 
@@ -1691,13 +1669,6 @@ public final class GUIMediator {
             LIBRARY_MEDIATOR = getMainFrame().getLibraryMediator();
         }
         return LIBRARY_MEDIATOR;
-    }
-
-    private ChatMediator getChatMediator() {
-        if (CHAT_MEDIATOR == null) {
-            CHAT_MEDIATOR = getMainFrame().getChatMediator();
-        }
-        return CHAT_MEDIATOR;
     }
 
     public static void setClipboardContent(String str) {
@@ -1777,6 +1748,18 @@ public final class GUIMediator {
         getBTDownloadMediator().openYouTubeItem(sr);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
+    
+    public void launchYouTubePreviewInBrowser(YouTubeCrawledStreamableSearchResult sr) {
+        try {
+            String displayName = URLEncoder.encode(sr.getDisplayName(), "UTF-8");
+            String source = URLEncoder.encode(sr.getSource(), "UTF-8");
+            String detailsUrl = URLEncoder.encode(sr.getDetailsUrl(), "UTF-8");
+            String previewUrl = String.format("http://www.frostclick.com/cloudplayer/?type=yt&displayName=%s&source=%s&detailsUrl=%s", displayName, source, detailsUrl);
+            openURL(previewUrl);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void openSlide(Slide slide) {
         getBTDownloadMediator().openSlide(slide);
@@ -1786,5 +1769,9 @@ public final class GUIMediator {
     public void openHttp(final String httpUrl, final String title, final String saveFileAs, final long fileSize) {
         getBTDownloadMediator().openHttp(httpUrl, title, saveFileAs, fileSize);
         setWindow(GUIMediator.Tabs.SEARCH);
+    }
+
+    public void startSearch(String query) {
+        getMainFrame().getApplicationHeader().startSearch(query);
     }
 }

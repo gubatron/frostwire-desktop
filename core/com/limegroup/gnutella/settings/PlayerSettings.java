@@ -34,4 +34,6 @@ public class PlayerSettings extends LimeProps {
     public static FloatSetting PLAYER_VOLUME = FACTORY.createFloatSetting("PLAYER_VOLUME", 0.5f);
 
     public static BooleanSetting USE_OS_DEFAULT_PLAYER = FACTORY.createBooleanSetting("USE_OS_DEFAULT_PLAYER", false);
+    
+    public static BooleanSetting USE_FW_PLAYER_FOR_CLOUD_VIDEO_PREVIEWS = FACTORY.createBooleanSetting("USE_FW_PLAYER_FOR_CLOUD_VIDEO_PREVIEWS", false);
 }

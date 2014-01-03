@@ -34,15 +34,15 @@ public interface HttpClient {
 
     public HttpClientListener getListener();
 
-    public String get(String url);
+    public String get(String url) throws IOException;
 
-    public String get(String url, int timeout);
+    public String get(String url, int timeout) throws IOException;
 
-    public String get(String url, int timeout, String userAgent);
+    public String get(String url, int timeout, String userAgent) throws IOException;
 
-    public String get(String url, int timeout, String userAgent, String referrer, String cookie);
+    public String get(String url, int timeout, String userAgent, String referrer, String cookie) throws IOException;
 
-    public String get(String url, int timeout, String userAgent, String referrer, String cookie, Map<String, String> customHeaders);
+    public String get(String url, int timeout, String userAgent, String referrer, String cookie, Map<String, String> customHeaders) throws IOException;
 
     public byte[] getBytes(String url, int timeout, String userAgent, String referrer);
     
