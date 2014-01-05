@@ -151,7 +151,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         TABLE = new LimeJTable(DATA_MODEL) {
 
-            private Image bigAudioIcon = GUIMediator.getThemeImage("audio128x128").getImage();
+            private final Image bigAudioIcon = GUIMediator.getThemeImage("audio128x128").getImage();
 
             protected void paintComponent(java.awt.Graphics g) {
                 //System.out.println("LibraryPlaylistTableMediator.getRowCount() " + TABLE.getRowCount());

@@ -561,7 +561,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
                 return;
             }
             
-            if (query.contains("youtube.com/watch?v=")) {
+            if (query.contains("youtube.com/watch?")) {
                 query = query.split("v=")[1];
                 queryTitle = "youtube:"+query;
             }
