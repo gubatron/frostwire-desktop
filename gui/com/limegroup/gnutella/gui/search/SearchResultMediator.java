@@ -435,6 +435,10 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         UXStats.instance().log(UXAction.SEARCH_RESULT_ENTER_KEY_DOWNLOAD);
         DOWNLOAD_LISTENER.actionPerformed(null);
     }
+    
+    public void selectSchemaBoxByMediaType(NamedMediaType type) {
+        schemaBox.selectMediaType(type);
+    }
 
     /**
      * Gets the SearchInformation of this search.
