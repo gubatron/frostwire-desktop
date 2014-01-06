@@ -135,8 +135,15 @@ public class BTDownloadCreator {
 
     public void addPartialDownload(File saveDir) throws TOTorrentException {
         _downloadManager = _globalManager.addDownloadManager(_torrentFile.getAbsolutePath(), torrent.getHash(), saveDir.getAbsolutePath(), null, DownloadManager.STATE_WAITING, true, false, new DownloadManagerInitialisationAdapter() {
-            public void initialised(DownloadManager dm) {
-                setupPartialDownload(dm);
+            @Override
+            public void initialised(DownloadManager manager, boolean for_seeding) {
+                setupPartialDownload(manager);
+            }
+
+            @Override
+            public int getActions() {
+                // TODO Auto-generated method stub
+                return 0;
             }
         });
     }
