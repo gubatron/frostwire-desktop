@@ -18,7 +18,6 @@
 		<ant dir="google-gson-1.4" />
 		<ant dir="lucene-3.5.0" />
 		<ant dir="h2-1.3.164" />
-		<ant dir="dnsjava-2.1.3" />
 		<ant dir="metadata-extractor-2.6.2-src" />
 		<ant dir="fwtips" />
 		<ant dir="mp4parser" />
@@ -44,7 +43,6 @@
 		<ant dir="google-gson-1.4" target="clean" />
 		<ant dir="lucene-3.5.0" target="clean" />
 		<ant dir="h2-1.3.164" target="clean" />
-		<ant dir="dnsjava-2.1.3" target="clean" />
 		<ant dir="metadata-extractor-2.6.2-src" target="clean" />
 		<ant dir="fwtips" target="clean" />
 		<ant dir="mp4parser" target="clean" />
@@ -69,7 +67,6 @@
 		<copy file="dist/httpcore-4.0.1.jar" todir="../jars/" />
 		<copy file="dist/lucene-3.5.0.jar" todir="../jars/" />
 		<copy file="dist/h2-1.3.164.jar" todir="../jars/" />
-		<copy file="dist/dnsjava-2.1.3.jar" todir="../jars/" />
 		<copy file="dist/metadata-extractor-2.6.2.jar" todir="../jars/" />
 		<copy file="dist/fwtips.jar" todir="../jars/" />
 		<copy file="dist/mp4parser.jar" todir="../jars/" />

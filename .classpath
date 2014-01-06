@@ -71,7 +71,6 @@
 	<classpathentry kind="lib" path="lib/jars/httpcore-4.0.1.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/h2-1.3.164.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/lucene-3.5.0.jar" sourcepath="lib/jars-src"/>
-	<classpathentry kind="lib" path="lib/jars/dnsjava-2.1.3.jar"/>
 	<classpathentry kind="lib" path="lib/jars/metadata-extractor-2.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/jars/fwtips.jar" sourcepath="/frostwire-tips/src/java"/>
 	<classpathentry kind="lib" path="lib/jars/mp4parser.jar" sourcepath="lib/jars-src/mp4parser"/>
