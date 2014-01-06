@@ -197,7 +197,6 @@ public class DomainAliasManager {
             List<DomainAlias> toRemove = new ArrayList<DomainAlias>();
 
             final DomainAliasPongListener pongListener = createPongListener(performer);
-            //reviveSearchTask(performer, pongListener);
 
             for (DomainAlias alias : aliases.get()) {
                 if (alias.getFailedAttempts() <= 3) {
