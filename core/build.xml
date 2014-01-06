@@ -28,7 +28,7 @@
 			   debug	    ="${compile.debug}"
 			   deprecation  ="${compile.deprecation}"
 	           optimize     ="${compile.optimize}"
-			   encoding     ="UTF-8"
+			   encoding     ="ISO-8859-1"
 	           source		="${compile.source}"
 	           target       ="${compile.target}"
 	           srcdir	    ="${limewire.core.src}"
@@ -43,6 +43,17 @@
             <src path="${limewire.home}/common/components/seamless"/>
             <src path="${limewire.home}/common/components/cling"/>
             <src path="${limewire.home}/common/components/jdownloader"/>
+            <src path="${limewire.home}/common/components/minicastle"/>
+            
+            <src path="${limewire.home}/common/vuze/azureus2/src"/>
+            <src path="${limewire.home}/common/vuze/azureus3/src"/>
+            <exclude name="**/bouncycastle/**"/>
+            <exclude name="**/jman/**"/>
+            <exclude name="**/swing/**"/>
+            <exclude name="**/swt/**"/>
+            <exclude name="**/systray/**"/>
+            <exclude name="**/tests/**"/>
+            
             <src path="${limewire.home}/common/components/core"/>
 	   	</javac>
 	</target>

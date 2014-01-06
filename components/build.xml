@@ -12,11 +12,10 @@
     <import file="common/build.xml" />
     <import file="setting/build.xml"/>
     <import file="resources/build.xml"/>
-    <import file="azureus/build.xml"/>
     <import file="osx_stub/build.xml" />
     <import file="alexandria/build.xml"/>
 	
-    <target name="initialize" depends="lw-setting.initialize, lw-common.initialize, lw-resources.initialize, azureus.initialize, osx_stub.initialize, alexandria.initialize" unless="initialized.all">
+    <target name="initialize" depends="lw-setting.initialize, lw-common.initialize, lw-resources.initialize, osx_stub.initialize, alexandria.initialize" unless="initialized.all">
         <do.setup-properties component="all">
 	  <tests-classpath>
             <path refid="tests.limewire.components.common.classpath"/>
@@ -43,8 +42,6 @@
             <pathelement location="${build.limewire.components.nio.classes}"/>
             <pathelement location="${build.limewire.components.setting.classes}"/>
             <pathelement location="${build.limewire.components.http.classes}"/>
- 	    <pathelement location="${build.limewire.components.net.classes}"/>
- 	    <pathelement location="${build.limewire.components.azureus.classes}"/>
             <pathelement location="${build.limewire.components.osx_stub.classes}"/>
             <pathelement location="${build.limewire.components.alexandria.classes}"/>
             <!-- test-util not added purposely, as the classes are required for tests only -->
@@ -86,7 +83,7 @@
 	
 	<target name="clean"
 	        description="Cleans all generated data in every component."
-	        depends="lw-setting.clean, lw-common.clean, azureus.clean, osx_stub.clean, alexandria.clean">
+	        depends="lw-setting.clean, lw-common.clean, osx_stub.clean, alexandria.clean">
 	    <do.clean component="all"/>
     </target>
     
@@ -114,7 +111,7 @@
 	
 	<target name="compile-core-src"
 	        description="Compiles only the source code of every non-UI component."
-	        depends="lw-setting.compile-src, lw-common.compile-src, azureus.compile-src, osx_stub.compile-src, alexandria.compile-src">
+	        depends="lw-setting.compile-src, lw-common.compile-src, osx_stub.compile-src, alexandria.compile-src">
         <mkdir dir="${build.limewire.components.all.classes}"/>
 	</target>
 	
@@ -179,8 +176,6 @@
 
     <!-- clean old jars -->
     <target name="clean-jars">
-        <delete file="${limewire.components.home}/azureus/dist/lw-azureus.jar"/>
-      <delete file="${limewire.components.home}/azureus/dist/lw-azureus.jar"/>
       <delete file="${limewire.components.home}/osx_stub/dist/lw-osx_stub.jar"/>
       <delete file="${limewire.components.home}/collection/dist/lw-collection.jar"/>
       <delete file="${limewire.components.home}/common/dist/lw-common.jar"/>
@@ -192,7 +187,7 @@
     </target>
 
     <!-- creates a jar for every component -->
-    <target name="jar" depends="clean-jars, azureus.jar, osx_stub.jar, alexandria.jar, lw-common.jar, lw-resources.jar, lw-setting.jar">
+    <target name="jar" depends="clean-jars, osx_stub.jar, alexandria.jar, lw-common.jar, lw-resources.jar, lw-setting.jar">
       <echo message="done with jars"/>
     </target>
 
@@ -213,7 +208,6 @@
     	  <fileset dir="${limewire.components.resources.src.resources}" />
     	  <fileset dir="${build.limewire.components.http.classes}" />
     	  <fileset dir="${build.limewire.components.net.classes}" />
-          <fileset dir="${build.limewire.components.azureus.classes}" excludes="**/*.java"/>
           <fileset dir="${build.limewire.components.osx_stub.classes}" excludes="**/*.java"/>
 	    </more-jar-elements>
       </do.jar>
