@@ -8,3 +8,6 @@ objects in your external Drag and Drops.
 -  && !filename.toLowerCase().endsWith(".dat" )){
 //TorrentUtils.setObtainedFrom( file, original_url );
 Fix in TorrentDownloaderImpl
+
+- Fix related to cling and http handler, check
+org.gudy.azureus2.core3.util.protocol.http
