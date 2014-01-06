@@ -31,9 +31,10 @@ import com.frostwire.search.SearchPerformer;
  * a single domain.
  * 
  * @author gubatron
+ * @author aldenml
  *
  */
-public class DomainAliasManager {
+public final class DomainAliasManager {
 
     private final String defaultDomain;
 
