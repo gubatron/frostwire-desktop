@@ -741,7 +741,8 @@ public class TorrentDownloaderImpl extends AEThread implements TorrentDownloader
 		          	// it to something more useful
 		          
 		          try{
-		        	  if ( !filename.toLowerCase().endsWith(".torrent" )){
+		        	  if ( !filename.toLowerCase().endsWith(".torrent" ) &&
+                      !filename.toLowerCase().endsWith(".dat" )){
 	
 		        		  TOTorrent	torrent = TorrentUtils.readFromFile( file, false );
 	
@@ -792,7 +793,7 @@ public class TorrentDownloaderImpl extends AEThread implements TorrentDownloader
 		        	  }
 		          }
 		          
-		          TorrentUtils.setObtainedFrom( file, original_url );
+		          //TorrentUtils.setObtainedFrom( file, original_url );
 	
 		          this.state = STATE_FINISHED;
 		        }
