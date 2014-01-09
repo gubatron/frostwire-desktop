@@ -24,6 +24,13 @@
 	<target name="compile-core" 
 	        description="Compiles just the core."
 	        depends="initialize">
+        
+	    <copy todir="${build.limewire.core.classes}" overwrite="true">
+			<fileset dir="${limewire.home}/common/vuze/azureus2/src">
+				<include name="**/*.properties"/>
+			</fileset>
+      	</copy>
+      
 	    <javac destdir      ="${build.limewire.core.classes}"
 			   debug	    ="${compile.debug}"
 			   deprecation  ="${compile.deprecation}"
