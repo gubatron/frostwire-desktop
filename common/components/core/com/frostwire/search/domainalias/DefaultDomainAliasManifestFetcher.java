@@ -49,7 +49,6 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         katAliases.add("kickass.pw");
         katAliases.add("katproxy.co"); //*
         katAliases.add("kickass.to.proxy.piratenpartij.nl"); //*
-        katAliases.add("proxykat.me"); //*
         
         //katAliases.add("www.kat.ph");
         //katAliases.add("kickass.pw");
