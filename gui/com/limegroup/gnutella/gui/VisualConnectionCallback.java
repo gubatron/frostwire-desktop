@@ -51,18 +51,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
     
     private VisualConnectionCallback() {
     }
-	
-	///////////////////////////////////////////////////////////////////////////
-	//  Files-related callbacks
-	///////////////////////////////////////////////////////////////////////////
-	
-    public void fileManagerLoading() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                //mf().getLibraryMediator().clearLibrary();
-            }
-        });
-    }
     
 
 	///////////////////////////////////////////////////////////////////////////

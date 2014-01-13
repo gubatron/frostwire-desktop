@@ -303,7 +303,7 @@ public class BTDownloadCreator {
         });
 
         if (downloadManager.getState() != DownloadManager.STATE_STOPPED) {
-            downloadManager.initialize();
+            //downloadManager.initialize();
         }
 
         if (CommonUtils.isPortable()) {
