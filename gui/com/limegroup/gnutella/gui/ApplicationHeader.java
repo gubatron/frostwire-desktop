@@ -30,6 +30,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.Map;
 
 import javax.swing.AbstractButton;
@@ -65,6 +66,7 @@ import com.limegroup.gnutella.gui.actions.FileMenuActions;
 import com.limegroup.gnutella.gui.search.SearchInformation;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.settings.SearchSettings;
+import com.limegroup.gnutella.util.URLDecoder;
 
 /**
  * 
@@ -561,10 +563,20 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
                 return;
             }
             
+            
+            if (query.contains("www.frostclick.com/cloudplayer/?type=yt")) {
+                query = query.split("detailsUrl=")[1];
+                try {
+                    query = URLDecoder.decode(query);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            
             if (query.contains("youtube.com/watch?")) {
                 query = query.split("v=")[1];
                 queryTitle = "youtube:"+query;
-            }
+            } 
 
             final SearchInformation info = SearchInformation.createTitledKeywordSearch(query, null, MediaType.getTorrentMediaType(), queryTitle);
 
