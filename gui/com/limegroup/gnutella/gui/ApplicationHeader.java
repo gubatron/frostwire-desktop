@@ -565,8 +565,8 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
             
             
             if (query.contains("www.frostclick.com/cloudplayer/?type=yt")) {
-                query = query.split("detailsUrl=")[1];
                 try {
+                    query = query.split("detailsUrl=")[1];
                     query = URLDecoder.decode(query);
                 } catch (IOException e1) {
                     e1.printStackTrace();
