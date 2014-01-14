@@ -568,7 +568,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
                 try {
                     query = query.split("detailsUrl=")[1];
                     query = URLDecoder.decode(query);
-                } catch (IOException e1) {
+                } catch (Exception e1) {
                     e1.printStackTrace();
                 }
             }
