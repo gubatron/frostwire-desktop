@@ -130,6 +130,9 @@ public class BTDownloadCreator {
 
             //addPartialDownload(saveDir);
             setupPartialSelection(_downloadManager, _filesSelection);
+            if (_downloadManager.getState() == DownloadManager.STATE_STOPPED) {
+                _downloadManager.initialize();
+            }
 
         }
     }
@@ -267,51 +270,53 @@ public class BTDownloadCreator {
 
     public static BTDownload createDownload(DownloadManager downloadManager, final boolean triggerFilter, boolean initialize) throws SaveLocationException, TOTorrentException {
 
-        downloadManager.addListener(new DownloadManagerAdapter() {
-            @Override
-            public void stateChanged(DownloadManager manager, int state) {
-                if (state == DownloadManager.STATE_READY) {
-                    manager.startDownload();
-                }
+        if (initialize) {
+            downloadManager.addListener(new DownloadManagerAdapter() {
+                @Override
+                public void stateChanged(DownloadManager manager, int state) {
+                    if (state == DownloadManager.STATE_READY) {
+                        manager.startDownload();
+                    }
 
-                if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue() || (TorrentUtil.isHandpicked(manager) && !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue())) {
-                    if (manager.getAssumedComplete()) {
-                        if (TorrentUtil.isStopable(manager)) {
-                            TorrentUtil.stop(manager);
+                    if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue() || (TorrentUtil.isHandpicked(manager) && !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue())) {
+                        if (manager.getAssumedComplete()) {
+                            if (TorrentUtil.isStopable(manager)) {
+                                TorrentUtil.stop(manager);
+                            }
                         }
                     }
-                }
 
-                if (manager.getAssumedComplete() && iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(manager.getSaveLocation())) {
-                    if ((OSUtils.isMacOSX() || OSUtils.isWindows())) {
-                        iTunesMediator.instance().scanForSongs(manager.getSaveLocation());
+                    if (manager.getAssumedComplete() && iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(manager.getSaveLocation())) {
+                        if ((OSUtils.isMacOSX() || OSUtils.isWindows())) {
+                            iTunesMediator.instance().scanForSongs(manager.getSaveLocation());
+                        }
+                    }
+
+                    if (manager.getAssumedComplete() && !LibraryMediator.instance().isScanned(manager.hashCode())) {
+                        LibraryMediator.instance().scan(manager.hashCode(), manager.getSaveLocation());
+                    }
+
+                    //if you have to hide seeds, do so.
+                    if (triggerFilter && state == DownloadManager.STATE_SEEDING) {
+                        GUIMediator.safeInvokeLater(new Runnable() {
+                            public void run() {
+                                BTDownloadMediator.instance().updateTableFilters();
+                            }
+                        });
                     }
                 }
-
-                if (manager.getAssumedComplete() && !LibraryMediator.instance().isScanned(manager.hashCode())) {
-                    LibraryMediator.instance().scan(manager.hashCode(), manager.getSaveLocation());
-                }
-
-                //if you have to hide seeds, do so.
-                if (triggerFilter && state == DownloadManager.STATE_SEEDING) {
-                    GUIMediator.safeInvokeLater(new Runnable() {
-                        public void run() {
-                            BTDownloadMediator.instance().updateTableFilters();
-                        }
-                    });
-                }
-            }
-        });
+            });
+        }
 
         if (initialize) {
             if (downloadManager.getState() != DownloadManager.STATE_STOPPED) {
                 downloadManager.initialize();
             }
         } else {
-//            if (TorrentUtil.isStartable(downloadManager)) {
-//                downloadManager.requestAssumedCompleteMode();
-//                TorrentUtil.start(downloadManager);
-//            }
+            //            if (TorrentUtil.isStartable(downloadManager)) {
+            //                downloadManager.requestAssumedCompleteMode();
+            //                TorrentUtil.start(downloadManager);
+            //            }
         }
 
         if (CommonUtils.isPortable()) {
