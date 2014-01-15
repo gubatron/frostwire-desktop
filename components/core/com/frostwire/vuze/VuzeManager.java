@@ -87,7 +87,9 @@ public final class VuzeManager {
             }
         });
 
-        oldTester.destroy();
+        if (oldTester != null) {
+            oldTester.destroy();
+        }
 
         new ActivityMonitor().start();
     }
