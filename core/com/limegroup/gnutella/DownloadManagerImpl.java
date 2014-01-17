@@ -25,6 +25,8 @@ import org.gudy.azureus2.core3.global.GlobalManager;
 import org.limewire.util.CommonUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
+import com.aelitis.azureus.core.AzureusCoreFactory;
+import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.AzureusStarter;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
@@ -32,7 +34,6 @@ import com.limegroup.gnutella.settings.UpdateSettings;
 public class DownloadManagerImpl implements DownloadManager {
 
     private static final Log LOG = LogFactory.getLog(DownloadManagerImpl.class);
-
 
     private final ActivityCallback activityCallback;
 
@@ -46,11 +47,13 @@ public class DownloadManagerImpl implements DownloadManager {
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#postGuiInit()
-     */
     public void loadSavedDownloadsAndScheduleWriting() {
-        loadTorrentDownloads();
+        AzureusCoreFactory.addCoreRunningListener(new AzureusCoreRunningListener() {
+            @Override
+            public void azureusCoreRunning(AzureusCore core) {
+                loadTorrentDownloads();
+            }
+        });
     }
 
     /**
@@ -81,13 +84,13 @@ public class DownloadManagerImpl implements DownloadManager {
                 LOG.info("Update download: " + downloadManager.getSaveLocation());
                 continue;
             }
-            
+
             if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
                 if (downloadManager.getAssumedComplete()) {
                     downloadManager.pause();
                 }
             }
-            
+
             if (CommonUtils.isPortable()) {
                 updateDownloadManagerPortableSaveLocation(downloadManager);
             }
@@ -116,7 +119,7 @@ public class DownloadManagerImpl implements DownloadManager {
                 }
             }
         }
-        
+
         if (hadToPauseIt) {
             downloadManager.resume();
         }

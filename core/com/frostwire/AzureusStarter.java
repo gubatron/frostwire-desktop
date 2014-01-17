@@ -24,6 +24,8 @@ import java.util.concurrent.CountDownLatch;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
+import org.gudy.azureus2.plugins.PluginManager;
+import org.gudy.azureus2.plugins.PluginManagerDefaults;
 import org.limewire.util.CommonUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
@@ -97,6 +99,8 @@ public final class AzureusStarter {
         System.setProperty("azureus.loadplugins", "0"); // disable third party azureus plugins
         System.setProperty("azureus.config.path", azureusUserPath.getAbsolutePath());
         System.setProperty("azureus.install.path", azureusUserPath.getAbsolutePath());
+        
+        disableDefaultPlugins();
 
         if (!AzureusCoreFactory.isCoreAvailable()) {
             //This does work
@@ -258,5 +262,22 @@ public final class AzureusStarter {
                 COConfigurationManager.setParameter("Max.Peer.Connections.Total", connections_global);
             }
         }
+    }
+    
+    private static void disableDefaultPlugins() {
+        PluginManagerDefaults pmd = PluginManager.getDefaults();
+
+        pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_START_STOP_RULES, false);
+        pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_REMOVE_RULES, false);
+        pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_SHARE_HOSTER, false);
+        pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_DEFAULT_TRACKER_WEB, false);
+
+        pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_PLUGIN_UPDATE_CHECKER, false);
+        pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_CORE_UPDATE_CHECKER, false);
+        pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_CORE_PATCH_CHECKER, false);
+        pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_PLATFORM_CHECKER, false);
+
+        pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_BUDDY, false);
+        pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_RSS, false);
     }
 }

@@ -1,0 +1,15 @@
+- org.gudy.azureus2.core3.security.impl.SESecurityManagerImpl.exit_vm_permitted = true
+Avoids Security Exception on shutdown.
+
+- org.gudy.azureus2.core3.security.impl.SESecurityManagerImpl.installSecurityManager()
+Make this function return early. Or not invoke it at all for it will consume the Transferable
+objects in your external Drag and Drops.
+
+- use "org.minicastle.jce.provider.BouncyCastleProvider" in org.gudy.azureus2.core3.security.impl.SESecurityManagerImpl 
+
+-  && !filename.toLowerCase().endsWith(".dat" )){
+//TorrentUtils.setObtainedFrom( file, original_url );
+Fix in TorrentDownloaderImpl
+
+- Fix related to cling and http handler, check
+org.gudy.azureus2.core3.util.protocol.http

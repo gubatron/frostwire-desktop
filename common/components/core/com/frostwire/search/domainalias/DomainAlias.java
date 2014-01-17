@@ -135,7 +135,7 @@ public class DomainAlias {
     @Override
     public boolean equals(Object obj) {
         DomainAlias other = (DomainAlias) obj;
-        return this.original.equals(other.original) && this.alias.equals(other.alias);
+        return other!=null && this.original.equals(other.original) && this.alias.equals(other.alias);
     }
 
     @Override

@@ -54,6 +54,7 @@ import com.frostwire.search.archiveorg.ArchiveorgCrawledSearchResult;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ApplicationHeader;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -196,10 +197,14 @@ public final class SearchMediator {
         }
 
         long token = newSearchToken();
-        addResultTab(token, info);
-
+        SearchResultMediator resultTab = addResultTab(token, info);
+        
         performSearch(token, info.getQuery());
 
+        if (info.getTitle().startsWith("youtube:")) {
+            resultTab.selectSchemaBoxByMediaType(NamedMediaType.getFromMediaType(MediaType.getVideoMediaType()));
+        }
+        
         return token;
     }
 

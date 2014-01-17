@@ -411,7 +411,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
                         }
                         if (dir.equals(torrentDataDirFile)) {
                             search(dir, ignore, LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
-                        } else if (dir.equals(LibrarySettings.USER_MUSIC_FOLDER) && !_mtsfdh.getMediaType().equals(MediaType.getAudioMediaType())) {
+                        } else if (dir.equals(LibrarySettings.USER_MUSIC_FOLDER.getValue()) && !_mtsfdh.getMediaType().equals(MediaType.getAudioMediaType())) {
                             continue;
                         } else {
                             search(dir, new HashSet<File>(), LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());

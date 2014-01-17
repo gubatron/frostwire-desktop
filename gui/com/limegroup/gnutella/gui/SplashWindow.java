@@ -2,8 +2,10 @@ package com.limegroup.gnutella.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -13,6 +15,8 @@ import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JWindow;
+
+import org.limewire.util.OSUtils;
 
 /**
  * Window that displays the splash screen.  This loads the splash screen
@@ -53,7 +57,14 @@ public final class SplashWindow {
     
     private void initialize() {
         glassPane = new StatusComponent(15);
-        splashLabel = new JLabel();
+        splashLabel = new JLabel() {
+            @Override
+            public void paint(Graphics g) {
+                super.paint(g);
+                paintOSIcons(g);
+            }
+        };
+        
         splashWindow = new JWindow();
         
         glassPane.setProgressPreferredSize(new Dimension(400, 17));
@@ -90,6 +101,26 @@ public final class SplashWindow {
 
         splashWindow.setGlassPane(glassPane);
         splashWindow.pack();
+    }
+    
+    private void paintOSIcons(Graphics g) {
+        try {
+            paintOSIcon("windows",OSUtils.isWindows(),10,10,g); //+33px to the right each. (icons are 28x28)
+            paintOSIcon("android",false,43,10,g);
+            paintOSIcon("mac",OSUtils.isMacOSX(),76,10,g);
+            paintOSIcon("linux",OSUtils.isLinux(),109,10,g);
+        } catch (Throwable t){
+            t.printStackTrace();
+        }
+    }
+    
+    private void paintOSIcon(String osName, boolean on, int x, int y, Graphics g) throws Throwable {
+        String prefix = "org/limewire/gui/images/";
+        String suffix = "_desktop_splash.png";
+        String on_off = on ? "on": "off";
+        URL macIconURL = ClassLoader.getSystemResource(prefix + osName + "_" + on_off + suffix);
+        BufferedImage img = ImageIO.read(macIconURL);
+        g.drawImage(img, x, y, null);
     }
     
     /**

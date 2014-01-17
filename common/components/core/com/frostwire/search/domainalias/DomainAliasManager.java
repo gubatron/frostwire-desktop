@@ -31,9 +31,10 @@ import com.frostwire.search.SearchPerformer;
  * a single domain.
  * 
  * @author gubatron
+ * @author aldenml
  *
  */
-public class DomainAliasManager {
+public final class DomainAliasManager {
 
     private final String defaultDomain;
 
@@ -197,20 +198,17 @@ public class DomainAliasManager {
             List<DomainAlias> toRemove = new ArrayList<DomainAlias>();
 
             final DomainAliasPongListener pongListener = createPongListener(performer);
-            //reviveSearchTask(performer, pongListener);
 
-            synchronized (aliases) {
-                for (DomainAlias alias : aliases.get()) {
-                    if (alias.getFailedAttempts() <= 3) {
-                        alias.checkStatus(pongListener);
-                    } else {
-                        System.out.println("Removing alias " + alias.alias);
-                        toRemove.add(alias);
-                    }
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                    }
+            for (DomainAlias alias : aliases.get()) {
+                if (alias.getFailedAttempts() <= 3) {
+                    alias.checkStatus(pongListener);
+                } else {
+                    System.out.println("Removing alias " + alias.alias);
+                    toRemove.add(alias);
+                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
                 }
             }
 

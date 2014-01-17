@@ -85,7 +85,7 @@ public class CommonUtils {
 
     public static final String META_SETTINGS_KEY_ROOT_FOLDER_POSIX = "user.settings.root_folder.posix";
 
-    private static Boolean IS_PORTABLE = null;
+    //private static Boolean IS_PORTABLE = null;
 
     /**
      * Several arrays of illegal characters on various operating systems.
@@ -678,11 +678,12 @@ public class CommonUtils {
     }
 
     public static boolean isPortable() {
-        if (IS_PORTABLE == null) {
-            Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
-            IS_PORTABLE = !metaConfiguration.isEmpty();
-        }
-        return IS_PORTABLE;
+        // aldenml: Until we fully implement it
+//        if (IS_PORTABLE == null) {
+//            Properties metaConfiguration = CommonUtils.loadMetaConfiguration();
+//            IS_PORTABLE = !metaConfiguration.isEmpty();
+//        }
+        return false;//IS_PORTABLE;
     }
 
     public static void closeQuietly(Closeable closeable) {

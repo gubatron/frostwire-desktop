@@ -880,7 +880,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     public void addDownloadManager(DownloadManager mgr) {
         try {
-            add(BTDownloadCreator.createDownload(mgr, true));
+            add(BTDownloadCreator.createDownload(mgr, true, true));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -905,15 +905,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             DATA_MODEL.sort(BTDownloadDataLine.DATE_CREATED_INDEX);
         }
     }
-
-//        public void openYouTubeVideoUrl(final String videoUrl) {
-//            GUIMediator.safeInvokeLater(new Runnable() {
-//                public void run() {
-//                    BTDownload downloader = new YouTubeVideoUrlDownload(videoUrl);
-//                    add(downloader);
-//                }
-//            });
-//        }
 
     public void openSoundcloudTrackUrl(final String trackUrl, final String title, final SoundcloudSearchResult sr) {
         GUIMediator.safeInvokeLater(new Runnable() {

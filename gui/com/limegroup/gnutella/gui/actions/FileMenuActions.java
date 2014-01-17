@@ -221,7 +221,7 @@ public final class FileMenuActions {
             public void actionPerformed(ActionEvent a) {
                 if (openMagnetOrTorrent(PATH_FIELD.getText(),FileMenuActions.ActionInvocationSource.FROM_FILE_MENU)) {
                     dismissDialog();
-                } if (PATH_FIELD.getText().contains("youtube.com/watch?v=")) {
+                } if (PATH_FIELD.getText().contains("youtube.com/watch?")) {
                     GUIMediator.instance().startSearch(PATH_FIELD.getText());
                     dismissDialog();
                 } else {

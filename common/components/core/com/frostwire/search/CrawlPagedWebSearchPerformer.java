@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.frostwire.search.domainalias.DomainAliasManager;
+import com.frostwire.util.OSUtils;
 
 /**
  * @author gubatron
@@ -35,7 +36,7 @@ public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResu
     private static final Logger LOG = LoggerFactory.getLogger(CrawlPagedWebSearchPerformer.class);
 
     private static final int DEFAULT_CRAWL_TIMEOUT = 10000; // 10 seconds
-    private static final int DEFAULT_MAGNET_DOWNLOAD_TIMEOUT = 4000; // 4 seconds
+    private static final int DEFAULT_MAGNET_DOWNLOAD_TIMEOUT = OSUtils.isAndroid() ? 4000 : 20000; // 4 seconds for android, 20 seconds for desktop
 
     private static CrawlCache cache = null;
     private static MagnetDownloader magnetDownloader = null;

@@ -39,11 +39,6 @@ public interface ActivityCallback {
     public void handleAddressStateChanged();
 
     /**
-     * Notification that the file manager is beginning loading.
-     */
-    public void fileManagerLoading();
-
-    /**
      * Notification that an update became available.
      */
     public void updateAvailable(UpdateInformation info);

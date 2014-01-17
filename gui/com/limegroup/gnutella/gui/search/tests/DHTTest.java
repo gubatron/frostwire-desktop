@@ -41,8 +41,9 @@ public class DHTTest {
         }
 
         @Override
-        public void diversified(String desc) {
+        public boolean diversified(String desc) {
             System.out.println("diversified desc: " + desc);
+            return false;
         }
 
         @Override

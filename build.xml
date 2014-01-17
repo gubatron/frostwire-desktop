@@ -68,9 +68,10 @@
 	    <fileset dir="${limewire.home}/gui" includes="irc/**/*" excludes="irc/**/*.java"/>
 	    <fileset dir="${limewire.home}/gui" includes="org/**/*" excludes="org/**/*.java"/>
 	    <fileset dir="${limewire.home}/gui" includes="net/**/*" excludes="org/**/*.java"/>
-	    <manifest>
+	    	<fileset dir="${limewire.home}/common/vuze/azureus2/src" includes="**/*.properties" excludes="**/*.java"/>
+		<manifest>
 	      <attribute name="Main-Class" value="com.limegroup.gnutella.gui.Main" />
-	      <attribute name="Class-Path" value=". ${classpath} lw-alexandria.jar lw-azureus.jar lw-common.jar lw-resources.jar lw-setting.jar lw-jdownloader.jar fwtips.jar h2-1.3.164.jar gson-1.4.jar"/>
+	      <attribute name="Class-Path" value=". ${classpath} lw-alexandria.jar lw-common.jar lw-resources.jar lw-setting.jar lw-jdownloader.jar fwtips.jar h2-1.3.164.jar gson-1.4.jar"/>
 	    </manifest>
 	  </jar>
 	</target>

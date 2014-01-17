@@ -121,6 +121,11 @@ public class NamedMediaType implements IconAndNameHolder, Comparable<NamedMediaT
         }
         return _name.equals(((NamedMediaType) obj)._name);
     }
+    
+    @Override
+    public int hashCode() {
+        return _mediaType.hashCode() + _name.hashCode() + _icon.hashCode();
+    }
 
     /**
      * Retrieves the named media type for the specified schema uri.

@@ -8,11 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="src" output="components/setting/build/classes" path="components/setting/src/main/java"/>
 	<classpathentry kind="src" path="components/osx_stub/src/main/java"/>
-	<classpathentry kind="src" path="components/azureus/src/main/java">
-		<attributes>
-			<attribute name="ignore_optional_problems" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="src" path="components/alexandria/src/main/java"/>
 	<classpathentry kind="src" path="common/components/json"/>
 	<classpathentry kind="src" path="common/components/xml">
@@ -41,6 +36,21 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="common/components/jdownloader"/>
+	<classpathentry kind="src" path="common/components/minicastle">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**/bouncycastle/**|**/jman/**|**/swing/**|**/swt/**|**/systray/**|**/tests/**" kind="src" path="common/vuze/azureus2/src">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**/jman/**|**/swing/**|**/swt/**|**/systray/**|**/tests/**" kind="src" path="common/vuze/azureus3/src">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="common/components/core"/>
 	<classpathentry excluding="build.xml" kind="src" path="core">
 		<attributes>
@@ -61,7 +71,6 @@
 	<classpathentry kind="lib" path="lib/jars/httpcore-4.0.1.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/h2-1.3.164.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/lucene-3.5.0.jar" sourcepath="lib/jars-src"/>
-	<classpathentry kind="lib" path="lib/jars/dnsjava-2.1.3.jar"/>
 	<classpathentry kind="lib" path="lib/jars/metadata-extractor-2.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/jars/fwtips.jar" sourcepath="/frostwire-tips/src/java"/>
 	<classpathentry kind="lib" path="lib/jars/mp4parser.jar" sourcepath="lib/jars-src/mp4parser"/>

@@ -45,7 +45,7 @@ public final class FrostWireUtils {
 	private static final String FROSTWIRE_VERSION = "5.7.0";
 	
 	/** Build number for the current version, gets reset to 1 on every version bump*/
-	private static final int BUILD_NUMBER = -1;
+	private static final int BUILD_NUMBER = 1;
 
 	/**
 	 * Make sure the constructor can never be called.
