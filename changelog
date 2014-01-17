@@ -1,9 +1,10 @@
 frostwire (5.7.0) stable; urgency=high
-  * New Torrents.fm meta search.
+  * Updated BitTorrent engine from Azureus/Vuze project.
+  * New Torrents.fm meta search integration.
   * Brings back cloud downloads by entering url on search box or open dialog.
   * Chat Tab gone. Chat button now points to http://frostwire.com/chat. 
     Faster startup time.
- -- FrostWire Team <contact@frostwire.com>  Tue, 31 Dec 2013 00:31:48 -0500
+ -- FrostWire Team <contact@frostwire.com>  Fri, 17 Jan 2013 00:21:30 -0500
 
 frostwire (5.6.9) stable; urgency=high
   * Insanely faster cloud search results.
