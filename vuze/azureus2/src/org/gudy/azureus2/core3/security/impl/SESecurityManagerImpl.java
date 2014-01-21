@@ -128,7 +128,7 @@ SESecurityManagerImpl
 	protected Map	password_handlers		= new HashMap();
 	protected Map	certificate_handlers	= new HashMap();
 	
-	protected boolean	 exit_vm_permitted	= false;
+	protected boolean	 exit_vm_permitted	= true;
 	
 	private	AzureusSecurityManager	my_sec_man;
 	
@@ -176,7 +176,7 @@ SESecurityManagerImpl
 		String[]	providers = 
 			{ 	"com.sun.net.ssl.internal.ssl.Provider", 
 				"org.metastatic.jessie.provider.Jessie",
-				"org.bouncycastle.jce.provider.BouncyCastleProvider"};
+				"org.minicastle.jce.provider.BouncyCastleProvider"};
 			
 		String	provider = null;
 		
@@ -350,6 +350,10 @@ SESecurityManagerImpl
 	protected void
 	installSecurityManager()
 	{
+	    if (true) {
+            return;
+	    }
+	    
 		if ( Constants.isAndroid ){
 			
 			// can't do this
