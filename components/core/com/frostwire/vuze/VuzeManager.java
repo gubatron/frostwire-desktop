@@ -19,10 +19,9 @@
 package com.frostwire.vuze;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
+import org.gudy.azureus2.core3.util.SystemTime;
 import org.gudy.azureus2.plugins.PluginManager;
 import org.gudy.azureus2.plugins.PluginManagerDefaults;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.dht.speed.DHTSpeedTester;
@@ -38,18 +37,18 @@ import com.frostwire.util.OSUtils;
  */
 public final class VuzeManager {
 
-    private static final Logger LOG = LoggerFactory.getLogger(VuzeManager.class);
-
     private final AzureusCore core;
 
     public VuzeManager(AzureusCore core) {
         this.core = core;
-
-        COConfigurationManager.setParameter("network.max.simultaneous.connect.attempts", 1);
-
+       
         disableDefaultPlugins();
-
+        
         if (OSUtils.isAndroid()) {
+            SystemTime.TIME_GRANULARITY_MILLIS = 300;
+            
+            COConfigurationManager.setParameter("network.max.simultaneous.connect.attempts", 1);
+            
             disableSpeedManager();
         }
     }
