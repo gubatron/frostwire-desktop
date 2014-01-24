@@ -25,6 +25,9 @@ import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiManager.MulticastLock;
@@ -36,6 +39,8 @@ import android.net.wifi.WifiManager.MulticastLock;
  *
  */
 public final class LocalPeerManagerImpl implements LocalPeerManager {
+
+    private static final Logger LOG = LoggerFactory.getLogger(LocalPeerManagerImpl.class);
 
     private static final String LOCK_NAME = "FW_LOCAL_PEER_MANAGER";
     private static final String SERVICE_TYPE = "_workstation._tcp.local.";
@@ -71,40 +76,46 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
 
     @Override
     public void start(Context ctx) {
-        WifiManager wifi = (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
-
-        lock = wifi.createMulticastLock(LOCK_NAME);
-        lock.setReferenceCounted(true);
-
-        lock.acquire();
-
         try {
+            WifiManager wifi = (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
+
+            lock = wifi.createMulticastLock(LOCK_NAME);
+            lock.setReferenceCounted(true);
+
+            lock.acquire();
+
             InetAddress address = getInetAddress(wifi);
 
             jmdns = JmDNS.create(address);
             jmdns.addServiceListener(SERVICE_TYPE, serviceListener);
             jmdns.registerService(serviceInfo);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Throwable e) {
+            LOG.error("Unable to start local peer manager", e);
         }
     }
 
     @Override
     public void stop() {
-        if (jmdns != null) {
-            jmdns.removeServiceListener(SERVICE_TYPE, serviceListener);
-            jmdns.unregisterAllServices();
-            try {
-                jmdns.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            jmdns = null;
-        }
+        try {
+            if (jmdns != null) {
+                jmdns.removeServiceListener(SERVICE_TYPE, serviceListener);
+                jmdns.unregisterAllServices();
 
-        if (lock != null) {
-            lock.release();
+                try {
+                    jmdns.close();
+                } catch (IOException e) {
+                    LOG.error("Error closing JmDNS", e);
+                }
+
+                jmdns = null;
+            }
+
+            if (lock != null) {
+                lock.release();
+            }
+        } catch (Throwable e) {
+            LOG.error("Error stopping local peer manager", e);
         }
     }
 
