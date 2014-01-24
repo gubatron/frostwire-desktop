@@ -23,9 +23,11 @@ package com.frostwire.localpeer;
  * @author aldenml
  *
  */
-public interface LocalPeerManager {
+public interface MulticastLock {
 
-    public void start();
+    public void acquire();
 
-    public void stop();
+    public void release();
+
+    public boolean isHeld();
 }

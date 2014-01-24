@@ -28,10 +28,6 @@ import javax.jmdns.ServiceListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import android.content.Context;
-import android.net.wifi.WifiManager;
-import android.net.wifi.WifiManager.MulticastLock;
-
 /**
  * 
  * @author gubatron
@@ -42,18 +38,22 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
 
     private static final Logger LOG = LoggerFactory.getLogger(LocalPeerManagerImpl.class);
 
-    private static final String LOCK_NAME = "FW_LOCAL_PEER_MANAGER";
     private static final String SERVICE_TYPE = "_workstation._tcp.local.";
+
+    private final MulticastLock lock;
+    private final InetAddress address;
 
     private final ServiceListener serviceListener;
     private final ServiceInfo serviceInfo;
 
-    private MulticastLock lock;
     private JmDNS jmdns;
 
-    public LocalPeerManagerImpl(int port) {
+    public LocalPeerManagerImpl(MulticastLock lock, InetAddress address, int port) {
 
-        serviceListener = new ServiceListener() {
+        this.lock = lock;
+        this.address = address;
+
+        this.serviceListener = new ServiceListener() {
 
             @Override
             public void serviceResolved(ServiceEvent ev) {
@@ -71,20 +71,13 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
             }
         };
 
-        serviceInfo = ServiceInfo.create("_fw_local_peer._tcp.local.", "FrostWireLocalPeer", port, "frostwire local peer service");
+        this.serviceInfo = ServiceInfo.create("_fw_local_peer._tcp.local.", "FrostWireLocalPeer", port, "frostwire local peer service");
     }
 
     @Override
-    public void start(Context ctx) {
+    public void start() {
         try {
-            WifiManager wifi = (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
-
-            lock = wifi.createMulticastLock(LOCK_NAME);
-            lock.setReferenceCounted(true);
-
             lock.acquire();
-
-            InetAddress address = getInetAddress(wifi);
 
             jmdns = JmDNS.create(address);
             jmdns.addServiceListener(SERVICE_TYPE, serviceListener);
@@ -118,11 +111,5 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
         } catch (Throwable e) {
             LOG.error("Error stopping local peer manager", e);
         }
-    }
-
-    private InetAddress getInetAddress(WifiManager wifi) throws IOException {
-        int intaddr = wifi.getConnectionInfo().getIpAddress();
-        byte[] byteaddr = new byte[] { (byte) (intaddr & 0xff), (byte) (intaddr >> 8 & 0xff), (byte) (intaddr >> 16 & 0xff), (byte) (intaddr >> 24 & 0xff) };
-        return InetAddress.getByAddress(byteaddr);
     }
 }
