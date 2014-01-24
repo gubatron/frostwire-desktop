@@ -51,7 +51,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
     private MulticastLock lock;
     private JmDNS jmdns;
 
-    public LocalPeerManagerImpl() {
+    public LocalPeerManagerImpl(int port) {
 
         serviceListener = new ServiceListener() {
 
@@ -71,7 +71,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
             }
         };
 
-        serviceInfo = ServiceInfo.create("_fw_local_peer._tcp.local.", "FrostWireLocalPeer", 0, "frostwire local peer service");
+        serviceInfo = ServiceInfo.create("_fw_local_peer._tcp.local.", "FrostWireLocalPeer", port, "frostwire local peer service");
     }
 
     @Override
@@ -88,6 +88,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
 
             jmdns = JmDNS.create(address);
             jmdns.addServiceListener(SERVICE_TYPE, serviceListener);
+
             jmdns.registerService(serviceInfo);
 
         } catch (Throwable e) {
