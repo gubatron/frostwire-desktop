@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-package com.frostwire.search;
-
-import java.util.concurrent.TimeUnit;
+package com.frostwire.localpeer;
 
 /**
  * 
@@ -25,15 +23,11 @@ import java.util.concurrent.TimeUnit;
  * @author aldenml
  *
  */
-public interface SearchManager {
+public interface MulticastLock {
 
-    public void registerListener(SearchManagerListener listener);
+    public void acquire();
 
-    public void perform(SearchPerformer performer);
+    public void release();
 
-    public void stop();
-
-    public void stop(long token);
-
-    public boolean shutdown(long timeout, TimeUnit unit);
+    public boolean isHeld();
 }
