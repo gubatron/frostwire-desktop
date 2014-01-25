@@ -23,12 +23,9 @@ package com.frostwire.localpeer;
  * @author aldenml
  *
  */
-public final class LocalPeer {
+public interface LocalPeerManagerListener {
 
-    public String uuid;
-    public int listeningPort;
-    public int numSharedFiles;
-    public String nickname;
-    public int deviceMajorType;
-    public String clientVersion;
+    public void peerResolved(LocalPeer peer);
+
+    public void peerRemoved(LocalPeer peer);
 }

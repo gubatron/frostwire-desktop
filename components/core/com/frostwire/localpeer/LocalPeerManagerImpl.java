@@ -19,6 +19,8 @@ package com.frostwire.localpeer;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
@@ -28,7 +30,11 @@ import javax.jmdns.ServiceListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.frostwire.util.JsonUtils;
+
 /**
+ * 
+ * Not thread safe.
  * 
  * @author gubatron
  * @author aldenml
@@ -40,47 +46,49 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
 
     private static final String SERVICE_TYPE = "_fw_local_peer._tcp.local.";
     private static final String SERVICE_NAME = "TESTFROMANDROID"; // check if this is the nickname
-    private static final String SERVICE_TEXT = "FrostWire local peer service";
+    private static final String PEER_PROPERTY = "peer";
 
     private final MulticastLock lock;
     private final InetAddress address;
+    private final LocalPeer localPeer;
 
     private final ServiceListener serviceListener;
     private final ServiceInfo serviceInfo;
 
     private JmDNS jmdns;
+    private LocalPeerManagerListener listener;
 
-    public LocalPeerManagerImpl(MulticastLock lock, InetAddress address, int port) {
+    public LocalPeerManagerImpl(MulticastLock lock, InetAddress address, int port, LocalPeer localPeer) {
 
         this.lock = lock;
         this.address = address;
+        this.localPeer = localPeer;
 
-        this.serviceListener = new ServiceListener() {
+        this.serviceListener = new JmDNSServiceListener();
 
-            @Override
-            public void serviceResolved(ServiceEvent event) {
-                System.out.println("Service resolved: " + event.getInfo().getQualifiedName() + " port:" + event.getInfo().getPort());
-            }
+        this.serviceInfo = createService(localPeer);
+    }
 
-            @Override
-            public void serviceRemoved(ServiceEvent event) {
-                System.out.println("Service removed: " + event.getName());
-            }
+    public LocalPeer getLocalPeer() {
+        return localPeer;
+    }
 
-            @Override
-            public void serviceAdded(ServiceEvent event) {
-                if (jmdns != null) {
-                    jmdns.requestServiceInfo(event.getType(), event.getName(), 1);
-                }
-            }
-        };
+    public LocalPeerManagerListener getListener() {
+        return listener;
+    }
 
-        this.serviceInfo = ServiceInfo.create(SERVICE_TYPE, SERVICE_NAME, port, SERVICE_TEXT);
+    public void setListener(LocalPeerManagerListener listener) {
+        this.listener = listener;
     }
 
     @Override
     public void start() {
         try {
+            if (jmdns != null) {
+                LOG.warn("JmDNS already working, review the logic");
+                stop();
+            }
+
             lock.acquire();
 
             jmdns = JmDNS.create(address);
@@ -114,6 +122,43 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
             }
         } catch (Throwable e) {
             LOG.error("Error stopping local peer manager", e);
+        }
+    }
+
+    private ServiceInfo createService(LocalPeer peer) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put(PEER_PROPERTY, JsonUtils.toJson(peer));
+        return ServiceInfo.create(SERVICE_TYPE, SERVICE_NAME, peer.listeningPort, 0, 0, false, map);
+    }
+
+    private final class JmDNSServiceListener implements ServiceListener {
+
+        @Override
+        public void serviceResolved(ServiceEvent event) {
+            if (listener != null) {
+                LocalPeer peer = getPeer(event);
+                listener.peerResolved(peer);
+            }
+        }
+
+        @Override
+        public void serviceRemoved(ServiceEvent event) {
+            if (listener != null) {
+                LocalPeer peer = getPeer(event);
+                listener.peerRemoved(peer);
+            }
+        }
+
+        @Override
+        public void serviceAdded(ServiceEvent event) {
+            if (jmdns != null) {
+                jmdns.requestServiceInfo(event.getType(), event.getName(), 1);
+            }
+        }
+
+        private LocalPeer getPeer(ServiceEvent event) {
+            String json = event.getInfo().getPropertyString(PEER_PROPERTY);
+            return JsonUtils.toObject(json, LocalPeer.class);
         }
     }
 }
