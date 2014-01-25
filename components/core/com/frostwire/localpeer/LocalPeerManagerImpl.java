@@ -38,7 +38,9 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
 
     private static final Logger LOG = LoggerFactory.getLogger(LocalPeerManagerImpl.class);
 
-    private static final String SERVICE_TYPE = "_workstation._tcp.local.";
+    private static final String SERVICE_TYPE = "_fw_local_peer._tcp.local.";
+    private static final String SERVICE_NAME = "TESTFROMANDROID"; // check if this is the nickname
+    private static final String SERVICE_TEXT = "FrostWire local peer service";
 
     private final MulticastLock lock;
     private final InetAddress address;
@@ -56,11 +58,13 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
         this.serviceListener = new ServiceListener() {
 
             @Override
-            public void serviceResolved(ServiceEvent ev) {
+            public void serviceResolved(ServiceEvent event) {
+                System.out.println("Service resolved: " + event.getInfo().getQualifiedName() + " port:" + event.getInfo().getPort());
             }
 
             @Override
-            public void serviceRemoved(ServiceEvent ev) {
+            public void serviceRemoved(ServiceEvent event) {
+                System.out.println("Service removed: " + event.getName());
             }
 
             @Override
@@ -71,7 +75,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
             }
         };
 
-        this.serviceInfo = ServiceInfo.create("_fw_local_peer._tcp.local.", "FrostWireLocalPeer", port, "frostwire local peer service");
+        this.serviceInfo = ServiceInfo.create(SERVICE_TYPE, SERVICE_NAME, port, SERVICE_TEXT);
     }
 
     @Override
