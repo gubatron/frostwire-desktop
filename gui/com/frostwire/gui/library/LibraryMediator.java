@@ -95,7 +95,7 @@ public class LibraryMediator {
 
     private AbstractLibraryTableMediator<?, ?, ?> currentMediator;
 
-    private DeviceDiscoveryClerk clerk;
+    private final DeviceDiscoveryClerk clerk;
     private HttpServerManager httpServerManager;
 
     /**

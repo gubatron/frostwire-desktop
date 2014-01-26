@@ -20,6 +20,7 @@ package com.frostwire.gui.library;
 
 import java.net.InetAddress;
 import java.net.URI;
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,9 +32,13 @@ import org.apache.commons.logging.LogFactory;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.JsonEngine;
+import com.frostwire.core.Constants;
 import com.frostwire.gui.library.Device.OnActionFailedListener;
 import com.frostwire.gui.upnp.PingInfo;
 import com.frostwire.gui.upnp.UPnPManager;
+import com.frostwire.localpeer.DesktopMulticastLock;
+import com.frostwire.localpeer.LocalPeerManager;
+import com.frostwire.localpeer.LocalPeerManagerImpl;
 
 /**
  * @author gubatron
@@ -44,13 +49,18 @@ public class DeviceDiscoveryClerk {
 
     private static final Log LOG = LogFactory.getLog(DeviceDiscoveryClerk.class);
 
+    private final LocalPeerManager peerManager;
+
     private Map<String, Device> deviceCache;
 
     private JsonEngine jsonEngine;
 
     public DeviceDiscoveryClerk() {
+        this.peerManager = new LocalPeerManagerImpl(new DesktopMulticastLock(), getMulticastAddress(), Constants.EXTERNAL_CONTROL_LISTENING_PORT);
         deviceCache = Collections.synchronizedMap(new HashMap<String, Device>());
         jsonEngine = new JsonEngine();
+
+        peerManager.start();
     }
 
     public void handleDeviceState(String key, InetAddress address, int listeningPort, boolean bye, PingInfo pinfo) {
@@ -141,5 +151,13 @@ public class DeviceDiscoveryClerk {
                 UPnPManager.instance().removeRemoteDevice(device.getUdn());
             }
         });
+    }
+
+    private InetAddress getMulticastAddress() {
+        try {
+            return InetAddress.getByName("0.0.0.0");
+        } catch (UnknownHostException e) {
+            return null;
+        }
     }
 }
