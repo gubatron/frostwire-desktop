@@ -32,13 +32,17 @@ import org.apache.commons.logging.LogFactory;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.JsonEngine;
+import com.frostwire.core.ConfigurationManager;
 import com.frostwire.core.Constants;
+import com.frostwire.gui.Librarian;
 import com.frostwire.gui.library.Device.OnActionFailedListener;
 import com.frostwire.gui.upnp.PingInfo;
 import com.frostwire.gui.upnp.UPnPManager;
-import com.frostwire.localpeer.DesktopMulticastLock;
+import com.frostwire.localpeer.LocalPeer;
 import com.frostwire.localpeer.LocalPeerManager;
 import com.frostwire.localpeer.LocalPeerManagerImpl;
+import com.frostwire.localpeer.LocalPeerManagerListener;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * @author gubatron
@@ -56,7 +60,28 @@ public class DeviceDiscoveryClerk {
     private JsonEngine jsonEngine;
 
     public DeviceDiscoveryClerk() {
-        this.peerManager = new LocalPeerManagerImpl(new DesktopMulticastLock(), getMulticastAddress(), Constants.EXTERNAL_CONTROL_LISTENING_PORT);
+        LocalPeer p = new LocalPeer();
+
+        p.uuid = ConfigurationManager.instance().getUUIDString();
+        p.listeningPort = Constants.EXTERNAL_CONTROL_LISTENING_PORT;
+        p.numSharedFiles = Librarian.instance().getNumSharedFiles();
+        p.nickname = ConfigurationManager.instance().getNickname();
+        p.deviceMajorType = Constants.DEVICE_MAJOR_TYPE_DESKTOP;
+        p.clientVersion = FrostWireUtils.getFrostWireVersion();
+
+        this.peerManager = new LocalPeerManagerImpl(p);
+        this.peerManager.setListener(new LocalPeerManagerListener() {
+            
+            @Override
+            public void peerResolved(LocalPeer peer) {
+                System.out.println("Peer found: " + peer.nickname);
+            }
+
+            @Override
+            public void peerRemoved(LocalPeer peer) {
+                System.out.println("Peer removed: " + peer.nickname);
+            }
+        });
         deviceCache = Collections.synchronizedMap(new HashMap<String, Device>());
         jsonEngine = new JsonEngine();
 
@@ -151,13 +176,5 @@ public class DeviceDiscoveryClerk {
                 UPnPManager.instance().removeRemoteDevice(device.getUdn());
             }
         });
-    }
-
-    private InetAddress getMulticastAddress() {
-        try {
-            return InetAddress.getByName("0.0.0.0");
-        } catch (UnknownHostException e) {
-            return null;
-        }
     }
 }
