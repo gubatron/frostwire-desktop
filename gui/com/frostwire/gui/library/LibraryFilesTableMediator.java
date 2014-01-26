@@ -61,7 +61,6 @@ import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
-import com.frostwire.gui.upnp.UPnPManager;
 import com.frostwire.util.MP4Muxer;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
@@ -1233,7 +1232,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 }
             }
 
-            UPnPManager.instance().refreshPing();
+            //UPnPManager.instance().refreshPing();
             UXStats.instance().log(share ? UXAction.WIFI_SHARING_SHARED : UXAction.WIFI_SHARING_UNSHARED);
         }
 

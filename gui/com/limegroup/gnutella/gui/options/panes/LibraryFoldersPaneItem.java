@@ -23,7 +23,6 @@ import com.frostwire.gui.library.AddLibraryDirectoryAction;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.RecursiveLibraryDirectoryPanel;
 import com.frostwire.gui.library.RemoveLibraryDirectoryAction;
-import com.frostwire.gui.upnp.UPnPManager;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -204,7 +203,7 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
 	        Librarian.instance().deleteFolderFilesFromShareTable(folderToUnshare.getAbsolutePath());
 	    }
 	    
-	    UPnPManager.instance().refreshPing();
+	    //UPnPManager.instance().refreshPing();
     }
 
     public boolean isDirty() {

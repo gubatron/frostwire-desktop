@@ -40,8 +40,7 @@ import com.frostwire.HttpFetcherListener;
 import com.frostwire.JsonEngine;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.library.ProgressFileEntity.ProgressFileEntityListener;
-import com.frostwire.gui.upnp.PingInfo;
-import com.frostwire.gui.upnp.UPnPManager;
+import com.frostwire.localpeer.LocalPeer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.util.EncodingUtils;
@@ -76,17 +75,17 @@ public class Device {
     private OnActionFailedListener _listener;
     private long timestamp;
 
-    private PingInfo pingInfo;
+    private LocalPeer pingInfo;
 
     private boolean local;
 
-    public Device(String udn, InetAddress address, int port, Finger finger, PingInfo pinfo) {
+    public Device(String udn, InetAddress address, int port, Finger finger, LocalPeer pinfo) {
         this.udn = udn;
         this._address = address;
         this._port = port;
         this.finger = finger;
         this.pingInfo = pinfo;
-        this.local = udn.equals(UPnPManager.instance().getLocalDevice().getIdentity().getUdn().getIdentifierString());
+        this.local = false;//udn.equals(UPnPManager.instance().getLocalDevice().getIdentity().getUdn().getIdentifierString());
     }
     
     /**

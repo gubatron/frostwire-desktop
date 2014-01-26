@@ -20,7 +20,6 @@ package com.frostwire.gui.library;
 
 import java.net.InetAddress;
 import java.net.URI;
-import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,8 +35,6 @@ import com.frostwire.core.ConfigurationManager;
 import com.frostwire.core.Constants;
 import com.frostwire.gui.Librarian;
 import com.frostwire.gui.library.Device.OnActionFailedListener;
-import com.frostwire.gui.upnp.PingInfo;
-import com.frostwire.gui.upnp.UPnPManager;
 import com.frostwire.localpeer.LocalPeer;
 import com.frostwire.localpeer.LocalPeerManager;
 import com.frostwire.localpeer.LocalPeerManagerImpl;
@@ -71,7 +68,7 @@ public class DeviceDiscoveryClerk {
 
         this.peerManager = new LocalPeerManagerImpl(p);
         this.peerManager.setListener(new LocalPeerManagerListener() {
-            
+
             @Override
             public void peerResolved(LocalPeer peer) {
                 System.out.println("Peer found: " + peer.nickname);
@@ -88,7 +85,7 @@ public class DeviceDiscoveryClerk {
         peerManager.start();
     }
 
-    public void handleDeviceState(String key, InetAddress address, int listeningPort, boolean bye, PingInfo pinfo) {
+    public void handleDeviceState(String key, InetAddress address, int listeningPort, boolean bye, LocalPeer pinfo) {
         if (!bye) {
             retrieveFinger(key, address, listeningPort, pinfo);
         } else {
@@ -99,7 +96,7 @@ public class DeviceDiscoveryClerk {
         }
     }
 
-    private boolean retrieveFinger(final String key, final InetAddress address, int listeningPort, PingInfo pinfo) {
+    private boolean retrieveFinger(final String key, final InetAddress address, int listeningPort, LocalPeer pinfo) {
         try {
             URI uri = new URI("http://" + address.getHostAddress() + ":" + listeningPort + "/finger");
 
@@ -173,7 +170,7 @@ public class DeviceDiscoveryClerk {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 LibraryMediator.instance().handleDeviceStale(device);
-                UPnPManager.instance().removeRemoteDevice(device.getUdn());
+                //UPnPManager.instance().removeRemoteDevice(device.getUdn());
             }
         });
     }

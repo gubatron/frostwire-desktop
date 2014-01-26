@@ -10,27 +10,7 @@
 	<classpathentry kind="src" path="components/osx_stub/src/main/java"/>
 	<classpathentry kind="src" path="components/alexandria/src/main/java"/>
 	<classpathentry kind="src" path="common/components/json"/>
-	<classpathentry kind="src" path="common/components/xml">
-		<attributes>
-			<attribute name="ignore_optional_problems" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="common/components/javax">
-		<attributes>
-			<attribute name="ignore_optional_problems" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="src" path="common/components/apache">
-		<attributes>
-			<attribute name="ignore_optional_problems" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="common/components/seamless">
-		<attributes>
-			<attribute name="ignore_optional_problems" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="common/components/cling">
 		<attributes>
 			<attribute name="ignore_optional_problems" value="true"/>
 		</attributes>
