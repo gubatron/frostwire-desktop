@@ -25,6 +25,10 @@ package com.frostwire.localpeer;
  */
 public interface LocalPeerManager {
 
+    public LocalPeerManagerListener getListener();
+
+    public void setListener(LocalPeerManagerListener listener);
+
     public void start();
 
     public void stop();
