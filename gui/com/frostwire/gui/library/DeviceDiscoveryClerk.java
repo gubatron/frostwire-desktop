@@ -84,6 +84,10 @@ public class DeviceDiscoveryClerk {
 
         peerManager.start();
     }
+    
+    public LocalPeerManager getPeerManager() {
+        return peerManager;
+    }
 
     public void handleDeviceState(String key, InetAddress address, int listeningPort, boolean bye, LocalPeer pinfo) {
         if (!bye) {

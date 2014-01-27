@@ -38,6 +38,7 @@ import com.frostwire.core.providers.ShareFilesDB.Columns;
 import com.frostwire.database.Cursor;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.library.Finger;
+import com.frostwire.gui.library.LibraryMediator;
 
 /**
  * @author gubatron
@@ -295,7 +296,7 @@ public final class Librarian {
                 pathSharingSet.remove(filePath);
 
                 if (refreshPing) {
-                    //UPnPManager.instance().refreshPing();
+                    LibraryMediator.instance().getDeviceDiscoveryClerk().getPeerManager().refresh();
                 }
             }
         };
