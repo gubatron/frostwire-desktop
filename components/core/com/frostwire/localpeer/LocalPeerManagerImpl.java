@@ -43,6 +43,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
 
     private static final Logger LOG = LoggerFactory.getLogger(LocalPeerManagerImpl.class);
 
+    private static final String JMDNS_NAME = "LocalPeerManagerJmDNS";
     private static final String SERVICE_TYPE = "_fw_local_peer._tcp.local.";
     private static final String SERVICE_NAME = "FrostWire Local Peer";
     private static final String PEER_PROPERTY = "peer";
@@ -92,7 +93,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
                 lock.acquire();
             }
 
-            jmdns = JmDNS.create();
+            jmdns = JmDNS.create(JMDNS_NAME);
             jmdns.addServiceListener(SERVICE_TYPE, serviceListener);
 
             jmdns.registerService(serviceInfo);
@@ -126,16 +127,32 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
         }
     }
 
+    @Override
+    public void refresh() {
+        try {
+            if (jmdns != null) {
+                serviceInfo.setText(createProps(localPeer));
+            }
+        } catch (Throwable e) {
+            LOG.error("Error refreshing local peer manager", e);
+        }
+    }
+
     private ServiceInfo createService(LocalPeer peer) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put(PEER_PROPERTY, JsonUtils.toJson(peer));
-        return ServiceInfo.create(SERVICE_TYPE, SERVICE_NAME, peer.listeningPort, 0, 0, false, map);
+        return ServiceInfo.create(SERVICE_TYPE, SERVICE_NAME, peer.listeningPort, 0, 0, false, createProps(localPeer));
+    }
+
+    private Map<String, Object> createProps(LocalPeer peer) {
+        Map<String, Object> props = new HashMap<String, Object>();
+        props.put(PEER_PROPERTY, JsonUtils.toJson(peer));
+        return props;
     }
 
     private final class JmDNSServiceListener implements ServiceListener {
 
         @Override
         public void serviceResolved(ServiceEvent event) {
+            System.out.println("serviceResolved");
             if (listener != null) {
                 LocalPeer peer = getPeer(event);
                 if (peer != null) {
@@ -146,6 +163,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
 
         @Override
         public void serviceRemoved(ServiceEvent event) {
+            System.out.println("serviceRemoved");
             if (listener != null) {
                 LocalPeer peer = getPeer(event);
                 if (peer != null) {
@@ -166,7 +184,9 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
 
             try {
                 String json = event.getInfo().getPropertyString(PEER_PROPERTY);
-                peer = JsonUtils.toObject(json, LocalPeer.class);
+                if (json != null) {
+                    peer = JsonUtils.toObject(json, LocalPeer.class);
+                }
             } catch (Throwable e) {
                 LOG.error("Unable to extract peer info from service event", e);
             }
