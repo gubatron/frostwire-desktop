@@ -25,10 +25,7 @@ package com.frostwire.core;
  * @author aldenml
  * 
  */
-public final class CommonConstants {
-
-    private CommonConstants() {
-    }
+public interface CommonConstants {
 
     // generic file types
     public static final byte FILE_TYPE_AUDIO = 0x00;
