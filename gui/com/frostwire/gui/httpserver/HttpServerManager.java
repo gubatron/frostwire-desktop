@@ -33,18 +33,10 @@ public class HttpServerManager {
 
     private static final Logger LOG = Logger.getLogger(HttpServerManager.class.getName());
 
-    //private final SessionManager sessionManager;
-
     private HttpServer httpServer;
 
     public HttpServerManager() {
-        //this.threadPool = Executors.newCachedThreadPool();// ExecutorsHelper.n.newFixedSizeThreadPool(3, "HttpServer");
-        //this.sessionManager = new SessionManager();
     }
-
-    //    public SessionManager getSessionManager() {
-    //        return sessionManager;
-    //    }
 
     public void start(int port) {
 
@@ -55,12 +47,10 @@ public class HttpServerManager {
         try {
 
             httpServer = HttpServer.create(new InetSocketAddress(port), 10);
-            
+
             httpServer.createContext("/finger", new FingerHandler());
             httpServer.createContext("/browse", new BrowseHandler());
             httpServer.createContext("/download", new DownloadHandler());
-            //httpServer.createContext("/dekstop-upload-request", new DesktopUploadRequestHandler(sessionManager));
-            //httpServer.createContext("/desktop-upload", new DesktopUploadHandler(sessionManager));
 
             httpServer.start();
 
@@ -78,8 +68,8 @@ public class HttpServerManager {
             httpServer.stop(0);
         } catch (Throwable e) {
             LOG.log(Level.WARNING, "Something wrong stopping the HTTP server", e);
-        } finally {
-            httpServer = null;
         }
+
+        httpServer = null;
     }
 }
