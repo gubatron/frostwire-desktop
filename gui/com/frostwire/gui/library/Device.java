@@ -42,6 +42,8 @@ import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.library.ProgressFileEntity.ProgressFileEntityListener;
 import com.frostwire.localpeer.Finger;
 import com.frostwire.localpeer.LocalPeer;
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.util.EncodingUtils;
@@ -79,6 +81,8 @@ public class Device {
     private LocalPeer pingInfo;
 
     private boolean local;
+    
+    private final HttpClient httpClient;
 
     public Device(String udn, InetAddress address, int port, Finger finger, LocalPeer pinfo) {
         this.udn = udn;
@@ -87,6 +91,8 @@ public class Device {
         this.finger = finger;
         this.pingInfo = pinfo;
         this.local = pinfo.address.equals("0.0.0.0");
+        
+        this.httpClient = HttpClientFactory.newDefaultInstance();
     }
     
     /**
@@ -160,20 +166,16 @@ public class Device {
 
         try {
 
-            URI uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/browse?type=" + fileType);
+            String url = "http://" + _address.getHostAddress() + ":" + _port + "/browse?type=" + fileType;
 
-            HttpFetcher fetcher = new HttpFetcher(uri, 10000); // 10 seconds http timeout
-
-            byte[] jsonBytes = (byte[]) fetcher.fetch(true)[0];
-
-            if (jsonBytes == null) {
+            String json = httpClient.get(url, 10000);
+            
+            if (json == null) {
                 notifyOnActionFailed(ACTION_BROWSE, null);
                 return new ArrayList<FileDescriptor>();
             }
 
             setTimestamp(System.currentTimeMillis());
-
-            String json = new String(jsonBytes, "UTF-8");
 
             FileDescriptorList list = JSON_ENGINE.toObject(json, FileDescriptorList.class);
 
