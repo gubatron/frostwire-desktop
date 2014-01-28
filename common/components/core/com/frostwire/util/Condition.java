@@ -35,7 +35,7 @@ public final class Condition {
      * @param args
      * @return true if needle is in any of the args.
      */
-    public static <T> boolean in(T needle, T... args) {
+    public static <T> boolean in(T needle, @SuppressWarnings("unchecked") T... args) {
         if (args == null) {
             throw new IllegalArgumentException("args on in operation can't be null");
         }
@@ -48,5 +48,4 @@ public final class Condition {
 
         return false;
     }
-
 }
