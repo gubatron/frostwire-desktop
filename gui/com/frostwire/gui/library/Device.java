@@ -85,7 +85,7 @@ public class Device {
         this._port = port;
         this.finger = finger;
         this.pingInfo = pinfo;
-        this.local = false;//udn.equals(UPnPManager.instance().getLocalDevice().getIdentity().getUdn().getIdentifierString());
+        this.local = pinfo.address.equals("0.0.0.0");
     }
     
     /**

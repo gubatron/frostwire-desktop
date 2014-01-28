@@ -39,6 +39,7 @@ import com.frostwire.localpeer.LocalPeer;
 import com.frostwire.localpeer.LocalPeerManager;
 import com.frostwire.localpeer.LocalPeerManagerImpl;
 import com.frostwire.localpeer.LocalPeerManagerListener;
+import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
@@ -73,6 +74,16 @@ public class DeviceDiscoveryClerk {
         deviceCache = Collections.synchronizedMap(new HashMap<String, Device>());
         jsonEngine = new JsonEngine();
 
+        if (LibrarySettings.LIBRARY_WIFI_SHARING_ENABLED.getValue()) {
+            start();
+        }
+    }
+
+    public void updateLocalPeer() {
+        peerManager.update(createLocalPeer());
+    }
+
+    public void start() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -81,8 +92,13 @@ public class DeviceDiscoveryClerk {
         }).start();
     }
 
-    public void updateLocalPeer() {
-        peerManager.update(createLocalPeer());
+    public void stop() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                peerManager.stop();
+            }
+        }).start();
     }
 
     public void handleDeviceState(String key, InetAddress address, int listeningPort, boolean bye, LocalPeer pinfo) {

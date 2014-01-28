@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 
+import com.frostwire.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.LibrarySettings;
 
@@ -68,9 +69,9 @@ public class WiFiSharingPaneItem extends AbstractPaneItem {
 
         if (resetUPnP) {
             if (LibrarySettings.LIBRARY_WIFI_SHARING_ENABLED.getValue()) {
-                //UPnPManager.instance().resume();
+                LibraryMediator.instance().getDeviceDiscoveryClerk().start();
             } else {
-                //UPnPManager.instance().pause();
+                LibraryMediator.instance().getDeviceDiscoveryClerk().stop();
             }
         }
 
