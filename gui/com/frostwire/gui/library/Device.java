@@ -209,7 +209,7 @@ public class Device {
     }
     
     public int getDeviceType() {
-        return  pingInfo.deviceMajorType;
+        return  pingInfo.deviceType;
     }
 
     public byte[] download(int type, int id) {

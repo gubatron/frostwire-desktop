@@ -49,28 +49,21 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
     private static final String PEER_PROPERTY = "peer";
 
     private final MulticastLock lock;
-    private final LocalPeer localPeer;
 
     private final ServiceListener serviceListener;
-    private final ServiceInfo serviceInfo;
 
     private JmDNS jmdns;
+    private ServiceInfo serviceInfo;
     private LocalPeerManagerListener listener;
 
-    public LocalPeerManagerImpl(LocalPeer localPeer, MulticastLock lock) {
-        this.localPeer = localPeer;
+    public LocalPeerManagerImpl(MulticastLock lock) {
         this.lock = lock;
 
         this.serviceListener = new JmDNSServiceListener();
-        this.serviceInfo = createService(localPeer);
     }
 
-    public LocalPeerManagerImpl(LocalPeer localPeer) {
-        this(localPeer, null);
-    }
-
-    public LocalPeer getLocalPeer() {
-        return localPeer;
+    public LocalPeerManagerImpl() {
+        this(null);
     }
 
     public LocalPeerManagerListener getListener() {
@@ -82,7 +75,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
     }
 
     @Override
-    public void start() {
+    public void start(LocalPeer peer) {
         try {
             if (jmdns != null) {
                 LOG.warn("JmDNS already working, review the logic");
@@ -96,6 +89,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
             jmdns = JmDNS.create(JMDNS_NAME);
             jmdns.addServiceListener(SERVICE_TYPE, serviceListener);
 
+            serviceInfo = createService(peer);
             jmdns.registerService(serviceInfo);
 
         } catch (Throwable e) {
@@ -128,10 +122,10 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
     }
 
     @Override
-    public void refresh() {
+    public void update(LocalPeer peer) {
         try {
             if (jmdns != null) {
-                serviceInfo.setText(createProps(localPeer));
+                serviceInfo.setText(createProps(peer));
             }
         } catch (Throwable e) {
             LOG.error("Error refreshing local peer manager", e);
@@ -139,7 +133,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
     }
 
     private ServiceInfo createService(LocalPeer peer) {
-        return ServiceInfo.create(SERVICE_TYPE, SERVICE_NAME, peer.listeningPort, 0, 0, false, createProps(localPeer));
+        return ServiceInfo.create(SERVICE_TYPE, SERVICE_NAME, peer.port, 0, 0, false, createProps(peer));
     }
 
     private Map<String, Object> createProps(LocalPeer peer) {
@@ -152,22 +146,30 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
 
         @Override
         public void serviceResolved(ServiceEvent event) {
-            System.out.println("serviceResolved");
             if (listener != null) {
-                LocalPeer peer = getPeer(event);
-                if (peer != null) {
-                    listener.peerResolved(peer);
+                try {
+                    LocalPeer peer = getPeer(event);
+                    if (peer != null) {
+                        listener.peerResolved(peer);
+                    }
+                } catch (Throwable e) {
+                    LOG.error("Error in client listener", e);
                 }
             }
         }
 
         @Override
         public void serviceRemoved(ServiceEvent event) {
-            System.out.println("serviceRemoved");
             if (listener != null) {
-                LocalPeer peer = getPeer(event);
-                if (peer != null) {
+                try {
+                    ServiceInfo info = event.getInfo();
+                    String address = info.getHostAddresses()[0];
+                    int port = info.getPort();
+
+                    LocalPeer peer = new LocalPeer(address, port);
                     listener.peerRemoved(peer);
+                } catch (Throwable e) {
+                    LOG.error("Error in client listener", e);
                 }
             }
         }
@@ -183,9 +185,16 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
             LocalPeer peer = null;
 
             try {
+                ServiceInfo info = event.getInfo();
+                String address = info.getHostAddresses()[0];
+                int port = info.getPort();
+
                 String json = event.getInfo().getPropertyString(PEER_PROPERTY);
                 if (json != null) {
                     peer = JsonUtils.toObject(json, LocalPeer.class);
+
+                    // update peer with actual address and port
+                    peer = peer.withAddress(address).withPort(port);
                 }
             } catch (Throwable e) {
                 LOG.error("Unable to extract peer info from service event", e);

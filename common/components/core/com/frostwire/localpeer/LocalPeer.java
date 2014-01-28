@@ -25,10 +25,54 @@ package com.frostwire.localpeer;
  */
 public final class LocalPeer {
 
-    public String uuid;
-    public int listeningPort;
-    public int numSharedFiles;
-    public String nickname;
-    public int deviceMajorType;
-    public String clientVersion;
+    public LocalPeer(String address, int port, String nickname, int numSharedFiles, int deviceType, String clientVersion) {
+        this.address = address;
+        this.port = port;
+
+        this.nickname = nickname;
+        this.numSharedFiles = numSharedFiles;
+        this.deviceType = deviceType;
+        this.clientVersion = clientVersion;
+    }
+
+    /**
+     * Constructor to allow pseudo-empty identification of LocalPeer when leaving
+     * 
+     * @param address
+     * @param port
+     */
+    public LocalPeer(String address, int port) {
+        this(address, port, null, 0, 0, null);
+    }
+
+    /**
+     * Empty constructor for json serialization
+     */
+    public LocalPeer() {
+        this(null, 0, null, 0, 0, null);
+    }
+
+    public final String address;
+    public final int port;
+
+    public final String nickname;
+    public final int numSharedFiles;
+    public final int deviceType;
+    public final String clientVersion;
+
+    public LocalPeer withAddress(String address) {
+        return new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
+    }
+
+    public LocalPeer withPort(int port) {
+        return new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
+    }
+
+    public LocalPeer withNumSharedFiles(int numSharedFiles) {
+        return new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
+    }
+
+    public String getKey() {
+        return address + ":" + port;
+    }
 }

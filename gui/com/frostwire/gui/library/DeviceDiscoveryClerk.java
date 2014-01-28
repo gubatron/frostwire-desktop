@@ -57,16 +57,16 @@ public class DeviceDiscoveryClerk {
     private JsonEngine jsonEngine;
 
     public DeviceDiscoveryClerk() {
-        LocalPeer p = new LocalPeer();
+        String address = "0.0.0.0";
+        int port = Constants.EXTERNAL_CONTROL_LISTENING_PORT;
+        int numSharedFiles = Librarian.instance().getNumSharedFiles();
+        String nickname = ConfigurationManager.instance().getNickname();
+        int deviceType = Constants.DEVICE_MAJOR_TYPE_DESKTOP;
+        String clientVersion = FrostWireUtils.getFrostWireVersion();
 
-        p.uuid = ConfigurationManager.instance().getUUIDString();
-        p.listeningPort = Constants.EXTERNAL_CONTROL_LISTENING_PORT;
-        p.numSharedFiles = Librarian.instance().getNumSharedFiles();
-        p.nickname = ConfigurationManager.instance().getNickname();
-        p.deviceMajorType = Constants.DEVICE_MAJOR_TYPE_DESKTOP;
-        p.clientVersion = FrostWireUtils.getFrostWireVersion();
+        LocalPeer p = new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
 
-        this.peerManager = new LocalPeerManagerImpl(p);
+        this.peerManager = new LocalPeerManagerImpl();
         this.peerManager.setListener(new LocalPeerManagerListener() {
 
             @Override
@@ -82,9 +82,9 @@ public class DeviceDiscoveryClerk {
         deviceCache = Collections.synchronizedMap(new HashMap<String, Device>());
         jsonEngine = new JsonEngine();
 
-        peerManager.start();
+        peerManager.start(p);
     }
-    
+
     public LocalPeerManager getPeerManager() {
         return peerManager;
     }

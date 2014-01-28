@@ -29,9 +29,9 @@ public interface LocalPeerManager {
 
     public void setListener(LocalPeerManagerListener listener);
 
-    public void start();
+    public void start(LocalPeer peer);
 
     public void stop();
 
-    public void refresh();
+    public void update(LocalPeer peer);
 }
