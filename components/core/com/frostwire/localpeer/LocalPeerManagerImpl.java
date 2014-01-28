@@ -100,6 +100,9 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
     public void stop() {
         try {
             if (jmdns != null) {
+
+                triggerLocalServiceRemoved();
+
                 jmdns.removeServiceListener(SERVICE_TYPE, serviceListener);
                 jmdns.unregisterAllServices();
 
@@ -139,6 +142,20 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
         Map<String, Object> props = new HashMap<String, Object>();
         props.put(PEER_PROPERTY, JsonUtils.toJson(peer));
         return props;
+    }
+
+    private void triggerLocalServiceRemoved() {
+        if (listener != null && serviceInfo != null) {
+            try {
+                String address = "0.0.0.0";
+                int port = serviceInfo.getPort();
+
+                LocalPeer peer = new LocalPeer(address, port);
+                listener.peerRemoved(peer);
+            } catch (Throwable e) {
+                LOG.error("Error in client listener", e);
+            }
+        }
     }
 
     private final class JmDNSServiceListener implements ServiceListener {
