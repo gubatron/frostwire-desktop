@@ -45,7 +45,6 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
 
     private static final String JMDNS_NAME = "LocalPeerManagerJmDNS";
     private static final String SERVICE_TYPE = "_fw_local_peer._tcp.local.";
-    private static final String SERVICE_NAME = "FrostWire Local Peer";
     private static final String PEER_PROPERTY = "peer";
 
     private final MulticastLock lock;
@@ -133,7 +132,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
     }
 
     private ServiceInfo createService(LocalPeer peer) {
-        return ServiceInfo.create(SERVICE_TYPE, SERVICE_NAME, peer.port, 0, 0, false, createProps(peer));
+        return ServiceInfo.create(SERVICE_TYPE, peer.nickname, peer.port, 0, 0, false, createProps(peer));
     }
 
     private Map<String, Object> createProps(LocalPeer peer) {

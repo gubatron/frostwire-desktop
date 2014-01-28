@@ -48,14 +48,14 @@ public final class DNSConstants {
     public static final int    PROBE_CONFLICT_INTERVAL        = 1000;                                                         // milliseconds to wait after conflict.
     public static final int    PROBE_THROTTLE_COUNT           = 10;                                                           // After x tries go 1 time a sec. on probes.
     public static final int    PROBE_THROTTLE_COUNT_INTERVAL  = 5000;                                                         // We only increment the throttle count, if the previous increment is inside this interval.
-    public static final int    ANNOUNCE_WAIT_INTERVAL         = 1000;                                                         // milliseconds between Announce loops.
+    public static final int    ANNOUNCE_WAIT_INTERVAL         = 100;//1000;                                                         // milliseconds between Announce loops.
     public static final int    RECORD_REAPER_INTERVAL         = 1000;//10000;                                                        // milliseconds between cache cleanups.
     public static final int    RECORD_EXPIRY_DELAY            = 1;                                                            // This is 1s delay used in ttl and therefore in seconds
     public static final int    KNOWN_ANSWER_TTL               = 120;
     public static final int    ANNOUNCED_RENEWAL_TTL_INTERVAL = DNS_TTL * 500;                                                // 50% of the TTL in milliseconds
 
-    public static final long   CLOSE_TIMEOUT                  = ANNOUNCE_WAIT_INTERVAL * 5L;
-    public static final long   SERVICE_INFO_TIMEOUT           = ANNOUNCE_WAIT_INTERVAL * 6L;
+    public static final long   CLOSE_TIMEOUT                  = 5000;//ANNOUNCE_WAIT_INTERVAL * 5L;
+    public static final long   SERVICE_INFO_TIMEOUT           = 6000;//ANNOUNCE_WAIT_INTERVAL * 6L;
 
     public static final int    NETWORK_CHECK_INTERVAL         = 10 * 1000;                                                    // 10 secondes
 
