@@ -57,15 +57,6 @@ public class DeviceDiscoveryClerk {
     private JsonEngine jsonEngine;
 
     public DeviceDiscoveryClerk() {
-        String address = "0.0.0.0";
-        int port = Constants.EXTERNAL_CONTROL_LISTENING_PORT;
-        int numSharedFiles = Librarian.instance().getNumSharedFiles();
-        String nickname = ConfigurationManager.instance().getNickname();
-        int deviceType = Constants.DEVICE_MAJOR_TYPE_DESKTOP;
-        String clientVersion = FrostWireUtils.getFrostWireVersion();
-
-        LocalPeer p = new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
-
         this.peerManager = new LocalPeerManagerImpl();
         this.peerManager.setListener(new LocalPeerManagerListener() {
 
@@ -82,11 +73,16 @@ public class DeviceDiscoveryClerk {
         deviceCache = Collections.synchronizedMap(new HashMap<String, Device>());
         jsonEngine = new JsonEngine();
 
-        peerManager.start(p);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                peerManager.start(createLocalPeer());
+            }
+        }).start();
     }
 
-    public LocalPeerManager getPeerManager() {
-        return peerManager;
+    public void updateLocalPeer() {
+        peerManager.update(createLocalPeer());
     }
 
     public void handleDeviceState(String key, InetAddress address, int listeningPort, boolean bye, LocalPeer pinfo) {
@@ -98,6 +94,17 @@ public class DeviceDiscoveryClerk {
                 handleDeviceStale(key, address, device);
             }
         }
+    }
+
+    private LocalPeer createLocalPeer() {
+        String address = "0.0.0.0";
+        int port = Constants.EXTERNAL_CONTROL_LISTENING_PORT;
+        int numSharedFiles = Librarian.instance().getNumSharedFiles();
+        String nickname = ConfigurationManager.instance().getNickname();
+        int deviceType = Constants.DEVICE_MAJOR_TYPE_DESKTOP;
+        String clientVersion = FrostWireUtils.getFrostWireVersion();
+
+        return new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
     }
 
     private boolean retrieveFinger(final String key, final InetAddress address, int listeningPort, LocalPeer pinfo) {
@@ -174,7 +181,6 @@ public class DeviceDiscoveryClerk {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 LibraryMediator.instance().handleDeviceStale(device);
-                //UPnPManager.instance().removeRemoteDevice(device.getUdn());
             }
         });
     }

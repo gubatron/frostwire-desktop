@@ -39,8 +39,6 @@ import com.frostwire.database.Cursor;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.library.Finger;
 import com.frostwire.gui.library.LibraryMediator;
-import com.frostwire.localpeer.LocalPeer;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * @author gubatron
@@ -298,16 +296,7 @@ public final class Librarian {
                 pathSharingSet.remove(filePath);
 
                 if (refreshPing) {
-                    String address = "0.0.0.0";
-                    int port = Constants.EXTERNAL_CONTROL_LISTENING_PORT;
-                    int numSharedFiles = Librarian.instance().getNumSharedFiles();
-                    String nickname = ConfigurationManager.instance().getNickname();
-                    int deviceType = Constants.DEVICE_MAJOR_TYPE_DESKTOP;
-                    String clientVersion = FrostWireUtils.getFrostWireVersion();
-
-                    LocalPeer p = new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
-
-                    LibraryMediator.instance().getDeviceDiscoveryClerk().getPeerManager().update(p);
+                    LibraryMediator.instance().getDeviceDiscoveryClerk().updateLocalPeer();
                 }
             }
         };

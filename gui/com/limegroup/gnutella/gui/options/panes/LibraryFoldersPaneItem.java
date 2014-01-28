@@ -203,7 +203,7 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
 	        Librarian.instance().deleteFolderFilesFromShareTable(folderToUnshare.getAbsolutePath());
 	    }
 	    
-	    //UPnPManager.instance().refreshPing();
+	    LibraryMediator.instance().getDeviceDiscoveryClerk().updateLocalPeer();
     }
 
     public boolean isDirty() {

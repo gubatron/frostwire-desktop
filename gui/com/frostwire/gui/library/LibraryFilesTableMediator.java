@@ -1256,7 +1256,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 }
             }
 
-            //UPnPManager.instance().refreshPing();
+            LibraryMediator.instance().getDeviceDiscoveryClerk().updateLocalPeer();
             UXStats.instance().log(share ? UXAction.WIFI_SHARING_SHARED : UXAction.WIFI_SHARING_UNSHARED);
         }
 
