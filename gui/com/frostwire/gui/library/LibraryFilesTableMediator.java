@@ -26,6 +26,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.Action;
@@ -48,7 +49,6 @@ import javax.swing.table.TableColumnModel;
 
 import org.apache.commons.io.FilenameUtils;
 import org.gudy.azureus2.core3.download.DownloadManager;
-import org.limewire.collection.CollectionUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
@@ -421,7 +421,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
         clearTable();
 
-        List<List<File>> partitionedFiles = CollectionUtils.split(100, Arrays.asList(dirHolder.getFiles()));
+        List<List<File>> partitionedFiles = split(100, Arrays.asList(dirHolder.getFiles()));
 
         for (List<File> partition : partitionedFiles) {
             final List<File> fPartition = partition;
@@ -818,6 +818,30 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
     private boolean hasExploreAction() {
         return OSUtils.isWindows() || OSUtils.isMacOSX();
+    }
+    
+    /**
+     * Split a collection in Lists of up to partitionSize elements.
+     * @param <T>
+     * @param partitionSize
+     * @param collection
+     * @return
+     */
+    public static <T> List<List<T>> split(int partitionSize, List<T> collection) {
+        List<List<T>> lists = new LinkedList<List<T>>();
+        
+        for (int i = 0; i < collection.size(); i+=partitionSize) {
+            //the compiler might not know if the collection has changed size
+            //so it might not optimize this by itself.
+            int jLimit = Math.min(collection.size(),i+partitionSize);
+            List<T> newList = new LinkedList<T>();
+            for (int j=i; j < jLimit;j++) {
+                newList.add(collection.get(j));
+            }
+            lists.add(newList);
+        }
+        
+        return lists;
     }
 
     ///////////////////////////////////////////////////////
