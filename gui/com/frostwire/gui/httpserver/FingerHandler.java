@@ -23,7 +23,7 @@ import java.io.OutputStream;
 import java.util.logging.Logger;
 
 import com.frostwire.gui.Librarian;
-import com.frostwire.gui.library.Finger;
+import com.frostwire.localpeer.Finger;
 import com.frostwire.util.JsonUtils;
 import com.sun.net.httpserver.HttpExchange;
 

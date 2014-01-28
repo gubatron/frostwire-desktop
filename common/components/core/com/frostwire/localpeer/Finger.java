@@ -15,9 +15,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.frostwire.gui.library;
 
-public class Finger {
+package com.frostwire.localpeer;
+
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public final class Finger {
 
     // general data
 
@@ -42,7 +49,7 @@ public class Finger {
     public String deviceManufacturer;
 
     public String deviceBrand;
-    
+
     public ScreenMetrics deviceScreen;
 
     // shared data
@@ -78,7 +85,7 @@ public class Finger {
         StringBuilder sb = new StringBuilder();
 
         sb.append("(");
-        sb.append(nickname + ", " + totalShared + ", " + ( deviceScreen != null ? " sc:" + deviceScreen.widthPixels + "x" + deviceScreen.heightPixels : ""));
+        sb.append(nickname + ", " + totalShared + ", " + (deviceScreen != null ? " sc:" + deviceScreen.widthPixels + "x" + deviceScreen.heightPixels : ""));
         sb.append("[");
         sb.append("aud:" + numSharedAudioFiles + "/" + numTotalAudioFiles + ", ");
         sb.append("vid:" + numSharedVideoFiles + "/" + numTotalVideoFiles + ", ");

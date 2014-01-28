@@ -37,8 +37,8 @@ import com.frostwire.core.providers.ShareFilesDB;
 import com.frostwire.core.providers.ShareFilesDB.Columns;
 import com.frostwire.database.Cursor;
 import com.frostwire.gui.bittorrent.TorrentUtil;
-import com.frostwire.gui.library.Finger;
 import com.frostwire.gui.library.LibraryMediator;
+import com.frostwire.localpeer.Finger;
 
 /**
  * @author gubatron

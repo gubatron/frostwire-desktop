@@ -40,6 +40,7 @@ import com.frostwire.HttpFetcherListener;
 import com.frostwire.JsonEngine;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.library.ProgressFileEntity.ProgressFileEntityListener;
+import com.frostwire.localpeer.Finger;
 import com.frostwire.localpeer.LocalPeer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;

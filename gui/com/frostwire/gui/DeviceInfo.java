@@ -18,7 +18,7 @@
 
 package com.frostwire.gui;
 
-import com.frostwire.gui.library.ScreenMetrics;
+import com.frostwire.localpeer.ScreenMetrics;
 
 /**
  * 

@@ -37,6 +37,7 @@ import com.frostwire.core.Constants;
 import com.frostwire.gui.Librarian;
 import com.frostwire.gui.httpserver.HttpServerManager;
 import com.frostwire.gui.library.Device.OnActionFailedListener;
+import com.frostwire.localpeer.Finger;
 import com.frostwire.localpeer.LocalPeer;
 import com.frostwire.localpeer.LocalPeerManager;
 import com.frostwire.localpeer.LocalPeerManagerImpl;
