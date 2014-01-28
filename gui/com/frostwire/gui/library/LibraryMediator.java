@@ -39,8 +39,6 @@ import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
-import com.frostwire.core.Constants;
-import com.frostwire.gui.httpserver.HttpServerManager;
 import com.frostwire.gui.player.DeviceMediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
@@ -93,7 +91,6 @@ public class LibraryMediator {
     private AbstractLibraryTableMediator<?, ?, ?> currentMediator;
 
     private final DeviceDiscoveryClerk clerk;
-    private HttpServerManager httpServerManager;
 
     /**
      * @return the <tt>LibraryMediator</tt> instance
@@ -133,9 +130,6 @@ public class LibraryMediator {
         DividerLocationSettingUpdater.install(splitPane, UISettings.UI_LIBRARY_MAIN_DIVIDER_LOCATION);
 
         MAIN_PANEL.add(splitPane);
-
-        httpServerManager = new HttpServerManager();
-        httpServerManager.start(Constants.EXTERNAL_CONTROL_LISTENING_PORT);
         
         clerk = new DeviceDiscoveryClerk();
     }

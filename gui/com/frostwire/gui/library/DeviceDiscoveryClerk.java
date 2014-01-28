@@ -20,6 +20,7 @@ package com.frostwire.gui.library;
 
 import java.net.InetAddress;
 import java.net.URI;
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,7 @@ import com.frostwire.JsonEngine;
 import com.frostwire.core.ConfigurationManager;
 import com.frostwire.core.Constants;
 import com.frostwire.gui.Librarian;
+import com.frostwire.gui.httpserver.HttpServerManager;
 import com.frostwire.gui.library.Device.OnActionFailedListener;
 import com.frostwire.localpeer.LocalPeer;
 import com.frostwire.localpeer.LocalPeerManager;
@@ -51,6 +53,7 @@ public class DeviceDiscoveryClerk {
 
     private static final Log LOG = LogFactory.getLog(DeviceDiscoveryClerk.class);
 
+    private final HttpServerManager httpServerManager;
     private final LocalPeerManager peerManager;
 
     private Map<String, Device> deviceCache;
@@ -58,17 +61,27 @@ public class DeviceDiscoveryClerk {
     private JsonEngine jsonEngine;
 
     public DeviceDiscoveryClerk() {
+        this.httpServerManager = new HttpServerManager();
+
         this.peerManager = new LocalPeerManagerImpl();
         this.peerManager.setListener(new LocalPeerManagerListener() {
 
             @Override
             public void peerResolved(LocalPeer peer) {
-                System.out.println("Peer found: " + peer.nickname);
+                try {
+                    handleDeviceState(peer.getKey(), InetAddress.getByName(peer.address), peer.port, false, peer);
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void peerRemoved(LocalPeer peer) {
-                System.out.println("Peer removed: " + peer.nickname);
+                try {
+                    handleDeviceState(peer.getKey(), InetAddress.getByName(peer.address), peer.port, true, peer);
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
             }
         });
         deviceCache = Collections.synchronizedMap(new HashMap<String, Device>());
@@ -87,6 +100,7 @@ public class DeviceDiscoveryClerk {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                httpServerManager.start(Constants.EXTERNAL_CONTROL_LISTENING_PORT);
                 peerManager.start(createLocalPeer());
             }
         }).start();
@@ -96,6 +110,7 @@ public class DeviceDiscoveryClerk {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                httpServerManager.stop();
                 peerManager.stop();
             }
         }).start();
