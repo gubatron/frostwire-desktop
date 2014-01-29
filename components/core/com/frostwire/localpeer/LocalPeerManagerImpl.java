@@ -134,20 +134,29 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
         }
     }
 
+    @Override
+    public String getHostAddress() {
+        if (jmdns != null) {
+            return getHostAddress(jmdns);
+        } else {
+            return null;
+        }
+    }
+
     private ServiceInfo createService(LocalPeer peer, JmDNS jmdns) {
         return ServiceInfo.create(SERVICE_TYPE, peer.nickname, peer.port, 0, 0, false, createProps(peer, jmdns));
     }
 
     private Map<String, Object> createProps(LocalPeer peer, JmDNS jmdns) {
         if (jmdns != null) { // fix ip address
-            peer = peer.withAddress(getBindAddress(jmdns));
+            peer = peer.withAddress(getHostAddress(jmdns));
         }
         Map<String, Object> props = new HashMap<String, Object>();
         props.put(PEER_PROPERTY, JsonUtils.toJson(peer));
         return props;
     }
 
-    private String getBindAddress(JmDNS jmdns) {
+    private String getHostAddress(JmDNS jmdns) {
         if (jmdns == null) {
             throw new IllegalArgumentException("jmdns can't be null");
         }

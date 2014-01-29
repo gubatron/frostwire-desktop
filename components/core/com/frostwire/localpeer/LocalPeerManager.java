@@ -34,4 +34,6 @@ public interface LocalPeerManager {
     public void stop();
 
     public void update(LocalPeer peer);
+    
+    public String getHostAddress();
 }
