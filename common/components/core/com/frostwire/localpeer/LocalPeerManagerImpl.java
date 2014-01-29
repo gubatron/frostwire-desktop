@@ -88,7 +88,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
             jmdns = JmDNS.create(JMDNS_NAME);
             jmdns.addServiceListener(SERVICE_TYPE, serviceListener);
 
-            serviceInfo = createService(peer);
+            serviceInfo = createService(peer, jmdns);
             jmdns.registerService(serviceInfo);
 
         } catch (Throwable e) {
@@ -127,21 +127,45 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
     public void update(LocalPeer peer) {
         try {
             if (jmdns != null) {
-                serviceInfo.setText(createProps(peer));
+                serviceInfo.setText(createProps(peer, jmdns));
             }
         } catch (Throwable e) {
             LOG.error("Error refreshing local peer manager", e);
         }
     }
 
-    private ServiceInfo createService(LocalPeer peer) {
-        return ServiceInfo.create(SERVICE_TYPE, peer.nickname, peer.port, 0, 0, false, createProps(peer));
+    @Override
+    public String getHostAddress() {
+        if (jmdns != null) {
+            return getHostAddress(jmdns);
+        } else {
+            return null;
+        }
     }
 
-    private Map<String, Object> createProps(LocalPeer peer) {
+    private ServiceInfo createService(LocalPeer peer, JmDNS jmdns) {
+        return ServiceInfo.create(SERVICE_TYPE, peer.nickname, peer.port, 0, 0, false, createProps(peer, jmdns));
+    }
+
+    private Map<String, Object> createProps(LocalPeer peer, JmDNS jmdns) {
+        if (jmdns != null) { // fix ip address
+            peer = peer.withAddress(getHostAddress(jmdns));
+        }
         Map<String, Object> props = new HashMap<String, Object>();
         props.put(PEER_PROPERTY, JsonUtils.toJson(peer));
         return props;
+    }
+
+    private String getHostAddress(JmDNS jmdns) {
+        if (jmdns == null) {
+            throw new IllegalArgumentException("jmdns can't be null");
+        }
+
+        try {
+            return jmdns.getInetAddress().getHostAddress();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void triggerLocalServiceRemoved() {
