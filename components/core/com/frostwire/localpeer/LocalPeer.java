@@ -18,12 +18,13 @@
 package com.frostwire.localpeer;
 
 /**
+ * Immutable class, share and thread safe.
  * 
  * @author gubatron
  * @author aldenml
  *
  */
-public final class LocalPeer {
+public final class LocalPeer implements Cloneable {
 
     public LocalPeer(String address, int port, String nickname, int numSharedFiles, int deviceType, String clientVersion) {
         this.address = address;
@@ -74,5 +75,10 @@ public final class LocalPeer {
 
     public String getKey() {
         return address + ":" + port;
+    }
+
+    @Override
+    public Object clone() {
+        return new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
     }
 }
