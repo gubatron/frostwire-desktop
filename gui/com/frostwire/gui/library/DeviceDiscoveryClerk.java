@@ -67,10 +67,14 @@ public class DeviceDiscoveryClerk {
         this.peerManager = new LocalPeerManagerImpl();
         this.peerManager.setListener(new LocalPeerManagerListener() {
 
+            private String getKey(LocalPeer peer) {
+                return peer.address + ":" + peer.port;
+            }
+
             @Override
             public void peerResolved(LocalPeer peer) {
                 try {
-                    handleDeviceState(peer.getKey(), InetAddress.getByName(peer.address), peer.port, false, peer);
+                    handleDeviceState(getKey(peer), InetAddress.getByName(peer.address), peer.port, false, peer);
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
                 }
@@ -79,7 +83,7 @@ public class DeviceDiscoveryClerk {
             @Override
             public void peerRemoved(LocalPeer peer) {
                 try {
-                    handleDeviceState(peer.getKey(), InetAddress.getByName(peer.address), peer.port, true, peer);
+                    handleDeviceState(getKey(peer), InetAddress.getByName(peer.address), peer.port, true, peer);
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
                 }
