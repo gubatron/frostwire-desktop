@@ -751,7 +751,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         if (selectedFile != null) {
             SEND_TO_FRIEND_ACTION.setEnabled(sel.length == 1);
-
+            
             if (getMediaType().equals(MediaType.getAnyTypeMediaType())) {
                 boolean atLeastOneIsPlayable = false;
 
@@ -969,8 +969,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         private static final long serialVersionUID = 4726989286129406765L;
 
         public SendAudioFilesToiTunes() {
-            putValue(Action.NAME, I18n.tr("Send to iTunes"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send audio files to iTunes"));
+        	if(OSUtils.isLinux() == false){
+        		putValue(Action.NAME, I18n.tr("Send to iTunes"));
+        		putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send audio files to iTunes"));
+        	}
         }
 
         @Override
