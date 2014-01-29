@@ -73,10 +73,6 @@ public final class LocalPeer implements Cloneable {
         return new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
     }
 
-    public String getKey() {
-        return address + ":" + port;
-    }
-
     @Override
     public Object clone() {
         return new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
