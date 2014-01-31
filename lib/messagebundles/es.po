@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-08 14:18-0300\n"
-"PO-Revision-Date: 2014-01-08 14:30-0300\n"
+"POT-Creation-Date: 2014-01-27 22:59-0300\n"
+"PO-Revision-Date: 2014-01-28 17:43-0300\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: FTA <saintrecall@gmail.com>\n"
 "Language: es\n"
@@ -66,6 +66,7 @@ msgstr "Cerrar la ventana de Frostwire solo ocultará la aplicación"
 #: gui/com/frostwire/gui/HideExitDialog.java:72
 msgid "This way file transfers may continue in the background."
 msgstr ""
+"De esta forma las transferencias de archivo podrán continuar en el fondo."
 
 #: gui/com/frostwire/gui/HideExitDialog.java:72
 msgid "<html>"
@@ -154,6 +155,8 @@ msgstr "Reintentar las descargas seleccionadas"
 msgid ""
 "One of the transfers is complete and resuming will cause it to start seeding"
 msgstr ""
+"Una de las transferencias está completa y reanudarla causará que comience a "
+"sembrar"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:212
 msgid ""
@@ -1125,7 +1128,7 @@ msgstr "Vista previa del vídeo"
 
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:230
 msgid "Play Video preview of"
-msgstr ""
+msgstr "Reproducir vista previa del vídeo "
 
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:247
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:248
@@ -1134,7 +1137,7 @@ msgstr "Vista previa del audio"
 
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:249
 msgid "Play Audio preview of"
-msgstr ""
+msgstr "Reproducir vista previa de "
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:171
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:231
@@ -1294,7 +1297,7 @@ msgstr "Carpeta de descarga predeteminada"
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:224
 #: gui/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:36
 msgid "Wi-Fi Sharing"
-msgstr ""
+msgstr "Compartiendo Wi-Fi"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:246
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:184
@@ -1322,7 +1325,7 @@ msgstr "Abrir directorio de la biblioteca"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableDataLine.java:274
 msgid "Wi-Fi Shared"
-msgstr ""
+msgstr "Compartido Wi-Fi"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableDataLine.java:284
 msgid "Path"
@@ -1628,7 +1631,7 @@ msgstr "Exportar lista de reproducción a carpeta"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:849
 msgid "Copy all playlist files to a folder of your choosing"
-msgstr ""
+msgstr "Copiar todas las listas de reproducción a una carpeta de tu elección"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:867
 msgid "Where do you want the playlist files copied to?"
@@ -2276,19 +2279,19 @@ msgstr ""
 "BitTorrent, el logo BitTorrent y Torrent son marcas registradas de "
 "BitTorrent, Inc."
 
-#: gui/com/limegroup/gnutella/gui/ApplicationHeader.java:187
+#: gui/com/limegroup/gnutella/gui/ApplicationHeader.java:189
 msgid "Search or enter URL"
 msgstr "Buscar o ingresar URL"
 
-#: gui/com/limegroup/gnutella/gui/ApplicationHeader.java:199
+#: gui/com/limegroup/gnutella/gui/ApplicationHeader.java:201
 msgid "A new update has been downloaded."
 msgstr "Se ha descargado una nueva actualización."
 
-#: gui/com/limegroup/gnutella/gui/ApplicationHeader.java:224
+#: gui/com/limegroup/gnutella/gui/ApplicationHeader.java:226
 msgid "Chat"
 msgstr "Chat"
 
-#: gui/com/limegroup/gnutella/gui/ApplicationHeader.java:244
+#: gui/com/limegroup/gnutella/gui/ApplicationHeader.java:246
 msgid "Show our community chat"
 msgstr "Mostrar nuestra comunidad de chat"
 
@@ -2321,33 +2324,32 @@ msgstr "Sí"
 msgid "No"
 msgstr "No"
 
-#. MigLayout lesson: Using px explicitly as the unit does make a big difference.
-#: gui/com/limegroup/gnutella/gui/DonationButtons.java:49
+#: gui/com/limegroup/gnutella/gui/DonationButtons.java:55
 msgid "Support FrostWire development with a Bitcoin donation"
 msgstr "Apoya el desarrollo de FrostWire con una donación de Bitcoin"
 
-#: gui/com/limegroup/gnutella/gui/DonationButtons.java:50
+#: gui/com/limegroup/gnutella/gui/DonationButtons.java:56
 msgid "Support FrostWire development with a USD $1 donation"
 msgstr "Apoya el desarrollo de FrostWire con una donación de US$ 1"
 
-#: gui/com/limegroup/gnutella/gui/DonationButtons.java:51
+#: gui/com/limegroup/gnutella/gui/DonationButtons.java:57
 msgid "Support FrostWire development with a USD $5 donation"
 msgstr "Apoya el desarrollo de FrostWire con una donación de US$ 5"
 
-#: gui/com/limegroup/gnutella/gui/DonationButtons.java:52
+#: gui/com/limegroup/gnutella/gui/DonationButtons.java:58
 msgid "Support FrostWire development with a USD $10 donation"
 msgstr "Apoya el desarrollo de FrostWire con una donación de US$ 10"
 
-#: gui/com/limegroup/gnutella/gui/DonationButtons.java:53
+#: gui/com/limegroup/gnutella/gui/DonationButtons.java:59
 msgid "Support FrostWire development with a USD $25 donation"
 msgstr "Apoya el desarrollo de FrostWire con una donación de US$ 25"
 
-#: gui/com/limegroup/gnutella/gui/DonationButtons.java:54
+#: gui/com/limegroup/gnutella/gui/DonationButtons.java:60
 msgid "Support FrostWire development with a Paypal donation"
 msgstr "Apoya el desarrollo de FrostWire con una donación en Paypal"
 
 #. new Font("Helvetica", Font.BOLD, 12);
-#: gui/com/limegroup/gnutella/gui/DonationButtons.java:59
+#: gui/com/limegroup/gnutella/gui/DonationButtons.java:65
 msgid "Donate"
 msgstr "Donar"
 
@@ -2898,13 +2900,10 @@ msgstr ""
 "archivo."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:25
-#, fuzzy
 msgid ""
 "You can change the look and feel of FrostWire by going to View &gt; Use "
 "Small Icons, Show Icon Text and Increase-Decrease the Font Size."
 msgstr ""
-"Puedes cambiar la apariencia de FrostWire si vas a Vista &gt; Cambiar "
-"Apariencia y seleccionando un nueva Apariencia"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:26
 #, fuzzy
@@ -4829,7 +4828,7 @@ msgstr "Máx"
 
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:116
 msgid "No results so far..."
-msgstr ""
+msgstr "Aún no hay resultados..."
 
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:150
 msgid "%s Audio files found (including .mp3, .wav, .ogg, and more)"
@@ -4941,6 +4940,8 @@ msgid ""
 "has been disabled on your FrostWire Search Options. (Go to Tools > Options > "
 "Search to enable)"
 msgstr ""
+"ha sido deshabilitado en tus opciones de búsqueda de Frostwire. (Ve a "
+"Herramientas > Opciones > Búsqueda para habilitarlo)"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:83
 #: gui/com/limegroup/gnutella/gui/tables/AbstractActionsRenderer.java:85
@@ -5131,134 +5132,3 @@ msgid ""
 msgstr ""
 "La ruta del directorio contenedor excede el largo máximo de las rutas en el "
 "sistema de archivos. {0} "
-
-#~ msgid "Loading Community Chat..."
-#~ msgstr "Cargando chat de la comunidad..."
-
-#~ msgid "Nickname required to connect"
-#~ msgstr "Se requiere un apodo para conectar"
-
-#~ msgid "The nickname"
-#~ msgstr "El apodo"
-
-#~ msgid "can't be accepted"
-#~ msgstr "no puede ser aceptado"
-
-#~ msgid "Loading Community Chat Window..."
-#~ msgstr "Cargando la ventana del chat de la comunidad..."
-
-#~ msgid "Filter files"
-#~ msgstr "Filtrar archivos"
-
-#~ msgid "(High Quality)"
-#~ msgstr "(Calidad Alta)"
-
-#~ msgid "(Medium Quality)"
-#~ msgstr "(Calidad Media)"
-
-#~ msgid "(Poor Quality)"
-#~ msgstr "(Calidad Baja)"
-
-#~ msgid "Stopped"
-#~ msgstr "Detenido"
-
-#~ msgid "Crawling"
-#~ msgstr "Buscando"
-
-#~ msgid "C&hat"
-#~ msgstr "C&hat"
-
-#~ msgid "Chat Community"
-#~ msgstr "Chat de la comunidad"
-
-#~ msgid ""
-#~ "FrostWire's Community Chat Tab requires you to have a nickname to "
-#~ "communicate with others in the chatrooms."
-#~ msgstr ""
-#~ "El chat de la comunidad de FrostWire requiere un apodo para que te "
-#~ "comuniques con otras personas en las salas."
-
-#~ msgid "Type your chat nickname here (any name):"
-#~ msgstr "Escriba su apodo (cualquier nombre) aquí:"
-
-#~ msgid "Show Smi&leys"
-#~ msgstr "Mostrar &emoticones"
-
-#~ msgid "Show emoticons in chat"
-#~ msgstr "Muestra emoticones en el chat"
-
-#~ msgid "Community Chat"
-#~ msgstr "Chat de la comunidad"
-
-#~ msgid ""
-#~ "FrostWire's Community Chat Tab requires you to have a nickname to "
-#~ "communicate with others in the chatrooms"
-#~ msgstr ""
-#~ "El chat de la comunidad de FrostWire requiere un apodo para comunicarse "
-#~ "con otras personas en las salas"
-
-#~ msgid "The chosen nickname is not allowed."
-#~ msgstr "El apodo seleccionado no está permitido."
-
-#~ msgid "Warning: Forbidden name!"
-#~ msgstr "Atención: ¡Nombre prohibido!"
-
-#~ msgid "language"
-#~ msgstr "Idioma"
-
-#~ msgid "languageencoding"
-#~ msgstr "languageencoding"
-
-#~ msgid "lngextension"
-#~ msgstr "Extensiones"
-
-#~ msgid "backuplanguage"
-#~ msgstr "Idioma"
-
-#~ msgid "backuplanguageencoding"
-#~ msgstr "backuplanguageencoding"
-
-#~ msgid "gui"
-#~ msgstr "gui"
-
-#~ msgid "authorizedjoinlist"
-#~ msgstr "authorizedjoinlist"
-
-#~ msgid "authorizedleavelist"
-#~ msgstr "authorizedleavelist"
-
-#~ msgid "authorizedcommandlist"
-#~ msgstr "authorizedcommandlist"
-
-#~ msgid "aslseparatorstring"
-#~ msgstr "aslseparatorstring"
-
-#~ msgid "noasldisplayprefix"
-#~ msgstr "noasldisplayprefix"
-
-#~ msgid "quitmessage"
-#~ msgstr "mensajes"
-
-#~ msgid "aslmale"
-#~ msgstr "aslmale"
-
-#~ msgid "aslfemale"
-#~ msgstr "aslfemale"
-
-#~ msgid "userid"
-#~ msgstr "Id de usuario"
-
-#~ msgid "aslunknown"
-#~ msgstr "Desconocido"
-
-#~ msgid "fingerreply"
-#~ msgstr "fingerreply"
-
-#~ msgid "userinforeply"
-#~ msgstr "userinforeply"
-
-#~ msgid "mouse"
-#~ msgstr "mouse"
-
-#~ msgid "helppage"
-#~ msgstr "helppage"

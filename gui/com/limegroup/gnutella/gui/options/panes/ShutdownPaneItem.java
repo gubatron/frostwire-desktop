@@ -67,7 +67,7 @@ public class ShutdownPaneItem extends AbstractPaneItem {
         shutdownImmediately = new JRadioButton(I18n.tr(immediateLabel));
         minimizeToTray = new JRadioButton(I18n.tr(minimizeLabel));
 
-        String showHideExitDialogLabel = I18nMarker.marktr("Show dialog to ask before close");
+        String showHideExitDialogLabel = I18n.tr("Show dialog to ask before close");
         _checkBoxShowHideExitDialog = new JCheckBox(showHideExitDialogLabel);
 
         ButtonGroup bg = new ButtonGroup();
