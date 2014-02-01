@@ -39,7 +39,13 @@ public final class VuzeManager {
 
     public VuzeManager(AzureusCore core) {
         this.core = core;
+    }
 
+    public AzureusCore getCore() {
+        return core;
+    }
+
+    public static void setupConfiguration() {
         disableDefaultPlugins();
 
         if (OSUtils.isAndroid()) {
@@ -47,10 +53,6 @@ public final class VuzeManager {
 
             COConfigurationManager.setParameter("network.max.simultaneous.connect.attempts", 1);
         }
-    }
-
-    public AzureusCore getCore() {
-        return core;
     }
 
     private static void disableDefaultPlugins() {
