@@ -23,7 +23,10 @@ import java.net.URI;
 import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.swing.SwingUtilities;
 
@@ -117,6 +120,11 @@ public class DeviceDiscoveryClerk {
             public void run() {
                 httpServerManager.stop();
                 peerManager.stop();
+                
+                for (Entry<String, Device> e : new HashSet<Entry<String, Device>>(deviceCache.entrySet())) {
+                    Device device = deviceCache.get(e.getKey());
+                    handleDeviceStale(e.getKey(), device.getAddress(), device);
+                }
             }
         }).start();
     }
