@@ -61,6 +61,10 @@ public final class LocalPeer implements Cloneable {
         return new LocalPeer(address, port, local, nickname, numSharedFiles, deviceType, clientVersion);
     }
 
+    public LocalPeer withLocal(boolean local) {
+        return new LocalPeer(address, port, local, nickname, numSharedFiles, deviceType, clientVersion);
+    }
+
     public LocalPeer withNumSharedFiles(int numSharedFiles) {
         return new LocalPeer(address, port, local, nickname, numSharedFiles, deviceType, clientVersion);
     }
