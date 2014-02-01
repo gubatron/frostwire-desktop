@@ -30,7 +30,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
 import java.util.Map;
 
 import javax.swing.AbstractButton;
@@ -575,8 +574,11 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
             
             if (query.contains("youtube.com/watch?")) {
                 query = query.split("v=")[1];
-                queryTitle = "youtube:"+query;
-            } 
+                if (query.contains("#")) {
+                    query = query.split("#")[0];
+                }
+                queryTitle = "youtube:" + query;
+            }
 
             final SearchInformation info = SearchInformation.createTitledKeywordSearch(query, null, MediaType.getTorrentMediaType(), queryTitle);
 
