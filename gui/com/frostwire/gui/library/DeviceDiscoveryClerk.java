@@ -140,7 +140,7 @@ public class DeviceDiscoveryClerk {
         int deviceType = Constants.DEVICE_MAJOR_TYPE_DESKTOP;
         String clientVersion = FrostWireUtils.getFrostWireVersion();
 
-        return new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
+        return new LocalPeer(address, port, true, nickname, numSharedFiles, deviceType, clientVersion);
     }
 
     private boolean retrieveFinger(final String key, final InetAddress address, int listeningPort, LocalPeer pinfo) {
