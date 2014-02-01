@@ -79,6 +79,8 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
     @Override
     public void start(LocalPeer peer) {
         try {
+            cache.clear();
+
             if (jmdns != null) {
                 LOG.warn("JmDNS already working, review the logic");
                 stop();
@@ -146,7 +148,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
 
     private Map<String, Object> createProps(LocalPeer peer, JmDNS jmdns) {
         if (jmdns != null) { // fix ip address
-            peer = peer.withAddress(getHostAddress(jmdns));
+            peer = peer.withAddress(getHostAddress(jmdns)).withLocal(false);
         }
         Map<String, Object> props = new HashMap<String, Object>();
         props.put(PEER_PROPERTY, JsonUtils.toJson(peer));
@@ -170,6 +172,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
             try {
                 LocalPeer peer = cache.get(serviceInfo.getKey());
                 if (peer != null) {
+                    peer = peer.withLocal(true);
                     cache.remove(serviceInfo.getKey());
                     listener.peerRemoved(peer);
                 }
@@ -189,6 +192,11 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
 
                     LocalPeer peer = getPeer(info);
                     if (peer != null) {
+                        if (info.getKey().equals(serviceInfo.getKey())) {
+                            peer = peer.withLocal(true);
+                        } else {
+                            peer = peer.withLocal(false);
+                        }
                         cache.put(info.getKey(), peer);
                         listener.peerResolved(peer);
                     }
