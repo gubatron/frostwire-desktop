@@ -26,9 +26,10 @@ package com.frostwire.localpeer;
  */
 public final class LocalPeer implements Cloneable {
 
-    public LocalPeer(String address, int port, String nickname, int numSharedFiles, int deviceType, String clientVersion) {
+    public LocalPeer(String address, int port, boolean local, String nickname, int numSharedFiles, int deviceType, String clientVersion) {
         this.address = address;
         this.port = port;
+        this.local = local;
 
         this.nickname = nickname;
         this.numSharedFiles = numSharedFiles;
@@ -37,24 +38,15 @@ public final class LocalPeer implements Cloneable {
     }
 
     /**
-     * Constructor to allow pseudo-empty identification of LocalPeer when leaving
-     * 
-     * @param address
-     * @param port
-     */
-    public LocalPeer(String address, int port) {
-        this(address, port, null, 0, 0, null);
-    }
-
-    /**
      * Empty constructor for json serialization
      */
     public LocalPeer() {
-        this(null, 0, null, 0, 0, null);
+        this(null, 0, false, null, 0, 0, null);
     }
 
     public final String address;
     public final int port;
+    public final boolean local;
 
     public final String nickname;
     public final int numSharedFiles;
@@ -62,19 +54,19 @@ public final class LocalPeer implements Cloneable {
     public final String clientVersion;
 
     public LocalPeer withAddress(String address) {
-        return new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
+        return new LocalPeer(address, port, local, nickname, numSharedFiles, deviceType, clientVersion);
     }
 
     public LocalPeer withPort(int port) {
-        return new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
+        return new LocalPeer(address, port, local, nickname, numSharedFiles, deviceType, clientVersion);
     }
 
     public LocalPeer withNumSharedFiles(int numSharedFiles) {
-        return new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
+        return new LocalPeer(address, port, local, nickname, numSharedFiles, deviceType, clientVersion);
     }
 
     @Override
     public Object clone() {
-        return new LocalPeer(address, port, nickname, numSharedFiles, deviceType, clientVersion);
+        return new LocalPeer(address, port, local, nickname, numSharedFiles, deviceType, clientVersion);
     }
 }

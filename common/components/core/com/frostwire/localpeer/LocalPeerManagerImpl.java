@@ -20,6 +20,7 @@ package com.frostwire.localpeer;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
@@ -50,6 +51,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
     private final MulticastLock lock;
 
     private final ServiceListener serviceListener;
+    private final Map<String, LocalPeer> cache;
 
     private JmDNS jmdns;
     private ServiceInfo serviceInfo;
@@ -59,6 +61,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
         this.lock = lock;
 
         this.serviceListener = new JmDNSServiceListener();
+        this.cache = new ConcurrentHashMap<String, LocalPeer>();
     }
 
     public LocalPeerManagerImpl() {
@@ -118,6 +121,9 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
             if (lock != null) {
                 lock.release();
             }
+
+            cache.clear();
+
         } catch (Throwable e) {
             LOG.error("Error stopping local peer manager", e);
         }
@@ -131,15 +137,6 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
             }
         } catch (Throwable e) {
             LOG.error("Error refreshing local peer manager", e);
-        }
-    }
-
-    @Override
-    public String getHostAddress() {
-        if (jmdns != null) {
-            return getHostAddress(jmdns);
-        } else {
-            return null;
         }
     }
 
@@ -171,11 +168,11 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
     private void triggerLocalServiceRemoved() {
         if (listener != null && serviceInfo != null) {
             try {
-                String address = "0.0.0.0";
-                int port = serviceInfo.getPort();
-
-                LocalPeer peer = new LocalPeer(address, port);
-                listener.peerRemoved(peer);
+                LocalPeer peer = cache.get(serviceInfo.getKey());
+                if (peer != null) {
+                    cache.remove(serviceInfo.getKey());
+                    listener.peerRemoved(peer);
+                }
             } catch (Throwable e) {
                 LOG.error("Error in client listener", e);
             }
@@ -188,8 +185,11 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
         public void serviceResolved(ServiceEvent event) {
             if (listener != null) {
                 try {
-                    LocalPeer peer = getPeer(event);
+                    ServiceInfo info = event.getInfo();
+
+                    LocalPeer peer = getPeer(info);
                     if (peer != null) {
+                        cache.put(info.getKey(), peer);
                         listener.peerResolved(peer);
                     }
                 } catch (Throwable e) {
@@ -203,11 +203,12 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
             if (listener != null) {
                 try {
                     ServiceInfo info = event.getInfo();
-                    String address = info.getHostAddresses()[0];
-                    int port = info.getPort();
 
-                    LocalPeer peer = new LocalPeer(address, port);
-                    listener.peerRemoved(peer);
+                    LocalPeer peer = cache.get(info.getKey());
+                    if (peer != null) {
+                        cache.remove(info.getKey());
+                        listener.peerRemoved(peer);
+                    }
                 } catch (Throwable e) {
                     LOG.error("Error in client listener", e);
                 }
@@ -221,15 +222,14 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
             }
         }
 
-        private LocalPeer getPeer(ServiceEvent event) {
+        private LocalPeer getPeer(ServiceInfo info) {
             LocalPeer peer = null;
 
             try {
-                ServiceInfo info = event.getInfo();
                 String address = info.getHostAddresses()[0];
                 int port = info.getPort();
 
-                String json = event.getInfo().getPropertyString(PEER_PROPERTY);
+                String json = info.getPropertyString(PEER_PROPERTY);
                 if (json != null) {
                     peer = JsonUtils.toObject(json, LocalPeer.class);
 
