@@ -24,8 +24,6 @@ import org.gudy.azureus2.plugins.PluginManager;
 import org.gudy.azureus2.plugins.PluginManagerDefaults;
 
 import com.aelitis.azureus.core.AzureusCore;
-import com.aelitis.azureus.core.dht.speed.DHTSpeedTester;
-import com.aelitis.azureus.core.dht.speed.DHTSpeedTesterListener;
 import com.frostwire.util.OSUtils;
 
 /**
@@ -41,53 +39,18 @@ public final class VuzeManager {
 
     public VuzeManager(AzureusCore core) {
         this.core = core;
-       
+
         disableDefaultPlugins();
-        
+
         if (OSUtils.isAndroid()) {
             SystemTime.TIME_GRANULARITY_MILLIS = 300;
-            
+
             COConfigurationManager.setParameter("network.max.simultaneous.connect.attempts", 1);
-            
-            disableSpeedManager();
         }
     }
 
     public AzureusCore getCore() {
         return core;
-    }
-
-    private void disableSpeedManager() {
-        core.getSpeedManager().setEnabled(false);
-        DHTSpeedTester oldTester = core.getSpeedManager().getSpeedTester();
-
-        core.getSpeedManager().setSpeedTester(new DHTSpeedTester() {
-
-            @Override
-            public void setContactNumber(int number) {
-            }
-
-            @Override
-            public void removeListener(DHTSpeedTesterListener listener) {
-            }
-
-            @Override
-            public int getContactNumber() {
-                return 0;
-            }
-
-            @Override
-            public void destroy() {
-            }
-
-            @Override
-            public void addListener(DHTSpeedTesterListener listener) {
-            }
-        });
-
-        if (oldTester != null) {
-            oldTester.destroy();
-        }
     }
 
     private static void disableDefaultPlugins() {
