@@ -46,9 +46,9 @@ import com.frostwire.logging.Logger;
  * @author aldenml
  *
  */
-final class FWHttpClient implements HttpClient {
+final class JdkHttpClient implements HttpClient {
 
-    private static final Logger LOG = Logger.getLogger(FWHttpClient.class);
+    private static final Logger LOG = Logger.getLogger(JdkHttpClient.class);
 
     private static final int DEFAULT_TIMEOUT = 10000;
     private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();

@@ -61,7 +61,7 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
         this.keywords = keywords;
         this.encodedKeywords = URLUtils.encode(keywords);
         this.timeout = timeout;
-        this.client = HttpClientFactory.newDefaultInstance();
+        this.client = HttpClientFactory.newInstance();
     }
 
     public final String getKeywords() {

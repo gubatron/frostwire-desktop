@@ -28,18 +28,7 @@ public class HttpClientFactory {
     private HttpClientFactory() {
     }
 
-    public static HttpClient newInstance(HttpClientType type) {
-        switch (type) {
-        case Apache:
-            throw new UnsupportedOperationException();
-        case PureJava:
-            return new FWHttpClient();
-        default:
-            throw new IllegalArgumentException();
-        }
-    }
-
-    public static HttpClient newDefaultInstance() {
-        return newInstance(HttpClientType.PureJava);
+    public static HttpClient newInstance() {
+        return new JdkHttpClient();
     }
 }
