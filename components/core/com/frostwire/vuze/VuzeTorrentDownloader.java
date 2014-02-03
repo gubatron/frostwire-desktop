@@ -18,8 +18,11 @@
 
 package com.frostwire.vuze;
 
+import java.io.File;
+
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
+import org.gudy.azureus2.core3.torrentdownloader.impl.TorrentDownloaderImpl;
 
 import com.frostwire.logging.Logger;
 
@@ -37,8 +40,11 @@ public final class VuzeTorrentDownloader {
 
     private VuzeTorrentDownloadListener listener;
 
-    public VuzeTorrentDownloader(TorrentDownloader dl) {
-        this.dl = dl;
+    public VuzeTorrentDownloader(String torrentUrl, String detailsUrl) {
+        TorrentDownloaderImpl dlImpl = new TorrentDownloaderImpl();
+        dlImpl.init(new TorrentDownloaderListener(), torrentUrl, detailsUrl, null, null);
+
+        this.dl = dlImpl;
     }
 
     public VuzeTorrentDownloadListener getListener() {
@@ -49,6 +55,18 @@ public final class VuzeTorrentDownloader {
         this.listener = listener;
     }
 
+    public void start() {
+        dl.start();
+    }
+
+    public void cancel() {
+        dl.cancel();
+    }
+
+    public File getFile() {
+        return dl.getFile();
+    }
+
     private class TorrentDownloaderListener implements TorrentDownloaderCallBackInterface {
 
         @Override
@@ -57,6 +75,8 @@ public final class VuzeTorrentDownloader {
                 try {
                     if (state == TorrentDownloader.STATE_FINISHED) {
                         listener.onFinished(VuzeTorrentDownloader.this);
+                    } else if (state == TorrentDownloader.STATE_ERROR) {
+                        listener.onError(VuzeTorrentDownloader.this);
                     }
                 } catch (Throwable e) {
                     LOG.error("Error in client listener", e);
