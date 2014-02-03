@@ -20,8 +20,8 @@ package com.frostwire.vuze;
 
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import com.frostwire.logging.Logger;
 
 /**
  * 
@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class VuzeTorrentDownloader {
 
-    private static final Logger LOG = LoggerFactory.getLogger(VuzeTorrentDownloader.class);
+    private static final Logger LOG = Logger.getLogger(VuzeTorrentDownloader.class);
 
     private final TorrentDownloader dl;
 

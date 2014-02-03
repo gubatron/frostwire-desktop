@@ -32,9 +32,7 @@ import jd.parser.Regex;
 import jd.parser.html.Form;
 import jd.parser.html.Form.MethodType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.frostwire.logging.Logger;
 import com.frostwire.search.FileSearchResult;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
@@ -46,7 +44,7 @@ import com.frostwire.util.HttpClientFactory;
  */
 public final class YouTubeExtractor {
 
-    private static final Logger LOG = LoggerFactory.getLogger(YouTubeExtractor.class);
+    private static final Logger LOG = Logger.getLogger(YouTubeExtractor.class);
 
     private static final Pattern FILENAME_PATTERN = Pattern.compile("<meta name=\"title\" content=\"(.*?)\">", Pattern.CASE_INSENSITIVE);
     private static final String UNSUPPORTEDRTMP = "itag%2Crtmpe%2";

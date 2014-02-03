@@ -38,8 +38,7 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.frostwire.logging.Logger;
 
 /**
  * A pure java based HTTP client with resume capabilities.
@@ -49,7 +48,7 @@ import org.slf4j.LoggerFactory;
  */
 final class FWHttpClient implements HttpClient {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FWHttpClient.class);
+    private static final Logger LOG = Logger.getLogger(FWHttpClient.class);
 
     private static final int DEFAULT_TIMEOUT = 10000;
     private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();
