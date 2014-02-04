@@ -36,15 +36,13 @@ public final class VuzeTorrentDownloader {
 
     private static final Logger LOG = Logger.getLogger(VuzeTorrentDownloader.class);
 
-    private final TorrentDownloader dl;
+    private final TorrentDownloaderImpl dl;
 
     private VuzeTorrentDownloadListener listener;
 
     public VuzeTorrentDownloader(String torrentUrl, String detailsUrl) {
-        TorrentDownloaderImpl dlImpl = new TorrentDownloaderImpl();
-        dlImpl.init(new TorrentDownloaderListener(), torrentUrl, detailsUrl, null, null);
-
-        this.dl = dlImpl;
+        this.dl = new TorrentDownloaderImpl();
+        this.dl.init(new TorrentDownloaderListener(), torrentUrl, detailsUrl, null, null);
     }
 
     public VuzeTorrentDownloadListener getListener() {
