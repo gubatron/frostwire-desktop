@@ -45,7 +45,6 @@ import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.ui.UIFunctions;
 import com.aelitis.azureus.ui.UIFunctionsManager;
-import com.frostwire.android.gui.util.FileUtils;
 
 /**
  * 
@@ -365,5 +364,63 @@ public final class VuzeUtils {
             System.out.println("Error calculating download percent");
             return 0;
         }
+    }
+    
+    public static Set<File> getIgnorableFiles() {
+        Set<File> set = getIncompleteFiles();
+        set.addAll(getSkipedFiles());
+        return set;
+    }
+    
+    public static Set<File> getIncompleteFiles() {
+        Set<File> set = new HashSet<File>();
+
+//        if (!AzureusManager.isCreated()) {
+//            return set;
+//        }
+//
+//        List<?> dms = AzureusManager.instance().getGlobalManager().getDownloadManagers();
+//        for (Object obj : dms) {
+//            DownloadManager dm = (DownloadManager) obj;
+//            set.addAll(getIncompleteFiles(dm));
+//        }
+
+        return set;
+    }
+    
+    public static Set<File> getSkipedFiles() {
+        Set<File> set = new HashSet<File>();
+
+//        if (!AzureusManager.isCreated()) {
+//            return set;
+//        }
+//
+//        List<?> dms = AzureusManager.instance().getGlobalManager().getDownloadManagers();
+//        for (Object obj : dms) {
+//            DownloadManager dm = (DownloadManager) obj;
+//            set.addAll(getSkippedFiles(dm));
+//        }
+
+        return set;
+    }
+    
+    public static boolean isComplete(DownloadManager dm) {
+        /*
+        if (!TorrentUtil.getSkippedFiles(dm).isEmpty()) {
+            long downloaded = 0;
+            long size = 0;
+            for (DiskManagerFileInfo fileInfo : getNoSkippedFileInfoSet(dm)) {
+                downloaded += fileInfo.getDownloaded();
+                size += fileInfo.getLength();
+            }
+            return downloaded == size;
+        } else {
+            return dm.getStats().getDownloadCompleted(true) == 1000;
+        }*/
+        return dm.getAssumedComplete();
+    }
+    
+    public static void stop(DownloadManager dm) {
+        ManagerUtils.start(dm);
     }
 }
