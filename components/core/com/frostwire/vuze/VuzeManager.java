@@ -18,7 +18,11 @@
 
 package com.frostwire.vuze;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.gudy.azureus2.core3.config.COConfigurationManager;
+import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.global.GlobalManager;
 import org.gudy.azureus2.core3.util.SystemTime;
 import org.gudy.azureus2.plugins.PluginManager;
@@ -26,6 +30,7 @@ import org.gudy.azureus2.plugins.PluginManagerDefaults;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
+import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.util.OSUtils;
 
 /**
@@ -55,8 +60,40 @@ public final class VuzeManager {
         return core;
     }
 
+    public void loadTorrents(final boolean stop, final LoadTorrentsListener listener) {
+        AzureusCoreFactory.addCoreRunningListener(new AzureusCoreRunningListener() {
+
+            @Override
+            public void azureusCoreRunning(AzureusCore core) {
+                List<VuzeDownloadManager> dms = new ArrayList<VuzeDownloadManager>();
+
+                GlobalManager gm = core.getGlobalManager();
+
+                for (DownloadManager dm : gm.getDownloadManagers()) {
+                    VuzeDownloadManager vdm = new VuzeDownloadManager(dm);
+
+                    if (stop && vdm.isComplete()) {
+                        vdm.stop();
+                    }
+
+                    dms.add(vdm);
+                }
+
+                listener.onLoad(dms);
+            }
+        });
+    }
+
     GlobalManager getGlobalManager() {
         return core.getGlobalManager();
+    }
+
+    public long getDataReceiveRate() {
+        return core.getGlobalManager().getStats().getDataReceiveRate() / 1000;
+    }
+    
+    public long getDataSendRate() {
+        return core.getGlobalManager().getStats().getDataSendRate() / 1000;
     }
 
     public static void setupConfiguration() {
@@ -93,5 +130,10 @@ public final class VuzeManager {
             pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_LOCAL_TRACKER, false);
             pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_TRACKER_PEER_AUTH, false);
         }
+    }
+
+    public static interface LoadTorrentsListener {
+
+        public void onLoad(List<VuzeDownloadManager> dms);
     }
 }
