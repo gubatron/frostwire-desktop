@@ -20,9 +20,17 @@ package com.frostwire.vuze;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Set;
 
+import org.apache.commons.io.FilenameUtils;
+import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.gudy.azureus2.core3.torrent.TOTorrentException;
+import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
+import org.minicastle.util.Arrays;
+
+import com.frostwire.vuze.VuzeUtils.InfoSetQuery;
 
 /**
  * 
@@ -35,17 +43,20 @@ public final class VuzeDownloadManager {
     private final DownloadManager dm;
 
     private final String displayName;
-    private final String hash;
     private final long size;
+    private final byte[] hash;
     private final File savePath;
     private final Date creationDate;
 
     public VuzeDownloadManager(DownloadManager dm) {
         this.dm = dm;
 
-        this.displayName = dm.getDisplayName();
-        this.hash = TorrentUtil.hashToString(dm.getTorrent().getHash());
-        this.size = dm.getSize();
+        Set<DiskManagerFileInfo> noSkippedSet = VuzeUtils.getFileInfoSet(dm, InfoSetQuery.NO_SKIPPED);
+
+        this.displayName = calculateDisplayName(dm, noSkippedSet);
+        this.size = calculateSize(dm, noSkippedSet);
+
+        this.hash = calculateHash(dm);
         this.savePath = dm.getSaveLocation();
         this.creationDate = new Date(dm.getCreationTime());
     }
@@ -54,12 +65,18 @@ public final class VuzeDownloadManager {
         return displayName;
     }
 
-    public String getHash() {
-        return hash;
-    }
-
     public long getSize() {
         return size;
+    }
+
+    /**
+     * The client should be aware that if the array is modified, the inner state of
+     * the object is changed (due to array mutability in java).
+     * 
+     * @return
+     */
+    public byte[] getHash() {
+        return hash;
     }
 
     public File getSavePath() {
@@ -67,7 +84,7 @@ public final class VuzeDownloadManager {
     }
 
     /**
-     * This is method should be used with care, since Date is mutable, the user
+     * This method should be used with care, since Date is mutable, the user
      * of this class could mess with the inner state of the object.
      * 
      * @return
@@ -82,6 +99,18 @@ public final class VuzeDownloadManager {
 
     public int getDownloadCompleted() {
         return dm.getStats().getDownloadCompleted(true) / 10;
+    }
+
+    public boolean isResumable() {
+        return ManagerUtils.isStartable(dm);
+    }
+
+    public boolean isPausable() {
+        return ManagerUtils.isStopable(dm);
+    }
+
+    public boolean isComplete() {
+        return dm.getAssumedComplete();
     }
 
     public boolean isDownloading() {
@@ -110,5 +139,130 @@ public final class VuzeDownloadManager {
 
     public long getETA() {
         return dm.getStats().getETA();
+    }
+
+    public int getShareRatio() {
+        return dm.getStats().getShareRatio();
+    }
+
+    public int getPeers() {
+        int peers;
+
+        TRTrackerScraperResponse response = dm.getTrackerScrapeResponse();
+
+        if (response != null && response.isValid()) {
+            int trackerPeerCount = response.getPeers();
+            peers = dm.getNbPeers();
+            if (peers == 0 || trackerPeerCount > peers) {
+                if (trackerPeerCount <= 0) {
+                    peers = dm.getActivationCount();
+                } else {
+                    peers = trackerPeerCount;
+                }
+            }
+        } else {
+            peers = dm.getNbPeers();
+        }
+
+        return peers;
+    }
+
+    public int getSeeds() {
+        int seeds;
+
+        TRTrackerScraperResponse response = dm.getTrackerScrapeResponse();
+
+        if (response != null && response.isValid()) {
+            seeds = Math.max(dm.getNbSeeds(), response.getSeeds());
+        } else {
+            seeds = dm.getNbSeeds();
+        }
+
+        return seeds;
+    }
+
+    public int getConnectedPeers() {
+        return dm.getNbPeers();
+    }
+
+    public int getConnectedSeeds() {
+        return dm.getNbSeeds();
+    }
+
+    public boolean hasStarted() {
+        int state = dm.getState();
+        return state == DownloadManager.STATE_SEEDING || state == DownloadManager.STATE_DOWNLOADING;
+    }
+
+    public boolean hasScrape() {
+        TRTrackerScraperResponse response = dm.getTrackerScrapeResponse();
+        return response != null && response.isValid();
+    }
+
+    public void start() {
+        ManagerUtils.start(dm);
+    }
+
+    public void stop() {
+        ManagerUtils.stop(dm);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean equals = false;
+
+        if (o instanceof VuzeDownloadManager) {
+            VuzeDownloadManager other = (VuzeDownloadManager) o;
+            if (dm.equals(other.dm) || Arrays.areEqual(getHash(), other.getHash())) {
+                equals = true;
+            }
+        }
+
+        return equals;
+    }
+
+    /**
+     * To turn private when refactor is finished.
+     * 
+     * @return
+     */
+    public DownloadManager getDM() {
+        return dm;
+    }
+
+    private String calculateDisplayName(DownloadManager dm, Set<DiskManagerFileInfo> noSkippedSet) {
+        String displayName = null;
+
+        if (noSkippedSet.size() == 1) {
+            displayName = FilenameUtils.getBaseName(noSkippedSet.iterator().next().getFile(false).getName());
+        } else {
+            displayName = dm.getDisplayName();
+        }
+
+        return displayName;
+    }
+
+    private long calculateSize(DownloadManager dm, Set<DiskManagerFileInfo> noSkippedSet) {
+        long size = 0;
+
+        boolean partial = noSkippedSet.size() == dm.getDiskManagerFileInfoSet().nbFiles();
+
+        if (partial) {
+            for (DiskManagerFileInfo fileInfo : noSkippedSet) {
+                size += fileInfo.getLength();
+            }
+        } else {
+            size = dm.getSize();
+        }
+
+        return size;
+    }
+
+    private byte[] calculateHash(DownloadManager dm) {
+        try {
+            return dm.getTorrent().getHash();
+        } catch (TOTorrentException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
