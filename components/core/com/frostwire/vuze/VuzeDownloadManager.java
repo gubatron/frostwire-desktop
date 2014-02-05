@@ -221,12 +221,7 @@ public final class VuzeDownloadManager {
         return equals;
     }
 
-    /**
-     * To turn private when refactor is finished.
-     * 
-     * @return
-     */
-    public DownloadManager getDM() {
+    DownloadManager getDM() {
         return dm;
     }
 
