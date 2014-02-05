@@ -19,11 +19,13 @@
 package com.frostwire.vuze;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
+import org.gudy.azureus2.core3.global.GlobalManager;
 import org.gudy.azureus2.core3.util.SystemTime;
 import org.gudy.azureus2.plugins.PluginManager;
 import org.gudy.azureus2.plugins.PluginManagerDefaults;
 
 import com.aelitis.azureus.core.AzureusCore;
+import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.frostwire.util.OSUtils;
 
 /**
@@ -37,12 +39,24 @@ public final class VuzeManager {
 
     private final AzureusCore core;
 
-    public VuzeManager(AzureusCore core) {
-        this.core = core;
+    private VuzeManager() {
+        this.core = AzureusCoreFactory.create();
+    }
+
+    private static class Loader {
+        static VuzeManager INSTANCE = new VuzeManager();
+    }
+
+    public static VuzeManager getInstance() {
+        return Loader.INSTANCE;
     }
 
     public AzureusCore getCore() {
         return core;
+    }
+
+    GlobalManager getGlobalManager() {
+        return core.getGlobalManager();
     }
 
     public static void setupConfiguration() {
