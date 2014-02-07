@@ -12,3 +12,6 @@ objects in your external Drag and Drops.
 Fix in TorrentDownloaderImpl
 
 - Comment Debug.out in DNSUtils during static initialization.
+
+- In VersionClientCheck write in VersionCheckClient
+NetworkAdminASN new_asn = old_asn;//admin.lookupCurrentASN( my_ip );

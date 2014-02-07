@@ -18,12 +18,14 @@
 
 package com.frostwire.vuze;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.global.GlobalManager;
+import org.gudy.azureus2.core3.util.SystemProperties;
 import org.gudy.azureus2.core3.util.SystemTime;
 import org.gudy.azureus2.plugins.PluginManager;
 import org.gudy.azureus2.plugins.PluginManagerDefaults;
@@ -91,7 +93,7 @@ public final class VuzeManager {
     public long getDataReceiveRate() {
         return core.getGlobalManager().getStats().getDataReceiveRate() / 1000;
     }
-    
+
     public long getDataSendRate() {
         return core.getGlobalManager().getStats().getDataSendRate() / 1000;
     }
@@ -103,6 +105,16 @@ public final class VuzeManager {
             SystemTime.TIME_GRANULARITY_MILLIS = 300;
 
             COConfigurationManager.setParameter("network.max.simultaneous.connect.attempts", 1);
+        }
+    }
+
+    public static void setApplicationPath(String path) {
+        try {
+            Field f = SystemProperties.class.getDeclaredField("app_path");
+            f.setAccessible(true);
+            f.set(null, path);
+        } catch (Throwable e) {
+            throw new RuntimeException("Unable to set vuze application path", e);
         }
     }
 
