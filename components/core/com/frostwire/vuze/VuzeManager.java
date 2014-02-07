@@ -108,7 +108,12 @@ public final class VuzeManager {
         }
     }
 
-    public static void setApplicationPath(String path) {
+    public static void setConfigPath(String path) {
+        setApplicationPath(path);
+        SystemProperties.setUserPath(path);
+    }
+
+    private static void setApplicationPath(String path) {
         try {
             Field f = SystemProperties.class.getDeclaredField("app_path");
             f.setAccessible(true);
