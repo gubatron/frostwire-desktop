@@ -202,7 +202,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
 
                     LocalPeer peer = getPeer(info);
                     if (peer != null) {
-                        if (info.getKey().equals(serviceInfo.getKey())) {
+                        if (isLocal(info, peer)) {
                             peer = peer.withLocal(true);
                         } else {
                             peer = peer.withLocal(false);
@@ -259,6 +259,10 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
             }
 
             return peer;
+        }
+
+        private boolean isLocal(ServiceInfo info, LocalPeer p) {
+            return info.getKey().equals(serviceInfo.getKey()) && p.address.equals(getHostAddress(jmdns));
         }
     }
 }
