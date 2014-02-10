@@ -17,6 +17,8 @@
 
 package com.frostwire.localpeer;
 
+import java.net.InetAddress;
+
 /**
  * 
  * @author gubatron
@@ -28,6 +30,8 @@ public interface LocalPeerManager {
     public LocalPeerManagerListener getListener();
 
     public void setListener(LocalPeerManagerListener listener);
+
+    public void start(InetAddress addr, LocalPeer peer);
 
     public void start(LocalPeer peer);
 
