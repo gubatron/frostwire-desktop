@@ -36,9 +36,12 @@ import org.gudy.azureus2.core3.util.SystemTime;
 import org.gudy.azureus2.plugins.PluginManager;
 import org.gudy.azureus2.plugins.PluginManagerDefaults;
 
+import android.util.Log;
+
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
+import com.frostwire.android.gui.NetworkManager;
 import com.frostwire.logging.Logger;
 import com.frostwire.util.OSUtils;
 
@@ -65,6 +68,7 @@ public final class VuzeManager {
         setupConfiguration();
 
         this.core = AzureusCoreFactory.create();
+        this.core.start();
     }
 
     private static class Loader {
@@ -103,16 +107,20 @@ public final class VuzeManager {
         });
     }
 
-    GlobalManager getGlobalManager() {
-        return core.getGlobalManager();
-    }
-
     public long getDataReceiveRate() {
         return core.getGlobalManager().getStats().getDataReceiveRate() / 1000;
     }
 
     public long getDataSendRate() {
         return core.getGlobalManager().getStats().getDataSendRate() / 1000;
+    }
+
+    public void pause() {
+        core.getGlobalManager().pauseDownloads();
+    }
+
+    public void resume() {
+        core.getGlobalManager().resumeDownloads();
     }
 
     public static void setConfiguration(VuzeConfiguration conf) {
