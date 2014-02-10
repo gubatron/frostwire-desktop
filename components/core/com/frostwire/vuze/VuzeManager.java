@@ -39,7 +39,6 @@ import org.gudy.azureus2.plugins.PluginManagerDefaults;
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
-import com.frostwire.android.gui.util.SystemUtils;
 import com.frostwire.logging.Logger;
 import com.frostwire.util.OSUtils;
 
@@ -54,9 +53,15 @@ public final class VuzeManager {
 
     private static final Logger LOG = Logger.getLogger(VuzeManager.class);
 
+    private static VuzeConfiguration conf = null;
+
     private final AzureusCore core;
 
     private VuzeManager() {
+        if (conf == null) {
+            throw new IllegalStateException("no config set");
+        }
+
         setupConfiguration();
 
         this.core = AzureusCoreFactory.create();
@@ -110,12 +115,15 @@ public final class VuzeManager {
         return core.getGlobalManager().getStats().getDataSendRate() / 1000;
     }
 
-    public static void setConfigPath(String path) {
-        setApplicationPath(path);
-        SystemProperties.setUserPath(path);
+    public static void setConfiguration(VuzeConfiguration conf) {
+        VuzeManager.conf = conf;
+
+        // before anything else
+        setApplicationPath(conf.getConfigPath());
+        SystemProperties.setUserPath(conf.getConfigPath());
     }
 
-    public static void setMessages(Map<String, String> msgs) {
+    private void setMessages(Map<String, String> msgs) {
         IntegratedResourceBundle res = new IntegratedResourceBundle(new EmptyResourceBundle(), new HashMap<String, ClassLoader>());
 
         for (Entry<String, String> kv : msgs.entrySet()) {
@@ -132,15 +140,13 @@ public final class VuzeManager {
         DisplayFormatters.loadMessages();
     }
 
-    private static void setupConfiguration() {
+    private void setupConfiguration() {
         System.setProperty("azureus.loadplugins", "0"); // disable third party azureus plugins
-
-        VuzeManager.setupConfiguration();
 
         SystemProperties.APPLICATION_NAME = "azureus";
 
         COConfigurationManager.setParameter("Auto Adjust Transfer Defaults", false);
-        COConfigurationManager.setParameter("General_sDefaultTorrent_Directory", SystemUtils.getTorrentsDirectory().getAbsolutePath());
+        COConfigurationManager.setParameter("General_sDefaultTorrent_Directory", conf.getTorrentsPath());
 
         disableDefaultPlugins();
 
@@ -156,19 +162,11 @@ public final class VuzeManager {
 
             COConfigurationManager.setParameter("network.max.simultaneous.connect.attempts", 1);
         }
+
+        setMessages(conf.getMessages());
     }
 
-    private static void setApplicationPath(String path) {
-        try {
-            Field f = SystemProperties.class.getDeclaredField("app_path");
-            f.setAccessible(true);
-            f.set(null, path);
-        } catch (Throwable e) {
-            throw new RuntimeException("Unable to set vuze application path", e);
-        }
-    }
-
-    private static void disableDefaultPlugins() {
+    private void disableDefaultPlugins() {
         PluginManagerDefaults pmd = PluginManager.getDefaults();
 
         pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_START_STOP_RULES, false);
@@ -191,6 +189,16 @@ public final class VuzeManager {
             pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_EXTERNAL_SEED, false);
             pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_LOCAL_TRACKER, false);
             pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_TRACKER_PEER_AUTH, false);
+        }
+    }
+
+    private static void setApplicationPath(String path) {
+        try {
+            Field f = SystemProperties.class.getDeclaredField("app_path");
+            f.setAccessible(true);
+            f.set(null, path);
+        } catch (Throwable e) {
+            throw new RuntimeException("Unable to set vuze application path", e);
         }
     }
 
