@@ -20,11 +20,17 @@ package com.frostwire.vuze;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.global.GlobalManager;
+import org.gudy.azureus2.core3.internat.IntegratedResourceBundle;
+import org.gudy.azureus2.core3.internat.MessageText;
+import org.gudy.azureus2.core3.util.DisplayFormatters;
 import org.gudy.azureus2.core3.util.SystemProperties;
 import org.gudy.azureus2.core3.util.SystemTime;
 import org.gudy.azureus2.plugins.PluginManager;
@@ -33,6 +39,8 @@ import org.gudy.azureus2.plugins.PluginManagerDefaults;
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
+import com.frostwire.android.gui.util.SystemUtils;
+import com.frostwire.logging.Logger;
 import com.frostwire.util.OSUtils;
 
 /**
@@ -44,9 +52,13 @@ import com.frostwire.util.OSUtils;
  */
 public final class VuzeManager {
 
+    private static final Logger LOG = Logger.getLogger(VuzeManager.class);
+
     private final AzureusCore core;
 
     private VuzeManager() {
+        setupConfiguration();
+
         this.core = AzureusCoreFactory.create();
     }
 
@@ -98,19 +110,52 @@ public final class VuzeManager {
         return core.getGlobalManager().getStats().getDataSendRate() / 1000;
     }
 
-    public static void setupConfiguration() {
+    public static void setConfigPath(String path) {
+        setApplicationPath(path);
+        SystemProperties.setUserPath(path);
+    }
+
+    public static void setMessages(Map<String, String> msgs) {
+        IntegratedResourceBundle res = new IntegratedResourceBundle(new EmptyResourceBundle(), new HashMap<String, ClassLoader>());
+
+        for (Entry<String, String> kv : msgs.entrySet()) {
+            res.addString(kv.getKey(), kv.getValue());
+        }
+
+        try {
+            Field f = MessageText.class.getDeclaredField("DEFAULT_BUNDLE");
+            f.setAccessible(true);
+            f.set(null, res);
+        } catch (Throwable e) {
+            LOG.error("Unable to set vuze messages", e);
+        }
+        DisplayFormatters.loadMessages();
+    }
+
+    private static void setupConfiguration() {
+        System.setProperty("azureus.loadplugins", "0"); // disable third party azureus plugins
+
+        VuzeManager.setupConfiguration();
+
+        SystemProperties.APPLICATION_NAME = "azureus";
+
+        COConfigurationManager.setParameter("Auto Adjust Transfer Defaults", false);
+        COConfigurationManager.setParameter("General_sDefaultTorrent_Directory", SystemUtils.getTorrentsDirectory().getAbsolutePath());
+
         disableDefaultPlugins();
 
         if (OSUtils.isAndroid()) {
             SystemTime.TIME_GRANULARITY_MILLIS = 300;
 
+            COConfigurationManager.setParameter("network.tcp.write.select.time", 1000);
+            COConfigurationManager.setParameter("network.tcp.write.select.min.time", 1000);
+            COConfigurationManager.setParameter("network.tcp.read.select.time", 1000);
+            COConfigurationManager.setParameter("network.tcp.read.select.min.time", 1000);
+            COConfigurationManager.setParameter("network.control.write.idle.time", 1000);
+            COConfigurationManager.setParameter("network.control.read.idle.time", 1000);
+
             COConfigurationManager.setParameter("network.max.simultaneous.connect.attempts", 1);
         }
-    }
-
-    public static void setConfigPath(String path) {
-        setApplicationPath(path);
-        SystemProperties.setUserPath(path);
     }
 
     private static void setApplicationPath(String path) {
