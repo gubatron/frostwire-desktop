@@ -18,6 +18,7 @@
 package com.frostwire.localpeer;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -77,7 +78,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
     }
 
     @Override
-    public void start(LocalPeer peer) {
+    public void start(InetAddress addr, LocalPeer peer) {
         try {
             cache.clear();
 
@@ -90,7 +91,11 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
                 lock.acquire();
             }
 
-            jmdns = JmDNS.create(JMDNS_NAME);
+            if (addr != null) {
+                jmdns = JmDNS.create(addr, JMDNS_NAME);
+            } else {
+                jmdns = JmDNS.create(JMDNS_NAME);
+            }
             jmdns.addServiceListener(SERVICE_TYPE, serviceListener);
 
             serviceInfo = createService(peer, jmdns);
@@ -99,6 +104,11 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
         } catch (Throwable e) {
             LOG.error("Unable to start local peer manager", e);
         }
+    }
+
+    @Override
+    public void start(LocalPeer peer) {
+        start(null, peer);
     }
 
     @Override
@@ -192,7 +202,7 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
 
                     LocalPeer peer = getPeer(info);
                     if (peer != null) {
-                        if (info.getKey().equals(serviceInfo.getKey())) {
+                        if (isLocal(info, peer)) {
                             peer = peer.withLocal(true);
                         } else {
                             peer = peer.withLocal(false);
@@ -249,6 +259,10 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
             }
 
             return peer;
+        }
+
+        private boolean isLocal(ServiceInfo info, LocalPeer p) {
+            return info.getKey().equals(serviceInfo.getKey()) && p.address.equals(getHostAddress(jmdns));
         }
     }
 }
