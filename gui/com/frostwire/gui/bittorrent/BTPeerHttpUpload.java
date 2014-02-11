@@ -193,4 +193,24 @@ public class BTPeerHttpUpload implements BTDownload {
     public Date getDateCreated() {
         return upload.getDateCreated();
     }
+
+    @Override
+    public boolean hasPaymentOptions() {
+        return false;
+    }
+
+    @Override
+    public boolean hasCreativeCommonsLicencse() {
+        return false;
+    }
+
+    @Override
+    public PaymentOptions getPaymentOptions() {
+        return null;
+    }
+
+    @Override
+    public CreativeCommonsLicense getCreativeCommons() {
+        return null;
+    }
 }

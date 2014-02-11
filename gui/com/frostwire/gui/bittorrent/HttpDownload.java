@@ -427,7 +427,7 @@ public class HttpDownload implements BTDownload {
 
         @Override
         public void onData(HttpClient client, byte[] buffer, int offset, int length) {
-            if (state != STATE_PAUSING && state != STATE_CANCELING) {
+            if (!state.equals(STATE_PAUSING) && !state.equals(STATE_CANCELING)) {
                 bytesReceived += length;
                 updateAverageDownloadSpeed();
                 state = STATE_DOWNLOADING;
@@ -455,12 +455,12 @@ public class HttpDownload implements BTDownload {
 
         @Override
         public void onCancel(HttpClient client) {
-            if (state == STATE_CANCELING) {
+            if (state.equals(STATE_CANCELING)) {
                 if (deleteDataWhenCancelled) {
                     cleanup();
                 }
                 state = STATE_CANCELED;
-            } else if (state == STATE_PAUSING) {
+            } else if (state.equals(STATE_PAUSING)) {
                 state = STATE_PAUSED;
             } else {
                 state = STATE_CANCELED;
@@ -505,5 +505,25 @@ public class HttpDownload implements BTDownload {
     @Override
     public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove) {
 
+    }
+
+    @Override
+    public boolean hasPaymentOptions() {
+        return false;
+    }
+
+    @Override
+    public boolean hasCreativeCommonsLicencse() {
+        return false;
+    }
+
+    @Override
+    public PaymentOptions getPaymentOptions() {
+        return null;
+    }
+
+    @Override
+    public CreativeCommonsLicense getCreativeCommons() {
+        return null;
     }
 }

@@ -136,4 +136,24 @@ public class DuplicateDownload implements BTDownload {
 	public void updateDownloadManager(DownloadManager downloadManager) {
 		_delegate.updateDownloadManager(downloadManager);
 	}
+
+    @Override
+    public boolean hasPaymentOptions() {
+        return _delegate.hasPaymentOptions();
+    }
+
+    @Override
+    public boolean hasCreativeCommonsLicencse() {
+        return _delegate.hasCreativeCommonsLicencse();
+    }
+
+    @Override
+    public PaymentOptions getPaymentOptions() {
+        return _delegate.getPaymentOptions();
+    }
+
+    @Override
+    public CreativeCommonsLicense getCreativeCommons() {
+        return _delegate.getCreativeCommons();
+    }
 }

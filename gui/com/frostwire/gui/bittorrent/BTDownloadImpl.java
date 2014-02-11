@@ -20,11 +20,13 @@ package com.frostwire.gui.bittorrent;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Map;
 import java.util.Set;
 
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.download.DownloadManagerStats;
+import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
@@ -47,12 +49,39 @@ public class BTDownloadImpl implements BTDownload {
 
     private boolean _deleteDataWhenRemove;
 	private String _displayName;
+    private final boolean hasPaymentOptions;
+    private final boolean hasLicense;
+    private final CreativeCommonsLicense license;
+    private final PaymentOptions paymentOptions;
 
     public BTDownloadImpl(DownloadManager downloadManager) {
         updateDownloadManager(downloadManager);
 
         _deleteTorrentWhenRemove = false;
         _deleteDataWhenRemove = false;
+        
+        { 
+            //init license and payment options if present in the torrent.
+            final TOTorrent torrent = downloadManager.getTorrent();
+            
+            Map<String,Map<String,String>> licenseMap = torrent.getAdditionalMapProperty("license");
+            Map<String,Map<String,String>> paymentOptionsMap = torrent.getAdditionalMapProperty("paymentOptions");
+            
+            hasLicense = licenseMap != null && !licenseMap.isEmpty();
+            hasPaymentOptions = paymentOptionsMap != null && !paymentOptionsMap.isEmpty();
+            
+            if (hasLicense) {
+                license = new CreativeCommonsLicense(licenseMap);
+            } else {
+                license = null;
+            }
+            
+            if (hasPaymentOptions) {
+                paymentOptions = new PaymentOptions(paymentOptionsMap);
+            } else {
+                paymentOptions = null;
+            }
+        }
     }
 
 	public void updateSize(DownloadManager downloadManager) {
@@ -399,5 +428,28 @@ public class BTDownloadImpl implements BTDownload {
         } else {
             _displayName = _downloadManager.getDisplayName();
         }
+    }
+
+    @Override
+    public boolean hasPaymentOptions() {
+        return hasPaymentOptions;
+    }
+
+    @Override
+    public boolean hasCreativeCommonsLicencse() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public PaymentOptions getPaymentOptions() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public CreativeCommonsLicense getCreativeCommons() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

@@ -396,7 +396,7 @@ public class YouTubeDownload implements BTDownload {
 
         @Override
         public void onData(HttpClient client, byte[] buffer, int offset, int length) {
-            if (state != STATE_PAUSING && state != STATE_CANCELING) {
+            if (!state.equals(STATE_PAUSING) && !state.equals(STATE_CANCELING)) {
                 bytesReceived += length;
                 updateAverageDownloadSpeed();
                 state = STATE_DOWNLOADING;
@@ -460,10 +460,10 @@ public class YouTubeDownload implements BTDownload {
 
         @Override
         public void onCancel(HttpClient client) {
-            if (state == STATE_CANCELING) {
+            if (state.equals(STATE_CANCELING)) {
                 cleanup();
                 state = STATE_CANCELED;
-            } else if (state == STATE_PAUSING) {
+            } else if (state.equals(STATE_PAUSING)) {
                 state = STATE_PAUSED;
             } else {
                 state = STATE_CANCELED;
@@ -509,5 +509,25 @@ public class YouTubeDownload implements BTDownload {
         byte[] jpg = jpgUrl != null ? HttpClientFactory.newDefaultInstance().getBytes(jpgUrl) : null;
 
         return new MP4Metadata(title, author, source, jpg);
+    }
+
+    @Override
+    public boolean hasPaymentOptions() {
+        return false;
+    }
+
+    @Override
+    public boolean hasCreativeCommonsLicencse() {
+        return false;
+    }
+
+    @Override
+    public PaymentOptions getPaymentOptions() {
+        return null;
+    }
+
+    @Override
+    public CreativeCommonsLicense getCreativeCommons() {
+        return null;
     }
 }

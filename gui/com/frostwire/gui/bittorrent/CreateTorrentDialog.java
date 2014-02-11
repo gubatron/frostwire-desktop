@@ -157,6 +157,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	private String _invalidTrackerURL;
 	private JFileChooser _saveAsDialog;
 	private JButton _buttonClose;
+	
+	private CreativeCommonsLicense ccLicense;
+	private PaymentOptions paymentOptions;
 
 	public CreateTorrentDialog(JFrame frame) {
 	    super(frame);
@@ -744,7 +747,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				creator.addListener(this);
 				
 				torrent = creator.create();
-				
 
 			} else {
 				// GUBATRON: I THINK THIS else WILL NEVER HAPPEN
@@ -758,8 +760,22 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				torrent = c.create();
 			}
 
-			if (tracker_type == TT_DECENTRAL) {
+			////////////////////////////// BITCOIN/PAYPAL/CREATIVE COMMONS PROOF OF CONCEPT TORRENT ///////////////////////
+	        //hard coded section for proof of concept
+			// additional parameters:
+			// TIP/DONATION/SET YOUR PRICE:
+			// - Bitcoin address.
+			// - Paypal address.
+			paymentOptions = new PaymentOptions("bitcoin:14F6JPXK2fR5b4gZp3134qLRGgYtvabMWL", "litecoin:LiYp3Dg11N5BgV8qKW42ubSZXFmjDByjoV", "Andrewlieber123@gmail.com");
+			
+			// Creative Commons License.CC_NC_SA
+			ccLicense = new CreativeCommonsLicense(true,true,false,"Product Of My Environment","Hi-Rez","http://hirezfans.com/");			
 
+			torrent.setAdditionalMapProperty("license", ccLicense.asMap());
+			torrent.setAdditionalMapProperty("paymentOptions", paymentOptions.asMap());
+            ////////////////////////////// EOF BITCOIN/PAYPAL/CREATIVE COMMONS PROOF OF CONCEPT TORRENT ////////////////////
+			
+			if (tracker_type == TT_DECENTRAL) {
 				TorrentUtils.setDecentralised(torrent);
 			}
 

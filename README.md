@@ -245,4 +245,6 @@ Twitter [@frostwire][8]
 [Tumblr][10]
 [10]: <http://tumblr.frostwire.com>
 
-###### FrostWire Team  Last updated - June 21th 2013 11:58:29 EST
+###### FrostWire Team  Last updated - February 3rd 2014 15:44:50 EST
+
+[![tip for next commit](http://tip4commit.com/projects/538.svg)](http://tip4commit.com/projects/538)

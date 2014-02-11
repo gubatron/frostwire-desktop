@@ -102,17 +102,17 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     /**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
      */
-    public static Action LAUNCH_ACTION;
-    public static Action LAUNCH_OS_ACTION;
-    public static Action OPEN_IN_FOLDER_ACTION;
-    public static Action DEMUX_MP4_AUDIO_ACTION;
-    public static Action CREATE_TORRENT_ACTION;
-    public static Action DELETE_ACTION;
-    public static Action RENAME_ACTION;
-    public static Action SEND_TO_ITUNES_ACTION;
-    public static Action WIFI_UNSHARE_ACTION;
-    public static Action WIFI_SHARE_ACTION;
-
+    private Action LAUNCH_ACTION;
+    private Action LAUNCH_OS_ACTION;
+    private Action OPEN_IN_FOLDER_ACTION;
+    private Action DEMUX_MP4_AUDIO_ACTION;
+    private Action CREATE_TORRENT_ACTION;
+    private Action DELETE_ACTION;
+    private Action RENAME_ACTION;
+    private Action SEND_TO_ITUNES_ACTION;
+    private Action WIFI_UNSHARE_ACTION;
+    private Action WIFI_SHARE_ACTION;
+    
     /**
      * instance, for singleton access
      */
@@ -130,7 +130,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      */
     protected void buildListeners() {
         super.buildListeners();
-
         LAUNCH_ACTION = new LaunchAction();
         LAUNCH_OS_ACTION = new LaunchOSAction();
         OPEN_IN_FOLDER_ACTION = new OpenInFolderAction();
@@ -141,7 +140,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         SEND_TO_ITUNES_ACTION = new SendAudioFilesToiTunes();
         WIFI_SHARE_ACTION = new WiFiShareAction(true);
         WIFI_UNSHARE_ACTION = new WiFiShareAction(false);
-
     }
 
     @Override
@@ -379,10 +377,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         TableColumnModel model = TABLE.getColumnModel();
 
         TableColumn tc = model.getColumn(LibraryFilesTableDataLine.SHARE_IDX);
-        tc.setCellEditor(new FileShareCellEditor(new FileShareCellRenderer()));
+        tc.setCellEditor(new FileShareCellEditor(FILE_SHARE_CELL_RENDERER));
 
         tc = model.getColumn(LibraryFilesTableDataLine.ACTIONS_IDX);
-        tc.setCellEditor(new GenericCellEditor(new LibraryActionsRenderer()));
+        tc.setCellEditor(new GenericCellEditor(getAbstractActionsRenderer()));
     }
 
     /**

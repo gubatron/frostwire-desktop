@@ -46,6 +46,7 @@ import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
  * 1. Make sure the Model for your table <code>isCellEditable()</model> method returns true for that column.
  * 2. Make sure to add the proper default cell editors on your mediator's setDefaultEditors class (on that particular column).
  * 3. Make sure to add the proper default cell renderer on {@link AbstractTableMediator} <code>setDefaultRenderers()</code> 
+ * 4. Avoid using FlowLayout as it will wrap if your component won't fit into the column.
  * @author gubatron
  *
  */

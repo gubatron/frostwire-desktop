@@ -291,7 +291,7 @@ public class TorrentFetcherDownload implements BTDownload {
             if (state == TorrentDownloader.STATE_FINISHED && finished.compareAndSet(false, true)) {
                 onTorrentDownloaderFinished(inf.getFile());
             } else if (state == TorrentDownloader.STATE_ERROR) {
-                if (_hash != null && _hash.trim() != "" && (_uri.toLowerCase().startsWith("http://") || _uri.toLowerCase().startsWith("https://"))) {
+                if (_hash != null && !_hash.trim().equals("") && (_uri.toLowerCase().startsWith("http://") || _uri.toLowerCase().startsWith("https://"))) {
                     _uri = TorrentUtil.getMagnet(_hash);
                     _torrentDownloader = TorrentDownloaderFactory.create(new TorrentDownloaderListener(), _uri, null, _torrentSaveDir);
                     _state = STATE_DOWNLOADING;
@@ -415,5 +415,25 @@ public class TorrentFetcherDownload implements BTDownload {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public boolean hasPaymentOptions() {
+        return false;
+    }
+
+    @Override
+    public boolean hasCreativeCommonsLicencse() {
+        return false;
+    }
+
+    @Override
+    public PaymentOptions getPaymentOptions() {
+        return null;
+    }
+
+    @Override
+    public CreativeCommonsLicense getCreativeCommons() {
+        return null;
     }
 }

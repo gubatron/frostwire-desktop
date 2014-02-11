@@ -35,9 +35,8 @@ import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.notify.Notification;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
+import com.limegroup.gnutella.gui.search.BTDownloadFileActionsHolder;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
-import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
-import com.limegroup.gnutella.gui.tables.IconAndNameHolderImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.ProgressBarHolder;
 import com.limegroup.gnutella.gui.tables.SeedsHolder;
@@ -105,7 +104,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
      * Column index for the file name.
      */
     static final int FILE_INDEX = 0;
-    private static final LimeTableColumn FILE_COLUMN = new LimeTableColumn(FILE_INDEX, "DOWNLOAD_NAME_COLUMN", I18n.tr("Name"), 201, true, IconAndNameHolder.class);
+    private static final LimeTableColumn FILE_COLUMN = new LimeTableColumn(FILE_INDEX, "DOWNLOAD_NAME_COLUMN", I18n.tr("Name"), 201, true, BTDownloadFileActionsHolder.class);
 
     /**
      * Column index for the file size.
@@ -206,7 +205,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     public Object getValueAt(int index) {
         switch (index) {
         case FILE_INDEX:
-            return new IconAndNameHolderImpl(getIcon(), initializer.getDisplayName());
+            return new BTDownloadFileActionsHolder(getIcon(), initializer);
         case SIZE_INDEX:
             if (initializer.isPartialDownload()) {
                 return new SizeHolder(_size, PARTIAL_DOWNLOAD_TEXT);

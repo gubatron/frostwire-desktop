@@ -1,10 +1,21 @@
+frostwire (5.7.1) stable; urgency=high
+  * Wi-Fi sharing discovery improved considerably with JmDNS.
+    Removed cling library.
+  * Improvements in .torrent creation window:
+     1. Web seed url(s) (GetRight style) support.
+     2. Associate a Bitcoin address for Name-your-price/tips support.
+     3. Associate a Litecoin address for Name-your-price/tips support.
+     4. Associate a Paypal url for Name-your-price/tips support.	
+     5. Associate a Creative Commons license.
+ -- FrostWire Team <contact@frostwire.com>  Mon, 10 Feb 2014 16:59:12 -0500
+
 frostwire (5.7.0) stable; urgency=high
   * Updated BitTorrent engine from Azureus/Vuze project.
   * New Torrents.fm meta search integration.
   * Brings back cloud downloads by entering url on search box or open dialog.
   * Chat Tab gone. Chat button now points to http://frostwire.com/chat. 
     Faster startup time.
- -- FrostWire Team <contact@frostwire.com>  Fri, 17 Jan 2013 00:21:30 -0500
+ -- FrostWire Team <contact@frostwire.com>  Fri, 17 Jan 2014 00:21:30 -0500
 
 frostwire (5.6.9) stable; urgency=high
   * Insanely faster cloud search results.

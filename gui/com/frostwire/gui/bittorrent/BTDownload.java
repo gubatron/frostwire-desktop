@@ -91,4 +91,12 @@ public interface BTDownload {
 	public void updateDownloadManager(DownloadManager downloadManager);
 
     public Date getDateCreated();
+    
+    public boolean hasPaymentOptions();
+    
+    public boolean hasCreativeCommonsLicencse();
+    
+    public PaymentOptions getPaymentOptions();
+    
+    public CreativeCommonsLicense getCreativeCommons();
 }
