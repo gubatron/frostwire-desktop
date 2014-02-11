@@ -31,6 +31,8 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.frostwire.search.extractors.YouTubeExtractor.LinkInfo;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
+import com.frostwire.torrent.CreativeCommonsLicense;
+import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;

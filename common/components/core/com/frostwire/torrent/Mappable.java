@@ -1,4 +1,4 @@
-package com.frostwire.gui.bittorrent;
+package com.frostwire.torrent;
 
 import java.util.Map;
 

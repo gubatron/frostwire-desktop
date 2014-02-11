@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-package com.frostwire.gui.bittorrent;
+package com.frostwire.torrent;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class PaymentOptions implements Mappable<String, Map<String,String>>{
     /** BitCoin URI, see BIP-0021 - https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki 

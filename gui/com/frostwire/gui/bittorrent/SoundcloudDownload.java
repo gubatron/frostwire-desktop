@@ -34,6 +34,8 @@ import com.frostwire.mp3.ID3v1Tag;
 import com.frostwire.mp3.ID3v23Tag;
 import com.frostwire.mp3.Mp3File;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
+import com.frostwire.torrent.CreativeCommonsLicense;
+import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;

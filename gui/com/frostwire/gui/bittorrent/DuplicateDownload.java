@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 
+import com.frostwire.torrent.CreativeCommonsLicense;
+import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.I18n;
 
 public class DuplicateDownload implements BTDownload {

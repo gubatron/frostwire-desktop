@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-package com.frostwire.gui.bittorrent;
+package com.frostwire.torrent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /** TODO: Refactor this to have Licenses modeled with OO hierarchy after we have proof of concept working. 
  * This is a quick-n-dirty implementation. */

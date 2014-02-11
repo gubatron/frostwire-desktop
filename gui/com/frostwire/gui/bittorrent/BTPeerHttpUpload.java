@@ -25,6 +25,8 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.transfers.PeerHttpUpload;
+import com.frostwire.torrent.CreativeCommonsLicense;
+import com.frostwire.torrent.PaymentOptions;
 
 /**
  * @author gubatron

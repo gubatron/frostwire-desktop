@@ -30,6 +30,8 @@ import java.util.concurrent.Executors;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.FilenameUtils;
 
+import com.frostwire.torrent.CreativeCommonsLicense;
+import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.util.DigestUtils;
 import com.frostwire.util.DigestUtils.DigestProgressListener;
 import com.frostwire.util.HttpClient;

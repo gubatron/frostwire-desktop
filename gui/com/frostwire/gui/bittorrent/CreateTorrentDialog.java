@@ -72,6 +72,8 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.torrent.CreativeCommonsLicense;
+import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.FileChooserHandler;

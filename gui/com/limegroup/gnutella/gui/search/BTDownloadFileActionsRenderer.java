@@ -30,7 +30,7 @@ import javax.swing.JTable;
 import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.bittorrent.BTDownload;
-import com.frostwire.gui.bittorrent.PaymentOptions;
+import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tables.TableActionLabel;
