@@ -200,16 +200,16 @@ public class LibraryUtils {
 
         final StringBuilder plBuilder = new StringBuilder();
 
-        //        GUIMediator.safeInvokeAndWait(new Runnable() {
-        //
-        //            @Override
-        //            public void run() {
-        String input = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, suggestPlaylistName(files));
-        if (!StringUtils.isNullOrEmpty(input, true)) {
-            plBuilder.append(input);
-        }
-        //            }
-        //        });
+        GUIMediator.safeInvokeAndWait(new Runnable() {
+        
+            @Override
+            public void run() {
+		        String input = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, suggestPlaylistName(files));
+		        if (!StringUtils.isNullOrEmpty(input, true)) {
+		            plBuilder.append(input);
+		        }
+            }
+        });
 
         String playlistName = plBuilder.toString();
 

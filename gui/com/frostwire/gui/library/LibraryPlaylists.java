@@ -474,7 +474,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
                     e.printStackTrace();
                     GUIMediator.safeInvokeLater(new Runnable() {
                         public void run() {
-                            GUIMediator.showError("Unable to save playlist");
+                            GUIMediator.showError("Unable to load playlist");
                         }
                     });
                 }
