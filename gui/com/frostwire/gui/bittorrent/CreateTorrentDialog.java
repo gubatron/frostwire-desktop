@@ -66,6 +66,7 @@ import org.gudy.azureus2.core3.util.AEThread2;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 import org.gudy.azureus2.core3.util.TrackersUtil;
+import org.limewire.util.OSUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
@@ -147,17 +148,15 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	private final JTabbedPane _tabbedPane;
     private final JPanel _basicTorrentPane;
     private final JPanel _creativeCommonsPaymentsPane;
+    private final CreativeCommonsSelectorPanel _ccPanel;
+    private final PaymentOptionsPanel _paymentOptionsPanel;
 	
-    //basic torrent pane tab.
     private JTextField _textSelectedContent;
     private JButton _buttonSelectFile;
 	private JLabel _labelTrackers;
 	private JTextArea _textTrackers;
 	private JCheckBox _checkStartSeeding;
 	private JCheckBox _checkUseDHT;
-
-	private CreativeCommonsSelectorPanel _ccPanel;
-	private PaymentOptionsPanel _paymentOptionsPanel;
 	
 	private JButton _buttonSaveAs;
 	private JProgressBar _progressBar;
@@ -170,9 +169,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	private JFileChooser _saveAsDialog;
 	private JButton _buttonClose;
 	
-	private CreativeCommonsLicense ccLicense;
-	private PaymentOptions paymentOptions;
-
 	public CreateTorrentDialog(JFrame frame) {
 	    super(frame);
 		//don't add edonkey hashes.
@@ -187,6 +183,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         
         _basicTorrentPane = new JPanel();
         _creativeCommonsPaymentsPane = new JPanel();
+        _ccPanel = new CreativeCommonsSelectorPanel();
+        _paymentOptionsPanel = new PaymentOptionsPanel();
 
         initContainersLayouts();
 		initComponents();
@@ -194,61 +192,46 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	}
 	
     private void initContainersLayouts() {
-        _container.setLayout(new MigLayout("fill, insets panel, debug","[]"));
-
+        _container.setLayout(new MigLayout("fill, debug"));
         _tabbedPane.setLayout(new MigLayout("ins 20 20 20 20, fill, debug"));
-       
-        _basicTorrentPane.setLayout(new MigLayout("ins 10, fillx, filly, wrap 1"));
-        _creativeCommonsPaymentsPane.setLayout(new MigLayout());
+        _basicTorrentPane.setLayout(new MigLayout("fill"));
+        _creativeCommonsPaymentsPane.setLayout(new MigLayout("fill"));
     }
 
 	private void initTabbedPane() {
-	    _tabbedPane.add(_basicTorrentPane, I18n.tr("1. Contents and Tracking"));
-	    _tabbedPane.add(_creativeCommonsPaymentsPane, I18n.tr("2. License, Payments/Tips"));
-	    _container.add(_tabbedPane,"grow, wrap");
+	    _container.add(_tabbedPane,"gaptop 30, growy, grow, wrap");
+	    //_tabbedPane.addTab(I18n.tr("1. Contents and Tracking"),_basicTorrentPane);
+	    _tabbedPane.addTab("Otro",new JLabel("Segundo tab"));
+	    JLabel jLabel = new JLabel("Tercer tab");
+	    jLabel.setLayout(new MigLayout("fill, debug"));
+	    _tabbedPane.addTab("Otro mas",jLabel);
+	    //_tabbedPane.addTab(I18n.tr("2. License, Payments/Tips"),_creativeCommonsPaymentsPane);
     }
 
     private void initComponents() {
 		setTitle(I18n.tr("Create New Torrent"));
 		setSize(MINIMUM_DIALOG_DIMENSIONS);
-		//setMinimumSize(MINIMUM_DIALOG_DIMENSIONS);
+		setMinimumSize(MINIMUM_DIALOG_DIMENSIONS);
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setModalityType(ModalityType.APPLICATION_MODAL);
+        GUIUtils.addHideAction((JComponent) _container);
 
 		// we do it from the bottom, and dock them south
-		
-	    // CREATE AND SAVE AS
         initSaveCloseButtons();
-
-        // PROGRESS BAR
         initProgressBar();      
         
-        // ---------------
-		
-		// TORRENT CONTENTS: Add file... Add directory
 		initTorrentContents();
-
-		// TORRENT PROPERTIES: Trackers, Start Seeding, Trackerless
 		initTorrentTracking();
-		
-		initCreativeCommonsSelectorPanel();
-		
-		initPaymentOptionsPanel();
-		
-		// Put sub-containers on each respective pane.
 	    initTabbedPane();
 
 		buildListeners();
-		
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        setModalityType(ModalityType.APPLICATION_MODAL);
-		GUIUtils.addHideAction((JComponent) getContentPane());
 	}
     
     private void initTorrentContents() {
 		JPanel torrentContentsPanel = new JPanel(new MigLayout("fillx"));
 		GUIUtils.setTitledBorderOnPanel(torrentContentsPanel, I18n.tr("Torrent Contents"));
-		
-	    //text that shows what content has been selected
-        _textSelectedContent = new JTextField();
+
+		_textSelectedContent = new JTextField();
         _textSelectedContent.setEditable(false);
         _textSelectedContent.setToolTipText(I18n.tr("These box shows the contents you've selected for your new .torrent.\nEither a file, or the contents of a folder."));
         torrentContentsPanel.add(_textSelectedContent, "growx, gapleft 5, gapright 5, gaptop 5, wrap");
@@ -283,23 +266,14 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		_textTrackersScrollPane = new JScrollPane(_textTrackers);
 		torrentTrackingPanel.add(_textTrackersScrollPane, "gapright 5, gapleft 80, gaptop 10, gapbottom 5, hmin 165px, growx 60, growy, east");
 		
-		//by default suggest DHT
+		//suggest DHT by default 
 		updateTrackerRelatedControlsAvailability(true);
 		_basicTorrentPane.add(torrentTrackingPanel,"grow");
 	}
-	
-    private void initPaymentOptionsPanel() {
-        _paymentOptionsPanel = new PaymentOptionsPanel();
-    }
-
-    private void initCreativeCommonsSelectorPanel() {
-        _ccPanel = new CreativeCommonsSelectorPanel();
-        
-    }
 
 	private void initSaveCloseButtons() {
 	    JPanel buttonContainer = new JPanel();
-	    buttonContainer.setLayout(new MigLayout("fillx, debug"));
+	    buttonContainer.setLayout(new MigLayout("fillx"));
 		
 	    //first button will dock all the way east,
 		_buttonSaveAs = new JButton(I18n.tr("Save torrent as..."));
@@ -346,7 +320,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				boolean useDHT = _checkUseDHT.isSelected();
-
 				updateTrackerRelatedControlsAvailability(useDHT);
 			}
 		});
@@ -359,7 +332,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				}
 			}
 		});
-
 	}
 
 	private void updateTrackerRelatedControlsAvailability(boolean useDHT) {
@@ -391,12 +363,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		int result = _fileChooser.showOpenDialog(this);
 
 		if (result == JFileChooser.APPROVE_OPTION) {
-
 			File chosenFile = _fileChooser.getSelectedFile();
 			FileChooserHandler.setLastInputDirectory(chosenFile);
 
 			setChosenContent(chosenFile);
-
 		} else if (result == JFileChooser.ERROR_OPTION) {
 			_textSelectedContent.setText(I18n
 					.tr("Unkown error. Try again please."));
@@ -552,7 +522,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		File suggestedFileName =  null;
 		File torrContents = (create_from_dir) ? new File(directoryPath) : new File(singlePath);
 		
-		//suggestedFileName = new File(torrContents.getParent(),torrContents.getName() + ".torrent");
 		suggestedFileName = new File(_saveAsDialog.getSelectedFile(),torrContents.getName() + ".torrent");
 		
 		_saveAsDialog.setSelectedFile(suggestedFileName);
@@ -709,22 +678,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		            // - Bitcoin address.
 		            // - Paypal address.
 		            //
-		            if (_paymentOptionsPanel.hasPaymentOptions()) {
-		                paymentOptions = _paymentOptionsPanel.getPaymentOptions();
-		                if (paymentOptions != null) {
-		                    torrent.setAdditionalMapProperty("paymentOptions", paymentOptions.asMap());
-		                }
-		                //paymentOptions = new PaymentOptions("bitcoin:14F6JPXK2fR5b4gZp3134qLRGgYtvabMWL", "litecoin:LiYp3Dg11N5BgV8qKW42ubSZXFmjDByjoV", "Andrewlieber123@gmail.com");
-		            }
-		            
-		            if (_ccPanel.hasCreativeCommonsLicense()) {
-	                    // Creative Commons License.CC_NC_SA
-	                    ccLicense = _ccPanel.getCreativeCommonsLicense();           
-	                    if (ccLicense != null) {
-	                        torrent.setAdditionalMapProperty("license", ccLicense.asMap());
-	                    }
-	                    //new CreativeCommonsLicense(true,true,false,"Product Of My Environment","Hi-Rez","http://hirezfans.com/");
-		            }		            
+		            addAvailablePaymentOptions(torrent);
+		            addAvailableCreativeCommonsLicense(torrent);		            
 		            ////////////////////////////// EOF BITCOIN/PAYPAL/CREATIVE COMMONS PROOF OF CONCEPT TORRENT ////////////////////
 		            
 		            if (tracker_type == TT_DECENTRAL) {
@@ -825,6 +780,25 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		return true;
 	}
 
+    private void addAvailableCreativeCommonsLicense(final TOTorrent torrent) {
+        if (_ccPanel.hasCreativeCommonsLicense()) {
+            CreativeCommonsLicense ccLicense = _ccPanel.getCreativeCommonsLicense();           
+            if (ccLicense != null) {
+                torrent.setAdditionalMapProperty("license", ccLicense.asMap());
+            }
+        }
+    }
+
+    private void addAvailablePaymentOptions(final TOTorrent torrent) {
+        if (_paymentOptionsPanel.hasPaymentOptions()) {
+            PaymentOptions paymentOptions = _paymentOptionsPanel.getPaymentOptions();
+            if (paymentOptions != null) {
+                torrent.setAdditionalMapProperty("paymentOptions", paymentOptions.asMap());
+            }
+            //paymentOptions = new PaymentOptions("bitcoin:14F6JPXK2fR5b4gZp3134qLRGgYtvabMWL", "litecoin:LiYp3Dg11N5BgV8qKW42ubSZXFmjDByjoV", "Andrewlieber123@gmail.com");
+        }
+    }
+
 	private void revertSaveCloseButtons() {
 		_buttonClose.setEnabled(true);
 
@@ -896,6 +870,12 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	}
 	
 	public static void main(String[] args) {
+
+        if (OSUtils.isMacOSX()) {
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+            System.setProperty("com.apple.eawt.CocoaComponent.CompatibilityMode", "false");
+        }
+	    
 		AzureusStarter.start();
 		
 		CreateTorrentDialog dlg = new CreateTorrentDialog(null);
