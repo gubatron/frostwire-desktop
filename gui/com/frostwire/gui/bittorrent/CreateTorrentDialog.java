@@ -20,13 +20,13 @@ package com.frostwire.gui.bittorrent;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -73,6 +73,7 @@ import org.gudy.azureus2.core3.util.TrackersUtil;
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
+import com.frostwire.AzureusStarter;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.torrent.CreativeCommonsLicense;
 import com.frostwire.torrent.PaymentOptions;
@@ -190,24 +191,42 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         
         _basicTorrentPane = new JPanel();
         _creativeCommonsPaymentsPane = new JPanel();
-		
+
+        initContainersLayouts();
 		initComponents();
 		setLocationRelativeTo(frame);
 	}
+	
+    private void initContainersLayouts() {
+        _container.setLayout(new MigLayout("fill, insets panel, debug","[]"));
+
+        _tabbedPane.setLayout(new MigLayout("ins 20 20 20 20, fill, debug"));
+       
+        _basicTorrentPane.setLayout(new MigLayout("ins 10, fillx, filly, wrap 1"));
+        _creativeCommonsPaymentsPane.setLayout(new MigLayout());
+    }
 
 	private void initTabbedPane() {
 	    _tabbedPane.add(_basicTorrentPane, I18n.tr("1. Contents and Tracking"));
 	    _tabbedPane.add(_creativeCommonsPaymentsPane, I18n.tr("2. License, Payments/Tips"));
-	    _container.add(_tabbedPane,"north, growy");
+	    _container.add(_tabbedPane,"grow, wrap");
     }
 
     private void initComponents() {
 		setTitle(I18n.tr("Create New Torrent"));
 		setSize(MINIMUM_DIALOG_DIMENSIONS);
-		setMinimumSize(MINIMUM_DIALOG_DIMENSIONS);
+		//setMinimumSize(MINIMUM_DIALOG_DIMENSIONS);
 
-		initContainersLayouts();
+		// we do it from the bottom, and dock them south
+		
+	    // CREATE AND SAVE AS
+        initSaveCloseButtons();
 
+        // PROGRESS BAR
+        initProgressBar();      
+        
+        // ---------------
+		
 		// TORRENT CONTENTS: Add file... Add directory
 		initTorrentContents();
 
@@ -221,130 +240,64 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		// Put sub-containers on each respective pane.
 	    initTabbedPane();
 
-		// CREATE AND SAVE AS
-		initSaveCloseButtons();
-
-		// PROGRESS BAR
-		initProgressBar();		
-
 		buildListeners();
 		
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setModalityType(ModalityType.APPLICATION_MODAL);
 		GUIUtils.addHideAction((JComponent) getContentPane());
 	}
-
-    private void initContainersLayouts() {
-        _container.setLayout(new MigLayout("ins 10, fill, wrap 1","[]"));
-        _basicTorrentPane.setLayout(new MigLayout("ins 10, fillx, filly, wrap 1","[]"));
-        _creativeCommonsPaymentsPane.setLayout(new MigLayout());
+    
+    private JPanel createTitledBorderedPanel(String title, LayoutManager layoutManager) {
+        JPanel panel = new JPanel(layoutManager);
+        Border titleBorder = BorderFactory.createTitledBorder(title);
+        Border lineBorder = BorderFactory.createLineBorder(ThemeMediator.LIGHT_BORDER_COLOR);
+        Border border = BorderFactory.createCompoundBorder(lineBorder, titleBorder);
+        panel.setBorder(border);
+        panel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
+        return panel;
     }
 
     private void initTorrentContents() {
-		GridBagConstraints c;
-		JPanel torrentContentsPanel = new JPanel(new GridBagLayout());
-		Border titleBorder = BorderFactory.createTitledBorder(I18n
-                .tr("Torrent Contents"));
-		Border lineBorder = BorderFactory.createLineBorder(ThemeMediator.LIGHT_BORDER_COLOR);
-		Border border = BorderFactory.createCompoundBorder(lineBorder, titleBorder);
-		torrentContentsPanel.setBorder(border);
-		torrentContentsPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
-
+		JPanel torrentContentsPanel = createTitledBorderedPanel(I18n.tr("Torrent Contents"), new MigLayout("fillx"));
+		
+	    //text that shows what content has been selected
+        _textSelectedContent = new JTextField();
+        _textSelectedContent.setEditable(false);
+        _textSelectedContent.setToolTipText(I18n.tr("These box shows the contents you've selected for your new .torrent.\nEither a file, or the contents of a folder."));
+        torrentContentsPanel.add(_textSelectedContent, "growx, gapleft 5, gapright 5, gaptop 5, wrap");
+		
 		_buttonSelectFile = new JButton(I18n.tr("Select File or Folder..."));
 		_buttonSelectFile.setToolTipText(I18n.tr("Click here to select a single file or a folder as the content indexed by your new .torrent"));
+		torrentContentsPanel.add(_buttonSelectFile,"east, gapright 5, gapbottom 5");
 		
-		final Insets MARGINS = new Insets(5,5,5,5);
-
-		//text that shows what content has been selected
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.LINE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.weightx = 1;
-		c.gridwidth = 5;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = MARGINS;
-		_textSelectedContent = new JTextField();
-		_textSelectedContent.setEditable(false);
-		_textSelectedContent.setToolTipText(I18n.tr("These box shows the contents you've selected for your new .torrent.\nEither a file, or the contents of a folder."));
-		torrentContentsPanel.add(_textSelectedContent, c);
-		
-		//button to select single files
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.LINE_END;
-		c.gridx = 3;
-		c.gridy = 1;
-		c.gridwidth = 1;
-		c.insets = MARGINS;
-		c.weightx = 1.0;
-		torrentContentsPanel.add(_buttonSelectFile, c);
-		
-		_basicTorrentPane.add(torrentContentsPanel, "growy, growx");
+		_basicTorrentPane.add(torrentContentsPanel, "growx, wrap");
 	}
 
 	private void initTorrentTracking() {
-		GridBagConstraints c;
-		JPanel torrentPropertiesPanel = new JPanel(new GridBagLayout());
-		Border titleBorder = BorderFactory.createTitledBorder(I18n
-                .tr("Tracking"));
-		Border lineBorder = BorderFactory.createLineBorder(ThemeMediator.LIGHT_BORDER_COLOR);
-        Border border = BorderFactory.createCompoundBorder(lineBorder, titleBorder);
-        torrentPropertiesPanel.setBorder(border);
-        torrentPropertiesPanel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
+		JPanel torrentTrackingPanel = createTitledBorderedPanel(I18n.tr("Tracking"), new MigLayout("fill"));
 
-		// Trackerless
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 2;
-		c.anchor = GridBagConstraints.LINE_START;
-		c.fill = GridBagConstraints.NONE;
 		_checkUseDHT = new JCheckBox(I18n.tr("Trackerless Torrent (DHT)"),true);
 		_checkUseDHT.setToolTipText(I18n.tr("Select this option to create torrents that don't need trackers, completely descentralized. (Recommended)"));
-		torrentPropertiesPanel.add(_checkUseDHT, c);
+		torrentTrackingPanel.add(_checkUseDHT, "gapleft 5, north, wrap");
 
-		// Start seeding checkbox
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = 2;
-		c.anchor = GridBagConstraints.LINE_START;
-		c.fill = GridBagConstraints.NONE;
 		_checkStartSeeding = new JCheckBox(I18n.tr("Start seeding"),true);
 		_checkStartSeeding.setToolTipText(I18n.tr("Announce yourself as a seed for the content indexed by this torrent as soon as it's created.\nIf nobody is seeding the torrent won't work. (Recommended)"));
-		torrentPropertiesPanel.add(_checkStartSeeding, c);
+		torrentTrackingPanel.add(_checkStartSeeding, "gapleft 5, north, wrap");
 
-		// Trackers
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 2;
-		c.weightx = 0.3;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.insets = new Insets(10, 5, 5, 5);
-		_labelTrackers = new JLabel(I18n.tr(
-				"<html><p>Tracker Announce URLs</p><p>(One tracker per line)</p></html>"));
-		_labelTrackers.setToolTipText(I18n.tr("Enter a list of valid BitTorrent Tracker Server URLs.\nYour new torrent will be announced to these trackers if you start seeding the torrent."));		
-		torrentPropertiesPanel.add(_labelTrackers, c);
-
-		c = new GridBagConstraints();
-		c.gridx = 1;
-		c.gridy = 2;
-		c.fill = GridBagConstraints.BOTH;
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.weighty = 1.0;
-		c.weightx = 0.7;
-		c.insets = new Insets(5, 5, 5, 5);
+		_labelTrackers = new JLabel(I18n.tr("<html><p>Tracker Announce URLs</p><p>(One tracker per line)</p></html>"));
+		_labelTrackers.setToolTipText(I18n.tr("Enter a list of valid BitTorrent Tracker Server URLs.\nYour new torrent will be announced to these trackers if you start seeding the torrent."));
+		torrentTrackingPanel.add(_labelTrackers, "growx 40, gapleft 5, gapright 10, wmin 150px, north, west");
+		
 		_textTrackers = new JTextArea(10, 80);
 		_textTrackers.setToolTipText(_labelTrackers.getToolTipText());
 		_textTrackers.setLineWrap(false);
 		_textTrackers.setText("udp://tracker.openbittorrent.com:80/announce");
 		_textTrackersScrollPane = new JScrollPane(_textTrackers);
-		torrentPropertiesPanel.add(_textTrackersScrollPane, c);
+		torrentTrackingPanel.add(_textTrackersScrollPane, "gapright 5, gapleft 100, gaptop 10, gapbottom 5, hmin 165px, growx 60, growy, east");
 		
 		//by default suggest DHT
 		updateTrackerRelatedControlsAvailability(true);
-		_basicTorrentPane.add(torrentPropertiesPanel,"growx, growy");
+		_basicTorrentPane.add(torrentTrackingPanel,"grow");
 	}
 	
     private void initPaymentOptionsPanel() {
@@ -359,43 +312,23 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 	private void initSaveCloseButtons() {
 	    JPanel buttonContainer = new JPanel();
-	    buttonContainer.setLayout(new GridBagLayout());
-		GridBagConstraints c;
-		c = new GridBagConstraints();
-		c.gridx =0;
-		c.gridy = 2;
-		c.weightx = 1;
-		c.anchor = GridBagConstraints.LINE_END;
-		c.insets = new Insets(0, 10, 10, 10);
-		_buttonClose = new JButton(I18n.tr("Close"));
-		buttonContainer.add(_buttonClose, c);
-
-		c = new GridBagConstraints();
-		c.gridx = 1;
-		c.gridy = 2;
-		c.anchor = GridBagConstraints.LINE_END;
-		c.insets = new Insets(0, 10, 10, 10);
-		_buttonSaveAs = new JButton(I18n.tr("Save torrent as..."));
-		buttonContainer.add(_buttonSaveAs, c);
+	    buttonContainer.setLayout(new MigLayout("fillx, debug"));
 		
-		_container.add(buttonContainer,"south, gap 5");
+	    //first button will dock all the way east,
+		_buttonSaveAs = new JButton(I18n.tr("Save torrent as..."));
+		buttonContainer.add(_buttonSaveAs, "east, gapleft 5");
+		
+		//then this one will dock east (west of) the next to the existing component
+	    _buttonClose = new JButton(I18n.tr("Close"));
+	    buttonContainer.add(_buttonClose, "east");
+		
+		_container.add(buttonContainer,"south, gapbottom 5");
 	}
 
 	private void initProgressBar() {
-	    /*
-		GridBagConstraints c;
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 3;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1.0;
-		c.anchor = GridBagConstraints.PAGE_END;
-		c.insets = new Insets(0, 10, 10, 10);
-		c.gridwidth = 2;
-		*/
 		_progressBar = new JProgressBar(0,100);
 		_progressBar.setStringPainted(true);
-		_container.add(_progressBar, "south, growx");
+		_container.add(_progressBar, "south, growx, gap 5 5 5 5");
 	}
 
 	private void buildListeners() {
@@ -975,20 +908,20 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		
 	}
 	
-//	public static void main(String[] args) {
-//		AzureusStarter.start();
-//		
-//		CreateTorrentDialog dlg = new CreateTorrentDialog(null);
-//		dlg.setVisible(true);
-//		dlg.addWindowListener(new WindowAdapter() {
-//			@Override
-//			public void windowClosing(WindowEvent e) {
-//				System.out.println("End of Test");
-//				AzureusStarter.getAzureusCore().stop();
-//				System.out.println("Stopped");
-//				System.exit(0);
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		AzureusStarter.start();
+		
+		CreateTorrentDialog dlg = new CreateTorrentDialog(null);
+		dlg.setVisible(true);
+		dlg.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.out.println("End of Test");
+				AzureusStarter.getAzureusCore().stop();
+				System.out.println("Stopped");
+				System.exit(0);
+			}
+		});
+	}
 
 }
