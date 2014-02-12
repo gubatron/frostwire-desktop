@@ -28,7 +28,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +46,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -109,7 +109,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	private static String default_save_dir = SharingSettings.TORRENTS_DIR_SETTING
 			.getValueAsString();
 	
-	private static String comment = I18n.tr("Torrent File Created with FrostWire");
+	private static String comment = I18n.tr("Torrent File Created with FrostWire http://www.frostwire.com");
 	
 	private static int tracker_type = COConfigurationManager.getIntParameter(
 			"CreateTorrent.default.trackertype", TT_EXTERNAL);
@@ -129,8 +129,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	boolean useWebSeed = false;
 	private boolean addOtherHashes = false;
 
-	String multiTrackerConfig = "";
-	List<List<String>> trackers = new ArrayList<List<String>>();
+	//String multiTrackerConfig = "";
+	private final List<List<String>> trackers;
 
 	String webSeedConfig = "";
 	//Map webseeds = new HashMap();
@@ -144,16 +144,27 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	
 	private File _saveDir;
 
-	private Container _container;
-	private JButton _buttonSelectFile;
+	private final Container _container;
+	private final JTabbedPane _tabbedPane;
+    private final JPanel _basicTorrentPane;
+    private final JPanel _creativeCommonsPaymentsPane;
+	
+    //basic torrent pane tab.
+    private JTextField _textSelectedContent;
+    private JButton _buttonSelectFile;
+	private JLabel _labelTrackers;
 	private JTextArea _textTrackers;
 	private JCheckBox _checkStartSeeding;
 	private JCheckBox _checkUseDHT;
+
+	private CreativeCommonsSelectorPanel _ccPanel;
+	private PaymentOptionsPanel _paymentOptionsPanel;
+	
 	private JButton _buttonSaveAs;
 	private JProgressBar _progressBar;
-	private JTextField _textSelectedContent;
+	
 	private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(600, 570);
-	private JLabel _labelTrackers;
+	
 	private JScrollPane _textTrackersScrollPane;
 	private JFileChooser _fileChooser;
 	private String _invalidTrackerURL;
@@ -169,18 +180,29 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		addOtherHashes = false;
 
 		// they had it like this
+		trackers = new ArrayList<List<String>>();
 		trackers.add(new ArrayList<String>());
+		
+        _container = getContentPane();
+        _tabbedPane = new JTabbedPane();
+        _basicTorrentPane = new JPanel();
+        _creativeCommonsPaymentsPane = new JPanel();
 		
 		initComponents();
 		setLocationRelativeTo(frame);
 	}
 
-	private void initComponents() {
+	private void initTabbedPane() {
+	    _tabbedPane.add(_basicTorrentPane);
+	    _tabbedPane.add(_creativeCommonsPaymentsPane);
+	    _container.add(_tabbedPane);
+    }
+
+    private void initComponents() {
 		setTitle(I18n.tr("Create New Torrent"));
 		setSize(MINIMUM_DIALOG_DIMENSIONS);
 		setMinimumSize(MINIMUM_DIALOG_DIMENSIONS);
 
-		_container = getContentPane();
 		_container.setLayout(new GridBagLayout());
 
 		// TORRENT CONTENTS: Add file... Add directory
@@ -188,6 +210,13 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 		// TORRENT PROPERTIES: Trackers, Start Seeding, Trackerless
 		initTorrentProperties();
+		
+		initCreativeCommonsSelectorPanel();
+		
+		initPaymentOptionsPanel();
+		
+		// Put sub-containers on each respective pane.
+	    initTabbedPane();
 
 		// CREATE AND SAVE AS
 		initSaveCloseButtons();
@@ -202,7 +231,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		GUIUtils.addHideAction((JComponent) getContentPane());
 	}
 
-	private void initTorrentContents() {
+    private void initTorrentContents() {
 		GridBagConstraints c;
 		JPanel torrentContentsPanel = new JPanel(new GridBagLayout());
 		Border titleBorder = BorderFactory.createTitledBorder(I18n
@@ -253,7 +282,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.insets = new Insets(10, 10, 10, 10);
 		c.ipady = 50;
 		c.ipadx = 50;
-		_container.add(torrentContentsPanel, c);
+		_basicTorrentPane.add(torrentContentsPanel, c);
 	}
 
 	private void initTorrentProperties() {
@@ -300,7 +329,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				"<html><p>Tracker Announce URLs</p><p>(One tracker per line)</p></html>"));
 		_labelTrackers.setToolTipText(I18n.tr("Enter a list of valid BitTorrent Tracker Server URLs.\nYour new torrent will be announced to these trackers if you start seeding the torrent."));		
 		torrentPropertiesPanel.add(_labelTrackers, c);
-		
 
 		c = new GridBagConstraints();
 		c.gridx = 1;
@@ -330,8 +358,17 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(0, 10, 10, 10);
 
-		_container.add(torrentPropertiesPanel, c);
+		_basicTorrentPane.add(torrentPropertiesPanel, c);
 	}
+	
+    private void initPaymentOptionsPanel() {
+        _paymentOptionsPanel = new PaymentOptionsPanel();
+        
+    }
+
+    private void initCreativeCommonsSelectorPanel() {
+        // TODO Auto-generated method stub
+    }
 
 	private void initSaveCloseButtons() {
 
@@ -478,15 +515,17 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	    File canonicalFile = null;
         try {
             canonicalFile = chosenFile.getCanonicalFile();
-        } catch (IOException e) {
+            
+            if (canonicalFile.isFile()) {
+                directoryPath = null;
+                singlePath = chosenFile.getAbsolutePath();
+            } else if (canonicalFile.isDirectory()){ 
+                directoryPath = chosenFile.getAbsolutePath();
+                singlePath = null;
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
-		if (canonicalFile.isFile()) {
-			directoryPath = null;
-			singlePath = chosenFile.getAbsolutePath();
-		} else if (canonicalFile.isDirectory()){ 
-			directoryPath = chosenFile.getAbsolutePath();
-			singlePath = null;
-		}
 	}
 
 	private void correctFileSelectionMode(File chosenFile) {
@@ -502,7 +541,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 			_fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		} 
 		
-		create_from_dir = chosenFile.isDirectory();//_fileChooser.getFileSelectionMode() == JFileChooser.DIRECTORIES_ONLY;
+		create_from_dir = chosenFile.isDirectory();
 	}
 	
 	protected void onContentSelectionButton(int onContentSelectionButton) {
@@ -750,158 +789,102 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				
 				torrent = creator.create();
 
-			} else {
-				// GUBATRON: I THINK THIS else WILL NEVER HAPPEN
-				// SINCE UI OPTIONS WILL BE A LOT SIMPLER
-				TOTorrentCreator c = TOTorrentFactory
-						.createFromFileOrDirWithFixedPieceLength(f, url,
-								addOtherHashes, getPieceSizeManual());
+				if (torrent != null) {
+		            ////////////////////////////// BITCOIN/PAYPAL/CREATIVE COMMONS PROOF OF CONCEPT TORRENT ///////////////////////
+		            //hard coded section for proof of concept
+		            // additional parameters:
+		            // TIP/DONATION/SET YOUR PRICE:
+		            // - Bitcoin address.
+		            // - Paypal address.
+		            //
+		            if (_paymentOptionsPanel.hasPaymentOptions()) {
+		                paymentOptions = _paymentOptionsPanel.getPaymentOptions();
+		                if (paymentOptions != null) {
+		                    torrent.setAdditionalMapProperty("paymentOptions", paymentOptions.asMap());
+		                }
+		                //paymentOptions = new PaymentOptions("bitcoin:14F6JPXK2fR5b4gZp3134qLRGgYtvabMWL", "litecoin:LiYp3Dg11N5BgV8qKW42ubSZXFmjDByjoV", "Andrewlieber123@gmail.com");
+		            }
+		            
+		            if (_ccPanel.hasCreativeCommonsLicense()) {
+	                    // Creative Commons License.CC_NC_SA
+	                    ccLicense = _ccPanel.getCreativeCommonsLicense();           
+	                    if (ccLicense != null) {
+	                        torrent.setAdditionalMapProperty("license", ccLicense.asMap());
+	                    }
+	                    //new CreativeCommonsLicense(true,true,false,"Product Of My Environment","Hi-Rez","http://hirezfans.com/");
+		            }		            
+		            ////////////////////////////// EOF BITCOIN/PAYPAL/CREATIVE COMMONS PROOF OF CONCEPT TORRENT ////////////////////
+		            
+		            if (tracker_type == TT_DECENTRAL) {
+		                TorrentUtils.setDecentralised(torrent);
+		            }
 
-				c.addListener(this);
+		            torrent.setComment(comment);
 
-				torrent = c.create();
+		            TorrentUtils.setDHTBackupEnabled(torrent, permitDHT);
+
+		            TorrentUtils.setPrivate(torrent, privateTorrent);
+
+		            LocaleTorrentUtil.setDefaultTorrentEncoding(torrent);
+
+		            // mark this newly created torrent as complete to avoid rechecking
+		            // on open
+
+		            final File save_dir;
+
+		            if (create_from_dir) {
+		                save_dir = f;
+		            } else {
+		                save_dir = f.getParentFile();
+		            }
+		            
+		            _saveDir = save_dir;
+
+		            if (useMultiTracker) {
+		                reportCurrentTask(MessageText.getString("wizard.addingmt"));
+		                TorrentUtils.listToAnnounceGroups(trackers, torrent);
+		            }
+
+		            // NO WEB SEEDS FOR THIS RELEASE.
+		            // if (useWebSeed && webseeds.size() > 0) {
+		            // this.reportCurrentTask(MessageText
+		            // .getString("wizard.webseed.adding"));
+		            //
+		            // Map ws = _wizard.webseeds;
+		            //
+		            // List getright = (List) ws.get("getright");
+		            //
+		            // if (getright.size() > 0) {
+		            //
+		            // for (int i = 0; i < getright.size(); i++) {
+		            // reportCurrentTask("    GetRight: " + getright.get(i));
+		            // }
+		            // torrent.setAdditionalListProperty("url-list",
+		            // new ArrayList(getright));
+		            // }
+		            //
+		            // List webseed = (List) ws.get("webseed");
+		            //
+		            // if (webseed.size() > 0) {
+		            //
+		            // for (int i = 0; i < webseed.size(); i++) {
+		            // reportCurrentTask("    WebSeed: " + webseed.get(i));
+		            // }
+		            // torrent.setAdditionalListProperty("httpseeds",
+		            // new ArrayList(webseed));
+		            // }
+		            //
+		            // }
+
+		            reportCurrentTask(MessageText.getString("wizard.savingfile"));
+
+		            final File torrent_file = new File(savePath);
+
+		            torrent.serialiseToBEncodedFile(torrent_file);
+		            reportCurrentTask(MessageText.getString("wizard.filesaved"));				    
+				}
 			}
 
-			////////////////////////////// BITCOIN/PAYPAL/CREATIVE COMMONS PROOF OF CONCEPT TORRENT ///////////////////////
-	        //hard coded section for proof of concept
-			// additional parameters:
-			// TIP/DONATION/SET YOUR PRICE:
-			// - Bitcoin address.
-			// - Paypal address.
-			paymentOptions = new PaymentOptions("bitcoin:14F6JPXK2fR5b4gZp3134qLRGgYtvabMWL", "litecoin:LiYp3Dg11N5BgV8qKW42ubSZXFmjDByjoV", "Andrewlieber123@gmail.com");
-			
-			// Creative Commons License.CC_NC_SA
-			ccLicense = new CreativeCommonsLicense(true,true,false,"Product Of My Environment","Hi-Rez","http://hirezfans.com/");			
-
-			torrent.setAdditionalMapProperty("license", ccLicense.asMap());
-			torrent.setAdditionalMapProperty("paymentOptions", paymentOptions.asMap());
-            ////////////////////////////// EOF BITCOIN/PAYPAL/CREATIVE COMMONS PROOF OF CONCEPT TORRENT ////////////////////
-			
-			if (tracker_type == TT_DECENTRAL) {
-				TorrentUtils.setDecentralised(torrent);
-			}
-
-			torrent.setComment(comment);
-
-			TorrentUtils.setDHTBackupEnabled(torrent, permitDHT);
-
-			TorrentUtils.setPrivate(torrent, privateTorrent);
-
-			LocaleTorrentUtil.setDefaultTorrentEncoding(torrent);
-
-			// mark this newly created torrent as complete to avoid rechecking
-			// on open
-
-			final File save_dir;
-
-			if (create_from_dir) {
-				save_dir = f;
-			} else {
-				save_dir = f.getParentFile();
-			}
-			
-			_saveDir = save_dir;
-
-			if (useMultiTracker) {
-				reportCurrentTask(MessageText.getString("wizard.addingmt"));
-				TorrentUtils.listToAnnounceGroups(trackers, torrent);
-			}
-
-			// NO WEB SEEDS FOR THIS RELEASE.
-			// if (useWebSeed && webseeds.size() > 0) {
-			// this.reportCurrentTask(MessageText
-			// .getString("wizard.webseed.adding"));
-			//
-			// Map ws = _wizard.webseeds;
-			//
-			// List getright = (List) ws.get("getright");
-			//
-			// if (getright.size() > 0) {
-			//
-			// for (int i = 0; i < getright.size(); i++) {
-			// reportCurrentTask("    GetRight: " + getright.get(i));
-			// }
-			// torrent.setAdditionalListProperty("url-list",
-			// new ArrayList(getright));
-			// }
-			//
-			// List webseed = (List) ws.get("webseed");
-			//
-			// if (webseed.size() > 0) {
-			//
-			// for (int i = 0; i < webseed.size(); i++) {
-			// reportCurrentTask("    WebSeed: " + webseed.get(i));
-			// }
-			// torrent.setAdditionalListProperty("httpseeds",
-			// new ArrayList(webseed));
-			// }
-			//
-			// }
-
-			reportCurrentTask(MessageText.getString("wizard.savingfile"));
-
-			final File torrent_file = new File(savePath);
-
-			torrent.serialiseToBEncodedFile(torrent_file);
-			reportCurrentTask(MessageText.getString("wizard.filesaved"));
-
-//			// if the user wants to start seeding right away
-//			if (autoOpen) {
-//				waitForCore(TriggerInThread.NEW_THREAD,
-//						new AzureusCoreRunningListener() {
-//							public void azureusCoreRunning(AzureusCore core) {
-//								boolean default_start_stopped = COConfigurationManager
-//										.getBooleanParameter("Default Start Torrents Stopped");
-//
-//								byte[] hash = null;
-//								try {
-//									hash = torrent.getHash();
-//								} catch (TOTorrentException e1) {
-//								}
-//
-//								DownloadManager dm = core
-//										.getGlobalManager()
-//										.addDownloadManager(
-//												torrent_file.toString(),
-//												hash,
-//												save_dir.toString(),
-//												default_start_stopped ? DownloadManager.STATE_STOPPED
-//														: DownloadManager.STATE_QUEUED,
-//												true, // persistent
-//												true, // for seeding
-//												null); // no adapter required
-//
-//								if (!default_start_stopped && dm != null) {
-//									// We want this to move to seeding ASAP, so
-//									// move it to the top
-//									// of the download list, where it will do
-//									// the quick check and
-//									// move to the seeding list
-//									// (the for seeding flag should really be
-//									// smarter and verify
-//									// it's a seeding torrent and set
-//									// appropriately)
-//									dm.getGlobalManager().moveTop(
-//											new DownloadManager[] { dm });
-//								}
-//
-//								if (autoHost && getTrackerType() != TT_EXTERNAL) {
-//
-//									try {
-//										core.getTrackerHost().hostTorrent(
-//												torrent, true, false);
-//
-//									} catch (TRHostException e) {
-//										revertSaveCloseButtons();
-//										Logger.log(new LogAlert(
-//												LogAlert.REPEATABLE,
-//												"Host operation fails", e));
-//									}
-//								}
-//
-//							}
-//						});
-//			}
 		} catch (Exception e) {
 			
 			revertSaveCloseButtons();
