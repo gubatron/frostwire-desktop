@@ -40,6 +40,22 @@ import com.frostwire.vuze.VuzeUtils.InfoSetQuery;
  */
 public final class VuzeDownloadManager {
 
+    // states from azureus download manager
+    public static final int STATE_WAITING = DownloadManager.STATE_WAITING;
+    public static final int STATE_INITIALIZING = DownloadManager.STATE_INITIALIZING;
+    public static final int STATE_INITIALIZED = DownloadManager.STATE_INITIALIZING;
+    public static final int STATE_ALLOCATING = DownloadManager.STATE_ALLOCATING;
+    public static final int STATE_CHECKING = DownloadManager.STATE_CHECKING;
+    public static final int STATE_READY = DownloadManager.STATE_READY;
+    public static final int STATE_DOWNLOADING = DownloadManager.STATE_DOWNLOADING;
+    public static final int STATE_FINISHING = DownloadManager.STATE_FINISHING;
+    public static final int STATE_SEEDING = DownloadManager.STATE_SEEDING;
+    public static final int STATE_STOPPING = DownloadManager.STATE_STOPPING;
+    public static final int STATE_STOPPED = DownloadManager.STATE_STOPPED;
+    public static final int STATE_CLOSED = DownloadManager.STATE_STOPPED;
+    public static final int STATE_QUEUED = DownloadManager.STATE_QUEUED;
+    public static final int STATE_ERROR = DownloadManager.STATE_ERROR;
+
     private final DownloadManager dm;
 
     private final String displayName;

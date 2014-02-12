@@ -73,6 +73,7 @@ public final class VuzeDownloadFactory {
 
             vdm = new VuzeDownloadManager(dm);
             setupListener(vdm, listener);
+
         } else { // modify the existing one
             throw new IllegalStateException("Not implmented yet");
         }
@@ -109,6 +110,14 @@ public final class VuzeDownloadFactory {
             public void stateChanged(DownloadManager manager, int state) {
                 if (state == DownloadManager.STATE_READY) {
                     manager.startDownload();
+                } else {
+                    if (listener != null) {
+                        try {
+                            listener.stateChanged(dm, state);
+                        } catch (Throwable e) {
+                            LOG.error("Error calling download manager listener", e);
+                        }
+                    }
                 }
             }
 
