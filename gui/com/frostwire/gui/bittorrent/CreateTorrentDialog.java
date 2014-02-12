@@ -55,6 +55,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 
+import net.miginfocom.swing.MigLayout;
+
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
 import org.gudy.azureus2.core3.internat.MessageText;
@@ -193,9 +195,11 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	}
 
 	private void initTabbedPane() {
+	    _container.setLayout(new MigLayout("fill, wrap 1","[]"));
+	    
 	    _tabbedPane.add(_basicTorrentPane);
 	    _tabbedPane.add(_creativeCommonsPaymentsPane);
-	    _container.add(_tabbedPane);
+	    _container.add(_tabbedPane,"north, growy");
     }
 
     private void initComponents() {
@@ -259,7 +263,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		_textSelectedContent.setEditable(false);
 		_textSelectedContent.setToolTipText(I18n.tr("These box shows the contents you've selected for your new .torrent.\nEither a file, or the contents of a folder."));
 		torrentContentsPanel.add(_textSelectedContent, c);
-		
 		
 		//button to select single files
 		c = new GridBagConstraints();
@@ -341,6 +344,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		_textTrackers = new JTextArea(10, 80);
 		_textTrackers.setToolTipText(_labelTrackers.getToolTipText());
 		_textTrackers.setLineWrap(false);
+		_textTrackers.setText("udp://tracker.openbittorrent.com:80/announce");
 		_textTrackersScrollPane = new JScrollPane(_textTrackers);
 		torrentPropertiesPanel.add(_textTrackersScrollPane, c);
 		
@@ -368,10 +372,12 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
     private void initCreativeCommonsSelectorPanel() {
         // TODO Auto-generated method stub
+        _ccPanel = new CreativeCommonsSelectorPanel();
     }
 
 	private void initSaveCloseButtons() {
-
+	    JPanel buttonContainer = new JPanel();
+	    buttonContainer.setLayout(new GridBagLayout());
 		GridBagConstraints c;
 		c = new GridBagConstraints();
 		c.gridx =0;
@@ -380,7 +386,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.anchor = GridBagConstraints.LINE_END;
 		c.insets = new Insets(0, 10, 10, 10);
 		_buttonClose = new JButton(I18n.tr("Close"));
-		_container.add(_buttonClose, c);
+		buttonContainer.add(_buttonClose, c);
 
 		c = new GridBagConstraints();
 		c.gridx = 1;
@@ -388,10 +394,13 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.anchor = GridBagConstraints.LINE_END;
 		c.insets = new Insets(0, 10, 10, 10);
 		_buttonSaveAs = new JButton(I18n.tr("Save torrent as..."));
-		_container.add(_buttonSaveAs, c);
+		buttonContainer.add(_buttonSaveAs, c);
+		
+		_container.add(buttonContainer,"south, gap 5");
 	}
 
 	private void initProgressBar() {
+	    /*
 		GridBagConstraints c;
 		c = new GridBagConstraints();
 		c.gridx = 0;
@@ -401,9 +410,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.anchor = GridBagConstraints.PAGE_END;
 		c.insets = new Insets(0, 10, 10, 10);
 		c.gridwidth = 2;
+		*/
 		_progressBar = new JProgressBar(0,100);
 		_progressBar.setStringPainted(true);
-		_container.add(_progressBar, c);
+		_container.add(_progressBar, "south, growx");
 	}
 
 	private void buildListeners() {
