@@ -10,6 +10,10 @@ import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.I18n;
 
 public class PaymentOptionsPanel extends JPanel {
+
+    //"bitcoin :14F6JPXK2fR5b4gZp3134qLRGgYtvabMWL", 
+    //"litecoin:LiYp3Dg11N5BgV8qKW42ubSZXFmjDByjoV", 
+
     public PaymentOptionsPanel() {
         initBorder();
         add(new JLabel("Payment Options panel"));

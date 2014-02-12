@@ -193,19 +193,14 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	
     private void initContainersLayouts() {
         _container.setLayout(new MigLayout("fill, debug"));
-        _tabbedPane.setLayout(new MigLayout("ins 20 20 20 20, fill, debug"));
         _basicTorrentPane.setLayout(new MigLayout("fill"));
         _creativeCommonsPaymentsPane.setLayout(new MigLayout("fill"));
     }
 
 	private void initTabbedPane() {
-	    _container.add(_tabbedPane,"gaptop 30, growy, grow, wrap");
-	    //_tabbedPane.addTab(I18n.tr("1. Contents and Tracking"),_basicTorrentPane);
-	    _tabbedPane.addTab("Otro",new JLabel("Segundo tab"));
-	    JLabel jLabel = new JLabel("Tercer tab");
-	    jLabel.setLayout(new MigLayout("fill, debug"));
-	    _tabbedPane.addTab("Otro mas",jLabel);
-	    //_tabbedPane.addTab(I18n.tr("2. License, Payments/Tips"),_creativeCommonsPaymentsPane);
+	    _container.add(_tabbedPane,"gap 5 5 5 5,growy, grow, push, wrap");
+	    _tabbedPane.addTab(I18n.tr("1. Contents and Tracking"),_basicTorrentPane);
+	    _tabbedPane.addTab(I18n.tr("2. License, Payments/Tips"),_creativeCommonsPaymentsPane);
     }
 
     private void initComponents() {
@@ -795,7 +790,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
             if (paymentOptions != null) {
                 torrent.setAdditionalMapProperty("paymentOptions", paymentOptions.asMap());
             }
-            //paymentOptions = new PaymentOptions("bitcoin:14F6JPXK2fR5b4gZp3134qLRGgYtvabMWL", "litecoin:LiYp3Dg11N5BgV8qKW42ubSZXFmjDByjoV", "Andrewlieber123@gmail.com");
+
         }
     }
 
@@ -870,13 +865,14 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	}
 	
 	public static void main(String[] args) {
-
+        //ThemeMediator.changeTheme();
+        
         if (OSUtils.isMacOSX()) {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
             System.setProperty("com.apple.eawt.CocoaComponent.CompatibilityMode", "false");
         }
-	    
-		AzureusStarter.start();
+
+        AzureusStarter.start();
 		
 		CreateTorrentDialog dlg = new CreateTorrentDialog(null);
 		dlg.setVisible(true);
@@ -888,6 +884,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				System.out.println("Stopped");
 				System.exit(0);
 			}
+			
+			
 		});
 	}
 
