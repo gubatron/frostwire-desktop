@@ -118,6 +118,10 @@ final class JdkHttpClient implements HttpClient {
         return getBytes(url, DEFAULT_TIMEOUT, DEFAULT_USER_AGENT, null);
     }
 
+    public void save(String url, File file) throws IOException {
+        save(url, file, false, DEFAULT_TIMEOUT, DEFAULT_USER_AGENT);
+    }
+
     public void save(String url, File file, boolean resume) throws IOException {
         save(url, file, resume, DEFAULT_TIMEOUT, DEFAULT_USER_AGENT);
     }
