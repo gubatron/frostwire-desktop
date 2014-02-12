@@ -192,7 +192,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	}
 	
     private void initContainersLayouts() {
-        _container.setLayout(new MigLayout("fill, debug"));
+        _container.setLayout(new MigLayout("fill"));
         _basicTorrentPane.setLayout(new MigLayout("fill"));
         _creativeCommonsPaymentsPane.setLayout(new MigLayout("fill"));
     }
@@ -204,12 +204,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     }
 
     private void initComponents() {
-		setTitle(I18n.tr("Create New Torrent"));
-		setSize(MINIMUM_DIALOG_DIMENSIONS);
-		setMinimumSize(MINIMUM_DIALOG_DIMENSIONS);
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        setModalityType(ModalityType.APPLICATION_MODAL);
-        GUIUtils.addHideAction((JComponent) _container);
+		initDialogSettings();
 
 		// we do it from the bottom, and dock them south
         initSaveCloseButtons();
@@ -221,20 +216,28 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 		buildListeners();
 	}
+
+    private void initDialogSettings() {
+        setTitle(I18n.tr("Create New Torrent"));
+		setSize(MINIMUM_DIALOG_DIMENSIONS);
+		setMinimumSize(MINIMUM_DIALOG_DIMENSIONS);
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setModalityType(ModalityType.APPLICATION_MODAL);
+        GUIUtils.addHideAction((JComponent) _container);
+    }
     
     private void initTorrentContents() {
-		JPanel torrentContentsPanel = new JPanel(new MigLayout("fillx"));
+		JPanel torrentContentsPanel = new JPanel(new MigLayout("fillx, wrap 1","[]"));
 		GUIUtils.setTitledBorderOnPanel(torrentContentsPanel, I18n.tr("Torrent Contents"));
-
 		_textSelectedContent = new JTextField();
         _textSelectedContent.setEditable(false);
         _textSelectedContent.setToolTipText(I18n.tr("These box shows the contents you've selected for your new .torrent.\nEither a file, or the contents of a folder."));
-        torrentContentsPanel.add(_textSelectedContent, "growx, gapleft 5, gapright 5, gaptop 5, wrap");
+        torrentContentsPanel.add(_textSelectedContent, "north, growx, gap 5 5 0 0, wrap");
 		
 		_buttonSelectFile = new JButton(I18n.tr("Select File or Folder..."));
 		_buttonSelectFile.setToolTipText(I18n.tr("Click here to select a single file or a folder as the content indexed by your new .torrent"));
-		torrentContentsPanel.add(_buttonSelectFile,"east, gapright 5, gapbottom 5");
-		
+		torrentContentsPanel.add(_buttonSelectFile,"width 175px, align right, gaptop 5, gapright 5, gapbottom 5");
+
 		_basicTorrentPane.add(torrentContentsPanel, "growx, wrap");
 	}
 
@@ -278,13 +281,13 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	    _buttonClose = new JButton(I18n.tr("Close"));
 	    buttonContainer.add(_buttonClose, "east");
 		
-		_container.add(buttonContainer,"south, gapbottom 5");
+		_container.add(buttonContainer,"south, gapbottom 10, gapright 5");
 	}
 
 	private void initProgressBar() {
 		_progressBar = new JProgressBar(0,100);
 		_progressBar.setStringPainted(true);
-		_container.add(_progressBar, "south, growx, gap 5 5 5 5");
+		_container.add(_progressBar, "south, growx, gap 5 5 0 5");
 	}
 
 	private void buildListeners() {
@@ -617,7 +620,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 	protected void setTrackerType(int type) {
 		tracker_type = type;
-
 		COConfigurationManager.setParameter(
 				"CreateTorrent.default.trackertype", tracker_type);
 	}
@@ -666,32 +668,20 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				torrent = creator.create();
 
 				if (torrent != null) {
-		            ////////////////////////////// BITCOIN/PAYPAL/CREATIVE COMMONS PROOF OF CONCEPT TORRENT ///////////////////////
-		            //hard coded section for proof of concept
-		            // additional parameters:
-		            // TIP/DONATION/SET YOUR PRICE:
-		            // - Bitcoin address.
-		            // - Paypal address.
-		            //
 		            addAvailablePaymentOptions(torrent);
 		            addAvailableCreativeCommonsLicense(torrent);		            
-		            ////////////////////////////// EOF BITCOIN/PAYPAL/CREATIVE COMMONS PROOF OF CONCEPT TORRENT ////////////////////
 		            
 		            if (tracker_type == TT_DECENTRAL) {
 		                TorrentUtils.setDecentralised(torrent);
 		            }
 
 		            torrent.setComment(comment);
-
 		            TorrentUtils.setDHTBackupEnabled(torrent, permitDHT);
-
 		            TorrentUtils.setPrivate(torrent, privateTorrent);
-
 		            LocaleTorrentUtil.setDefaultTorrentEncoding(torrent);
 
 		            // mark this newly created torrent as complete to avoid rechecking
 		            // on open
-
 		            final File save_dir;
 
 		            if (create_from_dir) {
