@@ -20,7 +20,6 @@ package com.frostwire.gui.bittorrent;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -34,7 +33,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -50,7 +48,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
@@ -74,7 +71,6 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.AzureusStarter;
-import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.torrent.CreativeCommonsLicense;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.uxstats.UXAction;
@@ -247,18 +243,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		GUIUtils.addHideAction((JComponent) getContentPane());
 	}
     
-    private JPanel createTitledBorderedPanel(String title, LayoutManager layoutManager) {
-        JPanel panel = new JPanel(layoutManager);
-        Border titleBorder = BorderFactory.createTitledBorder(title);
-        Border lineBorder = BorderFactory.createLineBorder(ThemeMediator.LIGHT_BORDER_COLOR);
-        Border border = BorderFactory.createCompoundBorder(lineBorder, titleBorder);
-        panel.setBorder(border);
-        panel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
-        return panel;
-    }
-
     private void initTorrentContents() {
-		JPanel torrentContentsPanel = createTitledBorderedPanel(I18n.tr("Torrent Contents"), new MigLayout("fillx"));
+		JPanel torrentContentsPanel = new JPanel(new MigLayout("fillx"));
+		GUIUtils.setTitledBorderOnPanel(torrentContentsPanel, I18n.tr("Torrent Contents"));
 		
 	    //text that shows what content has been selected
         _textSelectedContent = new JTextField();
@@ -274,8 +261,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	}
 
 	private void initTorrentTracking() {
-		JPanel torrentTrackingPanel = createTitledBorderedPanel(I18n.tr("Tracking"), new MigLayout("fill"));
-
+		JPanel torrentTrackingPanel = new JPanel(new MigLayout("fill"));
+		GUIUtils.setTitledBorderOnPanel(torrentTrackingPanel, I18n.tr("Tracking"));
+		
 		_checkUseDHT = new JCheckBox(I18n.tr("Trackerless Torrent (DHT)"),true);
 		_checkUseDHT.setToolTipText(I18n.tr("Select this option to create torrents that don't need trackers, completely descentralized. (Recommended)"));
 		torrentTrackingPanel.add(_checkUseDHT, "gapleft 5, north, wrap");
@@ -293,7 +281,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		_textTrackers.setLineWrap(false);
 		_textTrackers.setText("udp://tracker.openbittorrent.com:80/announce");
 		_textTrackersScrollPane = new JScrollPane(_textTrackers);
-		torrentTrackingPanel.add(_textTrackersScrollPane, "gapright 5, gapleft 100, gaptop 10, gapbottom 5, hmin 165px, growx 60, growy, east");
+		torrentTrackingPanel.add(_textTrackersScrollPane, "gapright 5, gapleft 80, gaptop 10, gapbottom 5, hmin 165px, growx 60, growy, east");
 		
 		//by default suggest DHT
 		updateTrackerRelatedControlsAvailability(true);
@@ -302,12 +290,11 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	
     private void initPaymentOptionsPanel() {
         _paymentOptionsPanel = new PaymentOptionsPanel();
-        
     }
 
     private void initCreativeCommonsSelectorPanel() {
-        // TODO Auto-generated method stub
         _ccPanel = new CreativeCommonsSelectorPanel();
+        
     }
 
 	private void initSaveCloseButtons() {
