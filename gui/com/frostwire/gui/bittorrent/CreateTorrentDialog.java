@@ -72,6 +72,7 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.AzureusStarter;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.torrent.CreativeCommonsLicense;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.uxstats.UXAction;
@@ -80,6 +81,7 @@ import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.LimeTextField;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
@@ -151,7 +153,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     private final CreativeCommonsSelectorPanel _ccPanel;
     private final PaymentOptionsPanel _paymentOptionsPanel;
 	
-    private JTextField _textSelectedContent;
+    private LimeTextField _textSelectedContent;
     private JButton _buttonSelectFile;
 	private JLabel _labelTrackers;
 	private JTextArea _textTrackers;
@@ -200,6 +202,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	private void initTabbedPane() {
 	    _container.add(_tabbedPane,"gap 5 5 5 5,growy, grow, push, wrap");
 	    _tabbedPane.addTab(I18n.tr("1. Contents and Tracking"),_basicTorrentPane);
+	    
+	    _creativeCommonsPaymentsPane.add(_ccPanel,"grow, wrap");
+	    _creativeCommonsPaymentsPane.add(_paymentOptionsPanel,"grow");
+	    
 	    _tabbedPane.addTab(I18n.tr("2. License, Payments/Tips"),_creativeCommonsPaymentsPane);
     }
 
@@ -229,7 +235,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     private void initTorrentContents() {
 		JPanel torrentContentsPanel = new JPanel(new MigLayout("fillx, wrap 1","[]"));
 		GUIUtils.setTitledBorderOnPanel(torrentContentsPanel, I18n.tr("Torrent Contents"));
-		_textSelectedContent = new JTextField();
+		_textSelectedContent = new LimeTextField();
         _textSelectedContent.setEditable(false);
         _textSelectedContent.setToolTipText(I18n.tr("These box shows the contents you've selected for your new .torrent.\nEither a file, or the contents of a folder."));
         torrentContentsPanel.add(_textSelectedContent, "north, growx, gap 5 5 0 0, wrap");
@@ -255,9 +261,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 		_labelTrackers = new JLabel(I18n.tr("<html><p>Tracker Announce URLs</p><p>(One tracker per line)</p></html>"));
 		_labelTrackers.setToolTipText(I18n.tr("Enter a list of valid BitTorrent Tracker Server URLs.\nYour new torrent will be announced to these trackers if you start seeding the torrent."));
-		torrentTrackingPanel.add(_labelTrackers, "growx 40, gapleft 5, gapright 10, wmin 150px, north, west");
+		torrentTrackingPanel.add(_labelTrackers, "pushy, growx 40, gapleft 5, gapright 10, wmin 150px, north, west");
 		
 		_textTrackers = new JTextArea(10, 80);
+		ThemeMediator.fixKeyStrokes(_textTrackers);
 		_textTrackers.setToolTipText(_labelTrackers.getToolTipText());
 		_textTrackers.setLineWrap(false);
 		_textTrackers.setText("udp://tracker.openbittorrent.com:80/announce");
@@ -266,7 +273,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		
 		//suggest DHT by default 
 		updateTrackerRelatedControlsAvailability(true);
-		_basicTorrentPane.add(torrentTrackingPanel,"grow");
+		_basicTorrentPane.add(torrentTrackingPanel,"grow, push");
 	}
 
 	private void initSaveCloseButtons() {

@@ -35,6 +35,7 @@ import org.limewire.i18n.I18nMarker;
 
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
+import com.frostwire.gui.theme.ThemeMediator;
 
 /**
  * A better JTextField.
@@ -226,6 +227,8 @@ public class LimeTextField extends JTextField {
         undoManager = new UndoManager();
         undoManager.setLimit(1);
         getDocument().addUndoableEditListener(undoManager);
+        
+        ThemeMediator.fixKeyStrokes(this);
     }
     
     /**

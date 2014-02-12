@@ -25,7 +25,7 @@ public class CreativeCommonsSelectorPanel extends JPanel {
                 .tr("Choose a Creative Commons License for this Content"));
         
         confirmRightfulUseOfLicense = new JCheckBox("<html><strong>" + I18n.tr("I am the Content Creator of this work or I have been granted the right to share this content under the following license by the Content Creator of this work.") + "</strong></html>");
-        authorsName = new LimeTextField(I18n.tr("Author's Name"));
+        authorsName = new LimeTextField();
         
         initComponents();
     }
@@ -39,7 +39,7 @@ public class CreativeCommonsSelectorPanel extends JPanel {
             }
         });
         
-        add(confirmRightfulUseOfLicense,"growx, wrap");
+        add(confirmRightfulUseOfLicense,"growx, north, wrap");
         add(authorsName, "growx, wrap");
     }
 
