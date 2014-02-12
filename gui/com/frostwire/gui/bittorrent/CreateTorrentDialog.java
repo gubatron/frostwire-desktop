@@ -187,6 +187,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		
         _container = getContentPane();
         _tabbedPane = new JTabbedPane();
+        
         _basicTorrentPane = new JPanel();
         _creativeCommonsPaymentsPane = new JPanel();
 		
@@ -195,10 +196,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	}
 
 	private void initTabbedPane() {
-	    _container.setLayout(new MigLayout("fill, wrap 1","[]"));
-	    
-	    _tabbedPane.add(_basicTorrentPane);
-	    _tabbedPane.add(_creativeCommonsPaymentsPane);
+	    _tabbedPane.add(_basicTorrentPane, I18n.tr("1. Contents and Tracking"));
+	    _tabbedPane.add(_creativeCommonsPaymentsPane, I18n.tr("2. License, Payments/Tips"));
 	    _container.add(_tabbedPane,"north, growy");
     }
 
@@ -207,13 +206,13 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		setSize(MINIMUM_DIALOG_DIMENSIONS);
 		setMinimumSize(MINIMUM_DIALOG_DIMENSIONS);
 
-		_container.setLayout(new GridBagLayout());
+		initContainersLayouts();
 
 		// TORRENT CONTENTS: Add file... Add directory
 		initTorrentContents();
 
 		// TORRENT PROPERTIES: Trackers, Start Seeding, Trackerless
-		initTorrentProperties();
+		initTorrentTracking();
 		
 		initCreativeCommonsSelectorPanel();
 		
@@ -234,6 +233,12 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         setModalityType(ModalityType.APPLICATION_MODAL);
 		GUIUtils.addHideAction((JComponent) getContentPane());
 	}
+
+    private void initContainersLayouts() {
+        _container.setLayout(new MigLayout("ins 10, fill, wrap 1","[]"));
+        _basicTorrentPane.setLayout(new MigLayout("ins 10, fillx, filly, wrap 1","[]"));
+        _creativeCommonsPaymentsPane.setLayout(new MigLayout());
+    }
 
     private void initTorrentContents() {
 		GridBagConstraints c;
@@ -274,25 +279,14 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.weightx = 1.0;
 		torrentContentsPanel.add(_buttonSelectFile, c);
 		
-		// add to content pane
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.PAGE_START;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.weightx = 1.0;
-		c.gridwidth = 2;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(10, 10, 10, 10);
-		c.ipady = 50;
-		c.ipadx = 50;
-		_basicTorrentPane.add(torrentContentsPanel, c);
+		_basicTorrentPane.add(torrentContentsPanel, "growy, growx");
 	}
 
-	private void initTorrentProperties() {
+	private void initTorrentTracking() {
 		GridBagConstraints c;
 		JPanel torrentPropertiesPanel = new JPanel(new GridBagLayout());
 		Border titleBorder = BorderFactory.createTitledBorder(I18n
-                .tr("Torrent Properties"));
+                .tr("Tracking"));
 		Border lineBorder = BorderFactory.createLineBorder(ThemeMediator.LIGHT_BORDER_COLOR);
         Border border = BorderFactory.createCompoundBorder(lineBorder, titleBorder);
         torrentPropertiesPanel.setBorder(border);
@@ -350,19 +344,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		
 		//by default suggest DHT
 		updateTrackerRelatedControlsAvailability(true);
-
-		// add to content pane
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 1;
-		c.weightx = 1.0;
-		c.weighty = 1.0;
-		c.gridwidth = 2;
-		c.anchor = GridBagConstraints.LINE_END;
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(0, 10, 10, 10);
-
-		_basicTorrentPane.add(torrentPropertiesPanel, c);
+		_basicTorrentPane.add(torrentPropertiesPanel,"growx, growy");
 	}
 	
     private void initPaymentOptionsPanel() {
