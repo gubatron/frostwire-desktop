@@ -228,11 +228,6 @@ public final class VuzeDownloadFactory {
         return s;
     }
 
-    public static VuzeDownloadManager create(String absolutePath, Object object, String relativePath) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
     public static VuzeDownloadManager create(URI uri) {
         // TODO Auto-generated method stub
         return null;
