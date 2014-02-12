@@ -26,8 +26,6 @@ import java.util.Set;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
 
-import com.frostwire.android.gui.transfers.BittorrentDownload;
-import com.frostwire.android.gui.transfers.TransferManager;
 import com.frostwire.search.torrent.TorrentSearchResult;
 
 /**
@@ -143,17 +141,17 @@ public class VuzeDownloadFactory {
         return s;
     }
 
-    public static BittorrentDownload create(String absolutePath, Object object, String relativePath) {
+    public static VuzeDownloadManager create(String absolutePath, Object object, String relativePath) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    public static BittorrentDownload create(URI uri) {
+    public static VuzeDownloadManager create(URI uri) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    public static BittorrentDownload create(TorrentSearchResult sr) {
+    public static VuzeDownloadManager create(TorrentSearchResult sr) {
         // TODO Auto-generated method stub
         return null;
     }

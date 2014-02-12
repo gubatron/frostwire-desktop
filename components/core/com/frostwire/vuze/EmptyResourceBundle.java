@@ -23,13 +23,11 @@ import java.util.ResourceBundle;
 import java.util.Vector;
 
 /**
- * This class is public until the a refactor is done.
- * 
  * @author gubatron
  * @author aldenml
  *
  */
-public final class EmptyResourceBundle extends ResourceBundle {
+final class EmptyResourceBundle extends ResourceBundle {
 
     @Override
     public Enumeration<String> getKeys() {

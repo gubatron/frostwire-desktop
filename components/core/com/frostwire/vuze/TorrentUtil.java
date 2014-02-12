@@ -34,6 +34,7 @@ import com.aelitis.azureus.ui.selectedcontent.SelectedContent;
  * @author Allan Crooks
  *
  */
+@SuppressWarnings({"deprecation", "unused"})
 public class TorrentUtil {
 
     public static boolean shouldStopGroup(Object[] datasources) {
