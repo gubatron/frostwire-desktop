@@ -29,9 +29,11 @@ import org.apache.commons.io.IOUtils;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.download.DownloadManagerInitialisationAdapter;
+import org.gudy.azureus2.core3.download.impl.DownloadManagerAdapter;
 import org.gudy.azureus2.core3.global.GlobalManager;
 import org.gudy.azureus2.core3.util.HashWrapper;
 
+import com.frostwire.logging.Logger;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.torrent.TOTorrent;
 import com.frostwire.torrent.TOTorrentException;
@@ -45,13 +47,16 @@ import com.frostwire.torrent.TorrentUtils;
  */
 public final class VuzeDownloadFactory {
 
+    private static final Logger LOG = Logger.getLogger(VuzeDownloadFactory.class);
+
     private VuzeDownloadFactory() {
     }
 
-    public static VuzeDownloadManager create(String torrent, final Set<String> selection, String saveDir) throws IOException {
+    public static VuzeDownloadManager create(String torrent, final Set<String> selection, String saveDir, VuzeDownloadListener listener) throws IOException {
         GlobalManager gm = VuzeManager.getInstance().getCore().getGlobalManager();
 
         DownloadManager dm = findDM(gm, torrent);
+        VuzeDownloadManager vdm = null;
 
         if (dm == null) { // new download
             dm = gm.addDownloadManager(torrent, null, saveDir, null, DownloadManager.STATE_WAITING, true, false, new DownloadManagerInitialisationAdapter() {
@@ -65,11 +70,14 @@ public final class VuzeDownloadFactory {
                     return 0;
                 }
             });
+
+            vdm = new VuzeDownloadManager(dm);
+            setupListener(vdm, listener);
         } else { // modify the existing one
             throw new IllegalStateException("Not implmented yet");
         }
 
-        return null;
+        return vdm;
     }
 
     private static DownloadManager findDM(GlobalManager gm, String torrent) throws IOException {
@@ -90,6 +98,42 @@ public final class VuzeDownloadFactory {
             IOUtils.closeQuietly(is);
         }
     }
+
+    private static void setupListener(final VuzeDownloadManager dm, final VuzeDownloadListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("Download manager listener can't be null");
+        }
+
+        dm.getDM().addListener(new DownloadManagerAdapter() {
+            @Override
+            public void stateChanged(DownloadManager manager, int state) {
+                if (state == DownloadManager.STATE_READY) {
+                    manager.startDownload();
+                }
+            }
+
+            @Override
+            public void downloadComplete(DownloadManager manager) {
+                if (listener != null) {
+                    try {
+                        listener.downloadComplete(dm);
+                    } catch (Throwable e) {
+                        LOG.error("Error calling download manager listener", e);
+                    }
+                }
+            }
+        });
+
+        if (dm.getDM().getState() != DownloadManager.STATE_STOPPED) {
+            dm.getDM().initialize();
+        }
+    }
+
+    //    if (notifyFinished) {
+    //        TransferManager.instance().incrementDownloadsToReview();
+    //        Engine.instance().notifyDownloadFinished(manager.getDisplayName(), manager.getSaveLocation().getAbsoluteFile());
+    //        Librarian.instance().scan(manager.getSaveLocation().getAbsoluteFile());
+    //    }
 
     //    public static VuzeDownloadManager create(String torrent, final Set<String> fileSelection, String saveDir, VuzeDownloadListener listener) throws IOException {
     //        GlobalManager gm = VuzeManager.getInstance().getGlobalManager();
@@ -191,12 +235,6 @@ public final class VuzeDownloadFactory {
     }
 
     /*
-    final class BittorrentDownloadCreator {
-
-    private static final String TAG = "FW.BittorrentDownloadCreator";
-
-    private BittorrentDownloadCreator() {
-    }
 
     public static BittorrentDownload create(TransferManager manager, URI uri) throws TOTorrentException {
         if (uri.getScheme().equalsIgnoreCase("file")) {
@@ -351,35 +389,7 @@ public final class VuzeDownloadFactory {
         }
     }
 
-    private static void setup(DownloadManager dm, final boolean notifyFinished) {
-        dm.addListener(new DownloadManagerAdapter() {
-
-            private AtomicBoolean finished = new AtomicBoolean(false);
-
-            @Override
-            public void stateChanged(DownloadManager manager, int state) {
-                if (state == DownloadManager.STATE_READY) {
-                    manager.startDownload();
-                }
-
-                if (VuzeUtils.isComplete(manager) && finished.compareAndSet(false, true)) {
-                    if (!ConfigurationManager.instance().getBoolean(Constants.PREF_KEY_TORRENT_SEED_FINISHED_TORRENTS)) {
-                        VuzeUtils.stop(manager);
-                    }
-
-                    if (notifyFinished) {
-                        TransferManager.instance().incrementDownloadsToReview();
-                        Engine.instance().notifyDownloadFinished(manager.getDisplayName(), manager.getSaveLocation().getAbsoluteFile());
-                        Librarian.instance().scan(manager.getSaveLocation().getAbsoluteFile());
-                    }
-                }
-            }
-        });
-
-        if (dm.getState() != DownloadManager.STATE_STOPPED) {
-            dm.initialize();
-        }
-    }
+    
 
     private static boolean[] getFileSelection(DownloadManager dm) {
         boolean[] fileSelections = new boolean[dm.getDiskManagerFileInfoSet().getFiles().length];

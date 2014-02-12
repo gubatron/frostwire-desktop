@@ -48,7 +48,7 @@ public final class VuzeDownloadManager {
     private final File savePath;
     private final Date creationDate;
 
-    public VuzeDownloadManager(DownloadManager dm) {
+    VuzeDownloadManager(DownloadManager dm) {
         this.dm = dm;
 
         Set<DiskManagerFileInfo> noSkippedSet = VuzeUtils.getFileInfoSet(dm, InfoSetQuery.NO_SKIPPED);

@@ -35,7 +35,7 @@ import com.aelitis.azureus.ui.selectedcontent.SelectedContent;
  *
  */
 @SuppressWarnings({"deprecation", "unused"})
-public class TorrentUtil {
+class TorrentUtil {
 
     public static boolean shouldStopGroup(Object[] datasources) {
         DownloadManager[] dms = toDMS(datasources);

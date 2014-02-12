@@ -102,15 +102,18 @@ public final class VuzeUtils {
         return result;
     }
 
+    public static void remove(VuzeDownloadManager dm, boolean deleteData) {
+        TorrentUtil.removeDownloads(new DownloadManager[] { dm.getDM() }, null, deleteData);
+    }
+
     public static enum InfoSetQuery {
         ALL, SKIPPED, NO_SKIPPED
     }
-    
-    
+
     /// review this code
-    
+
     private static AsyncDispatcher async = new AsyncDispatcher(2000);
-    
+
     public static void removeDownload(VuzeDownloadManager downloadManager, boolean deleteTorrent, boolean deleteData) {
         removeDownload(downloadManager, deleteTorrent, deleteData, true);
     }
@@ -318,27 +321,27 @@ public final class VuzeUtils {
 
         finalCleanup(dm);
     }
-    
+
     /**
      * Deletes incomplete and skipped files.
      */
     private static void finalCleanup(DownloadManager dm) {
-//        Set<File> filesToDelete = getSkippedFiles(dm);
-//        filesToDelete.addAll(getIncompleteFiles(dm));
-//
-//        for (File f : filesToDelete) {
-//            try {
-//                if (f.exists() && !f.delete()) {
-//                    System.out.println("Can't delete file: " + f);
-//                }
-//            } catch (Throwable e) {
-//                System.out.println("Can't delete file: " + f);
-//            }
-//        }
-//
-//        FileUtils.deleteEmptyDirectoryRecursive(dm.getSaveLocation());
+        //        Set<File> filesToDelete = getSkippedFiles(dm);
+        //        filesToDelete.addAll(getIncompleteFiles(dm));
+        //
+        //        for (File f : filesToDelete) {
+        //            try {
+        //                if (f.exists() && !f.delete()) {
+        //                    System.out.println("Can't delete file: " + f);
+        //                }
+        //            } catch (Throwable e) {
+        //                System.out.println("Can't delete file: " + f);
+        //            }
+        //        }
+        //
+        //        FileUtils.deleteEmptyDirectoryRecursive(dm.getSaveLocation());
     }
-    
+
     public static Set<File> getIncompleteFiles(DownloadManager dm) {
         Set<File> set = new HashSet<File>();
 
@@ -351,7 +354,7 @@ public final class VuzeUtils {
 
         return set;
     }
-    
+
     public static int getDownloadPercent(DiskManagerFileInfo fileInfo) {
         try {
             long length = fileInfo.getLength();
@@ -365,45 +368,45 @@ public final class VuzeUtils {
             return 0;
         }
     }
-    
+
     public static Set<File> getIgnorableFiles() {
         Set<File> set = getIncompleteFiles();
         set.addAll(getSkipedFiles());
         return set;
     }
-    
+
     public static Set<File> getIncompleteFiles() {
         Set<File> set = new HashSet<File>();
 
-//        if (!AzureusManager.isCreated()) {
-//            return set;
-//        }
-//
-//        List<?> dms = AzureusManager.instance().getGlobalManager().getDownloadManagers();
-//        for (Object obj : dms) {
-//            DownloadManager dm = (DownloadManager) obj;
-//            set.addAll(getIncompleteFiles(dm));
-//        }
+        //        if (!AzureusManager.isCreated()) {
+        //            return set;
+        //        }
+        //
+        //        List<?> dms = AzureusManager.instance().getGlobalManager().getDownloadManagers();
+        //        for (Object obj : dms) {
+        //            DownloadManager dm = (DownloadManager) obj;
+        //            set.addAll(getIncompleteFiles(dm));
+        //        }
 
         return set;
     }
-    
+
     public static Set<File> getSkipedFiles() {
         Set<File> set = new HashSet<File>();
 
-//        if (!AzureusManager.isCreated()) {
-//            return set;
-//        }
-//
-//        List<?> dms = AzureusManager.instance().getGlobalManager().getDownloadManagers();
-//        for (Object obj : dms) {
-//            DownloadManager dm = (DownloadManager) obj;
-//            set.addAll(getSkippedFiles(dm));
-//        }
+        //        if (!AzureusManager.isCreated()) {
+        //            return set;
+        //        }
+        //
+        //        List<?> dms = AzureusManager.instance().getGlobalManager().getDownloadManagers();
+        //        for (Object obj : dms) {
+        //            DownloadManager dm = (DownloadManager) obj;
+        //            set.addAll(getSkippedFiles(dm));
+        //        }
 
         return set;
     }
-    
+
     public static boolean isComplete(DownloadManager dm) {
         /*
         if (!TorrentUtil.getSkippedFiles(dm).isEmpty()) {
@@ -419,7 +422,7 @@ public final class VuzeUtils {
         }*/
         return dm.getAssumedComplete();
     }
-    
+
     public static void stop(DownloadManager dm) {
         ManagerUtils.start(dm);
     }
