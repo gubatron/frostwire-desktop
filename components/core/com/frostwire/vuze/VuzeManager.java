@@ -178,7 +178,9 @@ public final class VuzeManager {
             COConfigurationManager.setParameter("network.max.simultaneous.connect.attempts", 1);
         }
 
-        setMessages(conf.getMessages());
+        if (conf.getMessages() != null) {
+            setMessages(conf.getMessages());
+        }
     }
 
     private void disableDefaultPlugins() {
