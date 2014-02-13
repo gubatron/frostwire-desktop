@@ -46,7 +46,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -163,7 +162,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	private JButton _buttonSaveAs;
 	private JProgressBar _progressBar;
 	
-	private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(600, 570);
+	private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(730, 600);
 	
 	private JScrollPane _textTrackersScrollPane;
 	private JFileChooser _fileChooser;
@@ -881,8 +880,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				System.out.println("Stopped");
 				System.exit(0);
 			}
-			
-			
 		});
 	}
 
