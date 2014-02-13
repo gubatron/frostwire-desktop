@@ -3,9 +3,11 @@ package com.frostwire.gui.bittorrent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Icon;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -96,5 +98,12 @@ public class CreativeCommonsSelectorPanel extends JPanel {
 
     public CreativeCommonsLicense getCreativeCommonsLicense() {
         return null;
+    }
+    
+    public class ImageToggleButton extends JToggleButton {
+        public ImageToggleButton(String text, Icon icon) {
+            super("<html><b>" + text + "</b></html>",icon);
+            
+        }
     }
 }
