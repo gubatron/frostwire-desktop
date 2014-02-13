@@ -28,16 +28,20 @@ public class CreativeCommonsSelectorPanel extends JPanel {
         authorsName = new LimeTextField();
         
         initComponents();
+        initListeners();
     }
 
-    private void initComponents() {
-        confirmRightfulUseOfLicense.setSelected(false);
+    private void initListeners() {
         confirmRightfulUseOfLicense.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                onConfirmRightfulUseOfLicenseAction(); 
             }
         });
+    }
+
+    private void initComponents() {
+        confirmRightfulUseOfLicense.setSelected(false);
         
         add(confirmRightfulUseOfLicense,"growx, north, wrap");
         add(authorsName, "growx, wrap");
