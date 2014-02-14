@@ -148,7 +148,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	private final Container _container;
 	private final JTabbedPane _tabbedPane;
     private final JPanel _basicTorrentPane;
-    private final JPanel _creativeCommonsPaymentsPane;
+    private final JPanel _creativeCommonsPane;
+    private final JPanel _paymentsPane;
     private final CreativeCommonsSelectorPanel _ccPanel;
     private final PaymentOptionsPanel _paymentOptionsPanel;
 	
@@ -183,7 +184,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         _tabbedPane = new JTabbedPane();
         
         _basicTorrentPane = new JPanel();
-        _creativeCommonsPaymentsPane = new JPanel();
+        _creativeCommonsPane = new JPanel();
+        _paymentsPane = new JPanel();
         _ccPanel = new CreativeCommonsSelectorPanel();
         _paymentOptionsPanel = new PaymentOptionsPanel();
 
@@ -195,17 +197,18 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     private void initContainersLayouts() {
         _container.setLayout(new MigLayout("fill"));
         _basicTorrentPane.setLayout(new MigLayout("fill"));
-        _creativeCommonsPaymentsPane.setLayout(new MigLayout("fill"));
+        _creativeCommonsPane.setLayout(new MigLayout("fill"));
+        _paymentsPane.setLayout(new MigLayout("fill"));
     }
 
 	private void initTabbedPane() {
-	    _container.add(_tabbedPane,"gap 5 5 5 5,growy, grow, push, wrap");
+	    _container.add(_tabbedPane,"gap 5 5 5 5, grow, wrap");
+	    _creativeCommonsPane.add(_ccPanel,"grow");
+	    _paymentsPane.add(_paymentOptionsPanel,"grow");
+
 	    _tabbedPane.addTab(I18n.tr("1. Contents and Tracking"),_basicTorrentPane);
-	    
-	    _creativeCommonsPaymentsPane.add(_ccPanel,"grow, wrap");
-	    _creativeCommonsPaymentsPane.add(_paymentOptionsPanel,"grow");
-	    
-	    _tabbedPane.addTab(I18n.tr("2. License, Payments/Tips"),_creativeCommonsPaymentsPane);
+	    _tabbedPane.addTab(I18n.tr("2. Copyright License"),_creativeCommonsPane);
+	    _tabbedPane.addTab(I18n.tr("3. Payments/Tips"),_paymentsPane);
     }
 
     private void initComponents() {

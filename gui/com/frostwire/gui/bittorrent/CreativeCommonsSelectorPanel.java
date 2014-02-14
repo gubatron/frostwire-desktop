@@ -74,9 +74,9 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
         
         ccButton = new LicenseToggleButton(LicenseToggleButton.LicenseIcon.CC,"Creative Commons", "Offering your work under a Creative Commons license does not mean giving up your copyright. It means offering some of your rights to any member of the public but only under certain conditions.", true, false);
         byButton = new LicenseToggleButton(LicenseToggleButton.LicenseIcon.BY,"Attribution" , "You let others copy, distribute, display, and perform your copyrighted work but only if they give credit the way you request.", true, false);
-        saButton = new LicenseToggleButton(LicenseToggleButton.LicenseIcon.SA,"Share-Alike", "You allow others to distribute derivative works only under a license identical to the license that governs your work.", true, true);
+        ncButton = new LicenseToggleButton(LicenseToggleButton.LicenseIcon.NC,"NonCommercial", "You let others copy, distribute, display, and perform your work — and derivative works based upon it — but for noncommercial purposes only.",true, true);
         ndButton = new LicenseToggleButton(LicenseToggleButton.LicenseIcon.ND,"NoDerivatives","You let others copy, distribute, display, and perform only verbatim copies of your work, not derivative works based upon it.", false, true);
-        ncButton = new LicenseToggleButton(LicenseToggleButton.LicenseIcon.NC,"NonCommercial", "You let others copy, distribute, display, and perform your work — and derivative works based upon it — but for noncommercial purposes only.",false, true);
+        saButton = new LicenseToggleButton(LicenseToggleButton.LicenseIcon.SA,"Share-Alike", "You allow others to distribute derivative works only under a license identical to the license that governs your work.", true, true);
         
         initListeners();
         initComponents();
@@ -113,6 +113,9 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
                onConfirmRightfulUseOfLicenseAction(); 
             }
         });
+        
+        ndButton.setOnToggleListener(this);
+        saButton.setOnToggleListener(this);
     }
 
     private void initComponents() {
@@ -134,9 +137,9 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
         JPanel licenseButtonsPanel = new JPanel(new MigLayout("fillx, insets 0 0 0 0, debug"));
         licenseButtonsPanel.add(ccButton, "aligny top");
         licenseButtonsPanel.add(byButton,"aligny top");
-        licenseButtonsPanel.add(saButton,"aligny top");
+        licenseButtonsPanel.add(ncButton,"aligny top");
         licenseButtonsPanel.add(ndButton,"aligny top");
-        licenseButtonsPanel.add(ncButton,"aligny top,wrap");
+        licenseButtonsPanel.add(saButton,"aligny top, wrap");
         licenseButtonsPanel.setEnabled(false);
         
         add(new JLabel("<html><strong>"+I18n.tr("Select what people can and can't do with this work")+"</strong></html>"),"span 2, alignx center, growx, wrap");
