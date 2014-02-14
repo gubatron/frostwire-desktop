@@ -44,7 +44,7 @@ public final class VuzeFormatter {
 
         return hex;
     }
-    
+
     public static String formatShareRatio(int sr) {
         if (sr == Integer.MAX_VALUE) {
             sr = Integer.MAX_VALUE - 1;
@@ -119,5 +119,40 @@ public final class VuzeFormatter {
         tmp = tmp.replaceAll("%2", param2);
 
         return tmp;
+    }
+
+    public static String formatDownloadState(int state) {
+        switch (state) {
+        case VuzeDownloadManager.STATE_WAITING:
+            return "Waiting";
+        case VuzeDownloadManager.STATE_INITIALIZING:
+            return "Initializing";
+        case VuzeDownloadManager.STATE_INITIALIZED:
+            return "Initialized";
+        case VuzeDownloadManager.STATE_ALLOCATING:
+            return "Allocating";
+        case VuzeDownloadManager.STATE_CHECKING:
+            return "Checking";
+        case VuzeDownloadManager.STATE_READY:
+            return "Ready";
+        case VuzeDownloadManager.STATE_DOWNLOADING:
+            return "Downloading";
+        case VuzeDownloadManager.STATE_FINISHING:
+            return "Finishing";
+        case VuzeDownloadManager.STATE_SEEDING:
+            return "Seeding";
+        case VuzeDownloadManager.STATE_STOPPING:
+            return "Stopping";
+        case VuzeDownloadManager.STATE_STOPPED:
+            return "Stopped";
+        case VuzeDownloadManager.STATE_CLOSED:
+            return "Closed";
+        case VuzeDownloadManager.STATE_QUEUED:
+            return "Queued";
+        case VuzeDownloadManager.STATE_ERROR:
+            return "Error";
+        default:
+            return "Unknown";
+        }
     }
 }

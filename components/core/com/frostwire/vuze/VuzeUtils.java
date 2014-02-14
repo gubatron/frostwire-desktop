@@ -26,12 +26,14 @@ import java.util.Set;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfoSet;
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.gudy.azureus2.core3.global.GlobalManager;
 import org.gudy.azureus2.core3.global.GlobalManagerDownloadRemovalVetoException;
 import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.util.AERunnable;
 import org.gudy.azureus2.core3.util.AsyncDispatcher;
 import org.gudy.azureus2.core3.util.Debug;
+import org.gudy.azureus2.core3.util.HashWrapper;
 import org.gudy.azureus2.plugins.PluginInterface;
 import org.gudy.azureus2.plugins.download.Download;
 import org.gudy.azureus2.plugins.sharing.ShareManager;
@@ -104,6 +106,14 @@ public final class VuzeUtils {
 
     public static void remove(VuzeDownloadManager dm, boolean deleteData) {
         TorrentUtil.removeDownloads(new DownloadManager[] { dm.getDM() }, null, deleteData);
+    }
+
+    public static void remove(byte[] hash, boolean deleteData) {
+        GlobalManager gm = VuzeManager.getInstance().getGlobalManager();
+        DownloadManager dm = gm.getDownloadManager(new HashWrapper(hash));
+        if (dm != null) {
+            TorrentUtil.removeDownloads(new DownloadManager[] { dm }, null, deleteData);
+        }
     }
 
     public static enum InfoSetQuery {

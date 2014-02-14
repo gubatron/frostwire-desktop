@@ -76,8 +76,12 @@ public final class VuzeManager {
         return Loader.INSTANCE;
     }
 
-    public AzureusCore getCore() {
+    AzureusCore getCore() {
         return core;
+    }
+
+    GlobalManager getGlobalManager() {
+        return core.getGlobalManager();
     }
 
     public void loadTorrents(final boolean stop, final LoadTorrentsListener listener) {

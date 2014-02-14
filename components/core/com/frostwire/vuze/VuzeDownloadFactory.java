@@ -53,7 +53,7 @@ public final class VuzeDownloadFactory {
     }
 
     public static VuzeDownloadManager create(String torrent, final Set<String> selection, String saveDir, VuzeDownloadListener listener) throws IOException {
-        GlobalManager gm = VuzeManager.getInstance().getCore().getGlobalManager();
+        GlobalManager gm = VuzeManager.getInstance().getGlobalManager();
 
         DownloadManager dm = findDM(gm, torrent);
         VuzeDownloadManager vdm = null;
