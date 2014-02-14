@@ -67,7 +67,7 @@ public class CreativeCommonsLicense implements Mappable<String,Map<String,String
     public CreativeCommonsLicense(boolean shareAlike, boolean nonCommercial, boolean noDerivatives, String attributionTitle, String attributionAuthor, String attributionURL) {
         final String licenseUrl = getValidLicenseString(shareAlike, nonCommercial, noDerivatives);
         if (!isInvalidLicense(licenseUrl)) {
-            this.licenseUrl = licenseUrl + "-" + CC_VERSION;
+            this.licenseUrl = licenseUrl;
             this.attributionTitle = attributionTitle;
             this.attributionAuthor = attributionAuthor;
             this.attributionUrl = attributionURL;
@@ -95,6 +95,13 @@ public class CreativeCommonsLicense implements Mappable<String,Map<String,String
         
         container.put("creative-commons", innerMap);
         return container;
+    }
+    
+    public String getLicenseShortCode() {
+       int offsetStart = "http://creativecommons.org/licenses/".length();
+       int offsetEnd = licenseUrl.indexOf("/", offsetStart+1);
+       System.out.println(licenseUrl);
+       return licenseUrl.substring(offsetStart, offsetEnd);
     }
     
     private static boolean isInvalidLicense(String licenseStr) {
