@@ -206,9 +206,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	    _creativeCommonsPane.add(_ccPanel,"grow");
 	    _paymentsPane.add(_paymentOptionsPanel,"grow");
 
-	    _tabbedPane.addTab(I18n.tr("1. Contents and Tracking"),_basicTorrentPane);
-	    _tabbedPane.addTab(I18n.tr("2. Copyright License"),_creativeCommonsPane);
-	    _tabbedPane.addTab(I18n.tr("3. Payments/Tips"),_paymentsPane);
+	    _tabbedPane.addTab("1. " + I18n.tr("Contents and Tracking"),_basicTorrentPane);
+	    _tabbedPane.addTab("2. " + I18n.tr("Copyright License"),_creativeCommonsPane);
+	    _tabbedPane.addTab("3. " + I18n.tr("Payments/Tips"),_paymentsPane);
     }
 
     private void initComponents() {
@@ -775,7 +775,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	}
 
     private void addAvailableCreativeCommonsLicense(final TOTorrent torrent) {
-        if (_ccPanel.hasCreativeCommonsLicense()) {
+        if (_ccPanel.hasConfirmedRightfulUseOfLicense()) {
             CreativeCommonsLicense ccLicense = _ccPanel.getCreativeCommonsLicense();           
             if (ccLicense != null) {
                 torrent.setAdditionalMapProperty("license", ccLicense.asMap());

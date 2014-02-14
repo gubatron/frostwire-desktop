@@ -18,5 +18,5 @@ package com.frostwire.gui.bittorrent;
 import com.frostwire.gui.bittorrent.CreativeCommonsSelectorPanel.LicenseToggleButton;
 
 public interface LicenseToggleButtonOnToggleListener {
-    public void onToggle(final LicenseToggleButton event);
+    public void onButtonToggled(final LicenseToggleButton event);
 }
