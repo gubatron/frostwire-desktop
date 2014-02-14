@@ -15,11 +15,14 @@
 
 package com.frostwire.gui.bittorrent;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -175,12 +178,12 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
         add(new JLabel("<html><strong>" + I18n.tr("Select what people can and can't do with this work") + "</strong></html>"), "span 2, alignx center, growx, push, wrap");
 
         JPanel licenseButtonsPanel = new JPanel(new MigLayout("fillx, insets 0 0 0 0"));
-        licenseButtonsPanel.add(ccButton, "aligny top");
-        licenseButtonsPanel.add(byButton, "aligny top");
-        licenseButtonsPanel.add(ncButton, "aligny top");
-        licenseButtonsPanel.add(ndButton, "aligny top");
-        licenseButtonsPanel.add(saButton, "aligny top, wrap");
-        add(licenseButtonsPanel, "aligny top, span 2, growx, pushy, gapbottom 5px, wrap");
+        licenseButtonsPanel.add(ccButton, "growx, aligny top, pushy, growy, gap 2 2 2 2");
+        licenseButtonsPanel.add(byButton, "growx, aligny top, pushy, growy, gap 2 2 2 2");
+        licenseButtonsPanel.add(ncButton, "growx, aligny top, pushy, growy, gap 2 2 2 2");
+        licenseButtonsPanel.add(ndButton, "growx, aligny top, pushy, growy, gap 2 2 2 2");
+        licenseButtonsPanel.add(saButton, "growx, aligny top, pushy, growy, gap 2 2 2 2, wrap");
+        add(licenseButtonsPanel, "aligny top, span 2, grow, pushy, gapbottom 5px, wrap");
         
         pickedLicenseLabel.setHorizontalAlignment(SwingConstants.LEFT);
         pickedLicenseLabel.setBorderPainted(false);
@@ -207,6 +210,10 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
         ccButton.setSelected(creativeCommonsEnabled);
         byButton.setSelected(creativeCommonsEnabled);
         ncButton.setSelected(creativeCommonsEnabled);
+        
+        ncButton.setToggleable(creativeCommonsEnabled);
+        ndButton.setToggleable(creativeCommonsEnabled);
+        saButton.setToggleable(creativeCommonsEnabled);
 
         if (creativeCommonsEnabled) {
             ndButton.setSelected(false);
@@ -222,7 +229,7 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
 
     public static class LicenseToggleButton extends JPanel {
         private boolean selected;
-        private final boolean toggleable;
+        private boolean toggleable;
 
         private final ImageIcon selectedIcon;
         private final AlphaIcon unselectedIcon;
@@ -252,21 +259,15 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
             descriptionLabel = new JLabel("<html><small>" + description + "</small></html>");
 
             setLayout(new MigLayout("fill, wrap 1"));
-            add(iconLabel, "alignx center, wrap");
-            add(titleLabel, "growx, alignx center, wrap");
-            add(descriptionLabel, "alignx center");
+            add(iconLabel, "top, aligny top, alignx center, wrap");
+            add(titleLabel, "top, aligny top, growx, alignx center, wrap");
+            add(descriptionLabel, "top, aligny top, growy, pushy, alignx center");
 
-            addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    if (listener != null && listener instanceof CreativeCommonsSelectorPanel) {
-                        CreativeCommonsSelectorPanel parentPanel = (CreativeCommonsSelectorPanel) listener;
-                        if (parentPanel.hasConfirmedRightfulUseOfLicense()) {
-                            onToggle();
-                        }
-                    }
-                }
-            });
+            initEventListeners();
+        }
+        
+        public void setToggleable(boolean t) {
+            toggleable = t;
         }
 
         public LicenseIcon getLicenseIcon() {
@@ -285,6 +286,21 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
         public void setOnToggleListener(LicenseToggleButtonOnToggleListener listener) {
             this.listener = listener;
         }
+        
+        private void onMouseEntered() {
+            if (toggleable) {
+                setOpaque(true);
+                setBackground(Color.WHITE);
+                BasicStroke stroke = new BasicStroke(1.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+                setBorder(BorderFactory.createStrokeBorder(stroke,Color.GRAY));
+            }
+        }
+
+        private void onMouseExited() {
+            if (toggleable) {
+                setMeUp();
+            }
+        }
 
         private void onToggle() {
             if (toggleable) {
@@ -295,6 +311,30 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
                     listener.onButtonToggled(this);
                 }
             }
+        }
+        
+        private void initEventListeners() {
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    if (listener != null && listener instanceof CreativeCommonsSelectorPanel) {
+                        CreativeCommonsSelectorPanel parentPanel = (CreativeCommonsSelectorPanel) listener;
+                        if (parentPanel.hasConfirmedRightfulUseOfLicense()) {
+                            onToggle();
+                        }
+                    }
+                }
+                
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    onMouseEntered();
+                }
+                
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    onMouseExited();
+                }
+            });
         }
 
         private void updateComponents() {
@@ -314,8 +354,9 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
         private void setMeUp() {
             setBackground(null);
             setOpaque(false);
+            setBorder(null);
         }
-
+        
         private static ImageIcon getIcon(LicenseIcon iconName) {
             String name = "CC";
             switch (iconName) {

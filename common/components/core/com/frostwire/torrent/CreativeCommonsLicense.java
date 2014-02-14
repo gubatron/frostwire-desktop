@@ -100,7 +100,6 @@ public class CreativeCommonsLicense implements Mappable<String,Map<String,String
     public String getLicenseShortCode() {
        int offsetStart = "http://creativecommons.org/licenses/".length();
        int offsetEnd = licenseUrl.indexOf("/", offsetStart+1);
-       System.out.println(licenseUrl);
        return licenseUrl.substring(offsetStart, offsetEnd);
     }
     
