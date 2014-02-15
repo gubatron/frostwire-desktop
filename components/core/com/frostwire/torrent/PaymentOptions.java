@@ -31,28 +31,31 @@ public class PaymentOptions implements Mappable<String, Map<String,String>>{
      *     paymentOptions: {
      *        bitcoin: "bitcoin:14F6JPXK2fR5b4gZp3134qLRGgYtvabMWL",
      *        litecoin: "litecoin:LiYp3Dg11N5BgV8qKW42ubSZXFmjDByjoV",
-     *        donationUrl: "http://frostwire.com/donate"
+     *        dogecoin: "dogecoin:DNnZb9Xn5cnShg2or1GdgdvfqHmS54AjEm",
+     *        paypalUrl: "http://frostwire.com/donate"
      *     }
      * 
      */
     public final String bitcoin;
-    
     public final String litecoin;
+    public final String dogecoin;
     
     /** Simply a valid email address for creating a paypal payment form */
-    public final String donationUrl;
+    public final String paypalUrl;
     
-    public PaymentOptions(String bitcoin, String litecoin, String paypal) {
+    public PaymentOptions(String bitcoin, String litecoin, String dogecoin, String paypal) {
         this.bitcoin = bitcoin;
         this.litecoin = litecoin;
-        this.donationUrl = paypal;
+        this.dogecoin = dogecoin;
+        this.paypalUrl = paypal;
     }
     
     public PaymentOptions(Map<String,Map<String,String>> paymentOptionsMap) {
         Map<String, String> paymentOptions = paymentOptionsMap.get("paymentOptions");
         this.bitcoin = paymentOptions.get("bitcoin");
         this.litecoin = paymentOptions.get("litecoin");
-        this.donationUrl = paymentOptions.get("donationUrl");
+        this.dogecoin = paymentOptions.get("dogecoin");
+        this.paypalUrl = paymentOptions.get("paypalUrl");
     }
 
     public Map<String, Map<String, String>> asMap() {
@@ -63,9 +66,11 @@ public class PaymentOptions implements Mappable<String, Map<String,String>>{
         if (litecoin != null) {
             innerMap.put("litecoin", this.litecoin);
         }
-
-        if (donationUrl != null) {
-            innerMap.put("donationUrl", this.donationUrl);
+        if (dogecoin != null) {
+            innerMap.put("dogecoin", this.dogecoin);
+        }
+        if (paypalUrl != null) {
+            innerMap.put("paypalUrl", this.paypalUrl);
         }
 
         Map<String, Map<String, String>> paymentOptions = new HashMap<String, Map<String, String>>();
