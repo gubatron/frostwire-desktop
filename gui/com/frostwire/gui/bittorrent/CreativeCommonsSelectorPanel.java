@@ -76,7 +76,7 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
         title = new LimeTextField();
         title.setToolTipText(I18n.tr("The name of this work, i.e. the titleLabel of a music album, the titleLabel of a book, the titleLabel of a movie, etc."));
 
-        attributionUrlLabel = new JLabel("<html><b>" + I18n.tr("Attribution URL") + "</b></html>");
+        attributionUrlLabel = new JLabel("<html>" + I18n.tr("Attribution URL") + "</html>");
         attributionUrl = new LimeTextField();
         attributionUrl.setToolTipText(I18n.tr("The Content Creator's website to give attribution about this work if shared by others."));
 
@@ -116,7 +116,7 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
         getCreativeCommonsLicense();
         
         if (creativeCommonsLicense != null) {
-            pickedLicenseLabel.setText("<html>" + I18n.tr("You have selected the following License") +": <a href=\"" + creativeCommonsLicense.licenseUrl + "\">" + creativeCommonsLicense.getLicenseName() + "</a>" );
+            pickedLicenseLabel.setText("<html>" + I18n.tr("You have selected the following License") +":<br> <a href=\"" + creativeCommonsLicense.licenseUrl + "\">" + creativeCommonsLicense.getLicenseName() + "</a>" );
             ActionListener[] actionListeners = pickedLicenseLabel.getActionListeners();
             if (actionListeners!=null) {
                 for (ActionListener listener : actionListeners) {
@@ -178,11 +178,11 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
         add(new JLabel("<html><strong>" + I18n.tr("Select what people can and can't do with this work") + "</strong></html>"), "span 2, alignx center, growx, push, wrap");
 
         JPanel licenseButtonsPanel = new JPanel(new MigLayout("fillx, insets 0 0 0 0"));
-        licenseButtonsPanel.add(ccButton, "aligny top, pushy, growy, gap 2 2 2 2");
-        licenseButtonsPanel.add(byButton, "aligny top, pushy, growy, gap 2 2 2 2");
-        licenseButtonsPanel.add(ncButton, "aligny top, pushy, growy, gap 2 2 2 2");
-        licenseButtonsPanel.add(ndButton, "aligny top, pushy, growy, gap 2 2 2 2");
-        licenseButtonsPanel.add(saButton, "aligny top, pushy, growy, gap 2 2 2 2, wrap");
+        licenseButtonsPanel.add(ccButton, "aligny top, pushy, grow, gap 2 2 2 2");
+        licenseButtonsPanel.add(byButton, "aligny top, pushy, grow, gap 2 2 2 2");
+        licenseButtonsPanel.add(ncButton, "aligny top, pushy, grow, gap 2 2 2 2");
+        licenseButtonsPanel.add(ndButton, "aligny top, pushy, grow, gap 2 2 2 2");
+        licenseButtonsPanel.add(saButton, "aligny top, pushy, grow, gap 2 2 2 2, wrap");
         add(licenseButtonsPanel, "aligny top, span 2, grow, pushy, gapbottom 5px, wrap");
         
         pickedLicenseLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -258,10 +258,10 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
             titleLabel = new JLabel("<html><b>" + text + "</b></html>");
             descriptionLabel = new JLabel("<html><small>" + description + "</small></html>");
 
-            setLayout(new MigLayout("fill, wrap 1"));
+            setLayout(new MigLayout("fill, wrap 1, debug"));
             add(iconLabel, "top, aligny top, alignx center, wrap");
-            add(titleLabel, "top, aligny top, growx, alignx center, wrap");
-            add(descriptionLabel, "top, aligny top, growy, pushy, alignx center");
+            add(titleLabel, "top, aligny top, alignx center, wrap");
+            add(descriptionLabel, "top, aligny top, pushy, alignx center");
 
             initEventListeners();
         }
