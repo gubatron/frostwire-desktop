@@ -16,11 +16,15 @@
 package com.frostwire.gui.bittorrent;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import net.miginfocom.swing.MigLayout;
+
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.torrent.PaymentOptions;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LimeTextField;
 
@@ -31,7 +35,7 @@ public class PaymentOptionsPanel extends JPanel {
     private final LimeTextField bitcoinAddress;
     private final LimeTextField litecoinAddress;
     private final LimeTextField dogecoinAddress;
-    private final LimeTextField genericPaymentAddress;
+    private final LimeTextField paypalUrlAddress;
     
 
     public PaymentOptionsPanel() {
@@ -39,7 +43,15 @@ public class PaymentOptionsPanel extends JPanel {
         bitcoinAddress = new LimeTextField();
         litecoinAddress = new LimeTextField();
         dogecoinAddress = new LimeTextField();
-        genericPaymentAddress = new LimeTextField();
+        paypalUrlAddress = new LimeTextField();
+        
+        setLayout(new MigLayout("fill"));
+        initComponents();
+    }
+
+    private void initComponents() {
+        JLabel btcAccepted = new JLabel(GUIMediator.getThemeImage("bitcoin_accepted.png"));
+        add(btcAccepted,"top, east, push");
     }
 
     private void initBorder() {
@@ -57,12 +69,12 @@ public class PaymentOptionsPanel extends JPanel {
         boolean validLitecoin = hasValidAddress("litecoin:", litecoinAddress);
         boolean validDogecoin = hasValidAddress("dogecoin:", dogecoinAddress);
             
-        if (validBitcoin || validLitecoin || validDogecoin) {
+        if (validBitcoin || validLitecoin || validDogecoin || (paypalUrlAddress.getText()!=null && !paypalUrlAddress.getText().isEmpty())) {
             String bitcoin = validBitcoin ? normalizeValidAddress("bitcoin:", bitcoinAddress.getText().trim()) : null;
             String litecoin = validLitecoin ? normalizeValidAddress("litecoin:", litecoinAddress.getText().trim()) : null;
             String dogecoin = validDogecoin ? normalizeValidAddress("dogecoin:", dogecoinAddress.getText().trim()) : null;
             
-            result = new PaymentOptions(bitcoin,litecoin,dogecoin,genericPaymentAddress.getText());
+            result = new PaymentOptions(bitcoin,litecoin,dogecoin,paypalUrlAddress.getText());
         }
         
         return result;

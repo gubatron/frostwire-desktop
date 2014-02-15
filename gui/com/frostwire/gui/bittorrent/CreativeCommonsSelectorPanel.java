@@ -178,11 +178,11 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
         add(new JLabel("<html><strong>" + I18n.tr("Select what people can and can't do with this work") + "</strong></html>"), "span 2, alignx center, growx, push, wrap");
 
         JPanel licenseButtonsPanel = new JPanel(new MigLayout("fillx, insets 0 0 0 0"));
-        licenseButtonsPanel.add(ccButton, "aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(byButton, "aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(ncButton, "aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(ndButton, "aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(saButton, "aligny top, pushy, grow, gap 2 2 2 2, wrap");
+        licenseButtonsPanel.add(ccButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
+        licenseButtonsPanel.add(byButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
+        licenseButtonsPanel.add(ncButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
+        licenseButtonsPanel.add(ndButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
+        licenseButtonsPanel.add(saButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2, wrap");
         add(licenseButtonsPanel, "aligny top, span 2, grow, pushy, gapbottom 5px, wrap");
         
         pickedLicenseLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -258,7 +258,7 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
             titleLabel = new JLabel("<html><b>" + text + "</b></html>");
             descriptionLabel = new JLabel("<html><small>" + description + "</small></html>");
 
-            setLayout(new MigLayout("fill, wrap 1, debug"));
+            setLayout(new MigLayout("fill, wrap 1"));
             add(iconLabel, "top, aligny top, alignx center, wrap");
             add(titleLabel, "top, aligny top, alignx center, wrap");
             add(descriptionLabel, "top, aligny top, pushy, alignx center");
