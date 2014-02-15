@@ -118,7 +118,7 @@ public class CreativeCommonsLicense implements Mappable<String,Map<String,String
                 replaceAll("nd", ND_WORD).
                 replaceAll("sa",SA_WORD);
         
-        return "Creative Commons Attribution" + licenseName + " " + CC_VERSION + INTERNATIONAL_LICENSE;
+        return "Creative Commons " + licenseName + " " + CC_VERSION + " " + INTERNATIONAL_LICENSE;
     }
     
     private static boolean isInvalidLicense(String licenseStr) {
