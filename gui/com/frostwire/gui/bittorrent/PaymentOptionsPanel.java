@@ -15,6 +15,10 @@
 
 package com.frostwire.gui.bittorrent;
 
+import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -47,16 +51,98 @@ public class PaymentOptionsPanel extends JPanel {
         
         setLayout(new MigLayout("fill"));
         initComponents();
+        initListeners();
+    }
+
+    private void initListeners() {
+        
+        bitcoinAddress.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                onCryptoAddressPressed(bitcoinAddress);
+            }
+        });
+        litecoinAddress.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                onCryptoAddressPressed(litecoinAddress);
+            }
+        });
+        dogecoinAddress.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                onCryptoAddressPressed(dogecoinAddress);
+            }
+        });
+    }
+
+    protected void onCryptoAddressPressed(LimeTextField textField) {
+        boolean hasValidPrefixOrNoPrefix = false;
+        String prefix = "";
+        if (textField.equals(bitcoinAddress)) {
+            prefix = "bitcoin:";
+        } else if (textField.equals(litecoinAddress)) {
+            prefix = "litecoin:";
+        } else if (textField.equals(dogecoinAddress)) {
+            prefix = "dogecoin:";
+        }
+        
+        hasValidPrefixOrNoPrefix = hasValidPrefixOrNoPrefix(prefix, textField);
+        
+        if (!hasValidAddress(prefix, textField) || !hasValidPrefixOrNoPrefix) {
+            textField.setForeground(Color.red);
+        } else {
+            textField.setForeground(Color.black);
+        }
+        
+        int caretPosition = textField.getCaretPosition();
+        int lengthBefore = textField.getText().length();
+        textField.setText(textField.getText().replaceAll(" ", ""));
+        int lengthAfter = textField.getText().length();
+        if (lengthAfter < lengthBefore) {
+            caretPosition -= (lengthBefore - lengthAfter);
+        }
+        textField.setCaretPosition(caretPosition);
+
+    }
+
+    private boolean hasValidPrefixOrNoPrefix(String prefix, LimeTextField textField) {
+        boolean hasPrefix = false;
+        boolean hasValidPrefix = false;
+        String text = textField.getText();
+        
+        if (text.contains(":")) {
+            hasPrefix = true;
+            hasValidPrefix = text.startsWith(prefix);
+        } else {
+            hasPrefix = false;
+        }
+        
+        return (hasPrefix && hasValidPrefix) || !hasPrefix;
     }
 
     private void initComponents() {
-        JLabel btcAccepted = new JLabel(GUIMediator.getThemeImage("bitcoin_accepted.png"));
-        add(btcAccepted,"top, east, push");
+        add(new JLabel("<html><strong>Bitcoin</strong> wallet address</html>"),"wrap, span");
+        add(new JLabel(GUIMediator.getThemeImage("bitcoin_accepted.png")),"aligny top");
+        add(bitcoinAddress,"aligny top, growx, push, wrap");
+
+        
+        add(new JLabel("<html><strong>Litecoin</strong> wallet address</html>"),"wrap, span");
+        add(new JLabel(GUIMediator.getThemeImage("litecoin_accepted.png")),"aligny top");
+        add(litecoinAddress, "aligny top, growx, push, wrap");
+
+        add(new JLabel("<html><strong>Dogecoin</strong> wallet address</html>"),"wrap, span");
+        add(new JLabel(GUIMediator.getThemeImage("dogecoin_accepted.png")),"aligny top");
+        add(dogecoinAddress, "aligny top, growx, push, wrap");
+
+        add(new JLabel("<html><strong>Paypal</strong> payment/donation page url</html>"),"wrap, span");
+        add(new JLabel(GUIMediator.getThemeImage("paypal_accepted.png")), "aligny top");
+        add(paypalUrlAddress, "aligny top, growx, push");
     }
 
     private void initBorder() {
         Border titleBorder = BorderFactory.createTitledBorder(I18n
-                .tr("Name your price Payment Options"));
+                .tr("\"Name your price\", \"Tips\", \"Donations\" payment options"));
         Border lineBorder = BorderFactory.createLineBorder(ThemeMediator.LIGHT_BORDER_COLOR);
         Border border = BorderFactory.createCompoundBorder(lineBorder, titleBorder);
         setBorder(border);
@@ -95,19 +181,23 @@ public class PaymentOptionsPanel extends JPanel {
             text = text.replaceAll(optionalPrefix, "");
             char firstChar = text.charAt(0);
             
-            boolean validBitcoin1stChar = optionalPrefix.equals("bitcoin:") && firstChar == '1' || firstChar == '3';
-            boolean validLitecoin1stChar = optionalPrefix.equals("litecoin:") && firstChar == 'L';
-            boolean validDogecoin1stChar = optionalPrefix.equals("dogecoin:") && firstChar == 'D';
+            boolean validFirstChar = false;
+            if (optionalPrefix.equals("bitcoin:")) {
+                validFirstChar = (firstChar == '1' || firstChar == '3');
+            } else if (optionalPrefix.equals("litecoin:")) {
+                validFirstChar = firstChar == 'L';
+            } else if (optionalPrefix.equals("dogecoin:")) {
+                validFirstChar = firstChar == 'D';
+            }
+
+            System.out.println("text ["+text+"] - " + text.length() + " - valid 1st char? " + validFirstChar);
             
-            result = (27 <= text.length() && text.length() <= 34) &&
-                     (validBitcoin1stChar || validLitecoin1stChar || validDogecoin1stChar);
+            result = (26 <= text.length() && text.length() <= 34) && validFirstChar;
         }
-        
         return result;
     }
     
     public boolean hasPaymentOptions() {
         return false;
     }
-
 }
