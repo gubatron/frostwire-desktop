@@ -144,7 +144,7 @@ public final class BTDownloadFileActionsRenderer extends FWAbstractJPanelTableCe
             boolean gotPaymentOptions = paymentOptions != null;
 
             labelBitcoin.updateActionIcon(gotPaymentOptions && paymentOptions.bitcoin != null, showSolid);
-            labelPaypal.updateActionIcon(gotPaymentOptions && paymentOptions.donationUrl != null, showSolid);
+            labelPaypal.updateActionIcon(gotPaymentOptions && paymentOptions.paypalUrl != null, showSolid);
             labelLitecoin.updateActionIcon(gotPaymentOptions && paymentOptions.litecoin != null, showSolid);
         } catch (Throwable t) {
             t.printStackTrace();

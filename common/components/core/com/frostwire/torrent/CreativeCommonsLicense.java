@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.limegroup.gnutella.gui.I18n;
+
 
 /** TODO: Refactor this to have Licenses modeled with OO hierarchy after we have proof of concept working. 
  * This is a quick-n-dirty implementation. */
@@ -53,6 +55,12 @@ public class CreativeCommonsLicense implements Mappable<String,Map<String,String
     public static final String CC_NC_ND = "http://creativecommons.org/licenses/by-nc-nd/"+ CC_VERSION + "/";
 
     public static final List<String> validLicenses;
+    
+    public final String BY_WORD = I18n.tr("Attribution");
+    public final String SA_WORD = I18n.tr("Share-Alike");
+    public final String ND_WORD = I18n.tr("NoDerivatives");
+    public final String NC_WORD = I18n.tr("NonCommercial");
+    public final String INTERNATIONAL_LICENSE = I18n.tr("International License");
     
     static {
         validLicenses = new ArrayList<>();
@@ -101,6 +109,16 @@ public class CreativeCommonsLicense implements Mappable<String,Map<String,String
        int offsetStart = "http://creativecommons.org/licenses/".length();
        int offsetEnd = licenseUrl.indexOf("/", offsetStart+1);
        return licenseUrl.substring(offsetStart, offsetEnd);
+    }
+    
+    public String getLicenseName() {
+        String shortCode = getLicenseShortCode();
+        String licenseName = shortCode.replaceAll("by",BY_WORD).
+                replaceAll("nc",NC_WORD).
+                replaceAll("nd", ND_WORD).
+                replaceAll("sa",SA_WORD);
+        
+        return "Creative Commons Attribution" + licenseName + " " + CC_VERSION + INTERNATIONAL_LICENSE;
     }
     
     private static boolean isInvalidLicense(String licenseStr) {

@@ -116,7 +116,7 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
         getCreativeCommonsLicense();
         
         if (creativeCommonsLicense != null) {
-            pickedLicenseLabel.setText("<html>Selected License: <a href=\"" + creativeCommonsLicense.licenseUrl + "\">" + creativeCommonsLicense.getLicenseShortCode() + "</a>" );
+            pickedLicenseLabel.setText("<html>" + I18n.tr("You have selected the following License") +": <a href=\"" + creativeCommonsLicense.licenseUrl + "\">" + creativeCommonsLicense.getLicenseName() + "</a>" );
             ActionListener[] actionListeners = pickedLicenseLabel.getActionListeners();
             if (actionListeners!=null) {
                 for (ActionListener listener : actionListeners) {
@@ -178,11 +178,11 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
         add(new JLabel("<html><strong>" + I18n.tr("Select what people can and can't do with this work") + "</strong></html>"), "span 2, alignx center, growx, push, wrap");
 
         JPanel licenseButtonsPanel = new JPanel(new MigLayout("fillx, insets 0 0 0 0"));
-        licenseButtonsPanel.add(ccButton, "growx, aligny top, pushy, growy, gap 2 2 2 2");
-        licenseButtonsPanel.add(byButton, "growx, aligny top, pushy, growy, gap 2 2 2 2");
-        licenseButtonsPanel.add(ncButton, "growx, aligny top, pushy, growy, gap 2 2 2 2");
-        licenseButtonsPanel.add(ndButton, "growx, aligny top, pushy, growy, gap 2 2 2 2");
-        licenseButtonsPanel.add(saButton, "growx, aligny top, pushy, growy, gap 2 2 2 2, wrap");
+        licenseButtonsPanel.add(ccButton, "aligny top, pushy, growy, gap 2 2 2 2");
+        licenseButtonsPanel.add(byButton, "aligny top, pushy, growy, gap 2 2 2 2");
+        licenseButtonsPanel.add(ncButton, "aligny top, pushy, growy, gap 2 2 2 2");
+        licenseButtonsPanel.add(ndButton, "aligny top, pushy, growy, gap 2 2 2 2");
+        licenseButtonsPanel.add(saButton, "aligny top, pushy, growy, gap 2 2 2 2, wrap");
         add(licenseButtonsPanel, "aligny top, span 2, grow, pushy, gapbottom 5px, wrap");
         
         pickedLicenseLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -318,6 +318,7 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
                 @Override
                 public void mousePressed(MouseEvent e) {
                     if (listener != null && listener instanceof CreativeCommonsSelectorPanel) {
+                        //magic tricks
                         CreativeCommonsSelectorPanel parentPanel = (CreativeCommonsSelectorPanel) listener;
                         if (parentPanel.hasConfirmedRightfulUseOfLicense()) {
                             onToggle();
@@ -378,6 +379,5 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
             }
             return GUIMediator.getThemeImage(name + ".png");
         }
-
     }
 }
