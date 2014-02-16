@@ -33,6 +33,7 @@ import javax.swing.undo.UndoManager;
 
 import org.limewire.i18n.I18nMarker;
 
+import com.frostwire.gui.searchfield.PromptSupport;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.theme.ThemeMediator;
@@ -179,6 +180,11 @@ public class LimeTextField extends JTextField {
     public LimeTextField(Document doc, String text, int columns) {
         super(doc, text, columns);
         init();
+    }
+    
+    /** The light text that's on the textfield as a hint before you type*/
+    public void setPrompt(String promptText) {
+        PromptSupport.setPrompt(promptText, this);
     }
     
     /**

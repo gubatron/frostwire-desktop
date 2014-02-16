@@ -75,10 +75,12 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
         titleLabel = new JLabel("<html>" + I18n.tr("Work's Title") + "</html>");
         title = new LimeTextField();
         title.setToolTipText(I18n.tr("The name of this work, i.e. the titleLabel of a music album, the titleLabel of a book, the titleLabel of a movie, etc."));
-
+        title.setPrompt(I18n.tr("album name, movie title, book title, game title."));
+        
         attributionUrlLabel = new JLabel("<html>" + I18n.tr("Attribution URL") + "</html>");
         attributionUrl = new LimeTextField();
         attributionUrl.setToolTipText(I18n.tr("The Content Creator's website to give attribution about this work if shared by others."));
+        attributionUrl.setPrompt("http://www.contentcreator.com/website/here");
 
         ccButton = new LicenseToggleButton(
                 LicenseToggleButton.LicenseIcon.CC,
