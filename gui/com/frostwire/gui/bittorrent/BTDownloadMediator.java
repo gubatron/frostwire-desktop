@@ -58,6 +58,7 @@ import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
 import com.limegroup.gnutella.gui.search.GenericCellEditor;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
+import com.limegroup.gnutella.gui.tables.IconAndNameRenderer;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.TableSettings;
@@ -756,8 +757,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     protected void setDefaultEditors() {
         TableColumnModel model = TABLE.getColumnModel();
         TableColumn tc;
-        tc = model.getColumn(BTDownloadDataLine.FILE_INDEX); 
-        tc.setCellEditor(new GenericCellEditor(getBTDownloadFileActionsRenderer()));
+        tc = model.getColumn(BTDownloadDataLine.FILE_INDEX);
+        tc.setCellEditor(new GenericCellEditor(new IconAndNameRenderer()));
+        
+        tc = model.getColumn(BTDownloadDataLine.PAYMENT_OPTIONS_INDEX);
+        tc.setCellEditor(new GenericCellEditor(getBTDownloadPaymentOptionsRenderer()));
     }
 
     protected void selectRowByDownload(BTDownload download) {

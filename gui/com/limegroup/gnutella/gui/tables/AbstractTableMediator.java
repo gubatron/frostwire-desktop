@@ -51,8 +51,8 @@ import org.limewire.util.StringUtils;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.PaddedPanel;
-import com.limegroup.gnutella.gui.search.BTDownloadFileActionsHolder;
-import com.limegroup.gnutella.gui.search.BTDownloadFileActionsRenderer;
+import com.limegroup.gnutella.gui.search.BTDownloadPaymentOptionsHolder;
+import com.limegroup.gnutella.gui.search.BTDownloadPaymentOptionsRenderer;
 import com.limegroup.gnutella.gui.search.SearchResultActionsHolder;
 import com.limegroup.gnutella.gui.search.SearchResultActionsRenderer;
 import com.limegroup.gnutella.gui.search.SourceHolder;
@@ -167,7 +167,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
     
     private static SearchResultActionsRenderer SEARCH_RESULT_ACTIONS_RENDERER;
 
-    private static BTDownloadFileActionsRenderer BT_DOWNLOAD_FILE_ACTIONS_RENDERER = null;
+    private static BTDownloadPaymentOptionsRenderer BT_DOWNLOAD_PAYMENT_OPTIONS_RENDERER = null;
     /**
      * Variable for the default renderer for all components.
      */
@@ -395,7 +395,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         TABLE.setDefaultRenderer(IconAndNameHolder.class, getIconAndNameRenderer());
         TABLE.setDefaultRenderer(ActionIconAndNameHolder.class, getActionIconAndNameRenderer());
         TABLE.setDefaultRenderer(SearchResultActionsHolder.class, getSearchResultsActionsRenderer());
-        TABLE.setDefaultRenderer(BTDownloadFileActionsHolder.class, getBTDownloadFileActionsRenderer());
+        TABLE.setDefaultRenderer(BTDownloadPaymentOptionsHolder.class, getBTDownloadPaymentOptionsRenderer());
         TABLE.setDefaultRenderer(SourceHolder.class, getSourceRenderer());
         TABLE.setDefaultRenderer(Object.class, getDefaultRenderer());
         TABLE.setDefaultRenderer(CenteredHolder.class, getCenterRenderer());
@@ -1000,11 +1000,11 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         return SEARCH_RESULT_ACTIONS_RENDERER;
     }
     
-    protected TableCellRenderer getBTDownloadFileActionsRenderer() {
-        if (BT_DOWNLOAD_FILE_ACTIONS_RENDERER == null) {
-            BT_DOWNLOAD_FILE_ACTIONS_RENDERER = new BTDownloadFileActionsRenderer();
+    protected TableCellRenderer getBTDownloadPaymentOptionsRenderer() {
+        if (BT_DOWNLOAD_PAYMENT_OPTIONS_RENDERER == null) {
+            BT_DOWNLOAD_PAYMENT_OPTIONS_RENDERER = new BTDownloadPaymentOptionsRenderer();
         }
-        return BT_DOWNLOAD_FILE_ACTIONS_RENDERER;
+        return BT_DOWNLOAD_PAYMENT_OPTIONS_RENDERER;
     }
 
 

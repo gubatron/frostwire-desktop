@@ -18,8 +18,6 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import javax.swing.Icon;
-
 import com.frostwire.gui.bittorrent.BTDownload;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 
@@ -29,23 +27,17 @@ import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
  * @author aldenml
  * 
  */
-public final class BTDownloadFileActionsHolder implements Comparable<BTDownloadFileActionsHolder> {
+public final class BTDownloadPaymentOptionsHolder implements Comparable<BTDownloadPaymentOptionsHolder> {
 
-    private final Icon fileIcon;
     private final BTDownload btDownload;
     private final String displayName;
 
-    public BTDownloadFileActionsHolder(Icon fileIcon, final BTDownload download) {
-        this.fileIcon = fileIcon;
+    public BTDownloadPaymentOptionsHolder(final BTDownload download) {
         this.btDownload = download;
         this.displayName = download.getDisplayName();
     }
     
-    public Icon getFileIcon() {
-        return fileIcon;
-    }
-
-    public int compareTo(BTDownloadFileActionsHolder o) {
+    public int compareTo(BTDownloadPaymentOptionsHolder o) {
         return AbstractTableMediator.compare(btDownload.getDisplayName(), o.btDownload.getDisplayName());
     }
 

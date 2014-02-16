@@ -41,7 +41,7 @@ import com.limegroup.gnutella.gui.tables.TableActionLabel;
  * @author aldenml
  * 
  */
-public final class BTDownloadFileActionsRenderer extends FWAbstractJPanelTableCellRenderer {
+public final class BTDownloadPaymentOptionsRenderer extends FWAbstractJPanelTableCellRenderer {
     private final static ImageIcon bitcoin_enabled;
     private final static ImageIcon bitcoin_disabled;
 
@@ -55,11 +55,10 @@ public final class BTDownloadFileActionsRenderer extends FWAbstractJPanelTableCe
     private final TableActionLabel labelBitcoin;
     private final TableActionLabel labelLitecoin;
     private final TableActionLabel labelPaypal;
-    private final JLabel labelTitle;
 
     //mutable
     private BTDownload btDownload;
-    private BTDownloadFileActionsHolder actionsHolder;
+    private BTDownloadPaymentOptionsHolder actionsHolder;
 
     static {
         bitcoin_enabled = GUIMediator.getThemeImage("bitcoin_enabled");
@@ -72,18 +71,17 @@ public final class BTDownloadFileActionsRenderer extends FWAbstractJPanelTableCe
         paypal_disabled = GUIMediator.getThemeImage("paypal_disabled");
     }
 
-    public BTDownloadFileActionsRenderer() {
+    public BTDownloadPaymentOptionsRenderer() {
         labelFileIcon = new JLabel();
         labelBitcoin = new TableActionLabel(bitcoin_enabled, bitcoin_disabled);
         labelLitecoin = new TableActionLabel(litecoin_enabled, litecoin_disabled);
         labelPaypal = new TableActionLabel(paypal_enabled, paypal_disabled);
-        labelTitle = new JLabel();
         setupUI();
     }
 
     @Override
     protected void updateUIData(Object dataHolder, JTable table, int row, int column) {
-        updateUIData((BTDownloadFileActionsHolder) dataHolder, table, row, column);
+        updateUIData((BTDownloadPaymentOptionsHolder) dataHolder, table, row, column);
     }
 
     private void setupUI() {
@@ -105,7 +103,7 @@ public final class BTDownloadFileActionsRenderer extends FWAbstractJPanelTableCe
         add(labelBitcoin, "width 20px!, growx 0, aligny top");
         add(labelLitecoin, "width 20px!, growx 0, aligny top");
         add(labelPaypal, "width 20px!, growx 0, aligny top");
-        add(labelTitle, "wmin 20lp, alignx left, growx, push, aligny center");
+        //add(labelTitle, "wmin 20lp, alignx left, growx, push, aligny center");
     }
 
     private void initMouseListeners() {
@@ -131,14 +129,12 @@ public final class BTDownloadFileActionsRenderer extends FWAbstractJPanelTableCe
         });
     }
 
-    private void updateUIData(BTDownloadFileActionsHolder value, JTable table, int row, int column) {
+    private void updateUIData(BTDownloadPaymentOptionsHolder value, JTable table, int row, int column) {
         try {
             boolean showSolid = mouseIsOverRow(table, row);
             actionsHolder = value;
-            labelFileIcon.setIcon(actionsHolder.getFileIcon());
 
             btDownload = actionsHolder.getBTDownload();
-            labelTitle.setText(btDownload.getDisplayName());
 
             PaymentOptions paymentOptions = btDownload.getPaymentOptions();
             boolean gotPaymentOptions = paymentOptions != null;
@@ -153,7 +149,7 @@ public final class BTDownloadFileActionsRenderer extends FWAbstractJPanelTableCe
 
     private void labelBitcoin_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1 && labelBitcoin.isActionEnabled()) {
-            //TODO: log action UXStats.instance().log(ACTION CODE HERE);
+            //TODO: uxlog action UXStats.instance().log(ACTION CODE HERE);
             System.out.println("Bitcoin click! " + btDownload.getDisplayName());
         } else if (!labelBitcoin.isActionEnabled()) {
             System.out.println("Bitcoin click, but button disabled. " + btDownload.getDisplayName());
@@ -162,14 +158,14 @@ public final class BTDownloadFileActionsRenderer extends FWAbstractJPanelTableCe
 
     private void labelLitecoin_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1 && labelLitecoin.isActionEnabled()) {
-            //TODO: log action
+            //TODO: uxlog action
             System.out.println("Litecoin click!");
         }
     }
 
     private void labelPaypal_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1 && labelPaypal.isActionEnabled()) {
-            //TODO: log action
+            //TODO: uxlog action
             System.out.println("Paypal click!");
         }
     }
