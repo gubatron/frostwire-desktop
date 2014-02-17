@@ -131,6 +131,6 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
     
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == BTDownloadDataLine.FILE_INDEX;
+        return columnIndex == BTDownloadDataLine.PAYMENT_OPTIONS_INDEX;
     }
 }

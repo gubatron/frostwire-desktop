@@ -102,6 +102,9 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     private Date dateCreated;
 
     private boolean _notification;
+
+    private BTDownloadPaymentOptionsHolder paymentOptionsHolder;
+    private IconAndNameHolderImpl filenameIconHolder;
     /**
      * Column index for the file name.
      */
@@ -189,6 +192,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     public void initialize(BTDownload downloader) {
         super.initialize(downloader);
         _notification = downloader.isCompleted();
+        filenameIconHolder = new IconAndNameHolderImpl(getIcon(), initializer.getDisplayName());
+        paymentOptionsHolder = new BTDownloadPaymentOptionsHolder(initializer);
         update();
     }
 
@@ -211,9 +216,9 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     public Object getValueAt(int index) {
         switch (index) {
         case FILE_INDEX:
-            return new IconAndNameHolderImpl(getIcon(), initializer.getDisplayName());
+            return filenameIconHolder;
         case PAYMENT_OPTIONS_INDEX:
-            return new BTDownloadPaymentOptionsHolder(initializer);
+            return paymentOptionsHolder;
         case SIZE_INDEX:
             if (initializer.isPartialDownload()) {
                 return new SizeHolder(_size, PARTIAL_DOWNLOAD_TEXT);

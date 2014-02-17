@@ -178,6 +178,7 @@ public final class BTDownloadPaymentOptionsRenderer extends FWAbstractJPanelTabl
     }
 
     private void labelDogecoin_mouseReleased(MouseEvent e) {
+        System.out.println("mouse released dogecoin.");
         if (e.getButton() == MouseEvent.BUTTON1 && labelLitecoin.isActionEnabled()) {
             //TODO: uxlog action
             System.out.println("Dogecoin click!");
