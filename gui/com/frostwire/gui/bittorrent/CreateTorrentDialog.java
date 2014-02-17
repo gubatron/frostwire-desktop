@@ -447,12 +447,14 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		//Make sure a readable file or folder has been selected.
 		if (singlePath == null && directoryPath == null) {
 			JOptionPane.showMessageDialog(this, I18n.tr("Please select a file or a folder.\nYour new torrent will need content to index."),I18n.tr("Something's missing"),JOptionPane.ERROR_MESSAGE);
+			_tabbedPane.setSelectedIndex(0);
 			return;
 		}
 		
 		//if user chose a folder that's empty
 		if (directoryPath != null && new File(directoryPath).listFiles().length == 0) {
 			JOptionPane.showMessageDialog(this, I18n.tr("The folder you selected is empty."),I18n.tr("Invalid Folder"),JOptionPane.ERROR_MESSAGE);
+			_tabbedPane.setSelectedIndex(0);
 			return;
 		}
 		
@@ -475,6 +477,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		
 		//Whether or not to start seeding this torrent right away
 		autoOpen = _checkStartSeeding.isSelected();
+		
+		//TODO: Add more validations for payment options if necessary.
 		
 		//show save as dialog
 		if (!showSaveAsDialog()) {
@@ -861,10 +865,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		});
 		
 	}
+
 	
 	public static void main(String[] args) {
-        //ThemeMediator.changeTheme();
-        
         if (OSUtils.isMacOSX()) {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
             System.setProperty("com.apple.eawt.CocoaComponent.CompatibilityMode", "false");

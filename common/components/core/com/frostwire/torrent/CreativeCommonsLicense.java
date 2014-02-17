@@ -83,12 +83,20 @@ public class CreativeCommonsLicense implements Mappable<String,Map<String,String
     }
     
     /** Deserialization constructor */
-    public CreativeCommonsLicense(Map<String,Map<String,String>> map) {
-         Map<String,String> innerMap = map.get("creative-commons");
-         this.licenseUrl = innerMap.get("licenseUrl");
-         this.attributionTitle = innerMap.get("attributionTitle");
-         this.attributionAuthor = innerMap.get("attributionAuthor");
-         this.attributionUrl = innerMap.get("attributionUrl");
+    public CreativeCommonsLicense(Map<String,Map<String,Object>> map) {
+         Map<String,Object> creativeCommonsMap = map.get("creative-commons");
+         this.licenseUrl = deserializeEncodedString("licenseUrl",creativeCommonsMap);    
+         this.attributionTitle = deserializeEncodedString("attributionTitle",creativeCommonsMap);    
+         this.attributionAuthor = deserializeEncodedString("attributionAuthor",creativeCommonsMap);    
+         this.attributionUrl = deserializeEncodedString("attributionUrl",creativeCommonsMap);
+    }
+    
+    private String deserializeEncodedString(String fieldName, Map<String,Object> map) {
+        String result = null;
+        if (map.get(fieldName)!=null && map.get(fieldName) instanceof byte[]) {
+            result = new String((byte[]) map.get(fieldName));    
+        }
+        return result;
     }
 
     public Map<String, Map<String,String>> asMap() {

@@ -201,6 +201,6 @@ public class PaymentOptionsPanel extends JPanel {
     }
     
     public boolean hasPaymentOptions() {
-        return false;
+        return getPaymentOptions() != null;
     }
 }
