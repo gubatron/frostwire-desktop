@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.limegroup.gnutella.gui.I18n;
-
 
 /** TODO: Refactor this to have Licenses modeled with OO hierarchy after we have proof of concept working. 
  * This is a quick-n-dirty implementation. */
@@ -56,11 +54,11 @@ public class CreativeCommonsLicense implements Mappable<String,Map<String,String
 
     public static final List<String> validLicenses;
     
-    public final String BY_WORD = I18n.tr("Attribution");
-    public final String SA_WORD = I18n.tr("Share-Alike");
-    public final String ND_WORD = I18n.tr("NoDerivatives");
-    public final String NC_WORD = I18n.tr("NonCommercial");
-    public final String INTERNATIONAL_LICENSE = I18n.tr("International License");
+    public final String BY_WORD = "Attribution";
+    public final String SA_WORD = "Share-Alike";
+    public final String ND_WORD = "NoDerivatives";
+    public final String NC_WORD = "NonCommercial";
+    public final String INTERNATIONAL_LICENSE = "International License";
     
     static {
         validLicenses = new ArrayList<>();

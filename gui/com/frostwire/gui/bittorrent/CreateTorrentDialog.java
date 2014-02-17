@@ -789,7 +789,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
             if (paymentOptions != null) {
                 torrent.setAdditionalMapProperty("paymentOptions", paymentOptions.asMap());
             }
-
         }
     }
 
