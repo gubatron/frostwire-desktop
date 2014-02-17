@@ -117,7 +117,10 @@ public abstract class PromptTextUI extends TextUI  {
 			promptComponent.setText(PromptSupport.getPrompt(txt));
 		}
 
-		promptComponent.getHighlighter().removeAllHighlights();
+		if (promptComponent.getHighlighter() != null) {
+		    promptComponent.getHighlighter().removeAllHighlights();
+		}
+		
 		if (txt.isFocusOwner() && PromptSupport.getFocusBehavior(txt) == FocusBehavior.HIGHLIGHT_PROMPT) {
 			promptComponent.setForeground(txt.getSelectedTextColor());
 			try {
