@@ -29,6 +29,7 @@ public final class IconAndNameRenderer extends DefaultTableCellRenderer {
      * Returns the <tt>Component</tt> that displays the icons & names
      * based on the <tt>IconAndNameHolder</tt> object.
      */
+    @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 
         IconAndNameHolder in = (IconAndNameHolder) value;
@@ -45,6 +46,7 @@ public final class IconAndNameRenderer extends DefaultTableCellRenderer {
                 name = strValue;
             }
         }
+        
         setIcon(icon);
         Component comp = super.getTableCellRendererComponent(table, name, isSelected, hasFocus, row, column);
 

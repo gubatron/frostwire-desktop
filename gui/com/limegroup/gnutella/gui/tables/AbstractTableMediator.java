@@ -408,8 +408,6 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         }
     }
 
-
-
     protected TableCellRenderer getAbstractActionsRenderer() {
         return null;
     }

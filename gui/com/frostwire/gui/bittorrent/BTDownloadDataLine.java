@@ -37,6 +37,7 @@ import com.limegroup.gnutella.gui.notify.Notification;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.search.BTDownloadPaymentOptionsHolder;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
+import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolderImpl;
 import com.limegroup.gnutella.gui.tables.IconAndNameRenderer;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
@@ -109,7 +110,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
      * Column index for the file name.
      */
     static final int FILE_INDEX = 0;
-    private static final LimeTableColumn FILE_COLUMN = new LimeTableColumn(FILE_INDEX, "DOWNLOAD_NAME_COLUMN", I18n.tr("Name"), 201, true, IconAndNameRenderer.class);
+    private static final LimeTableColumn FILE_COLUMN = new LimeTableColumn(FILE_INDEX, "DOWNLOAD_NAME_COLUMN", I18n.tr("Name"), 201, true, IconAndNameHolder.class);
 
     /** Column index for name-your-price/tips/donations */
     static final int PAYMENT_OPTIONS_INDEX = 1;
