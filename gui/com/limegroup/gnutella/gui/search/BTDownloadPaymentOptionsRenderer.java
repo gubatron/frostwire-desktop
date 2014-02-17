@@ -30,6 +30,7 @@ import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.bittorrent.BTDownload;
 import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.util.StringUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tables.TableActionLabel;
@@ -151,10 +152,10 @@ public final class BTDownloadPaymentOptionsRenderer extends FWAbstractJPanelTabl
             PaymentOptions paymentOptions = btDownload.getPaymentOptions();
             boolean gotPaymentOptions = paymentOptions != null;
 
-            labelBitcoin.updateActionIcon(gotPaymentOptions && paymentOptions.bitcoin != null, showSolid);
-            labelLitecoin.updateActionIcon(gotPaymentOptions && paymentOptions.litecoin != null, showSolid);
-            labelDogecoin.updateActionIcon(gotPaymentOptions && paymentOptions.dogecoin != null, showSolid);
-            labelPaypal.updateActionIcon(gotPaymentOptions && paymentOptions.paypalUrl != null, showSolid);
+            labelBitcoin.updateActionIcon(gotPaymentOptions && !StringUtils.isNullOrEmpty(paymentOptions.bitcoin), showSolid);
+            labelLitecoin.updateActionIcon(gotPaymentOptions && !StringUtils.isNullOrEmpty(paymentOptions.litecoin), showSolid);
+            labelDogecoin.updateActionIcon(gotPaymentOptions && !StringUtils.isNullOrEmpty(paymentOptions.dogecoin), showSolid);
+            labelPaypal.updateActionIcon(gotPaymentOptions && !StringUtils.isNullOrEmpty(paymentOptions.paypalUrl), showSolid);
         } catch (Throwable t) {
             t.printStackTrace();
         }

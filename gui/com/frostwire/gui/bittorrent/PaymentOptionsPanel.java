@@ -162,8 +162,8 @@ public class PaymentOptionsPanel extends JPanel {
             String bitcoin = validBitcoin ? normalizeValidAddress("bitcoin:", bitcoinAddress.getText().trim()) : null;
             String litecoin = validLitecoin ? normalizeValidAddress("litecoin:", litecoinAddress.getText().trim()) : null;
             String dogecoin = validDogecoin ? normalizeValidAddress("dogecoin:", dogecoinAddress.getText().trim()) : null;
-            
-            result = new PaymentOptions(bitcoin,litecoin,dogecoin,paypalUrlAddress.getText());
+            String paypal = (paypalUrlAddress != null && paypalUrlAddress.getText() != null && !paypalUrlAddress.getText().isEmpty()) ? paypalUrlAddress.getText() : null;
+            result = new PaymentOptions(bitcoin,litecoin,dogecoin,paypal);
         }
         
         return result;

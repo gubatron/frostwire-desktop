@@ -69,15 +69,15 @@ public class BTDownloadImpl implements BTDownload {
             //the way it is now the properties are being added outside the info map, as getAdditionalInfoMapProperty() is protected.
             //I think I might have to update azureus, or extend TOTorent to expose that map if we want payment options and license to
             //be inside the info hash map.
-            //Map<String,Map<String,String>> licenseMap = torrent.getAdditionalMapProperty("license");
-            Map licenseMap = torrent.getAdditionalMapProperty("license");
-            Map<String,Map<String,String>> paymentOptionsMap = torrent.getAdditionalMapProperty("paymentOptions");
+            @SuppressWarnings("unchecked")
+            Map<String,Map<String,Object>> licenseMap = torrent.getAdditionalMapProperty("license");
+            @SuppressWarnings("unchecked")
+            Map<String,Map<String,Object>> paymentOptionsMap = torrent.getAdditionalMapProperty("paymentOptions");
             
             hasLicense = licenseMap != null && !licenseMap.isEmpty();
             hasPaymentOptions = paymentOptionsMap != null && !paymentOptionsMap.isEmpty();
             
             if (hasLicense) {
-                Map ccCommons = (Map) licenseMap.get("creative-commons");
                 license = new CreativeCommonsLicense(licenseMap);
             } else {
                 license = null;
@@ -444,19 +444,16 @@ public class BTDownloadImpl implements BTDownload {
 
     @Override
     public boolean hasCreativeCommonsLicencse() {
-        // TODO Auto-generated method stub
-        return false;
+        return hasLicense;
     }
 
     @Override
     public PaymentOptions getPaymentOptions() {
-        // TODO Auto-generated method stub
-        return null;
+        return paymentOptions;
     }
 
     @Override
     public CreativeCommonsLicense getCreativeCommons() {
-        // TODO Auto-generated method stub
-        return null;
+        return license;
     }
 }

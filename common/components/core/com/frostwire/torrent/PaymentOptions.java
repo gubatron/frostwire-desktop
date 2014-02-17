@@ -20,6 +20,8 @@ package com.frostwire.torrent;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.frostwire.util.StringUtils;
+
 
 public class PaymentOptions implements Mappable<String, Map<String,String>>{
     /** BitCoin URI, see BIP-0021 - https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki 
@@ -50,27 +52,27 @@ public class PaymentOptions implements Mappable<String, Map<String,String>>{
         this.paypalUrl = paypal;
     }
     
-    public PaymentOptions(Map<String,Map<String,String>> paymentOptionsMap) {
-        Map<String, String> paymentOptions = paymentOptionsMap.get("paymentOptions");
-        this.bitcoin = paymentOptions.get("bitcoin");
-        this.litecoin = paymentOptions.get("litecoin");
-        this.dogecoin = paymentOptions.get("dogecoin");
-        this.paypalUrl = paymentOptions.get("paypalUrl");
+    public PaymentOptions(Map<String,Map<String,Object>> paymentOptionsMap) {
+        Map<String, Object> paymentOptions = paymentOptionsMap.get("paymentOptions");
+        this.bitcoin = TorrentUtils.getStringFromEncodedMap("bitcoin", paymentOptions);
+        this.litecoin = TorrentUtils.getStringFromEncodedMap("litecoin", paymentOptions);
+        this.dogecoin = TorrentUtils.getStringFromEncodedMap("dogecoin", paymentOptions);
+        this.paypalUrl = TorrentUtils.getStringFromEncodedMap("paypalUrl", paymentOptions);
     }
 
     public Map<String, Map<String, String>> asMap() {
         Map<String, String> innerMap = new HashMap<>();
-        if (bitcoin != null) {
-            innerMap.put("bitcoin", this.bitcoin);
+        if (!StringUtils.isNullOrEmpty(bitcoin)) {
+            innerMap.put("bitcoin", bitcoin);
         }
-        if (litecoin != null) {
-            innerMap.put("litecoin", this.litecoin);
+        if (!StringUtils.isNullOrEmpty(litecoin)) {
+            innerMap.put("litecoin", litecoin);
         }
-        if (dogecoin != null) {
-            innerMap.put("dogecoin", this.dogecoin);
+        if (!StringUtils.isNullOrEmpty(dogecoin)) {
+            innerMap.put("dogecoin", dogecoin);
         }
-        if (paypalUrl != null) {
-            innerMap.put("paypalUrl", this.paypalUrl);
+        if (!StringUtils.isNullOrEmpty(paypalUrl)) {
+            innerMap.put("paypalUrl", paypalUrl);
         }
 
         Map<String, Map<String, String>> paymentOptions = new HashMap<String, Map<String, String>>();
