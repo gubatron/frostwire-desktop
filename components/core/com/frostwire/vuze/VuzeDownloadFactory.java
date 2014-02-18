@@ -34,7 +34,6 @@ import org.gudy.azureus2.core3.global.GlobalManager;
 import org.gudy.azureus2.core3.util.HashWrapper;
 
 import com.frostwire.logging.Logger;
-import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.torrent.TOTorrent;
 import com.frostwire.torrent.TOTorrentException;
 import com.frostwire.torrent.TorrentUtils;
@@ -53,6 +52,17 @@ public final class VuzeDownloadFactory {
     }
 
     public static VuzeDownloadManager create(String torrent, final Set<String> selection, String saveDir, VuzeDownloadListener listener) throws IOException {
+        // this args checking is critical
+        if (torrent == null) {
+            throw new IllegalArgumentException("Torrent file path can't be null");
+        }
+        if (saveDir == null) {
+            throw new IllegalArgumentException("Torrent data save dir can't be null");
+        }
+        if (listener == null) {
+            throw new IllegalArgumentException("Download manager listener can't be null");
+        }
+
         GlobalManager gm = VuzeManager.getInstance().getGlobalManager();
 
         DownloadManager dm = findDM(gm, torrent);
@@ -138,11 +148,7 @@ public final class VuzeDownloadFactory {
         }
     }
 
-    //    if (notifyFinished) {
-    //        TransferManager.instance().incrementDownloadsToReview();
-    //        Engine.instance().notifyDownloadFinished(manager.getDisplayName(), manager.getSaveLocation().getAbsoluteFile());
-    //        Librarian.instance().scan(manager.getSaveLocation().getAbsoluteFile());
-    //    }
+
 
     //    public static VuzeDownloadManager create(String torrent, final Set<String> fileSelection, String saveDir, VuzeDownloadListener listener) throws IOException {
     //        GlobalManager gm = VuzeManager.getInstance().getGlobalManager();
@@ -229,11 +235,6 @@ public final class VuzeDownloadFactory {
     }
 
     public static VuzeDownloadManager create(URI uri) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public static VuzeDownloadManager create(TorrentSearchResult sr) {
         // TODO Auto-generated method stub
         return null;
     }
