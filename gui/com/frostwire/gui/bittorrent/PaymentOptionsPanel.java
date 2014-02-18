@@ -26,6 +26,7 @@ import javax.swing.border.Border;
 
 import net.miginfocom.swing.MigLayout;
 
+import com.frostwire.gui.bittorrent.CryptoCurrencyTextField.CurrencyURIPrefix;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -36,17 +37,17 @@ public class PaymentOptionsPanel extends JPanel {
 
     //"bitcoin :14F6JPXK2fR5b4gZp3134qLRGgYtvabMWL", 
     //"litecoin:LiYp3Dg11N5BgV8qKW42ubSZXFmjDByjoV",
-    private final LimeTextField bitcoinAddress;
-    private final LimeTextField litecoinAddress;
-    private final LimeTextField dogecoinAddress;
+    private final CryptoCurrencyTextField bitcoinAddress;
+    private final CryptoCurrencyTextField litecoinAddress;
+    private final CryptoCurrencyTextField dogecoinAddress;
     private final LimeTextField paypalUrlAddress;
     
 
     public PaymentOptionsPanel() {
         initBorder();
-        bitcoinAddress = new LimeTextField();
-        litecoinAddress = new LimeTextField();
-        dogecoinAddress = new LimeTextField();
+        bitcoinAddress = new CryptoCurrencyTextField(CurrencyURIPrefix.BITCOIN);
+        litecoinAddress = new CryptoCurrencyTextField(CurrencyURIPrefix.LITECOIN);
+        dogecoinAddress = new CryptoCurrencyTextField(CurrencyURIPrefix.DOGECOIN);
         paypalUrlAddress = new LimeTextField();
         
         setLayout(new MigLayout("fill"));
@@ -76,20 +77,12 @@ public class PaymentOptionsPanel extends JPanel {
         });
     }
 
-    protected void onCryptoAddressPressed(LimeTextField textField) {
+    protected void onCryptoAddressPressed(CryptoCurrencyTextField textField) {
         boolean hasValidPrefixOrNoPrefix = false;
-        String prefix = "";
-        if (textField.equals(bitcoinAddress)) {
-            prefix = "bitcoin:";
-        } else if (textField.equals(litecoinAddress)) {
-            prefix = "litecoin:";
-        } else if (textField.equals(dogecoinAddress)) {
-            prefix = "dogecoin:";
-        }
+                
+        hasValidPrefixOrNoPrefix = textField.hasValidPrefixOrNoPrefix();
         
-        hasValidPrefixOrNoPrefix = hasValidPrefixOrNoPrefix(prefix, textField);
-        
-        if (!hasValidAddress(prefix, textField) || !hasValidPrefixOrNoPrefix) {
+        if (!textField.hasValidAddress() || !hasValidPrefixOrNoPrefix) {
             textField.setForeground(Color.red);
         } else {
             textField.setForeground(Color.black);
@@ -97,28 +90,19 @@ public class PaymentOptionsPanel extends JPanel {
         
         int caretPosition = textField.getCaretPosition();
         int lengthBefore = textField.getText().length();
+        int selectionStart = textField.getSelectionStart();
+        int selectionEnd = textField.getSelectionEnd();
+        
         textField.setText(textField.getText().replaceAll(" ", ""));
         int lengthAfter = textField.getText().length();
         if (lengthAfter < lengthBefore) {
-            caretPosition -= (lengthBefore - lengthAfter);
+            int delta = (lengthBefore - lengthAfter);
+            caretPosition -= delta;
+            selectionEnd -= delta;
         }
-        textField.setCaretPosition(caretPosition);
-
-    }
-
-    private boolean hasValidPrefixOrNoPrefix(String prefix, LimeTextField textField) {
-        boolean hasPrefix = false;
-        boolean hasValidPrefix = false;
-        String text = textField.getText();
-        
-        if (text.contains(":")) {
-            hasPrefix = true;
-            hasValidPrefix = text.startsWith(prefix);
-        } else {
-            hasPrefix = false;
-        }
-        
-        return (hasPrefix && hasValidPrefix) || !hasPrefix;
+        textField.setCaretPosition(caretPosition);         
+        textField.setSelectionStart(selectionStart);
+        textField.setSelectionEnd(selectionEnd);
     }
 
     private void initComponents() {
@@ -154,49 +138,18 @@ public class PaymentOptionsPanel extends JPanel {
     public PaymentOptions getPaymentOptions() {
         PaymentOptions result = null;
 
-        boolean validBitcoin = hasValidAddress("bitcoin:", bitcoinAddress);
-        boolean validLitecoin = hasValidAddress("litecoin:", litecoinAddress);
-        boolean validDogecoin = hasValidAddress("dogecoin:", dogecoinAddress);
+        boolean validBitcoin = bitcoinAddress.hasValidAddress();
+        boolean validLitecoin = litecoinAddress.hasValidAddress();
+        boolean validDogecoin = dogecoinAddress.hasValidAddress();
             
         if (validBitcoin || validLitecoin || validDogecoin || (paypalUrlAddress.getText()!=null && !paypalUrlAddress.getText().isEmpty())) {
-            String bitcoin = validBitcoin ? normalizeValidAddress("bitcoin:", bitcoinAddress.getText().trim()) : null;
-            String litecoin = validLitecoin ? normalizeValidAddress("litecoin:", litecoinAddress.getText().trim()) : null;
-            String dogecoin = validDogecoin ? normalizeValidAddress("dogecoin:", dogecoinAddress.getText().trim()) : null;
+            String bitcoin = validBitcoin ? bitcoinAddress.normalizeValidAddress() : null;
+            String litecoin = validLitecoin ? litecoinAddress.normalizeValidAddress() : null;
+            String dogecoin = validDogecoin ? dogecoinAddress.normalizeValidAddress() : null;
             String paypal = (paypalUrlAddress != null && paypalUrlAddress.getText() != null && !paypalUrlAddress.getText().isEmpty()) ? paypalUrlAddress.getText() : null;
             result = new PaymentOptions(bitcoin,litecoin,dogecoin,paypal);
         }
         
-        return result;
-    }
-    
-    private String normalizeValidAddress(String prefix, String validAddress) {
-        String result = validAddress;
-        if (!validAddress.startsWith(prefix)) {
-            result = prefix + validAddress;
-        }
-        return result;
-    }
-
-    private boolean hasValidAddress(String optionalPrefix, LimeTextField textField) {
-        boolean result = false;
-        String text = textField.getText().trim();
-        if (text != null && !text.isEmpty()) {
-            text = text.replaceAll(optionalPrefix, "");
-            char firstChar = text.charAt(0);
-            
-            boolean validFirstChar = false;
-            if (optionalPrefix.equals("bitcoin:")) {
-                validFirstChar = (firstChar == '1' || firstChar == '3');
-            } else if (optionalPrefix.equals("litecoin:")) {
-                validFirstChar = firstChar == 'L';
-            } else if (optionalPrefix.equals("dogecoin:")) {
-                validFirstChar = firstChar == 'D';
-            }
-
-            System.out.println("text ["+text+"] - " + text.length() + " - valid 1st char? " + validFirstChar);
-            
-            result = (26 <= text.length() && text.length() <= 34) && validFirstChar;
-        }
         return result;
     }
     
