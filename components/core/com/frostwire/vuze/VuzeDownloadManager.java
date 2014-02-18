@@ -25,11 +25,11 @@ import java.util.Set;
 import org.apache.commons.io.FilenameUtils;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
-import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
 import org.minicastle.util.Arrays;
 
+import com.frostwire.logging.Logger;
 import com.frostwire.vuze.VuzeUtils.InfoSetQuery;
 
 /**
@@ -39,6 +39,8 @@ import com.frostwire.vuze.VuzeUtils.InfoSetQuery;
  *
  */
 public final class VuzeDownloadManager {
+
+    private static final Logger LOG = Logger.getLogger(VuzeDownloadManager.class);
 
     // states from azureus download manager
     public static final int STATE_WAITING = DownloadManager.STATE_WAITING;
@@ -55,6 +57,8 @@ public final class VuzeDownloadManager {
     public static final int STATE_CLOSED = DownloadManager.STATE_CLOSED;
     public static final int STATE_QUEUED = DownloadManager.STATE_QUEUED;
     public static final int STATE_ERROR = DownloadManager.STATE_ERROR;
+
+    private static final byte[] EMPTY_HASH = {};
 
     private final DownloadManager dm;
 
@@ -272,8 +276,9 @@ public final class VuzeDownloadManager {
     private byte[] calculateHash(DownloadManager dm) {
         try {
             return dm.getTorrent().getHash();
-        } catch (TOTorrentException e) {
-            throw new RuntimeException(e);
+        } catch (Throwable e) {
+            LOG.error("Torrent download in bad state");
+            return EMPTY_HASH;
         }
     }
 }
