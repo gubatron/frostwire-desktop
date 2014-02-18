@@ -96,7 +96,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	static final int TT_LOCAL = 1; // I Don't Think So
 	static final int TT_EXTERNAL = 2;
 	static final int TT_DECENTRAL = 3;
-
+	
 	public enum TriggerInThread {
 		SWT_THREAD, ANY_THREAD, NEW_THREAD
 	}
@@ -208,7 +208,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 	    _tabbedPane.addTab("1. " + I18n.tr("Contents and Tracking"),_basicTorrentPane);
 	    _tabbedPane.addTab("2. " + I18n.tr("Copyright License"),_creativeCommonsPane);
-	    _tabbedPane.addTab("3. " + I18n.tr("Payments/Tips"),_paymentsPane);
+	    
+	    if (!SharingSettings.HIDE_PAYMENT_OPTIONS_PANE.getValue()) {
+	        _tabbedPane.addTab("3. " + I18n.tr("Payments/Tips"),_paymentsPane);
+	    }
     }
 
     private void initComponents() {
