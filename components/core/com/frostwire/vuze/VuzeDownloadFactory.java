@@ -77,7 +77,7 @@ public final class VuzeDownloadFactory {
 
                 @Override
                 public int getActions() {
-                    return 0;
+                    return ACT_NONE;
                 }
             });
 
@@ -147,8 +147,6 @@ public final class VuzeDownloadFactory {
             dm.getDM().initialize();
         }
     }
-
-
 
     //    public static VuzeDownloadManager create(String torrent, final Set<String> fileSelection, String saveDir, VuzeDownloadListener listener) throws IOException {
     //        GlobalManager gm = VuzeManager.getInstance().getGlobalManager();
