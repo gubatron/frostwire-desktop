@@ -71,6 +71,7 @@ public final class VuzeDownloadManager {
     // the only fields that can be changed due to a partial download change
     private String displayName;
     private long size;
+    private long changedTime;
 
     VuzeDownloadManager(DownloadManager dm) {
         this.dm = dm;
@@ -90,6 +91,10 @@ public final class VuzeDownloadManager {
 
     public long getSize() {
         return size;
+    }
+
+    public long getChangedTime() {
+        return changedTime;
     }
 
     /**
@@ -254,6 +259,7 @@ public final class VuzeDownloadManager {
         Set<DiskManagerFileInfo> noSkippedSet = VuzeUtils.getFileInfoSet(dm, InfoSetQuery.NO_SKIPPED);
         vdm.displayName = calculateDisplayName(dm, noSkippedSet);
         vdm.size = calculateSize(dm, noSkippedSet);
+        vdm.changedTime = System.currentTimeMillis();
     }
 
     private static String calculateDisplayName(DownloadManager dm, Set<DiskManagerFileInfo> noSkippedSet) {
