@@ -21,7 +21,6 @@ package com.frostwire.vuze;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
@@ -84,16 +83,26 @@ public final class VuzeDownloadFactory {
             setupListener(vdm, listener);
 
         } else { // modify the existing one
-            setupPartialSelection(dm, selection);
-
-            vdm = VuzeDownloadManager.refreshData(dm);
-
-            if (dm.getState() == DownloadManager.STATE_STOPPED) {
-                dm.initialize();
-            }
+            vdm = modify(dm, selection);
         }
 
         return vdm;
+    }
+
+    public static VuzeDownloadManager modify(byte[] hash, final Set<String> selection) {
+        GlobalManager gm = VuzeManager.getInstance().getGlobalManager();
+        DownloadManager dm = gm.getDownloadManager(new HashWrapper(hash));
+        return modify(dm, selection);
+    }
+
+    private static VuzeDownloadManager modify(DownloadManager dm, final Set<String> selection) {
+        setupPartialSelection(dm, selection);
+
+        if (dm.getState() == DownloadManager.STATE_STOPPED) {
+            dm.initialize();
+        }
+
+        return VuzeDownloadManager.refreshData(dm);
     }
 
     private static DownloadManager findDM(GlobalManager gm, String torrent) throws IOException {
@@ -153,40 +162,6 @@ public final class VuzeDownloadFactory {
         }
     }
 
-    //    public static VuzeDownloadManager create(String torrent, final Set<String> fileSelection, String saveDir, VuzeDownloadListener listener) throws IOException {
-    //        GlobalManager gm = VuzeManager.getInstance().getGlobalManager();
-    //        DownloadManager dm = null;
-    //        VuzeDownloadManager vdm = null;
-    //        boolean initialize = false;
-    //
-    //        dm = findDM(gm, torrent);
-    //
-    //        if (dm == null) { // new download
-    //            dm = gm.addDownloadManager(torrent, null, saveDir, null, DownloadManager.STATE_WAITING, true, false, new DownloadManagerInitialisationAdapter() {
-    //                @Override
-    //                public void initialised(DownloadManager manager, boolean for_seeding) {
-    //                    setupPartialSelection(manager, fileSelection);
-    //                }
-    //
-    //                @Override
-    //                public int getActions() {
-    //                    return 0;
-    //                }
-    //            });
-    //
-    //            initialize = true;
-    //        } else { // download already there
-    //            setupPartialSelection(dm, union(fileSelection, VuzeUtils.getSkippedPaths(dm)));
-    //
-    //            initialize = false;
-    //        }
-    //
-    //        vdm = new VuzeDownloadManager(dm);
-    //        setup(vdm, listener, initialize);
-    //
-    //        return vdm;
-    //    }
-
     // this method modify the partial selection by only adding new paths.
     private static void setupPartialSelection(DownloadManager dm, Set<String> paths) {
         DiskManagerFileInfo[] infs = dm.getDiskManagerFileInfoSet().getFiles();
@@ -203,7 +178,7 @@ public final class VuzeDownloadFactory {
             } else {
                 for (DiskManagerFileInfo inf : infs) {
                     String path = inf.getFile(false).getPath();
-                    if (inf.isSkipped() && paths.contains(path)) {
+                    if (inf.isSkipped() && paths.contains(path)) { // same reasoning
                         inf.setSkipped(false);
                     }
                 }
@@ -212,204 +187,4 @@ public final class VuzeDownloadFactory {
             dm.getDownloadState().suppressStateSave(false);
         }
     }
-
-    public static VuzeDownloadManager create(URI uri) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /*
-
-    public static BittorrentDownload create(TransferManager manager, URI uri) throws TOTorrentException {
-        if (uri.getScheme().equalsIgnoreCase("file")) {
-            return create(manager, uri.getPath(), null, null);
-        } else if (uri.getScheme().equalsIgnoreCase("http")) {
-            return new TorrentFetcherDownload(manager, new TorrentUrlInfo(uri.toString()));
-        } else {
-            return new InvalidBittorrentDownload(R.string.torrent_scheme_download_not_supported);
-        }
-    }
-
-    public static BittorrentDownload create(TransferManager manager, TorrentSearchResult sr) throws TOTorrentException {
-        GlobalManager gm = AzureusManager.instance().getGlobalManager();
-
-        if (StringUtils.isNullOrEmpty(sr.getHash())) {
-            return new TorrentFetcherDownload(manager, new TorrentSearchResultInfo(sr));
-        } else {
-            Log.d(TAG, "About to create download for hash: " + sr.getHash());
-            DownloadManager dm = gm.getDownloadManager(new HashWrapper(ByteUtils.decodeHex(sr.getHash())));
-            if (dm == null) {// new download, I need to download the torrent
-                Log.d(TAG, "Creating new TorrentFetcherDownload for hash: " + sr.getHash());
-                return new TorrentFetcherDownload(manager, new TorrentSearchResultInfo(sr));
-            } else {
-                if (sr instanceof TorrentCrawledSearchResult) {
-                    return create(manager, dm.getTorrentFileName(), dm.getTorrent().getHash(), sr.getFilename());
-                } else {
-                    return create(manager, dm.getTorrentFileName(), dm.getTorrent().getHash(), null);
-                }
-            }
-        }
-    }
-
-    static BittorrentDownload create(TransferManager manager, DownloadManager dm) {
-        setup(dm, false);
-
-        return new AzureusBittorrentDownload(manager, new VuzeDownloadManager(dm));
-    }
-
-    public static BittorrentDownload create(TransferManager manager, String torrentFile, byte[] hash, String relativePartialPath) throws TOTorrentException {
-        GlobalManager gm = AzureusManager.instance().getGlobalManager();
-        TOTorrent torrent = null;
-        DownloadManager dm = null;
-
-        if (hash == null) {
-            torrent = TorrentUtils.readFromFile(new File(torrentFile), false);
-            hash = torrent.getHash();
-        }
-
-        if (hash != null) {
-            dm = gm.getDownloadManager(new HashWrapper(hash));
-        }
-
-        if (dm == null) {
-            boolean[] fileSelection = null;
-            if (relativePartialPath != null) {
-                if (torrent == null) {
-                    torrent = TorrentUtils.readFromFile(new File(torrentFile), false);
-                }
-                fileSelection = buildFileSelection(torrent, relativePartialPath);
-            }
-            dm = createDownloadManager(manager, torrentFile, fileSelection);
-            setup(dm, true);
-
-        } else { //the download manager was there...
-
-            boolean[] fileSelection = null;
-
-            if (relativePartialPath != null) { //I want to download partial files.
-
-                fileSelection = buildFileSelection(dm, relativePartialPath);
-                boolean[] prevSelection = getFileSelection(dm);
-
-                //he was already downloading the whole torrent, you'll get the file eventually when it finishes.
-                if (isDownloadingAll(prevSelection)) {
-                    return new InvalidBittorrentDownload(R.string.file_is_already_downloading);
-                }
-
-                //let the new fileSelection know about the older files that were selected for download
-                //(union)
-                for (int i = 0; i < fileSelection.length; i++) {
-                    if (prevSelection[i]) {
-                        fileSelection[i] = true;
-                    }
-                }
-
-            } else { // I want to download the whole thing
-                boolean[] prevSelection = getFileSelection(dm);
-                if (isDownloadingAll(prevSelection)) {
-                    return new InvalidBittorrentDownload(R.string.file_is_already_downloading);
-                }
-            }
-
-            BittorrentDownload oldDownload = findDownload(manager, dm);
-            setupPartialSelection2(dm, fileSelection);
-            if (dm.getState() == DownloadManager.STATE_STOPPED) {
-                dm.initialize();
-            }
-
-            if (oldDownload instanceof TorrentFetcherDownload) {
-                oldDownload = ((TorrentFetcherDownload) oldDownload).getDelegate();
-            }
-            if (oldDownload instanceof AzureusBittorrentDownload) {
-                ((AzureusBittorrentDownload) oldDownload).refreshData();
-            }
-            return oldDownload;
-        }
-
-        return new AzureusBittorrentDownload(manager, new VuzeDownloadManager(dm));
-    }
-
-    private static boolean isDownloadingAll(boolean[] fileSelection) {
-        for (int i = 0; i < fileSelection.length; i++) {
-            if (!fileSelection[i]) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    
-
-    private static boolean[] getFileSelection(DownloadManager dm) {
-        boolean[] fileSelections = new boolean[dm.getDiskManagerFileInfoSet().getFiles().length];
-        for (int i = 0; i < dm.getDiskManagerFileInfoSet().getFiles().length; i++) {
-            fileSelections[i] = !dm.getDiskManagerFileInfoSet().getFiles()[i].isSkipped();
-        }
-
-        return fileSelections;
-    }
-
-    private static boolean[] buildFileSelection(TOTorrent torrent, String relativePath) throws TOTorrentException {
-        boolean[] filesSelection = new boolean[torrent.getFiles().length];
-        for (int i = 0; i < filesSelection.length; i++) {
-            filesSelection[i] = torrent.getFiles()[i].getRelativePath().equals(relativePath);
-        }
-        return filesSelection;
-    }
-
-    private static boolean[] buildFileSelection(DownloadManager dm, String relativePath) {
-        DiskManagerFileInfo[] files = dm.getDiskManagerFileInfoSet().getFiles();
-        boolean[] fileSelection = new boolean[files.length];
-        for (int i = 0; i < files.length; i++) {
-            fileSelection[i] = files[i].getFile(false).getAbsolutePath().endsWith(relativePath);
-        }
-
-        return fileSelection;
-    }
-
-    private static DownloadManager createDownloadManager(TransferManager manager, String torrentFile, final boolean[] fileSelection) {
-        GlobalManager globalManager = AzureusManager.instance().getGlobalManager();
-        String saveDir = SystemUtils.getTorrentDataDirectory().getAbsolutePath();
-
-        if (fileSelection == null) {
-            return globalManager.addDownloadManager(torrentFile, null, saveDir, DownloadManager.STATE_WAITING, true, false, null);
-        } else {
-            return globalManager.addDownloadManager(torrentFile, null, saveDir, null, DownloadManager.STATE_WAITING, true, false, new DownloadManagerInitialisationAdapter() {
-
-                @Override
-                public void initialised(DownloadManager manager, boolean for_seeding) {
-                    setupPartialSelection(manager, fileSelection);
-                }
-
-                @Override
-                public int getActions() {
-                    return 0;
-                }
-            });
-        }
-    }
-
-    private static void setupPartialSelection2(DownloadManager dm, boolean[] fileSelection) {
-        DiskManagerFileInfo[] fileInfos = dm.getDiskManagerFileInfoSet().getFiles();
-
-        try {
-            dm.getDownloadState().suppressStateSave(true);
-
-            if (fileSelection == null || fileSelection.length == 0) {
-                for (DiskManagerFileInfo fileInfo : fileInfos) {
-                    fileInfo.setSkipped(false);
-                }
-            } else {
-                for (int i = 0; i < fileSelection.length; i++) {
-                    if (fileSelection[i]) {
-                        dm.getDiskManagerFileInfoSet().getFiles()[i].setSkipped(false);
-                    }
-                }
-            }
-        } finally {
-            dm.getDownloadState().suppressStateSave(false);
-        }
-    }
-    }
-     */
 }
