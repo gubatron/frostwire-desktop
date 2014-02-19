@@ -33,6 +33,7 @@ import com.frostwire.gui.bittorrent.BTDownload;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.torrent.PaymentOptions.PaymentMethod;
 import com.frostwire.util.StringUtils;
+import com.frostwire.util.URLUtils;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -170,9 +171,10 @@ public final class BTDownloadPaymentOptionsRenderer extends FWAbstractJPanelTabl
         if (method == PaymentMethod.PAYPAL && !StringUtils.isNullOrEmpty(paymentOptions.paypalUrl)) {
             paymentOptionsUrl = paymentOptions.paypalUrl;
         } else {
-            String paymentOptionsJSON = new JsonEngine().toJson(paymentOptions).replaceAll("\n", "");
-            String title = actionsHolder.getBTDownload().getDisplayName();
+            String paymentOptionsJSON = URLUtils.encode(new JsonEngine().toJson(paymentOptions).replaceAll("\n", ""));
+            String title = URLUtils.encode(actionsHolder.getBTDownload().getDisplayName());
             paymentOptionsUrl = "http://www.frostwire.com/tips/?method=" + method.toString() + "&po=" + paymentOptionsJSON + "&title=" + title;
+            
         }
         GUIMediator.openURL(paymentOptionsUrl);
     }
