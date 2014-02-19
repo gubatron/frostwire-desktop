@@ -86,7 +86,7 @@ public final class VuzeDownloadFactory {
         } else { // modify the existing one
             setupPartialSelection(dm, selection);
 
-            VuzeDownloadManager.refreshData(dm);
+            vdm = VuzeDownloadManager.refreshData(dm);
 
             if (dm.getState() == DownloadManager.STATE_STOPPED) {
                 dm.initialize();
@@ -196,13 +196,15 @@ public final class VuzeDownloadFactory {
 
             if (paths == null || paths.isEmpty()) {
                 for (DiskManagerFileInfo inf : infs) {
-                    inf.setSkipped(false);
+                    if (inf.isSkipped()) { // I don't want to trigger any internal logic
+                        inf.setSkipped(false);
+                    }
                 }
             } else {
                 for (DiskManagerFileInfo inf : infs) {
                     String path = inf.getFile(false).getPath();
-                    if (inf.isSkipped()) {
-                        inf.setSkipped(!paths.contains(path));
+                    if (inf.isSkipped() && paths.contains(path)) {
+                        inf.setSkipped(false);
                     }
                 }
             }

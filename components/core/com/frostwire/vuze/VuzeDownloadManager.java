@@ -253,13 +253,15 @@ public final class VuzeDownloadManager {
         return dm;
     }
 
-    static void refreshData(DownloadManager dm) {
+    static VuzeDownloadManager refreshData(DownloadManager dm) {
         VuzeDownloadManager vdm = (VuzeDownloadManager) dm.getUserData(VUZE_DOWNLOAD_MANAGER_OBJECT_KEY);
 
         Set<DiskManagerFileInfo> noSkippedSet = VuzeUtils.getFileInfoSet(dm, InfoSetQuery.NO_SKIPPED);
         vdm.displayName = calculateDisplayName(dm, noSkippedSet);
         vdm.size = calculateSize(dm, noSkippedSet);
         vdm.changedTime = System.currentTimeMillis();
+
+        return vdm;
     }
 
     private static String calculateDisplayName(DownloadManager dm, Set<DiskManagerFileInfo> noSkippedSet) {
