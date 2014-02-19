@@ -16,9 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.limegroup.gnutella.gui.search;
+package com.frostwire.gui.bittorrent;
 
-import com.frostwire.gui.bittorrent.BTDownload;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 
 /**

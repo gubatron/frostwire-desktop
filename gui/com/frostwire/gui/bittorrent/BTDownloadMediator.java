@@ -753,11 +753,17 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
     
     @Override
+    protected void setDefaultRenderers() {
+        super.setDefaultRenderers();
+        TABLE.setDefaultRenderer(BTDownloadPaymentOptionsHolder.class, new BTDownloadPaymentOptionsRenderer());
+    }
+    
+    @Override
     protected void setDefaultEditors() {
         TableColumnModel model = TABLE.getColumnModel();
         TableColumn tc;
         tc = model.getColumn(BTDownloadDataLine.PAYMENT_OPTIONS_INDEX);
-        tc.setCellEditor(new GenericCellEditor(getBTDownloadPaymentOptionsRenderer()));
+        tc.setCellEditor(new GenericCellEditor(new BTDownloadPaymentOptionsRenderer()));
     }
 
     protected void selectRowByDownload(BTDownload download) {

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.limegroup.gnutella.gui.search;
+package com.frostwire.gui.bittorrent;
 
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
@@ -29,7 +29,6 @@ import javax.swing.JTable;
 import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.JsonEngine;
-import com.frostwire.gui.bittorrent.BTDownload;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.torrent.PaymentOptions.PaymentMethod;
 import com.frostwire.util.StringUtils;
@@ -38,6 +37,7 @@ import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.search.FWAbstractJPanelTableCellRenderer;
 import com.limegroup.gnutella.gui.tables.TableActionLabel;
 
 /**
