@@ -42,6 +42,8 @@ public final class VuzeDownloadManager {
 
     private static final Logger LOG = Logger.getLogger(VuzeDownloadManager.class);
 
+    private static final String VUZE_DOWNLOAD_MANAGER_OBJECT_KEY = "VUZE_DOWNLOAD_MANAGER_OBJECT";
+
     // states from azureus download manager
     public static final int STATE_WAITING = DownloadManager.STATE_WAITING;
     public static final int STATE_INITIALIZING = DownloadManager.STATE_INITIALIZING;
@@ -70,6 +72,8 @@ public final class VuzeDownloadManager {
 
     VuzeDownloadManager(DownloadManager dm) {
         this.dm = dm;
+
+        dm.setUserData(VUZE_DOWNLOAD_MANAGER_OBJECT_KEY, this);
 
         Set<DiskManagerFileInfo> noSkippedSet = VuzeUtils.getFileInfoSet(dm, InfoSetQuery.NO_SKIPPED);
 
@@ -243,6 +247,10 @@ public final class VuzeDownloadManager {
 
     DownloadManager getDM() {
         return dm;
+    }
+
+    static VuzeDownloadManager getVDM(DownloadManager dm) {
+        return (VuzeDownloadManager) dm.getUserData(VUZE_DOWNLOAD_MANAGER_OBJECT_KEY);
     }
 
     private String calculateDisplayName(DownloadManager dm, Set<DiskManagerFileInfo> noSkippedSet) {

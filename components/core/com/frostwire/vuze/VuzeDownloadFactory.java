@@ -22,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
@@ -85,7 +84,13 @@ public final class VuzeDownloadFactory {
             setupListener(vdm, listener);
 
         } else { // modify the existing one
-            throw new IllegalStateException("Not implmented yet");
+            setupPartialSelection(dm, selection);
+
+            vdm = VuzeDownloadManager.getVDM(dm);
+
+            if (dm.getState() == DownloadManager.STATE_STOPPED) {
+                dm.initialize();
+            }
         }
 
         return vdm;
@@ -182,6 +187,7 @@ public final class VuzeDownloadFactory {
     //        return vdm;
     //    }
 
+    // this method modify the partial selection by only adding new paths.
     private static void setupPartialSelection(DownloadManager dm, Set<String> paths) {
         DiskManagerFileInfo[] infs = dm.getDiskManagerFileInfoSet().getFiles();
 
@@ -195,41 +201,14 @@ public final class VuzeDownloadFactory {
             } else {
                 for (DiskManagerFileInfo inf : infs) {
                     String path = inf.getFile(false).getPath();
-                    inf.setSkipped(!paths.contains(path));
+                    if (inf.isSkipped()) {
+                        inf.setSkipped(!paths.contains(path));
+                    }
                 }
             }
         } finally {
             dm.getDownloadState().suppressStateSave(false);
         }
-    }
-
-    //    private static void setup(final VuzeDownloadManager vdm, final VuzeDownloadListener listener, boolean initialize) {
-    //        DownloadManager dm = vdm.getDM();
-    //        dm.addListener(new DownloadManagerAdapter() {
-    //
-    //            private AtomicBoolean finished = new AtomicBoolean(false);
-    //
-    //            @Override
-    //            public void stateChanged(DownloadManager manager, int state) {
-    //                if (state == DownloadManager.STATE_READY) {
-    //                    manager.startDownload();
-    //                }
-    //
-    //                if (manager.getAssumedComplete() && finished.compareAndSet(false, true)) {
-    //                    listener.downloadComplete(vdm);
-    //                }
-    //            }
-    //        });
-    //
-    //        if (initialize && dm.getState() != DownloadManager.STATE_STOPPED) {
-    //            dm.initialize();
-    //        }
-    //    }
-
-    private static Set<String> union(Set<String> s1, Set<String> s2) {
-        Set<String> s = new HashSet<String>(s1); // I don't want to modify original sets
-        s.addAll(s2);
-        return s;
     }
 
     public static VuzeDownloadManager create(URI uri) {
@@ -357,41 +336,6 @@ public final class VuzeDownloadFactory {
         return true;
     }
 
-    private static void setupPartialSelection(DownloadManager dm, boolean[] fileSelection) {
-        DiskManagerFileInfo[] fileInfos = dm.getDiskManagerFileInfoSet().getFiles();
-
-        try {
-            dm.getDownloadState().suppressStateSave(true);
-
-            boolean[] toSkip = new boolean[fileInfos.length];
-            boolean[] toCompact = new boolean[fileInfos.length];
-
-            int compNum = 0;
-
-            for (int iIndex = 0; iIndex < fileInfos.length; iIndex++) {
-                DiskManagerFileInfo fileInfo = fileInfos[iIndex];
-                File fDest = fileInfo.getFile(true);
-
-                if (!fileSelection[iIndex]) {
-                    toSkip[iIndex] = true;
-                    if (!fDest.exists()) {
-                        toCompact[iIndex] = true;
-                        compNum++;
-                    }
-                }
-            }
-
-            if (compNum > 0) {
-                dm.getDiskManagerFileInfoSet().setStorageTypes(toCompact, DiskManagerFileInfo.ST_COMPACT);
-            }
-
-            dm.getDiskManagerFileInfoSet().setSkipped(toSkip, true);
-
-        } finally {
-            dm.getDownloadState().suppressStateSave(false);
-        }
-    }
-
     
 
     private static boolean[] getFileSelection(DownloadManager dm) {
@@ -441,23 +385,6 @@ public final class VuzeDownloadFactory {
                 }
             });
         }
-    }
-
-    private static BittorrentDownload findDownload(TransferManager manager, DownloadManager dm) {
-        for (BittorrentDownload download : manager.getBittorrentDownloads()) {
-            BittorrentDownload btDownload = download;
-            if (download instanceof TorrentFetcherDownload) {
-                btDownload = ((TorrentFetcherDownload) download).getDelegate();
-            }
-            if (btDownload != null) {
-                if (btDownload instanceof AzureusBittorrentDownload) {
-                    if (((AzureusBittorrentDownload) btDownload).getDownloadManager().equals(dm)) {
-                        return download;
-                    }
-                }
-            }
-        }
-        return null;
     }
 
     private static void setupPartialSelection2(DownloadManager dm, boolean[] fileSelection) {
