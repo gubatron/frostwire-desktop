@@ -28,9 +28,14 @@ import javax.swing.JTable;
 
 import net.miginfocom.swing.MigLayout;
 
+import com.frostwire.JsonEngine;
 import com.frostwire.gui.bittorrent.BTDownload;
+import com.frostwire.gui.bittorrent.PaymentOptionsPanel;
 import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.torrent.PaymentOptions.PaymentMethod;
 import com.frostwire.util.StringUtils;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tables.TableActionLabel;
@@ -160,35 +165,56 @@ public final class BTDownloadPaymentOptionsRenderer extends FWAbstractJPanelTabl
             t.printStackTrace();
         }
     }
+    
+    private void openPaymentOptionsURL(PaymentOptions paymentOptions, PaymentMethod method) {
+        String paymentOptionsUrl = null;
+        if (method == PaymentMethod.PAYPAL && !StringUtils.isNullOrEmpty(paymentOptions.paypalUrl)) {
+            paymentOptionsUrl = paymentOptions.paypalUrl;
+        } else {
+            String paymentOptionsJSON = new JsonEngine().toJson(paymentOptions).replaceAll("\n", "");
+            paymentOptionsUrl = "http://www1.frostwire.com/tips?method=" + method.toString() + "&po=" + paymentOptionsJSON;
+        }
+        GUIMediator.openURL(paymentOptionsUrl);
+    }
 
     private void labelBitcoin_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1 && labelBitcoin.isActionEnabled()) {
-            //TODO: uxlog action UXStats.instance().log(ACTION CODE HERE);
-            System.out.println("Bitcoin click! " + btDownload.getDisplayName());
-        } else if (!labelBitcoin.isActionEnabled()) {
-            System.out.println("Bitcoin click, but button disabled. " + btDownload.getDisplayName());
+            PaymentOptions paymentOptions = actionsHolder.getBTDownload().getPaymentOptions();
+            if (paymentOptions != null && !StringUtils.isNullOrEmpty(paymentOptions.bitcoin)) {
+                openPaymentOptionsURL(paymentOptions, PaymentMethod.BITCOIN);
+                UXStats.instance().log(UXAction.DOWNLOAD_CLICK_BITCOIN_PAYMENT);
+            }
         }
     }
 
     private void labelLitecoin_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1 && labelLitecoin.isActionEnabled()) {
-            //TODO: uxlog action
-            System.out.println("Litecoin click!");
+            PaymentOptions paymentOptions = actionsHolder.getBTDownload().getPaymentOptions();
+            if (paymentOptions != null && !StringUtils.isNullOrEmpty(paymentOptions.litecoin)) {
+                openPaymentOptionsURL(paymentOptions, PaymentMethod.LITECOIN);
+                UXStats.instance().log(UXAction.DOWNLOAD_CLICK_LITECOIN_PAYMENT);
+            }
         }
     }
 
     private void labelDogecoin_mouseReleased(MouseEvent e) {
         System.out.println("mouse released dogecoin.");
-        if (e.getButton() == MouseEvent.BUTTON1 && labelLitecoin.isActionEnabled()) {
-            //TODO: uxlog action
-            System.out.println("Dogecoin click!");
+        if (e.getButton() == MouseEvent.BUTTON1 && labelDogecoin.isActionEnabled()) {
+            PaymentOptions paymentOptions = actionsHolder.getBTDownload().getPaymentOptions();
+            if (paymentOptions != null && !StringUtils.isNullOrEmpty(paymentOptions.dogecoin)) {
+                openPaymentOptionsURL(paymentOptions, PaymentMethod.DOGECOIN);
+                UXStats.instance().log(UXAction.DOWNLOAD_CLICK_DOGECOIN_PAYMENT);
+            }
         }
     }
     
     private void labelPaypal_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1 && labelPaypal.isActionEnabled()) {
-            //TODO: uxlog action
-            System.out.println("Paypal click!");
+            PaymentOptions paymentOptions = actionsHolder.getBTDownload().getPaymentOptions();
+            if (paymentOptions != null && !StringUtils.isNullOrEmpty(paymentOptions.paypalUrl)) {
+                openPaymentOptionsURL(paymentOptions, PaymentMethod.PAYPAL);
+                UXStats.instance().log(UXAction.DOWNLOAD_CLICK_PAYPAL_PAYMENT);
+            }
         }
     }
 
