@@ -86,7 +86,7 @@ public final class VuzeDownloadFactory {
         } else { // modify the existing one
             setupPartialSelection(dm, selection);
 
-            vdm = VuzeDownloadManager.getVDM(dm);
+            VuzeDownloadManager.refreshData(dm);
 
             if (dm.getState() == DownloadManager.STATE_STOPPED) {
                 dm.initialize();

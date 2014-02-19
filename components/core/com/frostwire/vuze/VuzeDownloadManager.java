@@ -64,25 +64,24 @@ public final class VuzeDownloadManager {
 
     private final DownloadManager dm;
 
-    private final String displayName;
-    private final long size;
     private final byte[] hash;
     private final File savePath;
     private final Date creationDate;
+
+    // the only fields that can be changed due to a partial download change
+    private String displayName;
+    private long size;
 
     VuzeDownloadManager(DownloadManager dm) {
         this.dm = dm;
 
         dm.setUserData(VUZE_DOWNLOAD_MANAGER_OBJECT_KEY, this);
 
-        Set<DiskManagerFileInfo> noSkippedSet = VuzeUtils.getFileInfoSet(dm, InfoSetQuery.NO_SKIPPED);
-
-        this.displayName = calculateDisplayName(dm, noSkippedSet);
-        this.size = calculateSize(dm, noSkippedSet);
-
         this.hash = calculateHash(dm);
         this.savePath = dm.getSaveLocation();
         this.creationDate = new Date(dm.getCreationTime());
+
+        refreshData(dm);
     }
 
     public String getDisplayName() {
@@ -249,11 +248,15 @@ public final class VuzeDownloadManager {
         return dm;
     }
 
-    static VuzeDownloadManager getVDM(DownloadManager dm) {
-        return (VuzeDownloadManager) dm.getUserData(VUZE_DOWNLOAD_MANAGER_OBJECT_KEY);
+    static void refreshData(DownloadManager dm) {
+        VuzeDownloadManager vdm = (VuzeDownloadManager) dm.getUserData(VUZE_DOWNLOAD_MANAGER_OBJECT_KEY);
+
+        Set<DiskManagerFileInfo> noSkippedSet = VuzeUtils.getFileInfoSet(dm, InfoSetQuery.NO_SKIPPED);
+        vdm.displayName = calculateDisplayName(dm, noSkippedSet);
+        vdm.size = calculateSize(dm, noSkippedSet);
     }
 
-    private String calculateDisplayName(DownloadManager dm, Set<DiskManagerFileInfo> noSkippedSet) {
+    private static String calculateDisplayName(DownloadManager dm, Set<DiskManagerFileInfo> noSkippedSet) {
         String displayName = null;
 
         if (noSkippedSet.size() == 1) {
@@ -265,7 +268,7 @@ public final class VuzeDownloadManager {
         return displayName;
     }
 
-    private long calculateSize(DownloadManager dm, Set<DiskManagerFileInfo> noSkippedSet) {
+    private static long calculateSize(DownloadManager dm, Set<DiskManagerFileInfo> noSkippedSet) {
         long size = 0;
 
         boolean partial = noSkippedSet.size() == dm.getDiskManagerFileInfoSet().nbFiles();
@@ -281,7 +284,7 @@ public final class VuzeDownloadManager {
         return size;
     }
 
-    private byte[] calculateHash(DownloadManager dm) {
+    private static byte[] calculateHash(DownloadManager dm) {
         try {
             return dm.getTorrent().getHash();
         } catch (Throwable e) {
