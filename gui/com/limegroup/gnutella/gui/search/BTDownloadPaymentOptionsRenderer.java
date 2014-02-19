@@ -30,7 +30,6 @@ import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.JsonEngine;
 import com.frostwire.gui.bittorrent.BTDownload;
-import com.frostwire.gui.bittorrent.PaymentOptionsPanel;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.torrent.PaymentOptions.PaymentMethod;
 import com.frostwire.util.StringUtils;
@@ -172,7 +171,8 @@ public final class BTDownloadPaymentOptionsRenderer extends FWAbstractJPanelTabl
             paymentOptionsUrl = paymentOptions.paypalUrl;
         } else {
             String paymentOptionsJSON = new JsonEngine().toJson(paymentOptions).replaceAll("\n", "");
-            paymentOptionsUrl = "http://www1.frostwire.com/tips?method=" + method.toString() + "&po=" + paymentOptionsJSON;
+            String title = actionsHolder.getBTDownload().getDisplayName();
+            paymentOptionsUrl = "http://www.frostwire.com/tips/?method=" + method.toString() + "&po=" + paymentOptionsJSON + "&title=" + title;
         }
         GUIMediator.openURL(paymentOptionsUrl);
     }
