@@ -18,29 +18,34 @@
 
 package com.frostwire.torrent;
 
-import java.net.URL;
+import java.io.File;
+import java.io.InputStream;
 import java.util.Map;
 
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
-import org.gudy.azureus2.core3.torrent.impl.TOTorrentImpl;
-import org.gudy.azureus2.core3.util.TorrentUtils.ExtendedTorrent;
 
 /**
  * This class is NOT thread safe.
  * The same as TOTorentImpl, but it makes visible methods to manipulate the info properties.
  */
-public class FWTorrentImpl extends TOTorrentImpl implements ExtendedTorrent {
+public class FWTorrentImpl extends org.gudy.azureus2.core3.torrent.impl.TOTorrentDeserialiseImpl {
     
-    
-    
-    public FWTorrentImpl() {
-        super();
+    public FWTorrentImpl(Map map) throws TOTorrentException {
+        super(map);
+    }
+
+    public FWTorrentImpl(InputStream is) throws TOTorrentException {
+        super(is);
     }
     
-    public FWTorrentImpl(String _torrent_name, URL _announce_url, boolean _simple_torrent) throws TOTorrentException {
-        super(_torrent_name, _announce_url, _simple_torrent);
+    public FWTorrentImpl(File f) throws TOTorrentException {
+        super(f);
     }
-    
+
+    public FWTorrentImpl(byte[] b) throws TOTorrentException {
+        super(b);
+    }
+
     public void addAdditionalInfoProperty(String name, Object value) {
         super.addAdditionalInfoProperty(name, value);
     }
@@ -57,17 +62,5 @@ public class FWTorrentImpl extends TOTorrentImpl implements ExtendedTorrent {
             result = (String) map.get(key);
         }
         return result;
-    }
-
-    @Override
-    public byte[][] peekPieces() throws TOTorrentException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void setDiscardFluff(boolean discard) {
-        // TODO Auto-generated method stub
-        
     }
 }
