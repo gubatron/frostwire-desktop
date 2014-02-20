@@ -202,7 +202,6 @@ public final class TorrentUtils {
 
         return (errorDetail);
     }
-    
 
     public static String announceGroupsToText(TOTorrent torrent) {
         URI announce_url = torrent.getAnnounceURL();
