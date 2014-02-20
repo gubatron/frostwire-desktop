@@ -26,13 +26,13 @@ import java.util.Set;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.download.DownloadManagerStats;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.torrent.CreativeCommonsLicense;
+import com.frostwire.torrent.FWTorrentImpl;
 import com.frostwire.torrent.PaymentOptions;
 
 /**
@@ -65,14 +65,15 @@ public class BTDownloadImpl implements BTDownload {
         
         { 
             //init license and payment options if present in the torrent.
-            final TOTorrent torrent = downloadManager.getTorrent();
-            //the way it is now the properties are being added outside the info map, as getAdditionalInfoMapProperty() is protected.
-            //I think I might have to update azureus, or extend TOTorent to expose that map if we want payment options and license to
-            //be inside the info hash map.
+            final org.gudy.azureus2.core3.torrent.TOTorrent torrent = downloadManager.getTorrent();
+            final FWTorrentImpl fwTorrent = (FWTorrentImpl) torrent;
+            Map<String, Object> additionalInfoProperties = fwTorrent.getAdditionalInfoProperties();
+            
             @SuppressWarnings("unchecked")
-            Map<String,Map<String,Object>> licenseMap = torrent.getAdditionalMapProperty("license");
+            Map<String,Map<String,Object>> licenseMap = (additionalInfoProperties != null) ? (Map<String,Map<String,Object>>) additionalInfoProperties.get("license") : null;
+
             @SuppressWarnings("unchecked")
-            Map<String,Map<String,Object>> paymentOptionsMap = torrent.getAdditionalMapProperty("paymentOptions");
+            Map<String,Map<String,Object>> paymentOptionsMap = (additionalInfoProperties != null) ? (Map<String,Map<String,Object>>) additionalInfoProperties.get("paymentOptions") : null;
             
             hasLicense = licenseMap != null && !licenseMap.isEmpty();
             hasPaymentOptions = paymentOptionsMap != null && !paymentOptionsMap.isEmpty();
