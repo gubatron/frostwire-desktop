@@ -19,6 +19,7 @@
 package com.frostwire.gui.bittorrent;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
@@ -26,6 +27,8 @@ import java.util.Set;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.download.DownloadManagerStats;
+import org.gudy.azureus2.core3.torrent.TOTorrent;
+import org.gudy.azureus2.core3.torrent.impl.TOTorrentDeserialiseImpl;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
@@ -64,9 +67,7 @@ public class BTDownloadImpl implements BTDownload {
         _deleteDataWhenRemove = false;
         
         { 
-            //init license and payment options if present in the torrent.
-            final org.gudy.azureus2.core3.torrent.TOTorrent torrent = downloadManager.getTorrent();
-            final FWTorrentImpl fwTorrent = (FWTorrentImpl) torrent;
+            final FWTorrentImpl fwTorrent = getFWTorrentImpl(downloadManager);
             Map<String, Object> additionalInfoProperties = fwTorrent.getAdditionalInfoProperties();
             
             @SuppressWarnings("unchecked")
@@ -92,7 +93,27 @@ public class BTDownloadImpl implements BTDownload {
         }
     }
 
-	public void updateSize(DownloadManager downloadManager) {
+	private FWTorrentImpl getFWTorrentImpl(DownloadManager downloadManager) {
+	    FWTorrentImpl result = null;
+	    Class<? extends TOTorrent> class1 = downloadManager.getTorrent().getClass();
+	    try {
+            Field firstDelegateField = class1.getDeclaredField("delegate");
+            
+            firstDelegateField .setAccessible(true);
+            Object theTOTorrent = firstDelegateField.get(downloadManager.getTorrent());
+            
+            if (theTOTorrent instanceof TOTorrentDeserialiseImpl) {
+                result = (FWTorrentImpl) theTOTorrent;
+            }
+            
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+	    
+        return result;
+    }
+
+    public void updateSize(DownloadManager downloadManager) {
 		if (_partialDownload) {
             _fileInfoSet = TorrentUtil.getNoSkippedFileInfoSet(downloadManager);
             
