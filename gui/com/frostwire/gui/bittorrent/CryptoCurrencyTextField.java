@@ -68,10 +68,8 @@ public class CryptoCurrencyTextField extends LimeTextField {
         if (text.contains(":")) {
             hasPrefix = true;
             hasValidPrefix = text.startsWith(prefix);
-            System.out.println("hasPrefix:" + hasPrefix + " hasValidPrefix:" + hasValidPrefix);
         } else {
             hasPrefix = false;
-            System.out.println("has no prefix.");
         }
         
         return (hasPrefix && hasValidPrefix) || !hasPrefix;

@@ -19,7 +19,6 @@
 package com.frostwire.gui.bittorrent;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
@@ -27,16 +26,14 @@ import java.util.Set;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.download.DownloadManagerStats;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.torrent.impl.TOTorrentDeserialiseImpl;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.torrent.CreativeCommonsLicense;
-import com.frostwire.torrent.FWTorrentImpl;
 import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.torrent.TorrentInfoManipulator;
 
 /**
  * @author gubatron
@@ -60,6 +57,7 @@ public class BTDownloadImpl implements BTDownload {
     private final CreativeCommonsLicense license;
     private final PaymentOptions paymentOptions;
 
+    @SuppressWarnings("unchecked")
     public BTDownloadImpl(DownloadManager downloadManager) {
         updateDownloadManager(downloadManager);
 
@@ -67,8 +65,8 @@ public class BTDownloadImpl implements BTDownload {
         _deleteDataWhenRemove = false;
         
         { 
-            final FWTorrentImpl fwTorrent = getFWTorrentImpl(downloadManager);
-            Map<String, Object> additionalInfoProperties = fwTorrent.getAdditionalInfoProperties();
+            final TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(downloadManager);
+            Map<String, Object> additionalInfoProperties = infoManipulator.getAdditionalInfoProperties();
             
             @SuppressWarnings("unchecked")
             Map<String,Map<String,Object>> licenseMap = (additionalInfoProperties != null) ? (Map<String,Map<String,Object>>) additionalInfoProperties.get("license") : null;
@@ -93,25 +91,7 @@ public class BTDownloadImpl implements BTDownload {
         }
     }
 
-	private FWTorrentImpl getFWTorrentImpl(DownloadManager downloadManager) {
-	    FWTorrentImpl result = null;
-	    Class<? extends TOTorrent> class1 = downloadManager.getTorrent().getClass();
-	    try {
-            Field firstDelegateField = class1.getDeclaredField("delegate");
-            
-            firstDelegateField .setAccessible(true);
-            Object theTOTorrent = firstDelegateField.get(downloadManager.getTorrent());
-            
-            if (theTOTorrent instanceof TOTorrentDeserialiseImpl) {
-                result = (FWTorrentImpl) theTOTorrent;
-            }
-            
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-	    
-        return result;
-    }
+	
 
     public void updateSize(DownloadManager downloadManager) {
 		if (_partialDownload) {

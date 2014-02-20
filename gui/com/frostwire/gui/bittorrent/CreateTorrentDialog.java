@@ -73,7 +73,7 @@ import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.AzureusStarter;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.torrent.CreativeCommonsLicense;
-import com.frostwire.torrent.FWTorrentImpl;
+import com.frostwire.torrent.TorrentInfoManipulator;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
@@ -786,7 +786,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         if (_ccPanel.hasConfirmedRightfulUseOfLicense()) {
             CreativeCommonsLicense ccLicense = _ccPanel.getCreativeCommonsLicense();           
             if (ccLicense != null) {
-                ((FWTorrentImpl) torrent).addAdditionalInfoProperty("license", ccLicense.asMap());
+                TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(torrent);
+                infoManipulator.addAdditionalInfoProperty("license", ccLicense.asMap());
             }
         }
     }
@@ -795,7 +796,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         if (_paymentOptionsPanel.hasPaymentOptions()) {
             PaymentOptions paymentOptions = _paymentOptionsPanel.getPaymentOptions();
             if (paymentOptions != null) {
-                ((FWTorrentImpl) torrent).addAdditionalInfoProperty("paymentOptions", paymentOptions.asMap());
+                TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(torrent);
+                infoManipulator.addAdditionalInfoProperty("paymentOptions", paymentOptions.asMap());
             }
         }
     }
