@@ -85,10 +85,10 @@ public class CreativeCommonsLicense implements Mappable<String,Map<String,String
     /** Deserialization constructor */
     public CreativeCommonsLicense(Map<String,Map<String,Object>> map) {
          Map<String,Object> creativeCommonsMap = map.get("creative-commons");
-         this.licenseUrl = TorrentUtils.getStringFromEncodedMap("licenseUrl",creativeCommonsMap);    
-         this.attributionTitle = TorrentUtils.getStringFromEncodedMap("attributionTitle",creativeCommonsMap);    
-         this.attributionAuthor = TorrentUtils.getStringFromEncodedMap("attributionAuthor",creativeCommonsMap);    
-         this.attributionUrl = TorrentUtils.getStringFromEncodedMap("attributionUrl",creativeCommonsMap);
+         this.licenseUrl = FWTorrentImpl.getStringFromEncodedMap("licenseUrl",creativeCommonsMap);    
+         this.attributionTitle = FWTorrentImpl.getStringFromEncodedMap("attributionTitle",creativeCommonsMap);    
+         this.attributionAuthor = FWTorrentImpl.getStringFromEncodedMap("attributionAuthor",creativeCommonsMap);    
+         this.attributionUrl = FWTorrentImpl.getStringFromEncodedMap("attributionUrl",creativeCommonsMap);
     }
     
     public Map<String, Map<String,String>> asMap() {

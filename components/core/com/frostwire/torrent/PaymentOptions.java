@@ -61,10 +61,10 @@ public class PaymentOptions implements Mappable<String, Map<String,String>>{
     
     public PaymentOptions(Map<String,Map<String,Object>> paymentOptionsMap) {
         Map<String, Object> paymentOptions = paymentOptionsMap.get("paymentOptions");
-        this.bitcoin = TorrentUtils.getStringFromEncodedMap("bitcoin", paymentOptions);
-        this.litecoin = TorrentUtils.getStringFromEncodedMap("litecoin", paymentOptions);
-        this.dogecoin = TorrentUtils.getStringFromEncodedMap("dogecoin", paymentOptions);
-        this.paypalUrl = TorrentUtils.getStringFromEncodedMap("paypalUrl", paymentOptions);
+        this.bitcoin = FWTorrentImpl.getStringFromEncodedMap("bitcoin", paymentOptions);
+        this.litecoin = FWTorrentImpl.getStringFromEncodedMap("litecoin", paymentOptions);
+        this.dogecoin = FWTorrentImpl.getStringFromEncodedMap("dogecoin", paymentOptions);
+        this.paypalUrl = FWTorrentImpl.getStringFromEncodedMap("paypalUrl", paymentOptions);
     }
 
     public Map<String, Map<String, String>> asMap() {

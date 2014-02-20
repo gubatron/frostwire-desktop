@@ -4071,7 +4071,6 @@ DownloadManagerStateImpl
     		String		name )
        	{
 	   		if ( fixup()){
-				
 				return( delegate.getAdditionalByteArrayProperty( name ));
 			}
 	   		
