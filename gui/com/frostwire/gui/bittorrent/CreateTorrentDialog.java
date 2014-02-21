@@ -482,8 +482,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		//Whether or not to start seeding this torrent right away
 		autoOpen = _checkStartSeeding.isSelected();
 		
-		//TODO: Add more validations for payment options if necessary.
-		
 		//show save as dialog
 		if (!showSaveAsDialog()) {
 			return;
