@@ -3,11 +3,12 @@ frostwire (5.7.1) stable; urgency=high
     Removed cling library.
   * Improvements in .torrent creation window:
      1. Web seed url(s) (GetRight style) support.
-     2. Associate a Bitcoin address for Name-your-price/tips support.
-     3. Associate a Litecoin address for Name-your-price/tips support.
-     4. Associate a Paypal url for Name-your-price/tips support.	
-     5. Associate a Creative Commons license.
- -- FrostWire Team <contact@frostwire.com>  Mon, 10 Feb 2014 16:59:12 -0500
+     2. Associate a Creative Commons license.	
+     3. Associate a Bitcoin address for Name-your-price/tips support.
+     4. Associate a Litecoin address for Name-your-price/tips support.
+     5. Associate a Paypal url for Name-your-price/tips support.	
+
+ -- FrostWire Team <contact@frostwire.com>  Thu, 20 Feb 2014 22:55:08 -0500
 
 frostwire (5.7.0) stable; urgency=high
   * Updated BitTorrent engine from Azureus/Vuze project.
