@@ -16,10 +16,13 @@
 package com.frostwire.gui.bittorrent;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -35,8 +38,7 @@ import com.limegroup.gnutella.gui.LimeTextField;
 
 public class PaymentOptionsPanel extends JPanel {
 
-    //"bitcoin :14F6JPXK2fR5b4gZp3134qLRGgYtvabMWL", 
-    //"litecoin:LiYp3Dg11N5BgV8qKW42ubSZXFmjDByjoV",
+    private final JCheckBox confirmationCheckbox;
     private final CryptoCurrencyTextField bitcoinAddress;
     private final CryptoCurrencyTextField litecoinAddress;
     private final CryptoCurrencyTextField dogecoinAddress;
@@ -45,6 +47,7 @@ public class PaymentOptionsPanel extends JPanel {
 
     public PaymentOptionsPanel() {
         initBorder();
+        confirmationCheckbox = new JCheckBox("<html><strong>I am the content creator or I have the right to collect financial contributions for this work.</strong><br>I understand that incurring in financial gains from unauthorized copyrighted works can make me liable for counterfeiting and criminal copyright infringement.</html>");
         bitcoinAddress = new CryptoCurrencyTextField(CurrencyURIPrefix.BITCOIN);
         litecoinAddress = new CryptoCurrencyTextField(CurrencyURIPrefix.LITECOIN);
         dogecoinAddress = new CryptoCurrencyTextField(CurrencyURIPrefix.DOGECOIN);
@@ -56,6 +59,12 @@ public class PaymentOptionsPanel extends JPanel {
     }
 
     private void initListeners() {
+        confirmationCheckbox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onConfirmationCheckbox();
+            }
+        });
         
         bitcoinAddress.addKeyListener(new KeyAdapter() {
             @Override
@@ -75,6 +84,13 @@ public class PaymentOptionsPanel extends JPanel {
                 onCryptoAddressPressed(dogecoinAddress);
             }
         });
+    }
+
+    protected void onConfirmationCheckbox() {
+        bitcoinAddress.setEnabled(confirmationCheckbox.isSelected());
+        litecoinAddress.setEnabled(confirmationCheckbox.isSelected());
+        dogecoinAddress.setEnabled(confirmationCheckbox.isSelected());
+        paypalUrlAddress.setEnabled(confirmationCheckbox.isSelected());
     }
 
     protected void onCryptoAddressPressed(CryptoCurrencyTextField textField) {
@@ -106,6 +122,8 @@ public class PaymentOptionsPanel extends JPanel {
     }
 
     private void initComponents() {
+        add(confirmationCheckbox, "aligny top, gapbottom 10px, wrap, span");
+        
         add(new JLabel("<html><strong>Bitcoin</strong> receiving wallet address</html>"),"wrap, span");
         add(new JLabel(GUIMediator.getThemeImage("bitcoin_accepted.png")),"aligny top");
         bitcoinAddress.setPrompt("bitcoin:1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
@@ -125,6 +143,8 @@ public class PaymentOptionsPanel extends JPanel {
         add(new JLabel(GUIMediator.getThemeImage("paypal_accepted.png")), "aligny top");
         paypalUrlAddress.setPrompt("http://your.paypal.button/url/here");
         add(paypalUrlAddress, "aligny top, growx, push");
+        
+        onConfirmationCheckbox();
     }
 
     private void initBorder() {
@@ -138,16 +158,18 @@ public class PaymentOptionsPanel extends JPanel {
     public PaymentOptions getPaymentOptions() {
         PaymentOptions result = null;
 
-        boolean validBitcoin = bitcoinAddress.hasValidAddress();
-        boolean validLitecoin = litecoinAddress.hasValidAddress();
-        boolean validDogecoin = dogecoinAddress.hasValidAddress();
-            
-        if (validBitcoin || validLitecoin || validDogecoin || (paypalUrlAddress.getText()!=null && !paypalUrlAddress.getText().isEmpty())) {
-            String bitcoin = validBitcoin ? bitcoinAddress.normalizeValidAddress() : null;
-            String litecoin = validLitecoin ? litecoinAddress.normalizeValidAddress() : null;
-            String dogecoin = validDogecoin ? dogecoinAddress.normalizeValidAddress() : null;
-            String paypal = (paypalUrlAddress != null && paypalUrlAddress.getText() != null && !paypalUrlAddress.getText().isEmpty()) ? paypalUrlAddress.getText() : null;
-            result = new PaymentOptions(bitcoin,litecoin,dogecoin,paypal);
+        if (confirmationCheckbox.isSelected()) {
+            boolean validBitcoin = bitcoinAddress.hasValidAddress();
+            boolean validLitecoin = litecoinAddress.hasValidAddress();
+            boolean validDogecoin = dogecoinAddress.hasValidAddress();
+                
+            if (validBitcoin || validLitecoin || validDogecoin || (paypalUrlAddress.getText()!=null && !paypalUrlAddress.getText().isEmpty())) {
+                String bitcoin = validBitcoin ? bitcoinAddress.normalizeValidAddress() : null;
+                String litecoin = validLitecoin ? litecoinAddress.normalizeValidAddress() : null;
+                String dogecoin = validDogecoin ? dogecoinAddress.normalizeValidAddress() : null;
+                String paypal = (paypalUrlAddress != null && paypalUrlAddress.getText() != null && !paypalUrlAddress.getText().isEmpty()) ? paypalUrlAddress.getText() : null;
+                result = new PaymentOptions(bitcoin,litecoin,dogecoin,paypal);
+            }
         }
         
         return result;
