@@ -29,6 +29,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,6 +54,7 @@ import javax.swing.filechooser.FileFilter;
 
 import net.miginfocom.swing.MigLayout;
 
+import org.apache.lucene.util.ArrayUtil;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
 import org.gudy.azureus2.core3.internat.MessageText;
@@ -83,6 +85,7 @@ import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LimeTextField;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 /**
  * @author gubatron
@@ -695,6 +698,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				torrent = creator.create();
 
 				if (torrent != null) {
+				    
+				    addAvailableWebSeeds(torrent);
 		            addAvailablePaymentOptions(torrent);
 		            addAvailableCreativeCommonsLicense(torrent);		            
 		            
@@ -723,37 +728,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		                reportCurrentTask(MessageText.getString("wizard.addingmt"));
 		                TorrentUtils.listToAnnounceGroups(trackers, torrent);
 		            }
-
-		            // NO WEB SEEDS FOR THIS RELEASE.
-		            // if (useWebSeed && webseeds.size() > 0) {
-		            // this.reportCurrentTask(MessageText
-		            // .getString("wizard.webseed.adding"));
-		            //
-		            // Map ws = _wizard.webseeds;
-		            //
-		            // List getright = (List) ws.get("getright");
-		            //
-		            // if (getright.size() > 0) {
-		            //
-		            // for (int i = 0; i < getright.size(); i++) {
-		            // reportCurrentTask("    GetRight: " + getright.get(i));
-		            // }
-		            // torrent.setAdditionalListProperty("url-list",
-		            // new ArrayList(getright));
-		            // }
-		            //
-		            // List webseed = (List) ws.get("webseed");
-		            //
-		            // if (webseed.size() > 0) {
-		            //
-		            // for (int i = 0; i < webseed.size(); i++) {
-		            // reportCurrentTask("    WebSeed: " + webseed.get(i));
-		            // }
-		            // torrent.setAdditionalListProperty("httpseeds",
-		            // new ArrayList(webseed));
-		            // }
-		            //
-		            // }
 
 		            reportCurrentTask(MessageText.getString("wizard.savingfile"));
 
@@ -791,6 +765,17 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		
 		return true;
 	}
+	
+	private void addAvailableWebSeeds(TOTorrent torrent) {
+	    if (_textWebseeds.getText().length() > 0) {
+	       List<String> mirrors = Arrays.asList(_textWebseeds.getText().split("\n"));
+	       if (mirrors!=null && !mirrors.isEmpty()) {
+	           torrent.setAdditionalListProperty("url-list",mirrors);
+	       }
+	    }
+    }
+
+
 
     private void addAvailableCreativeCommonsLicense(final TOTorrent torrent) {
         if (_ccPanel.hasConfirmedRightfulUseOfLicense()) {
