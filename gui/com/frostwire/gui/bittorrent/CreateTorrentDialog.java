@@ -73,8 +73,8 @@ import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.AzureusStarter;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.torrent.CreativeCommonsLicense;
-import com.frostwire.torrent.TorrentInfoManipulator;
 import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.torrent.TorrentInfoManipulator;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.FileChooserHandler;
@@ -160,6 +160,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	private JTextArea _textTrackers;
 	private JCheckBox _checkStartSeeding;
 	private JCheckBox _checkUseDHT;
+    private JLabel _labelWebseeds;
+    private JTextArea _textWebseeds;
+
 	
 	private JButton _buttonSaveAs;
 	private JProgressBar _progressBar;
@@ -257,17 +260,18 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		JPanel torrentTrackingPanel = new JPanel(new MigLayout("fill"));
 		GUIUtils.setTitledBorderOnPanel(torrentTrackingPanel, I18n.tr("Tracking"));
 		
-		_checkUseDHT = new JCheckBox(I18n.tr("Trackerless Torrent (DHT)"),true);
-		_checkUseDHT.setToolTipText(I18n.tr("Select this option to create torrents that don't need trackers, completely descentralized. (Recommended)"));
-		torrentTrackingPanel.add(_checkUseDHT, "gapleft 5, north, wrap");
+        _checkUseDHT = new JCheckBox(I18n.tr("Trackerless Torrent (DHT)"),true);
+        _checkUseDHT.setToolTipText(I18n.tr("Select this option to create torrents that don't need trackers, completely descentralized. (Recommended)"));
+        torrentTrackingPanel.add(_checkUseDHT, "align left, gapleft 5");
 
-		_checkStartSeeding = new JCheckBox(I18n.tr("Start seeding"),true);
-		_checkStartSeeding.setToolTipText(I18n.tr("Announce yourself as a seed for the content indexed by this torrent as soon as it's created.\nIf nobody is seeding the torrent won't work. (Recommended)"));
-		torrentTrackingPanel.add(_checkStartSeeding, "gapleft 5, north, wrap");
+		_checkStartSeeding = new JCheckBox(I18n.tr("Start seeding"), true);
+        _checkStartSeeding.setToolTipText(I18n
+                .tr("Announce yourself as a seed for the content indexed by this torrent as soon as it's created.\nIf nobody is seeding the torrent won't work. (Recommended)"));
+        torrentTrackingPanel.add(_checkStartSeeding, "align right, gapright 10, wrap");
 
-		_labelTrackers = new JLabel(I18n.tr("<html><p>Tracker Announce URLs</p><p>(One tracker per line)</p></html>"));
+		_labelTrackers = new JLabel("<html><p>" + I18n.tr("Tracker Announce URLs") + "</p><p>(" + I18n.tr("One tracker per line") + ")</p></html>");
 		_labelTrackers.setToolTipText(I18n.tr("Enter a list of valid BitTorrent Tracker Server URLs.\nYour new torrent will be announced to these trackers if you start seeding the torrent."));
-		torrentTrackingPanel.add(_labelTrackers, "pushy, growx 40, gapleft 5, gapright 10, wmin 150px, north, west");
+		torrentTrackingPanel.add(_labelTrackers, "aligny top, pushy, growx 40, gapleft 5, gapright 10, wmin 150px");
 		
 		_textTrackers = new JTextArea(10, 80);
 		ThemeMediator.fixKeyStrokes(_textTrackers);
@@ -275,7 +279,15 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		_textTrackers.setLineWrap(false);
 		_textTrackers.setText("udp://tracker.openbittorrent.com:80/announce");
 		_textTrackersScrollPane = new JScrollPane(_textTrackers);
-		torrentTrackingPanel.add(_textTrackersScrollPane, "gapright 5, gapleft 80, gaptop 10, gapbottom 5, hmin 165px, growx 60, growy, east");
+		torrentTrackingPanel.add(_textTrackersScrollPane, "gapright 5, gapleft 80, gapbottom 5, hmin 165px, growx 60, growy, wrap");
+		
+		_labelWebseeds = new JLabel(I18n.tr("Web Seeds Mirror URLs"));
+		_labelWebseeds.setToolTipText(I18n.tr("If these files can be downloaded from the web, enter the URLs of each possible mirror, one per line (GetRight style)."));
+		torrentTrackingPanel.add(_labelWebseeds,"aligny top, pushy, gapleft 5, gapright 10, wmin 150px");
+		
+		_textWebseeds = new JTextArea(4, 80);
+		ThemeMediator.fixKeyStrokes(_textWebseeds);
+		torrentTrackingPanel.add(new JScrollPane(_textWebseeds),"gapright 5, gapleft 80, gapbottom 5, hmin 165px, growx 60, growy");
 		
 		//suggest DHT by default 
 		updateTrackerRelatedControlsAvailability(true);
