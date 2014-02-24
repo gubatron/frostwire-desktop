@@ -76,10 +76,16 @@ public final class VuzeDownloadFactory {
             });
 
             vdm = new VuzeDownloadManager(dm);
-            setupListener(vdm, listener);
+            
+            vdm.getDM().addListener(new VuzeDownloadManagerAdapter(vdm, listener));
+
+            if (vdm.getDM().getState() != DownloadManager.STATE_STOPPED) {
+                vdm.getDM().initialize();
+            }
 
         } else { // modify the existing one
             vdm = VuzeDownloadManager.getVDM(dm);
+            
             vdm.setSkipped(selection, true);
 
             if (dm.getState() == DownloadManager.STATE_STOPPED) {
@@ -106,18 +112,6 @@ public final class VuzeDownloadFactory {
             throw new IOException("Unable to read the torrent", e);
         } finally {
             IOUtils.closeQuietly(is);
-        }
-    }
-
-    private static void setupListener(final VuzeDownloadManager dm, final VuzeDownloadListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Download manager listener can't be null");
-        }
-
-        dm.getDM().addListener(new VuzeDownloadManagerAdapter(dm, listener));
-
-        if (dm.getDM().getState() != DownloadManager.STATE_STOPPED) {
-            dm.getDM().initialize();
         }
     }
 

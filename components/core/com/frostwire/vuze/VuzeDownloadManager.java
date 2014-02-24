@@ -20,7 +20,6 @@ package com.frostwire.vuze;
 
 import java.io.File;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.io.FilenameUtils;
@@ -232,17 +231,6 @@ public final class VuzeDownloadManager {
 
     public void stop() {
         ManagerUtils.stop(dm);
-    }
-
-    public Set<String> getSkipped() {
-        Set<DiskManagerFileInfo> set = VuzeUtils.getFileInfoSet(dm, InfoSetQuery.SKIPPED);
-        Set<String> result = new HashSet<String>();
-
-        for (DiskManagerFileInfo info : set) {
-            result.add(info.getFile(false).getPath());
-        }
-
-        return result;
     }
 
     public void setSkipped(Set<String> paths, boolean skipped) {
