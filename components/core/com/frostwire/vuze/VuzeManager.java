@@ -31,6 +31,7 @@ import org.gudy.azureus2.core3.global.GlobalManager;
 import org.gudy.azureus2.core3.internat.IntegratedResourceBundle;
 import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
+import org.gudy.azureus2.core3.util.HashWrapper;
 import org.gudy.azureus2.core3.util.SystemProperties;
 import org.gudy.azureus2.core3.util.SystemTime;
 import org.gudy.azureus2.plugins.PluginManager;
@@ -82,6 +83,16 @@ public final class VuzeManager {
 
     GlobalManager getGlobalManager() {
         return core.getGlobalManager();
+    }
+
+    public VuzeDownloadManager find(byte[] hash) {
+        GlobalManager gm = getGlobalManager();
+        DownloadManager dm = gm.getDownloadManager(new HashWrapper(hash));
+        if (dm != null) {
+            return (VuzeDownloadManager) dm.getUserData(VuzeDownloadManager.VUZE_DOWNLOAD_MANAGER_OBJECT_KEY);
+        } else {
+            return null;
+        }
     }
 
     public void loadTorrents(final boolean stop, final LoadTorrentsListener listener) {

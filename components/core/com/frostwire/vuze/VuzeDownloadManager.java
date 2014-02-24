@@ -20,6 +20,7 @@ package com.frostwire.vuze;
 
 import java.io.File;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.io.FilenameUtils;
@@ -42,7 +43,7 @@ public final class VuzeDownloadManager {
 
     private static final Logger LOG = Logger.getLogger(VuzeDownloadManager.class);
 
-    private static final String VUZE_DOWNLOAD_MANAGER_OBJECT_KEY = "VUZE_DOWNLOAD_MANAGER_OBJECT";
+    static final String VUZE_DOWNLOAD_MANAGER_OBJECT_KEY = "VUZE_DOWNLOAD_MANAGER_OBJECT";
 
     // states from azureus download manager
     public static final int STATE_WAITING = DownloadManager.STATE_WAITING;
@@ -233,6 +234,42 @@ public final class VuzeDownloadManager {
 
     public void stop() {
         ManagerUtils.stop(dm);
+    }
+
+    public Set<String> getSkipped() {
+        Set<DiskManagerFileInfo> set = VuzeUtils.getFileInfoSet(dm, InfoSetQuery.SKIPPED);
+        Set<String> result = new HashSet<String>();
+
+        for (DiskManagerFileInfo info : set) {
+            result.add(info.getFile(false).getPath());
+        }
+
+        return result;
+    }
+
+    public void setSkipped(Set<String> paths, boolean skipped) {
+        DiskManagerFileInfo[] infs = dm.getDiskManagerFileInfoSet().getFiles();
+
+        try {
+            dm.getDownloadState().suppressStateSave(true);
+
+            if (paths == null || paths.isEmpty()) {
+                for (DiskManagerFileInfo inf : infs) {
+                    inf.setSkipped(false);
+                }
+            } else {
+                for (DiskManagerFileInfo inf : infs) {
+                    String path = inf.getFile(false).getPath();
+                    if (skipped && !inf.isSkipped()) {
+                        inf.setSkipped(paths.contains(path));
+                    } else if (!skipped && inf.isSkipped()) {
+                        inf.setSkipped(!paths.contains(path));
+                    }
+                }
+            }
+        } finally {
+            dm.getDownloadState().suppressStateSave(false);
+        }
     }
 
     @Override
