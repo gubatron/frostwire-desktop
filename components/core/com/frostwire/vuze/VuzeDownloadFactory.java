@@ -83,26 +83,15 @@ public final class VuzeDownloadFactory {
             setupListener(vdm, listener);
 
         } else { // modify the existing one
-            vdm = modify(dm, selection);
+            vdm = VuzeDownloadManager.getVDM(dm);
+            vdm.setSkipped(selection, true);
+
+            if (dm.getState() == DownloadManager.STATE_STOPPED) {
+                dm.initialize();
+            }
         }
 
         return vdm;
-    }
-
-    public static VuzeDownloadManager modify(byte[] hash, final Set<String> selection) {
-        GlobalManager gm = VuzeManager.getInstance().getGlobalManager();
-        DownloadManager dm = gm.getDownloadManager(new HashWrapper(hash));
-        return modify(dm, selection);
-    }
-
-    private static VuzeDownloadManager modify(DownloadManager dm, final Set<String> selection) {
-        setupPartialSelection(dm, selection);
-
-        if (dm.getState() == DownloadManager.STATE_STOPPED) {
-            dm.initialize();
-        }
-
-        return VuzeDownloadManager.refreshData(dm);
     }
 
     private static DownloadManager findDM(GlobalManager gm, String torrent) throws IOException {

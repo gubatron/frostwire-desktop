@@ -43,8 +43,6 @@ public final class VuzeDownloadManager {
 
     private static final Logger LOG = Logger.getLogger(VuzeDownloadManager.class);
 
-    static final String VUZE_DOWNLOAD_MANAGER_OBJECT_KEY = "VUZE_DOWNLOAD_MANAGER_OBJECT";
-
     // states from azureus download manager
     public static final int STATE_WAITING = DownloadManager.STATE_WAITING;
     public static final int STATE_INITIALIZING = DownloadManager.STATE_INITIALIZING;
@@ -77,7 +75,7 @@ public final class VuzeDownloadManager {
     VuzeDownloadManager(DownloadManager dm) {
         this.dm = dm;
 
-        dm.setUserData(VUZE_DOWNLOAD_MANAGER_OBJECT_KEY, this);
+        dm.setUserData(VuzeKeys.VUZE_DOWNLOAD_MANAGER_OBJECT_KEY, this);
 
         this.hash = calculateHash(dm);
         this.savePath = dm.getSaveLocation();
@@ -270,6 +268,8 @@ public final class VuzeDownloadManager {
         } finally {
             dm.getDownloadState().suppressStateSave(false);
         }
+
+        refreshData(dm);
     }
 
     @Override
@@ -290,15 +290,16 @@ public final class VuzeDownloadManager {
         return dm;
     }
 
-    static VuzeDownloadManager refreshData(DownloadManager dm) {
-        VuzeDownloadManager vdm = (VuzeDownloadManager) dm.getUserData(VUZE_DOWNLOAD_MANAGER_OBJECT_KEY);
+    static VuzeDownloadManager getVDM(DownloadManager dm) {
+        return (VuzeDownloadManager) dm.getUserData(VuzeKeys.VUZE_DOWNLOAD_MANAGER_OBJECT_KEY);
+    }
 
+    private void refreshData(DownloadManager dm) {
         Set<DiskManagerFileInfo> noSkippedSet = VuzeUtils.getFileInfoSet(dm, InfoSetQuery.NO_SKIPPED);
-        vdm.displayName = calculateDisplayName(dm, noSkippedSet);
-        vdm.size = calculateSize(dm, noSkippedSet);
-        vdm.changedTime = System.currentTimeMillis();
 
-        return vdm;
+        this.displayName = calculateDisplayName(dm, noSkippedSet);
+        this.size = calculateSize(dm, noSkippedSet);
+        this.changedTime = System.currentTimeMillis();
     }
 
     private static String calculateDisplayName(DownloadManager dm, Set<DiskManagerFileInfo> noSkippedSet) {

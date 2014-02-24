@@ -32,4 +32,6 @@ public interface VuzeKeys {
     public static final String MAX_UPLOADS = "Max Uploads";
     public static final String MAX_TOTAL_CONNECTIONS = "Max.Peer.Connections.Total";
     public static final String MAX_TORRENT_CONNECTIONS = "Max.Peer.Connections.Per.Torrent";
+
+    static final String VUZE_DOWNLOAD_MANAGER_OBJECT_KEY = "VUZE_DOWNLOAD_MANAGER_OBJECT";
 }

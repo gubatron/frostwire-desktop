@@ -89,7 +89,7 @@ public final class VuzeManager {
         GlobalManager gm = getGlobalManager();
         DownloadManager dm = gm.getDownloadManager(new HashWrapper(hash));
         if (dm != null) {
-            return (VuzeDownloadManager) dm.getUserData(VuzeDownloadManager.VUZE_DOWNLOAD_MANAGER_OBJECT_KEY);
+            return VuzeDownloadManager.getVDM(dm);
         } else {
             return null;
         }
