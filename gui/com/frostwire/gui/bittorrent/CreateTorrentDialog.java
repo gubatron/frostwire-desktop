@@ -54,7 +54,6 @@ import javax.swing.filechooser.FileFilter;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.apache.lucene.util.ArrayUtil;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
 import org.gudy.azureus2.core3.internat.MessageText;
@@ -85,7 +84,6 @@ import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LimeTextField;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 /**
  * @author gubatron
@@ -698,7 +696,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				torrent = creator.create();
 
 				if (torrent != null) {
-				    
 				    addAvailableWebSeeds(torrent);
 		            addAvailablePaymentOptions(torrent);
 		            addAvailableCreativeCommonsLicense(torrent);		            
@@ -774,8 +771,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	       }
 	    }
     }
-
-
 
     private void addAvailableCreativeCommonsLicense(final TOTorrent torrent) {
         if (_ccPanel.hasConfirmedRightfulUseOfLicense()) {
