@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.download.DownloadManager;
@@ -57,6 +58,7 @@ public final class VuzeManager {
     private static VuzeConfiguration conf = null;
 
     private final AzureusCore core;
+    private final AtomicBoolean torrentsLoaded;
 
     private VuzeManager() {
         if (conf == null) {
@@ -67,6 +69,8 @@ public final class VuzeManager {
 
         this.core = AzureusCoreFactory.create();
         this.core.start();
+
+        this.torrentsLoaded = new AtomicBoolean(false);
     }
 
     private static class Loader {
@@ -95,26 +99,36 @@ public final class VuzeManager {
         }
     }
 
-    public void loadTorrents(final boolean stop, final LoadTorrentsListener listener) {
+    public void loadTorrents(final boolean stop, final LoadTorrentsListener loadListener, final VuzeDownloadListener downloadListener) {
+        if (!torrentsLoaded.compareAndSet(false, true)) {
+            throw new RuntimeException("Load torrents can't be called twice, review the logic");
+        }
+
         AzureusCoreFactory.addCoreRunningListener(new AzureusCoreRunningListener() {
 
             @Override
             public void azureusCoreRunning(AzureusCore core) {
-                List<VuzeDownloadManager> dms = new ArrayList<VuzeDownloadManager>();
+                try {
+                    List<VuzeDownloadManager> dms = new ArrayList<VuzeDownloadManager>();
 
-                GlobalManager gm = core.getGlobalManager();
+                    GlobalManager gm = core.getGlobalManager();
 
-                for (DownloadManager dm : gm.getDownloadManagers()) {
-                    VuzeDownloadManager vdm = new VuzeDownloadManager(dm);
+                    for (DownloadManager dm : gm.getDownloadManagers()) {
+                        VuzeDownloadManager vdm = new VuzeDownloadManager(dm);
 
-                    if (stop && vdm.isComplete()) {
-                        vdm.stop();
+                        vdm.getDM().addListener(new VuzeDownloadManagerAdapter(vdm, downloadListener));
+
+                        if (stop && vdm.isComplete()) {
+                            vdm.stop();
+                        }
+
+                        dms.add(vdm);
                     }
 
-                    dms.add(vdm);
+                    loadListener.onLoad(dms);
+                } catch (Throwable e) {
+                    LOG.error("Failed to load downloads from vuze core", e);
                 }
-
-                listener.onLoad(dms);
             }
         });
     }

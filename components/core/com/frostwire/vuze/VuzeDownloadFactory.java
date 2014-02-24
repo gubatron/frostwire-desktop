@@ -27,11 +27,9 @@ import org.apache.commons.io.IOUtils;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.download.DownloadManagerInitialisationAdapter;
-import org.gudy.azureus2.core3.download.impl.DownloadManagerAdapter;
 import org.gudy.azureus2.core3.global.GlobalManager;
 import org.gudy.azureus2.core3.util.HashWrapper;
 
-import com.frostwire.logging.Logger;
 import com.frostwire.torrent.TOTorrent;
 import com.frostwire.torrent.TOTorrentException;
 import com.frostwire.torrent.TorrentUtils;
@@ -43,8 +41,6 @@ import com.frostwire.torrent.TorrentUtils;
  *
  */
 public final class VuzeDownloadFactory {
-
-    private static final Logger LOG = Logger.getLogger(VuzeDownloadFactory.class);
 
     private VuzeDownloadFactory() {
     }
@@ -118,33 +114,7 @@ public final class VuzeDownloadFactory {
             throw new IllegalArgumentException("Download manager listener can't be null");
         }
 
-        dm.getDM().addListener(new DownloadManagerAdapter() {
-            @Override
-            public void stateChanged(DownloadManager manager, int state) {
-                if (state == DownloadManager.STATE_READY) {
-                    manager.startDownload();
-                } else {
-                    if (listener != null) {
-                        try {
-                            listener.stateChanged(dm, state);
-                        } catch (Throwable e) {
-                            LOG.error("Error calling download manager listener", e);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void downloadComplete(DownloadManager manager) {
-                if (listener != null) {
-                    try {
-                        listener.downloadComplete(dm);
-                    } catch (Throwable e) {
-                        LOG.error("Error calling download manager listener", e);
-                    }
-                }
-            }
-        });
+        dm.getDM().addListener(new VuzeDownloadManagerAdapter(dm, listener));
 
         if (dm.getDM().getState() != DownloadManager.STATE_STOPPED) {
             dm.getDM().initialize();
