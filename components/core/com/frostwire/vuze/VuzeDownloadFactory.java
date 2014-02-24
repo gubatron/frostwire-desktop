@@ -77,7 +77,7 @@ public final class VuzeDownloadFactory {
 
             vdm = new VuzeDownloadManager(dm);
             
-            vdm.getDM().addListener(new VuzeDownloadManagerAdapter(vdm, listener));
+            vdm.getDM().addListener(new VuzeCoreDownloadManagerAdapter(vdm, listener));
 
             if (vdm.getDM().getState() != DownloadManager.STATE_STOPPED) {
                 vdm.getDM().initialize();

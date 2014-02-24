@@ -116,7 +116,7 @@ public final class VuzeManager {
                     for (DownloadManager dm : gm.getDownloadManagers()) {
                         VuzeDownloadManager vdm = new VuzeDownloadManager(dm);
 
-                        vdm.getDM().addListener(new VuzeDownloadManagerAdapter(vdm, downloadListener));
+                        vdm.getDM().addListener(new VuzeCoreDownloadManagerAdapter(vdm, downloadListener));
 
                         if (stop && vdm.isComplete()) {
                             vdm.stop();

@@ -29,14 +29,14 @@ import com.frostwire.logging.Logger;
  * @author aldenml
  *
  */
-final class VuzeDownloadManagerAdapter extends DownloadManagerAdapter {
+final class VuzeCoreDownloadManagerAdapter extends DownloadManagerAdapter {
 
-    private static final Logger LOG = Logger.getLogger(VuzeDownloadManagerAdapter.class);
+    private static final Logger LOG = Logger.getLogger(VuzeCoreDownloadManagerAdapter.class);
 
     private final VuzeDownloadManager dm;
     private final VuzeDownloadListener listener;
 
-    public VuzeDownloadManagerAdapter(VuzeDownloadManager dm, VuzeDownloadListener listener) {
+    public VuzeCoreDownloadManagerAdapter(VuzeDownloadManager dm, VuzeDownloadListener listener) {
         this.dm = dm;
         this.listener = listener;
     }
