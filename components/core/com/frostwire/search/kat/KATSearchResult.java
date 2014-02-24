@@ -20,9 +20,10 @@ package com.frostwire.search.kat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import com.frostwire.search.torrent.AbstractTorrentSearchResult;
-import com.frostwire.util.URLUtils;
+import com.frostwire.util.StringUtils;
 
 /**
  * 
@@ -96,12 +97,12 @@ public class KATSearchResult extends AbstractTorrentSearchResult {
     }
 
     private String buildUrl() {
-        return "magnet:?xt=urn:btih:" + getHash() + "&dn=" + URLUtils.encode(getFilename()) + "&tr=http%3A%2F%2Ftracker.publicbt.com%2Fannounce";
+        return "magnet:?xt=urn:btih:" + getHash() + "&dn=" + StringUtils.encodeUrl(getFilename()) + "&tr=http%3A%2F%2Ftracker.publicbt.com%2Fannounce";
     }
 
     private long buildCreationTime(KATItem item) {
         //Saturday 26 Jan 2008 01:01:52 +0000
-        SimpleDateFormat date = new SimpleDateFormat("EEEE dd MMM yyyy HH:mm:ss Z ");
+        SimpleDateFormat date = new SimpleDateFormat("EEEE dd MMM yyyy HH:mm:ss Z ", Locale.US);
         long result = System.currentTimeMillis();
         try {
             result = date.parse(item.pubDate).getTime();

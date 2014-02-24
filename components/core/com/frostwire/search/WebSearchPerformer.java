@@ -26,7 +26,7 @@ import com.frostwire.logging.Logger;
 import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
-import com.frostwire.util.URLUtils;
+import com.frostwire.util.StringUtils;
 import com.frostwire.util.UserAgentGenerator;
 
 /**
@@ -59,7 +59,7 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
 
         this.domainAliasManager = domainAliasManager;
         this.keywords = keywords;
-        this.encodedKeywords = URLUtils.encode(keywords);
+        this.encodedKeywords = StringUtils.encodeUrl(keywords);
         this.timeout = timeout;
         this.client = HttpClientFactory.newInstance();
     }

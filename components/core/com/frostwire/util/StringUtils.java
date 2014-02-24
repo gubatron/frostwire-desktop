@@ -471,14 +471,17 @@ public class StringUtils {
      * @return
      */
     public static String encodeUrl(String s) {
-        if (s == null) {
-            return "";
+        String enc = "";
+
+        if (s != null) {
+            try {
+                enc = URLEncoder.encode(s, "UTF-8").replaceAll("\\+", "%20");
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException("Impossible to run in an environment with lack of UTF-8 support", e);
+            }
         }
-        try {
-            return URLEncoder.encode(s, "UTF-8").replaceAll("\\+", "%20");
-        } catch (UnsupportedEncodingException e) {
-            return s.replaceAll("\\+", "%20");
-        }
+
+        return enc;
     }
 
     public static String decodeUrl(String s) {
