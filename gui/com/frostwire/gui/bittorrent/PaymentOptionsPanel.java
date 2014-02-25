@@ -47,7 +47,7 @@ public class PaymentOptionsPanel extends JPanel {
 
     public PaymentOptionsPanel() {
         initBorder();
-        confirmationCheckbox = new JCheckBox("<html><strong>I am the content creator or I have the right to collect financial contributions for this work.</strong><br>I understand that incurring in financial gains from unauthorized copyrighted works can make me liable for counterfeiting and criminal copyright infringement.</html>");
+        confirmationCheckbox = new JCheckBox("<html><strong>" + I18n.tr("I am the content creator or I have the right to collect financial contributions for this work.")+"</strong><br>"+I18n.tr("I understand that incurring in financial gains from unauthorized copyrighted works can make me liable for counterfeiting and criminal copyright infringement.")+"</html>");
         bitcoinAddress = new CryptoCurrencyTextField(CurrencyURIPrefix.BITCOIN);
         litecoinAddress = new CryptoCurrencyTextField(CurrencyURIPrefix.LITECOIN);
         dogecoinAddress = new CryptoCurrencyTextField(CurrencyURIPrefix.DOGECOIN);

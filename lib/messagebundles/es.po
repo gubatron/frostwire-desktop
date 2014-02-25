@@ -323,7 +323,7 @@ msgstr "Nombre"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:115
 msgid "Tips/Donations"
-msgstr ""
+msgstr "Propinas/Donaciones"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:121
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:319
@@ -580,37 +580,35 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadPaymentOptionsRenderer.java:103
 msgid "bitcoins"
-msgstr ""
+msgstr "bitcoins"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadPaymentOptionsRenderer.java:104
 msgid "litecoins"
-msgstr ""
+msgstr "litecoins"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadPaymentOptionsRenderer.java:105
 msgid "dogecoins"
-msgstr ""
+msgstr "dogecoins"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadPaymentOptionsRenderer.java:106
 msgid "Name your price, Send a Tip or Donation via Paypal"
-msgstr ""
+msgstr "Nombra tu precio, envia una propina o donación por Paypal"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:116
-#, fuzzy
 msgid "Torrent File Created with FrostWire http://www.frostwire.com"
-msgstr "Archivo Torrent creado con FrostWire"
+msgstr "Archivo torrent creado con FrostWire http://www.frostwire.com"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:213
 msgid "Contents and Tracking"
-msgstr ""
+msgstr "Contenidos y Tracking"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:214
-#, fuzzy
 msgid "Copyright License"
-msgstr "Copiar enlace"
+msgstr "Licencia de derechos de autor"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:217
 msgid "Payments/Tips"
-msgstr ""
+msgstr "Pagos/Propinas"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:236
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:925
@@ -680,9 +678,8 @@ msgid "Tracker Announce URLs"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:272
-#, fuzzy
 msgid "One tracker per line"
-msgstr "Editar trackers, uno por línea"
+msgstr "Un tracker por línea"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:273
 msgid ""
@@ -805,7 +802,7 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:774
 msgid "Web seed not reachable."
-msgstr ""
+msgstr "Semilla web no disponible."
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:872
 msgid "Saving Torrent..."
@@ -813,31 +810,35 @@ msgstr "Guardando archivo..."
 
 #: gui/com/frostwire/gui/bittorrent/CreativeCommonsSelectorPanel.java:66
 msgid "Choose a Creative Commons License for this work"
-msgstr ""
+msgstr "Elige una licencia Creative Commons para este trabajo"
 
 #: gui/com/frostwire/gui/bittorrent/CreativeCommonsSelectorPanel.java:69
 msgid ""
 "I am the Content Creator of this work or I have been granted the rights to "
 "share this content under the following license by the Content Creator(s)."
 msgstr ""
+"Soy el creador de este trabajo o poseo los derechos para compartir este "
+"contenido bajo la siguiente licencia por el creador del contenido."
 
 #: gui/com/frostwire/gui/bittorrent/CreativeCommonsSelectorPanel.java:71
 msgid "Author's Name"
-msgstr ""
+msgstr "Nombre del autor"
 
 #: gui/com/frostwire/gui/bittorrent/CreativeCommonsSelectorPanel.java:73
 msgid "The name of the creator or creators of this work."
-msgstr ""
+msgstr "Nombre del creador o los creadores de este trabajo."
 
 #: gui/com/frostwire/gui/bittorrent/CreativeCommonsSelectorPanel.java:75
 msgid "Work's Title"
-msgstr ""
+msgstr "Título"
 
 #: gui/com/frostwire/gui/bittorrent/CreativeCommonsSelectorPanel.java:77
 msgid ""
 "The name of this work, i.e. the titleLabel of a music album, the titleLabel "
 "of a book, the titleLabel of a movie, etc."
 msgstr ""
+"Nombre de este trabajo, p.e. el título de un álbum musical, el título de un "
+"libro, el título de una película, etc."
 
 #: gui/com/frostwire/gui/bittorrent/CreativeCommonsSelectorPanel.java:78
 msgid "album name, movie title, book title, game title."
@@ -845,21 +846,23 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreativeCommonsSelectorPanel.java:80
 msgid "Attribution URL"
-msgstr ""
+msgstr "URL de atribución"
 
 #: gui/com/frostwire/gui/bittorrent/CreativeCommonsSelectorPanel.java:82
 msgid ""
 "The Content Creator's website to give attribution about this work if shared "
 "by others."
 msgstr ""
+"Sitio web del creador del contenido para entregar la atribución de este "
+"trabajo si es compartido por otros."
 
 #: gui/com/frostwire/gui/bittorrent/CreativeCommonsSelectorPanel.java:121
 msgid "You have selected the following License"
-msgstr ""
+msgstr "Ha seleccionado la siguiente licencia"
 
 #: gui/com/frostwire/gui/bittorrent/CreativeCommonsSelectorPanel.java:180
 msgid "Select what people can and can't do with this work"
-msgstr ""
+msgstr "Selecciona que pueden hacer o no con este trabajo"
 
 #: gui/com/frostwire/gui/bittorrent/DuplicateDownload.java:14
 msgid "Duplicated"
@@ -977,6 +980,24 @@ msgstr "Seleccionar/Des-seleccionar todos los archivos"
 #: gui/com/frostwire/gui/transfers/PeerHttpUpload.java:162
 msgid "Unknown"
 msgstr "Desconocido"
+
+#: gui/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:50
+msgid ""
+"I am the content creator or I have the right to collect financial "
+"contributions for this work."
+msgstr ""
+"Soy el creador de este contenido o poseo los derechos para obtener ganancias "
+"de este trabajo."
+
+#: gui/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:50
+msgid ""
+"I understand that incurring in financial gains from unauthorized copyrighted "
+"works can make me liable for counterfeiting and criminal copyright "
+"infringement."
+msgstr ""
+"Entiendo que obtener ganancias de trabajos sin licenciamiento autorizado "
+"puede conducirme a demandas criminales por falsificación y violación de derechos de "
+"autor."
 
 #: gui/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:152
 msgid "\"Name your price\", \"Tips\", \"Donations\" payment options"
