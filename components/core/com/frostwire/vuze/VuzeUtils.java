@@ -59,14 +59,6 @@ public final class VuzeUtils {
     private VuzeUtils() {
     }
 
-    public static void start(VuzeDownloadManager dm) {
-        ManagerUtils.start(dm.getDM());
-    }
-
-    public static void stop(VuzeDownloadManager dm) {
-        ManagerUtils.stop(dm.getDM());
-    }
-
     static Set<DiskManagerFileInfo> getFileInfoSet(DownloadManager dm, InfoSetQuery q) {
 
         Set<DiskManagerFileInfo> set = new HashSet<DiskManagerFileInfo>();
@@ -123,10 +115,6 @@ public final class VuzeUtils {
     /// review this code
 
     private static AsyncDispatcher async = new AsyncDispatcher(2000);
-
-    public static void removeDownload(VuzeDownloadManager downloadManager, boolean deleteTorrent, boolean deleteData) {
-        removeDownload(downloadManager, deleteTorrent, deleteData, true);
-    }
 
     public static void removeDownload(VuzeDownloadManager downloadManager, boolean deleteTorrent, boolean deleteData, boolean async) {
         if (async) {
@@ -352,33 +340,6 @@ public final class VuzeUtils {
         //        FileUtils.deleteEmptyDirectoryRecursive(dm.getSaveLocation());
     }
 
-    public static Set<File> getIncompleteFiles(DownloadManager dm) {
-        Set<File> set = new HashSet<File>();
-
-        DiskManagerFileInfoSet infoSet = dm.getDiskManagerFileInfoSet();
-        for (DiskManagerFileInfo fileInfo : infoSet.getFiles()) {
-            if (getDownloadPercent(fileInfo) < 100) {
-                set.add(fileInfo.getFile(false));
-            }
-        }
-
-        return set;
-    }
-
-    public static int getDownloadPercent(DiskManagerFileInfo fileInfo) {
-        try {
-            long length = fileInfo.getLength();
-            if (length == 0 || fileInfo.getDownloaded() == length) {
-                return 100;
-            } else {
-                return (int) (fileInfo.getDownloaded() * 100 / length);
-            }
-        } catch (Throwable e) {
-            System.out.println("Error calculating download percent");
-            return 0;
-        }
-    }
-
     public static Set<File> getIgnorableFiles() {
         Set<File> set = getIncompleteFiles();
         set.addAll(getSkipedFiles());
@@ -415,25 +376,5 @@ public final class VuzeUtils {
         //        }
 
         return set;
-    }
-
-    public static boolean isComplete(DownloadManager dm) {
-        /*
-        if (!TorrentUtil.getSkippedFiles(dm).isEmpty()) {
-            long downloaded = 0;
-            long size = 0;
-            for (DiskManagerFileInfo fileInfo : getNoSkippedFileInfoSet(dm)) {
-                downloaded += fileInfo.getDownloaded();
-                size += fileInfo.getLength();
-            }
-            return downloaded == size;
-        } else {
-            return dm.getStats().getDownloadCompleted(true) == 1000;
-        }*/
-        return dm.getAssumedComplete();
-    }
-
-    public static void stop(DownloadManager dm) {
-        ManagerUtils.start(dm);
     }
 }
