@@ -19,7 +19,6 @@
 package com.frostwire.vuze;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,27 +26,10 @@ import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfoSet;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.global.GlobalManager;
-import org.gudy.azureus2.core3.global.GlobalManagerDownloadRemovalVetoException;
-import org.gudy.azureus2.core3.internat.MessageText;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.util.AERunnable;
-import org.gudy.azureus2.core3.util.AsyncDispatcher;
-import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.HashWrapper;
-import org.gudy.azureus2.plugins.PluginInterface;
-import org.gudy.azureus2.plugins.download.Download;
-import org.gudy.azureus2.plugins.sharing.ShareManager;
-import org.gudy.azureus2.plugins.sharing.ShareResource;
-import org.gudy.azureus2.plugins.sharing.ShareResourceDir;
-import org.gudy.azureus2.plugins.sharing.ShareResourceFile;
-import org.gudy.azureus2.plugins.tracker.Tracker;
-import org.gudy.azureus2.plugins.tracker.TrackerTorrent;
-import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
 
-import com.aelitis.azureus.core.AzureusCoreFactory;
-import com.aelitis.azureus.ui.UIFunctions;
-import com.aelitis.azureus.ui.UIFunctionsManager;
 import com.frostwire.logging.Logger;
+import com.frostwire.util.DirectoryUtils;
 
 /**
  * 
@@ -56,7 +38,7 @@ import com.frostwire.logging.Logger;
  *
  */
 public final class VuzeUtils {
-    
+
     private static final Logger LOG = Logger.getLogger(VuzeUtils.class);
 
     private VuzeUtils() {
@@ -111,236 +93,9 @@ public final class VuzeUtils {
         }
     }
 
-    public static enum InfoSetQuery {
-        ALL, SKIPPED, NO_SKIPPED
+    public static void removeDownload(VuzeDownloadManager dm, boolean deleteTorrent, boolean deleteData) {
+        ManagerUtils.asyncStopDelete(dm.getDM(), DownloadManager.STATE_STOPPED, deleteTorrent, deleteData, null);
     }
-
-    /// review this code
-
-    private static AsyncDispatcher async = new AsyncDispatcher(2000);
-
-    public static void removeDownload(VuzeDownloadManager downloadManager, boolean deleteTorrent, boolean deleteData, boolean async) {
-        if (async) {
-            asyncStopDelete(downloadManager.getDM(), DownloadManager.STATE_STOPPED, deleteTorrent, deleteData, null);
-        } else {
-            blockingStopDelete(downloadManager.getDM(), DownloadManager.STATE_STOPPED, deleteTorrent, deleteData, null);
-        }
-    }
-
-    public static void asyncStopDelete(final DownloadManager dm, final int stateAfterStopped, final boolean bDeleteTorrent, final boolean bDeleteData, final AERunnable deleteFailed) {
-
-        async.dispatch(new AERunnable() {
-            public void runSupport() {
-
-                try {
-                    // I would move the FLAG_DO_NOT_DELETE_DATA_ON_REMOVE even deeper
-                    // but I fear what could possibly go wrong.
-                    boolean reallyDeleteData = bDeleteData && !dm.getDownloadState().getFlag(Download.FLAG_DO_NOT_DELETE_DATA_ON_REMOVE);
-
-                    dm.getGlobalManager().removeDownloadManager(dm, bDeleteTorrent, reallyDeleteData);
-                } catch (GlobalManagerDownloadRemovalVetoException f) {
-
-                    // see if we can delete a corresponding share as users frequently share
-                    // stuff by mistake and then don't understand how to delete the share
-                    // properly
-
-                    try {
-                        PluginInterface pi = AzureusCoreFactory.getSingleton().getPluginManager().getDefaultPluginInterface();
-
-                        ShareManager sm = pi.getShareManager();
-
-                        Tracker tracker = pi.getTracker();
-
-                        ShareResource[] shares = sm.getShares();
-
-                        TOTorrent torrent = dm.getTorrent();
-
-                        byte[] target_hash = torrent.getHash();
-
-                        for (ShareResource share : shares) {
-
-                            int type = share.getType();
-
-                            byte[] hash;
-
-                            if (type == ShareResource.ST_DIR) {
-
-                                hash = ((ShareResourceDir) share).getItem().getTorrent().getHash();
-
-                            } else if (type == ShareResource.ST_FILE) {
-
-                                hash = ((ShareResourceFile) share).getItem().getTorrent().getHash();
-
-                            } else {
-
-                                hash = null;
-                            }
-
-                            if (hash != null) {
-
-                                if (Arrays.equals(target_hash, hash)) {
-
-                                    try {
-                                        dm.stopIt(DownloadManager.STATE_STOPPED, false, false);
-
-                                    } catch (Throwable e) {
-                                    }
-
-                                    try {
-                                        TrackerTorrent tracker_torrent = tracker.getTorrent(PluginCoreUtils.wrap(torrent));
-
-                                        if (tracker_torrent != null) {
-
-                                            tracker_torrent.stop();
-                                        }
-                                    } catch (Throwable e) {
-                                    }
-
-                                    share.delete();
-
-                                    return;
-                                }
-                            }
-                        }
-
-                    } catch (Throwable e) {
-
-                    }
-
-                    if (!f.isSilent()) {
-                        UIFunctionsManager.getUIFunctions().forceNotify(UIFunctions.STATUSICON_WARNING, MessageText.getString("globalmanager.download.remove.veto"), f.getMessage(), null, null, -1);
-
-                        //Logger.log(new LogAlert(dm, false, "{globalmanager.download.remove.veto}", f));
-                    }
-                    if (deleteFailed != null) {
-                        deleteFailed.runSupport();
-                    }
-                } catch (Throwable ex) {
-                    Debug.printStackTrace(ex);
-                    if (deleteFailed != null) {
-                        deleteFailed.runSupport();
-                    }
-                }
-
-                //finalCleanup(dm);
-            }
-        });
-    }
-
-    public static void blockingStopDelete(final DownloadManager dm, final int stateAfterStopped, final boolean bDeleteTorrent, final boolean bDeleteData, final AERunnable deleteFailed) {
-
-        try {
-            // I would move the FLAG_DO_NOT_DELETE_DATA_ON_REMOVE even deeper
-            // but I fear what could possibly go wrong.
-            boolean reallyDeleteData = bDeleteData && !dm.getDownloadState().getFlag(Download.FLAG_DO_NOT_DELETE_DATA_ON_REMOVE);
-
-            dm.getGlobalManager().removeDownloadManager(dm, bDeleteTorrent, reallyDeleteData);
-        } catch (GlobalManagerDownloadRemovalVetoException f) {
-
-            // see if we can delete a corresponding share as users frequently share
-            // stuff by mistake and then don't understand how to delete the share
-            // properly
-
-            try {
-                PluginInterface pi = AzureusCoreFactory.getSingleton().getPluginManager().getDefaultPluginInterface();
-
-                ShareManager sm = pi.getShareManager();
-
-                Tracker tracker = pi.getTracker();
-
-                ShareResource[] shares = sm.getShares();
-
-                TOTorrent torrent = dm.getTorrent();
-
-                byte[] target_hash = torrent.getHash();
-
-                for (ShareResource share : shares) {
-
-                    int type = share.getType();
-
-                    byte[] hash;
-
-                    if (type == ShareResource.ST_DIR) {
-
-                        hash = ((ShareResourceDir) share).getItem().getTorrent().getHash();
-
-                    } else if (type == ShareResource.ST_FILE) {
-
-                        hash = ((ShareResourceFile) share).getItem().getTorrent().getHash();
-
-                    } else {
-
-                        hash = null;
-                    }
-
-                    if (hash != null) {
-
-                        if (Arrays.equals(target_hash, hash)) {
-
-                            try {
-                                dm.stopIt(DownloadManager.STATE_STOPPED, false, false);
-
-                            } catch (Throwable e) {
-                            }
-
-                            try {
-                                TrackerTorrent tracker_torrent = tracker.getTorrent(PluginCoreUtils.wrap(torrent));
-
-                                if (tracker_torrent != null) {
-
-                                    tracker_torrent.stop();
-                                }
-                            } catch (Throwable e) {
-                            }
-
-                            share.delete();
-
-                            return;
-                        }
-                    }
-                }
-
-            } catch (Throwable e) {
-
-            }
-
-            if (!f.isSilent()) {
-                UIFunctionsManager.getUIFunctions().forceNotify(UIFunctions.STATUSICON_WARNING, MessageText.getString("globalmanager.download.remove.veto"), f.getMessage(), null, null, -1);
-
-                // Logger.log(new LogAlert(dm, false,
-                // "{globalmanager.download.remove.veto}", f));
-            }
-            if (deleteFailed != null) {
-                deleteFailed.runSupport();
-            }
-        } catch (Exception ex) {
-            Debug.printStackTrace(ex);
-            if (deleteFailed != null) {
-                deleteFailed.runSupport();
-            }
-        }
-
-        //finalCleanup(dm);
-    }
-
-    /**
-     * Deletes incomplete and skipped files.
-     */
-//    private static void finalCleanup(DownloadManager dm) {
-//        Set<File> toDelete = getIgnorableFiles(dm);
-//
-//        for (File f : toDelete) {
-//            try {
-//                if (f.exists() && !f.delete()) {
-//                    LOG.info("Can't delete file: " + f);
-//                }
-//            } catch (Throwable e) {
-//                LOG.info("Can't delete file: " + f);
-//            }
-//        }
-//
-//        FileUtils.deleteEmptyDirectoryRecursive(dm.getSaveLocation());
-//    }
 
     public static Set<File> getIgnorableFiles() {
         Set<File> set = new HashSet<File>();
@@ -364,5 +119,28 @@ public final class VuzeUtils {
         }
 
         return set;
+    }
+
+    /**
+     * Deletes incomplete and skipped files.
+     */
+    static void finalCleanup(DownloadManager dm) {
+        Set<File> toDelete = getIgnorableFiles(dm);
+
+        for (File f : toDelete) {
+            try {
+                if (f.exists() && !f.delete()) {
+                    LOG.info("Can't delete file: " + f);
+                }
+            } catch (Throwable e) {
+                LOG.info("Can't delete file: " + f);
+            }
+        }
+
+        DirectoryUtils.deleteEmptyDirectoryRecursive(dm.getSaveLocation());
+    }
+
+    public static enum InfoSetQuery {
+        ALL, SKIPPED, NO_SKIPPED
     }
 }

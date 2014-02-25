@@ -552,6 +552,8 @@ import com.frostwire.vuze.CoreWaiterSWT.TriggerInThread;
 						deleteFailed.runSupport();
 					}
 				}
+				
+				VuzeUtils.finalCleanup(dm); // important code not in the original source code 
 			}
 		});
 	}
