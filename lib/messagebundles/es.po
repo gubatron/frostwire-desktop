@@ -576,7 +576,7 @@ msgstr "Dirección URL de rastreador inválida\n"
 #: gui/com/frostwire/gui/bittorrent/BTDownloadPaymentOptionsRenderer.java:104
 #: gui/com/frostwire/gui/bittorrent/BTDownloadPaymentOptionsRenderer.java:105
 msgid "Name your price, Send a Tip or Donation in "
-msgstr ""
+msgstr "Nombra tu precio, envia una propina o donación en "
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadPaymentOptionsRenderer.java:103
 msgid "bitcoins"
@@ -675,7 +675,7 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:272
 msgid "Tracker Announce URLs"
-msgstr ""
+msgstr "URLs para anuncio en Trackers"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:272
 msgid "One tracker per line"
@@ -694,7 +694,7 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:284
 msgid "Web Seeds Mirror URLs"
-msgstr ""
+msgstr "URLs de Semillas web (Espejos)"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:285
 msgid ""
@@ -842,7 +842,7 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreativeCommonsSelectorPanel.java:78
 msgid "album name, movie title, book title, game title."
-msgstr ""
+msgstr "nombre de album, titulo de pelicula, titulo de libro, titulo de juego."
 
 #: gui/com/frostwire/gui/bittorrent/CreativeCommonsSelectorPanel.java:80
 msgid "Attribution URL"
