@@ -206,7 +206,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     }
 
     private void initTabbedPane() {
-        _container.add(_tabbedPane, "gap 5 5 5 5, grow, wrap");
+        _container.add(_tabbedPane, "gap 5px 5px 5px 5px, grow, pushy, wrap");
         _creativeCommonsPane.add(_ccPanel, "grow");
         _paymentsPane.add(_paymentOptionsPanel, "grow");
 
@@ -312,7 +312,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     private void initProgressBar() {
         _progressBar = new JProgressBar(0, 100);
         _progressBar.setStringPainted(true);
-        _container.add(_progressBar, "south, growx, gap 5 5 0 5");
+        _container.add(_progressBar, "south, growx, gap 5px 5px 0 5px");
     }
 
     private void buildListeners() {
