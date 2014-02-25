@@ -341,39 +341,25 @@ public final class VuzeUtils {
     }
 
     public static Set<File> getIgnorableFiles() {
-        Set<File> set = getIncompleteFiles();
-        set.addAll(getSkipedFiles());
-        return set;
-    }
-
-    public static Set<File> getIncompleteFiles() {
         Set<File> set = new HashSet<File>();
 
-        //        if (!AzureusManager.isCreated()) {
-        //            return set;
-        //        }
-        //
-        //        List<?> dms = AzureusManager.instance().getGlobalManager().getDownloadManagers();
-        //        for (Object obj : dms) {
-        //            DownloadManager dm = (DownloadManager) obj;
-        //            set.addAll(getIncompleteFiles(dm));
-        //        }
+        for (DownloadManager dm : VuzeManager.getInstance().getGlobalManager().getDownloadManagers()) {
+            set.addAll(getIgnorableFiles(dm));
+        }
 
         return set;
     }
 
-    public static Set<File> getSkipedFiles() {
+    private static Set<File> getIgnorableFiles(DownloadManager dm) {
         Set<File> set = new HashSet<File>();
 
-        //        if (!AzureusManager.isCreated()) {
-        //            return set;
-        //        }
-        //
-        //        List<?> dms = AzureusManager.instance().getGlobalManager().getDownloadManagers();
-        //        for (Object obj : dms) {
-        //            DownloadManager dm = (DownloadManager) obj;
-        //            set.addAll(getSkippedFiles(dm));
-        //        }
+        DiskManagerFileInfoSet infs = dm.getDiskManagerFileInfoSet();
+        for (DiskManagerFileInfo inf : infs.getFiles()) {
+            long length = inf.getLength();
+            if (inf.getDownloaded() < length || inf.isSkipped()) {
+                set.add(inf.getFile(false));
+            }
+        }
 
         return set;
     }
