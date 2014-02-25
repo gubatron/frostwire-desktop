@@ -47,6 +47,7 @@ import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.ui.UIFunctions;
 import com.aelitis.azureus.ui.UIFunctionsManager;
+import com.frostwire.logging.Logger;
 
 /**
  * 
@@ -55,6 +56,8 @@ import com.aelitis.azureus.ui.UIFunctionsManager;
  *
  */
 public final class VuzeUtils {
+    
+    private static final Logger LOG = Logger.getLogger(VuzeUtils.class);
 
     private VuzeUtils() {
     }
@@ -219,7 +222,7 @@ public final class VuzeUtils {
                     }
                 }
 
-                finalCleanup(dm);
+                //finalCleanup(dm);
             }
         });
     }
@@ -317,28 +320,27 @@ public final class VuzeUtils {
             }
         }
 
-        finalCleanup(dm);
+        //finalCleanup(dm);
     }
 
     /**
      * Deletes incomplete and skipped files.
      */
-    private static void finalCleanup(DownloadManager dm) {
-        //        Set<File> filesToDelete = getSkippedFiles(dm);
-        //        filesToDelete.addAll(getIncompleteFiles(dm));
-        //
-        //        for (File f : filesToDelete) {
-        //            try {
-        //                if (f.exists() && !f.delete()) {
-        //                    System.out.println("Can't delete file: " + f);
-        //                }
-        //            } catch (Throwable e) {
-        //                System.out.println("Can't delete file: " + f);
-        //            }
-        //        }
-        //
-        //        FileUtils.deleteEmptyDirectoryRecursive(dm.getSaveLocation());
-    }
+//    private static void finalCleanup(DownloadManager dm) {
+//        Set<File> toDelete = getIgnorableFiles(dm);
+//
+//        for (File f : toDelete) {
+//            try {
+//                if (f.exists() && !f.delete()) {
+//                    LOG.info("Can't delete file: " + f);
+//                }
+//            } catch (Throwable e) {
+//                LOG.info("Can't delete file: " + f);
+//            }
+//        }
+//
+//        FileUtils.deleteEmptyDirectoryRecursive(dm.getSaveLocation());
+//    }
 
     public static Set<File> getIgnorableFiles() {
         Set<File> set = new HashSet<File>();
