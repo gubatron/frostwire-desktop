@@ -124,24 +124,26 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
 
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                List<Slide> slides = MultimediaSlideshowPanel.this.slides;
-                try {
-                    int i = 0;
-                    for (Slide s : slides) {
-                        add(new SlidePanel(s, i), String.valueOf(i));
-                        i++;
-                    }
+                if (MultimediaSlideshowPanel.this.slides != null) {
+                    List<Slide> slides = MultimediaSlideshowPanel.this.slides;
+                    try {
+                        int i = 0;
+                        for (Slide s : slides) {
+                            add(new SlidePanel(s, i), String.valueOf(i));
+                            i++;
+                        }
 
-                    if (container != null && useControls) {
-                        container.add(new SlideshowPanelControls(MultimediaSlideshowPanel.this), BorderLayout.PAGE_END);
-                    }
+                        if (container != null && useControls) {
+                            container.add(new SlideshowPanelControls(MultimediaSlideshowPanel.this), BorderLayout.PAGE_END);
+                        }
 
-                    if (slides != null && !slides.isEmpty()) {
-                        timer = new Timer("SlideShow Timer");
-                        timer.schedule(new SlideSwitcher(), slides.get(0).duration);
+                        if (!slides.isEmpty()) {
+                            timer = new Timer("SlideShow Timer");
+                            timer.schedule(new SlideSwitcher(), slides.get(0).duration);
+                        }
+                    } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
                     }
-                } catch (Exception e) {
-                    LOG.error(e.getMessage(), e);
                 }
             }
         });

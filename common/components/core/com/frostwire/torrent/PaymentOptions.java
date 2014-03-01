@@ -52,6 +52,13 @@ public class PaymentOptions implements Mappable<String, Map<String,String>>{
     /** Simply a valid email address for creating a paypal payment form */
     public final String paypalUrl;
     
+    public PaymentOptions() {
+        bitcoin = null;
+        litecoin = null;
+        dogecoin = null;
+        paypalUrl = null;
+    }
+    
     public PaymentOptions(String bitcoin, String litecoin, String dogecoin, String paypal) {
         this.bitcoin = bitcoin;
         this.litecoin = litecoin;
