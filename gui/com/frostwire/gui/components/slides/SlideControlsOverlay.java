@@ -34,6 +34,10 @@ import javax.swing.plaf.FontUIResource;
 
 import net.miginfocom.swing.MigLayout;
 
+import com.frostwire.JsonEngine;
+import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.util.StringUtils;
+import com.frostwire.util.URLUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconButton;
@@ -66,11 +70,12 @@ final class SlideControlsOverlay extends JPanel {
 
     private void setupUI() {
         setOpaque(false);
-        setLayout(new MigLayout("", "[grow][center][grow]", //columns
+        setLayout(new MigLayout("debug", "[grow][center][grow]", //columns
                 "[grow][center][grow][bottom]")); //rows
         setBackground(BACKGROUND);
 
         setupTitle();
+        setupPaymentOptions();
         setupButtons();
         setupSocialBar();
     }
@@ -82,6 +87,13 @@ final class SlideControlsOverlay extends JPanel {
             labelTitle.setForeground(TEXT_FOREGROUND);
             labelTitle.setFont(deriveFont(true, TITLE_TEXT_FONT_SIZE_DELTA));
             add(labelTitle, "cell 0 0, span 3, top");
+        }
+    }
+    
+    private void setupPaymentOptions() {
+        Slide slide = controller.getSlide();
+        if (slide!=null && slide.paymentOptions != null) {
+            add(new OverlayIconButton(new PaymentAction(slide.paymentOptions, slide.title)), "cell 2 0, aligny top, alignx right");
         }
     }
 
@@ -290,6 +302,43 @@ final class SlideControlsOverlay extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             GUIMediator.openURL(url);
+        }
+    }
+    
+    private static final class PaymentAction extends AbstractAction {
+        
+        private final String paymentOptionsUrl;
+        
+        public PaymentAction(final PaymentOptions paymentOptions, String workTitle) {
+            putValue(Action.SHORT_DESCRIPTION, String.format(I18n.tr("Support %s with a tip, donation or voluntary payment"), workTitle));
+            
+            String paymentOptionsJSON = URLUtils.encode(new JsonEngine().toJson(paymentOptions).replaceAll("\n", ""));
+            paymentOptionsUrl = String.format(
+                    "http://www.frostwire.com/tips/?method=%s&po=%s&title=%s", 
+                    getDefaultPaymentMethod(paymentOptions),
+                    paymentOptionsJSON,
+                    URLUtils.encode(workTitle));
+        }
+        
+        private String getDefaultPaymentMethod(PaymentOptions paymentOptions) {
+            String paymentMethod = "";
+            
+            if (!StringUtils.isNullOrEmpty(paymentOptions.bitcoin)) {
+                paymentMethod = PaymentOptions.PaymentMethod.BITCOIN.toString();
+            } else if (!StringUtils.isNullOrEmpty(paymentOptions.litecoin)) {
+                paymentMethod = PaymentOptions.PaymentMethod.LITECOIN.toString();
+            } else if (!StringUtils.isNullOrEmpty(paymentOptions.dogecoin)) {
+                paymentMethod = PaymentOptions.PaymentMethod.DOGECOIN.toString();
+            } else if (!StringUtils.isNullOrEmpty(paymentOptions.paypalUrl)) {
+                paymentMethod = PaymentOptions.PaymentMethod.PAYPAL.toString();
+            }
+            
+            return paymentMethod;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            GUIMediator.openURL(paymentOptionsUrl);
         }
     }
 }
