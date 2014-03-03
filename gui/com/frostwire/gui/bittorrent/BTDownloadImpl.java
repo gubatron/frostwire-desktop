@@ -31,7 +31,7 @@ import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.torrent.CreativeCommonsLicense;
+import com.frostwire.torrent.CopyrightLicense;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.torrent.TorrentInfoManipulator;
 
@@ -54,7 +54,7 @@ public class BTDownloadImpl implements BTDownload {
 	private String _displayName;
     private final boolean hasPaymentOptions;
     private final boolean hasLicense;
-    private final CreativeCommonsLicense license;
+    private final CopyrightLicense license;
     private final PaymentOptions paymentOptions;
 
     @SuppressWarnings("unchecked")
@@ -78,7 +78,7 @@ public class BTDownloadImpl implements BTDownload {
             hasPaymentOptions = paymentOptionsMap != null && !paymentOptionsMap.isEmpty();
             
             if (hasLicense) {
-                license = new CreativeCommonsLicense(licenseMap);
+                license = new CopyrightLicense(licenseMap);
             } else {
                 license = null;
             }
@@ -455,7 +455,7 @@ public class BTDownloadImpl implements BTDownload {
     }
 
     @Override
-    public CreativeCommonsLicense getCreativeCommons() {
+    public CopyrightLicense getCreativeCommons() {
         return license;
     }
 }

@@ -74,7 +74,7 @@ import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.AzureusStarter;
 import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.torrent.CreativeCommonsLicense;
+import com.frostwire.torrent.CopyrightLicense;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.torrent.TorrentInfoManipulator;
 import com.frostwire.util.HttpClient;
@@ -837,7 +837,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
     private void addAvailableCreativeCommonsLicense(final TOTorrent torrent) {
         if (_ccPanel.hasConfirmedRightfulUseOfLicense()) {
-            CreativeCommonsLicense ccLicense = _ccPanel.getCreativeCommonsLicense();
+            CopyrightLicense ccLicense = _ccPanel.getCreativeCommonsLicense();
             if (ccLicense != null) {
                 TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(torrent);
                 infoManipulator.addAdditionalInfoProperty("license", ccLicense.asMap());

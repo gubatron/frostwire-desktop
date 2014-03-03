@@ -32,7 +32,7 @@ import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 import org.gudy.azureus2.core3.util.UrlUtils;
 
-import com.frostwire.torrent.CreativeCommonsLicense;
+import com.frostwire.torrent.CopyrightLicense;
 import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -435,7 +435,7 @@ public class TorrentFetcherDownload implements BTDownload {
     }
 
     @Override
-    public CreativeCommonsLicense getCreativeCommons() {
+    public CopyrightLicense getCreativeCommons() {
         return null;
     }
 }

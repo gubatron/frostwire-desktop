@@ -34,7 +34,7 @@ import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.AlphaIcon;
 import com.frostwire.gui.bittorrent.CreativeCommonsSelectorPanel.LicenseToggleButton.LicenseIcon;
-import com.frostwire.torrent.CreativeCommonsLicense;
+import com.frostwire.torrent.CopyrightLicense;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -59,7 +59,7 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
     
     private final JButton pickedLicenseLabel;
     
-    private CreativeCommonsLicense creativeCommonsLicense;
+    private CopyrightLicense creativeCommonsLicense;
 
     public CreativeCommonsSelectorPanel() {
         setLayout(new MigLayout("fill"));
@@ -138,11 +138,11 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
         return confirmRightfulUseOfLicense.isSelected();
     }
 
-    public CreativeCommonsLicense getCreativeCommonsLicense() {
+    public CopyrightLicense getCreativeCommonsLicense() {
         creativeCommonsLicense = null;
 
         if (hasConfirmedRightfulUseOfLicense()) {
-            creativeCommonsLicense = new CreativeCommonsLicense(saButton.isSelected(), ncButton.isSelected(), ndButton.isSelected(), title.getText(), authorsName.getText(), attributionUrl.getText());
+            creativeCommonsLicense = new CopyrightLicense(saButton.isSelected(), ncButton.isSelected(), ndButton.isSelected(), title.getText(), authorsName.getText(), attributionUrl.getText());
         }
 
         return creativeCommonsLicense;

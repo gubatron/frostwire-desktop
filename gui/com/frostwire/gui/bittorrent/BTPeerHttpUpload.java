@@ -25,7 +25,7 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.transfers.PeerHttpUpload;
-import com.frostwire.torrent.CreativeCommonsLicense;
+import com.frostwire.torrent.CopyrightLicense;
 import com.frostwire.torrent.PaymentOptions;
 
 /**
@@ -212,7 +212,7 @@ public class BTPeerHttpUpload implements BTDownload {
     }
 
     @Override
-    public CreativeCommonsLicense getCreativeCommons() {
+    public CopyrightLicense getCreativeCommons() {
         return null;
     }
 }
