@@ -23,9 +23,9 @@ import java.util.List;
 import java.util.Map;
 
 
-/** TODO: Refactor this to have Licenses modeled with OO hierarchy after we have proof of concept working. 
+/** TODO: Refactor this to have Licenses modeled with Object Oriented Types after we have proof of concept working. 
  * This is a quick-n-dirty implementation. */
-public class CreativeCommonsLicense implements Mappable<String,Map<String,String>> {
+public class CopyrightLicense implements Mappable<String,Map<String,String>> {
     public final String licenseUrl;
     
     public final String attributionTitle;
@@ -70,7 +70,7 @@ public class CreativeCommonsLicense implements Mappable<String,Map<String,String
         validLicenses.add(CC_NC_ND);
     }
     
-    public CreativeCommonsLicense(boolean shareAlike, boolean nonCommercial, boolean noDerivatives, String attributionTitle, String attributionAuthor, String attributionURL) {
+    public CopyrightLicense(boolean shareAlike, boolean nonCommercial, boolean noDerivatives, String attributionTitle, String attributionAuthor, String attributionURL) {
         final String licenseUrl = getValidLicenseString(shareAlike, nonCommercial, noDerivatives);
         if (!isInvalidLicense(licenseUrl)) {
             this.licenseUrl = licenseUrl;
@@ -83,7 +83,7 @@ public class CreativeCommonsLicense implements Mappable<String,Map<String,String
     }
     
     /** Deserialization constructor */
-    public CreativeCommonsLicense(Map<String,Map<String,Object>> map) {
+    public CopyrightLicense(Map<String,Map<String,Object>> map) {
          Map<String,Object> creativeCommonsMap = map.get("creative-commons");
          this.licenseUrl = TorrentInfoManipulator.getStringFromEncodedMap("licenseUrl",creativeCommonsMap);    
          this.attributionTitle = TorrentInfoManipulator.getStringFromEncodedMap("attributionTitle",creativeCommonsMap);    
