@@ -152,7 +152,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     private final JPanel _basicTorrentPane;
     private final JPanel _creativeCommonsPane;
     private final JPanel _paymentsPane;
-    private final CreativeCommonsSelectorPanel _ccPanel;
+    private final CopyrightLicenseSelectorPanel _ccPanel;
     private final PaymentOptionsPanel _paymentOptionsPanel;
 
     private LimeTextField _textSelectedContent;
@@ -190,7 +190,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         _basicTorrentPane = new JPanel();
         _creativeCommonsPane = new JPanel();
         _paymentsPane = new JPanel();
-        _ccPanel = new CreativeCommonsSelectorPanel();
+        _ccPanel = new CopyrightLicenseSelectorPanel();
         _paymentOptionsPanel = new PaymentOptionsPanel();
 
         initContainersLayouts();

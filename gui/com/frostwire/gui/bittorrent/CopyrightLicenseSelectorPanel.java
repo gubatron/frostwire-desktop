@@ -33,14 +33,14 @@ import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.AlphaIcon;
-import com.frostwire.gui.bittorrent.CreativeCommonsSelectorPanel.LicenseToggleButton.LicenseIcon;
+import com.frostwire.gui.bittorrent.CopyrightLicenseSelectorPanel.LicenseToggleButton.LicenseIcon;
 import com.frostwire.torrent.CopyrightLicense;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LimeTextField;
 
-public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggleButtonOnToggleListener {
+public class CopyrightLicenseSelectorPanel extends JPanel implements LicenseToggleButtonOnToggleListener {
 
     private final JCheckBox confirmRightfulUseOfLicense;
 
@@ -61,7 +61,7 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
     
     private CopyrightLicense creativeCommonsLicense;
 
-    public CreativeCommonsSelectorPanel() {
+    public CopyrightLicenseSelectorPanel() {
         setLayout(new MigLayout("fill"));
         GUIUtils.setTitledBorderOnPanel(this, I18n.tr("Choose a Creative Commons License for this work"));
 
@@ -319,9 +319,9 @@ public class CreativeCommonsSelectorPanel extends JPanel implements LicenseToggl
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    if (listener != null && listener instanceof CreativeCommonsSelectorPanel) {
+                    if (listener != null && listener instanceof CopyrightLicenseSelectorPanel) {
                         //magic tricks
-                        CreativeCommonsSelectorPanel parentPanel = (CreativeCommonsSelectorPanel) listener;
+                        CopyrightLicenseSelectorPanel parentPanel = (CopyrightLicenseSelectorPanel) listener;
                         if (parentPanel.hasConfirmedRightfulUseOfLicense()) {
                             onToggle();
                         }
