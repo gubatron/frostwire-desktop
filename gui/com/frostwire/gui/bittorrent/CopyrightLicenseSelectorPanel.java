@@ -16,6 +16,7 @@
 package com.frostwire.gui.bittorrent;
 
 import java.awt.BasicStroke;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
@@ -50,6 +52,11 @@ public class CopyrightLicenseSelectorPanel extends JPanel implements LicenseTogg
     private final LimeTextField title;
     private final JLabel attributionUrlLabel;
     private final LimeTextField attributionUrl;
+    
+    private final JPanel licenseTypesContainer;
+    private final JRadioButton licenseTypeCC;
+    private final JRadioButton licenseTypeOpenSource;
+    private final JRadioButton licenseTypePublicDomain;
 
     private final LicenseToggleButton ccButton;
     private final LicenseToggleButton byButton;
@@ -61,9 +68,11 @@ public class CopyrightLicenseSelectorPanel extends JPanel implements LicenseTogg
     
     private CopyrightLicense creativeCommonsLicense;
 
+    
+
     public CopyrightLicenseSelectorPanel() {
         setLayout(new MigLayout("fill"));
-        GUIUtils.setTitledBorderOnPanel(this, I18n.tr("Choose a Creative Commons License for this work"));
+        GUIUtils.setTitledBorderOnPanel(this, I18n.tr("Choose a Copyright License for this work"));
 
         confirmRightfulUseOfLicense = new JCheckBox("<html><strong>"
                 + I18n.tr("I am the Content Creator of this work or I have been granted the rights to share this content under the following license by the Content Creator(s).") + "</strong></html>");
@@ -82,6 +91,12 @@ public class CopyrightLicenseSelectorPanel extends JPanel implements LicenseTogg
         attributionUrl.setToolTipText(I18n.tr("The Content Creator's website to give attribution about this work if shared by others."));
         attributionUrl.setPrompt("http://www.contentcreator.com/website/here");
 
+        licenseTypesContainer = new JPanel(new CardLayout());
+        
+        licenseTypeCC = new JRadioButton(I18n.tr("Creative Commons"));
+        licenseTypeOpenSource = new JRadioButton(I18n.tr("Open Source"));
+        licenseTypePublicDomain = new JRadioButton(I18n.tr("Public Domain"));
+        
         ccButton = new LicenseToggleButton(
                 LicenseToggleButton.LicenseIcon.CC,
                 "Creative Commons",
@@ -165,6 +180,8 @@ public class CopyrightLicenseSelectorPanel extends JPanel implements LicenseTogg
         confirmRightfulUseOfLicense.setSelected(false);
 
         add(confirmRightfulUseOfLicense, "growx, north, gapbottom 8, wrap");
+        confirmRightfulUseOfLicense.setSelected(false);
+        onConfirmRightfulUseOfLicenseAction();
 
         add(authorsNameLabel, "gapbottom 5px, pushx, wmin 215px");
         add(titleLabel, "gapbottom 5px, wmin 215px, pushx, wrap");
@@ -176,27 +193,31 @@ public class CopyrightLicenseSelectorPanel extends JPanel implements LicenseTogg
         attribPanel.add(attributionUrlLabel, "width 110px!, alignx left");
         attribPanel.add(attributionUrl, "alignx left, growx, pushx");
         add(attribPanel, "aligny top, growx, gapbottom 10px, span 2, wrap");
-
-        add(new JLabel("<html><strong>" + I18n.tr("Select what people can and can't do with this work") + "</strong></html>"), "span 2, alignx center, growx, push, wrap");
-
-        JPanel licenseButtonsPanel = new JPanel(new MigLayout("fillx, insets 0 0 0 0"));
-        licenseButtonsPanel.add(ccButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(byButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(ncButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(ndButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(saButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2, wrap");
-        add(licenseButtonsPanel, "aligny top, span 2, grow, pushy, gapbottom 5px, wrap");
+        
+        add(licenseTypesContainer,"aligny top, span 2, grow, pushy, gapbottom 5px, wrap");
+        {
+            //creative commons panel
+            add(new JLabel("<html><strong>" + I18n.tr("Select what people can and can't do with this work") + "</strong></html>"), "span 2, alignx center, growx, push, wrap");
+            JPanel licenseButtonsPanel = new JPanel(new MigLayout("fillx, insets 0 0 0 0"));
+            licenseButtonsPanel.add(ccButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
+            licenseButtonsPanel.add(byButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
+            licenseButtonsPanel.add(ncButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
+            licenseButtonsPanel.add(ndButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
+            licenseButtonsPanel.add(saButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2, wrap");
+            licenseTypesContainer.add(licenseButtonsPanel);
+        }
+        
+        {
+            //open source licenses panel
+        }
         
         pickedLicenseLabel.setHorizontalAlignment(SwingConstants.LEFT);
         pickedLicenseLabel.setBorderPainted(false);
         pickedLicenseLabel.setOpaque(false);
         pickedLicenseLabel.setContentAreaFilled(false);
         pickedLicenseLabel.setFocusPainted(false);
-        
         add(pickedLicenseLabel,"alignx center, growx, span 2, pushx");
 
-        confirmRightfulUseOfLicense.setSelected(false);
-        onConfirmRightfulUseOfLicenseAction();
     }
 
     protected void onConfirmRightfulUseOfLicenseAction() {
