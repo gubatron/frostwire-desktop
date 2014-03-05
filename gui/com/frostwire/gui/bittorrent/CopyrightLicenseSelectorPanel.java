@@ -92,7 +92,6 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
     private final JButton pickedLicenseLabel;
     
     private CopyrightLicense creativeCommonsLicense;
-
     
 
     public CopyrightLicenseSelectorPanel() {
@@ -195,12 +194,23 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
 
     private void updatePickedLicenseLabel() {
         //TODO: reflect other licenses picked.
+        if (licenseTypeCC.isSelected()) {
+            updateCreativeCommonsPickedLicenseLabel();
+        } else if (licenseTypeOpenSource.isSelected()) {
+            updateOpenSourcePickedLicenseLabel();
+        } else if (licenseTypePublicDomain.isSelected()) {
+            updatePublicDomainPickedLicenseLabel();
+        }
+    }
+
+
+    private void updateCreativeCommonsPickedLicenseLabel() {
         getCreativeCommonsLicense();
-        
         if (creativeCommonsLicense != null) {
-            pickedLicenseLabel.setText("<html>" + I18n.tr("You have selected the following License") +":<br> <a href=\"" + creativeCommonsLicense.licenseUrl + "\">" + creativeCommonsLicense.getLicenseName() + "</a>" );
+            pickedLicenseLabel.setText("<html>" + I18n.tr("You have selected the following License") + ":<br> <a href=\"" + creativeCommonsLicense.licenseUrl + "\">"
+                    + creativeCommonsLicense.getLicenseName() + "</a>");
             ActionListener[] actionListeners = pickedLicenseLabel.getActionListeners();
-            if (actionListeners!=null) {
+            if (actionListeners != null) {
                 for (ActionListener listener : actionListeners) {
                     pickedLicenseLabel.removeActionListener(listener);
                 }
@@ -213,7 +223,15 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
             });
         }
     }
+    
+    private void updateOpenSourcePickedLicenseLabel() {
 
+    }
+
+    private void updatePublicDomainPickedLicenseLabel() {
+        // TODO Auto-generated method stub
+    }
+    
     public boolean hasConfirmedRightfulUseOfLicense() {
         return confirmRightfulUseOfLicense.isSelected();
     }
@@ -239,7 +257,6 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         initLicenseTypeRadioButtonsListener();
         initCreativeCommonsLicenseToggleListeners();
         initOpenSourceLicensesToggleListeners();
-        
     }
 
     private void initOpenSourceLicensesToggleListeners() {
@@ -293,11 +310,11 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
     private void initComponents() {
         initCommonComponents();
         
-        //initCreativeCommonsLicensePanel();
+        initCreativeCommonsLicensePanel();
         initOpenSourceLicensesPanel();
         //initPublicDomainLicensePanel();
+        
         add(licenseTypesCardLayoutContainer,"aligny top, span 2, grow, pushy, gapbottom 5px, wrap");
-        onLicenseTypeChanged();
 
         pickedLicenseLabel.setHorizontalAlignment(SwingConstants.LEFT);
         pickedLicenseLabel.setBorderPainted(false);
@@ -308,35 +325,32 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
     }
 
     private void initCreativeCommonsLicensePanel() {
-        //creative commons panel
-        add(new JLabel("<html><strong>" + I18n.tr("Select what people can and can't do with this work") + "</strong></html>"), "span 2, alignx center, growx, pushy, aligny top, wrap");
         JPanel licenseButtonsPanel = new JPanel(new MigLayout("fillx, insets 0 0 0 0"));
+        JLabel label = new JLabel("<html>" + I18n.tr("Select what people can and can't do with this work") + "</html>");
+        label.setEnabled(false);
+        licenseButtonsPanel.add(label, "span 5, alignx center, pushy, aligny bottom, wrap");
         licenseButtonsPanel.add(ccButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
         licenseButtonsPanel.add(byButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
         licenseButtonsPanel.add(ncButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
         licenseButtonsPanel.add(ndButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
         licenseButtonsPanel.add(saButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2, wrap");
-        //licenseTypesCardLayoutContainer.add(licenseButtonsPanel, "grow, span 2, wrap");
         licenseTypesCardLayoutContainer.add(licenseButtonsPanel, CREATIVE_COMMONS_CARD_NAME);
-        //CardLayout cardLayout = (CardLayout) licenseTypesCardLayoutContainer.getLayout();
-        //cardLayout.addLayoutComponent(licenseButtonsPanel, "Creative Commons");
     }
 
     private void initOpenSourceLicensesPanel() {
-        //open source licenses panel
         JPanel licenseButtonsPanel = new JPanel(new MigLayout("fillx, insets 0 0 0 0"));
         licenseButtonsPanel.add(apacheButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
         licenseButtonsPanel.add(bsd3ClauseButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
         licenseButtonsPanel.add(bsd2ClauseButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(gpl3Button, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(lgplButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2, wrap");
+        licenseButtonsPanel.add(gpl3Button, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2, wrap");
+        licenseButtonsPanel.add(lgplButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
         licenseButtonsPanel.add(mitButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
         licenseButtonsPanel.add(mozillaButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(cddlButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
+        licenseButtonsPanel.add(cddlButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2, wrap");
         licenseButtonsPanel.add(eclipseButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
         JScrollPane scrollPane = new JScrollPane(licenseButtonsPanel);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         Dimension scrollPaneDimensions = new Dimension(800,250);
         scrollPane.setMinimumSize(scrollPaneDimensions);
         scrollPane.setPreferredSize(scrollPaneDimensions);
@@ -344,9 +358,6 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         scrollPane.getVerticalScrollBar().setVisible(false);
         
         licenseTypesCardLayoutContainer.add(scrollPane, OPEN_SOURCE_CARD_NAME);
-        //licenseTypesCardLayoutContainer.add(scrollPane, "growy, span 2, wrap");
-        //CardLayout cardLayout = (CardLayout) licenseTypesCardLayoutContainer.getLayout();
-        //cardLayout.addLayoutComponent(licenseButtonsPanel, "Open Source");
     }
 
     private void initPublicDomainLicensePanel() {
@@ -379,12 +390,14 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         
         JPanel licenseRadioButtonsContainer = new JPanel(new MigLayout("fillx, insets 0 0 0 0"));
         ButtonGroup group = new ButtonGroup();
-        licenseTypeCC.setSelected(false);
-        licenseTypeCC.setEnabled(true);
-        licenseTypeOpenSource.setEnabled(false);
-        licenseTypeOpenSource.setSelected(true);
-        licenseTypePublicDomain.setEnabled(false);
+        licenseTypeCC.setSelected(true);
+        licenseTypeOpenSource.setSelected(false);
         licenseTypePublicDomain.setSelected(false);
+        
+        licenseTypeCC.setEnabled(false);
+        licenseTypeOpenSource.setEnabled(false);
+        licenseTypePublicDomain.setEnabled(false);
+        
         group.add(licenseTypeCC);
         group.add(licenseTypeOpenSource);
         group.add(licenseTypePublicDomain);
@@ -399,16 +412,15 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         if (confirmRightfulUseOfLicense.isSelected()) {
             System.out.println("onLicenseTypeChanged()");
             CardLayout deck = (CardLayout) licenseTypesCardLayoutContainer.getLayout();
+            String currentPanelName = null;
             if (licenseTypeCC.isSelected()) {
-                deck.show(licenseTypesCardLayoutContainer, CREATIVE_COMMONS_CARD_NAME);
-                System.out.println(CREATIVE_COMMONS_CARD_NAME);
+                currentPanelName = CREATIVE_COMMONS_CARD_NAME;
             } else if (licenseTypeOpenSource.isSelected()) {
-                deck.show(licenseTypesCardLayoutContainer, OPEN_SOURCE_CARD_NAME);
-                System.out.println(OPEN_SOURCE_CARD_NAME);
+                currentPanelName = OPEN_SOURCE_CARD_NAME;
             } else if (licenseTypePublicDomain.isSelected()) {
-                deck.show(licenseTypesCardLayoutContainer, PUBLIC_DOMAIN_CARD_NAME);
-                System.out.println(PUBLIC_DOMAIN_CARD_NAME);
+                currentPanelName = PUBLIC_DOMAIN_CARD_NAME;
             }
+            deck.show(licenseTypesCardLayoutContainer, currentPanelName);
         }
     }
 
