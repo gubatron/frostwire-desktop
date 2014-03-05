@@ -151,7 +151,7 @@ public class CopyrightLicenseSelectorPanel extends JPanel implements LicenseTogg
         } else if (button.getLicenseIcon() == LicenseIcon.SA && button.isSelected()) {
             ndButton.setSelected(false);
         } else if (isOpenSourceLicenseButton(button)) {
-            button.setSelected(!button.isSelected())
+            button.setSelected(!button.isSelected());
         }
         
         updatePickedLicenseLabel();
@@ -454,7 +454,7 @@ public class CopyrightLicenseSelectorPanel extends JPanel implements LicenseTogg
         }
 
         private void onMouseExited() {
-            if (toggleable && !selected) {
+            if (toggleable) {
                 setMeUp();
             }
         }
