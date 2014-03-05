@@ -1,4 +1,7 @@
 /*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -15,20 +18,14 @@
 
 package com.frostwire.gui.bittorrent;
 
-import java.awt.BasicStroke;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -39,8 +36,7 @@ import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
 
-import com.frostwire.gui.AlphaIcon;
-import com.frostwire.gui.bittorrent.CopyrightLicenseSelectorPanel.LicenseToggleButton.LicenseIcon;
+import com.frostwire.gui.bittorrent.LicenseToggleButton.LicenseIcon;
 import com.frostwire.torrent.CopyrightLicense;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
@@ -467,151 +463,5 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         }
     }
 
-    public static class LicenseToggleButton extends JPanel {
-        private boolean selected;
-        private boolean toggleable;
 
-        private final ImageIcon selectedIcon;
-        private final AlphaIcon unselectedIcon;
-
-        private final String title;
-        private JLabel iconLabel;
-        private JLabel titleLabel;
-        private JLabel descriptionLabel;
-
-        private LicenseIcon licenseIcon;
-
-        private LicenseToggleButtonOnToggleListener listener;
-
-        public enum LicenseIcon {
-            CC, BY, SA, ND, NC,
-            APACHE,
-            BSD,
-            GPL3,
-            LGPL3,
-            MOZILLA,
-            OPENSOURCE
-        }
-
-        public LicenseToggleButton(LicenseIcon iconName, String text, String description, boolean selected, boolean toggleable) {
-            this.toggleable = toggleable;
-            setMeUp();
-
-            licenseIcon = iconName;
-            selectedIcon = getIcon(iconName);
-            unselectedIcon = new AlphaIcon(selectedIcon, 0.2f);
-
-            iconLabel = new JLabel((selected) ? selectedIcon : unselectedIcon);
-            title = text;
-            titleLabel = new JLabel("<html><b>" + text + "</b></html>");
-            descriptionLabel = new JLabel("<html><small>" + description + "</small></html>");
-
-            setLayout(new MigLayout("fill, wrap 1"));
-            add(iconLabel, "top, aligny top, alignx center, wrap");
-            add(titleLabel, "top, aligny top, alignx center, wrap");
-            add(descriptionLabel, "top, aligny top, pushy, alignx center");
-
-            initEventListeners();
-        }
-        
-        public String getTitle() {
-            return title;
-        }
-        
-        public void setToggleable(boolean t) {
-            toggleable = t;
-        }
-
-        public LicenseIcon getLicenseIcon() {
-            return licenseIcon;
-        }
-
-        public boolean isSelected() {
-            return selected;
-        }
-
-        public void setSelected(boolean selected) {
-            this.selected = selected;
-            updateComponents();
-        }
-
-        public void setOnToggleListener(LicenseToggleButtonOnToggleListener listener) {
-            this.listener = listener;
-        }
-        
-        private void onMouseEntered() {
-            if (toggleable) {
-                setOpaque(true);
-                setBackground(Color.WHITE);
-                BasicStroke stroke = new BasicStroke(1.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-                setBorder(BorderFactory.createStrokeBorder(stroke,Color.GRAY));
-            }
-        }
-
-        private void onMouseExited() {
-            if (toggleable) {
-                setMeUp();
-            }
-        }
-
-        private void onToggle() {
-            if (toggleable) {
-                selected = !selected;
-                updateComponents();
-
-                if (listener != null) {
-                    listener.onButtonToggled(this);
-                }
-            }
-        }
-        
-        private void initEventListeners() {
-            addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    if (listener != null && listener instanceof CopyrightLicenseSelectorPanel) {
-                        //magic tricks
-                        CopyrightLicenseSelectorPanel parentPanel = (CopyrightLicenseSelectorPanel) listener;
-                        if (parentPanel.hasConfirmedRightfulUseOfLicense()) {
-                            onToggle();
-                        }
-                    }
-                }
-                
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    onMouseEntered();
-                }
-                
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    onMouseExited();
-                }
-            });
-        }
-
-        private void updateComponents() {
-            if (iconLabel != null && selectedIcon != null && unselectedIcon != null) {
-                iconLabel.setIcon((selected) ? selectedIcon : unselectedIcon);
-            }
-
-            if (titleLabel != null) {
-                titleLabel.setEnabled(selected);
-            }
-
-            if (descriptionLabel != null) {
-                descriptionLabel.setEnabled(selected);
-            }
-        }
-
-        private void setMeUp() {
-            setBackground(null);
-            setOpaque(false);
-            setBorder(null);
-        }
-        
-        private static ImageIcon getIcon(LicenseIcon iconName) {
-            return GUIMediator.getThemeImage(iconName.toString() + ".png");
-        }
-    }
 }
