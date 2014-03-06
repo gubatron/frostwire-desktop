@@ -135,13 +135,7 @@ public class LicenseToggleButton extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (listener != null && listener instanceof CopyrightLicenseSelectorPanel) {
-                    //magic tricks
-                    CopyrightLicenseSelectorPanel parentPanel = (CopyrightLicenseSelectorPanel) listener;
-                    if (parentPanel.hasConfirmedRightfulUseOfLicense()) {
-                        onToggle();
-                    }
-                }
+                onToggle();
             }
             
             @Override

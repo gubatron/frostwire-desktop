@@ -165,12 +165,14 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
 
 
     public void onCreativeCommonsButtonToggled(LicenseToggleButton button) {
-        if (button.getLicenseIcon() == LicenseIcon.ND && button.isSelected()) {
-            saButton.setSelected(false);
-        } else if (button.getLicenseIcon() == LicenseIcon.SA && button.isSelected()) {
-            ndButton.setSelected(false);
+        if (confirmRightfulUseOfLicense.isSelected()) {
+            if (button.getLicenseIcon() == LicenseIcon.ND && button.isSelected()) {
+                saButton.setSelected(false);
+            } else if (button.getLicenseIcon() == LicenseIcon.SA && button.isSelected()) {
+                ndButton.setSelected(false);
+            }
+            updatePickedLicenseLabel();
         }
-        updatePickedLicenseLabel();
     }
     
     protected void onOpenSourceButtonToggled(LicenseToggleButton button) {
@@ -362,8 +364,6 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         publicDomainLicensePanel.add(new JLabel("You are using a tool for freeing your own work of copyright restrictions around the world. You may use this tool even if your work is free of copyright in some jurisdictions, if you want to ensure it is free everywhere."));
         //licenseTypesCardLayoutContainer.add(publicDomainLicensePanel, "grow, span 2, wrap");
         licenseTypesCardLayoutContainer.add(publicDomainLicensePanel, PUBLIC_DOMAIN_CARD_NAME);
-        //CardLayout cardLayout = (CardLayout) licenseTypesCardLayoutContainer.getLayout();
-        //cardLayout.addLayoutComponent(publicDomainLicensePanel, "Public Domain");
     }
 
     private void initCommonComponents() {
@@ -462,6 +462,4 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
             button.setToggleable(toggleable);
         }
     }
-
-
 }
