@@ -21,6 +21,7 @@ public class IconButton extends JButton {
     private String iconName;
     private String rollOverIconName;
     private boolean horizontalText;
+    private boolean useTransparentBackground;
     
 	/**
 	 * The super constructors of JButton call {@link #updateUI()} before we
@@ -41,6 +42,7 @@ public class IconButton extends JButton {
     public IconButton(String text, String iconName, boolean horizontalTextPlacement) {
         this(text, iconName);
         horizontalText = horizontalTextPlacement;
+        useTransparentBackground = true;
     }
     
     /**
@@ -51,6 +53,7 @@ public class IconButton extends JButton {
         this.iconName = iconName;
         this.message = text;
         initialized = true;
+        useTransparentBackground = true;
         updateButton();
     }
 
@@ -63,6 +66,7 @@ public class IconButton extends JButton {
         this.message = "";
         this.iconOnly = true;
         initialized = true;
+        useTransparentBackground = true;
         updateButton();
     }
 
@@ -79,6 +83,7 @@ public class IconButton extends JButton {
 		super(action);
 		setRolloverEnabled(true);
 		initialized = true;
+		useTransparentBackground = true;
 		updateButton();
 	}
 	
@@ -94,6 +99,15 @@ public class IconButton extends JButton {
 		setButtonFromAction(a);
 		a.addPropertyChangeListener(getListener());
 	}
+	
+	public void setHorizontalText(boolean useHorizontalText) {
+	    horizontalText = useHorizontalText;
+	}
+	
+    public void setUseTransparentBackground(boolean transparentBackground) {
+        useTransparentBackground = transparentBackground;
+    }
+
 	
     private void setButtonFromAction(Action action) {
 		iconName = (String)action.getValue(LimeAction.ICON_NAME);
@@ -149,9 +163,11 @@ public class IconButton extends JButton {
             
             setVerticalTextPosition(SwingConstants.CENTER);
             setHorizontalTextPosition(SwingConstants.CENTER);
+            
             setContentAreaFilled(true);
             setBorderPainted(true);
             setOpaque(true);
+            
         } else {
             setIcon(icon);
             
@@ -169,13 +185,20 @@ public class IconButton extends JButton {
                 setHorizontalTextPosition(SwingConstants.TRAILING);
             }
 
-            setContentAreaFilled(false);
-            setBorderPainted(false);
-            setOpaque(false);
+            if (useTransparentBackground) {
+                setBorderPainted(false);
+                setOpaque(false);
+                setContentAreaFilled(false);
+            } else {
+                setBorderPainted(true);
+                setOpaque(false);
+                setContentAreaFilled(true);
+            }
             
-            if (!iconOnly 
-                    && UISettings.TEXT_WITH_ICONS.getValue()
-                    && message != null && message.length() > 0) {
+            if (!iconOnly && 
+                UISettings.TEXT_WITH_ICONS.getValue() && 
+                message != null && 
+                message.length() > 0) {
                 super.setText(message);
                 setPreferredSize(null);
             } else {
