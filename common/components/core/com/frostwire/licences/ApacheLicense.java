@@ -17,17 +17,10 @@
  */
 
 
-
 package com.frostwire.licences;
 
-/**
- * 
- * @author gubatron
- * @author aldenml
- *
- */
-public final class PublicDomainDedicationLicense extends CreativeCommonsLicense {
-    public PublicDomainDedicationLicense() {
-        super("CC0 1.0", "CC0 1.0 Universal Public Domain Dedication", "http://creativecommons.org/publicdomain/zero/1.0/");
+public class ApacheLicense extends License {
+    public ApacheLicense() {
+        super("Apache License, Version 2.0", "http://www.apache.org/licenses/LICENSE-2.0.html");
     }
 }

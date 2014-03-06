@@ -37,7 +37,9 @@ import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.bittorrent.LicenseToggleButton.LicenseIcon;
+import com.frostwire.licences.License;
 import com.frostwire.torrent.CopyrightLicenseBroker;
+import com.frostwire.torrent.CopyrightLicenseBroker.LicenseCategory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -151,6 +153,14 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         initListeners();
         initComponents();
     }
+    
+    public boolean hasConfirmedRightfulUseOfLicense() {
+        return confirmRightfulUseOfLicense.isSelected();
+    }
+
+    public CopyrightLicenseBroker getLicenseBroker() {
+        return licenseBroker;
+    }
 
     private void initOpenSourceButtonList() {
         openSourceLicenseButtons.add(apacheButton);
@@ -207,62 +217,85 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
 
 
     private void updateCreativeCommonsPickedLicenseLabel() {
-        getCreativeCommonsLicense();
-        if (licenseBroker != null) {
-            updateLicenseLabel();
+        updateLicenseBrokerWithCreativeCommonsLicense();
+        updateLicenseLabel();
+    }
+    
+    private void updateLicenseBroker(License license, CopyrightLicenseBroker.LicenseCategory category) {
+        if (license != null) {
+            licenseBroker = new CopyrightLicenseBroker(category,
+                    license,
+                    title.getText(), 
+                    authorsName.getText(), 
+                    attributionUrl.getText());
         }
     }
 
     private void updateLicenseLabel() {
-        pickedLicenseLabel.setText("<html>" + I18n.tr("You have selected the following License") + ":<br> <a href=\"" + licenseBroker.license.getUrl() + "\">"
-                + licenseBroker.getLicenseName() + "</a>");
-        ActionListener[] actionListeners = pickedLicenseLabel.getActionListeners();
-        if (actionListeners != null) {
-            for (ActionListener listener : actionListeners) {
-                pickedLicenseLabel.removeActionListener(listener);
+        if (licenseBroker != null) {
+            pickedLicenseLabel.setText("<html>" + I18n.tr("You have selected the following License") + ":<br> <a href=\"" + licenseBroker.license.getUrl() + "\">" + licenseBroker.getLicenseName()
+                    + "</a>");
+            ActionListener[] actionListeners = pickedLicenseLabel.getActionListeners();
+            if (actionListeners != null) {
+                for (ActionListener listener : actionListeners) {
+                    pickedLicenseLabel.removeActionListener(listener);
+                }
             }
+            pickedLicenseLabel.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    GUIMediator.openURL(licenseBroker.license.getUrl());
+                }
+            });
+        } else {
+            pickedLicenseLabel.setText("");
         }
-        pickedLicenseLabel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GUIMediator.openURL(licenseBroker.license.getUrl());
-            }
-        });
     }
     
     private void updateOpenSourcePickedLicenseLabel() {
-
+        licenseBroker = null;
+        License license = null;
+        if (apacheButton.isSelected()) {
+            license = CopyrightLicenseBroker.APACHE_LICENSE;
+        } else if (bsd2ClauseButton.isSelected()) {
+            license = CopyrightLicenseBroker.BSD_2_CLAUSE_LICENSE;
+        } else if (bsd3ClauseButton.isSelected()) {
+            license = CopyrightLicenseBroker.BSD_3_CLAUSE_LICENSE;
+        } else if (lgplButton.isSelected()) {
+            license = CopyrightLicenseBroker.LGPL_LICENSE;
+        } else if (mitButton.isSelected()) {
+            license = CopyrightLicenseBroker.MIT_LICENSE;
+        } else if (mozillaButton.isSelected()) {
+            license = CopyrightLicenseBroker.MOZILLA_LICENSE;
+        } else if (cddlButton.isSelected()) {
+            license = CopyrightLicenseBroker.CDDL_LICENSE;
+        } else if (eclipseButton.isSelected()) {
+            license = CopyrightLicenseBroker.ECLIPSE_LICENSE;
+        }
+        
+        updateLicenseBroker(license, LicenseCategory.OpenSource);
+        updateLicenseLabel();
     }
 
     private void updatePublicDomainPickedLicenseLabel() {
-        String licenseUrl = CopyrightLicenseBroker.PUBLIC_DOMAIN_MARK_URL; 
+        licenseBroker = null;
+        License license = CopyrightLicenseBroker.PUBLIC_DOMAIN_MARK_LICENSE; 
         if (publicDomainButton.isSelected()) {
-            licenseUrl = CopyrightLicenseBroker.PUBLIC_DOMAIN_MARK_URL;
+            license = CopyrightLicenseBroker.PUBLIC_DOMAIN_MARK_LICENSE;
         } else if (cc0Button.isSelected()) {
-            licenseUrl = CopyrightLicenseBroker.CC0_URL;
+            license = CopyrightLicenseBroker.PUBLIC_DOMAIN_CC0_LICENSE;
         }
         
-        licenseBroker = new CopyrightLicenseBroker(CopyrightLicenseBroker.LicenseCategory.PublicDomain,
-                licenseUrl,
-                title.getText(), 
-                authorsName.getText(), 
-                attributionUrl.getText());
-        
+        updateLicenseBroker(license, LicenseCategory.PublicDomain);
         updateLicenseLabel();
     }
-    
-    public boolean hasConfirmedRightfulUseOfLicense() {
-        return confirmRightfulUseOfLicense.isSelected();
-    }
 
-    public CopyrightLicenseBroker getCreativeCommonsLicense() {
+    private void updateLicenseBrokerWithCreativeCommonsLicense() {
         licenseBroker = null;
 
-        if (hasConfirmedRightfulUseOfLicense()) {
+        if (hasConfirmedRightfulUseOfLicense() && licenseTypeCC.isSelected()) {
             licenseBroker = new CopyrightLicenseBroker(saButton.isSelected(), ncButton.isSelected(), ndButton.isSelected(), title.getText(), authorsName.getText(), attributionUrl.getText());
         }
-
-        return licenseBroker;
     }
 
     private void initListeners() {

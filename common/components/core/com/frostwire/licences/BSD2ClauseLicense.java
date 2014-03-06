@@ -17,17 +17,10 @@
  */
 
 
-
 package com.frostwire.licences;
 
-/**
- * 
- * @author gubatron
- * @author aldenml
- *
- */
-public final class PublicDomainDedicationLicense extends CreativeCommonsLicense {
-    public PublicDomainDedicationLicense() {
-        super("CC0 1.0", "CC0 1.0 Universal Public Domain Dedication", "http://creativecommons.org/publicdomain/zero/1.0/");
+public class BSD2ClauseLicense extends License {
+    public BSD2ClauseLicense() {
+        super("The FreeBSD Copyright License (BSD 2 Clause)", "http://www.freebsd.org/copyright/freebsd-license.html");
     }
 }

@@ -690,7 +690,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
                 if (torrent != null) {
                     if (addAvailableWebSeeds(torrent,create_from_dir)) {
                         addAvailablePaymentOptions(torrent);
-                        addAvailableCreativeCommonsLicense(torrent);
+                        addAvailableCopyrightLicense(torrent);
 
                         if (tracker_type == TT_DECENTRAL) {
                             TorrentUtils.setDecentralised(torrent);
@@ -835,12 +835,12 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         return urlPath;
     }
 
-    private void addAvailableCreativeCommonsLicense(final TOTorrent torrent) {
+    private void addAvailableCopyrightLicense(final TOTorrent torrent) {
         if (_ccPanel.hasConfirmedRightfulUseOfLicense()) {
-            CopyrightLicenseBroker ccLicense = _ccPanel.getCreativeCommonsLicense();
-            if (ccLicense != null) {
+            CopyrightLicenseBroker license = _ccPanel.getLicenseBroker();
+            if (license != null) {
                 TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(torrent);
-                infoManipulator.addAdditionalInfoProperty("license", ccLicense.asMap());
+                infoManipulator.addAdditionalInfoProperty("license", license.asMap());
             }
         }
     }

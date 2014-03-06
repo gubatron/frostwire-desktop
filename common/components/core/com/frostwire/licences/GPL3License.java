@@ -17,17 +17,10 @@
  */
 
 
-
 package com.frostwire.licences;
 
-/**
- * 
- * @author gubatron
- * @author aldenml
- *
- */
-public final class PublicDomainDedicationLicense extends CreativeCommonsLicense {
-    public PublicDomainDedicationLicense() {
-        super("CC0 1.0", "CC0 1.0 Universal Public Domain Dedication", "http://creativecommons.org/publicdomain/zero/1.0/");
+public class GPL3License extends License {
+    public GPL3License() {
+        super("GNU General Public License Version 3 (GPL 3)", "https://www.gnu.org/licenses/gpl.html");
     }
 }
