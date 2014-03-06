@@ -144,7 +144,7 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         initOpenSourceButtonList();
         
         publicDomainButton = new LicenseToggleButton(LicenseIcon.PUBLICDOMAIN, "Public Domain Mark 1.0", "This work has been identified as being free of known restrictions under copyright law, including all related and neighboring rights.",true,true);
-        cc0Button = new LicenseToggleButton(LicenseIcon.CC0, "CC0_URL 1.0", "The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.", false, true);
+        cc0Button = new LicenseToggleButton(LicenseIcon.CC0, "CC0 1.0", "The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.", false, true);
         
         pickedLicenseLabel = new JButton();
         
