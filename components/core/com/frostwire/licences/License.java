@@ -30,15 +30,15 @@ public abstract class License {
 
     public static final License UNKNOWN = new UnknownLicense();
 
-    public static final License CC_BY = new CCLicense("CC BY", "Creative Commons Attribution", "http://creativecommons.org/licenses/by/3.0");
-    public static final License CC_BY_SA = new CCLicense("CC BY-SA", "Creative Commons Attribution-ShareAlike", "http://creativecommons.org/licenses/by-sa/3.0");
-    public static final License CC_BY_ND = new CCLicense("CC BY-ND", "Creative Commons Attribution-NoDerivs", "http://creativecommons.org/licenses/by-nd/3.0");
-    public static final License CC_BY_NC = new CCLicense("CC BY-NC", "Creative Commons Attribution-NonCommercial", "http://creativecommons.org/licenses/by-nc/3.0");
-    public static final License CC_BY_NC_SA = new CCLicense("CC BY", "Creative Commons Attribution-NonCommercial-ShareAlike", "http://creativecommons.org/licenses/by-nc-sa/3.0");
-    public static final License CC_BY_NC_ND = new CCLicense("CC BY", "Creative Commons Attribution-NonCommercial-NoDerivs", "http://creativecommons.org/licenses/by-nc-nd/3.0");
-    public static final License CC_CC0 = new CCLicense("CC0", "Creative Commons Public Domain Dedication", "http://creativecommons.org/publicdomain/zero/1.0");
+    public static final License CC_BY = new CreativeCommonsLicense("CC BY", "Creative Commons Attribution", "http://creativecommons.org/licenses/by/3.0");
+    public static final License CC_BY_SA = new CreativeCommonsLicense("CC BY-SA", "Creative Commons Attribution-ShareAlike", "http://creativecommons.org/licenses/by-sa/3.0");
+    public static final License CC_BY_ND = new CreativeCommonsLicense("CC BY-ND", "Creative Commons Attribution-NoDerivs", "http://creativecommons.org/licenses/by-nd/3.0");
+    public static final License CC_BY_NC = new CreativeCommonsLicense("CC BY-NC", "Creative Commons Attribution-NonCommercial", "http://creativecommons.org/licenses/by-nc/3.0");
+    public static final License CC_BY_NC_SA = new CreativeCommonsLicense("CC BY", "Creative Commons Attribution-NonCommercial-ShareAlike", "http://creativecommons.org/licenses/by-nc-sa/3.0");
+    public static final License CC_BY_NC_ND = new CreativeCommonsLicense("CC BY", "Creative Commons Attribution-NonCommercial-NoDerivs", "http://creativecommons.org/licenses/by-nc-nd/3.0");
+    public static final License CC_CC0 = new CreativeCommonsLicense("CC0_URL", "Creative Commons Public Domain Dedication", "http://creativecommons.org/publicdomain/zero/1.0");
 
-    public static final License CC_PUBLIC_DOMAIN = new PublicDomainLicense();
+    public static final License CC_PUBLIC_DOMAIN = new PublicDomainDedicationLicense();
 
     public static final List<License> CREATIVE_COMMONS = Arrays.asList(CC_BY, CC_BY_SA, CC_BY_ND, CC_BY_NC, CC_BY_NC_SA, CC_BY_NC_ND, CC_CC0, CC_PUBLIC_DOMAIN);
 

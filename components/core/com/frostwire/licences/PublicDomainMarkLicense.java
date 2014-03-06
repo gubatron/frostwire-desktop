@@ -23,16 +23,8 @@ package com.frostwire.licences;
  * @author aldenml
  *
  */
-public class CCLicense extends License {
-
-    private final String longName;
-
-    CCLicense(String name, String longName, String url) {
-        super(name, url);
-        this.longName = longName;
-    }
-
-    public String getLongName() {
-        return longName;
+public final class PublicDomainMarkLicense extends CreativeCommonsLicense {
+    public PublicDomainMarkLicense() {
+        super("Public Domain Mark 1.0", "Public Domain Mark 1.0", "http://creativecommons.org/publicdomain/mark/1.0/");
     }
 }
