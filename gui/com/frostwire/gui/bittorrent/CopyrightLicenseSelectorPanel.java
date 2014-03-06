@@ -37,7 +37,7 @@ import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.bittorrent.LicenseToggleButton.LicenseIcon;
-import com.frostwire.torrent.CopyrightLicense;
+import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -87,7 +87,7 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
     private final LicenseToggleButton publicDomainButton;
 
     private final JButton pickedLicenseLabel;
-    private CopyrightLicense copyrightLicense;
+    private CopyrightLicenseBroker licenseBroker;
 
     public CopyrightLicenseSelectorPanel() {
         setLayout(new MigLayout("fill"));
@@ -144,7 +144,7 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         initOpenSourceButtonList();
         
         publicDomainButton = new LicenseToggleButton(LicenseIcon.PUBLICDOMAIN, "Public Domain Mark 1.0", "This work has been identified as being free of known restrictions under copyright law, including all related and neighboring rights.",true,true);
-        cc0Button = new LicenseToggleButton(LicenseIcon.CC0, "CC0 1.0", "The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.", false, true);
+        cc0Button = new LicenseToggleButton(LicenseIcon.CC0, "CC0_URL 1.0", "The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.", false, true);
         
         pickedLicenseLabel = new JButton();
         
@@ -208,22 +208,26 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
 
     private void updateCreativeCommonsPickedLicenseLabel() {
         getCreativeCommonsLicense();
-        if (copyrightLicense != null) {
-            pickedLicenseLabel.setText("<html>" + I18n.tr("You have selected the following License") + ":<br> <a href=\"" + copyrightLicense.licenseUrl + "\">"
-                    + copyrightLicense.getLicenseName() + "</a>");
-            ActionListener[] actionListeners = pickedLicenseLabel.getActionListeners();
-            if (actionListeners != null) {
-                for (ActionListener listener : actionListeners) {
-                    pickedLicenseLabel.removeActionListener(listener);
-                }
-            }
-            pickedLicenseLabel.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    GUIMediator.openURL(copyrightLicense.licenseUrl);
-                }
-            });
+        if (licenseBroker != null) {
+            updateLicenseLabel();
         }
+    }
+
+    private void updateLicenseLabel() {
+        pickedLicenseLabel.setText("<html>" + I18n.tr("You have selected the following License") + ":<br> <a href=\"" + licenseBroker.license.getUrl() + "\">"
+                + licenseBroker.getLicenseName() + "</a>");
+        ActionListener[] actionListeners = pickedLicenseLabel.getActionListeners();
+        if (actionListeners != null) {
+            for (ActionListener listener : actionListeners) {
+                pickedLicenseLabel.removeActionListener(listener);
+            }
+        }
+        pickedLicenseLabel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GUIMediator.openURL(licenseBroker.license.getUrl());
+            }
+        });
     }
     
     private void updateOpenSourcePickedLicenseLabel() {
@@ -231,22 +235,34 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
     }
 
     private void updatePublicDomainPickedLicenseLabel() {
-        //http://creativecommons.org/publicdomain/zero/1.0/
-        //http://creativecommons.org/publicdomain/mark/1.0/
+        String licenseUrl = "http://creativecommons.org/publicdomain/mark/1.0/"; 
+        if (publicDomainButton.isSelected()) {
+            licenseUrl = CopyrightLicenseBroker.PUBLICDOMAINMARK_URL;
+        } else if (cc0Button.isSelected()) {
+            licenseUrl = CopyrightLicenseBroker.CC0_URL;
+        }
+        
+        licenseBroker = new CopyrightLicenseBroker(CopyrightLicenseBroker.LicenseCategory.PublicDomain,
+                licenseUrl,
+                title.getText(), 
+                authorsName.getText(), 
+                attributionUrl.getText());
+        
+        updateLicenseLabel();
     }
     
     public boolean hasConfirmedRightfulUseOfLicense() {
         return confirmRightfulUseOfLicense.isSelected();
     }
 
-    public CopyrightLicense getCreativeCommonsLicense() {
-        copyrightLicense = null;
+    public CopyrightLicenseBroker getCreativeCommonsLicense() {
+        licenseBroker = null;
 
         if (hasConfirmedRightfulUseOfLicense()) {
-            copyrightLicense = new CopyrightLicense(saButton.isSelected(), ncButton.isSelected(), ndButton.isSelected(), title.getText(), authorsName.getText(), attributionUrl.getText());
+            licenseBroker = new CopyrightLicenseBroker(saButton.isSelected(), ncButton.isSelected(), ndButton.isSelected(), title.getText(), authorsName.getText(), attributionUrl.getText());
         }
 
-        return copyrightLicense;
+        return licenseBroker;
     }
 
     private void initListeners() {

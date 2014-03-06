@@ -23,7 +23,7 @@ import java.util.Date;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 
-import com.frostwire.torrent.CopyrightLicense;
+import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 
 /**
@@ -101,5 +101,5 @@ public interface BTDownload {
     
     public PaymentOptions getPaymentOptions();
     
-    public CopyrightLicense getCreativeCommons();
+    public CopyrightLicenseBroker getCreativeCommons();
 }
