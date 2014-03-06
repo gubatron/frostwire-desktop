@@ -105,7 +105,7 @@ final class SlideControlsOverlay extends JPanel {
         paymentButton.setForeground(new Color(0x5cb4e0));
         paymentButton.setBackground(Color.WHITE);
         UIDefaults nimbusOverrides = (UIDefaults) paymentButton.getClientProperty("Nimbus.Overrides");
-        nimbusOverrides.put("Button.contentMargins", new Insets(5,5,5,5));
+        nimbusOverrides.put("Button.contentMargins", new Insets(5,7,5,7));
         paymentButton.putClientProperty("Nimbus.Overrides", nimbusOverrides);
         paymentButton.updateUI();
         
