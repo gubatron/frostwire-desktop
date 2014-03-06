@@ -17,17 +17,10 @@
  */
 
 
-
 package com.frostwire.licences;
 
-/**
- * 
- * @author gubatron
- * @author aldenml
- *
- */
-public final class PublicDomainDedicationLicense extends CreativeCommonsLicense {
-    public PublicDomainDedicationLicense() {
-        super("CC0 1.0", "CC0 1.0 Universal Public Domain Dedication", "http://creativecommons.org/publicdomain/zero/1.0/");
+public class CDDLLicense extends License {
+    public CDDLLicense() {
+        super("Common Development and Distribution License (CDDL-1.0)", "http://opensource.org/licenses/CDDL-1.0");
     }
 }

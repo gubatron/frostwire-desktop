@@ -24,8 +24,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.frostwire.licences.ApacheLicense;
+import com.frostwire.licences.BSD2ClauseLicense;
+import com.frostwire.licences.BSD3ClauseLicense;
+import com.frostwire.licences.CDDLLicense;
 import com.frostwire.licences.CreativeCommonsLicense;
+import com.frostwire.licences.EclipseLicense;
+import com.frostwire.licences.GPL3License;
+import com.frostwire.licences.LGPLLicense;
 import com.frostwire.licences.License;
+import com.frostwire.licences.MITLicense;
+import com.frostwire.licences.MozillaLicense;
 import com.frostwire.licences.PublicDomainDedicationLicense;
 import com.frostwire.licences.PublicDomainMarkLicense;
 
@@ -76,13 +85,7 @@ public class CopyrightLicenseBroker implements Mappable<String,Map<String,String
     /** attribution - non commercial - no derivatives */
     public static final String CC_BY_NC_ND_URL = "http://creativecommons.org/licenses/by-nc-nd/"+ CC_VERSION + "/";
 
-    //open source licenses
-    
-    
-    //public domain licenses
-    public static final String PUBLIC_DOMAIN_MARK_URL = "http://creativecommons.org/publicdomain/mark/1.0/";
-    public static final String CC0_URL = "http://creativecommons.org/publicdomain/zero/1.0/";
-
+    //creative-commons licenses
     public static final License CC_BY_LICENSE = new CreativeCommonsLicense("CC-BY", "Creative Commons Attribution " + CC_VERSION, "http://creativecommons.org/licenses/by/" + CC_VERSION);
     public static final License CC_BY_SA_LICENSE = new CreativeCommonsLicense("CC-BY-SA", "Creative Commons Attribution-ShareAlike " + CC_VERSION, "http://creativecommons.org/licenses/by-sa/" + CC_VERSION);
     public static final License CC_BY_ND_LICENSE = new CreativeCommonsLicense("CC-BY-ND", "Creative Commons Attribution-NoDerivs " + CC_VERSION, "http://creativecommons.org/licenses/by-nd/" + CC_VERSION);
@@ -90,6 +93,18 @@ public class CopyrightLicenseBroker implements Mappable<String,Map<String,String
     public static final License CC_BY_NC_SA_LICENSE = new CreativeCommonsLicense("CC-BY-NC-SA", "Creative Commons Attribution-NonCommercial-ShareAlike " + CC_VERSION, "http://creativecommons.org/licenses/by-nc-sa/" + CC_VERSION);
     public static final License CC_BY_NC_ND_LICENSE = new CreativeCommonsLicense("CC-BY-NC-ND", "Creative Commons Attribution-NonCommercial-NoDerivs " + CC_VERSION, "http://creativecommons.org/licenses/by-nc-nd/" + CC_VERSION);
 
+    //open-source licenses
+    public static final License APACHE_LICENSE = new ApacheLicense();
+    public static final License BSD_2_CLAUSE_LICENSE = new BSD2ClauseLicense();
+    public static final License BSD_3_CLAUSE_LICENSE = new BSD3ClauseLicense();
+    public static final License GPL3_LICENSE = new GPL3License();
+    public static final License LGPL_LICENSE = new LGPLLicense();
+    public static final License MIT_LICENSE = new MITLicense();
+    public static final License MOZILLA_LICENSE = new MozillaLicense();
+    public static final License CDDL_LICENSE = new CDDLLicense();
+    public static final License ECLIPSE_LICENSE = new EclipseLicense();
+    
+    //public-domain licenses
     public static final License PUBLIC_DOMAIN_MARK_LICENSE = new PublicDomainMarkLicense();
     public static final License PUBLIC_DOMAIN_CC0_LICENSE = new PublicDomainDedicationLicense();
 
@@ -113,9 +128,6 @@ public class CopyrightLicenseBroker implements Mappable<String,Map<String,String
         validLicenseUrls.add(CC_BY_NC_SA_URL);
         validLicenseUrls.add(CC_BY_NC_ND_URL);
         
-        validLicenseUrls.add(PUBLIC_DOMAIN_MARK_URL);
-        validLicenseUrls.add(CC0_URL);
-        
         urlToLicense = new HashMap<String,License>();
         urlToLicense.put(CC_BY_URL, CC_BY_LICENSE);
         urlToLicense.put(CC_BY_SA_URL, CC_BY_SA_LICENSE);
@@ -123,9 +135,6 @@ public class CopyrightLicenseBroker implements Mappable<String,Map<String,String
         urlToLicense.put(CC_BY_NC_URL, CC_BY_NC_LICENSE);
         urlToLicense.put(CC_BY_NC_SA_URL, CC_BY_NC_SA_LICENSE);
         urlToLicense.put(CC_BY_NC_ND_URL, CC_BY_NC_ND_LICENSE);
-        
-        urlToLicense.put(PUBLIC_DOMAIN_MARK_URL, PUBLIC_DOMAIN_MARK_LICENSE);
-        urlToLicense.put(CC0_URL, PUBLIC_DOMAIN_CC0_LICENSE);
     }
     
     public CopyrightLicenseBroker(boolean shareAlike, boolean nonCommercial, boolean noDerivatives, String attributionTitle, String attributionAuthor, String attributionURL) {
@@ -166,10 +175,10 @@ public class CopyrightLicenseBroker implements Mappable<String,Map<String,String
              this.attributionUrl = null;
          }
     }
-    
-    public CopyrightLicenseBroker(LicenseCategory category, String licenseUrl, String title, String author, String attributionUrl) {
+
+    public CopyrightLicenseBroker(LicenseCategory category, License license, String title, String author, String attributionUrl) {
         licenseCategory = category;
-        this.license = urlToLicense.get(licenseUrl);
+        this.license = license;
         this.attributionTitle = title;
         this.attributionAuthor = author;
         this.attributionUrl = attributionUrl;
