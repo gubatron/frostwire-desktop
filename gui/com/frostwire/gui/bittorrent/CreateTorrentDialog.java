@@ -24,8 +24,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -67,12 +65,10 @@ import org.gudy.azureus2.core3.util.AEThread2;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 import org.gudy.azureus2.core3.util.TrackersUtil;
-import org.limewire.util.OSUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
-import com.frostwire.AzureusStarter;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
@@ -150,9 +146,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     private final Container _container;
     private final JTabbedPane _tabbedPane;
     private final JPanel _basicTorrentPane;
-    private final JPanel _creativeCommonsPane;
+    private final JPanel _licensesPane;
     private final JPanel _paymentsPane;
-    private final CopyrightLicenseSelectorPanel _ccPanel;
+    private final CopyrightLicenseSelectorPanel _licenseSelectorPanel;
     private final PaymentOptionsPanel _paymentOptionsPanel;
 
     private LimeTextField _textSelectedContent;
@@ -167,7 +163,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     private JButton _buttonSaveAs;
     private JProgressBar _progressBar;
 
-    private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(850, 800);
+    private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(860, 800);
 
     private JScrollPane _textTrackersScrollPane;
     private JFileChooser _fileChooser;
@@ -188,30 +184,31 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         _tabbedPane = new JTabbedPane();
 
         _basicTorrentPane = new JPanel();
-        _creativeCommonsPane = new JPanel();
+        _licensesPane = new JPanel();
         _paymentsPane = new JPanel();
-        _ccPanel = new CopyrightLicenseSelectorPanel();
+        _licenseSelectorPanel = new CopyrightLicenseSelectorPanel();
         _paymentOptionsPanel = new PaymentOptionsPanel();
 
         initContainersLayouts();
         initComponents();
         setLocationRelativeTo(frame);
+        pack();
     }
 
     private void initContainersLayouts() {
         _container.setLayout(new MigLayout("fill"));
         _basicTorrentPane.setLayout(new MigLayout("fill"));
-        _creativeCommonsPane.setLayout(new MigLayout("fill"));
+        _licensesPane.setLayout(new MigLayout("fill"));
         _paymentsPane.setLayout(new MigLayout("fill"));
     }
 
     private void initTabbedPane() {
         _container.add(_tabbedPane, "gap 5px 5px 5px 5px, grow, pushy, wrap");
-        _creativeCommonsPane.add(_ccPanel, "grow");
+        _licensesPane.add(_licenseSelectorPanel, "grow");
         _paymentsPane.add(_paymentOptionsPanel, "grow");
 
         _tabbedPane.addTab("1. " + I18n.tr("Contents and Tracking"), _basicTorrentPane);
-        _tabbedPane.addTab("2. " + I18n.tr("Copyright License"), _creativeCommonsPane);
+        _tabbedPane.addTab("2. " + I18n.tr("Copyright License"), _licensesPane);
 
         if (!SharingSettings.HIDE_PAYMENT_OPTIONS_PANE.getValue()) {
             _tabbedPane.addTab("3. " + I18n.tr("Payments/Tips"), _paymentsPane);
@@ -236,6 +233,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         setTitle(I18n.tr("Create New Torrent"));
         setSize(MINIMUM_DIALOG_DIMENSIONS);
         setMinimumSize(MINIMUM_DIALOG_DIMENSIONS);
+        setPreferredSize(MINIMUM_DIALOG_DIMENSIONS);
+        setMaximumSize(MINIMUM_DIALOG_DIMENSIONS);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setModalityType(ModalityType.APPLICATION_MODAL);
         GUIUtils.addHideAction((JComponent) _container);
@@ -296,17 +295,17 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
     private void initSaveCloseButtons() {
         JPanel buttonContainer = new JPanel();
-        buttonContainer.setLayout(new MigLayout("fillx"));
+        buttonContainer.setLayout(new MigLayout("fillx, insets 5 5 5 5"));
 
         //first button will dock all the way east,
         _buttonSaveAs = new JButton(I18n.tr("Save torrent as..."));
-        buttonContainer.add(_buttonSaveAs, "east, gapleft 5");
+        buttonContainer.add(_buttonSaveAs, "pushx, alignx right, gapleft 5");
 
         //then this one will dock east (west of) the next to the existing component
         _buttonClose = new JButton(I18n.tr("Close"));
-        buttonContainer.add(_buttonClose, "east");
+        buttonContainer.add(_buttonClose, "alignx right, gapright 5");
 
-        _container.add(buttonContainer, "south, gapbottom 10, gapright 5");
+        _container.add(buttonContainer, "south, gap 10px 10px 10px 10px");
     }
 
     private void initProgressBar() {
@@ -836,8 +835,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     }
 
     private void addAvailableCopyrightLicense(final TOTorrent torrent) {
-        if (_ccPanel.hasConfirmedRightfulUseOfLicense()) {
-            CopyrightLicenseBroker license = _ccPanel.getLicenseBroker();
+        if (_licenseSelectorPanel.hasConfirmedRightfulUseOfLicense()) {
+            CopyrightLicenseBroker license = _licenseSelectorPanel.getLicenseBroker();
             if (license != null) {
                 TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(torrent);
                 infoManipulator.addAdditionalInfoProperty("license", license.asMap());
@@ -932,7 +931,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         });
     }
 
+    /*
     public static void main(String[] args) {
+        
         if (OSUtils.isMacOSX()) {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
             System.setProperty("com.apple.eawt.CocoaComponent.CompatibilityMode", "false");
@@ -952,5 +953,5 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
             }
         });
     }
-
+       */
 }

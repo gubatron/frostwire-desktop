@@ -19,7 +19,6 @@
 package com.frostwire.gui.bittorrent;
 
 import java.awt.CardLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -389,7 +388,7 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
     }
 
     private void initCreativeCommonsLicensePanel() {
-        JPanel licenseButtonsPanel = new JPanel(new MigLayout("fillx, insets 0 0 0 0"));
+        JPanel licenseButtonsPanel = new JPanel(new MigLayout("fill, insets 0 0 0 0"));
         JLabel label = new JLabel("<html>" + I18n.tr("Select what people can and can't do with this work") + "</html>");
         label.setEnabled(false);
         licenseButtonsPanel.add(label, "span 5, alignx center, pushy, aligny bottom, wrap");
@@ -402,25 +401,20 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
     }
 
     private void initOpenSourceLicensesPanel() {
-        JPanel licenseButtonsPanel = new JPanel(new MigLayout("fillx, insets 0 0 0 0"));
+        JPanel licenseButtonsPanel = new JPanel(new MigLayout("fill, insets 0 0 0 0"));
         licenseButtonsPanel.add(apacheButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
         licenseButtonsPanel.add(bsd3ClauseButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(bsd2ClauseButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(gpl3Button, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2, wrap");
+        licenseButtonsPanel.add(bsd2ClauseButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2, wrap");
+        licenseButtonsPanel.add(gpl3Button, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
         licenseButtonsPanel.add(lgplButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(mitButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
+        licenseButtonsPanel.add(mitButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2, wrap");
         licenseButtonsPanel.add(mozillaButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
-        licenseButtonsPanel.add(cddlButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2, wrap");
+        licenseButtonsPanel.add(cddlButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
         licenseButtonsPanel.add(eclipseButton, "wmin 130px, aligny top, pushy, grow, gap 2 2 2 2");
 
-        Dimension scrollPaneDimensions = new Dimension(800,250);
         JScrollPane scrollPane = new JScrollPane(licenseButtonsPanel);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setMinimumSize(scrollPaneDimensions);
-        scrollPane.setPreferredSize(scrollPaneDimensions);
-        scrollPane.setMaximumSize(scrollPaneDimensions);
-        scrollPane.getVerticalScrollBar().setVisible(false);
         licenseTypesCardLayoutContainer.add(scrollPane, OPEN_SOURCE_CARD_NAME);
     }
 
@@ -428,9 +422,9 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         JPanel publicDomainLicensePanel = new JPanel(new MigLayout("fill, insets 0 0 0 0, alignx center"));
         JLabel label = new JLabel("You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.");
         label.setEnabled(false);
-        publicDomainLicensePanel.add(label,"gaptop 10px, aligny bottom, pushx, alignx center, span 2, wrap");
-        publicDomainLicensePanel.add(publicDomainButton,"wmin 350px, aligny top, push, grow, gap 2 2 2 2");
-        publicDomainLicensePanel.add(cc0Button,"wmin 350px, aligny top, push, grow, gap 2 2 2 2");
+        publicDomainLicensePanel.add(label,"gaptop 10px, aligny bottom, push, alignx center, span 2, wrap");
+        publicDomainLicensePanel.add(publicDomainButton,"wmin 400px, aligny top, push, grow, gap 2 2 2 2");
+        publicDomainLicensePanel.add(cc0Button,"wmin 400px, aligny top, push, grow, gap 2 2 2 2");
         licenseTypesCardLayoutContainer.add(publicDomainLicensePanel, PUBLIC_DOMAIN_CARD_NAME);
     }
 
@@ -490,7 +484,7 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
     }
 
     protected void onConfirmRightfulUseOfLicenseAction() {
-        boolean rightfulUseConfirmed = confirmRightfulUseOfLicense.isSelected();
+        boolean rightfulUseConfirmed = hasConfirmedRightfulUseOfLicense();
 
         authorsNameLabel.setEnabled(rightfulUseConfirmed);
         authorsName.setEnabled(rightfulUseConfirmed);
@@ -513,15 +507,22 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
 
         licenseTypesCardLayoutContainer.setEnabled(rightfulUseConfirmed);
         updateOpenSourceLicensesToggleability(rightfulUseConfirmed);
-        
+
+        publicDomainButton.setSelected(rightfulUseConfirmed);
+        cc0Button.setSelected(rightfulUseConfirmed);
         publicDomainButton.setToggleable(rightfulUseConfirmed);
         cc0Button.setToggleable(rightfulUseConfirmed);
+        
+
         
         pickedLicenseLabel.setVisible(rightfulUseConfirmed);
         
         if (rightfulUseConfirmed) {
+            //reset
             ndButton.setSelected(false);
             saButton.setSelected(true);
+            publicDomainButton.setSelected(true);
+            cc0Button.setSelected(false);
             updatePickedLicenseLabel();
         } else {
             ndButton.setSelected(rightfulUseConfirmed);
