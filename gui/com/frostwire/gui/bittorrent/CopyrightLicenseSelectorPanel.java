@@ -235,9 +235,9 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
     }
 
     private void updatePublicDomainPickedLicenseLabel() {
-        String licenseUrl = "http://creativecommons.org/publicdomain/mark/1.0/"; 
+        String licenseUrl = CopyrightLicenseBroker.PUBLIC_DOMAIN_MARK_URL; 
         if (publicDomainButton.isSelected()) {
-            licenseUrl = CopyrightLicenseBroker.PUBLICDOMAINMARK_URL;
+            licenseUrl = CopyrightLicenseBroker.PUBLIC_DOMAIN_MARK_URL;
         } else if (cc0Button.isSelected()) {
             licenseUrl = CopyrightLicenseBroker.CC0_URL;
         }
@@ -452,6 +452,7 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
                 currentPanelName = PUBLIC_DOMAIN_CARD_NAME;
             }
             deck.show(licenseTypesCardLayoutContainer, currentPanelName);
+            updatePickedLicenseLabel();
         }
     }
 

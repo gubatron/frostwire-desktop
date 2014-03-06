@@ -25,6 +25,6 @@ package com.frostwire.licences;
  */
 public final class PublicDomainDedicationLicense extends CreativeCommonsLicense {
     public PublicDomainDedicationLicense() {
-        super("CC0 1.0", "Creative Commons Public Domain Dedication 1.0", "http://creativecommons.org/publicdomain/zero/1.0/");
+        super("CC0 1.0", "CC0 1.0 Universal Public Domain Dedication", "http://creativecommons.org/publicdomain/zero/1.0/");
     }
 }
