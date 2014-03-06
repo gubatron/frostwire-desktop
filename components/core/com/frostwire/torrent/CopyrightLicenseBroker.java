@@ -80,7 +80,7 @@ public class CopyrightLicenseBroker implements Mappable<String,Map<String,String
     
     
     //public domain licenses
-    public static final String PUBLICDOMAINMARK_URL = "http://creativecommons.org/publicdomain/mark/1.0/";
+    public static final String PUBLIC_DOMAIN_MARK_URL = "http://creativecommons.org/publicdomain/mark/1.0/";
     public static final String CC0_URL = "http://creativecommons.org/publicdomain/zero/1.0/";
 
     public static final License CC_BY_LICENSE = new CreativeCommonsLicense("CC-BY", "Creative Commons Attribution " + CC_VERSION, "http://creativecommons.org/licenses/by/" + CC_VERSION);
@@ -90,8 +90,8 @@ public class CopyrightLicenseBroker implements Mappable<String,Map<String,String
     public static final License CC_BY_NC_SA_LICENSE = new CreativeCommonsLicense("CC-BY-NC-SA", "Creative Commons Attribution-NonCommercial-ShareAlike " + CC_VERSION, "http://creativecommons.org/licenses/by-nc-sa/" + CC_VERSION);
     public static final License CC_BY_NC_ND_LICENSE = new CreativeCommonsLicense("CC-BY-NC-ND", "Creative Commons Attribution-NonCommercial-NoDerivs " + CC_VERSION, "http://creativecommons.org/licenses/by-nc-nd/" + CC_VERSION);
 
-    public static final License PUBLIC_DOMAIN_MARK_LIENSE = new PublicDomainMarkLicense();
-    public static final License CC_CC0 = new PublicDomainDedicationLicense();
+    public static final License PUBLIC_DOMAIN_MARK_LICENSE = new PublicDomainMarkLicense();
+    public static final License PUBLIC_DOMAIN_CC0_LICENSE = new PublicDomainDedicationLicense();
 
     
     public static final List<String> validLicenseUrls;
@@ -113,7 +113,7 @@ public class CopyrightLicenseBroker implements Mappable<String,Map<String,String
         validLicenseUrls.add(CC_BY_NC_SA_URL);
         validLicenseUrls.add(CC_BY_NC_ND_URL);
         
-        validLicenseUrls.add(PUBLICDOMAINMARK_URL);
+        validLicenseUrls.add(PUBLIC_DOMAIN_MARK_URL);
         validLicenseUrls.add(CC0_URL);
         
         urlToLicense = new HashMap<String,License>();
@@ -123,6 +123,9 @@ public class CopyrightLicenseBroker implements Mappable<String,Map<String,String
         urlToLicense.put(CC_BY_NC_URL, CC_BY_NC_LICENSE);
         urlToLicense.put(CC_BY_NC_SA_URL, CC_BY_NC_SA_LICENSE);
         urlToLicense.put(CC_BY_NC_ND_URL, CC_BY_NC_ND_LICENSE);
+        
+        urlToLicense.put(PUBLIC_DOMAIN_MARK_URL, PUBLIC_DOMAIN_MARK_LICENSE);
+        urlToLicense.put(CC0_URL, PUBLIC_DOMAIN_CC0_LICENSE);
     }
     
     public CopyrightLicenseBroker(boolean shareAlike, boolean nonCommercial, boolean noDerivatives, String attributionTitle, String attributionAuthor, String attributionURL) {
