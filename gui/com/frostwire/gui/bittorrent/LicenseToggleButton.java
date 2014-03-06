@@ -56,7 +56,9 @@ public class LicenseToggleButton extends JPanel {
         GPL3,
         LGPL3,
         MOZILLA,
-        OPENSOURCE
+        OPENSOURCE, 
+        CC0,
+        PUBLICDOMAIN
     }
 
     public LicenseToggleButton(LicenseIcon iconName, String text, String description, boolean selected, boolean toggleable) {
@@ -111,12 +113,14 @@ public class LicenseToggleButton extends JPanel {
             setBackground(Color.WHITE);
             BasicStroke stroke = new BasicStroke(1.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
             setBorder(BorderFactory.createStrokeBorder(stroke,Color.GRAY));
+            updateComponents();
         }
     }
 
     private void onMouseExited() {
         if (toggleable) {
             setMeUp();
+            updateComponents();
         }
     }
 
