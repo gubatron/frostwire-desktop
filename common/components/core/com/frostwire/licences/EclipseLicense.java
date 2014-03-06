@@ -16,8 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.bittorrent;
 
-public interface LicenseToggleButtonOnToggleListener {
-    public void onButtonToggled(final LicenseToggleButton event);
+package com.frostwire.licences;
+
+public class EclipseLicense extends License {
+    public EclipseLicense() {
+        super("Eclipse Public License Version 1.0 (EPL-1.0)", "http://www.eclipse.org/legal/epl-v10.html");
+    }
 }

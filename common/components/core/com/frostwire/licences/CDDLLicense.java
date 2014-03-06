@@ -16,8 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.bittorrent;
 
-public interface LicenseToggleButtonOnToggleListener {
-    public void onButtonToggled(final LicenseToggleButton event);
+package com.frostwire.licences;
+
+public class CDDLLicense extends License {
+    public CDDLLicense() {
+        super("Common Development and Distribution License (CDDL-1.0)", "http://opensource.org/licenses/CDDL-1.0");
+    }
 }

@@ -31,7 +31,7 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.frostwire.search.extractors.YouTubeExtractor.LinkInfo;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
-import com.frostwire.torrent.CreativeCommonsLicense;
+import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
@@ -529,7 +529,7 @@ public class YouTubeDownload implements BTDownload {
     }
 
     @Override
-    public CreativeCommonsLicense getCreativeCommons() {
+    public CopyrightLicenseBroker getCreativeCommons() {
         return null;
     }
 }

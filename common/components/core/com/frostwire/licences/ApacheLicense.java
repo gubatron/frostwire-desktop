@@ -16,8 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.bittorrent;
 
-public interface LicenseToggleButtonOnToggleListener {
-    public void onButtonToggled(final LicenseToggleButton event);
+package com.frostwire.licences;
+
+public class ApacheLicense extends License {
+    public ApacheLicense() {
+        super("Apache License, Version 2.0", "http://www.apache.org/licenses/LICENSE-2.0.html");
+    }
 }

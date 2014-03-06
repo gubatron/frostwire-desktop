@@ -16,8 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.bittorrent;
 
-public interface LicenseToggleButtonOnToggleListener {
-    public void onButtonToggled(final LicenseToggleButton event);
+
+package com.frostwire.licences;
+
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public class CreativeCommonsLicense extends License {
+
+    private final String longName;
+
+    public CreativeCommonsLicense(String name, String longName, String url) {
+        super(name, url);
+        this.longName = longName;
+    }
+
+    public String getLongName() {
+        return longName;
+    }
 }

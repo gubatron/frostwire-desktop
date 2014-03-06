@@ -16,8 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.bittorrent;
 
-public interface LicenseToggleButtonOnToggleListener {
-    public void onButtonToggled(final LicenseToggleButton event);
+
+package com.frostwire.licences;
+
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public final class PublicDomainDedicationLicense extends CreativeCommonsLicense {
+    public PublicDomainDedicationLicense() {
+        super("CC0 1.0", "CC0 1.0 Universal Public Domain Dedication", "http://creativecommons.org/publicdomain/zero/1.0/");
+    }
 }

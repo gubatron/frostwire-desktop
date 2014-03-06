@@ -16,8 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.bittorrent;
 
-public interface LicenseToggleButtonOnToggleListener {
-    public void onButtonToggled(final LicenseToggleButton event);
+package com.frostwire.licences;
+
+public class LGPLLicense extends License {
+    public LGPLLicense() {
+        super("GNU Lesser General Public License Version 3 (LGPL 3)", "http://www.gnu.org/copyleft/lesser.html");
+    }
 }

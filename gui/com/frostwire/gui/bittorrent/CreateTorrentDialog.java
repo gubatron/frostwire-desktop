@@ -74,7 +74,7 @@ import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.AzureusStarter;
 import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.torrent.CreativeCommonsLicense;
+import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.torrent.TorrentInfoManipulator;
 import com.frostwire.util.HttpClient;
@@ -152,7 +152,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     private final JPanel _basicTorrentPane;
     private final JPanel _creativeCommonsPane;
     private final JPanel _paymentsPane;
-    private final CreativeCommonsSelectorPanel _ccPanel;
+    private final CopyrightLicenseSelectorPanel _ccPanel;
     private final PaymentOptionsPanel _paymentOptionsPanel;
 
     private LimeTextField _textSelectedContent;
@@ -190,7 +190,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         _basicTorrentPane = new JPanel();
         _creativeCommonsPane = new JPanel();
         _paymentsPane = new JPanel();
-        _ccPanel = new CreativeCommonsSelectorPanel();
+        _ccPanel = new CopyrightLicenseSelectorPanel();
         _paymentOptionsPanel = new PaymentOptionsPanel();
 
         initContainersLayouts();
@@ -690,7 +690,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
                 if (torrent != null) {
                     if (addAvailableWebSeeds(torrent,create_from_dir)) {
                         addAvailablePaymentOptions(torrent);
-                        addAvailableCreativeCommonsLicense(torrent);
+                        addAvailableCopyrightLicense(torrent);
 
                         if (tracker_type == TT_DECENTRAL) {
                             TorrentUtils.setDecentralised(torrent);
@@ -835,12 +835,12 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         return urlPath;
     }
 
-    private void addAvailableCreativeCommonsLicense(final TOTorrent torrent) {
+    private void addAvailableCopyrightLicense(final TOTorrent torrent) {
         if (_ccPanel.hasConfirmedRightfulUseOfLicense()) {
-            CreativeCommonsLicense ccLicense = _ccPanel.getCreativeCommonsLicense();
-            if (ccLicense != null) {
+            CopyrightLicenseBroker license = _ccPanel.getLicenseBroker();
+            if (license != null) {
                 TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(torrent);
-                infoManipulator.addAdditionalInfoProperty("license", ccLicense.asMap());
+                infoManipulator.addAdditionalInfoProperty("license", license.asMap());
             }
         }
     }

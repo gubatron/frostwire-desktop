@@ -16,8 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.bittorrent;
 
-public interface LicenseToggleButtonOnToggleListener {
-    public void onButtonToggled(final LicenseToggleButton event);
+package com.frostwire.licences;
+
+public class BSD3ClauseLicense extends License {
+    public BSD3ClauseLicense() {
+        super("The FreeBSD Copyright License (BSD 3 Clause)", "http://opensource.org/licenses/BSD-3-Clause");
+    }
 }

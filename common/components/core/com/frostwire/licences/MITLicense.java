@@ -16,8 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.bittorrent;
 
-public interface LicenseToggleButtonOnToggleListener {
-    public void onButtonToggled(final LicenseToggleButton event);
+package com.frostwire.licences;
+
+public class MITLicense extends License {
+    public MITLicense() {
+        super("The MIT License (MIT)", "http://opensource.org/licenses/MIT");
+    }
 }
