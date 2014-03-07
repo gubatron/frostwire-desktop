@@ -33,6 +33,9 @@ public interface HttpClient {
     public void setListener(HttpClientListener listener);
 
     public HttpClientListener getListener();
+    
+    /** Returns the HTTP response code */
+    public int head(String url, int connectTimeoutInMillis) throws IOException;
 
     public String get(String url) throws IOException;
 

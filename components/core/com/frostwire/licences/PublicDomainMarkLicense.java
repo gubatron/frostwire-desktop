@@ -23,9 +23,8 @@ package com.frostwire.licences;
  * @author aldenml
  *
  */
-public final class PublicDomainLicense extends CCLicense {
-
-    PublicDomainLicense() {
-        super("Public Domain", "Creative Commons Public Domain", "http://creativecommons.org/licenses/publicdomain");
+public final class PublicDomainMarkLicense extends CreativeCommonsLicense {
+    public PublicDomainMarkLicense() {
+        super("Public Domain Mark 1.0", "Public Domain Mark 1.0", "http://creativecommons.org/publicdomain/mark/1.0/");
     }
 }

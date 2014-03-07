@@ -55,6 +55,16 @@ final class JdkHttpClient implements HttpClient {
     private HttpClientListener listener;
 
     private boolean canceled;
+    
+    @Override
+    public int head(String url, int connectTimeoutInMillis) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+        connection.setConnectTimeout(connectTimeoutInMillis);
+        connection.setReadTimeout(connectTimeoutInMillis);
+        connection.setRequestMethod("HEAD");
+        return connection.getResponseCode();
+    }
+
 
     public String get(String url) throws IOException {
         return get(url, DEFAULT_TIMEOUT, DEFAULT_USER_AGENT);
