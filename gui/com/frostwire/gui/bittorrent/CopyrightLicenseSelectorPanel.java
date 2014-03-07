@@ -44,6 +44,7 @@ import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LimeTextField;
 
+@SuppressWarnings("serial")
 public class CopyrightLicenseSelectorPanel extends JPanel {
 
     private static final String CREATIVE_COMMONS_CARD_NAME = "Creative Commons";
@@ -422,7 +423,7 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         JPanel publicDomainLicensePanel = new JPanel(new MigLayout("fill, insets 0 0 0 0, alignx center"));
         JLabel label = new JLabel("You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.");
         label.setEnabled(false);
-        publicDomainLicensePanel.add(label,"gaptop 10px, aligny bottom, push, alignx center, span 2, wrap");
+        publicDomainLicensePanel.add(label,"gaptop 10px, aligny center, push, alignx center, span 2, wrap");
         publicDomainLicensePanel.add(publicDomainButton,"wmin 400px, aligny top, push, grow, gap 2 2 2 2");
         publicDomainLicensePanel.add(cc0Button,"wmin 400px, aligny top, push, grow, gap 2 2 2 2");
         licenseTypesCardLayoutContainer.add(publicDomainLicensePanel, PUBLIC_DOMAIN_CARD_NAME);
