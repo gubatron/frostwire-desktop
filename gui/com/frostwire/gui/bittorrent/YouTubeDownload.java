@@ -36,7 +36,6 @@ import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;
-import com.frostwire.util.HttpClientType;
 import com.frostwire.util.MP4Muxer;
 import com.frostwire.util.MP4Muxer.MP4Metadata;
 import com.limegroup.gnutella.gui.I18n;
@@ -99,7 +98,7 @@ public class YouTubeDownload implements BTDownload {
 
         httpClientListener = new HttpDownloadListenerImpl();
 
-        httpClient = HttpClientFactory.newInstance(HttpClientType.PureJava);
+        httpClient = HttpClientFactory.newInstance();
         httpClient.setListener(httpClientListener);
 
         start();
@@ -508,7 +507,7 @@ public class YouTubeDownload implements BTDownload {
             jpgUrl = sr.getAudio() != null ? sr.getAudio().thumbnails.normal : null;
         }
 
-        byte[] jpg = jpgUrl != null ? HttpClientFactory.newDefaultInstance().getBytes(jpgUrl) : null;
+        byte[] jpg = jpgUrl != null ? HttpClientFactory.newInstance().getBytes(jpgUrl) : null;
 
         return new MP4Metadata(title, author, source, jpg);
     }

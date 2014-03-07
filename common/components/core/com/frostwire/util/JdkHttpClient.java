@@ -38,8 +38,7 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.frostwire.logging.Logger;
 
 /**
  * A pure java based HTTP client with resume capabilities.
@@ -47,9 +46,9 @@ import org.slf4j.LoggerFactory;
  * @author aldenml
  *
  */
-final class FWHttpClient implements HttpClient {
+final class JdkHttpClient implements HttpClient {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FWHttpClient.class);
+    private static final Logger LOG = Logger.getLogger(JdkHttpClient.class);
 
     private static final int DEFAULT_TIMEOUT = 10000;
     private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();
@@ -127,6 +126,10 @@ final class FWHttpClient implements HttpClient {
 
     public byte[] getBytes(String url) {
         return getBytes(url, DEFAULT_TIMEOUT, DEFAULT_USER_AGENT, null);
+    }
+
+    public void save(String url, File file) throws IOException {
+        save(url, file, false, DEFAULT_TIMEOUT, DEFAULT_USER_AGENT);
     }
 
     public void save(String url, File file, boolean resume) throws IOException {

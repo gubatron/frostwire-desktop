@@ -16,7 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.util;
+package com.frostwire.vuze;
+
 
 /**
  * 
@@ -24,28 +25,9 @@ package com.frostwire.util;
  * @author aldenml
  *
  */
-public final class Condition {
+public interface VuzeDownloadListener {
 
-    private Condition() {
-    }
+    public void stateChanged(VuzeDownloadManager dm, int state);
 
-    /**
-     * Useful to shorten long "or" boolean expressions.
-     * @param needle
-     * @param args
-     * @return true if needle is in any of the args.
-     */
-    public static <T> boolean in(T needle, T... args) {
-        if (args == null) {
-            throw new IllegalArgumentException("args on in operation can't be null");
-        }
-
-        for (T t : args) {
-            if (t != null && t.equals(needle)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
+    public void downloadComplete(VuzeDownloadManager dm);
 }

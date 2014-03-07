@@ -803,7 +803,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
      */
     private boolean checkWebSeedMirror(String mirror, TOTorrent torrent, boolean isMultiFile) {
         String urlPath = getWebSeedTestPath(mirror, torrent, isMultiFile);
-        HttpClient browser = HttpClientFactory.newDefaultInstance();
+        HttpClient browser = HttpClientFactory.newInstance();
 
         int responseCode = 500;
         try {

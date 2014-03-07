@@ -36,7 +36,6 @@ import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.util.DigestUtils;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
-import com.frostwire.util.HttpClientType;
 import com.limegroup.gnutella.gui.I18n;
 
 public class SlideDownload extends HttpDownload {
@@ -96,7 +95,7 @@ public class SlideDownload extends HttpDownload {
 
     private boolean verifySignature(File saveLocation, String executableDownloadURL) {
     	String certificateURL = getCertificateURL(executableDownloadURL);
-    	HttpClient httpClient = HttpClientFactory.newInstance(HttpClientType.PureJava);
+    	HttpClient httpClient = HttpClientFactory.newInstance();
     	
     	try {
     		String certificateInBase64 = httpClient.get(certificateURL);

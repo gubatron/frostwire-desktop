@@ -36,7 +36,6 @@ import org.limewire.util.OSUtils;
 import com.frostwire.JsonEngine;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
-import com.frostwire.util.HttpClientType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -151,7 +150,7 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
 
     private void load(final String url) {
         try {
-            HttpClient client = HttpClientFactory.newInstance(HttpClientType.PureJava);
+            HttpClient client = HttpClientFactory.newInstance();
             String jsonString = client.get(url);
 
             if (jsonString != null) {

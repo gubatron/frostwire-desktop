@@ -16,10 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.util;
+package com.frostwire.vuze;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.io.File;
+
+import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 
 /**
  * 
@@ -27,22 +28,34 @@ import java.net.URLEncoder;
  * @author aldenml
  *
  */
-public final class URLUtils {
+public final class VuzeFileInfo {
 
-    private URLUtils() {
+    private final DiskManagerFileInfo info;
+    private final File file;
+    private final String filename;
+    private final long length;
+
+    public VuzeFileInfo(DiskManagerFileInfo info) {
+        this.info = info;
+
+        this.file = info.getFile(false);
+        this.filename = file.getName();
+        this.length = info.getLength();
     }
 
-    public static String encode(String str) {
-        String enc = "";
+    public File getFile() {
+        return file;
+    }
 
-        if (str != null) {
-            try {
-                enc = URLEncoder.encode(str, "UTF-8").replaceAll("\\+", "%20");
-            } catch (UnsupportedEncodingException e) {
-                throw new RuntimeException("Impossible to run in an environment with lack of UTF-8 support", e);
-            }
-        }
+    public String getFilename() {
+        return filename;
+    }
 
-        return enc;
+    public long getLength() {
+        return length;
+    }
+
+    public long getDownloaded() {
+        return info.getDownloaded();
     }
 }

@@ -92,7 +92,7 @@ public class Device {
         this.pingInfo = pinfo;
         this.local = pinfo.local;
         
-        this.httpClient = HttpClientFactory.newDefaultInstance();
+        this.httpClient = HttpClientFactory.newInstance();
     }
     
     /**

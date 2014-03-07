@@ -11,5 +11,7 @@ objects in your external Drag and Drops.
 //TorrentUtils.setObtainedFrom( file, original_url );
 Fix in TorrentDownloaderImpl
 
-- Fix related to cling and http handler, check
-org.gudy.azureus2.core3.util.protocol.http
+- Comment Debug.out in DNSUtils during static initialization.
+
+- In VersionClientCheck write in VersionCheckClient
+NetworkAdminASN new_asn = old_asn;//admin.lookupCurrentASN( my_ip );
