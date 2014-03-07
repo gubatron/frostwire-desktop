@@ -39,7 +39,6 @@ import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;
-import com.frostwire.util.HttpClientType;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -96,7 +95,7 @@ public class SoundcloudDownload implements BTDownload {
 
         httpClientListener = new HttpDownloadListenerImpl();
 
-        httpClient = HttpClientFactory.newInstance(HttpClientType.PureJava);
+        httpClient = HttpClientFactory.newInstance();
         httpClient.setListener(httpClientListener);
 
         start();
@@ -429,7 +428,7 @@ public class SoundcloudDownload implements BTDownload {
 
     private boolean setAlbumArt(String mp3Filename, String mp3outputFilename) {
         try {
-            byte[] imageBytes = HttpClientFactory.newDefaultInstance().getBytes(sr.getThumbnailUrl());
+            byte[] imageBytes = HttpClientFactory.newInstance().getBytes(sr.getThumbnailUrl());
 
             Mp3File mp3 = new Mp3File(mp3Filename);
 

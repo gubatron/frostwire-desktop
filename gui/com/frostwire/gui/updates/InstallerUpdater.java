@@ -53,7 +53,6 @@ import com.frostwire.util.DigestUtils;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpRangeException;
 import com.frostwire.util.HttpClientFactory;
-import com.frostwire.util.HttpClientType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.UpdateSettings;
@@ -126,7 +125,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
         }
         try {
             //new HttpFetcher(new URI(_updateMessage.getInstallerUrl())).save(installerFileLocation);
-            HttpClient httpClient = HttpClientFactory.newInstance(HttpClientType.PureJava);
+            HttpClient httpClient = HttpClientFactory.newInstance();
             try {
                 httpClient.save(_updateMessage.getInstallerUrl(), installerFileLocation, true);
             } catch (HttpRangeException e) {

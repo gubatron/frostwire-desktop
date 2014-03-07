@@ -38,7 +38,6 @@ import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClient.RangeNotSupportedException;
 import com.frostwire.util.HttpClientFactory;
-import com.frostwire.util.HttpClientType;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -112,7 +111,7 @@ public class HttpDownload implements BTDownload {
 
         httpClientListener = new HttpDownloadListenerImpl();
 
-        httpClient = HttpClientFactory.newInstance(HttpClientType.PureJava);
+        httpClient = HttpClientFactory.newInstance();
         httpClient.setListener(httpClientListener);
 
         isResumable = shouldResume;
