@@ -140,7 +140,7 @@ final class SlideControlsOverlay extends JPanel {
             addDownloadInstallButton(centerButtonsPanel, slide);
             addPreviewButtons(centerButtonsPanel, slide);
         }
-        add(centerButtonsPanel,"gaptop 35px, gapbottom 35px, growy, pushy, pushx, spanx 3, aligny center, alignx center, wrap");
+        add(centerButtonsPanel,"gaptop 35px, gapbottom 25px, growy, pushy, pushx, spanx 3, aligny center, alignx center, wrap");
     }
 
     private void setupSocialBar() {
