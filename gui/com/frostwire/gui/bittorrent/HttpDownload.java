@@ -525,7 +525,7 @@ public class HttpDownload implements BTDownload {
     }
 
     @Override
-    public CopyrightLicenseBroker getCreativeCommons() {
+    public CopyrightLicenseBroker getCopyrightLicenseBroker() {
         return null;
     }
 }

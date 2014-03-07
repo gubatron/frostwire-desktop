@@ -469,7 +469,7 @@ public class SoundcloudDownload implements BTDownload {
     }
 
     @Override
-    public CopyrightLicenseBroker getCreativeCommons() {
+    public CopyrightLicenseBroker getCopyrightLicenseBroker() {
         return null;
     }
 }

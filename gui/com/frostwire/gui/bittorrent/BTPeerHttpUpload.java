@@ -212,7 +212,7 @@ public class BTPeerHttpUpload implements BTDownload {
     }
 
     @Override
-    public CopyrightLicenseBroker getCreativeCommons() {
+    public CopyrightLicenseBroker getCopyrightLicenseBroker() {
         return null;
     }
 }

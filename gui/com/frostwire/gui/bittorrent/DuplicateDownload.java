@@ -155,7 +155,7 @@ public class DuplicateDownload implements BTDownload {
     }
 
     @Override
-    public CopyrightLicenseBroker getCreativeCommons() {
-        return _delegate.getCreativeCommons();
+    public CopyrightLicenseBroker getCopyrightLicenseBroker() {
+        return _delegate.getCopyrightLicenseBroker();
     }
 }

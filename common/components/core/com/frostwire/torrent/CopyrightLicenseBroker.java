@@ -135,6 +135,16 @@ public class CopyrightLicenseBroker implements Mappable<String,Map<String,String
         urlToLicense.put(CC_BY_NC_URL, CC_BY_NC_LICENSE);
         urlToLicense.put(CC_BY_NC_SA_URL, CC_BY_NC_SA_LICENSE);
         urlToLicense.put(CC_BY_NC_ND_URL, CC_BY_NC_ND_LICENSE);
+        
+        urlToLicense.put(APACHE_LICENSE.getUrl(), APACHE_LICENSE);
+        urlToLicense.put(BSD_2_CLAUSE_LICENSE.getUrl(), BSD_2_CLAUSE_LICENSE);
+        urlToLicense.put(BSD_3_CLAUSE_LICENSE.getUrl(), BSD_3_CLAUSE_LICENSE);
+        urlToLicense.put(GPL3_LICENSE.getUrl(), GPL3_LICENSE);
+        urlToLicense.put(LGPL_LICENSE.getUrl(), LGPL_LICENSE);
+        urlToLicense.put(MIT_LICENSE.getUrl(), MIT_LICENSE);
+        urlToLicense.put(MOZILLA_LICENSE.getUrl(), MOZILLA_LICENSE);
+        urlToLicense.put(CDDL_LICENSE.getUrl(), CDDL_LICENSE);
+        urlToLicense.put(ECLIPSE_LICENSE.getUrl(), ECLIPSE_LICENSE);
     }
     
     public CopyrightLicenseBroker(boolean shareAlike, boolean nonCommercial, boolean noDerivatives, String attributionTitle, String attributionAuthor, String attributionURL) {

@@ -101,5 +101,5 @@ public interface BTDownload {
     
     public PaymentOptions getPaymentOptions();
     
-    public CopyrightLicenseBroker getCreativeCommons();
+    public CopyrightLicenseBroker getCopyrightLicenseBroker();
 }

@@ -455,7 +455,7 @@ public class BTDownloadImpl implements BTDownload {
     }
 
     @Override
-    public CopyrightLicenseBroker getCreativeCommons() {
+    public CopyrightLicenseBroker getCopyrightLicenseBroker() {
         return license;
     }
 }

@@ -69,7 +69,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     private long _upload;
 
     /**
-     * Variable for the progress made in the progressbar.
+     * Variable for the progress made in the progress bar.
      */
     private int _progress;
 
@@ -99,6 +99,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     private String _seedToPeerRatio;
 
     private Date dateCreated;
+    
+    private String license;
 
     private boolean _notification;
 
@@ -171,10 +173,13 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     static final int DATE_CREATED_INDEX = 14;
     static final LimeTableColumn DATE_CREATED_COLUMN = new LimeTableColumn(DATE_CREATED_INDEX, "DATE_CREATED_COLUMN", I18n.tr("Started On"), 80, false, Date.class);
 
+    static final int LICENSE_INDEX = 15;
+    static final LimeTableColumn LICENSE_COLUMN = new LimeTableColumn(LICENSE_INDEX, "LICENSE_COLUMN", I18n.tr("License"), 80, false, String.class);
+    
     /**
      * Number of columns to display
      */
-    static final int NUMBER_OF_COLUMNS = 15;
+    static final int NUMBER_OF_COLUMNS = 16;
 
     // Implements DataLine interface
     public int getColumnCount() {
@@ -253,6 +258,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
             return _seedToPeerRatio;
         case DATE_CREATED_INDEX:
             return dateCreated;
+        case LICENSE_INDEX:
+            return license;
         }
         return null;
     }
@@ -296,6 +303,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
             return SEED_TO_PEER_RATIO_COLUMN;
         case DATE_CREATED_INDEX:
             return DATE_CREATED_COLUMN;
+        case LICENSE_INDEX:
+            return LICENSE_COLUMN;
         }
         return null;
     }
@@ -368,6 +377,13 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
         _seedToPeerRatio = initializer.getSeedToPeerRatio();
         _size = initializer.getSize();
         dateCreated = initializer.getDateCreated();
+        
+        if (initializer.getCopyrightLicenseBroker() != null && initializer.getCopyrightLicenseBroker().license != null) {
+            license = initializer.getCopyrightLicenseBroker().license.getName();
+        } else {
+            license = "";
+        }
+
 
         if (getInitializeObject().isCompleted()) {
             showNotification();
