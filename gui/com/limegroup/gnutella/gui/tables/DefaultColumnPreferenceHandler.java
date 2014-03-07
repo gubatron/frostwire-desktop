@@ -320,9 +320,11 @@ public class DefaultColumnPreferenceHandler implements ColumnPreferenceHandler, 
         DataLineModel<?, ?> dlm = (DataLineModel<?, ?>) table.getModel();
         for (int i = 0; i < dlm.getColumnCount(); i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
-            int width = getWidth(ltc);
-            if (width != -1) {
-                ltc.setPreferredWidth(width);
+            if (ltc != null) {
+                int width = getWidth(ltc);
+                if (width != -1) {
+                    ltc.setPreferredWidth(width);
+                }
             }
         }
 
@@ -345,17 +347,19 @@ public class DefaultColumnPreferenceHandler implements ColumnPreferenceHandler, 
         int max = dlm.getColumnCount();
         for (int i = 0; i < max; i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
-            int order = getOrder(ltc);
-            if (table.isColumnVisible(ltc.getId())) {
-                int current = tcm.getColumnIndex(ltc.getId());
-                // can't go beyond boundary
-                if (order >= max) {
-                    order = max - 1;
-                    setOrder(ltc, order);
-                    changed = true;
+            if (ltc != null) {
+                int order = getOrder(ltc);
+                if (table.isColumnVisible(ltc.getId())) {
+                    int current = tcm.getColumnIndex(ltc.getId());
+                    // can't go beyond boundary
+                    if (order >= max) {
+                        order = max - 1;
+                        setOrder(ltc, order);
+                        changed = true;
+                    }
+                    if (current != order)
+                        tcm.moveColumn(current, order);
                 }
-                if (current != order)
-                    tcm.moveColumn(current, order);
             }
         }
 
