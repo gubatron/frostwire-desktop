@@ -102,6 +102,10 @@ final class SlideControlsOverlay extends JPanel {
 
     private OverlayIconButton createPaymentButton(Slide slide) {
         final OverlayIconButton paymentButton = new OverlayIconButton(new PaymentAction(slide.paymentOptions, slide.title),true,false);
+        Font origFont = paymentButton.getFont();
+        Font newFont = origFont.deriveFont(origFont.getSize2D() - 3f);
+        paymentButton.setFont(newFont);
+        
         paymentButton.setForeground(new Color(0x5cb4e0));
         paymentButton.setBackground(Color.WHITE);
         UIDefaults nimbusOverrides = (UIDefaults) paymentButton.getClientProperty("Nimbus.Overrides");
