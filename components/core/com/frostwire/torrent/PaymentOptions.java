@@ -1,7 +1,7 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
  * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -23,7 +23,12 @@ import java.util.Map;
 
 import com.frostwire.util.StringUtils;
 
-
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class PaymentOptions implements Mappable<String, Map<String,String>>{
     /** BitCoin URI, see BIP-0021 - https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki 
      * bitcoinurn     = "bitcoin:" bitcoinaddress [ "?" bitcoinparams ]
@@ -76,7 +81,7 @@ public class PaymentOptions implements Mappable<String, Map<String,String>>{
     }
 
     public Map<String, Map<String, String>> asMap() {
-        Map<String, String> innerMap = new HashMap<>();
+        Map<String, String> innerMap = new HashMap<String,String>();
         if (!StringUtils.isNullOrEmpty(bitcoin)) {
             innerMap.put("bitcoin", bitcoin);
         }

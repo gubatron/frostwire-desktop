@@ -1,7 +1,7 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
  * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 package com.frostwire.torrent;
 
@@ -38,6 +37,12 @@ import com.frostwire.licences.MozillaLicense;
 import com.frostwire.licences.PublicDomainDedicationLicense;
 import com.frostwire.licences.PublicDomainMarkLicense;
 
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class CopyrightLicenseBroker implements Mappable<String,Map<String,String>> {
     
     public enum LicenseCategory {
@@ -120,7 +125,7 @@ public class CopyrightLicenseBroker implements Mappable<String,Map<String,String
     public final String INTERNATIONAL_LICENSE = "International License";
     
     static {
-        validLicenseUrls = new ArrayList<>();
+        validLicenseUrls = new ArrayList<String>();
         validLicenseUrls.add(CC_BY_URL);
         validLicenseUrls.add(CC_BY_SA_URL);
         validLicenseUrls.add(CC_BY_ND_URL);
@@ -195,8 +200,8 @@ public class CopyrightLicenseBroker implements Mappable<String,Map<String,String
     }
 
     public Map<String, Map<String,String>> asMap() {
-        Map<String,Map<String,String>> container = new HashMap<>();
-        Map<String,String> innerMap = new HashMap<>();
+        Map<String,Map<String,String>> container = new HashMap<String,Map<String,String>>();
+        Map<String,String> innerMap = new HashMap<String,String>();
         innerMap.put("licenseUrl", this.license.getUrl());
         innerMap.put("attributionTitle", this.attributionTitle);
         innerMap.put("attributionAuthor", this.attributionAuthor);
