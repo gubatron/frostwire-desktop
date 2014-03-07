@@ -21,13 +21,12 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import com.frostwire.logging.Logger;
 import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
-import com.frostwire.util.URLUtils;
+import com.frostwire.util.StringUtils;
 import com.frostwire.util.UserAgentGenerator;
 
 /**
@@ -38,7 +37,7 @@ import com.frostwire.util.UserAgentGenerator;
  */
 public abstract class WebSearchPerformer extends AbstractSearchPerformer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(WebSearchPerformer.class);
+    private static final Logger LOG = Logger.getLogger(WebSearchPerformer.class);
 
     private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();
 
@@ -60,9 +59,9 @@ public abstract class WebSearchPerformer extends AbstractSearchPerformer {
 
         this.domainAliasManager = domainAliasManager;
         this.keywords = keywords;
-        this.encodedKeywords = URLUtils.encode(keywords);
+        this.encodedKeywords = StringUtils.encodeUrl(keywords);
         this.timeout = timeout;
-        this.client = HttpClientFactory.newDefaultInstance();
+        this.client = HttpClientFactory.newInstance();
     }
 
     public final String getKeywords() {

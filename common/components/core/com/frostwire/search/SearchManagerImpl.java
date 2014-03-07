@@ -26,10 +26,8 @@ import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.frostwire.concurrent.DefaultThreadFactory;
+import com.frostwire.logging.Logger;
 
 /**
  * 
@@ -39,7 +37,7 @@ import com.frostwire.concurrent.DefaultThreadFactory;
  */
 public class SearchManagerImpl implements SearchManager {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SearchManagerImpl.class);
+    private static final Logger LOG = Logger.getLogger(SearchManagerImpl.class);
 
     private static final int DEFAULT_NTHREADS = 4;
 

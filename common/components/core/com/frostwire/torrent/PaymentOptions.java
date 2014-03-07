@@ -1,7 +1,7 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
  * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -23,8 +23,13 @@ import java.util.Map;
 
 import com.frostwire.util.StringUtils;
 
-
-public class PaymentOptions implements Mappable<String, Map<String,String>>{
+/**
+ * 
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public class PaymentOptions implements Mappable<String, Map<String, String>> {
     /** BitCoin URI, see BIP-0021 - https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki 
      * bitcoinurn     = "bitcoin:" bitcoinaddress [ "?" bitcoinparams ]
      * bitcoinaddress = base58 *base58
@@ -42,32 +47,29 @@ public class PaymentOptions implements Mappable<String, Map<String,String>>{
     public final String bitcoin;
     public final String litecoin;
     public final String dogecoin;
-    
+
     public enum PaymentMethod {
-        BITCOIN,
-        LITECOIN,
-        DOGECOIN,
-        PAYPAL
+        BITCOIN, LITECOIN, DOGECOIN, PAYPAL
     }
-    
+
     /** Simply a valid email address for creating a paypal payment form */
     public final String paypalUrl;
-    
+
     public PaymentOptions() {
         bitcoin = null;
         litecoin = null;
         dogecoin = null;
         paypalUrl = null;
     }
-    
+
     public PaymentOptions(String bitcoin, String litecoin, String dogecoin, String paypal) {
         this.bitcoin = bitcoin;
         this.litecoin = litecoin;
         this.dogecoin = dogecoin;
         this.paypalUrl = paypal;
     }
-    
-    public PaymentOptions(Map<String,Map<String,Object>> paymentOptionsMap) {
+
+    public PaymentOptions(Map<String, Map<String, Object>> paymentOptionsMap) {
         Map<String, Object> paymentOptions = paymentOptionsMap.get("paymentOptions");
         this.bitcoin = TorrentInfoManipulator.getStringFromEncodedMap("bitcoin", paymentOptions);
         this.litecoin = TorrentInfoManipulator.getStringFromEncodedMap("litecoin", paymentOptions);
@@ -76,7 +78,7 @@ public class PaymentOptions implements Mappable<String, Map<String,String>>{
     }
 
     public Map<String, Map<String, String>> asMap() {
-        Map<String, String> innerMap = new HashMap<>();
+        Map<String, String> innerMap = new HashMap<String, String>();
         if (!StringUtils.isNullOrEmpty(bitcoin)) {
             innerMap.put("bitcoin", bitcoin);
         }

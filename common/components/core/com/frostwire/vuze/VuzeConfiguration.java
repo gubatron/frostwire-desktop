@@ -16,36 +16,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.util;
+package com.frostwire.vuze;
+
+import java.util.Map;
 
 /**
- * 
  * @author gubatron
  * @author aldenml
  *
  */
-public final class Condition {
+public final class VuzeConfiguration {
 
-    private Condition() {
+    private final String configPath;
+    private final String torrentsPath;
+    private final Map<String, String> messages;
+
+    public VuzeConfiguration(String configPath, String torrentsPath, Map<String, String> messages) {
+        this.configPath = configPath;
+        this.torrentsPath = torrentsPath;
+        this.messages = messages;
     }
 
-    /**
-     * Useful to shorten long "or" boolean expressions.
-     * @param needle
-     * @param args
-     * @return true if needle is in any of the args.
-     */
-    public static <T> boolean in(T needle, T... args) {
-        if (args == null) {
-            throw new IllegalArgumentException("args on in operation can't be null");
-        }
+    public String getConfigPath() {
+        return configPath;
+    }
 
-        for (T t : args) {
-            if (t != null && t.equals(needle)) {
-                return true;
-            }
-        }
+    public String getTorrentsPath() {
+        return torrentsPath;
+    }
 
-        return false;
+    public Map<String, String> getMessages() {
+        return messages;
     }
 }

@@ -24,9 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.frostwire.logging.Logger;
 import com.frostwire.search.PagedWebSearchPerformer;
 import com.frostwire.search.SearchResult;
 import com.frostwire.search.domainalias.DomainAliasManager;
@@ -38,7 +36,7 @@ import com.frostwire.search.domainalias.DomainAliasManager;
  */
 public class FrostClickSearchPerformer extends PagedWebSearchPerformer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FrostClickSearchPerformer.class);
+    private static final Logger LOG = Logger.getLogger(FrostClickSearchPerformer.class);
 
     private static final int MAX_RESULTS = 1;
 

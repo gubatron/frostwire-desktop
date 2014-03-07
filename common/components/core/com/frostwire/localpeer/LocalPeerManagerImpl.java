@@ -28,9 +28,7 @@ import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.frostwire.logging.Logger;
 import com.frostwire.util.JsonUtils;
 
 /**
@@ -43,7 +41,7 @@ import com.frostwire.util.JsonUtils;
  */
 public final class LocalPeerManagerImpl implements LocalPeerManager {
 
-    private static final Logger LOG = LoggerFactory.getLogger(LocalPeerManagerImpl.class);
+    private static final Logger LOG = Logger.getLogger(LocalPeerManagerImpl.class);
 
     private static final String JMDNS_NAME = "LocalPeerManagerJmDNS";
     private static final String SERVICE_TYPE = "_fw_local_peer._tcp.local.";

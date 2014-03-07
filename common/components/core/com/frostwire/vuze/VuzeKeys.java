@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011, 2012, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,24 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.gudy.azureus2.core3.util.protocol.http;
-
-import java.io.IOException;
-import java.net.Proxy;
-import java.net.URL;
-import java.net.URLConnection;
+package com.frostwire.vuze;
 
 /**
+ * 
  * @author gubatron
  * @author aldenml
- * 
+ *
  */
-public class Handler extends sun.net.www.protocol.http.Handler {
-    protected URLConnection openConnection(URL u) throws IOException {
-        return openConnection(u, null);
-    }
+public interface VuzeKeys {
 
-    protected URLConnection openConnection(URL u, Proxy p) throws IOException {
-        return new HTTPURLConnection(u, this);
-    }
+    public static final String MAX_DOWNLOAD_SPEED = "Max Download Speed KBs";
+    public static final String MAX_UPLOAD_SPEED = "Max Upload Speed KBs";
+    public static final String MAX_DOWNLOADS = "max downloads";
+    public static final String MAX_UPLOADS = "Max Uploads";
+    public static final String MAX_TOTAL_CONNECTIONS = "Max.Peer.Connections.Total";
+    public static final String MAX_TORRENT_CONNECTIONS = "Max.Peer.Connections.Per.Torrent";
+
+    static final String VUZE_DOWNLOAD_MANAGER_OBJECT_KEY = "VUZE_DOWNLOAD_MANAGER_OBJECT";
 }

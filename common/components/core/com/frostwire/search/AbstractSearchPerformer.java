@@ -19,8 +19,7 @@ package com.frostwire.search;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.frostwire.logging.Logger;
 
 /**
  * 
@@ -30,7 +29,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractSearchPerformer implements SearchPerformer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractSearchPerformer.class);
+    private static final Logger LOG = Logger.getLogger(AbstractSearchPerformer.class);
 
     private final long token;
 
