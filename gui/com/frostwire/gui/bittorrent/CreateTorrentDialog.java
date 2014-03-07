@@ -89,6 +89,7 @@ import com.limegroup.gnutella.settings.SharingSettings;
  * @author aldenml
  *
  */
+@SuppressWarnings("serial")
 public class CreateTorrentDialog extends JDialog implements TOTorrentProgressListener {
 
     /**
@@ -163,7 +164,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     private JButton _buttonSaveAs;
     private JProgressBar _progressBar;
 
-    private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(860, 800);
+    private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(942, 830);
 
     private JScrollPane _textTrackersScrollPane;
     private JFileChooser _fileChooser;
@@ -196,14 +197,14 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     }
 
     private void initContainersLayouts() {
-        _container.setLayout(new MigLayout("fill"));
+        _container.setLayout(new MigLayout("fill, insets 5px 5px 5px 5px"));
         _basicTorrentPane.setLayout(new MigLayout("fill"));
         _licensesPane.setLayout(new MigLayout("fill"));
         _paymentsPane.setLayout(new MigLayout("fill"));
     }
 
     private void initTabbedPane() {
-        _container.add(_tabbedPane, "gap 5px 5px 5px 5px, grow, pushy, wrap");
+        _container.add(_tabbedPane, "grow, pushy, wrap");
         _licensesPane.add(_licenseSelectorPanel, "grow");
         _paymentsPane.add(_paymentOptionsPanel, "grow");
 
@@ -217,15 +218,14 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
     private void initComponents() {
         initDialogSettings();
-
-        // we do it from the bottom, and dock them south
-        initSaveCloseButtons();
+        
+        initTabbedPane();        
         initProgressBar();
+        initSaveCloseButtons();
 
         initTorrentContents();
         initTorrentTracking();
-        initTabbedPane();
-
+        
         buildListeners();
     }
 
@@ -234,7 +234,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         setSize(MINIMUM_DIALOG_DIMENSIONS);
         setMinimumSize(MINIMUM_DIALOG_DIMENSIONS);
         setPreferredSize(MINIMUM_DIALOG_DIMENSIONS);
-        setMaximumSize(MINIMUM_DIALOG_DIMENSIONS);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setModalityType(ModalityType.APPLICATION_MODAL);
         GUIUtils.addHideAction((JComponent) _container);
@@ -272,7 +271,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         _labelTrackers.setToolTipText(I18n.tr("Enter a list of valid BitTorrent Tracker Server URLs.\nYour new torrent will be announced to these trackers if you start seeding the torrent."));
         torrentTrackingPanel.add(_labelTrackers, "aligny top, pushy, growx 40, gapleft 5, gapright 10, wmin 150px");
 
-        _textTrackers = new JTextArea(10, 80);
+        _textTrackers = new JTextArea(10, 70);
         ThemeMediator.fixKeyStrokes(_textTrackers);
         _textTrackers.setToolTipText(_labelTrackers.getToolTipText());
         _textTrackers.setLineWrap(false);
@@ -284,7 +283,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         _labelWebseeds.setToolTipText(I18n.tr("If these files can be downloaded from the web, enter the URLs of each possible mirror, one per line (GetRight style)."));
         torrentTrackingPanel.add(_labelWebseeds, "aligny top, pushy, gapleft 5, gapright 10, wmin 150px");
 
-        _textWebseeds = new JTextArea(4, 80);
+        _textWebseeds = new JTextArea(4, 70);
         ThemeMediator.fixKeyStrokes(_textWebseeds);
         torrentTrackingPanel.add(new JScrollPane(_textWebseeds), "gapright 5, gapleft 80, gapbottom 5, hmin 165px, growx 60, growy");
 
@@ -305,13 +304,13 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         _buttonClose = new JButton(I18n.tr("Close"));
         buttonContainer.add(_buttonClose, "alignx right, gapright 5");
 
-        _container.add(buttonContainer, "south, gap 10px 10px 10px 10px");
+        _container.add(buttonContainer, "alignx right, pushx");
     }
 
     private void initProgressBar() {
         _progressBar = new JProgressBar(0, 100);
         _progressBar.setStringPainted(true);
-        _container.add(_progressBar, "south, growx, gap 5px 5px 0 5px");
+        _container.add(_progressBar, "growx, gap 5px 5px 0 5px, wrap");
     }
 
     private void buildListeners() {
