@@ -141,7 +141,6 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
     }
 
     protected void updateUIData(Object value, JTable table, int row, int column) {
-        System.out.println("PaymentOptions.updateUIData - " + value);
         try {
             boolean showSolid = mouseIsOverRow(table, row);
             boolean gotPaymentOptions = false;
@@ -191,7 +190,6 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
     }
 
     private void labelDogecoin_mouseReleased(MouseEvent e) {
-        System.out.println("mouse released dogecoin - " + this);
         if (e.getButton() == MouseEvent.BUTTON1 && labelDogecoin.isActionEnabled()) {
             if (paymentOptions != null && !StringUtils.isNullOrEmpty(paymentOptions.dogecoin)) {
                 openPaymentOptionsURL(paymentOptions, PaymentMethod.DOGECOIN);

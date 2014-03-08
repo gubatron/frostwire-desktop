@@ -87,7 +87,7 @@ public class BTDownloadImpl implements BTDownload {
             if (hasPaymentOptions) {
                 paymentOptions = new PaymentOptions(paymentOptionsMap);
             } else {
-                paymentOptions = null;
+                paymentOptions = new PaymentOptions(null,null,null,null);
             }
             paymentOptions.setItemName(_displayName);
         }

@@ -342,7 +342,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 
             new LimeTableColumn(MODIFICATION_TIME_IDX, "LIBRARY_TABLE_MODIFICATION_TIME", I18n.tr("Last Modified"), 20, true, PlayableCell.class),
             
-            new LimeTableColumn(PAYMENT_OPTIONS_IDX, "LIBRARY_TABLE_PAYMENT_OPTIONS", I18n.tr("Tips"), 20, false, PaymentOptions.class),
+            new LimeTableColumn(PAYMENT_OPTIONS_IDX, "LIBRARY_TABLE_PAYMENT_OPTIONS", I18n.tr("Tips/Donations"), 20, false, PaymentOptions.class),
             
             new LimeTableColumn(LICENSE_IDX, "LIBRARY_TABLE_LICENSE", I18n.tr("License"), 100, true, String.class),
             };
