@@ -51,6 +51,7 @@ import com.frostwire.gui.transfers.PeerHttpUpload;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
+import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
@@ -755,7 +756,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     @Override
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
-        TABLE.setDefaultRenderer(BTDownloadPaymentOptionsHolder.class, new BTDownloadPaymentOptionsRenderer());
+        TABLE.setDefaultRenderer(PaymentOptions.class, new PaymentOptionsRenderer());
     }
     
     @Override
@@ -763,7 +764,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         TableColumnModel model = TABLE.getColumnModel();
         TableColumn tc;
         tc = model.getColumn(BTDownloadDataLine.PAYMENT_OPTIONS_INDEX);
-        tc.setCellEditor(new GenericCellEditor(new BTDownloadPaymentOptionsRenderer()));
+        tc.setCellEditor(new GenericCellEditor(new PaymentOptionsRenderer()));
     }
 
     protected void selectRowByDownload(BTDownload download) {

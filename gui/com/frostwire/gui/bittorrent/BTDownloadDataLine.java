@@ -27,6 +27,7 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.library.LibraryMediator;
+import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -104,7 +105,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
 
     private boolean _notification;
 
-    private BTDownloadPaymentOptionsHolder paymentOptionsHolder;
+    private PaymentOptions paymentOptions;
     
     /**
      * Column index for the file name.
@@ -114,7 +115,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
 
     /** Column index for name-your-price/tips/donations */
     static final int PAYMENT_OPTIONS_INDEX = 1;
-    private static final LimeTableColumn PAYMENT_OPTIONS_COLUMN = new LimeTableColumn(PAYMENT_OPTIONS_INDEX, "PAYMENT_OPTIONS_COLUMN", I18n.tr("Tips/Donations"), 65, true, BTDownloadPaymentOptionsHolder.class );
+    private static final LimeTableColumn PAYMENT_OPTIONS_COLUMN = new LimeTableColumn(PAYMENT_OPTIONS_INDEX, "PAYMENT_OPTIONS_COLUMN", I18n.tr("Tips/Donations"), 65, true, PaymentOptions.class );
     
     /**
      * Column index for the file size.
@@ -196,7 +197,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     public void initialize(BTDownload downloader) {
         super.initialize(downloader);
         _notification = downloader.isCompleted();
-        paymentOptionsHolder = new BTDownloadPaymentOptionsHolder(initializer);
+        paymentOptions = initializer.getPaymentOptions();//comes with item name preset
         update();
     }
 
@@ -221,7 +222,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
         case FILE_INDEX:
             return new IconAndNameHolderImpl(getIcon(), initializer.getDisplayName());
         case PAYMENT_OPTIONS_INDEX:
-            return paymentOptionsHolder;
+            return paymentOptions;
         case SIZE_INDEX:
             if (initializer.isPartialDownload()) {
                 return new SizeHolder(_size, PARTIAL_DOWNLOAD_TEXT);

@@ -57,7 +57,7 @@ public class BTDownloadImpl implements BTDownload {
     private final CopyrightLicenseBroker license;
     private final PaymentOptions paymentOptions;
 
-    @SuppressWarnings("unchecked")
+
     public BTDownloadImpl(DownloadManager downloadManager) {
         updateDownloadManager(downloadManager);
 
@@ -66,6 +66,7 @@ public class BTDownloadImpl implements BTDownload {
         
         { 
             final TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(downloadManager);
+            @SuppressWarnings("unchecked")
             Map<String, Object> additionalInfoProperties = infoManipulator.getAdditionalInfoProperties();
             
             @SuppressWarnings("unchecked")
@@ -88,6 +89,7 @@ public class BTDownloadImpl implements BTDownload {
             } else {
                 paymentOptions = null;
             }
+            paymentOptions.setItemName(_displayName);
         }
     }
 
@@ -451,6 +453,7 @@ public class BTDownloadImpl implements BTDownload {
 
     @Override
     public PaymentOptions getPaymentOptions() {
+        paymentOptions.setItemName(getDisplayName());
         return paymentOptions;
     }
 

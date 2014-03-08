@@ -55,12 +55,14 @@ import org.limewire.util.OSUtils;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.Librarian;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
+import com.frostwire.gui.bittorrent.PaymentOptionsRenderer;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
+import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.util.MP4Muxer;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
@@ -368,6 +370,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         TABLE.setDefaultRenderer(PlayableIconCell.class, new PlayableIconCellRenderer());
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
         TABLE.setDefaultRenderer(FileShareCell.class, FILE_SHARE_CELL_RENDERER);
+        TABLE.setDefaultRenderer(PaymentOptions.class, new PaymentOptionsRenderer());
     }
 
     /**
@@ -381,6 +384,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         tc = model.getColumn(LibraryFilesTableDataLine.ACTIONS_IDX);
         tc.setCellEditor(new GenericCellEditor(getAbstractActionsRenderer()));
+        
+        tc = model.getColumn(LibraryFilesTableDataLine.PAYMENT_OPTIONS_IDX);
+        tc.setCellEditor(new GenericCellEditor(new PaymentOptionsRenderer()));
     }
 
     /**
