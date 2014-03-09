@@ -164,7 +164,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     private JButton _buttonSaveAs;
     private JProgressBar _progressBar;
 
-    private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(942, 830);
+    private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(942, 700);
 
     private JScrollPane _textTrackersScrollPane;
     private JFileChooser _fileChooser;
