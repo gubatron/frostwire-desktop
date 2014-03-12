@@ -409,10 +409,7 @@ public final class UpdateMessageReader implements ContentHandler {
 
                 List<SearchEngine> searchEngines = SearchEngine.getEngines();
                 for (SearchEngine searchEngine : searchEngines) {
-                    // not doing it for ClearBits on purpose.
-                    if (!searchEngine.equals(SearchEngine.CLEARBITS)) {
-                        searchEngine.redirectUrl = torrentDetailsUrl;
-                    }
+                    searchEngine.redirectUrl = torrentDetailsUrl;
                 }
             }
         } else if (localName.equalsIgnoreCase("message")) {
