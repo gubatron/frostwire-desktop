@@ -3,7 +3,7 @@ frostwire (5.7.1) stable; urgency=high
     Removed cling library.
   * Improvements in .torrent creation window:
      1. Web seed url(s) (GetRight style) support.
-     2. Associate a Creative Commons license.	
+     2. Associate a Creative Commons, Open Source, or Public Domain license.	
      3. Associate a Bitcoin address for Name-your-price/tips support.
      4. Associate a Litecoin address for Name-your-price/tips support.
      5. Associate a Dogecoin address for Name-your-price/tips support.
@@ -13,7 +13,7 @@ frostwire (5.7.1) stable; urgency=high
   * Updated Torrents.fm search engine.
   * Removed Clearbits search engine, service offline for ~2 months now.
 
- -- FrostWire Team <contact@frostwire.com>  Wed, 12 Mar 2014 16:24:28 -0500
+ -- FrostWire Team <contact@frostwire.com>  Wed, 12 Mar 2014 16:25:42 -0500
 
 frostwire (5.7.0) stable; urgency=high
   * Updated BitTorrent engine from Azureus/Vuze project.
