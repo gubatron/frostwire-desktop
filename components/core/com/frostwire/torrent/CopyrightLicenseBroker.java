@@ -43,7 +43,7 @@ import com.frostwire.licences.PublicDomainMarkLicense;
  * @author aldenml
  *
  */
-public class CopyrightLicenseBroker implements Mappable<String, Map<String, String>> {
+public class CopyrightLicenseBroker extends AbstractMappable<String, Map<String, String>> {
 
     public enum LicenseCategory {
         CreativeCommons("creative-commons"), OpenSource("open-source"), PublicDomain("public-domain"), NoLicense("no-license");
@@ -175,10 +175,10 @@ public class CopyrightLicenseBroker implements Mappable<String, Map<String, Stri
 
         if (licenseCategory != LicenseCategory.NoLicense) {
             Map<String, Object> innerMap = map.get(licenseCategory.toString());
-            this.license = urlToLicense.get(TorrentInfoManipulator.getStringFromEncodedMap("licenseUrl", innerMap));
-            this.attributionTitle = TorrentInfoManipulator.getStringFromEncodedMap("attributionTitle", innerMap);
-            this.attributionAuthor = TorrentInfoManipulator.getStringFromEncodedMap("attributionAuthor", innerMap);
-            this.attributionUrl = TorrentInfoManipulator.getStringFromEncodedMap("attributionUrl", innerMap);
+            this.license = urlToLicense.get(getStringFromEncodedMap("licenseUrl", innerMap));
+            this.attributionTitle = getStringFromEncodedMap("attributionTitle", innerMap);
+            this.attributionAuthor = getStringFromEncodedMap("attributionAuthor", innerMap);
+            this.attributionUrl = getStringFromEncodedMap("attributionUrl", innerMap);
         } else {
             this.license = null;
             this.attributionTitle = null;

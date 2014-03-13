@@ -29,7 +29,7 @@ import com.frostwire.util.StringUtils;
  * @author aldenml
  *
  */
-public class PaymentOptions implements Mappable<String, Map<String, String>> {
+public class PaymentOptions extends AbstractMappable<String, Map<String, String>> {
     /** BitCoin URI, see BIP-0021 - https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki 
      * bitcoinurn     = "bitcoin:" bitcoinaddress [ "?" bitcoinparams ]
      * bitcoinaddress = base58 *base58
@@ -54,6 +54,8 @@ public class PaymentOptions implements Mappable<String, Map<String, String>> {
 
     /** Simply a valid email address for creating a paypal payment form */
     public final String paypalUrl;
+    
+    public String itemName;
 
     public PaymentOptions() {
         bitcoin = null;
@@ -71,10 +73,10 @@ public class PaymentOptions implements Mappable<String, Map<String, String>> {
 
     public PaymentOptions(Map<String, Map<String, Object>> paymentOptionsMap) {
         Map<String, Object> paymentOptions = paymentOptionsMap.get("paymentOptions");
-        this.bitcoin = TorrentInfoManipulator.getStringFromEncodedMap("bitcoin", paymentOptions);
-        this.litecoin = TorrentInfoManipulator.getStringFromEncodedMap("litecoin", paymentOptions);
-        this.dogecoin = TorrentInfoManipulator.getStringFromEncodedMap("dogecoin", paymentOptions);
-        this.paypalUrl = TorrentInfoManipulator.getStringFromEncodedMap("paypalUrl", paymentOptions);
+        this.bitcoin = getStringFromEncodedMap("bitcoin", paymentOptions);
+        this.litecoin = getStringFromEncodedMap("litecoin", paymentOptions);
+        this.dogecoin = getStringFromEncodedMap("dogecoin", paymentOptions);
+        this.paypalUrl = getStringFromEncodedMap("paypalUrl", paymentOptions);
     }
 
     public Map<String, Map<String, String>> asMap() {
@@ -98,5 +100,13 @@ public class PaymentOptions implements Mappable<String, Map<String, String>> {
             paymentOptions.put("paymentOptions", innerMap);
         }
         return paymentOptions;
+    }
+    
+    public void setItemName(String name) {
+        itemName = name;
+    }
+    
+    public String getItemName() {
+        return itemName;
     }
 }
