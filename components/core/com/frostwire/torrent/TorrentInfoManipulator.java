@@ -18,14 +18,17 @@
 
 package com.frostwire.torrent;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
+import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
 import org.gudy.azureus2.core3.torrent.impl.TOTorrentDeserialiseImpl;
 import org.gudy.azureus2.core3.util.LightHashMap;
-
 
 public class TorrentInfoManipulator {
     private Map additional_info_properties = new LightHashMap(4);
@@ -36,6 +39,20 @@ public class TorrentInfoManipulator {
     
     public TorrentInfoManipulator(DownloadManager downloadManager) {
         initAdditionalInfoPropertiesReference(getTOTorrentDeserializeImplDelegate(downloadManager));
+    }
+    
+    public TorrentInfoManipulator(File torrentFile) {
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(torrentFile);
+            TOTorrent toTorrent = TOTorrentFactory.deserialiseFromBEncodedInputStream(fileInputStream);
+            fileInputStream.close();
+            initAdditionalInfoProperties(toTorrent);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(fileInputStream);//this does a NPE check inside... so no worries.
+        }
     }
     
     public static String getStringFromEncodedMap(String key, Map<String, Object> map) {
