@@ -72,7 +72,6 @@ import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
-import com.frostwire.torrent.TorrentInfoManipulator;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.uxstats.UXAction;

@@ -28,10 +28,10 @@ import javax.swing.Icon;
 import org.limewire.util.FileUtils;
 
 import com.frostwire.gui.Librarian;
+import com.frostwire.gui.bittorrent.TorrentInfoManipulator;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
-import com.frostwire.torrent.TorrentInfoManipulator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;

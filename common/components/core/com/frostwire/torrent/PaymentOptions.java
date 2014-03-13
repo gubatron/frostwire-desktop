@@ -29,7 +29,7 @@ import com.frostwire.util.StringUtils;
  * @author aldenml
  *
  */
-public class PaymentOptions implements Mappable<String, Map<String, String>> {
+public class PaymentOptions extends AbstractMappable<String, Map<String, String>> {
     /** BitCoin URI, see BIP-0021 - https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki 
      * bitcoinurn     = "bitcoin:" bitcoinaddress [ "?" bitcoinparams ]
      * bitcoinaddress = base58 *base58
@@ -73,10 +73,10 @@ public class PaymentOptions implements Mappable<String, Map<String, String>> {
 
     public PaymentOptions(Map<String, Map<String, Object>> paymentOptionsMap) {
         Map<String, Object> paymentOptions = paymentOptionsMap.get("paymentOptions");
-        this.bitcoin = TorrentInfoManipulator.getStringFromEncodedMap("bitcoin", paymentOptions);
-        this.litecoin = TorrentInfoManipulator.getStringFromEncodedMap("litecoin", paymentOptions);
-        this.dogecoin = TorrentInfoManipulator.getStringFromEncodedMap("dogecoin", paymentOptions);
-        this.paypalUrl = TorrentInfoManipulator.getStringFromEncodedMap("paypalUrl", paymentOptions);
+        this.bitcoin = getStringFromEncodedMap("bitcoin", paymentOptions);
+        this.litecoin = getStringFromEncodedMap("litecoin", paymentOptions);
+        this.dogecoin = getStringFromEncodedMap("dogecoin", paymentOptions);
+        this.paypalUrl = getStringFromEncodedMap("paypalUrl", paymentOptions);
     }
 
     public Map<String, Map<String, String>> asMap() {
