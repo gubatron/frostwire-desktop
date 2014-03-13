@@ -514,8 +514,6 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         publicDomainButton.setToggleable(rightfulUseConfirmed);
         cc0Button.setToggleable(rightfulUseConfirmed);
         
-
-        
         pickedLicenseLabel.setVisible(rightfulUseConfirmed);
         
         if (rightfulUseConfirmed) {
