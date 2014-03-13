@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.torrent;
+package com.frostwire.gui.bittorrent;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,16 +47,6 @@ public class TorrentInfoManipulator {
         } finally {
             IOUtils.closeQuietly(fileInputStream);//this does a NPE check inside... so no worries.
         }
-    }
-    
-    public static String getStringFromEncodedMap(String key, Map<String, Object> map) {
-        String result = null;
-        if (map.get(key) != null && map.get(key) instanceof byte[]) {
-            result = new String((byte[]) map.get(key));
-        } else if (map.get(key) != null && map.get(key) instanceof String && !((String) map.get(key)).isEmpty()) {
-            result = (String) map.get(key);
-        }
-        return result;
     }
 
     @SuppressWarnings("unchecked")

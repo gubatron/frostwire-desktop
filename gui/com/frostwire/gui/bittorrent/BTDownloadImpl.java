@@ -36,7 +36,6 @@ import org.limewire.util.StringUtils;
 
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
-import com.frostwire.torrent.TorrentInfoManipulator;
 
 /**
  * @author gubatron
