@@ -43,7 +43,7 @@ public final class UserAgent {
         this.headerMap = initHeadersMap(normalizeUnavailableString(operatingSystem), normalizeUnavailableString(fwVersion), normalizeUnavailableString(buildNumber));
         this.uuid = UUID.randomUUID().toString();
     }
-
+    
     public Map<String, String> getHeadersMap() {
         return headerMap;
     }
