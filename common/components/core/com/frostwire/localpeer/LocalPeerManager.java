@@ -30,6 +30,8 @@ public interface LocalPeerManager {
     public LocalPeerManagerListener getListener();
 
     public void setListener(LocalPeerManagerListener listener);
+    
+    public boolean isRunning();
 
     public void start(InetAddress addr, LocalPeer peer);
 

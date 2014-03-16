@@ -76,6 +76,11 @@ public final class LocalPeerManagerImpl implements LocalPeerManager {
     }
 
     @Override
+    public boolean isRunning() {
+        return jmdns != null;
+    }
+
+    @Override
     public void start(InetAddress addr, LocalPeer peer) {
         try {
             cache.clear();
