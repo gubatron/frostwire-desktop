@@ -379,7 +379,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
         _size = initializer.getSize();
         dateCreated = initializer.getDateCreated();
         
-        if (initializer.getCopyrightLicenseBroker() != null && initializer.getCopyrightLicenseBroker().license != null) {
+        if (initializer.getCopyrightLicenseBroker() != null && 
+            initializer.getCopyrightLicenseBroker().license != null) {
             license = initializer.getCopyrightLicenseBroker().license.getName();
         } else {
             license = "";

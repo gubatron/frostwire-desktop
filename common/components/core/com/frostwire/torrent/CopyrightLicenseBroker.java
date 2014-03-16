@@ -88,12 +88,12 @@ public class CopyrightLicenseBroker extends AbstractMappable<String, Map<String,
     public static final String CC_BY_NC_ND_URL = "http://creativecommons.org/licenses/by-nc-nd/" + CC_VERSION + "/";
 
     //creative-commons licenses
-    public static final License CC_BY_LICENSE = new CreativeCommonsLicense("CC-BY", "Creative Commons Attribution " + CC_VERSION, "http://creativecommons.org/licenses/by/" + CC_VERSION);
-    public static final License CC_BY_SA_LICENSE = new CreativeCommonsLicense("CC-BY-SA", "Creative Commons Attribution-ShareAlike " + CC_VERSION, "http://creativecommons.org/licenses/by-sa/" + CC_VERSION);
-    public static final License CC_BY_ND_LICENSE = new CreativeCommonsLicense("CC-BY-ND", "Creative Commons Attribution-NoDerivs " + CC_VERSION, "http://creativecommons.org/licenses/by-nd/" + CC_VERSION);
-    public static final License CC_BY_NC_LICENSE = new CreativeCommonsLicense("CC-BY-NC", "Creative Commons Attribution-NonCommercial " + CC_VERSION, "http://creativecommons.org/licenses/by-nc/" + CC_VERSION);
-    public static final License CC_BY_NC_SA_LICENSE = new CreativeCommonsLicense("CC-BY-NC-SA", "Creative Commons Attribution-NonCommercial-ShareAlike " + CC_VERSION, "http://creativecommons.org/licenses/by-nc-sa/" + CC_VERSION);
-    public static final License CC_BY_NC_ND_LICENSE = new CreativeCommonsLicense("CC-BY-NC-ND", "Creative Commons Attribution-NonCommercial-NoDerivs " + CC_VERSION, "http://creativecommons.org/licenses/by-nc-nd/" + CC_VERSION);
+    public static final License CC_BY_LICENSE = new CreativeCommonsLicense("CC-BY", "Creative Commons Attribution " + CC_VERSION, CC_BY_URL);
+    public static final License CC_BY_SA_LICENSE = new CreativeCommonsLicense("CC-BY-SA", "Creative Commons Attribution-ShareAlike " + CC_VERSION, CC_BY_SA_URL);
+    public static final License CC_BY_ND_LICENSE = new CreativeCommonsLicense("CC-BY-ND", "Creative Commons Attribution-NoDerivs " + CC_VERSION, CC_BY_ND_URL);
+    public static final License CC_BY_NC_LICENSE = new CreativeCommonsLicense("CC-BY-NC", "Creative Commons Attribution-NonCommercial " + CC_VERSION, CC_BY_NC_URL);
+    public static final License CC_BY_NC_SA_LICENSE = new CreativeCommonsLicense("CC-BY-NC-SA", "Creative Commons Attribution-NonCommercial-ShareAlike " + CC_VERSION, CC_BY_NC_SA_URL);
+    public static final License CC_BY_NC_ND_LICENSE = new CreativeCommonsLicense("CC-BY-NC-ND", "Creative Commons Attribution-NonCommercial-NoDerivs " + CC_VERSION, CC_BY_NC_ND_URL);
 
     //open-source licenses
     public static final License APACHE_LICENSE = new ApacheLicense();
@@ -146,6 +146,9 @@ public class CopyrightLicenseBroker extends AbstractMappable<String, Map<String,
         urlToLicense.put(MOZILLA_LICENSE.getUrl(), MOZILLA_LICENSE);
         urlToLicense.put(CDDL_LICENSE.getUrl(), CDDL_LICENSE);
         urlToLicense.put(ECLIPSE_LICENSE.getUrl(), ECLIPSE_LICENSE);
+        
+        urlToLicense.put(PUBLIC_DOMAIN_MARK_LICENSE.getUrl(), PUBLIC_DOMAIN_MARK_LICENSE);
+        urlToLicense.put(PUBLIC_DOMAIN_CC0_LICENSE.getUrl(), PUBLIC_DOMAIN_CC0_LICENSE);
     }
 
     public CopyrightLicenseBroker(boolean shareAlike, boolean nonCommercial, boolean noDerivatives, String attributionTitle, String attributionAuthor, String attributionURL) {
