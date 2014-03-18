@@ -185,7 +185,7 @@ public class DomainAliasManifestQA {
         public void run() {
             System.out.println("SearchTestListener waiting for searches to finish...");
             try {
-                latch.await(20,TimeUnit.SECONDS);
+                latch.await(60,TimeUnit.SECONDS);
                 System.out.println("SearchTestListener done waiting...");
             } catch (Throwable e) {
                 System.out.println("SearchTestListener latch timed out!");
