@@ -71,27 +71,40 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
     private File _executableFile;
 
     private static String lastMD5;
+    private static boolean isDownloadingUpdate = false;
+    
+    private final boolean forceUpdate;
 
-    public InstallerUpdater(UpdateMessage updateMessage) {
+    public InstallerUpdater(UpdateMessage updateMessage, boolean force) {
         _updateMessage = updateMessage;
+        forceUpdate = force;
+        isDownloadingUpdate = false;
     }
 
     public void start() {
         new Thread(this, "InstallerUpdater").start();
     }
+    
+    public static boolean isDownloadingUpdate() {
+        return isDownloadingUpdate;
+    }
 
     public void run() {
-        if (!UpdateSettings.AUTOMATIC_INSTALLER_DOWNLOAD.getValue()) {
+        if (!forceUpdate && !UpdateSettings.AUTOMATIC_INSTALLER_DOWNLOAD.getValue()) {
             return;
         }
 
         if (checkIfDownloaded()) {
             showUpdateMessage();
         } else {
+            isDownloadingUpdate = true;
+            
             if (_updateMessage.getTorrent() != null) {
                 handleTorrentDownload();
             } else if (_updateMessage.getInstallerUrl() != null) {
                 handleHttpDownload();
+            } else {
+                isDownloadingUpdate = false;
             }
         }
     }
@@ -106,9 +119,12 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
             boolean exists = torrentFileLocation.exists() || torrentFileLocation.getAbsoluteFile().exists();
             if (torrentFileLocation != null && exists) {
                 _manager = startTorrentDownload(torrentFileLocation.getAbsolutePath(), UpdateSettings.UPDATES_DIR.getAbsolutePath(), this);
+            } else {
+                isDownloadingUpdate = false;
             }
 
         } catch (Throwable e) {
+            isDownloadingUpdate = false;
             LOG.error("Error starting update torrent download", e);
         }
     }
@@ -132,7 +148,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                 // recovery in case the server does not support resume
                 httpClient.save(_updateMessage.getInstallerUrl(), installerFileLocation, false);
             }
-
+            isDownloadingUpdate = false;
             saveMetaData();
             cleanupOldUpdates();
 
@@ -140,6 +156,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                 showUpdateMessage();
             }
         } catch (Throwable e) {
+            isDownloadingUpdate = false;
             LOG.error("Failed to download installer: " + _updateMessage.getInstallerUrl(), e);
         }
     }
@@ -318,16 +335,19 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
         printDownloadManagerStatus(manager);
 
         if (torrentDataDownloadedToDisk()) {
+            isDownloadingUpdate = false;
             return;
         }
 
         System.out.println("InstallerUpdater.stateChanged() - " + state + " completed: " + manager.isDownloadComplete(false));
         if (state == DownloadManager.STATE_SEEDING) {
+            isDownloadingUpdate = false;
             System.out.println("InstallerUpdater.stateChanged() - SEEDING!");
             return;
         }
 
         if (state == DownloadManager.STATE_ERROR) {
+            isDownloadingUpdate = false;
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             System.out.println(_manager.getErrorDetails());
             System.out.println("InstallerUpdater: ERROR - stopIt, startDownload!");

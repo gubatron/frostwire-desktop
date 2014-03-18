@@ -86,7 +86,7 @@ public final class UpdateManager implements Serializable {
      * Starts an Update Task in <secondsAfter> seconds after.
      * 
      */
-    public static void scheduleUpdateCheckTask(final int secondsAfter, final String updateURL) {
+    public static void scheduleUpdateCheckTask(final int secondsAfter, final String updateURL, final boolean force) {
 
         Runnable checkForUpdatesTask = new Runnable() {
 
@@ -103,13 +103,13 @@ public final class UpdateManager implements Serializable {
 
                 //System.out.println("UpdateManager.scheduleUpdateCheckTask() Runnable: here we go!");
                 UpdateManager um = UpdateManager.getInstance();
-                um.checkForUpdates(updateURL);
+                um.checkForUpdates(updateURL, force);
             }
         };
 
         new Thread(checkForUpdatesTask).start();
     }
-
+    
     /**
      * Starts an Update Task in <secondsAfter> seconds after at a custom update
      * URL
@@ -117,7 +117,18 @@ public final class UpdateManager implements Serializable {
      * @param secondsAfter
      */
     public static void scheduleUpdateCheckTask(int secondsAfter) {
-        scheduleUpdateCheckTask(secondsAfter, null);
+        scheduleUpdateCheckTask(secondsAfter, false);
+    }
+
+    /**
+     * Starts an Update Task in <secondsAfter> seconds after at a custom update
+     * URL
+     * 
+     * @param secondsAfter
+     * @param force (force the update download)
+     */
+    public static void scheduleUpdateCheckTask(int secondsAfter, boolean force) {
+        scheduleUpdateCheckTask(secondsAfter, null, force);
     }
 
     /** The singleton instance */
@@ -155,7 +166,7 @@ public final class UpdateManager implements Serializable {
     /**
      * Checks for updates, and shows message dialogs if needed.
      */
-    public void checkForUpdates(String updateURL) {
+    public void checkForUpdates(String updateURL, boolean force) {
         // We start the XML Reader/Parser. It will connect to
         // frostwire.com/update.xml
         // and parse the given XML.
@@ -168,7 +179,7 @@ public final class UpdateManager implements Serializable {
         // website is down, or the XML is malformed.
 
         //show a message update, download a torrent update, or let user know update has been downloaded	
-        handlePossibleUpdateMessage(umr);
+        handlePossibleUpdateMessage(umr, force);
 
         // attempt to show available non expired announcements
         if (umr.hasAnnouncements()) {
@@ -191,7 +202,7 @@ public final class UpdateManager implements Serializable {
      * 
      * @param umr
      */
-    private void handlePossibleUpdateMessage(UpdateMessageReader umr) {
+    private void handlePossibleUpdateMessage(UpdateMessageReader umr, boolean force) {
         UpdateMessage updateMessage = umr.getUpdateMessage();
         
         if (updateMessage != null) {
@@ -211,14 +222,14 @@ public final class UpdateManager implements Serializable {
                 if (hasUrl && !hasTorrent && !hasInstallerUrl) {
                     showUpdateMessage(updateMessage);
                 } else if (hasTorrent || hasInstallerUrl) {
-                    new InstallerUpdater(updateMessage).start();
+                    new InstallerUpdater(updateMessage, force).start();
                 }
             }
             // Logic for Linux
             else if (OSUtils.isLinux()) {
                 if (OSUtils.isUbuntu()) {
                     if (hasTorrent || hasInstallerUrl) {
-                        new InstallerUpdater(updateMessage).start();
+                        new InstallerUpdater(updateMessage, force).start();
                     } else {
                         showUpdateMessage(updateMessage);
                     }

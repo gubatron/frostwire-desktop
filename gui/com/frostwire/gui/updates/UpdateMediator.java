@@ -66,17 +66,7 @@ public final class UpdateMediator {
     }
 
     public boolean isUpdateDownloading() {
-        if (latestMsg == null) {
-            return false;
-        }
-
-        String lastMD5 = InstallerUpdater.getLastMD5();
-
-        if (lastMD5 == null) {
-            return true;
-        }
-
-        return !lastMD5.equalsIgnoreCase(latestMsg.getRemoteMD5().trim());
+        return InstallerUpdater.isDownloadingUpdate();
     }
 
     public boolean isUpdateDownloaded() {
@@ -172,7 +162,7 @@ public final class UpdateMediator {
 
     public void checkForUpdate() {
         latestMsg = null;
-        UpdateManager.scheduleUpdateCheckTask(0);
+        UpdateManager.scheduleUpdateCheckTask(0,true);
     }
 
     public void setUpdateMessage(UpdateMessage msg) {
