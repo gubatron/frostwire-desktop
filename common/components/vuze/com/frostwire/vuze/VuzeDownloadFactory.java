@@ -76,7 +76,7 @@ public final class VuzeDownloadFactory {
             });
 
             vdm = new VuzeDownloadManager(dm);
-            
+
             vdm.getDM().addListener(new VuzeCoreDownloadManagerAdapter(vdm, listener));
 
             if (vdm.getDM().getState() != DownloadManager.STATE_STOPPED) {
@@ -85,8 +85,8 @@ public final class VuzeDownloadFactory {
 
         } else { // modify the existing one
             vdm = VuzeDownloadManager.getVDM(dm);
-            
-            vdm.setSkipped(selection, true);
+
+            vdm.setSkipped(selection, false);
 
             if (dm.getState() == DownloadManager.STATE_STOPPED) {
                 dm.initialize();
@@ -129,11 +129,11 @@ public final class VuzeDownloadFactory {
                     }
                 }
             } else {
+                String savePath = dm.getSaveLocation().getPath();
                 for (DiskManagerFileInfo inf : infs) {
                     String path = inf.getFile(false).getPath();
-                    if (inf.isSkipped() && paths.contains(path)) { // same reasoning
-                        inf.setSkipped(false);
-                    }
+                    path = VuzeDownloadManager.removePrefixPath(savePath, path);
+                    inf.setSkipped(!paths.contains(path));
                 }
             }
         } finally {

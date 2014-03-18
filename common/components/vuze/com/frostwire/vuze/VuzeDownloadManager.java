@@ -244,8 +244,10 @@ public final class VuzeDownloadManager {
                     inf.setSkipped(false);
                 }
             } else {
+                String savePath = dm.getSaveLocation().getPath();
                 for (DiskManagerFileInfo inf : infs) {
                     String path = inf.getFile(false).getPath();
+                    path = removePrefixPath(savePath, path);
                     if (skipped && !inf.isSkipped()) {
                         inf.setSkipped(paths.contains(path));
                     } else if (!skipped && inf.isSkipped()) {
@@ -280,6 +282,14 @@ public final class VuzeDownloadManager {
 
     static VuzeDownloadManager getVDM(DownloadManager dm) {
         return (VuzeDownloadManager) dm.getUserData(VuzeKeys.VUZE_DOWNLOAD_MANAGER_OBJECT_KEY);
+    }
+    
+    static String removePrefixPath(String prefix, String path) {
+        path = path.replace(prefix, "");
+        if (path.startsWith("/")) {
+            path = path.substring(1);
+        }
+        return path;
     }
 
     private void refreshData(DownloadManager dm) {
