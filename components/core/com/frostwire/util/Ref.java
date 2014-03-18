@@ -52,6 +52,6 @@ public final class Ref {
     }
 
     public static <T> boolean alive(Reference<T> ref) {
-        return ref.get() != null;
+        return ref != null && ref.get() != null;
     }
 }
