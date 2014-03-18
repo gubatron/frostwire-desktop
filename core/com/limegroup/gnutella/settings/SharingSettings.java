@@ -33,8 +33,6 @@ public class SharingSettings extends LimeProps {
     private SharingSettings() {
     }
 
-    public static final BooleanSetting HIDE_PAYMENT_OPTIONS_PANE = FACTORY.createBooleanSetting("HIDE_PAYMENT_OPTIONS_PANE", true);
-    
     public static final File DEFAULT_TORRENTS_DIR = new File((PORTABLE_ROOT_FOLDER == null) ? FrostWireUtils.getFrostWireRootFolder() : PORTABLE_ROOT_FOLDER, "Torrents");
 
     public static final FileSetting TORRENTS_DIR_SETTING = FACTORY.createFileSetting("TORRENTS_DIR_SETTING", DEFAULT_TORRENTS_DIR).setAlwaysSave(true);

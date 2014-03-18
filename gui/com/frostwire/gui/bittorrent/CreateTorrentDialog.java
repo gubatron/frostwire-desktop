@@ -209,10 +209,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
         _tabbedPane.addTab("1. " + I18n.tr("Contents and Tracking"), _basicTorrentPane);
         _tabbedPane.addTab("2. " + I18n.tr("Copyright License"), _licensesPane);
-
-        if (!SharingSettings.HIDE_PAYMENT_OPTIONS_PANE.getValue()) {
-            _tabbedPane.addTab("3. " + I18n.tr("Payments/Tips"), _paymentsPane);
-        }
+        _tabbedPane.addTab("3. " + I18n.tr("Payments/Tips"), _paymentsPane);
     }
 
     private void initComponents() {
