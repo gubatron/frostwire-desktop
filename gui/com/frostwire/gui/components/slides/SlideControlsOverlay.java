@@ -40,6 +40,8 @@ import net.miginfocom.swing.MigLayout;
 import com.frostwire.JsonEngine;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.util.StringUtils;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconButton;
@@ -387,6 +389,7 @@ final class SlideControlsOverlay extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             GUIMediator.openURL(paymentOptionsUrl);
+            UXStats.instance().log(UXAction.MISC_PROMO_CLICK_ON_TIPS);
         }
     }
 }
