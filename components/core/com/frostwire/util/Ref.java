@@ -54,4 +54,8 @@ public final class Ref {
     public static <T> boolean alive(Reference<T> ref) {
         return ref != null && ref.get() != null;
     }
+
+    public static void free(Reference<?> ref) {
+        ref.clear();
+    }
 }
