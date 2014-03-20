@@ -261,6 +261,8 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
             license = CopyrightLicenseBroker.BSD_2_CLAUSE_LICENSE;
         } else if (bsd3ClauseButton.isSelected()) {
             license = CopyrightLicenseBroker.BSD_3_CLAUSE_LICENSE;
+        } else if (gpl3Button.isSelected()) {
+            license = CopyrightLicenseBroker.GPL3_LICENSE;
         } else if (lgplButton.isSelected()) {
             license = CopyrightLicenseBroker.LGPL_LICENSE;
         } else if (mitButton.isSelected()) {
