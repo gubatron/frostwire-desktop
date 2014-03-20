@@ -45,14 +45,9 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
 
         //KAT
         List<String> katAliases = new ArrayList<String>();
+        katAliases.add("kickassunblock.info");
         katAliases.add("kickasstorrents.come.in");
         katAliases.add("kickass.pw");
-        katAliases.add("katproxy.co"); //*
-        katAliases.add("kickass.to.proxy.piratenpartij.nl"); //*
-        
-        //katAliases.add("www.kat.ph");
-        //katAliases.add("kickass.pw");
-        //katAliases.add("katproxy.pw");
         manifest.aliases.put("kickass.to", katAliases);
         
         //TPB
@@ -66,10 +61,16 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         tpbAliases.add("thelitebay.com");
         tpbAliases.add("www.proxybay.eu");
         
+        tpbAliases.add("proxybay.eu");
+        tpbAliases.add("pirateproxy.ca");
         tpbAliases.add("tpbunion.com");
-        tpbAliases.add("pirate-bay.pw");
         tpbAliases.add("quluxingba.info");
         tpbAliases.add("tpb.pirati.cz");
+        tpbAliases.add("tpb.al");
+        tpbAliases.add("piratesniper.org.uk");
+        tpbAliases.add("tpb.rebootorrents.com");
+        tpbAliases.add("piratebay.io");
+        tpbAliases.add("thepirate.al");
         manifest.aliases.put("thepiratebay.se", tpbAliases);
         
         //TORRENTS
@@ -86,7 +87,10 @@ public class DefaultDomainAliasManifestFetcher extends AbstractDomainAliasManife
         manifest.aliases.put("isohunt.to",isoHuntAliases);
         */
         
-        manifest.aliases.put("extratorrent.cc", Collections.<String> emptyList());
+        List<String> extraTorrentAliases = new ArrayList<String>();
+        extraTorrentAliases.add("extratorrent.cc.prx.websiteproxy.co.uk");
+        
+        manifest.aliases.put("extratorrent.cc", extraTorrentAliases);//Collections.<String> emptyList());
         notifyManifestFetched(manifest);
     }
 }
