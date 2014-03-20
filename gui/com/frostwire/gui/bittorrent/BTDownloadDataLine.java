@@ -385,6 +385,10 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
         } else {
             license = "";
         }
+        
+        if (initializer.getPaymentOptions() != null) {
+            paymentOptions = initializer.getPaymentOptions();
+        }
 
 
         if (getInitializeObject().isCompleted()) {
