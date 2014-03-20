@@ -509,16 +509,6 @@ public class HttpDownload implements BTDownload {
     }
 
     @Override
-    public boolean hasPaymentOptions() {
-        return false;
-    }
-
-    @Override
-    public boolean hasCreativeCommonsLicencse() {
-        return false;
-    }
-
-    @Override
     public PaymentOptions getPaymentOptions() {
         return null;
     }

@@ -419,11 +419,7 @@ public class SoundcloudDownload implements BTDownload {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof SoundcloudDownload)) {
-            return false;
-        }
-
-        return sr.getDownloadUrl().equals(((SoundcloudDownload) obj).sr.getDownloadUrl());
+        return obj instanceof SoundcloudDownload && sr.getDownloadUrl().equals(((SoundcloudDownload) obj).sr.getDownloadUrl());
     }
 
     private boolean setAlbumArt(String mp3Filename, String mp3outputFilename) {
@@ -450,16 +446,6 @@ public class SoundcloudDownload implements BTDownload {
         } catch (Throwable e) {
             return false;
         }
-    }
-
-    @Override
-    public boolean hasPaymentOptions() {
-        return false;
-    }
-
-    @Override
-    public boolean hasCreativeCommonsLicencse() {
-        return false;
     }
 
     @Override

@@ -490,11 +490,7 @@ public class YouTubeDownload implements BTDownload {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof YouTubeDownload)) {
-            return false;
-        }
-
-        return sr.getDownloadUrl().equals(((YouTubeDownload) obj).sr.getDownloadUrl());
+        return obj instanceof YouTubeDownload && sr.getDownloadUrl().equals(((YouTubeDownload) obj).sr.getDownloadUrl());
     }
 
     private MP4Metadata buildMetadata() {
@@ -510,16 +506,6 @@ public class YouTubeDownload implements BTDownload {
         byte[] jpg = jpgUrl != null ? HttpClientFactory.newInstance().getBytes(jpgUrl) : null;
 
         return new MP4Metadata(title, author, source, jpg);
-    }
-
-    @Override
-    public boolean hasPaymentOptions() {
-        return false;
-    }
-
-    @Override
-    public boolean hasCreativeCommonsLicencse() {
-        return false;
     }
 
     @Override
