@@ -110,6 +110,7 @@ public final class UXAction {
     
     public static final int MISC_BASE = 7000;
     public static final int MISC_CHAT_OPENED_IN_BROWSER = MISC_BASE + 1;
+    public static final int MISC_PROMO_CLICK_ON_TIPS = MISC_BASE + 2;
 
     UXAction(int code, long time) {
         this.code = code;
