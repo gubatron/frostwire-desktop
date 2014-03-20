@@ -24,8 +24,10 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
+import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
+import org.gudy.azureus2.core3.torrent.impl.TOTorrentDeserialiseImpl;
 import org.gudy.azureus2.core3.util.LightHashMap;
 
 public class TorrentInfoManipulator {
@@ -33,6 +35,10 @@ public class TorrentInfoManipulator {
 
     public TorrentInfoManipulator(TOTorrent torrent) {
         initAdditionalInfoPropertiesReference(torrent);
+    }
+
+    public TorrentInfoManipulator(DownloadManager downloadManager) {
+        this(TorrentInfoManipulator.getTOTorrentDeserializeImplDelegate(downloadManager));
     }
     
     public TorrentInfoManipulator(File torrentFile) {
@@ -81,5 +87,36 @@ public class TorrentInfoManipulator {
                 t.printStackTrace();
             }
         }
+    }
+    
+    private static TOTorrentDeserialiseImpl getTOTorrentDeserializeImplDelegate(DownloadManager downloadManager) {
+        TOTorrentDeserialiseImpl result = null;
+        Class<? extends TOTorrent> class1 = downloadManager.getTorrent().getClass();
+        try {
+            Field firstDelegateField = class1.getDeclaredField("delegate");
+            
+            firstDelegateField.setAccessible(true);
+            Object delegate1 = firstDelegateField.get(downloadManager.getTorrent());
+            firstDelegateField.setAccessible(false);
+            
+            if (delegate1 instanceof TOTorrentDeserialiseImpl) {
+                result = (TOTorrentDeserialiseImpl) delegate1;
+            } else {
+            
+                Field delegate2 = delegate1.getClass().getDeclaredField("delegate");
+                if (delegate2 != null) {
+                    delegate2.setAccessible(true);
+                    Object theTorrent = delegate2.get(delegate1);
+                    delegate2.setAccessible(false);
+                    
+                    if (theTorrent instanceof TOTorrentDeserialiseImpl) {
+                        result = (TOTorrentDeserialiseImpl) theTorrent;
+                    }
+                }
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

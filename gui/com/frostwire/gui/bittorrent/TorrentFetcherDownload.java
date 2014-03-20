@@ -67,6 +67,8 @@ public class TorrentFetcherDownload implements BTDownload {
     private String relativePath;
 
     private boolean[] filesSelection;
+    private CopyrightLicenseBroker licenseBroker;
+    private PaymentOptions paymentOptions;
 
     public TorrentFetcherDownload(String uri, String referrer, String displayName, String hash, long size, boolean partialDownload, ActionListener postPartialDownloadAction, final String relativePath) {
         _uri = uri;
@@ -368,6 +370,8 @@ public class TorrentFetcherDownload implements BTDownload {
             }
 
             BTDownloadCreator creator = new BTDownloadCreator(torrentFile, filesSelection);
+            initLicenseAndPaymentOptions(creator.getDownloadManager());
+            
             _delegate = creator.createDownload();
 
             if (_delegate instanceof DuplicateDownload) {
@@ -385,6 +389,12 @@ public class TorrentFetcherDownload implements BTDownload {
             _state = STATE_ERROR;
             e.printStackTrace();
         }
+    }
+
+    private void initLicenseAndPaymentOptions(DownloadManager downloadManager) {
+        BTInfoAditionalMetadataHolder holder = new BTInfoAditionalMetadataHolder(downloadManager, _displayName);
+        licenseBroker = holder.getLicenseBroker();
+        paymentOptions = holder.getPaymentOptions();
     }
 
     private final class WaitForTorrentReady implements Runnable {
@@ -420,22 +430,12 @@ public class TorrentFetcherDownload implements BTDownload {
     }
 
     @Override
-    public boolean hasPaymentOptions() {
-        return false;
-    }
-
-    @Override
-    public boolean hasCreativeCommonsLicencse() {
-        return false;
-    }
-
-    @Override
     public PaymentOptions getPaymentOptions() {
-        return null;
+        return paymentOptions;
     }
 
     @Override
     public CopyrightLicenseBroker getCopyrightLicenseBroker() {
-        return null;
+        return licenseBroker;
     }
 }

@@ -95,10 +95,6 @@ public interface BTDownload {
 
     public Date getDateCreated();
     
-    public boolean hasPaymentOptions();
-    
-    public boolean hasCreativeCommonsLicencse();
-    
     public PaymentOptions getPaymentOptions();
     
     public CopyrightLicenseBroker getCopyrightLicenseBroker();

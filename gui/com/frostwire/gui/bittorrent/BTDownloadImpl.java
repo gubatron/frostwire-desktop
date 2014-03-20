@@ -19,16 +19,12 @@
 package com.frostwire.gui.bittorrent;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.Date;
-import java.util.Map;
 import java.util.Set;
 
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.download.DownloadManagerStats;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.torrent.impl.TOTorrentDeserialiseImpl;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
@@ -54,9 +50,7 @@ public class BTDownloadImpl implements BTDownload {
 
     private boolean _deleteDataWhenRemove;
 	private String _displayName;
-    private final boolean hasPaymentOptions;
-    private final boolean hasLicense;
-    private final CopyrightLicenseBroker license;
+    private final CopyrightLicenseBroker licenseBroker;
     private final PaymentOptions paymentOptions;
 
 
@@ -66,36 +60,10 @@ public class BTDownloadImpl implements BTDownload {
         _deleteTorrentWhenRemove = false;
         _deleteDataWhenRemove = false;
         
-        { 
-            final TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(getTOTorrentDeserializeImplDelegate(downloadManager));
-            @SuppressWarnings("unchecked")
-            Map<String, Object> additionalInfoProperties = infoManipulator.getAdditionalInfoProperties();
-            
-            @SuppressWarnings("unchecked")
-            Map<String,Map<String,Object>> licenseMap = (additionalInfoProperties != null) ? (Map<String,Map<String,Object>>) additionalInfoProperties.get("license") : null;
-
-            @SuppressWarnings("unchecked")
-            Map<String,Map<String,Object>> paymentOptionsMap = (additionalInfoProperties != null) ? (Map<String,Map<String,Object>>) additionalInfoProperties.get("paymentOptions") : null;
-            
-            hasLicense = licenseMap != null && !licenseMap.isEmpty();
-            hasPaymentOptions = paymentOptionsMap != null && !paymentOptionsMap.isEmpty();
-            
-            if (hasLicense) {
-                license = new CopyrightLicenseBroker(licenseMap);
-            } else {
-                license = null;
-            }
-            
-            if (hasPaymentOptions) {
-                paymentOptions = new PaymentOptions(paymentOptionsMap);
-            } else {
-                paymentOptions = new PaymentOptions(null,null,null,null);
-            }
-            paymentOptions.setItemName(_displayName);
-        }
+        BTInfoAditionalMetadataHolder holder = new BTInfoAditionalMetadataHolder(downloadManager, _displayName);
+        licenseBroker = holder.getLicenseBroker();
+        paymentOptions = holder.getPaymentOptions();
     }
-
-	
 
     public void updateSize(DownloadManager downloadManager) {
 		if (_partialDownload) {
@@ -444,16 +412,6 @@ public class BTDownloadImpl implements BTDownload {
     }
 
     @Override
-    public boolean hasPaymentOptions() {
-        return hasPaymentOptions;
-    }
-
-    @Override
-    public boolean hasCreativeCommonsLicencse() {
-        return hasLicense;
-    }
-
-    @Override
     public PaymentOptions getPaymentOptions() {
         paymentOptions.setItemName(getDisplayName());
         return paymentOptions;
@@ -461,37 +419,6 @@ public class BTDownloadImpl implements BTDownload {
 
     @Override
     public CopyrightLicenseBroker getCopyrightLicenseBroker() {
-        return license;
-    }
-    
-    private static TOTorrentDeserialiseImpl getTOTorrentDeserializeImplDelegate(DownloadManager downloadManager) {
-        TOTorrentDeserialiseImpl result = null;
-        Class<? extends TOTorrent> class1 = downloadManager.getTorrent().getClass();
-        try {
-            Field firstDelegateField = class1.getDeclaredField("delegate");
-            
-            firstDelegateField.setAccessible(true);
-            Object delegate1 = firstDelegateField.get(downloadManager.getTorrent());
-            firstDelegateField.setAccessible(false);
-            
-            if (delegate1 instanceof TOTorrentDeserialiseImpl) {
-                result = (TOTorrentDeserialiseImpl) delegate1;
-            } else {
-            
-                Field delegate2 = delegate1.getClass().getDeclaredField("delegate");
-                if (delegate2 != null) {
-                    delegate2.setAccessible(true);
-                    Object theTorrent = delegate2.get(delegate1);
-                    delegate2.setAccessible(false);
-                    
-                    if (theTorrent instanceof TOTorrentDeserialiseImpl) {
-                        result = (TOTorrentDeserialiseImpl) theTorrent;
-                    }
-                }
-            }
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        return result;
+        return licenseBroker;
     }
 }

@@ -140,16 +140,6 @@ public class DuplicateDownload implements BTDownload {
 	}
 
     @Override
-    public boolean hasPaymentOptions() {
-        return _delegate.hasPaymentOptions();
-    }
-
-    @Override
-    public boolean hasCreativeCommonsLicencse() {
-        return _delegate.hasCreativeCommonsLicencse();
-    }
-
-    @Override
     public PaymentOptions getPaymentOptions() {
         return _delegate.getPaymentOptions();
     }
