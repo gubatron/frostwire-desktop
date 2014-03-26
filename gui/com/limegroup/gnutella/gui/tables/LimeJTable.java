@@ -517,7 +517,9 @@ public class LimeJTable extends JTable implements JSortTable {
             // Create new columns from the data model info
             for (int i = 0; i < dlm.getColumnCount(); i++) {
                 TableColumn newColumn = dlm.getTableColumn(i);
-                addColumn(newColumn);
+                if (newColumn != null) {
+                    addColumn(newColumn);
+                }
             }
         }
     }

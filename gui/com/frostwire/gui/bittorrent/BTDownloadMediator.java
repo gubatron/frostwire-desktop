@@ -26,6 +26,9 @@ import java.util.List;
 
 import javax.swing.Action;
 import javax.swing.JPopupMenu;
+import javax.swing.JTable;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,11 +51,13 @@ import com.frostwire.gui.transfers.PeerHttpUpload;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
+import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
+import com.limegroup.gnutella.gui.search.GenericCellEditor;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
@@ -175,6 +180,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         _seedingFilter = new SeedingFilter();
         DATA_MODEL = new BTDownloadRowFilteredModel(_seedingFilter);//new BTDownloadModel();
         TABLE = new LimeJTable(DATA_MODEL);
+        TABLE.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
         _downloadButtons = new BTDownloadButtons(this);
         BUTTON_ROW = _downloadButtons.getComponent();
 
@@ -261,8 +267,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      */
     private BTDownloadMediator() {
         super("DOWNLOAD_TABLE");
+        TABLE.setRowHeight(30);
         GUIMediator.addRefreshListener(this);
-
         restoreSorting();
     }
 
@@ -652,7 +658,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     private boolean isHttpTransfer(BTDownload d) {
-        return isYouTubeTransfer(d) || d instanceof SoundcloudDownload || d instanceof SoundcloudDownload || d instanceof BTPeerHttpUpload;
+        return isYouTubeTransfer(d) || d instanceof SoundcloudDownload || d instanceof HttpDownload || d instanceof BTPeerHttpUpload;
     }
 
     private boolean isYouTubeTransfer(BTDownload d) {
@@ -746,6 +752,20 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             }
         });
     }
+    
+    @Override
+    protected void setDefaultRenderers() {
+        super.setDefaultRenderers();
+        TABLE.setDefaultRenderer(PaymentOptions.class, new PaymentOptionsRenderer());
+    }
+    
+    @Override
+    protected void setDefaultEditors() {
+        TableColumnModel model = TABLE.getColumnModel();
+        TableColumn tc;
+        tc = model.getColumn(BTDownloadDataLine.PAYMENT_OPTIONS_INDEX);
+        tc.setCellEditor(new GenericCellEditor(new PaymentOptionsRenderer()));
+    }
 
     protected void selectRowByDownload(BTDownload download) {
         for (int i = 0; i < TABLE.getRowCount(); i++) {
@@ -757,7 +777,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                 return;
             }
         }
-
     }
 
     public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
@@ -871,7 +890,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                 initializeObject.pause();
             }
         }
-
     }
 
     public boolean isDownloading(String hash) {

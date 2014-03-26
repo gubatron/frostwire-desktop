@@ -18,6 +18,8 @@
 
 package com.frostwire.gui.components.slides;
 
+import com.frostwire.torrent.PaymentOptions;
+
 /**
  * 
  * @author gubatron
@@ -203,6 +205,8 @@ public class Slide {
 
     /** Use these flags to determine how the slide will behave. */
     public int flags;
+    
+    public PaymentOptions paymentOptions;
 
     public boolean hasFlag(int flag) {
         return (flags & flag) == flag;

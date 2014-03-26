@@ -21,11 +21,17 @@ package com.frostwire.gui.library;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Map;
 
 import javax.swing.Icon;
 
+import org.limewire.util.FileUtils;
+
 import com.frostwire.gui.Librarian;
+import com.frostwire.gui.bittorrent.TorrentInfoManipulator;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.torrent.CopyrightLicenseBroker;
+import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
@@ -81,6 +87,10 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
      * Constant for the column indicating the mod time of a file.
      */
     static final int MODIFICATION_TIME_IDX = 7;
+    
+    static final int PAYMENT_OPTIONS_IDX = 8;
+    
+    static final int LICENSE_IDX = 9;
 
     private static final SizeHolder ZERO_SIZED_HOLDER = new SizeHolder(0);
 
@@ -138,6 +148,10 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 
     private Date lastModified;
 
+    private String license;
+
+    private PaymentOptions paymentOptions;
+
     /**
      * Initialize the object.
      * It will fail if not given a FileDesc or a File
@@ -186,6 +200,45 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         this.actionsHolder = new LibraryActionsHolder(this, false);
 
         this.nameCell = new NameHolder(_name);
+        
+        if (initializer != null && 
+            initializer.isFile() && 
+            FileUtils.getFileExtension(initializer) != null && 
+            FileUtils.getFileExtension(initializer).endsWith("torrent")) {
+            
+            TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(initializer);
+            
+            @SuppressWarnings("unchecked")
+            Map<String, Object> additionalInfoProperties = infoManipulator.getAdditionalInfoProperties();
+            
+            @SuppressWarnings("unchecked")
+            Map<String,Map<String,Object>> licenseMap = (additionalInfoProperties != null) ? (Map<String,Map<String,Object>>) additionalInfoProperties.get("license") : null;
+
+            @SuppressWarnings("unchecked")
+            Map<String,Map<String,Object>> paymentOptionsMap = (additionalInfoProperties != null) ? (Map<String,Map<String,Object>>) additionalInfoProperties.get("paymentOptions") : null;
+            
+            boolean hasLicense = licenseMap != null && !licenseMap.isEmpty();
+            boolean hasPaymentOptions = paymentOptionsMap != null && !paymentOptionsMap.isEmpty();
+            
+            if (hasLicense) {
+                 System.out.println(initializer);
+                 CopyrightLicenseBroker copyrightLicenseBroker = new CopyrightLicenseBroker(licenseMap);
+                 if (copyrightLicenseBroker.license != null && copyrightLicenseBroker.license.getName() != null) {
+                     license = new CopyrightLicenseBroker(licenseMap).license.getName();
+                 } else {
+                     license = "";
+                 }
+            } else {
+                license = "";
+            }
+            
+            if (hasPaymentOptions) {
+                paymentOptions = new PaymentOptions(paymentOptionsMap);
+            } else {
+                paymentOptions = new PaymentOptions(null, null, null, null);
+            }
+            paymentOptions.setItemName(_name);
+        }
     }
 
     /**
@@ -227,6 +280,10 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
                 return new PlayableCell(this, lastModified, lastModified.toString(), isPlaying, idx);
             case SHARE_IDX:
                 return new FileShareCell(this, initializer.getAbsolutePath(), shared);
+            case PAYMENT_OPTIONS_IDX:
+                return paymentOptions;
+            case LICENSE_IDX:
+                return license;
             }
         } catch (Throwable t) {
             t.printStackTrace();
@@ -283,7 +340,12 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 
             new LimeTableColumn(PATH_IDX, "LIBRARY_TABLE_PATH", I18n.tr("Path"), 108, true, PlayableCell.class),
 
-            new LimeTableColumn(MODIFICATION_TIME_IDX, "LIBRARY_TABLE_MODIFICATION_TIME", I18n.tr("Last Modified"), 20, true, PlayableCell.class) };
+            new LimeTableColumn(MODIFICATION_TIME_IDX, "LIBRARY_TABLE_MODIFICATION_TIME", I18n.tr("Last Modified"), 20, true, PlayableCell.class),
+            
+            new LimeTableColumn(PAYMENT_OPTIONS_IDX, "LIBRARY_TABLE_PAYMENT_OPTIONS", I18n.tr("Tips/Donations"), 20, false, PaymentOptions.class),
+            
+            new LimeTableColumn(LICENSE_IDX, "LIBRARY_TABLE_LICENSE", I18n.tr("License"), 100, true, String.class),
+            };
             ltColumns = temp;
         }
         return ltColumns;

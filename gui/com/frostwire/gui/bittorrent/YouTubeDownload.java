@@ -31,10 +31,11 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.frostwire.search.extractors.YouTubeExtractor.LinkInfo;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
+import com.frostwire.torrent.CopyrightLicenseBroker;
+import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;
-import com.frostwire.util.HttpClientType;
 import com.frostwire.util.MP4Muxer;
 import com.frostwire.util.MP4Muxer.MP4Metadata;
 import com.limegroup.gnutella.gui.I18n;
@@ -97,7 +98,7 @@ public class YouTubeDownload implements BTDownload {
 
         httpClientListener = new HttpDownloadListenerImpl();
 
-        httpClient = HttpClientFactory.newInstance(HttpClientType.PureJava);
+        httpClient = HttpClientFactory.newInstance();
         httpClient.setListener(httpClientListener);
 
         start();
@@ -396,7 +397,7 @@ public class YouTubeDownload implements BTDownload {
 
         @Override
         public void onData(HttpClient client, byte[] buffer, int offset, int length) {
-            if (state != STATE_PAUSING && state != STATE_CANCELING) {
+            if (!state.equals(STATE_PAUSING) && !state.equals(STATE_CANCELING)) {
                 bytesReceived += length;
                 updateAverageDownloadSpeed();
                 state = STATE_DOWNLOADING;
@@ -460,10 +461,10 @@ public class YouTubeDownload implements BTDownload {
 
         @Override
         public void onCancel(HttpClient client) {
-            if (state == STATE_CANCELING) {
+            if (state.equals(STATE_CANCELING)) {
                 cleanup();
                 state = STATE_CANCELED;
-            } else if (state == STATE_PAUSING) {
+            } else if (state.equals(STATE_PAUSING)) {
                 state = STATE_PAUSED;
             } else {
                 state = STATE_CANCELED;
@@ -489,11 +490,7 @@ public class YouTubeDownload implements BTDownload {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof YouTubeDownload)) {
-            return false;
-        }
-
-        return sr.getDownloadUrl().equals(((YouTubeDownload) obj).sr.getDownloadUrl());
+        return obj instanceof YouTubeDownload && sr.getDownloadUrl().equals(((YouTubeDownload) obj).sr.getDownloadUrl());
     }
 
     private MP4Metadata buildMetadata() {
@@ -506,8 +503,18 @@ public class YouTubeDownload implements BTDownload {
             jpgUrl = sr.getAudio() != null ? sr.getAudio().thumbnails.normal : null;
         }
 
-        byte[] jpg = jpgUrl != null ? HttpClientFactory.newDefaultInstance().getBytes(jpgUrl) : null;
+        byte[] jpg = jpgUrl != null ? HttpClientFactory.newInstance().getBytes(jpgUrl) : null;
 
         return new MP4Metadata(title, author, source, jpg);
+    }
+
+    @Override
+    public PaymentOptions getPaymentOptions() {
+        return null;
+    }
+
+    @Override
+    public CopyrightLicenseBroker getCopyrightLicenseBroker() {
+        return null;
     }
 }

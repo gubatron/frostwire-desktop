@@ -40,8 +40,10 @@ import com.frostwire.HttpFetcherListener;
 import com.frostwire.JsonEngine;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.library.ProgressFileEntity.ProgressFileEntityListener;
-import com.frostwire.gui.upnp.PingInfo;
-import com.frostwire.gui.upnp.UPnPManager;
+import com.frostwire.localpeer.Finger;
+import com.frostwire.localpeer.LocalPeer;
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.util.EncodingUtils;
@@ -76,17 +78,21 @@ public class Device {
     private OnActionFailedListener _listener;
     private long timestamp;
 
-    private PingInfo pingInfo;
+    private LocalPeer pingInfo;
 
     private boolean local;
+    
+    private final HttpClient httpClient;
 
-    public Device(String udn, InetAddress address, int port, Finger finger, PingInfo pinfo) {
+    public Device(String udn, InetAddress address, int port, Finger finger, LocalPeer pinfo) {
         this.udn = udn;
         this._address = address;
         this._port = port;
         this.finger = finger;
         this.pingInfo = pinfo;
-        this.local = udn.equals(UPnPManager.instance().getLocalDevice().getIdentity().getUdn().getIdentifierString());
+        this.local = pinfo.local;
+        
+        this.httpClient = HttpClientFactory.newInstance();
     }
     
     /**
@@ -160,20 +166,16 @@ public class Device {
 
         try {
 
-            URI uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/browse?type=" + fileType);
+            String url = "http://" + _address.getHostAddress() + ":" + _port + "/browse?type=" + fileType;
 
-            HttpFetcher fetcher = new HttpFetcher(uri, 10000); // 10 seconds http timeout
-
-            byte[] jsonBytes = (byte[]) fetcher.fetch(true)[0];
-
-            if (jsonBytes == null) {
+            String json = httpClient.get(url, 10000);
+            
+            if (json == null) {
                 notifyOnActionFailed(ACTION_BROWSE, null);
                 return new ArrayList<FileDescriptor>();
             }
 
             setTimestamp(System.currentTimeMillis());
-
-            String json = new String(jsonBytes, "UTF-8");
 
             FileDescriptorList list = JSON_ENGINE.toObject(json, FileDescriptorList.class);
 
@@ -210,7 +212,7 @@ public class Device {
     }
     
     public int getDeviceType() {
-        return  pingInfo.deviceMajorType;
+        return  pingInfo.deviceType;
     }
 
     public byte[] download(int type, int id) {

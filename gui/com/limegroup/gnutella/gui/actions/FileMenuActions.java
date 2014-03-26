@@ -221,7 +221,7 @@ public final class FileMenuActions {
             public void actionPerformed(ActionEvent a) {
                 if (openMagnetOrTorrent(PATH_FIELD.getText(),FileMenuActions.ActionInvocationSource.FROM_FILE_MENU)) {
                     dismissDialog();
-                } if (PATH_FIELD.getText().contains("youtube.com/watch?")) {
+                } else if (PATH_FIELD.getText().contains("youtube.com/watch?")) {
                     GUIMediator.instance().startSearch(PATH_FIELD.getText());
                     dismissDialog();
                 } else {
@@ -264,7 +264,6 @@ public final class FileMenuActions {
             UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_MAGNET_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_MAGNET_URL_FROM_SEARCH_FIELD);
             return true;
         } else if (userText.matches(".*youtube.com.*")) {
-            //GUIMediator.instance().openYouTubeVideoUrl(userText);
             UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_CLOUD_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_CLOUD_URL_FROM_SEARCH_FIELD);
             return false;
         } else if (userText.matches(".*soundcloud.com.*")) {

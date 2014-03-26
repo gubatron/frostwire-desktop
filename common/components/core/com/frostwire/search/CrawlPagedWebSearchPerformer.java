@@ -20,9 +20,7 @@ package com.frostwire.search;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.frostwire.logging.Logger;
 import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.util.OSUtils;
 
@@ -33,7 +31,7 @@ import com.frostwire.util.OSUtils;
  */
 public abstract class CrawlPagedWebSearchPerformer<T extends CrawlableSearchResult> extends PagedWebSearchPerformer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CrawlPagedWebSearchPerformer.class);
+    private static final Logger LOG = Logger.getLogger(CrawlPagedWebSearchPerformer.class);
 
     private static final int DEFAULT_CRAWL_TIMEOUT = 10000; // 10 seconds
     private static final int DEFAULT_MAGNET_DOWNLOAD_TIMEOUT = OSUtils.isAndroid() ? 4000 : 20000; // 4 seconds for android, 20 seconds for desktop

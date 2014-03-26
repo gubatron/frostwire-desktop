@@ -30,6 +30,9 @@ import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
 import org.limewire.util.StringUtils;
 
+import com.frostwire.torrent.CopyrightLicenseBroker;
+import com.frostwire.torrent.PaymentOptions;
+
 /**
  * @author gubatron
  * @author aldenml
@@ -47,15 +50,22 @@ public class BTDownloadImpl implements BTDownload {
 
     private boolean _deleteDataWhenRemove;
 	private String _displayName;
+    private final CopyrightLicenseBroker licenseBroker;
+    private final PaymentOptions paymentOptions;
+
 
     public BTDownloadImpl(DownloadManager downloadManager) {
         updateDownloadManager(downloadManager);
 
         _deleteTorrentWhenRemove = false;
         _deleteDataWhenRemove = false;
+        
+        BTInfoAditionalMetadataHolder holder = new BTInfoAditionalMetadataHolder(downloadManager, _displayName);
+        licenseBroker = holder.getLicenseBroker();
+        paymentOptions = holder.getPaymentOptions();
     }
 
-	public void updateSize(DownloadManager downloadManager) {
+    public void updateSize(DownloadManager downloadManager) {
 		if (_partialDownload) {
             _fileInfoSet = TorrentUtil.getNoSkippedFileInfoSet(downloadManager);
             
@@ -399,5 +409,16 @@ public class BTDownloadImpl implements BTDownload {
         } else {
             _displayName = _downloadManager.getDisplayName();
         }
+    }
+
+    @Override
+    public PaymentOptions getPaymentOptions() {
+        paymentOptions.setItemName(getDisplayName());
+        return paymentOptions;
+    }
+
+    @Override
+    public CopyrightLicenseBroker getCopyrightLicenseBroker() {
+        return licenseBroker;
     }
 }

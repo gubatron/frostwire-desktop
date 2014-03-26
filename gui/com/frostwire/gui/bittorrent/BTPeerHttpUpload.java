@@ -25,6 +25,8 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.transfers.PeerHttpUpload;
+import com.frostwire.torrent.CopyrightLicenseBroker;
+import com.frostwire.torrent.PaymentOptions;
 
 /**
  * @author gubatron
@@ -192,5 +194,15 @@ public class BTPeerHttpUpload implements BTDownload {
     @Override
     public Date getDateCreated() {
         return upload.getDateCreated();
+    }
+
+    @Override
+    public PaymentOptions getPaymentOptions() {
+        return null;
+    }
+
+    @Override
+    public CopyrightLicenseBroker getCopyrightLicenseBroker() {
+        return null;
     }
 }

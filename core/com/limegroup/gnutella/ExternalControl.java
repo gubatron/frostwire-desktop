@@ -28,6 +28,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URI;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +44,6 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.HttpFetcher;
-import com.limegroup.gnutella.util.UrlUtils;
 
 public class ExternalControl {
 
@@ -385,7 +385,7 @@ public class ExternalControl {
             
             String urlParameter = null;
             if (arg != null && (arg.startsWith("http://") || arg.startsWith("https://") || arg.startsWith("magnet:?") || arg.endsWith(".torrent"))) {
-                urlParameter = "/download?url=" + UrlUtils.encode(arg);
+                urlParameter = "/download?url=" + encode(arg);
             }  else {
                 urlParameter = "/show";
             }
@@ -402,5 +402,16 @@ public class ExternalControl {
         }
 
         return false;
+    }
+    
+    private static String encode(String url) {
+        if (url == null) {
+            return "";
+        }
+        try {
+            return URLEncoder.encode(url, "UTF-8").replaceAll("\\+", "%20");
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 }

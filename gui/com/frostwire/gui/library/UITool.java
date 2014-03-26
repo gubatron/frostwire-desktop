@@ -23,6 +23,7 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import com.frostwire.localpeer.Finger;
 import com.limegroup.gnutella.gui.I18n;
 
 public class UITool {

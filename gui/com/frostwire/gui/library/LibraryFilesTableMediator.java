@@ -26,6 +26,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.Action;
@@ -48,20 +49,20 @@ import javax.swing.table.TableColumnModel;
 
 import org.apache.commons.io.FilenameUtils;
 import org.gudy.azureus2.core3.download.DownloadManager;
-import org.limewire.collection.CollectionUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.Librarian;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
+import com.frostwire.gui.bittorrent.PaymentOptionsRenderer;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
-import com.frostwire.gui.upnp.UPnPManager;
+import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.util.MP4Muxer;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
@@ -103,17 +104,17 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     /**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
      */
-    public static Action LAUNCH_ACTION;
-    public static Action LAUNCH_OS_ACTION;
-    public static Action OPEN_IN_FOLDER_ACTION;
-    public static Action DEMUX_MP4_AUDIO_ACTION;
-    public static Action CREATE_TORRENT_ACTION;
-    public static Action DELETE_ACTION;
-    public static Action RENAME_ACTION;
-    public static Action SEND_TO_ITUNES_ACTION;
-    public static Action WIFI_UNSHARE_ACTION;
-    public static Action WIFI_SHARE_ACTION;
-
+    private Action LAUNCH_ACTION;
+    private Action LAUNCH_OS_ACTION;
+    private Action OPEN_IN_FOLDER_ACTION;
+    private Action DEMUX_MP4_AUDIO_ACTION;
+    private Action CREATE_TORRENT_ACTION;
+    private Action DELETE_ACTION;
+    private Action RENAME_ACTION;
+    private Action SEND_TO_ITUNES_ACTION;
+    private Action WIFI_UNSHARE_ACTION;
+    private Action WIFI_SHARE_ACTION;
+    
     /**
      * instance, for singleton access
      */
@@ -131,7 +132,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      */
     protected void buildListeners() {
         super.buildListeners();
-
         LAUNCH_ACTION = new LaunchAction();
         LAUNCH_OS_ACTION = new LaunchOSAction();
         OPEN_IN_FOLDER_ACTION = new OpenInFolderAction();
@@ -142,7 +142,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         SEND_TO_ITUNES_ACTION = new SendAudioFilesToiTunes();
         WIFI_SHARE_ACTION = new WiFiShareAction(true);
         WIFI_UNSHARE_ACTION = new WiFiShareAction(false);
-
     }
 
     @Override
@@ -371,6 +370,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         TABLE.setDefaultRenderer(PlayableIconCell.class, new PlayableIconCellRenderer());
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
         TABLE.setDefaultRenderer(FileShareCell.class, FILE_SHARE_CELL_RENDERER);
+        TABLE.setDefaultRenderer(PaymentOptions.class, new PaymentOptionsRenderer());
     }
 
     /**
@@ -380,10 +380,13 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         TableColumnModel model = TABLE.getColumnModel();
 
         TableColumn tc = model.getColumn(LibraryFilesTableDataLine.SHARE_IDX);
-        tc.setCellEditor(new FileShareCellEditor(new FileShareCellRenderer()));
+        tc.setCellEditor(new FileShareCellEditor(FILE_SHARE_CELL_RENDERER));
 
         tc = model.getColumn(LibraryFilesTableDataLine.ACTIONS_IDX);
-        tc.setCellEditor(new GenericCellEditor(new LibraryActionsRenderer()));
+        tc.setCellEditor(new GenericCellEditor(getAbstractActionsRenderer()));
+        
+        tc = model.getColumn(LibraryFilesTableDataLine.PAYMENT_OPTIONS_IDX);
+        tc.setCellEditor(new GenericCellEditor(new PaymentOptionsRenderer()));
     }
 
     /**
@@ -422,7 +425,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
         clearTable();
 
-        List<List<File>> partitionedFiles = CollectionUtils.split(100, Arrays.asList(dirHolder.getFiles()));
+        List<List<File>> partitionedFiles = split(100, Arrays.asList(dirHolder.getFiles()));
 
         for (List<File> partition : partitionedFiles) {
             final List<File> fPartition = partition;
@@ -751,7 +754,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         if (selectedFile != null) {
             SEND_TO_FRIEND_ACTION.setEnabled(sel.length == 1);
-
+            
             if (getMediaType().equals(MediaType.getAnyTypeMediaType())) {
                 boolean atLeastOneIsPlayable = false;
 
@@ -819,6 +822,30 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
     private boolean hasExploreAction() {
         return OSUtils.isWindows() || OSUtils.isMacOSX();
+    }
+    
+    /**
+     * Split a collection in Lists of up to partitionSize elements.
+     * @param <T>
+     * @param partitionSize
+     * @param collection
+     * @return
+     */
+    public static <T> List<List<T>> split(int partitionSize, List<T> collection) {
+        List<List<T>> lists = new LinkedList<List<T>>();
+        
+        for (int i = 0; i < collection.size(); i+=partitionSize) {
+            //the compiler might not know if the collection has changed size
+            //so it might not optimize this by itself.
+            int jLimit = Math.min(collection.size(),i+partitionSize);
+            List<T> newList = new LinkedList<T>();
+            for (int j=i; j < jLimit;j++) {
+                newList.add(collection.get(j));
+            }
+            lists.add(newList);
+        }
+        
+        return lists;
     }
 
     ///////////////////////////////////////////////////////
@@ -969,8 +996,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         private static final long serialVersionUID = 4726989286129406765L;
 
         public SendAudioFilesToiTunes() {
-            putValue(Action.NAME, I18n.tr("Send to iTunes"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send audio files to iTunes"));
+        	if(!OSUtils.isLinux()) {
+        		putValue(Action.NAME, I18n.tr("Send to iTunes"));
+        		putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send audio files to iTunes"));
+        	}
         }
 
         @Override
@@ -1233,7 +1262,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 }
             }
 
-            UPnPManager.instance().refreshPing();
+            LibraryMediator.instance().getDeviceDiscoveryClerk().updateLocalPeer();
             UXStats.instance().log(share ? UXAction.WIFI_SHARING_SHARED : UXAction.WIFI_SHARING_UNSHARED);
         }
 

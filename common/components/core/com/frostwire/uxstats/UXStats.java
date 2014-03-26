@@ -19,9 +19,7 @@ package com.frostwire.uxstats;
 
 import java.util.concurrent.ExecutorService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.frostwire.logging.Logger;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.JsonUtils;
@@ -34,7 +32,7 @@ import com.frostwire.util.JsonUtils;
 public final class UXStats {
     private static final boolean IS_TESTING = false;
     
-    private static final Logger LOG = LoggerFactory.getLogger(UXStats.class);
+    private static final Logger LOG = Logger.getLogger(UXStats.class);
 
     private static final int HTTP_TIMEOUT = 4000;
 
@@ -51,7 +49,7 @@ public final class UXStats {
     }
 
     private UXStats() {
-        this.httpClient = HttpClientFactory.newDefaultInstance();
+        this.httpClient = HttpClientFactory.newInstance();
 
         this.executor = null;
         this.conf = null;

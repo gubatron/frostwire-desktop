@@ -267,6 +267,10 @@ public class BTDownloadCreator {
             return createDownload(_downloadManager, false, true);
         }
     }
+    
+    public DownloadManager getDownloadManager() {
+        return _downloadManager;
+    }
 
     public static BTDownload createDownload(DownloadManager downloadManager, final boolean triggerFilter, boolean initialize) throws SaveLocationException, TOTorrentException {
 

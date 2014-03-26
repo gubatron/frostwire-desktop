@@ -23,6 +23,9 @@ import java.util.Date;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 
+import com.frostwire.torrent.CopyrightLicenseBroker;
+import com.frostwire.torrent.PaymentOptions;
+
 /**
  * @author gubatron
  * @author aldenml
@@ -91,4 +94,8 @@ public interface BTDownload {
 	public void updateDownloadManager(DownloadManager downloadManager);
 
     public Date getDateCreated();
+    
+    public PaymentOptions getPaymentOptions();
+    
+    public CopyrightLicenseBroker getCopyrightLicenseBroker();
 }

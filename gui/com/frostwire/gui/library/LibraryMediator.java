@@ -39,16 +39,11 @@ import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
-
-import com.frostwire.core.Constants;
-import com.frostwire.gui.httpserver.HttpServerManager;
-import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.DeviceMediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
-import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.gui.upnp.UPnPManager;
-import com.frostwire.gui.upnp.desktop.DesktopUPnPManager;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaSource;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
@@ -95,8 +90,7 @@ public class LibraryMediator {
 
     private AbstractLibraryTableMediator<?, ?, ?> currentMediator;
 
-    private DeviceDiscoveryClerk clerk;
-    private HttpServerManager httpServerManager;
+    private final DeviceDiscoveryClerk clerk;
 
     /**
      * @return the <tt>LibraryMediator</tt> instance
@@ -136,11 +130,7 @@ public class LibraryMediator {
         DividerLocationSettingUpdater.install(splitPane, UISettings.UI_LIBRARY_MAIN_DIVIDER_LOCATION);
 
         MAIN_PANEL.add(splitPane);
-
-        httpServerManager = new HttpServerManager();
-        httpServerManager.start(Constants.EXTERNAL_CONTROL_LISTENING_PORT);
-        ((DesktopUPnPManager) UPnPManager.instance()).start();
-
+        
         clerk = new DeviceDiscoveryClerk();
     }
 

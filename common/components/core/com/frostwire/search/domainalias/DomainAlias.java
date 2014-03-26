@@ -109,7 +109,7 @@ public class DomainAlias {
     private static boolean ping(String domainName) {
         boolean pong = false;
         try {
-            HttpClient httpClient = HttpClientFactory.newDefaultInstance();
+            HttpClient httpClient = HttpClientFactory.newInstance();
             String string = httpClient.get("http://"+domainName, DOMAIN_ALIAS_CHECK_TIMEOUT_MILLISECONDS);
             pong = string != null && string.length()> 0;
         } catch (Throwable t) {

@@ -34,10 +34,11 @@ import com.frostwire.mp3.ID3v1Tag;
 import com.frostwire.mp3.ID3v23Tag;
 import com.frostwire.mp3.Mp3File;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
+import com.frostwire.torrent.CopyrightLicenseBroker;
+import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;
-import com.frostwire.util.HttpClientType;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -94,7 +95,7 @@ public class SoundcloudDownload implements BTDownload {
 
         httpClientListener = new HttpDownloadListenerImpl();
 
-        httpClient = HttpClientFactory.newInstance(HttpClientType.PureJava);
+        httpClient = HttpClientFactory.newInstance();
         httpClient.setListener(httpClientListener);
 
         start();
@@ -367,7 +368,7 @@ public class SoundcloudDownload implements BTDownload {
 
         @Override
         public void onData(HttpClient client, byte[] buffer, int offset, int length) {
-            if (state != STATE_PAUSING && state != STATE_CANCELING) {
+            if (!state.equals(STATE_PAUSING) && !state.equals(STATE_CANCELING)) {
                 bytesReceived += length;
                 updateAverageDownloadSpeed();
                 state = STATE_DOWNLOADING;
@@ -393,10 +394,10 @@ public class SoundcloudDownload implements BTDownload {
 
         @Override
         public void onCancel(HttpClient client) {
-            if (state == STATE_CANCELING) {
+            if (state.equals(STATE_CANCELING)) {
                 cleanup();
                 state = STATE_CANCELED;
-            } else if (state == STATE_PAUSING) {
+            } else if (state.equals(STATE_PAUSING)) {
                 state = STATE_PAUSED;
             } else {
                 state = STATE_CANCELED;
@@ -418,16 +419,12 @@ public class SoundcloudDownload implements BTDownload {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof SoundcloudDownload)) {
-            return false;
-        }
-
-        return sr.getDownloadUrl().equals(((SoundcloudDownload) obj).sr.getDownloadUrl());
+        return obj instanceof SoundcloudDownload && sr.getDownloadUrl().equals(((SoundcloudDownload) obj).sr.getDownloadUrl());
     }
 
     private boolean setAlbumArt(String mp3Filename, String mp3outputFilename) {
         try {
-            byte[] imageBytes = HttpClientFactory.newDefaultInstance().getBytes(sr.getThumbnailUrl());
+            byte[] imageBytes = HttpClientFactory.newInstance().getBytes(sr.getThumbnailUrl());
 
             Mp3File mp3 = new Mp3File(mp3Filename);
 
@@ -449,5 +446,15 @@ public class SoundcloudDownload implements BTDownload {
         } catch (Throwable e) {
             return false;
         }
+    }
+
+    @Override
+    public PaymentOptions getPaymentOptions() {
+        return null;
+    }
+
+    @Override
+    public CopyrightLicenseBroker getCopyrightLicenseBroker() {
+        return null;
     }
 }

@@ -22,9 +22,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.frostwire.search.domainalias.DomainAliasManager;
 
 /**
@@ -33,9 +30,6 @@ import com.frostwire.search.domainalias.DomainAliasManager;
  *
  */
 public abstract class PagedWebSearchPerformer extends WebSearchPerformer {
-
-    @SuppressWarnings("unused")
-    private static final Logger LOG = LoggerFactory.getLogger(PagedWebSearchPerformer.class);
 
     private final int pages;
 

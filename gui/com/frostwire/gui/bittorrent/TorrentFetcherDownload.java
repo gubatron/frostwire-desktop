@@ -32,6 +32,8 @@ import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 import org.gudy.azureus2.core3.util.UrlUtils;
 
+import com.frostwire.torrent.CopyrightLicenseBroker;
+import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
@@ -291,7 +293,7 @@ public class TorrentFetcherDownload implements BTDownload {
             if (state == TorrentDownloader.STATE_FINISHED && finished.compareAndSet(false, true)) {
                 onTorrentDownloaderFinished(inf.getFile());
             } else if (state == TorrentDownloader.STATE_ERROR) {
-                if (_hash != null && _hash.trim() != "" && (_uri.toLowerCase().startsWith("http://") || _uri.toLowerCase().startsWith("https://"))) {
+                if (_hash != null && !_hash.trim().equals("") && (_uri.toLowerCase().startsWith("http://") || _uri.toLowerCase().startsWith("https://"))) {
                     _uri = TorrentUtil.getMagnet(_hash);
                     _torrentDownloader = TorrentDownloaderFactory.create(new TorrentDownloaderListener(), _uri, null, _torrentSaveDir);
                     _state = STATE_DOWNLOADING;
@@ -415,5 +417,15 @@ public class TorrentFetcherDownload implements BTDownload {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public PaymentOptions getPaymentOptions() {
+        return _delegate==null ? null : _delegate.getPaymentOptions();
+    }
+
+    @Override
+    public CopyrightLicenseBroker getCopyrightLicenseBroker() {
+        return _delegate==null ? null : _delegate.getCopyrightLicenseBroker();
     }
 }

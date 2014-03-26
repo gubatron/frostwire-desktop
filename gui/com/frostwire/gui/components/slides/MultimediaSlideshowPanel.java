@@ -36,7 +36,6 @@ import org.limewire.util.OSUtils;
 import com.frostwire.JsonEngine;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
-import com.frostwire.util.HttpClientType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -124,24 +123,26 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
 
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                List<Slide> slides = MultimediaSlideshowPanel.this.slides;
-                try {
-                    int i = 0;
-                    for (Slide s : slides) {
-                        add(new SlidePanel(s, i), String.valueOf(i));
-                        i++;
-                    }
+                if (MultimediaSlideshowPanel.this.slides != null) {
+                    List<Slide> slides = MultimediaSlideshowPanel.this.slides;
+                    try {
+                        int i = 0;
+                        for (Slide s : slides) {
+                            add(new SlidePanel(s, i), String.valueOf(i));
+                            i++;
+                        }
 
-                    if (container != null && useControls) {
-                        container.add(new SlideshowPanelControls(MultimediaSlideshowPanel.this), BorderLayout.PAGE_END);
-                    }
+                        if (container != null && useControls) {
+                            container.add(new SlideshowPanelControls(MultimediaSlideshowPanel.this), BorderLayout.PAGE_END);
+                        }
 
-                    if (slides != null && !slides.isEmpty()) {
-                        timer = new Timer("SlideShow Timer");
-                        timer.schedule(new SlideSwitcher(), slides.get(0).duration);
+                        if (!slides.isEmpty()) {
+                            timer = new Timer("SlideShow Timer");
+                            timer.schedule(new SlideSwitcher(), slides.get(0).duration);
+                        }
+                    } catch (Exception e) {
+                        LOG.error(e.getMessage(), e);
                     }
-                } catch (Exception e) {
-                    LOG.error(e.getMessage(), e);
                 }
             }
         });
@@ -149,7 +150,7 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
 
     private void load(final String url) {
         try {
-            HttpClient client = HttpClientFactory.newInstance(HttpClientType.PureJava);
+            HttpClient client = HttpClientFactory.newInstance();
             String jsonString = client.get(url);
 
             if (jsonString != null) {

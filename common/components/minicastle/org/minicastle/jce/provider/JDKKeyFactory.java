@@ -62,7 +62,7 @@ import org.minicastle.jce.interfaces.ElGamalPrivateKey;
 import org.minicastle.jce.interfaces.ElGamalPublicKey;
 import org.minicastle.jce.spec.ECPrivateKeySpec;
 import org.minicastle.jce.spec.ECPublicKeySpec;
-import org.gudy.azureus2.core3.util.Debug;
+//import org.gudy.azureus2.core3.util.Debug;
 
 public abstract class 
 JDKKeyFactory 
@@ -278,7 +278,7 @@ JDKKeyFactory
 	        	
 	        }catch( Throwable e ){
 	        	
-	        	Debug.out( e );
+	        	e.printStackTrace();//Debug.out( e );
 	        }
 	    }
 	

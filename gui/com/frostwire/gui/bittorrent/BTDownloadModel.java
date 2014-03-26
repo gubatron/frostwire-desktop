@@ -128,4 +128,9 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
     public boolean isDownloading(String hash) {
         return _hashDownloads.contains(hash);
     }
+    
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return columnIndex == BTDownloadDataLine.PAYMENT_OPTIONS_INDEX;
+    }
 }

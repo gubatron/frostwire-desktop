@@ -37,8 +37,8 @@ import com.frostwire.core.providers.ShareFilesDB;
 import com.frostwire.core.providers.ShareFilesDB.Columns;
 import com.frostwire.database.Cursor;
 import com.frostwire.gui.bittorrent.TorrentUtil;
-import com.frostwire.gui.library.Finger;
-import com.frostwire.gui.upnp.UPnPManager;
+import com.frostwire.gui.library.LibraryMediator;
+import com.frostwire.localpeer.Finger;
 
 /**
  * @author gubatron
@@ -275,7 +275,7 @@ public final class Librarian {
     public void shareFile(final String filePath, final boolean share) {
         shareFile(filePath, share, true);
     }
-    
+
     public void shareFile(final String filePath, final boolean share, final boolean refreshPing) {
         if (pathSharingSet.contains(filePath)) {
             return;
@@ -296,7 +296,7 @@ public final class Librarian {
                 pathSharingSet.remove(filePath);
 
                 if (refreshPing) {
-                    UPnPManager.instance().refreshPing();
+                    LibraryMediator.instance().getDeviceDiscoveryClerk().updateLocalPeer();
                 }
             }
         };
@@ -312,7 +312,7 @@ public final class Librarian {
 
         db.delete(where, whereArgs);
     }
-    
+
     public void deleteFolderFilesFromShareTable(String folderPath) {
         String where = Columns.FILE_PATH + " LIKE ?";
         String[] whereArgs = new String[] { folderPath + "%" };
@@ -322,7 +322,7 @@ public final class Librarian {
         try {
             db.delete(where, whereArgs);
         } catch (Exception e) {
-        
+
         }
     }
 

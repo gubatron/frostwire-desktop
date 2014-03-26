@@ -32,8 +32,8 @@ import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
 public class TorrentsfmSearchPerformer extends TorrentRegexSearchPerformer<TorrentsfmSearchResult> {
 
     private static final int MAX_RESULTS = 20;
-    private static final String REGEX = "(?is)><td><span class=\"icon-.*?\"></span></td><td><a title=\"(.*?)\" href=\'(.*?)\'>.*?</a><a title=\"Share on Facebook\".*?<a title=\"Download magnet\".*?</td></tr>";
-    private static final String HTML_REGEX = "(?is)alpha omega\"><h1>(.*?)</h1></div><div class=.*?<div class=\"size\">(.*?)</div>.*?<span title=\"([0-9]*) seeds / [0-9]* leechers\">.*?<dl class=\"date\"><dt>Created</dt><dd>(.*?)</dd></dl>.*?<a class=\"download\" data-track=\"Download,Magnet,File / Big Button\" data-downloader=\"1\" href=\"(.*?)\"><span class=\"icon-download_button\">";
+    private static final String REGEX = "(?is)<li class=\"grid_6 alpha omega\"><div class=\"grid_3 alpha omega\"><a title=\"(.*?)\" href=\'(.*?)\'>.*?</span> Download</a></div></li>";
+    private static final String HTML_REGEX = "(?is)<section id=\"download\" class=\"grid_24\">.*?<div class=\"grid_17 omega\"><h1>(.*?)</h1>.*?<div class=\"size\">(.*?)</div>.*?<span title=\"([0-9]*) seeds / [0-9]* leechers\">.*?<dl class=\"date\"><dt>Created</dt><dd>(.*?)</dd></dl>.*?<a class=\"download\".*?data-track=\"Download,Magnet,File / Big Button\" data-downloader=\"1\" href=\"(.*?)\"><span class=\"icon download-button\">";
 
     // matcher groups: 1 -> title
     //                 2 -> file size (needs parsing)

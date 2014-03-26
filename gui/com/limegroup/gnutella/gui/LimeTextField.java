@@ -33,8 +33,10 @@ import javax.swing.undo.UndoManager;
 
 import org.limewire.i18n.I18nMarker;
 
+import com.frostwire.gui.searchfield.PromptSupport;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
+import com.frostwire.gui.theme.ThemeMediator;
 
 /**
  * A better JTextField.
@@ -180,6 +182,11 @@ public class LimeTextField extends JTextField {
         init();
     }
     
+    /** The light text that's on the textfield as a hint before you type*/
+    public void setPrompt(String promptText) {
+        PromptSupport.setPrompt(promptText, this);
+    }
+    
     /**
      * Undoes the last action.
      */
@@ -226,6 +233,8 @@ public class LimeTextField extends JTextField {
         undoManager = new UndoManager();
         undoManager.setLimit(1);
         getDocument().addUndoableEditListener(undoManager);
+        
+        ThemeMediator.fixKeyStrokes(this);
     }
     
     /**

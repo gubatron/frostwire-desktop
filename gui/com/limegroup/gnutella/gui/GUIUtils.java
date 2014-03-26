@@ -44,6 +44,7 @@ import java.util.Locale;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
@@ -55,6 +56,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.table.TableModel;
@@ -67,6 +69,7 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.SpeedConstants;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
@@ -811,33 +814,39 @@ public final class GUIUtils {
      * @return
      */
     public static void adjustColumnWidth(TableModel model, int columnIndex, int maxWidth, int rightPadding, JTable table) {
-    	
-    	if (columnIndex > model.getColumnCount()-1) {
-    		//invalid column index
-    		return;
-    	}
-    	
-    	if (!model.getColumnClass(columnIndex).equals(String.class)) {
-    		return;
-    	}
-    	
-    	String longestValue = "";
-    	for (int row = 0; row < model.getRowCount(); row++) {
-    		String strValue = (String) model.getValueAt(row, columnIndex);
-    		if (strValue != null && strValue.length() > longestValue.length()) {
-    			longestValue = strValue;
-    		}
-    	}
-    	
-    	Graphics g = table.getGraphics();
-    	
-    	try {
-    		int suggestedWidth = (int) g.getFontMetrics(table.getFont()).getStringBounds(longestValue, g).getWidth();
-    		table.getColumnModel().getColumn(columnIndex).setPreferredWidth(((suggestedWidth > maxWidth) ? maxWidth : suggestedWidth)+rightPadding);
-    	} catch (Exception e) {
-    		table.getColumnModel().getColumn(columnIndex).setPreferredWidth(maxWidth);
-    		e.printStackTrace();
-    	}
+        if (columnIndex > model.getColumnCount() - 1) {
+            //invalid column index
+            return;
+        }
+
+        if (!model.getColumnClass(columnIndex).equals(String.class)) {
+            return;
+        }
+
+        String longestValue = "";
+        for (int row = 0; row < model.getRowCount(); row++) {
+            String strValue = (String) model.getValueAt(row, columnIndex);
+            if (strValue != null && strValue.length() > longestValue.length()) {
+                longestValue = strValue;
+            }
+        }
+
+        Graphics g = table.getGraphics();
+
+        try {
+            int suggestedWidth = (int) g.getFontMetrics(table.getFont()).getStringBounds(longestValue, g).getWidth();
+            table.getColumnModel().getColumn(columnIndex).setPreferredWidth(((suggestedWidth > maxWidth) ? maxWidth : suggestedWidth) + rightPadding);
+        } catch (Exception e) {
+            table.getColumnModel().getColumn(columnIndex).setPreferredWidth(maxWidth);
+            e.printStackTrace();
+        }
+    }
     
+    public static void setTitledBorderOnPanel(JPanel panel, String title) {
+        Border titleBorder = BorderFactory.createTitledBorder(title);
+        Border lineBorder = BorderFactory.createLineBorder(ThemeMediator.LIGHT_BORDER_COLOR);
+        Border border = BorderFactory.createCompoundBorder(lineBorder, titleBorder);
+        panel.setBorder(border);
+        panel.putClientProperty(ThemeMediator.SKIN_PROPERTY_DARK_BOX_BACKGROUND, Boolean.TRUE);
     }
 }

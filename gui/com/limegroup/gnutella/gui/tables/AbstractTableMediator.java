@@ -404,8 +404,6 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         }
     }
 
-
-
     protected TableCellRenderer getAbstractActionsRenderer() {
         return null;
     }
@@ -992,12 +990,10 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
     protected TableCellRenderer getSearchResultsActionsRenderer() {
         if (SEARCH_RESULT_ACTIONS_RENDERER == null) {
             SEARCH_RESULT_ACTIONS_RENDERER = new SearchResultActionsRenderer();
-            
         }
         return SEARCH_RESULT_ACTIONS_RENDERER;
     }
-
-
+    
     protected TableCellRenderer getDefaultRenderer() {
         if (DEFAULT_RENDERER == null) {
             DEFAULT_RENDERER = new DefaultTableCellRenderer();

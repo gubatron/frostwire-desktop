@@ -64,6 +64,7 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.InsetsUIResource;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.TableCellEditor;
+import javax.swing.text.JTextComponent;
 
 import org.limewire.util.OSUtils;
 import org.slf4j.Logger;
@@ -206,7 +207,7 @@ public final class ThemeMediator {
         }
     }
 
-    public static void fixKeyStrokes(JTextField textField) {
+    public static void fixKeyStrokes(JTextComponent textField) {
         if (OSUtils.isMacOSX()) {
             fixKeyStroke(textField, "copy", KeyEvent.VK_C, 0);
             fixKeyStroke(textField, "paste", KeyEvent.VK_V, 0);
@@ -226,7 +227,7 @@ public final class ThemeMediator {
         }
     }
 
-    private static void fixKeyStroke(JTextField textField, String name, int vk, int mask) {
+    private static void fixKeyStroke(JTextComponent textField, String name, int vk, int mask) {
         Action action = null;
 
         ActionMap actionMap = textField.getActionMap();

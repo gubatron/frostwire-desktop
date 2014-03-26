@@ -27,7 +27,7 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  * Settings for sharing
  */
 public class SharingSettings extends LimeProps {
-
+    
     private static final File PORTABLE_ROOT_FOLDER = CommonUtils.getPortableRootFolder();
 
     private SharingSettings() {

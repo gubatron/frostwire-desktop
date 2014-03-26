@@ -47,7 +47,7 @@ final class HelpMenu extends AbstractMenu {
         
         addMenuItem(new OpenLinkAction("http://www.frostwire.com/android", I18n.tr("FrostWire for Android"),I18n.tr("Get FrostWire on your Android phone, tablet or google tv, all free.")));
 
-        addMenuItem(new OpenLinkAction("http://www.frostwire.com/?id=faq#fil7", I18n.tr("What is \"Seeding\"?"), I18n.tr("Learn about BitTorrent Seeding")));
+        addMenuItem(new OpenLinkAction("http://support.frostwire.com/hc/en-us/articles/200302295-What-is-seeding-", I18n.tr("What is \"Seeding\"?"), I18n.tr("Learn about BitTorrent Seeding")));
 
         addSeparator();
         

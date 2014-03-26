@@ -148,20 +148,14 @@ public interface TOTorrent {
      * @return
      * @throws TOTorrentException
      */
-
-    public byte[] getHash()
-
-    throws TOTorrentException;
+    public byte[] getHash() throws TOTorrentException;
 
     /**
      * convenience method to get a wrapped hash for performance purposes
      * @return
      * @throws TOTorrentException
      */
-
-    public HashWrapper getHashWrapper()
-
-    throws TOTorrentException;
+    public HashWrapper getHashWrapper() throws TOTorrentException;
 
     /**
      * Only supported for decentralised torrents, allows an alternative hash to be used
@@ -169,10 +163,7 @@ public interface TOTorrent {
      * @param hash
      * @throws TOTorrentException
      */
-
-    public void setHashOverride(byte[] hash)
-
-    throws TOTorrentException;
+    public void setHashOverride(byte[] hash) throws TOTorrentException;
 
     /**
      * compares two torrents by hash
@@ -188,10 +179,7 @@ public interface TOTorrent {
      * Note - changing the private attribute CHANGES THE TORRENT HASH 
      * @param _private
      */
-
-    public void setPrivate(boolean _private)
-
-    throws TOTorrentException;
+    public void setPrivate(boolean _private) throws TOTorrentException;
 
     /**
      * The additional properties are used for holding non-core data for Azureus' own user

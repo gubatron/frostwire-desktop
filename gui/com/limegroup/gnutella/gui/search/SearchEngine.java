@@ -26,7 +26,6 @@ import org.limewire.setting.BooleanSetting;
 import com.frostwire.search.SearchPerformer;
 import com.frostwire.search.archiveorg.ArchiveorgSearchPerformer;
 import com.frostwire.search.bitsnoop.BitSnoopSearchPerformer;
-import com.frostwire.search.clearbits.ClearBitsSearchPerformer;
 import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.domainalias.DomainAliasManagerBroker;
 import com.frostwire.search.extratorrent.ExtratorrentSearchPerformer;
@@ -76,13 +75,6 @@ public abstract class SearchEngine {
     public static final int TORRENTS_ID = 16; 
     
     public static final DomainAliasManagerBroker DOMAIN_ALIAS_MANAGER_BROKER = new DomainAliasManagerBroker();
-
-    public static final SearchEngine CLEARBITS = new SearchEngine(CLEARBITS_ID, "ClearBits", SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("www.clearbits.net")) {
-        @Override
-        public SearchPerformer getPerformer(long token, String keywords) {
-            return new ClearBitsSearchPerformer(SearchEngine.CLEARBITS.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
-        }
-    };
 
     public static final SearchEngine MININOVA = new SearchEngine(MININOVA_ID, "Mininova", SearchEnginesSettings.MININOVA_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("www.mininova.org")) {
         @Override
@@ -211,7 +203,7 @@ public abstract class SearchEngine {
     }
 
     public static List<SearchEngine> getEngines() {
-        return Arrays.asList(TORRENTS, EXTRATORRENT, BITSNOOP, SOUNDCLOUD, YOUTUBE, FROSTCLICK, CLEARBITS, MININOVA, KAT, TPB, MONOVA, ARCHIVEORG, TORLOCK, EZTV);
+        return Arrays.asList(TORRENTS, EXTRATORRENT, BITSNOOP, SOUNDCLOUD, YOUTUBE, FROSTCLICK, MININOVA, KAT, TPB, MONOVA, ARCHIVEORG, TORLOCK, EZTV);
     }
 
     public abstract SearchPerformer getPerformer(long token, String keywords);

@@ -57,6 +57,10 @@ public final class UXAction {
     public static final int DOWNLOAD_PAUSE = DOWNLOAD_BASE + 10;
     public static final int DOWNLOAD_RESUME = DOWNLOAD_BASE + 11;
     public static final int DOWNLOAD_REMOVE = DOWNLOAD_BASE + 12;
+    public static final int DOWNLOAD_CLICK_BITCOIN_PAYMENT = DOWNLOAD_BASE + 13;
+    public static final int DOWNLOAD_CLICK_LITECOIN_PAYMENT = DOWNLOAD_BASE + 14;
+    public static final int DOWNLOAD_CLICK_DOGECOIN_PAYMENT = DOWNLOAD_BASE + 15;
+    public static final int DOWNLOAD_CLICK_PAYPAL_PAYMENT = DOWNLOAD_BASE + 16;
 
     public static final int SHARING_BASE = 3000;
     public static final int SHARING_TORRENT_CREATED_FORMALLY = SHARING_BASE + 1;
@@ -106,6 +110,7 @@ public final class UXAction {
     
     public static final int MISC_BASE = 7000;
     public static final int MISC_CHAT_OPENED_IN_BROWSER = MISC_BASE + 1;
+    public static final int MISC_PROMO_CLICK_ON_TIPS = MISC_BASE + 2;
 
     UXAction(int code, long time) {
         this.code = code;
