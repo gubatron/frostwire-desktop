@@ -541,9 +541,13 @@ public class LibraryUtils {
         return getSecondsInDDHHMMSS((int) totalSecs);
     }
 
-    public static boolean directoryContainsAudio(File directory, int depth) {
+    public static boolean directoryContainsPlayableExtensions(File directory, int depth) {
         Set<File> ignore = TorrentUtil.getIgnorableFiles();
         return directoryContainsExtension(directory, depth, ignore, MediaPlayer.getPlayableExtensions());
+    }
+    
+    public static boolean directoryContainsASinglePlayableFile(File directory, int depth) {
+        return directoryContainsPlayableExtensions(directory, depth) && directory.listFiles().length == 1;
     }
 
     public static boolean directoryContainsAudio(File directory) {

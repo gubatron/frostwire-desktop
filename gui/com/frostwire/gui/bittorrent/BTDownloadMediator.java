@@ -653,7 +653,13 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             return true;
         }
         File saveLocation = d.getSaveLocation();
-        boolean hasAudioFiles = saveLocation != null && (LibraryUtils.directoryContainsAudio(saveLocation, 4) || (saveLocation.isFile() && MediaPlayer.isPlayableFile(saveLocation)));
+        
+        //in case it's a single picked download
+        if (saveLocation.isDirectory() && LibraryUtils.directoryContainsASinglePlayableFile(saveLocation,4)) {
+            saveLocation = saveLocation.listFiles()[0];
+        }
+        
+        boolean hasAudioFiles = saveLocation != null && (LibraryUtils.directoryContainsPlayableExtensions(saveLocation, 4) || (saveLocation.isFile() && MediaPlayer.isPlayableFile(saveLocation)));
         return hasAudioFiles;
     }
 
