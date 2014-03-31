@@ -654,13 +654,13 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
         File saveLocation = d.getSaveLocation();
         
-        //in case it's a single picked download
+        //in case it's a single picked .torrent/magnet download
         if (saveLocation.isDirectory() && LibraryUtils.directoryContainsASinglePlayableFile(saveLocation,4)) {
             saveLocation = saveLocation.listFiles()[0];
         }
         
-        boolean hasAudioFiles = saveLocation != null && (LibraryUtils.directoryContainsPlayableExtensions(saveLocation, 4) || (saveLocation.isFile() && MediaPlayer.isPlayableFile(saveLocation)));
-        return hasAudioFiles;
+        boolean hasPlayableFiles = saveLocation != null && (LibraryUtils.directoryContainsPlayableExtensions(saveLocation, 4) || (saveLocation.isFile() && MediaPlayer.isPlayableFile(saveLocation)));
+        return hasPlayableFiles;
     }
 
     private boolean isHttpTransfer(BTDownload d) {
