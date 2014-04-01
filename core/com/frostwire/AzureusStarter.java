@@ -101,6 +101,7 @@ public final class AzureusStarter {
         System.setProperty("azureus.install.path", azureusUserPath.getAbsolutePath());
         
         disableDefaultPlugins();
+        enablePlugins();
 
         if (!AzureusCoreFactory.isCoreAvailable()) {
             //This does work
@@ -279,5 +280,9 @@ public final class AzureusStarter {
 
         pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_BUDDY, false);
         pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_RSS, false);
+    }
+    
+    private static void enablePlugins() {
+        PluginManager.registerPlugin(new com.vuze.client.plugins.utp.UTPPlugin(), "azutp");
     }
 }
