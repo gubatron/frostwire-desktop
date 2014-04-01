@@ -15,3 +15,5 @@ Fix in TorrentDownloaderImpl
 
 - In VersionClientCheck write in VersionCheckClient
 NetworkAdminASN new_asn = old_asn;//admin.lookupCurrentASN( my_ip );
+
+- In Constants.java - IS_CVS_VERSION hardcode to false.

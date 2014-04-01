@@ -143,7 +143,7 @@ Constants
 
   private static final boolean FORCE_NON_CVS = System.getProperty( "az.force.noncvs", "0" ).equals( "1" );
   
-  public static final boolean IS_CVS_VERSION = isCVSVersion( AZUREUS_VERSION ) && !FORCE_NON_CVS;
+  public static final boolean IS_CVS_VERSION = false;//isCVSVersion( AZUREUS_VERSION ) && !FORCE_NON_CVS;
   
   public static final String  OSName = System.getProperty("os.name");
   
