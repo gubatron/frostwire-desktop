@@ -96,6 +96,7 @@ public final class AzureusStarter {
             azureusUserPath.mkdirs();
         }
 
+        System.setProperty("az.force.noncvs","1");
         System.setProperty("azureus.loadplugins", "0"); // disable third party azureus plugins
         System.setProperty("azureus.config.path", azureusUserPath.getAbsolutePath());
         System.setProperty("azureus.install.path", azureusUserPath.getAbsolutePath());
