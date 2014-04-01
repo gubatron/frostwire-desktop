@@ -51,6 +51,7 @@
             
             <src path="${limewire.home}/common/vuze/azureus2/src"/>
             <src path="${limewire.home}/common/vuze/azureus3/src"/>
+            <src path="${limewire.home}/common/vuze/plugins"/>
             <exclude name="**/bouncycastle/**"/>
             <exclude name="**/jman/**"/>
             <exclude name="**/swing/**"/>
