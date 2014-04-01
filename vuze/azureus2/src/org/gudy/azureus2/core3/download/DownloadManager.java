@@ -158,6 +158,22 @@ DownloadManager
         int     stateAfterStopping,
         boolean remove_torrent,
         boolean remove_data );
+    
+    /**
+     * As above but definitely indicates that the stop is for removal (if for_removal is true) and therefore that any removal specific actions
+     * such as removing partial files should be performed
+     *  
+     * @param stateAfterStopping
+     * @param remove_torrent
+     * @param remove_data
+     * @param for_removal
+     */
+    public void
+    stopIt(
+        int     stateAfterStopping,
+        boolean remove_torrent,
+        boolean remove_data,
+        boolean	for_removal );
 
     public boolean
     pause();
@@ -207,6 +223,9 @@ DownloadManager
     public TRTrackerScraperResponse
     getTrackerScrapeResponse();
 
+	public List<TRTrackerScraperResponse>
+	getGoodTrackerScrapeResponses();
+	
     public void
     setTrackerScrapeResponse(
         TRTrackerScraperResponse    response );
@@ -493,6 +512,13 @@ DownloadManager
         File    new_parent_dir )
 
         throws DownloadManagerException;
+    
+    public void
+    copyDataFiles(
+    	File	parent_dir )
+    
+    	throws DownloadManagerException;
+    
     /**
      * Rename the download - this means the name of the file being downloaded (for single
      * file torrents), or the name of the directory holding the files (in a multi-file torrent).

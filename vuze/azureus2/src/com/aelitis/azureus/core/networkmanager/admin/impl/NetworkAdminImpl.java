@@ -116,6 +116,7 @@ NetworkAdminImpl
 	private long								address_history_update_time;
 	
 	private InetAddress[]				currentBindIPs			= new InetAddress[] { null };
+	private boolean						forceBind				= false;
 	private boolean						supportsIPv6withNIO		= true;
 	private boolean						supportsIPv6 = true;
 	private boolean						supportsIPv4 = true;
@@ -810,6 +811,7 @@ addressLoop:
 	{
 		boolean changed = false;
 		String 	bind_ip 	= COConfigurationManager.getStringParameter("Bind IP", "").trim();
+		
 		boolean enforceBind = COConfigurationManager.getBooleanParameter("Enforce Bind IP");
 		
 		if ( enforceBind ){
@@ -830,6 +832,8 @@ addressLoop:
 				logged_bind_force_issue = false;
 			}
 		}
+		
+		forceBind = enforceBind;
 		
 		InetAddress[] addrs = calcBindAddresses(bind_ip, enforceBind);
 		changed = !Arrays.equals(currentBindIPs, addrs);
@@ -1340,50 +1344,80 @@ addressLoop:
 	private static InetAddress[]		gdpa_lock = { null };
 	private static AESemaphore			gdpa_sem;
 	private static long					gdpa_last_fail;
+	private static long					gdpa_last_lookup;
+	private static AESemaphore			gdpa_initial_sem = new AESemaphore( "gdpa:init" );
 	
 	public InetAddress
 	getDefaultPublicAddress()
 	{
+		return( getDefaultPublicAddress( false ));
+	}
+	
+	public InetAddress
+	getDefaultPublicAddress(
+		boolean		peek )
+	{
 		final AESemaphore	sem;
 				
 		synchronized( gdpa_lock ){
+				
+			long	now = SystemTime.getMonotonousTime();
 						
 			if ( gdpa_sem == null ){
+			
+				boolean	do_lookup = true;
 				
-				gdpa_sem = sem = new AESemaphore( "getDefaultPublicAddress");
-				
-				new AEThread2( "getDefaultPublicAddress" )
-				{
-					public void
-					run()
-					{
-						InetAddress address = null;
+				if ( peek ){
+					
+					if ( gdpa_last_lookup != 0 && now - gdpa_last_lookup <= 60*1000 ){
 						
-						try{
-							Utilities utils = PluginInitializer.getDefaultInterface().getUtilities();
+						do_lookup = false;
+					}
+				}
+
+				if ( do_lookup ){
+										
+					gdpa_last_lookup = now;
+					
+					gdpa_sem = sem = new AESemaphore( "getDefaultPublicAddress");
+									
+					new AEThread2( "getDefaultPublicAddress" )
+					{
+						public void
+						run()
+						{
+							InetAddress address = null;
 							
-							address = utils.getPublicAddress();
-							
-							if ( address == null ){
+							try{
+								Utilities utils = PluginInitializer.getDefaultInterface().getUtilities();
 								
-								address = utils.getPublicAddress( true );
-							}
-						}catch( Throwable e ){
-							
-						}finally{
-							
-							synchronized( gdpa_lock ){
+								address = utils.getPublicAddress();
 								
-								gdpa_lock[0]	= address;	
-																
-								sem.releaseForever();
+								if ( address == null ){
+									
+									address = utils.getPublicAddress( true );
+								}
+							}catch( Throwable e ){
 								
-								gdpa_sem = null;
+							}finally{
+								
+								synchronized( gdpa_lock ){
+									
+									gdpa_lock[0]	= address;	
+																	
+									sem.releaseForever();
+									
+									gdpa_sem = null;
+									
+									gdpa_initial_sem.releaseForever();
+								}
 							}
 						}
-					}
-				}.start();
-				
+					}.start();
+				}else{
+					
+					sem = null;		// no lookup this time around - we're peeking
+				}
 			}else{
 				
 				sem = gdpa_sem;
@@ -1395,27 +1429,51 @@ addressLoop:
 			}
 		}
 
-			// in case things block - yes, they can do :(
-		
-		boolean	worked = sem.reserve( 10*1000 );
-		
-		synchronized( gdpa_lock ){
-				
-			if ( worked ){
-				
-				gdpa_last_fail = 0;
-				
-			}else{
-				
-				gdpa_last_fail = SystemTime.getMonotonousTime();
-			}
+		if ( peek ){
 			
-			return( gdpa_lock[0] );
+				// we're doing a peek and don't want to wait
+			
+			gdpa_initial_sem.reserve( 10*1000 );
+			
+			synchronized( gdpa_lock ){
+				
+				return( gdpa_lock[0] );
+			}
+		}else{
+				// in case things block - yes, they can do :(
+			
+			boolean	worked = sem.reserve( 10*1000 );
+			
+			synchronized( gdpa_lock ){
+					
+				if ( worked ){
+					
+					gdpa_last_fail = 0;
+					
+				}else{
+				
+					gdpa_initial_sem.releaseForever();
+					
+					gdpa_last_fail = SystemTime.getMonotonousTime();
+				}
+				
+				return( gdpa_lock[0] );
+			}
 		}
 	}
 	
 	@Override
-	public InetAddress getDefaultPublicAddressV6() {
+	public InetAddress 
+	getDefaultPublicAddressV6() 
+	{
+		return( getDefaultPublicAddressV6( false ));
+	}
+	
+	@Override
+	public InetAddress 
+	getDefaultPublicAddressV6(
+		boolean	peek ) 
+	{
 		if(!supportsIPv6)
 			return null;
 		
@@ -2509,6 +2567,13 @@ addressLoop:
 			
 			((AESemaphore)sems.get(i)).reserve();
 		}
+	}
+	
+	@Override
+	public boolean 
+	mustBind() 
+	{
+		return( forceBind );
 	}
 	
 	public boolean

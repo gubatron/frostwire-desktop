@@ -115,8 +115,17 @@ public class UrlFilter
 			}
 		}
 	}
-
+	
 	public void addUrlWhitelist(String string) {
+		addUrlWhitelistSupport( string );
+		
+		if ( string.contains( "://localhost" )){
+			
+			addUrlWhitelistSupport( string.replace( "://localhost", "://127.0.0.1" ));
+		}
+	}
+
+	private void addUrlWhitelistSupport(String string) {
 		mon.enter();
 		try {
 			if (!listUrlWhitelist.contains(string)) {
@@ -162,7 +171,7 @@ public class UrlFilter
 	}
 	
 	public boolean urlCanRPC(String url) {
-		return urlCanRPC(url, false);
+		return urlCanRPC(url, false );//Constants.isCVSVersion());
 	}
 
 	public boolean urlCanRPC(String url,boolean showDebug) {

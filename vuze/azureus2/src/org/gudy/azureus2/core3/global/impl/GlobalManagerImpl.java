@@ -214,6 +214,7 @@ public class GlobalManagerImpl
 	private volatile boolean 	isStopping;
 	private volatile boolean	destroyed;
 	private volatile boolean 	needsSaving = false;
+	private volatile long		needsSavingCozStateChanged;
   
 	private boolean seeding_only_mode 				= false;
 	private boolean potentially_seeding_only_mode	= false;
@@ -292,10 +293,39 @@ public class GlobalManagerImpl
 	        
 	        determineSaveResumeDataInterval();
 	        
-	        if (	( loopFactor % saveResumeLoopCount == 0 ) || 
-	        		( needsSaving && loadingComplete && loopFactor > initSaveResumeLoopCount )) {
-	          	
+	        if (( loopFactor % saveResumeLoopCount == 0 )){
+	        	
 	        	saveDownloads( true );
+	        	
+	        }else if ( loadingComplete && loopFactor > initSaveResumeLoopCount ){
+	          	
+	        	if ( needsSavingCozStateChanged > 0 ){
+	        	
+	        		int num_downloads = managers_cow.size();
+	        		
+	        		boolean	do_save = false;
+	        		
+	        		if ( num_downloads < 10 ){
+	        		
+	        			do_save = true;
+	        			
+	        		}else{
+	        		
+	        				// this save isn't that important so back off based on number of downloads as saving a lot of download's state
+	        				// takes some resources...
+	        			
+	        			long	now = SystemTime.getMonotonousTime();
+	        			
+	        			long	elapsed_secs = ( now - needsSavingCozStateChanged )/1000;
+	        			
+	        			do_save = elapsed_secs > num_downloads;
+	        		}
+	        		
+	        		if ( do_save ){
+	        		
+	        			saveDownloads( true );
+	        		}
+	        	}
 	        }
 	        	        
 	        if ((loopFactor % natCheckLoopCount == 0)) {
@@ -840,6 +870,24 @@ public class GlobalManagerImpl
 
 			if (manager == null || manager != new_manager) {
 				deleteDest = true;
+			}else{
+					// new torrent, see if it is add-stopped and we want to auto-pause
+				
+				if ( initialState == DownloadManager.STATE_STOPPED ){
+					
+					if ( COConfigurationManager.getBooleanParameter( "Default Start Torrents Stopped Auto Pause" )){
+						
+			         	try {
+			          		paused_list_mon.enter();
+			            
+			          		paused_list.add( new Object[]{ manager.getTorrent().getHashWrapper(), false });
+			          		
+				    	}finally{
+				    		
+				    		paused_list_mon.exit();  
+				    	}
+					}
+				}
 			}
 		} catch (IOException e) {
 			System.out.println("DownloadManager::addDownloadManager: fails - td = "
@@ -1263,7 +1311,7 @@ public class GlobalManagerImpl
 	  
   	canDownloadManagerBeRemoved( manager, remove_torrent, remove_data );
   	
-  	manager.stopIt(DownloadManager.STATE_STOPPED, remove_torrent, remove_data);
+  	manager.stopIt(DownloadManager.STATE_STOPPED, remove_torrent, remove_data, true );
   	
     try{
     	managers_mon.enter();
@@ -2057,7 +2105,9 @@ public class GlobalManagerImpl
 
     //    if(Boolean.getBoolean("debug")) return;
 
-	  needsSaving = false;
+	  needsSaving 					= false;
+	  needsSavingCozStateChanged 	= 0;
+	  
 	  if (this.cripple_downloads_config) {
 		  return;
 	  }
@@ -2730,7 +2780,10 @@ public class GlobalManagerImpl
 	DownloadManager 	manager, 
 	int 				new_state ) 
   {
-	  needsSaving = true;  //make sure we update 'downloads.config' on state changes
+	  if ( needsSavingCozStateChanged == 0  ){
+		  
+		  needsSavingCozStateChanged = SystemTime.getMonotonousTime(); //make sure we update 'downloads.config' on state changes
+	  }
 
 	  //run seeding-only-mode check
 
@@ -3870,6 +3923,11 @@ public class GlobalManagerImpl
 				}else{
 					
 					tag_incomplete.removeTaggable( manager );
+				}
+				
+				if ( tag_paused.hasTaggable( manager )){
+
+					tag_paused.removeTaggable( manager );
 				}
 			}	
 		}

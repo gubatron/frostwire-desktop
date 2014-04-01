@@ -3,7 +3,6 @@ package com.aelitis.azureus.ui.swt.shells.main;
 import java.util.Map;
 
 import org.eclipse.swt.widgets.Menu;
-
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.config.ParameterListener;
 import org.gudy.azureus2.core3.config.impl.ConfigurationChecker;
@@ -20,6 +19,8 @@ import org.gudy.azureus2.pluginsimpl.local.PluginInitializer;
 import org.gudy.azureus2.ui.swt.Utils;
 import org.gudy.azureus2.ui.swt.mainwindow.MenuFactory;
 import org.gudy.azureus2.ui.swt.views.ConfigView;
+import org.gudy.azureus2.ui.swt.views.LoggerView;
+import org.gudy.azureus2.ui.swt.views.PeersSuperView;
 import org.gudy.azureus2.ui.swt.views.stats.StatsView;
 
 import com.aelitis.azureus.core.AzureusCore;
@@ -137,6 +138,26 @@ public class MainMDISetup
 			}
 		});
 
+		mdi.registerEntry(PeersSuperView.VIEW_ID, new MdiEntryCreationListener() {
+			public MdiEntry createMDiEntry(String id) {
+				MdiEntry entry = mdi.createEntryFromEventListener(
+						MultipleDocumentInterface.SIDEBAR_HEADER_TRANSFERS, new PeersSuperView(),
+						id, true, null, null);
+				// TODO: come up with a better icon?
+				entry.setImageLeftID("image.sidebar.plugin");
+				return entry;
+			}
+		});
+		
+		mdi.registerEntry(LoggerView.VIEW_ID, new MdiEntryCreationListener() {
+			public MdiEntry createMDiEntry(String id) {
+				MdiEntry entry = mdi.createEntryFromEventListener(
+						MultipleDocumentInterface.SIDEBAR_HEADER_PLUGINS, new LoggerView(),
+						id, true, null, null);
+				return entry;
+			}
+		});
+
 		mdi.registerEntry(MultipleDocumentInterface.SIDEBAR_SECTION_TAGS,
 				new MdiEntryCreationListener() {
 					public MdiEntry createMDiEntry(String id) {
@@ -214,18 +235,8 @@ public class MainMDISetup
 		};
 		mdi.setPreferredOrder(preferredOrder);
 
-		boolean[] disableCollapses = {
-			true,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false
-		};
 		for (int i = 0; i < preferredOrder.length; i++) {
 			String id = preferredOrder[i];
-			final boolean disableCollapse = disableCollapses[i];
 			mdi.registerEntry(id, new MdiEntryCreationListener() {
 				public MdiEntry createMDiEntry(String id) {
 					MdiEntry entry = mdi.createHeader(id, "sidebar." + id, null);
@@ -235,11 +246,7 @@ public class MainMDISetup
 						return( null );
 					}
 					
-					if (disableCollapse) {
-						entry.setCollapseDisabled(true);
-					} else {
-						entry.setDefaultExpanded(true);
-					}
+					entry.setDefaultExpanded(true);
 
 					if (id.equals(MultipleDocumentInterface.SIDEBAR_HEADER_PLUGINS)) {
 						entry.addListener(new MdiChildCloseListener() {
@@ -311,7 +318,7 @@ public class MainMDISetup
 				}
 			});
 		}
-		
+			
 		mdi.registerEntry(MultipleDocumentInterface.SIDEBAR_SECTION_ABOUTPLUGINS,
 				new MdiEntryCreationListener() {
 					public MdiEntry createMDiEntry(String id) {

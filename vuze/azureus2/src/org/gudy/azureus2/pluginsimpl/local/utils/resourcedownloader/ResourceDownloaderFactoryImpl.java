@@ -29,12 +29,12 @@ package org.gudy.azureus2.pluginsimpl.local.utils.resourcedownloader;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.Proxy;
 import java.net.URI;
 import java.net.URL;
 import java.util.*;
 
 import org.gudy.azureus2.plugins.utils.resourcedownloader.*;
-
 import org.gudy.azureus2.core3.logging.*;
 
 public class 
@@ -85,10 +85,29 @@ ResourceDownloaderFactoryImpl
 		}
 	}
 	
+	public ResourceDownloader
+	createWithAutoPluginProxy(
+		URL			url )
+	{
+		ResourceDownloader rd = create(url);
+		if ( rd instanceof ResourceDownloaderURLImpl) {
+			((ResourceDownloaderURLImpl)rd).setAutoPluginProxy();
+		}
+		return rd;
+	}
+	
 	public ResourceDownloader create(URL url, boolean force_no_proxy) {
 		ResourceDownloader rd = create(url);
 		if (force_no_proxy && rd instanceof ResourceDownloaderURLImpl) {
 			((ResourceDownloaderURLImpl)rd).setForceNoProxy(force_no_proxy);
+		}
+		return rd;
+	}
+	
+	public ResourceDownloader create(URL url, Proxy proxy ) {
+		ResourceDownloader rd = create(url);
+		if (proxy != null && rd instanceof ResourceDownloaderURLImpl) {
+			((ResourceDownloaderURLImpl)rd).setForceProxy(proxy);
 		}
 		return rd;
 	}
@@ -99,6 +118,14 @@ ResourceDownloaderFactoryImpl
 		String 	postData )
 	{
 		return new ResourceDownloaderURLImpl(null, url, postData.getBytes(), false, null, null);
+	}
+	
+	public ResourceDownloader create(URL url, String postData, Proxy proxy ) {
+		ResourceDownloader rd = create(url,postData);
+		if (proxy != null && rd instanceof ResourceDownloaderURLImpl) {
+			((ResourceDownloaderURLImpl)rd).setForceProxy(proxy);
+		}
+		return rd;
 	}
 	
 	public ResourceDownloader

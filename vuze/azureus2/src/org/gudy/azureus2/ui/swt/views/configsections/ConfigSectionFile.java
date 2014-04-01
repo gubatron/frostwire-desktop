@@ -32,8 +32,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.*;
-
 import org.gudy.azureus2.core3.config.COConfigurationManager;
+import org.gudy.azureus2.core3.config.ParameterListener;
 import org.gudy.azureus2.core3.config.impl.ConfigurationDefaults;
 import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
@@ -93,7 +93,7 @@ public class ConfigSectionFile
 		int userMode = COConfigurationManager.getIntParameter("User Mode");
 
 		// Default Dir Section
-		Group gDefaultDir = new Group(gFile, SWT.NONE);
+		final Group gDefaultDir = new Group(gFile, SWT.NONE);
 		Messages.setLanguageText(gDefaultDir,
 				"ConfigView.section.file.defaultdir.section");
 		layout = new GridLayout();
@@ -182,20 +182,56 @@ public class ConfigSectionFile
 			gridData = new GridData(GridData.FILL_HORIZONTAL);
 			gridData.horizontalSpan = 3;
 			autoSaveAutoRename.setLayoutData(gridData);
-			IAdditionalActionPerformer aapDefaultDirStuff3 = new ChangeSelectionActionPerformer(
-					autoSaveAutoRename.getControls(), false);
+			//IAdditionalActionPerformer aapDefaultDirStuff3 = new ChangeSelectionActionPerformer(
+			//		autoSaveAutoRename.getControls(), false);
 
 			// def dir: best guess
 			sCurConfigID = "DefaultDir.BestGuess";
 			allConfigIDs.add(sCurConfigID);
-			BooleanParameter bestGuess = new BooleanParameter(gDefaultDir,
+			final BooleanParameter bestGuess = new BooleanParameter(gDefaultDir,
 					sCurConfigID, "ConfigView.section.file.defaultdir.bestguess");
 			gridData = new GridData(GridData.FILL_HORIZONTAL);
 			gridData.horizontalSpan = 3;
 			bestGuess.setLayoutData(gridData);
 
-			IAdditionalActionPerformer aapDefaultDirStuff = new ChangeSelectionActionPerformer(
-					bestGuess.getControls(), true);
+				// best guess default dir
+			sCurConfigID = "DefaultDir.BestGuess.Default";
+			allConfigIDs.add(sCurConfigID);
+			final Label lblBestGuessDefaultDir = new Label(gDefaultDir, SWT.NONE);
+			Messages.setLanguageText(lblBestGuessDefaultDir,
+					"ConfigView.section.file.bgdefaultdir.ask");
+			gridData = new GridData();
+			gridData.horizontalIndent=25;
+			lblBestGuessDefaultDir.setLayoutData(gridData);
+
+			gridData = new GridData(GridData.FILL_HORIZONTAL);
+			final StringParameter bestGuessPathParameter = new StringParameter(gDefaultDir,
+					sCurConfigID);
+			bestGuessPathParameter.setLayoutData(gridData);
+
+			final Button bestGuessBrowse = new Button(gDefaultDir, SWT.PUSH);
+			bestGuessBrowse.setImage(imgOpenFolder);
+			bestGuessBrowse.setToolTipText(MessageText.getString("ConfigView.button.browse"));
+
+			bestGuessBrowse.addListener(SWT.Selection, new Listener() {
+				/* (non-Javadoc)
+				 * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
+				 */
+				public void handleEvent(Event event) {
+					DirectoryDialog dialog = new DirectoryDialog(parent.getShell(),
+							SWT.APPLICATION_MODAL);
+					dialog.setFilterPath(pathParameter.getValue());
+					dialog.setMessage(MessageText.getString("ConfigView.dialog.choosedefaultsavepath"));
+					dialog.setText(MessageText.getString("ConfigView.section.file.defaultdir.ask"));
+					String path = dialog.open();
+					if (path != null) {
+						bestGuessPathParameter.setValue(path);
+					}
+				}
+			});
+			
+			//IAdditionalActionPerformer aapDefaultDirStuff = new ChangeSelectionActionPerformer(
+			//		bestGuess.getControls(), true);
 
 			// def dir: auto update
 			sCurConfigID = "DefaultDir.AutoUpdate";
@@ -206,8 +242,32 @@ public class ConfigSectionFile
 			gridData.horizontalSpan = 3;
 			autoUpdateSaveDir.setLayoutData(gridData);
 
-			IAdditionalActionPerformer aapDefaultDirStuff2 = new ChangeSelectionActionPerformer(
-					autoUpdateSaveDir.getControls(), true);
+			//IAdditionalActionPerformer aapDefaultDirStuff2 = new ChangeSelectionActionPerformer(
+			//		autoUpdateSaveDir.getControls(), true);
+			
+			COConfigurationManager.addAndFireParameterListener(
+					"Default save path",
+					new ParameterListener() {
+						
+						public void parameterChanged(String parameterName) {
+						
+							if ( gDefaultDir.isDisposed()){
+								
+								COConfigurationManager.removeParameterListener(parameterName, this );
+								
+							}else{
+								
+								String dsp = COConfigurationManager.getStringParameter( parameterName );
+								
+								boolean enable = dsp == null || dsp.trim().length() == 0;
+								
+								bestGuess.setEnabled( enable );
+								lblBestGuessDefaultDir.setEnabled( enable );
+								bestGuessPathParameter.setEnabled( enable );
+								bestGuessBrowse.setEnabled( enable );
+							}
+						}
+					});
 		}
 
 		new Label(gFile, SWT.NONE);
@@ -655,6 +715,15 @@ public class ConfigSectionFile
 			gridData.horizontalSpan = 2;
 			new BooleanParameter(gDeletion, sCurConfigID,
 					"ConfigView.section.file.delete.include_files_outside_save_dir").setLayoutData(gridData);
+			
+			sCurConfigID = "Delete Partial Files On Library Removal";
+			allConfigIDs.add(sCurConfigID);
+
+			gridData = new GridData();
+			gridData.horizontalSpan = 2;
+			new BooleanParameter(gDeletion, sCurConfigID,
+					"delete.partial.files").setLayoutData(gridData);
+			
 		}
 
 		if (userMode > 0) {

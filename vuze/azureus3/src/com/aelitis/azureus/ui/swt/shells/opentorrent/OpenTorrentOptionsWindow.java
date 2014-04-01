@@ -22,6 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Pattern;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -50,6 +51,8 @@ import org.gudy.azureus2.plugins.ui.UIInputReceiverListener;
 import org.gudy.azureus2.plugins.ui.tables.TableColumn;
 import org.gudy.azureus2.plugins.ui.tables.TableColumnCreationListener;
 import org.gudy.azureus2.ui.swt.*;
+import org.gudy.azureus2.ui.swt.config.generic.GenericIntParameter;
+import org.gudy.azureus2.ui.swt.config.generic.GenericParameterAdapter;
 import org.gudy.azureus2.ui.swt.mainwindow.Colors;
 import org.gudy.azureus2.ui.swt.mainwindow.SWTThread;
 import org.gudy.azureus2.ui.swt.mainwindow.TorrentOpener;
@@ -69,11 +72,13 @@ import com.aelitis.azureus.core.tag.TagFeatureFileLocation;
 import com.aelitis.azureus.core.tag.TagManagerFactory;
 import com.aelitis.azureus.core.tag.TagType;
 import com.aelitis.azureus.core.tag.TagTypeListener;
+import com.aelitis.azureus.core.util.RegExUtil;
 import com.aelitis.azureus.ui.IUIIntializer;
 import com.aelitis.azureus.ui.InitializerListener;
 import com.aelitis.azureus.ui.UIFunctionsManager;
 import com.aelitis.azureus.ui.common.table.TableRowCore;
 import com.aelitis.azureus.ui.common.table.TableSelectionListener;
+import com.aelitis.azureus.ui.common.table.TableViewFilterCheck;
 import com.aelitis.azureus.ui.common.table.impl.TableColumnManager;
 import com.aelitis.azureus.ui.common.updater.UIUpdatable;
 import com.aelitis.azureus.ui.swt.imageloader.ImageLoader;
@@ -1326,6 +1331,7 @@ public class OpenTorrentOptionsWindow
 	
 	protected class
 	OpenTorrentInstance
+		implements TableViewFilterCheck<TorrentOpenFileOptions>
 	{
 		final private HashWrapper						hash;
 		final private TorrentOpenOptions 				torrentOptions;
@@ -1370,7 +1376,7 @@ public class OpenTorrentOptionsWindow
 
 		private SWTSkinObjectText soFileAreaInfo;
 
-		private TableViewSWT<Object> tvFiles;
+		private TableViewSWT<TorrentOpenFileOptions> tvFiles;
 
 		private SWTSkinObjectExpandItem soStartOptionsExpandItem;
 
@@ -1485,7 +1491,7 @@ public class OpenTorrentOptionsWindow
 			if ( torrentOptions != null ){
 				SWTSkinObject so = skin.getSkinObject("filearea-table");
 				if (so instanceof SWTSkinObjectContainer) {
-					setupTVFiles((SWTSkinObjectContainer) so);
+					setupTVFiles((SWTSkinObjectContainer) so, (SWTSkinObjectTextbox)skin.getSkinObject("filearea-filter"));
 				}
 		
 				so = skin.getSkinObject("filearea-buttons");
@@ -1523,6 +1529,11 @@ public class OpenTorrentOptionsWindow
 					setupTrackers((SWTSkinObjectContainer) so);
 				}
 				
+				so = skin.getSkinObject("updownlimit");
+				if (so instanceof SWTSkinObjectContainer) {
+					setupUpDownLimitOption((SWTSkinObjectContainer) so);
+				}
+			
 				so = skin.getSkinObject("ipfilter");
 				if (so instanceof SWTSkinObjectContainer) {
 					setupIPFilterOption((SWTSkinObjectContainer) so);
@@ -2190,7 +2201,7 @@ public class OpenTorrentOptionsWindow
 				}, false );
 		}
 	
-		private void setupTVFiles(SWTSkinObjectContainer soFilesTable) {
+		private void setupTVFiles(SWTSkinObjectContainer soFilesTable, SWTSkinObjectTextbox soFilesFilter ) {
 			TableColumnManager tcm = TableColumnManager.getInstance();
 			if (tcm.getDefaultColumnNames(TABLEID_FILES) == null) {
 				tcm.registerColumn(TorrentOpenFileOptions.class,
@@ -2256,6 +2267,21 @@ public class OpenTorrentOptionsWindow
 			tvFiles.initialize(soFilesTable.getComposite());
 			tvFiles.setRowDefaultHeight(20);
 	
+			if ( torrentOptions.getFiles().length > 1 && soFilesFilter != null ){
+				
+				soFilesFilter.setVisible( true );
+				
+				Text text = soFilesFilter.getTextControl();
+								
+				tvFiles.enableFilterCheck(text, this);
+		
+			}else{
+				if ( soFilesFilter != null ){
+					
+					soFilesFilter.setVisible( false );
+				}
+			}
+			
 			tvFiles.addKeyListener(new KeyListener() {
 	
 				public void keyPressed(KeyEvent e) {
@@ -2578,6 +2604,47 @@ public class OpenTorrentOptionsWindow
 			tvFiles.addDataSources(torrentOptions.getFiles());
 		}
 	
+		public boolean 
+		filterCheck(
+			TorrentOpenFileOptions 	ds, 
+			String 					filter, 
+			boolean 				regex )
+		{
+			if ( filter == null || filter.length() == 0 ){
+				
+				return( true );
+			}
+			
+			try {
+				File file = ds.getDestFileFullName();
+
+				String name = filter.contains( File.separator )?file.getAbsolutePath():file.getName();
+				
+				String s = regex ? filter : "\\Q" + filter.replaceAll("[|;]", "\\\\E|\\\\Q") + "\\E";
+				
+				boolean	match_result = true;
+				
+				if ( regex && s.startsWith( "!" )){
+					
+					s = s.substring(1);
+					
+					match_result = false;
+				}
+				
+				Pattern pattern = RegExUtil.getCachedPattern( "fv:search", s, Pattern.CASE_INSENSITIVE);
+	  
+				return( pattern.matcher(name).find() == match_result );
+				
+			} catch (Exception e) {
+				
+				return true;
+			}	
+		}
+		
+		public void filterSet(String filter)
+		{
+		}
+		
 		protected void updateFileButtons() {
 			Utils.execSWTThread(new AERunnable() {
 				public void runSupport() {
@@ -2943,10 +3010,60 @@ public class OpenTorrentOptionsWindow
 				}});
 		}
 		
+		private void setupUpDownLimitOption(SWTSkinObjectContainer so) {
+			Composite parent = so.getComposite();
+	
+			parent.setBackgroundMode( SWT.INHERIT_FORCE );	// win 7 classic theme shows grey background without this
+			parent.setLayout( new GridLayout(4, false));
+			
+			GridData gridData = new GridData();
+			Label label = new Label(parent, SWT.NULL);
+			label.setText( MessageText.getString( "TableColumn.header.maxupspeed") + "[" + DisplayFormatters.getRateUnit(DisplayFormatters.UNIT_KB  ) + "]" );
+
+			gridData = new GridData();
+			GenericIntParameter paramMaxUploadSpeed = 
+				new GenericIntParameter(
+					new IntAdapter()
+					{
+						public void
+						setIntValue(
+							String	key,
+							int		value )
+						{
+							torrentOptions.setMaxUploadSpeed( value );
+						}
+					},
+					parent,
+					"torrentoptions.config.uploadspeed", 0, -1);
+			
+			paramMaxUploadSpeed.setLayoutData(gridData);
+
+			label = new Label(parent, SWT.NULL);
+			label.setText( MessageText.getString( "TableColumn.header.maxdownspeed") + "[" + DisplayFormatters.getRateUnit(DisplayFormatters.UNIT_KB  ) + "]" );
+
+			gridData = new GridData();
+			GenericIntParameter paramMaxDownloadSpeed = 
+				new GenericIntParameter(
+					new IntAdapter()
+					{
+						public void
+						setIntValue(
+							String	key,
+							int		value )
+						{
+							torrentOptions.setMaxDownloadSpeed( value );
+						}
+					},
+					parent,
+					"torrentoptions.config.downloadspeed", 0, -1);
+			
+			paramMaxDownloadSpeed.setLayoutData(gridData);
+		}
+		
 		private void setupIPFilterOption(SWTSkinObjectContainer so) {
 			Composite parent = so.getComposite();
 	
-			parent.setBackgroundMode( SWT.INHERIT_FORCE );	// win 7 classic theme sows grey background without this
+			parent.setBackgroundMode( SWT.INHERIT_FORCE );	// win 7 classic theme shows grey background without this
 			parent.setLayout( new GridLayout());
 			
 			Button button = new Button(parent, SWT.CHECK | SWT.WRAP );
@@ -2966,7 +3083,7 @@ public class OpenTorrentOptionsWindow
 	
 		private void setupPeerSourcesOptions(SWTSkinObjectContainer so) {
 			Composite parent = so.getComposite();
-			parent.setBackgroundMode( SWT.INHERIT_FORCE );	// win 7 classic theme sows grey background without this
+			parent.setBackgroundMode( SWT.INHERIT_FORCE );	// win 7 classic theme shows grey background without this
 
 			Group peer_sources_group = new Group(parent, SWT.NULL);
 			Messages.setLanguageText(peer_sources_group,
@@ -3232,30 +3349,30 @@ public class OpenTorrentOptionsWindow
 	
 		private boolean 
 		okPressed(
-			String dataDir) 
+			String dataDirPassed) 
 		{
-			File file = new File(dataDir);
+			File filePassed = new File(dataDirPassed);
 	
 			File fileDefSavePath = new File(
 					COConfigurationManager.getStringParameter(PARAM_DEFSAVEPATH));
 	
-			if (file.equals(fileDefSavePath) && !fileDefSavePath.isDirectory()) {
+			if (filePassed.equals(fileDefSavePath) && !fileDefSavePath.isDirectory()) {
 				FileUtil.mkdirs(fileDefSavePath);
 			}
 	
-			boolean isPathInvalid = dataDir.length() == 0 || file.isFile();
-			if (!isPathInvalid && !file.isDirectory()) {
+			boolean isPathInvalid = dataDirPassed.length() == 0 || filePassed.isFile();
+			if (!isPathInvalid && !filePassed.isDirectory()) {
 				MessageBoxShell mb = new MessageBoxShell(SWT.YES | SWT.NO
 						| SWT.ICON_QUESTION, "OpenTorrentWindow.mb.askCreateDir",
 						new String[] {
-							file.toString()
+							filePassed.toString()
 						});
 				mb.setParent(shell);
 				mb.open(null);
 				int doCreate = mb.waitUntilClosed();
 	
 				if (doCreate == SWT.YES)
-					isPathInvalid = !FileUtil.mkdirs(file);
+					isPathInvalid = !FileUtil.mkdirs(filePassed);
 				else {
 					cmbDataDir.setFocus();
 					return false;
@@ -3265,7 +3382,7 @@ public class OpenTorrentOptionsWindow
 			if (isPathInvalid) {
 				MessageBoxShell mb = new MessageBoxShell(SWT.OK | SWT.ICON_ERROR,
 						"OpenTorrentWindow.mb.noGlobalDestDir", new String[] {
-							file.toString()
+							filePassed.toString()
 						});
 				mb.setParent(shell);
 				mb.open(null);
@@ -3276,7 +3393,7 @@ public class OpenTorrentOptionsWindow
 			String sExistingFiles = "";
 			int iNumExistingFiles = 0;
 	
-			file = new File(torrentOptions.getDataDir());
+			File torrentOptionsDataDir = new File(torrentOptions.getDataDir());
 	
 			// Need to make directory now, or single file torrent will take the 
 			// "dest dir" as their filename.  ie:
@@ -3284,18 +3401,23 @@ public class OpenTorrentOptionsWindow
 			// 2) type a non-existant directory c:\test\moo
 			// 3) unselect the torrent
 			// 4) change the global def directory to a real one
-			// 5) click ok.  "hi.exe" will be written as moo in c:\test			
-			if (!file.isDirectory() && !FileUtil.mkdirs(file)) {
+			// 5) click ok.  "hi.exe" will be written as moo in c:\test		
+	
+			if ( !torrentOptions.isSimpleTorrent()){
+				torrentOptionsDataDir = torrentOptionsDataDir.getParentFile();	// for non-simple this points to the top folder in downoad
+			}
+			
+			if (!torrentOptionsDataDir.isDirectory() && !FileUtil.mkdirs(torrentOptionsDataDir)) {
 				MessageBoxShell mb = new MessageBoxShell(SWT.OK | SWT.ICON_ERROR,
 						"OpenTorrentWindow.mb.noDestDir", new String[] {
-							file.toString(),
+						torrentOptionsDataDir.toString(),
 							torrentOptions.getTorrentName()
 						});
 				mb.setParent(shell);
 				mb.open(null);
 				return false;
 			}
-	
+
 			if (!torrentOptions.isValid) {
 				MessageBoxShell mb = new MessageBoxShell(SWT.OK | SWT.ICON_ERROR,
 						"OpenTorrentWindow.mb.notValid", new String[] {
@@ -3420,5 +3542,33 @@ public class OpenTorrentOptionsWindow
 		public void
 		instanceChanged(
 			OpenTorrentInstance		instance );
+	}
+	
+	private class
+	IntAdapter
+		extends GenericParameterAdapter
+	{
+		public int
+		getIntValue(
+			String	key )
+		{
+			return( 0 );
+		}
+		
+		public int
+		getIntValue(
+			String	key,
+			int		def )
+		{
+			return( def );
+		}
+		
+		
+		public boolean
+		resetIntDefault(
+			String	key )
+		{
+			return( false );
+		}	
 	}
 }

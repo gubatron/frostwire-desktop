@@ -23,6 +23,8 @@
 package org.gudy.azureus2.core3.torrentdownloader;
 
 import java.io.File;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.gudy.azureus2.core3.global.GlobalManager;
@@ -30,6 +32,9 @@ import org.gudy.azureus2.core3.torrentdownloader.impl.TorrentDownloaderImpl;
 import org.gudy.azureus2.core3.torrentdownloader.impl.TorrentDownloaderManager;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.UrlUtils;
+
+import com.aelitis.azureus.core.proxy.AEProxyFactory;
+import com.aelitis.azureus.core.proxy.AEProxyFactory.PluginProxy;
 
 /**
  *
@@ -170,6 +175,8 @@ public class TorrentDownloaderFactory {
 		private volatile boolean	irc_set;
 		private volatile boolean	irc;
 		
+		private volatile String		original_error;
+		
   		private
   		TorrentDownloadRetrier(
   			final TorrentDownloaderCallBackInterface 	_callback, 
@@ -194,7 +201,10 @@ public class TorrentDownloaderFactory {
   					
   					private boolean	init_reported 		= false;
   					private boolean	start_reported		= false;
-  					private boolean	 finish_reported	= false;
+  					private boolean	finish_reported		= false;
+  					
+  					private boolean			proxy_tried = false;
+  					private PluginProxy		plugin_proxy;
   					
   					public void 
   					TorrentDownloaderEvent(
@@ -206,6 +216,26 @@ public class TorrentDownloaderFactory {
   							return;
   						}
   						
+  						if ( state == STATE_ERROR ){
+  							
+  							if ( original_error == null ){
+  								
+  								original_error = delegate.getError();
+  							}
+  						}
+  						
+  						if (	plugin_proxy != null &&
+  								(	state == STATE_FINISHED ||
+  									state == STATE_DUPLICATE ||
+  									state == STATE_CANCELLED ||
+  									state == STATE_ERROR )){
+  										
+  							plugin_proxy.setOK( state != STATE_ERROR );
+  							
+  							plugin_proxy = null;
+  						}
+  					
+  									
   						synchronized( this ){
   							
 	  						if ( state == STATE_INIT ){
@@ -270,8 +300,59 @@ public class TorrentDownloaderFactory {
   						
   						if ( state == STATE_ERROR ){
   							
-  							String lc_url = url.toLowerCase().trim();
-  							
+ 							String lc_url = url.toLowerCase().trim();
+
+  							if ( !proxy_tried ){
+  								
+  								proxy_tried = true;
+  								
+  	  							if ( lc_url.startsWith( "http" )){
+
+  	  								try{
+  	  									URL original_url = new URL( url );
+  	  									
+  	  									plugin_proxy = AEProxyFactory.getPluginProxy( "loading plugin details", original_url );
+  	  									
+  	  									if ( plugin_proxy != null ){
+  	  										
+	  	  									delegate = TorrentDownloaderFactory.getClass( logged );  		  
+	  	  	  				  			
+	  	  									if ( sdp_set ){
+	  	  	  				 				
+	  	  										delegate.setDownloadPath( sdp_path, sdp_file );
+	  	  									}
+	  	  	  				 			
+		  	  	  				 			if ( dfoc_set ){
+		  	  	  				 				
+		  	  	  				 				delegate.setDeleteFileOnCancel( dfoc );
+		  	  	  				 			}
+		  	  	  				 			
+		  	  	  				 			if ( irc_set ){
+		  	  	  				 				
+		  	  	  				 				delegate.setIgnoreReponseCode( irc );
+		  	  	  				 			}
+		  	  	  				 			
+		  	  	  				 			Map props = new HashMap();
+		  	  	  				 			
+		  	  	  				 			if ( request_properties != null ){
+		  	  	  				 				
+		  	  	  				 				props.putAll( request_properties );
+		  	  	  				 			}
+		  	  	  				 			
+		  	  	  				 			props.put( "HOST", plugin_proxy.getURLHostRewrite() + (original_url.getPort()==-1?"":(":"+original_url.getPort())));
+		  	  	  				 			
+		  	  	  				  			delegate.init( this, plugin_proxy.getURL().toExternalForm(), plugin_proxy.getProxy(), referrer, props, fileordir );
+		  	  	  				  				  	  	  							
+		  	  	  							delegate.start();
+		  	  	  							
+		  	  	  							return;
+  	  									}
+  	  								}catch( Throwable e ){
+  	  									
+  	  								}
+  	  							}
+  							}
+   							
   							String	retry_url = null;
   							
   							if ( lc_url.startsWith( "http" )){
@@ -298,7 +379,7 @@ public class TorrentDownloaderFactory {
 	  				 				delegate.setIgnoreReponseCode( irc );
 	  				 			}
 	  				 			
-	  				  			delegate.init( this, retry_url, referrer, request_properties, fileordir );
+	  				  			delegate.init( this, retry_url, null, referrer, request_properties, fileordir );
 	  				  			
 	  							no_retry	= true;
 	  							
@@ -322,7 +403,7 @@ public class TorrentDownloaderFactory {
 
   			delegate = TorrentDownloaderFactory.getClass( logged );  		  
   			
-  			delegate.init( callback, url, referrer, request_properties, fileordir );
+  			delegate.init( callback, url, null, referrer, request_properties, fileordir );
   		}
   		
   		public void 
@@ -378,6 +459,11 @@ public class TorrentDownloaderFactory {
   		public String 
   		getError()
   		{
+  			if ( original_error != null ){
+  				
+  				return( original_error );
+  			}
+  			
   			return( delegate.getError());
   		}
   		

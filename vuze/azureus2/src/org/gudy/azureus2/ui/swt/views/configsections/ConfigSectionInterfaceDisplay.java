@@ -25,25 +25,31 @@
 package org.gudy.azureus2.ui.swt.views.configsections;
 
 import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
-
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.internat.MessageText;
+import org.gudy.azureus2.core3.util.AEThread2;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.FileUtil;
 import org.gudy.azureus2.platform.PlatformManagerCapabilities;
 import org.gudy.azureus2.platform.PlatformManagerFactory;
+import org.gudy.azureus2.plugins.PluginInterface;
 import org.gudy.azureus2.plugins.ui.config.ConfigSection;
 import org.gudy.azureus2.ui.swt.Messages;
+import org.gudy.azureus2.ui.swt.Utils;
 import org.gudy.azureus2.ui.swt.config.*;
 import org.gudy.azureus2.ui.swt.plugins.UISWTConfigSection;
 
-import com.aelitis.azureus.core.util.AZ3Functions;
+import com.aelitis.azureus.core.AzureusCoreFactory;
+import com.aelitis.azureus.core.proxy.AEProxyFactory;
+
 
 public class ConfigSectionInterfaceDisplay implements UISWTConfigSection {
 	private final static String MSG_PREFIX = "ConfigView.section.style.";
@@ -100,7 +106,7 @@ public class ConfigSectionInterfaceDisplay implements UISWTConfigSection {
 
 		new BooleanParameter(gVarious, "Add URL Silently", MSG_PREFIX	+ "addurlsilently");
 
-		new BooleanParameter(gVarious, "suppress_file_download_dialog", "ConfigView.section.interface.display.suppress.file.download.dialog");
+		//new BooleanParameter(gVarious, "suppress_file_download_dialog", "ConfigView.section.interface.display.suppress.file.download.dialog");
 
 		new BooleanParameter(gVarious, "show_torrents_menu", "Menu.show.torrent.menu");
 
@@ -257,16 +263,385 @@ public class ConfigSectionInterfaceDisplay implements UISWTConfigSection {
 					MSG_PREFIX + "separateProtDataStats");
 		}
 		
-		if( userMode > 1 ) {
-			Group gBrowser = new Group(cSection, SWT.NULL);
+			// external browser
+			
+		if( userMode > 0 ) {
+			Group gExternalBrowser = new Group(cSection, SWT.NULL);
 			layout = new GridLayout();
 			layout.numColumns = 1;
-			gBrowser.setLayout(layout);
-			gBrowser.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			gExternalBrowser.setLayout(layout);
+			gExternalBrowser.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 			
-			gBrowser.setText( MessageText.getString( "label.browser" ));
-			final BooleanParameter fMoz = new BooleanParameter(gBrowser, "swt.forceMozilla",MSG_PREFIX + "forceMozilla");
-			Composite pArea = new Composite(gBrowser,SWT.NULL);
+			gExternalBrowser.setText( MessageText.getString( "config.external.browser" ));
+			
+			label = new Label(gExternalBrowser, SWT.NULL);
+			Messages.setLanguageText(label, "config.external.browser.info1");
+			label = new Label(gExternalBrowser, SWT.NULL);
+			Messages.setLanguageText(label, "config.external.browser.info2");
+			
+				// browser selection
+
+			final java.util.List<String[]> browser_choices = new ArrayList<String[]>(); 
+				
+			browser_choices.add( 
+					new String[]{ "system",  MessageText.getString( "external.browser.system" ) });
+			browser_choices.add( 
+					new String[]{ "manual",  MessageText.getString( "external.browser.manual" ) });
+			
+			java.util.List<PluginInterface> pis = 
+					AzureusCoreFactory.getSingleton().getPluginManager().getPluginsWithMethod(
+						"launchURL", 
+						new Class[]{ URL.class, boolean.class, Runnable.class });
+			
+			for ( PluginInterface pi: pis ){
+				
+				browser_choices.add( 
+						new String[]{ "plugin:" + pi.getPluginID(),  pi.getPluginName() });
+				
+			}
+			final Composite cEBArea = new Composite(gExternalBrowser, SWT.WRAP);
+			gridData = new GridData( GridData.FILL_HORIZONTAL);
+			cEBArea.setLayoutData(gridData);
+			layout = new GridLayout();
+			layout.numColumns = 2;
+			layout.marginHeight = 0;
+			cEBArea.setLayout(layout);
+			
+			label = new Label(cEBArea, SWT.NULL);
+			Messages.setLanguageText(label, "config.external.browser.select");
+
+			final Composite cEB = new Group(cEBArea, SWT.WRAP);
+			gridData = new GridData( GridData.FILL_HORIZONTAL);
+			cEB.setLayoutData(gridData);
+			layout = new GridLayout();
+			layout.numColumns = browser_choices.size();
+			layout.marginHeight = 0;
+			cEB.setLayout(layout);
+
+			java.util.List<Button> buttons = new ArrayList<Button>();
+			
+			for ( int i=0;i< browser_choices.size(); i++ ){
+				Button button = new Button ( cEB, SWT.RADIO );
+				button.setText( browser_choices.get(i)[1] );
+				button.setData("index", String.valueOf(i));
+			
+				buttons.add( button );
+			}
+					
+			String existing = COConfigurationManager.getStringParameter( "browser.external.id", browser_choices.get(0)[0] );
+			
+			int existing_index = -1;
+			
+			for ( int i=0; i<browser_choices.size();i++){
+				
+				if ( browser_choices.get(i)[0].equals( existing )){
+					
+					existing_index = i;
+							
+					break;
+				}
+			}
+			
+			if ( existing_index == -1 ){
+				
+				existing_index = 0;
+				
+				COConfigurationManager.setParameter( "browser.external.id", browser_choices.get(0)[0] );
+			}
+			
+			buttons.get(existing_index).setSelection( true );
+			
+			Messages.setLanguageText(new Label(cEBArea,SWT.NONE), "config.external.browser.prog" );
+			
+			Composite manualArea = new Composite(cEBArea,SWT.NULL);
+			layout = new GridLayout(2,false);
+			layout.marginHeight = 0;
+			layout.marginWidth = 0;
+			manualArea.setLayout( layout);
+			manualArea.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+			final Parameter manualProg = new FileParameter(manualArea, "browser.external.prog","", new String[]{});
+
+			manualProg.setEnabled( existing_index == 1 );
+			
+		    Listener radioListener = 
+			    	new Listener () 
+			    	{
+			    		public void 
+			    		handleEvent(
+			    			Event event ) 
+			    		{	
+						    Button button = (Button)event.widget;
+
+						    if ( button.getSelection()){
+					    		Control [] children = cEB.getChildren ();
+					    		
+					    		for (int j=0; j<children.length; j++) {
+					    			 Control child = children [j];
+					    			 if ( child != button && child instanceof Button) {
+					    				 Button b = (Button) child;
+					    				
+					    				 b.setSelection (false);
+					    			 }
+					    		}
+								    
+							    int index = Integer.parseInt((String)button.getData("index"));
+						    
+							    COConfigurationManager.setParameter( "browser.external.id", browser_choices.get(index)[0] );
+							    
+							    manualProg.setEnabled( index == 1 );
+						    }
+					    }
+			    	};
+			
+			for ( Button b: buttons ){
+				
+				b.addListener( SWT.Selection, radioListener );
+			}
+			
+				// test launch
+			
+			Composite testArea = new Composite(gExternalBrowser,SWT.NULL);
+			layout = new GridLayout(3,false);
+			layout.marginHeight = 0;
+			testArea.setLayout(layout);
+			testArea.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+			label = new Label(testArea, SWT.NULL);
+			Messages.setLanguageText(label, "config.external.browser.test");
+
+		    final Button test_button = new Button(testArea, SWT.PUSH);
+		    
+		    Messages.setLanguageText(test_button, "configureWizard.nat.test");
+
+		    test_button.addListener(SWT.Selection, 
+		    		new Listener() 
+					{
+				        public void 
+						handleEvent(Event event) 
+				        {
+				        	test_button.setEnabled( false );
+				        	
+				        	new AEThread2( "async" )
+				        	{
+				        		public void
+				        		run()
+				        		{
+				        			try{
+				        				Utils.launch( "http://www.vuze.com/", true );
+				        				
+				        			}finally{
+				        				
+				        				Utils.execSWTThread(
+				        					new Runnable()
+				        					{
+				        						public void
+				        						run()
+				        						{
+				        							if (! test_button.isDisposed()){
+				        				
+				        								test_button.setEnabled( true );
+				        							}
+				        						}
+				        					});
+				        			}
+				        		}
+				        	}.start();
+				        }
+				    });
+			
+			label = new Label(testArea, SWT.NULL);
+			label.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+				// switch internal->external
+			
+			label = new Label(gExternalBrowser, SWT.NULL);
+			Messages.setLanguageText(label, "config.external.browser.switch.info");
+
+			Group switchArea = new Group(gExternalBrowser,SWT.NULL);
+			layout = new GridLayout(3,false);
+			//layout.marginHeight = 0;
+			//layout.marginWidth = 0;
+			switchArea.setLayout(layout);
+			switchArea.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+				// header
+			
+			label = new Label(switchArea, SWT.NULL);
+			Messages.setLanguageText(label, "config.external.browser.switch.feature");
+			label = new Label(switchArea, SWT.NULL);
+			Messages.setLanguageText(label, "config.external.browser.switch.external");
+			label = new Label(switchArea, SWT.NULL);
+			gridData = new GridData(GridData.FILL_HORIZONTAL);
+			gridData.horizontalIndent = 10;
+			label.setLayoutData(gridData);
+			Messages.setLanguageText(label, "config.external.browser.switch.implic");
+
+				// search 
+			
+			label = new Label(switchArea, SWT.NULL);
+			gridData = new GridData();
+			gridData.verticalIndent = 10;
+			label.setLayoutData(gridData);
+			Messages.setLanguageText(label, "config.external.browser.switch.search");
+			
+			BooleanParameter switchSearch = new BooleanParameter(switchArea, "browser.external.search" );
+			gridData = new GridData();
+			gridData.verticalIndent = 10;
+			gridData.horizontalAlignment = SWT.CENTER;
+			switchSearch.setLayoutData(gridData);
+			
+			label = new Label(switchArea, SWT.NULL);
+			gridData = new GridData(GridData.FILL_HORIZONTAL);
+			gridData.verticalIndent = 10;
+			gridData.horizontalIndent = 10;
+			label.setLayoutData(gridData);
+			Messages.setLanguageText(label, "config.external.browser.switch.search.inf");
+
+				// subscriptions
+			
+			label = new Label(switchArea, SWT.NULL);
+			gridData = new GridData();
+			label.setLayoutData(gridData);
+			Messages.setLanguageText(label, "config.external.browser.switch.subs");
+			
+			BooleanParameter switchSubs = new BooleanParameter(switchArea, "browser.external.subs" );
+			gridData = new GridData();
+			gridData.horizontalAlignment = SWT.CENTER;
+			switchSubs.setLayoutData(gridData);
+			
+			label = new Label(switchArea, SWT.NULL);
+			gridData = new GridData(GridData.FILL_HORIZONTAL);
+			gridData.horizontalIndent = 10;
+			label.setLayoutData(gridData);
+			Messages.setLanguageText(label, "config.external.browser.switch.subs.inf");
+		}
+		
+			// internal browser
+		
+		if( userMode > 1 ) {
+			Group gInternalBrowser = new Group(cSection, SWT.NULL);
+			layout = new GridLayout();
+			layout.numColumns = 1;
+			gInternalBrowser.setLayout(layout);
+			gInternalBrowser.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			
+			gInternalBrowser.setText( MessageText.getString( "config.internal.browser" ));
+			
+			label = new Label(gInternalBrowser, SWT.NULL);
+			Messages.setLanguageText(label, "config.internal.browser.info1");
+
+			label = new Label(gInternalBrowser, SWT.NULL);
+			Messages.setLanguageText(label, "config.internal.browser.info3");
+			
+			java.util.List<PluginInterface> pis = AEProxyFactory.getPluginHTTPProxyProviders( true ); 
+					
+			final java.util.List<String[]> proxy_choices = new ArrayList<String[]>(); 
+
+			proxy_choices.add( 
+					new String[]{ "none",  MessageText.getString( "PeersView.uniquepiece.none" ) });
+
+			for ( PluginInterface pi: pis ){
+				
+				proxy_choices.add( 
+						new String[]{ "plugin:" + pi.getPluginID(),  pi.getPluginName() });
+				
+			}
+			
+			final Composite cIPArea = new Composite(gInternalBrowser, SWT.WRAP);
+			gridData = new GridData( GridData.FILL_HORIZONTAL);
+			cIPArea.setLayoutData(gridData);
+			layout = new GridLayout();
+			layout.numColumns = 2;
+			layout.marginHeight = 0;
+			cIPArea.setLayout(layout);
+			
+			label = new Label(cIPArea, SWT.NULL);
+			Messages.setLanguageText(label, "config.internal.browser.proxy.select");
+
+			final Composite cIP = new Group(cIPArea, SWT.WRAP);
+			gridData = new GridData( GridData.FILL_HORIZONTAL);
+			cIP.setLayoutData(gridData);
+			layout = new GridLayout();
+			layout.numColumns = proxy_choices.size();
+			layout.marginHeight = 0;
+			cIP.setLayout(layout);
+
+			java.util.List<Button> buttons = new ArrayList<Button>();
+			
+			for ( int i=0;i< proxy_choices.size(); i++ ){
+				Button button = new Button ( cIP, SWT.RADIO );
+				button.setText( proxy_choices.get(i)[1] );
+				button.setData("index", String.valueOf(i));
+			
+				buttons.add( button );
+			}
+					
+			String existing = COConfigurationManager.getStringParameter( "browser.internal.proxy.id", proxy_choices.get(0)[0] );
+			
+			int existing_index = -1;
+			
+			for ( int i=0; i<proxy_choices.size();i++){
+				
+				if ( proxy_choices.get(i)[0].equals( existing )){
+					
+					existing_index = i;
+							
+					break;
+				}
+			}
+			
+			if ( existing_index == -1 ){
+				
+				existing_index = 0;
+				
+				COConfigurationManager.setParameter( "browser.internal.proxy.id", proxy_choices.get(0)[0] );
+			}
+			
+			buttons.get(existing_index).setSelection( true );
+			
+						
+		    Listener radioListener = 
+			    	new Listener () 
+			    	{
+			    		public void 
+			    		handleEvent(
+			    			Event event ) 
+			    		{	
+						    Button button = (Button)event.widget;
+
+						    if ( button.getSelection()){
+					    		Control [] children = cIP.getChildren ();
+					    		
+					    		for (int j=0; j<children.length; j++) {
+					    			 Control child = children [j];
+					    			 if ( child != button && child instanceof Button) {
+					    				 Button b = (Button) child;
+					    				
+					    				 b.setSelection (false);
+					    			 }
+					    		}
+								    
+							    int index = Integer.parseInt((String)button.getData("index"));
+						    
+							    COConfigurationManager.setParameter( "browser.internal.proxy.id", proxy_choices.get(index)[0] );
+						    }
+					    }
+			    	};
+			
+			for ( Button b: buttons ){
+				
+				b.addListener( SWT.Selection, radioListener );
+			}			
+			
+				// force firefox
+			
+			label = new Label(gInternalBrowser, SWT.NULL);
+			Messages.setLanguageText(label, "config.internal.browser.info2");
+
+			
+			final BooleanParameter fMoz = new BooleanParameter(gInternalBrowser, "swt.forceMozilla",MSG_PREFIX + "forceMozilla");
+			Composite pArea = new Composite(gInternalBrowser,SWT.NULL);
 			pArea.setLayout(new GridLayout(3,false));
 			pArea.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 			Messages.setLanguageText(new Label(pArea,SWT.NONE), MSG_PREFIX+"xulRunnerPath");
