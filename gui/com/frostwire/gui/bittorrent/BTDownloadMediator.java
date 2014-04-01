@@ -655,7 +655,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         File saveLocation = d.getSaveLocation();
         
         //in case it's a single picked .torrent/magnet download
-        if (saveLocation.isDirectory() && LibraryUtils.directoryContainsASinglePlayableFile(saveLocation,4)) {
+        if (saveLocation != null && saveLocation.isDirectory() && LibraryUtils.directoryContainsASinglePlayableFile(saveLocation,4)) {
             saveLocation = saveLocation.listFiles()[0];
         }
         
