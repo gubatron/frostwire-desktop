@@ -291,23 +291,71 @@ public class SavePathPanel extends AbstractWizardPanel<NewTorrentWizard> {
     gridData.horizontalSpan = 3;
     bAutoOpen.setLayoutData(gridData);
     
+    final Button bforce = new Button(panel,SWT.CHECK);
+    Messages.setLanguageText(bforce,"wizard.maketorrents.force");
+    gridData = new GridData(GridData.FILL_HORIZONTAL);
+    gridData.horizontalSpan = 3;
+    bforce.setLayoutData(gridData);
+    
+    final Button bSuperSeed = new Button(panel,SWT.CHECK);
+    Messages.setLanguageText(bSuperSeed,"wizard.maketorrents.superseed");
+    gridData = new GridData(GridData.FILL_HORIZONTAL);
+    gridData.horizontalSpan = 3;
+    bSuperSeed.setLayoutData(gridData);
+
     final Button bAutoHost = new Button(panel,SWT.CHECK);
     Messages.setLanguageText(bAutoHost,"wizard.maketorrents.autohost");
     gridData = new GridData(GridData.FILL_HORIZONTAL);
     gridData.horizontalSpan = 3;
     bAutoHost.setLayoutData(gridData);
+
+    label = new Label(panel,SWT.NULL);
+    Messages.setLanguageText(label,"wizard.maketorrents.init.tags");
+    final Text tag_area = new Text(panel,SWT.BORDER);
+    gridData = new GridData(GridData.FILL_HORIZONTAL);
+    gridData.horizontalSpan = 2;
+    tag_area.setLayoutData(gridData);
+    
+    bforce.setEnabled( false );
+    tag_area.setEnabled( false );
+    bSuperSeed.setEnabled( false );
     bAutoHost.setEnabled( false );
     
-    bAutoOpen.addListener(SWT.Selection,new Listener() {
-        public void handleEvent(Event event) {
-          wizard.autoOpen = bAutoOpen.getSelection();
+    bAutoOpen.addListener(SWT.Selection,new Listener(){
+        public void handleEvent(Event event){
+          boolean autoOpen = wizard.autoOpen = bAutoOpen.getSelection();
           
-          bAutoHost.setEnabled( wizard.autoOpen && wizard.getTrackerType() != NewTorrentWizard.TT_EXTERNAL );
+          boolean enable = autoOpen && wizard.getTrackerType() != NewTorrentWizard.TT_EXTERNAL;
+          
+          bforce.setEnabled( autoOpen );
+          tag_area.setEnabled( autoOpen );
+          bSuperSeed.setEnabled( autoOpen );
+          bAutoHost.setEnabled( enable );
         }
       });
     
-    bAutoHost.addListener(SWT.Selection,new Listener() {
-      public void handleEvent(Event event) {
+    bforce.addListener(SWT.Selection,new Listener(){
+        public void handleEvent(Event event) {
+          wizard.forceStart = bforce.getSelection();
+        }
+      });
+    
+    tag_area.setText( wizard.getInitialTags(false));
+    tag_area.addModifyListener(new ModifyListener(){
+        public void modifyText( ModifyEvent arg0){
+        	wizard.setInitialTags( tag_area.getText().trim());
+        }
+    });
+    
+    
+    bSuperSeed.addListener(SWT.Selection,new Listener(){
+        public void handleEvent(Event event){
+          wizard.superseed = bSuperSeed.getSelection();
+        }
+      });
+    
+    bAutoHost.addListener(SWT.Selection,new Listener(){
+      public void handleEvent(Event event){
         wizard.autoHost = bAutoHost.getSelection();
       }
     });

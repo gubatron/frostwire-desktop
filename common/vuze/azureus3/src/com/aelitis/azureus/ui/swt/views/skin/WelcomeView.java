@@ -32,7 +32,6 @@ import com.aelitis.azureus.ui.swt.browser.BrowserContext.loadingListener;
 import com.aelitis.azureus.ui.swt.skin.SWTSkinObject;
 import com.aelitis.azureus.ui.swt.skin.SWTSkinObjectBrowser;
 import com.aelitis.azureus.ui.swt.views.skin.sidebar.SideBar;
-import com.aelitis.azureus.ui.swt.views.skin.sidebar.SideBarEntrySWT;
 import com.aelitis.azureus.util.ConstantsVuze;
 import com.aelitis.azureus.util.ContentNetworkUtils;
 
@@ -80,16 +79,24 @@ public class WelcomeView
 		openURL();
 
 		MultipleDocumentInterface mdi = UIFunctionsManager.getUIFunctions().getMDI();
-		MdiEntry entry = mdi.getEntry(SideBar.SIDEBAR_SECTION_WELCOME);
-		entry.addListener(new MdiCloseListener() {
-			public void mdiEntryClosed(MdiEntry entry, boolean userClosed) {
-				MultipleDocumentInterface mdi = UIFunctionsManager.getUIFunctions().getMDI();
-				if (mdi != null) {
-					mdi.showEntryByID(SideBar.SIDEBAR_SECTION_LIBRARY);
-				}
+		
+		if ( mdi != null ){
+			
+			MdiEntry entry = mdi.getEntry(SideBar.SIDEBAR_SECTION_WELCOME);
+			
+			if ( entry != null ){
+				
+				entry.addListener(new MdiCloseListener() {
+					public void mdiEntryClosed(MdiEntry entry, boolean userClosed) {
+						MultipleDocumentInterface mdi = UIFunctionsManager.getUIFunctions().getMDI();
+						if (mdi != null) {
+							mdi.showEntryByID(SideBar.SIDEBAR_SECTION_LIBRARY);
+						}
+					}
+				});
 			}
-		});
-
+		}
+		
 		return null;
 	}
 
@@ -97,14 +104,17 @@ public class WelcomeView
 		if (waitLoadingURL) {
 			return;
 		}
+		String sURL;
 		Object o = skinObject.getData("CreationParams");
 		if (o instanceof String) {
-			browserSkinObject.setURL((String) o);
+			sURL = (String)o;
 		} else {
-			String sURL = ContentNetworkUtils.getUrl(
-					ConstantsVuze.getDefaultContentNetwork(), ContentNetwork.SERVICE_WELCOME);
-			browserSkinObject.setURL(sURL);
+			sURL = ContentNetworkUtils.getUrl( ConstantsVuze.getDefaultContentNetwork(), ContentNetwork.SERVICE_WELCOME);
 		}
+		
+		browserSkinObject.enablePluginProxy( "welcome" );
+		
+		browserSkinObject.setURL(sURL);
 	}
 
 	public static void setWaitLoadingURL(boolean waitLoadingURL) {

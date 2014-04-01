@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * changes.
  */
 public class SystemTime {
-	public static long	TIME_GRANULARITY_MILLIS	= 25;	//internal update time ms
+	public static final long	TIME_GRANULARITY_MILLIS	= 25;	//internal update time ms
 	
 	private static final int	STEPS_PER_SECOND	= (int) (1000 / TIME_GRANULARITY_MILLIS);
 

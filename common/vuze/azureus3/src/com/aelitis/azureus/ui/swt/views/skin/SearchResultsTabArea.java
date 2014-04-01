@@ -21,14 +21,19 @@
 package com.aelitis.azureus.ui.swt.views.skin;
 
 import java.io.File;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.*;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.*;
-
+import org.gudy.azureus2.core3.config.COConfigurationManager;
+import org.gudy.azureus2.core3.config.ParameterListener;
 import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.util.*;
 import org.gudy.azureus2.pluginsimpl.local.PluginInitializer;
@@ -41,6 +46,7 @@ import com.aelitis.azureus.core.*;
 import com.aelitis.azureus.core.metasearch.Engine;
 import com.aelitis.azureus.core.metasearch.MetaSearchManagerFactory;
 import com.aelitis.azureus.core.metasearch.impl.web.WebEngine;
+import com.aelitis.azureus.core.proxy.AEProxyFactory;
 import com.aelitis.azureus.ui.UIFunctionsManager;
 import com.aelitis.azureus.ui.common.viewtitleinfo.ViewTitleInfoManager;
 import com.aelitis.azureus.ui.mdi.*;
@@ -68,6 +74,174 @@ public class SearchResultsTabArea
 	extends SkinView
 	implements OpenCloseSearchDetailsListener
 {
+	private static boolean							search_proxy_init_done;
+	private static AEProxyFactory.PluginHTTPProxy	search_proxy;
+	private static boolean							search_proxy_set;
+	private static AESemaphore						search_proxy_sem = new AESemaphore( "sps" );
+	
+	private static List<SearchResultsTabArea>	pending = new ArrayList<SearchResultsTabArea>();
+	
+	private static void
+	initProxy()
+	{
+		synchronized( SearchResultsTabArea.class ){
+			
+			if ( search_proxy_init_done ){
+				
+				return;
+			}
+			
+			search_proxy_init_done = true;
+		}
+		
+		new AEThread2( "ST_test" )
+		{
+			public void
+			run()
+			{	
+				try{
+			
+					String test_url;
+					
+					if ( System.getProperty("metasearch", "1").equals("1")){
+						
+						test_url = ConstantsVuze.getDefaultContentNetwork().getXSearchService( "derp", false );
+						
+					}else{
+						
+						test_url = ConstantsVuze.getDefaultContentNetwork().getSearchService( "derp" );
+					}
+					
+					try{
+						URL url = new URL( test_url );
+						
+						url = UrlUtils.setProtocol( url, "https" );
+						
+						url = UrlUtils.setPort( url, 443 );
+						
+						boolean use_proxy = !COConfigurationManager.getStringParameter( "browser.internal.proxy.id", "none" ).equals( "none" );
+						
+						if ( !use_proxy ){
+						
+							Boolean looks_ok = AEProxyFactory.testPluginHTTPProxy( url, true );
+						
+							use_proxy = looks_ok != null && !looks_ok;
+						}
+						
+						if ( use_proxy ){
+														
+							search_proxy = AEProxyFactory.getPluginHTTPProxy( "search", url, true );
+							
+							if ( search_proxy != null ){
+								
+								UrlFilter.getInstance().addUrlWhitelist( "https?://" + ((InetSocketAddress)search_proxy.getProxy().address()).getAddress().getHostAddress() + ":?[0-9]*/.*" );
+							}
+						}
+					}catch( Throwable e ){
+					}
+				}finally{
+					
+					List<SearchResultsTabArea> to_redo = null;
+					
+					synchronized( SearchResultsTabArea.class ){
+						
+						search_proxy_set	= true;
+														
+						to_redo = new ArrayList<SearchResultsTabArea>( pending );
+						
+						pending.clear();
+					}
+				
+					search_proxy_sem.releaseForever();
+
+					for ( SearchResultsTabArea area: to_redo ){
+							
+						try{	
+							try{
+								area.browserSkinObject.setAutoReloadPending( false, search_proxy == null );
+									
+							}catch( Throwable e ){
+							}
+							
+							if ( search_proxy != null ){
+								
+								SearchQuery sq = area.sq;
+									
+								if ( sq != null ){
+									
+									area.anotherSearch( sq );
+								}
+							}
+						}catch( Throwable e ){	
+						}
+					}
+				}
+			}
+		}.start();
+	}
+	
+	static{
+		COConfigurationManager.addParameterListener(
+			"browser.internal.proxy.id",
+			new ParameterListener()
+			{	
+				public void 
+				parameterChanged(
+					String parameterName ) 
+				{
+					synchronized( SearchResultsTabArea.class ){
+						
+						if ( !search_proxy_init_done ){
+							
+							return;
+						}
+						
+						search_proxy_init_done = false;
+
+						search_proxy_set	= false;
+						
+						if ( search_proxy != null ){
+							
+							search_proxy.destroy();
+							
+							search_proxy = null;
+						}
+					}
+				}
+			});
+	}
+	
+	private static AEProxyFactory.PluginHTTPProxy
+	getSearchProxy(
+		SearchResultsTabArea		area )
+	{
+		initProxy();
+		
+		boolean force_proxy = !COConfigurationManager.getStringParameter( "browser.internal.proxy.id", "none" ).equals( "none" );
+
+		search_proxy_sem.reserve( force_proxy?60*1000:2500 );
+		
+		synchronized( SearchResultsTabArea.class ){
+			
+			if ( search_proxy_set ){
+				
+				return( search_proxy );
+				
+			}else{
+				
+				pending.add( area );
+				
+				try{
+					area.browserSkinObject.setAutoReloadPending( true, false );
+						
+				}catch( Throwable e ){
+				}
+				
+				return( null );
+			}
+		}
+	}
+	
 	private SWTSkinObjectBrowser browserSkinObject;
 
 	private SWTSkin skin;
@@ -79,9 +253,14 @@ public class SearchResultsTabArea
 	private MdiEntryVitalityImage vitalityImage;
 
 	private boolean menu_added;
-	
+		
 	public SearchQuery sq;
 
+	public
+	SearchResultsTabArea()
+	{
+	}
+	
 	public static class SearchQuery {
 		public SearchQuery(String term, boolean toSubscribe) {
 			this.term = term;
@@ -622,6 +801,7 @@ public class SearchResultsTabArea
 		Utils.execSWTThread(new AERunnable() {
 
 			public void runSupport() {
+
 				SWTSkinObject soSearchResults = skin.getSkinObject("searchresults-search-results");
 				if (soSearchResults == null) {
 					return;
@@ -686,15 +866,27 @@ public class SearchResultsTabArea
 	
 	public void anotherSearch(SearchQuery sq) {
 		this.sq = sq;
-		String url = 
-			ConstantsVuze.getDefaultContentNetwork().getSearchService( sq.term );
+		
+		String url;
 
-		if (System.getProperty("metasearch", "1").equals("1")) {
+		if ( System.getProperty("metasearch", "1").equals("1")){
 			
 			url = ConstantsVuze.getDefaultContentNetwork().getXSearchService( sq.term, sq.toSubscribe );
+			
+		}else{
+			
+			url = ConstantsVuze.getDefaultContentNetwork().getSearchService( sq.term );
 		}
 
+		AEProxyFactory.PluginHTTPProxy proxy = getSearchProxy( this );
+			
+		if ( proxy != null ){
+			
+			url = proxy.proxifyURL( url );
+		}
+		
 		closeSearchResults(null);
+		
 		if (Utils.isThisThreadSWT()) {
 			try {
   			browserSkinObject.getBrowser().setText("");
@@ -725,6 +917,7 @@ public class SearchResultsTabArea
 				
 			}
 		}
+		
 		browserSkinObject.setURL(url);
 
 		MultipleDocumentInterface mdi = UIFunctionsManager.getUIFunctions().getMDI();
