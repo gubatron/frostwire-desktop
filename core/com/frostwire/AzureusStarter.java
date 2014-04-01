@@ -113,7 +113,8 @@ public final class AzureusStarter {
 
             COConfigurationManager.setParameter("Auto Adjust Transfer Defaults", false);
             COConfigurationManager.setParameter("General_sDefaultTorrent_Directory", SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath());
-
+            //COConfigurationManager.setParameter("utp.logging.enabled", true);
+            
             if (CommonUtils.isPortable()) {
                 COConfigurationManager.setParameter("diskmanager.friendly.hashchecking", FALSE);
                 COConfigurationManager.setParameter("diskmanager.perf.cache.enable.read", TRUE);
