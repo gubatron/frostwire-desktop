@@ -1,3 +1,9 @@
+frostwire (5.7.2) stable; urgency=high
+  * uTP support enabled.
+  * UX updates.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 1 Apr 2014 15:41:32 -0500
+	
 frostwire (5.7.1) stable; urgency=high
   * Wi-Fi sharing discovery improved considerably with JmDNS.
     Removed cling library.
