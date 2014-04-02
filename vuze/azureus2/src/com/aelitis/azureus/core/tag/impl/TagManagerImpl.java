@@ -30,12 +30,16 @@ import java.net.URL;
 import java.util.*;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
+import org.gudy.azureus2.core3.disk.DiskManager;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.download.DownloadManagerInitialisationAdapter;
 import org.gudy.azureus2.core3.download.DownloadManagerState;
 import org.gudy.azureus2.core3.global.GlobalManager;
+import org.gudy.azureus2.core3.logging.LogAlert;
+import org.gudy.azureus2.core3.logging.Logger;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.util.AERunnable;
+import org.gudy.azureus2.core3.util.AEThread2;
 import org.gudy.azureus2.core3.util.AsyncDispatcher;
 import org.gudy.azureus2.core3.util.BDecoder;
 import org.gudy.azureus2.core3.util.Base32;
@@ -55,6 +59,7 @@ import org.gudy.azureus2.plugins.PluginInterface;
 import org.gudy.azureus2.plugins.PluginManager;
 import org.gudy.azureus2.plugins.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.plugins.download.Download;
+import org.gudy.azureus2.plugins.download.DownloadCompletionListener;
 import org.gudy.azureus2.plugins.download.DownloadScrapeResult;
 import org.gudy.azureus2.plugins.torrent.Torrent;
 import org.gudy.azureus2.plugins.tracker.web.TrackerWebPageRequest;
@@ -68,11 +73,12 @@ import com.aelitis.azureus.core.AzureusCoreLifecycleAdapter;
 import com.aelitis.azureus.core.rssgen.RSSGeneratorPlugin;
 import com.aelitis.azureus.core.tag.*;
 import com.aelitis.azureus.core.util.CopyOnWriteList;
+import com.aelitis.azureus.core.util.IdentityHashSet;
 import com.aelitis.azureus.util.MapUtils;
 
 public class 
 TagManagerImpl
-	implements TagManager
+	implements TagManager, DownloadCompletionListener
 {
 	private static final String	CONFIG_FILE 				= "tag.config";
 	
@@ -107,6 +113,8 @@ TagManagerImpl
 	private static final String RSS_PROVIDER	= "tags";
 	
 	private Set<TagBase>	rss_tags = new HashSet<TagBase>();
+	
+	private Set<DownloadManager>	active_copy_on_complete = new IdentityHashSet<DownloadManager>();
 	
 	private RSSGeneratorPlugin.Provider rss_generator = 
 		new RSSGeneratorPlugin.Provider()
@@ -497,9 +505,18 @@ TagManagerImpl
 		
 		new TagPropertyTrackerTemplateHandler( azureus_core, this );
 		
+		new TagPropertyConstraintHandler( azureus_core, this );
+		
 		azureus_core.addLifecycleListener(
 			new AzureusCoreLifecycleAdapter()
 			{
+				public void
+				started(
+					AzureusCore		core )
+				{
+					core.getPluginManager().getDefaultPluginInterface().getDownloadManager().getGlobalDownloadEventNotifier().addCompletionListener( TagManagerImpl.this);
+				}
+				
 				public void 
 				componentCreated(
 					AzureusCore 			core,
@@ -611,6 +628,178 @@ TagManagerImpl
 					}
 				}
 			});
+	}
+	
+	public void 
+	onCompletion(
+		Download d )
+	{
+		final DownloadManager manager = PluginCoreUtils.unwrap( d );
+	
+		List<Tag> tags = getTagsForTaggable( manager );
+		
+		List<Tag> cc_tags = new ArrayList<Tag>();
+		
+		for ( Tag tag: tags ){
+			
+			if ( tag.getTagType().hasTagTypeFeature( TagFeature.TF_FILE_LOCATION )){
+			
+				TagFeatureFileLocation fl = (TagFeatureFileLocation)tag;
+
+				if ( fl.supportsTagCopyOnComplete()){
+					
+					File save_loc = fl.getTagCopyOnCompleteFolder();
+					
+					if ( save_loc != null ){
+						
+						cc_tags.add( tag );
+					}
+				}
+			}
+		}
+		
+		if ( cc_tags.size() > 0 ){
+			
+			if ( cc_tags.size() > 1 ){
+				
+				Collections.sort(
+						cc_tags,
+					new Comparator<Tag>()
+					{
+						public int 
+						compare(
+							Tag o1, Tag o2) 
+						{
+							return( o1.getTagID() - o2.getTagID());
+						}
+					});
+			}
+			
+			final File new_loc = ((TagFeatureFileLocation)cc_tags.get(0)).getTagCopyOnCompleteFolder();
+			
+			File old_loc = manager.getSaveLocation();
+			
+			if ( !new_loc.equals( old_loc )){
+				
+				boolean do_it;
+				
+				synchronized( active_copy_on_complete ){
+					
+					if ( active_copy_on_complete.contains( manager )){
+						
+						do_it = false;
+						
+					}else{
+						
+						active_copy_on_complete.add( manager );
+						
+						do_it = true;
+					}
+				}
+				
+				if ( do_it ){
+					
+					new AEThread2( "tm:copy")
+					{
+						public void
+						run()
+						{
+							try{
+								long stopped_and_incomplete_start 	= 0;
+								long looks_good_start 				= 0;
+								
+								while( true ){
+									
+									if ( manager.isDestroyed()){
+										
+										throw( new Exception( "Download has been removed" ));
+									}
+									
+									DiskManager dm = manager.getDiskManager();
+								
+									if ( dm == null ){
+										
+										looks_good_start = 0;
+										
+										if ( !manager.getAssumedComplete()){
+											
+											long	now = SystemTime.getMonotonousTime();
+											
+											if ( stopped_and_incomplete_start == 0 ){
+											
+												stopped_and_incomplete_start = now;
+												
+											}else if ( now - stopped_and_incomplete_start > 30*1000 ){
+												
+												throw( new Exception( "Download is stopped and incomplete" ));
+											}
+										}else{
+											
+											break;
+										}
+									}else{
+										
+										stopped_and_incomplete_start = 0;
+										
+										if ( manager.getAssumedComplete()){
+											
+											if ( dm.getMoveProgress() == -1 && dm.getCompleteRecheckStatus() == -1 ){
+												
+												long	now = SystemTime.getMonotonousTime();
+												
+												if ( looks_good_start == 0 ){
+												
+													looks_good_start = now;
+													
+												}else if ( now - looks_good_start > 5*1000 ){
+													
+													break;
+												}
+											}
+										}else{
+											
+											looks_good_start = 0;
+										}
+									}
+									
+									//System.out.println( "Waiting" );
+									
+									Thread.sleep( 1000 );
+								}
+								
+								manager.copyDataFiles( new_loc );
+								
+								Logger.logTextResource(
+									new LogAlert(
+										manager, 
+										LogAlert.REPEATABLE,
+										LogAlert.AT_INFORMATION, 
+										"alert.copy.on.comp.done"),
+									new String[]{ manager.getDisplayName(), new_loc.toString()});
+								 
+							}catch( Throwable e ){
+								
+								 Logger.logTextResource(
+									new LogAlert(
+										manager, 
+										LogAlert.REPEATABLE,
+										LogAlert.AT_ERROR, 
+										"alert.copy.on.comp.fail"),
+									new String[]{ manager.getDisplayName(), new_loc.toString(), Debug.getNestedExceptionMessage(e)});
+								 
+							}finally{
+								
+								synchronized( active_copy_on_complete ){
+									
+									active_copy_on_complete.remove( manager );
+								}
+								
+							}
+						}
+					}.start();
+				}
+			}
+		}
 	}
 	
 	private void
@@ -740,6 +929,58 @@ TagManagerImpl
 	getTagTypes()
 	{
 		return( tag_types.getList());
+	}
+	
+	public void
+	taggableAdded(
+		TagType		tag_type,
+		Tag			tag,
+		Taggable	tagged )
+	{
+			// hack to support initial-save-location logic when a user manually assigns a tag and the download
+			// hasn't had files allocated yet (most common scenario is user has 'add-torrent-stopped' set up)
+		
+		try{
+			if ( tag_type.getTagType() == TagType.TT_DOWNLOAD_MANUAL && tagged instanceof DownloadManager ){
+				
+				TagFeatureFileLocation fl = (TagFeatureFileLocation)tag;
+	
+				if ( fl.supportsTagInitialSaveFolder()){
+					
+					File save_loc = fl.getTagInitialSaveFolder();
+					
+					if ( save_loc != null ){
+	
+						DownloadManager dm = (DownloadManager)tagged;
+						
+						if ( dm.getState() == DownloadManager.STATE_STOPPED ){
+						
+							TOTorrent torrent = dm.getTorrent();
+							
+							if ( torrent != null ){
+								
+									// This test detects whether or not we are in the process of adding the download
+									// If we are then initial save-location stuff will be applied by the init-adapter
+									// code above - we're only dealing later assignments here 
+								
+								if ( dm.getGlobalManager().getDownloadManager( torrent.getHashWrapper()) != null ){
+									
+									File existing_save_loc = dm.getSaveLocation();
+									
+									if ( ! ( existing_save_loc.equals( save_loc ) || existing_save_loc.exists())){
+										
+										dm.setTorrentSaveDir( save_loc.getAbsolutePath());
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}catch( Throwable e ){
+		
+			Debug.out(e );
+		}
 	}
 	
 	public List<Tag>

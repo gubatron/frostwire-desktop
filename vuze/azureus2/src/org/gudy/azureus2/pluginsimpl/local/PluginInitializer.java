@@ -235,8 +235,8 @@ PluginInitializer
   
   private static boolean	loading_builtin;
   
-  private List		s_plugins				= new ArrayList();
-  private List		s_plugin_interfaces		= new ArrayList();
+  private List<Plugin>					s_plugins				= new ArrayList<Plugin>();
+  private List<PluginInterfaceImpl>		s_plugin_interfaces		= new ArrayList<PluginInterfaceImpl>();
   
   private boolean	initialisation_complete;
   
@@ -2248,24 +2248,34 @@ PluginInitializer
   }
   
   
-  public static List getPluginInterfaces() {
-  	return singleton.getPluginInterfacesSupport();
+  public static List<PluginInterfaceImpl> getPluginInterfaces() {
+  	return singleton.getPluginInterfacesSupport( false );
   }
 
-  protected List getPluginInterfacesSupport() {
+  private List<PluginInterfaceImpl> getPluginInterfacesSupport( boolean expect_partial_result ) {
 	  
-	checkPluginsInitialised();
-		
+	if ( !expect_partial_result ){
+	
+		checkPluginsInitialised();
+	}
+	
 	synchronized( s_plugin_interfaces ){
 		
-		return( new ArrayList( s_plugin_interfaces ));
+		return( new ArrayList<PluginInterfaceImpl>( s_plugin_interfaces ));
 	}
   }
   
   public PluginInterface[]
   getPlugins()
   {
-  	List	pis = getPluginInterfacesSupport();
+	  return( getPlugins( false ));
+  }
+  
+  public PluginInterface[]
+  getPlugins(
+		boolean	expect_partial_result )
+  {
+  	List	pis = getPluginInterfacesSupport( expect_partial_result );
   	
   	PluginInterface[]	res = new 	PluginInterface[pis.size()];
   	

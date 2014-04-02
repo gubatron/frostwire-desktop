@@ -112,8 +112,12 @@ public class FilesView
     new TorrentRelativePathItem(),
     new FileCRC32Item(),
     new FileMD5Item(),
+    new FileSHA1Item(),
     new FileAvailabilityItem(),
     new AlertsItem(  TableManager.TABLE_TORRENT_FILES ),
+    new FileReadSpeedItem(),
+    new FileWriteSpeedItem(),
+    new FileETAItem(),
   };
   
   static{
@@ -464,6 +468,19 @@ public class FilesView
         }
       });
       
+    }else if (sColumnName.equals("file_eta")) {
+        final MenuItem item = new MenuItem(menuThisColumn, SWT.CHECK );
+        Messages.setLanguageText(item, "MyTorrentsView.menu.eta.abs");
+        item.setSelection( MyTorrentsView.eta_absolute );
+                
+        item.addListener(SWT.Selection, new Listener() {
+          public void handleEvent(Event e) {
+        	  MyTorrentsView.eta_absolute = item.getSelection();
+            tv.columnInvalidate("eta");
+            tv.refreshTable(false);
+            COConfigurationManager.setParameter( "mtv.eta.show_absolute", MyTorrentsView.eta_absolute );
+          }
+        });
     }
   }
   

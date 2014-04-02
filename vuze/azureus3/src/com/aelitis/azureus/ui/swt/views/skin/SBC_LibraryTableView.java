@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Text;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.util.AERunnable;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.plugins.ui.UIPluginViewToolBarListener;
@@ -294,12 +295,11 @@ public class SBC_LibraryTableView
 			if (dm != null) {
 				UIFunctionsManager.getUIFunctions().openView(UIFunctions.VIEW_DM_DETAILS, dm);
 				return;
-			}else{
-				DiskManagerFileInfo file = DataSourceUtils.getFileInfo(ds);
-				if (file != null) {
-					UIFunctionsManager.getUIFunctions().openView(UIFunctions.VIEW_DM_DETAILS, file.getDownloadManager());
-					return;
-				}
+			}
+			DiskManagerFileInfo file = DataSourceUtils.getFileInfo(ds);
+			if (file != null) {
+				UIFunctionsManager.getUIFunctions().openView(UIFunctions.VIEW_DM_DETAILS, file.getDownloadManager());
+				return;
 			}
 		}else if (mode.equals("2")) {
 			// Show in explorer
@@ -308,13 +308,12 @@ public class SBC_LibraryTableView
 				boolean openMode = COConfigurationManager.getBooleanParameter("MyTorrentsView.menu.show_parent_folder_enabled");
 				ManagerUtils.open(dm, openMode);
 				return;
-			}else{
-				DiskManagerFileInfo file = DataSourceUtils.getFileInfo(ds);
-				if (file != null) {
-					boolean openMode = COConfigurationManager.getBooleanParameter("MyTorrentsView.menu.show_parent_folder_enabled");
-					ManagerUtils.open(file, openMode);
-					return;
-				}
+			}
+			DiskManagerFileInfo file = DataSourceUtils.getFileInfo(ds);
+			if (file != null) {
+				boolean openMode = COConfigurationManager.getBooleanParameter("MyTorrentsView.menu.show_parent_folder_enabled");
+				ManagerUtils.open(file, openMode);
+				return;
 			}
 		}else if (mode.equals("3")) {
 			// Launch
@@ -322,12 +321,11 @@ public class SBC_LibraryTableView
 			if (dm != null) {
 				TorrentUtil.runDataSources(new Object[]{ dm });
 				return;
-			}else{
-				DiskManagerFileInfo file = DataSourceUtils.getFileInfo(ds);
-				if (file != null) {
-					TorrentUtil.runDataSources(new Object[]{ file });
-					return;
-				}
+			}
+			DiskManagerFileInfo file = DataSourceUtils.getFileInfo(ds);
+			if (file != null) {
+				TorrentUtil.runDataSources(new Object[]{ file });
+				return;
 			}
 		}
 		
@@ -340,11 +338,28 @@ public class SBC_LibraryTableView
 		if (PlayUtils.canPlayDS(ds, -1) || (stateMask & SWT.CONTROL) != 0) {
 			TorrentListViewsUtils.playOrStreamDataSource(ds,
 					DLReferals.DL_REFERAL_DBLCLICK, false, true );
+			return;
 		}
 
 		if (PlayUtils.canStreamDS(ds, -1)) {
 			TorrentListViewsUtils.playOrStreamDataSource(ds,
 					DLReferals.DL_REFERAL_DBLCLICK, true, false );
+			return;
+		}
+		
+		DownloadManager dm = DataSourceUtils.getDM(ds);
+		DiskManagerFileInfo file = DataSourceUtils.getFileInfo(ds);
+		TOTorrent torrent = DataSourceUtils.getTorrent(ds);
+		if (torrent == null && file != null) {
+			DownloadManager dmFile = file.getDownloadManager();
+			if (dmFile != null) {
+				torrent = dmFile.getTorrent();
+			}
+		}
+		if (file != null && file.getDownloaded() == file.getLength()) {
+			TorrentUtil.runDataSources(new Object[] { file });
+		} else if (dm != null) {
+			TorrentUtil.runDataSources(new Object[] { dm });
 		}
 	}
 

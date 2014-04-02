@@ -2175,6 +2175,10 @@ public class TransferStatsView
         break;
         
       case UISWTViewEvent.TYPE_FOCUSGAINED:
+    	  // weird layout issue with general panel - switch away from view and then back leaves bottom line not rendering - this fixes it
+    	if ( generalPanel != null ){
+    	  generalPanel.layout( true, true );
+    	}
       	break;
         
       case UISWTViewEvent.TYPE_REFRESH:

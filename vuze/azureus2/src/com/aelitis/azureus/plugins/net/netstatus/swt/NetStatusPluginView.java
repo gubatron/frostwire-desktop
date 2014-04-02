@@ -21,6 +21,9 @@
 
 package com.aelitis.azureus.plugins.net.netstatus.swt;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
@@ -31,12 +34,16 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.util.AEThread2;
+import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.plugins.ui.UIInstance;
 import org.gudy.azureus2.ui.swt.Messages;
+import org.gudy.azureus2.ui.swt.Utils;
+import org.gudy.azureus2.ui.swt.mainwindow.ClipboardCopy;
 import org.gudy.azureus2.ui.swt.mainwindow.Colors;
 import org.gudy.azureus2.ui.swt.plugins.UISWTInstance;
 import org.gudy.azureus2.ui.swt.plugins.UISWTViewEvent;
@@ -46,6 +53,7 @@ import org.gudy.azureus2.ui.swt.shells.CoreWaiterSWT.TriggerInThread;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
+import com.aelitis.azureus.core.proxy.AEProxyFactory;
 import com.aelitis.azureus.plugins.net.netstatus.NetStatusPlugin;
 
 public class 
@@ -148,14 +156,24 @@ NetStatusPluginView
 		layout.marginWidth = 4;
 		control.setLayout(layout);
 
+		Label info = new Label( control, SWT.NULL );
+		grid_data = new GridData(GridData.FILL_HORIZONTAL);
+		grid_data.horizontalSpan = 3;
+		info.setLayoutData( grid_data );
+		Messages.setLanguageText( info,  "label.test.internet" );
+		
 		grid_data = new GridData(GridData.FILL_HORIZONTAL);
 		grid_data.horizontalSpan = 1;
 		control.setLayoutData(grid_data);
 
+		List<Button> buttons = new ArrayList<Button>();
+		
 				// start
 		
 			start_button = new Button( control, SWT.PUSH );
 				
+			buttons.add( start_button );
+			
 		 	Messages.setLanguageText( start_button, "ConfigView.section.start");
 		 	
 		 	start_button.addSelectionListener(
@@ -177,6 +195,8 @@ NetStatusPluginView
 		 	
 		 	cancel_button = new Button( control, SWT.PUSH );
 		 	
+		 	buttons.add( cancel_button );
+		 	
 		 	Messages.setLanguageText( cancel_button, "UpdateWindow.cancel");
 		 	
 		 	cancel_button.addSelectionListener(
@@ -194,12 +214,16 @@ NetStatusPluginView
 		
 		 	cancel_button.setEnabled( false );
 		 	
-			Composite options = new Composite(control, SWT.NONE);
+		 	Utils.makeButtonsEqualWidth( buttons );
+		 	
+			Group options = new Group(control, SWT.NONE);
 			layout = new GridLayout();
-			layout.numColumns 	 	= 3;
+			layout.numColumns 	 	= 4;
 			layout.marginHeight 	= 4;
 			layout.marginWidth 		= 4;
 			options.setLayout(layout);
+		 	Messages.setLanguageText( options, "label.test.types");
+
 
 			grid_data = new GridData(GridData.FILL_HORIZONTAL);
 			options.setLayoutData(grid_data);
@@ -211,38 +235,54 @@ NetStatusPluginView
 				
 				addOption( opt1, NetStatusPluginTester.TEST_PING_ROUTE );
 			*/
-				Button opt2 = new Button( options, SWT.CHECK );
+				Button opt = new Button( options, SWT.CHECK );
 
-				opt2.setText( "outbound" );
+				Messages.setLanguageText( opt, "label.outbound" );
 
-				addOption( opt2, NetStatusPluginTester.TEST_OUTBOUND, true );
+				addOption( opt, NetStatusPluginTester.TEST_OUTBOUND, true );
 
-				Button opt3 = new Button( options, SWT.CHECK );
+				opt = new Button( options, SWT.CHECK );
 
-				opt3.setText( "inbound" );
+				Messages.setLanguageText( opt, "label.inbound" );
 
-				addOption( opt3, NetStatusPluginTester.TEST_INBOUND, true );
+				addOption( opt, NetStatusPluginTester.TEST_INBOUND, true );
 
-				Button opt4 = new Button( options, SWT.CHECK );
+				opt = new Button( options, SWT.CHECK );
 
-				opt4.setText( "nat/proxies" );
+				Messages.setLanguageText( opt, "label.nat.proxies" );
 
-				addOption( opt4, NetStatusPluginTester.TEST_NAT_PROXIES, true );
+				addOption( opt, NetStatusPluginTester.TEST_NAT_PROXIES, true );
 
-				Button opt5 = new Button( options, SWT.CHECK );
+				opt = new Button( options, SWT.CHECK );
 
-				opt5.setText( "BT connect" );
+				Messages.setLanguageText( opt, "label.bt.connect" );
 
-				addOption( opt5, NetStatusPluginTester.TEST_BT_CONNECT, true );
+				addOption( opt, NetStatusPluginTester.TEST_BT_CONNECT, true );
 				
-				Button opt6 = new Button( options, SWT.CHECK );
+				opt = new Button( options, SWT.CHECK );
 
-				opt6.setText( "IPv6" );
+				opt.setText( "IPv6" );
 
 				boolean ipv6_enabled = COConfigurationManager.getBooleanParameter( "IPV6 Enable Support" );
 				
-				addOption( opt6, NetStatusPluginTester.TEST_IPV6, ipv6_enabled );
+				addOption( opt, NetStatusPluginTester.TEST_IPV6, ipv6_enabled );
 
+				opt = new Button( options, SWT.CHECK );
+
+				Messages.setLanguageText( opt, "label.vuze.services" );
+				
+				addOption( opt, NetStatusPluginTester.TEST_VUZE_SERVICES, true );
+
+				if ( Constants.isWindows || Constants.isOSX ){
+					
+					opt = new Button( options, SWT.CHECK );
+	
+					Messages.setLanguageText( opt, "label.indirect.connect" );
+					
+					boolean ic_enabled = AEProxyFactory.hasPluginProxy();
+	
+					addOption( opt, NetStatusPluginTester.TEST_PROXY_CONNECT, ic_enabled );
+				}
 				
 			// log area
 		
@@ -252,6 +292,17 @@ NetStatusPluginView
 		grid_data.horizontalIndent = 4;
 		log.setLayoutData(grid_data);
 		log.setIndent( 4 );
+		
+		ClipboardCopy.addCopyToClipMenu(
+				log,
+				new ClipboardCopy.copyToClipProvider()
+				{
+					public String 
+					getText() 
+					{
+						return( log.getText().trim());
+					}
+				});
 	}
 	
 	protected void
@@ -264,7 +315,7 @@ NetStatusPluginView
 		
 		boolean	selected = plugin.getBooleanParameter( config, enable );
 		
-		if ( selected ){
+		if ( selected && enable ){
 			
 			selected_tests |= type;
 			
@@ -348,8 +399,14 @@ NetStatusPluginView
 						{
 							public void 
 							log(
-								String str) 
+								String 		str,
+								boolean		detailed )
 							{
+								if ( detailed && !plugin.isDetailedLogging()){
+									
+									return;
+								}
+								
 								println( str );
 							}
 							

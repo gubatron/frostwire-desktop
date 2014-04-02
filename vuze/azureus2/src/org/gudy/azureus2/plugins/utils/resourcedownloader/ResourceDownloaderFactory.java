@@ -27,6 +27,7 @@ package org.gudy.azureus2.plugins.utils.resourcedownloader;
  */
 
 import java.io.File;
+import java.net.Proxy;
 import java.net.URL;
 
 public interface 
@@ -53,6 +54,10 @@ ResourceDownloaderFactory
 	create(
 		URL		url );
 	
+	public ResourceDownloader
+	createWithAutoPluginProxy(
+		URL			url );
+	
 	/**
 	 * Creates a basic downloader, where you can force any configured proxy
 	 * to be avoided. 
@@ -60,6 +65,11 @@ ResourceDownloaderFactory
 	 * @since 3.1.0.1
 	 */
 	public ResourceDownloader create(URL url, boolean force_no_proxy);
+	
+	/**
+	 * @since 5.2.0.1
+	 */
+	public ResourceDownloader create(URL url, Proxy force_proxy );
 		
 	public ResourceDownloader
 	create(
@@ -204,6 +214,12 @@ ResourceDownloaderFactory
 		URL 		url, 
 		String 		post_data );
 		
+	ResourceDownloader 
+	create(
+		URL 		url, 
+		String 		post_data,
+		Proxy		proxy );
+	
 	ResourceDownloader 
 	create(
 		URL 		url, 

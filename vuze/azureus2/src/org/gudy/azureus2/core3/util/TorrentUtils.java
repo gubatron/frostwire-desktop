@@ -1252,6 +1252,47 @@ TorrentUtils
 	}
 	
 	public static List<List<String>>
+	removeAnnounceURLs2(
+		List<List<String>> 	base_urls,
+		List<String>		remove_urls )
+	{
+		base_urls = getClone( base_urls );
+		if ( remove_urls == null ){
+			return( base_urls );
+		}
+		Set<String> removeSet = new HashSet<String>();
+		removeSet.add( NO_VALID_URL_URL );	// this results in removal of this dummy url if present
+		removeSet.addAll(remove_urls);
+		
+		Iterator<List<String>> it1 = base_urls.iterator();
+		while( it1.hasNext()){
+			List<String> l = it1.next();
+			Iterator<String> it2 = l.iterator();
+			while( it2.hasNext()){
+				String url = it2.next();
+				if ( url.equals( NO_VALID_URL_URL )){
+					it2.remove();
+				}else{
+					for ( String s: removeSet ){
+						
+						if ( url.toLowerCase().startsWith( s )){
+							
+							it2.remove();
+							
+							break;
+						}
+					}
+				}
+			}
+			if ( l.isEmpty()){
+				it1.remove();
+			}
+		}
+		
+		return( base_urls );
+	}
+	
+	public static List<List<String>>
 	getClone(
 		List<List<String>> lls )
 	{
@@ -1533,6 +1574,51 @@ TorrentUtils
 		}
 		
 		return( m );
+	}
+	
+	private static String 
+	getContentMapString(
+		TOTorrent	torrent,
+		String 		key ) 
+	{
+		Map m = getAzureusProperties( torrent );
+		
+		Object content = m.get( "Content" );
+
+		if ( !(content instanceof Map )){
+			
+			return null;
+		}
+
+		Map mapContent = (Map)content;
+		
+		Object obj = mapContent.get(key);
+
+		if ( obj instanceof String ){
+			
+			return (String) obj;
+			
+		}else if ( obj instanceof byte[] ){
+			
+			try{
+				return new String((byte[]) obj, Constants.DEFAULT_ENCODING);
+				
+			}catch ( UnsupportedEncodingException e ){
+				
+				e.printStackTrace();
+			}
+		}
+
+		return null;
+	}
+
+	public static boolean 
+	isFeaturedContent(
+		TOTorrent		torrent )
+	{
+		String content_type = getContentMapString( torrent, "Content Type" );
+
+		return( content_type != null && content_type.equalsIgnoreCase( "featured" ));
 	}
 	
 	public static void

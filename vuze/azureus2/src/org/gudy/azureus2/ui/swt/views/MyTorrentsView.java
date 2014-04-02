@@ -23,6 +23,7 @@
 package org.gudy.azureus2.ui.swt.views;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -34,7 +35,6 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
-
 import org.gudy.azureus2.core3.category.*;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.config.ParameterListener;
@@ -42,6 +42,7 @@ import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfoSet;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.download.DownloadManagerListener;
+import org.gudy.azureus2.core3.download.DownloadManagerState;
 import org.gudy.azureus2.core3.global.*;
 import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.logging.LogEvent;
@@ -121,7 +122,8 @@ public class MyTorrentsView
                   TableRefreshListener,
                   TableViewFilterCheck.TableViewFilterCheckEx<DownloadManager>,
                   TableRowRefreshListener,
-                  TableCountChangeListener
+                  TableCountChangeListener,
+                  TableExpansionChangeListener
 {
 	private static final LogIDs LOGID = LogIDs.GUI;
 	
@@ -314,6 +316,7 @@ public class MyTorrentsView
     if (tv.canHaveSubItems()) {
     	tv.addRefreshListener(this);
     	tv.addCountChangeListener(this);
+    	tv.addExpansionChangeListener(this);
     }
     
     tv.addTableDataSourceChangedListener(new TableDataSourceChangedListener() {
@@ -1055,6 +1058,29 @@ public class MyTorrentsView
 	public void mouseExit(TableRowCore row) {
 	}
 
+	private FrequencyLimitedDispatcher refresh_limiter = new FrequencyLimitedDispatcher(
+			new AERunnable() {
+				public void runSupport() {
+					Utils.getOffOfSWTThread(new AERunnable() {
+						public void runSupport() {
+							updateSelectedContent();
+						}
+					});
+				}
+			}, 250 );
+
+	{
+		refresh_limiter.setSingleThreaded();
+	}
+	
+	private void
+	updateSelectedContentRateLimited()
+	{
+			// we can get a lot of these in succession when lots of rows are selected and we, for example, right-click or stop the torrents etc
+		
+		refresh_limiter.dispatch();
+	}
+	
 	public void updateSelectedContent() {
 		updateSelectedContent( false );
 	}
@@ -1825,7 +1851,7 @@ public class MyTorrentsView
 				public void runSupport() {
 		    	row.refresh(true);
 		    	if (row.isSelected()) {
-		    		updateSelectedContent();
+		    		updateSelectedContentRateLimited();
 		    	}
 				}
     	});
@@ -2338,11 +2364,41 @@ public class MyTorrentsView
 	}
 
 	public void rowAdded(TableRowCore row) {
+		if (row.getParentRowCore() == null) {
+			DownloadManager dm = (DownloadManager) row.getDataSource(true);
+			if ( dm.getDownloadState().getBooleanAttribute( DownloadManagerState.AT_FILES_EXPANDED )){
+				row.setExpanded(true);
+			}
+		}
 		//if (getRowDefaultHeight() > 0 && row.getParentRowCore() != null) {
 		//	row.setHeight(20);
 		//}
 	}
 
 	public void rowRemoved(TableRowCore row) {
+	}
+	
+	public void 
+	rowExpanded(
+		TableRowCore 	row )
+	{
+		if ( row.getParentRowCore() == null ){
+			
+			DownloadManager dm = (DownloadManager) row.getDataSource(true);
+				
+			dm.getDownloadState().setBooleanAttribute( DownloadManagerState.AT_FILES_EXPANDED, true );
+		}
+	}
+	
+	public void 
+	rowCollapsed(
+		TableRowCore 	row )
+	{
+		if ( row.getParentRowCore() == null ){
+			
+			DownloadManager dm = (DownloadManager) row.getDataSource(true);
+				
+			dm.getDownloadState().setBooleanAttribute( DownloadManagerState.AT_FILES_EXPANDED, false );
+		}
 	}
 }

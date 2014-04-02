@@ -24,9 +24,11 @@ import java.util.*;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.config.impl.ConfigurationDefaults;
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.gudy.azureus2.core3.download.DownloadManagerState;
 import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentFile;
+import org.gudy.azureus2.core3.util.AETemporaryFileHandler;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.FileUtil;
 import org.gudy.azureus2.core3.util.TorrentUtils;
@@ -107,6 +109,9 @@ public class TorrentOpenOptions
 
 	private List<List<String>>	updatedTrackers;
 	
+	private int max_up;
+	private int max_down;
+	
 		// add stuff here -> update the clone constructor
 	
 	/**
@@ -122,7 +127,7 @@ public class TorrentOpenOptions
 		this.bDeleteFileOnCancel = bDeleteFileOnCancel;
 		this.sFileName = sFileName;
 		this.sOriginatingLocation = sFileName;
-		this.setTorrent(torrent, true);
+		this.setTorrent(torrent);
 	}
 
 	public TorrentOpenOptions() {
@@ -158,6 +163,8 @@ public class TorrentOpenOptions
 				updatedTrackers.add( new ArrayList<String>( l ));
 			}
 		}
+		this.max_up 	= toBeCloned.max_up;
+		this.max_down 	= toBeCloned.max_down;	
 	}
 
 	public static int getDefaultStartMode() {
@@ -230,6 +237,8 @@ public class TorrentOpenOptions
 				}
 			}
 
+			String temp_dir = AETemporaryFileHandler.getTempDirectory().getAbsolutePath().toLowerCase( Locale.US );
+			
 			int maxMatches = 0;
 			DownloadManager match = null;
 			for (Iterator iter = downloadManagers.iterator(); iter.hasNext();) {
@@ -239,6 +248,23 @@ public class TorrentOpenOptions
 					continue;
 				}
 
+				DownloadManagerState dms = dm.getDownloadState();
+				
+				if ( 	dms.getFlag( DownloadManagerState.FLAG_LOW_NOISE ) ||
+						dms.getFlag( DownloadManagerState.FLAG_METADATA_DOWNLOAD )){
+					
+					continue;
+				}
+				
+					// had users with files ending up in the temp dir (5100/5200) so as an attempt to stop this
+					// lets excluded anything dodgy (might also have been to do with metadata downloads we now
+					// filter above)
+				
+				if ( dm.getSaveLocation().getAbsolutePath().toLowerCase( Locale.US ).startsWith( temp_dir )){
+					
+					continue;
+				}
+				
 				int numMatches = 0;
 
 				String dmName = dm.getDisplayName().toLowerCase();
@@ -328,6 +354,32 @@ public class TorrentOpenOptions
 		List<List<String>>	trackers )
 	{
 		updatedTrackers = trackers;
+	}
+	
+	public void
+	setMaxUploadSpeed(
+		int		kbs )
+	{
+		max_up	= kbs;
+	}
+	
+	public int
+	getMaxUploadSpeed()
+	{
+		return( max_up );
+	}
+	
+	public void
+	setMaxDownloadSpeed(
+		int		kbs )
+	{
+		max_down	= kbs;
+	}
+	
+	public int
+	getMaxDownloadSpeed()
+	{
+		return( max_down );
 	}
 	
 	public TorrentOpenFileOptions[] getFiles() {
@@ -472,12 +524,20 @@ public class TorrentOpenOptions
 		return torrent;
 	}
 
-	public void setTorrent(TOTorrent torrent, boolean updateDestDir) {
+	public void setTorrent(TOTorrent torrent) {
 		this.torrent = torrent;
 
-		if (updateDestDir) {
-			if (COConfigurationManager.getBooleanParameter("DefaultDir.BestGuess")
-					&& !COConfigurationManager.getBooleanParameter(PARAM_MOVEWHENDONE)) {
+			// only apply the 'smart' save path directory guessing logic if the user hasn't set an explicit
+			// save path (5100/5200 was missing this logic that previously existed before the open-torrent-options
+			// was rewritten and this has caused quite some grief with downloads ending up in unexpected locations...)
+		
+		if (	COConfigurationManager.getBooleanParameter("DefaultDir.BestGuess") &&
+				!COConfigurationManager.getBooleanParameter(PARAM_MOVEWHENDONE)) {
+			
+			String def_save_path = COConfigurationManager.getStringParameter( PARAM_DEFSAVEPATH );
+			
+			if ( def_save_path == null || def_save_path.trim().length() == 0 ){
+				
 				this.sDestDir = getSmartDestDir();
 			}
 		}

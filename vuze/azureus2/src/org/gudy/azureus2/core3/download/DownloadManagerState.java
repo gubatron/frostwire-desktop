@@ -75,7 +75,8 @@ DownloadManagerState
 	public static final String AT_PEAK_RECEIVE_RATE			= "pkdo";
 	public static final String AT_PEAK_SEND_RATE			= "pkup";
 	public static final String AT_DL_FILE_ALERTS			= "df_alerts";
-	public static final String AT_SHARE_RATIO_PROGRESS		= "sr.prog";	// long: left word - timestamp in secs, right word sr in 1000ths
+	public static final String AT_SHARE_RATIO_PROGRESS		= "sr.prog";		// long: left word - timestamp in secs, right word sr in 1000ths
+	public static final String AT_FILES_EXPANDED			= "file.expand";	// boolean
 
 
 	public static Object[][] ATTRIBUTE_DEFAULTS = {
@@ -110,6 +111,7 @@ DownloadManagerState
 	public static final String	PARAM_STATS_COUNTED						= "stats.counted";
 	public static final String	PARAM_DOWNLOAD_ADDED_TIME				= "stats.download.added.time";
 	public static final String	PARAM_DOWNLOAD_COMPLETED_TIME			= "stats.download.completed.time";
+	public static final String	PARAM_DOWNLOAD_FILE_COMPLETED_TIME		= "stats.download.file.completed.time";
 	public static final String	PARAM_MAX_UPLOAD_WHEN_BUSY				= "max.upload.when.busy";
 	public static final String  PARAM_DND_FLAGS							= "dndflags";
 	public static final String  PARAM_RANDOM_SEED						= "rand";
@@ -131,6 +133,7 @@ DownloadManagerState
 		{ PARAM_MAX_UPLOADS_WHEN_SEEDING_ENABLED, 	new Boolean( false ) },
 		{ PARAM_STATS_COUNTED, 						new Boolean( false ) },
 		{ PARAM_DOWNLOAD_ADDED_TIME,				new Long( 0 ) },
+		{ PARAM_DOWNLOAD_FILE_COMPLETED_TIME, 		new Long( 0 ) },
 		{ PARAM_DOWNLOAD_COMPLETED_TIME, 			new Long( 0 ) },
 		{ PARAM_MAX_UPLOAD_WHEN_BUSY,				new Long( 0 ) },
 		{ PARAM_DND_FLAGS, 							new Long( 0 ) },

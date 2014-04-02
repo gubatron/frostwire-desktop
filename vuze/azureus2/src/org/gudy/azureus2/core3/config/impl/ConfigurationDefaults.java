@@ -73,7 +73,7 @@ public class ConfigurationDefaults {
   private static ConfigurationDefaults configdefaults;
   private static AEMonitor				class_mon	= new AEMonitor( "ConfigDef");
   
-  private Map def = null;
+  private ConcurrentHashMapWrapper<String,Object> def = null;
   
   public static final int def_int = 0;
   public static final long def_long = 0;
@@ -126,7 +126,7 @@ public class ConfigurationDefaults {
   protected 
   ConfigurationDefaults() 
   {
-    def = new HashMap();
+    def = new ConcurrentHashMapWrapper<String,Object>( 2000, 0.75f, 8 );
 
     
     /** Core settings **/
@@ -150,7 +150,7 @@ public class ConfigurationDefaults {
     def.put("Listen.Port.Randomize.Together", TRUE );
     def.put("Listen.Port.Randomize.Range", RandomUtils.LISTEN_PORT_MIN + "-" + RandomUtils.LISTEN_PORT_MAX );
     def.put("webseed.activation.uses.availability", TRUE );
-    def.put("IPV6 Enable Support", Constants.IS_CVS_VERSION?TRUE:FALSE );	// hack to test ipv6 DHT - 12th april 2013
+    def.put("IPV6 Enable Support", FALSE );
     def.put("IPV6 Prefer Addresses",FALSE );
     def.put("IPV4 Prefer Stack", FALSE );
     
@@ -351,6 +351,7 @@ public class ConfigurationDefaults {
     def.put( "File.save.peers.enable", TRUE );
     def.put( "File.strict.locking", TRUE );
     def.put( "Move Deleted Data To Recycle Bin", TRUE);
+    def.put( "Delete Partial Files On Library Removal", FALSE );
     def.put( "Popup Download Finished", FALSE);
     def.put( "Popup File Finished", FALSE);
     def.put( "Popup Download Added", FALSE);
@@ -492,6 +493,7 @@ public class ConfigurationDefaults {
     def.put( "diskmanager.friendly.hashchecking", FALSE );
     def.put( "diskmanager.hashchecking.smallestfirst", TRUE );    
     def.put( "Default Start Torrents Stopped", FALSE);
+    def.put( "Default Start Torrents Stopped Auto Pause", FALSE );
     def.put( "Server Enable UDP", TRUE); // this actually means the UDP tracker client
     def.put( "Tracker UDP Probe Enable", TRUE );
     def.put( "Tracker Client Enable TCP", TRUE );
@@ -673,7 +675,7 @@ public class ConfigurationDefaults {
   ConfigurationDefaults(
 	Map	_def )
   {
-	  def = _def;
+	  def = new ConcurrentHashMapWrapper<String, Object>((Map<String, Object>)_def );
   }
   
   protected void

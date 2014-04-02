@@ -21,6 +21,8 @@
 
 package org.gudy.azureus2.core3.torrent;
 
+import java.util.Map;
+
 public interface 
 TOTorrentFile 
 {
@@ -46,4 +48,7 @@ TOTorrentFile
 	
 	public int
 	getNumberOfPieces();
+	
+	public Map
+	getAdditionalProperties();
 }

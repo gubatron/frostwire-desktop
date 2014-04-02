@@ -14,15 +14,16 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
-
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.config.ParameterListener;
 import org.gudy.azureus2.core3.config.impl.ConfigurationManager;
 import org.gudy.azureus2.core3.internat.MessageText;
+import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.IndentWriter;
 import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
 import org.gudy.azureus2.ui.swt.Messages;
+import org.gudy.azureus2.ui.swt.Utils;
 import org.gudy.azureus2.ui.swt.plugins.UISWTInstance;
 import org.gudy.azureus2.ui.swt.plugins.UISWTViewEvent;
 import org.gudy.azureus2.ui.swt.plugins.UISWTInstance.UISWTViewEventListenerWrapper;
@@ -40,6 +41,8 @@ import com.aelitis.azureus.ui.swt.UIFunctionsSWT;
  */
 public class TableViewSWT_TabsCommon
 {
+	private static final Object	NULL_DS = new Object();
+	
 	TableViewSWT<?> tv;
 	
 		/** TabViews */
@@ -56,7 +59,6 @@ public class TableViewSWT_TabsCommon
 	private boolean minimized;
 	private UISWTViewCore selectedView;
 
-
 	public TableViewSWT_TabsCommon(TableViewSWT<?> tv) {
 		this.tv = tv;
 	}
@@ -70,8 +72,7 @@ public class TableViewSWT_TabsCommon
 			for (int i = 0; i < tabViews.size(); i++) {
 				UISWTViewCore view = tabViews.get(i);
 				if (view != null) {
-					view.triggerEvent(UISWTViewEvent.TYPE_DATASOURCE_CHANGED,
-							tv.getParentDataSource());
+					dataSourceChanged( view, tv.getParentDataSource());
 				}
 			}
 			return;
@@ -86,18 +87,15 @@ public class TableViewSWT_TabsCommon
 			UISWTViewCore view = tabViews.get(i);
 			if (view != null) {
 				if (view.useCoreDataSource()) {
-					view.triggerEvent(UISWTViewEvent.TYPE_DATASOURCE_CHANGED,
-							dataSourcesCore.length == 0 ? tv.getParentDataSource()
-									: dataSourcesCore);
+					dataSourceChanged( view, dataSourcesCore.length == 0 ? tv.getParentDataSource()	: dataSourcesCore);
 				} else {
 					if (dataSourcesPlugin == null) {
 						dataSourcesPlugin = tv.getSelectedDataSources(false);
 					}
 
-					view.triggerEvent(
-							UISWTViewEvent.TYPE_DATASOURCE_CHANGED,
-							dataSourcesPlugin.length == 0 ? PluginCoreUtils.convert(
-									tv.getParentDataSource(), false) : dataSourcesPlugin);
+					dataSourceChanged( 
+						view,
+						dataSourcesPlugin.length == 0 ? PluginCoreUtils.convert( tv.getParentDataSource(), false) : dataSourcesPlugin);
 				}
 			}
 		}
@@ -117,7 +115,8 @@ public class TableViewSWT_TabsCommon
 			UISWTViewCore view = tabViews.get(i);
 			if (view != null) {
 				if (view.useCoreDataSource()) {
-					view.triggerEvent(UISWTViewEvent.TYPE_DATASOURCE_CHANGED,
+					dataSourceChanged( 
+							view,
 							dataSourcesCore.length == 0 ? tv.getParentDataSource()
 									: dataSourcesCore);
 				} else {
@@ -125,8 +124,8 @@ public class TableViewSWT_TabsCommon
 						dataSourcesPlugin = tv.getSelectedDataSources(false);
 					}
 
-					view.triggerEvent(
-							UISWTViewEvent.TYPE_DATASOURCE_CHANGED,
+					dataSourceChanged( 
+							view,
 							dataSourcesPlugin.length == 0 ? PluginCoreUtils.convert(
 									tv.getParentDataSource(), false) : dataSourcesPlugin);
 				}
@@ -136,21 +135,22 @@ public class TableViewSWT_TabsCommon
 	
 	public void triggerTabViewDataSourceChanged(UISWTViewCore view) {
 		if (view != null) {
-			view.triggerEvent(UISWTViewEvent.TYPE_DATASOURCE_CHANGED, tv.getParentDataSource());
+			dataSourceChanged( view, tv.getParentDataSource());
 
 			if (view.useCoreDataSource()) {
 				Object[] dataSourcesCore = tv.getSelectedDataSources(true);
 				if (dataSourcesCore.length > 0) {
-					view.triggerEvent(UISWTViewEvent.TYPE_DATASOURCE_CHANGED,
-							dataSourcesCore.length == 0 ? tv.getParentDataSource()
+					dataSourceChanged( 
+						view,
+						dataSourcesCore.length == 0 ? tv.getParentDataSource()
 									: dataSourcesCore);
 				}
 			} else {
 				Object[] dataSourcesPlugin = tv.getSelectedDataSources(false);
 				if (dataSourcesPlugin.length > 0) {
-					view.triggerEvent(
-							UISWTViewEvent.TYPE_DATASOURCE_CHANGED,
-							dataSourcesPlugin.length == 0 ? PluginCoreUtils.convert(
+					dataSourceChanged( 
+						view,
+						dataSourcesPlugin.length == 0 ? PluginCoreUtils.convert(
 									tv.getParentDataSource(), false) : dataSourcesPlugin);
 				}
 			}
@@ -202,9 +202,66 @@ public class TableViewSWT_TabsCommon
 		return selectedView;
 	}
 
-	public void refreshSelectedSubView() {
+	private void
+	dataSourceChanged(
+		final UISWTViewCore			view,
+		final Object				ds )
+	{
+		Utils.execSWTThread(
+			new Runnable()
+			{	
+				public void 
+				run() 
+				{
+					Composite comp = view.getComposite();
+					
+					if ( comp != null && comp.isVisible()){
+					
+						Object old_ds = view.getUserData( TableViewSWT_TabsCommon.class );
+						
+						if ( old_ds != null ){
+							
+							view.setUserData( TableViewSWT_TabsCommon.class, null );
+						}
+						
+						view.triggerEvent(UISWTViewEvent.TYPE_DATASOURCE_CHANGED, ds);
+						
+					}else{
+						
+						view.setUserData( TableViewSWT_TabsCommon.class, ds==null?NULL_DS:ds );
+					}
+				}
+			});
+	}
+	
+	private void
+	checkPendingDataSourceChange(
+		UISWTViewCore		view )
+	{
+		Object ds = view.getUserData( TableViewSWT_TabsCommon.class );
+		
+		if ( ds != null ){
+			
+			if ( ds == NULL_DS ){
+				
+				ds = null;
+			}
+						
+			view.setUserData( TableViewSWT_TabsCommon.class, null );
+			
+			view.triggerEvent(UISWTViewEvent.TYPE_DATASOURCE_CHANGED, ds);
+		}
+	}
+	
+	public void 
+	refreshSelectedSubView()
+	{
 		UISWTViewCore view = getActiveSubView();
-		if (view != null && view.getComposite().isVisible()) {
+		
+		if ( view != null && view.getComposite().isVisible()){
+			
+			checkPendingDataSourceChange( view );
+			
 			view.triggerEvent(UISWTViewEvent.TYPE_REFRESH, null);
 		}
 	}
@@ -436,7 +493,9 @@ public class TableViewSWT_TabsCommon
 		tabFolder.setTabHeight(TABHEIGHT);
 		final int iFolderHeightAdj = tabFolder.computeSize(SWT.DEFAULT, 0).y;
 
-		final Sash sash = new Sash(form, SWT.HORIZONTAL);
+		final int SASH_WIDTH = 5;
+		
+		final Sash sash = Utils.createSash( form, SASH_WIDTH );
 
 		tableComposite = tv.createMainPanel(form);
 		Composite cFixLayout = tableComposite;
@@ -483,7 +542,7 @@ public class TableViewSWT_TabsCommon
 		formData.left = new FormAttachment(0, 0);
 		formData.right = new FormAttachment(100, 0);
 		formData.bottom = new FormAttachment(tabFolder);
-		formData.height = 5;
+		formData.height = SASH_WIDTH;
 		sash.setLayoutData(formData);
 
 		// FormData for table Composite
@@ -494,37 +553,6 @@ public class TableViewSWT_TabsCommon
 		formData.bottom = new FormAttachment(sash);
 		cFixLayout.setLayoutData(formData);
 
-		// Listeners to size the folder
-		sash.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				final boolean FASTDRAG = true;
-
-				if (FASTDRAG && e.detail == SWT.DRAG) {
-					return;
-				}
-
-				if (tabFolder.getMinimized()) {
-					tabFolder.setMinimized(false);
-					refreshSelectedSubView();
-					ConfigurationManager configMan = ConfigurationManager.getInstance();
-					configMan.setParameter(props_prefix + ".subViews.minimized",
-							false);
-				}
-
-				Rectangle area = form.getClientArea();
-				tabFolderData.height = area.height - e.y - e.height - iFolderHeightAdj;
-				form.layout();
-
-				Double l = new Double((double) tabFolder.getBounds().height
-						/ form.getBounds().height);
-				sash.setData("PCT", l);
-				if (e.detail != SWT.DRAG) {
-					ConfigurationManager configMan = ConfigurationManager.getInstance();
-					configMan.setParameter(props_prefix + ".SplitAt",
-							(int) (l.doubleValue() * 10000));
-				}
-			}
-		});
 
 		final CTabFolder2Adapter folderListener = new CTabFolder2Adapter() {
 			public void minimize(CTabFolderEvent event) {
@@ -549,7 +577,7 @@ public class TableViewSWT_TabsCommon
 				configMan.setParameter(props_prefix + ".subViews.minimized", true);
 			}
 
-			public void restore(CTabFolderEvent event) {
+			public void restore(CTabFolderEvent event_maybe_null ) {
 				minimized = false;
 				tabFolder.setMinimized(false);
 				CTabItem selection = tabFolder.getSelection();
@@ -580,6 +608,45 @@ public class TableViewSWT_TabsCommon
 			}
 
 		};
+		
+		// Listeners to size the folder
+		sash.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				final boolean FASTDRAG = true;
+
+				if (FASTDRAG && e.detail == SWT.DRAG) {
+					return;
+				}
+
+				if (tabFolder.getMinimized()) {
+					folderListener.restore( null );
+				}
+
+				Rectangle area = form.getClientArea();
+				
+				int height = area.height - e.y - e.height - iFolderHeightAdj;
+				
+				if ( !Constants.isWindows ){
+					height -= SASH_WIDTH;
+				}
+				
+				if ( height < 0 ){
+					height = 0;
+				}
+				
+				tabFolderData.height = height;
+				form.layout();
+
+				Double l = new Double((double) tabFolder.getBounds().height
+						/ form.getBounds().height);
+				sash.setData("PCT", l);
+				if (e.detail != SWT.DRAG) {
+					ConfigurationManager configMan = ConfigurationManager.getInstance();
+					configMan.setParameter(props_prefix + ".SplitAt",
+							(int) (l.doubleValue() * 10000));
+				}
+			}
+		});
 		
 		tabFolder.addCTabFolder2Listener(folderListener);
 
@@ -850,6 +917,8 @@ public class TableViewSWT_TabsCommon
 		
 		focused_view = view;
 		
+		checkPendingDataSourceChange( view );
+		
 		view.triggerEvent(UISWTViewEvent.TYPE_FOCUSGAINED, null);
 	}
 	
@@ -872,7 +941,8 @@ public class TableViewSWT_TabsCommon
 	
 	public void swt_refresh() {
 		if (tv.isTabViewsEnabled() && tabFolder != null && !tabFolder.isDisposed()
-				&& !tabFolder.getMinimized()) {
+				&& !tabFolder.getMinimized()){
+			
 			refreshSelectedSubView();
 		}
 	}

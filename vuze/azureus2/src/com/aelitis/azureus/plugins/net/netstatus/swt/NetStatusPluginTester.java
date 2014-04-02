@@ -21,14 +21,31 @@
 
 package com.aelitis.azureus.plugins.net.netstatus.swt;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.URL;
 import java.util.*;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
+
+import java.security.cert.Certificate;
+
+import org.gudy.azureus2.core3.util.BDecoder;
+import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.Debug;
+import org.gudy.azureus2.core3.util.FileUtil;
+import org.gudy.azureus2.pluginsimpl.local.utils.resourcedownloader.ResourceDownloaderFactoryImpl;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.networkmanager.admin.*;
+import com.aelitis.azureus.core.proxy.AEProxyFactory;
+import com.aelitis.azureus.core.proxy.AEProxyFactory.PluginProxy;
 import com.aelitis.azureus.core.versioncheck.VersionCheckClient;
 import com.aelitis.azureus.plugins.net.netstatus.NetStatusPlugin;
 import com.aelitis.azureus.plugins.net.netstatus.NetStatusProtocolTesterBT;
@@ -43,6 +60,8 @@ NetStatusPluginTester
 	public static final int		TEST_INBOUND		= 0x00000008;
 	public static final int		TEST_BT_CONNECT		= 0x00000010;
 	public static final int		TEST_IPV6			= 0x00000020;
+	public static final int		TEST_VUZE_SERVICES	= 0x00000040;
+	public static final int		TEST_PROXY_CONNECT	= 0x00000080;
 
 	
 	private static final int	ROUTE_TIMEOUT	= 120*1000;
@@ -68,6 +87,11 @@ NetStatusPluginTester
 	doTest(
 		int		type )
 	{
+		if ( test_cancelled ){
+			
+			return( false );
+		}
+		
 		return((test_types & type ) != 0 );
 	}
 	
@@ -600,6 +624,256 @@ NetStatusPluginTester
 			}
 		}
 		
+		if ( doTest( TEST_VUZE_SERVICES )){
+			
+			log( "Vuze Services test" );
+			
+			String[][] services = { 
+					{ "Vuze Website", 		"https://www.vuze.com/" },
+					{ "Client Website", 	"https://client.vuze.com/" },
+					{ "Version Server", 	"http://version.vuze.com/?dee" },
+					{ "Pairing Server", 	"https://pair.vuze.com/pairing/web/view?" },
+					{ "License Server", 	"https://license.vuze.com/licence" },
+					{ "Plugins Website", 	"https://plugins.vuze.com/" },
+			};
+			
+			for ( String[] service: services ){
+				
+				if ( test_cancelled ){
+					
+					return;
+				}
+				
+				try{
+					URL	url = new URL( service[1] );
+			
+					log( "    " + service[0] + " - " + url.getHost());
+
+					boolean	is_https = url.getProtocol().equals( "https" );
+					
+					if ( is_https ){
+						
+						String[]	host_bits = url.getHost().split( "\\." );
+						
+						String host_match = "." + host_bits[host_bits.length-2] + "." + host_bits[host_bits.length-1];
+
+						HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
+																	  	
+						con.setHostnameVerifier(
+							new HostnameVerifier()
+							{
+								public boolean
+								verify(
+									String		host,
+									SSLSession	session )
+								{
+									return( true );
+								}
+							});
+						
+						
+						con.setInstanceFollowRedirects( false );
+						
+						con.setConnectTimeout( 30*1000 );
+						con.setReadTimeout( 30*1000 );
+		
+						con.getResponseCode();
+							
+						con.getInputStream();
+						
+						Certificate[] certs = con.getServerCertificates();
+							
+						if ( certs == null || certs.length == 0 ){
+								
+							logError( "        No certificates returned" );
+								
+						}else{
+							
+							Certificate cert = certs[0];
+							
+							java.security.cert.X509Certificate x509_cert;
+							
+							if ( cert instanceof java.security.cert.X509Certificate ){
+								
+								x509_cert = (java.security.cert.X509Certificate)cert;
+								
+							}else{
+								
+								java.security.cert.CertificateFactory cf = java.security.cert.CertificateFactory.getInstance("X.509");
+								
+								x509_cert = (java.security.cert.X509Certificate)cf.generateCertificate(new ByteArrayInputStream(cert.getEncoded()));
+							}
+
+							log( "        Certificate: " + x509_cert.getSubjectDN());
+						
+							Collection<List<?>> alt_names = x509_cert.getSubjectAlternativeNames();
+							
+							boolean match = false;
+							
+							for ( List<?> alt_name: alt_names ){
+								
+								int	type = ((Number)alt_name.get(0)).intValue();
+								
+								if ( type == 2 ){		// DNS name
+									
+									String	dns_name = (String)alt_name.get(1);
+									
+									if ( dns_name.endsWith( host_match )){
+										
+										match = true;
+										
+										break;
+									}
+								}
+							}
+							
+							if ( !match ){
+								
+								logError( "        Failed: Host '" + host_match + "' not found in certificate" );
+								
+							}else{
+								
+								logSuccess( "        Connection result: " + con.getResponseCode() + "/" + con.getResponseMessage());
+							}
+						}
+					}else{
+						
+						HttpURLConnection con = (HttpURLConnection)url.openConnection();
+						
+						con.setInstanceFollowRedirects( false );
+						
+						con.setConnectTimeout( 30*1000 );
+						con.setReadTimeout( 30*1000 );
+		
+						if ( con.getResponseCode() != 200 ){
+							
+							throw( new Exception( "Connection failed: " + con.getResponseCode() + "/" + con.getResponseMessage()));
+						}
+							
+						Map resp = BDecoder.decode( new BufferedInputStream( con.getInputStream(), 16*1024 ));
+						
+						if ( resp != null && resp.containsKey( "version" )){
+							
+							logSuccess( "        Connection result: " + con.getResponseCode() + "/" + con.getResponseMessage());
+
+						}else{
+							
+							logError( "        Unexpected reply from server: " + resp );
+						}
+					}
+				}catch( Throwable e ){
+				
+					logError( "        Failed: " + Debug.getNestedExceptionMessage( e ));
+				}
+			}
+		}
+		
+		if ( doTest( TEST_PROXY_CONNECT )){
+			
+			log( "Indirect Connect test" );
+			
+			try{
+				URL target = new URL( "https://www.vuze.com" );
+				
+				PluginProxy proxy = AEProxyFactory.getPluginProxy( "Network Status test", target );
+				
+				if ( proxy == null ){
+					
+					String url_str = "http://azureus.sourceforge.net/plugin_detailssf.php?plugin=aznettor&os=";
+					
+					if ( Constants.isWindows ){
+						
+						url_str += "Windows";
+						
+					}else{
+						
+						url_str += "Mac%20OSX";
+					}
+					
+					URL url = new URL( url_str );
+					
+					logError( "    No plugin proxy available" );
+					logInfo( "    For the plugin installer see " + url.toExternalForm());
+					
+				}else{
+				
+					log( "    Connecting to " + target.toExternalForm());
+					
+					HttpURLConnection con = (HttpURLConnection)proxy.getURL().openConnection( proxy.getProxy());
+					
+					if ( con instanceof HttpsURLConnection ){
+										  	
+						((HttpsURLConnection)con).setHostnameVerifier(
+								new HostnameVerifier()
+								{
+									public boolean
+									verify(
+										String		host,
+										SSLSession	session )
+									{
+										return( true );
+									}
+								});
+					}
+					
+					con.setRequestProperty( "HOST", proxy.getURLHostRewrite());
+					
+					con.setInstanceFollowRedirects( false );
+					
+					con.setConnectTimeout( 60*1000 );
+					con.setReadTimeout( 30*1000 );
+	
+					try{
+						int resp = con.getResponseCode();
+							
+						if ( con instanceof HttpsURLConnection ){
+							
+							Certificate[] certs = ((HttpsURLConnection)con).getServerCertificates();
+							
+							if ( certs == null || certs.length == 0 ){
+								
+								logError( "    No certificates returned" );
+								
+							}else{
+								Certificate cert = certs[0];
+								
+								java.security.cert.X509Certificate x509_cert;
+								
+								if ( cert instanceof java.security.cert.X509Certificate ){
+									
+									x509_cert = (java.security.cert.X509Certificate)cert;
+									
+								}else{
+									
+									java.security.cert.CertificateFactory cf = java.security.cert.CertificateFactory.getInstance("X.509");
+									
+									x509_cert = (java.security.cert.X509Certificate)cf.generateCertificate(new ByteArrayInputStream(cert.getEncoded()));
+								}
+	
+								log( "    Certificate: " + x509_cert.getSubjectDN());
+							}
+						}
+					
+						if ( resp == 200 ){
+							
+							logSuccess( "    Connection result: " + con.getResponseCode() + "/" + con.getResponseMessage());
+							
+						}else{
+							
+							log( "    Connection result: " + con.getResponseCode() + "/" + con.getResponseMessage());
+						}
+					}finally{
+						
+						proxy.setOK( true );
+					}
+				}
+			}catch( Throwable e ){
+				
+				logError( "    Failed: " + Debug.getNestedExceptionMessage( e ));
+				logError( "    Check the logs for the 'Tor Helper Plugin' (Tools->Plugins->Log Views)" );
+			}
+		}
+		
 		if ( doTest( TEST_BT_CONNECT )){
 
 			log( "Distributed protocol test" );
@@ -615,11 +889,11 @@ NetStatusPluginTester
 						complete(
 							NetStatusProtocolTesterBT	tester )
 						{
-							log( "Results" );
+							log( "Results", false );
 							
 							if ( tester.getOutboundConnects() < 4 ){
 								
-								log( "    insufficient outbound connects for analysis" );
+								log( "    insufficient outbound connects for analysis", false );
 								
 								return;
 							}
@@ -675,12 +949,16 @@ NetStatusPluginTester
 								log( "  " + 
 										( session.isInitiator()?"Outbound":"Inbound" ) + "," + 
 										( session.isSeed()?"Seed":"Leecher") + "," + 
-										session.getProtocolString());
+										session.getProtocolString(), false );
 							}
+							
+							boolean	good = true;
 							
 							if ( incoming_connect_ok == 0 ){
 								
 								logError( "  No incoming connections received, likely NAT problems" );
+								
+								good = false;
 							}
 							
 							if ( 	outgoing_leecher_ok > 0 &&
@@ -688,6 +966,13 @@ NetStatusPluginTester
 									outgoing_seed_bad > 0 ){
 								
 								logError( "  Outgoing seed connects appear to be failing while non-seeds succeed" );
+								
+								good = false;
+							}
+							
+							if ( good ){
+								
+								logSuccess( "    Test successful" );
 							}
 						}
 						
@@ -703,9 +988,10 @@ NetStatusPluginTester
 						
 						public void
 						log(
-							String		str )
+							String		str,
+							boolean		detailed )
 						{
-							NetStatusPluginTester.this.log( "  " + str );
+							NetStatusPluginTester.this.log( "  " + str, detailed );
 						}
 						
 						public void
@@ -802,9 +1088,17 @@ NetStatusPluginTester
 	
 	protected void
 	log(
-		String	str )
+		String		str )
 	{
-		logger.log( str );
+		log( str, false );
+	}
+	
+	protected void
+	log(
+		String		str,
+		boolean		detailed )
+	{
+		logger.log( str, detailed );
 	}
 	
 	protected void
@@ -826,7 +1120,7 @@ NetStatusPluginTester
 		String		str,
 		Throwable	e )
 	{
-		logger.log( str + ": " + e.getLocalizedMessage());
+		logger.log( str + ": " + e.getLocalizedMessage(), false );
 	}
 	
 	protected void
@@ -849,7 +1143,8 @@ NetStatusPluginTester
 	{
 		public void
 		log(
-			String	str );
+			String	str,
+			boolean	is_detailed );
 		
 		public void
 		logSuccess(

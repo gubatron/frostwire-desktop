@@ -46,7 +46,27 @@ public class PeerDatabase {
   private long start_time = SystemTime.getMonotonousTime();
   
   private final HashMap peer_connections = new HashMap();
-  private final LinkedHashSet<PeerItem> discovered_peers = new LinkedHashSet<PeerItem>();
+  
+  private final TreeSet<PeerItem> discovered_peers = 
+		 new TreeSet<PeerItem>(
+			new Comparator<PeerItem>()
+			{
+				public int 
+				compare(
+					PeerItem o1, 
+					PeerItem o2 ) 
+				{
+					long res = o2.getPriority() - o1.getPriority();
+					
+					if ( res == 0 ){
+						
+						res = o1.compareTo( o2 );
+					}
+					
+					return( res<0?-1:(res>0?1:0 ));
+				}
+			});
+  
   private final AEMonitor map_mon = new AEMonitor( "PeerDatabase" );
   
   private PeerItem[] cached_peer_popularities = null;
@@ -276,7 +296,16 @@ public class PeerDatabase {
    * @return peer to connect, or null of no optimistic peer available
    */
   public PeerItem getNextOptimisticConnectPeer( ) {
-	  return(getNextOptimisticConnectPeer(0));
+	  PeerItem item = getNextOptimisticConnectPeer(0);
+	  
+	  /*
+	  if ( item != null ){
+		  
+		 System.out.println( "pri: " + item.getPriority());
+	  }
+	  */
+	  
+	  return( item );
   }
   
   private PeerItem getNextOptimisticConnectPeer( final int recursion_count ) {

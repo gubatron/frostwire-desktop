@@ -30,7 +30,6 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.*;
 
 import org.gudy.azureus2.core3.util.*;
@@ -102,6 +101,9 @@ public class BrowserContext
 	private List<String> listJS = new ArrayList<String>(1);
 	
 	private boolean allowPopups = true;
+	
+	private volatile boolean 	autoReloadPending = false;
+	private String[]			lastRetryData;
 	
 	/**
 	 * Creates a context and registers the given browser.
@@ -295,12 +297,12 @@ public class BrowserContext
 							event.doit = false;
 							boolean doLinkExternally = PlatformConfigMessenger.areLinksExternal(browser.getUrl());
 							if (doLinkExternally) {
-								Program.launch(event.location);
+								Utils.launch(event.location);
 							} else if (allowPopups()
 									&& !UrlFilter.getInstance().urlIsBlocked(event.location)
 									&& (event.location.startsWith("http://") || event.location.startsWith("https://"))) {
 								debug("open sub browser: " + event.location);
-								Program.launch(event.location);
+								Utils.launch(event.location);
 							} else {
 								debug("blocked open sub browser: " + event.location);
 							}
@@ -737,22 +739,65 @@ public class BrowserContext
 		torrentURLHandler = handler;
 	}
 	
+	public void
+	setAutoReloadPending(
+		final boolean	is_pending,
+		final boolean	aborted )
+	{
+		autoReloadPending = is_pending;
+		
+		Utils.execSWTThread(
+			new Runnable()
+			{
+				public void
+				run()
+				{
+					if ( !is_pending ){
+						
+						if ( aborted ){
+											
+							if ( lastRetryData != null ){
+		
+								if ( !browser.isDisposed()){
+									
+									fillWithRetry( lastRetryData[0], lastRetryData[1] );
+								}
+							}
+						}
+					}
+				}
+			});
+	}
+	
 	public void fillWithRetry(String s, String s2) {
+		
 		Color bg = browser.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
 		Color fg = browser.getDisplay().getSystemColor(SWT.COLOR_WIDGET_FOREGROUND);
-		
-		browser.setText("<html><body style='overflow:auto; font-family: verdana; font-size: 10pt' bgcolor=#"
-				+ Utils.toColorHexString(bg)
-				+ " text=#" + Utils.toColorHexString(fg) + ">"
-				+ "<br>Sorry, there was a problem loading this page.<br> "
-				+ "Please check if your internet connection is working and click <a href='"
-				+ lastValidURL
-				+ "' style=\"color: rgb(100, 155, 255); \">retry</a> to continue."
-				+ "<div style='word-wrap: break-word'><font size=1 color=#"
-				+ Utils.toColorHexString(bg)
-				+ ">"
-				+ s + "<br><br>" + s2
-				+ "</font></div>" + "</body></html>");
+
+		if ( autoReloadPending ){
+			
+			lastRetryData = new String[]{ s, s2 };
+
+			browser.setText("<html><body style='overflow:auto; font-family: verdana; font-size: 10pt' bgcolor=#"
+					+ Utils.toColorHexString(bg)
+					+ " text=#" + Utils.toColorHexString(fg) + ">"
+					+ "<br>Please wait while Vuze attempts to load the page (this can take a moment or two initially) ...<br>"
+					+ "</body></html>");
+		}else{
+			
+			browser.setText("<html><body style='overflow:auto; font-family: verdana; font-size: 10pt' bgcolor=#"
+					+ Utils.toColorHexString(bg)
+					+ " text=#" + Utils.toColorHexString(fg) + ">"
+					+ "<br>Sorry, there was a problem loading this page.<br> "
+					+ "Please check if your internet connection is working and click <a href='"
+					+ lastValidURL
+					+ "' style=\"color: rgb(100, 155, 255); \">retry</a> to continue."
+					+ "<div style='word-wrap: break-word'><font size=1 color=#"
+					+ Utils.toColorHexString(bg)
+					+ ">"
+					+ s + "<br><br>" + s2
+					+ "</font></div>" + "</body></html>");
+		}
 	}
 	
 	private void 
