@@ -21,7 +21,6 @@ package com.frostwire.gui.searchfield;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.net.URI;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -39,8 +38,9 @@ import org.limewire.util.LCS;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.HttpFetcher;
 import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -156,8 +156,9 @@ public class GoogleSearchField extends SearchField {
             try {
                 String url = String.format(SUGGESTIONS_URL, URLEncoder.encode(constraint, "UTF-8"));
 
-                HttpFetcher fetcher = new HttpFetcher(new URI(url), HTTP_QUERY_TIMEOUT);
-                String json = StringUtils.getUTF8String(fetcher.fetch());
+                HttpClient httpClient = HttpClientFactory.newInstance();
+                
+                String json = httpClient.get(url, HTTP_QUERY_TIMEOUT);
 
                 if (!isCancelled()) {
                     final List<String> suggestions = readSuggestions((JSONArray) ((JSONArray) JSONValue.parse(json)).get(1));
