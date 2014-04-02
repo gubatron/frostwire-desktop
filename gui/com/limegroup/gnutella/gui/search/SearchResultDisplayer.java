@@ -570,8 +570,13 @@ public final class SearchResultDisplayer implements RefreshListener {
      */
     private String titleOf(SearchResultMediator rp) {
         int total = rp.totalResults();
+        
+        String title = rp.getTitle();
+        if (title.length() > 40) {
+            title = title.substring(0,39) + "...";
+        }
 
-        return rp.getTitle() + " (" + total + " " + I18n.tr("results") + ")";
+        return title + " (" + total + " " + I18n.tr("results") + ")";
     }
 
     /**
