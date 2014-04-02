@@ -79,6 +79,27 @@ public class ArchiveorgSearchPerformer extends CrawlPagedWebSearchPerformer<Arch
         List<ArchiveorgCrawledSearchResult> list = new LinkedList<ArchiveorgCrawledSearchResult>();
 
         String json = new String(data, "UTF-8");
+
+        List<ArchiveorgFile> files = readFiles(json);
+
+        long totalSize = calcTotalSize(files);
+
+        for (ArchiveorgFile file : files) {
+            if (isStreamable(file.filename)) {
+                list.add(new ArchiveorgCrawledStreamableSearchResult(sr, file));
+            } else if (file.filename.endsWith(".torrent")) {
+                list.add(new ArchiveorgTorrentSearchResult(sr, file, totalSize));
+            } else {
+                list.add(new ArchiveorgCrawledSearchResult(sr, file));
+            }
+        }
+
+        return list;
+    }
+
+    private List<ArchiveorgFile> readFiles(String json) throws Exception {
+        List<ArchiveorgFile> result = new LinkedList<ArchiveorgFile>();
+
         JSONObject obj = new JSONObject(json);
         JSONObject files = obj.getJSONObject("files");
 
@@ -89,16 +110,12 @@ public class ArchiveorgSearchPerformer extends CrawlPagedWebSearchPerformer<Arch
             String name = it.next();
             ArchiveorgFile file = JsonUtils.toObject(files.getJSONObject(name).toString(), ArchiveorgFile.class);
             if (filter(file)) {
-                String filename = cleanName(name);
-                if (isStreamable(filename)) {
-                    list.add(new ArchiveorgCrawledStreamableSearchResult(sr, filename, file));
-                } else {
-                    list.add(new ArchiveorgCrawledSearchResult(sr, filename, file));
-                }
+                file.filename = cleanName(name);
+                result.add(file);
             }
         }
 
-        return list;
+        return result;
     }
 
     private String cleanName(String name) {
@@ -107,6 +124,20 @@ public class ArchiveorgSearchPerformer extends CrawlPagedWebSearchPerformer<Arch
         }
 
         return name;
+    }
+
+    private long calcTotalSize(List<ArchiveorgFile> files) {
+        long size = 0;
+
+        for (ArchiveorgFile f : files) {
+            try {
+                size += Long.parseLong(f.size);
+            } catch (Throwable e) {
+                // ignore
+            }
+        }
+
+        return size;
     }
 
     private boolean filter(ArchiveorgFile file) {
