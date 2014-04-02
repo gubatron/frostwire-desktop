@@ -76,31 +76,34 @@ public final class SplashWindow {
         try {
             imageURL = Main.getChosenSplashURL();
         } catch (Exception e) { e.printStackTrace(); }
-        assert imageURL != null;
-        Image splashImage = null;
-        try {
-            splashImage = ImageIO.read(imageURL);
-        } catch (IOException e) {
-            e.printStackTrace();
+        
+        if (imageURL != null) {
+            Image splashImage = null;
+            try {
+                splashImage = ImageIO.read(imageURL);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+            if (splashImage != null) {
+                int imgWidth = splashImage.getWidth(null);
+                if(imgWidth < 1)
+                    imgWidth = 1;
+                int imgHeight = splashImage.getHeight(null);
+                if(imgHeight < 1)
+                    imgHeight = 1;
+                Dimension size = new Dimension(imgWidth + 2, imgHeight + 2);
+                splashWindow.setSize(size);        
+          
+                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                splashWindow.setLocation((screenSize.width - size.width) / 2, (screenSize.height - size.height) / 2);
+                splashLabel.setIcon(new ImageIcon(splashImage));
+                splashWindow.getContentPane().add(splashLabel, BorderLayout.CENTER);
+
+                splashWindow.setGlassPane(glassPane);
+                splashWindow.pack();
+            }
         }
-        assert splashImage != null;
-
-        int imgWidth = splashImage.getWidth(null);
-        if(imgWidth < 1)
-            imgWidth = 1;
-        int imgHeight = splashImage.getHeight(null);
-        if(imgHeight < 1)
-            imgHeight = 1;
-        Dimension size = new Dimension(imgWidth + 2, imgHeight + 2);
-        splashWindow.setSize(size);        
-  
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        splashWindow.setLocation((screenSize.width - size.width) / 2, (screenSize.height - size.height) / 2);
-        splashLabel.setIcon(new ImageIcon(splashImage));
-        splashWindow.getContentPane().add(splashLabel, BorderLayout.CENTER);
-
-        splashWindow.setGlassPane(glassPane);
-        splashWindow.pack();
     }
     
     private void paintOSIcons(Graphics g) {
