@@ -841,9 +841,15 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         int count = TABLE.getRowCount();
         List<BTDownload> downloads = new ArrayList<BTDownload>(count);
         for (int i = 0; i < count; i++) {
-            BTDownloadDataLine line = DATA_MODEL.get(i);
-            BTDownload downloader = line.getInitializeObject();
-            downloads.add(downloader);
+            try {
+                BTDownloadDataLine line = DATA_MODEL.get(i);
+                BTDownload downloader = line.getInitializeObject();
+                downloads.add(downloader);
+            } catch (Throwable t) {
+                //saw user with 771 downloads
+                //perhaps deleted one, and by the time this finished
+                //iterating this threw an IndexOutOfBounds exception
+            }
         }
         return downloads;
     }
