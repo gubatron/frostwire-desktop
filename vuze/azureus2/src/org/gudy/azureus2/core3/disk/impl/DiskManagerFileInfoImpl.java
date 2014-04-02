@@ -39,6 +39,10 @@ import com.aelitis.azureus.core.diskmanager.cache.CacheFileManagerException;
 import com.aelitis.azureus.core.diskmanager.cache.CacheFileManagerFactory;
 import com.aelitis.azureus.core.diskmanager.cache.CacheFileOwner;
 import com.aelitis.azureus.core.util.CopyOnWriteList;
+import com.aelitis.azureus.core.util.average.AverageFactory;
+import com.aelitis.azureus.core.util.average.AverageFactory.LazyMovingImmediateAverageAdapter;
+import com.aelitis.azureus.core.util.average.AverageFactory.LazyMovingImmediateAverageState;
+import com.aelitis.azureus.core.util.average.MovingImmediateAverage;
 
 /**
  * @author Olivier
@@ -572,13 +576,143 @@ DiskManagerFileInfoImpl
 			buffer.returnToPool();
 			
 			Debug.printStackTrace(e);
-			
+			 
 			throw( new IOException( e.getMessage()));
 		}
 		
 		return( buffer );	
 	}
+		
+	private volatile LazyMovingImmediateAverageState	read_average_state;
+	private volatile LazyMovingImmediateAverageState	write_average_state;
+	private volatile LazyMovingImmediateAverageState	eta_average_state;
+	
+	private static LazyMovingImmediateAverageAdapter<DiskManagerFileInfoImpl> read_adapter = 
+			new LazyMovingImmediateAverageAdapter<DiskManagerFileInfoImpl>()
+			{
+				public LazyMovingImmediateAverageState
+				getCurrent(
+					DiskManagerFileInfoImpl		instance )
+				{
+					return( instance.read_average_state );
+				}
+				
+				public void 
+				setCurrent(
+					DiskManagerFileInfoImpl 				instance,
+					LazyMovingImmediateAverageState 		average ) 
+				{
+					instance.read_average_state = average;
+				}
+				
+				public long 
+				getValue(
+					DiskManagerFileInfoImpl instance) 
+				{
+					return( instance.cache_file.getSessionBytesRead());
+				}
+			};
+	
+	private static LazyMovingImmediateAverageAdapter<DiskManagerFileInfoImpl> write_adapter = 
+			new LazyMovingImmediateAverageAdapter<DiskManagerFileInfoImpl>()
+			{
+				public LazyMovingImmediateAverageState
+				getCurrent(
+					DiskManagerFileInfoImpl		instance )
+				{
+					return( instance.write_average_state );
+				}
+				
+				public void 
+				setCurrent(
+					DiskManagerFileInfoImpl 				instance,
+					LazyMovingImmediateAverageState 		average ) 
+				{
+					instance.write_average_state = average;
+				}
+				
+				public long 
+				getValue(
+					DiskManagerFileInfoImpl instance) 
+				{
+					return( instance.cache_file.getSessionBytesWritten());
+				}
+			};
+		
+	private static LazyMovingImmediateAverageAdapter<DiskManagerFileInfoImpl> eta_adapter = 
+			new LazyMovingImmediateAverageAdapter<DiskManagerFileInfoImpl>()
+			{
+				public LazyMovingImmediateAverageState
+				getCurrent(
+					DiskManagerFileInfoImpl		instance )
+				{
+					return( instance.eta_average_state );
+				}
+				
+				public void 
+				setCurrent(
+					DiskManagerFileInfoImpl 				instance,
+					LazyMovingImmediateAverageState 		average ) 
+				{
+					instance.eta_average_state = average;
+				}
+				
+				public long 
+				getValue(
+					DiskManagerFileInfoImpl instance) 
+				{
+					return( instance.cache_file.getSessionBytesWritten());
+				}
+			};
+					
+   	public int
+	getReadBytesPerSecond()
+	{
+		return( (int)AverageFactory.LazyMovingImmediateAverage( 10, 1, read_adapter, this ));
+	}
+	
+	public int
+	getWriteBytesPerSecond()
+	{
+		return( (int)AverageFactory.LazyMovingImmediateAverage( 10, 1, write_adapter, this ));
+	}
+	
+	public long
+	getETA()
+	{
+		if ( isSkipped()){
 			
+			return( -1 );
+		}
+		
+		long	rem = getLength() - getDownloaded();
+		
+		if ( rem == 0 ){
+			
+			return( -1 );
+		}
+		
+		long speed = AverageFactory.LazySmoothMovingImmediateAverage( eta_adapter, this );
+		
+		if ( speed == 0 ){
+			
+			return( Constants.CRAPPY_INFINITE_AS_LONG );
+			
+		}else{
+			
+			long eta = rem / speed;
+			
+			if ( eta == 0 ){
+				
+				return( 1 );
+				
+			}else{
+				
+				return( eta );
+			}
+		}
+	}
+	
 	public void
 	close()
 	{

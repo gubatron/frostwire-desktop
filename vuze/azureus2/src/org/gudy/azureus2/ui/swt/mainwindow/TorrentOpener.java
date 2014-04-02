@@ -27,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
@@ -515,6 +516,18 @@ public class TorrentOpener {
 							file_info_set.setPriority( priorities );
 						}
 						
+						int	maxUp = torrentOptions.getMaxUploadSpeed();
+						
+						if ( maxUp > 0 ){
+							dm.getStats().setUploadRateLimitBytesPerSecond( maxUp*1024 );
+						}
+						
+						int	maxDown = torrentOptions.getMaxDownloadSpeed();
+						
+						if ( maxDown > 0 ){
+							dm.getStats().setDownloadRateLimitBytesPerSecond( maxDown*1024 );
+						}
+						
 						if (torrentOptions.disableIPFilter) {
 
 							dm.getDownloadState().setFlag(
@@ -648,7 +661,7 @@ public class TorrentOpener {
 				return false;
 			}
 
-			if (fOriginal.length() > 20 * 1024 * 1024) {
+			if (fOriginal.length() > (sFileName.toLowerCase(Locale.US).endsWith(".vuze")?50*1024*1024L:20*1024*1024L )) {
 				UIFunctionsManager.getUIFunctions().showErrorMessage(
 						"OpenTorrentWindow.mb.openError", fOriginal.toString(),
 						new String[] {
@@ -711,7 +724,7 @@ public class TorrentOpener {
 
 		torrentOptions.bDeleteFileOnCancel = bDeleteFileOnCancel;
 		torrentOptions.sFileName = torrentFile.getAbsolutePath();
-		torrentOptions.setTorrent(torrent, true);
+		torrentOptions.setTorrent(torrent);
 		torrentOptions.sOriginatingLocation = sOriginatingLocation;
 
 		return torrentOptions.getTorrent() != null;

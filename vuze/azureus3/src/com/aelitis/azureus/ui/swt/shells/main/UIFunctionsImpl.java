@@ -67,6 +67,7 @@ import org.gudy.azureus2.ui.swt.views.clientstats.ClientStatsView;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.cnetwork.ContentNetwork;
 import com.aelitis.azureus.core.tag.Tag;
+import com.aelitis.azureus.core.torrent.PlatformTorrentUtils;
 import com.aelitis.azureus.ui.*;
 import com.aelitis.azureus.ui.common.table.TableView;
 import com.aelitis.azureus.ui.common.updater.UIUpdater;
@@ -82,6 +83,7 @@ import com.aelitis.azureus.ui.swt.UIFunctionsSWT;
 import com.aelitis.azureus.ui.swt.mdi.BaseMdiEntry;
 import com.aelitis.azureus.ui.swt.mdi.MultipleDocumentInterfaceSWT;
 import com.aelitis.azureus.ui.swt.plugininstall.SimplePluginInstaller;
+import com.aelitis.azureus.ui.swt.search.SearchHandler;
 import com.aelitis.azureus.ui.swt.shells.BrowserWindow;
 import com.aelitis.azureus.ui.swt.shells.RemotePairingWindow;
 import com.aelitis.azureus.ui.swt.shells.opentorrent.OpenTorrentOptionsWindow;
@@ -435,7 +437,7 @@ public class UIFunctionsImpl
 
 			case VIEW_ALLPEERS:
 				openView(SideBar.SIDEBAR_HEADER_TRANSFERS, PeersSuperView.class,
-						null, data, true);
+						"AllPeersView", data, true);
 				break;
 
 			case VIEW_PEERS_STATS:
@@ -881,27 +883,19 @@ public class UIFunctionsImpl
 				timeout = -1;
 			}
 			
-			promptUser(
-				title, 
-				text, 
-				new String[] {
-					MessageText.getString("UpdateWindow.restart"),
-					MessageText.getString("UpdateWindow.restartLater")
-				}, 
-				0, 
-				null, 
-				null, 
-				false, 
-				timeout, 
-				new UserPrompterResultListener() 
-				{
-					public void 
-					prompterClosed(
-						int result ) 
-					{
-						listener.actionComplete( result == 0 );
-					}
-				});
+			MessageBoxShell messageBoxShell = new MessageBoxShell(title, text,
+					new String[] {
+				MessageText.getString("UpdateWindow.restart"),
+				MessageText.getString("UpdateWindow.restartLater")
+			}, 0);
+			messageBoxShell.setAutoCloseInMS(timeout);
+			messageBoxShell.setParent(getMainShell());
+			messageBoxShell.setOneInstanceOf(MSG_PREFIX);
+			messageBoxShell.open( new UserPrompterResultListener() {
+				public void prompterClosed(int result) {
+					listener.actionComplete(result == 0);
+				}
+			});
 		}else{
 			
 			Debug.out( "Unknown action " + action_id );
@@ -998,7 +992,11 @@ public class UIFunctionsImpl
 		});
 	}
 
-	public void doSearch(String sSearchText, boolean toSubscribe) {
+	public void 
+	doSearch(
+		String sSearchText, 
+		boolean toSubscribe) 
+	{
 		if (sSearchText.length() == 0) {
 			return;
 		}
@@ -1007,41 +1005,8 @@ public class UIFunctionsImpl
 			
 			return;
 		}
-		
-		SearchResultsTabArea.SearchQuery sq = new SearchResultsTabArea.SearchQuery(
-				sSearchText, toSubscribe);
-
-		MultipleDocumentInterface mdi = UIFunctionsManager.getUIFunctions().getMDI();
-		String id = MultipleDocumentInterface.SIDEBAR_SECTION_SEARCH;
-		MdiEntry existingEntry = mdi.getEntry(id);
-		if (existingEntry != null && existingEntry.isAdded()) {
-			SearchResultsTabArea searchClass = (SearchResultsTabArea) SkinViewManager.getByClass(SearchResultsTabArea.class);
-			if (searchClass != null) {
-				searchClass.anotherSearch(sSearchText, toSubscribe);
-			}
-			mdi.showEntry(existingEntry);
-			return;
-		}
-
-		final MdiEntry entry = mdi.createEntryFromSkinRef(
-				MultipleDocumentInterface.SIDEBAR_HEADER_DISCOVERY, id,
-				"main.area.searchresultstab", sSearchText, null, sq, true, MultipleDocumentInterface.SIDEBAR_POS_FIRST );
-		if (entry != null) {
-			entry.setImageLeftID("image.sidebar.search");
-			entry.setDatasource(sq);
-			entry.setViewTitleInfo(new ViewTitleInfo() {
-				public Object getTitleInfoProperty(int propertyID) {
-					if (propertyID == TITLE_TEXT) {
-						SearchResultsTabArea searchClass = (SearchResultsTabArea) SkinViewManager.getByClass(SearchResultsTabArea.class);
-						if (searchClass != null && searchClass.sq != null) {
-							return searchClass.sq.term;
-						}
-					}
-					return null;
-				}
-			});
-		}
-		mdi.showEntryByID(id);
+	
+		SearchHandler.handleSearch( sSearchText, toSubscribe );
 	}
 	
 	private static boolean
@@ -1053,6 +1018,31 @@ public class UIFunctionsImpl
 		String hit = UrlUtils.parseTextForURL( str, true, true );
 		
 		if ( hit == null ){
+			
+			try{
+				File f = new File( str );
+			
+				if ( f.isFile()){
+				
+					String name = f.getName().toLowerCase();
+					
+					if ( name.endsWith( ".torrent" ) || name.endsWith( ".vuze" )){
+						
+						UIFunctionsSWT uif = UIFunctionsManagerSWT.getUIFunctionsSWT();
+			    		
+						if ( uif != null ){
+							
+			    			uif.openTorrentOpenOptions(
+			    				null, null, new String[] { f.getAbsolutePath() },
+			    				false, false);
+			    		
+			    			return( true );
+						}
+					}
+				}
+			}catch( Throwable e ){
+				
+			}
 			
 			return( false );
 		}
@@ -1221,20 +1211,29 @@ public class UIFunctionsImpl
 						boolean can_merge = TorrentUtils.canMergeAnnounceURLs(
 								torrentOptions.getTorrent(), fExistingDownload.getTorrent());
 
+						long	existed_for = SystemTime.getCurrentTime() - fExistingDownload.getCreationTime();
+
 						Shell mainShell = UIFunctionsManagerSWT.getUIFunctionsSWT().getMainShell();
 
 						if ((Display.getDefault().getActiveShell() == null
 								|| !mainShell.isVisible() || mainShell.getMinimized())
 								&& (!can_merge)) {
 
-							new MessageSlideShell(Display.getCurrent(), SWT.ICON_INFORMATION,
-									MSG_ALREADY_EXISTS, null, new String[] {
-										":" + torrentOptions.sOriginatingLocation,
-										fExistingName,
-										MessageText.getString(MSG_ALREADY_EXISTS_NAME),
-									}, new Object[] {
-										fExistingDownload
-									}, -1);
+							
+								// seems we're getting some double additions (linux user reported but could be a general issue) so 
+								// don't warn if the matching download has been added recently
+							
+							if ( existed_for > 15*1000 ){
+								
+								new MessageSlideShell(Display.getCurrent(), SWT.ICON_INFORMATION,
+										MSG_ALREADY_EXISTS, null, new String[] {
+											":" + torrentOptions.sOriginatingLocation,
+											fExistingName,
+											MessageText.getString(MSG_ALREADY_EXISTS_NAME),
+										}, new Object[] {
+											fExistingDownload
+										}, -1);
+							}
 						} else {
 
 							if (can_merge) {
@@ -1263,13 +1262,17 @@ public class UIFunctionsImpl
 									}
 								});
 							} else {
-								MessageBoxShell mb = new MessageBoxShell(SWT.OK,
-										MSG_ALREADY_EXISTS, new String[] {
-											":" + torrentOptions.sOriginatingLocation,
-											fExistingName,
-											MessageText.getString(MSG_ALREADY_EXISTS_NAME),
-										});
-								mb.open(null);
+								
+								if ( existed_for > 15*1000 ){
+
+									MessageBoxShell mb = new MessageBoxShell(SWT.OK,
+											MSG_ALREADY_EXISTS, new String[] {
+												":" + torrentOptions.sOriginatingLocation,
+												fExistingName,
+												MessageText.getString(MSG_ALREADY_EXISTS_NAME),
+											});
+									mb.open(null);
+								}
 							}
 						}
 					}
@@ -1284,11 +1287,17 @@ public class UIFunctionsImpl
 		}
 		
 
-		if (!force) {
+		if ( !force ){
+			
+			TOTorrent torrent = torrentOptions.getTorrent();
+			
+			boolean is_featured = torrent != null && PlatformTorrentUtils.isFeaturedContent( torrent );
+			
 			String showAgainMode = COConfigurationManager.getStringParameter(ConfigurationDefaults.CFG_TORRENTADD_OPENOPTIONS);
-			if (showAgainMode != null
-					&& ((showAgainMode.equals(ConfigurationDefaults.CFG_TORRENTADD_OPENOPTIONS_NEVER)) || (showAgainMode.equals(ConfigurationDefaults.CFG_TORRENTADD_OPENOPTIONS_MANY)
-							&& torrentOptions.getFiles() != null && torrentOptions.getFiles().length == 1))) {
+			
+			if ( 	is_featured ||
+					(	showAgainMode != null && ((showAgainMode.equals(ConfigurationDefaults.CFG_TORRENTADD_OPENOPTIONS_NEVER)) || (showAgainMode.equals(ConfigurationDefaults.CFG_TORRENTADD_OPENOPTIONS_MANY)
+							&& torrentOptions.getFiles() != null && torrentOptions.getFiles().length == 1)))){
 				
 					// we're about to silently add the download - ensure that it is going to be saved somewhere vaguely sensible
 					// as the current save location is simply taken from the 'default download' config which can be blank (for example)

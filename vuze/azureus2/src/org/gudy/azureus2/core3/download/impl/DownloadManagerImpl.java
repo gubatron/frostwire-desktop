@@ -60,6 +60,7 @@ import org.gudy.azureus2.core3.torrent.TOTorrentListener;
 import org.gudy.azureus2.core3.tracker.client.*;
 import org.gudy.azureus2.core3.util.*;
 import org.gudy.azureus2.plugins.PluginInterface;
+import org.gudy.azureus2.plugins.download.Download;
 import org.gudy.azureus2.plugins.download.DownloadAnnounceResult;
 import org.gudy.azureus2.plugins.download.DownloadScrapeResult;
 import org.gudy.azureus2.plugins.download.savelocation.SaveLocationChange;
@@ -1853,9 +1854,19 @@ DownloadManagerImpl
   	
 	public void 
 	stopIt(
-			int state_after_stopping, 
-			boolean remove_torrent,
-			boolean remove_data) 
+		int 		state_after_stopping, 
+		boolean 	remove_torrent,
+		boolean 	remove_data) 
+	{
+		stopIt( state_after_stopping, remove_torrent, remove_data, false );
+	}
+	
+	public void 
+	stopIt(
+		int 		state_after_stopping, 
+		boolean 	remove_torrent,
+		boolean		remove_data,
+		boolean		for_removal )
 	{
 		try {
 			boolean closing = state_after_stopping == DownloadManager.STATE_CLOSED;
@@ -1870,7 +1881,7 @@ DownloadManagerImpl
 						DownloadManagerState.AT_TIME_STOPPED, SystemTime.getCurrentTime());
 			}
 
-			controller.stopIt(state_after_stopping, remove_torrent, remove_data);
+			controller.stopIt(state_after_stopping, remove_torrent, remove_data,for_removal );
 
 		} finally {
 
@@ -2451,6 +2462,71 @@ DownloadManagerImpl
 		
 		return( new Object[]{ response, active_url } );
 	}
+	
+	
+	public List<TRTrackerScraperResponse>
+	getGoodTrackerScrapeResponses()
+	{
+		List<TRTrackerScraperResponse> 	responses	= new ArrayList<TRTrackerScraperResponse>();
+		
+		if ( torrent != null){
+			
+			TRTrackerScraper	scraper = globalManager.getTrackerScraper();
+
+    	
+			TOTorrentAnnounceURLSet[]	sets;
+			
+			try{
+				sets = torrent.getAnnounceURLGroup().getAnnounceURLSets();
+				
+			}catch( Throwable e ){
+				
+				sets = new  TOTorrentAnnounceURLSet[0];
+			}
+    	
+			if ( sets.length == 0 ){
+    	
+				TRTrackerScraperResponse response = scraper.peekScrape( torrent, null );
+   
+				if ( response!= null ){
+					
+					int status = response.getStatus();
+										
+					if ( status == TRTrackerScraperResponse.ST_ONLINE ) {
+						
+						responses.add( response );
+					}
+				}
+			}else{
+    			       		
+				for (int i=0; i<sets.length;i++){
+    			
+					TOTorrentAnnounceURLSet	set = sets[i];
+    			
+					URL[]	urls = set.getAnnounceURLs();
+    			   							 				 	
+					for ( URL url: urls ){
+												
+						TRTrackerScraperResponse response = scraper.peekScrape( torrent, url );
+			 		
+						if ( response!= null ){
+							
+							int status = response.getStatus();
+														
+							if ( status == TRTrackerScraperResponse.ST_ONLINE ) {
+								
+
+								responses.add( response );
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return( responses );
+	}
+	
 	
 	public void
 	requestTrackerAnnounce(
@@ -3323,6 +3399,77 @@ DownloadManagerImpl
 		state.setFlag(DownloadManagerState.FLAG_DISABLE_AUTO_FILE_MOVE, true);
 	}
   
+	protected void
+	deletePartialDataFiles()
+	{
+		DiskManagerFileInfo[] files = getDiskManagerFileInfoSet().getFiles();
+		
+		String abs_root = torrent_save_location.getAbsolutePath();
+		
+		for ( DiskManagerFileInfo file: files ){
+			
+			if ( !file.isSkipped()){
+				
+				continue;
+			}
+			
+				// just to be safe...
+			
+			if ( file.getDownloaded() == file.getLength()){
+				
+				continue;
+			}
+			
+				// user may have switched a partially completed file to DND for some reason - be safe
+				// and only delete compact files 
+			
+			int	storage_type = file.getStorageType() ;
+				
+			if ( storage_type == DiskManagerFileInfo.ST_COMPACT || storage_type == DiskManagerFileInfo.ST_REORDER_COMPACT ){
+				
+				File f = file.getFile( true );
+				
+				if ( f.exists()){
+					
+					if ( f.delete()){
+						
+						File parent = f.getParentFile();
+						
+						while ( parent != null ){
+						
+							if ( parent.isDirectory() && parent.listFiles().length == 0 ){
+							
+								if ( parent.getAbsolutePath().startsWith( abs_root )){
+									
+									if ( !parent.delete()){
+										
+										Debug.outNoStack( "Failed to remove empty directory: " + parent );
+										
+										break;
+										
+									}else{
+										
+										parent = parent.getParentFile();
+									}
+									
+								}else{
+									
+									break;
+								}
+							}else{
+								
+								break;
+							}
+						}
+					}else{
+						
+						Debug.outNoStack( "Failed to remove partial: " + f );
+					}
+				}
+			}
+		}
+	}
+	
 	protected void 
 	deleteTorrentFile() 
 	{
@@ -3686,6 +3833,115 @@ DownloadManagerImpl
 	  }
   }
   
+  public void
+  copyDataFiles(
+  	File	parent_dir )
+  
+  	throws DownloadManagerException
+  {
+	  if ( parent_dir.exists()){
+		  
+		  if ( !parent_dir.isDirectory()){
+			
+			  throw( new DownloadManagerException( "'" + parent_dir + "' is not a directory" ));
+		  }
+	  }else{
+		  
+		  if ( !parent_dir.mkdirs()){
+			  
+			  throw( new DownloadManagerException( "failed to create '" + parent_dir + "'" ));
+		  }
+	  }
+	  
+	  DiskManagerFileInfo[] files = controller.getDiskManagerFileInfoSet().getFiles();
+	  
+	  if ( torrent.isSimpleTorrent()){
+		  
+		  File file_from = files[0].getFile( true );
+		  
+		  try{
+			  File file_to = new File( parent_dir, file_from.getName());
+			  
+			  if ( file_to.exists()){
+				  
+				  if ( file_to.length() != file_from.length()){
+					  
+					  throw( new Exception( "target file '" + file_to + " already exists" ));
+				  }
+			  }else{
+			  
+				  FileUtil.copyFileWithException( file_from, file_to );
+			  }
+		  }catch( Throwable e ){
+			  
+			  throw( new DownloadManagerException( "copy of '" + file_from + "' failed", e ));
+		  }
+	  }else{
+	  
+		  try{
+			  File sl_file = getSaveLocation();
+			  
+			  String save_location = sl_file.getCanonicalPath();
+			  
+			  if ( !save_location.endsWith( File.separator )){
+				  
+				  save_location += File.separator;
+			  }
+			  
+			  parent_dir = new File( parent_dir, sl_file.getName());
+			  
+			  if ( !parent_dir.isDirectory()){
+				  
+				  parent_dir.mkdirs();
+			  }
+			  
+			  for ( DiskManagerFileInfo file: files ){
+				  
+				  if ( !file.isSkipped() && file.getDownloaded() == file.getLength()){
+					  
+					  File file_from = file.getFile( true );
+					  
+					  try{
+						  String file_path = file_from.getCanonicalPath();
+						  
+						  if ( file_path.startsWith( save_location )){
+							  
+							  File file_to = new File( parent_dir, file_path.substring( save_location.length()));
+							  
+							  if ( file_to.exists()){
+								  
+								  if ( file_to.length() != file_from.length()){
+									  
+									  throw( new Exception( "target file '" + file_to + " already exists" ));
+								  }
+							  }else{
+							  
+								  File parent = file_to.getParentFile();
+								  
+								  if ( !parent.exists()){
+									  
+									  if ( !parent.mkdirs()){
+										  
+										  throw( new Exception( "Failed to make directory '" + parent + "'" ));
+									  }
+								  }
+								  
+								  FileUtil.copyFileWithException( file_from, file_to );
+							  }
+						  }
+					  }catch( Throwable e ){
+						  
+						  throw( new DownloadManagerException( "copy of '" + file_from + "' failed", e ));
+					  }
+				  }
+			  }
+		  }catch( Throwable e ){
+			  
+			  throw( new DownloadManagerException( "copy failed", e ));
+		  }
+	  }
+  }
+  
   public void moveTorrentFile(File new_parent_dir) throws DownloadManagerException {
 	  this.moveTorrentFile(new_parent_dir, null);
   }
@@ -3933,9 +4189,16 @@ DownloadManagerImpl
 					
   				setUserData( TPS_Key, new Object[]{ tps, tol });
 
+  				Download plugin_download = PluginCoreUtils.wrap( this );
+  				
+  				if ( isDestroyed() || plugin_download == null ){
+  					
+  					return( tps );
+  				}
+  				
   					// tracker peer sources
   				
-  				TOTorrent t = getTorrent();
+  				final TOTorrent t = getTorrent();
 
   				if ( t != null ){
 
@@ -4296,6 +4559,28 @@ DownloadManagerImpl
 										delegate.manualUpdate();
 									}
 								}
+								
+								public boolean
+								canDelete()
+								{
+									return( true );
+								}
+								
+								public void
+								delete()
+								{
+									List<List<String>> lists = TorrentUtils.announceGroupsToList( t );
+
+									List<String>	rem = new ArrayList<String>();
+									
+									for ( URL u: urls ){
+										rem.add( u.toExternalForm());
+									}
+									
+									lists = TorrentUtils.removeAnnounceURLs2( lists, rem );
+									
+									TorrentUtils.listToAnnounceGroups( lists, t );
+								}
 							});
 					}
 					
@@ -4406,7 +4691,7 @@ DownloadManagerImpl
 	  				
 	  				if ( esp != null ){
 	  					  					
-						tps.add( esp.getTrackerPeerSource( PluginCoreUtils.wrap( this ) ));
+						tps.add( esp.getTrackerPeerSource( plugin_download ));
 	 				}
 	  			}catch( Throwable e ){
 	  			}
@@ -4419,7 +4704,7 @@ DownloadManagerImpl
 	
 	  			    if ( dht_pi != null ){
 	  			    	
-	  			    	tps.add(((DHTTrackerPlugin)dht_pi.getPlugin()).getTrackerPeerSource( PluginCoreUtils.wrap( this )));
+	  			    	tps.add(((DHTTrackerPlugin)dht_pi.getPlugin()).getTrackerPeerSource( plugin_download ));
 	  			    }
 				}catch( Throwable e ){
 	  			}
@@ -4432,7 +4717,7 @@ DownloadManagerImpl
 	
 					if ( lt_pi != null ){
 						
-	  			    	tps.add(((LocalTrackerPlugin)lt_pi.getPlugin()).getTrackerPeerSource( PluginCoreUtils.wrap( this )));
+	  			    	tps.add(((LocalTrackerPlugin)lt_pi.getPlugin()).getTrackerPeerSource( plugin_download ));
 					
 					}
 					
@@ -4444,7 +4729,7 @@ DownloadManagerImpl
 				
 				try{
 				
-					tps.add(((DownloadImpl)PluginCoreUtils.wrap( this )).getTrackerPeerSource());
+					tps.add(((DownloadImpl)plugin_download).getTrackerPeerSource());
 					
 				}catch( Throwable e ){
 					

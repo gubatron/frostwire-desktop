@@ -22,6 +22,12 @@
 
 package com.aelitis.azureus.core.proxy;
 
+import java.net.Proxy;
+import java.net.URL;
+import java.util.List;
+
+import org.gudy.azureus2.plugins.PluginInterface;
+
 import com.aelitis.azureus.core.proxy.impl.*;
 
 /**
@@ -56,5 +62,111 @@ AEProxyFactory
 	getAddressMapper()
 	{
 		return( AEProxyAddressMapperImpl.getSingleton());
+	}
+	
+	public static PluginProxy
+	getPluginProxy(
+		String		reason,
+		URL			target )
+	{
+		return( getPluginProxy( reason, target, false));
+	}
+	
+	public static PluginProxy
+	getPluginProxy(
+		String		reason,
+		URL			target,
+		boolean		can_wait )
+	{
+		return( AEPluginProxyHandler.getPluginProxy( reason, target, can_wait ));
+	}
+	
+	public static PluginProxy
+	getPluginProxy(
+		String		reason,
+		String		host,
+		int			port )
+	{
+		return( AEPluginProxyHandler.getPluginProxy( reason, host, port ));
+	}
+		
+	public static PluginProxy
+	getPluginProxy(
+		Proxy		proxy )
+	{
+		return( AEPluginProxyHandler.getPluginProxy( proxy ));
+	}
+	
+	public static Boolean
+	testPluginHTTPProxy(
+		URL				target,
+		boolean			can_wait )
+	{
+		return( AEPluginProxyHandler.testPluginHTTPProxy( target, can_wait ));
+
+	}
+	
+	public static PluginHTTPProxy
+	getPluginHTTPProxy(
+		String			reason,
+		URL				target,
+		boolean			can_wait )
+	{
+		return( AEPluginProxyHandler.getPluginHTTPProxy( reason, target, can_wait ));
+	}
+	
+	public static List<PluginInterface>
+	getPluginHTTPProxyProviders(
+		boolean	can_wait )
+	{
+		return( AEPluginProxyHandler.getPluginHTTPProxyProviders( can_wait ));
+	}
+	
+	public static boolean
+	hasPluginProxy()
+	{
+		return( AEPluginProxyHandler.hasPluginProxy());
+	}
+	
+	public interface
+	PluginProxy
+	{
+		public PluginProxy
+		getChildProxy(
+			String		reason,
+			URL			url );
+		
+		public Proxy
+		getProxy();
+		
+		public URL
+		getURL();
+		
+		public String
+		getURLHostRewrite();
+		
+		public String
+		getHost();
+		
+		public int
+		getPort();
+		
+		public void
+		setOK(
+			boolean	good );
+	}
+	
+	public interface
+	PluginHTTPProxy
+	{
+		public Proxy
+		getProxy();
+		
+		public String
+		proxifyURL(
+			String		url );
+		
+		public void
+		destroy();
 	}
 }

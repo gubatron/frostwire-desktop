@@ -328,7 +328,7 @@ DownloadManagerController
 	  				// in my life... Tidy things up so we don't sit here in a READ state that can't
 	  				// be started.
 	  			
-	  			stopIt( DownloadManager.STATE_STOPPED, false, false );
+	  			stopIt( DownloadManager.STATE_STOPPED, false, false, false );
 	  			
 	  			return;
 	  		}
@@ -905,7 +905,8 @@ DownloadManagerController
 	stopIt(
 		int 				_stateAfterStopping, 
 		final boolean 		remove_torrent, 
-		final boolean 		remove_data )
+		final boolean 		remove_data,
+		final boolean		for_removal )
 	{	  
 		long	current_up = stats.getDataSendRate();
 		
@@ -936,6 +937,13 @@ DownloadManagerController
 				if( remove_data ){
 				  
 					download_manager.deleteDataFiles();
+					
+				}else{
+					
+					if ( for_removal && COConfigurationManager.getBooleanParameter( "Delete Partial Files On Library Removal") ){
+						
+						download_manager.deletePartialDataFiles();
+					}
 				}
 	      
 				if( remove_torrent ){
@@ -1053,10 +1061,17 @@ DownloadManagerController
 				   force_start = false;
          
 				   if( remove_data ){
-				   
-				   		download_manager.deleteDataFiles();
+
+					   download_manager.deleteDataFiles();
+
+				   }else{
+
+					   if ( for_removal && COConfigurationManager.getBooleanParameter( "Delete Partial Files On Library Removal") ){
+
+						   download_manager.deletePartialDataFiles();
+					   }
 				   }
-				   
+
 				   if( remove_torrent ){
 				   	
 					   download_manager.deleteTorrentFile();
@@ -1310,7 +1325,7 @@ DownloadManagerController
 	{
 		boolean	was_force_start = isForceStart();
 			    
-		stopIt( DownloadManager.STATE_STOPPED, false, false );
+		stopIt( DownloadManager.STATE_STOPPED, false, false, false );
 	    
 		if (forceRecheck) {
 			download_manager.getDownloadState().clearResumeData();
@@ -1736,7 +1751,7 @@ DownloadManagerController
 			errorDetail = reason;
 		}
   	
-		stopIt( DownloadManager.STATE_ERROR, false, false );
+		stopIt( DownloadManager.STATE_ERROR, false, false, false );
 	}
 
 	
@@ -1767,7 +1782,18 @@ DownloadManagerController
 			if (!fileInfo.isSkipped()) {
 				File file = fileInfo.getFile(true);
 				try {
-					if (!file.exists()) {
+					long start = SystemTime.getMonotonousTime();
+					
+					boolean 	exists = file.exists();
+					
+					long elapsed = SystemTime.getMonotonousTime() - start;
+					
+					if ( elapsed >= 500 ){
+						
+						Debug.out( "Accessing '" + file.getAbsolutePath() + "' in '" + getDisplayName() + "' took " + elapsed + "ms - possibly offline" );
+					}
+					
+					if ( !exists ){
 						
 						// For multi-file torrents, complain if the save directory is missing.
 						if (!this.download_manager.getTorrent().isSimpleTorrent()) {
@@ -2328,7 +2354,8 @@ DownloadManagerController
 	
 	public void
 	tick(
-		int	tick_count )
+		long	mono_now,
+		int		tick_count )
 	{
 		stats.timerTick( tick_count );
 	}
@@ -2850,6 +2877,24 @@ DownloadManagerController
 				
 				facade_mon.exit();
 			}
+		}
+		
+		public int 
+		getReadBytesPerSecond() 
+		{
+			return( delegate.getReadBytesPerSecond());
+		}
+		
+		public int 
+		getWriteBytesPerSecond() 
+		{
+			return( delegate.getWriteBytesPerSecond());
+		}
+		
+		public long
+		getETA()
+		{
+			return( delegate.getETA());
 		}
 		
 		public void

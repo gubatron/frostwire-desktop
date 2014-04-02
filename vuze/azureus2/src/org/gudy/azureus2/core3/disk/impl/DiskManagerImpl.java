@@ -40,7 +40,9 @@ import org.gudy.azureus2.core3.disk.impl.resume.RDResumeHandler;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.download.DownloadManagerException;
 import org.gudy.azureus2.core3.download.DownloadManagerState;
+import org.gudy.azureus2.core3.download.DownloadManagerStats;
 import org.gudy.azureus2.core3.download.impl.DownloadManagerMoveHandler;
+import org.gudy.azureus2.core3.download.impl.DownloadManagerStatsImpl;
 import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
 import org.gudy.azureus2.core3.internat.LocaleUtilDecoder;
 import org.gudy.azureus2.core3.internat.LocaleUtilEncodingException;
@@ -63,7 +65,6 @@ import com.aelitis.azureus.core.diskmanager.cache.CacheFileManagerException;
 import com.aelitis.azureus.core.diskmanager.cache.CacheFileManagerFactory;
 import com.aelitis.azureus.core.diskmanager.cache.CacheFileOwner;
 import com.aelitis.azureus.core.diskmanager.file.FMFileManagerFactory;
-import com.aelitis.azureus.core.util.CaseSensitiveFileMap;
 import com.aelitis.azureus.core.util.LinkFileMap;
 
 
@@ -1013,7 +1014,7 @@ DiskManagerImpl
 
                 if ( file_set.contains( file_key )){
 
-                    this.errorMessage = "File occurs more than once in download: " + data_file.toString();
+                    this.errorMessage = "File occurs more than once in download: " + data_file.toString() + ".\nRename one of the files in Files view via the right-click menu.";
 
                     setState( FAULTY );
 
@@ -1404,8 +1405,8 @@ DiskManagerImpl
         return remaining;
     }
 
-    public long
-    getRemainingExcludingDND()
+    private void
+    fixupSkippedCalculation()
     {
         if ( skipped_file_set_changed ){
 
@@ -1436,7 +1437,18 @@ DiskManagerImpl
                     file_piece_mon.exit();
                 }
             }
+            
+            DownloadManagerStats stats = download_manager.getStats();
+            if (stats instanceof DownloadManagerStatsImpl) {
+            	((DownloadManagerStatsImpl) stats).setSkippedFileStats(skipped_file_set_size, skipped_but_downloaded);
+            }
         }
+    }
+
+    public long
+    getRemainingExcludingDND()
+    {
+    	fixupSkippedCalculation();
 
         long rem = ( remaining - ( skipped_file_set_size - skipped_but_downloaded ));
 
@@ -1447,6 +1459,21 @@ DiskManagerImpl
 
         return( rem );
     }
+    
+	public long getSizeExcludingDND() {
+		fixupSkippedCalculation();
+
+		return totalLength - skipped_file_set_size;
+	}
+
+	public int getPercentDoneExcludingDND() {
+		long sizeExcludingDND = getSizeExcludingDND();
+		if (sizeExcludingDND <= 0) {
+			return 0;
+		}
+		float pct = (sizeExcludingDND - getRemainingExcludingDND()) / (float) sizeExcludingDND;
+		return (int) (1000 * pct);
+	}
 
     public long
     getAllocated()
@@ -1530,8 +1557,9 @@ DiskManagerImpl
                     if ( file_done == file_length ){
                          
                     	try{
+                      		DownloadManagerState state = download_manager.getDownloadState();
+
                     		try{
-	                      		DownloadManagerState state = download_manager.getDownloadState();
 	                    		
 	                    		String suffix = state.getAttribute( DownloadManagerState.AT_INCOMP_FILE_SUFFIX );
 	                    		
@@ -1611,6 +1639,13 @@ DiskManagerImpl
 
                                		this_file.setAccessMode( DiskManagerFileInfo.READ );
                                	}
+                             	
+                             		// only record completion during normal downloading, not rechecking etc
+                             	
+                             	if ( getState() == READY ){
+                             	
+                             		state.setLongParameter( DownloadManagerState.PARAM_DOWNLOAD_FILE_COMPLETED_TIME, SystemTime.getCurrentTime());
+                             	}
                     		}
                         }catch ( Throwable e ){
                         

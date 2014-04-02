@@ -52,6 +52,7 @@ public class UIConfigDefaultsSWT
 		def.addParameter("IconBar.enabled", true);
 
 		def.addParameter("DefaultDir.BestGuess", true);
+		def.addParameter("DefaultDir.BestGuess.Default", "");
 		def.addParameter("DefaultDir.AutoUpdate", true);
 		def.addParameter("DefaultDir.AutoSave.AutoRename", true);
 		def.addParameter("GUI_SWT_bFancyTab", true);
@@ -110,7 +111,7 @@ public class UIConfigDefaultsSWT
 			COConfigurationManager.setParameter( "Open Bar", false );
 		}
 		
-		def.addParameter("suppress_file_download_dialog", false);
+		//def.addParameter("suppress_file_download_dialog", false);
 		def.addParameter("auto_remove_inactive_items", false);
 		def.addParameter("show_torrents_menu", true);
 		
@@ -139,8 +140,15 @@ public class UIConfigDefaultsSWT
 
 			def.addParameter("list.dm.dblclick", "1");
 			def.addParameter(MultipleDocumentInterface.SIDEBAR_SECTION_LIBRARY + ".viewmode", 1);
-  		def.addParameter(MultipleDocumentInterface.SIDEBAR_SECTION_LIBRARY_DL + "DL.viewmode", 1);
-  		def.addParameter(MultipleDocumentInterface.SIDEBAR_SECTION_LIBRARY_CD + ".viewmode", 1);
+			def.addParameter(MultipleDocumentInterface.SIDEBAR_SECTION_LIBRARY_DL + "DL.viewmode", 1);
+			def.addParameter(MultipleDocumentInterface.SIDEBAR_SECTION_LIBRARY_CD + ".viewmode", 1);
 		}
+		
+		
+		def.addParameter( "browser.external.id", "system" );
+		def.addParameter( "browser.external.search", false );
+		def.addParameter( "browser.internal.proxy.id", "none" );
+		
+		def.addParameter( "Bar Transparency", 0 );
 	}
 }

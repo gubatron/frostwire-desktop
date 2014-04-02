@@ -119,6 +119,15 @@ DiskManagerFileInfo
 	
 		throws	Exception;
 	
+	public int
+	getReadBytesPerSecond();
+	
+	public int
+	getWriteBytesPerSecond();
+	
+	public long
+	getETA();
+	
 	public void
 	close();
 	

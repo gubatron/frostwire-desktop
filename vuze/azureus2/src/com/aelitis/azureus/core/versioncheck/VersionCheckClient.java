@@ -41,7 +41,6 @@ import org.gudy.azureus2.core3.logging.*;
 import org.gudy.azureus2.core3.stats.transfer.*;
 import org.gudy.azureus2.core3.util.*;
 import org.gudy.azureus2.plugins.PluginInterface;
-import org.gudy.azureus2.plugins.PluginManager;
 import org.gudy.azureus2.plugins.utils.DelayedTask;
 import org.gudy.azureus2.pluginsimpl.local.utils.UtilitiesImpl;
 
@@ -51,6 +50,9 @@ import com.aelitis.azureus.core.impl.AzureusCoreImpl;
 import com.aelitis.azureus.core.clientmessageservice.*;
 import com.aelitis.azureus.core.networkmanager.admin.NetworkAdmin;
 import com.aelitis.azureus.core.networkmanager.admin.NetworkAdminASN;
+import com.aelitis.azureus.core.networkmanager.impl.udp.UDPNetworkManager;
+import com.aelitis.azureus.core.proxy.AEProxyFactory;
+import com.aelitis.azureus.core.proxy.AEProxyFactory.PluginProxy;
 import com.aelitis.azureus.core.security.CryptoManagerFactory;
 import com.aelitis.azureus.core.util.DNSUtils;
 import com.aelitis.net.udp.uc.PRUDPPacketHandler;
@@ -74,6 +76,7 @@ public class VersionCheckClient {
 	public static final String	REASON_RECOMMENDED_PLUGINS		= "rp";
 	public static final String	REASON_SECONDARY_CHECK			= "sc";
 	public static final String	REASON_PLUGIN_UPDATE			= "pu";
+	public static final String	REASON_DHT_BOOTSTRAP			= "db";
 
 
 	private static final String 	AZ_MSG_SERVER_ADDRESS_V4 	= Constants.VERSION_SERVER_V4;
@@ -708,6 +711,46 @@ public class VersionCheckClient {
 		return( res );
 	}
 
+	public List<InetSocketAddress>
+	getDHTBootstrap(
+		boolean 	ipv4 )
+	{
+		List<InetSocketAddress>	result = new ArrayList<InetSocketAddress>();
+
+		try{
+			Map reply = getVersionCheckInfo( REASON_DHT_BOOTSTRAP, ipv4?AT_V4:AT_V6 );
+	
+			List<Map>	l = (List<Map>)reply.get( "dht_boot" );
+	
+			if ( l != null ){
+	
+				for( Map m: l ){
+					
+					byte[]	address = (byte[])m.get("a");
+					int		port	= ((Long)m.get("p")).intValue();
+					
+					if (	ipv4 && address.length == 4 ||
+							!ipv4 && address.length == 16 ){
+						
+						InetAddress iaddress = InetAddress.getByAddress( address );
+						
+						if ( !(	iaddress.isLoopbackAddress() ||
+								iaddress.isLinkLocalAddress() ||
+								iaddress.isSiteLocalAddress())){
+				
+							result.add( new InetSocketAddress( iaddress, port ));
+						}
+					}
+				}
+			}
+		}catch( Throwable e ){
+			
+			Debug.out( e );
+		}
+		
+		return( result );
+	}
+
 	public Map<String,Object>
 	getCountryInfo()
 	{
@@ -867,25 +910,68 @@ public class VersionCheckClient {
 
 		URL	url = new URL( url_str );
 
-		HttpURLConnection	url_connection = (HttpURLConnection)url.openConnection();
-
-		url_connection.setConnectTimeout( 10*1000 );
-		url_connection.setReadTimeout( 10*1000 );
-
-		url_connection.connect();
-
 		try{
-			InputStream	is = url_connection.getInputStream();
-
-			Map	reply = BDecoder.decode( new BufferedInputStream( is ));
-
-			preProcessReply( reply, v6 );
-
-			return( reply );
-
-		}finally{
-
-			url_connection.disconnect();
+			HttpURLConnection	url_connection = (HttpURLConnection)url.openConnection();
+				
+			url_connection.setConnectTimeout( 10*1000 );
+			url_connection.setReadTimeout( 10*1000 );
+	
+			url_connection.connect();
+	
+			try{
+				InputStream	is = url_connection.getInputStream();
+	
+				Map	reply = BDecoder.decode( new BufferedInputStream( is ));
+	
+				preProcessReply( reply, v6 );
+	
+				return( reply );
+	
+			}finally{
+	
+				url_connection.disconnect();
+			}
+		}catch( Exception e ){
+			
+			if ( !v6 ){
+				
+				PluginProxy proxy = AEProxyFactory.getPluginProxy( "Vuze version check", url );
+				
+				if ( proxy != null ){
+					
+					boolean	worked = false;
+					
+					try{
+						HttpURLConnection url_connection = (HttpURLConnection)proxy.getURL().openConnection( proxy.getProxy());
+						
+						url_connection.setConnectTimeout( 30*1000 );
+						url_connection.setReadTimeout( 30*1000 );
+				
+						url_connection.connect();
+				
+						try{
+							InputStream	is = url_connection.getInputStream();
+				
+							Map	reply = BDecoder.decode( new BufferedInputStream( is ));
+				
+							preProcessReply( reply, v6 );
+				
+							worked = true;
+							
+							return( reply );
+				
+						}finally{
+				
+							url_connection.disconnect();
+						}
+					}finally{
+						
+						proxy.setOK( worked );
+					}
+				}
+			}
+			
+			throw( e );
 		}
 	}
 
@@ -1143,28 +1229,31 @@ public class VersionCheckClient {
 		try{
 			byte[] address = (byte[])reply.get( "source_ip_address" );
 
-			InetAddress my_ip = InetAddress.getByName( new String( address ));
-
-			NetworkAdminASN old_asn = admin.getCurrentASN();
-
-			NetworkAdminASN new_asn = old_asn;//admin.lookupCurrentASN( my_ip );
-
-			if ( !new_asn.sameAs( old_asn )){
-
-				// kick off a secondary version check to communicate the new information
-
-				if ( !secondary_check_done ){
-
-					secondary_check_done	= true;
-
-					new AEThread( "Secondary version check", true )
-					{
-						public void
-						runSupport()
+			if ( address != null ){
+				
+				InetAddress my_ip = InetAddress.getByName( new String( address ));
+	
+				NetworkAdminASN old_asn = admin.getCurrentASN();
+	
+				NetworkAdminASN new_asn = old_asn;//admin.lookupCurrentASN( my_ip );
+	
+				if ( !new_asn.sameAs( old_asn )){
+	
+					// kick off a secondary version check to communicate the new information
+	
+					if ( !secondary_check_done ){
+	
+						secondary_check_done	= true;
+	
+						new AEThread( "Secondary version check", true )
 						{
-							getVersionCheckInfoSupport( REASON_SECONDARY_CHECK, false, true, v6 );
-						}
-					}.start();
+							public void
+							runSupport()
+							{
+								getVersionCheckInfoSupport( REASON_SECONDARY_CHECK, false, true, v6 );
+							}
+						}.start();
+					}
 				}
 			}
 		}catch( Throwable e ){
@@ -1244,7 +1333,7 @@ public class VersionCheckClient {
 
 		byte[] address = (byte[])reply.get( "source_ip_address" );
 
-		return( InetAddress.getByName( new String( address )));
+		return( address==null?null:InetAddress.getByName( new String( address )));
 	}
 
 	public InetAddress
@@ -1259,7 +1348,7 @@ public class VersionCheckClient {
 
 		byte[] address = (byte[])reply.get( "source_ip_address" );
 
-		return( InetAddress.getByName( new String( address )));
+		return( address==null?null:InetAddress.getByName( new String( address )));
 	}
 
 	public InetAddress
@@ -1274,7 +1363,7 @@ public class VersionCheckClient {
 
 		byte[] address = (byte[])reply.get( "source_ip_address" );
 
-		return( InetAddress.getByName( new String( address )));
+		return( address==null?null:InetAddress.getByName( new String( address )));
 	}
 
 	protected String
@@ -1445,9 +1534,17 @@ public class VersionCheckClient {
 			}
 
 			try{
-				NetworkAdminASN current_asn = NetworkAdmin.getSingleton().getCurrentASN();
+				int	port = UDPNetworkManager.getSingleton().getUDPNonDataListeningPortNumber();
+				
+				message.put( "dht", port );
+				
+			}catch( Throwable e ){
 
-				String	as = current_asn.getAS();
+				Debug.out( e );
+			}
+			
+			try{
+				NetworkAdminASN current_asn = NetworkAdmin.getSingleton().getCurrentASN();
 
 				message.put( "ip_as", current_asn.getAS());
 

@@ -149,6 +149,11 @@ PluginCoreUtils
 	
 		throws DownloadException
 	{
+		if ( info instanceof DiskManagerFileInfoImpl ){
+			
+			return(((DiskManagerFileInfoImpl)info).getCore());
+		}
+	
 		if ( info == null ){
 			
 			return( null );
@@ -295,7 +300,8 @@ PluginCoreUtils
 				}
 				
 				public File 
-				getFile( boolean follow_link )
+				getFile( 
+					boolean follow_link )
 				{
 					if ( follow_link ){
 						
@@ -328,6 +334,24 @@ PluginCoreUtils
 				
 					throws	Exception
 				{	
+				}
+				
+				public int 
+				getReadBytesPerSecond() 
+				{
+					return( 0 );
+				}
+				
+				public int 
+				getWriteBytesPerSecond() 
+				{
+					return( 0 );
+				}
+				
+				public long
+				getETA()
+				{
+					return( -1 );
 				}
 				
 				public void
@@ -454,6 +478,22 @@ PluginCoreUtils
 		}
 
 		return datasource;
+	}
+	
+	public static org.gudy.azureus2.core3.download.DownloadManager
+	unwrapIfPossible(
+		Download		dm )
+	{
+			// might be a LWSDownload
+		
+		if ( dm instanceof DownloadImpl ){
+			
+			return(((DownloadImpl)dm).getDownload());
+			
+		}else{
+			
+			return( null );
+		}
 	}
 	
 	public static org.gudy.azureus2.core3.download.DownloadManager

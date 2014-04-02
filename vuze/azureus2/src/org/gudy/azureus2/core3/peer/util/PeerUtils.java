@@ -26,14 +26,18 @@ import java.util.*;
 
 import org.gudy.azureus2.core3.config.*;
 import org.gudy.azureus2.core3.peer.PEPeer;
+import org.gudy.azureus2.core3.util.ByteFormatter;
+import org.gudy.azureus2.core3.util.CRC32C;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.Debug;
+import org.gudy.azureus2.core3.util.HostNameToIPResolver;
 import org.gudy.azureus2.core3.util.SystemTime;
 import org.gudy.azureus2.plugins.peers.Peer;
 import org.gudy.azureus2.plugins.utils.LocationProvider;
 import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
 
 import com.aelitis.azureus.core.AzureusCoreFactory;
+import com.aelitis.azureus.core.networkmanager.admin.NetworkAdmin;
 
 
 /**
@@ -77,6 +81,258 @@ public class PeerUtils {
   	   	
   	MAX_CONNECTIONS_TOTAL = COConfigurationManager.getIntParameter(CONFIG_MAX_CONN_TOTAL);
    }
+   
+   private static final NetworkAdmin	network_admin;
+   
+   private static volatile long		na_last_ip4_time;
+   private static volatile long		na_last_ip6_time;
+   private static volatile byte[]	na_last_ip4;
+   private static volatile byte[]	na_last_ip6;
+
+   private static int	na_tcp_port;
+   
+   static{
+	   NetworkAdmin temp = null;
+	   
+	   try{
+		   temp = NetworkAdmin.getSingleton();
+		   
+	   }catch( Throwable e ){
+	   }
+	   
+	   network_admin = temp;
+	   
+	   COConfigurationManager.addAndFireParameterListener(
+			 "TCP.Listen.Port",
+			 new ParameterListener() 
+			 {	
+				public void 
+				parameterChanged(
+					String parameterName ) 
+				{
+					na_tcp_port = COConfigurationManager.getIntParameter( parameterName );
+				}
+			});
+   }
+   
+   public static int
+   getPeerPriority(
+	   String 	address,
+	   int		port )
+   {
+	   if ( network_admin == null ){
+		   
+		   return( 0 );
+	   }
+	   
+	   try{
+	   
+		   InetAddress ia = HostNameToIPResolver.syncResolve( address );
+		   
+		   if ( ia != null ){
+			   
+			   return( getPeerPriority( ia, port ));
+		   }
+		   
+	   }catch( Throwable e ){
+	   }
+	   
+	   return( 0 );
+   }
+   
+
+   
+   public static int
+   getPeerPriority(
+		InetAddress		address,
+		int				peer_port )
+   { 
+	  return( getPeerPriority( address.getAddress(), peer_port ));
+   }
+   
+   public static int
+   getPeerPriority(
+		byte[]		peer_address,
+		short		peer_port )
+   {
+	   return( getPeerPriority( peer_address, ((int)peer_port)&0xffff ));
+   }
+   
+   public static int
+   getPeerPriority(
+		byte[]		peer_address,
+		int			peer_port )
+   {
+	   if ( network_admin == null ){
+		   
+		   return( 0 );
+	   }
+
+	   if ( peer_address == null ){
+		   
+		   return( 0 );
+	   }
+	   
+	   byte[] my_address = null;
+	   
+	   long now = SystemTime.getMonotonousTime();
+	   
+	   if ( peer_address.length == 4 ){
+		   
+		   if ( na_last_ip4 != null && now - na_last_ip4_time < 120*1000 ){
+			   
+			   my_address = na_last_ip4;
+			   
+		   }else{
+			  
+			   if ( na_last_ip4_time == 0 || now - na_last_ip4_time > 10*1000 ){
+			   
+				   na_last_ip4_time = now;
+				   
+				   InetAddress ia = network_admin.getDefaultPublicAddress( true );
+				   
+				   if ( ia != null ){
+					   
+					   byte[] iab = ia.getAddress();
+					   
+					   if ( iab != null ){
+						   
+						   na_last_ip4 = my_address = ia.getAddress();
+					   }
+				   }
+			   }
+		   }  
+		   
+		   if ( my_address == null ){
+			   
+			   my_address = na_last_ip4;
+		   }
+	   }else if ( peer_address.length == 16 ){
+		   
+		   if ( na_last_ip6 != null && now - na_last_ip6_time < 120*1000 ){
+			   
+			   my_address = na_last_ip6;
+			   
+		   }else{
+			  
+			   if ( na_last_ip6_time == 0 || now - na_last_ip6_time > 10*1000 ){
+			   
+				   na_last_ip6_time = now;
+				   
+				   InetAddress ia = network_admin.getDefaultPublicAddressV6( true );
+				   
+				   if ( ia != null ){
+					   
+					   byte[] iab = ia.getAddress();
+					   
+					   if ( iab != null ){
+						   
+						   na_last_ip6 = my_address = ia.getAddress();
+					   }
+				   }
+			   }
+		   } 
+		   
+		   if ( my_address == null ){
+			   
+			   my_address = na_last_ip6;
+		   }
+	   }else{
+		   
+		   return( 0 );
+	   }
+	   
+	   if ( my_address != null && my_address.length == peer_address.length ){
+		   
+		   return( getPeerPriority( my_address, na_tcp_port, peer_address, peer_port ));
+		   
+	   }else{
+		   
+		   return( 0 );
+	   }
+   }
+   
+   private static int
+   getPeerPriority(
+		 byte[]		a1,
+		 int		port1,
+		 byte[]		a2,
+		 int		port2 )
+   {
+	   		// http://www.bittorrent.org/beps/bep_0040.html
+	   	   
+	   byte[] a1_masked = new byte[a1.length];
+	   byte[] a2_masked = new byte[a2.length];
+	   	   
+	   /*
+	   The formula to be used in prioritizing peers is this:
+
+	   priority = crc32-c(sort(masked_client_ip, masked_peer_ip))
+	   If the IP addresses are the same, the port numbers (16-bit integers) should be used instead:
+
+	   priority = crc32-c(sort(client_port, peer_port))
+	   For an IPv4 address, the mask to be used should be FF.FF.55.55 unless the IP addresses are in the same /16. 
+	   In that case, the mask to be used should be FF.FF.FF.55. If the IP addresses are in the same /24, the entire address should be used (mask FF.FF.FF.FF).
+
+	   For an IPv6 address, the mask should be derived in the same way, beginning with FFFF:FFFF:FFFF:5555:5555:5555:5555:5555. 
+	   If the IP addresses are in the same /48, the mask to be used should be FFFF:FFFF:FFFF:FF55:5555:5555:5555:5555. 
+	   If the IP addresses are in the same /56, the mask to be used should be FFFF:FFFF:FFFF:FFFF:5555:5555:5555:5555, etc...
+	   */
+	   
+	   int x = a1_masked.length==4?1:5;
+	   
+	   boolean	same = true;
+
+	   int order = 0;
+	   
+	   for ( int i=0;i<a1_masked.length;i++){
+		   byte	a1_byte = a1[i];
+		   byte	a2_byte = a2[i];
+
+		   if ( i < x || same ){
+			   a1_masked[i] = a1_byte;
+			   a2_masked[i] = a2_byte;
+		   }else{
+			   a1_masked[i] = (byte)(a1_byte&0x55);
+			   a2_masked[i] = (byte)(a2_byte&0x55);
+		   }
+		   
+		   if ( i >= x && same ){
+			   same = a1_byte == a2_byte;
+		   }
+		   
+		   if ( order == 0 ){
+			  			   
+			   order = (a1_masked[i]&0xff) - (a2_masked[i]&0xff);
+		   }
+	   }
+	   
+	   if ( same ){
+		   
+		   a1_masked = new byte[]{ (byte)(port1>>8), (byte)port1 };
+		   a2_masked = new byte[]{ (byte)(port2>>8), (byte)port2 };
+		   
+		   order = port1 - port2;
+	   }
+	   
+	   CRC32C crc32 = new CRC32C();
+	   
+	   if ( order < 0 ){
+		   
+		   crc32.updateWord( a1_masked, true );
+		   crc32.updateWord( a2_masked, true );
+		   
+	   }else{
+		   
+		   crc32.updateWord( a2_masked, true );
+		   crc32.updateWord( a1_masked, true );
+	   }
+	   
+	   long res = crc32.getValue();
+	   
+	   return( (int)res );
+   }
+   
   /**
    * Get the number of new peer connections allowed for the given data item,
    * within the configured per-torrent and global connection limits.
@@ -316,4 +572,38 @@ public class PeerUtils {
 		
 		return( details );
 	}
+	
+	/*
+	public static void
+	main(
+		String[]	args )
+	{
+	
+		// If the client is 123.213.32.10 and the peer is 98.76.54.32, the hash that they should both arrive at is crc32-c(624C14007BD50000) or BB97323E.
+		// If the client is 123.213.32.10 and the peer is 123.213.32.234, the hash that they should both arrive at is crc32-c[(7BD5200A7BD520EA) or C816B840.
+	
+		
+		CRC32C crc = new CRC32C();
+		
+		crc.update("The quick brown fox jumps over the lazy dog".getBytes());
+		
+		System.out.println( Long.toString( crc.getValue(), 16 ));
+		
+		try{
+			if ( getPeerPriority( InetAddress.getByName( "123.213.32.10" ).getAddress(), 10,   InetAddress.getByName( "98.76.54.32" ).getAddress(), 10 ) != 0xBB97323E ){
+				
+				System.out.println( "derp1" );
+			}
+			if ( getPeerPriority( InetAddress.getByName( "123.213.32.10" ).getAddress(), 10,   InetAddress.getByName( "123.213.32.234" ).getAddress(), 10 ) != 0xC816B840 ){
+				System.out.println( "derp2" );
+			}
+			if ( getPeerPriority( InetAddress.getByName( "123.213.32.10" ).getAddress(), 10,   InetAddress.getByName( "123.213.32.10" ).getAddress(), 20 ) != 1879809021 ){
+				System.out.println( "derp3" );
+			}
+		}catch( Throwable e ){
+			e.printStackTrace();
+			
+		}
+	}
+	*/
 }
