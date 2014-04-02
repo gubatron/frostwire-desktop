@@ -18,7 +18,7 @@
 
 package com.frostwire.search.archiveorg;
 
-import com.frostwire.search.StreamableSearchResult;
+import com.frostwire.search.torrent.TorrentSearchResult;
 
 /**
  * 
@@ -26,14 +26,32 @@ import com.frostwire.search.StreamableSearchResult;
  * @author aldenml
  *
  */
-public class ArchiveorgCrawledStreamableSearchResult extends ArchiveorgCrawledSearchResult implements StreamableSearchResult {
+public class ArchiveorgTorrentSearchResult extends ArchiveorgCrawledSearchResult implements TorrentSearchResult {
 
-    public ArchiveorgCrawledStreamableSearchResult(ArchiveorgSearchResult sr, ArchiveorgFile file) {
+    private final long size;
+
+    public ArchiveorgTorrentSearchResult(ArchiveorgSearchResult sr, ArchiveorgFile file, long size) {
         super(sr, file);
+        this.size = size;
     }
 
     @Override
-    public String getStreamUrl() {
+    public String getTorrentUrl() {
         return getDownloadUrl();
+    }
+
+    @Override
+    public int getSeeds() {
+        return 0;
+    }
+
+    @Override
+    public String getHash() {
+        return null;
+    }
+
+    @Override
+    public long getSize() {
+        return size;
     }
 }

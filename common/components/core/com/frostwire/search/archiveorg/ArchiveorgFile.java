@@ -26,6 +26,7 @@ package com.frostwire.search.archiveorg;
  */
 public class ArchiveorgFile {
 
+    public String filename;
     public String source;
     public String size;
     public String format;
