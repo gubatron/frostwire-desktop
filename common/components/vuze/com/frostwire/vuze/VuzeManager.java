@@ -163,6 +163,9 @@ public final class VuzeManager {
         VuzeManager.conf = conf;
 
         // before anything else
+        System.setProperty("az.force.noncvs", "1"); // disable debug and development DHT
+        System.setProperty("azureus.loadplugins", "0"); // disable third party azureus plugins
+
         setApplicationPath(conf.getConfigPath());
         SystemProperties.setUserPath(conf.getConfigPath());
     }
@@ -185,17 +188,16 @@ public final class VuzeManager {
     }
 
     private void setupConfiguration() {
-        System.setProperty("azureus.loadplugins", "0"); // disable third party azureus plugins
-
         SystemProperties.APPLICATION_NAME = "azureus";
 
         COConfigurationManager.setParameter("Auto Adjust Transfer Defaults", false);
         COConfigurationManager.setParameter("General_sDefaultTorrent_Directory", conf.getTorrentsPath());
 
         disableDefaultPlugins();
+        enablePlugins();
 
         if (OSUtils.isAndroid()) {
-            SystemTime.TIME_GRANULARITY_MILLIS = 300;
+            setTimeGranularityMillis(300);
 
             COConfigurationManager.setParameter("network.tcp.write.select.time", 1000);
             COConfigurationManager.setParameter("network.tcp.write.select.min.time", 1000);
@@ -236,6 +238,10 @@ public final class VuzeManager {
             pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_LOCAL_TRACKER, false);
             pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_TRACKER_PEER_AUTH, false);
         }
+    }
+
+    private static void enablePlugins() {
+        PluginManager.registerPlugin(new com.vuze.client.plugins.utp.UTPPlugin(), "azutp");
     }
 
     private void autoAdjustBittorrentSpeed() {
@@ -306,6 +312,16 @@ public final class VuzeManager {
             f.set(null, path);
         } catch (Throwable e) {
             throw new RuntimeException("Unable to set vuze application path", e);
+        }
+    }
+
+    private static void setTimeGranularityMillis(long millis) {
+        try {
+            Field f = SystemTime.class.getDeclaredField("TIME_GRANULARITY_MILLIS");
+            f.setAccessible(true);
+            f.set(null, millis);
+        } catch (Throwable e) {
+            throw new RuntimeException("Unable to set vuze SystemTime.TIME_GRANULARITY_MILLIS", e);
         }
     }
 

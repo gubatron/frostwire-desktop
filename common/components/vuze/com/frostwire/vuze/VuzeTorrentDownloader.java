@@ -42,7 +42,7 @@ public final class VuzeTorrentDownloader {
 
     public VuzeTorrentDownloader(String torrentUrl, String detailsUrl) {
         this.dl = new TorrentDownloaderImpl();
-        this.dl.init(new TorrentDownloaderListener(), torrentUrl, detailsUrl, null, null);
+        this.dl.init(new TorrentDownloaderListener(), torrentUrl, null, detailsUrl, null, null);
     }
 
     public VuzeTorrentDownloadListener getListener() {
