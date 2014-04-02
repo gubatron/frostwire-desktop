@@ -240,116 +240,124 @@ public final class StatusLine {
      * and makes sure it has room to add an indicator before adding it.
      */
     public void refresh() {
-        getComponent().removeAll();
+        if (getComponent() != null) {
+            getComponent().removeAll();
 
-        //  figure out remaining width, and do not add indicators if no room
-        int sepWidth = Math.max(2, createSeparator().getWidth());
-        int remainingWidth = BAR.getWidth();
-        if (remainingWidth <= 0)
-            remainingWidth = ApplicationSettings.APP_WIDTH.getValue();
+            //  figure out remaining width, and do not add indicators if no room
+            int sepWidth = Math.max(2, createSeparator().getWidth());
+            int remainingWidth = BAR.getWidth();
+            if (remainingWidth <= 0)
+                remainingWidth = ApplicationSettings.APP_WIDTH.getValue();
 
-        //  subtract player as needed
-        remainingWidth -= sepWidth;
-        remainingWidth -= GUIConstants.SEPARATOR / 2;
+            //  subtract player as needed
+            remainingWidth -= sepWidth;
+            remainingWidth -= GUIConstants.SEPARATOR / 2;
 
-        // substract donation buttons as needed2
-        if (_donationButtons != null) {
-            remainingWidth -= _donationButtons.getWidth();
-            remainingWidth -= GUIConstants.SEPARATOR;
-        }
-
-        //  subtract center component
-        int indicatorWidth = _centerComponent.getWidth();
-        if (indicatorWidth <= 0) {
-            if (_updatePanel.shouldBeShown()) {
-                indicatorWidth = 190;
+            // substract donation buttons as needed2
+            if (_donationButtons != null) {
+                remainingWidth -= _donationButtons.getWidth();
+                remainingWidth -= GUIConstants.SEPARATOR;
             }
-        }
-        remainingWidth -= indicatorWidth;
 
-        //  add components to panel, if room
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(0, 0, 0, 0);
-        gbc.weightx = 0;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.gridx = GridBagConstraints.RELATIVE;
+            //  subtract center component
+            int indicatorWidth = _centerComponent.getWidth();
+            if (indicatorWidth <= 0) {
+                if (_updatePanel.shouldBeShown()) {
+                    indicatorWidth = 190;
+                }
+            }
+            remainingWidth -= indicatorWidth;
 
-        //  add connection quality indicator if there's room
-        indicatorWidth = GUIConstants.SEPARATOR + Math.max((int) _connectionQualityMeter.getMinimumSize().getWidth(), _connectionQualityMeter.getWidth()) + sepWidth;
-        if (StatusBarSettings.CONNECTION_QUALITY_DISPLAY_ENABLED.getValue() && remainingWidth > indicatorWidth) {
-            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-            BAR.add(_connectionQualityMeter, gbc);
+            //  add components to panel, if room
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.insets = new Insets(0, 0, 0, 0);
+            gbc.weightx = 0;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.gridx = GridBagConstraints.RELATIVE;
+
+            //  add connection quality indicator if there's room
+            indicatorWidth = GUIConstants.SEPARATOR + Math.max((int) _connectionQualityMeter.getMinimumSize().getWidth(), _connectionQualityMeter.getWidth()) + sepWidth;
+            if (StatusBarSettings.CONNECTION_QUALITY_DISPLAY_ENABLED.getValue() && remainingWidth > indicatorWidth) {
+                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+                BAR.add(_connectionQualityMeter, gbc);
+                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+                BAR.add(createSeparator(), gbc);
+                remainingWidth -= indicatorWidth;
+            }
+
+            //  add the language button if there's room
+            indicatorWidth = GUIConstants.SEPARATOR + Math.max((int) _languageButton.getMinimumSize().getWidth(), _languageButton.getWidth()) + sepWidth;
+
+            BooleanSetting languageSetting = getLanguageSetting();
+            if (languageSetting.getValue() && remainingWidth > indicatorWidth) {
+                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+                BAR.add(_languageButton, gbc);
+                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+                BAR.add(createSeparator(), gbc);
+                remainingWidth -= indicatorWidth;
+            }
+
+            //  then add firewall display if there's room
+            indicatorWidth = GUIConstants.SEPARATOR + Math.max((int) _firewallStatus.getMinimumSize().getWidth(), _firewallStatus.getWidth()) + sepWidth;
+            if (StatusBarSettings.FIREWALL_DISPLAY_ENABLED.getValue() && remainingWidth > indicatorWidth) {
+                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+                BAR.add(_firewallStatus, gbc);
+                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+                BAR.add(createSeparator(), gbc);
+                remainingWidth -= indicatorWidth;
+                updateFirewall();
+            }
+
+            //  add bandwidth display if there's room
+            indicatorWidth = GUIConstants.SEPARATOR + GUIConstants.SEPARATOR / 2 + sepWidth + Math.max((int) _bandwidthUsageDown.getMinimumSize().getWidth(), _bandwidthUsageDown.getWidth())
+                    + Math.max((int) _bandwidthUsageUp.getMinimumSize().getWidth(), _bandwidthUsageUp.getWidth());
+            if (StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.getValue() && remainingWidth > indicatorWidth) {
+                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+                BAR.add(_bandwidthUsageDown, gbc);
+                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
+                BAR.add(_bandwidthUsageUp, gbc);
+                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+                BAR.add(createSeparator(), gbc);
+                remainingWidth -= indicatorWidth;
+            }
+
+            gbc = new GridBagConstraints();
+            gbc.gridx = GridBagConstraints.RELATIVE;
+            BAR.add(seedingStatusButton, gbc);
             BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
             BAR.add(createSeparator(), gbc);
-            remainingWidth -= indicatorWidth;
+            updateSeedingStatus();
+
+            gbc = new GridBagConstraints();
+            gbc.gridx = GridBagConstraints.RELATIVE;
+            BAR.add(_facebookButton, gbc);
+            BAR.add(_twitterButton, gbc);
+            BAR.add(_googlePlusButton, gbc);
+
+            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+            //  make center panel stretchy
+            gbc.weightx = 1;
+            BAR.add(_centerPanel, gbc);
+            gbc.weightx = 0;
+            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+
+            // donation buttons
+            if (_donationButtons != null && StatusBarSettings.DONATION_BUTTONS_DISPLAY_ENABLED.getValue()) {
+                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+                BAR.add(_donationButtons, gbc);
+                BAR.add(Box.createHorizontalStrut(10));
+                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
+            }
+
+            try {
+                //some macosx versions are throwing a deep NPE when this is invoked all the way down at 
+                //sun.lwawt.macosx.LWCToolkit.getScreenResolution(Unknown Source)
+                BAR.validate();
+            } catch (Throwable t) {}
+            
+            BAR.repaint();
         }
-
-        //  add the language button if there's room
-        indicatorWidth = GUIConstants.SEPARATOR + Math.max((int) _languageButton.getMinimumSize().getWidth(), _languageButton.getWidth()) + sepWidth;
-
-        BooleanSetting languageSetting = getLanguageSetting();
-        if (languageSetting.getValue() && remainingWidth > indicatorWidth) {
-            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-            BAR.add(_languageButton, gbc);
-            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-            BAR.add(createSeparator(), gbc);
-            remainingWidth -= indicatorWidth;
-        }
-
-        //  then add firewall display if there's room
-        indicatorWidth = GUIConstants.SEPARATOR + Math.max((int) _firewallStatus.getMinimumSize().getWidth(), _firewallStatus.getWidth()) + sepWidth;
-        if (StatusBarSettings.FIREWALL_DISPLAY_ENABLED.getValue() && remainingWidth > indicatorWidth) {
-            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-            BAR.add(_firewallStatus, gbc);
-            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-            BAR.add(createSeparator(), gbc);
-            remainingWidth -= indicatorWidth;
-            updateFirewall();
-        }
-
-        //  add bandwidth display if there's room
-        indicatorWidth = GUIConstants.SEPARATOR + GUIConstants.SEPARATOR / 2 + sepWidth + Math.max((int) _bandwidthUsageDown.getMinimumSize().getWidth(), _bandwidthUsageDown.getWidth()) + Math.max((int) _bandwidthUsageUp.getMinimumSize().getWidth(), _bandwidthUsageUp.getWidth());
-        if (StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.getValue() && remainingWidth > indicatorWidth) {
-            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-            BAR.add(_bandwidthUsageDown, gbc);
-            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
-            BAR.add(_bandwidthUsageUp, gbc);
-            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-            BAR.add(createSeparator(), gbc);
-            remainingWidth -= indicatorWidth;
-        }
-
-        gbc = new GridBagConstraints();
-        gbc.gridx = GridBagConstraints.RELATIVE;
-        BAR.add(seedingStatusButton, gbc);
-        BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-        BAR.add(createSeparator(), gbc);
-        updateSeedingStatus();
-
-        gbc = new GridBagConstraints();
-        gbc.gridx = GridBagConstraints.RELATIVE;
-        BAR.add(_facebookButton, gbc);
-        BAR.add(_twitterButton, gbc);
-        BAR.add(_googlePlusButton, gbc);
-
-        BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-        //  make center panel stretchy
-        gbc.weightx = 1;
-        BAR.add(_centerPanel, gbc);
-        gbc.weightx = 0;
-        BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-
-        // donation buttons
-        if (_donationButtons != null && StatusBarSettings.DONATION_BUTTONS_DISPLAY_ENABLED.getValue()) {
-            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-            BAR.add(_donationButtons, gbc);
-            BAR.add(Box.createHorizontalStrut(10));
-            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
-        }
-
-        BAR.validate();
-        BAR.repaint();
     }
 
     /**
