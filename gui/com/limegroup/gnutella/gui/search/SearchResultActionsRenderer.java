@@ -31,7 +31,9 @@ import javax.swing.JTable;
 import com.frostwire.gui.AlphaIcon;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.search.CrawlableSearchResult;
+import com.frostwire.search.SearchResult;
 import com.frostwire.search.StreamableSearchResult;
+import com.frostwire.search.archiveorg.ArchiveorgTorrentSearchResult;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
@@ -135,7 +137,8 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
         labelDownload.setIcon(showSolid ? download_solid : download_transparent);
         labelDownload.setVisible(true);
         labelPartialDownload.setIcon(showSolid ? details_solid : details_transparent);
-        labelPartialDownload.setVisible(searchResult.getSearchResult() instanceof CrawlableSearchResult);
+        SearchResult sr = searchResult.getSearchResult();
+        labelPartialDownload.setVisible(sr instanceof CrawlableSearchResult || sr instanceof ArchiveorgTorrentSearchResult);
     }
 
     private boolean isSearchResultPlayable() {
@@ -175,7 +178,8 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
 
     private void labelPartialDownload_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
-            if (searchResult.getSearchResult() instanceof CrawlableSearchResult) {
+            SearchResult sr = searchResult.getSearchResult();
+            if (sr instanceof CrawlableSearchResult || sr instanceof ArchiveorgTorrentSearchResult) {
                 searchResult.download(true);
                 UXStats.instance().log(UXAction.SEARCH_RESULT_DETAIL_VIEW);
             }
