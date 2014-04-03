@@ -42,7 +42,7 @@ public class ArchiveorgTorrentSearchResult extends ArchiveorgCrawledSearchResult
 
     @Override
     public int getSeeds() {
-        return 0;
+        return 3;
     }
 
     @Override
