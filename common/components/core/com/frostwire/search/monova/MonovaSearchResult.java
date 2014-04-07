@@ -18,7 +18,6 @@
 
 package com.frostwire.search.monova;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,16 +67,31 @@ public class MonovaSearchResult extends AbstractTorrentSearchResult {
          * 4 -> SIZE (B|KiB|MiBGiB)
          */
         this.detailsUrl = detailsUrl;
-        this.torrentUrl = matcher.group(1);
-        this.filename = FilenameUtils.getName(torrentUrl);
-        this.displayName = HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename));
-        this.infoHash = matcher.group(2).split("&")[0];
-        this.creationTime = parseCreationTime(torrentUrl);
+        this.filename = parseFileName(FilenameUtils.getName(matcher.group(1)));
+        this.displayName = parseDisplayName(HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename)));
+        this.infoHash = matcher.group(5);
+        this.creationTime = parseCreationTime(matcher.group(2));
         this.size = parseSize(matcher.group(4));
         this.seeds = parseSeeds(matcher.group(3));
 
         // Monova can't handle direct download of torrents without some sort of cookie
-        // torrentURI = "magnet:?xt=urn:btih:" + infoHash;
+        //the torcache url wont resolve into direct .torrent
+        this.torrentUrl = "magnet:?xt=urn:btih:" + infoHash;
+    }
+
+    private String parseDisplayName(String fileName) {
+        return fileName.replaceAll("_"," ");
+    }
+
+    private String parseFileName(String name) {
+        String[] split = name.split("title\\=");
+        if (split.length > 1) {
+            name = split[1];
+            if (name.endsWith("(")) {
+                name = name.substring(0, -1).trim();
+            }
+        }
+        return name + ".torrent";
     }
 
     private long parseSize(String group) {
@@ -107,19 +121,24 @@ public class MonovaSearchResult extends AbstractTorrentSearchResult {
         }
     }
 
-    private long parseCreationTime(String torrentDetailsUrl) {
+    private long parseCreationTime(String addedWhenString) {
 
-        String[] arr = torrentDetailsUrl.split("/");
-        arr = arr[6].split("-");
-
-        int year = Integer.parseInt(arr[0]);
-        int month = Integer.parseInt(arr[1]);
-        int date = Integer.parseInt(arr[2]);
-
-        Calendar instance = Calendar.getInstance();
-        instance.clear();
-        instance.set(year, month, date);
-        return instance.getTimeInMillis();
+        String[] arr = addedWhenString.split(" ");
+        int unit = Integer.parseInt(arr[0]);
+        
+        String period = arr[1];
+        int periodMultiplierInDays = 0;
+        
+        if (period.startsWith("day")) {
+            periodMultiplierInDays = 1;
+        } else if (period.startsWith("month")) {
+            periodMultiplierInDays = 30;
+        } else if (period.startsWith("year")) {
+            periodMultiplierInDays = 365;
+        }
+        
+        long daysBackInTimeInMillis = unit * periodMultiplierInDays * 86400000;
+        return System.currentTimeMillis() - daysBackInTimeInMillis;
     }
 
     @Override

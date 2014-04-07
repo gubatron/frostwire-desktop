@@ -78,7 +78,10 @@ public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResul
 
             try {
                 if (matcher.find()) {
-                    list.add(fromHtmlMatcher(sr, new SearchMatcher(matcher)));
+                    T searchResult = fromHtmlMatcher(sr, new SearchMatcher(matcher));
+                    if (searchResult != null) {
+                        list.add(searchResult);
+                    }
                 }
             } catch (Exception e) {
                 throw new Exception("URL:" + sr.getDetailsUrl(), e);

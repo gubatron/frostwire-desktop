@@ -41,4 +41,12 @@ public abstract class AbstractSearchResult implements SearchResult {
     public String toString() {
         return getDetailsUrl();
     }
+    
+    public int getDaysOld() {
+        int daysOld =(int) ((System.currentTimeMillis() - getCreationTime())/86400000);
+        if (daysOld < 0) {
+            daysOld = 1;
+        }
+        return daysOld;
+    }
 }
