@@ -496,7 +496,9 @@ public class LimeJTable extends JTable implements JSortTable {
      */
     public JToolTip createToolTip() {
         MultilineToolTip ret = new MultilineToolTip();
-        ret.setTipArray(tips);
+        if (tips != null && tips.length > 0) {
+            ret.setTipArray(tips);
+        }
         tips = DataUtils.EMPTY_STRING_ARRAY;
         return ret;
     }
