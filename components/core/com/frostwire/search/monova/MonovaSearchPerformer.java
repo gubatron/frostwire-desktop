@@ -35,7 +35,7 @@ public class MonovaSearchPerformer extends TorrentRegexSearchPerformer<MonovaSea
 
     private static final int MAX_RESULTS = 10;
     private static final String REGEX = "(?is)<a href=\"http://www.monova.org/torrent/([0-9]*?)/(.*?).html";
-    private static final String HTML_REGEX = "(?is)<div id=\"downloadbox\"><h2><a href=\"(.*?)\" rel=\"nofollow\">.*?<a href=\"magnet:\\?xt=urn:btih:(.*?)\"><b>Magnet</b></a>.*?<font color=\"[A-Za-z]*?\">(.*?)</font> seeds,.*?<strong>Total size:</strong>(.*?)<br /><strong>Pieces:.*?";
+    private static final String HTML_REGEX = "(?is)<div id=\"downloadbox\" .*?Zoink</a>.*?<a href=\"(.*?)\" alt=\"Download!\" rel=\"nofollow\">Torcache<.*?<strong>Added:</strong>(.*?)<div class=\"clear-both\">.*?<font color=\"[A-Za-z]*?\">(.*?)</font> seeds.*?<strong>Total size:</strong><div .*?>(.*?)</div><div class=\"clear-both\">.*?Hash:</strong><div .*?>(.*?)</div><div class=\"clear-both\">";
 
     public MonovaSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
         super(domainAliasManager, token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX);
@@ -60,6 +60,30 @@ public class MonovaSearchPerformer extends TorrentRegexSearchPerformer<MonovaSea
 
     @Override
     protected MonovaSearchResult fromHtmlMatcher(CrawlableSearchResult sr, SearchMatcher matcher) {
-        return new MonovaSearchResult(sr.getDetailsUrl(), matcher);
+        MonovaSearchResult candidate = new MonovaSearchResult(sr.getDetailsUrl(), matcher);
+        if (candidate.getSeeds() < 40 || candidate.getDaysOld() > 200) {
+            //since we can only do monova using magnets, we better have seeds or else we'll
+            //suck in UX.
+            candidate = null;
+        }
+        return candidate;
     }
+    
+    /**
+    public static void main(String[] args) throws Throwable {
+
+        byte[] readAllBytes = Files.readAllBytes(Paths.get("/Users/gubatron/Desktop/monova_input.txt"));
+        String fileStr = new String(readAllBytes,"utf-8");
+        Pattern pattern = Pattern.compile(HTML_REGEX);
+        Matcher matcher = pattern.matcher(fileStr);
+        
+        System.out.println("find? : " + matcher.find());
+        
+        System.out.println("group 1: " + matcher.group(1));
+        System.out.println("group 2: " + matcher.group(2));
+        System.out.println("group 3: " + matcher.group(3));
+        System.out.println("group 4: " + matcher.group(4));
+        System.out.println("group 5: " + matcher.group(5));
+    }
+    */
 }
