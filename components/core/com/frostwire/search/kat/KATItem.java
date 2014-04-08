@@ -44,8 +44,8 @@ public class KATItem implements ComparableTorrentJsonItem {
             "size": 8838656,
             "votes": 19,
             "verified": 1
-        }
-	 */
+    }
+	*/
     
     public String title;
     public String link;

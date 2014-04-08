@@ -46,16 +46,17 @@ public abstract class PagedWebSearchPerformer extends WebSearchPerformer {
     }
 
     protected List<? extends SearchResult> searchPage(int page) {
+        List<? extends SearchResult> result = Collections.emptyList();
         try {
             String url = getUrl(page, getEncodedKeywords());
             String text = fetchSearchPage(url);
             if (text != null) {
-                return searchPage(text);
+                result = searchPage(text);
             }
         } catch (Throwable e) {
             checkAccesibleDomains();
         }
-        return Collections.emptyList();
+        return result;
     }
 
     protected String fetchSearchPage(String url) throws IOException {
