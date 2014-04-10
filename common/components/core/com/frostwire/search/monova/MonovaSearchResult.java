@@ -127,7 +127,7 @@ public class MonovaSearchResult extends AbstractTorrentSearchResult {
         int unit = Integer.parseInt(arr[0]);
         
         String period = arr[1];
-        int periodMultiplierInDays = 0;
+        long periodMultiplierInDays = 0;
         
         if (period.startsWith("day")) {
             periodMultiplierInDays = 1;
@@ -137,8 +137,11 @@ public class MonovaSearchResult extends AbstractTorrentSearchResult {
             periodMultiplierInDays = 365;
         }
         
-        long daysBackInTimeInMillis = unit * periodMultiplierInDays * 86400000;
-        return System.currentTimeMillis() - daysBackInTimeInMillis;
+        long daysBackInTimeInMillis = unit * periodMultiplierInDays * 86400000l;
+        long now = System.currentTimeMillis();
+        long dateInThePast = now - daysBackInTimeInMillis;
+        
+        return dateInThePast;
     }
 
     @Override
