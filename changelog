@@ -2,8 +2,9 @@ frostwire (5.7.2) stable; urgency=high
   * uTP support enabled.
   * Multiple crash fixes.
   * UX updates.
+  * Fixes UI Thread freeze when opening Options > Search.
 
- -- FrostWire Team <contact@frostwire.com>  Wed, 2 Apr 2014 12:03:21 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 10 Apr 2014 18:06:21 -0500
 	
 frostwire (5.7.1) stable; urgency=high
   * Wi-Fi sharing discovery improved considerably with JmDNS.

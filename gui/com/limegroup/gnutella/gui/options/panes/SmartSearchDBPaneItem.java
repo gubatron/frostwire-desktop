@@ -14,6 +14,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.search.SearchMediator;
+import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 public final class SmartSearchDBPaneItem extends AbstractPaneItem {
@@ -91,10 +92,20 @@ public final class SmartSearchDBPaneItem extends AbstractPaneItem {
      * window is shown.
      */
     public void initOptions() {
-        _numTorrents = SearchMediator.instance().getTotalTorrents();
-        _numTorrentsLabel.setText(String.valueOf(_numTorrents));
-
-        smartSearchEnabled.setSelected(SearchSettings.SMART_SEARCH_ENABLED.getValue());
+        _numTorrentsLabel.setText("...");
+        BackgroundExecutorService.schedule(new Runnable() {
+            @Override
+            public void run() {
+                _numTorrents = SearchMediator.instance().getTotalTorrents();
+                GUIMediator.safeInvokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        _numTorrentsLabel.setText(String.valueOf(_numTorrents));
+                        smartSearchEnabled.setSelected(SearchSettings.SMART_SEARCH_ENABLED.getValue());
+                    }
+                });
+            }
+        });
     }
 
     /**
