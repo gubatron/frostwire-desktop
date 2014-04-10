@@ -40,7 +40,7 @@ import com.limegroup.gnutella.gui.search.FWAbstractJPanelTableCellRenderer;
  * 
  */
 public abstract class AbstractActionsRenderer extends FWAbstractJPanelTableCellRenderer {
-    private final static float BUTTONS_TRANSPARENCY = 0.35f;
+    private final static float BUTTONS_TRANSPARENCY = 0.85f;
     private final static ImageIcon play_solid;
     private final static AlphaIcon play_transparent;
     private final static ImageIcon download_solid;

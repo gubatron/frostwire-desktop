@@ -38,7 +38,7 @@ import com.frostwire.gui.AlphaIcon;
  *
  */
 public class TableActionLabel extends JLabel {
-    private final static float BUTTONS_TRANSPARENCY = 0.35f;
+    private final static float BUTTONS_TRANSPARENCY = 0.85f;
 
     private final ImageIcon enabledSolid;
     private final AlphaIcon enabledTransparent;
