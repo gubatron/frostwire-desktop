@@ -1,10 +1,12 @@
 frostwire (5.7.2) stable; urgency=high
   * uTP support enabled.
   * Multiple crash fixes.
-  * UX updates.
-  * Fixes UI Thread freeze when opening Options > Search.
+  * UX: playable single file torrents now can be played from transfer list.
+  * UX: Fixes UI Thread freeze when opening Options > Search.
+  * UX: Better error reporting when a torrent can't be fetched from a 
+        magnet connection.
 
- -- FrostWire Team <contact@frostwire.com>  Thu, 10 Apr 2014 18:06:21 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 10 Apr 2014 20:50:28 -0500
 	
 frostwire (5.7.1) stable; urgency=high
   * Wi-Fi sharing discovery improved considerably with JmDNS.
