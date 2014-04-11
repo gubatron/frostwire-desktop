@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-11 14:31-0300\n"
-"PO-Revision-Date: 2014-04-11 14:39-0300\n"
+"PO-Revision-Date: 2014-04-11 14:47-0300\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: FTA <saintrecall@gmail.com>\n"
 "Language: es\n"
@@ -736,7 +736,7 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:278
 msgid "Web Seeds Mirror URLs"
-msgstr "URLs de semillas web (Espejos)"
+msgstr "URLs de semillas"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:279
 msgid ""
