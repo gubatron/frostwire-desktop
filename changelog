@@ -5,8 +5,9 @@ frostwire (5.7.2) stable; urgency=high
   * UX: Fixes UI Thread freeze when opening Options > Search.
   * UX: Better error reporting when a torrent can't be fetched from a 
         magnet connection.
+  * Spanish translation update by @dennistobar.
 
- -- FrostWire Team <contact@frostwire.com>  Thu, 10 Apr 2014 20:50:28 -0500
+ -- FrostWire Team <contact@frostwire.com>  Fri, 11 Apr 2014 14:22:10 -0500
 	
 frostwire (5.7.1) stable; urgency=high
   * Wi-Fi sharing discovery improved considerably with JmDNS.
