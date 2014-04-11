@@ -49,6 +49,7 @@ public class TorrentFetcherDownload implements BTDownload {
 
     private static final String STATE_DOWNLOADING = I18n.tr("Downloading Torrent");
     private static final String STATE_ERROR = I18n.tr("Error");
+    private static final String STATE_ERROR_NOT_ENOUGH_SEEDS = I18n.tr("Couldn't download Torrent, not enough peers.");
     private static final String STATE_CANCELED = I18n.tr("Canceled");
 
     private String _uri;
@@ -299,7 +300,11 @@ public class TorrentFetcherDownload implements BTDownload {
                     _state = STATE_DOWNLOADING;
                     _torrentDownloader.start();
                 } else {
-                    _state = STATE_ERROR;
+                    if (inf.getURL().startsWith("magnet:?")) {
+                        _state = STATE_ERROR_NOT_ENOUGH_SEEDS;    
+                    } else {
+                        _state = STATE_ERROR;
+                    }
                 }
             }
         }
