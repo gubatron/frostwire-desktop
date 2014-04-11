@@ -123,23 +123,22 @@ public class PaymentOptionsPanel extends JPanel {
 
     private void initComponents() {
         add(confirmationCheckbox, "aligny top, gapbottom 10px, wrap, span");
-        
-        add(new JLabel("<html><strong>Bitcoin</strong> receiving wallet address</html>"),"wrap, span");
+        add(new JLabel("<html>"+I18n.tr("<strong>Bitcoin</strong> receiving wallet address")+"</html>"),"wrap, span");
         add(new JLabel(GUIMediator.getThemeImage("bitcoin_accepted.png")),"aligny top");
         bitcoinAddress.setPrompt("bitcoin:1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         add(bitcoinAddress,"aligny top, growx, push, wrap");
         
-        add(new JLabel("<html><strong>Litecoin</strong> receiving wallet address</html>"),"wrap, span");
+        add(new JLabel("<html>"+I18n.tr("<strong>Litecoin</strong> receiving wallet address")+"</html>"),"wrap, span");
         add(new JLabel(GUIMediator.getThemeImage("litecoin_accepted.png")),"aligny top");
         litecoinAddress.setPrompt("litecoin:Lxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         add(litecoinAddress, "aligny top, growx, push, wrap");
 
-        add(new JLabel("<html><strong>Dogecoin</strong> receiving wallet address</html>"),"wrap, span");
+        add(new JLabel("<html>"+I18n.tr("<strong>Dogecoin</strong> receiving wallet address")+"</html>"),"wrap, span");
         add(new JLabel(GUIMediator.getThemeImage("dogecoin_accepted.png")),"aligny top");
         dogecoinAddress.setPrompt("dogecoin:Dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         add(dogecoinAddress, "aligny top, growx, push, wrap");
 
-        add(new JLabel("<html><strong>Paypal</strong> payment/donation page url</html>"),"wrap, span");
+        add(new JLabel("<html>"+I18n.tr("<strong>Paypal</strong> payment/donation page url")+"</html>"),"wrap, span");
         add(new JLabel(GUIMediator.getThemeImage("paypal_accepted.png")), "aligny top");
         paypalUrlAddress.setPrompt("http://your.paypal.button/url/here");
         add(paypalUrlAddress, "aligny top, growx, push");
