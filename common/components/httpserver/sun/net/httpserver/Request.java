@@ -25,13 +25,15 @@
 
 package sun.net.httpserver;
 
-import java.util.*;
-import java.nio.*;
-import java.net.*;
-import java.io.*;
-import java.nio.channels.*;
-import com.sun.net.httpserver.*;
-import com.sun.net.httpserver.spi.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.BufferOverflowException;
+import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.SocketChannel;
+
+import com.sun.net.httpserver.Headers;
 
 /**
  */
@@ -42,12 +44,10 @@ class Request {
     final static byte LF = 10;
 
     private String startLine;
-    private SocketChannel chan;
     private InputStream is;
     private OutputStream os;
 
     Request (InputStream rawInputStream, OutputStream rawout) throws IOException {
-        this.chan = chan;
         is = rawInputStream;
         os = rawout;
         do {
