@@ -231,9 +231,9 @@ public final class VuzeManager {
         pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_RSS, false);
 
         if (OSUtils.isAndroid()) {
-            pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_DHT, false);
+            //pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_DHT, false);
             pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_DHT_TRACKER, false);
-            pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_MAGNET, false);
+            //pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_MAGNET, false);
             pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_EXTERNAL_SEED, false);
             pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_LOCAL_TRACKER, false);
             pmd.setDefaultPluginEnabled(PluginManagerDefaults.PID_TRACKER_PEER_AUTH, false);
