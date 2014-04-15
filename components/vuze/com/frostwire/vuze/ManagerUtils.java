@@ -336,7 +336,7 @@ import com.frostwire.vuze.CoreWaiterSWT.TriggerInThread;
   		DownloadManager dm) 
   {
     if (dm != null && dm.getState() == DownloadManager.STATE_STOPPED) {
-      dm.setStateWaiting();
+        dm.initialize();
     }
   }
 
