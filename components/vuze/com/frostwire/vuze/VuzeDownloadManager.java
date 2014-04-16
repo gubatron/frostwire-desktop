@@ -315,7 +315,7 @@ public final class VuzeDownloadManager {
     private static long calculateSize(DownloadManager dm, Set<DiskManagerFileInfo> noSkippedSet) {
         long size = 0;
 
-        boolean partial = noSkippedSet.size() == dm.getDiskManagerFileInfoSet().nbFiles();
+        boolean partial = noSkippedSet.size() != dm.getDiskManagerFileInfoSet().nbFiles();
 
         if (partial) {
             for (DiskManagerFileInfo fileInfo : noSkippedSet) {
