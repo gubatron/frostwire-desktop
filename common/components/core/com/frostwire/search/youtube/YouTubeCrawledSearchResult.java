@@ -232,4 +232,9 @@ public class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult impl
 
         return downloadUrl;
     }
+
+    @Override
+    public String getThumbnailUrl() {
+        return null;
+    }
 }

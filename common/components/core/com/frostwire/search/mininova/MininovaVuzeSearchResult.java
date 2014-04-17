@@ -85,4 +85,9 @@ public class MininovaVuzeSearchResult extends AbstractTorrentSearchResult {
     public String getDetailsUrl() {
         return item.cdp;
     }
+
+    @Override
+    public String getThumbnailUrl() {
+        return null;
+    }
 }

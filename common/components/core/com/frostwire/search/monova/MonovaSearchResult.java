@@ -188,4 +188,9 @@ public class MonovaSearchResult extends AbstractTorrentSearchResult {
     public String getTorrentUrl() {
         return torrentUrl;
     }
+
+    @Override
+    public String getThumbnailUrl() {
+        return null;
+    }
 }

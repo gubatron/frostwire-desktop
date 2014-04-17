@@ -62,4 +62,9 @@ public class TorrentsfmTempSearchResult extends AbstractSearchResult implements 
     public boolean isComplete() {
         return false;
     }
+
+    @Override
+    public String getThumbnailUrl() {
+        return null;
+    }
 }

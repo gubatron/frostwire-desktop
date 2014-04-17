@@ -16,12 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.search.torrentsfm;
+package com.frostwire.search.yifi;
 
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.limewire.util.FilenameUtils;
 
 import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.torrent.AbstractTorrentSearchResult;
@@ -31,22 +33,26 @@ import com.frostwire.search.torrent.AbstractTorrentSearchResult;
  * @author aldenml
  *
  */
-public class TorrentsfmSearchResult extends AbstractTorrentSearchResult {
+public class YifiSearchResult extends AbstractTorrentSearchResult {
 
     private final static long[] BYTE_MULTIPLIERS = new long[] { 1, 2 << 9, 2 << 19, 2 << 29, 2 << 39, 2 << 49 };
 
     private static final Map<String, Integer> UNIT_TO_BYTE_MULTIPLIERS_MAP;
+    
+    private static final Pattern sizePattern;
 
     static {
         UNIT_TO_BYTE_MULTIPLIERS_MAP = new HashMap<String, Integer>();
         UNIT_TO_BYTE_MULTIPLIERS_MAP.put("B", 0);
-        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("KiB", 1);
-        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("MiB", 2);
-        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("GiB", 3);
-        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("TiB", 4);
-        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("PiB", 5);
+        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("K", 1);
+        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("M", 2);
+        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("G", 3);
+        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("T", 4);
+        UNIT_TO_BYTE_MULTIPLIERS_MAP.put("P", 5);
+        sizePattern = Pattern.compile("(\\d+).(\\d+)([BKMGTP])");
     }
 
+    private final String thumbnailUrl;
     private final String filename;
     private final String displayName;
     private final String detailsUrl;
@@ -56,16 +62,30 @@ public class TorrentsfmSearchResult extends AbstractTorrentSearchResult {
     private final long creationTime;
     private final int seeds;
 
-    public TorrentsfmSearchResult(String domainName, String detailsUrl, SearchMatcher matcher) {
+    public YifiSearchResult(String domainName, String detailsUrl, SearchMatcher matcher) {
+        // matcher groups: 1 -> cover (url may contains date)
+        //                 2 -> display name
+        //                 3 -> size
+        //                 4 -> language
+        //                 5 -> peers
+        //                 6 -> seeds
+        //                 7 -> magnet    
+        this.thumbnailUrl = matcher.group(1);
         this.detailsUrl = detailsUrl;
-        this.filename = matcher.group(1);//parseFileName(matcher.group(1), FilenameUtils.getBaseName(detailsUrl));
+        this.filename = parseFileName(detailsUrl);
         this.size = parseSize(matcher.group(2));
-        this.creationTime = parseCreationTime(matcher.group(4));
-        this.seeds = parseSeeds(matcher.group(3));
+        this.creationTime = System.currentTimeMillis();
+        this.seeds = Integer.parseInt(matcher.group(6));
+
         //a magnet
-        this.torrentUrl = matcher.group(5);//"http://" + domainName + "/tor/" + matcher.group(5) + ".torrent";
-        this.displayName = matcher.group(1);//HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename));
+        this.torrentUrl = matcher.group(7);
+        this.displayName = matcher.group(2) + "("+ matcher.group(4) +")";
         this.infoHash = parseInfoHash(torrentUrl);
+    }
+
+    private String parseFileName(String detailsUrl) {
+        String[] split = detailsUrl.split("/");
+        return FilenameUtils.getBaseName(split[split.length-1]);
     }
 
     @Override
@@ -80,7 +100,7 @@ public class TorrentsfmSearchResult extends AbstractTorrentSearchResult {
 
     @Override
     public String getSource() {
-        return "Torrents.fm";
+        return "Yifi";
     }
 
     @Override
@@ -114,38 +134,24 @@ public class TorrentsfmSearchResult extends AbstractTorrentSearchResult {
     }
 
     private long parseSize(String group) {
-        String[] size = group.split(" ");
-        String amount = size[0].trim();
-        String unit = size[1].trim();
+        long result = 0;
+        Matcher matcher = sizePattern.matcher(group);
+        if (matcher.find()) {
+            String amount = matcher.group(1);
+            String unit = matcher.group(2);
 
-        long multiplier = BYTE_MULTIPLIERS[UNIT_TO_BYTE_MULTIPLIERS_MAP.get(unit)];
+            long multiplier = BYTE_MULTIPLIERS[UNIT_TO_BYTE_MULTIPLIERS_MAP.get(unit)];
 
-        //fractional size
-        if (amount.indexOf(".") > 0) {
-            float floatAmount = Float.parseFloat(amount);
-            return (long) (floatAmount * multiplier);
-        }
-        //integer based size
-        else {
-            int intAmount = Integer.parseInt(amount);
-            return (long) (intAmount * multiplier);
-        }
-    }
-
-    private int parseSeeds(String group) {
-        try {
-            return Integer.parseInt(group);
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-    private long parseCreationTime(String dateString) {
-        long result = System.currentTimeMillis();
-        try {
-            SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
-            result = myFormat.parse(dateString).getTime();
-        } catch (Throwable t) {
+            //fractional size
+            if (amount.indexOf(".") > 0) {
+                float floatAmount = Float.parseFloat(amount);
+                result = (long) (floatAmount * multiplier);
+            }
+            //integer based size
+            else {
+                int intAmount = Integer.parseInt(amount);
+                result = (long) (intAmount * multiplier);
+            }
         }
         return result;
     }
@@ -157,6 +163,6 @@ public class TorrentsfmSearchResult extends AbstractTorrentSearchResult {
 
     @Override
     public String getThumbnailUrl() {
-        return null;
+        return thumbnailUrl;
     }
 }

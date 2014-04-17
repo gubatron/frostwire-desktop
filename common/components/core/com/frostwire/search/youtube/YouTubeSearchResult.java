@@ -34,7 +34,6 @@ import com.frostwire.search.CrawlableSearchResult;
  */
 public class YouTubeSearchResult extends AbstractFileSearchResult implements CrawlableSearchResult {
 
-
     private final String filename;
     private final String displayName;
     private final long creationTime;
@@ -131,5 +130,10 @@ public class YouTubeSearchResult extends AbstractFileSearchResult implements Cra
         } catch (Throwable t) {
             return UNKNOWN_SIZE;
         }
+    }
+
+    @Override
+    public String getThumbnailUrl() {
+        return null;
     }
 }

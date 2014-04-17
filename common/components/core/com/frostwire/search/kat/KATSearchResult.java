@@ -110,4 +110,9 @@ public class KATSearchResult extends AbstractTorrentSearchResult {
         }
         return result;
     }
+
+    @Override
+    public String getThumbnailUrl() {
+        return null;
+    }
 }
