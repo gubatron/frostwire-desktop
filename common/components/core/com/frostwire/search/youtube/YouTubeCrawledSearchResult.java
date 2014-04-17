@@ -23,6 +23,7 @@ import org.apache.commons.io.FilenameUtils;
 import com.frostwire.search.AbstractCrawledSearchResult;
 import com.frostwire.search.HttpSearchResult;
 import com.frostwire.search.extractors.YouTubeExtractor.LinkInfo;
+import com.frostwire.util.StringUtils;
 
 /**
  * @author gubatron
@@ -235,7 +236,20 @@ public class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult impl
 
     @Override
     public String getThumbnailUrl() {
-        //TODO!
-        return null;
+        String thumbnailUrl = null;
+        
+        if (video != null && video.thumbnails != null) {
+            if (!StringUtils.isNullOrEmpty(video.thumbnails.maxres)) {
+                thumbnailUrl = video.thumbnails.maxres;
+            } else if (!StringUtils.isNullOrEmpty(video.thumbnails.hq)) {
+                thumbnailUrl = video.thumbnails.hq;
+            } else if (!StringUtils.isNullOrEmpty(video.thumbnails.mq)) {
+                thumbnailUrl = video.thumbnails.mq;
+            } else if (!StringUtils.isNullOrEmpty(video.thumbnails.normal)) {
+                thumbnailUrl = video.thumbnails.normal;
+            }
+        }
+        
+        return thumbnailUrl;
     }
 }
