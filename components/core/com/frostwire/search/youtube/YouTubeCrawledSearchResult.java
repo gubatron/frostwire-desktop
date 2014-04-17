@@ -235,6 +235,7 @@ public class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult impl
 
     @Override
     public String getThumbnailUrl() {
+        //TODO!
         return null;
     }
 }

@@ -205,9 +205,4 @@ public class TPBSearchResult extends AbstractTorrentSearchResult {
     private String buildFilename(String filename) {
         return filename.replaceAll("[\\\\/:*?\"<>|\\[\\]]+", "_") + ".torrent";
     }
-
-    @Override
-    public String getThumbnailUrl() {
-        return null;
-    }
 }

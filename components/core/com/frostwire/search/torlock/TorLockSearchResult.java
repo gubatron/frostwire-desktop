@@ -167,9 +167,4 @@ public class TorLockSearchResult extends AbstractTorrentSearchResult {
         }
         return result;
     }
-
-    @Override
-    public String getThumbnailUrl() {
-        return null;
-    }
 }

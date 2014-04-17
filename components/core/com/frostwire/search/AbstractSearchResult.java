@@ -49,4 +49,9 @@ public abstract class AbstractSearchResult implements SearchResult {
         }
         return daysOld;
     }
+    
+    @Override
+    public String getThumbnailUrl() {
+        return null;
+    }
 }

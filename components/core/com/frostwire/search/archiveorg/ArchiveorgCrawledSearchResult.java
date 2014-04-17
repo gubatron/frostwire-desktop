@@ -76,9 +76,4 @@ public class ArchiveorgCrawledSearchResult extends AbstractCrawledSearchResult i
             return -1;
         }
     }
-
-    @Override
-    public String getThumbnailUrl() {
-        return null;
-    }
 }

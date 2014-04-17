@@ -62,9 +62,4 @@ public class YifiTempSearchResult extends AbstractSearchResult implements Crawla
     public boolean isComplete() {
         return false;
     }
-
-    @Override
-    public String getThumbnailUrl() {
-        return null;
-    }
 }
