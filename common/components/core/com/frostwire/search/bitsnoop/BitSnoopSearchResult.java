@@ -175,9 +175,4 @@ public class BitSnoopSearchResult extends AbstractTorrentSearchResult {
         }
         return result;
     }
-
-    @Override
-    public String getThumbnailUrl() {
-        return null;
-    }
 }

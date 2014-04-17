@@ -154,9 +154,4 @@ public class TorrentsfmSearchResult extends AbstractTorrentSearchResult {
         //magnet:?xt=urn:btih:e3811b9539cacff680e418124272177c47477157&amp;
         return url.substring("magnet:?xt=urn:btih:".length(), url.indexOf("&amp"));
     }
-
-    @Override
-    public String getThumbnailUrl() {
-        return null;
-    }
 }

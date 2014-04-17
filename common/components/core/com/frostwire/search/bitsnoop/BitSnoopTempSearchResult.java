@@ -60,9 +60,4 @@ public class BitSnoopTempSearchResult extends AbstractSearchResult implements Cr
     public boolean isComplete() {
         return false;
     }
-
-    @Override
-    public String getThumbnailUrl() {
-        return null;
-    }
 }

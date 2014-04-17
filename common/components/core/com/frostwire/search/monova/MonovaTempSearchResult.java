@@ -60,9 +60,4 @@ public class MonovaTempSearchResult extends AbstractSearchResult implements Craw
     public boolean isComplete() {
         return false;
     }
-
-    @Override
-    public String getThumbnailUrl() {
-        return null;
-    }
 }

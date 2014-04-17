@@ -159,9 +159,4 @@ public class EztvSearchResult extends AbstractTorrentSearchResult {
         }
         return result;
     }
-
-    @Override
-    public String getThumbnailUrl() {
-        return null;
-    }
 }

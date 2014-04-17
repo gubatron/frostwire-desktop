@@ -72,7 +72,8 @@ public abstract class SearchEngine {
     public static final int BITSNOOP_ID = 13;
     public static final int TORLOCK_ID = 14;
     public static final int EZTV_ID = 15;
-    public static final int TORRENTS_ID = 16; 
+    public static final int TORRENTS_ID = 16;
+    public static final int YIFI_ID = 17;
     
     public static final DomainAliasManagerBroker DOMAIN_ALIAS_MANAGER_BROKER = new DomainAliasManagerBroker();
 
