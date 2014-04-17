@@ -98,4 +98,9 @@ public class ArchiveorgSearchResult extends AbstractSearchResult implements Craw
     public String getDomainName() {
         return domainName;
     }
+
+    @Override
+    public String getThumbnailUrl() {
+        return null;
+    }
 }

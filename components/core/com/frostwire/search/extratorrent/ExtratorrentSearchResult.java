@@ -86,4 +86,9 @@ public class ExtratorrentSearchResult extends AbstractTorrentSearchResult {
     public String getDetailsUrl() {
         return item.link;
     }
+
+    @Override
+    public String getThumbnailUrl() {
+        return null;
+    }
 }
