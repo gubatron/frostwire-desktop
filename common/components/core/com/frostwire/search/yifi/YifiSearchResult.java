@@ -49,7 +49,7 @@ public class YifiSearchResult extends AbstractTorrentSearchResult {
         UNIT_TO_BYTE_MULTIPLIERS_MAP.put("G", 3);
         UNIT_TO_BYTE_MULTIPLIERS_MAP.put("T", 4);
         UNIT_TO_BYTE_MULTIPLIERS_MAP.put("P", 5);
-        sizePattern = Pattern.compile("(\\d+).(\\d+)([BKMGTP])");
+        sizePattern = Pattern.compile("([\\d+\\.]+)([BKMGTP])");
     }
 
     private final String thumbnailUrl;
@@ -73,19 +73,19 @@ public class YifiSearchResult extends AbstractTorrentSearchResult {
         this.thumbnailUrl = matcher.group(1);
         this.detailsUrl = detailsUrl;
         this.filename = parseFileName(detailsUrl);
-        this.size = parseSize(matcher.group(2));
+        this.size = parseSize(matcher.group(3));
         this.creationTime = System.currentTimeMillis();
         this.seeds = Integer.parseInt(matcher.group(6));
 
         //a magnet
         this.torrentUrl = matcher.group(7);
-        this.displayName = matcher.group(2) + "("+ matcher.group(4) +")";
+        this.displayName = matcher.group(2) + " ("+ matcher.group(4) +")";
         this.infoHash = parseInfoHash(torrentUrl);
     }
 
     private String parseFileName(String detailsUrl) {
         String[] split = detailsUrl.split("/");
-        return FilenameUtils.getBaseName(split[split.length-1]);
+        return FilenameUtils.getBaseName(split[split.length-1]) + ".torrent";
     }
 
     @Override
@@ -158,7 +158,7 @@ public class YifiSearchResult extends AbstractTorrentSearchResult {
 
     private String parseInfoHash(String url) {
         //magnet:?xt=urn:btih:e3811b9539cacff680e418124272177c47477157&amp;
-        return url.substring("magnet:?xt=urn:btih:".length(), url.indexOf("&amp"));
+        return url.substring("magnet:?xt=urn:btih:".length(), url.indexOf("&"));
     }
 
     @Override

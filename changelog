@@ -1,3 +1,8 @@
+frostwire (5.7.3) stable; urgency=high
+  * New Yifi search.
+
+ -- FrostWire Team <contact@frostwire.com>  Thu, 17 Apr 2014 20:11:33 -0500
+
 frostwire (5.7.2) stable; urgency=high
   * uTP support enabled.
   * Multiple crash fixes.
