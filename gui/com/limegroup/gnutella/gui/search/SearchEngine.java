@@ -39,7 +39,7 @@ import com.frostwire.search.soundcloud.SoundcloudSearchPerformer;
 import com.frostwire.search.tbp.TPBSearchPerformer;
 import com.frostwire.search.torlock.TorLockSearchPerformer;
 import com.frostwire.search.torrentsfm.TorrentsfmSearchPerformer;
-import com.frostwire.search.yifi.YifiSearchPerformer;
+import com.frostwire.search.yify.YifySearchPerformer;
 import com.frostwire.search.youtube.YouTubeSearchPerformer;
 import com.limegroup.gnutella.settings.SearchEnginesSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -171,10 +171,10 @@ public abstract class SearchEngine {
         }
     };
     
-    public static final SearchEngine YIFI = new SearchEngine(YIFI_ID, "Yifi", SearchEnginesSettings.YIFI_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("www.yify-torrent.org")) {
+    public static final SearchEngine YIFY = new SearchEngine(YIFI_ID, "Yify", SearchEnginesSettings.YIFY_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("www.yify-torrent.org")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new YifiSearchPerformer(SearchEngine.YIFI.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
+            return new YifySearchPerformer(SearchEngine.YIFY.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
@@ -208,11 +208,11 @@ public abstract class SearchEngine {
 
     @Override
     public boolean equals(Object obj) {
-        return _id == ((SearchEngine) obj)._id;
+        return obj !=null && _id == ((SearchEngine) obj)._id;
     }
 
     public static List<SearchEngine> getEngines() {
-        return Arrays.asList(TORRENTS, EXTRATORRENT, BITSNOOP, SOUNDCLOUD, YOUTUBE, FROSTCLICK, MININOVA, KAT, TPB, MONOVA, ARCHIVEORG, TORLOCK, EZTV, YIFI);
+        return Arrays.asList(TORRENTS, EXTRATORRENT, BITSNOOP, SOUNDCLOUD, YOUTUBE, FROSTCLICK, MININOVA, KAT, TPB, MONOVA, ARCHIVEORG, TORLOCK, EZTV, YIFY);
     }
 
     public abstract SearchPerformer getPerformer(long token, String keywords);

@@ -120,7 +120,9 @@ public class DatabaseCrawlCache implements CrawlCache {
 
             c = db.query(columns, where, whereArgs, null);
 
-            size = c.getCount();
+            if (c != null) {
+                size = c.getCount();
+            }
 
         } catch (Exception e) {
             LOG.warn("Failed to get num of shared files", e);

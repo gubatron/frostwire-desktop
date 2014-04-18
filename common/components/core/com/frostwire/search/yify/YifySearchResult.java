@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.search.yifi;
+package com.frostwire.search.yify;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -100,7 +100,7 @@ public class YifySearchResult extends AbstractTorrentSearchResult {
 
     @Override
     public String getSource() {
-        return "Yifi";
+        return "Yify";
     }
 
     @Override
@@ -157,7 +157,6 @@ public class YifySearchResult extends AbstractTorrentSearchResult {
     }
 
     private String parseInfoHash(String url) {
-        //magnet:?xt=urn:btih:e3811b9539cacff680e418124272177c47477157&amp;
         return url.substring("magnet:?xt=urn:btih:".length(), url.indexOf("&"));
     }
 
