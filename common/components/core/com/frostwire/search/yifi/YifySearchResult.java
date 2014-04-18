@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.limewire.util.FilenameUtils;
+import org.apache.commons.io.FilenameUtils;
 
 import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.torrent.AbstractTorrentSearchResult;
@@ -33,7 +33,7 @@ import com.frostwire.search.torrent.AbstractTorrentSearchResult;
  * @author aldenml
  *
  */
-public class YifiSearchResult extends AbstractTorrentSearchResult {
+public class YifySearchResult extends AbstractTorrentSearchResult {
 
     private final static long[] BYTE_MULTIPLIERS = new long[] { 1, 2 << 9, 2 << 19, 2 << 29, 2 << 39, 2 << 49 };
 
@@ -62,7 +62,7 @@ public class YifiSearchResult extends AbstractTorrentSearchResult {
     private final long creationTime;
     private final int seeds;
 
-    public YifiSearchResult(String domainName, String detailsUrl, SearchMatcher matcher) {
+    public YifySearchResult(String domainName, String detailsUrl, SearchMatcher matcher) {
         // matcher groups: 1 -> cover (url may contains date)
         //                 2 -> display name
         //                 3 -> size

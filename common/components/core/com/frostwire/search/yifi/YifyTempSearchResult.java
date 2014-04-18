@@ -27,13 +27,13 @@ import com.frostwire.search.CrawlableSearchResult;
  * @author aldenml
  *
  */
-public class YifiTempSearchResult extends AbstractSearchResult implements CrawlableSearchResult {
+public class YifyTempSearchResult extends AbstractSearchResult implements CrawlableSearchResult {
 
     private final String itemId;
     private final String detailsUrl;
     private final String displayName;
 
-    public YifiTempSearchResult(String domainName, String itemId, String htmlFilename, String displayName) {
+    public YifyTempSearchResult(String domainName, String itemId, String htmlFilename, String displayName) {
         this.itemId = itemId;
         this.detailsUrl = "http://" + domainName + "/movie/" + itemId + "/" + htmlFilename;
         this.displayName = displayName;
