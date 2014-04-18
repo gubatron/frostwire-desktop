@@ -18,11 +18,6 @@
 
 package com.frostwire.search.yifi;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.frostwire.search.CrawlableSearchResult;
 import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.domainalias.DomainAliasManager;
@@ -34,7 +29,7 @@ import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
  * @author aldenml
  *
  */
-public class YifiSearchPerformer extends TorrentRegexSearchPerformer<YifiSearchResult> {
+public class YifySearchPerformer extends TorrentRegexSearchPerformer<YifySearchResult> {
 
     private static final int MAX_RESULTS = 21;
     private static final String HTML_REGEX = "(?is)<div class=\"minfo\">.*?<div class=\"cover\"><img src='(.*?)' /></div>.*?<div class=\"name\"><h1>(.*?)</h1>.*?<li><b>Size:</b> (.*?)</li>.*?<li><b>Language:</b> (.*?)</li>.*?li><b>Peers/Seeds:</b> (\\d*?) / (\\d*?)</li>.*?<div class=\"attr\"><a class=\"large button orange\" href=\"(.*?)\">Download Ma";
@@ -49,7 +44,7 @@ public class YifiSearchPerformer extends TorrentRegexSearchPerformer<YifiSearchR
     private static final String REGEX = "(?is)<div class=\"mv\">.*?<h3><a href=['\"]/movie/([0-9]*)/(.*?)['\"] target=\"_blank\" title=\"(.*?)\">";
 
 
-    public YifiSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
+    public YifySearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
         super(domainAliasManager, token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX);
     }
 
@@ -64,16 +59,16 @@ public class YifiSearchPerformer extends TorrentRegexSearchPerformer<YifiSearchR
         String htmlFileName = matcher.group(2);
         String displayName = matcher.group(3);
         
-        return new YifiTempSearchResult(getDomainNameToUse(), itemId, htmlFileName, displayName);
+        return new YifyTempSearchResult(getDomainNameToUse(), itemId, htmlFileName, displayName);
     }
 
     @Override
-    protected YifiSearchResult fromHtmlMatcher(CrawlableSearchResult sr, SearchMatcher matcher) {
-         return new YifiSearchResult(getDomainNameToUse(), sr.getDetailsUrl(), matcher);
+    protected YifySearchResult fromHtmlMatcher(CrawlableSearchResult sr, SearchMatcher matcher) {
+         return new YifySearchResult(getDomainNameToUse(), sr.getDetailsUrl(), matcher);
     }
 
     public static void main(String[] args) throws Throwable {
-
+        /**
         byte[] readAllBytes = Files.readAllBytes(Paths.get("/Users/gubatron/Desktop/love2.html"));
         String fileStr = new String(readAllBytes,"utf-8");
 
@@ -98,10 +93,11 @@ public class YifiSearchPerformer extends TorrentRegexSearchPerformer<YifiSearchR
             System.out.println("group 6: " + matcher.group(6));
             System.out.println("group 7: " + matcher.group(7));
             */
-
+        /**
             System.out.println("===");
         }
-        System.out.println("-done-");
+        //System.out.println("-done-");
+        */
         
     }
 }
