@@ -37,9 +37,7 @@ import com.frostwire.search.torrent.TorrentRegexSearchPerformer;
 public class YifiSearchPerformer extends TorrentRegexSearchPerformer<YifiSearchResult> {
 
     private static final int MAX_RESULTS = 21;
-    private static final String REGEX = "(?is)<div class=\"minfo\">.*?<div class=\"cover\"><img src='(.*?)' /></div>.*?<div class=\"name\"><h1>(.*?)</h1>.*?<li><b>Size:</b> (.*?)</li>.*?<li><b>Language:</b> (.*?)</li>.*?li><b>Peers/Seeds:</b> (\\d*?) / (\\d*?)</li>.*?<div class=\"attr\"><a class=\"large button orange\" href=\"(.*?)\">Download Ma";
-    private static final String HTML_REGEX = "(?is)<div class=\"mv\">.*?<h3><a href=['\"]/movie/([0-9]*)/(.*?)['\"] target=\"_blank\" title=\"(.*?)\">";
-
+    private static final String HTML_REGEX = "(?is)<div class=\"minfo\">.*?<div class=\"cover\"><img src='(.*?)' /></div>.*?<div class=\"name\"><h1>(.*?)</h1>.*?<li><b>Size:</b> (.*?)</li>.*?<li><b>Language:</b> (.*?)</li>.*?li><b>Peers/Seeds:</b> (\\d*?) / (\\d*?)</li>.*?<div class=\"attr\"><a class=\"large button orange\" href=\"(.*?)\">Download Ma";
     // matcher groups: 1 -> cover (url contains date)
     //                 2 -> display name
     //                 3 -> size
@@ -47,6 +45,8 @@ public class YifiSearchPerformer extends TorrentRegexSearchPerformer<YifiSearchR
     //                 5 -> peers
     //                 6 -> seeds
     //                 7 -> magnet    
+
+    private static final String REGEX = "(?is)<div class=\"mv\">.*?<h3><a href=['\"]/movie/([0-9]*)/(.*?)['\"] target=\"_blank\" title=\"(.*?)\">";
 
 
     public YifiSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
@@ -64,7 +64,7 @@ public class YifiSearchPerformer extends TorrentRegexSearchPerformer<YifiSearchR
         String htmlFileName = matcher.group(2);
         String displayName = matcher.group(3);
         
-        return new YifiTempSearchResult(getDomainNameToUse(), itemId, displayName, htmlFileName);
+        return new YifiTempSearchResult(getDomainNameToUse(), itemId, htmlFileName, displayName);
     }
 
     @Override
@@ -74,21 +74,34 @@ public class YifiSearchPerformer extends TorrentRegexSearchPerformer<YifiSearchR
 
     public static void main(String[] args) throws Throwable {
 
-        byte[] readAllBytes = Files.readAllBytes(Paths.get("/Users/gubatron/Desktop/yifi_input.html"));
+        byte[] readAllBytes = Files.readAllBytes(Paths.get("/Users/gubatron/Desktop/love2.html"));
         String fileStr = new String(readAllBytes,"utf-8");
 
-        //Pattern pattern = Pattern.compile(HTML_REGEX);
         Pattern pattern = Pattern.compile(REGEX);
+        //Pattern pattern = Pattern.compile(HTML_REGEX);
+        
         Matcher matcher = pattern.matcher(fileStr);
         
-        System.out.println("find? : " + matcher.find());
+        int found = 0;
+        while (matcher.find()) {
+            found++;
+            System.out.println("\nfound " + found);
+            
+            System.out.println("group 1: " + matcher.group(1));
+            System.out.println("group 2: " + matcher.group(2));
+            System.out.println("group 3: " + matcher.group(3));
+            
+            /**
+            //test HTML_REGEX
+            System.out.println("group 4: " + matcher.group(4));
+            System.out.println("group 5: " + matcher.group(5));
+            System.out.println("group 6: " + matcher.group(6));
+            System.out.println("group 7: " + matcher.group(7));
+            */
+
+            System.out.println("===");
+        }
+        System.out.println("-done-");
         
-        System.out.println("group 1: " + matcher.group(1));
-        System.out.println("group 2: " + matcher.group(2));
-        System.out.println("group 3: " + matcher.group(3));
-        System.out.println("group 4: " + matcher.group(4));
-        System.out.println("group 5: " + matcher.group(5));
-        System.out.println("group 6: " + matcher.group(6));
-        System.out.println("group 7: " + matcher.group(7));
     }
 }
