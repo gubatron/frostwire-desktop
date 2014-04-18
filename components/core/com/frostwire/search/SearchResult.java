@@ -36,4 +36,6 @@ public interface SearchResult {
     public String getSource();
 
     public License getLicense();
+    
+    public String getThumbnailUrl();
 }

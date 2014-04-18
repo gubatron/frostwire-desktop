@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.search.bitsnoop;
+package com.frostwire.search.yifi;
 
 import com.frostwire.search.AbstractSearchResult;
 import com.frostwire.search.CrawlableSearchResult;
@@ -27,14 +27,16 @@ import com.frostwire.search.CrawlableSearchResult;
  * @author aldenml
  *
  */
-public class BitSnoopTempSearchResult extends AbstractSearchResult implements CrawlableSearchResult {
+public class YifiTempSearchResult extends AbstractSearchResult implements CrawlableSearchResult {
 
     private final String itemId;
     private final String detailsUrl;
+    private final String displayName;
 
-    public BitSnoopTempSearchResult(String domainName, String itemId) {
+    public YifiTempSearchResult(String domainName, String itemId, String htmlFilename, String displayName) {
         this.itemId = itemId;
-        this.detailsUrl = "http://" + domainName + itemId;
+        this.detailsUrl = "http://" + domainName + "/movie/" + itemId + "/" + htmlFilename;
+        this.displayName = displayName;
     }
 
     public String getItemId() {
@@ -43,7 +45,7 @@ public class BitSnoopTempSearchResult extends AbstractSearchResult implements Cr
 
     @Override
     public String getDisplayName() {
-        return null;
+        return displayName;
     }
 
     @Override
