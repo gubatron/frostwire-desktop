@@ -236,16 +236,12 @@ public class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult impl
 
     @Override
     public String getThumbnailUrl() {
-        String thumbnailUrl = null;
-        
-        LinkInfo linfo = video;
-        
-        if (linfo == null) {
-            linfo = audio;
-        }
-        
-        if (linfo != null && linfo.thumbnails != null) {
+        return getBestThumbnailUrl(video != null ? video : audio);
+    }
 
+    private String getBestThumbnailUrl(LinkInfo linfo) {
+        String thumbnailUrl = null;
+        if (linfo != null && linfo.thumbnails != null) {
             if (!StringUtils.isNullOrEmpty(linfo.thumbnails.maxres)) {
                 thumbnailUrl = linfo.thumbnails.maxres;
             } else if (!StringUtils.isNullOrEmpty(linfo.thumbnails.hq)) {
@@ -256,7 +252,6 @@ public class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult impl
                 thumbnailUrl = linfo.thumbnails.normal;
             }
         }
-        
         return thumbnailUrl;
     }
 }
