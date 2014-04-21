@@ -146,7 +146,11 @@ public final class VuzeManager {
     }
 
     public void resume() {
-        core.getGlobalManager().resumeDownloads();
+        //core.getGlobalManager().resumeDownloads();
+        List<DownloadManager> downloadManagers = core.getGlobalManager().getDownloadManagers();
+        if (downloadManagers != null && downloadManagers.size() > 0) {
+            TorrentUtil.resumeTorrents(downloadManagers.toArray());
+        }
     }
 
     public void setParameter(String key, long value) {
