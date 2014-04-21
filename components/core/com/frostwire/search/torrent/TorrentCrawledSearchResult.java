@@ -83,4 +83,9 @@ public class TorrentCrawledSearchResult extends AbstractCrawledSearchResult impl
     public String getHash() {
         return sr.getHash();
     }
+    
+    @Override
+    public String getThumbnailUrl() {
+        return sr.getThumbnailUrl();
+    }
 }
