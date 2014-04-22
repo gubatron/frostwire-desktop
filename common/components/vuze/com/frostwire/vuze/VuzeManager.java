@@ -141,12 +141,22 @@ public final class VuzeManager {
         return core.getGlobalManager().getStats().getDataSendRate() / 1000;
     }
 
-    public void pause() {
-        core.getGlobalManager().pauseDownloads();
+    public void pause(boolean disconnected) {
+        if (!disconnected) {
+            core.getGlobalManager().pauseDownloads();
+        } else {
+            List<DownloadManager> downloadManagers = core.getGlobalManager().getDownloadManagers();
+            if (downloadManagers != null && downloadManagers.size() > 0) {
+                TorrentUtil.queueTorrents(downloadManagers.toArray());
+            }
+        }
     }
 
     public void resume() {
-        core.getGlobalManager().resumeDownloads();
+        List<DownloadManager> downloadManagers = core.getGlobalManager().getDownloadManagers();
+        if (downloadManagers != null && downloadManagers.size() > 0) {
+            TorrentUtil.resumeTorrents(downloadManagers.toArray());
+        }
     }
 
     public void setParameter(String key, long value) {

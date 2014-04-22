@@ -236,20 +236,22 @@ public class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult impl
 
     @Override
     public String getThumbnailUrl() {
+        return getBestThumbnailUrl(video != null ? video : audio);
+    }
+
+    private String getBestThumbnailUrl(LinkInfo linfo) {
         String thumbnailUrl = null;
-        
-        if (video != null && video.thumbnails != null) {
-            if (!StringUtils.isNullOrEmpty(video.thumbnails.maxres)) {
-                thumbnailUrl = video.thumbnails.maxres;
-            } else if (!StringUtils.isNullOrEmpty(video.thumbnails.hq)) {
-                thumbnailUrl = video.thumbnails.hq;
-            } else if (!StringUtils.isNullOrEmpty(video.thumbnails.mq)) {
-                thumbnailUrl = video.thumbnails.mq;
-            } else if (!StringUtils.isNullOrEmpty(video.thumbnails.normal)) {
-                thumbnailUrl = video.thumbnails.normal;
+        if (linfo != null && linfo.thumbnails != null) {
+            if (!StringUtils.isNullOrEmpty(linfo.thumbnails.maxres)) {
+                thumbnailUrl = linfo.thumbnails.maxres;
+            } else if (!StringUtils.isNullOrEmpty(linfo.thumbnails.hq)) {
+                thumbnailUrl = linfo.thumbnails.hq;
+            } else if (!StringUtils.isNullOrEmpty(linfo.thumbnails.mq)) {
+                thumbnailUrl = linfo.thumbnails.mq;
+            } else if (!StringUtils.isNullOrEmpty(linfo.thumbnails.normal)) {
+                thumbnailUrl = linfo.thumbnails.normal;
             }
         }
-        
         return thumbnailUrl;
     }
 }

@@ -243,7 +243,8 @@ import com.frostwire.vuze.CoreWaiterSWT.TriggerInThread;
     if(dm == null)
       return false;
     int state = dm.getState();
-    if (state != DownloadManager.STATE_STOPPED) {
+    if (state != DownloadManager.STATE_STOPPED &&
+        state != DownloadManager.STATE_QUEUED) {
       return false;
     }
     return true;
@@ -335,7 +336,7 @@ import com.frostwire.vuze.CoreWaiterSWT.TriggerInThread;
   start(
   		DownloadManager dm) 
   {
-    if (dm != null && (dm.getState() == DownloadManager.STATE_STOPPED || dm.getState() == DownloadManager.STATE_WAITING)) {
+    if (dm != null && (dm.getState() == DownloadManager.STATE_QUEUED || dm.getState() == DownloadManager.STATE_STOPPED || dm.getState() == DownloadManager.STATE_WAITING)) {
         dm.initialize();
     }
   }
