@@ -243,7 +243,7 @@ import com.frostwire.vuze.CoreWaiterSWT.TriggerInThread;
     if(dm == null)
       return false;
     int state = dm.getState();
-    if (state != DownloadManager.STATE_STOPPED ||
+    if (state != DownloadManager.STATE_STOPPED &&
         state != DownloadManager.STATE_QUEUED) {
       return false;
     }
