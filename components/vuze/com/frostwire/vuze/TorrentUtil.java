@@ -112,10 +112,28 @@ class TorrentUtil {
         //		}
     }
 
+    /** Queue torrents so they can be automatically restarted when connection comes back.*/
+    public static void queueTorrents(Object[] download_managers) {
+        DMTask task = new DMTask(toDMS(download_managers)) {
+            public void run(DownloadManager dm) {
+                //don't mark queued those that were stopped by the user.
+                if (dm.getState() != DownloadManager.STATE_STOPPED) {
+                    ManagerUtils.stop(dm);
+                    ManagerUtils.queue(dm); //this won't work unless it's already stopped.
+                }
+            }
+        };
+        task.go();        
+    }
+
+    
     public static void resumeTorrents(Object[] download_managers) {
         DMTask task = new DMTask(toDMS(download_managers)) {
             public void run(DownloadManager dm) {
-                ManagerUtils.start(dm);
+                //queued == same as STATE_STOPPED, except it can be restarted automatically.
+                if (dm.getState() == DownloadManager.STATE_QUEUED) {
+                    ManagerUtils.start(dm);
+                }
             }
         };
         task.go();
