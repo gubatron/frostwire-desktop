@@ -118,8 +118,7 @@ class TorrentUtil {
             public void run(DownloadManager dm) {
                 //don't mark queued those that were stopped by the user.
                 if (dm.getState() != DownloadManager.STATE_STOPPED) {
-                    ManagerUtils.stop(dm);
-                    ManagerUtils.queue(dm); //this won't work unless it's already stopped.
+                    ManagerUtils.stop(dm, DownloadManager.STATE_QUEUED);
                 }
             }
         };
