@@ -370,9 +370,10 @@ import com.frostwire.vuze.CoreWaiterSWT.TriggerInThread;
 
 		int state = dm.getState();
 
-		if (state == DownloadManager.STATE_STOPPED
-				|| state == DownloadManager.STATE_STOPPING ){
-			return;
+        if (state == DownloadManager.STATE_STOPPED  || 
+            state == DownloadManager.STATE_STOPPING || 
+            state == DownloadManager.STATE_ERROR) {
+            return;
 		}
 		
 		asyncPause(dm);
@@ -392,6 +393,7 @@ import com.frostwire.vuze.CoreWaiterSWT.TriggerInThread;
 
 		if (state == DownloadManager.STATE_STOPPED
 				|| state == DownloadManager.STATE_STOPPING
+				|| state == DownloadManager.STATE_ERROR
 				|| state == stateAfterStopped) {
 			return;
 		}
