@@ -47,6 +47,7 @@ public class TorrentsfmSearchResult extends AbstractTorrentSearchResult {
         UNIT_TO_BYTE_MULTIPLIERS_MAP.put("PiB", 5);
     }
 
+    private final String thumbnailUrl;
     private final String filename;
     private final String displayName;
     private final String detailsUrl;
@@ -58,16 +59,22 @@ public class TorrentsfmSearchResult extends AbstractTorrentSearchResult {
 
     public TorrentsfmSearchResult(String domainName, String detailsUrl, SearchMatcher matcher) {
         this.detailsUrl = detailsUrl;
-        this.filename = matcher.group(1);//parseFileName(matcher.group(1), FilenameUtils.getBaseName(detailsUrl));
-        this.size = parseSize(matcher.group(2));
-        this.creationTime = parseCreationTime(matcher.group(4));
-        this.seeds = parseSeeds(matcher.group(3));
+        this.thumbnailUrl = matcher.group(1);
+        this.filename = matcher.group(2);
+        this.size = parseSize(matcher.group(3));
+        this.creationTime = parseCreationTime(matcher.group(5));
+        this.seeds = parseSeeds(matcher.group(4));
         //a magnet
-        this.torrentUrl = matcher.group(5);//"http://" + domainName + "/tor/" + matcher.group(5) + ".torrent";
-        this.displayName = matcher.group(1);//HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename));
+        this.torrentUrl = matcher.group(6);//"http://" + domainName + "/tor/" + matcher.group(5) + ".torrent";
+        this.displayName = matcher.group(2);//HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename));
         this.infoHash = parseInfoHash(torrentUrl);
     }
 
+    @Override
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
+    
     @Override
     public long getSize() {
         return size;
