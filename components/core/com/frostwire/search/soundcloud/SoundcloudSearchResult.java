@@ -39,7 +39,6 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
     private final String username;
     private final String trackUrl;
     private final String filename;
-    private final long duration;
     private final String source;
     private final String thumbnailUrl;
     private final long date;
@@ -51,7 +50,6 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
         this.username = buildUsername(item);
         this.trackUrl = item.permalink_url;
         this.filename = item.permalink + "-soundcloud.mp3";
-        this.duration = Math.round((item.duration * 128f) / 8f);
         this.size = item.original_content_size;
         this.source = buildSource(item);
         this.thumbnailUrl = buildThumbnailUrl(item.artwork_url);
