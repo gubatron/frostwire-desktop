@@ -59,7 +59,7 @@ public class TorrentsfmSearchResult extends AbstractTorrentSearchResult {
 
     public TorrentsfmSearchResult(String domainName, String detailsUrl, SearchMatcher matcher) {
         this.detailsUrl = detailsUrl;
-        this.thumbnailUrl = matcher.group(1);
+        this.thumbnailUrl = parseThumbnailUrl(domainName, matcher.group(1));
         this.filename = matcher.group(2);
         this.size = parseSize(matcher.group(3));
         this.creationTime = parseCreationTime(matcher.group(5));
@@ -68,6 +68,14 @@ public class TorrentsfmSearchResult extends AbstractTorrentSearchResult {
         this.torrentUrl = matcher.group(6);//"http://" + domainName + "/tor/" + matcher.group(5) + ".torrent";
         this.displayName = matcher.group(2);//HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename));
         this.infoHash = parseInfoHash(torrentUrl);
+    }
+
+    private String parseThumbnailUrl(String domainName, String srcUrl) {
+        String result = srcUrl;
+        if (srcUrl.startsWith("/static/missing")) {
+            result = "http://" + domainName + srcUrl;
+        }
+        return result;
     }
 
     @Override
