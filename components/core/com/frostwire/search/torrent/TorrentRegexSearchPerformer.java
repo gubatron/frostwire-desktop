@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.frostwire.logging.Logger;
 import com.frostwire.search.CrawlRegexSearchPerformer;
 import com.frostwire.search.CrawlableSearchResult;
 import com.frostwire.search.MaxIterCharSequence;
@@ -38,18 +39,19 @@ import com.frostwire.search.domainalias.DomainAliasManager;
  */
 public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResult> extends CrawlRegexSearchPerformer<CrawlableSearchResult> {
 
-    private final Pattern pattern;
-    private final Pattern htmlPattern;
+    private final Pattern preliminarSearchResultspattern;
+    private final Pattern htmlDetailPagePattern;
+    private final static Logger LOG = Logger.getLogger(TorrentRegexSearchPerformer.class);
 
-    public TorrentRegexSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout, int pages, int numCrawls, int regexMaxResults, String regex, String htmlRegex) {
+    public TorrentRegexSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout, int pages, int numCrawls, int regexMaxResults, String preliminarSearchResultsRegex, String htmlDetailPagePatternRegex) {
         super(domainAliasManager, token, keywords, timeout, pages, numCrawls, regexMaxResults);
-        this.pattern = Pattern.compile(regex);
-        this.htmlPattern = Pattern.compile(htmlRegex);
+        this.preliminarSearchResultspattern = Pattern.compile(preliminarSearchResultsRegex);
+        this.htmlDetailPagePattern = Pattern.compile(htmlDetailPagePatternRegex);
     }
 
     @Override
     public Pattern getPattern() {
-        return pattern;
+        return preliminarSearchResultspattern;
     }
 
     @Override
@@ -70,11 +72,12 @@ public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResul
         List<SearchResult> list = new LinkedList<SearchResult>();
 
         if (sr instanceof TorrentCrawlableSearchResult) {
+            //in case we fetched a torrent's info (magnet, or the .torrent itself) to obtain 
             list.addAll(PerformersHelper.crawlTorrent(this, (TorrentCrawlableSearchResult) sr, data));
         } else {
             String html = new String(data, "UTF-8");
 
-            Matcher matcher = htmlPattern.matcher(new MaxIterCharSequence(html, 2 * html.length()));
+            Matcher matcher = htmlDetailPagePattern.matcher(new MaxIterCharSequence(html, 2 * html.length()));
 
             try {
                 if (matcher.find()) {
@@ -82,6 +85,8 @@ public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResul
                     if (searchResult != null) {
                         list.add(searchResult);
                     }
+                } else {
+                    LOG.error("Possible Update Necessary:  Search broken for " + sr.getClass().getPackage().getName() + " (please notify dev-team on twitter @frostwire or write to contact@frostwire.com if you keep seeing this message.)");
                 }
             } catch (Exception e) {
                 throw new Exception("URL:" + sr.getDetailsUrl(), e);
