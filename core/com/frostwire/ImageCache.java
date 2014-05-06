@@ -29,10 +29,11 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.util.OSUtils;
+import org.limewire.concurrent.ThreadExecutor;
 
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * @author gubatron
@@ -129,26 +130,22 @@ public class ImageCache {
     }
 
     private void loadFromUrl(final URL url, final OnLoadedListener listener) {
-        // TODO: may be I must use BackgroundExecutorService
-        new Thread(new Runnable() {
+        ThreadExecutor.startThread(new Thread(new Runnable() {
             public void run() {
                 try {
                     BufferedImage image = null;
-
-                    String userAgent = "FrostWire/" + OSUtils.getOS() + "/" + FrostWireUtils.getFrostWireVersion();
-                    HttpFetcher fetcher = new HttpFetcher(url.toURI(), userAgent);
-                    Object[] result = fetcher.fetch(false);
-
-                    if (result == null) {
-                        throw new IOException("HttpFetcher.fetch() got nothing at " + url.toString());
+                    HttpClient newInstance = HttpClientFactory.newInstance();
+                    byte[] data = newInstance.getBytes(url.toString());
+                    
+                    if (data == null) {
+                        throw new IOException("ImageCache.loadUrl() got nothing at " + url.toString());
                     }
 
-                    byte[] data = (byte[]) result[0];
-                    long date = (Long) result[1];
                     if (data != null) {
                         image = ImageIO.read(new ByteArrayInputStream(data));
-                        saveToCache(url, image, date);
+                        saveToCache(url, image, System.currentTimeMillis());
                     }
+                    
                     if (listener != null && image != null) {
                         listener.onLoaded(url, image, false, false);
                     }
@@ -157,7 +154,7 @@ public class ImageCache {
                     listener.onLoaded(url, null, false, true);
                 }
             }
-        }).start();
+        }),"ImageCache.loadFromUrl");
     }
 
     private void saveToCache(URL url, BufferedImage image, long date) {
