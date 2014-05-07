@@ -3753,7 +3753,7 @@ msgid "&File"
 msgstr "파일 (&F)"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "Sharing &Help"
+msgid "&Help"
 msgstr "공유&도움"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46

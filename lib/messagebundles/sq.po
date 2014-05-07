@@ -3695,7 +3695,7 @@ msgid "&File"
 msgstr "Skedë"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "Sharing &Help"
+msgid "&Help"
 msgstr "Lidhja po nis"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46

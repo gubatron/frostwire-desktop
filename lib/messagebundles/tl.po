@@ -3860,7 +3860,7 @@ msgid "&File"
 msgstr "&File"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "Sharing &Help"
+msgid "&Help"
 msgstr "Pagbabahagi at Tulong"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46

@@ -3543,7 +3543,7 @@ msgid "&File"
 msgstr "&Subor"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "Sharing &Help"
+msgid "&Help"
 msgstr "Zacinanie"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46

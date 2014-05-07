@@ -3651,7 +3651,7 @@ msgid "&File"
 msgstr "&Comhad"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "Sharing &Help"
+msgid "&Help"
 msgstr "Ag Comhroinnt"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46

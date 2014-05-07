@@ -3660,7 +3660,7 @@ msgid "&File"
 msgstr "Αρχείο [&A]"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "Sharing &Help"
+msgid "&Help"
 msgstr "Σύνδεση"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46
