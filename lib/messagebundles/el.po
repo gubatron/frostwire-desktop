@@ -447,7 +447,7 @@ msgstr "Διαγραφή λήψης"
 #: gui/com/limegroup/gnutella/gui/init/SetupManager.java:504
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:39
 msgid "Cancel"
-msgstr "Ακύρωση Σάρωσης"
+msgstr "Ακύρωση "
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:616
 msgid "Cancel Selected Downloads"
