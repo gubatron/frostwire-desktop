@@ -176,7 +176,7 @@ public class DeviceDiscoveryClerk {
                 } else {
                     Device device = new Device(key, address, listeningPort, finger, pinfo);
                     device.setOnActionFailedListener(new OnActionFailedListener() {
-                        public void onActionFailed(Device device, int action, Exception e) {
+                        public void onActionFailed(Device device, int action, Throwable e) {
                             handleDeviceStale(key, address, device);
                         }
                     });

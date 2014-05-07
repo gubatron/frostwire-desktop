@@ -19,6 +19,7 @@
 package com.frostwire.gui.library;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.URL;
@@ -33,10 +34,9 @@ import javax.swing.JOptionPane;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ExecutorsHelper;
+import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.util.NetworkUtils;
 
-import com.frostwire.HttpFetcher;
-import com.frostwire.HttpFetcherListener;
 import com.frostwire.JsonEngine;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.library.ProgressFileEntity.ProgressFileEntityListener;
@@ -44,6 +44,7 @@ import com.frostwire.localpeer.Finger;
 import com.frostwire.localpeer.LocalPeer;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.UserAgentGenerator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.util.EncodingUtils;
@@ -219,11 +220,8 @@ public class Device {
 
         try {
 
-            URI uri = getDownloadURL(type, id).toURI();
-
-            HttpFetcher fetcher = new HttpFetcher(uri);
-
-            byte[] data = fetcher.fetch();
+            HttpClient browser = HttpClientFactory.newInstance();
+            byte[] data = browser.getBytes(getDownloadURL(type, id).toString());
 
             if (data == null) {
                 notifyOnActionFailed(ACTION_DOWNLOAD, null);
@@ -259,46 +257,51 @@ public class Device {
                 }
             }
 
-            HttpFetcher fetcher = new HttpFetcher("http://" + _address.getHostAddress() + ":" + _port + "/dekstop-upload-request", 60000);
-
-            String json = new JsonEngine().toJson(dur);
-
+            final String postUrl = "http://" + _address.getHostAddress() + ":" + _port + "/desktop-upload-request";
+            final String json = new JsonEngine().toJson(dur);
             final DeviceUploadDialog dlg = new DeviceUploadDialog(GUIMediator.getAppFrame());
 
-            fetcher.asyncPostJSON(json, new HttpFetcherListener() {
+            ThreadExecutor.startThread(new Runnable() {
 
                 @Override
-                public void onSuccess(final byte[] body) {
-                    GUIMediator.safeInvokeAndWait(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (dlg.isVisible()) {
-                                dlg.setVisible(false);
-                                try {
-                                    String token = new String(body, "UTF-8");
-
-                                    executor.execute(new DeviceUploadTask(Device.this, dur.files.toArray(new FileDescriptor[0]), token));
-                                } catch (Throwable e) {
-                                    LOG.error("Error uploading files to device", e);
+                public void run() {
+                    try{
+                        final String token = HttpClientFactory.newInstance().post(postUrl, 60000, UserAgentGenerator.getUserAgent(), json,"application/json", false);
+                        
+                        GUIMediator.safeInvokeAndWait(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (dlg.isVisible()) {
+                                    dlg.setVisible(false);
+                                    try {
+                                        if (token != null){
+                                            executor.execute(new DeviceUploadTask(Device.this, dur.files.toArray(new FileDescriptor[0]), token));
+                                        } else {
+                                            throw new Exception("Could not reach other device.");
+                                        }
+                                    } catch (Throwable e) {
+                                        LOG.error("Error uploading files to device", e);
+                                    }
                                 }
                             }
-                        }
-                    });
-                }
+                        });
 
-                @Override
-                public void onError(Throwable e) {
-                    GUIMediator.safeInvokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (dlg.isVisible()) {
-                                dlg.setVisible(false);
-                                JOptionPane.showMessageDialog(GUIMediator.getAppFrame(), I18n.tr("The device is busy with another transfer or did not authorize your request"), I18n.tr("Transfer failed"), JOptionPane.INFORMATION_MESSAGE);
+                    } catch (IOException ioe){
+                        GUIMediator.safeInvokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (dlg.isVisible()) {
+                                    dlg.setVisible(false);
+                                    JOptionPane.showMessageDialog(GUIMediator.getAppFrame(), I18n.tr("The device is busy with another transfer or did not authorize your request"), I18n.tr("Transfer failed"), JOptionPane.INFORMATION_MESSAGE);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
-            });
+                
+            }, "Device.upload(File[])");
+            
+            
 
             dlg.setVisible(true);
 
@@ -314,14 +317,11 @@ public class Device {
         try {
             uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/desktop-upload?filePath=" + EncodingUtils.encode(file.getAbsolutePath()) + "&token=" + EncodingUtils.encode(token));
 
-            HttpFetcher fetcher = new HttpFetcher(uri);
-
             ProgressFileEntity fileEntity = new ProgressFileEntity(file);
             fileEntity.setProgressFileEntityListener(listener);
-
-            fetcher.post(fileEntity);
-
-        } catch (Exception e) {
+            
+            HttpClientFactory.newInstance().post(uri.toString(), 10000, UserAgentGenerator.getUserAgent(), fileEntity);
+        } catch (Throwable e) {
             notifyOnActionFailed(ACTION_UPLOAD, e);
             throw new RuntimeException(e);
         }
@@ -346,14 +346,14 @@ public class Device {
         return _address + ":" + _port + ", " + finger;
     }
 
-    protected void notifyOnActionFailed(int action, Exception e) {
+    protected void notifyOnActionFailed(int action, Throwable e) {
         if (_listener != null) {
             _listener.onActionFailed(this, action, e);
         }
     }
 
     public interface OnActionFailedListener {
-        public void onActionFailed(Device device, int action, Exception e);
+        public void onActionFailed(Device device, int action, Throwable e);
     }
 
     private static List<File> flatFiles(File[] files) {
