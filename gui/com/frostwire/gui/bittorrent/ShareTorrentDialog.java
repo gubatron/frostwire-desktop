@@ -52,6 +52,9 @@ import org.gudy.azureus2.core3.util.UrlUtils;
 import com.frostwire.HttpFetcher;
 import com.frostwire.HttpFetcher.HttpRequestInfo;
 import com.frostwire.HttpFetcherListener;
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClient.HttpClientListener;
+import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
@@ -315,9 +318,11 @@ public class ShareTorrentDialog extends JDialog {
 		return _link;
 	}
 
-    private void performAsyncURLShortening(AbstractHttpFetcherListener listener) {
+    private void performAsyncURLShortening(HttpClientListener listener) {
+    	HttpClient asyncFetcher = HttpClientFactory.newInstance();
+    	asyncFetcher.setListener(listener);
+    	
 		HttpFetcher asyncFetcher = new HttpFetcher(listener.getShortenerURL(), 2000);
-
 		asyncFetcher.asyncRequest(listener.getRequestInfo(),listener);
 	}
 
