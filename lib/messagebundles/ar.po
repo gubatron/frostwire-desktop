@@ -3721,7 +3721,7 @@ msgid "&File"
 msgstr "ملف"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "Sharing &Help"
+msgid "&Help"
 msgstr "يتم الآن الاتصال"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46

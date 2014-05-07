@@ -3673,7 +3673,7 @@ msgid "&File"
 msgstr "檔案(&F)"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "Sharing &Help"
+msgid "&Help"
 msgstr "連線 "
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46

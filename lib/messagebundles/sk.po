@@ -3701,7 +3701,7 @@ msgid "&File"
 msgstr "&Súbor"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "Sharing &Help"
+msgid "&Help"
 msgstr "Zdieľanie"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46

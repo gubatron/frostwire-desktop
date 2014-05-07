@@ -3836,7 +3836,7 @@ msgid "&File"
 msgstr "&File"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "Sharing &Help"
+msgid "&Help"
 msgstr "Condivisione  &Aiuto"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46

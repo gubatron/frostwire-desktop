@@ -3638,7 +3638,7 @@ msgid "&File"
 msgstr "&Arkiv"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "Sharing &Help"
+msgid "&Help"
 msgstr "Delning"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46

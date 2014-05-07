@@ -3583,7 +3583,7 @@ msgid "&File"
 msgstr "Файл"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "Sharing &Help"
+msgid "&Help"
 msgstr "Починаю підключатись"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46

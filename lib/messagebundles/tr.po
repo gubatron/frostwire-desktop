@@ -3833,7 +3833,7 @@ msgid "&File"
 msgstr "&Dosya"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "Sharing &Help"
+msgid "&Help"
 msgstr "Paylaşım & Yardım"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46

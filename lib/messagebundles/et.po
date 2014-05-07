@@ -3581,7 +3581,7 @@ msgid "&File"
 msgstr "&Fail"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "Sharing &Help"
+msgid "&Help"
 msgstr "Ühendan"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46
