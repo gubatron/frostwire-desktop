@@ -67,7 +67,7 @@ public interface HttpClient {
 
     public interface HttpClientListener {
 
-        public void onError(HttpClient client, Exception e);
+        public void onError(HttpClient client, Throwable e);
 
         public void onData(HttpClient client, byte[] buffer, int offset, int length);
 
@@ -76,6 +76,19 @@ public interface HttpClient {
         public void onCancel(HttpClient client);
 
         public void onHeaders(HttpClient httpClient, Map<String, List<String>> headerFields);
+    }
+    
+    public abstract class HttpClientListenerAdapter implements HttpClientListener {
+        
+        public void onError(HttpClient client, Throwable e) {}
+
+        public void onData(HttpClient client, byte[] buffer, int offset, int length) {}
+
+        public void onComplete(HttpClient client) {}
+
+        public void onCancel(HttpClient client) {}
+
+        public void onHeaders(HttpClient httpClient, Map<String, List<String>> headerFields) {}
     }
 
     public static class HttpRangeException extends IOException {

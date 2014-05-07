@@ -416,7 +416,7 @@ public class HttpDownload implements BTDownload {
 
     private final class HttpDownloadListenerImpl implements HttpClientListener {
         @Override
-        public void onError(HttpClient client, Exception e) {
+        public void onError(HttpClient client, Throwable e) {
             if (e instanceof RangeNotSupportedException) {
                 isResumable = false;
                 start(false);
