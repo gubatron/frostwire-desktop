@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,7 +47,6 @@ import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.AzureusStarter;
-import com.frostwire.HttpFetcher;
 import com.frostwire.util.DigestUtils;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpRangeException;
@@ -364,7 +362,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
         } else if (state == DownloadManager.STATE_DOWNLOADING) {
             System.out.println("stateChanged(STATE_DOWNLOADING)");
-        } else if (state == DownloadManager.STATE_READY) {
+        } else if (state == DownloadManager.STATE_READY || state == DownloadManager.STATE_QUEUED) {
             System.out.println("stateChanged(STATE_READY)");
             manager.startDownload();
         }
@@ -509,7 +507,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
     }
 
     public final static void downloadTorrentFile(String torrentURL, File saveLocation) throws IOException, URISyntaxException {
-        byte[] contents = new HttpFetcher(new URI(torrentURL)).fetch();
+        byte[] contents = HttpClientFactory.newInstance().getBytes(torrentURL);
 
         // save the torrent locally if you have to
         if (saveLocation != null && contents != null && contents.length > 0) {
