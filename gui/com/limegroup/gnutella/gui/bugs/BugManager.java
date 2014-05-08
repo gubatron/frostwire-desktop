@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Collections;
@@ -46,8 +45,8 @@ import org.limewire.util.StringUtils;
 import org.limewire.util.Version;
 import org.limewire.util.VersionFormatException;
 
-import com.frostwire.HttpFetcher;
 import com.frostwire.logging.Logger;
+import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LimeWireModule;
@@ -592,9 +591,9 @@ public final class BugManager {
         }
 
         public void run() {
-            byte[] response = null;
+            String response = null;
             try {
-                response = new HttpFetcher(new URI(BugSettings.BUG_REPORT_SERVER.getValue())).post(INFO.toBugReport(), "text/plain");
+                response = HttpClientFactory.newInstance().post(BugSettings.BUG_REPORT_SERVER.getValue(), 6000, "FrostWire-"+FrostWireUtils.getFrostWireVersion(), INFO.toBugReport(), "text/plain", false);
             } catch (Exception e) {
                 LOG.error("Error sending bug report", e);
             }

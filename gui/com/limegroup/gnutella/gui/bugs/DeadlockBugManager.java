@@ -1,12 +1,10 @@
 package com.limegroup.gnutella.gui.bugs;
 
-import java.net.URI;
-
 import org.limewire.util.Version;
 import org.limewire.util.VersionFormatException;
 
-import com.frostwire.HttpFetcher;
 import com.frostwire.logging.Logger;
+import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.LimeWireModule;
 import com.limegroup.gnutella.settings.BugSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -45,7 +43,7 @@ public class DeadlockBugManager {
     
     private static void sendToServlet(LocalClientInfo info) {
         try {
-            new HttpFetcher(new URI(BugSettings.BUG_REPORT_SERVER.getValue())).post(info.toBugReport(), "text/plain");
+            HttpClientFactory.newInstance().post(BugSettings.BUG_REPORT_SERVER.getValue(), 6000, "FrostWire-" + FrostWireUtils.getFrostWireVersion(), info.toBugReport(), "text/plain", false);
         } catch (Exception e) {
             LOG.error("Error sending bug report", e);
         }

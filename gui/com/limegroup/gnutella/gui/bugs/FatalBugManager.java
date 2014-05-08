@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URI;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -18,13 +17,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
-import com.frostwire.HttpFetcher;
 import com.frostwire.logging.Logger;
+import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.LimeWireModule;
 import com.limegroup.gnutella.gui.LocalClientInfoFactory;
 import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.SplashWindow;
 import com.limegroup.gnutella.settings.BugSettings;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 
 /**
@@ -163,7 +163,7 @@ public final class FatalBugManager {
      */
     private static void sendToServlet(LocalClientInfo info) {
         try {
-            new HttpFetcher(new URI(BugSettings.BUG_REPORT_SERVER.getValue())).post(info.toBugReport(), "text/plain");
+            HttpClientFactory.newInstance().post(BugSettings.BUG_REPORT_SERVER.getValue(), 6000, "FrostWire-" + FrostWireUtils.getFrostWireVersion(), info.toBugReport(), "text/plain", false);
         } catch (Exception e) {
             LOG.error("Error sending bug report", e);
         }
