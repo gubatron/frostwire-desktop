@@ -26,7 +26,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ import org.gudy.azureus2.core3.util.Debug;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.HttpFetcher;
+import com.frostwire.util.HttpClientFactory;
 
 public class ExternalControl {
 
@@ -392,9 +391,9 @@ public class ExternalControl {
             
             System.out.println("urlParameter = " + urlParameter);
             
-            HttpFetcher fetcher = new HttpFetcher(new URI("http://" + LOCALHOST_IP + ":" + SERVER_PORT + urlParameter), 1000);
-            //HttpFetcher fetcher = new HttpFetcher(new URI("http://localtest" + urlParameter), 1000);
-            if (fetcher.fetch() != null) {
+            final String response = HttpClientFactory.newInstance().get("http://" + LOCALHOST_IP + ":" + SERVER_PORT + urlParameter, 1000);
+
+            if (response != null) {
                 return true;
             }
             
