@@ -50,7 +50,7 @@ public final class Logger {
     }
 
     public void warn(String msg, Throwable e) {
-        jul.log(Level.INFO, msg, e);
+        jul.log(Level.WARNING, msg, e);
     }
 
     public void error(String msg) {

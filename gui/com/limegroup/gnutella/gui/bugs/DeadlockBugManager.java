@@ -2,19 +2,18 @@ package com.limegroup.gnutella.gui.bugs;
 
 import java.net.URI;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.util.Version;
 import org.limewire.util.VersionFormatException;
 
 import com.frostwire.HttpFetcher;
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.gui.LimeWireModule;
 import com.limegroup.gnutella.settings.BugSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class DeadlockBugManager {
     
-    private static final Log LOG = LogFactory.getLog(DeadlockBugManager.class);
+    private static final Logger LOG = Logger.getLogger(DeadlockBugManager.class);
 
    private DeadlockBugManager() {}
     

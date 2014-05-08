@@ -28,10 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ExecutorsHelper;
 
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.MagnetOptions;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -44,7 +43,7 @@ import com.limegroup.gnutella.util.QueryUtils;
  */
 public class MagnetClipboardListener extends WindowAdapter {
 
-    private static final Log LOG = LogFactory.getLog(MagnetClipboardListener.class);
+    private static final Logger LOG = Logger.getLogger(MagnetClipboardListener.class);
 
     private static final MagnetClipboardListener instance = new MagnetClipboardListener();
 

@@ -30,8 +30,7 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.frostwire.logging.Logger;
 
 /**
  * @author gubatron
@@ -42,7 +41,7 @@ public class ActionIconAndNameEditor extends AbstractCellEditor implements Table
 
     private static final long serialVersionUID = 2661028644256459921L;
 
-    private static final Log LOG = LogFactory.getLog(ActionIconAndNameEditor.class);
+    private static final Logger LOG = Logger.getLogger(ActionIconAndNameEditor.class);
 
     private final Rectangle actionRegion;
 

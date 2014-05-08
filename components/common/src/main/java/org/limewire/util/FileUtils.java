@@ -39,8 +39,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.frostwire.logging.Logger;
 
 /**
  * Provides file manipulation methods; ensures a file exists, makes a file 
@@ -48,7 +47,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class FileUtils {
     
-    private static final Log LOG = LogFactory.getLog(FileUtils.class);
+    private static final Logger LOG = Logger.getLogger(FileUtils.class);
     
     public static void writeObject(String fileName, Object obj) 
     throws IOException{

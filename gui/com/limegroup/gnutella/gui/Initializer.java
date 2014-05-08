@@ -23,8 +23,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicHTML;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.service.ErrorService;
 import org.limewire.util.I18NConvert;
@@ -33,6 +31,7 @@ import org.limewire.util.Stopwatch;
 import org.limewire.util.SystemUtils;
 
 import com.frostwire.AzureusStarter;
+import com.frostwire.logging.Logger;
 import com.frostwire.util.UserAgentGenerator;
 import com.limegroup.gnutella.ExternalControl;
 import com.limegroup.gnutella.LimeCoreGlue;
@@ -48,7 +47,7 @@ import com.limegroup.gnutella.util.MacOSXUtils;
 
 /** Initializes (creates, starts, & displays) the LimeWire Core & UI. */
 public final class Initializer {
-    private final Log LOG;
+    private final Logger LOG;
         
     /** True if is running from a system startup. */
     private volatile boolean isStartup = false;
@@ -60,13 +59,10 @@ public final class Initializer {
     private final Stopwatch stopwatch;
     
     Initializer() {
-        LOG = LogFactory.getLog(Initializer.class);
+        LOG = Logger.getLogger(Initializer.class);
         
-        if(LOG.isTraceEnabled()) {
-            startMemory = Runtime.getRuntime().totalMemory()
-                        - Runtime.getRuntime().freeMemory();
-            LOG.trace("START Initializer, using: " + startMemory + " memory");
-        }
+        startMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        LOG.info("START Initializer, using: " + startMemory + " memory");
         
         stopwatch = new Stopwatch(LOG);
     }
@@ -471,17 +467,12 @@ public final class Initializer {
     
     /** Runs post initialization tasks. */
     private void postinit() {
-        
         // Tell the GUI that loading is all done.
         GUIMediator.instance().loadFinished();
         stopwatch.resetAndLog("load finished");
                 
-        if(LOG.isTraceEnabled()) {
-            long stopMemory = Runtime.getRuntime().totalMemory()
-                            - Runtime.getRuntime().freeMemory();
-            LOG.trace("STOP Initializer, using: " + stopMemory +
-                      " memory, consumed: " + (stopMemory - startMemory));
-        }
+        long stopMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        LOG.info("STOP Initializer, using: " + stopMemory + " memory, consumed: " + (stopMemory - startMemory));
     }
     
     /**

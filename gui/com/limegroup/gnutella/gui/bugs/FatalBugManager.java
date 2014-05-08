@@ -18,10 +18,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.frostwire.HttpFetcher;
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.gui.LimeWireModule;
 import com.limegroup.gnutella.gui.LocalClientInfoFactory;
 import com.limegroup.gnutella.gui.MultiLineLabel;
@@ -34,7 +32,7 @@ import com.limegroup.gnutella.settings.BugSettings;
  */
 public final class FatalBugManager {
     
-    private static final Log LOG = LogFactory.getLog(FatalBugManager.class);
+    private static final Logger LOG = Logger.getLogger(FatalBugManager.class);
     
     private FatalBugManager() {
     }

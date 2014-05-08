@@ -39,8 +39,6 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.FileUtils;
@@ -49,6 +47,7 @@ import org.limewire.util.Version;
 import org.limewire.util.VersionFormatException;
 
 import com.frostwire.HttpFetcher;
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LimeWireModule;
@@ -68,7 +67,7 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  */
 public final class BugManager {
     
-    private static final Log LOG = LogFactory.getLog(BugManager.class);
+    private static final Logger LOG = Logger.getLogger(BugManager.class);
 
     private final LocalClientInfoFactory localClientInfoFactory;
 
@@ -128,7 +127,7 @@ public final class BugManager {
 	/**
 	 * The number of bug dialogs currently showing.
 	 */
-	private volatile int _dialogsShowing = 0;
+	private int _dialogsShowing = 0;
 	
 	/**
 	 * The maximum number of dialogs we're allowed to show.

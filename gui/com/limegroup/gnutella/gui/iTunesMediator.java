@@ -31,14 +31,13 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.bittorrent.TorrentUtil;
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.iTunesImportSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
@@ -48,7 +47,7 @@ import com.limegroup.gnutella.settings.iTunesSettings;
  */
 public final class iTunesMediator {
 
-    private static final Log LOG = LogFactory.getLog(iTunesMediator.class);
+    private static final Logger LOG = Logger.getLogger(iTunesMediator.class);
 
     private static final String JS_IMPORT_SCRIPT_NAME = "itunes_import.js";
 
@@ -140,9 +139,7 @@ public final class iTunesMediator {
         if (OSUtils.isMacOSX()) {
             QUEUE.execute(new ExecOSAScriptCommand(playlist, files));
         } else {
-            if (LOG.isTraceEnabled()) {
-                LOG.trace("Will add '" + files.length + " files" + "' to Playlist");
-            }
+            LOG.info("Will add '" + files.length + " files" + "' to Playlist");
             QUEUE.execute(new ExecWSHScriptCommand(playlist, files));
         }
     }
@@ -249,7 +246,7 @@ public final class iTunesMediator {
             try {
                 Runtime.getRuntime().exec(createOSAScriptCommand(playlist, files));
             } catch (IOException e) {
-                LOG.debug(e);
+                LOG.error(e.getMessage(),e);
             }
         }
     }
@@ -278,7 +275,7 @@ public final class iTunesMediator {
             try {
                 Runtime.getRuntime().exec(createWSHScriptCommand(playlist, files));
             } catch (IOException e) {
-                LOG.debug(e);
+                LOG.error(e.getMessage(),e);
             }
         }
     }

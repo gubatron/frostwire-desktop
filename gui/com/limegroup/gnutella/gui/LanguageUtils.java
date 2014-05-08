@@ -30,11 +30,10 @@ import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /**
@@ -43,7 +42,7 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  */
 public class LanguageUtils {
 
-    private static Log LOG = LogFactory.getLog(LanguageUtils.class);
+    private static Logger LOG = Logger.getLogger(LanguageUtils.class);
 
     private static final String BUNDLE_PREFIX = "org/limewire/i18n/Messages_";
 

@@ -46,8 +46,7 @@ import javax.swing.JWindow;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.frostwire.logging.Logger;
 
 public class AnimatedWindow extends JWindow {
 
@@ -62,7 +61,7 @@ public class AnimatedWindow extends JWindow {
 
     private final static float FADE_PER_INTERVAL = 0.015f;
 
-    private static final Log LOG = LogFactory.getLog(AnimatedWindow.class);
+    private static final Logger LOG = Logger.getLogger(AnimatedWindow.class);
 
     public static final Color TRANSPARENT = new Color(255, 255, 255, 0);
 
