@@ -32,8 +32,6 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.disk.DiskManager;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.disk.DiskManagerPiece;
@@ -47,6 +45,7 @@ import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.AzureusStarter;
+import com.frostwire.logging.Logger;
 import com.frostwire.util.DigestUtils;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpRangeException;
@@ -62,7 +61,7 @@ import com.limegroup.gnutella.settings.UpdateSettings;
  */
 public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
-    private static final Log LOG = LogFactory.getLog(InstallerUpdater.class);
+    private static final Logger LOG = Logger.getLogger(InstallerUpdater.class);
 
     private DownloadManager _manager = null;
     private UpdateMessage _updateMessage;

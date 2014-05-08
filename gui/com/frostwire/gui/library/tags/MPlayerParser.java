@@ -21,10 +21,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.frostwire.gui.mplayer.MPlayer;
+import com.frostwire.logging.Logger;
 
 /**
  * 
@@ -33,7 +31,7 @@ import com.frostwire.gui.mplayer.MPlayer;
  */
 class MPlayerParser extends AbstractTagParser {
 
-    private static final Log LOG = LogFactory.getLog(MPlayerParser.class);
+    private static final Logger LOG = Logger.getLogger(MPlayerParser.class);
 
     public MPlayerParser(File file) {
         super(file);

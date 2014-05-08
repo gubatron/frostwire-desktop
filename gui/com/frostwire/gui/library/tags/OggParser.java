@@ -20,12 +20,12 @@ package com.frostwire.gui.library.tags;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.ogg.OggFileReader;
 import org.jaudiotagger.tag.vorbiscomment.VorbisCommentTag;
+
+import com.frostwire.logging.Logger;
 
 /**
  * 
@@ -34,7 +34,7 @@ import org.jaudiotagger.tag.vorbiscomment.VorbisCommentTag;
  */
 class OggParser extends JaudiotaggerParser {
 
-    private static final Log LOG = LogFactory.getLog(OggParser.class);
+    private static final Logger LOG = Logger.getLogger(OggParser.class);
 
     public OggParser(File file) {
         super(file, new OggFileReader());

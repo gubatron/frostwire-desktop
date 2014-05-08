@@ -6,18 +6,17 @@ import java.lang.management.ThreadMXBean;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.util.VersionUtils;
 
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.gui.bugs.DeadlockBugManager;
 import com.limegroup.gnutella.gui.bugs.DeadlockException;
 
 /** Simple class to help monitor deadlocking. */
 public class DeadlockSupport {
     
-    private static Log LOG = LogFactory.getLog(DeadlockSupport.class);
+    private static Logger LOG = Logger.getLogger(DeadlockSupport.class);
     
     /** 
      * How often to check for deadlocks. 
@@ -34,11 +33,11 @@ public class DeadlockSupport {
                     try {
                         Thread.sleep(DEADLOCK_CHECK_INTERVAL);
                     } catch (InterruptedException ignored) {}
-                    LOG.trace("deadlock check start");
+                    LOG.info("deadlock check start");
                     long [] ids = findDeadlockedThreads(ManagementFactory.getThreadMXBean());
                     
                     if (ids == null) {
-                        LOG.trace("no deadlocks found");
+                        LOG.info("no deadlocks found");
                         continue;
                     }
                     
@@ -99,7 +98,7 @@ public class DeadlockSupport {
                     }
                 }
             } catch(Throwable t) {
-                LOG.trace("Error retrieving locked synchronizers", t);
+                LOG.info("Error retrieving locked synchronizers", t);
             }
         }
     }
@@ -122,7 +121,7 @@ public class DeadlockSupport {
                     }
                 }
             } catch(Throwable t) {
-                LOG.trace("Error retrieving monitor info", t);
+                LOG.info("Error retrieving monitor info", t);
             }
         }
     }
@@ -147,7 +146,7 @@ public class DeadlockSupport {
                     }
                 }
             } catch(Throwable t) {
-                LOG.trace("Error calling getLockInfo", t);
+                LOG.info("Error calling getLockInfo", t);
             }
         }
     }
@@ -177,7 +176,7 @@ public class DeadlockSupport {
                 Object o = m.invoke(ManagementFactory.getThreadMXBean(), new Object[] { ids, true, true } );
                 return (ThreadInfo[])o;
             } catch (Throwable t) {
-                LOG.trace("Error retrieving detailed thread info", t);
+                LOG.info("Error retrieving detailed thread info", t);
             }
         }
         

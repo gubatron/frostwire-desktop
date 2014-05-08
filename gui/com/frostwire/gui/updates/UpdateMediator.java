@@ -23,12 +23,11 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.UpdateSettings;
@@ -41,7 +40,7 @@ import com.limegroup.gnutella.settings.UpdateSettings;
  */
 public final class UpdateMediator {
 
-    private static final Log LOG = LogFactory.getLog(UpdateMediator.class);
+    private static final Logger LOG = Logger.getLogger(UpdateMediator.class);
 
     private UpdateMessage latestMsg;
 

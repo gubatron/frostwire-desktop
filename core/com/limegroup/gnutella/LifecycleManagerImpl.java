@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.lifecycle.ServiceRegistry;
 import org.limewire.listener.EventListener;
@@ -19,11 +17,12 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 
 import com.frostwire.AzureusStarter;
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 public class LifecycleManagerImpl implements LifecycleManager {
     
-    private static final Log LOG = LogFactory.getLog(LifecycleManagerImpl.class);
+    private static final Logger LOG = Logger.getLogger(LifecycleManagerImpl.class);
    
     private final AtomicBoolean preinitializeBegin = new AtomicBoolean(false);
     private final AtomicBoolean preinitializeDone = new AtomicBoolean(false);
@@ -168,10 +167,10 @@ public class LifecycleManagerImpl implements LifecycleManager {
         loadBackgroundTasksBlocking();
         
         // Restore any downloads in progress.
-        LOG.trace("START DownloadManager.postGuiInit");
+        LOG.info("START DownloadManager.postGuiInit");
         //activityCallback.componentLoading(I18nMarker.marktr("Loading Old Downloads..."));
         //downloadManager.loadSavedDownloadsAndScheduleWriting();
-        LOG.trace("STOP DownloadManager.postGuiInit");
+        LOG.info("STOP DownloadManager.postGuiInit");
 
         if(ApplicationSettings.AUTOMATIC_MANUAL_GC.getValue())
             startManualGCThread();
@@ -324,17 +323,17 @@ public class LifecycleManagerImpl implements LifecycleManager {
                     try {
                         Thread.sleep(5 * 60 * 1000);
                     } catch(InterruptedException ignored) {}
-                    LOG.trace("Running GC");
+                    LOG.info("Running GC");
                     System.gc();
-                    LOG.trace("GC finished, running finalizers");
+                    LOG.info("GC finished, running finalizers");
                     System.runFinalization();
-                    LOG.trace("Finalizers finished.");
+                    LOG.info("Finalizers finished.");
                 }
             }
         }, "ManualGC");
         t.setDaemon(true);
         t.start();
-        LOG.trace("Started manual GC thread.");
+        LOG.info("Started manual GC thread.");
     }
 
     public void addListener(EventListener<LifeCycleEvent> listener) {

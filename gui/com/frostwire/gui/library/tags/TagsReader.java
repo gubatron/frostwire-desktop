@@ -20,8 +20,7 @@ package com.frostwire.gui.library.tags;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.frostwire.logging.Logger;
 
 /**
  * 
@@ -30,7 +29,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class TagsReader {
 
-    private static final Log LOG = LogFactory.getLog(TagsReader.class);
+    private static final Logger LOG = Logger.getLogger(TagsReader.class);
 
     private final File file;
 

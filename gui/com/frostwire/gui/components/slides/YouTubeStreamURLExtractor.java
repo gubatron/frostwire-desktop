@@ -33,9 +33,9 @@ import jd.parser.Regex;
 import jd.parser.html.Form;
 import jd.parser.html.Form.MethodType;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.util.FileUtils;
+
+import com.frostwire.logging.Logger;
 
 /**
  * 
@@ -44,7 +44,7 @@ import org.limewire.util.FileUtils;
  *
  */
 class YouTubeStreamURLExtractor {
-    private static Log LOG = LogFactory.getLog(YouTubeStreamURLExtractor.class);
+    private static Logger LOG = Logger.getLogger(YouTubeStreamURLExtractor.class);
 
     static public final Pattern YT_FILENAME_PATTERN = Pattern.compile("<meta name=\"title\" content=\"(.*?)\">", Pattern.CASE_INSENSITIVE);
     private HashMap<DestinationFormat, ArrayList<Info>> possibleconverts;

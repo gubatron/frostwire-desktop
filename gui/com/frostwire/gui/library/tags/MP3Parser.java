@@ -20,14 +20,14 @@ package com.frostwire.gui.library.tags;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.audio.mp3.MP3FileReader;
 import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.jaudiotagger.tag.id3.ID3v24Frames;
 import org.jaudiotagger.tag.images.Artwork;
+
+import com.frostwire.logging.Logger;
 
 /**
  * 
@@ -36,7 +36,7 @@ import org.jaudiotagger.tag.images.Artwork;
  */
 class MP3Parser extends JaudiotaggerParser {
 
-    private static final Log LOG = LogFactory.getLog(MP3Parser.class);
+    private static final Logger LOG = Logger.getLogger(MP3Parser.class);
 
     public MP3Parser(File file) {
         super(file, new MP3FileReader());
