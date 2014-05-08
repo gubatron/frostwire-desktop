@@ -27,12 +27,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.appwork.utils.encoding.Base64;
 import org.limewire.util.SystemUtils;
 
 import com.frostwire.gui.components.slides.Slide;
+import com.frostwire.logging.Logger;
 import com.frostwire.util.DigestUtils;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
@@ -42,7 +41,7 @@ public class SlideDownload extends HttpDownload {
 	
 	private static final String STATE_ERROR_INVALID_SIGNATURE = I18n.tr("Error: Corrupted download");
 
-	private static final Log LOG = LogFactory.getLog(SlideDownload.class);
+	private static final Logger LOG = Logger.getLogger(SlideDownload.class);
     private final Slide slide;
     
     public SlideDownload(Slide slide) {

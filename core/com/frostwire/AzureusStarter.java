@@ -21,8 +21,6 @@ package com.frostwire;
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.plugins.PluginManager;
 import org.gudy.azureus2.plugins.PluginManagerDefaults;
@@ -33,6 +31,7 @@ import com.aelitis.azureus.core.AzureusCoreComponent;
 import com.aelitis.azureus.core.AzureusCoreException;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreLifecycleListener;
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
@@ -44,7 +43,8 @@ import com.limegroup.gnutella.settings.SharingSettings;
  */
 public final class AzureusStarter {
 
-    private static final Log LOG = LogFactory.getLog(AzureusStarter.class);
+    private static final Logger LOG = Logger.getLogger(AzureusStarter.class);
+
 
     private static AzureusCore AZUREUS_CORE;
 

@@ -27,10 +27,9 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ThreadExecutor;
 
+import com.frostwire.logging.Logger;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -42,7 +41,7 @@ import com.limegroup.gnutella.settings.SharingSettings;
  */
 public class ImageCache {
 
-    private static final Log LOG = LogFactory.getLog(ImageCache.class);
+    private static final Logger LOG = Logger.getLogger(ImageCache.class);
 
     private static ImageCache instance;
 

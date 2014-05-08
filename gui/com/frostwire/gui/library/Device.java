@@ -31,8 +31,6 @@ import java.util.concurrent.ExecutorService;
 
 import javax.swing.JOptionPane;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.util.NetworkUtils;
@@ -42,6 +40,7 @@ import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.library.ProgressFileEntity.ProgressFileEntityListener;
 import com.frostwire.localpeer.Finger;
 import com.frostwire.localpeer.LocalPeer;
+import com.frostwire.logging.Logger;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.UserAgentGenerator;
@@ -56,7 +55,7 @@ import com.limegroup.gnutella.util.EncodingUtils;
  */
 public class Device {
 
-    private static final Log LOG = LogFactory.getLog(Device.class);
+    private static final Logger LOG = Logger.getLogger(Device.class);
 
     private static final ExecutorService executor;
 

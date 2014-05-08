@@ -29,11 +29,10 @@ import java.util.regex.Pattern;
 
 import javax.swing.JPanel;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.JsonEngine;
+import com.frostwire.logging.Logger;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -49,7 +48,7 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  */
 public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
 
-    private static final Log LOG = LogFactory.getLog(MultimediaSlideshowPanel.class);
+    private static final Logger LOG = Logger.getLogger(MultimediaSlideshowPanel.class);
 
     private SlideshowListener listener;
     private CardLayout layout;

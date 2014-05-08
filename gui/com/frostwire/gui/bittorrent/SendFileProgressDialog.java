@@ -47,6 +47,7 @@ import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
 import org.gudy.azureus2.core3.torrent.TOTorrentProgressListener;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -59,7 +60,7 @@ import com.limegroup.gnutella.settings.SharingSettings;
  */
 public class SendFileProgressDialog extends JDialog {
     
-    private static final Log LOG = LogFactory.getLog(SendFileProgressDialog.class);
+    private static final Logger LOG = Logger.getLogger(SendFileProgressDialog.class);
 
 	private JProgressBar _progressBar;
 	private JButton _cancelButton;

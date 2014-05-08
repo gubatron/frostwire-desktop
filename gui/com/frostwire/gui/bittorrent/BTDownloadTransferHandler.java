@@ -27,9 +27,7 @@ import java.util.Set;
 
 import javax.swing.JComponent;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.DropInfo;
 import com.limegroup.gnutella.gui.dnd.FileTransferable;
@@ -48,7 +46,7 @@ final class BTDownloadTransferHandler extends LimeTransferHandler {
 
     private static final long serialVersionUID = 7090230440259575371L;
 
-    private static final Log LOG = LogFactory.getLog(BTDownloadTransferHandler.class);
+    private static final Logger LOG = Logger.getLogger(BTDownloadTransferHandler.class);
 
     public BTDownloadTransferHandler() {
         super(COPY);
