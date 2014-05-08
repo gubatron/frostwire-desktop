@@ -14,7 +14,6 @@
     <target name="initialize" depends="lw-common.initialize" unless="initialized.setting">
         <do.setup-properties component="setting">
 			<src-classpath>
-				<pathelement location="${limewire.lib.jars}/commons-logging.jar"/>
 			    <path refid="build.limewire.components.common.buildpath"/>
 			</src-classpath>
         </do.setup-properties>
