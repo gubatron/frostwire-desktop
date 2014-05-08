@@ -38,7 +38,6 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import javax.swing.AbstractAction;
@@ -61,8 +60,6 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.table.TableModel;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
@@ -70,6 +67,7 @@ import org.limewire.util.OSUtils;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.SpeedConstants;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
@@ -79,7 +77,7 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
  */
 public final class GUIUtils {
     
-    private static final Log LOG = LogFactory.getLog(GUIUtils.class);
+    private static final Logger LOG = Logger.getLogger(GUIUtils.class);
     
 	/**
      * Make sure the constructor is never called.
@@ -92,12 +90,6 @@ public final class GUIUtils {
      */
     private static NumberFormat NUMBER_FORMAT0; // localized "#,##0"
     private static NumberFormat NUMBER_FORMAT1; // localized "#,##0.0"
-    
-    /**
-     * Localizable Date Format constant for the current default locale
-     * set at init time.
-     */
-    private static DateFormat DATETIME_FORMAT;
     
     /** A full datetime format. */
     private static DateFormat FULL_DATETIME_FORMAT;
@@ -144,9 +136,6 @@ public final class GUIUtils {
         NUMBER_FORMAT1.setMinimumFractionDigits(1);
         NUMBER_FORMAT1.setGroupingUsed(true);
 
-        DATETIME_FORMAT = DateFormat.getDateTimeInstance(DateFormat.DEFAULT, 
-                DateFormat.DEFAULT, GUIMediator.getLocale());
-        
         FULL_DATETIME_FORMAT = 
             new SimpleDateFormat("EEE, MMM. d, yyyy h:mm a", GUIMediator.getLocale());
         
@@ -286,15 +275,6 @@ public final class GUIUtils {
      */
     public static String rate2speed(double rate) {
         return NUMBER_FORMAT0.format(rate) + " " + GENERAL_UNIT_KBPSEC;
-    }
-    
-    /**
-     * Converts number of milliseconds since way back when to
-     * a local-formatted date String
-     */
-    public static String msec2DateTime(long milliseconds) {
-        Date d = new Date(milliseconds);
-        return DATETIME_FORMAT.format(d);
     }
     
     /** Gets the full datetime formatter. */
