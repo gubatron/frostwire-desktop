@@ -3557,10 +3557,6 @@ msgstr "הגדר את נתוני השיתוף"
 msgid "&File"
 msgstr "קובץ (&F)"
 
-#: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "&Help"
-msgstr "משתף"
-
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46
 msgid "&FAQ"
 msgstr "שאלות ותשובות שכיחות (&F)"
@@ -5955,8 +5951,8 @@ msgstr ""
 #~ msgid "Display a view of the incoming and outgoing DHT messages"
 #~ msgstr "הצג מסך של הודעות DHT מתקבלות ונשלחות"
 
-#~ msgid "&Help"
-#~ msgstr "עזרה (&H)"
+msgid "&Help"
+msgstr "עזרה (&H)"
 
 #~ msgid "&Using FrostWire"
 #~ msgstr "שימוש בתוכנה (&U)"
