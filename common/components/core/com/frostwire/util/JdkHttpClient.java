@@ -41,7 +41,6 @@ import javax.net.ssl.SSLSession;
 
 import org.apache.http.util.ByteArrayBuffer;
 
-import com.frostwire.gui.library.ProgressFileEntity;
 import com.frostwire.logging.Logger;
 
 /**

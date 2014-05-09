@@ -37,13 +37,14 @@ import org.limewire.util.NetworkUtils;
 
 import com.frostwire.JsonEngine;
 import com.frostwire.core.FileDescriptor;
-import com.frostwire.gui.library.ProgressFileEntity.ProgressFileEntityListener;
 import com.frostwire.localpeer.Finger;
 import com.frostwire.localpeer.LocalPeer;
 import com.frostwire.logging.Logger;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.ProgressFileEntity;
 import com.frostwire.util.UserAgentGenerator;
+import com.frostwire.util.ProgressFileEntity.ProgressFileEntityListener;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.util.EncodingUtils;

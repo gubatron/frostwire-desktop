@@ -1,4 +1,4 @@
-package com.frostwire.gui.library;
+package com.frostwire.util;
 
 import java.io.File;
 import java.io.FileInputStream;
