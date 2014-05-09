@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-07 18:33-0400\n"
+"POT-Creation-Date: 2014-05-08 23:07-0400\n"
 "PO-Revision-Date: 2008-08-05 18:20+0000\n"
 "Last-Translator: FTA <Unknown>\n"
 "Language-Team: none\n"
@@ -75,7 +75,7 @@ msgstr "Video-Beeld"
 #. exit button
 #. exit
 #: gui/com/frostwire/gui/HideExitDialog.java:103
-#: gui/com/limegroup/gnutella/gui/notify/TrayNotifier.java:113
+#: gui/com/limegroup/gnutella/gui/notify/TrayNotifier.java:112
 msgid "Exit"
 msgstr ""
 
@@ -241,7 +241,7 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:342
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:343
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:344
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:506
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:479
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:356
 msgid "Copy Magnet"
 msgstr ""
@@ -420,15 +420,15 @@ msgstr ""
 msgid "Show Download in Library"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:179
+#: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:178
 msgid "Transfers"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:261
+#: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:260
 msgid "Loading Download Window..."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:615
+#: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:614
 msgid "Cancel Download"
 msgstr "Download"
 
@@ -436,10 +436,10 @@ msgstr "Download"
 #. * Constant for when the user selects the cancel button
 #. * in a message giving the user a cancel option.
 #.
-#: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:616
+#: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:615
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:580
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:152
-#: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:128
+#: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:127
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:89
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:529
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:531
@@ -452,13 +452,13 @@ msgstr "Download"
 msgid "Cancel"
 msgstr "Staak"
 
-#: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:617
+#: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:616
 msgid "Cancel Selected Downloads"
 msgstr ""
 
 #. could not read torrent file or bad torrent file.
-#: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:752
-#: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:820
+#: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:751
+#: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:819
 #, java-format
 msgid ""
 "FrostWire was unable to load the torrent file \"{0}\", - it may be malformed "
@@ -740,7 +740,7 @@ msgid "Close"
 msgstr "Maak &toe"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:371
-#: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:181
+#: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:180
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:100
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:122
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:144
@@ -846,8 +846,8 @@ msgstr "Download"
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:630
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:947
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:730
-#: gui/com/frostwire/gui/library/LibraryUtils.java:757
-#: gui/com/limegroup/gnutella/gui/Initializer.java:507
+#: gui/com/frostwire/gui/library/LibraryUtils.java:756
+#: gui/com/limegroup/gnutella/gui/Initializer.java:498
 #: gui/com/limegroup/gnutella/gui/MessageService.java:103
 #: gui/com/limegroup/gnutella/gui/MessageService.java:123
 #: gui/com/limegroup/gnutella/gui/MessageService.java:243
@@ -1003,19 +1003,19 @@ msgstr ""
 msgid "Name your price, Send a Tip or Donation via Paypal"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:91
+#: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:90
 msgid "Preparing selection"
 msgstr "Download al die Geselekteerde Files"
 
-#: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:92
+#: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:91
 msgid "please wait..."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:180
+#: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:179
 msgid "Select the content you want to send"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:184
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:147
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:263
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:264
 #: gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:265
@@ -1026,90 +1026,90 @@ msgstr ""
 msgid "Download"
 msgstr "Download"
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:184
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:147
 msgid "at"
 msgstr "Chat"
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:185
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:148
 msgid "via FrostWire"
 msgstr "&Gebruik FrostWire"
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:209
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:172
 msgid "Use the following text to share the \"%s\" folder"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:211
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:174
 msgid "Use the following text to share the \"%s\" file"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:263
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:226
 msgid ""
 "<strong>Keep FrostWire Open</strong> until the file has been downloaded by "
 "at least one other friend."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:264
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:227
 msgid ""
 "<strong>The more, the merrier.</strong> The more people sharing the faster "
 "it can be downloaded by others."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:265
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:228
 msgid ""
 "<strong>Your files can be discovered by others.</strong> Once you share this "
 "link and you seed the files they will be available to everybody on the "
 "BitTorrent network."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:267
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:230
 msgid "Tips"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:335
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:308
 msgid "All done! Now share the link"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:446
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:419
 msgid "Twitter it"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:447
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:420
 msgid "Send the message above to Twitter"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:464
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:437
 msgid "Copy Text"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:465
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:438
 msgid "Copy entire message to Clipboard"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:472
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:445
 msgid "Message copied to clipboard."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:484
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:457
 msgid "Copy Link"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:485
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:458
 msgid "Copy Link to Clipboard"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:492
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:465
 msgid "Link copied to clipboard."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:507
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:480
 msgid "Copy Magnet URL to Clipboard"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:514
+#: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:487
 msgid "Magnet copied to clipboard."
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/SlideDownload.java:43
+#: gui/com/frostwire/gui/bittorrent/SlideDownload.java:42
 msgid "Error: Corrupted download"
 msgstr ""
 
@@ -1192,8 +1192,8 @@ msgid ""
 "you may have not explicitly chosen for download.</html>"
 msgstr ""
 
-#: gui/com/frostwire/gui/bittorrent/TorrentUtil.java:447
-#: gui/com/frostwire/gui/bittorrent/TorrentUtil.java:548
+#: gui/com/frostwire/gui/bittorrent/TorrentUtil.java:446
+#: gui/com/frostwire/gui/bittorrent/TorrentUtil.java:547
 msgid "globalmanager.download.remove.veto"
 msgstr ""
 
@@ -1247,7 +1247,7 @@ msgid "You can configure the folders you share in FrostWire's Options."
 msgstr ""
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:263
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:362
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:360
 msgid "Send"
 msgstr "Spoed"
 
@@ -1266,12 +1266,12 @@ msgstr "Help vir die gebruik van FrostWire"
 msgid "Add"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/Device.java:296
+#: gui/com/frostwire/gui/library/Device.java:295
 msgid ""
 "The device is busy with another transfer or did not authorize your request"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/Device.java:296
+#: gui/com/frostwire/gui/library/Device.java:295
 msgid "Transfer failed"
 msgstr "Resultaat &Filter"
 
@@ -1283,8 +1283,8 @@ msgstr ""
 msgid "Waiting for device authorization..."
 msgstr ""
 
-#: gui/com/frostwire/gui/library/DeviceUploadTask.java:71
-#: gui/com/frostwire/gui/library/DeviceUploadTask.java:83
+#: gui/com/frostwire/gui/library/DeviceUploadTask.java:72
+#: gui/com/frostwire/gui/library/DeviceUploadTask.java:84
 #: gui/com/frostwire/gui/transfers/PeerHttpUpload.java:153
 msgid "Uploading"
 msgstr "Download"
@@ -1793,27 +1793,27 @@ msgstr "Wys Soek Resultaat Filters"
 msgid "Search in Library"
 msgstr "Maak toe soektog"
 
-#: gui/com/frostwire/gui/library/LibraryUtils.java:92
+#: gui/com/frostwire/gui/library/LibraryUtils.java:91
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
 #: gui/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:38
 msgid "Importing"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryUtils.java:175
-#: gui/com/frostwire/gui/library/LibraryUtils.java:207
-#: gui/com/frostwire/gui/library/LibraryUtils.java:256
+#: gui/com/frostwire/gui/library/LibraryUtils.java:174
+#: gui/com/frostwire/gui/library/LibraryUtils.java:206
+#: gui/com/frostwire/gui/library/LibraryUtils.java:255
 msgid "Playlist name"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryUtils.java:683
+#: gui/com/frostwire/gui/library/LibraryUtils.java:682
 msgid "Refreshing"
 msgstr "Verfris"
 
-#: gui/com/frostwire/gui/library/LibraryUtils.java:739
+#: gui/com/frostwire/gui/library/LibraryUtils.java:738
 msgid "Importing from"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/LibraryUtils.java:757
+#: gui/com/frostwire/gui/library/LibraryUtils.java:756
 msgid "Error importing Radio Station from"
 msgstr ""
 
@@ -2209,12 +2209,12 @@ msgstr "Kommentaar"
 msgid "Cancelled"
 msgstr "Staak"
 
-#: gui/com/frostwire/gui/updates/InstallerUpdater.java:181
-#: gui/com/frostwire/gui/updates/UpdateMediator.java:177
+#: gui/com/frostwire/gui/updates/InstallerUpdater.java:178
+#: gui/com/frostwire/gui/updates/UpdateMediator.java:176
 msgid "Update"
 msgstr ""
 
-#: gui/com/frostwire/gui/updates/PortableUpdater.java:78
+#: gui/com/frostwire/gui/updates/PortableUpdater.java:77
 msgid "Uncompressing files"
 msgstr ""
 
@@ -2232,7 +2232,7 @@ msgstr "&Omtrent FrostWire"
 
 #. set up limewire version label
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:75
-#: gui/com/limegroup/gnutella/gui/notify/TrayNotifier.java:57
+#: gui/com/limegroup/gnutella/gui/notify/TrayNotifier.java:56
 msgid "FrostWire"
 msgstr ""
 
@@ -2521,53 +2521,53 @@ msgstr ""
 msgid "FrostWire could not launch the specified file."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/GUIUtils.java:154
+#: gui/com/limegroup/gnutella/gui/GUIUtils.java:143
 msgid "KB"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/GUIUtils.java:156
+#: gui/com/limegroup/gnutella/gui/GUIUtils.java:145
 msgid "MB"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/GUIUtils.java:158
+#: gui/com/limegroup/gnutella/gui/GUIUtils.java:147
 msgid "GB"
 msgstr "R"
 
-#: gui/com/limegroup/gnutella/gui/GUIUtils.java:160
+#: gui/com/limegroup/gnutella/gui/GUIUtils.java:149
 msgid "TB"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/GUIUtils.java:162
+#: gui/com/limegroup/gnutella/gui/GUIUtils.java:151
 msgid "KB/s"
 msgstr ""
 
 #. Load up the HTML engine.
-#: gui/com/limegroup/gnutella/gui/Initializer.java:315
+#: gui/com/limegroup/gnutella/gui/Initializer.java:311
 msgid "Loading HTML Engine..."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/Initializer.java:363
+#: gui/com/limegroup/gnutella/gui/Initializer.java:359
 msgid "Loading User Interface..."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/Initializer.java:374
+#: gui/com/limegroup/gnutella/gui/Initializer.java:370
 msgid "Loading Core Components..."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/Initializer.java:429
+#: gui/com/limegroup/gnutella/gui/Initializer.java:425
 msgid "Loading Icons..."
 msgstr ""
 
 #. Touch the I18N stuff to ensure it loads properly.
-#: gui/com/limegroup/gnutella/gui/Initializer.java:436
+#: gui/com/limegroup/gnutella/gui/Initializer.java:432
 msgid "Loading Internationalization Support..."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/Initializer.java:451
+#: gui/com/limegroup/gnutella/gui/Initializer.java:447
 msgid "Loading Old Downloads..."
 msgstr "Laai vooraf afgelaaide dokumente..."
 
-#: gui/com/limegroup/gnutella/gui/Initializer.java:497
+#: gui/com/limegroup/gnutella/gui/Initializer.java:488
 msgid ""
 "FrostWire could not create a temporary preferences folder.\n"
 "\n"
@@ -2586,7 +2586,7 @@ msgstr ""
 #: gui/com/limegroup/gnutella/gui/InputFieldDialog.java:88
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:209
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:218
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:539
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:537
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:38
 msgid "OK"
 msgstr ""
@@ -3265,11 +3265,11 @@ msgstr ""
 msgid "Search for: {0}"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:84
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:82
 msgid "Internal Error"
 msgstr "&Fout"
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:322
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:320
 msgid ""
 "FrostWire has encountered an internal error. It is possible for FrostWire to "
 "recover and continue running normally. To aid with debugging, please click "
@@ -3277,7 +3277,7 @@ msgid ""
 "'Review' to look at the information that will be sent. Thank you."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:324
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:322
 msgid ""
 "FrostWire has encountered an internal error. It is possible for FrostWire to "
 "recover and continue running normally. To continue using FrostWire, click "
@@ -3285,47 +3285,47 @@ msgid ""
 "about the error."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:342
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:340
 msgid ""
 "Please add any comments you may have (e.g what caused the error).\n"
 "Thank you and please use English."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:371
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:369
 msgid "Review"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:385
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:383
 msgid "Discard"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:402
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:400
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:96
 msgid "Always Send Immediately"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:403
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:401
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:97
 msgid "Always Ask For Review"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:404
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:402
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:98
 msgid "Always Discard All Errors"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:502
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:500
 msgid ""
 "FrostWire was unable to connect to the bug server in order to send the below "
 "bug report. For further help and to aid with debugging, please visit www."
 "frostwire.com and click 'Support'. Thank you."
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:531
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:529
 msgid "Copy Report"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:641
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:639
 msgid ""
 "FrostWire was unable to write a necessary file because your hard drive is "
 "full. To continue using FrostWire you must free up space on your hard drive."
@@ -3333,7 +3333,7 @@ msgstr ""
 "FrostWire kon nie die leër vaslê nie, u hardeskyf is vol. Om met die gebruik "
 "van FrostWire voort te gaan moet u spasie op u hardeskyf maak."
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:643
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:641
 msgid ""
 "FrostWire was unable to open a necessary file because another program has "
 "locked the file. FrostWire may act unexpectedly until this file is released."
@@ -3341,7 +3341,7 @@ msgstr ""
 "FrostWire kon nie 'n noodsaaklike leër oopmaak nie want 'n ander program het "
 "die leër gesluit. FrostWire kan abnormaal optree totdat die leër ontsluit is."
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:645
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:643
 msgid ""
 "FrostWire was unable to write a necessary file because you do not have the "
 "necessary permissions. Your preferences may not be maintained the next time "
@@ -3351,7 +3351,7 @@ msgstr ""
 "magtiging nie. U voorkeure mag dalk nie behou tot die volgende keer wat u "
 "FrostWire gebruik nie, of FrostWire kan onverwags optree."
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:647
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:645
 msgid ""
 "FrostWire cannot open a necessary file because the filename contains "
 "characters which are not supported by your operating system. FrostWire may "
@@ -3361,7 +3361,7 @@ msgstr ""
 "karakters wat nie deur u bedryfstelsel ondersteun word nie. FrostWire mag "
 "dalk onverwags optree."
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:651
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:649
 msgid ""
 "FrostWire cannot download the selected file because your hard drive is full. "
 "To download more files, you must free up space on your hard drive."
@@ -3369,7 +3369,7 @@ msgstr ""
 "FrostWire kan nie die verkose leër aflaai nie want u hardeskyf is vol. Om "
 "verdere leërs af te laai moet u spasie op u hardeskyf maak."
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:653
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:651
 msgid ""
 "FrostWire was unable to download the selected file because another program "
 "is using the file. Please close the other program and retry the download."
@@ -3378,7 +3378,7 @@ msgstr ""
 "program gebruik tans die leër. Maak asseblief die ander program toe en "
 "probeer weer om die leër af te laai."
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:655
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:653
 msgid ""
 "FrostWire was unable to create or continue writing an incomplete file for "
 "the selected download because you do not have permission to write files to "
@@ -3389,7 +3389,7 @@ msgstr ""
 "aflaai-sessie te skryf nie, omdat U nie regte het om in die onkomplete leêr "
 "te werk nie. Om verder te werk selekteer asseblief `n ander leêr."
 
-#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:657
+#: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:655
 msgid ""
 "FrostWire was unable to open the incomplete file for the selected download "
 "because the filename contains characters which are not supported by your "
@@ -3804,12 +3804,12 @@ msgid "Select your Language Prefereces"
 msgstr ""
 
 #. restore
-#: gui/com/limegroup/gnutella/gui/notify/TrayNotifier.java:91
+#: gui/com/limegroup/gnutella/gui/notify/TrayNotifier.java:90
 msgid "Restore"
 msgstr "&Hulpbronne"
 
 #. about box
-#: gui/com/limegroup/gnutella/gui/notify/TrayNotifier.java:102
+#: gui/com/limegroup/gnutella/gui/notify/TrayNotifier.java:101
 msgid "About"
 msgstr ""
 
