@@ -156,8 +156,8 @@
 	    <attribute name="component"/>
 	    <element name="more-src-paths" optional="true"/>
 	    <attribute name="excludes" default=""/>
-        <attribute name="encoding" default="UTF-8"/>
-		<attribute name="compilerargline" default=""/>
+            <attribute name="encoding" default="UTF-8"/>
+            <attribute name="compilerargline" default=""/>
 	    <sequential>
 	        <do.build-init component="@{component}"/>
 			<mkdir dir="${build.limewire.components.@{component}.classes}"/>

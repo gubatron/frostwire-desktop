@@ -27,8 +27,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,10 +46,11 @@ import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.TOTorrentFile;
 import org.gudy.azureus2.core3.util.UrlUtils;
+import org.limewire.concurrent.ThreadExecutor;
 
-import com.frostwire.HttpFetcher;
-import com.frostwire.HttpFetcher.HttpRequestInfo;
-import com.frostwire.HttpFetcherListener;
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClient.HttpClientListenerAdapter;
+import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
@@ -72,41 +71,32 @@ public class ShareTorrentDialog extends JDialog {
 		public String longUrl;
 	}
 	
-	private abstract class AbstractHttpFetcherListener implements
-			HttpFetcherListener {
+	private final class URLShortnerHttpClientListener extends
+			HttpClientListenerAdapter {
 
-		private URI _shortenerUri;
+		private final String _shortenerUri;
 
-		public AbstractHttpFetcherListener(String uri) {
-			try {
-				_shortenerUri = new URI(uri);
-			} catch (URISyntaxException e) {
-			}
+		public URLShortnerHttpClientListener(String uri) {
+		    _shortenerUri = uri;
 		}
 
 		@Override
-		public void onError(Throwable e) {
+		public void onError(HttpClient client, Throwable e) {
 			if (_shortnerListeners.size() > 1) {
 				_shortnerListeners.remove(0);
 				performAsyncURLShortening(_shortnerListeners.get(0));
 				
-				System.out.println(">>> AbstractHttpFetcherListener ERROR >>>");
+				System.out.println(">>> URLShortnerHttpClientListener ERROR >>>");
 				e.printStackTrace();
 				System.out.println();
-				System.out.println("URL: [" + _shortenerUri.toString() + "]");
-				System.out.println(">>> AbstractHttpFetcherListener ERROR >>>");
+				System.out.println("Try shortening with URL: [" + _shortenerUri.toString() + "]");
+				System.out.println(">>> URLShortnerHttpClientListener ERROR >>>");
 			}
-
 		}
 
-		abstract public void onSuccess(byte[] body);
-
-		public URI getShortenerURL() {
+		public String getShortenerURL() {
 			return _shortenerUri;
 		}
-
-		abstract HttpRequestInfo getRequestInfo();
-			
 	}
 
 	private TOTorrent _torrent;
@@ -118,15 +108,15 @@ public class ShareTorrentDialog extends JDialog {
 	
 	private JLabel _feedbackLabel;
 
-	private AbstractHttpFetcherListener _bitlyShortnerListener;
-	private AbstractHttpFetcherListener _tinyurlShortnerListener;
+	private URLShortnerHttpClientListener _bitlyShortnerListener;
+	private URLShortnerHttpClientListener _tinyurlShortnerListener;
 
 	/**
 	 * Add more URL Shortner listeners to this list on
 	 * initURLShortnerListeners() to have more URL Shortening services to fall
 	 * back on. They will be executed in the order they were added.
 	 */
-	private List<AbstractHttpFetcherListener> _shortnerListeners;
+	private List<URLShortnerHttpClientListener> _shortnerListeners;
 
 	private String _link;
 	private String _info_hash;
@@ -139,42 +129,15 @@ public class ShareTorrentDialog extends JDialog {
 	}
 
 	private void initURLShortnerListeners() {
-		_bitlyShortnerListener = new AbstractHttpFetcherListener(
+		_bitlyShortnerListener = new URLShortnerHttpClientListener(
 				"http://api.bit.ly/v3/shorten?format=txt&login=frostwire&apiKey=R_749968a37da3260493d8aa19ee021d14&longUrl="
-						+ UrlUtils.encode(getLink())) {
-			
-			@Override
-			public void onSuccess(byte[] body) {
-				_link = new String(body);
-				updateTextArea();
-			}
-
-			@Override
-			HttpRequestInfo getRequestInfo() {
-				return new HttpRequestInfo(true,null,null);
-			}
-		};
+						+ UrlUtils.encode(getLink()));
 		
-		_tinyurlShortnerListener = new AbstractHttpFetcherListener(
-				"http://tinyurl.com/api-create.php?url=" + getLink()) {
+		_tinyurlShortnerListener = new URLShortnerHttpClientListener(
+				"http://tinyurl.com/api-create.php?url=" + getLink());
 
-			@Override
-			public void onSuccess(byte[] body) {
-				_link = new String(body);
-				updateTextArea();
-			}
-
-			@Override
-			HttpRequestInfo getRequestInfo() {
-				return new HttpRequestInfo(true,null,null);
-			}
-
-		};
-
-		_shortnerListeners = new LinkedList<ShareTorrentDialog.AbstractHttpFetcherListener>(Arrays.asList(
+		_shortnerListeners = new LinkedList<ShareTorrentDialog.URLShortnerHttpClientListener>(Arrays.asList(
 				_bitlyShortnerListener,_tinyurlShortnerListener));
-
-
 	}
 
 	private void updateTextArea() {
@@ -315,12 +278,22 @@ public class ShareTorrentDialog extends JDialog {
 		return _link;
 	}
 
-    private void performAsyncURLShortening(AbstractHttpFetcherListener listener) {
-		HttpFetcher asyncFetcher = new HttpFetcher(listener.getShortenerURL(), 2000);
-
-		asyncFetcher.asyncRequest(listener.getRequestInfo(),listener);
-	}
-
+    private void performAsyncURLShortening(final URLShortnerHttpClientListener listener) {
+        final HttpClient browser = HttpClientFactory.newInstance();
+        browser.setListener(listener);
+        ThreadExecutor.startThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    _link = browser.get(listener.getShortenerURL(), 2000);
+                    updateTextArea(); //happens safely on UI thread.
+                } catch (Throwable t) {
+                }
+            }
+            
+        }, "ShareTorrentDialog-performAsyncURLShortening");
+    }
+    
 	private void initActions() {
 		_actions = new Action[4];
 

@@ -29,12 +29,11 @@ import javax.swing.JTree;
 import javax.swing.TransferHandler;
 import javax.swing.tree.TreePath;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.logging.Logger;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
@@ -52,7 +51,7 @@ final class LibraryFilesTransferHandler extends TransferHandler {
 
     private static final long serialVersionUID = -3874985752229848555L;
 
-    private static final Log LOG = LogFactory.getLog(LibraryFilesTransferHandler.class);
+    private static final Logger LOG = Logger.getLogger(LibraryFilesTransferHandler.class);
 
     private final JTree tree;
 

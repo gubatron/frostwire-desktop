@@ -34,8 +34,6 @@ import java.util.concurrent.ExecutorService;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.FileUtils;
 import org.limewire.util.FilenameUtils;
@@ -53,6 +51,7 @@ import com.frostwire.gui.library.tags.TagsData;
 import com.frostwire.gui.library.tags.TagsReader;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.logging.Logger;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -75,7 +74,7 @@ public class LibraryUtils {
         FILE_SHARED_ICON = GUIMediator.getThemeImage("file_shared");
     }
 
-    private static final Log LOG = LogFactory.getLog(LibraryUtils.class);
+    private static final Logger LOG = Logger.getLogger(LibraryUtils.class);
 
     private static final ExecutorService executor;
 

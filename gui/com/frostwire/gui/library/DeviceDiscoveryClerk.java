@@ -26,14 +26,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.swing.SwingUtilities;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.frostwire.HttpFetcher;
 import com.frostwire.JsonEngine;
 import com.frostwire.core.ConfigurationManager;
 import com.frostwire.core.Constants;
@@ -45,6 +40,8 @@ import com.frostwire.localpeer.LocalPeer;
 import com.frostwire.localpeer.LocalPeerManager;
 import com.frostwire.localpeer.LocalPeerManagerImpl;
 import com.frostwire.localpeer.LocalPeerManagerListener;
+import com.frostwire.logging.Logger;
+import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
@@ -55,7 +52,7 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  */
 public class DeviceDiscoveryClerk {
 
-    private static final Log LOG = LogFactory.getLog(DeviceDiscoveryClerk.class);
+    private static final Logger LOG = Logger.getLogger(DeviceDiscoveryClerk.class);
 
     private final HttpServerManager httpServerManager;
     private final LocalPeerManager peerManager;
@@ -155,9 +152,7 @@ public class DeviceDiscoveryClerk {
         try {
             URI uri = new URI("http://" + address.getHostAddress() + ":" + listeningPort + "/finger");
 
-            HttpFetcher fetcher = new HttpFetcher(uri);
-
-            byte[] jsonBytes = fetcher.fetch();
+            byte[] jsonBytes = HttpClientFactory.newInstance().getBytes(uri.toString());
 
             if (jsonBytes == null) {
                 LOG.error("Failed to connnect to " + uri);
@@ -176,7 +171,7 @@ public class DeviceDiscoveryClerk {
                 } else {
                     Device device = new Device(key, address, listeningPort, finger, pinfo);
                     device.setOnActionFailedListener(new OnActionFailedListener() {
-                        public void onActionFailed(Device device, int action, Exception e) {
+                        public void onActionFailed(Device device, int action, Throwable e) {
                             handleDeviceStale(key, address, device);
                         }
                     });

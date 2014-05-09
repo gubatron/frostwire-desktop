@@ -390,7 +390,7 @@ public class YouTubeDownload implements BTDownload {
 
     private final class HttpDownloadListenerImpl implements HttpClientListener {
         @Override
-        public void onError(HttpClient client, Exception e) {
+        public void onError(HttpClient client, Throwable e) {
             state = STATE_ERROR;
             cleanup();
         }

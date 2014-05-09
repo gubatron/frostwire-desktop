@@ -12,7 +12,6 @@
     <target name="initialize" depends="lw-common.initialize" unless="initialized.alexandria">
         <do.setup-properties component="alexandria">
 			<src-classpath>
-				<pathelement location="${limewire.lib.jars}/commons-logging.jar"/>
 			    <path refid="build.limewire.components.common.buildpath"/>
 			</src-classpath>
         </do.setup-properties>

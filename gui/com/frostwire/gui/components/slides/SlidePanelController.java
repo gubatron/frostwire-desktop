@@ -20,12 +20,11 @@ package com.frostwire.gui.components.slides;
 
 import java.io.File;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.StreamMediaSource;
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.gui.GUIMediator;
 
 /**
@@ -36,7 +35,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
  */
 class SlidePanelController {
 
-    private static Log LOG = LogFactory.getLog(SlidePanelController.class);
+    private static Logger LOG = Logger.getLogger(SlidePanelController.class);
 
     private Slide slide;
 

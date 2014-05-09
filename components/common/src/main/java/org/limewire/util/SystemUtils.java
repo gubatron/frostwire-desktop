@@ -19,8 +19,7 @@ import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.frostwire.logging.Logger;
 
 
 /**
@@ -32,7 +31,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class SystemUtils {
     
-    private static final Log LOG = LogFactory.getLog(SystemUtils.class);
+    private static final Logger LOG = Logger.getLogger(SystemUtils.class);
     
     /**
      * Whether or not the native libraries could be loaded.

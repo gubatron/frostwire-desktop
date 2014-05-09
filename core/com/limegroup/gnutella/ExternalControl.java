@@ -26,7 +26,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -35,19 +34,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.Debug;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.HttpFetcher;
+import com.frostwire.logging.Logger;
+import com.frostwire.util.HttpClientFactory;
 
 public class ExternalControl {
 
-    private static final Log LOG = LogFactory.getLog(ExternalControl.class);
+    private static final Logger LOG = Logger.getLogger(ExternalControl.class);
 
     private static ExternalControl INSTANCE;
 
@@ -259,7 +257,7 @@ public class ExternalControl {
     }
 
     public String preprocessArgs(String args[]) {
-        LOG.trace("enter proprocessArgs");
+        LOG.info("enter proprocessArgs");
 
         StringBuilder arg = new StringBuilder();
         for (int i = 0; i < args.length; i++) {
@@ -292,7 +290,7 @@ public class ExternalControl {
     }
 
     public void enqueueControlRequest(String arg) {
-        LOG.trace("enter enqueueControlRequest");
+        LOG.info("enter enqueueControlRequest");
         enqueuedRequest = arg;
     }
 
@@ -339,7 +337,7 @@ public class ExternalControl {
 
     //refactored the download logic into a separate method
     public void handleMagnetRequest(String arg) {
-        LOG.trace("enter handleMagnetRequest");
+        LOG.info("enter handleMagnetRequest");
 
         if (isTorrentMagnetRequest(arg)) {
             System.out.println("ExternalControl.handleMagnetRequest(" + arg + ") -> handleTorrentMagnetRequest()");
@@ -351,8 +349,7 @@ public class ExternalControl {
         MagnetOptions options[] = MagnetOptions.parseMagnet(arg);
 
         if (options.length == 0) {
-            if (LOG.isWarnEnabled())
-                LOG.warn("Invalid magnet, ignoring: " + arg);
+            LOG.warn("Invalid magnet, ignoring: " + arg);
             return;
         }
         //		
@@ -369,7 +366,7 @@ public class ExternalControl {
     }
 
     private void handleTorrentRequest(String arg) {
-        LOG.trace("enter handleTorrentRequest");
+        LOG.info("enter handleTorrentRequest");
         ActivityCallback callback = restoreApplication();
         File torrentFile = new File(arg.trim());
         callback.handleTorrent(torrentFile);
@@ -392,9 +389,9 @@ public class ExternalControl {
             
             System.out.println("urlParameter = " + urlParameter);
             
-            HttpFetcher fetcher = new HttpFetcher(new URI("http://" + LOCALHOST_IP + ":" + SERVER_PORT + urlParameter), 1000);
-            //HttpFetcher fetcher = new HttpFetcher(new URI("http://localtest" + urlParameter), 1000);
-            if (fetcher.fetch() != null) {
+            final String response = HttpClientFactory.newInstance().get("http://" + LOCALHOST_IP + ":" + SERVER_PORT + urlParameter, 1000);
+
+            if (response != null) {
                 return true;
             }
             

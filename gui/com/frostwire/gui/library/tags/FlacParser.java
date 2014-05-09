@@ -21,13 +21,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.flac.FlacFileReader;
 import org.jaudiotagger.audio.flac.metadatablock.MetadataBlockDataPicture;
 import org.jaudiotagger.tag.flac.FlacTag;
+
+import com.frostwire.logging.Logger;
 
 /**
  * 
@@ -36,7 +36,7 @@ import org.jaudiotagger.tag.flac.FlacTag;
  */
 class FlacParser extends JaudiotaggerParser {
 
-    private static final Log LOG = LogFactory.getLog(FlacParser.class);
+    private static final Logger LOG = Logger.getLogger(FlacParser.class);
 
     public FlacParser(File file) {
         super(file, new FlacFileReader());

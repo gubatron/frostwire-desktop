@@ -19,8 +19,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.global.GlobalManager;
 import org.limewire.util.CommonUtils;
 
@@ -28,12 +26,13 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.AzureusStarter;
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
 
 public class DownloadManagerImpl implements DownloadManager {
 
-    private static final Log LOG = LogFactory.getLog(DownloadManagerImpl.class);
+    private static final Logger LOG = Logger.getLogger(DownloadManagerImpl.class);
 
     private final ActivityCallback activityCallback;
 

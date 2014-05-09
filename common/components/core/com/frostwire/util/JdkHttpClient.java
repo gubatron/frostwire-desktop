@@ -17,6 +17,7 @@
 
 package com.frostwire.util;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
@@ -37,6 +38,8 @@ import java.util.zip.GZIPOutputStream;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
+
+import org.apache.http.util.ByteArrayBuffer;
 
 import com.frostwire.logging.Logger;
 
@@ -158,9 +161,10 @@ final class JdkHttpClient implements HttpClient {
             closeQuietly(fos);
         }
     }
-
+    
     @Override
-    public void post(String url, int timeout, String userAgent, String content, boolean gzip) throws IOException {
+    public String post(String url, int timeout, String userAgent, String content, String postContentType, boolean gzip) throws IOException {
+        String result = null;
         canceled = false;
         final URL u = new URL(url);
         final HttpURLConnection conn = (HttpURLConnection) u.openConnection();
@@ -178,7 +182,7 @@ final class JdkHttpClient implements HttpClient {
         byte[] data = content.getBytes("UTF-8");
 
         conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "text/plain");
+        conn.setRequestProperty("Content-Type", postContentType);
         conn.setRequestProperty("charset", "utf-8");
         conn.setUseCaches(false);
 
@@ -214,6 +218,18 @@ final class JdkHttpClient implements HttpClient {
             if (canceled) {
                 onCancel();
             } else {
+                BufferedInputStream bis = new BufferedInputStream(conn.getInputStream(),4096);
+                ByteArrayBuffer baf = new ByteArrayBuffer(1024);
+                byte[] buffer = new byte[64];
+                int read = 0;
+                while (true){
+                    read = bis.read(buffer);
+                    if (read == -1){
+                        break;
+                    }
+                    baf.append(buffer,0,read);
+                }
+                result = new String(baf.toByteArray());
                 onComplete();
             }
         } catch (Exception e) {
@@ -222,8 +238,18 @@ final class JdkHttpClient implements HttpClient {
             closeQuietly(in);
             closeQuietly(conn);
         }
+        return result;
     }
 
+
+    @Override
+    public String post(String url, int timeout, String userAgent, String content, boolean gzip) throws IOException {
+        return post(url,timeout,userAgent,content,"text/plain",gzip);
+    }
+
+    /**
+     * Post a form Content-type: application/x-www-form-urlencoded
+     */
     @Override
     public String post(String url, int timeout, String userAgent, Map<String, String> formData) {
         String result = null;
@@ -233,7 +259,6 @@ final class JdkHttpClient implements HttpClient {
         try {
             baos = new ByteArrayOutputStream();
             post(url, baos, timeout, userAgent, formData);
-
             result = new String(baos.toByteArray(), "UTF-8");
         } catch (Throwable e) {
             LOG.error("Error getting string from http body response: " + e.getMessage(), e);
@@ -325,6 +350,55 @@ final class JdkHttpClient implements HttpClient {
             closeQuietly(conn);
         }
     }
+    
+    @Override
+    public void post(String url, int timeout, String userAgent, ProgressFileEntity fileEntity) throws Throwable {
+        canceled = false;
+        final URL u = new URL(url);
+        final HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+        conn.setDoOutput(true);
+
+        conn.setConnectTimeout(timeout);
+        conn.setReadTimeout(timeout);
+        conn.setRequestProperty("User-Agent", userAgent);
+        conn.setInstanceFollowRedirects(false);
+
+        if (conn instanceof HttpsURLConnection) {
+            setHostnameVerifier((HttpsURLConnection) conn);
+        }
+
+        InputStream in = null;
+        try {
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", fileEntity.getContentType().getValue());
+            conn.setRequestProperty("charset", "utf-8");
+            conn.setUseCaches(false);
+
+            OutputStream postOut = conn.getOutputStream();
+            fileEntity.writeTo(postOut);
+            closeQuietly(postOut);
+            conn.connect();
+
+            in = conn.getInputStream();
+            int httpResponseCode = getResponseCode(conn);
+
+            if (httpResponseCode != HttpURLConnection.HTTP_OK && httpResponseCode != HttpURLConnection.HTTP_PARTIAL) {
+                throw new ResponseCodeNotSupportedException(httpResponseCode);
+            }
+
+            if (canceled) {
+                onCancel();
+            } else {
+                onComplete();
+            }
+        } catch (Exception e) {
+            onError(e);
+        } finally {
+            closeQuietly(in);
+            closeQuietly(conn);
+        }
+    }
+
 
     private void post(String url, OutputStream out, int timeout, String userAgent, Map<String, String> formData) throws IOException {
         canceled = false;

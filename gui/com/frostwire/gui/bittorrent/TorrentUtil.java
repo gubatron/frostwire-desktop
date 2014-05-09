@@ -53,8 +53,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfoSet;
 import org.gudy.azureus2.core3.download.DownloadManager;
@@ -86,12 +84,13 @@ import com.aelitis.azureus.ui.UIFunctions;
 import com.aelitis.azureus.ui.UIFunctionsManager;
 import com.aelitis.azureus.ui.selectedcontent.SelectedContent;
 import com.frostwire.AzureusStarter;
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.iTunesImportSettings;
 
 public final class TorrentUtil {
 
-    private static final Log LOG = LogFactory.getLog(TorrentUtil.class);
+    private static final Logger LOG = Logger.getLogger(TorrentUtil.class);
 
     private static AsyncDispatcher async = new AsyncDispatcher(2000);
 

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * A pure java based HTTP client with resume capabilities.
  * @author gubatron
@@ -57,9 +58,13 @@ public interface HttpClient {
 
     public void save(String url, File file, boolean resume, int timeout, String userAgent) throws IOException;
 
-    public void post(String url, int timeout, String userAgent, String content, boolean gzip) throws IOException;
-
     public String post(String url, int timeout, String userAgent, Map<String, String> formData);
+
+    public String post(String url, int timeout, String userAgent, String content, boolean gzip) throws IOException;
+    
+    public String post(String url, int timeout, String userAgent, String content, String postContentType, boolean gzip) throws IOException;
+    
+    public void post(String url, int timeout, String userAgent, ProgressFileEntity fileEntity) throws Throwable;
 
     public void cancel();
 
@@ -67,7 +72,7 @@ public interface HttpClient {
 
     public interface HttpClientListener {
 
-        public void onError(HttpClient client, Exception e);
+        public void onError(HttpClient client, Throwable e);
 
         public void onData(HttpClient client, byte[] buffer, int offset, int length);
 
@@ -76,6 +81,19 @@ public interface HttpClient {
         public void onCancel(HttpClient client);
 
         public void onHeaders(HttpClient httpClient, Map<String, List<String>> headerFields);
+    }
+    
+    public abstract class HttpClientListenerAdapter implements HttpClientListener {
+        
+        public void onError(HttpClient client, Throwable e) {}
+
+        public void onData(HttpClient client, byte[] buffer, int offset, int length) {}
+
+        public void onComplete(HttpClient client) {}
+
+        public void onCancel(HttpClient client) {}
+
+        public void onHeaders(HttpClient httpClient, Map<String, List<String>> headerFields) {}
     }
 
     public static class HttpRangeException extends IOException {

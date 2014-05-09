@@ -30,8 +30,6 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
@@ -48,6 +46,7 @@ import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.transfers.PeerHttpUpload;
+import com.frostwire.logging.Logger;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
@@ -79,7 +78,7 @@ import com.limegroup.gnutella.settings.UpdateManagerSettings;
  */
 public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRowFilteredModel, BTDownloadDataLine, BTDownload> {
 
-    private static final Log LOG = LogFactory.getLog(BTDownloadMediator.class);
+    private static final Logger LOG = Logger.getLogger(BTDownloadMediator.class);
 
     public static final int MIN_HEIGHT = 150;
 

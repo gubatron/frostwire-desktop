@@ -1,4 +1,4 @@
-package org.limewire.util; 
+package org.limewire.util;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,8 +8,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.frostwire.logging.Logger;
 
 /**
  * Converts older package and class names to the new equivalent name and is useful 
@@ -57,21 +56,21 @@ import org.apache.commons.logging.LogFactory;
  * None of the earlier forms of the class need to exist in the classpath.
  */
 
-public class ConverterObjectInputStream extends ObjectInputStream { 
-    
-    private static final Log LOG = LogFactory.getLog(ConverterObjectInputStream.class);
-    
+public class ConverterObjectInputStream extends ObjectInputStream {
+
+    private static final Logger LOG = Logger.getLogger(ConverterObjectInputStream.class);
+
     private Map<String, String> lookups = new HashMap<String, String>(8);
 
     /**
      * Constructs a new <code>ConverterObjectInputStream</code> wrapping the 
      * specified <code>InputStream</code>.
-     */     
-    public ConverterObjectInputStream(InputStream in) throws IOException { 
-        super(in); 
+     */
+    public ConverterObjectInputStream(InputStream in) throws IOException {
+        super(in);
         createLookups();
-    } 
-    
+    }
+
     /**
      * Erases any lookups that were added using {@link #addLookup(String, String)}.
      */
@@ -79,7 +78,7 @@ public class ConverterObjectInputStream extends ObjectInputStream {
         lookups.clear();
         createLookups();
     }
-    
+
     /** Adds all internal lookups. */
     private void createLookups() {
         lookups.put("com.limegroup.gnutella.util.FileComparator", "org.limewire.collection.FileComparator");
@@ -96,7 +95,7 @@ public class ConverterObjectInputStream extends ObjectInputStream {
     public void addLookup(String oldName, String newName) {
         lookups.put(oldName, newName);
     }
-     
+
     /** 
      * Overridden to manually alter the class descriptors. 
      * Note this does NOT require the original class to be loadable.
@@ -110,23 +109,20 @@ public class ConverterObjectInputStream extends ObjectInputStream {
      * the class the corresponding class is loaded.</li>
      * <li>Otherwise the original ObjectStreamClass is returned.</li> 
      * <ul>
-     */ 
-    protected ObjectStreamClass readClassDescriptor() throws 
-      IOException, ClassNotFoundException { 
-        ObjectStreamClass read = super.readClassDescriptor(); 
-        String className = read.getName();        
+     */
+    protected ObjectStreamClass readClassDescriptor() throws IOException, ClassNotFoundException {
+        ObjectStreamClass read = super.readClassDescriptor();
+        String className = read.getName();
 
-        if(LOG.isDebugEnabled())
-            LOG.debug("Looking up class: " + className);
-        
+        LOG.debug("Looking up class: " + className);
+
         boolean array = className.startsWith("[L") && className.endsWith(";");
-        if(array) {
-            className = className.substring(2, className.length()-1);
-            if(LOG.isDebugEnabled())
-                LOG.debug("Stripping array form off, resulting in: " + className);
+        if (array) {
+            className = className.substring(2, className.length() - 1);
+            LOG.debug("Stripping array form off, resulting in: " + className);
         }
-        
-        ObjectStreamClass clazzToReturn; 
+
+        ObjectStreamClass clazzToReturn;
         String newName = lookups.get(className);
         if (newName != null) {
             clazzToReturn = ObjectStreamClass.lookup(Class.forName(newName));
@@ -147,18 +143,16 @@ public class ConverterObjectInputStream extends ObjectInputStream {
                 clazzToReturn = read;
             }
         }
-        
-        if(LOG.isDebugEnabled() && clazzToReturn != read)
-            LOG.debug("Located substitute class: " + clazzToReturn.getName());
-        
+
+        LOG.debug("Located substitute class: " + clazzToReturn.getName());
+
         // If it's an array, and we modified we we read off disk, convert
         // to array form.
-        if(array && read != clazzToReturn) {
+        if (array && read != clazzToReturn) {
             clazzToReturn = ObjectStreamClass.lookup(Class.forName("[L" + clazzToReturn.getName() + ";"));
-            if(LOG.isDebugEnabled())
-                LOG.debug("Re-added array wrapper, for class: " + clazzToReturn.getName());
+            LOG.debug("Re-added array wrapper, for class: " + clazzToReturn.getName());
         }
-        
+
         return clazzToReturn;
-    } 
+    }
 }

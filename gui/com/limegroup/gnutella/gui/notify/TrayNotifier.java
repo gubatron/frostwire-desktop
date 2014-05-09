@@ -15,10 +15,9 @@ import java.lang.reflect.Field;
 
 import javax.swing.SwingUtilities;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.UISettings;
@@ -29,7 +28,7 @@ import com.limegroup.gnutella.settings.UISettings;
  */
 public class TrayNotifier implements NotifyUser {
 	
-    private static final Log LOG = LogFactory.getLog(DefaultNotificationRenderer.class);
+    private static final Logger LOG = Logger.getLogger(DefaultNotificationRenderer.class);
     
 	private SystemTray _tray;
 	private TrayIcon _icon;

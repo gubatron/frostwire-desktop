@@ -30,9 +30,6 @@ import java.util.List;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.coremedia.iso.BoxParser;
 import com.coremedia.iso.IsoFile;
 import com.coremedia.iso.PropertyBoxParserImpl;
@@ -49,6 +46,7 @@ import com.coremedia.iso.boxes.apple.AppleItemListBox;
 import com.coremedia.iso.boxes.apple.AppleStandardGenreBox;
 import com.coremedia.iso.boxes.apple.AppleTrackNumberBox;
 import com.coremedia.iso.boxes.apple.AppleTrackTitleBox;
+import com.frostwire.logging.Logger;
 import com.googlecode.mp4parser.AbstractBox;
 import com.googlecode.mp4parser.util.Path;
 
@@ -59,7 +57,7 @@ import com.googlecode.mp4parser.util.Path;
  */
 class MP4Parser extends AbstractTagParser {
 
-    private static final Log LOG = LogFactory.getLog(MP4Parser.class);
+    private static final Logger LOG = Logger.getLogger(MP4Parser.class);
 
     public MP4Parser(File file) {
         super(file);

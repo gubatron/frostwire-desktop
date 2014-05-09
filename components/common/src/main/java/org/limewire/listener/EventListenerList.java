@@ -9,12 +9,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.util.ExceptionUtils;
 import org.limewire.util.Objects;
+
+import com.frostwire.logging.Logger;
 
 /**
  * Maintains event listeners and broadcasts events to all listeners.
@@ -32,7 +32,7 @@ import org.limewire.util.Objects;
 public class EventListenerList<E> implements ListenerSupport<E>, EventBroadcaster<E> {
     
     private final List<ListenerProxy<E>> listenerList = new CopyOnWriteArrayList<ListenerProxy<E>>();
-    private final Log log;
+    private final Logger log;
     private final EventListenerListContext context;
 
     /** Constructs an {@link EventListenerList} with a new context and no log. */
@@ -43,11 +43,11 @@ public class EventListenerList<E> implements ListenerSupport<E>, EventBroadcaste
     /** Constructs an {@link EventListenerList} with a new context a log based on the given class. */
     @SuppressWarnings("rawtypes")
 	public EventListenerList(Class loggerKey) {
-        this(LogFactory.getLog(loggerKey), new EventListenerListContext());
+        this(Logger.getLogger(loggerKey), new EventListenerListContext());
     }
     
     /** Constructs an {@link EventListenerList} with a new context the given log. */
-    public EventListenerList(Log log) {
+    public EventListenerList(Logger log) {
         this(log, new EventListenerListContext());
     }
     
@@ -57,7 +57,7 @@ public class EventListenerList<E> implements ListenerSupport<E>, EventBroadcaste
     }
     
     /** Constructs an {@link EventListenerList} with the given context and log. */
-    public EventListenerList(Log log, EventListenerListContext context) {
+    public EventListenerList(Logger log, EventListenerListContext context) {
         this.log = log;
         this.context = context;
     }

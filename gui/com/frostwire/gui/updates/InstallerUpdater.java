@@ -26,15 +26,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.disk.DiskManager;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.disk.DiskManagerPiece;
@@ -48,7 +45,7 @@ import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.AzureusStarter;
-import com.frostwire.HttpFetcher;
+import com.frostwire.logging.Logger;
 import com.frostwire.util.DigestUtils;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpRangeException;
@@ -64,7 +61,7 @@ import com.limegroup.gnutella.settings.UpdateSettings;
  */
 public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
-    private static final Log LOG = LogFactory.getLog(InstallerUpdater.class);
+    private static final Logger LOG = Logger.getLogger(InstallerUpdater.class);
 
     private DownloadManager _manager = null;
     private UpdateMessage _updateMessage;
@@ -364,7 +361,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
         } else if (state == DownloadManager.STATE_DOWNLOADING) {
             System.out.println("stateChanged(STATE_DOWNLOADING)");
-        } else if (state == DownloadManager.STATE_READY) {
+        } else if (state == DownloadManager.STATE_READY || state == DownloadManager.STATE_QUEUED) {
             System.out.println("stateChanged(STATE_READY)");
             manager.startDownload();
         }
@@ -509,7 +506,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
     }
 
     public final static void downloadTorrentFile(String torrentURL, File saveLocation) throws IOException, URISyntaxException {
-        byte[] contents = new HttpFetcher(new URI(torrentURL)).fetch();
+        byte[] contents = HttpClientFactory.newInstance().getBytes(torrentURL);
 
         // save the torrent locally if you have to
         if (saveLocation != null && contents != null && contents.length > 0) {

@@ -1,9 +1,8 @@
 package com.limegroup.gnutella.gui.shell;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.util.SystemUtils;
 
+import com.frostwire.logging.Logger;
 import com.frostwire.util.filetypes.Action;
 import com.frostwire.util.filetypes.Association;
 import com.frostwire.util.filetypes.AssociationAlreadyRegisteredException;
@@ -14,7 +13,7 @@ import com.frostwire.util.filetypes.RegisterFailedException;
 
 public class FileTypeAssociation implements ShellAssociation {
     
-    private static final Log LOG = LogFactory.getLog(FileTypeAssociation.class);
+    private static final Logger LOG = Logger.getLogger(FileTypeAssociation.class);
 
 	private static final AssociationService SERVICE = new AssociationService();
 	

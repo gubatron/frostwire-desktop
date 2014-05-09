@@ -49,7 +49,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/jars/commons-logging.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/gettext-commons.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/gson-1.4.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/messages.jar"/>

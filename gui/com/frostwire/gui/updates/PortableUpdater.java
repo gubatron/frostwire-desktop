@@ -32,11 +32,10 @@ import javax.swing.SwingWorker;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.logging.Logger;
 import com.frostwire.util.ZipUtils;
 import com.frostwire.util.ZipUtils.ZipListener;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -50,7 +49,7 @@ import com.limegroup.gnutella.gui.ResourceManager;
  */
 public final class PortableUpdater {
 
-    private static final Log LOG = LogFactory.getLog(PortableUpdater.class);
+    private static final Logger LOG = Logger.getLogger(PortableUpdater.class);
 
     private static final String PORTABLE_UPDATER_SCRIPT_WINDOWS = "portable_updater.js";
     private static final String PORTABLE_UPDATER_SCRIPT_MACOSX = "portable_updater.sh";

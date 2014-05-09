@@ -3,7 +3,7 @@
 <project name="lw-common" basedir="." default="compile-src">
 
 	<description>
-		LimeWire component 'common'.
+		FrostWire component 'common'.
 		This component is required for every other component and contains
 		the most common functionality shared by every component.
 	</description>
@@ -13,7 +13,6 @@
     <target name="initialize" unless="initialized.common">
         <do.setup-properties component="common">
 			<src-classpath>
-				<pathelement location="${limewire.lib.jars}/commons-logging.jar"/>
 				<pathelement location="${limewire.lib.jars}/log4j.jar"/>
 				<pathelement location="${limewire.lib.jars}/gson-1.4.jar"/>
 			</src-classpath>
@@ -23,10 +22,10 @@
 	<target name="clean" depends="initialize">
 	    <do.clean component="common"/>
 	</target>
-    
-    <target name="compile" depends="initialize">
-    	<do.compile component="common"/>
-    </target>
+
+        <target name="compile" depends="initialize">
+            <do.compile component="common"/>
+        </target>
 	
 	<target name="compile-src" depends="initialize">
 	    <do.compile-src component="common"/>

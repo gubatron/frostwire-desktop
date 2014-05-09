@@ -24,11 +24,10 @@ import java.io.File;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.util.FilenameUtils;
 
 import com.frostwire.jpeg.JPEGImageIO;
+import com.frostwire.logging.Logger;
 
 /**
  * 
@@ -37,7 +36,7 @@ import com.frostwire.jpeg.JPEGImageIO;
  */
 abstract class AbstractTagParser implements TagsParser {
 
-    private static final Log LOG = LogFactory.getLog(AbstractTagParser.class);
+    private static final Logger LOG = Logger.getLogger(AbstractTagParser.class);
 
     protected final File file;
 
