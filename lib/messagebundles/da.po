@@ -3704,10 +3704,6 @@ msgstr "Konfigurér proxy muligheder for FrostWire."
 msgid "&File"
 msgstr "&Filer"
 
-#: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-msgid "&Help"
-msgstr "Deler"
-
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:46
 msgid "&FAQ"
 msgstr "&OSS"
