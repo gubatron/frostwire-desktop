@@ -18,8 +18,6 @@
 
 package com.frostwire.core.providers;
 
-import java.util.logging.Logger;
-
 import com.frostwire.content.ContentValues;
 import com.frostwire.content.Context;
 import com.frostwire.core.Constants;
@@ -27,6 +25,7 @@ import com.frostwire.database.Cursor;
 import com.frostwire.database.sqlite.SQLiteDatabase;
 import com.frostwire.database.sqlite.SQLiteOpenHelper;
 import com.frostwire.database.sqlite.SQLiteQueryBuilder;
+import com.frostwire.logging.Logger;
 import com.frostwire.text.TextUtils;
 
 /**
@@ -36,7 +35,7 @@ import com.frostwire.text.TextUtils;
  */
 public final class ShareFilesDB {
 
-    private static final Logger LOG = Logger.getLogger(ShareFilesDB.class.getName());
+    private static final Logger LOG = Logger.getLogger(ShareFilesDB.class);
 
     private static final String DATABASE_NAME = "sharefiles";
 
@@ -202,7 +201,7 @@ public final class ShareFilesDB {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            LOG.warning("Upgrading documents database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
+            LOG.warn("Upgrading documents database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
             onCreate(db);
         }

@@ -23,12 +23,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.frostwire.content.ContentValues;
 import com.frostwire.database.Cursor;
 import com.frostwire.database.SQLException;
+import com.frostwire.logging.Logger;
 import com.frostwire.text.TextUtils;
 
 /**
@@ -38,7 +37,7 @@ import com.frostwire.text.TextUtils;
  */
 public class SQLiteDatabase {
 
-    private static final Logger LOG = Logger.getLogger(SQLiteDatabase.class.getName());
+    private static final Logger LOG = Logger.getLogger(SQLiteDatabase.class);
 
     private String path;
     private Connection connection;
@@ -98,7 +97,7 @@ public class SQLiteDatabase {
                 return new Cursor(statement, resultSet);
             }
         } catch (Throwable e) {
-            LOG.log(Level.WARNING, "Error performing SQL statement: " + sql, e);
+            LOG.warn("Error performing SQL statement: " + sql, e);
         }
 
         return cursor;
@@ -302,7 +301,7 @@ public class SQLiteDatabase {
                 statement.execute("SHUTDOWN");
                 connection.close();
             } catch (Throwable e) {
-                LOG.log(Level.WARNING, "Error closing the smart search database", e);
+                LOG.warn("Error closing the smart search database", e);
             }
         }
     }
@@ -316,7 +315,7 @@ public class SQLiteDatabase {
                 return statement.executeUpdate();
             }
         } catch (Throwable e) {
-            LOG.log(Level.WARNING, "Error performing SQL statement: " + sql, e);
+            LOG.warn("Error performing SQL statement: " + sql, e);
             return -1;
         } finally {
             if (statement != null) {
