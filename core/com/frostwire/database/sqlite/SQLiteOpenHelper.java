@@ -21,11 +21,10 @@ package com.frostwire.database.sqlite;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.frostwire.content.Context;
 import com.frostwire.database.sqlite.SQLiteDatabase.CursorFactory;
+import com.frostwire.logging.Logger;
 
 /**
  * @author gubatron
@@ -34,7 +33,7 @@ import com.frostwire.database.sqlite.SQLiteDatabase.CursorFactory;
  */
 public abstract class SQLiteOpenHelper {
 
-    private static final Logger LOG = Logger.getLogger(SQLiteOpenHelper.class.getName());
+    private static final Logger LOG = Logger.getLogger(SQLiteOpenHelper.class);
 
     private final String dbpath;
     private final SQLiteDatabase db;
@@ -130,7 +129,7 @@ public abstract class SQLiteOpenHelper {
 
             return db;
         } catch (Throwable e) {
-            LOG.log(Level.SEVERE, "Error opening the database", e);
+            LOG.error("Error opening the database", e);
             throw new RuntimeException(e);
         }
     }

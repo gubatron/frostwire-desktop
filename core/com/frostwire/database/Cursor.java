@@ -21,8 +21,8 @@ package com.frostwire.database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import com.frostwire.logging.Logger;
 
 /**
  * @author gubatron
@@ -31,7 +31,7 @@ import java.util.logging.Logger;
  */
 public class Cursor {
 
-    private static final Logger LOG = Logger.getLogger(Cursor.class.getName());
+    private static final Logger LOG = Logger.getLogger(Cursor.class);
 
     private final Statement statement;
     private final ResultSet rs;
@@ -56,7 +56,7 @@ public class Cursor {
         try {
             return rs.getInt(columnIndex);
         } catch (SQLException e) {
-            LOG.log(Level.WARNING, "Error reading typed result set value", e);
+            LOG.warn("Error reading typed result set value", e);
         }
         return 0;
     }
@@ -75,7 +75,7 @@ public class Cursor {
         try {
             return rs.getString(columnIndex);
         } catch (SQLException e) {
-            LOG.log(Level.WARNING, "Error reading typed result set value", e);
+            LOG.warn("Error reading typed result set value", e);
         }
         return null;
     }
@@ -95,7 +95,7 @@ public class Cursor {
         try {
             return rs.getLong(columnIndex);
         } catch (SQLException e) {
-            LOG.log(Level.WARNING, "Error reading typed result set value", e);
+            LOG.warn("Error reading typed result set value", e);
         }
         return 0;
     }
@@ -114,7 +114,7 @@ public class Cursor {
         try {
             return rs.findColumn(columnName);
         } catch (SQLException e) {
-            //LOG.log(Level.WARNING, "Error getting column index for name: " + columnName, e);
+            //LOG.warn("Error getting column index for name: " + columnName, e);
         }
         return -1;
     }
@@ -131,7 +131,7 @@ public class Cursor {
             rs.beforeFirst();
             return rows;
         } catch (SQLException e) {
-            LOG.log(Level.WARNING, "Error getting result set size", e);
+            LOG.warn("Error getting result set size", e);
         }
         return 0;
     }
@@ -145,12 +145,12 @@ public class Cursor {
         try {
             rs.close();
         } catch (SQLException e) {
-            LOG.log(Level.WARNING, "Error closing cursor result set", e);
+            LOG.warn("Error closing cursor result set", e);
         }
         try {
             statement.close();
         } catch (SQLException e) {
-            LOG.log(Level.WARNING, "Error closing cursor inner statement", e);
+            LOG.warn("Error closing cursor inner statement", e);
         }
     }
 
@@ -168,7 +168,7 @@ public class Cursor {
         try {
             return rs.relative(offset);
         } catch (SQLException e) {
-            LOG.log(Level.WARNING, "Error moving inside the result set, offset: " + offset, e);
+            LOG.warn("Error moving inside the result set, offset: " + offset, e);
         }
         return false;
     }
@@ -185,7 +185,7 @@ public class Cursor {
         try {
             return rs.next();
         } catch (SQLException e) {
-            LOG.log(Level.WARNING, "Error moving inside the result set, to next", e);
+            LOG.warn("Error moving inside the result set, to next", e);
         }
         return false;
     }
@@ -194,7 +194,7 @@ public class Cursor {
         try {
             return rs.getByte(columnIndex);
         } catch (SQLException e) {
-            LOG.log(Level.WARNING, "Error reading typed result set value", e);
+            LOG.warn("Error reading typed result set value", e);
         }
         return 0;
     }
@@ -203,7 +203,7 @@ public class Cursor {
         try {
             return rs.getBoolean(columnIndex);
         } catch (SQLException e) {
-            LOG.log(Level.WARNING, "Error reading typed result set value", e);
+            LOG.warn("Error reading typed result set value", e);
         }
         return false;
     }
@@ -212,7 +212,7 @@ public class Cursor {
         try {
             return rs.getBytes(columnIndex);
         } catch (SQLException e) {
-            LOG.log(Level.WARNING, "Error reading typed result set value", e);
+            LOG.warn("Error reading typed result set value", e);
         }
         return null;
     }
