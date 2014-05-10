@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import com.frostwire.logging.Logger;
 
 /**
  * This class is used to store a set of values that the {@link ContentResolver}
@@ -33,7 +33,7 @@ import java.util.logging.Logger;
  */
 public final class ContentValues /*implements Parcelable*/ {
     
-    private static final Logger LOG = Logger.getLogger(ContentValues.class.getName());
+    private static final Logger LOG = Logger.getLogger(ContentValues.class);
     //public static final String TAG = "ContentValues";
 
     /** Holds the actual values */
@@ -259,11 +259,11 @@ public final class ContentValues /*implements Parcelable*/ {
                 try {
                     return Long.valueOf(value.toString());
                 } catch (NumberFormatException e2) {
-                    LOG.warning("Cannot parse Long value for " + value + " at key " + key);
+                    LOG.warn("Cannot parse Long value for " + value + " at key " + key);
                     return null;
                 }
             } else {
-                LOG.log(Level.WARNING, "Cannot cast value for " + key + " to a Long: " + value, e);
+                LOG.warn("Cannot cast value for " + key + " to a Long: " + value, e);
                 return null;
             }
         }
@@ -284,11 +284,11 @@ public final class ContentValues /*implements Parcelable*/ {
                 try {
                     return Integer.valueOf(value.toString());
                 } catch (NumberFormatException e2) {
-                    LOG.warning("Cannot parse Integer value for " + value + " at key " + key);
+                    LOG.warn("Cannot parse Integer value for " + value + " at key " + key);
                     return null;
                 }
             } else {
-                LOG.log(Level.WARNING, "Cannot cast value for " + key + " to a Integer: " + value, e);
+                LOG.warn("Cannot cast value for " + key + " to a Integer: " + value, e);
                 return null;
             }
         }
@@ -309,11 +309,11 @@ public final class ContentValues /*implements Parcelable*/ {
                 try {
                     return Short.valueOf(value.toString());
                 } catch (NumberFormatException e2) {
-                    LOG.warning("Cannot parse Short value for " + value + " at key " + key);
+                    LOG.warn("Cannot parse Short value for " + value + " at key " + key);
                     return null;
                 }
             } else {
-                LOG.log(Level.WARNING, "Cannot cast value for " + key + " to a Short: " + value, e);
+                LOG.warn("Cannot cast value for " + key + " to a Short: " + value, e);
                 return null;
             }
         }
@@ -334,11 +334,11 @@ public final class ContentValues /*implements Parcelable*/ {
                 try {
                     return Byte.valueOf(value.toString());
                 } catch (NumberFormatException e2) {
-                    LOG.warning("Cannot parse Byte value for " + value + " at key " + key);
+                    LOG.warn("Cannot parse Byte value for " + value + " at key " + key);
                     return null;
                 }
             } else {
-                LOG.log(Level.WARNING, "Cannot cast value for " + key + " to a Byte: " + value, e);
+                LOG.warn("Cannot cast value for " + key + " to a Byte: " + value, e);
                 return null;
             }
         }
@@ -359,11 +359,11 @@ public final class ContentValues /*implements Parcelable*/ {
                 try {
                     return Double.valueOf(value.toString());
                 } catch (NumberFormatException e2) {
-                    LOG.warning("Cannot parse Double value for " + value + " at key " + key);
+                    LOG.warn("Cannot parse Double value for " + value + " at key " + key);
                     return null;
                 }
             } else {
-                LOG.log(Level.WARNING, "Cannot cast value for " + key + " to a Double: " + value, e);
+                LOG.warn("Cannot cast value for " + key + " to a Double: " + value, e);
                 return null;
             }
         }
@@ -384,11 +384,11 @@ public final class ContentValues /*implements Parcelable*/ {
                 try {
                     return Float.valueOf(value.toString());
                 } catch (NumberFormatException e2) {
-                    LOG.warning("Cannot parse Float value for " + value + " at key " + key);
+                    LOG.warn("Cannot parse Float value for " + value + " at key " + key);
                     return null;
                 }
             } else {
-                LOG.log(Level.WARNING, "Cannot cast value for " + key + " to a Float: " + value, e);
+                LOG.warn("Cannot cast value for " + key + " to a Float: " + value, e);
                 return null;
             }
         }
@@ -410,7 +410,7 @@ public final class ContentValues /*implements Parcelable*/ {
             } else if (value instanceof Number) {
                 return ((Number) value).intValue() != 0;
             } else {
-                LOG.log(Level.WARNING, "Cannot cast value for " + key + " to a Boolean: " + value, e);
+                LOG.warn("Cannot cast value for " + key + " to a Boolean: " + value, e);
                 return null;
             }
         }

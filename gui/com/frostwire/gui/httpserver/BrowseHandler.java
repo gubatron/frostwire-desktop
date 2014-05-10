@@ -21,11 +21,11 @@ package com.frostwire.gui.httpserver;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 import java.util.zip.GZIPOutputStream;
 
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.Librarian;
+import com.frostwire.logging.Logger;
 import com.frostwire.util.JsonUtils;
 import com.frostwire.util.URLUtils;
 import com.sun.net.httpserver.HttpExchange;
@@ -37,7 +37,7 @@ import com.sun.net.httpserver.HttpExchange;
  */
 class BrowseHandler extends AbstractHandler {
 
-    private static final Logger LOG = Logger.getLogger(BrowseHandler.class.getName());
+    private static final Logger LOG = Logger.getLogger(BrowseHandler.class);
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -71,7 +71,7 @@ class BrowseHandler extends AbstractHandler {
             os.finish();
 
         } catch (IOException e) {
-            LOG.warning("Error browsing files type=" + type);
+            LOG.warn("Error browsing files type=" + type);
             throw e;
         } finally {
             if (os != null) {
