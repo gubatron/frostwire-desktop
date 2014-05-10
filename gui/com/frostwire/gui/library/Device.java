@@ -168,7 +168,6 @@ public class Device {
         try {
 
             String url = "http://" + _address.getHostAddress() + ":" + _port + "/browse?type=" + fileType;
-
             String json = httpClient.get(url, 10000);
             
             if (json == null) {

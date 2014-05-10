@@ -69,7 +69,7 @@ class DownloadHandler extends AbstractHandler {
 
         try {
             
-            Map<String, String> splitQuery = URLUtils.splitQuery(exchange.getRequestURI().toURL());
+            Map<String, String> splitQuery = URLUtils.splitQuery(exchange.getRequestURI().getQuery());
 
             if (splitQuery.containsKey("type")) {
                 type = Byte.parseByte(splitQuery.get("type"));
