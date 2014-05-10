@@ -23,17 +23,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
+import java.util.Map;
 
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.Librarian;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.transfers.PeerHttpUpload;
+import com.frostwire.logging.Logger;
+import com.frostwire.util.URLUtils;
 import com.sun.net.httpserver.HttpExchange;
 
 /**
@@ -43,7 +40,7 @@ import com.sun.net.httpserver.HttpExchange;
  */
 class DownloadHandler extends AbstractHandler {
 
-    private static final Logger LOG = Logger.getLogger(DownloadHandler.class.getName());
+    private static final Logger LOG = Logger.getLogger(DownloadHandler.class);
 
     @Override
     public void handle(final HttpExchange exchange) throws IOException {
@@ -53,7 +50,7 @@ class DownloadHandler extends AbstractHandler {
                 try {
                     internalHandler(exchange);
                 } catch (IOException e) {
-                    LOG.log(Level.WARNING, "DownloadHandler async handle error", e);
+                    LOG.warn("DownloadHandler async handle error", e);
                 }
             }
         }).start();
@@ -71,18 +68,17 @@ class DownloadHandler extends AbstractHandler {
         PeerHttpUpload upload = null;
 
         try {
+            
+            Map<String, String> splitQuery = URLUtils.splitQuery(exchange.getRequestURI().toURL());
 
-            List<NameValuePair> query = URLEncodedUtils.parse(exchange.getRequestURI(), "UTF-8");
-
-            for (NameValuePair item : query) {
-                if (item.getName().equals("type")) {
-                    type = Byte.parseByte(item.getValue());
-                }
-                if (item.getName().equals("id")) {
-                    id = Integer.parseInt(item.getValue());
-                }
+            if (splitQuery.containsKey("type")) {
+                type = Byte.parseByte(splitQuery.get("type"));
             }
-
+            
+            if (splitQuery.containsKey("id")) {
+                id = Integer.parseInt(splitQuery.get("id"));
+            }
+            
             if (type == -1 || id == -1) {
                 exchange.sendResponseHeaders(Code.HTTP_BAD_REQUEST, 0);
                 return;
@@ -135,7 +131,7 @@ class DownloadHandler extends AbstractHandler {
             }
 
         } catch (IOException e) {
-            LOG.log(Level.INFO, "Error uploading file type=" + type + ", id=" + id);
+            LOG.info("Error uploading file type=" + type + ", id=" + id);
             throw e;
         } finally {
             close(os);

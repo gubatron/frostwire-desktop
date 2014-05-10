@@ -20,15 +20,14 @@ package com.frostwire.gui.httpserver;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 import java.util.zip.GZIPOutputStream;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
 
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.Librarian;
 import com.frostwire.util.JsonUtils;
+import com.frostwire.util.URLUtils;
 import com.sun.net.httpserver.HttpExchange;
 
 /**
@@ -50,14 +49,12 @@ class BrowseHandler extends AbstractHandler {
 
         try {
 
-            List<NameValuePair> query = URLEncodedUtils.parse(exchange.getRequestURI(), "UTF-8");
+            Map<String, String> splitQuery = URLUtils.splitQuery(exchange.getRequestURI().toURL());
 
-            for (NameValuePair item : query) {
-                if (item.getName().equals("type")) {
-                    type = Byte.parseByte(item.getValue());
-                }
+            if (splitQuery.containsKey("type")) {
+                type = Byte.parseByte(splitQuery.get("type"));
             }
-
+            
             if (type == -1) {
                 exchange.sendResponseHeaders(Code.HTTP_BAD_REQUEST, 0);
                 return;
