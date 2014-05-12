@@ -37,7 +37,7 @@ public class DeadlockSupport {
                     long [] ids = findDeadlockedThreads(ManagementFactory.getThreadMXBean());
                     
                     if (ids == null) {
-                        LOG.info("no deadlocks found");
+                        //LOG.info("no deadlocks found");
                         continue;
                     }
                     
