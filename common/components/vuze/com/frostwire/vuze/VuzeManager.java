@@ -101,7 +101,8 @@ public final class VuzeManager {
 
     public void loadTorrents(final boolean stop, final LoadTorrentsListener loadListener, final VuzeDownloadListener downloadListener) {
         if (!torrentsLoaded.compareAndSet(false, true)) {
-            throw new RuntimeException("Load torrents can't be called twice, review the logic");
+            //throw new RuntimeException("Load torrents can't be called twice, review the logic");
+            return;
         }
 
         AzureusCoreFactory.addCoreRunningListener(new AzureusCoreRunningListener() {

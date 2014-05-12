@@ -232,6 +232,11 @@ public final class VuzeDownloadManager {
     public void stop() {
         ManagerUtils.stop(dm);
     }
+    
+    /** Like stop() but transfer can be started automatically, like when switching to Wi-Fi for example.*/
+    public void enqueue() {
+        ManagerUtils.stop(dm, DownloadManager.STATE_QUEUED);
+    }
 
     public void setSkipped(Set<String> paths, boolean skipped) {
         DiskManagerFileInfo[] infs = dm.getDiskManagerFileInfoSet().getFiles();
