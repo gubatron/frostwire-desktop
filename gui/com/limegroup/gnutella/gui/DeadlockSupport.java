@@ -33,7 +33,7 @@ public class DeadlockSupport {
                     try {
                         Thread.sleep(DEADLOCK_CHECK_INTERVAL);
                     } catch (InterruptedException ignored) {}
-                    LOG.info("deadlock check start");
+                    //LOG.info("deadlock check start");
                     long [] ids = findDeadlockedThreads(ManagementFactory.getThreadMXBean());
                     
                     if (ids == null) {

@@ -75,7 +75,6 @@ public class ExternalControl {
             public void run() {
                 try {
                     ServerSocket serverSocket = new ServerSocket(SERVER_PORT, 50, InetAddress.getByName(LOCALHOST_IP));
-
                     while (true) {
                         final Socket socket = serverSocket.accept();
                         new Thread(new Runnable() {
@@ -386,9 +385,8 @@ public class ExternalControl {
             }  else {
                 urlParameter = "/show";
             }
-            
+
             System.out.println("urlParameter = " + urlParameter);
-            
             final String response = HttpClientFactory.newInstance().get("http://" + LOCALHOST_IP + ":" + SERVER_PORT + urlParameter, 1000);
 
             if (response != null) {
