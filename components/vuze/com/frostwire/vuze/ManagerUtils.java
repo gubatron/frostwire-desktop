@@ -243,8 +243,10 @@ import com.frostwire.vuze.CoreWaiterSWT.TriggerInThread;
     if(dm == null)
       return false;
     int state = dm.getState();
-    if (state != DownloadManager.STATE_STOPPED &&
-        state != DownloadManager.STATE_QUEUED) {
+    if (state != DownloadManager.STATE_STOPPED  &&
+        state != DownloadManager.STATE_STOPPING &&    
+        state != DownloadManager.STATE_QUEUED   &&
+        state != DownloadManager.STATE_ERROR) {
       return false;
     }
     return true;
@@ -254,8 +256,10 @@ import com.frostwire.vuze.CoreWaiterSWT.TriggerInThread;
     if(dm == null)
       return false;
     int state = dm.getState();
-    if (	state == DownloadManager.STATE_STOPPED ||
-    		state == DownloadManager.STATE_STOPPING	) {
+    if (	state == DownloadManager.STATE_STOPPED  ||
+    		state == DownloadManager.STATE_STOPPING ||
+    		state == DownloadManager.STATE_QUEUED   ||
+    		state == DownloadManager.STATE_ERROR) {
       return false;
     }
     return true;
@@ -265,12 +269,10 @@ import com.frostwire.vuze.CoreWaiterSWT.TriggerInThread;
 	    if(dm == null)
 	      return false;
 	    int state = dm.getState();
-	    if (	state == DownloadManager.STATE_STOPPED ||
-	    		state == DownloadManager.STATE_ERROR	) {
-	      return true;
-	    }
-	    return false;
-	  }
+	    return (	state == DownloadManager.STATE_STOPPED ||
+	    		    state == DownloadManager.STATE_ERROR	  ||
+	    		    state == DownloadManager.STATE_QUEUED);
+   }
   
   public static boolean
   isForceStartable(
@@ -370,9 +372,10 @@ import com.frostwire.vuze.CoreWaiterSWT.TriggerInThread;
 
 		int state = dm.getState();
 
-		if (state == DownloadManager.STATE_STOPPED
-				|| state == DownloadManager.STATE_STOPPING ){
-			return;
+        if (state == DownloadManager.STATE_STOPPED  || 
+            state == DownloadManager.STATE_STOPPING || 
+            state == DownloadManager.STATE_ERROR) {
+            return;
 		}
 		
 		asyncPause(dm);
@@ -392,6 +395,7 @@ import com.frostwire.vuze.CoreWaiterSWT.TriggerInThread;
 
 		if (state == DownloadManager.STATE_STOPPED
 				|| state == DownloadManager.STATE_STOPPING
+				|| state == DownloadManager.STATE_ERROR
 				|| state == stateAfterStopped) {
 			return;
 		}
