@@ -3,7 +3,7 @@
 <project name="lw-setting" basedir="." default="compile-src">
 
 	<description>
-		LimeWire component 'setting'.
+		FrostWire component 'setting'.
 	    This component contains settings-related classes, including
         the ability to set a 'remote settings manager'.
 	</description>
@@ -13,9 +13,9 @@
     
     <target name="initialize" depends="lw-common.initialize" unless="initialized.setting">
         <do.setup-properties component="setting">
-			<src-classpath>
-			    <path refid="build.limewire.components.common.buildpath"/>
-			</src-classpath>
+	   <src-classpath>
+	     <path refid="build.limewire.components.common.buildpath"/>
+	   </src-classpath>
         </do.setup-properties>
     </target>
 	
