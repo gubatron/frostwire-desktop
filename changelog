@@ -1,8 +1,9 @@
 frostwire (5.7.3) stable; urgency=high
   * New Yifi search.
   * Added Canonical Peer Priority support. (BEP40)
+  * Fixed broken EZTV search.
 	
- -- FrostWire Team <contact@frostwire.com>  Thu, 1 May 2014 14:42:33 -0500
+ -- FrostWire Team <contact@frostwire.com>  Wed, 14 May 2014 15:52:33 -0500
 
 frostwire (5.7.2) stable; urgency=high
   * uTP support enabled.
