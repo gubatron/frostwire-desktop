@@ -2,9 +2,9 @@ frostwire (5.7.3) stable; urgency=high
   * New Yifi search.
   * Added Canonical Peer Priority support. (BEP40)
   * Fixed broken EZTV search.
-  * Upgraded apache httpcore from 4.0.1 to 4.3.2. Got rid of httpclient libraries.
+  * Removed apache httpclient and httpcore libraries.
 	
- -- FrostWire Team <contact@frostwire.com>  Thu, 15 May 2014 15:54:23 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 15 May 2014 16:24:57 -0500
 
 frostwire (5.7.2) stable; urgency=high
   * uTP support enabled.
