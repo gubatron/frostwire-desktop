@@ -2,17 +2,16 @@
 <project name="jars-src" default="main" basedir=".">
 
 	<target name="check-compile">
+                <!--<touch file="../jars/COMPILE"/>-->
 		<available file="../jars/COMPILE" property="compile.present" />
 	</target>
 
 	<target name="main" depends="check-compile" if="compile.present">
-
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="dist" includes="*" />
 		</delete>
 
-		<ant dir="httpcomponents-core-4.0.1" />
-		<ant dir="httpcomponents-client-4.0" />
+		<ant dir="httpcomponents-core-4.3.2" />
 		<ant dir="gettext-commons-0_9_5" />
 		<ant dir="google-gson-1.4" />
 		<ant dir="lucene-3.5.0" />
@@ -29,13 +28,11 @@
 	</target>
 
 	<target name="clean">
-
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="dist" includes="*" />
 		</delete>
 
-		<ant dir="httpcomponents-client-4.0" target="clean" />
-		<ant dir="httpcomponents-core-4.0.1" target="clean" />
+		<ant dir="httpcomponents-core-4.3.2" target="clean" />
 		<ant dir="gettext-commons-0_9_5" target="clean" />
 		<ant dir="google-gson-1.4" target="clean" />
 		<ant dir="lucene-3.5.0" target="clean" />
@@ -51,22 +48,18 @@
 	 This should probably be done on purpose when we're making a source distribution.
 	 <touch file="../jars/COMPILE"/> 
     -->
-
 	</target>
 
 	<target name="copyjars">
-
 		<copy file="dist/gettext-commons.jar" todir="../jars/" />
 		<copy file="dist/gson-1.4.jar" todir="../jars/" />
-		<copy file="dist/httpclient-4.0.jar" todir="../jars/" />
-		<copy file="dist/httpcore-4.0.1.jar" todir="../jars/" />
+		<copy file="dist/httpcore-4.3.2.jar" todir="../jars/" />
 		<copy file="dist/lucene-3.5.0.jar" todir="../jars/" />
 		<copy file="dist/h2-1.3.164.jar" todir="../jars/" />
 		<copy file="dist/metadata-extractor-2.6.2.jar" todir="../jars/" />
 		<copy file="dist/mp4parser.jar" todir="../jars/" />
 		<copy file="dist/jaudiotagger.jar" todir="../jars/" />
 		<copy file="dist/slf4j-api-1.7.5.jar" todir="../jars/" />
-
 	</target>
 
 </project>
