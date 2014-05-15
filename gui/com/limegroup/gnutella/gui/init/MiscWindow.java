@@ -113,6 +113,7 @@ final class MiscWindow extends SetupWindow {
             gbc.gridwidth = GridBagConstraints.REMAINDER;
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.gridy = GridBagConstraints.RELATIVE;
+            gbc.weightx = 1.0;
             
             mainPanel.add(panelUXStats, gbc);
 
