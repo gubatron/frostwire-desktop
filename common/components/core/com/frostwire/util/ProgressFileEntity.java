@@ -6,15 +6,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.http.entity.FileEntity;
-
-public class ProgressFileEntity extends FileEntity {
+public class ProgressFileEntity  {
+    
+    private final File file;
+    private final String contentType; 
 
     private ProgressFileEntityListener _listener;
 
     public ProgressFileEntity(File file) {
-        super(file, "binary/octet-stream");
-        setChunked(true);
+        this.file = file;
+        this.contentType = "binary/octet-stream";
+    }
+    
+    public String getContentType() {
+        return contentType;
     }
 
     public ProgressFileEntityListener getProgressFileEntityListener() {
@@ -25,7 +30,6 @@ public class ProgressFileEntity extends FileEntity {
         _listener = listener;
     }
 
-    @Override
     public void writeTo(OutputStream outstream) throws IOException {
         if (outstream == null) {
             throw new IllegalArgumentException("Output stream may not be null");

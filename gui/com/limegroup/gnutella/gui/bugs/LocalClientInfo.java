@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.limewire.setting.Setting;
 import org.limewire.setting.SettingsFactory;
 import org.limewire.util.CommonUtils;
@@ -289,7 +287,7 @@ public final class LocalClientInfo extends LocalAbstractInfo {
     public String getShortParamList() {
         StringBuilder sb = new StringBuilder(2000);
         for (NameValuePair nvp : getPostRequestParams())
-            sb.append(nvp.getName()).append("=").append(nvp.getValue()).append("\n");
+            sb.append(nvp.name).append("=").append(nvp.value).append("\n");
         return sb.toString();
     }
 	
@@ -298,6 +296,17 @@ public final class LocalClientInfo extends LocalAbstractInfo {
 	 */
 	private final void append(List<? super NameValuePair> l, final String k, final String v){
 	    if( v != null )
-	        l.add(new BasicNameValuePair(k, v));
+	        l.add(new NameValuePair(k, v));
 	}
+	
+    private static final class NameValuePair {
+
+        private final String name;
+        private final String value;
+
+        public NameValuePair(final String name, final String value) {
+            this.name = name;
+            this.value = value;
+        }
+    }
 }

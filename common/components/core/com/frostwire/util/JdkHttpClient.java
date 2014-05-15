@@ -39,8 +39,6 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
-import org.apache.http.util.ByteArrayBuffer;
-
 import com.frostwire.logging.Logger;
 
 /**
@@ -370,7 +368,7 @@ final class JdkHttpClient implements HttpClient {
         InputStream in = null;
         try {
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", fileEntity.getContentType().getValue());
+            conn.setRequestProperty("Content-Type", fileEntity.getContentType());
             conn.setRequestProperty("charset", "utf-8");
             conn.setUseCaches(false);
 
