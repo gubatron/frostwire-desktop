@@ -36,7 +36,7 @@ public class EztvSearchPerformer extends TorrentRegexSearchPerformer<EztvSearchR
 
     private static final int MAX_RESULTS = 20;
     private static final String REGEX = "(?is)<a href=\"(/ep/.*?)\"";
-    private static final String HTML_REGEX = "(?is)<td class=\"section_post_header\" colspan=\"2\"><b>(.*?)</b></td>.*?<td class=\"section_post_header\">Download Links</td>.*?<a href=\"magnet:\\?xt=urn:btih:(.*?)&.*?<a href=\"(http://.*?torrent)\".*?\".*?<b>Released:</b> (.*?)<br />.*?<b>Filesize:</b> (.*?)<br />";
+    private static final String HTML_REGEX = "(?is)<td class=\"section_post_header\" colspan=\"2\"><b>(.*?)</b></td>.*?<td class=\"section_post_header\">Download Links</td>.*?<a href=\"magnet:\\?xt=urn:btih:(.*?)&.*?/a> <a href=\"(http://\\S*?torrent)\" class=\"download_.\" title=\"Download Mirror #.\".*?<b>Released:</b> (.*?)<br />.*?<b>Filesize:</b> (.*?)<br />";
 
     public EztvSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
         super(domainAliasManager, token, keywords, timeout, 1, 2 * MAX_RESULTS, MAX_RESULTS, REGEX, HTML_REGEX); 
@@ -70,7 +70,7 @@ public class EztvSearchPerformer extends TorrentRegexSearchPerformer<EztvSearchR
     /**
     public static void main(String[] args) throws Throwable {
         
-        byte[] readAllBytes = Files.readAllBytes(Paths.get("/home/gubatron/tmp/eztv2.html"));
+        byte[] readAllBytes = Files.readAllBytes(Paths.get("/Users/gubatron/tmp/eztv3.html"));
         String fileStr = new String(readAllBytes,"utf-8");
 
         //Pattern pattern = Pattern.compile(REGEX);
@@ -85,21 +85,21 @@ public class EztvSearchPerformer extends TorrentRegexSearchPerformer<EztvSearchR
             
             System.out.println("group 1: " + matcher.group(1));
             System.out.println("group 2: " + matcher.group(2));
-            //System.out.println("group 3: " + matcher.group(3));
+            System.out.println("group 3: " + matcher.group(3));
             
             
             //test HTML_REGEX
             System.out.println("group 4: " + matcher.group(4));
             System.out.println("group 5: " + matcher.group(5));
             
-            /**
-            System.out.println("group 6: " + matcher.group(6));
             
-            System.out.println("group 7: " + matcher.group(7));
+            //System.out.println("group 6: " + matcher.group(6));
+            
+            //System.out.println("group 7: " + matcher.group(7));
             
             System.out.println("===");
         }
         //System.out.println("-done-");
-    }   
+    }
     */
 }
