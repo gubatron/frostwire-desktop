@@ -4,7 +4,7 @@ frostwire (5.7.3) stable; urgency=high
   * Fixed broken EZTV search.
   * Removed apache httpclient and httpcore libraries.
 	
- -- FrostWire Team <contact@frostwire.com>  Thu, 15 May 2014 16:24:57 -0500
+ -- FrostWire Team <contact@frostwire.com>  Fri, 23 May 2014 16:20:00 -0500
 
 frostwire (5.7.2) stable; urgency=high
   * uTP support enabled.
