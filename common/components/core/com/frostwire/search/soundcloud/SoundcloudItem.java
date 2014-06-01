@@ -21,6 +21,7 @@ package com.frostwire.search.soundcloud;
 /**
  * @author gubatron
  * @author aldenml
+ * (gubatron:just saying... In XML they actually call this a <track>, should probably rename to SoundcloudTrack instead)
  *
  */
 public class SoundcloudItem {

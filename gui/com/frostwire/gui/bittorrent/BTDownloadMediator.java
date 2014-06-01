@@ -47,10 +47,14 @@ import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.transfers.PeerHttpUpload;
 import com.frostwire.logging.Logger;
+import com.frostwire.search.soundcloud.SoundCloudPlaylist;
+import com.frostwire.search.soundcloud.SoundcloudItem;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.JsonUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
@@ -638,7 +642,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     private boolean selectionHasMP4s(File saveLocation) {
-        boolean hasMP4Files = saveLocation != null && (LibraryUtils.directoryContainsExtension(saveLocation, 4, "mp4") || (saveLocation.isFile() && FilenameUtils.hasExtension(saveLocation.getAbsolutePath(), "mp4")));
+        boolean hasMP4Files = saveLocation != null
+                && (LibraryUtils.directoryContainsExtension(saveLocation, 4, "mp4") || (saveLocation.isFile() && FilenameUtils.hasExtension(saveLocation.getAbsolutePath(), "mp4")));
         return hasMP4Files;
     }
 
@@ -652,12 +657,12 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             return true;
         }
         File saveLocation = d.getSaveLocation();
-        
+
         //in case it's a single picked .torrent/magnet download
-        if (saveLocation != null && saveLocation.isDirectory() && LibraryUtils.directoryContainsASinglePlayableFile(saveLocation,4)) {
+        if (saveLocation != null && saveLocation.isDirectory() && LibraryUtils.directoryContainsASinglePlayableFile(saveLocation, 4)) {
             saveLocation = saveLocation.listFiles()[0];
         }
-        
+
         boolean hasPlayableFiles = saveLocation != null && (LibraryUtils.directoryContainsPlayableExtensions(saveLocation, 4) || (saveLocation.isFile() && MediaPlayer.isPlayableFile(saveLocation)));
         return hasPlayableFiles;
     }
@@ -695,7 +700,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     public void openTorrentSearchResult(final TorrentSearchResult sr, final boolean partialDownload, final ActionListener postPartialDownloadAction) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), sr.getDetailsUrl(), sr.getDisplayName(), sr.getHash(), sr.getSize(), partialDownload, postPartialDownloadAction, null);
+                BTDownload downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), sr.getDetailsUrl(), sr.getDisplayName(), sr.getHash(), sr.getSize(), partialDownload, postPartialDownloadAction,
+                        null);
                 add(downloader);
             }
         });
@@ -748,7 +754,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                     e.printStackTrace();
                     if (!e.toString().contains("No files selected by user")) {
                         // could not read torrent file or bad torrent file.
-                        GUIMediator.showError(I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.", torrentFile.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
+                        GUIMediator.showError(
+                                I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.",
+                                        torrentFile.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
                         //System.out.println("***Error happened from Download Mediator: " +  ioe);
                         //GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
                     }
@@ -757,13 +765,13 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             }
         });
     }
-    
+
     @Override
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
         TABLE.setDefaultRenderer(PaymentOptions.class, new PaymentOptionsRenderer());
     }
-    
+
     @Override
     protected void setDefaultEditors() {
         TableColumnModel model = TABLE.getColumnModel();
@@ -816,7 +824,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                     e.printStackTrace();
                     if (!e.toString().contains("No files selected by user")) {
                         // could not read torrent file or bad torrent file.
-                        GUIMediator.showError(I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.", torrentFile.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
+                        GUIMediator.showError(
+                                I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.",
+                                        torrentFile.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
                         //System.out.println("***Error happened from Download Mediator: " +  ioe);
                         //GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
                     }
@@ -936,14 +946,43 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openSoundcloudTrackUrl(final String trackUrl, final String title, final SoundcloudSearchResult sr) {
-        GUIMediator.safeInvokeLater(new Runnable() {
-            public void run() {
-                if (!isDownloading(sr.getDownloadUrl())) {
-                    BTDownload downloader = new SoundcloudDownload(sr);
-                    add(downloader);
+        if (sr != null) {
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    if (!isDownloading(sr.getDownloadUrl())) {
+                        BTDownload downloader = new SoundcloudDownload(sr);
+                        add(downloader);
+                    }
                 }
+            });
+        } else if (trackUrl != null) {
+            //resolve track information using http://api.soundcloud.com/resolve?url=<url>&client_id=b45b1aa10f1ac2941910a7f0d10f8e28
+            final String clientId="b45b1aa10f1ac2941910a7f0d10f8e28";
+            try {
+                final String resolveURL = "http://api.soundcloud.com/resolve.json?url="+trackUrl+"&client_id="+clientId;
+                final String json = HttpClientFactory.newInstance().get(resolveURL,10000);
+                System.out.println(json);
+
+                if (trackUrl.contains("/sets/")) {
+                    //download a whole playlist
+                    final SoundCloudPlaylist playlist = JsonUtils.toObject(json, SoundCloudPlaylist.class);
+                    for (SoundcloudItem scItem : playlist.tracks) {
+                        SoundcloudSearchResult srNew = new SoundcloudSearchResult(scItem, clientId);
+                        openSoundcloudTrackUrl(trackUrl, scItem.title, srNew);
+                    }
+                } else {
+                    //download single track
+                    final SoundcloudItem scItem = JsonUtils.toObject(json, SoundcloudItem.class);
+                    if (scItem != null) {
+                        SoundcloudSearchResult srNew = new SoundcloudSearchResult(scItem, clientId);
+                        openSoundcloudTrackUrl(trackUrl, scItem.title, srNew);
+                    }
+                }
+                
+            } catch (Throwable e) {
+                e.printStackTrace();
             }
-        });
+        }
     }
 
     public void openYouTubeItem(final YouTubeCrawledSearchResult sr) {

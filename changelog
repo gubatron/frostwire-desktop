@@ -1,3 +1,9 @@
+frostwire (5.7.4) stable; urgency=high
+  * Recovered ability to download soundcloud urls.
+  * Can download entire soundcloud playlsits from playlist url.
+	
+ -- FrostWire Team <contact@frostwire.com>  Sun, 1 June 2014 00:54:06 -0500
+
 frostwire (5.7.3) stable; urgency=high
   * New Yifi search.
   * Added Canonical Peer Priority support. (BEP40)

@@ -54,7 +54,10 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
         this.source = buildSource(item);
         this.thumbnailUrl = buildThumbnailUrl(item.artwork_url);
         this.date = buildDate(item.created_at);
-        this.downloadUrl = (item.download_url + "?client_id=" + clientId).replace("https://", "http://");
+        
+        final String downloadUrl = ((item.download_url != null) ? item.download_url : item.stream_url) + "?client_id=" + clientId;
+        this.downloadUrl = downloadUrl.replace("https://", "http://");
+        
     }
 
     @Override
