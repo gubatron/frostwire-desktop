@@ -50,14 +50,15 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
         this.username = buildUsername(item);
         this.trackUrl = item.permalink_url;
         this.filename = item.permalink + "-soundcloud.mp3";
-        this.size = item.original_content_size;
+        System.out.println("Original Item Size: " + item.original_content_size);
+        this.size = ((item.download_url != null) ? item.original_content_size : (int) (0.30 * ((float) item.original_content_size)));
+        System.out.println("Size after calculation: " + this.size);
         this.source = buildSource(item);
         this.thumbnailUrl = buildThumbnailUrl(item.artwork_url);
         this.date = buildDate(item.created_at);
         
         final String downloadUrl = ((item.download_url != null) ? item.download_url : item.stream_url) + "?client_id=" + clientId;
-        this.downloadUrl = downloadUrl.replace("https://", "http://");
-        
+        this.downloadUrl = downloadUrl.replace("https://", "http://");        
     }
 
     @Override

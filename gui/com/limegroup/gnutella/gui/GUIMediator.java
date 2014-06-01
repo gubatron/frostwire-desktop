@@ -1735,12 +1735,12 @@ public final class GUIMediator {
 //    }
 
     public void openSoundcloudTrackUrl(String trackUrl, String title) {
-        getBTDownloadMediator().openSoundcloudTrackUrl(trackUrl, title, null);
+        getBTDownloadMediator().downloadSoundcloudFromTrackUrlOrSearchResult(trackUrl, title, null);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
     public void openSoundcloudTrackUrl(String trackUrl, String title, SoundcloudSearchResult sr) {
-        getBTDownloadMediator().openSoundcloudTrackUrl(trackUrl, title, sr);
+        getBTDownloadMediator().downloadSoundcloudFromTrackUrlOrSearchResult(trackUrl, title, sr);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
