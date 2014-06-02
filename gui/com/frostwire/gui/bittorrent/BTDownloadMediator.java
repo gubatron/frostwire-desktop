@@ -47,7 +47,7 @@ import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.transfers.PeerHttpUpload;
 import com.frostwire.logging.Logger;
-import com.frostwire.search.soundcloud.SoundCloudPlaylist;
+import com.frostwire.search.soundcloud.SoundcloudPlaylist;
 import com.frostwire.search.soundcloud.SoundcloudItem;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
@@ -965,7 +965,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
                 if (trackUrl.contains("/sets/")) {
                     //download a whole playlist
-                    final SoundCloudPlaylist playlist = JsonUtils.toObject(json, SoundCloudPlaylist.class);
+                    final SoundcloudPlaylist playlist = JsonUtils.toObject(json, SoundcloudPlaylist.class);
                     for (SoundcloudItem scItem : playlist.tracks) {
                         if (scItem.downloadable) {
                             SoundcloudSearchResult srNew = new SoundcloudSearchResult(scItem, clientId);

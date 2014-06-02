@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014,, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,15 +50,11 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
         this.username = buildUsername(item);
         this.trackUrl = item.permalink_url;
         this.filename = item.permalink + "-soundcloud.mp3";
-        System.out.println("Original Item Size: " + item.original_content_size);
-        this.size = ((item.download_url != null) ? item.original_content_size : (int) (0.30 * ((float) item.original_content_size)));
-        System.out.println("Size after calculation: " + this.size);
+        this.size = buildSize(item);
         this.source = buildSource(item);
         this.thumbnailUrl = buildThumbnailUrl(item.artwork_url);
         this.date = buildDate(item.created_at);
-        
-        final String downloadUrl = ((item.download_url != null) ? item.download_url : item.stream_url) + "?client_id=" + clientId;
-        this.downloadUrl = downloadUrl.replace("https://", "http://");        
+        this.downloadUrl = buildDownloadUrl(item, clientId);
     }
 
     @Override
@@ -116,6 +112,10 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
         }
     }
 
+    private long buildSize(SoundcloudItem item) {
+        return ((item.download_url != null) ? item.original_content_size : (int) (0.30 * ((float) item.original_content_size)));
+    }
+
     private String buildSource(SoundcloudItem item) {
         if (item.user != null && item.user.username != null) {
             return "Soundcloud - " + item.user.username;
@@ -142,5 +142,10 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
         } catch (ParseException e) {
             return System.currentTimeMillis();
         }
+    }
+
+    private String buildDownloadUrl(SoundcloudItem item, String clientId) {
+        String downloadUrl = ((item.download_url != null) ? item.download_url : item.stream_url) + "?client_id=" + clientId;
+        return downloadUrl.replace("https://", "http://");
     }
 }
