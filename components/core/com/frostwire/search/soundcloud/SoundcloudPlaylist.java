@@ -18,25 +18,13 @@
 
 package com.frostwire.search.soundcloud;
 
+import java.util.List;
+
 /**
  * @author gubatron
  * @author aldenml
- * (gubatron:just saying... In XML they actually call this a <track>, should probably rename to SoundcloudTrack instead)
  *
  */
-public class SoundcloudItem {
-
-    public int id;
-    public SoundcloundUser user;
-    public String uri;
-    public int duration;
-    public String permalink;
-    public String title;
-    public String permalink_url;
-    public String artwork_url;
-    public String stream_url;
-    public String created_at;
-    public boolean downloadable;
-    public String download_url;
-    public long original_content_size;
+public class SoundcloudPlaylist {
+    public List<SoundcloudItem> tracks; 
 }
