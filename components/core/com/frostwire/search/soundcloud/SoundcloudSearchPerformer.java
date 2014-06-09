@@ -34,6 +34,7 @@ import com.frostwire.util.JsonUtils;
 public class SoundcloudSearchPerformer extends PagedWebSearchPerformer {
 
     private static final String CLIENT_ID = "b45b1aa10f1ac2941910a7f0d10f8e28";
+    private static final String APP_VERSION = "dd9d3970";
 
     public SoundcloudSearchPerformer(DomainAliasManager domainAliasManager, long token, String keywords, int timeout) {
         super(domainAliasManager, token, keywords, timeout, 1);
@@ -52,7 +53,7 @@ public class SoundcloudSearchPerformer extends PagedWebSearchPerformer {
 
         for (SoundcloudItem item : response.collection) {
             if (!isStopped() && item.downloadable) {
-                SoundcloudSearchResult sr = new SoundcloudSearchResult(item, CLIENT_ID);
+                SoundcloudSearchResult sr = new SoundcloudSearchResult(item, CLIENT_ID, APP_VERSION);
                 result.add(sr);
             }
         }
