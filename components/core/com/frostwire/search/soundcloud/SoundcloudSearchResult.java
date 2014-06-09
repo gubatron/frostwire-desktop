@@ -45,7 +45,7 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
     private final String downloadUrl;
     private final long size;
 
-    public SoundcloudSearchResult(SoundcloudItem item, String clientId) {
+    public SoundcloudSearchResult(SoundcloudItem item, String clientId, String appVersion) {
         this.displayName = item.title;
         this.username = buildUsername(item);
         this.trackUrl = item.permalink_url;
@@ -54,7 +54,8 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
         this.source = buildSource(item);
         this.thumbnailUrl = buildThumbnailUrl(item.artwork_url);
         this.date = buildDate(item.created_at);
-        this.downloadUrl = buildDownloadUrl(item, clientId);
+        this.downloadUrl = buildDownloadUrl(item, clientId, appVersion);
+        System.out.println("SoundCloudSearchResult().downloadUrl => " + this.downloadUrl);
     }
 
     @Override
@@ -144,8 +145,8 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
         }
     }
 
-    private String buildDownloadUrl(SoundcloudItem item, String clientId) {
-        String downloadUrl = ((item.download_url != null) ? item.download_url : item.stream_url) + "?client_id=" + clientId;
+    private String buildDownloadUrl(SoundcloudItem item, String clientId, String appVersion) {
+        String downloadUrl = ((item.download_url != null) ? item.download_url : item.stream_url) + "?client_id=" + clientId + "&app_version=" + appVersion;
         return downloadUrl.replace("https://", "http://");
     }
 }
