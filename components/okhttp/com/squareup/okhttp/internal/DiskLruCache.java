@@ -660,6 +660,10 @@ public final class DiskLruCache implements Closeable {
     OkBuffer buffer = Util.readFully(Okio.source(in));
     return buffer.readUtf8(buffer.size());
   }
+  
+  public boolean containsKey(String key) {
+      return lruEntries.containsKey(key);
+  }
 
   /** A snapshot of the values for an entry. */
   public final class Snapshot implements Closeable {
