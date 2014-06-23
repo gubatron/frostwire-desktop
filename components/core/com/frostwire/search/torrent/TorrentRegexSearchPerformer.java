@@ -19,8 +19,6 @@ package com.frostwire.search.torrent;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.frostwire.logging.Logger;
 import com.frostwire.search.CrawlRegexSearchPerformer;
@@ -30,6 +28,8 @@ import com.frostwire.search.PerformersHelper;
 import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.SearchResult;
 import com.frostwire.search.domainalias.DomainAliasManager;
+import com.google.code.regexp.Matcher;
+import com.google.code.regexp.Pattern;
 
 /**
  * 
@@ -81,7 +81,7 @@ public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResul
 
             try {
                 if (matcher.find()) {
-                    T searchResult = fromHtmlMatcher(sr, new SearchMatcher(matcher));
+                    T searchResult = fromHtmlMatcher(sr, SearchMatcher.from(matcher));
                     if (searchResult != null) {
                         list.add(searchResult);
                     }
