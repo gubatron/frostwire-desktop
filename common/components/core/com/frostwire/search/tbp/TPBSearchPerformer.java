@@ -19,13 +19,13 @@
 package com.frostwire.search.tbp;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 import com.frostwire.search.CrawlRegexSearchPerformer;
 import com.frostwire.search.PerformersHelper;
 import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.SearchResult;
 import com.frostwire.search.domainalias.DomainAliasManager;
+import com.google.code.regexp.Pattern;
 
 /**
  * 

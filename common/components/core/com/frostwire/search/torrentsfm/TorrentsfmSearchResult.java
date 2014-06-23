@@ -59,14 +59,14 @@ public class TorrentsfmSearchResult extends AbstractTorrentSearchResult {
 
     public TorrentsfmSearchResult(String domainName, String detailsUrl, SearchMatcher matcher) {
         this.detailsUrl = detailsUrl;
-        this.thumbnailUrl = parseThumbnailUrl(domainName, matcher.group(1));
-        this.filename = matcher.group(2);
-        this.size = parseSize(matcher.group(3));
-        this.creationTime = parseCreationTime(matcher.group(5));
-        this.seeds = parseSeeds(matcher.group(4));
+        this.thumbnailUrl = parseThumbnailUrl(domainName, matcher.group("thumbnail"));
+        this.filename = matcher.group("title");
+        this.size = parseSize(matcher.group("filesize"));
+        this.creationTime = parseCreationTime(matcher.group("created"));
+        this.seeds = parseSeeds(matcher.group("seeds"));
         //a magnet
-        this.torrentUrl = matcher.group(6);//"http://" + domainName + "/tor/" + matcher.group(5) + ".torrent";
-        this.displayName = matcher.group(2);//HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename));
+        this.torrentUrl = matcher.group("magnet");//"http://" + domainName + "/tor/" + matcher.group(5) + ".torrent";
+        this.displayName = filename;//HtmlManipulator.replaceHtmlEntities(FilenameUtils.getBaseName(filename));
         this.infoHash = parseInfoHash(torrentUrl);
     }
 
