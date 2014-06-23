@@ -242,9 +242,7 @@ public class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult impl
     private String getBestThumbnailUrl(LinkInfo linfo) {
         String thumbnailUrl = null;
         if (linfo != null && linfo.thumbnails != null) {
-            if (!StringUtils.isNullOrEmpty(linfo.thumbnails.maxres)) {
-                thumbnailUrl = linfo.thumbnails.maxres;
-            } else if (!StringUtils.isNullOrEmpty(linfo.thumbnails.hq)) {
+            if (!StringUtils.isNullOrEmpty(linfo.thumbnails.hq)) {
                 thumbnailUrl = linfo.thumbnails.hq;
             } else if (!StringUtils.isNullOrEmpty(linfo.thumbnails.mq)) {
                 thumbnailUrl = linfo.thumbnails.mq;
