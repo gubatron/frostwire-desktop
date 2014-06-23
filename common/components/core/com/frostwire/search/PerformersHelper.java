@@ -43,14 +43,14 @@ public final class PerformersHelper {
     public static List<? extends SearchResult> searchPageHelper(RegexSearchPerformer<?> performer, String page, int regexMaxResults) {
         List<SearchResult> result = new LinkedList<SearchResult>();
 
-        Matcher matcher = performer.getPattern().matcher(new MaxIterCharSequence(page, 2 * page.length()));
+        SearchMatcher matcher = SearchMatcher.from(performer.getPattern().matcher(new MaxIterCharSequence(page, 2 * page.length())));
 
         int max = regexMaxResults;
 
         int i = 0;
 
         while (matcher.find() && i < max && !performer.isStopped()) {
-            SearchResult sr = performer.fromMatcher(new SearchMatcher(matcher));
+            SearchResult sr = performer.fromMatcher(matcher);
             if (sr != null) {
                 result.add(sr);
                 i++;
