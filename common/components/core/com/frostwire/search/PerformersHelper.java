@@ -20,7 +20,6 @@ package com.frostwire.search;
 import java.io.ByteArrayInputStream;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
 
 import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
 import com.frostwire.search.torrent.TorrentCrawledSearchResult;

@@ -40,6 +40,8 @@ public class TorrentsfmSearchPerformer extends TorrentRegexSearchPerformer<Torre
     private static final int MAX_RESULTS = 20;
     private static final String REGEX = "(?is)<li class=\"grid_6 alpha omega\"><div class=\"grid_3 alpha omega\"><a title=\"(.*?)\" href=\'(.*?)\'>.*?</span> Download</a></div></li>";
     private static final String HTML_REGEX = "(?is)<section id=\"download\" class=\"grid_24\"><div class=\"grid_6 alpha suffix_1\">.*?<img src=\"(?<thumbnail>.*?)\".*?/>.*?</div><div class=\"grid_17 omega\"><h1 id=\"torrent_title\">(?<title>.*?)</h1>.*?<div class=\"size\">(?<filesize>.*?)</div>.*?<span title=\"(?<seeds>[0-9]*) seeds / [0-9]* leechers\">.*?(<dl class=\"date\"><dt>Created</dt><dd>(?<created>.*?)</dd></dl>).*?<a class=\"download\".*?data-track=\"Download,Magnet,File / Big Button\" data-downloader=\"1\" href=\"(?<magnet>.*?)\"><span class=\"icon download-button\">";
+    private static final String EO_REGEX = "<span class=\"icon download-button\">";
+    private static final int EO_REGEX_LENGTH = EO_REGEX.length();;
     
     // matcher groups: 1 -> thumbnail url
     //                 2 -> title
@@ -68,6 +70,16 @@ public class TorrentsfmSearchPerformer extends TorrentRegexSearchPerformer<Torre
     @Override
     protected TorrentsfmSearchResult fromHtmlMatcher(CrawlableSearchResult sr, SearchMatcher matcher) {
         return new TorrentsfmSearchResult(getDomainNameToUse(), sr.getDetailsUrl(), matcher);
+    }
+    
+    @Override
+    protected int prefixOffset(String html) {
+        return html.indexOf("<section id=\"download\"");
+    }
+    
+    @Override
+    protected int suffixOffset(String html) {
+        return html.indexOf(EO_REGEX) + EO_REGEX_LENGTH;
     }
     
     public static void main(String[] args) throws Throwable {
