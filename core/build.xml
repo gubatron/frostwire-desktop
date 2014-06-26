@@ -41,6 +41,7 @@
                 includeantruntime = "false">
 
                 <classpath refid="build.limewire.core.classpath"/>
+                <src path="${limewire.home}/common/components/gson"/>
                 <src path="${limewire.home}/common/components/json"/>
                 <src path="${limewire.home}/common/components/apache"/>
                 <src path="${limewire.home}/common/components/jmdns"/>

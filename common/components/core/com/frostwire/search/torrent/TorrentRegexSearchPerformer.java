@@ -19,8 +19,6 @@ package com.frostwire.search.torrent;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.frostwire.logging.Logger;
 import com.frostwire.search.CrawlRegexSearchPerformer;
@@ -30,6 +28,8 @@ import com.frostwire.search.PerformersHelper;
 import com.frostwire.search.SearchMatcher;
 import com.frostwire.search.SearchResult;
 import com.frostwire.search.domainalias.DomainAliasManager;
+import com.google.code.regexp.Matcher;
+import com.google.code.regexp.Pattern;
 
 /**
  * 
@@ -66,6 +66,8 @@ public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResul
 
         return crawlUrl;
     }
+    
+    
 
     @Override
     protected List<? extends SearchResult> crawlResult(CrawlableSearchResult sr, byte[] data) throws Exception {
@@ -75,25 +77,60 @@ public abstract class TorrentRegexSearchPerformer<T extends CrawlableSearchResul
             //in case we fetched a torrent's info (magnet, or the .torrent itself) to obtain 
             list.addAll(PerformersHelper.crawlTorrent(this, (TorrentCrawlableSearchResult) sr, data));
         } else {
-            String html = new String(data, "UTF-8");
+            String html = reduceHtml(new String(data, "UTF-8"));
 
-            Matcher matcher = htmlDetailPagePattern.matcher(new MaxIterCharSequence(html, 2 * html.length()));
-
-            try {
-                if (matcher.find()) {
-                    T searchResult = fromHtmlMatcher(sr, new SearchMatcher(matcher));
-                    if (searchResult != null) {
-                        list.add(searchResult);
+            if (html != null) {
+                Matcher matcher = htmlDetailPagePattern.matcher(new MaxIterCharSequence(html, 2 * html.length()));
+    
+                try {
+                    if (matcher.find()) {
+                        T searchResult = fromHtmlMatcher(sr, SearchMatcher.from(matcher));
+                        if (searchResult != null) {
+                            list.add(searchResult);
+                        }
+                    } else {
+                        LOG.error("Update Necessary:  Search broken for " + sr.getClass().getPackage().getName() + " (please notify dev-team on twitter @frostwire or write to contact@frostwire.com if you keep seeing this message.)");
                     }
-                } else {
-                    LOG.error("Possible Update Necessary:  Search broken for " + sr.getClass().getPackage().getName() + " (please notify dev-team on twitter @frostwire or write to contact@frostwire.com if you keep seeing this message.)");
+                } catch (Exception e) {
+                    throw new Exception("URL:" + sr.getDetailsUrl(), e);
                 }
-            } catch (Exception e) {
-                throw new Exception("URL:" + sr.getDetailsUrl(), e);
+            } else {
+                LOG.error("Update Necessary: HTML could not be reduced for optimal search. Search broken for " + sr.getClass().getPackage().getName() + " (please notify dev-team on twitter @frostwire or write to contact@frostwire.com if you keep seeing this message.)");
             }
         }
 
         return list;
+    }
+
+    /**
+     * Sometimes the HTML_REGEX has to work on too big of an HTML file.
+     * In order to minimize the chance for long backtracking times we can
+     * override this methods to specify what offsets of the HTML file our
+     * REGEX should be focusing on.
+     */
+    protected int prefixOffset(String html) {
+        return 0;
+    }
+    
+    /**
+     * Sometimes the HTML_REGEX has to work on too big of an HTML file.
+     * In order to minimize the chance for long backtracking times we can
+     * override this methods to specify what offsets of the HTML file our
+     * REGEX should be focusing on.
+     */
+    protected int suffixOffset(String html) {
+        return html.length();
+    }
+
+    private String reduceHtml(String html) {
+        int preOffset = prefixOffset(html);
+        int sufOffset = suffixOffset(html);
+        if (preOffset == -1 || sufOffset == -1) {
+            html = null;
+        } else if (preOffset > 0 || sufOffset < html.length()) {
+            html = new String(html.substring(preOffset, sufOffset).toCharArray());
+        }
+        return html;
     }
 
     protected abstract T fromHtmlMatcher(CrawlableSearchResult sr, SearchMatcher matcher);

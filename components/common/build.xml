@@ -13,7 +13,7 @@
     <target name="initialize" unless="initialized.common">
         <do.setup-properties component="common">
             <src-classpath>
-                <pathelement location="${limewire.lib.jars}/gson-1.4.jar"/>
+
             </src-classpath>
         </do.setup-properties>
     </target>
@@ -37,6 +37,7 @@
 
         <javac destdir="${limewire.home}/components/common/build/classes" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}" encoding="ISO-8859-1" source="${compile.source}" target="${compile.target}" srcdir="${limewire.home}/components/common/src/main/java" excludes="examples/**" includeantruntime="false">
             <classpath refid="build.limewire.core.classpath" />
+            <src path="${limewire.home}/common/components/gson" />
             <src path="${limewire.home}/common/components/json" />
             <src path="${limewire.home}/common/components/apache" />
             <src path="${limewire.home}/common/components/jmdns" />
