@@ -1,10 +1,11 @@
 frostwire (5.7.4) stable; urgency=high
+  * Fixes issues with youtube downloads.
   * Recovered ability to download soundcloud urls.
-  * Can download entire soundcloud playlsits from playlist url.
+  * Can download entire soundcloud playlists from playlist url.
   * Fixed broken Torrents.fm search.
   * Updated Gson library, included the sources into our repo.
 	
- -- FrostWire Team <contact@frostwire.com>  Mon, 23 June 2014 15:45:35 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 26 June 2014 15:44:35 -0500
 
 frostwire (5.7.3) stable; urgency=high
   * New Yifi search.
