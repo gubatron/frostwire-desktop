@@ -52,7 +52,13 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
         this.filename = item.permalink + "-soundcloud.mp3";
         this.size = buildSize(item);
         this.source = buildSource(item);
-        this.thumbnailUrl = buildThumbnailUrl(item.artwork_url);
+        
+        String userAvatarUrl = null;
+        if (item.user != null) {
+            userAvatarUrl = item.user.avatar_url;
+        }
+        this.thumbnailUrl = buildThumbnailUrl(item.artwork_url != null ? item.artwork_url : userAvatarUrl);
+
         this.date = buildDate(item.created_at);
         this.downloadUrl = buildDownloadUrl(item, clientId, appVersion);
         System.out.println("SoundCloudSearchResult().downloadUrl => " + this.downloadUrl);
@@ -128,11 +134,14 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
     private String buildThumbnailUrl(String str) {
         //http://i1.sndcdn.com/artworks-000019588274-le8r71-crop.jpg?be0edad
         //https://i1.sndcdn.com/artworks-000019588274-le8r71-t500x500.jpg
+        //https://i1.sndcdn.com/avatars-000081692254-cxjo72-t500x500.jpg?2aaad5e
         String url = null;
-        try {
-            url = str.substring(0, str.indexOf("-large.")) + "-t300x300.jpg";
-        } catch (Throwable e) {
-            // ignore
+        if (str != null) {
+            try {
+                url = str.substring(0, str.indexOf("-large.")) + "-t300x300.jpg";
+            } catch (Throwable e) {
+                // ignore
+            }
         }
         return url;
     }
