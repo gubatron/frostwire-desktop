@@ -218,6 +218,8 @@ public final class VuzeManager {
             COConfigurationManager.setParameter("network.control.read.idle.time", 1000);
 
             COConfigurationManager.setParameter("network.max.simultaneous.connect.attempts", 1);
+            
+            COConfigurationManager.setParameter("Enable incremental file creation", Long.valueOf(1));
         }
 
         if (conf.getMessages() != null) {
