@@ -124,7 +124,7 @@ public final class VuzeUtils {
     /**
      * Deletes incomplete and skipped files.
      */
-    static void finalCleanup(DownloadManager dm) {
+    public static void finalCleanup(DownloadManager dm) {
         Set<File> toDelete = getIgnorableFiles(dm);
 
         for (File f : toDelete) {

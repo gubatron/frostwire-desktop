@@ -281,7 +281,7 @@ public final class VuzeDownloadManager {
         return equals;
     }
 
-    DownloadManager getDM() {
+    public DownloadManager getDM() {
         return dm;
     }
 
