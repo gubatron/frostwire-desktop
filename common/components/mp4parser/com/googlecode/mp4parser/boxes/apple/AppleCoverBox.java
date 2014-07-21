@@ -15,6 +15,10 @@ public class AppleCoverBox extends AppleDataBox {
     public AppleCoverBox() {
         super("covr", 1);
     }
+    
+    public byte[] getCoverData() {
+        return data;
+    }
 
     @Override
     protected byte[] writeData() {
