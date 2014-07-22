@@ -1,0 +1,125 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+
+sourceSets {
+
+    //and before we do these frostwire-desktop components
+    //let's make sure we already have frostwire-commons done
+    commonComponentsApache {
+        java {
+            srcDir 'common/components/apache'
+        }
+    }
+
+    commonComponentsGson {
+        java {
+            srcDir 'common/components/gson'
+        }
+    }
+
+    commonComponentsHttpserver {
+        java {
+            srcDir 'common/components/httpserver'
+        }
+    }
+
+    commonComponentsJdownloader {
+        java {
+            srcDir 'common/components/jdownloader'
+        }
+    }
+
+    commonComponentsJdmns {
+        java {
+            srcDir 'common/components/jdmns'
+        }
+    }
+
+    commonComponentsJson {
+        java {
+            srcDir 'common/components/json'
+        }
+    }
+
+    commonComponentsMinicastle {
+        java {
+            srcDir 'common/components/minicastle'
+        }
+    }
+
+    commonComponentsMp4Parser {
+        java {
+            srcDir 'common/components/mp4parser'
+        }
+    }
+
+    commonComponentsOkHttp {
+        java {
+            srcDir 'common/components/okhttp'
+        }
+    }
+
+    commonComponentsVuze {
+        java {
+            srcDir 'common/components/vuze'
+            //TODO: Figure out exclusions and if they even go here.
+        }
+    }
+
+    commonComponentsCore {
+        java {
+            srcDir 'common/components/core'
+        }
+    }
+
+    //now components
+
+    componentsSetting {
+        java {
+            srcDir 'components/setting/src'
+        }
+    }
+
+    componentsCommon {
+        java {
+            srcDir 'components/common/src'
+        }
+    }
+
+    componentsResources {
+        resources {
+            srcDir 'components/resources/src/main/resources'
+        }
+    }
+
+    componentsAlexandria {
+        java {
+            srcDir 'components/alexandria/src'
+        }
+    }
+
+    //now core
+
+    core {
+        java {
+            srcDir 'core'
+        }
+    }
+
+    //finally gui
+
+    gui {
+
+    }
+}
+
+dependencies {
+
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class: com.limegroup.gnutella.gui.Main'
+    }
+}
