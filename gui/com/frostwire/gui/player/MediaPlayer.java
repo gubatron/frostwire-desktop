@@ -26,7 +26,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
-import java.nio.channels.ReadableByteChannel;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,6 +39,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import org.apache.commons.io.IOUtils;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.FileUtils;
 import org.limewire.util.FilenameUtils;
@@ -49,7 +49,7 @@ import com.coremedia.iso.BoxParser;
 import com.coremedia.iso.IsoFile;
 import com.coremedia.iso.PropertyBoxParserImpl;
 import com.coremedia.iso.boxes.Box;
-import com.coremedia.iso.boxes.ContainerBox;
+import com.coremedia.iso.boxes.Container;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.library.LibraryMediator;
@@ -60,6 +60,8 @@ import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.mplayer.PositionListener;
 import com.frostwire.mplayer.StateListener;
 import com.googlecode.mp4parser.AbstractBox;
+import com.googlecode.mp4parser.DataSource;
+import com.googlecode.mp4parser.FileDataSourceImpl;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.MPlayerMediator;
@@ -309,13 +311,10 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     }
 
     private long getDurationFromM4A(File f) {
-        FileInputStream fis = null;
         try {
-            fis = new FileInputStream(f);
-            FileChannel inFC = fis.getChannel();
             BoxParser parser = new PropertyBoxParserImpl() {
                 @Override
-                public Box parseBox(ReadableByteChannel byteChannel, ContainerBox parent) throws IOException {
+                public Box parseBox(DataSource byteChannel, Container parent) throws IOException {
                     Box box = super.parseBox(byteChannel, parent);
 
                     if (box instanceof AbstractBox) {
@@ -325,19 +324,15 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
                     return box;
                 }
             };
-            IsoFile isoFile = new IsoFile(inFC, parser);
+            IsoFile isoFile = new IsoFile(new FileDataSourceImpl(f), parser);
 
-            return isoFile.getMovieBox().getMovieHeaderBox().getDuration() / isoFile.getMovieBox().getMovieHeaderBox().getTimescale();
+            try {
+                return isoFile.getMovieBox().getMovieHeaderBox().getDuration() / isoFile.getMovieBox().getMovieHeaderBox().getTimescale();
+            } finally {
+                IOUtils.closeQuietly(isoFile);
+            }
         } catch (Throwable e) {
             return -1;
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (Throwable e) {
-                    // ignore
-                }
-            }
         }
     }
 
