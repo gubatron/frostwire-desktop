@@ -150,7 +150,7 @@ final class SlideControlsOverlay extends JPanel {
 
     private void setupSocialBar() {
         Slide slide = controller.getSlide();
-        JPanel container = new JPanel(new MigLayout("fillx"));
+        JPanel container = new JPanel(new MigLayout("fillx, ins 0"));
 
         JLabel labelAuthor = new JLabel(slide.author + " " + I18n.tr("on"));
         //labelAuthor.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
