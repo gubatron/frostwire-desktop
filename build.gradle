@@ -3,65 +3,24 @@ apply plugin: 'java'
 sourceCompatibility = 1.7
 
 sourceSets {
-
-    //and before we do these frostwire-desktop components
-    //let's make sure we already have frostwire-commons done
-    commonComponentsApache {
+    frostwire {
         java {
             srcDir 'common/components/apache'
-        }
-    }
-
-    commonComponentsGson {
-        java {
             srcDir 'common/components/gson'
-        }
-    }
-
-    commonComponentsHttpserver {
-        java {
             srcDir 'common/components/httpserver'
-        }
-    }
 
-    commonComponentsJdownloader {
-        java {
             srcDir 'common/components/jdownloader'
-        }
-    }
 
-    commonComponentsJdmns {
-        java {
             srcDir 'common/components/jdmns'
-        }
-    }
 
-    commonComponentsJson {
-        java {
             srcDir 'common/components/json'
-        }
-    }
 
-    commonComponentsMinicastle {
-        java {
             srcDir 'common/components/minicastle'
-        }
-    }
 
-    commonComponentsMp4Parser {
-        java {
             srcDir 'common/components/mp4parser'
-        }
-    }
 
-    commonComponentsOkHttp {
-        java {
             srcDir 'common/components/okhttp'
-        }
-    }
 
-    commonComponentsVuze {
-        java {
             srcDir 'common/components/vuze'
             exclude '**/bouncycastle/**'            
             exclude '**/jman/**'
@@ -69,72 +28,35 @@ sourceSets {
             exclude '**/swt/**'
             exclude '**/systray/**'
             exclude '**/tests/**'
-        }
-    }
 
-    commonComponentsCore {
-        java {
             srcDir 'common/components/core'
-        }
-    }
 
-    //now components
+            /////////////////////////////////////////////
 
-    componentsSetting {
-        java {
             srcDir 'components/setting/src'
-        }
-    }
 
-    componentsCommon {
-        java {
             srcDir 'components/common/src'
-        }
-    }
 
-    componentsResources {
+            srcDir 'components/alexandria/src'
+
+            srcDir 'components/osx_stub/src'
+
+            /////////////////////////////////////////////
+
+            srcDir 'core'
+
+            srcDir 'gui'
+        }
+
         resources {
             srcDir 'components/resources/src/main/resources'
-        }
-    }
-
-    componentsAlexandria {
-        java {
-            srcDir 'components/alexandria/src'
-        }
-    }
-
-    componentsCommon {
-        java {
-            srcDir 'components/common/src'
-        }
-    }
-
-    componentsOSXStub {
-        java {
-            srcDir 'components/osx_stub/src'
-        }
-    }
-
-    //now core
-
-    core {
-        java {
-            srcDir 'core'
-        }
-    }
-
-    //finally gui
-
-    gui {
-        java {
-            srcDir 'gui'
         }
     }
 }
 
 dependencies {
 }
+
 
 /**
 jar {
