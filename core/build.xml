@@ -47,6 +47,7 @@
                 <src path="${limewire.home}/common/components/jmdns"/>
                 <src path="${limewire.home}/common/components/jdownloader"/>
                 <src path="${limewire.home}/common/components/minicastle"/>
+                <src path="${limewire.home}/common/components/mp4parser"/>
                 <src path="${limewire.home}/common/vuze/azureus2/src"/>
                 <src path="${limewire.home}/common/vuze/azureus3/src"/>
                 <src path="${limewire.home}/common/vuze/plugins"/>
