@@ -140,23 +140,4 @@ class SlidePanelController {
             }
         }
     }
-
-    public void openFacebookPage() {
-        openSocialMediaPage(slide.facebook);
-    }
-
-    public void openTwitterPage() {
-        openSocialMediaPage(slide.twitter);
-    }
-
-    public void openGooglePlusPage() {
-        openSocialMediaPage(slide.gplus);
-    }
-
-    private void openSocialMediaPage(String url) {
-        if (!StringUtils.isNullOrEmpty(url)) {
-            GUIMediator.openURL(url);
-        }
-
-    }
 }
