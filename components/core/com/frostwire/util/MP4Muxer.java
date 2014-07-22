@@ -22,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
-import java.nio.channels.ReadableByteChannel;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -33,25 +32,27 @@ import com.coremedia.iso.BoxParser;
 import com.coremedia.iso.IsoFile;
 import com.coremedia.iso.PropertyBoxParserImpl;
 import com.coremedia.iso.boxes.Box;
-import com.coremedia.iso.boxes.ContainerBox;
+import com.coremedia.iso.boxes.Container;
 import com.coremedia.iso.boxes.FileTypeBox;
 import com.coremedia.iso.boxes.HandlerBox;
 import com.coremedia.iso.boxes.MetaBox;
 import com.coremedia.iso.boxes.MovieBox;
 import com.coremedia.iso.boxes.TrackBox;
 import com.coremedia.iso.boxes.UserDataBox;
-import com.coremedia.iso.boxes.apple.AppleAlbumArtistBox;
-import com.coremedia.iso.boxes.apple.AppleAlbumBox;
-import com.coremedia.iso.boxes.apple.AppleArtistBox;
-import com.coremedia.iso.boxes.apple.AppleCoverBox;
 import com.coremedia.iso.boxes.apple.AppleItemListBox;
-import com.coremedia.iso.boxes.apple.AppleMediaTypeBox;
-import com.coremedia.iso.boxes.apple.AppleTrackTitleBox;
 import com.googlecode.mp4parser.AbstractBox;
+import com.googlecode.mp4parser.DataSource;
+import com.googlecode.mp4parser.FileDataSourceImpl;
 import com.googlecode.mp4parser.authoring.Movie;
 import com.googlecode.mp4parser.authoring.Mp4TrackImpl;
 import com.googlecode.mp4parser.authoring.Track;
 import com.googlecode.mp4parser.authoring.builder.DefaultMp4Builder;
+import com.googlecode.mp4parser.boxes.apple.AppleAlbumBox;
+import com.googlecode.mp4parser.boxes.apple.AppleArtist2Box;
+import com.googlecode.mp4parser.boxes.apple.AppleArtistBox;
+import com.googlecode.mp4parser.boxes.apple.AppleCoverBox;
+import com.googlecode.mp4parser.boxes.apple.AppleMediaTypeBox;
+import com.googlecode.mp4parser.boxes.apple.AppleNameBox;
 
 /**
  * 
@@ -83,7 +84,7 @@ public final class MP4Muxer {
                 outMovie.addTrack(trk);
             }
 
-            IsoFile out = new DefaultMp4Builder() {
+            Container out = new DefaultMp4Builder() {
                 @Override
                 protected FileTypeBox createFileTypeBox(Movie movie) {
                     List<String> minorBrands = new LinkedList<String>();
@@ -120,7 +121,7 @@ public final class MP4Muxer {
 
             FileOutputStream fos = new FileOutputStream(output);
             try {
-                out.getBox(fos.getChannel());
+                out.writeContainer(fos.getChannel());
             } finally {
                 IOUtils.closeQuietly(fos);
             }
@@ -155,7 +156,7 @@ public final class MP4Muxer {
             Movie outMovie = new Movie();
             outMovie.addTrack(audioTrack);
 
-            IsoFile out = new DefaultMp4Builder() {
+            Container out = new DefaultMp4Builder() {
                 @Override
                 protected FileTypeBox createFileTypeBox(Movie movie) {
                     List<String> minorBrands = new LinkedList<String>();
@@ -192,7 +193,7 @@ public final class MP4Muxer {
 
             FileOutputStream fos = new FileOutputStream(output);
             try {
-                out.getBox(fos.getChannel());
+                out.writeContainer(fos.getChannel());
             } finally {
                 IOUtils.closeQuietly(fos);
             }
@@ -201,10 +202,10 @@ public final class MP4Muxer {
         }
     }
 
-    private static Movie buildMovie(ReadableByteChannel channel) throws IOException {
+    private static Movie buildMovie(FileChannel channel) throws IOException {
         BoxParser parser = new PropertyBoxParserImpl() {
             @Override
-            public Box parseBox(ReadableByteChannel byteChannel, ContainerBox parent) throws IOException {
+            public Box parseBox(DataSource byteChannel, Container parent) throws IOException {
                 Box box = super.parseBox(byteChannel, parent);
 
                 if (box instanceof AbstractBox) {
@@ -215,7 +216,7 @@ public final class MP4Muxer {
             }
         };
         @SuppressWarnings("resource")
-        IsoFile isoFile = new IsoFile(channel, parser);
+        IsoFile isoFile = new IsoFile(new FileDataSourceImpl(channel), parser);
         Movie m = new Movie();
         List<TrackBox> trackBoxes = isoFile.getMovieBox().getBoxes(TrackBox.class);
         for (TrackBox trackBox : trackBoxes) {
@@ -241,7 +242,7 @@ public final class MP4Muxer {
         meta.addBox(ilst);
 
         if (mt.title != null) {
-            AppleTrackTitleBox cnam = new AppleTrackTitleBox();
+            AppleNameBox cnam = new AppleNameBox();
             cnam.setValue(mt.title);
             ilst.addBox(cnam);
         }
@@ -252,7 +253,7 @@ public final class MP4Muxer {
             ilst.addBox(cART);
         }
 
-        AppleAlbumArtistBox aART = new AppleAlbumArtistBox();
+        AppleArtist2Box aART = new AppleArtist2Box();
         aART.setValue(mt.title + " " + mt.author);
         ilst.addBox(aART);
 
@@ -263,7 +264,7 @@ public final class MP4Muxer {
         }
 
         AppleMediaTypeBox stik = new AppleMediaTypeBox();
-        stik.setValue("1");
+        stik.setValue(1);
         ilst.addBox(stik);
 
         if (mt.jpg != null) {
