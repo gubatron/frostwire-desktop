@@ -21,13 +21,16 @@ sourceSets {
 
             srcDir 'common/components/okhttp'
 
-            srcDir 'common/components/vuze'
-            exclude '**/bouncycastle/**'            
-            exclude '**/jman/**'
-            exclude '**/swing/**'
-            exclude '**/swt/**'
-            exclude '**/systray/**'
-            exclude '**/tests/**'
+            exclude 'common/vuze/**/bouncycastle/**'            
+            exclude 'common/vuze/**/jman/**'
+            exclude 'common/vuze/**/swing/**'
+            exclude 'common/vuze/**/swt/**'
+            exclude 'common/vuze/**/systray/**'
+            exclude 'common/vuze/**/tests/**'
+            srcDir 'common/vuze/azureus2/src'
+            srcDir 'common/vuze/azureus3/src'
+
+            srcDir  'common/components/vuze'
 
             srcDir 'common/components/core'
 
