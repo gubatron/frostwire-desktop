@@ -27,39 +27,7 @@
     </target>
 
     <target name="compile-src" depends="initialize">
-        <mkdir dir="${limewire.home}/components/common/build/classes"/>
-        <property name="limewire.core.home"           location="${limewire.home}/core"/>
-        <property name="build.limewire.core.classes"  location="${limewire.core.home}"/>
-        <path id="build.limewire.core.classpath">
-            <fileset dir="${limewire.lib.jars}" includes="**/*.jar" excludes="tests/**" />
-            <path refid="build.limewire.components.classes.core" />
-        </path>
-
-        <javac destdir="${limewire.home}/components/common/build/classes" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}" encoding="ISO-8859-1" source="${compile.source}" target="${compile.target}" srcdir="${limewire.home}/components/common/src/main/java" excludes="examples/**" includeantruntime="false">
-            <classpath refid="build.limewire.core.classpath" />
-            <src path="${limewire.home}/common/components/gson" />
-            <src path="${limewire.home}/common/components/json" />
-            <src path="${limewire.home}/common/components/apache" />
-            <src path="${limewire.home}/common/components/jmdns" />
-            <src path="${limewire.home}/common/components/jdownloader" />
-            <src path="${limewire.home}/common/components/minicastle" />
-            <src path="${limewire.home}/common/components/mp4parser"/>
-            <src path="${limewire.home}/common/vuze/azureus2/src" />
-            <src path="${limewire.home}/common/vuze/azureus3/src" />
-            <src path="${limewire.home}/common/vuze/plugins" />
-            <exclude name="**/bouncycastle/**" />
-            <exclude name="**/jman/**" />
-            <exclude name="**/swing/**" />
-            <exclude name="**/swt/**" />
-            <exclude name="**/systray/**" />
-            <exclude name="**/tests/**" />
-
-            <src path="${limewire.home}/common/components/core" />
-        </javac>
-        <!--this next line is the only thing that used to be here, but I don't see a way to pass the source paths of common/components before compiling
-            so I've basically done the javac ant task manually here, including everything from commons/components to make sure
-            component/commons (yeah I know) won't miss any thing -->
-        <!--<do.compile-src component="common"/>-->
+        <do.compile-src component="common"/>
     </target>
 
     <target name="clean-src" depends="initialize">
