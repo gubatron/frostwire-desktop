@@ -100,14 +100,6 @@ public class DNSCache extends ConcurrentHashMap<String, List<DNSEntry>> {
          * {@inheritDoc}
          */
         @Override
-        public Set<String> keySet() {
-            return Collections.emptySet();
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
         public Collection<List<DNSEntry>> values() {
             return Collections.emptySet();
         }
