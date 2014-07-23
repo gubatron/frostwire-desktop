@@ -28,7 +28,7 @@
     </target>
 	
 	<target name="compile-src" depends="lw-common.compile-src">
-	    <do.compile-src component="setting"/>
+	    <!--<do.compile-src component="setting"/>-->
 	</target>
     
 	<target name="clean-src" depends="lw-common.clean-src">
@@ -56,7 +56,7 @@
 	</target>
     
     <target name="jar" depends="initialize, compile-src">
-        <do.jar component="setting"/>
+        <!--<do.jar component="setting"/>-->
     </target>
     
 	<target name="javadoc" depends="initialize, compile-src">
