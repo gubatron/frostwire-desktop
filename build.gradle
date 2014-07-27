@@ -2,62 +2,70 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.7
 
+compileJava {
+    options.encoding = '8859_1'
+    options.fork = 'true'
+//    options.compilerArgs.each { String opt ->
+//       println "$opt"
+//    }
+}
+
+//how to add a .jar as a compile dependency.
+//dependencies {
+//    compile files('common/vuze/uis/lib/junit.jar')
+//}
+
 sourceSets {
-    frostwire {
+    main {
         java {
-            srcDir 'common/components/apache'
             srcDir 'common/components/gson'
-            srcDir 'common/components/httpserver'
-
-            srcDir 'common/components/jdownloader'
-
-            srcDir 'common/components/jdmns'
-
             srcDir 'common/components/json'
-
+            srcDir 'common/components/apache'
+            srcDir 'common/components/jmdns'
+            srcDir 'common/components/jdownloader'
             srcDir 'common/components/minicastle'
-
             srcDir 'common/components/mp4parser'
 
+            srcDir 'common/components/httpserver'
             srcDir 'common/components/okhttp'
 
-            exclude 'common/vuze/**/bouncycastle/**'            
-            exclude 'common/vuze/**/jman/**'
-            exclude 'common/vuze/**/swing/**'
-            exclude 'common/vuze/**/swt/**'
-            exclude 'common/vuze/**/systray/**'
-            exclude 'common/vuze/**/tests/**'
+
+            exclude '**/bouncycastle/**'            
+            exclude '**/jman/**'
+            exclude '**/swing/**'
+            exclude '**/swt/**'
+            exclude '**/systray/**'
+            exclude '**/tests/**'
             srcDir 'common/vuze/azureus2/src'
             srcDir 'common/vuze/azureus3/src'
-
-            srcDir  'common/components/vuze'
+            srcDir 'common/vuze/plugins'
 
             srcDir 'common/components/core'
+            srcDir 'common/components/vuze'
+
 
             /////////////////////////////////////////////
 
-            srcDir 'components/setting/src'
+//this folder just has tests which depend on junit, which we don't have (except inside vuze's)
+//            exclude 'components/setting/src/**'
+//            exclude 'components/common/src/test/**'
+            srcDir 'components/common/src/main'
+            srcDir 'components/alexandria/src/main'
 
-            srcDir 'components/common/src'
-
-            srcDir 'components/alexandria/src'
-
-            srcDir 'components/osx_stub/src'
+//            srcDir 'components/osx_stub/src'
 
             /////////////////////////////////////////////
 
-            srcDir 'core'
+//            srcDir 'core'
 
-            srcDir 'gui'
+//            srcDir 'gui'
+
         }
 
         resources {
             srcDir 'components/resources/src/main/resources'
         }
     }
-}
-
-dependencies {
 }
 
 
