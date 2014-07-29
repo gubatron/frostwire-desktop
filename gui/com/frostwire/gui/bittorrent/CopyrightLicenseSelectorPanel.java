@@ -47,9 +47,9 @@ import com.limegroup.gnutella.gui.LimeTextField;
 @SuppressWarnings("serial")
 public class CopyrightLicenseSelectorPanel extends JPanel {
 
-    private static final String CREATIVE_COMMONS_CARD_NAME = "Creative Commons";
-    private static final String OPEN_SOURCE_CARD_NAME = "Open Source";
-    private static final String PUBLIC_DOMAIN_CARD_NAME = "Public Domain";
+    private static final String CREATIVE_COMMONS_CARD_NAME = I18n.tr("Creative Commons");
+    private static final String OPEN_SOURCE_CARD_NAME = I18n.tr("Open Source");
+    private static final String PUBLIC_DOMAIN_CARD_NAME = I18n.tr("Public Domain");
 
     private final JCheckBox confirmRightfulUseOfLicense;
 
@@ -121,16 +121,16 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         ccButton = new LicenseToggleButton(
                 LicenseToggleButton.LicenseIcon.CC,
                 CREATIVE_COMMONS_CARD_NAME,
-                "Offering your work under a Creative Commons license does not mean giving up your copyright. It means offering some of your rights to any member of the public but only under certain conditions.",
+                I18n.tr("Offering your work under a Creative Commons license does not mean giving up your copyright. It means offering some of your rights to any member of the public but only under certain conditions."),
                 true, false);
         byButton = new LicenseToggleButton(LicenseIcon.BY, "Attribution",
-                "You let others copy, distribute, display, and perform your copyrighted work but only if they give credit the way you request.", true, false);
+                I18n.tr("You let others copy, distribute, display, and perform your copyrighted work but only if they give credit the way you request."), true, false);
         ncButton = new LicenseToggleButton(LicenseIcon.NC, "NonCommercial",
-                "<strong>No commercial use allowed.</strong><br>You let others copy, distribute, display, and perform your work — and derivative works based upon it — but for noncommercial purposes only.", true, true);
+                I18n.tr("<strong>No commercial use allowed.</strong><br>You let others copy, distribute, display, and perform your work — and derivative works based upon it — but for noncommercial purposes only."), true, true);
         ndButton = new LicenseToggleButton(LicenseIcon.ND, "NoDerivatives",
-                "<strong>No remixing allowed.</strong><br>You let others copy, distribute, display, and perform only verbatim copies of your work, not derivative works based upon it.", false, true);
+                I18n.tr("<strong>No remixing allowed.</strong><br>You let others copy, distribute, display, and perform only verbatim copies of your work, not derivative works based upon it."), false, true);
         saButton = new LicenseToggleButton(LicenseIcon.SA, "Share-Alike",
-                "You allow others to distribute derivative works only under a license identical to the license that governs your work.", true, true);
+                I18n.tr("You allow others to distribute derivative works only under a license identical to the license that governs your work."), true, true);
 
         apacheButton = new LicenseToggleButton(LicenseIcon.APACHE,"Apache 2.0","Apache License 2.0",false,true);
         bsd2ClauseButton = new LicenseToggleButton(LicenseIcon.BSD, "BSD 2-Clause", "BSD 2-Clause \"Simplified\" or \"FreeBSD\" license.", false, true);
@@ -145,8 +145,8 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         openSourceLicenseButtons = new LinkedList<LicenseToggleButton>();
         initOpenSourceButtonList();
         
-        publicDomainButton = new LicenseToggleButton(LicenseIcon.PUBLICDOMAIN, "Public Domain Mark 1.0", "This work has been identified as being free of known restrictions under copyright law, including all related and neighboring rights.",true,true);
-        cc0Button = new LicenseToggleButton(LicenseIcon.CC0, "CC0 1.0", "The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.", false, true);
+        publicDomainButton = new LicenseToggleButton(LicenseIcon.PUBLICDOMAIN, "Public Domain Mark 1.0", I18n.tr("This work has been identified as being free of known restrictions under copyright law, including all related and neighboring rights."),true,true);
+        cc0Button = new LicenseToggleButton(LicenseIcon.CC0, "CC0 1.0", I18n.tr("The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law."), false, true);
         
         pickedLicenseLabel = new JButton();
         
@@ -423,7 +423,7 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
 
     private void initPublicDomainLicensePanel() {
         JPanel publicDomainLicensePanel = new JPanel(new MigLayout("fill, insets 0 0 0 0, alignx center"));
-        JLabel label = new JLabel("You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.");
+        JLabel label = new JLabel(I18n.tr("You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission."));
         label.setEnabled(false);
         publicDomainLicensePanel.add(label,"gaptop 10px, aligny center, push, alignx center, span 2, wrap");
         publicDomainLicensePanel.add(publicDomainButton,"wmin 400px, aligny top, push, grow, gap 2 2 2 2");
