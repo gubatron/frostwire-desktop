@@ -86,12 +86,27 @@ sourceSets {
 
         resources {
             srcDir 'components/resources/src/main/resources'
+            include '**/*.properties'
+            include '**/*.png'
+            include '**/*.gif'
+            include '**/*.jpg'
+            include '**/*.html'
+            include '**/*.js'
+            include '**/*.sh'
+            include '**/*.dat'
+            include '**/*.icc'
+            exclude '**/*.DS_Store'
+
+            srcDir 'common/vuze/azureus2/src'
+            include '**/Messages*.properties'
+            exclude '**/*.class'
+            exclude '**/*.java'
         }
     }
 }
 
 jar {
-    archiveName='FrostWire.jar'
+    archiveName='frostwire.jar'
 
     exclude('META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF')
 
