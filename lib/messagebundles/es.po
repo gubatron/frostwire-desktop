@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-29 14:58-0400\n"
-"PO-Revision-Date: 2014-07-29 15:28-0300\n"
+"POT-Creation-Date: 2014-07-29 15:42-0400\n"
+"PO-Revision-Date: 2014-07-29 15:54-0300\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: FTA <saintrecall@gmail.com>\n"
 "Language: es\n"
@@ -575,6 +575,18 @@ msgstr "Verifica de nuevo la dirección URL de tu rastreador.\n"
 msgid "Invalid Tracker URL\n"
 msgstr "Dirección URL de rastreador inválida\n"
 
+#: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:50
+msgid "Creative Commons"
+msgstr "Creative Commons"
+
+#: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:51
+msgid "Open Source"
+msgstr "Código Abierto"
+
+#: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:52
+msgid "Public Domain"
+msgstr "Dominio Público"
+
 #: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:96
 msgid "Choose a Copyright License for this work"
 msgstr "Elige una licencia para este trabajo"
@@ -609,7 +621,7 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:108
 msgid "album name, movie title, book title, game title."
-msgstr "nombre de album, titulo de pelicula, titulo de libro, titulo de juego."
+msgstr "nombre de álbum, título de película, título de libro, título de juego."
 
 #: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:110
 msgid "Attribution URL"
@@ -623,6 +635,72 @@ msgstr ""
 "Sitio web del creador del contenido para entregar la atribución de este "
 "trabajo si es compartido por otros."
 
+#: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:124
+msgid ""
+"Offering your work under a Creative Commons license does not mean giving up "
+"your copyright. It means offering some of your rights to any member of the "
+"public but only under certain conditions."
+msgstr ""
+"Ofrecer tu trabajo bajo una licencia Creative Commons no significa que "
+"entregues tus derechos de autor. Significa que liberas algunos de tus "
+"derechos a cualquier persona pero bajo algunas condiciones."
+
+#: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:127
+msgid ""
+"You let others copy, distribute, display, and perform your copyrighted work "
+"but only if they give credit the way you request."
+msgstr ""
+"Permite que cualquiera pueda copiar, distribuir, mostrar, y ejecutar tu "
+"trabajo con derechos de autor, pero si te entregan la atribución que "
+"solicitas."
+
+#: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:129
+msgid ""
+"<strong>No commercial use allowed.</strong><br>You let others copy, "
+"distribute, display, and perform your work — and derivative works based upon "
+"it — but for noncommercial purposes only."
+msgstr ""
+"<strong>Uso No Comercial permitido.</strong><br>Permite que cualquier pueda "
+"copiar, distribuir, mostrar y ejecutar tu trabajo -los derivados basados en "
+"este- pero solo para propósitos no comerciales."
+
+#: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:131
+msgid ""
+"<strong>No remixing allowed.</strong><br>You let others copy, distribute, "
+"display, and perform only verbatim copies of your work, not derivative works "
+"based upon it."
+msgstr ""
+"<strong>Uso Sin Derivados.</strong><br>Permite que cualquier pueda copiar, "
+"distribuir, mostrar y ejecutar copias originales de tu trabajo, no "
+"permitiendo trabajos derivados del mismo."
+
+#: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:133
+msgid ""
+"You allow others to distribute derivative works only under a license "
+"identical to the license that governs your work."
+msgstr ""
+"Permite que cualquiera pueda distribuir trabajos derivados sólo bajo una "
+"licencia idéntica a la que posee le trabajo original."
+
+#: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:148
+msgid ""
+"This work has been identified as being free of known restrictions under "
+"copyright law, including all related and neighboring rights."
+msgstr ""
+"Este trabajo ha sido identificado libre de cualquier restricción de derechos "
+"de autor, incluyendo todos los derechos relacionados."
+
+#: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:149
+#, fuzzy
+msgid ""
+"The person who associated a work with this deed has dedicated the work to "
+"the public domain by waiving all of his or her rights to the work worldwide "
+"under copyright law, including all related and neighboring rights, to the "
+"extent allowed by law."
+msgstr ""
+"La persona que asoció un trabajo con esta licencia ha dedicado el trabajo al "
+"dominio público delegando todos sus derechos al mundo."
+
 #: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:236
 msgid "You have selected the following License"
 msgstr "Ha seleccionado la siguiente licencia"
@@ -630,6 +708,14 @@ msgstr "Ha seleccionado la siguiente licencia"
 #: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:395
 msgid "Select what people can and can't do with this work"
 msgstr "Selecciona que pueden hacer o no con este trabajo"
+
+#: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:426
+msgid ""
+"You can copy, modify, distribute and perform the work, even for commercial "
+"purposes, all without asking permission."
+msgstr ""
+"Puede copiar, modificar, distribuir y ejecutar la obra, incluso con fines "
+"comerciales, sin solicitar permiso."
 
 #: gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:468
 msgid "License type:"
