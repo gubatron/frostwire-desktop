@@ -50,7 +50,7 @@ import java.sql.SQLXML;
 import java.sql.SQLClientInfoException;
 //*/
 
-/*## Java 1.7 ##
+//## Java 1.7 ##
 import java.util.concurrent.Executor;
 //*/
 
@@ -1685,7 +1685,7 @@ public class JdbcConnection extends TraceObject implements Connection {
      *
      * @param schema the schema
      */
-/*## Java 1.7 ##
+//## Java 1.7 ##
     public void setSchema(String schema) {
         // not supported
     }
@@ -1694,7 +1694,7 @@ public class JdbcConnection extends TraceObject implements Connection {
     /**
      * [Not supported]
      */
-/*## Java 1.7 ##
+//## Java 1.7 ##
     public String getSchema() {
         return null;
     }
@@ -1705,7 +1705,7 @@ public class JdbcConnection extends TraceObject implements Connection {
      *
      * @param executor the executor used by this method
      */
-/*## Java 1.7 ##
+//## Java 1.7 ##
     public void abort(Executor executor) {
         // not supported
     }
@@ -1717,7 +1717,7 @@ public class JdbcConnection extends TraceObject implements Connection {
      * @param executor the executor used by this method
      * @param milliseconds the TCP connection timeout
      */
-/*## Java 1.7 ##
+//## Java 1.7 ##
     public void setNetworkTimeout(Executor executor, int milliseconds) {
         // not supported
     }
@@ -1726,7 +1726,7 @@ public class JdbcConnection extends TraceObject implements Connection {
     /**
      * [Not supported]
      */
-/*## Java 1.7 ##
+//## Java 1.7 ##
     public int getNetworkTimeout() {
         return 0;
     }

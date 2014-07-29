@@ -4,20 +4,48 @@ sourceCompatibility = 1.7
 
 compileJava {
     options.encoding = '8859_1'
+
+    //raise heap
     options.fork = 'true'
-//    options.compilerArgs.each { String opt ->
-//       println "$opt"
-//    }
+    options.forkOptions.with {
+        memoryMaximumSize = "2048m"
+    }
 }
 
-//how to add a .jar as a compile dependency.
-//dependencies {
-//    compile files('common/vuze/uis/lib/junit.jar')
-//}
+//add third party jars to classpath.
+dependencies {
+    /* -compiles using lib/jars, not lib/jars-src/ sources.
+    if you don't want to use jars-src, then uncomment this block
+    and comment the jars-src block below so you just include these
+    jars in the classpath when building.
+    compile files('lib/jars/gettext-commons.jar',
+                  'lib/jars/lucene-3.5.0.jar',
+                  'lib/jaudiotagger.jar',
+                  'lib/jars/h2-1.3.164.jar',
+                  'lib/jars/messages.jar',
+                  'lib/jars/slf4j-api-1.7.5.jar',
+                  'lib/jars/jaudiotagger.jar',
+                  'lib/jars/metadata-extractor-2.6.2.jar'
+                  )
+    */
+
+    //for some reason when building gettext's source code gradle
+    //is not adding ant to the classpath
+    compile files('lib/jars-src/gettext-commons-0_9_5/lib/ant.jar')
+}
 
 sourceSets {
     main {
         java {
+            //exclusion rules
+            exclude '**/bouncycastle/**'            
+            exclude '**/jman/**'
+            exclude '**/systray/**'
+            exclude '**/tests/**'
+            exclude '**/swt/**'
+            exclude '**/vuze*swing/**'
+
+            // common/components
             srcDir 'common/components/gson'
             srcDir 'common/components/json'
             srcDir 'common/components/apache'
@@ -25,54 +53,48 @@ sourceSets {
             srcDir 'common/components/jdownloader'
             srcDir 'common/components/minicastle'
             srcDir 'common/components/mp4parser'
-
             srcDir 'common/components/httpserver'
             srcDir 'common/components/okhttp'
 
-
-            exclude '**/bouncycastle/**'            
-            exclude '**/jman/**'
-            exclude '**/swing/**'
-            exclude '**/swt/**'
-            exclude '**/systray/**'
-            exclude '**/tests/**'
             srcDir 'common/vuze/azureus2/src'
             srcDir 'common/vuze/azureus3/src'
             srcDir 'common/vuze/plugins'
 
+            // our common/components/core and vuze common wrapping/utilities.
             srcDir 'common/components/core'
             srcDir 'common/components/vuze'
 
-
-            /////////////////////////////////////////////
-
-//this folder just has tests which depend on junit, which we don't have (except inside vuze's)
-//            exclude 'components/setting/src/**'
-//            exclude 'components/common/src/test/**'
+            // components, alexandria (library gui), osx_stub 
             srcDir 'components/common/src/main'
             srcDir 'components/alexandria/src/main'
+            srcDir 'components/osx_stub/src'
 
-//            srcDir 'components/osx_stub/src'
+            // jars-src (other third parties dependencies, we keep their sources
+            // so that we can properly create the .deb sources for debian based mantainers
+            // to corroborate we build entirely from source.)
+            srcDir 'lib/gettext-commons-0_9_5/src/java'
+            srcDir 'lib/jars-src/gettext-commons-0_9_5/src/java'
+            srcDir 'lib/jars-src/lucene-3.5.0'
+            srcDir 'lib/jars-src/h2-1.3.164'
+            srcDir 'lib/jars-src/jaudiotagger/src'
+            srcDir 'lib/jars-src/slf4j-api/src/main/java'
+            srcDir 'lib/jars-src/metadata-extractor-2.6.2-src/Source'
 
-            /////////////////////////////////////////////
-
-//            srcDir 'core'
-
-//            srcDir 'gui'
-
+            srcDir 'core'
+            srcDir 'gui'
         }
 
         resources {
             srcDir 'components/resources/src/main/resources'
+            source zipTree('lib/jars/messages.jar')
         }
     }
 }
 
-
-/**
 jar {
+    archiveName='FrostWire.jar'
+    exclude('META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF')
     manifest {
-        attributes 'Main-Class: com.limegroup.gnutella.gui.Main'
+        attributes 'Main-Class': 'com.limegroup.gnutella.gui.Main'
     }
 }
-*/
