@@ -90,7 +90,7 @@ correctly. If you are a Windows or Mac user the process is fairly similar.
 -   Try having the latest JDK available (OpenJDK or Sun's JDK should do it -
     As of this document it can be built using Java 1.7)
 
--   ant
+-   ant, gradle
 
 -   GIT to clone, check out the project to your machine.
 
@@ -134,8 +134,8 @@ cd frostwire-desktop/
 If you're already in project root, simply execute :
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-ant clean
-ant
+gradle clean
+gradle build
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 

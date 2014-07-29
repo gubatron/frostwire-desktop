@@ -92,6 +92,7 @@ sourceSets {
 
 jar {
     archiveName='FrostWire.jar'
+    level="9"
     exclude('META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF')
 
     from (zipTree('lib/jars/messages.jar')) {
