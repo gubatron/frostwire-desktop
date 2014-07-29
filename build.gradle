@@ -86,7 +86,6 @@ sourceSets {
 
         resources {
             srcDir 'components/resources/src/main/resources'
-            source zipTree('lib/jars/messages.jar')
         }
     }
 }
@@ -94,6 +93,11 @@ sourceSets {
 jar {
     archiveName='FrostWire.jar'
     exclude('META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF')
+
+    from (zipTree('lib/jars/messages.jar')) {
+        include '**/*.class'
+    }
+
     manifest {
         attributes 'Main-Class': 'com.limegroup.gnutella.gui.Main'
     }
