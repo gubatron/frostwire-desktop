@@ -188,27 +188,10 @@ task gettextBundle {
     }
 
     // jar them
-
-    // todo
+    ant.jar(destfile:'lib/jars/messages.jar',
+            basedir:'lib/messagebundles',
+            includes:"org/**")
 
     // clean up
-
-    // todo
+    delete 'lib/messagebundles/org'
 }
-
-/*
-    TO PORT:
-    <!-- generate one jar with almost complete translations -->
-    <target name="gettext-bundle" description="Rebuilds messages and bundles them" depends="init.gettext">
-
-    
-        
-        <!-- jar them -->
-        <jar destfile="lib/jars/messages.jar" 
-             basedir="lib/messagebundles"
-             includes="org/**"/>
-            
-        <!-- clean up -->
-        <delete dir="lib/messagebundles/org"/>
-    </target>
-*/
