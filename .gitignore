@@ -22,6 +22,9 @@ lib/native/mplayer/config
 lib/themes/themes.jar
 lib/mplayer/upx
 messages.mo
+build/
+reports/
+.gradle/
 .settings/
 *.swp
 .settings/
