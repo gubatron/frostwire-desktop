@@ -15,7 +15,7 @@ sourceCompatibility = 1.7
 
 compileJava {
     options.encoding = '8859_1'
-}s
+}
 
 // add third party jars to classpath.
 dependencies {
