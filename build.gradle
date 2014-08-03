@@ -106,6 +106,10 @@ sourceSets {
             include '**/Messages*.properties'
             exclude '**/*.class'
             exclude '**/*.java'
+			
+			srcDir 'common/components/mp4parser'
+			include '**/*.properties'
+			exclude '**/*.java'
         }
     }
 }

@@ -427,6 +427,7 @@ public class YouTubeDownload implements BTDownload {
                     }
 
                 } catch (Exception e) {
+                	e.printStackTrace();
                     state = STATE_ERROR_MOVING_INCOMPLETE;
                     cleanupIncomplete();
                 }
