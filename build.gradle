@@ -15,13 +15,7 @@ sourceCompatibility = 1.7
 
 compileJava {
     options.encoding = '8859_1'
-
-    // raise heap
-    options.fork = 'true'
-    options.forkOptions.with {
-        memoryMaximumSize = "2048m"
-    }
-}
+}s
 
 // add third party jars to classpath.
 dependencies {
