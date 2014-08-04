@@ -1,7 +1,12 @@
 #!/bin/bash
-
 ### Run script for FrostWire.
 ### Builds a classpath for all jars & components.
+if [ -z ${JAVA_HOME} ]; then
+   echo "Error: I don't know where is your Java Virtual Machine."
+   echo "Please make sure to set your JAVA_HOME environment variable."
+   exit 1
+fi
+
 CLASSPATH=../build/libs/frostwire.jar
 PS=":"
 
@@ -51,6 +56,7 @@ export JAVA_BIN=${JAVA_HOME}/bin/java
 
 echo Java Home:
 echo ${JAVA_HOME}
+
 echo Java Binary:
 echo ${JAVA_BIN}
 echo Java Version:
