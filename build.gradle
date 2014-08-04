@@ -1,5 +1,4 @@
 /*
-
  Usage:
  gradle build - builds code and creates a single jar in build/libs/frostwire.jar
  gradle clean - cleans the build.
@@ -11,6 +10,10 @@
 */
 apply plugin: 'java'
 
+if (!System.getenv('ANT_HOME')?.trim()) { 
+    throw new GradleException("ERROR: ANT_HOME environment variable not set.\n\n(e.g. on MacOSX: /usr/local/Cellar/ant/1.9.3/libexec\n      on Linux:  /usr/share/ant)")
+}
+
 sourceCompatibility = 1.7
 
 compileJava {
@@ -19,24 +22,8 @@ compileJava {
 
 // add third party jars to classpath.
 dependencies {
-    /* -compiles using lib/jars, not lib/jars-src/ sources.
-    if you don't want to use jars-src, then uncomment this block
-    and comment the jars-src block below so you just include these
-    jars in the classpath when building.
-    compile files('lib/jars/gettext-commons.jar',
-                  'lib/jars/lucene-3.5.0.jar',
-                  'lib/jaudiotagger.jar',
-                  'lib/jars/h2-1.3.164.jar',
-                  'lib/jars/messages.jar',
-                  'lib/jars/slf4j-api-1.7.5.jar',
-                  'lib/jars/jaudiotagger.jar',
-                  'lib/jars/metadata-extractor-2.6.2.jar'
-                  )
-    */
-
-    // for some reason when building gettext's source code gradle
-    // is not adding ant to the classpath
-    compile files('lib/jars-src/gettext-commons-0_9_5/lib/ant.jar')
+    def ant_jar_path = System.getenv('ANT_HOME') + '/lib/ant.jar'
+    compile files(new File(ant_jar_path).toURI())
 }
 
 sourceSets {
