@@ -851,9 +851,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         List<BTDownload> downloads = new ArrayList<BTDownload>(count);
         for (int i = 0; i < count; i++) {
             try {
-                BTDownloadDataLine line = DATA_MODEL.get(i);
-                BTDownload downloader = line.getInitializeObject();
-                downloads.add(downloader);
+            	if (i < DATA_MODEL.getRowCount()) {            	
+	                BTDownloadDataLine line = DATA_MODEL.get(i);
+	                BTDownload downloader = line.getInitializeObject();
+	                downloads.add(downloader);
+            	}
             } catch (Throwable t) {
                 //saw user with 771 downloads
                 //perhaps deleted one, and by the time this finished
