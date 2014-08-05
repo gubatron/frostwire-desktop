@@ -115,8 +115,8 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
     private final JPanel searchPanels;
 
     public ApplicationHeader(Map<Tabs, Tab> tabs) {
-        setMinimumSize(new Dimension(995, 54));
-        setLayout(new MigLayout("insets 0 10px 0 0, ay 50%, filly", "[][][grow][][]"));
+        setMinimumSize(new Dimension(1000, 54));
+        setLayout(new MigLayout("ins 0, ay 50%, filly,", "[][][grow][][]"));
 
         headerButtonBackgroundSelected = GUIMediator.getThemeImage("selected_header_button_background").getImage();
         headerButtonBackgroundUnselected = GUIMediator.getThemeImage("unselected_header_button_background").getImage();
@@ -141,10 +141,9 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
                 super.processKeyEvent(evt);
             }
         };
-
         
         searchPanels = createSearchPanel();
-        add(searchPanels, "w 240px!, gapright 10px");
+        add(searchPanels, "w 240px!, gapright 10px, gapleft 5px");
 
         //The Chat Tab is not a real Tab, it's a button, it's creation is done inside this method.
         addTabButtons(tabs);
@@ -159,7 +158,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         add(logoUpdateButtonsPanel, "growx, alignx center");
 
         JComponent player = new MediaPlayerComponent().getMediaPanel();
-        add(player, "dock east, growy, gapright 7px");
+        add(player, "dock east, growy, gapafter 10px!");
 
         GUIMediator.addRefreshListener(this);
 

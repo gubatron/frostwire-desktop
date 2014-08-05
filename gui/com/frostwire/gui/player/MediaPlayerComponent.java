@@ -183,7 +183,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     private JPanel constructMediaPanel() {
 
         // create sliders
-        PROGRESS.setMinimumSize(progressBarDimension);
+        PROGRESS.setMinimumSize(new Dimension(progressBarDimension.width-50,progressBarDimension.height));
         PROGRESS.setPreferredSize(progressBarDimension);
         PROGRESS.setMaximum(3600);
         PROGRESS.setEnabled(false);
@@ -201,7 +201,8 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout("insets 0, gap 0, filly", //component constraints
                 "[][]"));
-        panel.setPreferredSize(new Dimension(130, 55));
+        panel.setPreferredSize(new Dimension(480, 55));
+        panel.setMinimumSize(new Dimension(480, 55));
 
         panel.add(createPlaybackButtonsPanel(), "span 1 2, growy, gapright 4px");
         panel.add(createTrackDetailPanel(), "wrap, growx");
@@ -235,7 +236,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     private JPanel createTrackDetailPanel() {
         JPanel panel = new JPanel();
         Cursor theHand = new Cursor(Cursor.HAND_CURSOR);
-        panel.setLayout(new MigLayout("insets 0, gap 7px, w 355px!", //layout
+        panel.setLayout(new MigLayout("insets 0, gap 7px, fillx",//w 340px!", //layout
                 "[][][grow][][][]", //columns
                 "")); //row
 
