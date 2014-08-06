@@ -214,7 +214,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     private JPanel createPlaybackButtonsPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("debug, insets 0, filly"));
+        panel.setLayout(new MigLayout("insets 0, filly"));
 
         panel.add(ThemeMediator.createAppHeaderSeparator(), "growy");
 
