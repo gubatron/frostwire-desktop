@@ -121,12 +121,11 @@ public class CopyrightLicenseSelectorPanel extends JPanel {
         ccButton = new LicenseToggleButton(
                 LicenseToggleButton.LicenseIcon.CC,
                 CREATIVE_COMMONS_CARD_NAME,
-                I18n.tr("Offering your work under a Creative Commons license does not mean giving up your copyright. It means offering some of your rights to any member of the public but only under certain conditions."),
-                true, false);
+                I18n.tr("Offering your work under a Creative Commons license does not mean giving up your copyright. It means offering some of your rights to any member of the public but only under certain conditions."), true, false);
         byButton = new LicenseToggleButton(LicenseIcon.BY, "Attribution",
                 I18n.tr("You let others copy, distribute, display, and perform your copyrighted work but only if they give credit the way you request."), true, false);
         ncButton = new LicenseToggleButton(LicenseIcon.NC, "NonCommercial",
-                I18n.tr("<strong>No commercial use allowed.</strong><br>You let others copy, distribute, display, and perform your work — and derivative works based upon it — but for noncommercial purposes only."), true, true);
+                I18n.tr("<strong>No commercial use allowed.</strong><br>You let others copy, distribute, display, and perform your work &mdash; and derivative works based upon it &mdash; but for noncommercial purposes only."), true, true);
         ndButton = new LicenseToggleButton(LicenseIcon.ND, "NoDerivatives",
                 I18n.tr("<strong>No remixing allowed.</strong><br>You let others copy, distribute, display, and perform only verbatim copies of your work, not derivative works based upon it."), false, true);
         saButton = new LicenseToggleButton(LicenseIcon.SA, "Share-Alike",
