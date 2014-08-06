@@ -122,7 +122,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     /**
      * The ProgressBar dimensions for showing the name & play progress.
      */
-    private final Dimension progressBarDimension = new Dimension(180, 10);
+    private final Dimension progressBarDimension = new Dimension(245, 10);
 
     /**
      * The current song that is playing
@@ -183,7 +183,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     private JPanel constructMediaPanel() {
 
         // create sliders
-        PROGRESS.setMinimumSize(new Dimension(progressBarDimension.width-50,progressBarDimension.height));
+        PROGRESS.setMinimumSize(progressBarDimension);
         PROGRESS.setPreferredSize(progressBarDimension);
         PROGRESS.setMaximum(3600);
         PROGRESS.setEnabled(false);
@@ -199,21 +199,22 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         registerListeners();
 
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0, gap 0, filly", //component constraints
+        panel.setLayout(new MigLayout("insets 0, gap 0, fillx", //component constraints
                 "[][]"));
         panel.setPreferredSize(new Dimension(480, 55));
         panel.setMinimumSize(new Dimension(480, 55));
+        panel.setMaximumSize(new Dimension(480, 55));
 
-        panel.add(createPlaybackButtonsPanel(), "span 1 2, growy, gapright 4px");
-        panel.add(createTrackDetailPanel(), "wrap, growx");
-        panel.add(createProgressPanel(), "growx");
+        panel.add(createPlaybackButtonsPanel(), "span 1 2,growy, gapright 0");
+        panel.add(createTrackDetailPanel(), "wrap, w 345px");
+        panel.add(createProgressPanel(),"w 345px");
 
         return panel;
     }
 
     private JPanel createPlaybackButtonsPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0, filly"));
+        panel.setLayout(new MigLayout("debug, insets 0, filly"));
 
         panel.add(ThemeMediator.createAppHeaderSeparator(), "growy");
 
@@ -236,7 +237,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     private JPanel createTrackDetailPanel() {
         JPanel panel = new JPanel();
         Cursor theHand = new Cursor(Cursor.HAND_CURSOR);
-        panel.setLayout(new MigLayout("insets 0, gap 7px, fillx",//w 340px!", //layout
+        panel.setLayout(new MigLayout("insets 0, gap 4px, fillx, w 340px!", //layout
                 "[][][grow][][][]", //columns
                 "")); //row
 
@@ -283,7 +284,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 }
             }
         });
-        panel.add(trackTitle, "growx, wmax 186px");
+        panel.add(trackTitle, "w 186px, wmax 186px");
 
         initPlaylistPlaybackModeControls();
         panel.add(LOOP_BUTTON, "w 20px!");
@@ -295,7 +296,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     private JPanel createProgressPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("insets 0 0 5px 0 4px, fillx", "[][grow][align right]"));
+        panel.setLayout(new MigLayout("insets 0 0 5px 0 5px, fillx", "[][grow][]"));
 
         Font f = panel.getFont();
         f = f.deriveFont(10f);
