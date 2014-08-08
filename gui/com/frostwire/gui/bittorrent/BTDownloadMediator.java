@@ -47,6 +47,7 @@ import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.transfers.PeerHttpUpload;
 import com.frostwire.logging.Logger;
+import com.frostwire.search.soundcloud.SoundCloudRedirectResponse;
 import com.frostwire.search.soundcloud.SoundcloudPlaylist;
 import com.frostwire.search.soundcloud.SoundcloudItem;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
@@ -968,33 +969,57 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                 }
                 
                 final String resolveURL = "http://api.soundcloud.com/resolve.json?url="+url+"&client_id="+clientId+"&app_version="+appVersion;
-                final String json = HttpClientFactory.newInstance().get(resolveURL,10000);
                 System.out.println("resolve: "+ resolveURL);
-                System.out.println(json);
+                final String json = HttpClientFactory.newInstance().get(resolveURL,10000);
+                //System.out.println(json);
 
-                if (url.contains("/sets/")) {
-                    //download a whole playlist
-                    final SoundcloudPlaylist playlist = JsonUtils.toObject(json, SoundcloudPlaylist.class);
-                    
-                    if (playlist.tracks != null){
-                        for (SoundcloudItem scItem : playlist.tracks) {
-                            if (scItem.downloadable) {
-                                SoundcloudSearchResult srNew = new SoundcloudSearchResult(scItem, clientId, appVersion);
-                                downloadSoundcloudFromTrackUrlOrSearchResult(url, scItem.title, srNew);
-                            }
-                        }
+                if (json.contains("\"status\":\"30")) {
+                    try {
+                        System.out.println("Soundcloud Redirection! >> " + json);
+                        final SoundCloudRedirectResponse redirectResponse = JsonUtils.toObject(json, SoundCloudRedirectResponse.class);
+                        final String redirectedJson = HttpClientFactory.newInstance().get(redirectResponse.location,10000);
+                        //System.out.println(redirectedJson);
+                        downloadSoundcloudSetOrTrack(clientId, appVersion, url, redirectedJson);
+                    } catch (Throwable t) {
+                        t.printStackTrace();
                     }
                 } else {
-                    //download single track
-                    final SoundcloudItem scItem = JsonUtils.toObject(json, SoundcloudItem.class);
-                    if (scItem != null) {
-                        SoundcloudSearchResult srNew = new SoundcloudSearchResult(scItem, clientId, appVersion);
-                        downloadSoundcloudFromTrackUrlOrSearchResult(url, scItem.title, srNew);
-                    }
+                    downloadSoundcloudSetOrTrack(clientId, appVersion, url, json);
                 }
                 
             } catch (Throwable e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    private void downloadSoundcloudSetOrTrack(final String clientId, final String appVersion, String url, final String json) {
+        if (url.contains("/sets/")) {
+            downloadSoundcloudSet(clientId, appVersion, url, json);
+        } else {
+            downloadSoundcloudTrack(clientId, appVersion, url, json);
+        }
+    }
+
+    private void downloadSoundcloudTrack(final String clientId, final String appVersion, String url, final String json) {
+        //download single track
+        final SoundcloudItem scItem = JsonUtils.toObject(json, SoundcloudItem.class);
+        if (scItem != null) {
+            SoundcloudSearchResult srNew = new SoundcloudSearchResult(scItem, clientId, appVersion);
+            downloadSoundcloudFromTrackUrlOrSearchResult(url, scItem.title, srNew);
+        }
+    }
+
+    private void downloadSoundcloudSet(final String clientId, final String appVersion, String url, final String json) {
+        //download a whole playlist
+        final SoundcloudPlaylist playlist = JsonUtils.toObject(json, SoundcloudPlaylist.class);
+        
+        if (playlist.tracks != null){
+            for (SoundcloudItem scItem : playlist.tracks) {
+                if (scItem.downloadable) {
+                    SoundcloudSearchResult srNew = new SoundcloudSearchResult(scItem, clientId, appVersion);
+                    downloadSoundcloudFromTrackUrlOrSearchResult(url, scItem.title, srNew);
+                }
             }
         }
     }
