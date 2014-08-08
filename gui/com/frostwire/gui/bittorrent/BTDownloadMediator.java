@@ -1014,7 +1014,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         //download a whole playlist
         final SoundcloudPlaylist playlist = JsonUtils.toObject(json, SoundcloudPlaylist.class);
         
-        if (playlist.tracks != null){
+        if (playlist!=null && playlist.tracks != null){
             for (SoundcloudItem scItem : playlist.tracks) {
                 if (scItem.downloadable) {
                     SoundcloudSearchResult srNew = new SoundcloudSearchResult(scItem, clientId, appVersion);
