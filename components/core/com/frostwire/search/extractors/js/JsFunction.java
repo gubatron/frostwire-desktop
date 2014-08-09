@@ -27,8 +27,10 @@ import static com.frostwire.search.extractors.js.JavaFunctions.reverse;
 import static com.frostwire.search.extractors.js.JavaFunctions.slice;
 import static com.frostwire.search.extractors.js.JavaFunctions.escape;
 import static com.frostwire.search.extractors.js.JavaFunctions.mscpy;
+import static com.frostwire.search.extractors.js.JavaFunctions.json_loads;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,7 +116,14 @@ public final class JsFunction<T> {
             };
             expr = stmt.substring("return ".length());
         } else {
-            throw new JsError(String.format("Cannot determine left side of statement in %s", stmt));
+            // Try interpreting it as an expression
+            expr = stmt;
+            assign = new Lambda1() {
+                @Override
+                public Object eval(Object v) {
+                    return v;
+                }
+            };
         }
 
         Object v = interpret_expression(ctx, expr, local_vars, allow_recursion);
@@ -130,50 +139,86 @@ public final class JsFunction<T> {
             return local_vars.get(expr);
         }
 
-        Matcher m = Pattern.compile("^(?<in>[a-z]+)\\.(?<member>.*)$").matcher(expr);
-        if (m.find()) {
-            String member = m.group("member");
-            String variable = m.group("in");
+        //        try:
+        //            return json.loads(expr)
+        //        except ValueError:
+        //            pass
+        Object jsl = json_loads(expr);
+        if (jsl != null) {
+            return jsl;
+        }
 
-            if (!local_vars.containsKey(variable)) {
+        Matcher m = Pattern.compile("^(?<var>[a-zA-Z0-9_]+)\\.(?<member>[^\\(]+)(\\((?<args>[^\\(\\)]*)\\))?$").matcher(expr);
+        if (m.find()) {
+            String variable = m.group("var");
+            String member = m.group("member");
+            String arg_str = m.group("args");
+
+            Object obj = null;
+            if (local_vars.containsKey(variable)) {
+                obj = local_vars.get(variable);
+            } else {
                 if (!ctx.objects.containsKey(variable)) {
                     ctx.objects.put(variable, extract_object(ctx, variable));
                 }
-                JsObject obj = ctx.objects.get(variable);
-                String[] arr = member.split("\\(");
-                String key = arr[0];
-                String args = arr[1];
-                args = args.replace(")", "");
-                List<Object> argvals = new ArrayList<Object>();
-                for (String v : args.split(",")) {
-                    if (isdigit(v)) {
-                        argvals.add(Integer.valueOf(v));
-                    } else {
-                        argvals.add(local_vars.get(v));
-                    }
+                obj = ctx.objects.get(variable);
+            }
+
+            if (arg_str == null) {
+                // Member access
+                if (member.equals("length")) {
+                    return len(obj);
                 }
-
-                return obj.functions.get(key).eval(argvals.toArray());
+                return ((JsObject) obj).functions.get(member).eval(new Object[] {});
             }
 
-            Object val = local_vars.get(m.group("in"));
-            if (member.equals("split(\"\")")) {
-                return list((String) val);
+            if (!expr.endsWith(")")) {
+                throw new JsError("Error parsing js code");
             }
-            if (member.equals("join(\"\")")) {
-                return join((Object[]) val);
+            List<Object> argvals = null;
+            if (arg_str.equals("")) {
+                argvals = new ArrayList<Object>();
+            } else {
+                argvals = new ArrayList<Object>();
+                for (String v : arg_str.split(",")) {
+                    argvals.add(interpret_expression(ctx, v, local_vars, 20));
+                }
             }
-            if (member.equals("length")) {
-                return len(val);
+
+            if (member.equals("split")) {
+                //assert argvals == ('',)
+                return list(obj);
             }
-            if (member.equals("reverse()")) {
-                return reverse(val);
+            if (member.equals("join")) {
+                //assert len(argvals) == 1
+                return join((Object[]) obj, argvals.get(0));
             }
-            Matcher slice_m = Pattern.compile("slice\\((?<idx>.*)\\)").matcher(member);
-            if (slice_m.find()) {
-                Object idx = interpret_expression(ctx, slice_m.group("idx"), local_vars, allow_recursion - 1);
-                return slice(val, (Integer) idx);
+            if (member.equals("reverse")) {
+                //assert len(argvals) == 0
+                reverse(obj);
+                return obj;
             }
+            if (member.equals("slice")) {
+                //assert len(argvals) == 1
+                return slice(obj, (Integer) argvals.get(0));
+            }
+            if (member.equals("splice")) {
+                //assert isinstance(obj, list)
+                int index = (Integer) argvals.get(0);
+                int howMany = (Integer) argvals.get(1);
+                List<Object> res = new ArrayList<Object>();
+                List<Object> temp = new ArrayList<Object>(Arrays.asList((Object[]) obj));
+                for (int i = index; i < Math.min(index + howMany, len(obj)); i++) {
+                    res.add(temp.remove(index));
+                }
+                // mutate object
+                if (local_vars.containsKey(variable)) {
+                    local_vars.put(variable, temp.toArray());
+                }
+                return res.toArray();
+            }
+
+            return ((JsObject) obj).functions.get(member).eval(argvals.toArray());
         }
 
         m = Pattern.compile("^(?<in>[a-z]+)\\[(?<idx>.+)\\]$").matcher(expr);
