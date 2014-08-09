@@ -31,10 +31,12 @@ class JsContext {
     public JsContext(String jscode) {
         this.jscode = new StringBuilder(jscode);
         this.functions = new HashMap<String, LambdaN>();
+        this.objects = new HashMap<String, JsObject>();
     }
 
     public final StringBuilder jscode;
     public final Map<String, LambdaN> functions;
+    public final Map<String, JsObject> objects;
 
     public void free() {
         jscode.setLength(0);
