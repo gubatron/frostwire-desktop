@@ -18,19 +18,18 @@
 
 package com.frostwire.search.extractors.js;
 
+import static com.frostwire.search.extractors.js.JavaFunctions.escape;
 import static com.frostwire.search.extractors.js.JavaFunctions.isalpha;
 import static com.frostwire.search.extractors.js.JavaFunctions.isdigit;
 import static com.frostwire.search.extractors.js.JavaFunctions.join;
+import static com.frostwire.search.extractors.js.JavaFunctions.json_loads;
 import static com.frostwire.search.extractors.js.JavaFunctions.len;
 import static com.frostwire.search.extractors.js.JavaFunctions.list;
+import static com.frostwire.search.extractors.js.JavaFunctions.mscpy;
 import static com.frostwire.search.extractors.js.JavaFunctions.reverse;
 import static com.frostwire.search.extractors.js.JavaFunctions.slice;
-import static com.frostwire.search.extractors.js.JavaFunctions.escape;
-import static com.frostwire.search.extractors.js.JavaFunctions.mscpy;
-import static com.frostwire.search.extractors.js.JavaFunctions.json_loads;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,9 +86,10 @@ public final class JsFunction<T> {
                 assert idx instanceof Integer;
 
                 assign = new Lambda1() {
+                    @SuppressWarnings("unchecked")
                     @Override
                     public Object eval(Object val) {
-                        ((Object[]) lvar)[(Integer) idx] = val;
+                        ((List<Object>) lvar).set((Integer) idx, val);
                         return val;
                     }
                 };
@@ -130,6 +130,7 @@ public final class JsFunction<T> {
         return assign.eval(v);
     }
 
+    @SuppressWarnings("unchecked")
     private static Object interpret_expression(final JsContext ctx, String expr, Map<String, Object> local_vars, int allow_recursion) {
         if (isdigit(expr)) {
             return Integer.valueOf(expr);
@@ -191,7 +192,7 @@ public final class JsFunction<T> {
             }
             if (member.equals("join")) {
                 //assert len(argvals) == 1
-                return join((Object[]) obj, argvals.get(0));
+                return join((List<Object>) obj, argvals.get(0));
             }
             if (member.equals("reverse")) {
                 //assert len(argvals) == 0
@@ -207,13 +208,9 @@ public final class JsFunction<T> {
                 int index = (Integer) argvals.get(0);
                 int howMany = (Integer) argvals.get(1);
                 List<Object> res = new ArrayList<Object>();
-                List<Object> temp = new ArrayList<Object>(Arrays.asList((Object[]) obj));
+                List<Object> list = (List<Object>) obj;
                 for (int i = index; i < Math.min(index + howMany, len(obj)); i++) {
-                    res.add(temp.remove(index));
-                }
-                // mutate object
-                if (local_vars.containsKey(variable)) {
-                    local_vars.put(variable, temp.toArray());
+                    res.add(list.remove(index));
                 }
                 return res.toArray();
             }
@@ -225,7 +222,7 @@ public final class JsFunction<T> {
         if (m.find()) {
             Object val = local_vars.get(m.group("in"));
             Object idx = interpret_expression(ctx, m.group("idx"), local_vars, allow_recursion - 1);
-            return ((Object[]) val)[(Integer) idx];
+            return ((List<?>) val).get((Integer) idx);
         }
 
         m = Pattern.compile("^(?<a>.+?)(?<op>[%])(?<b>.+?)$").matcher(expr);
