@@ -62,7 +62,7 @@ final class JavaFunctions {
         return true;
     }
 
-    public static Object[] list(Object obj) {
+    public static List<Object> list(Object obj) {
         Object[] r = new Object[len(obj)];
 
         if (obj instanceof Object[]) {
@@ -70,7 +70,7 @@ final class JavaFunctions {
             for (int i = 0; i < arr.length; i++) {
                 r[i] = arr[i];
             }
-            return r;
+            return new ArrayList<Object>(Arrays.asList(r));
         }
 
         if (obj instanceof String) {
@@ -78,7 +78,7 @@ final class JavaFunctions {
             for (int i = 0; i < str.length(); i++) {
                 r[i] = str.charAt(i);
             }
-            return r;
+            return new ArrayList<Object>(Arrays.asList(r));
         }
 
         throw new IllegalArgumentException("Not supported type");
@@ -110,6 +110,22 @@ final class JavaFunctions {
         return sb.toString();
     }
 
+    public static String join(List<Object> list, Object obj) {
+        if (list.size() == 0) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(list.get(0).toString());
+        for (int i = 1; i < list.size(); i++) {
+            sb.append(obj.toString());
+            sb.append(list.get(i).toString());
+        }
+
+        return sb.toString();
+    }
+
     public static Integer len(Object obj) {
 
         if (obj instanceof Object[]) {
@@ -120,19 +136,17 @@ final class JavaFunctions {
             return ((String) obj).length();
         }
 
+        if (obj instanceof List<?>) {
+            return ((List<?>) obj).size();
+        }
+
         throw new IllegalArgumentException("Not supported type");
     }
 
     public static void reverse(Object obj) {
 
-        if (obj instanceof Object[]) {
-            Object[] arr = (Object[]) obj;
-            List<Object> list = new ArrayList<Object>();
-            list.addAll(Arrays.asList(arr));
-            Collections.reverse(list);
-            for (int i = 0; i < arr.length; i++) {
-                arr[i] = list.get(i);
-            }
+        if (obj instanceof List<?>) {
+            Collections.reverse((List<?>) obj);
             return;
         }
 
