@@ -51,8 +51,8 @@ public final class YouTubeExtractor {
 
     private static final Map<Integer, Format> FORMATS = buildFormats();
 
-    // using the signature decoding per running session
-    private static YouTubeSig YT_SIG;
+    // using the signature decoding per running session (LruCache)
+    private static LRUCacheMap<String, YouTubeSig> YT_SIG_MAP = new LRUCacheMap<String, YouTubeSig>(50);
 
     public List<LinkInfo> extract(String videoUrl, boolean testConnection) {
         try {
@@ -341,7 +341,7 @@ public final class YouTubeExtractor {
                         sig = new Regex(hit, "(sig|signature)%3D(.*?)%26").getMatch(1);
                     if (sig == null) {
                         String temp = new Regex(hit, "s=(.*?)(\\&|$)").getMatch(0);
-                        sig = ytSig != null && temp != null ? ytSig.calc(temp) : decryptSignature(temp);
+                        sig = ytSig != null && temp != null ? ytSig.calc(temp) : null;
                     }
                     String hitFmt = new Regex(hit, "itag=(\\d+)").getMatch(0);
                     if (hitUrl != null && hitFmt != null) {
@@ -371,154 +371,24 @@ public final class YouTubeExtractor {
         return vuid;
     }
 
-    /**
-     * thx to youtube-dl
-     * 
-     * @param s
-     * @return
-     */
-    private String decryptSignature(String s) {
-        if (s == null)
-            return s;
-        StringBuilder sb = new StringBuilder();
-        log("SigLength: " + s.length());
-        if (s.length() == 93) {
-            sb.append(new StringBuilder(s.substring(30, 87)).reverse());
-            sb.append(s.charAt(88));
-            sb.append(new StringBuilder(s.substring(6, 29)).reverse());
-        } else if (s.length() == 92) {
-            sb.append(s.charAt(25));
-            sb.append(s.substring(3, 25));
-            sb.append(s.charAt(0));
-            sb.append(s.substring(26, 42));
-            sb.append(s.charAt(79));
-            sb.append(s.substring(43, 79));
-            sb.append(s.charAt(91));
-            sb.append(s.substring(80, 83));
-        } else if (s.length() == 91) {
-            sb.append(new StringBuilder(s.substring(28, 85)).reverse());
-            sb.append(s.charAt(86));
-            sb.append(new StringBuilder(s.substring(6, 27)).reverse());
-        } else if (s.length() == 90) {
-            sb.append(s.charAt(25));
-            sb.append(s.substring(3, 25));
-            sb.append(s.charAt(2));
-            sb.append(s.substring(26, 40));
-            sb.append(s.charAt(77));
-            sb.append(s.substring(41, 77));
-            sb.append(s.charAt(89));
-            sb.append(s.substring(78, 81));
-        } else if (s.length() == 89) {
-            sb.append(new StringBuilder(s.substring(79, 85)).reverse());
-            sb.append(s.charAt(87));
-            sb.append(new StringBuilder(s.substring(61, 78)).reverse());
-            sb.append(s.charAt(0));
-            sb.append(new StringBuilder(s.substring(4, 60)).reverse());
-        } else if (s.length() == 88) {
-            sb.append(s.substring(7, 28));
-            sb.append(s.charAt(87));
-            sb.append(s.substring(29, 45));
-            sb.append(s.charAt(55));
-            sb.append(s.substring(46, 55));
-            sb.append(s.charAt(2));
-            sb.append(s.substring(56, 87));
-            sb.append(s.charAt(28));
-        } else if (s.length() == 87) {
-            sb.append(s.substring(6, 27));
-            sb.append(s.charAt(4));
-            sb.append(s.substring(28, 39));
-            sb.append(s.charAt(27));
-            sb.append(s.substring(40, 59));
-            sb.append(s.charAt(2));
-            sb.append(s.substring(60));
-        } else if (s.length() == 86) {
-            sb.append(new StringBuilder(s.substring(73, 81)).reverse());
-            sb.append(s.charAt(16));
-            sb.append(new StringBuilder(s.substring(40, 72)).reverse());
-            sb.append(s.charAt(72));
-            sb.append(new StringBuilder(s.substring(17, 39)).reverse());
-            sb.append(s.charAt(82));
-            sb.append(new StringBuilder(s.substring(0, 16)).reverse());
-        } else if (s.length() == 85) {
-            sb.append(s.substring(3, 11));
-            sb.append(s.charAt(0));
-            sb.append(s.substring(12, 55));
-            sb.append(s.charAt(84));
-            sb.append(s.substring(56, 84));
-        } else if (s.length() == 84) {
-            sb.append(new StringBuilder(s.substring(71, 79)).reverse());
-            sb.append(s.charAt(14));
-            sb.append(new StringBuilder(s.substring(38, 70)).reverse());
-            sb.append(s.charAt(70));
-            sb.append(new StringBuilder(s.substring(15, 37)).reverse());
-            sb.append(s.charAt(80));
-            sb.append(new StringBuilder(s.substring(0, 13)).reverse());
-        } else if (s.length() == 83) {
-            sb.append(new StringBuilder(s.substring(64, 81)).reverse());
-            sb.append(s.charAt(0));
-            sb.append(new StringBuilder(s.substring(1, 63)).reverse());
-            sb.append(s.charAt(63));
-        } else if (s.length() == 82) {
-            sb.append(new StringBuilder(s.substring(38, 81)).reverse());
-            sb.append(s.charAt(7));
-            sb.append(new StringBuilder(s.substring(8, 37)).reverse());
-            sb.append(s.charAt(0));
-            sb.append(new StringBuilder(s.substring(1, 7)).reverse());
-            sb.append(s.charAt(37));
-        } else if (s.length() == 81) {
-            sb.append(s.charAt(56));
-            sb.append(new StringBuilder(s.substring(57, 80)).reverse());
-            sb.append(s.charAt(41));
-            sb.append(new StringBuilder(s.substring(42, 56)).reverse());
-            sb.append(s.charAt(80));
-            sb.append(new StringBuilder(s.substring(35, 41)).reverse());
-            sb.append(s.charAt(0));
-            sb.append(new StringBuilder(s.substring(30, 34)).reverse());
-            sb.append(s.charAt(34));
-            sb.append(new StringBuilder(s.substring(10, 29)).reverse());
-            sb.append(s.charAt(29));
-            sb.append(new StringBuilder(s.substring(1, 9)).reverse());
-            sb.append(s.charAt(9));
-        } else if (s.length() == 80) {
-            sb.append(s.substring(1, 19));
-            sb.append(s.charAt(0));
-            sb.append(s.substring(20, 68));
-            sb.append(s.charAt(19));
-            sb.append(s.substring(69, 80));
-        } else if (s.length() == 79) {
-            sb.append(s.charAt(54));
-            sb.append(new StringBuilder(s.substring(55, 78)).reverse());
-            sb.append(s.charAt(39));
-            sb.append(new StringBuilder(s.substring(40, 54)).reverse());
-            sb.append(s.charAt(78));
-            sb.append(new StringBuilder(s.substring(35, 39)).reverse());
-            sb.append(s.charAt(0));
-            sb.append(new StringBuilder(s.substring(30, 34)).reverse());
-            sb.append(s.charAt(34));
-            sb.append(new StringBuilder(s.substring(10, 29)).reverse());
-            sb.append(s.charAt(29));
-            sb.append(new StringBuilder(s.substring(1, 9)).reverse());
-            sb.append(s.charAt(9));
-        } else {
-            log("Unsupported SigLength: " + s.length());
-            return null;
-        }
-        return sb.toString();
-    }
-
     private YouTubeSig getYouTubeSig(String html5player) {
         // concurrency issues are not important in this point
-        if (YT_SIG == null) {
+        YouTubeSig sig = null;
+        if (!YT_SIG_MAP.containsKey(html5player)) {
             try {
                 HttpClient httpClient = HttpClientFactory.newInstance();
                 String jscode = httpClient.get(html5player.replace("\\", ""));
-                YT_SIG = new YouTubeSig(jscode);
+                sig = new YouTubeSig(jscode);
+                YT_SIG_MAP.put(html5player, sig);
             } catch (Throwable t) {
                 LOG.error("Could not getYouTubeSig", t);
             }
+        } else {
+            //System.out.println(html5player);
+            // cache hit, it works
         }
 
-        return YT_SIG;
+        return sig;
     }
 
     private ThumbnailLinks createThumbnailLink(String videoId) {
@@ -688,5 +558,18 @@ public final class YouTubeExtractor {
         public final String video;
         public final String audio;
         public final String quality;
+    }
+
+    private static class LRUCacheMap<K, V> extends LinkedHashMap<K, V> {
+        private final int capacity;
+
+        public LRUCacheMap(int capacity) {
+            this.capacity = capacity;
+        }
+
+        @Override
+        protected boolean removeEldestEntry(java.util.Map.Entry<K, V> eldest) {
+            return size() > capacity;
+        }
     }
 }
