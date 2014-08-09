@@ -24,7 +24,9 @@ import static com.frostwire.search.extractors.js.JavaFunctions.join;
 import static com.frostwire.search.extractors.js.JavaFunctions.len;
 import static com.frostwire.search.extractors.js.JavaFunctions.list;
 import static com.frostwire.search.extractors.js.JavaFunctions.reverse;
-import static com.frostwire.search.extractors.js.JavaFunctions.splice;
+import static com.frostwire.search.extractors.js.JavaFunctions.slice;
+import static com.frostwire.search.extractors.js.JavaFunctions.escape;
+import static com.frostwire.search.extractors.js.JavaFunctions.mscpy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -147,7 +149,7 @@ public final class JsFunction<T> {
             Matcher slice_m = Pattern.compile("slice\\((?<idx>.*)\\)").matcher(member);
             if (slice_m.find()) {
                 Object idx = interpret_expression(ctx, slice_m.group("idx"), local_vars, allow_recursion - 1);
-                return splice(val, (Integer) idx);
+                return slice(val, (Integer) idx);
             }
         }
 
@@ -185,7 +187,7 @@ public final class JsFunction<T> {
     }
 
     private static LambdaN extract_function(final JsContext ctx, String funcname) {
-        final Matcher func_m = Pattern.compile("function " + java.util.regex.Pattern.quote(funcname) + "\\((?<args>[a-z,]+)\\)\\{(?<code>[^\\}]+)\\}").matcher(ctx.jscode);
+        final Matcher func_m = Pattern.compile("function " + escape(funcname) + "\\((?<args>[a-z,]+)\\)\\{(?<code>[^\\}]+)\\}").matcher(ctx.jscode);
         func_m.find();
 
         final String[] argnames = mscpy(func_m.group("args").split(","));
@@ -205,15 +207,5 @@ public final class JsFunction<T> {
                 return res;
             }
         };
-    }
-
-    private static String[] mscpy(String[] arr) {
-        String[] r = new String[arr.length];
-
-        for (int i = 0; i < arr.length; i++) {
-            r[i] = new String(arr[i].toCharArray());
-        }
-
-        return r;
     }
 }

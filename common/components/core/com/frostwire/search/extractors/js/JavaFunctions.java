@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @author gubatron
@@ -110,7 +111,7 @@ final class JavaFunctions {
         throw new IllegalArgumentException("Not supported type");
     }
 
-    public static Object splice(Object obj, int fromIndex) {
+    public static Object slice(Object obj, int fromIndex) {
 
         if (obj instanceof Object[]) {
             return Arrays.asList((Object[]) obj).subList(fromIndex, ((Object[]) obj).length).toArray();
@@ -121,5 +122,19 @@ final class JavaFunctions {
         }
 
         throw new IllegalArgumentException("Not supported type");
+    }
+
+    public static String escape(String s) {
+        return Pattern.quote(s);
+    }
+
+    public static String[] mscpy(String[] arr) {
+        String[] r = new String[arr.length];
+
+        for (int i = 0; i < arr.length; i++) {
+            r[i] = new String(arr[i].toCharArray());
+        }
+
+        return r;
     }
 }
