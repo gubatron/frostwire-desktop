@@ -187,11 +187,19 @@ public final class JsFunction<T> {
     }
 
     private static LambdaN extract_function(final JsContext ctx, String funcname) {
-        final Matcher func_m = Pattern.compile("function " + escape(funcname) + "\\((?<args>[a-z,]+)\\)\\{(?<code>[^\\}]+)\\}").matcher(ctx.jscode);
-        func_m.find();
+        String func_mRegex = String.format("(function %1$s|[\\{;]%1$s\\p{Space}*=\\p{Space}*function)", escape(funcname)) + "\\((?<args>[a-z,]+)\\)\\{(?<code>[^\\}]+)\\}";
+        final Matcher func_m = Pattern.compile(func_mRegex).matcher(ctx.jscode);
+        if (!func_m.find()) {
+            throw new JsError("Could not find JS function " + funcname);
+        }
 
         final String[] argnames = mscpy(func_m.group("args").split(","));
-        final String[] stmts = mscpy(func_m.group("code").split(";"));
+
+        return build_function(ctx, argnames, func_m.group("code"));
+    }
+
+    private static LambdaN build_function(final JsContext ctx, final String[] argnames, String code) {
+        final String[] stmts = mscpy(code.split(";"));
 
         return new LambdaN() {
             @Override
