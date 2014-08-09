@@ -133,6 +133,29 @@ public final class JsFunction<T> {
         Matcher m = Pattern.compile("^(?<in>[a-z]+)\\.(?<member>.*)$").matcher(expr);
         if (m.find()) {
             String member = m.group("member");
+            String variable = m.group("in");
+
+            if (!local_vars.containsKey(variable)) {
+                if (!ctx.objects.containsKey(variable)) {
+                    ctx.objects.put(variable, extract_object(ctx, variable));
+                }
+                JsObject obj = ctx.objects.get(variable);
+                String[] arr = member.split("\\(");
+                String key = arr[0];
+                String args = arr[1];
+                args = args.replace(")", "");
+                List<Object> argvals = new ArrayList<Object>();
+                for (String v : args.split(",")) {
+                    if (isdigit(v)) {
+                        argvals.add(Integer.valueOf(v));
+                    } else {
+                        argvals.add(local_vars.get(v));
+                    }
+                }
+
+                return obj.functions.get(key).eval(argvals.toArray());
+            }
+
             Object val = local_vars.get(m.group("in"));
             if (member.equals("split(\"\")")) {
                 return list((String) val);
@@ -184,6 +207,26 @@ public final class JsFunction<T> {
             return ctx.functions.get(fname).eval(argvals.toArray());
         }
         throw new JsError(String.format("Unsupported JS expression %s", expr));
+    }
+
+    private static JsObject extract_object(final JsContext ctx, String objname) {
+        JsObject obj = new JsObject();
+        String obj_mRegex = String.format("(var\\p{Space}+)?%1$s\\p{Space}*=\\p{Space}*\\{", escape(objname)) + "\\p{Space}*(?<fields>([a-zA-Z$]+\\p{Space}*:\\p{Space}*function\\(.*?\\)\\p{Space}*\\{.*?\\})*)\\}\\p{Space}*;";
+        final Matcher obj_m = Pattern.compile(obj_mRegex).matcher(ctx.jscode);
+        obj_m.find();
+        String fields = obj_m.group("fields");
+        // Currently, it only supports function definitions
+        final Matcher fields_m = Pattern.compile("(?<key>[a-zA-Z$]+)\\p{Space}*:\\p{Space}*function\\((?<args>[a-z,]+)\\)\\{(?<code>[^\\}]+)\\}").matcher(fields);
+
+        while (fields_m.find()) {
+            final String[] argnames = mscpy(fields_m.group("args").split(","));
+
+            LambdaN f = build_function(ctx, argnames, fields_m.group("code"));
+
+            obj.functions.put(fields_m.group("key"), f);
+        }
+
+        return obj;
     }
 
     private static LambdaN extract_function(final JsContext ctx, String funcname) {
