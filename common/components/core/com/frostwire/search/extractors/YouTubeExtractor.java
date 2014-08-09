@@ -82,7 +82,7 @@ public final class YouTubeExtractor {
             ThumbnailLinks thumbnailLinks = createThumbnailLink(videoId);
 
             List<LinkInfo> infos = new LinkedList<LinkInfo>();
-            
+
             if (!testConnection || testConnection(br, getFirstLink(LinksFound))) {
                 for (int fmt : LinksFound.keySet()) {
                     Format format = FORMATS.get(fmt);
@@ -101,7 +101,7 @@ public final class YouTubeExtractor {
             throw new ExtractorException("General extractor error", e);
         }
     }
-    
+
     private boolean testConnection(Browser br, String link) {
         boolean connected = false;
         try {
@@ -120,7 +120,7 @@ public final class YouTubeExtractor {
         return connected;
     }
 
-    private String getFirstLink(Map<Integer, String> linksFound){
+    private String getFirstLink(Map<Integer, String> linksFound) {
         for (int fmt : linksFound.keySet()) {
             Format format = FORMATS.get(fmt);
             if (format == null) {
@@ -157,7 +157,7 @@ public final class YouTubeExtractor {
 
         br.setFollowRedirects(true);
         /* this cookie makes html5 available and skip controversy check */
-        br.setCookie("youtube.com", "PREF", "f2=40100000&hl=en-GB");
+        br.setCookie("youtube.com", "PREF", "f2=40100000&hl=en-US");
         br.getHeaders().put("User-Agent", "Wget/1.12");
         br.getPage(video);
 
