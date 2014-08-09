@@ -211,12 +211,12 @@ public final class JsFunction<T> {
 
     private static JsObject extract_object(final JsContext ctx, String objname) {
         JsObject obj = new JsObject();
-        String obj_mRegex = String.format("(var\\p{Space}+)?%1$s\\p{Space}*=\\p{Space}*\\{", escape(objname)) + "\\p{Space}*(?<fields>([a-zA-Z$]+\\p{Space}*:\\p{Space}*function\\(.*?\\)\\p{Space}*\\{.*?\\})*)\\}\\p{Space}*;";
+        String obj_mRegex = String.format("(var\\p{Space}+)?%1$s\\p{Space}*=\\p{Space}*\\{", escape(objname)) + "\\p{Space}*(?<fields>([a-zA-Z$0-9]+\\p{Space}*:\\p{Space}*function\\(.*?\\)\\p{Space}*\\{.*?\\})*)\\}\\p{Space}*;";
         final Matcher obj_m = Pattern.compile(obj_mRegex).matcher(ctx.jscode);
         obj_m.find();
         String fields = obj_m.group("fields");
         // Currently, it only supports function definitions
-        final Matcher fields_m = Pattern.compile("(?<key>[a-zA-Z$]+)\\p{Space}*:\\p{Space}*function\\((?<args>[a-z,]+)\\)\\{(?<code>[^\\}]+)\\}").matcher(fields);
+        final Matcher fields_m = Pattern.compile("(?<key>[a-zA-Z$0-9]+)\\p{Space}*:\\p{Space}*function\\((?<args>[a-z,]+)\\)\\{(?<code>[^\\}]+)\\}").matcher(fields);
 
         while (fields_m.find()) {
             final String[] argnames = mscpy(fields_m.group("args").split(","));
