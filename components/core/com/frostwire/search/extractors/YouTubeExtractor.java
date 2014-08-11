@@ -335,7 +335,7 @@ public final class YouTubeExtractor {
                     hit = unescape(hit);
                     String hitUrl = new Regex(hit, "url=(http.*?)(\\&|$)").getMatch(0);
                     String sig = new Regex(hit, "url=http.*?(\\&|$)(sig|signature)=(.*?)(\\&|$)").getMatch(2);
-                    if (sig == null)
+                    if (sig == null) 
                         sig = new Regex(hit, "(sig|signature)=(.*?)(\\&|$)").getMatch(1);
                     if (sig == null)
                         sig = new Regex(hit, "(sig|signature)%3D(.*?)%26").getMatch(1);
@@ -343,6 +343,7 @@ public final class YouTubeExtractor {
                         String temp = new Regex(hit, "s=(.*?)(\\&|$)").getMatch(0);
                         sig = ytSig != null && temp != null ? ytSig.calc(temp) : null;
                     }
+                    
                     String hitFmt = new Regex(hit, "itag=(\\d+)").getMatch(0);
                     if (hitUrl != null && hitFmt != null) {
                         hitUrl = unescape(hitUrl.replaceAll("\\\\/", "/"));
@@ -371,21 +372,21 @@ public final class YouTubeExtractor {
         return vuid;
     }
 
-    private YouTubeSig getYouTubeSig(String html5player) {
+    private YouTubeSig getYouTubeSig(String html5playerUrl) {
         // concurrency issues are not important in this point
         YouTubeSig sig = null;
-        if (!YT_SIG_MAP.containsKey(html5player)) {
+        if (!YT_SIG_MAP.containsKey(html5playerUrl)) {
             try {
                 HttpClient httpClient = HttpClientFactory.newInstance();
-                String jscode = httpClient.get(html5player.replace("\\", ""));
+                String jscode = httpClient.get(html5playerUrl.replace("\\", ""));
                 sig = new YouTubeSig(jscode);
-                YT_SIG_MAP.put(html5player, sig);
+                YT_SIG_MAP.put(html5playerUrl, sig);
             } catch (Throwable t) {
                 LOG.error("Could not getYouTubeSig", t);
             }
         } else {
-            //System.out.println(html5player);
-            // cache hit, it works
+            //cache hit, it worked with this url.            
+            sig = YT_SIG_MAP.get(html5playerUrl);
         }
 
         return sig;
