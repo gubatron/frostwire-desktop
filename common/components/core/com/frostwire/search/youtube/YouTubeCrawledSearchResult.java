@@ -226,7 +226,7 @@ public class YouTubeCrawledSearchResult extends AbstractCrawledSearchResult impl
         } else if (video == null && audio != null) {
             downloadUrl = audio.link;
         } else if (video != null && audio != null) {
-            downloadUrl = null;
+            downloadUrl = video.link;
         } else {
             throw new IllegalArgumentException("No track defined");
         }
