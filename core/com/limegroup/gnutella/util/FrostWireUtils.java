@@ -42,7 +42,7 @@ public final class FrostWireUtils {
 	/** 
 	 * Constant for the current version of FrostWire.
 	 */
-	private static final String FROSTWIRE_VERSION = "5.7.4";
+	private static final String FROSTWIRE_VERSION = "5.7.5";
 	
 	/** Build number for the current version, gets reset to 1 on every version bump*/
 	private static final int BUILD_NUMBER = 1;
