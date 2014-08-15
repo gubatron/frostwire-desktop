@@ -21,6 +21,7 @@ package com.limegroup.gnutella.gui.tables;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.Map;
@@ -100,6 +101,12 @@ public class ProgressBarRenderer extends JProgressBar implements TableCellRender
         return value == null ? 0 : ((Integer) value).intValue();
     }
 
+    @Override
+    protected void paintBorder(Graphics g) {
+        super.paintBorder(g);
+        BeveledCellPainter.paintBorder(g, getWidth(), getHeight());
+    }
+    
     /*
      * The following methods are overridden as a performance measure to 
      * to prune code-paths are often called in the case of renders

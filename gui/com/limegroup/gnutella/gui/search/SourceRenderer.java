@@ -30,13 +30,13 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.tables.DefaultTableBevelledCellRenderer;
 
 /**
  * 
@@ -44,7 +44,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
  * @author aldenml
  *
  */
-public class SourceRenderer extends DefaultTableCellRenderer implements TableCellRenderer {
+public class SourceRenderer extends DefaultTableBevelledCellRenderer implements TableCellRenderer {
 
     private static final Map<String, ImageIcon> sourceIcons = new HashMap<String, ImageIcon>();
 

@@ -23,7 +23,6 @@ import java.util.Map;
 
 import javax.swing.JComponent;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
 /**
@@ -72,7 +71,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * NOTE: This does not color selected or focused cells.
  */
-class ColorRenderer extends DefaultTableCellRenderer {
+class ColorRenderer extends DefaultTableBevelledCellRenderer {
 
     /**
      * Map is from TableCellRenderer to TableCellRenderer.

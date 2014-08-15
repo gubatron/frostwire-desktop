@@ -1,7 +1,7 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
  * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -16,33 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.library;
+package com.limegroup.gnutella.gui.tables;
 
-import java.awt.Component;
+import java.awt.Graphics;
 
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.limegroup.gnutella.gui.tables.DefaultTableBevelledCellRenderer;
-
 /**
- * 
+ * So that table cells look beveled, details that make the difference.
  * @author gubatron
  * @author aldenml
  *
  */
-class PlayableIconCellRenderer extends DefaultTableBevelledCellRenderer {
-    public PlayableIconCellRenderer() {
-    }
-
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        PlayableIconCell cell = (PlayableIconCell) value;
-        JLabel component = (JLabel) super.getTableCellRendererComponent(table, null, isSelected, hasFocus, row, column);
-        component.setIcon(cell.getIcon());
-        component.setHorizontalTextPosition(JLabel.CENTER);
-        component.setHorizontalAlignment(SwingConstants.CENTER);
-        return component;
+public class DefaultTableBevelledCellRenderer extends DefaultTableCellRenderer {
+    @Override
+    protected void paintBorder(Graphics g) {
+        super.paintBorder(g);
+        BeveledCellPainter.paintBorder(g, getWidth(), getHeight());
     }
 }

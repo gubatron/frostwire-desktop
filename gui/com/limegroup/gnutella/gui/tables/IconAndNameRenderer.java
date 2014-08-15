@@ -5,14 +5,13 @@ import java.awt.Component;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 
 import com.frostwire.gui.theme.ThemeMediator;
 
 /**
  * Renders an icon along with a label.
  */
-public final class IconAndNameRenderer extends DefaultTableCellRenderer {
+public final class IconAndNameRenderer extends DefaultTableBevelledCellRenderer {
 
     /**
      * Constructs a new IconAndNameRenderer with the Icon aligned to the left

@@ -21,7 +21,8 @@ package com.frostwire.gui.library;
 import java.awt.Component;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
+
+import com.limegroup.gnutella.gui.tables.DefaultTableBevelledCellRenderer;
 
 /**
  *  Creates both a renderer and an editor for cells in the playlist table that display the name
@@ -30,7 +31,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  *  @author gubatron
  *  @author aldenml
  */
-class PlayableCellRenderer extends DefaultTableCellRenderer {
+class PlayableCellRenderer extends DefaultTableBevelledCellRenderer {
 
     public PlayableCellRenderer() {
     }

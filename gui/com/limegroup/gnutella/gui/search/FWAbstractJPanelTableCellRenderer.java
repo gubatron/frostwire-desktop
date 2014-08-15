@@ -21,6 +21,7 @@ package com.limegroup.gnutella.gui.search;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
@@ -37,6 +38,7 @@ import com.frostwire.gui.theme.SkinTableUI;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.AbstractCellEditor;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
+import com.limegroup.gnutella.gui.tables.BeveledCellPainter;
 
 
 /**
@@ -52,7 +54,7 @@ import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
  */
 abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implements TableCellRenderer {
 
-    private JTable table; 
+    private JTable table;
     
     @Override
     public Component getTableCellRendererComponent(final JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -218,5 +220,11 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
             //don't risk painting the table over a tooltip
         }
         return super.getToolTipText(event);
+    }
+    
+    @Override
+    protected void paintBorder(Graphics g) {
+        super.paintBorder(g);
+        BeveledCellPainter.paintBorder(g, getWidth(), getHeight());
     }
 }

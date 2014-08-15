@@ -23,6 +23,8 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import com.limegroup.gnutella.gui.tables.DefaultTableBevelledCellRenderer;
+
 /**
  *  Creates both a renderer and an editor for cells in the playlist table that display the name
  *  of the file being played.
@@ -30,7 +32,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  *  @author gubatron
  *  @author aldenml
  */
-class PlaylistItemPropertyRenderer extends DefaultTableCellRenderer {
+class PlaylistItemPropertyRenderer extends DefaultTableBevelledCellRenderer {
 
     public PlaylistItemPropertyRenderer() {
     }

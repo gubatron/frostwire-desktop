@@ -25,9 +25,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.tables.DefaultTableBevelledCellRenderer;
 
 /**
  *  Creates both a renderer and an editor for cells in the playlist table that display the name
@@ -36,7 +36,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
  *  @author gubatron
  *  @author aldenml
  */
-class PlaylistItemStarRenderer extends DefaultTableCellRenderer {
+class PlaylistItemStarRenderer extends DefaultTableBevelledCellRenderer {
 
     private static final long serialVersionUID = 6800146830099830381L;
 

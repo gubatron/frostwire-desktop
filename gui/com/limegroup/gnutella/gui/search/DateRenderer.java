@@ -5,9 +5,10 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 
-class DateRenderer extends DefaultTableCellRenderer {
+import com.limegroup.gnutella.gui.tables.DefaultTableBevelledCellRenderer;
+
+class DateRenderer extends DefaultTableBevelledCellRenderer {
     
 	private static final long serialVersionUID = -5927935873435355689L;
 	private static final DateFormat FORMAT =

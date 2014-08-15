@@ -4,15 +4,11 @@ import java.awt.Component;
 import java.util.Date;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIUtils;
 
-public class DateRenderer extends DefaultTableCellRenderer {
+public class DateRenderer extends DefaultTableBevelledCellRenderer {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -5183888170958098871L;
 
     @Override

@@ -3,14 +3,13 @@ package com.limegroup.gnutella.gui.tables;
 import java.awt.Component;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIUtils;
 
 /**
  * Simple renderer for speeds.
  */
-public final class SpeedRenderer extends DefaultTableCellRenderer {
+public final class SpeedRenderer extends DefaultTableBevelledCellRenderer {
 	
 	/**
      * 

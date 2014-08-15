@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import com.frostwire.gui.Librarian;
+import com.limegroup.gnutella.gui.tables.DefaultTableBevelledCellRenderer;
 
 /**
  * 
@@ -34,7 +35,7 @@ import com.frostwire.gui.Librarian;
  * @author aldenml
  *
  */
-class FileShareCellRenderer extends DefaultTableCellRenderer {
+class FileShareCellRenderer extends DefaultTableBevelledCellRenderer {
 
     private static final long serialVersionUID = 6392689488563533358L;
 

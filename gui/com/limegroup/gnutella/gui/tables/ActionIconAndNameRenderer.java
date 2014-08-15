@@ -30,7 +30,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author gubatron
  * @author aldenml
  */
-public final class ActionIconAndNameRenderer extends DefaultTableCellRenderer {
+public final class ActionIconAndNameRenderer extends DefaultTableBevelledCellRenderer {
 
     /**
      * 

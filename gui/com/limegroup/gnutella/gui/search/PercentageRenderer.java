@@ -3,12 +3,13 @@ package com.limegroup.gnutella.gui.search;
 import java.awt.Component;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
+
+import com.limegroup.gnutella.gui.tables.DefaultTableBevelledCellRenderer;
 
 /**
  * a TableCellRenderer rendering a Float as percentage 
  */
-public class PercentageRenderer extends DefaultTableCellRenderer {
+public class PercentageRenderer extends DefaultTableBevelledCellRenderer {
 
     /**
      * 

@@ -36,9 +36,10 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+
+import com.limegroup.gnutella.gui.tables.DefaultTableBevelledCellRenderer;
 
 
 /**
@@ -689,7 +690,7 @@ public class CheckBoxList<E> extends BoxPanel {
      /**
      * Check box tree cell renderer.
      */
-    private class CheckBoxCellRenderer extends DefaultTableCellRenderer {
+    private class CheckBoxCellRenderer extends DefaultTableBevelledCellRenderer {
         
         private static final long serialVersionUID = -8209871264709364379L;
         

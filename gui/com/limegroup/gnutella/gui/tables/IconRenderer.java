@@ -20,13 +20,12 @@ import java.awt.Component;
 import javax.swing.Icon;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  * Renders the column in the search window that displays an icon for
  * whether or not the host returning the result is chattable.
  */
-public final class IconRenderer extends DefaultTableCellRenderer {
+public final class IconRenderer extends DefaultTableBevelledCellRenderer {
 	
 	/**
      * 

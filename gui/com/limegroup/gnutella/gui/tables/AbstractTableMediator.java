@@ -996,7 +996,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
     
     protected TableCellRenderer getDefaultRenderer() {
         if (DEFAULT_RENDERER == null) {
-            DEFAULT_RENDERER = new DefaultTableCellRenderer();
+            DEFAULT_RENDERER = new DefaultTableBevelledCellRenderer();//new DefaultTableCellRenderer();
         }
         return DEFAULT_RENDERER;
     }
