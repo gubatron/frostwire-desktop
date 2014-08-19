@@ -124,7 +124,7 @@ final class SearchOptionsPanel extends JPanel {
     }
 
     private LabeledTextField createNameFilter() {
-        LabeledTextField textField = new LabeledTextField(I18n.tr("Name"), 40, -1, 200);
+        LabeledTextField textField = new LabeledTextField(I18n.tr("Name|Source|Ext."), 40, -1, 200);
         
         textField.addKeyListener(new KeyAdapter() {
             @Override

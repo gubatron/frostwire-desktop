@@ -59,7 +59,6 @@ public final class GeneralResultFilter implements TableLineFilter<SearchResultDa
         _maxSeeds = Integer.MAX_VALUE;
         _minSize = 0;
         _maxSize = Integer.MAX_VALUE;
-
     }
 
     public boolean allow(SearchResultDataLine node) {
@@ -132,9 +131,18 @@ public final class GeneralResultFilter implements TableLineFilter<SearchResultDa
             inSizeRange = size == _maxResultsSize;
         }
 
-        boolean hasKeywords = hasKeywords(node.getDisplayName());
-
+        String sourceName = getSourceName(node);
+        boolean hasKeywords = hasKeywords(node.getDisplayName() + " " + node.getExtension() + " " + sourceName);
         return inSeedRange && inSizeRange && hasKeywords;
+    }
+
+    private String getSourceName(SearchResultDataLine node) {
+        SourceHolder sourceHolder = (SourceHolder) node.getValueAt(SearchTableColumns.SOURCE_IDX);
+        String sourceName = "";
+        if (sourceHolder != null) {
+            sourceName = sourceHolder.getSourceName();
+        }
+        return sourceName;
     }
 
     private boolean hasKeywords(String filename) {

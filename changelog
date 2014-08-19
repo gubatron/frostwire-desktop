@@ -1,3 +1,8 @@
+frostwire (5.7.6) stable; urgency=high
+  * New: Filter search results by file extension, source name.
+	
+ -- FrostWire Team <contact@frostwire.com>  Tue, 19 August 2014 12:47:35 -0500
+
 frostwire (5.7.5) stable; urgency=high
   * Improved mp4 parser.
   * Improved cloud search results.
