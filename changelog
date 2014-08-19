@@ -1,5 +1,6 @@
 frostwire (5.7.6) stable; urgency=high
   * New: Filter search results by file extension, source name.
+  * UI: Now table rows have a subtle bevel effect.
 	
  -- FrostWire Team <contact@frostwire.com>  Tue, 19 August 2014 12:47:35 -0500
 
