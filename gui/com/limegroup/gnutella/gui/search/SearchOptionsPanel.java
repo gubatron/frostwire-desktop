@@ -65,12 +65,12 @@ final class SearchOptionsPanel extends JPanel {
         
         setLayout(new MigLayout("insets 0, fillx"));
 
-        add(createSearchEnginesFilter(), "wrap");
-        
+        this.textFieldKeywords = createNameFilter();
+        add(textFieldKeywords, "gapx 3, gaptop 4px, wrap");
+
         add(new JSeparator(SwingConstants.HORIZONTAL), "growx, wrap");
 
-        this.textFieldKeywords = createNameFilter();
-        add(textFieldKeywords, "gapx 3, wrap");
+        add(createSearchEnginesFilter(), "wrap");
         
         add(new JSeparator(SwingConstants.HORIZONTAL), "growx, wrap");
 
