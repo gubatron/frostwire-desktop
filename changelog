@@ -1,8 +1,9 @@
 frostwire (5.7.6) stable; urgency=high
   * New: Filter search results by file extension, source name.
   * UI: Now table rows have a subtle bevel effect.
+  * UI: Adds support for full screen mode on Mac OSX. Thanks to Tim Farris.
 	
- -- FrostWire Team <contact@frostwire.com>  Tue, 19 August 2014 12:47:35 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 21 August 2014 23:53:35 -0500
 
 frostwire (5.7.5) stable; urgency=high
   * Improved mp4 parser.

@@ -57,6 +57,7 @@ import com.limegroup.gnutella.gui.menu.MenuMediator;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
 import com.limegroup.gnutella.settings.ApplicationSettings;
+import com.limegroup.gnutella.util.MacOSXUtils;
 
 /**
  * This class constructs the main <tt>JFrame</tt> for the program as well as 
@@ -218,6 +219,10 @@ public final class MainFrame {
 
         if (ApplicationSettings.MAGNET_CLIPBOARD_LISTENER.getValue()) {
             FRAME.addWindowListener(MagnetClipboardListener.getInstance());
+        }
+        
+        if (OSUtils.isAnyMac()) {
+            MacOSXUtils.enableOSXFullscreen(FRAME);
         }
     }
 

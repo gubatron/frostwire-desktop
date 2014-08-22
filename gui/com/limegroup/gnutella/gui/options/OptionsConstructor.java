@@ -83,6 +83,7 @@ import com.limegroup.gnutella.gui.options.panes.WiFiSharingPaneItem;
 import com.limegroup.gnutella.gui.options.panes.iTunesPreferencePaneItem;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.settings.UISettings;
+import com.limegroup.gnutella.util.MacOSXUtils;
 
 /**
  * This class constructs the options tree on the left side of the options dialog.
@@ -264,6 +265,10 @@ public final class OptionsConstructor {
 
         OptionsTreeNode node = initializePanels();
         PANE_MANAGER.show(node);
+        
+        if (OSUtils.isAnyMac()) {
+            MacOSXUtils.enableOSXFullscreen(DIALOG);
+        }
     }
 
     @SuppressWarnings({ "unchecked" })
