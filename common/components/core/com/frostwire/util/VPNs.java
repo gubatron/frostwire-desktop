@@ -52,9 +52,32 @@ public final class VPNs {
     private static boolean isPosixVPNActive() {
         boolean result = false;
         try {
-            result = readProcessOutput("netstat","-nr").indexOf(" tun") != -1;
+            result = isAnyNetworkInterfaceATunnel();
         } catch (Throwable t) {
             result = false;
+            try {
+                result = readProcessOutput("netstat","-nr").indexOf(" tun") != -1;                
+            } catch (Throwable t2) {
+                result = false;
+            }
+        }
+        
+        return result;
+    }
+    
+    private static boolean isAnyNetworkInterfaceATunnel() {
+        boolean result = false;
+        try {
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface iface = networkInterfaces.nextElement();
+                if (iface.getDisplayName().contains("tun")) {
+                    result = true;
+                    break;
+                }
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
         
         return result;
