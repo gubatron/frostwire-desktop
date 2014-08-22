@@ -64,7 +64,6 @@ sourceSets {
             // jars-src (other third parties dependencies, we keep their sources
             // so that we can properly create the .deb sources for debian based mantainers
             // to corroborate we build entirely from source.)
-            srcDir 'lib/gettext-commons-0_9_5/src/java'
             srcDir 'lib/jars-src/gettext-commons-0_9_5/src/java'
             srcDir 'lib/jars-src/lucene-3.5.0'
             srcDir 'lib/jars-src/h2-1.3.164'
