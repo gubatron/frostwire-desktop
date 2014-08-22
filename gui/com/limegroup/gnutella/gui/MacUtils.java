@@ -16,8 +16,11 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.FileDialog;
+import java.awt.Window;
 
 import net.roydesign.ui.FolderDialog;
+
+import com.apple.eawt.FullScreenUtilities;
 
 /**
  * A collection of OSX GUI utilities.
@@ -26,9 +29,10 @@ import net.roydesign.ui.FolderDialog;
  * OSX jars aren't included with other installations.
  */
 public final class MacUtils {
-    
-    private MacUtils() {}
-    
+
+    private MacUtils() {
+    }
+
     /**
      * Returns the OSX Folder Dialog.
      */
@@ -38,5 +42,9 @@ public final class MacUtils {
         // Apple's VMs to show a real folder dialog, with a 
         // Choose button and all.
         return new FolderDialog(GUIMediator.getAppFrame(), "");
+    }
+
+    public static void enableFullscreen(Window window) {
+        FullScreenUtilities.setWindowCanFullScreen(window, true);
     }
 }

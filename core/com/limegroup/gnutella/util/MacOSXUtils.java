@@ -1,8 +1,5 @@
 package com.limegroup.gnutella.util;
 
-import java.awt.Window;
-import java.lang.reflect.Method;
-
 import org.limewire.util.CommonUtils;
 
 /**
@@ -14,19 +11,20 @@ import org.limewire.util.CommonUtils;
  * use the method CommonUtils.isCocoaFoundationAvailable().
  */
 public class MacOSXUtils {
-    
-	private static boolean initialized = false;
-	
+
+    private static boolean initialized = false;
+
     static {
-        	try {
-        		System.loadLibrary("MacOSXUtilsLeopard");
-        		initialized = true;
-        	} catch (Throwable err) {
-            }
+        try {
+            System.loadLibrary("MacOSXUtilsLeopard");
+            initialized = true;
+        } catch (Throwable err) {
+        }
     }
-    
-    private MacOSXUtils() {}
-    
+
+    private MacOSXUtils() {
+    }
+
     /**
      * The name of the app that launches.
      */
@@ -43,7 +41,7 @@ public class MacOSXUtils {
             SetLoginStatusNative(allow, path);
         }
     }
-    
+
     /**
      * Gets the full user's name.
      */
@@ -54,28 +52,14 @@ public class MacOSXUtils {
             return "";
         }
     }
-    
+
     /**
      * Gets the full user's name.
      */
     private static final native String GetCurrentFullUserName();
-    
+
     /**
      * [Un]registers FrostWire from the startup items list.
      */
     private static final native void SetLoginStatusNative(boolean allow, String appPath);
-    
-    @SuppressWarnings("unchecked")
-    public static void enableOSXFullscreen(Window window) {
-        try {
-            Class class_ = Class.forName("com.apple.eawt.FullScreenUtilities");
-            Class params[] = new Class[]{Window.class, Boolean.TYPE};
-            Method method = class_.getMethod("setWindowCanFullScreen", params);
-            method.invoke(class_, window, true);
-        } catch (ClassNotFoundException e1) {
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }
