@@ -34,6 +34,12 @@ public class StatusBarSettings extends LimeProps {
         FACTORY.createBooleanSetting("FIREWALL_DISPLAY_ENABLED", true);
 
     /**
+     * Whether or not firewall status should be displayed.
+     */
+    public static BooleanSetting VPN_DISPLAY_ENABLED =
+            FACTORY.createBooleanSetting("VPN_DISPLAY_ENABLED", true);
+
+    /**
      * Whether or not bandwidth consumption should be displayed.
      */
     public static BooleanSetting BANDWIDTH_DISPLAY_ENABLED =

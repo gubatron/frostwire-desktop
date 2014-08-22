@@ -15,34 +15,6 @@
 
 package com.limegroup.gnutella.gui;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-import javax.swing.ToolTipManager;
-
-import org.gudy.azureus2.plugins.network.ConnectionManager;
-import org.limewire.setting.BooleanSetting;
-
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
@@ -52,6 +24,13 @@ import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StatusBarSettings;
+import org.gudy.azureus2.plugins.network.ConnectionManager;
+import org.limewire.setting.BooleanSetting;
+import org.limewire.util.OSUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 /**
  * The component for the space at the bottom of the main application
@@ -76,6 +55,8 @@ public final class StatusLine {
      */
     private JLabel _connectionQualityMeter;
     private final ImageIcon[] _connectionQualityMeterIcons = new ImageIcon[7];
+
+    private final VPNStatusButton _vpnStatus = new VPNStatusButton();
 
     /**
      * The button for the current language flag to allow language switching
@@ -240,6 +221,7 @@ public final class StatusLine {
      * and makes sure it has room to add an indicator before adding it.
      */
     public void refresh() {
+        System.out.println("StatusLine refresh...");
         if (getComponent() != null) {
             getComponent().removeAll();
 
@@ -277,35 +259,24 @@ public final class StatusLine {
             gbc.gridx = GridBagConstraints.RELATIVE;
 
             //  add connection quality indicator if there's room
-            indicatorWidth = GUIConstants.SEPARATOR + Math.max((int) _connectionQualityMeter.getMinimumSize().getWidth(), _connectionQualityMeter.getWidth()) + sepWidth;
-            if (StatusBarSettings.CONNECTION_QUALITY_DISPLAY_ENABLED.getValue() && remainingWidth > indicatorWidth) {
-                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-                BAR.add(_connectionQualityMeter, gbc);
-                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-                BAR.add(createSeparator(), gbc);
-                remainingWidth -= indicatorWidth;
+            if (StatusBarSettings.CONNECTION_QUALITY_DISPLAY_ENABLED.getValue()) {
+                remainingWidth = addStatusIndicator(_connectionQualityMeter, sepWidth, remainingWidth, gbc);
+            }
+
+            //TODO: Remove Windows condition when figure out VPN detection for that OS.
+            if (!OSUtils.isWindows() && StatusBarSettings.VPN_DISPLAY_ENABLED.getValue()) {
+                _vpnStatus.refresh();
+                remainingWidth = addStatusIndicator(_vpnStatus, sepWidth, remainingWidth, gbc);
             }
 
             //  add the language button if there's room
-            indicatorWidth = GUIConstants.SEPARATOR + Math.max((int) _languageButton.getMinimumSize().getWidth(), _languageButton.getWidth()) + sepWidth;
-
-            BooleanSetting languageSetting = getLanguageSetting();
-            if (languageSetting.getValue() && remainingWidth > indicatorWidth) {
-                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-                BAR.add(_languageButton, gbc);
-                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-                BAR.add(createSeparator(), gbc);
-                remainingWidth -= indicatorWidth;
+            if (getLanguageSetting().getValue() && remainingWidth > indicatorWidth) {
+                remainingWidth = addStatusIndicator(_languageButton, sepWidth, remainingWidth, gbc);
             }
 
             //  then add firewall display if there's room
-            indicatorWidth = GUIConstants.SEPARATOR + Math.max((int) _firewallStatus.getMinimumSize().getWidth(), _firewallStatus.getWidth()) + sepWidth;
-            if (StatusBarSettings.FIREWALL_DISPLAY_ENABLED.getValue() && remainingWidth > indicatorWidth) {
-                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-                BAR.add(_firewallStatus, gbc);
-                BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-                BAR.add(createSeparator(), gbc);
-                remainingWidth -= indicatorWidth;
+            if (StatusBarSettings.FIREWALL_DISPLAY_ENABLED.getValue()) {
+                remainingWidth = addStatusIndicator(_firewallStatus, sepWidth, remainingWidth, gbc);
                 updateFirewall();
             }
 
@@ -358,6 +329,19 @@ public final class StatusLine {
             
             BAR.repaint();
         }
+    }
+
+    private int addStatusIndicator(JComponent component, int sepWidth, int remainingWidth, GridBagConstraints gbc) {
+        int indicatorWidth;
+        indicatorWidth = GUIConstants.SEPARATOR + Math.max((int) component.getMinimumSize().getWidth(), component.getWidth()) + sepWidth;
+        if (remainingWidth > indicatorWidth) {
+            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+            BAR.add(component, gbc);
+            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+            BAR.add(createSeparator(), gbc);
+            remainingWidth -= indicatorWidth;
+        }
+        return remainingWidth;
     }
 
     /**
@@ -669,6 +653,10 @@ public final class StatusLine {
                 jcbmi.setState(StatusBarSettings.CONNECTION_QUALITY_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
 
+                jcbmi = new SkinCheckBoxMenuItem(new ShowVPNAction());
+                jcbmi.setState(StatusBarSettings.VPN_DISPLAY_ENABLED.getValue());
+                jpm.add(jcbmi);
+
                 //  add 'Show International Localization' menu item
                 jcbmi = new SkinCheckBoxMenuItem(new ShowLanguageStatusAction());
                 jcbmi.setState(getLanguageSetting().getValue());
@@ -696,12 +684,12 @@ public final class StatusLine {
     };
 
     /**
-     * Action for the 'Show Connection Quality' menu item. 
+     * Action for the 'Show Connection Quality' menu item.
      */
     private class ShowConnectionQualityAction extends AbstractAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 7922422377962473634L;
 
@@ -711,6 +699,21 @@ public final class StatusLine {
 
         public void actionPerformed(ActionEvent e) {
             StatusBarSettings.CONNECTION_QUALITY_DISPLAY_ENABLED.invert();
+            refresh();
+        }
+    }
+
+    /**
+     * Action for the 'Show Connection Quality' menu item.
+     */
+    private class ShowVPNAction extends AbstractAction {
+
+        public ShowVPNAction() {
+            putValue(Action.NAME, I18n.tr("Show Connection Privacy Status"));
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            StatusBarSettings.VPN_DISPLAY_ENABLED.invert();
             refresh();
         }
     }
