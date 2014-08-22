@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="jar://$MODULE_DIR$/lib/jars/gettext-commons.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/jars/messages.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/jars/h2-1.3.164.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/jars/lucene-3.5.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/jars/metadata-extractor-2.6.2.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/jars/jaudiotagger.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/jars/slf4j-api-1.7.5.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/jars/slf4j-jdk14-1.7.5.jar!/" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/components/resources/src/main/resources" expected_position="0" />
+      <src_folder value="file://$MODULE_DIR$/components/osx_stub/src/main/java" expected_position="1" />
+      <src_folder value="file://$MODULE_DIR$/components/alexandria/src/main/java" expected_position="2" />
+      <src_folder value="file://$MODULE_DIR$/common/components/json" expected_position="3" />
+      <src_folder value="file://$MODULE_DIR$/common/components/gson" expected_position="4" />
+      <src_folder value="file://$MODULE_DIR$/common/components/apache" expected_position="5" />
+      <src_folder value="file://$MODULE_DIR$/common/components/jdownloader" expected_position="6" />
+      <src_folder value="file://$MODULE_DIR$/common/components/jmdns" expected_position="7" />
+      <src_folder value="file://$MODULE_DIR$/common/components/minicastle" expected_position="8" />
+      <src_folder value="file://$MODULE_DIR$/common/components/mp4parser" expected_position="9" />
+      <src_folder value="file://$MODULE_DIR$/common/vuze/azureus2/src" expected_position="10" />
+      <src_folder value="file://$MODULE_DIR$/common/vuze/azureus3/src" expected_position="11" />
+      <src_folder value="file://$MODULE_DIR$/common/vuze/plugins" expected_position="12" />
+      <src_folder value="file://$MODULE_DIR$/common/components/core" expected_position="13" />
+      <src_folder value="file://$MODULE_DIR$/core" expected_position="14" />
+      <src_folder value="file://$MODULE_DIR$/gui" expected_position="15" />
+    </src_description>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="true">
+    <output url="file://$MODULE_DIR$/bin" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/components/osx_stub/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/components/alexandria/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common/components/json" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common/components/gson" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common/components/apache" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common/components/jdownloader" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common/components/jmdns" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common/components/minicastle" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common/components/mp4parser" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common/vuze/azureus3/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common/vuze/plugins" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common/components/core" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/gui" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/bin" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/gudy/azureus2/ui/swing" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/gettext-commons-0_9_5/src/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/jaudiotagger/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/slf4j-api/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/metadata-extractor-2.6.2-src/Source" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/components/resources/src/main/resources" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
+      <excludeFolder url="file://$MODULE_DIR$/builder" />
+      <excludeFolder url="file://$MODULE_DIR$/common/components/core/com/frostwire/search/tests" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/dht/netcoords/vivaldi/ver1/impl/tests" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/networkmanager/admin/impl/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/pairing/impl/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/proxy/impl/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/plugins/magnet/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/plugins/net/buddy/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/plugins/net/netstatus/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/plugins/startstoprules/defaultplugin/ui/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/ui/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/bouncycastle" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/eclipse/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/gudy/azureus2/core3/ipfilter/impl/tests" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/gudy/azureus2/core3/util/jman" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/gudy/azureus2/ui/swing" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/gudy/azureus2/ui/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/gudy/azureus2/ui/systray" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus3/src/com/aelitis/azureus/ui/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/test" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/uis/src/org/gudy/azureus2/ui" />
+      <excludeFolder url="file://$MODULE_DIR$/gui/com/limegroup/gnutella/gui/search/tests" />
+      <excludeFolder url="file://$MODULE_DIR$/lib/jars-src/gettext-commons-0_9_5/src/java/org/xnap/commons/ant" />
+      <excludeFolder url="file://$MODULE_DIR$/lib/jars-src/jaudiotagger/srctest" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="module-library">
+      <library name="gettext-commons.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jars/gettext-commons.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/lib/jars-src" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="messages.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jars/messages.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="h2-1.3.164.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jars/h2-1.3.164.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/lib/jars-src" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="lucene-3.5.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jars/lucene-3.5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/lib/jars-src" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="metadata-extractor-2.6.2.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jars/metadata-extractor-2.6.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jaudiotagger.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jars/jaudiotagger.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/lib/jars-src/jaudiotagger" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="slf4j-api-1.7.5.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jars/slf4j-api-1.7.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="slf4j-jdk14-1.7.5.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jars/slf4j-jdk14-1.7.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/common/vuze/uis/lib/log4j.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+
