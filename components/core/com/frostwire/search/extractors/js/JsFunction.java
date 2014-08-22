@@ -277,7 +277,7 @@ public final class JsFunction<T> {
         if (!func_m.find()) {
             throw new JsError("Could not find JS function " + funcname);
         }
-
+        
         final String[] argnames = mscpy(func_m.group("args").split(","));
 
         return build_function(ctx, argnames, func_m.group("code"));
