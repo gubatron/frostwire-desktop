@@ -221,7 +221,7 @@ public final class StatusLine {
      * and makes sure it has room to add an indicator before adding it.
      */
     public void refresh() {
-        System.out.println("StatusLine refresh...");
+        //System.out.println("StatusLine refresh...");
         if (getComponent() != null) {
             getComponent().removeAll();
 
