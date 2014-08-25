@@ -245,7 +245,7 @@ public final class iTunesMediator {
         public void run() {
             try {
                 Runtime.getRuntime().exec(createOSAScriptCommand(playlist, files));
-            } catch (IOException e) {
+            } catch (Throwable e) {
                 LOG.error(e.getMessage(),e);
             }
         }
