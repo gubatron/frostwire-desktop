@@ -18,18 +18,11 @@
 
 package com.frostwire.util;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import org.limewire.util.OSUtils;
+
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
-
-import org.limewire.util.OSUtils;
-
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
 /**
  * 
@@ -40,7 +33,7 @@ public final class VPNs {
     public static boolean isVPNActive() {
         boolean result = false;
         
-        if (OSUtils.isAnyMac() || OSUtils.isLinux()) {
+        if (OSUtils.isMacOSX() || OSUtils.isLinux()) {
             result = isPosixVPNActive();
         } else if (OSUtils.isWindows()) {
             result = isWindowsVPNActive();
@@ -55,11 +48,13 @@ public final class VPNs {
             result = isAnyNetworkInterfaceATunnel();
         } catch (Throwable t) {
             result = false;
+            /**
             try {
                 result = readProcessOutput("netstat","-nr").indexOf(" tun") != -1;                
             } catch (Throwable t2) {
                 result = false;
             }
+            */
         }
         
         return result;
@@ -101,7 +96,8 @@ public final class VPNs {
         // http://msdn.microsoft.com/en-us/library/windows/desktop/aa366062(v=vs.85).aspx
         return false;
     }
-    
+
+    /**
     private static String readProcessOutput(String command, String arguments) {
         String result ="";
         
@@ -141,6 +137,7 @@ public final class VPNs {
         
         return result;
     }
+    */
     
     public static void printNetworkInterfaces() {
         try {
