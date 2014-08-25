@@ -46,12 +46,11 @@ import com.frostwire.gui.theme.SkinProgressBarUI;
 public class ProgressBarRenderer extends JProgressBar implements TableCellRenderer {
 
     private Map<Color, Border> borders = new HashMap<Color, Border>();
+    private boolean isSelected;
 
     /**
      * Sets the font, border, and colors for the progress bar.
      *
-     * @param table the <tt>JTable</tt> instance used to obtain the colors
-     * to use for rendering
      */
     public ProgressBarRenderer() {
         setUI(SkinProgressBarUI.createUI(this));
@@ -76,7 +75,7 @@ public class ProgressBarRenderer extends JProgressBar implements TableCellRender
     }
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSel, boolean hasFocus, int row, int column) {
-
+        this.isSelected = isSel;
         setValue(Math.min(100, getBarStatus(value)));
         setString(getDescription(value));
 
@@ -104,7 +103,10 @@ public class ProgressBarRenderer extends JProgressBar implements TableCellRender
     @Override
     protected void paintBorder(Graphics g) {
         super.paintBorder(g);
-        BeveledCellPainter.paintBorder(g, getWidth(), getHeight());
+
+        if (!isSelected) {
+            BeveledCellPainter.paintBorder(g, getWidth(), getHeight());
+        }
     }
     
     /*

@@ -55,10 +55,12 @@ import com.limegroup.gnutella.gui.tables.BeveledCellPainter;
 abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implements TableCellRenderer {
 
     private JTable table;
+    private boolean isSelected;
     
     @Override
     public Component getTableCellRendererComponent(final JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         this.table = table;
+        this.isSelected = isSelected;
         updateUIData(value, table, row, column);
         setOpaque(true);
         setEnabled(table.isEnabled());
@@ -225,6 +227,8 @@ abstract public class FWAbstractJPanelTableCellRenderer extends JPanel implement
     @Override
     protected void paintBorder(Graphics g) {
         super.paintBorder(g);
-        BeveledCellPainter.paintBorder(g, getWidth(), getHeight());
+        if (!isSelected) {
+            BeveledCellPainter.paintBorder(g, getWidth(), getHeight());
+        }
     }
 }

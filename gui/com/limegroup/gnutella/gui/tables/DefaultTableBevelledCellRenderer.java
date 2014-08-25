@@ -18,9 +18,9 @@
 
 package com.limegroup.gnutella.gui.tables;
 
-import java.awt.Graphics;
-
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
 
 /**
  * So that table cells look beveled, details that make the difference.
@@ -29,9 +29,21 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  */
 public class DefaultTableBevelledCellRenderer extends DefaultTableCellRenderer {
+
+    private boolean isSelected;
+
     @Override
     protected void paintBorder(Graphics g) {
         super.paintBorder(g);
-        BeveledCellPainter.paintBorder(g, getWidth(), getHeight());
+
+        if (!isSelected) {
+            BeveledCellPainter.paintBorder(g, getWidth(), getHeight());
+        }
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        this.isSelected = isSelected;
+        return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
     }
 }
