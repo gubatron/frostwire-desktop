@@ -48,6 +48,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="gettext-commons" level="project" />
+    <orderEntry type="library" name="messages" level="project" />
   </component>
 </module>
 

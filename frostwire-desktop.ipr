@@ -45,23 +45,6 @@
     </option>
   </component>
   <component name="IdProvider" IDEtalkID="9D1CA3E16035A420F1FA7705148DCD9D" />
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-          <State>
-            <id>Android</id>
-          </State>
-          <State>
-            <id>Android Lint</id>
-          </State>
-        </expanded-state>
-      </profile-state>
-    </entry>
-  </component>
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/frostwire-desktop.iml" filepath="$PROJECT_DIR$/frostwire-desktop.iml" />
@@ -77,6 +60,13 @@
     <library name="gettext-commons">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/lib/jars/gettext-commons.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="messages">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/jars/messages.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
