@@ -11,7 +11,7 @@
 apply plugin: 'java'
 
 if (!System.getenv('ANT_HOME')?.trim()) { 
-    throw new GradleException("ERROR: ANT_HOME environment variable not set.\n\n(e.g. on MacOSX: /usr/local/Cellar/ant/1.9.3/libexec\n      on Linux:  /usr/share/ant)")
+    //throw new GradleException("ERROR: ANT_HOME environment variable not set.\n\n(e.g. on MacOSX: /usr/local/Cellar/ant/1.9.3/libexec\n      on Linux:  /usr/share/ant)")
 }
 
 sourceCompatibility = 1.7
