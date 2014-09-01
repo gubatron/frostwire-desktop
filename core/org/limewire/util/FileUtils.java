@@ -758,8 +758,10 @@ public class FileUtils {
     }
     
     public static File[] listFiles(File directoryFile) {
-        List<File> files = new LinkedList<>();
-        try (DirectoryStream<Path> dir = Files.newDirectoryStream(directoryFile.toPath())) {
+        List<File> files = new LinkedList<File>();
+        DirectoryStream<Path> dir = null;
+        try  {
+            dir = Files.newDirectoryStream(directoryFile.toPath());
             for (Path child : dir) {
                 files.add(child.toFile());
             }

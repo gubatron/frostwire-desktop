@@ -871,7 +871,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
             }
 
             //let's make a copy of the list in case the playlist will be modified during the copying.
-            final List<PlaylistItem> playlistItems = new ArrayList<>(playlist.getItems());
+            final List<PlaylistItem> playlistItems = new ArrayList<PlaylistItem>(playlist.getItems());
 
             BackgroundExecutorService.schedule(new Thread("Library-copy-playlist-files") {
                 @Override

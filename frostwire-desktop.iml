@@ -10,13 +10,11 @@
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/metadata-extractor-2.6.2-src/Source" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/apache" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/minicastle" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/gettext-commons-0_9_5/src/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/vuze/plugins" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/lucene-3.5.0" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/gson" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/slf4j-api/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/json" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/core" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/osx_stub/src" isTestSource="false" />
@@ -31,16 +29,25 @@
       <sourceFolder url="file://$MODULE_DIR$/common/vuze/azureus3/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/mp4parser" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/vuze" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/components/resources/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
-      <excludeFolder url="file://$MODULE_DIR$/.gradle" />
-      <excludeFolder url="file://$MODULE_DIR$/build" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/dht/netcoords/vivaldi/ver1/impl/tests" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/networkmanager/admin/impl/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/pairing/impl/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/proxy/impl/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/plugins/magnet/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/plugins/net/buddy/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/plugins/net/netstatus/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/plugins/startstoprules/defaultplugin/ui/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/ui/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/bouncycastle" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/eclipse/swt/widgets" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/gudy/azureus2/ui/swt" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/gudy/azureus2/ui/systray" />
+      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus3/src/com/aelitis/azureus/ui/swt" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="Gradle: _Users_aldenml_Development_workspace_frostwire_desktop_null_lib_ant_jar" level="project" />
+    <orderEntry type="library" name="gettext-commons" level="project" />
   </component>
 </module>
 

@@ -61,7 +61,7 @@ final class SearchOptionsPanel extends JPanel {
     public SearchOptionsPanel(SearchResultMediator resultPanel) {
         this.resultPanel = resultPanel;
 
-        engineCheckboxes = new HashMap<>();
+        engineCheckboxes = new HashMap<SearchEngine, JCheckBox>();
         
         setLayout(new MigLayout("insets 0, fillx"));
 
