@@ -10,8 +10,6 @@
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/metadata-extractor-2.6.2-src/Source" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/apache" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/minicastle" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/common/vuze/plugins" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/lucene-3.5.0" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/gson" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/slf4j-api/src/main/java" isTestSource="false" />
@@ -26,7 +24,6 @@
       <sourceFolder url="file://$MODULE_DIR$/common/components/okhttp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/core" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gui" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/common/vuze/azureus3/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/mp4parser" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/vuze" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/resources/src/main/resources" type="java-resource" />
