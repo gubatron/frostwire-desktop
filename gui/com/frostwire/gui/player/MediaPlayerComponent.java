@@ -81,7 +81,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     /**
      * Constant for the play button.
      */
-    private final MediaButton PLAY_BUTTON = new MediaButton(I18n.tr("Play"), "play_up", "play_dn");
+    private final MediaButton PLAY_BUTTON = new MediaButton(I18n.tr("Play") + " (" + I18n.tr("Long Press to Stop Playback") + ")", "play_up", "play_dn");
 
     /**
      * Constant for the pause button.
