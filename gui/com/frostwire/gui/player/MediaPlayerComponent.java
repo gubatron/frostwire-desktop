@@ -728,7 +728,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     // }
 
     private boolean isPlaying() {
-        return !(mediaPlayer.getState() == MediaPlaybackState.Stopped || mediaPlayer.getState() == MediaPlaybackState.Uninitialized || mediaPlayer.getState() == MediaPlaybackState.Paused || mediaPlayer.getState() == MediaPlaybackState.Failed);
+        return !(mediaPlayer.getState() == MediaPlaybackState.Stopped || mediaPlayer.getState() == MediaPlaybackState.Uninitialized || mediaPlayer.getState() == MediaPlaybackState.Paused || mediaPlayer.getState() == MediaPlaybackState.Failed || mediaPlayer.getState() == MediaPlaybackState.Closed);
     }
 
     /**

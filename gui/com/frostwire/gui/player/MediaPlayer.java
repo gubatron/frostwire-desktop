@@ -656,9 +656,14 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             asyncLoadMedia(media, true, true, currentPlaylist, Arrays.asList(playlistFilesView));
         }
     }
+    
+    private boolean isPlayerStoppedClosedFailed() {
+        MediaPlaybackState state = getState();
+        return state == MediaPlaybackState.Stopped || state == MediaPlaybackState.Closed || state == MediaPlaybackState.Failed;
+    }
 
     public boolean isThisBeingPlayed(File file) {
-        if (getState() == MediaPlaybackState.Stopped) {
+        if (isPlayerStoppedClosedFailed()) {
             return false;
         }
 
@@ -681,10 +686,10 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     }
 
     public boolean isThisBeingPlayed(String file) {
-        if (getState() == MediaPlaybackState.Stopped) {
+        if (isPlayerStoppedClosedFailed()) {
             return false;
         }
-
+        
         MediaSource currentMedia = getCurrentMedia();
         if (currentMedia == null) {
             return false;
@@ -700,7 +705,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     }
 
     public boolean isThisBeingPlayed(PlaylistItem playlistItem) {
-        if (getState() == MediaPlaybackState.Stopped) {
+        if (isPlayerStoppedClosedFailed()) {
             return false;
         }
 
