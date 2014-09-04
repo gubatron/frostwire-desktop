@@ -18,6 +18,8 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,14 +32,16 @@ import javax.swing.SwingConstants;
  * @author gubatron
  * @author aldenml
  */
-public final class MediaButton extends JButton {
+public final class MediaButton extends JButton implements LongPressable {
 
     private String tipText;
     private String upName;
     private String downName;
+    private ActionListener longPressActionListener = null;
 
     public MediaButton(String tipText, String upName, String downName) {
         init(tipText,upName,downName);
+        this.addMouseListener(new LongPressMouseAdapter(this));
     }
     
     public void init(String tipText, String upName, String downName) {
@@ -67,5 +71,21 @@ public final class MediaButton extends JButton {
         setMargin(new Insets(0, 0, 0, 0));
         setBorder(null);
         setToolTipText(tipText);
+    }
+    
+    /**
+     * Enable this media button to act upon a long press by giving it an action listener here.
+     * Set it to null, and it'll stop responding to long press events.
+     * @param actionListener
+     */
+    public final void setLongPressActionListener(ActionListener actionListener) {
+        longPressActionListener = actionListener;
+    }
+
+    @Override
+    public void onLongPress(MouseEvent e) {
+        if (longPressActionListener != null) {
+            longPressActionListener.actionPerformed(null); 
+        }
     }
 }

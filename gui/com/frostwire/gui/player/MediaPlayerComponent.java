@@ -86,7 +86,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     /**
      * Constant for the pause button.
      */
-    private final MediaButton PAUSE_BUTTON = new MediaButton(I18n.tr("Pause"), "pause_up", "pause_dn");
+    private final MediaButton PAUSE_BUTTON = new MediaButton(I18n.tr("Pause") + " (" + I18n.tr("Long Press to Stop Playback") + ")", "pause_up", "pause_dn");
 
     private JPanel PLAY_PAUSE_BUTTON_CONTAINER;
 
@@ -366,7 +366,9 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     public void registerListeners() {
         PLAY_BUTTON.addActionListener(new PlayListener());
+        PLAY_BUTTON.setLongPressActionListener(new LongPressStopListener());
         PAUSE_BUTTON.addActionListener(new PauseListener());
+        PAUSE_BUTTON.setLongPressActionListener(new LongPressStopListener());
         NEXT_BUTTON.addActionListener(new NextListener());
         PREV_BUTTON.addActionListener(new BackListener());
         VOLUME.addChangeListener(new VolumeSliderListener());
@@ -770,6 +772,13 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     private class PlayListener implements ActionListener {
         public void actionPerformed(ActionEvent ae) {
             play();
+        }
+    }
+    
+    /** Listens for the play button being long pressed during playback to stop. */
+    private class LongPressStopListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            stopSong();
         }
     }
 
