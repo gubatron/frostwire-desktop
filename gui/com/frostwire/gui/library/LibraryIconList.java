@@ -58,7 +58,9 @@ public class LibraryIconList extends JList<Object> {
         super.paintComponent(g);
         MediaPlayer player = MediaPlayer.instance();
 
-        if (player.getState() != MediaPlaybackState.Stopped) {
+        if (player.getState() != MediaPlaybackState.Stopped && 
+            player.getState() != MediaPlaybackState.Closed &&
+            player.getState() != MediaPlaybackState.Failed) {
             if (player.getCurrentMedia() != null && player.getCurrentPlaylist() != null && player.getPlaylistFilesView() != null) {
                 int index = getPlaylistIndex(player.getCurrentPlaylist());
                 if (index != -1) {
