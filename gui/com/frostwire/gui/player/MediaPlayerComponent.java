@@ -432,6 +432,8 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         if (mediaPlayer.getCurrentMedia() != null) {
             if (mediaPlayer.getState() == MediaPlaybackState.Paused || mediaPlayer.getState() == MediaPlaybackState.Playing) {
                 mediaPlayer.togglePause();
+            } else if (mediaPlayer.getState() == MediaPlaybackState.Closed) {
+                LibraryMediator.instance().playCurrentSelection();
             }
         } else {
             if (GUIMediator.instance().getSelectedTab() != null && GUIMediator.instance().getSelectedTab().equals(GUIMediator.Tabs.LIBRARY)) {

@@ -390,7 +390,6 @@ public class MPlayer extends BaseMediaPlayer {
 					.getString("azemp.failed.d3dbad"));
 			reportNewState(MediaPlaybackState.Failed);
 		} else if (line.startsWith(ID_EXIT)) {
-
 			reportNewState(MediaPlaybackState.Closed);
 		} else if (line.startsWith(ICY_INFO)) {
 		    String data = line.substring(ICY_INFO.length()).trim();

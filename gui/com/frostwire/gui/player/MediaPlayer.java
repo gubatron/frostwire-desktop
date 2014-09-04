@@ -899,7 +899,8 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         if (curState == MediaPlaybackState.Playing || curState == MediaPlaybackState.Paused) {
             togglePause();
         } else if (curState == MediaPlaybackState.Closed) {
-            playMedia();
+            //playMedia();
+            LibraryMediator.instance().playCurrentSelection();
         }
     }
 
