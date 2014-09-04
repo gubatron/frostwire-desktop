@@ -1,3 +1,11 @@
+frostwire (5.7.7) stable; urgency=high
+  * New: Stop media playback by long pressing play/pause button.
+  * Fix: Bug where files couldn't be played with the main player button.
+  * Fix: Bug where the speaker icon on the library would still show
+    after the media player had stopped.
+
+ -- FrostWire Team <contact@frostwire.com>  Thu, 04 September 2014 12:54:30 -0500
+
 frostwire (5.7.6) stable; urgency=high
   * New: Filter search results by file extension, source name.
   * UI: Now table rows have a subtle bevel effect.
@@ -12,7 +20,7 @@ frostwire (5.7.5) stable; urgency=high
   * Fixes player control layout issues when resizing the main window.
   * Fixes soundcloud url track/set downloads.
   * Fixes possible cloud download errors.
-	
+
  -- FrostWire Team <contact@frostwire.com>  Tue, 11 August 2014 17:46:15 -0500
 
 frostwire (5.7.4) stable; urgency=high
