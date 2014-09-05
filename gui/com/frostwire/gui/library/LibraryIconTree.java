@@ -67,8 +67,10 @@ public class LibraryIconTree extends JTree {
 
         try {
             MediaPlayer player = MediaPlayer.instance();
-
-            if (player.getState() != MediaPlaybackState.Stopped) {
+            MediaPlaybackState playerState = player.getState();
+            if (playerState != MediaPlaybackState.Stopped &&
+                playerState != MediaPlaybackState.Closed  &&
+                playerState != MediaPlaybackState.Failed) {
                 if (player.getCurrentMedia() instanceof InternetRadioAudioSource) {
                     TreePath path = getRadioPath();
                     if (path != null) {
