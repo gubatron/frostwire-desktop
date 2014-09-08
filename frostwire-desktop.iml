@@ -45,6 +45,9 @@
       <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/gudy/azureus2/ui/systray" />
       <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus3/src/com/aelitis/azureus/ui/swt" />
     </content>
+    <content url="file://$MODULE_DIR$/../frostwire-jlibtorrent/src">
+      <sourceFolder url="file://$MODULE_DIR$/../frostwire-jlibtorrent/src" isTestSource="false" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="gettext-commons" level="project" />
