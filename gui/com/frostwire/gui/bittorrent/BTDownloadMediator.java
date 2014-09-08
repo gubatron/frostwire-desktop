@@ -793,6 +793,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
     }
 
+    public void openTorrentFile2(final File torrentFile) {
+
+    }
+
     public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
         if (!AzureusStarter.isAzureusCoreStarted()) {
             LOG.error("Azureus core not started");

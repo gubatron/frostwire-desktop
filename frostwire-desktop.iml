@@ -30,6 +30,7 @@
       <sourceFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/vuze/azureus3/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/vuze/plugins" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common/components/libtorrent" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/dht/netcoords/vivaldi/ver1/impl/tests" />
       <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/networkmanager/admin/impl/swt" />
       <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/pairing/impl/swt" />
