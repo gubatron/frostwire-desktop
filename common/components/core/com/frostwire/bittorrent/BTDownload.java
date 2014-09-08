@@ -21,9 +21,10 @@ package com.frostwire.bittorrent;
 /**
  * @author gubatron
  * @author aldenml
- *
  */
 public interface BTDownload {
+
+    public String getName();
 
     public long getSize();
 }

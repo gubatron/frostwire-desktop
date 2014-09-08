@@ -27,7 +27,7 @@ import java.io.File;
 public abstract class BTDownloadFactory {
 
     // change this for a new implementation
-    private static final String DEFAULT_CLASS_NAME = "com.frostwire.bittorrent.libtorrent.LTDownloadProvider";
+    private static final String DEFAULT_CLASS_NAME = "com.frostwire.bittorrent.libtorrent.LTDownloadFactory";
 
     protected BTDownloadFactory() {
     }
@@ -36,6 +36,7 @@ public abstract class BTDownloadFactory {
         try {
             return (BTDownloadFactory) Class.forName(className).newInstance();
         } catch (Throwable e) {
+            e.printStackTrace();
             return null;
         }
     }

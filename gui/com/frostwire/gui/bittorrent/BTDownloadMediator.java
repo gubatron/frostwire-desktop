@@ -787,12 +787,12 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
     }
 
-    public void openTorrentFile2(final File torrentFile) {
+    public void openTorrentFile2(final File torrentFile, final boolean partialDownload) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 try {
                     BTDownloadFactory factory = BTDownloadFactory.newInstance();
-                    com.frostwire.bittorrent.BTDownload d = factory.create(torrentFile.getAbsolutePath());
+                    com.frostwire.bittorrent.BTDownload d = factory.create(torrentFile);
                     BittorrentDownload bt = new BittorrentDownload(d);
                     add(bt);
                 } catch (Throwable e) {

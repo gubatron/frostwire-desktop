@@ -751,7 +751,7 @@ public final class GUIMediator {
     }
 
     public final void openTorrentFile(File torrentFile, boolean partialSelection) {
-        getBTDownloadMediator().openTorrentFile(torrentFile, partialSelection);
+        getBTDownloadMediator().openTorrentFile2(torrentFile, partialSelection);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 

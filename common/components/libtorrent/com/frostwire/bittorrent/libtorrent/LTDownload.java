@@ -31,15 +31,24 @@ public final class LTDownload implements BTDownload {
     private final TorrentHandle th;
 
     private final TorrentInfo ti;
+    private final String name;
+    private final long size;
 
     public LTDownload(TorrentHandle th) {
         this.th = th;
 
         this.ti = this.th.getTorrentInfo();
+        this.name = this.ti.getName();
+        this.size = this.ti.getTotalSize();
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
     public long getSize() {
-        return this.ti.getTotalSize();
+        return size;
     }
 }
