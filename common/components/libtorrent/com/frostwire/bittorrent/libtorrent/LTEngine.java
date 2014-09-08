@@ -16,14 +16,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.bittorrent;
+package com.frostwire.bittorrent.libtorrent;
+
+import com.frostwire.jlibtorrent.Session;
 
 /**
  * @author gubatron
  * @author aldenml
- *
  */
-public interface BTDownload {
+public final class LTEngine {
 
-    public long getSize();
+    private final Session session;
+
+    public LTEngine() {
+        this.session = new Session();
+    }
+
+    private static class Loader {
+        static LTEngine INSTANCE = new LTEngine();
+    }
+
+    public static LTEngine getInstance() {
+        return Loader.INSTANCE;
+    }
+
+    public Session getSession() {
+        return session;
+    }
 }

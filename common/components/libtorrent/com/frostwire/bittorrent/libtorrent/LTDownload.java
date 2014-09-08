@@ -19,10 +19,27 @@
 package com.frostwire.bittorrent.libtorrent;
 
 import com.frostwire.bittorrent.BTDownload;
+import com.frostwire.jlibtorrent.TorrentHandle;
+import com.frostwire.jlibtorrent.TorrentInfo;
 
 /**
  * @author gubatron
  * @author aldenml
  */
 public final class LTDownload implements BTDownload {
+
+    private final TorrentHandle th;
+
+    private final TorrentInfo ti;
+
+    public LTDownload(TorrentHandle th) {
+        this.th = th;
+
+        this.ti = this.th.getTorrentInfo();
+    }
+
+    @Override
+    public long getSize() {
+        return this.ti.getTotalSize();
+    }
 }

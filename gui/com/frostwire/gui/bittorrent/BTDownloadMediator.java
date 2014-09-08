@@ -18,24 +18,9 @@
 
 package com.frostwire.gui.bittorrent;
 
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.swing.Action;
-import javax.swing.JPopupMenu;
-import javax.swing.JTable;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-
-import org.gudy.azureus2.core3.download.DownloadManager;
-import org.limewire.util.FilenameUtils;
-import org.limewire.util.OSUtils;
-
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
+import com.frostwire.bittorrent.BTDownloadFactory;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleMediaFileAction;
 import com.frostwire.gui.components.slides.Slide;
@@ -48,8 +33,8 @@ import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.transfers.PeerHttpUpload;
 import com.frostwire.logging.Logger;
 import com.frostwire.search.soundcloud.SoundCloudRedirectResponse;
-import com.frostwire.search.soundcloud.SoundcloudPlaylist;
 import com.frostwire.search.soundcloud.SoundcloudItem;
+import com.frostwire.search.soundcloud.SoundcloudPlaylist;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
@@ -66,20 +51,27 @@ import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.TableSettings;
-import com.limegroup.gnutella.settings.ApplicationSettings;
-import com.limegroup.gnutella.settings.BittorrentSettings;
-import com.limegroup.gnutella.settings.QuestionsHandler;
-import com.limegroup.gnutella.settings.TablesHandlerSettings;
-import com.limegroup.gnutella.settings.UpdateManagerSettings;
+import com.limegroup.gnutella.settings.*;
+import org.gudy.azureus2.core3.download.DownloadManager;
+import org.limewire.util.FilenameUtils;
+import org.limewire.util.OSUtils;
+
+import javax.swing.*;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class acts as a mediator between all of the components of the
  * download window.  It also constructs all of the download window
  * components.
- * 
+ *
  * @author gubatron
  * @author aldenml
- * 
  */
 public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRowFilteredModel, BTDownloadDataLine, BTDownload> {
 
@@ -114,7 +106,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     private Action showInLibraryAction;
     private Action clearInactiveAction;
 
-    /** The actual download buttons instance.
+    /**
+     * The actual download buttons instance.
      */
     private BTDownloadButtons _downloadButtons;
     private SeedingFilter _seedingFilter;
@@ -164,14 +157,15 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     /**
      * Returns the most prominent actions that operate on the download table.
+     *
      * @return
      */
     public Action[] getActions() {
         Action[] actions;
         if (OSUtils.isWindows() || OSUtils.isMacOSX())
-            actions = new Action[] { resumeAction, pauseAction, showInLibraryAction, exploreAction, removeAction, clearInactiveAction };
+            actions = new Action[]{resumeAction, pauseAction, showInLibraryAction, exploreAction, removeAction, clearInactiveAction};
         else
-            actions = new Action[] { resumeAction, pauseAction, removeAction };
+            actions = new Action[]{resumeAction, pauseAction, removeAction};
 
         return actions;
     }
@@ -193,8 +187,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     /**
      * Filter out all the models who are being seeded.
-     * @author gubatron
      *
+     * @author gubatron
      */
     class SeedingFilter implements TableLineFilter<BTDownloadDataLine> {
         @Override
@@ -222,10 +216,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     /**
      * Notification that a filter on this panel has changed.
-     *
+     * <p/>
      * Updates the data model with the new list, maintains the selection,
      * and moves the viewport to the first still visible selected row.
-    */
+     */
     boolean filterChanged() {
         // store the selection & visible rows
         int[] rows = TABLE.getSelectedRows();
@@ -336,7 +330,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     /**
      * Returns the aggregate amount of bandwidth being consumed by active downloads.
-     *  
+     *
      * @return the total amount of bandwidth being consumed by active downloads.
      */
     private double getBandwidth(boolean download) {
@@ -363,12 +357,12 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     /**
      * Overrides the default add.
-     *
+     * <p/>
      * Adds a new Downloads to the list of Downloads, obtaining the necessary
      * information from the supplied <tt>Downloader</tt>.
-     *
+     * <p/>
      * If the download is not already in the list, then it is added.
-     *  <p>
+     * <p/>
      */
     public void add(BTDownload downloader) {
         if (!DATA_MODEL.contains(downloader)) {
@@ -385,16 +379,16 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     /**
      * Overrides the default remove.
-     *
+     * <p/>
      * Takes action upon downloaded theme files, asking if the user wants to
      * apply the theme.
-     *
+     * <p/>
      * Removes a download from the list if the user has configured their system
      * to automatically clear completed download and if the download is
      * complete.
      *
      * @param downloader the <tt>Downloader</tt> to remove from the list if it is
-     *  complete.
+     *                   complete.
      */
     public void remove(BTDownload dloader) {
         //        DownloadStatus state = dloader.getState();
@@ -469,7 +463,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
     }
 
-    /**  
+    /**
      * Launches explorer
      */
     void launchExplorer() {
@@ -794,7 +788,18 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentFile2(final File torrentFile) {
-
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                try {
+                    BTDownloadFactory factory = BTDownloadFactory.newInstance();
+                    com.frostwire.bittorrent.BTDownload d = factory.create(torrentFile.getAbsolutePath());
+                    BittorrentDownload bt = new BittorrentDownload(d);
+                    add(bt);
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
@@ -856,11 +861,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         List<BTDownload> downloads = new ArrayList<BTDownload>(count);
         for (int i = 0; i < count; i++) {
             try {
-            	if (i < DATA_MODEL.getRowCount()) {            	
-	                BTDownloadDataLine line = DATA_MODEL.get(i);
-	                BTDownload downloader = line.getInitializeObject();
-	                downloads.add(downloader);
-            	}
+                if (i < DATA_MODEL.getRowCount()) {
+                    BTDownloadDataLine line = DATA_MODEL.get(i);
+                    BTDownload downloader = line.getInitializeObject();
+                    downloads.add(downloader);
+                }
             } catch (Throwable t) {
                 //saw user with 771 downloads
                 //perhaps deleted one, and by the time this finished
@@ -964,24 +969,24 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             });
         } else if (trackUrl != null) {
             //resolve track information using http://api.soundcloud.com/resolve?url=<url>&client_id=b45b1aa10f1ac2941910a7f0d10f8e28
-            final String clientId="b45b1aa10f1ac2941910a7f0d10f8e28";
-            final String appVersion="dd9d3970";
+            final String clientId = "b45b1aa10f1ac2941910a7f0d10f8e28";
+            final String appVersion = "dd9d3970";
             try {
                 String url = trackUrl;
-                if (trackUrl.contains("?in=")){
-                    url=trackUrl.substring(0,trackUrl.indexOf("?in="));
+                if (trackUrl.contains("?in=")) {
+                    url = trackUrl.substring(0, trackUrl.indexOf("?in="));
                 }
-                
-                final String resolveURL = "http://api.soundcloud.com/resolve.json?url="+url+"&client_id="+clientId+"&app_version="+appVersion;
-                System.out.println("resolve: "+ resolveURL);
-                final String json = HttpClientFactory.newInstance().get(resolveURL,10000);
+
+                final String resolveURL = "http://api.soundcloud.com/resolve.json?url=" + url + "&client_id=" + clientId + "&app_version=" + appVersion;
+                System.out.println("resolve: " + resolveURL);
+                final String json = HttpClientFactory.newInstance().get(resolveURL, 10000);
                 //System.out.println(json);
 
                 if (json.contains("\"status\":\"30")) {
                     try {
                         System.out.println("Soundcloud Redirection! >> " + json);
                         final SoundCloudRedirectResponse redirectResponse = JsonUtils.toObject(json, SoundCloudRedirectResponse.class);
-                        final String redirectedJson = HttpClientFactory.newInstance().get(redirectResponse.location,10000);
+                        final String redirectedJson = HttpClientFactory.newInstance().get(redirectResponse.location, 10000);
                         //System.out.println(redirectedJson);
                         downloadSoundcloudSetOrTrack(clientId, appVersion, url, redirectedJson);
                     } catch (Throwable t) {
@@ -990,7 +995,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                 } else {
                     downloadSoundcloudSetOrTrack(clientId, appVersion, url, json);
                 }
-                
+
             } catch (Throwable e) {
                 e.printStackTrace();
             }
@@ -1017,8 +1022,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     private void downloadSoundcloudSet(final String clientId, final String appVersion, String url, final String json) {
         //download a whole playlist
         final SoundcloudPlaylist playlist = JsonUtils.toObject(json, SoundcloudPlaylist.class);
-        
-        if (playlist!=null && playlist.tracks != null){
+
+        if (playlist != null && playlist.tracks != null) {
             for (SoundcloudItem scItem : playlist.tracks) {
                 if (scItem.downloadable) {
                     SoundcloudSearchResult srNew = new SoundcloudSearchResult(scItem, clientId, appVersion);
