@@ -55,22 +55,22 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public boolean isResumable() {
-        return false;
+        return d.isPaused();
     }
 
     @Override
     public boolean isPausable() {
-        return false;
+        return !d.isPaused();
     }
 
     @Override
     public boolean isCompleted() {
-        return false;
+        return d.isFinished();
     }
 
     @Override
     public int getState() {
-        return 0;
+        return d.getState().ordinal();
     }
 
     @Override
@@ -80,17 +80,17 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public void pause() {
-
+        d.pause();
     }
 
     @Override
     public File getSaveLocation() {
-        return null;
+        return new File(d.getSavePath());
     }
 
     @Override
     public void resume() {
-
+        d.resume();
     }
 
     @Override

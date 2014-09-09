@@ -27,4 +27,18 @@ public interface BTDownload {
     public String getName();
 
     public long getSize();
+
+    public boolean isPaused();
+
+    public boolean isSeeding();
+
+    public boolean isFinished();
+
+    public BTDownloadState getState();
+
+    public String getSavePath();
+
+    public void pause();
+
+    public void resume();
 }

@@ -19,8 +19,10 @@
 package com.frostwire.bittorrent.libtorrent;
 
 import com.frostwire.bittorrent.BTDownload;
+import com.frostwire.bittorrent.BTDownloadState;
 import com.frostwire.jlibtorrent.TorrentHandle;
 import com.frostwire.jlibtorrent.TorrentInfo;
+import com.frostwire.jlibtorrent.TorrentStatus;
 
 /**
  * @author gubatron
@@ -50,5 +52,65 @@ public final class LTDownload implements BTDownload {
     @Override
     public long getSize() {
         return size;
+    }
+
+    @Override
+    public boolean isPaused() {
+        return th.isPaused();
+    }
+
+    @Override
+    public boolean isSeeding() {
+        return th.isSeeding();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return th.isFinished();
+    }
+
+    @Override
+    public BTDownloadState getState() {
+        TorrentStatus.State state = th.getStatus().state;
+
+        if (th.isPaused()) {
+            return BTDownloadState.PAUSED;
+        }
+
+        switch (state) {
+            case QUEUED_FOR_CHECKING:
+                return BTDownloadState.QUEUED_FOR_CHECKING;
+            case CHECKING_FILES:
+                return BTDownloadState.CHECKING_FILES;
+            case DOWNLOADING_METADATA:
+                return BTDownloadState.DOWNLOADING_METADATA;
+            case DOWNLOADING:
+                return BTDownloadState.DOWNLOADING;
+            case FINISHED:
+                return BTDownloadState.FINISHED;
+            case SEEDING:
+                return BTDownloadState.SEEDING;
+            case ALLOCATING:
+                return BTDownloadState.ALLOCATING;
+            case CHECKING_RESUME_DATA:
+                return BTDownloadState.CHECKING_RESUME_DATA;
+            default:
+                throw new IllegalArgumentException("No enum value supported");
+        }
+    }
+
+    @Override
+    public String getSavePath() {
+        return th.getSavePath();
+    }
+
+    @Override
+    public void pause() {
+        th.pause();
+    }
+
+    @Override
+    public void resume() {
+        th.resume();
     }
 }
