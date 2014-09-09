@@ -105,6 +105,18 @@ public final class LTDownload implements BTDownload {
     }
 
     @Override
+    public int getProgress() {
+        float fp = th.getStatus().progress;
+
+        if (Float.compare(fp, 1f) == 0) {
+            return 100;
+        }
+
+        int p = (int) (th.getStatus().progress * 100);
+        return Math.min(p, 100);
+    }
+
+    @Override
     public void pause() {
         th.pause();
     }

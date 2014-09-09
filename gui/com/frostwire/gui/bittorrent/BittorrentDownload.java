@@ -95,12 +95,12 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public int getProgress() {
-        return 0;
+        return d.getProgress();
     }
 
     @Override
     public String getStateString() {
-        return null;
+        return d.getState().name();
     }
 
     @Override

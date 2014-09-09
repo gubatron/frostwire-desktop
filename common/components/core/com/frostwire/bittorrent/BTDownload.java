@@ -38,6 +38,14 @@ public interface BTDownload {
 
     public String getSavePath();
 
+    /**
+     * A value in the range [0, 100], that represents the progress of the torrent's
+     * current task. It may be checking files or downloading.
+     *
+     * @return
+     */
+    public int getProgress();
+
     public void pause();
 
     public void resume();
