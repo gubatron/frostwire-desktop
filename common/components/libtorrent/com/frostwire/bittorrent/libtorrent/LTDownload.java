@@ -117,6 +117,26 @@ public final class LTDownload implements BTDownload {
     }
 
     @Override
+    public long getBytesReceived() {
+        return th.getStatus().totalDownload;
+    }
+
+    @Override
+    public long getBytesSent() {
+        return th.getStatus().totalUpload;
+    }
+
+    @Override
+    public float getDownloadSpeed() {
+        return th.getStatus().downloadRate;
+    }
+
+    @Override
+    public float getUploadSpeed() {
+        return th.getStatus().uploadRate;
+    }
+
+    @Override
     public void pause() {
         th.pause();
     }

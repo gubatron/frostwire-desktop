@@ -46,6 +46,14 @@ public interface BTDownload {
      */
     public int getProgress();
 
+    public long getBytesReceived();
+
+    public long getBytesSent();
+
+    public float getDownloadSpeed();
+
+    public float getUploadSpeed();
+
     public void pause();
 
     public void resume();
