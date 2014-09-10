@@ -180,6 +180,23 @@ public final class LTDownload implements BTDownload {
     }
 
     @Override
+    public long getETA() {
+        TorrentStatus status = th.getStatus();
+        long left = this.size - status.totalDone;
+        long rate = status.downloadPayloadRate;
+
+        if (left <= 0) {
+            return 0;
+        }
+
+        if (rate <= 1) {
+            return -1;
+        }
+
+        return left / rate;
+    }
+
+    @Override
     public void pause() {
         th.pause();
     }

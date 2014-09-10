@@ -72,6 +72,8 @@ public interface BTDownload {
 
     public Date getDateCreated();
 
+    public long getETA();
+
     public void pause();
 
     public void resume();

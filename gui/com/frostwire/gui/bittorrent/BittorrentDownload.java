@@ -108,12 +108,12 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public long getBytesReceived() {
-        return d.getBytesReceived();
+        return d.getTotalBytesReceived();
     }
 
     @Override
     public long getBytesSent() {
-        return d.getBytesSent();
+        return d.getTotalBytesSent();
     }
 
     @Override
@@ -128,7 +128,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public long getETA() {
-        return 0;
+        return d.getETA();
     }
 
     @Override

@@ -40,7 +40,7 @@ public final class LTEngine {
         return Loader.INSTANCE;
     }
 
-    public Session getSession() {
+    Session getSession() {
         return session;
     }
 }
