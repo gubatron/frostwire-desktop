@@ -24,6 +24,8 @@ import com.frostwire.jlibtorrent.TorrentHandle;
 import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.jlibtorrent.TorrentStatus;
 
+import java.util.Date;
+
 /**
  * @author gubatron
  * @author aldenml
@@ -122,8 +124,18 @@ public final class LTDownload implements BTDownload {
     }
 
     @Override
+    public long getTotalBytesReceived() {
+        return th.getStatus().allTimeDownload;
+    }
+
+    @Override
     public long getBytesSent() {
         return th.getStatus().totalUpload;
+    }
+
+    @Override
+    public long getTotalBytesSent() {
+        return th.getStatus().allTimeUpload;
     }
 
     @Override
@@ -154,6 +166,16 @@ public final class LTDownload implements BTDownload {
     @Override
     public int getTotalSeeds() {
         return th.getStatus().listSeeds;
+    }
+
+    @Override
+    public String getInfoHash() {
+        return th.getTorrentInfo().getInfoHash();
+    }
+
+    @Override
+    public Date getDateCreated() {
+        return new Date(th.getStatus().addedTime);
     }
 
     @Override

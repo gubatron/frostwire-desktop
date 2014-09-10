@@ -165,17 +165,24 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public String getHash() {
-        return null;
+        return d.getInfoHash();
     }
 
     @Override
     public String getSeedToPeerRatio() {
-        return null;
+        return d.getTotalSeeds() + "/" + d.getTotalPeers();
     }
 
     @Override
     public String getShareRatio() {
-        return null;
+        long sent = d.getTotalBytesSent();
+        long received = d.getTotalBytesReceived();
+
+        if (received < 0) {
+            return "0";
+        }
+
+        return String.valueOf((double) sent / (double) received);
     }
 
     @Override
@@ -190,7 +197,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public Date getDateCreated() {
-        return null;
+        return d.getDateCreated();
     }
 
     @Override

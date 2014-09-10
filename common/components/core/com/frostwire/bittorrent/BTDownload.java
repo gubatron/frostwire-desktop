@@ -18,6 +18,8 @@
 
 package com.frostwire.bittorrent;
 
+import java.util.Date;
+
 /**
  * @author gubatron
  * @author aldenml
@@ -48,7 +50,11 @@ public interface BTDownload {
 
     public long getBytesReceived();
 
+    public long getTotalBytesReceived();
+
     public long getBytesSent();
+
+    public long getTotalBytesSent();
 
     public float getDownloadSpeed();
 
@@ -61,6 +67,10 @@ public interface BTDownload {
     public int getConnectedSeeds();
 
     public int getTotalSeeds();
+
+    public String getInfoHash();
+
+    public Date getDateCreated();
 
     public void pause();
 
