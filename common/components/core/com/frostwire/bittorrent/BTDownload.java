@@ -75,4 +75,14 @@ public interface BTDownload {
     public void pause();
 
     public void resume();
+
+    public void stop();
+
+    /**
+     * This method is specific for torrent downloads
+     *
+     * @param deleteTorrent
+     * @param deleteData
+     */
+    public void stop(boolean deleteTorrent, boolean deleteData);
 }

@@ -20,6 +20,7 @@ package com.frostwire.bittorrent.libtorrent;
 
 import com.frostwire.bittorrent.BTDownload;
 import com.frostwire.bittorrent.BTDownloadState;
+import com.frostwire.jlibtorrent.Session;
 import com.frostwire.jlibtorrent.TorrentHandle;
 import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.jlibtorrent.TorrentStatus;
@@ -186,5 +187,26 @@ public final class LTDownload implements BTDownload {
     @Override
     public void resume() {
         th.resume();
+    }
+
+    @Override
+    public void stop() {
+        this.stop(false, false);
+    }
+
+    @Override
+    public void stop(boolean deleteTorrent, boolean deleteData) {
+        Session s = LTEngine.getInstance().getSession();
+
+        Session.Options options = Session.Options.NONE;
+        if (deleteData) {
+            options = Session.Options.DELETE_FILES;
+        }
+
+        s.removeTorrent(th, options);
+
+        if (deleteTorrent) {
+            th.getTorrentFile().delete();
+        }
     }
 }

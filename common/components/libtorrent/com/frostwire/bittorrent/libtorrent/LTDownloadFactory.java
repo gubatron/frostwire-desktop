@@ -34,7 +34,7 @@ public final class LTDownloadFactory extends BTDownloadFactory {
     @Override
     public BTDownload create(File torrent) {
         Session s = LTEngine.getInstance().getSession();
-        TorrentHandle th = s.add(torrent);
+        TorrentHandle th = s.addTorrent(torrent);
         return new LTDownload(th);
     }
 }
