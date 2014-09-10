@@ -54,6 +54,14 @@ public interface BTDownload {
 
     public float getUploadSpeed();
 
+    public int getConnectedPeers();
+
+    public int getTotalPeers();
+
+    public int getConnectedSeeds();
+
+    public int getTotalSeeds();
+
     public void pause();
 
     public void resume();

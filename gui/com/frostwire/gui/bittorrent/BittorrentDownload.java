@@ -135,12 +135,12 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public String getPeersString() {
-        return null;
+        return d.getConnectedPeers() + "/" + d.getTotalPeers();
     }
 
     @Override
     public String getSeedsString() {
-        return null;
+        return d.getConnectedSeeds() + "/" + d.getTotalSeeds();
     }
 
     @Override

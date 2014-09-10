@@ -137,6 +137,26 @@ public final class LTDownload implements BTDownload {
     }
 
     @Override
+    public int getConnectedPeers() {
+        return th.getStatus().numPeers;
+    }
+
+    @Override
+    public int getTotalPeers() {
+        return th.getStatus().listPeers;
+    }
+
+    @Override
+    public int getConnectedSeeds() {
+        return th.getStatus().numSeeds;
+    }
+
+    @Override
+    public int getTotalSeeds() {
+        return th.getStatus().listSeeds;
+    }
+
+    @Override
     public void pause() {
         th.pause();
     }
