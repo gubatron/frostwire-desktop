@@ -16,34 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.bittorrent;
+package com.frostwire.bittorrent.libtorrent;
 
-import java.io.File;
+import com.frostwire.jlibtorrent.swig.alert;
 
 /**
  * @author gubatron
  * @author aldenml
  */
-public abstract class BTDownloadFactory {
+interface AlertListener<T extends alert> {
 
-    // change this for a new implementation
-    private static final String DEFAULT_CLASS_NAME = "com.frostwire.bittorrent.libtorrent.LTDownloadFactory";
+    public boolean accept(T a);
 
-    protected BTDownloadFactory() {
-    }
-
-    public static BTDownloadFactory newInstance(String className) {
-        try {
-            return (BTDownloadFactory) Class.forName(className).newInstance();
-        } catch (Throwable e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static BTDownloadFactory newInstance() {
-        return newInstance(DEFAULT_CLASS_NAME);
-    }
-
-    public abstract BTDownload create(File torrent, File saveDir);
+    public void onAlert(T a);
 }

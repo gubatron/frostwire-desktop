@@ -189,7 +189,7 @@ public final class LTDownload implements BTDownload {
             return 0;
         }
 
-        if (rate <= 1) {
+        if (rate <= 0) {
             return -1;
         }
 
@@ -225,5 +225,9 @@ public final class LTDownload implements BTDownload {
         if (deleteTorrent) {
             th.getTorrentFile().delete();
         }
+    }
+
+    TorrentHandle getTorrentHandle() {
+        return th;
     }
 }

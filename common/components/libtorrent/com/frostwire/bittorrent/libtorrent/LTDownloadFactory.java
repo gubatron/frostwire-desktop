@@ -22,6 +22,7 @@ import com.frostwire.bittorrent.BTDownload;
 import com.frostwire.bittorrent.BTDownloadFactory;
 import com.frostwire.jlibtorrent.Session;
 import com.frostwire.jlibtorrent.TorrentHandle;
+import com.frostwire.jlibtorrent.swig.torrent_alert;
 
 import java.io.File;
 
@@ -32,9 +33,36 @@ import java.io.File;
 public final class LTDownloadFactory extends BTDownloadFactory {
 
     @Override
-    public BTDownload create(File torrent) {
-        Session s = LTEngine.getInstance().getSession();
-        TorrentHandle th = s.addTorrent(torrent);
-        return new LTDownload(th);
+    public BTDownload create(File torrent, File saveDir) {
+        LTEngine e = LTEngine.getInstance();
+
+        Session s = e.getSession();
+        TorrentHandle th = s.addTorrent(torrent, saveDir);
+        LTDownload dl = new LTDownload(th);
+
+        e.addListener(new TorrentAlertAdapter(dl));
+
+        return dl;
+    }
+
+    private static class TorrentAlertAdapter implements AlertListener<torrent_alert> {
+
+        private final LTDownload dl;
+        private final TorrentHandle th;
+
+        public TorrentAlertAdapter(LTDownload dl) {
+            this.dl = dl;
+            this.th = dl.getTorrentHandle();
+        }
+
+        @Override
+        public boolean accept(torrent_alert a) {
+            return th.getSwig().op_eq(a.getHandle());
+        }
+
+        @Override
+        public void onAlert(torrent_alert a) {
+
+        }
     }
 }
