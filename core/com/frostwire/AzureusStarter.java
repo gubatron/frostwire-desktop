@@ -45,7 +45,8 @@ public final class AzureusStarter {
 
     private static final Logger LOG = Logger.getLogger(AzureusStarter.class);
 
-
+    private static boolean DOWNLOADS_RESUMED = false;
+    
     private static AzureusCore AZUREUS_CORE;
 
     public final static void start() {
@@ -69,6 +70,10 @@ public final class AzureusStarter {
 
     public static boolean isAzureusCoreStarted() {
         return AZUREUS_CORE != null && AZUREUS_CORE.isStarted();
+    }
+    
+    public static boolean haveDownloadsBeenResumed() {
+        return isAzureusCoreStarted() && DOWNLOADS_RESUMED;
     }
 
     private static final Long ZERO = new Long(0);
@@ -192,6 +197,7 @@ public final class AzureusStarter {
             try {
                 signal.await();
                 LOG.debug("azureusInit(): core started...");
+                DOWNLOADS_RESUMED = true;
             } catch (InterruptedException e) {
 
                 e.printStackTrace();

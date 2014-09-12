@@ -21,6 +21,7 @@ import javax.swing.SwingUtilities;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 
+import com.frostwire.AzureusStarter;
 import com.frostwire.gui.bittorrent.BTDownload;
 import com.limegroup.gnutella.ActivityCallback;
 import com.limegroup.gnutella.MagnetOptions;
@@ -210,29 +211,59 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	}
 	
 	public void handleTorrent(final File torrentFile) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				GUIMediator.instance().openTorrentFile(torrentFile, false);
-			}
-		});
+	    new AzureusCoreWaiter("VisualConnectionCallback::handleTorrent()") {
+            @Override
+            public void onAzureusCoreStarted() {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        GUIMediator.instance().openTorrentFile(torrentFile, false);
+                    }
+                });
+            }
+	    }.start();
 	}
 
 	public void handleTorrentMagnet(final String request, final boolean partialDownload) {
-	    SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-            	GUIMediator.instance().setRemoteDownloadsAllowed(partialDownload);
-            	    System.out.println("VisualConnectionCallback about to call openTorrentURI of request.");
-            	    System.out.println(request);
-                GUIMediator.instance().openTorrentURI(request, partialDownload);
+	    new AzureusCoreWaiter("VisualConnectionCallback::handleTorrentMagnet()") {
+            @Override
+            public void onAzureusCoreStarted() {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        GUIMediator.instance().setRemoteDownloadsAllowed(partialDownload);
+                            System.out.println("VisualConnectionCallback about to call openTorrentURI of request.");
+                            System.out.println(request);
+                        GUIMediator.instance().openTorrentURI(request, partialDownload);
+                    }
+                });
             }
-        });
+	    }.start();
+	}
+	
+	private abstract class AzureusCoreWaiter extends Thread {
+	    private final String name;
+
+        public AzureusCoreWaiter(String name) {
+            super("AzureusCoreWaiter-"+name);
+            this.name = name;
+        }
+	    
+	    @Override
+	    public void run() {
+            while (!AzureusStarter.haveDownloadsBeenResumed()) {
+                System.out.println(this.name + " - waiting for bittorrent engine to start and resume downloads...");
+                try { Thread.sleep(1000); } catch (Throwable t) { break; }
+            }
+            onAzureusCoreStarted();
+	    }
+	    
+        public abstract void onAzureusCoreStarted();
 	}
 
     public void addDownloadManager(DownloadManager dm) {
         Runnable doWorkRunnable = new AddDownloadManager(dm);
         GUIMediator.safeInvokeAndWait(doWorkRunnable);
     }
-    
+
     public boolean isRemoteDownloadsAllowed() {
         try {
             SwingUtilities.invokeAndWait(new Runnable() {
