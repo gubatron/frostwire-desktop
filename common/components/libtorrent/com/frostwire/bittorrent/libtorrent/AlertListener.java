@@ -24,9 +24,9 @@ import com.frostwire.jlibtorrent.swig.alert;
  * @author gubatron
  * @author aldenml
  */
-interface AlertListener<T extends alert> {
+interface AlertListener {
 
-    public boolean accept(T a);
+    public boolean accept(alert a);
 
-    public void onAlert(T a);
+    public void onAlert(alert a);
 }

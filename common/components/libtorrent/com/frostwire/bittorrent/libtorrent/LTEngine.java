@@ -39,13 +39,13 @@ public final class LTEngine {
     private final Session session;
 
     private boolean running;
-    private List<AlertListener<?>> listeners;
+    private List<AlertListener> listeners;
 
     public LTEngine() {
         this.session = new Session();
 
         this.running = true;
-        this.listeners = Collections.synchronizedList(new LinkedList<AlertListener<?>>());
+        this.listeners = Collections.synchronizedList(new LinkedList<AlertListener>());
 
         addEngineListener();
         alertsLoop();
