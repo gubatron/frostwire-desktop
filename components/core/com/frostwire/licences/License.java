@@ -36,8 +36,8 @@ public abstract class License {
     public static final License CC_BY_SA = new CreativeCommonsLicense("CC BY-SA", "Creative Commons Attribution-ShareAlike", "http://creativecommons.org/licenses/by-sa/3.0");
     public static final License CC_BY_ND = new CreativeCommonsLicense("CC BY-ND", "Creative Commons Attribution-NoDerivs", "http://creativecommons.org/licenses/by-nd/3.0");
     public static final License CC_BY_NC = new CreativeCommonsLicense("CC BY-NC", "Creative Commons Attribution-NonCommercial", "http://creativecommons.org/licenses/by-nc/3.0");
-    public static final License CC_BY_NC_SA = new CreativeCommonsLicense("CC BY", "Creative Commons Attribution-NonCommercial-ShareAlike", "http://creativecommons.org/licenses/by-nc-sa/3.0");
-    public static final License CC_BY_NC_ND = new CreativeCommonsLicense("CC BY", "Creative Commons Attribution-NonCommercial-NoDerivs", "http://creativecommons.org/licenses/by-nc-nd/3.0");
+    public static final License CC_BY_NC_SA = new CreativeCommonsLicense("CC BY-NC-SA", "Creative Commons Attribution-NonCommercial-ShareAlike", "http://creativecommons.org/licenses/by-nc-sa/3.0");
+    public static final License CC_BY_NC_ND = new CreativeCommonsLicense("CC BY-NC-ND", "Creative Commons Attribution-NonCommercial-NoDerivs", "http://creativecommons.org/licenses/by-nc-nd/3.0");
     public static final License CC_CC0 = new CreativeCommonsLicense("CC0 1.0", "Creative Commons Public Domain Dedication", "http://creativecommons.org/publicdomain/zero/1.0");
 
     public static final License CC_PUBLIC_DOMAIN = new PublicDomainDedicationLicense();
