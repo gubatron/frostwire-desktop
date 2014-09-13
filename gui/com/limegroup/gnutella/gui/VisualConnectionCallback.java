@@ -211,7 +211,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	}
 	
 	public void handleTorrent(final File torrentFile) {
-	    new AzureusCoreWaiter("VisualConnectionCallback::handleTorrent()") {
+	    new AzureusStarter.AzureusCoreWaiter("VisualConnectionCallback::handleTorrent()") {
             @Override
             public void onAzureusCoreStarted() {
                 SwingUtilities.invokeLater(new Runnable() {
@@ -224,7 +224,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	}
 
 	public void handleTorrentMagnet(final String request, final boolean partialDownload) {
-	    new AzureusCoreWaiter("VisualConnectionCallback::handleTorrentMagnet()") {
+	    new AzureusStarter.AzureusCoreWaiter("VisualConnectionCallback::handleTorrentMagnet()") {
             @Override
             public void onAzureusCoreStarted() {
                 SwingUtilities.invokeLater(new Runnable() {
@@ -239,26 +239,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	    }.start();
 	}
 	
-	private abstract class AzureusCoreWaiter extends Thread {
-	    private final String name;
-
-        public AzureusCoreWaiter(String name) {
-            super("AzureusCoreWaiter-"+name);
-            this.name = name;
-        }
-	    
-	    @Override
-	    public void run() {
-            while (!AzureusStarter.haveDownloadsBeenResumed()) {
-                System.out.println(this.name + " - waiting for bittorrent engine to start and resume downloads...");
-                try { Thread.sleep(1000); } catch (Throwable t) { break; }
-            }
-            onAzureusCoreStarted();
-	    }
-	    
-        public abstract void onAzureusCoreStarted();
-	}
-
     public void addDownloadManager(DownloadManager dm) {
         Runnable doWorkRunnable = new AddDownloadManager(dm);
         GUIMediator.safeInvokeAndWait(doWorkRunnable);
