@@ -15,6 +15,34 @@
 
 package com.limegroup.gnutella.gui;
 
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
+import javax.swing.ToolTipManager;
+
+import org.gudy.azureus2.plugins.network.ConnectionManager;
+import org.limewire.setting.BooleanSetting;
+
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
@@ -24,13 +52,6 @@ import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StatusBarSettings;
-import org.gudy.azureus2.plugins.network.ConnectionManager;
-import org.limewire.setting.BooleanSetting;
-import org.limewire.util.OSUtils;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 
 /**
  * The component for the space at the bottom of the main application
@@ -263,8 +284,7 @@ public final class StatusLine {
                 remainingWidth = addStatusIndicator(_connectionQualityMeter, sepWidth, remainingWidth, gbc);
             }
 
-            //TODO: Remove Windows condition when figure out VPN detection for that OS.
-            if (!OSUtils.isWindows() && StatusBarSettings.VPN_DISPLAY_ENABLED.getValue()) {
+            if (StatusBarSettings.VPN_DISPLAY_ENABLED.getValue()) {
                 _vpnStatus.refresh();
                 remainingWidth = addStatusIndicator(_vpnStatus, sepWidth, remainingWidth, gbc);
             }

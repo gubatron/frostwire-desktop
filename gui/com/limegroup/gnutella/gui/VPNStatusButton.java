@@ -18,11 +18,11 @@
 
 package com.limegroup.gnutella.gui;
 
-import com.frostwire.util.VPNs;
-
-import javax.swing.Action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import com.frostwire.util.VPNs;
+import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
 /**
  *
@@ -32,8 +32,8 @@ import java.awt.event.ActionListener;
  * Created by gubatron on 8/22/14.
  */
 public class VPNStatusButton extends IconButton {
-
-    private final String VPN_URL = "http://www.frostwire.com/vpn";
+	private static final long serialVersionUID = 5469124590465161094L;
+	private final String VPN_URL = "http://www.frostwire.com/vpn";
     private final long REFRESH_INTERVAL_IN_MILLIS = 20000;
     private long lastRefresh = 0;
 
@@ -71,7 +71,19 @@ public class VPNStatusButton extends IconButton {
         long now = System.currentTimeMillis();
         if (lastRefresh == 0 || (now-lastRefresh >= REFRESH_INTERVAL_IN_MILLIS)) {
             lastRefresh = now;
-            updateVPNIcon(VPNs.isVPNActive());
+            BackgroundExecutorService.schedule(new Runnable() {
+				@Override
+				public void run() {
+					//possibly blocking code
+					final boolean isVPNActive = VPNs.isVPNActive();
+					GUIMediator.safeInvokeLater(new Runnable() {
+						@Override
+						public void run() {
+							updateVPNIcon(isVPNActive);
+						}
+					});
+				}
+            });
         }
     }
 }
