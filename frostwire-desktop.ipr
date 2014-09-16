@@ -169,6 +169,7 @@
   <component name="ProjectDictionaryState">
     <dictionary name="aldenml">
       <words>
+        <w>bencode</w>
         <w>bittorrent</w>
         <w>gubatron</w>
       </words>

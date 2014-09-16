@@ -59,7 +59,7 @@ final class TorrentAlertListener implements AlertListener {
     @Override
     public void onAlert(alert a) {
         if (a instanceof save_resume_data_alert) {
-            onSafeResumeData((save_resume_data_alert) a);
+            onSaveResumeData((save_resume_data_alert) a);
             return; // I will explain why this return later
         }
 
@@ -70,9 +70,9 @@ final class TorrentAlertListener implements AlertListener {
         }
     }
 
-    private void onSafeResumeData(save_resume_data_alert a) {
+    private void onSaveResumeData(save_resume_data_alert a) {
         entry d = a.getResume_data();
-        byte[] arr = LibTorrent.bencode(d);
+        byte[] arr = LibTorrent.vector2bytes(d.bencode());
         System.out.println("Bencoded entry: " + arr.length);
     }
 }
