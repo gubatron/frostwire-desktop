@@ -45,8 +45,29 @@ public final class AzureusStarter {
 
     private static final Logger LOG = Logger.getLogger(AzureusStarter.class);
 
-
+    private static boolean DOWNLOADS_RESUMED = false;
+    
     private static AzureusCore AZUREUS_CORE;
+    
+    public static abstract class AzureusCoreWaiter extends Thread {
+        private final String name;
+
+        public AzureusCoreWaiter(String name) {
+            super("AzureusCoreWaiter-"+name);
+            this.name = name;
+        }
+        
+        @Override
+        public void run() {
+            while (!AzureusStarter.haveDownloadsBeenResumed()) {
+                System.out.println(this.name + " - waiting for bittorrent engine to start and resume downloads...");
+                try { Thread.sleep(1000); } catch (Throwable t) { break; }
+            }
+            onAzureusCoreStarted();
+        }
+        
+        public abstract void onAzureusCoreStarted();
+    }
 
     public final static void start() {
         azureusInit();
@@ -69,6 +90,10 @@ public final class AzureusStarter {
 
     public static boolean isAzureusCoreStarted() {
         return AZUREUS_CORE != null && AZUREUS_CORE.isStarted();
+    }
+    
+    public static boolean haveDownloadsBeenResumed() {
+        return isAzureusCoreStarted() && DOWNLOADS_RESUMED;
     }
 
     private static final Long ZERO = new Long(0);
@@ -192,6 +217,7 @@ public final class AzureusStarter {
             try {
                 signal.await();
                 LOG.debug("azureusInit(): core started...");
+                DOWNLOADS_RESUMED = true;
             } catch (InterruptedException e) {
 
                 e.printStackTrace();
