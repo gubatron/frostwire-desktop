@@ -52,20 +52,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
     
     private VisualConnectionCallback() {
     }
-    
-
-	///////////////////////////////////////////////////////////////////////////
-	//  Download-related callbacks
-	///////////////////////////////////////////////////////////////////////////
-    
-    public void addDownload(BTDownload mgr) {
-        Runnable doWorkRunnable = new AddDownload(mgr);
-        SwingUtilities.invokeLater(doWorkRunnable);
-    }
-    
-    public void downloadsComplete() {
-        Finalizer.setDownloadsComplete();
-    }
 
 	/**
 	 *  Show active downloads
@@ -76,17 +62,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
 		        GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);	
             }
         });
-	}	
-    
-    private class AddDownload implements Runnable {
-        private BTDownload mgr;
-        public AddDownload(BTDownload mgr) {
-            this.mgr = mgr;
-        }
-        public void run() {
-            mf().getBTDownloadMediator().add(mgr);
-		}
-    }
+	}
     
     private class AddDownloadManager implements Runnable {
         private DownloadManager mgr;
@@ -96,55 +72,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
         public void run() {
             mf().getBTDownloadMediator().addDownloadManager(mgr);
         }
-    }
-
-	
-	///////////////////////////////////////////////////////////////////////////
-	//  Upload-related callbacks
-	///////////////////////////////////////////////////////////////////////////
-    
-    public void uploadsComplete() {
-        Finalizer.setUploadsComplete();
-    }
-    	
-	///////////////////////////////////////////////////////////////////////////
-	//  Other stuff
-	///////////////////////////////////////////////////////////////////////////
-	
-    /**
-     * Notification that the address has changed.
-     */
-    public void handleAddressStateChanged() {
-//        SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                // don't touch GUI code if it isn't constructed.
-//                // this is necessary here only because addressStateChanged
-//                // is triggered by Acceptor, which is init'd prior to the
-//                // GUI actually existing.
-//                if (GUIMediator.isConstructed())
-//                    SearchMediator.addressChanged();
-//            }
-//        });
-    }
-    
-    public void handleNoInternetConnection() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                if (GUIMediator.isConstructed())
-                    GUIMediator.disconnected();
-            }
-        });
-    }
-
-	/**
-     * Notification that a new update is available.
-     */
-    public void updateAvailable(final UpdateInformation update) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                GUIMediator.instance().showUpdateNotification(update);
-            }
-        });
     }
 
 	/**
@@ -157,18 +84,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
             }
         }); 
 	}
-	
-	/**
-	 * Notification of a component loading.
-	 */
-	public void componentLoading(final String component) {
-	    SwingUtilities.invokeLater(new Runnable() {
-	        public void run() {
-                GUIMediator.setSplashScreenString(
-                    I18n.tr(component));
-            }
-        });
-    }
     
     /**
      * Returns the MainFrame.
@@ -177,38 +92,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
         return GUIMediator.instance().getMainFrame();
     }
 
-	/**
-	 * Returns true since we want to kick off the magnet downloads ourselves.
-	 */
-	public boolean handleMagnets(final MagnetOptions[] magnets) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				boolean oneSearchStarted = false;
-				for (int i = 0; i < magnets.length; i++) {
-					// spawn search for keyword only magnet
-					if (magnets[i].isKeywordTopicOnly() && !oneSearchStarted) {
-						String query = QueryUtils.createQueryString
-							(magnets[i].getKeywordTopic());
-						SearchInformation info = 
-							SearchInformation.createKeywordSearch
-							(query, null, MediaType.getAnyTypeMediaType());
-						if (SearchMediator.validateInfo(info) 
-							== SearchMediator.QUERY_VALID) {
-							oneSearchStarted = true;
-							SearchMediator.instance().triggerSearch(info);
-						}
-					}
-					else {
-						//DownloaderUtils.createDownloader(magnets[i]);
-					}
-				}
-				if (magnets.length > 0) {
-					GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
-				}
-			}
-		});
-		return true;
-	}
 	
 	public void handleTorrent(final File torrentFile) {
 	    new AzureusStarter.AzureusCoreWaiter("VisualConnectionCallback::handleTorrent()") {
