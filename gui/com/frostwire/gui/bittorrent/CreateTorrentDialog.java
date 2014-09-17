@@ -163,7 +163,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     private JButton _buttonSaveAs;
     private JProgressBar _progressBar;
 
-    private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(942, 700);
+    private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(942, 750);
 
     private JScrollPane _textTrackersScrollPane;
     private JFileChooser _fileChooser;
@@ -196,7 +196,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     }
 
     private void initContainersLayouts() {
-        _container.setLayout(new MigLayout("fill, insets 5px 5px 5px 5px"));
+        _container.setLayout(new MigLayout("fill, insets 3px 3px 3px 3px"));
         _basicTorrentPane.setLayout(new MigLayout("fill"));
         _licensesPane.setLayout(new MigLayout("fill"));
         _paymentsPane.setLayout(new MigLayout("fill"));
@@ -206,7 +206,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         _container.add(_tabbedPane, "grow, pushy, wrap");
         _licensesPane.add(_licenseSelectorPanel, "grow");
         _paymentsPane.add(_paymentOptionsPanel, "grow");
-
+        
         _tabbedPane.addTab("1. " + I18n.tr("Contents and Tracking"), _basicTorrentPane);
         _tabbedPane.addTab("2. " + I18n.tr("Copyright License"), _licensesPane);
         _tabbedPane.addTab("3. " + I18n.tr("Payments/Tips"), _paymentsPane);
@@ -230,6 +230,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         setSize(MINIMUM_DIALOG_DIMENSIONS);
         setMinimumSize(MINIMUM_DIALOG_DIMENSIONS);
         setPreferredSize(MINIMUM_DIALOG_DIMENSIONS);
+        //setMaximumSize(MINIMUM_DIALOG_DIMENSIONS);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setModalityType(ModalityType.APPLICATION_MODAL);
         GUIUtils.addHideAction((JComponent) _container);
@@ -306,7 +307,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     private void initProgressBar() {
         _progressBar = new JProgressBar(0, 100);
         _progressBar.setStringPainted(true);
-        _container.add(_progressBar, "growx, gap 5px 5px 0 5px, wrap");
+        _container.add(_progressBar, "growx, gap 5px 0, wrap");
     }
 
     private void buildListeners() {
