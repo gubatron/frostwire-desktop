@@ -39,7 +39,7 @@ public final class LTDownloadFactory extends BTDownloadFactory {
         TorrentHandle th = s.addTorrent(torrent, saveDir);
         LTDownload dl = new LTDownload(th);
 
-        e.addListener(new TorrentAlertListener(dl));
+        s.addListener(new LTDownloadListener(dl));
 
         return dl;
     }
