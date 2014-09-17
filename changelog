@@ -3,8 +3,11 @@ frostwire (5.7.7) stable; urgency=high
   * Fix: Bug where files couldn't be played with the main player button.
   * Fix: Bug where the speaker icon on the library would still show
     after the media player had stopped.
+  * Fix: Bug after 5.7.5 in which the buttons of the Create Torrent
+    dialog were not visible unless the window was resized.
+  * Updated MigLayout source code to version 4.0
 
- -- FrostWire Team <contact@frostwire.com>  Thu, 04 September 2014 12:54:30 -0500
+ -- FrostWire Team <contact@frostwire.com>  Tue, 16 September 2014 22:33:53 -0500
 
 frostwire (5.7.6) stable; urgency=high
   * New: Filter search results by file extension, source name.

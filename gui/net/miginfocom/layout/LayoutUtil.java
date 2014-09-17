@@ -69,7 +69,7 @@ public final class LayoutUtil
         try {
             LayoutUtil.class.getClassLoader().loadClass("java.beans.Beans");
             return true;
-        } catch (Throwable e) {
+        } catch (ClassNotFoundException e) {
             return false;
         }
     }
@@ -83,7 +83,7 @@ public final class LayoutUtil
 	 */
 	public static String getVersion()
 	{
-		return "4.2";
+		return "4.0";
 	}
 
 	/** If global debug should be on or off. If &gt; 0 then debug is turned on for all MigLayout
@@ -186,7 +186,7 @@ public final class LayoutUtil
 	 * @param c The class to set the registered deligate for.
 	 * @param del The new delegate or <code>null</code> to erase to old one.
 	 */
-	static synchronized void setDelegate(Class<?> c, PersistenceDelegate del)
+	static synchronized void setDelegate(Class c, PersistenceDelegate del)
 	{
 		try {
 			Introspector.getBeanInfo(c, Introspector.IGNORE_ALL_BEANINFO).getBeanDescriptor().setValue("persistenceDelegate", del);
@@ -507,8 +507,7 @@ public final class LayoutUtil
 	 * @return The object. Never <code>null</code>.
 	 * @throws IOException If there was a problem saving as XML
 	 */
-	@SuppressWarnings("resource")
-    public static synchronized Object readAsXML(ObjectInput in) throws IOException
+	public static synchronized Object readAsXML(ObjectInput in) throws IOException
 	{
 		if (readBuf == null)
 			readBuf = new byte[16384];

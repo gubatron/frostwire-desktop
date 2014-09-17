@@ -51,9 +51,11 @@ final class HelpMenu extends AbstractMenu {
 
         addMenuItem(new OpenLinkAction("http://support.frostwire.com/hc/en-us/articles/200302295-What-is-seeding-", I18n.tr("What is \"Seeding\"?"), I18n.tr("Learn about BitTorrent Seeding")));
 
+        addMenuItem(new OpenLinkAction("http://www.frostwire.com/vpn", I18n.tr("What is a VPN?"), I18n.tr("Learn about how to protect your internet connection and your privacy online")));
+        
         addSeparator();
         
-        addMenuItem(new OpenLinkAction("http://www.frostwire.com/stickers",I18n.tr("Free FrostWire Stickers"),I18n.tr("Order free FrostWire stickers, we ship worldwide. Stickers are free, you pay cents for shipping.")));
+        addMenuItem(new OpenLinkAction("http://www.frostwire.com/stickers",I18n.tr("Order FrostWire Stickers"),I18n.tr("Order FrostWire stickers, we ship worldwide.")));
         
         addMenuItem(new OpenLinkAction("http://www.frostwire.com/shop",I18n.tr("FrostWire T-Shirts"),I18n.tr("Get a T-shirt, support the project. You'll get also 10 free stickers")));
         
