@@ -24,9 +24,9 @@ import com.frostwire.bittorrent.libtorrent.LTEngine;
  * @author gubatron
  * @author aldenml
  */
-public abstract class BTEngineFactory {
+public final class BTEngineFactory {
 
-    protected BTEngineFactory() {
+    private BTEngineFactory() {
     }
 
     public static BTEngine getInstance() {

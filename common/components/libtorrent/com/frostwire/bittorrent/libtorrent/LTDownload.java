@@ -25,6 +25,7 @@ import com.frostwire.jlibtorrent.TorrentHandle;
 import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.jlibtorrent.TorrentStatus;
 
+import java.io.File;
 import java.util.Date;
 
 /**
@@ -33,18 +34,26 @@ import java.util.Date;
  */
 public final class LTDownload implements BTDownload {
 
+    private final LTEngine engine;
     private final TorrentHandle th;
+    private final File torrent;
 
     private final TorrentInfo ti;
     private final String name;
     private final long size;
 
-    public LTDownload(TorrentHandle th) {
+    public LTDownload(LTEngine engine, TorrentHandle th, File torrent) {
+        this.engine = engine;
         this.th = th;
+        this.torrent = torrent;
 
         this.ti = this.th.getTorrentInfo();
         this.name = this.ti.getName();
         this.size = this.ti.getTotalSize();
+    }
+
+    public LTEngine getEngine() {
+        return engine;
     }
 
     @Override
@@ -223,7 +232,7 @@ public final class LTDownload implements BTDownload {
         s.removeTorrent(th, options);
 
         if (deleteTorrent) {
-            th.getTorrentFile().delete();
+            torrent.delete();
         }
     }
 

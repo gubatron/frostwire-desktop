@@ -38,6 +38,8 @@ public final class LTEngine implements BTEngine {
 
     private final Session session;
 
+    private File home;
+
     public LTEngine() {
         this.session = new Session();
 
@@ -52,6 +54,16 @@ public final class LTEngine implements BTEngine {
         return Loader.INSTANCE;
     }
 
+    @Override
+    public File getHome() {
+        return home;
+    }
+
+    @Override
+    public void setHome(File home) {
+        this.home = home;
+    }
+
     Session getSession() {
         return session;
     }
@@ -62,7 +74,7 @@ public final class LTEngine implements BTEngine {
 
         Session s = e.getSession();
         TorrentHandle th = s.addTorrent(torrent, saveDir);
-        LTDownload dl = new LTDownload(th);
+        LTDownload dl = new LTDownload(e, th, torrent);
 
         s.addListener(new LTDownloadListener(dl));
 

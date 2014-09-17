@@ -26,5 +26,9 @@ import java.io.File;
  */
 public interface BTEngine {
 
+    public File getHome();
+
+    public void setHome(File home);
+
     public abstract BTDownload download(File torrent, File saveDir);
 }

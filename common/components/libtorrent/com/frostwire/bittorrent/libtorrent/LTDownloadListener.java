@@ -19,14 +19,19 @@
 package com.frostwire.bittorrent.libtorrent;
 
 import com.frostwire.jlibtorrent.TorrentAlertAdapter;
+import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.jlibtorrent.alerts.Alert;
 import com.frostwire.jlibtorrent.alerts.SaveResumeDataAlert;
+import com.frostwire.jlibtorrent.alerts.TorrentAddedAlert;
+import com.frostwire.logging.Logger;
 
 /**
  * @author gubatron
  * @author aldenml
  */
 final class LTDownloadListener extends TorrentAlertAdapter {
+
+    private static final Logger LOG = Logger.getLogger(LTDownloadListener.class);
 
     private static final long SAVE_RESUME_DATA_INTERVAL_MILLIS = 10000;
 
@@ -48,7 +53,16 @@ final class LTDownloadListener extends TorrentAlertAdapter {
         long now = System.currentTimeMillis();
         if (now - lastTimeSavedResumeData > SAVE_RESUME_DATA_INTERVAL_MILLIS) {
             lastTimeSavedResumeData = now;
-            th.saveResumeData();
+            if (th.needSaveResumeData()) {
+                th.saveResumeData();
+            }
+        }
+    }
+
+    @Override
+    public void onTorrentAdded(TorrentAddedAlert alert) {
+        TorrentInfo ti = alert.getTorrentHandle().getTorrentInfo();
+        if (ti != null) {
         }
     }
 
