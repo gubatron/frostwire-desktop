@@ -27,9 +27,5 @@ import java.io.IOException;
  */
 public interface BTEngine {
 
-    public File getHome();
-
-    public void setHome(File home);
-
     public BTDownload download(File torrent, File saveDir) throws IOException;
 }

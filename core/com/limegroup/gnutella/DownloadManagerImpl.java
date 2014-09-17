@@ -15,20 +15,21 @@
 
 package com.limegroup.gnutella;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.gudy.azureus2.core3.global.GlobalManager;
-import org.limewire.util.CommonUtils;
-
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.AzureusStarter;
+import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.bittorrent.BTEngineFactory;
 import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
+import org.gudy.azureus2.core3.global.GlobalManager;
+import org.limewire.util.CommonUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DownloadManagerImpl implements DownloadManager {
 
@@ -53,6 +54,8 @@ public class DownloadManagerImpl implements DownloadManager {
                 loadTorrentDownloads();
             }
         });
+
+        BTEngine engine = BTEngineFactory.getInstance();
     }
 
     /**

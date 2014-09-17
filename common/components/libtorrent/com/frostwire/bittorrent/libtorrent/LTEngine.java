@@ -26,6 +26,7 @@ import com.frostwire.jlibtorrent.TorrentHandle;
 import com.frostwire.jlibtorrent.alerts.Alert;
 import com.frostwire.logging.Logger;
 import org.apache.commons.io.FileUtils;
+import org.limewire.util.CommonUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,11 +40,11 @@ public final class LTEngine implements BTEngine {
     private static final Logger LOG = Logger.getLogger(LTEngine.class);
 
     private final Session session;
-
-    private File home;
+    private final File home;
 
     public LTEngine() {
         this.session = new Session();
+        this.home = buildHome();
 
         addEngineListener();
     }
@@ -56,16 +57,6 @@ public final class LTEngine implements BTEngine {
         return Loader.INSTANCE;
     }
 
-    @Override
-    public File getHome() {
-        return home;
-    }
-
-    @Override
-    public void setHome(File home) {
-        this.home = home;
-    }
-
     Session getSession() {
         return session;
     }
@@ -76,7 +67,7 @@ public final class LTEngine implements BTEngine {
 
         Session s = e.getSession();
         TorrentHandle th = s.addTorrent(torrent, saveDir);
-        FileUtils.copyFile(torrent, new File(getHome(), th.getInfoHash() + ".torrent"));
+        FileUtils.copyFile(torrent, new File(home, th.getInfoHash() + ".torrent"));
         LTDownload dl = new LTDownload(e, th, torrent);
 
         s.addListener(new LTDownloadListener(dl));
@@ -96,5 +87,13 @@ public final class LTEngine implements BTEngine {
                 //LOG.info(a.message());
             }
         });
+    }
+
+    private File buildHome() {
+        File path = new File(CommonUtils.getUserSettingsDir() + File.separator + "libtorrent" + File.separator);
+        if (!path.exists()) {
+            path.mkdirs();
+        }
+        return path;
     }
 }
