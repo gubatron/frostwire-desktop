@@ -939,6 +939,14 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
     }
 
+    public void addDownload(com.frostwire.bittorrent.BTDownload dl) {
+        try {
+            add(new BittorrentDownload(dl));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Load from the last settings saved the previous sorting preferences of this mediator.
      */

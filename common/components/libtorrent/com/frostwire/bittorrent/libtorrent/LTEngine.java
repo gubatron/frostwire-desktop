@@ -20,15 +20,21 @@ package com.frostwire.bittorrent.libtorrent;
 
 import com.frostwire.bittorrent.BTDownload;
 import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.bittorrent.BTEngineListener;
 import com.frostwire.jlibtorrent.AlertListener;
 import com.frostwire.jlibtorrent.Session;
 import com.frostwire.jlibtorrent.TorrentHandle;
 import com.frostwire.jlibtorrent.alerts.Alert;
+import com.frostwire.jlibtorrent.alerts.TorrentAlert;
+import com.frostwire.jlibtorrent.swig.torrent_added_alert;
 import com.frostwire.logging.Logger;
+import com.limegroup.gnutella.settings.SharingSettings;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.CommonUtils;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 
 /**
@@ -41,6 +47,8 @@ public final class LTEngine implements BTEngine {
 
     private final Session session;
     private final File home;
+
+    private BTEngineListener listener;
 
     public LTEngine() {
         this.session = new Session();
@@ -62,17 +70,47 @@ public final class LTEngine implements BTEngine {
     }
 
     @Override
+    public BTEngineListener getListener() {
+        return listener;
+    }
+
+    @Override
+    public void setListener(BTEngineListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
     public BTDownload download(File torrent, File saveDir) throws IOException {
         LTEngine e = LTEngine.getInstance();
 
         Session s = e.getSession();
         TorrentHandle th = s.addTorrent(torrent, saveDir);
         FileUtils.copyFile(torrent, new File(home, th.getInfoHash() + ".torrent"));
-        LTDownload dl = new LTDownload(e, th, torrent);
+        LTDownload dl = new LTDownload(th);
 
         s.addListener(new LTDownloadListener(dl));
 
         return dl;
+    }
+
+    @Override
+    public void restoreDownloads() {
+        File[] torrents = home.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return FilenameUtils.getExtension(name).equals("torrent");
+            }
+        });
+
+        File saveDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
+
+        for (File t : torrents) {
+            try {
+                session.asyncAddTorrent(t, saveDir);
+            } catch (Throwable e) {
+                LOG.error("Error restoring torrent download", e);
+            }
+        }
     }
 
     private void addEngineListener() {
@@ -85,6 +123,12 @@ public final class LTEngine implements BTEngine {
             @Override
             public void onAlert(Alert<?> alert) {
                 //LOG.info(a.message());
+                int type = alert.getType();
+                if (type == torrent_added_alert.alert_type) {
+                    if (listener != null) {
+                        listener.downloadAdded(new LTDownload(((TorrentAlert<?>) alert).getTorrentHandle()));
+                    }
+                }
             }
         });
     }

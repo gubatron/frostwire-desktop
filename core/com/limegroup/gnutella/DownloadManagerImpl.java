@@ -19,8 +19,10 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.AzureusStarter;
+import com.frostwire.bittorrent.BTDownload;
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.bittorrent.BTEngineFactory;
+import com.frostwire.bittorrent.BTEngineListener;
 import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
@@ -47,6 +49,12 @@ public class DownloadManagerImpl implements DownloadManager {
         }
     }
 
+    private void addDownload(BTDownload dl) {
+        synchronized (this) {
+            activityCallback.addDownload(dl);
+        }
+    }
+
     public void loadSavedDownloadsAndScheduleWriting() {
         AzureusCoreFactory.addCoreRunningListener(new AzureusCoreRunningListener() {
             @Override
@@ -56,6 +64,15 @@ public class DownloadManagerImpl implements DownloadManager {
         });
 
         BTEngine engine = BTEngineFactory.getInstance();
+
+        engine.setListener(new BTEngineListener() {
+            @Override
+            public void downloadAdded(BTDownload dl) {
+                addDownload(dl);
+            }
+        });
+
+        engine.restoreDownloads();
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.limegroup.gnutella;
 
+import com.frostwire.bittorrent.BTDownload;
+
 import java.io.File;
 
 
@@ -23,6 +25,8 @@ public interface ActivityCallback {
      * Add a file to the download window
      */
     public void addDownloadManager(org.gudy.azureus2.core3.download.DownloadManager d);
+
+    public void addDownload(BTDownload dl);
 
     /**
      * Show active downloads

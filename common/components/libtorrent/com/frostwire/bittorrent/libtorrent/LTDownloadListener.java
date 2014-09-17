@@ -18,8 +18,8 @@
 
 package com.frostwire.bittorrent.libtorrent;
 
+import com.frostwire.bittorrent.BTEngineListener;
 import com.frostwire.jlibtorrent.TorrentAlertAdapter;
-import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.jlibtorrent.alerts.Alert;
 import com.frostwire.jlibtorrent.alerts.SaveResumeDataAlert;
 import com.frostwire.jlibtorrent.alerts.TorrentAddedAlert;
@@ -61,9 +61,7 @@ final class LTDownloadListener extends TorrentAlertAdapter {
 
     @Override
     public void onTorrentAdded(TorrentAddedAlert alert) {
-        TorrentInfo ti = alert.getTorrentHandle().getTorrentInfo();
-        if (ti != null) {
-        }
+
     }
 
     @Override

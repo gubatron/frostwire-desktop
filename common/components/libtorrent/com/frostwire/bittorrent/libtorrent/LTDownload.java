@@ -25,7 +25,6 @@ import com.frostwire.jlibtorrent.TorrentHandle;
 import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.jlibtorrent.TorrentStatus;
 
-import java.io.File;
 import java.util.Date;
 
 /**
@@ -34,36 +33,21 @@ import java.util.Date;
  */
 public final class LTDownload implements BTDownload {
 
-    private final LTEngine engine;
     private final TorrentHandle th;
-    private final File torrent;
 
-    private final TorrentInfo ti;
-    private final String name;
-    private final long size;
-
-    public LTDownload(LTEngine engine, TorrentHandle th, File torrent) {
-        this.engine = engine;
+    public LTDownload(TorrentHandle th) {
         this.th = th;
-        this.torrent = torrent;
-
-        this.ti = this.th.getTorrentInfo();
-        this.name = this.ti.getName();
-        this.size = this.ti.getTotalSize();
-    }
-
-    public LTEngine getEngine() {
-        return engine;
     }
 
     @Override
     public String getName() {
-        return name;
+        return th.getDisplayName();
     }
 
     @Override
     public long getSize() {
-        return size;
+        TorrentInfo ti = th.getTorrentInfo();
+        return ti != null ? ti.getTotalSize() : 0;
     }
 
     @Override
@@ -190,8 +174,13 @@ public final class LTDownload implements BTDownload {
 
     @Override
     public long getETA() {
+        TorrentInfo ti = th.getTorrentInfo();
+        if (ti == null) {
+            return 0;
+        }
+
         TorrentStatus status = th.getStatus();
-        long left = this.size - status.totalDone;
+        long left = ti.getTotalSize() - status.totalDone;
         long rate = status.downloadPayloadRate;
 
         if (left <= 0) {
@@ -232,7 +221,7 @@ public final class LTDownload implements BTDownload {
         s.removeTorrent(th, options);
 
         if (deleteTorrent) {
-            torrent.delete();
+            //torrent.delete();
         }
     }
 

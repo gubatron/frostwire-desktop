@@ -18,20 +18,11 @@
 
 package com.frostwire.bittorrent;
 
-import java.io.File;
-import java.io.IOException;
-
 /**
  * @author gubatron
  * @author aldenml
  */
-public interface BTEngine {
+public interface BTEngineListener {
 
-    public BTEngineListener getListener();
-
-    public void setListener(BTEngineListener listener);
-
-    public BTDownload download(File torrent, File saveDir) throws IOException;
-
-    public void restoreDownloads();
+    public void downloadAdded(BTDownload dl);
 }
