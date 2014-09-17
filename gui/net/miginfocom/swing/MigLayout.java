@@ -157,7 +157,7 @@ public final class MigLayout implements LayoutManager2, Externalizable
 	/** Sets the layout constraints for the layout manager instance as a String.
 	 * <p>
 	 * See the class JavaDocs for information on how this string is formatted.
-	 * @param constr The layout constraints as a String pr {@link net.miginfocom.layout.LC} representation. <code>null</code> is converted to <code>""</code> for storage.
+	 * @param constr The layout constraints as a String representation. <code>null</code> is converted to <code>""</code> for storage.
 	 * @throws RuntimeException if the constraint was not valid.
 	 */
 	public void setLayoutConstraints(Object constr)
@@ -175,8 +175,8 @@ public final class MigLayout implements LayoutManager2, Externalizable
 	}
 
 	/** Returns the column layout constraints either as a <code>String</code> or {@link net.miginfocom.layout.AC}.
-	 * @return The column constraints either as a <code>String</code> or {@link net.miginfocom.layout.AC} depending what was sent in
-	 * to the constructor or set with {@link #setColumnConstraints(Object)}. Never <code>null</code>.
+	 * @return The column constraints either as a <code>String</code> or {@link net.miginfocom.layout.LC} depending what was sent in
+	 * to the constructor or set with {@link #setLayoutConstraints(Object)}. Never <code>null</code>.
 	 */
 	public Object getColumnConstraints()
 	{
@@ -186,7 +186,7 @@ public final class MigLayout implements LayoutManager2, Externalizable
 	/** Sets the column layout constraints for the layout manager instance as a String.
 	 * <p>
 	 * See the class JavaDocs for information on how this string is formatted.
-	 * @param constr The column layout constraints as a String or {@link net.miginfocom.layout.AC} representation. <code>null</code> is converted to <code>""</code> for storage.
+	 * @param constr The column layout constraints as a String representation. <code>null</code> is converted to <code>""</code> for storage.
 	 * @throws RuntimeException if the constraint was not valid.
 	 */
 	public void setColumnConstraints(Object constr)
@@ -203,9 +203,11 @@ public final class MigLayout implements LayoutManager2, Externalizable
 		dirty = true;
 	}
 
-	/** Returns the row layout constraints either as a <code>String</code> or {@link net.miginfocom.layout.AC}.
-	 * @return The row constraints either as a <code>String</code> or {@link net.miginfocom.layout.AC} depending what was sent in
-	 * to the constructor or set with {@link #setRowConstraints(Object)}. Never <code>null</code>.
+	/** Returns the row layout constraints as a String representation. This string is the exact string as set with {@link #setRowConstraints(Object)}
+	 * or sent into the constructor.
+	 * <p>
+	 * See the class JavaDocs for information on how this string is formatted.
+	 * @return The row layout constraints as a String representation. Never <code>null</code>.
 	 */
 	public Object getRowConstraints()
 	{
@@ -215,7 +217,7 @@ public final class MigLayout implements LayoutManager2, Externalizable
 	/** Sets the row layout constraints for the layout manager instance as a String.
 	 * <p>
 	 * See the class JavaDocs for information on how this string is formatted.
-	 * @param constr The row layout constraints as a String or {@link net.miginfocom.layout.AC} representation. <code>null</code> is converted to <code>""</code> for storage.
+	 * @param constr The row layout constraints as a String representation. <code>null</code> is converted to <code>""</code> for storage.
 	 * @throws RuntimeException if the constraint was not valid.
 	 */
 	public void setRowConstraints(Object constr)
@@ -424,8 +426,6 @@ public final class MigLayout implements LayoutManager2, Externalizable
 		if (dirty)
 			grid = null;
 
-		cleanConstraintMaps(parent);
-
 		// Check if the grid is valid
 		int mc = PlatformDefaults.getModCount();
 		if (lastModCount != mc) {
@@ -443,7 +443,6 @@ public final class MigLayout implements LayoutManager2, Externalizable
 					Object component = wrapper.getComponent();
 					if (component instanceof JTextArea || component instanceof JEditorPane)
 						resetLastInvalidOnParent = true;
-
 					hash ^= wrapper.getLayoutHashCode();
 					hash += 285134905;
 				}
@@ -474,24 +473,6 @@ public final class MigLayout implements LayoutManager2, Externalizable
 			grid = new Grid(par, lc, rowSpecs, colSpecs, ccMap, callbackList);
 
 		dirty = false;
-	}
-
-	/** Checks so all components in ccMap actually exist in the parent's collection. Removes
-	 * any references that don't.
-	 * @param parent The parent to compare ccMap against. Never null.
-	 */
-	private void cleanConstraintMaps(Container parent)
-	{
-		HashSet<Component> parentCompSet = new HashSet<Component>(Arrays.asList(parent.getComponents()));
-
-		Iterator<Map.Entry<ComponentWrapper, CC>> it = ccMap.entrySet().iterator();
-		while(it.hasNext()) {
-			Component c = (Component) it.next().getKey().getComponent();
-			if (parentCompSet.contains(c) == false) {
-				it.remove();
-				scrConstrMap.remove(c);
-			}
-		}
 	}
 
 	/**

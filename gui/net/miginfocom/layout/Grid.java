@@ -1,7 +1,6 @@
 package net.miginfocom.layout;
 
 
-import java.lang.ref.WeakReference;
 import java.util.*;
 /*
  * License (BSD):
@@ -64,10 +63,6 @@ public final class Grid
 	private static final ResizeConstraint GAP_RC_CONST = new ResizeConstraint(200, ResizeConstraint.WEIGHT_100, 50, null);
 	private static final ResizeConstraint GAP_RC_CONST_PUSH = new ResizeConstraint(200, ResizeConstraint.WEIGHT_100, 50, ResizeConstraint.WEIGHT_100);
 
-	/** Used for components that doesn't have a CC set. Not that it's really really important that the CC is never changed in this Grid class.
-	 */
-	private static final CC DEF_CC = new CC();
-
 	/** The constraints. Never <code>null</code>.
 	 */
 	private final LC lc;
@@ -126,8 +121,8 @@ public final class Grid
 	 * @param lc The form flow constraints.
 	 * @param rowConstr The rows specifications. If more cell rows are required, the last element will be used for when there is no corresponding element in this array.
 	 * @param colConstr The columns specifications. If more cell rows are required, the last element will be used for when there is no corresponding element in this array.
-	 * @param ccMap The map containing the parsed constraints for each child component of <code>parent</code>. Will not be altered.
-	 * @param callbackList A list of callbacks or <code>null</code> if none. Will not be altered.
+	 * @param ccMap The map containing the parsed constraints for each child component of <code>parent</code>. Will not be alterted.
+	 * @param callbackList A list of callbacks or <code>null</code> if none. Will not be alterted.
 	 */
 	public Grid(ContainerWrapper container, LC lc, AC rowConstr, AC colConstr, Map<ComponentWrapper, CC> ccMap, ArrayList<LayoutCallback> callbackList)
 	{
@@ -437,7 +432,7 @@ public final class Grid
 	private static CC getCC(ComponentWrapper comp, Map<ComponentWrapper, CC> ccMap)
 	{
 		CC cc = ccMap.get(comp);
-		return cc != null ? cc : DEF_CC;
+		return cc != null ? cc : new CC();
 	}
 
 	private void addLinkIDs(CC cc)
@@ -1434,8 +1429,7 @@ public final class Grid
 		TreeSet<Integer> secIndexes = isRows ? colIndexes : rowIndexes;
 		DimConstraint[] primDCs = (isRows ? rowConstr : colConstr).getConstaints();
 
-		@SuppressWarnings("unchecked")
-        ArrayList<LinkedDimGroup>[] groupLists = new ArrayList[primIndexes.size()];
+		ArrayList<LinkedDimGroup>[] groupLists = new ArrayList[primIndexes.size()];
 
 		int gIx = 0;
 		for (int i : primIndexes) {
@@ -1591,7 +1585,7 @@ public final class Grid
 		grid.put((r << 16) + c, new Cell(cw, spanx, spany, spanx > 1));
 	}
 
-	/** A simple representation of a cell in the grid. Contains a number of component wraps, if they span more than one cell.
+	/** A simple representation of a cell in the grid. Contains a number of component wraps and if they span more than one cell.
 	 */
 	private static class Cell
 	{
@@ -2302,12 +2296,11 @@ public final class Grid
 		return newArr;
 	}
 
-	private static WeakHashMap<Object, int[][]>[] PARENT_ROWCOL_SIZES_MAP = null;
-	@SuppressWarnings("unchecked")
-    private static synchronized void putSizesAndIndexes(Object parComp, int[] sizes, int[] ixArr, boolean isRows)
+	private static WeakHashMap[] PARENT_ROWCOL_SIZES_MAP = null;
+	private static synchronized void putSizesAndIndexes(Object parComp, int[] sizes, int[] ixArr, boolean isRows)
 	{
 		if (PARENT_ROWCOL_SIZES_MAP == null)    // Lazy since only if designing in IDEs
-			PARENT_ROWCOL_SIZES_MAP = new WeakHashMap[] {new WeakHashMap<Object, int[][]>(4), new WeakHashMap<Object, int[][]>(4)};
+			PARENT_ROWCOL_SIZES_MAP = new WeakHashMap[] {new WeakHashMap(4), new WeakHashMap(4)};
 
 		PARENT_ROWCOL_SIZES_MAP[isRows ? 0 : 1].put(parComp, new int[][] {ixArr, sizes});
 	}
@@ -2320,13 +2313,25 @@ public final class Grid
 		return (int[][]) PARENT_ROWCOL_SIZES_MAP[isRows ? 0 : 1].get(parComp);
 	}
 
-	private static WeakHashMap<Object, ArrayList<WeakCell>> PARENT_GRIDPOS_MAP = null;
+	private static WeakHashMap<Object, LinkedHashMap<Integer, Cell>> PARENT_GRIDPOS_MAP = null;
 	private static synchronized void saveGrid(ComponentWrapper parComp, LinkedHashMap<Integer, Cell> grid)
 	{
 		if (PARENT_GRIDPOS_MAP == null)    // Lazy since only if designing in IDEs
-			PARENT_GRIDPOS_MAP = new WeakHashMap<Object, ArrayList<WeakCell>>();
+			PARENT_GRIDPOS_MAP = new WeakHashMap<Object, LinkedHashMap<Integer, Cell>>();
 
-		ArrayList<WeakCell> weakCells = new ArrayList<WeakCell>(grid.size());
+		PARENT_GRIDPOS_MAP.put(parComp.getComponent(), grid);
+	}
+
+	static synchronized HashMap<Object, int[]> getGridPositions(Object parComp)
+	{
+		if (PARENT_GRIDPOS_MAP == null)
+			return null;
+
+		LinkedHashMap<Integer, Cell> grid = PARENT_GRIDPOS_MAP.get(parComp);
+		if (grid == null)
+			return null;
+
+		HashMap<Object, int[]> retMap = new HashMap<Object,int[]>();
 
 		for (Map.Entry<Integer, Cell> e : grid.entrySet()) {
 			Cell cell = e.getValue();
@@ -2336,42 +2341,10 @@ public final class Grid
 				int y = xyInt >> 16;
 
 				for (CompWrap cw : cell.compWraps)
-					weakCells.add(new WeakCell(cw.comp.getComponent(), x, y, cell.spanx, cell.spany));
+					retMap.put(cw.comp.getComponent(), new int[]{x, y, cell.spanx, cell.spany});
 			}
 		}
 
-		PARENT_GRIDPOS_MAP.put(parComp.getComponent(), weakCells);
-	}
-
-	static synchronized HashMap<Object, int[]> getGridPositions(Object parComp)
-	{
-		ArrayList<WeakCell> weakCells = PARENT_GRIDPOS_MAP != null ? PARENT_GRIDPOS_MAP.get(parComp) : null;
-		if (weakCells == null)
-			return null;
-
-		HashMap<Object, int[]> retMap = new HashMap<Object, int[]>();
-
-		for (WeakCell wc : weakCells) {
-			Object component = wc.componentRef.get();
-			if (component != null)
-				retMap.put(component, new int[] {wc.x, wc.y, wc.spanX, wc.spanY});
-		}
-
 		return retMap;
-	}
-
-	private static class WeakCell
-	{
-		private final WeakReference<Object> componentRef;
-		private final int x, y, spanX, spanY;
-
-		private WeakCell(Object component, int x, int y, int spanX, int spanY)
-		{
-			this.componentRef = new WeakReference<Object>(component);
-			this.x = x;
-			this.y = y;
-			this.spanX = spanX;
-			this.spanY = spanY;
-		}
 	}
 }
