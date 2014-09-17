@@ -19,6 +19,7 @@
 package com.frostwire.bittorrent;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author gubatron
@@ -30,5 +31,5 @@ public interface BTEngine {
 
     public void setHome(File home);
 
-    public abstract BTDownload download(File torrent, File saveDir);
+    public BTDownload download(File torrent, File saveDir) throws IOException;
 }

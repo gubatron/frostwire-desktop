@@ -25,8 +25,10 @@ import com.frostwire.jlibtorrent.Session;
 import com.frostwire.jlibtorrent.TorrentHandle;
 import com.frostwire.jlibtorrent.alerts.Alert;
 import com.frostwire.logging.Logger;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author gubatron
@@ -69,11 +71,12 @@ public final class LTEngine implements BTEngine {
     }
 
     @Override
-    public BTDownload download(File torrent, File saveDir) {
+    public BTDownload download(File torrent, File saveDir) throws IOException {
         LTEngine e = LTEngine.getInstance();
 
         Session s = e.getSession();
         TorrentHandle th = s.addTorrent(torrent, saveDir);
+        FileUtils.copyFile(torrent, new File(getHome(), th.getInfoHash() + ".torrent"));
         LTDownload dl = new LTDownload(e, th, torrent);
 
         s.addListener(new LTDownloadListener(dl));
