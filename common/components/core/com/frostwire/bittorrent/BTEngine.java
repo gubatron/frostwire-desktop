@@ -16,12 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.bittorrent.libtorrent;
-
-import com.frostwire.bittorrent.BTDownload;
-import com.frostwire.bittorrent.BTDownloadFactory;
-import com.frostwire.jlibtorrent.Session;
-import com.frostwire.jlibtorrent.TorrentHandle;
+package com.frostwire.bittorrent;
 
 import java.io.File;
 
@@ -29,18 +24,7 @@ import java.io.File;
  * @author gubatron
  * @author aldenml
  */
-public final class LTDownloadFactory extends BTDownloadFactory {
+public interface BTEngine {
 
-    @Override
-    public BTDownload create(File torrent, File saveDir) {
-        LTEngine e = LTEngine.getInstance();
-
-        Session s = e.getSession();
-        TorrentHandle th = s.addTorrent(torrent, saveDir);
-        LTDownload dl = new LTDownload(th);
-
-        s.addListener(new LTDownloadListener(dl));
-
-        return dl;
-    }
+    public abstract BTDownload download(File torrent, File saveDir);
 }

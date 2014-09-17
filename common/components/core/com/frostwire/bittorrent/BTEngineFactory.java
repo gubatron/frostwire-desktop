@@ -18,32 +18,18 @@
 
 package com.frostwire.bittorrent;
 
-import java.io.File;
+import com.frostwire.bittorrent.libtorrent.LTEngine;
 
 /**
  * @author gubatron
  * @author aldenml
  */
-public abstract class BTDownloadFactory {
+public abstract class BTEngineFactory {
 
-    // change this for a new implementation
-    private static final String DEFAULT_CLASS_NAME = "com.frostwire.bittorrent.libtorrent.LTDownloadFactory";
-
-    protected BTDownloadFactory() {
+    protected BTEngineFactory() {
     }
 
-    public static BTDownloadFactory newInstance(String className) {
-        try {
-            return (BTDownloadFactory) Class.forName(className).newInstance();
-        } catch (Throwable e) {
-            e.printStackTrace();
-            return null;
-        }
+    public static BTEngine getInstance() {
+        return LTEngine.getInstance();
     }
-
-    public static BTDownloadFactory newInstance() {
-        return newInstance(DEFAULT_CLASS_NAME);
-    }
-
-    public abstract BTDownload create(File torrent, File saveDir);
 }

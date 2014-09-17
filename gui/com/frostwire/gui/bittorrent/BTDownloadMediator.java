@@ -20,7 +20,8 @@ package com.frostwire.gui.bittorrent;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
-import com.frostwire.bittorrent.BTDownloadFactory;
+import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.bittorrent.BTEngineFactory;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleMediaFileAction;
 import com.frostwire.gui.components.slides.Slide;
@@ -792,8 +793,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             public void run() {
                 try {
                     File saveDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
-                    BTDownloadFactory factory = BTDownloadFactory.newInstance();
-                    com.frostwire.bittorrent.BTDownload d = factory.create(torrentFile, saveDir);
+                    BTEngine engine = BTEngineFactory.getInstance();
+                    com.frostwire.bittorrent.BTDownload d = engine.download(torrentFile, saveDir);
                     BittorrentDownload bt = new BittorrentDownload(d);
                     add(bt);
                 } catch (Throwable e) {

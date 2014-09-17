@@ -18,16 +18,21 @@
 
 package com.frostwire.bittorrent.libtorrent;
 
+import com.frostwire.bittorrent.BTDownload;
+import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.jlibtorrent.AlertListener;
 import com.frostwire.jlibtorrent.Session;
+import com.frostwire.jlibtorrent.TorrentHandle;
 import com.frostwire.jlibtorrent.alerts.Alert;
 import com.frostwire.logging.Logger;
+
+import java.io.File;
 
 /**
  * @author gubatron
  * @author aldenml
  */
-public final class LTEngine {
+public final class LTEngine implements BTEngine {
 
     private static final Logger LOG = Logger.getLogger(LTEngine.class);
 
@@ -49,6 +54,19 @@ public final class LTEngine {
 
     Session getSession() {
         return session;
+    }
+
+    @Override
+    public BTDownload download(File torrent, File saveDir) {
+        LTEngine e = LTEngine.getInstance();
+
+        Session s = e.getSession();
+        TorrentHandle th = s.addTorrent(torrent, saveDir);
+        LTDownload dl = new LTDownload(th);
+
+        s.addListener(new LTDownloadListener(dl));
+
+        return dl;
     }
 
     private void addEngineListener() {
