@@ -21,7 +21,6 @@
       <sourceFolder url="file://$MODULE_DIR$/components/common/src/main" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/alexandria/src/main" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/jaudiotagger/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/common/components/okhttp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/core" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gui" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/mp4parser" isTestSource="false" />
