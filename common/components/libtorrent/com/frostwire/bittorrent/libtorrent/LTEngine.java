@@ -160,8 +160,8 @@ public final class LTEngine implements BTEngine {
             entry e = LibTorrent.bytes2entry(arr);
             e.dict().set("torrent_path", new entry(torrent.getAbsolutePath()));
             arr = LibTorrent.entry2bytes(e);
-            FileUtils.writeByteArrayToFile(new File(home, ti.getInfoHash() + ".torrent"), arr);
-        } catch (IOException e) {
+            FileUtils.writeByteArrayToFile(resumeTorrentFile(ti.getInfoHash()), arr);
+        } catch (Throwable e) {
             LOG.warn("Error saving resume torrent", e);
         }
     }
@@ -171,8 +171,8 @@ public final class LTEngine implements BTEngine {
             TorrentHandle th = alert.getTorrentHandle();
             entry d = alert.getResumeData();
             byte[] arr = LibTorrent.entry2bytes(d);
-            FileUtils.writeByteArrayToFile(new File(home, th.getInfoHash() + ".resume"), arr);
-        } catch (IOException e) {
+            FileUtils.writeByteArrayToFile(resumeDataFile(th.getInfoHash()), arr);
+        } catch (Throwable e) {
             LOG.warn("Error saving resume data", e);
         }
     }
@@ -182,5 +182,27 @@ public final class LTEngine implements BTEngine {
         if (th.needSaveResumeData()) {
             th.saveResumeData();
         }
+    }
+
+    File resumeTorrentFile(String infoHash) {
+        return new File(home, infoHash + ".torrent");
+    }
+
+    File resumeDataFile(String infoHash) {
+        return new File(home, infoHash + ".resume");
+    }
+
+    File readTorrentPath(String infoHash) {
+        File torrent = null;
+
+        try {
+            byte[] arr = FileUtils.readFileToByteArray(resumeTorrentFile(infoHash));
+            entry e = LibTorrent.bytes2entry(arr);
+            torrent = new File(e.dict().get("torrent_path").string());
+        } catch (Throwable e) {
+            // can't recover original torrent path
+        }
+
+        return torrent;
     }
 }

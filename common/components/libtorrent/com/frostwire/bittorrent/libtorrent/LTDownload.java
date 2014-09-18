@@ -26,6 +26,7 @@ import com.frostwire.jlibtorrent.TorrentHandle;
 import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.jlibtorrent.TorrentStatus;
 
+import java.io.File;
 import java.util.Date;
 
 /**
@@ -167,7 +168,7 @@ public final class LTDownload implements BTDownload {
 
     @Override
     public String getInfoHash() {
-        return th.getTorrentInfo().getInfoHash();
+        return th.getInfoHash();
     }
 
     @Override
@@ -214,7 +215,8 @@ public final class LTDownload implements BTDownload {
 
     @Override
     public void stop(boolean deleteTorrent, boolean deleteData) {
-        Session s = LTEngine.getInstance().getSession();
+        LTEngine engine = LTEngine.getInstance();
+        Session s = engine.getSession();
 
         Session.Options options = Session.Options.NONE;
         if (deleteData) {
@@ -223,9 +225,17 @@ public final class LTDownload implements BTDownload {
 
         s.removeTorrent(th, options);
 
+        String infoHash = this.getInfoHash();
+
         if (deleteTorrent) {
-            //torrent.delete();
+            File torrent = LTEngine.getInstance().readTorrentPath(infoHash);
+            if (torrent.exists()) {
+                torrent.delete();
+            }
         }
+
+        engine.resumeDataFile(infoHash).delete();
+        engine.resumeTorrentFile(infoHash).delete();
     }
 
     @Override
