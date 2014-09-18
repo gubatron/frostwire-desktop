@@ -19,6 +19,9 @@
 package com.frostwire.bittorrent;
 
 import com.frostwire.bittorrent.libtorrent.LTEngine;
+import org.limewire.util.CommonUtils;
+
+import java.io.File;
 
 /**
  * @author gubatron
@@ -34,7 +37,20 @@ public final class BTEngineFactory {
     public static BTEngine getInstance() {
         if (instance == null) {
             instance = LTEngine.getInstance();
+            setup(instance);
         }
         return instance;
+    }
+
+    private static void setup(BTEngine engine) {
+        engine.setHome(buildHome());
+    }
+
+    private static File buildHome() {
+        File path = new File(CommonUtils.getUserSettingsDir() + File.separator + "libtorrent" + File.separator);
+        if (!path.exists()) {
+            path.mkdirs();
+        }
+        return path;
     }
 }

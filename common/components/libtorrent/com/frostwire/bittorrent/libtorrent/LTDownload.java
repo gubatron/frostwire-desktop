@@ -19,6 +19,7 @@
 package com.frostwire.bittorrent.libtorrent;
 
 import com.frostwire.bittorrent.BTDownload;
+import com.frostwire.bittorrent.BTDownloadListener;
 import com.frostwire.bittorrent.BTDownloadState;
 import com.frostwire.jlibtorrent.Session;
 import com.frostwire.jlibtorrent.TorrentHandle;
@@ -34,6 +35,8 @@ import java.util.Date;
 public final class LTDownload implements BTDownload {
 
     private final TorrentHandle th;
+
+    private BTDownloadListener listener;
 
     public LTDownload(TorrentHandle th) {
         this.th = th;
@@ -223,6 +226,16 @@ public final class LTDownload implements BTDownload {
         if (deleteTorrent) {
             //torrent.delete();
         }
+    }
+
+    @Override
+    public BTDownloadListener getListener() {
+        return listener;
+    }
+
+    @Override
+    public void setListener(BTDownloadListener listener) {
+        this.listener = listener;
     }
 
     TorrentHandle getTorrentHandle() {

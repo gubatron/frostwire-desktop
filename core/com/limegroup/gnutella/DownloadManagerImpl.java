@@ -72,7 +72,7 @@ public class DownloadManagerImpl implements DownloadManager {
             }
         });
 
-        engine.restoreDownloads();
+        engine.restoreDownloads(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
     }
 
     /**

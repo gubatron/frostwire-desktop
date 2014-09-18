@@ -18,7 +18,6 @@
 
 package com.frostwire.bittorrent.libtorrent;
 
-import com.frostwire.bittorrent.BTEngineListener;
 import com.frostwire.jlibtorrent.TorrentAlertAdapter;
 import com.frostwire.jlibtorrent.alerts.Alert;
 import com.frostwire.jlibtorrent.alerts.SaveResumeDataAlert;

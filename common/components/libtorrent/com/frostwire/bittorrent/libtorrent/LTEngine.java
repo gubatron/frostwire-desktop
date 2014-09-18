@@ -28,10 +28,8 @@ import com.frostwire.jlibtorrent.alerts.Alert;
 import com.frostwire.jlibtorrent.alerts.TorrentAlert;
 import com.frostwire.jlibtorrent.swig.torrent_added_alert;
 import com.frostwire.logging.Logger;
-import com.limegroup.gnutella.settings.SharingSettings;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.limewire.util.CommonUtils;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -46,14 +44,15 @@ public final class LTEngine implements BTEngine {
     private static final Logger LOG = Logger.getLogger(LTEngine.class);
 
     private final Session session;
-    private final File home;
 
+    private File home;
     private BTEngineListener listener;
 
     public LTEngine() {
         this.session = new Session();
-        this.home = buildHome();
 
+
+        this.home = new File(".").getAbsoluteFile();
         addEngineListener();
     }
 
@@ -67,6 +66,16 @@ public final class LTEngine implements BTEngine {
 
     Session getSession() {
         return session;
+    }
+
+    @Override
+    public File getHome() {
+        return home;
+    }
+
+    @Override
+    public void setHome(File home) {
+        this.home = home;
     }
 
     @Override
@@ -94,15 +103,13 @@ public final class LTEngine implements BTEngine {
     }
 
     @Override
-    public void restoreDownloads() {
+    public void restoreDownloads(File saveDir) {
         File[] torrents = home.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
                 return FilenameUtils.getExtension(name).equals("torrent");
             }
         });
-
-        File saveDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
 
         for (File t : torrents) {
             try {
@@ -131,13 +138,5 @@ public final class LTEngine implements BTEngine {
                 }
             }
         });
-    }
-
-    private File buildHome() {
-        File path = new File(CommonUtils.getUserSettingsDir() + File.separator + "libtorrent" + File.separator);
-        if (!path.exists()) {
-            path.mkdirs();
-        }
-        return path;
     }
 }

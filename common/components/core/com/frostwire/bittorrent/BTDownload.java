@@ -87,4 +87,8 @@ public interface BTDownload {
      * @param deleteData
      */
     public void stop(boolean deleteTorrent, boolean deleteData);
+
+    public BTDownloadListener getListener();
+
+    public void setListener(BTDownloadListener listener);
 }
