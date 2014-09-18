@@ -219,6 +219,8 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
 
     @Override
     public void stop(boolean deleteTorrent, boolean deleteData) {
+        String infoHash = this.getInfoHash();
+
         LTEngine engine = LTEngine.getInstance();
         Session s = engine.getSession();
 
@@ -229,8 +231,6 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
 
         s.removeListener(this);
         s.removeTorrent(th, options);
-
-        String infoHash = this.getInfoHash();
 
         if (deleteTorrent) {
             File torrent = LTEngine.getInstance().readTorrentPath(infoHash);
