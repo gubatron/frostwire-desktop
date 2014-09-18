@@ -22,10 +22,15 @@ import com.frostwire.bittorrent.BTDownload;
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.bittorrent.BTEngineListener;
 import com.frostwire.jlibtorrent.AlertListener;
+import com.frostwire.jlibtorrent.LibTorrent;
 import com.frostwire.jlibtorrent.Session;
 import com.frostwire.jlibtorrent.TorrentHandle;
 import com.frostwire.jlibtorrent.alerts.Alert;
+import com.frostwire.jlibtorrent.alerts.SaveResumeDataAlert;
 import com.frostwire.jlibtorrent.alerts.TorrentAlert;
+import com.frostwire.jlibtorrent.swig.block_finished_alert;
+import com.frostwire.jlibtorrent.swig.entry;
+import com.frostwire.jlibtorrent.swig.save_resume_data_alert;
 import com.frostwire.jlibtorrent.swig.torrent_added_alert;
 import com.frostwire.logging.Logger;
 import org.apache.commons.io.FileUtils;
@@ -48,11 +53,14 @@ public final class LTEngine implements BTEngine {
     private File home;
     private BTEngineListener listener;
 
+    private long lastTimeSavedResumeData;
+
     public LTEngine() {
         this.session = new Session();
 
 
         this.home = new File(".").getAbsoluteFile();
+
         addEngineListener();
     }
 
@@ -97,13 +105,11 @@ public final class LTEngine implements BTEngine {
         FileUtils.copyFile(torrent, new File(home, th.getInfoHash() + ".torrent"));
         LTDownload dl = new LTDownload(th);
 
-        s.addListener(new LTDownloadListener(dl));
-
         return dl;
     }
 
     @Override
-    public void restoreDownloads(File saveDir) {
+    public void restoreDownloads(File saveDir, boolean paused) {
         File[] torrents = home.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
@@ -113,7 +119,7 @@ public final class LTEngine implements BTEngine {
 
         for (File t : torrents) {
             try {
-                session.asyncAddTorrent(t, saveDir);
+                session.asyncAddTorrent(t, saveDir, paused);
             } catch (Throwable e) {
                 LOG.error("Error restoring torrent download", e);
             }
@@ -130,13 +136,42 @@ public final class LTEngine implements BTEngine {
             @Override
             public void onAlert(Alert<?> alert) {
                 //LOG.info(a.message());
+                if (listener == null) {
+                    return;
+                }
+
                 int type = alert.getType();
+
                 if (type == torrent_added_alert.alert_type) {
-                    if (listener != null) {
-                        listener.downloadAdded(new LTDownload(((TorrentAlert<?>) alert).getTorrentHandle()));
-                    }
+                    listener.downloadAdded(new LTDownload(((TorrentAlert<?>) alert).getTorrentHandle()));
+                }
+
+                if (type == save_resume_data_alert.alert_type) {
+                    saveResumeData((SaveResumeDataAlert) alert);
+                }
+
+                if (type == block_finished_alert.alert_type) {
+                    doResumeData((TorrentAlert<?>) alert);
                 }
             }
         });
+    }
+
+    public void saveResumeData(SaveResumeDataAlert alert) {
+        try {
+            TorrentHandle th = alert.getTorrentHandle();
+            entry d = alert.getResumeData();
+            byte[] arr = LibTorrent.entry2bytes(d);
+            FileUtils.writeByteArrayToFile(new File(home, th.getInfoHash() + ".resume"), arr);
+        } catch (IOException e) {
+            LOG.warn("Error saving resume data", e);
+        }
+    }
+
+    public void doResumeData(TorrentAlert<?> alert) {
+        TorrentHandle th = alert.getTorrentHandle();
+        if (th.needSaveResumeData()) {
+            th.saveResumeData();
+        }
     }
 }
