@@ -19,6 +19,7 @@
 package com.frostwire.bittorrent;
 
 import com.frostwire.bittorrent.libtorrent.LTEngine;
+import com.limegroup.gnutella.settings.SharingSettings;
 import org.limewire.util.CommonUtils;
 
 import java.io.File;
@@ -43,6 +44,10 @@ public final class BTEngineFactory {
     }
 
     private static void setup(BTEngine engine) {
+
+        SharingSettings.initTorrentDataDirSetting();
+        SharingSettings.initTorrentsDirSetting();
+
         engine.setHome(buildHome());
     }
 
