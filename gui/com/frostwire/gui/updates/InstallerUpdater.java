@@ -32,19 +32,18 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import org.gudy.azureus2.core3.disk.DiskManager;
-import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
-import org.gudy.azureus2.core3.disk.DiskManagerPiece;
-import org.gudy.azureus2.core3.download.DownloadManager;
-import org.gudy.azureus2.core3.download.DownloadManagerListener;
-import org.gudy.azureus2.core3.download.DownloadManagerStats;
-import org.gudy.azureus2.core3.global.GlobalManagerDownloadRemovalVetoException;
-import org.gudy.azureus2.core3.util.DisplayFormatters;
+import com.frostwire.bittorrent.libtorrent.LTEngine;
+import com.frostwire.jlibtorrent.Session;
+import com.frostwire.jlibtorrent.TorrentAlertAdapter;
+import com.frostwire.jlibtorrent.TorrentHandle;
+import com.frostwire.jlibtorrent.TorrentStatus;
+import com.frostwire.jlibtorrent.alerts.BlockFinishedAlert;
+import com.frostwire.jlibtorrent.alerts.FileErrorAlert;
+import com.frostwire.jlibtorrent.alerts.TorrentFinishedAlert;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.AzureusStarter;
 import com.frostwire.logging.Logger;
 import com.frostwire.util.DigestUtils;
 import com.frostwire.util.HttpClient;
@@ -59,17 +58,17 @@ import com.limegroup.gnutella.settings.UpdateSettings;
  * @author aldenml
  *
  */
-public class InstallerUpdater implements Runnable, DownloadManagerListener {
+public class InstallerUpdater implements Runnable {
 
     private static final Logger LOG = Logger.getLogger(InstallerUpdater.class);
 
-    private DownloadManager _manager = null;
+    private TorrentHandle _manager = null;
     private UpdateMessage _updateMessage;
     private File _executableFile;
 
     private static String lastMD5;
     private static boolean isDownloadingUpdate = false;
-    
+
     private final boolean forceUpdate;
 
     public InstallerUpdater(UpdateMessage updateMessage, boolean force) {
@@ -81,7 +80,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
     public void start() {
         new Thread(this, "InstallerUpdater").start();
     }
-    
+
     public static boolean isDownloadingUpdate() {
         return isDownloadingUpdate;
     }
@@ -95,7 +94,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
             showUpdateMessage();
         } else {
             isDownloadingUpdate = true;
-            
+
             if (_updateMessage.getTorrent() != null) {
                 handleTorrentDownload();
             } else if (_updateMessage.getInstallerUrl() != null) {
@@ -115,7 +114,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
             // http://bugs.sun.com/bugdatabase/view_bug.do;:YfiG?bug_id=4483097
             boolean exists = torrentFileLocation.exists() || torrentFileLocation.getAbsoluteFile().exists();
             if (torrentFileLocation != null && exists) {
-                _manager = startTorrentDownload(torrentFileLocation.getAbsolutePath(), UpdateSettings.UPDATES_DIR.getAbsolutePath(), this);
+                _manager = startTorrentDownload(torrentFileLocation.getAbsolutePath(), UpdateSettings.UPDATES_DIR.getAbsolutePath());
             } else {
                 isDownloadingUpdate = false;
             }
@@ -158,14 +157,34 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
         }
     }
 
-    private final DownloadManager startTorrentDownload(String torrentFile, String saveDataPath, DownloadManagerListener listener) throws Exception {
+    private final TorrentHandle startTorrentDownload(String torrentFile, String saveDataPath) throws Exception {
+        final Session session = LTEngine.getInstance().getSession();
 
-        DownloadManager manager = AzureusStarter.getAzureusCore().getGlobalManager().addDownloadManager(torrentFile, saveDataPath);
-        manager.addListener(listener);
+        TorrentHandle th = session.addTorrent(new File(torrentFile), new File(saveDataPath));
 
-        manager.initialize();
+        session.addListener(new TorrentAlertAdapter(th) {
 
-        return manager;
+            @Override
+            public void onFileError(FileErrorAlert alert) {
+                stateChanged(th, th.getStatus().getState());
+            }
+
+            @Override
+            public void onBlockFinished(BlockFinishedAlert alert) {
+                stateChanged(th, th.getStatus().getState());
+            }
+
+            @Override
+            public void onTorrentFinished(TorrentFinishedAlert alert) {
+                session.removeListener(this);
+                stateChanged(th, th.getStatus().getState());
+                downloadComplete(th);
+            }
+        });
+
+        th.resume();
+
+        return th;
     }
 
     private void showUpdateMessage() {
@@ -310,25 +329,12 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
         }
     }
 
-    @Override
-    public void completionChanged(DownloadManager manager, boolean bCompleted) {
-    }
-
-    @Override
-    public void filePriorityChanged(DownloadManager download, DiskManagerFileInfo file) {
-    }
-
-    @Override
-    public void positionChanged(DownloadManager download, int oldPosition, int newPosition) {
-    }
-
-    @Override
-    public void stateChanged(DownloadManager manager, int state) {
+    private void stateChanged(TorrentHandle manager, TorrentStatus.State state) {
         if (_manager == null && manager != null) {
             _manager = manager;
         }
 
-        printDiskManagerPieces(manager.getDiskManager());
+        //printDiskManagerPieces(manager.getDiskManager());
         printDownloadManagerStatus(manager);
 
         if (torrentDataDownloadedToDisk()) {
@@ -336,39 +342,40 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
             return;
         }
 
-        System.out.println("InstallerUpdater.stateChanged() - " + state + " completed: " + manager.isDownloadComplete(false));
-        if (state == DownloadManager.STATE_SEEDING) {
+        System.out.println("InstallerUpdater.stateChanged() - " + state + " completed: " + manager.isFinished());
+        if (state == TorrentStatus.State.SEEDING) {
             isDownloadingUpdate = false;
             System.out.println("InstallerUpdater.stateChanged() - SEEDING!");
             return;
         }
 
-        if (state == DownloadManager.STATE_ERROR) {
+        //if (state == DownloadManager.STATE_ERROR) {
+        String error = manager.getStatus().getError();
+        if (error != null && error.length() > 0) {
             isDownloadingUpdate = false;
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-            System.out.println(_manager.getErrorDetails());
+            System.out.println(error);
             System.out.println("InstallerUpdater: ERROR - stopIt, startDownload!");
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
             //try to restart the download. delete torrent and data
             //manager.stopIt(DownloadManager.STATE_READY, false, true);
             try {
-                AzureusStarter.getAzureusCore().getGlobalManager().removeDownloadManager(manager, false, true);
+                LTEngine.getInstance().getSession().removeTorrent(manager, Session.Options.DELETE_FILES);
                 //processMessage(_updateMessage);
-            } catch (GlobalManagerDownloadRemovalVetoException e) {
+            } catch (Throwable e) {
                 LOG.error("Error removing download manager on error", e);
             }
 
-        } else if (state == DownloadManager.STATE_DOWNLOADING) {
+        } else if (state == TorrentStatus.State.DOWNLOADING) {
             System.out.println("stateChanged(STATE_DOWNLOADING)");
-        } else if (state == DownloadManager.STATE_READY || state == DownloadManager.STATE_QUEUED) {
+        } /*else if (state == DownloadManager.STATE_READY || state == TorrentStatus.State.STATE_QUEUED) {
             System.out.println("stateChanged(STATE_READY)");
             manager.startDownload();
-        }
+        }*/
     }
 
-    @Override
-    public void downloadComplete(DownloadManager manager) {
+    private void downloadComplete(TorrentHandle manager) {
         System.out.println("InstallerUpdater.downloadComplete()!!!!");
         printDownloadManagerStatus(_manager);
 
@@ -434,10 +441,17 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
     }
 
     private boolean torrentDataDownloadedToDisk() {
-        if (_manager == null || _manager.getDiskManager() == null) {
+        if (_manager == null) {
             return false;
         }
 
+        if (!_manager.isValid()) {
+            return false;
+        }
+
+        return _manager.isFinished() || _manager.isSeeding();
+
+        /*
         String saveLocation = UpdateSettings.UPDATES_DIR.getAbsolutePath();
         File f = new File(saveLocation);
 
@@ -448,8 +462,10 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
         int rechecking = dm.getCompleteRecheckStatus();
 
         return f.exists() && f.length() == totalLength && percentDone == 1000 && rechecking == -1;
+        */
     }
 
+    /*
     public static void printDiskManagerPieces(DiskManager dm) {
         if (dm == null) {
             return;
@@ -460,9 +476,9 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
         }
 
         System.out.println();
-    }
+    }*/
 
-    public static void printDownloadManagerStatus(DownloadManager manager) {
+    public static void printDownloadManagerStatus(TorrentHandle manager) {
         if (manager == null) {
             return;
         }
@@ -470,33 +486,30 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
         StringBuffer buf = new StringBuffer();
         buf.append(" Completed:");
 
-        DownloadManagerStats stats = manager.getStats();
+        TorrentStatus stats = manager.getStatus();
 
-        int completed = stats.getCompleted();
-        buf.append(completed / 10);
-        buf.append('.');
-        buf.append(completed % 10);
+        buf.append(stats.getProgress());
         buf.append('%');
         buf.append(" Seeds:");
-        buf.append(manager.getNbSeeds());
+        buf.append(stats.getNumSeeds());
         buf.append(" Peers:");
-        buf.append(manager.getNbPeers());
+        buf.append(stats.getNumPeers());
         buf.append(" Downloaded:");
-        buf.append(DisplayFormatters.formatDownloaded(stats));
+        buf.append(stats.getTotalDone());
         buf.append(" Uploaded:");
-        buf.append(DisplayFormatters.formatByteCountToKiBEtc(stats.getTotalDataBytesSent()));
+        buf.append(stats.getTotalUpload());
         buf.append(" DSpeed:");
-        buf.append(DisplayFormatters.formatByteCountToKiBEtcPerSec(stats.getDataReceiveRate()));
+        buf.append(stats.getDownloadRate());
         buf.append(" USpeed:");
-        buf.append(DisplayFormatters.formatByteCountToKiBEtcPerSec(stats.getDataSendRate()));
-        buf.append(" TrackerStatus:");
-        buf.append(manager.getTrackerStatus());
+        buf.append(stats.getUploadRate());
+        //buf.append(" TrackerStatus:");
+        //buf.append(manager.getTrackerStatus());
         while (buf.length() < 80) {
             buf.append(' ');
         }
 
         buf.append(" TO:");
-        buf.append(manager.getSaveLocation().getAbsolutePath());
+        buf.append(manager.getSavePath());
 
         System.out.println(buf.toString());
     }
