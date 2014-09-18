@@ -39,104 +39,106 @@ import java.util.Date;
  */
 public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownload {
 
-    private final BTDownload d;
+    private final BTDownload dl;
 
     private boolean deleteTorrentWhenRemove;
     private boolean deleteDataWhenRemove;
 
-    public BittorrentDownload(BTDownload d) {
-        this.d = d;
-        this.d.setListener(new StatusListener());
+    public BittorrentDownload(BTDownload dl) {
+        this.dl = dl;
+        this.dl.setListener(new StatusListener());
+
+        dl.resume();
     }
 
     @Override
     public long getSize() {
-        return d.getSize();
+        return dl.getSize();
     }
 
     @Override
     public long getSize(boolean update) {
-        return d.getSize();
+        return dl.getSize();
     }
 
     @Override
     public String getDisplayName() {
-        return d.getName();
+        return dl.getName();
     }
 
     @Override
     public boolean isResumable() {
-        return d.isPaused();
+        return dl.isPaused();
     }
 
     @Override
     public boolean isPausable() {
-        return !d.isPaused();
+        return !dl.isPaused();
     }
 
     @Override
     public boolean isCompleted() {
-        return d.isFinished();
+        return dl.isFinished();
     }
 
     @Override
     public int getState() {
-        return d.getState().ordinal();
+        return dl.getState().ordinal();
     }
 
     @Override
     public void remove() {
-        d.stop(deleteTorrentWhenRemove, deleteDataWhenRemove);
+        dl.stop(deleteTorrentWhenRemove, deleteDataWhenRemove);
     }
 
     @Override
     public void pause() {
-        d.pause();
+        dl.pause();
     }
 
     @Override
     public File getSaveLocation() {
-        return new File(d.getSavePath());
+        return new File(dl.getSavePath());
     }
 
     @Override
     public void resume() {
-        d.resume();
+        dl.resume();
     }
 
     @Override
     public int getProgress() {
-        return d.getProgress();
+        return dl.getProgress();
     }
 
     @Override
     public String getStateString() {
-        return d.getState().name();
+        return dl.getState().name();
     }
 
     @Override
     public long getBytesReceived() {
-        return d.getTotalBytesReceived();
+        return dl.getTotalBytesReceived();
     }
 
     @Override
     public long getBytesSent() {
-        return d.getTotalBytesSent();
+        return dl.getTotalBytesSent();
     }
 
     @Override
     public double getDownloadSpeed() {
-        return d.getDownloadSpeed();
+        return dl.getDownloadSpeed();
     }
 
     @Override
     public double getUploadSpeed() {
-        return d.getUploadSpeed();
+        return dl.getUploadSpeed();
     }
 
     @Override
     public long getETA() {
-        return d.getETA();
+        return dl.getETA();
     }
 
     @Override
@@ -146,12 +148,12 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public String getPeersString() {
-        return d.getConnectedPeers() + "/" + d.getTotalPeers();
+        return dl.getConnectedPeers() + "/" + dl.getTotalPeers();
     }
 
     @Override
     public String getSeedsString() {
-        return d.getConnectedSeeds() + "/" + d.getTotalSeeds();
+        return dl.getConnectedSeeds() + "/" + dl.getTotalSeeds();
     }
 
     @Override
@@ -176,18 +178,18 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public String getHash() {
-        return d.getInfoHash();
+        return dl.getInfoHash();
     }
 
     @Override
     public String getSeedToPeerRatio() {
-        return d.getTotalSeeds() + "/" + d.getTotalPeers();
+        return dl.getTotalSeeds() + "/" + dl.getTotalPeers();
     }
 
     @Override
     public String getShareRatio() {
-        long sent = d.getTotalBytesSent();
-        long received = d.getTotalBytesReceived();
+        long sent = dl.getTotalBytesSent();
+        long received = dl.getTotalBytesReceived();
 
         if (received < 0) {
             return "0";
@@ -208,7 +210,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public Date getDateCreated() {
-        return d.getDateCreated();
+        return dl.getDateCreated();
     }
 
     @Override
