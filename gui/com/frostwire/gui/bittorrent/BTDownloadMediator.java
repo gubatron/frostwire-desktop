@@ -789,19 +789,13 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentFile2(final File torrentFile, final boolean partialDownload) {
-        GUIMediator.safeInvokeLater(new Runnable() {
-            public void run() {
-                try {
-                    File saveDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
-                    BTEngine engine = BTEngineFactory.getInstance();
-                    com.frostwire.bittorrent.BTDownload d = engine.download(torrentFile, saveDir);
-                    BittorrentDownload bt = new BittorrentDownload(d);
-                    add(bt);
-                } catch (Throwable e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        try {
+            File saveDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
+            BTEngine engine = BTEngineFactory.getInstance();
+            engine.download(torrentFile, saveDir);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 
     public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
