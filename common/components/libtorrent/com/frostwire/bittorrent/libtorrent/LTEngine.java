@@ -18,7 +18,6 @@
 
 package com.frostwire.bittorrent.libtorrent;
 
-import com.frostwire.bittorrent.BTDownload;
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.bittorrent.BTEngineListener;
 import com.frostwire.jlibtorrent.*;
@@ -92,15 +91,12 @@ public final class LTEngine implements BTEngine {
     }
 
     @Override
-    public BTDownload download(File torrent, File saveDir) throws IOException {
+    public void download(File torrent, File saveDir) throws IOException {
         LTEngine e = LTEngine.getInstance();
 
         Session s = e.getSession();
-        TorrentHandle th = s.addTorrent(torrent, saveDir);
+        s.asyncAddTorrent(torrent, saveDir, null);
         saveResumeTorrent(torrent);
-        LTDownload dl = new LTDownload(th);
-
-        return dl;
     }
 
     @Override

@@ -19,9 +19,16 @@
 package com.frostwire.gui.bittorrent;
 
 import com.frostwire.bittorrent.BTDownload;
+import com.frostwire.bittorrent.BTDownloadListener;
+import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
+import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.iTunesMediator;
+import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.settings.iTunesSettings;
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.limewire.util.OSUtils;
 
 import java.io.File;
 import java.util.Date;
@@ -39,6 +46,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     public BittorrentDownload(BTDownload d) {
         this.d = d;
+        this.d.setListener(new StatusListener());
     }
 
     @Override
@@ -211,5 +219,34 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     @Override
     public CopyrightLicenseBroker getCopyrightLicenseBroker() {
         return null;
+    }
+
+    private class StatusListener implements BTDownloadListener {
+
+        @Override
+        public void finished(BTDownload dl) {
+            if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue() || (dl.isPartial() && !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue())) {
+                dl.pause();
+            }
+
+            File saveLocation = new File(dl.getSavePath());
+
+            if (iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(saveLocation)) {
+                if ((OSUtils.isMacOSX() || OSUtils.isWindows())) {
+                    iTunesMediator.instance().scanForSongs(saveLocation);
+                }
+            }
+
+            if (!LibraryMediator.instance().isScanned(dl.hashCode())) {
+                LibraryMediator.instance().scan(dl.hashCode(), saveLocation);
+            }
+
+            //if you have to hide seeds, do so.
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    BTDownloadMediator.instance().updateTableFilters();
+                }
+            });
+        }
     }
 }

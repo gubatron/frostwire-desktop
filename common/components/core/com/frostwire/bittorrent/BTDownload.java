@@ -91,4 +91,6 @@ public interface BTDownload {
     public BTDownloadListener getListener();
 
     public void setListener(BTDownloadListener listener);
+
+    public boolean isPartial();
 }

@@ -21,10 +21,9 @@ package com.frostwire.bittorrent.libtorrent;
 import com.frostwire.bittorrent.BTDownload;
 import com.frostwire.bittorrent.BTDownloadListener;
 import com.frostwire.bittorrent.BTDownloadState;
-import com.frostwire.jlibtorrent.Session;
-import com.frostwire.jlibtorrent.TorrentHandle;
-import com.frostwire.jlibtorrent.TorrentInfo;
-import com.frostwire.jlibtorrent.TorrentStatus;
+import com.frostwire.jlibtorrent.*;
+import com.frostwire.jlibtorrent.alerts.TorrentFinishedAlert;
+import com.frostwire.logging.Logger;
 
 import java.io.File;
 import java.util.Date;
@@ -33,14 +32,19 @@ import java.util.Date;
  * @author gubatron
  * @author aldenml
  */
-public final class LTDownload implements BTDownload {
+public final class LTDownload extends TorrentAlertAdapter implements BTDownload {
+
+    private static final Logger LOG = Logger.getLogger(LTDownload.class);
 
     private final TorrentHandle th;
 
     private BTDownloadListener listener;
 
     public LTDownload(TorrentHandle th) {
+        super(th);
         this.th = th;
+
+        LTEngine.getInstance().getSession().addListener(this);
     }
 
     @Override
@@ -223,6 +227,7 @@ public final class LTDownload implements BTDownload {
             options = Session.Options.DELETE_FILES;
         }
 
+        s.removeListener(this);
         s.removeTorrent(th, options);
 
         String infoHash = this.getInfoHash();
@@ -250,5 +255,21 @@ public final class LTDownload implements BTDownload {
 
     TorrentHandle getTorrentHandle() {
         return th;
+    }
+
+    @Override
+    public void onTorrentFinished(TorrentFinishedAlert alert) {
+        if (listener != null) {
+            try {
+                listener.finished(this);
+            } catch (Throwable e) {
+                LOG.error("Error calling listener", e);
+            }
+        }
+    }
+
+    @Override
+    public boolean isPartial() {
+        return th.isPartial();
     }
 }

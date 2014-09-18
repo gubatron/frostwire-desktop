@@ -35,7 +35,7 @@ public interface BTEngine {
 
     public void setListener(BTEngineListener listener);
 
-    public BTDownload download(File torrent, File saveDir) throws IOException;
+    public void download(File torrent, File saveDir) throws IOException;
 
     public void restoreDownloads(File saveDir);
 }
