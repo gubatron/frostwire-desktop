@@ -46,7 +46,6 @@ sourceSets {
             srcDir 'common/components/minicastle'
             srcDir 'common/components/mp4parser'
             srcDir 'common/components/httpserver'
-            srcDir 'common/components/okhttp'
 
             srcDir 'common/vuze/azureus2/src'
             srcDir 'common/vuze/azureus3/src'
