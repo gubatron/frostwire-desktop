@@ -75,7 +75,7 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
 
     @Override
     public BTDownloadState getState() {
-        TorrentStatus.State state = th.getStatus().state;
+        TorrentStatus.State state = th.getStatus().getState();
 
         if (th.isPaused()) {
             return BTDownloadState.PAUSED;
@@ -110,19 +110,19 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
 
     @Override
     public int getProgress() {
-        float fp = th.getStatus().progress;
+        float fp = th.getStatus().getProgress();
 
         if (Float.compare(fp, 1f) == 0) {
             return 100;
         }
 
-        int p = (int) (th.getStatus().progress * 100);
+        int p = (int) (th.getStatus().getProgress() * 100);
         return Math.min(p, 100);
     }
 
     @Override
     public long getBytesReceived() {
-        return th.getStatus().totalDownload;
+        return th.getStatus().getTotalDownload();
     }
 
     @Override
@@ -132,7 +132,7 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
 
     @Override
     public long getBytesSent() {
-        return th.getStatus().totalUpload;
+        return th.getStatus().getTotalUpload();
     }
 
     @Override
@@ -142,17 +142,17 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
 
     @Override
     public float getDownloadSpeed() {
-        return th.getStatus().downloadRate;
+        return th.getStatus().getDownloadRate();
     }
 
     @Override
     public float getUploadSpeed() {
-        return th.getStatus().uploadRate;
+        return th.getStatus().getUploadRate();
     }
 
     @Override
     public int getConnectedPeers() {
-        return th.getStatus().numPeers;
+        return th.getStatus().getNumPeers();
     }
 
     @Override
@@ -162,7 +162,7 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
 
     @Override
     public int getConnectedSeeds() {
-        return th.getStatus().numSeeds;
+        return th.getStatus().getNumSeeds();
     }
 
     @Override
@@ -188,8 +188,8 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
         }
 
         TorrentStatus status = th.getStatus();
-        long left = ti.getTotalSize() - status.totalDone;
-        long rate = status.downloadPayloadRate;
+        long left = ti.getTotalSize() - status.getTotalDone();
+        long rate = status.getDownloadPayloadRate();
 
         if (left <= 0) {
             return 0;

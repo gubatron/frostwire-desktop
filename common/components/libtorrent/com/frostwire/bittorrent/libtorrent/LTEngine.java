@@ -66,7 +66,7 @@ public final class LTEngine implements BTEngine {
         return Loader.INSTANCE;
     }
 
-    Session getSession() {
+    public Session getSession() {
         return session;
     }
 
