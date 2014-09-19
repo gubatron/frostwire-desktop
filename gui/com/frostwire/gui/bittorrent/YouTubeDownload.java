@@ -18,6 +18,19 @@
 
 package com.frostwire.gui.bittorrent;
 
+import com.frostwire.search.extractors.YouTubeExtractor.LinkInfo;
+import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
+import com.frostwire.torrent.CopyrightLicenseBroker;
+import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.transfers.TransferState;
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClient.HttpClientListener;
+import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.MP4Muxer;
+import com.frostwire.util.MP4Muxer.MP4Metadata;
+import com.limegroup.gnutella.settings.SharingSettings;
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -26,39 +39,13 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import org.apache.commons.io.FilenameUtils;
-import org.gudy.azureus2.core3.download.DownloadManager;
-
-import com.frostwire.search.extractors.YouTubeExtractor.LinkInfo;
-import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
-import com.frostwire.torrent.CopyrightLicenseBroker;
-import com.frostwire.torrent.PaymentOptions;
-import com.frostwire.util.HttpClient;
-import com.frostwire.util.HttpClient.HttpClientListener;
-import com.frostwire.util.HttpClientFactory;
-import com.frostwire.util.MP4Muxer;
-import com.frostwire.util.MP4Muxer.MP4Metadata;
-import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.settings.SharingSettings;
-
 /**
  * @author gubatron
  * @author aldenml
- *
  */
 public class YouTubeDownload implements BTDownload {
 
     private static final Executor YOUTUBE_THREAD_POOL = Executors.newFixedThreadPool(6);
-
-    private static final String STATE_DOWNLOADING = I18n.tr("Downloading");
-    private static final String STATE_ERROR = I18n.tr("Error");
-    private static final String STATE_ERROR_MOVING_INCOMPLETE = I18n.tr("Error - can't save");
-    private static final String STATE_PAUSING = I18n.tr("Pausing");
-    private static final String STATE_PAUSED = I18n.tr("Paused");
-    private static final String STATE_CANCELING = I18n.tr("Canceling");
-    private static final String STATE_CANCELED = I18n.tr("Canceled");
-    private static final String STATE_WAITING = I18n.tr("Waiting");
-    private static final String STATE_FINISHED = I18n.tr("Finished");
 
     private static final int SPEED_AVERAGE_CALCULATION_INTERVAL_MILLISECONDS = 1000;
 
@@ -75,7 +62,7 @@ public class YouTubeDownload implements BTDownload {
 
     private final long size;
     private long bytesReceived;
-    private String state;
+    private TransferState state;
     private long averageSpeed; // in bytes
 
     // variables to keep the download rate of file transfer
@@ -151,18 +138,14 @@ public class YouTubeDownload implements BTDownload {
     }
 
     @Override
-    public int getState() {
-        if (state == STATE_DOWNLOADING) {
-            return DownloadManager.STATE_DOWNLOADING;
-        }
-
-        return DownloadManager.STATE_STOPPED;
+    public TransferState getState() {
+        return state;
     }
 
     @Override
     public void remove() {
-        if (state != STATE_FINISHED) {
-            state = STATE_CANCELING;
+        if (state != TransferState.FINISHED) {
+            state = TransferState.CANCELING;
             httpClient.cancel();
         }
     }
@@ -174,7 +157,7 @@ public class YouTubeDownload implements BTDownload {
 
     @Override
     public void pause() {
-        state = STATE_CANCELING;
+        state = TransferState.CANCELING;
         httpClient.cancel();
     }
 
@@ -191,7 +174,7 @@ public class YouTubeDownload implements BTDownload {
     @Override
     public int getProgress() {
         int progress = -1;
-        
+
         if (size > 0) {
             if (isComplete()) {
                 progress = 100;
@@ -202,11 +185,6 @@ public class YouTubeDownload implements BTDownload {
         }
 
         return progress;
-    }
-
-    @Override
-    public String getStateString() {
-        return state;
     }
 
     @Override
@@ -222,7 +200,7 @@ public class YouTubeDownload implements BTDownload {
     @Override
     public double getDownloadSpeed() {
         double result = 0;
-        if (state == STATE_DOWNLOADING) {
+        if (state == TransferState.DOWNLOADING) {
             result = averageSpeed / 1000;
         }
         return result;
@@ -297,7 +275,7 @@ public class YouTubeDownload implements BTDownload {
     }
 
     private void start(final LinkInfo inf, final File temp) {
-        state = STATE_WAITING;
+        state = TransferState.WAITING;
 
         YOUTUBE_THREAD_POOL.execute(new Runnable() {
             @Override
@@ -330,7 +308,9 @@ public class YouTubeDownload implements BTDownload {
         cleanupFile(completeFile);
     }
 
-    /** files are saved with (1), (2),... if there's one with the same name already. */
+    /**
+     * files are saved with (1), (2),... if there's one with the same name already.
+     */
     private static File buildFile(File savePath, String name) {
         String baseName = FilenameUtils.getBaseName(name);
         String ext = FilenameUtils.getExtension(name);
@@ -358,7 +338,7 @@ public class YouTubeDownload implements BTDownload {
 
     public boolean isComplete() {
         if (bytesReceived > 0) {
-            return bytesReceived == size || state == STATE_FINISHED;
+            return bytesReceived == size || state == TransferState.FINISHED;
         } else {
             return false;
         }
@@ -381,16 +361,16 @@ public class YouTubeDownload implements BTDownload {
     private final class HttpDownloadListenerImpl implements HttpClientListener {
         @Override
         public void onError(HttpClient client, Throwable e) {
-            state = STATE_ERROR;
+            state = TransferState.ERROR;
             cleanup();
         }
 
         @Override
         public void onData(HttpClient client, byte[] buffer, int offset, int length) {
-            if (!state.equals(STATE_PAUSING) && !state.equals(STATE_CANCELING)) {
+            if (!state.equals(TransferState.PAUSING) && !state.equals(TransferState.CANCELING)) {
                 bytesReceived += length;
                 updateAverageDownloadSpeed();
-                state = STATE_DOWNLOADING;
+                state = TransferState.DOWNLOADING;
             }
         }
 
@@ -400,9 +380,9 @@ public class YouTubeDownload implements BTDownload {
                 boolean renameTo = tempVideo.renameTo(completeFile);
 
                 if (!renameTo) {
-                    state = STATE_ERROR_MOVING_INCOMPLETE;
+                    state = TransferState.ERROR_MOVING_INCOMPLETE;
                 } else {
-                    state = STATE_FINISHED;
+                    state = TransferState.FINISHED;
                     cleanupIncomplete();
                 }
             } else if (downloadType == DownloadType.DEMUX) {
@@ -410,15 +390,15 @@ public class YouTubeDownload implements BTDownload {
                     new MP4Muxer().demuxAudio(tempAudio.getAbsolutePath(), completeFile.getAbsolutePath(), buildMetadata());
 
                     if (!completeFile.exists()) {
-                        state = STATE_ERROR_MOVING_INCOMPLETE;
+                        state = TransferState.ERROR_MOVING_INCOMPLETE;
                     } else {
-                        state = STATE_FINISHED;
+                        state = TransferState.FINISHED;
                         cleanupIncomplete();
                     }
 
                 } catch (Exception e) {
-                	e.printStackTrace();
-                    state = STATE_ERROR_MOVING_INCOMPLETE;
+                    e.printStackTrace();
+                    state = TransferState.ERROR_MOVING_INCOMPLETE;
                     cleanupIncomplete();
                 }
             } else if (downloadType == DownloadType.DASH) {
@@ -429,36 +409,36 @@ public class YouTubeDownload implements BTDownload {
                         new MP4Muxer().mux(tempVideo.getAbsolutePath(), tempAudio.getAbsolutePath(), completeFile.getAbsolutePath(), buildMetadata());
 
                         if (!completeFile.exists()) {
-                            state = STATE_ERROR_MOVING_INCOMPLETE;
+                            state = TransferState.ERROR_MOVING_INCOMPLETE;
                         } else {
-                            state = STATE_FINISHED;
+                            state = TransferState.FINISHED;
                             cleanupIncomplete();
                         }
 
                     } catch (Exception e) {
-                        state = STATE_ERROR_MOVING_INCOMPLETE;
+                        state = TransferState.ERROR_MOVING_INCOMPLETE;
                         cleanupIncomplete();
                     }
                 } else {
-                    state = STATE_ERROR_MOVING_INCOMPLETE;
+                    state = TransferState.ERROR_MOVING_INCOMPLETE;
                     cleanupIncomplete();
                 }
             } else {
                 // warning!!! if this point is reached review the logic
-                state = STATE_ERROR_MOVING_INCOMPLETE;
+                state = TransferState.ERROR_MOVING_INCOMPLETE;
                 cleanupIncomplete();
             }
         }
 
         @Override
         public void onCancel(HttpClient client) {
-            if (state.equals(STATE_CANCELING)) {
+            if (state.equals(TransferState.CANCELING)) {
                 cleanup();
-                state = STATE_CANCELED;
-            } else if (state.equals(STATE_PAUSING)) {
-                state = STATE_PAUSED;
+                state = TransferState.CANCELED;
+            } else if (state.equals(TransferState.PAUSING)) {
+                state = TransferState.PAUSED;
             } else {
-                state = STATE_CANCELED;
+                state = TransferState.CANCELED;
             }
         }
 

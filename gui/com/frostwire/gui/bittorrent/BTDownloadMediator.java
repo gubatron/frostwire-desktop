@@ -40,6 +40,7 @@ import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.transfers.TransferState;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.JsonUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -895,8 +896,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public boolean isClearable(BTDownload initializeObject) {
-        int state = initializeObject.getState();
-        return state != DownloadManager.STATE_SEEDING && state != DownloadManager.STATE_CHECKING && initializeObject.isCompleted();
+        TransferState state = initializeObject.getState();
+        return state != TransferState.SEEDING && state != TransferState.CHECKING && initializeObject.isCompleted();
     }
 
     public void removeCompleted() {

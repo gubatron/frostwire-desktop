@@ -2,6 +2,7 @@ package com.frostwire.gui.bittorrent;
 
 import java.util.HashSet;
 
+import com.frostwire.transfers.TransferState;
 import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
@@ -40,7 +41,7 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
 
         for (int i = 0; i < size; i++) {
             BTDownload downloader = get(i).getInitializeObject();
-            if (!downloader.isCompleted() && downloader.getState() == DownloadManager.STATE_DOWNLOADING) {
+            if (!downloader.isCompleted() && downloader.getState() == TransferState.DOWNLOADING) {
                 count++;
             }
         }
@@ -55,11 +56,11 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
             BTDownload downloader = get(i).getInitializeObject();
             // special case for peer uploads, needs refactor
             if (downloader instanceof BTPeerHttpUpload) {
-                if (downloader.getState() == DownloadManager.STATE_SEEDING) {
+                if (downloader.getState() == TransferState.SEEDING) {
                     count++;
                 }
             } else {
-                if (downloader.isCompleted() && downloader.getState() == DownloadManager.STATE_SEEDING) {
+                if (downloader.isCompleted() && downloader.getState() == TransferState.SEEDING) {
                     count++;
                 }
             }

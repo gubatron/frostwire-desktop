@@ -25,6 +25,7 @@ import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.transfers.PeerHttpUpload;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.transfers.TransferState;
 
 /**
  * @author gubatron
@@ -74,10 +75,8 @@ public class BTPeerHttpUpload implements BTDownload {
     }
 
     @Override
-    public int getState() {
-        // TODO:BITTORRENT
-        //return isCompleted() ? com.frostwire.bittorrent.BTDownload.STATE_STOPPED : DownloadManager.STATE_SEEDING;
-        return 0;
+    public TransferState getState() {
+        return isCompleted() ? TransferState.STOPPED : TransferState.SEEDING;
     }
 
     @Override
@@ -102,11 +101,6 @@ public class BTPeerHttpUpload implements BTDownload {
     @Override
     public int getProgress() {
         return upload.getProgress();
-    }
-
-    @Override
-    public String getStateString() {
-        return upload.getStatus();
     }
 
     @Override

@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.Set;
 
+import com.frostwire.transfers.TransferState;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.download.DownloadManagerStats;
@@ -109,8 +110,9 @@ public class BTDownloadImpl implements BTDownload {
         return _downloadManager.getAssumedComplete();
     }
 
-    public int getState() {
-        return _downloadManager.getState();
+    public TransferState getState() {
+        // TODO:BITTORRENT
+        return TransferState.ERROR;//  _downloadManager.getState();
     }
 
     public void remove() {

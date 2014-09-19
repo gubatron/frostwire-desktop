@@ -23,6 +23,7 @@ import com.frostwire.bittorrent.BTDownloadListener;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.transfers.TransferState;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -81,8 +82,8 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     }
 
     @Override
-    public int getState() {
-        return dl.getState().ordinal();
+    public TransferState getState() {
+        return dl.getState();
     }
 
     @Override
@@ -108,11 +109,6 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     @Override
     public int getProgress() {
         return dl.getProgress();
-    }
-
-    @Override
-    public String getStateString() {
-        return dl.getState().name();
     }
 
     @Override

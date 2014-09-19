@@ -20,10 +20,10 @@ package com.frostwire.bittorrent.libtorrent;
 
 import com.frostwire.bittorrent.BTDownload;
 import com.frostwire.bittorrent.BTDownloadListener;
-import com.frostwire.bittorrent.BTDownloadState;
 import com.frostwire.jlibtorrent.*;
 import com.frostwire.jlibtorrent.alerts.TorrentFinishedAlert;
 import com.frostwire.logging.Logger;
+import com.frostwire.transfers.TransferState;
 
 import java.io.File;
 import java.util.Date;
@@ -74,30 +74,30 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
     }
 
     @Override
-    public BTDownloadState getState() {
+    public TransferState getState() {
         TorrentStatus.State state = th.getStatus().getState();
 
         if (th.isPaused()) {
-            return BTDownloadState.PAUSED;
+            return TransferState.PAUSED;
         }
 
         switch (state) {
             case QUEUED_FOR_CHECKING:
-                return BTDownloadState.QUEUED_FOR_CHECKING;
+                return TransferState.QUEUED_FOR_CHECKING;
             case CHECKING_FILES:
-                return BTDownloadState.CHECKING_FILES;
+                return TransferState.CHECKING;
             case DOWNLOADING_METADATA:
-                return BTDownloadState.DOWNLOADING_METADATA;
+                return TransferState.DOWNLOADING_METADATA;
             case DOWNLOADING:
-                return BTDownloadState.DOWNLOADING;
+                return TransferState.DOWNLOADING;
             case FINISHED:
-                return BTDownloadState.FINISHED;
+                return TransferState.FINISHED;
             case SEEDING:
-                return BTDownloadState.SEEDING;
+                return TransferState.SEEDING;
             case ALLOCATING:
-                return BTDownloadState.ALLOCATING;
+                return TransferState.ALLOCATING;
             case CHECKING_RESUME_DATA:
-                return BTDownloadState.CHECKING_RESUME_DATA;
+                return TransferState.CHECKING;
             default:
                 throw new IllegalArgumentException("No enum value supported");
         }
@@ -224,13 +224,12 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
         LTEngine engine = LTEngine.getInstance();
         Session s = engine.getSession();
 
-        Session.Options options = Session.Options.NONE;
-        if (deleteData) {
-            options = Session.Options.DELETE_FILES;
-        }
-
         s.removeListener(this);
-        s.removeTorrent(th, options);
+        if (deleteData) {
+            s.removeTorrent(th, Session.Options.DELETE_FILES);
+        } else {
+            s.removeTorrent(th);
+        }
 
         if (deleteTorrent) {
             File torrent = LTEngine.getInstance().readTorrentPath(infoHash);

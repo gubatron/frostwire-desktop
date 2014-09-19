@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.frostwire.transfers.TransferState;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
@@ -167,8 +168,8 @@ public class TorrentFetcherDownload implements BTDownload {
         return _delegate != null ? _delegate.isCompleted() : false;
     }
 
-    public int getState() {
-        return _delegate != null ? _delegate.getState() : -1;
+    public TransferState getState() {
+        return _delegate != null ? _delegate.getState() : TransferState.DOWNLOADING;
     }
 
     public void remove() {
@@ -209,10 +210,6 @@ public class TorrentFetcherDownload implements BTDownload {
 
     public int getProgress() {
         return _delegate != null ? _delegate.getProgress() : 0;
-    }
-
-    public String getStateString() {
-        return _delegate != null ? _delegate.getStateString() : _state;
     }
 
     public long getBytesReceived() {

@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import com.frostwire.transfers.TransferState;
 import org.apache.commons.io.FilenameUtils;
 import org.gudy.azureus2.core3.download.DownloadManager;
 
@@ -51,16 +52,6 @@ public class SoundcloudDownload implements BTDownload {
 
     private static final Executor SOUNDCLOUD_THREAD_POOL = Executors.newFixedThreadPool(6);
 
-    private static final String STATE_DOWNLOADING = I18n.tr("Downloading");
-    private static final String STATE_ERROR = I18n.tr("Error");
-    private static final String STATE_ERROR_MOVING_INCOMPLETE = I18n.tr("Error - can't save");
-    private static final String STATE_PAUSING = I18n.tr("Pausing");
-    private static final String STATE_PAUSED = I18n.tr("Paused");
-    private static final String STATE_CANCELING = I18n.tr("Canceling");
-    private static final String STATE_CANCELED = I18n.tr("Canceled");
-    private static final String STATE_WAITING = I18n.tr("Waiting");
-    private static final String STATE_FINISHED = I18n.tr("Finished");
-
     private static final int SPEED_AVERAGE_CALCULATION_INTERVAL_MILLISECONDS = 1000;
 
     private final SoundcloudSearchResult sr;
@@ -74,7 +65,7 @@ public class SoundcloudDownload implements BTDownload {
 
     private final long size;
     private long bytesReceived;
-    private String state;
+    private TransferState state;
     private long averageSpeed; // in bytes
 
     // variables to keep the download rate of file transfer
@@ -132,18 +123,14 @@ public class SoundcloudDownload implements BTDownload {
     }
 
     @Override
-    public int getState() {
-        if (state == STATE_DOWNLOADING) {
-            return DownloadManager.STATE_DOWNLOADING;
-        }
-
-        return DownloadManager.STATE_STOPPED;
+    public TransferState getState() {
+        return state;
     }
 
     @Override
     public void remove() {
-        if (state != STATE_FINISHED) {
-            state = STATE_CANCELING;
+        if (state != TransferState.FINISHED) {
+            state = TransferState.CANCELING;
             httpClient.cancel();
         }
     }
@@ -155,7 +142,7 @@ public class SoundcloudDownload implements BTDownload {
 
     @Override
     public void pause() {
-        state = STATE_CANCELING;
+        state = TransferState.CANCELING;
         httpClient.cancel();
     }
 
@@ -181,11 +168,6 @@ public class SoundcloudDownload implements BTDownload {
     }
 
     @Override
-    public String getStateString() {
-        return state;
-    }
-
-    @Override
     public long getBytesReceived() {
         return bytesReceived;
     }
@@ -198,7 +180,7 @@ public class SoundcloudDownload implements BTDownload {
     @Override
     public double getDownloadSpeed() {
         double result = 0;
-        if (state == STATE_DOWNLOADING) {
+        if (state == TransferState.DOWNLOADING) {
             result = averageSpeed / 1000;
         }
         return result;
@@ -269,7 +251,7 @@ public class SoundcloudDownload implements BTDownload {
     }
 
     private void start(final File temp) {
-        state = STATE_WAITING;
+        state = TransferState.WAITING;
 
         SOUNDCLOUD_THREAD_POOL.execute(new Runnable() {
             @Override
@@ -329,7 +311,7 @@ public class SoundcloudDownload implements BTDownload {
 
     public boolean isComplete() {
         if (bytesReceived > 0) {
-            return bytesReceived == size || state == STATE_FINISHED;
+            return bytesReceived == size || state == TransferState.FINISHED;
         } else {
             return false;
         }
@@ -352,31 +334,31 @@ public class SoundcloudDownload implements BTDownload {
     private final class HttpDownloadListenerImpl implements HttpClientListener {
         @Override
         public void onError(HttpClient client, Throwable e) {
-            state = STATE_ERROR;
+            state = TransferState.ERROR;
             cleanup();
         }
 
         @Override
         public void onData(HttpClient client, byte[] buffer, int offset, int length) {
-            if (!state.equals(STATE_PAUSING) && !state.equals(STATE_CANCELING)) {
+            if (!state.equals(TransferState.PAUSING) && !state.equals(TransferState.CANCELING)) {
                 bytesReceived += length;
                 updateAverageDownloadSpeed();
-                state = STATE_DOWNLOADING;
+                state = TransferState.DOWNLOADING;
             }
         }
 
         @Override
         public void onComplete(HttpClient client) {
             if (setAlbumArt(tempAudio.getAbsolutePath(), completeFile.getAbsolutePath())) {
-                state = STATE_FINISHED;
+                state = TransferState.FINISHED;
                 cleanupIncomplete();
             } else {
                 boolean renameTo = tempAudio.renameTo(completeFile);
 
                 if (!renameTo) {
-                    state = STATE_ERROR_MOVING_INCOMPLETE;
+                    state = TransferState.ERROR_MOVING_INCOMPLETE;
                 } else {
-                    state = STATE_FINISHED;
+                    state = TransferState.FINISHED;
                     cleanupIncomplete();
                 }
             }
@@ -384,13 +366,13 @@ public class SoundcloudDownload implements BTDownload {
 
         @Override
         public void onCancel(HttpClient client) {
-            if (state.equals(STATE_CANCELING)) {
+            if (state.equals(TransferState.CANCELING)) {
                 cleanup();
-                state = STATE_CANCELED;
-            } else if (state.equals(STATE_PAUSING)) {
-                state = STATE_PAUSED;
+                state = TransferState.CANCELED;
+            } else if (state.equals(TransferState.PAUSING)) {
+                state = TransferState.PAUSED;
             } else {
-                state = STATE_CANCELED;
+                state = TransferState.CANCELED;
             }
         }
 
