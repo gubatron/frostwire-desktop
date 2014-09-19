@@ -18,6 +18,8 @@
 
 package com.frostwire.bittorrent;
 
+import com.frostwire.transfers.TransferState;
+
 import java.util.Date;
 
 /**
@@ -36,7 +38,7 @@ public interface BTDownload {
 
     public boolean isFinished();
 
-    public BTDownloadState getState();
+    public TransferState getState();
 
     public String getSavePath();
 
@@ -93,4 +95,6 @@ public interface BTDownload {
     public void setListener(BTDownloadListener listener);
 
     public boolean isPartial();
+
+    public String makeMagnetUri();
 }

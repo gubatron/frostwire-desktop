@@ -16,21 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.bittorrent;
+package com.frostwire.transfers;
 
 /**
  * @author gubatron
  * @author aldenml
  */
-public enum BTDownloadState {
+public enum TransferState {
 
     QUEUED_FOR_CHECKING,
-    CHECKING_FILES,
+    CHECKING,
     DOWNLOADING_METADATA,
     DOWNLOADING,
     FINISHED,
     SEEDING,
     ALLOCATING,
-    CHECKING_RESUME_DATA,
-    PAUSED
+    PAUSED,
+    ERROR,
+    ERROR_MOVING_INCOMPLETE,
+    ERROR_HASH_MD5,
+    ERROR_SIGNATURE,
+    STOPPED,
+    PAUSING,
+    CANCELING,
+    CANCELED,
+    WAITING,
+    DUPLICATED
 }

@@ -18,23 +18,21 @@
 
 package com.frostwire.gui.bittorrent;
 
-import java.io.File;
-import java.util.Date;
-
-import org.gudy.azureus2.core3.download.DownloadManager;
-
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.transfers.TransferState;
+
+import java.io.File;
+import java.util.Date;
 
 /**
  * @author gubatron
  * @author aldenml
- *
  */
 public interface BTDownload {
 
     public long getSize();
-    
+
     public long getSize(boolean update);
 
     public String getDisplayName();
@@ -45,7 +43,7 @@ public interface BTDownload {
 
     public boolean isCompleted();
 
-    public int getState();
+    public TransferState getState();
 
     public void remove();
 
@@ -57,10 +55,8 @@ public interface BTDownload {
 
     public int getProgress();
 
-    public String getStateString();
-
     public long getBytesReceived();
-    
+
     public long getBytesSent();
 
     public double getDownloadSpeed();
@@ -68,21 +64,19 @@ public interface BTDownload {
     public double getUploadSpeed();
 
     public long getETA();
-    
-    public DownloadManager getDownloadManager();
 
     public String getPeersString();
 
     public String getSeedsString();
-    
+
     public boolean isDeleteTorrentWhenRemove();
-    
+
     public void setDeleteTorrentWhenRemove(boolean deleteTorrentWhenRemove);
-    
+
     public boolean isDeleteDataWhenRemove();
-    
+
     public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove);
-    
+
     public String getHash();
 
     public String getSeedToPeerRatio();
@@ -91,11 +85,9 @@ public interface BTDownload {
 
     public boolean isPartialDownload();
 
-	public void updateDownloadManager(DownloadManager downloadManager);
-
     public Date getDateCreated();
-    
+
     public PaymentOptions getPaymentOptions();
-    
+
     public CopyrightLicenseBroker getCopyrightLicenseBroker();
 }

@@ -40,6 +40,7 @@ import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.transfers.TransferState;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.JsonUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -53,7 +54,6 @@ import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.settings.*;
-import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
@@ -388,7 +388,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * to automatically clear completed download and if the download is
      * complete.
      *
-     * @param downloader the <tt>Downloader</tt> to remove from the list if it is
+     * @param dloader the <tt>Downloader</tt> to remove from the list if it is
      *                   complete.
      */
     public void remove(BTDownload dloader) {
@@ -781,7 +781,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
             if (download.getHash().equals(btDownloadDataLine.getInitializeObject().getHash())) {
                 btDownloadDataLine.getInitializeObject().getSize(true);
-                btDownloadDataLine.getInitializeObject().updateDownloadManager(download.getDownloadManager());
+                // TODO:BITTORRENT
+                //btDownloadDataLine.getInitializeObject().updateDownloadManager(download.getDownloadManager());
                 TABLE.setSelectedRow(i);
                 return;
             }
@@ -894,8 +895,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public boolean isClearable(BTDownload initializeObject) {
-        int state = initializeObject.getState();
-        return state != DownloadManager.STATE_SEEDING && state != DownloadManager.STATE_CHECKING && initializeObject.isCompleted();
+        TransferState state = initializeObject.getState();
+        return state != TransferState.SEEDING && state != TransferState.CHECKING && initializeObject.isCompleted();
     }
 
     public void removeCompleted() {
@@ -925,13 +926,15 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         return DATA_MODEL.isDownloading(hash);
     }
 
+    // TODO:BITTORRENT
+    /*
     public void addDownloadManager(DownloadManager mgr) {
         try {
             add(BTDownloadCreator.createDownload(mgr, true, true));
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void addDownload(com.frostwire.bittorrent.BTDownload dl) {
         try {

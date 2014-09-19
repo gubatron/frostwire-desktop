@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import org.gudy.azureus2.core3.download.DownloadManager;
+import com.frostwire.transfers.TransferState;
 import org.limewire.util.FilenameUtils;
 
 import com.frostwire.torrent.CopyrightLicenseBroker;
@@ -83,7 +83,7 @@ public class HttpDownload implements BTDownload {
 
     private long size;
     private long bytesReceived;
-    protected String state;
+    protected TransferState state;
     private long averageSpeed; // in bytes
 
     // variables to keep the download rate of file transfer
@@ -135,12 +135,12 @@ public class HttpDownload implements BTDownload {
 
     @Override
     public boolean isResumable() {
-        return isResumable && state == STATE_PAUSED && size > 0;
+        return isResumable && state == TransferState.PAUSED && size > 0;
     }
 
     @Override
     public boolean isPausable() {
-        return isResumable && state == STATE_DOWNLOADING && size > 0;
+        return isResumable && state == TransferState.DOWNLOADING && size > 0;
     }
 
     @Override
@@ -149,18 +149,14 @@ public class HttpDownload implements BTDownload {
     }
 
     @Override
-    public int getState() {
-        if (state == STATE_DOWNLOADING) {
-            return DownloadManager.STATE_DOWNLOADING;
-        }
-
-        return DownloadManager.STATE_STOPPED;
+    public TransferState getState() {
+        return state;
     }
 
     @Override
     public void remove() {
-        if (state != STATE_FINISHED) {
-            state = STATE_CANCELING;
+        if (state != TransferState.FINISHED) {
+            state = TransferState.CANCELING;
             httpClient.cancel();
         }
     }
@@ -172,7 +168,7 @@ public class HttpDownload implements BTDownload {
 
     @Override
     public void pause() {
-        state = STATE_PAUSING;
+        state = TransferState.PAUSING;
         httpClient.cancel();
     }
 
@@ -188,7 +184,7 @@ public class HttpDownload implements BTDownload {
 
     @Override
     public int getProgress() {
-        if (state == STATE_CHECKING) {
+        if (state == TransferState.CHECKING) {
             return md5CheckingProgress;
         }
 
@@ -199,11 +195,6 @@ public class HttpDownload implements BTDownload {
         int progress = (int) ((bytesReceived * 100) / size);
 
         return Math.min(100, progress);
-    }
-
-    @Override
-    public String getStateString() {
-        return state;
     }
 
     @Override
@@ -219,7 +210,7 @@ public class HttpDownload implements BTDownload {
     @Override
     public double getDownloadSpeed() {
         double result = 0;
-        if (state == STATE_DOWNLOADING) {
+        if (state == TransferState.DOWNLOADING) {
             result = averageSpeed / 1000;
         }
         return result;
@@ -238,11 +229,6 @@ public class HttpDownload implements BTDownload {
         } else {
             return -1;
         }
-    }
-
-    @Override
-    public DownloadManager getDownloadManager() {
-        return null;
     }
 
     @Override
@@ -286,17 +272,12 @@ public class HttpDownload implements BTDownload {
     }
 
     @Override
-    public void updateDownloadManager(DownloadManager downloadManager) {
-
-    }
-
-    @Override
     public Date getDateCreated() {
         return dateCreated;
     }
 
     private void start(final boolean resume) {
-        state = STATE_WAITING;
+        state = TransferState.WAITING;
 
         saveFile = completeFile;
 
@@ -310,7 +291,7 @@ public class HttpDownload implements BTDownload {
                         checkMD5(expectedFile)) {
                         saveFile = expectedFile;
                         bytesReceived = expectedFile.length();
-                        state = STATE_FINISHED;
+                        state = TransferState.FINISHED;
                         onComplete();
                         return;
                     }
@@ -348,7 +329,7 @@ public class HttpDownload implements BTDownload {
     }
 
     private boolean checkMD5(File file) {
-        state = STATE_CHECKING;
+        state = TransferState.CHECKING;
         md5CheckingProgress = 0;
         return file.exists() && DigestUtils.checkMD5(file, md5, new DigestProgressListener() {
 
@@ -394,7 +375,7 @@ public class HttpDownload implements BTDownload {
 
     public boolean isComplete() {
         if (bytesReceived > 0) {
-            return bytesReceived == size || state == STATE_FINISHED;
+            return bytesReceived == size || state == TransferState.FINISHED;
         } else {
             return false;
         }
@@ -421,7 +402,7 @@ public class HttpDownload implements BTDownload {
                 isResumable = false;
                 start(false);
             } else {
-                state = STATE_ERROR;
+                state = TransferState.ERROR;
                 cleanup();
             }
         }
@@ -431,14 +412,14 @@ public class HttpDownload implements BTDownload {
             if (!state.equals(STATE_PAUSING) && !state.equals(STATE_CANCELING)) {
                 bytesReceived += length;
                 updateAverageDownloadSpeed();
-                state = STATE_DOWNLOADING;
+                state = TransferState.DOWNLOADING;
             }
         }
 
         @Override
         public void onComplete(HttpClient client) {
             if (md5 != null && !checkMD5(incompleteFile)) {
-                state = STATE_ERROR_MD5;
+                state = TransferState.ERROR_HASH_MD5;
                 cleanupIncomplete();
                 return;
             }
@@ -446,9 +427,9 @@ public class HttpDownload implements BTDownload {
             boolean renameTo = incompleteFile.renameTo(completeFile);
 
             if (!renameTo) {
-                state = STATE_ERROR_MOVING_INCOMPLETE;
+                state = TransferState.ERROR_MOVING_INCOMPLETE;
             } else {
-                state = STATE_FINISHED;
+                state = TransferState.FINISHED;
                 cleanupIncomplete();
                 HttpDownload.this.onComplete();
             }
@@ -460,11 +441,11 @@ public class HttpDownload implements BTDownload {
                 if (deleteDataWhenCancelled) {
                     cleanup();
                 }
-                state = STATE_CANCELED;
+                state = TransferState.CANCELED;
             } else if (state.equals(STATE_PAUSING)) {
-                state = STATE_PAUSED;
+                state = TransferState.PAUSED;
             } else {
-                state = STATE_CANCELED;
+                state = TransferState.CANCELED;
             }
         }
 

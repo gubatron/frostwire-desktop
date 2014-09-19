@@ -320,8 +320,10 @@ public final class OptionsConstructor {
         }
         addOption(ADVANCED_KEY, UXSTATS_KEY, I18n.tr("Usage Statistics"), UXStatsPaneItem.class);
 
-        addOption(OptionsMediator.ROOT_NODE_KEY, SHUTDOWN_KEY, I18n.tr("System Tray"), ShutdownPaneItem.class);
-
+        if (!OSUtils.isAnyMac()) {
+            addOption(OptionsMediator.ROOT_NODE_KEY, SHUTDOWN_KEY, I18n.tr("System Tray"), ShutdownPaneItem.class);
+        }
+        
         // debug
         addOption(OptionsMediator.ROOT_NODE_KEY, BUGS_KEY, I18n.tr("Bug Reports"), BugsPaneItem.class);
 

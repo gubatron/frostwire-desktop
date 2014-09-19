@@ -1,20 +1,16 @@
 package com.frostwire.gui.bittorrent;
 
+import com.frostwire.torrent.CopyrightLicenseBroker;
+import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.transfers.TransferState;
+
 import java.io.File;
 import java.util.Date;
 
-import org.gudy.azureus2.core3.download.DownloadManager;
-
-import com.frostwire.torrent.CopyrightLicenseBroker;
-import com.frostwire.torrent.PaymentOptions;
-import com.limegroup.gnutella.gui.I18n;
-
 public class DuplicateDownload implements BTDownload {
 
-    private static final String STATE_DUPLICATED = I18n.tr("Duplicated");
-    
     private final BTDownload _delegate;
-    
+
     public DuplicateDownload(BTDownload delegate) {
         _delegate = delegate;
     }
@@ -22,9 +18,9 @@ public class DuplicateDownload implements BTDownload {
     public long getSize() {
         return _delegate.getSize();
     }
-    
+
     public long getSize(boolean update) {
-    	return _delegate.getSize(update);
+        return _delegate.getSize(update);
     }
 
     public String getDisplayName() {
@@ -43,8 +39,8 @@ public class DuplicateDownload implements BTDownload {
         return false;
     }
 
-    public int getState() {
-        return -1;
+    public TransferState getState() {
+        return TransferState.DUPLICATED;
     }
 
     public void remove() {
@@ -62,10 +58,6 @@ public class DuplicateDownload implements BTDownload {
 
     public int getProgress() {
         return 0;
-    }
-
-    public String getStateString() {
-        return STATE_DUPLICATED;
     }
 
     public long getBytesReceived() {
@@ -86,10 +78,6 @@ public class DuplicateDownload implements BTDownload {
 
     public long getETA() {
         return 0;
-    }
-
-    public DownloadManager getDownloadManager() {
-        return _delegate.getDownloadManager();
     }
 
     public String getPeersString() {
@@ -125,7 +113,7 @@ public class DuplicateDownload implements BTDownload {
     public String getShareRatio() {
         return "";
     }
-    
+
     public Date getDateCreated() {
         return _delegate.getDateCreated();
     }
@@ -133,11 +121,6 @@ public class DuplicateDownload implements BTDownload {
     public boolean isPartialDownload() {
         return false;
     }
-
-	@Override
-	public void updateDownloadManager(DownloadManager downloadManager) {
-		_delegate.updateDownloadManager(downloadManager);
-	}
 
     @Override
     public PaymentOptions getPaymentOptions() {

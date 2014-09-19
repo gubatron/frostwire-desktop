@@ -3,7 +3,7 @@ package com.frostwire.gui.bittorrent;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gudy.azureus2.core3.download.DownloadManager;
+import com.frostwire.transfers.TransferState;
 
 import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.settings.BittorrentSettings;
@@ -137,11 +137,11 @@ public class BTDownloadRowFilteredModel extends BTDownloadModel {
                 BTDownload downloader = HIDDEN.get(i).getInitializeObject();
                 // special case for peer uploads, needs refactor
                 if (downloader instanceof BTPeerHttpUpload) {
-                    if (downloader.getState() == DownloadManager.STATE_SEEDING) {
+                    if (downloader.getState() == TransferState.SEEDING) {
                         count++;
                     }
                 } else {
-                    if (downloader.isCompleted() && downloader.getState() == DownloadManager.STATE_SEEDING) {
+                    if (downloader.isCompleted() && downloader.getState() == TransferState.SEEDING) {
                         count++;
                     }
                 }

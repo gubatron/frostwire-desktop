@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.frostwire.transfers.TransferState;
 import org.apache.commons.io.IOUtils;
 import org.appwork.utils.encoding.Base64;
 import org.limewire.util.SystemUtils;
@@ -58,7 +59,7 @@ public class SlideDownload extends HttpDownload {
             if (verifySignature(getSaveLocation(), slide.httpDownloadURL)) {
                 executeSlide(slide);
             } else {
-            	state = STATE_ERROR_INVALID_SIGNATURE;
+            	state = TransferState.ERROR_SIGNATURE;
             }
         }
     }

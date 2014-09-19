@@ -23,11 +23,11 @@ import com.frostwire.bittorrent.BTDownloadListener;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.transfers.TransferState;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
-import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.OSUtils;
 
 import java.io.File;
@@ -82,8 +82,8 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     }
 
     @Override
-    public int getState() {
-        return dl.getState().ordinal();
+    public TransferState getState() {
+        return dl.getState();
     }
 
     @Override
@@ -112,11 +112,6 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     }
 
     @Override
-    public String getStateString() {
-        return dl.getState().name();
-    }
-
-    @Override
     public long getBytesReceived() {
         return dl.getTotalBytesReceived();
     }
@@ -139,11 +134,6 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     @Override
     public long getETA() {
         return dl.getETA();
-    }
-
-    @Override
-    public DownloadManager getDownloadManager() {
-        return null;
     }
 
     @Override
@@ -204,11 +194,6 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     }
 
     @Override
-    public void updateDownloadManager(DownloadManager downloadManager) {
-
-    }
-
-    @Override
     public Date getDateCreated() {
         return dl.getDateCreated();
     }
@@ -250,5 +235,9 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
                 }
             });
         }
+    }
+
+    public String makeMagnetUri() {
+        return dl.makeMagnetUri();
     }
 }

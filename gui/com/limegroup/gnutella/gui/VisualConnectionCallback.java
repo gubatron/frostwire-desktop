@@ -15,10 +15,8 @@
 
 package com.limegroup.gnutella.gui;
 
-import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.BTDownload;
 import com.limegroup.gnutella.ActivityCallback;
-import org.gudy.azureus2.core3.download.DownloadManager;
 
 import javax.swing.*;
 import java.io.File;
@@ -56,18 +54,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
         });
     }
 
-    private class AddDownloadManager implements Runnable {
-        private DownloadManager mgr;
-
-        public AddDownloadManager(DownloadManager mgr) {
-            this.mgr = mgr;
-        }
-
-        public void run() {
-            mf().getBTDownloadMediator().addDownloadManager(mgr);
-        }
-    }
-
     private class AddDownload implements Runnable {
         private BTDownload mgr;
 
@@ -100,37 +86,22 @@ public final class VisualConnectionCallback implements ActivityCallback {
 
 
     public void handleTorrent(final File torrentFile) {
-        new AzureusStarter.AzureusCoreWaiter("VisualConnectionCallback::handleTorrent()") {
-            @Override
-            public void onAzureusCoreStarted() {
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        GUIMediator.instance().openTorrentFile(torrentFile, false);
-                    }
-                });
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                GUIMediator.instance().openTorrentFile(torrentFile, false);
             }
-        }.start();
+        });
     }
 
     public void handleTorrentMagnet(final String request, final boolean partialDownload) {
-        new AzureusStarter.AzureusCoreWaiter("VisualConnectionCallback::handleTorrentMagnet()") {
-            @Override
-            public void onAzureusCoreStarted() {
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        GUIMediator.instance().setRemoteDownloadsAllowed(partialDownload);
-                        System.out.println("VisualConnectionCallback about to call openTorrentURI of request.");
-                        System.out.println(request);
-                        GUIMediator.instance().openTorrentURI(request, partialDownload);
-                    }
-                });
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                GUIMediator.instance().setRemoteDownloadsAllowed(partialDownload);
+                System.out.println("VisualConnectionCallback about to call openTorrentURI of request.");
+                System.out.println(request);
+                GUIMediator.instance().openTorrentURI(request, partialDownload);
             }
-        }.start();
-    }
-
-    public void addDownloadManager(DownloadManager dm) {
-        Runnable doWorkRunnable = new AddDownloadManager(dm);
-        GUIMediator.safeInvokeAndWait(doWorkRunnable);
+        });
     }
 
     @Override

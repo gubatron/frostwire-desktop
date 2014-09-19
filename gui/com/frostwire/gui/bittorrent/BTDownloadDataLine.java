@@ -23,7 +23,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
 
-import org.gudy.azureus2.core3.download.DownloadManager;
+import com.frostwire.transfers.TransferState;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.library.LibraryMediator;
@@ -206,7 +206,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
             return false;
         }
 
-        return initializer.getState() == DownloadManager.STATE_SEEDING;
+        return initializer.getState() == TransferState.SEEDING;
     }
 
     /**
@@ -317,7 +317,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     public String[] getToolTipArray(int col) {
         String[] info = new String[11];
         String name = getInitializeObject().getDisplayName();
-        String status = I18n.tr("Status") + ": " + getInitializeObject().getStateString();
+        String status = I18n.tr("Status") + ": " + I18n.tr(getInitializeObject().getState().name());
         String progress = I18n.tr("Progress") + ": " + getInitializeObject().getProgress() + "%";
         String downSpeed = I18n.tr("Down Speed") + ": " + GUIUtils.rate2speed(getInitializeObject().getDownloadSpeed());
         String upSpeed = I18n.tr("Up Speed") + ": " + GUIUtils.rate2speed(getInitializeObject().getUploadSpeed());
@@ -365,7 +365,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
      * @implements DataLine interface
      */
     public void update() {
-        _status = initializer.getStateString();
+        _status = I18n.tr(initializer.getState().name());
         _progress = initializer.getProgress();
         _download = initializer.getBytesReceived();
         _upload = initializer.getBytesSent();

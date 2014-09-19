@@ -349,9 +349,13 @@ final class BTDownloadActions {
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             String str = "";
             for (int i = 0; i < downloaders.length; i++) {
-                str += TorrentUtil.getMagnet(downloaders[i].getHash()) + "&" + TorrentUtil.getMagnetURLParameters(downloaders[i].getDownloadManager().getTorrent());
-                if (i < downloaders.length - 1) {
-                    str += "\n";
+                BTDownload d = downloaders[i];
+                if (d instanceof BittorrentDownload) {
+                    String magnetUri = ((BittorrentDownload)d).makeMagnetUri();
+                    str += magnetUri;
+                    if (i < downloaders.length - 1) {
+                        str += System.lineSeparator();
+                    }
                 }
             }
 
@@ -409,7 +413,8 @@ final class BTDownloadActions {
 
             BTDownload btDownload = downloaders[0];
 
-            new ShareTorrentDialog(btDownload.getDownloadManager().getTorrent()).setVisible(true);
+            // TODO:BITTORRENT
+            //new ShareTorrentDialog(btDownload.getDownloadManager().getTorrent()).setVisible(true);
         }
     }
 

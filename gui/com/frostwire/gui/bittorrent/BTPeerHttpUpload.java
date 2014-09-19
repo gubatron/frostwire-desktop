@@ -21,12 +21,11 @@ package com.frostwire.gui.bittorrent;
 import java.io.File;
 import java.util.Date;
 
-import org.gudy.azureus2.core3.download.DownloadManager;
-
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.transfers.PeerHttpUpload;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.transfers.TransferState;
 
 /**
  * @author gubatron
@@ -76,8 +75,8 @@ public class BTPeerHttpUpload implements BTDownload {
     }
 
     @Override
-    public int getState() {
-        return isCompleted() ? DownloadManager.STATE_STOPPED : DownloadManager.STATE_SEEDING;
+    public TransferState getState() {
+        return isCompleted() ? TransferState.STOPPED : TransferState.SEEDING;
     }
 
     @Override
@@ -105,11 +104,6 @@ public class BTPeerHttpUpload implements BTDownload {
     }
 
     @Override
-    public String getStateString() {
-        return upload.getStatus();
-    }
-
-    @Override
     public long getBytesReceived() {
         return upload.getBytesReceived();
     }
@@ -132,11 +126,6 @@ public class BTPeerHttpUpload implements BTDownload {
     @Override
     public long getETA() {
         return upload.getETA();
-    }
-
-    @Override
-    public DownloadManager getDownloadManager() {
-        return null;
     }
 
     @Override
@@ -185,10 +174,6 @@ public class BTPeerHttpUpload implements BTDownload {
     @Override
     public boolean isPartialDownload() {
         return false;
-    }
-
-    @Override
-    public void updateDownloadManager(DownloadManager downloadManager) {
     }
 
     @Override
