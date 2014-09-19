@@ -24,7 +24,6 @@ import javax.swing.Action;
 import javax.swing.Icon;
 
 import com.frostwire.transfers.TransferState;
-import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.library.LibraryMediator;

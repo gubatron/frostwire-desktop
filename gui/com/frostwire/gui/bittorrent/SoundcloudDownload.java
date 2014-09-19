@@ -28,7 +28,6 @@ import java.util.concurrent.Executors;
 
 import com.frostwire.transfers.TransferState;
 import org.apache.commons.io.FilenameUtils;
-import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.frostwire.mp3.ID3Wrapper;
 import com.frostwire.mp3.ID3v1Tag;
@@ -40,7 +39,6 @@ import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;
-import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 /**

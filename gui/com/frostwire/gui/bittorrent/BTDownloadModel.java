@@ -3,7 +3,6 @@ package com.frostwire.gui.bittorrent;
 import java.util.HashSet;
 
 import com.frostwire.transfers.TransferState;
-import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 

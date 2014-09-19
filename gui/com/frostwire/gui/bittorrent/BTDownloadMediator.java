@@ -54,7 +54,6 @@ import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.settings.*;
-import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
@@ -927,13 +926,15 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         return DATA_MODEL.isDownloading(hash);
     }
 
+    // TODO:BITTORRENT
+    /*
     public void addDownloadManager(DownloadManager mgr) {
         try {
             add(BTDownloadCreator.createDownload(mgr, true, true));
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void addDownload(com.frostwire.bittorrent.BTDownload dl) {
         try {

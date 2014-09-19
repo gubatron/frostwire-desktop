@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.frostwire.transfers.TransferState;
-import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
@@ -37,7 +36,6 @@ import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 /**

@@ -28,7 +28,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import com.frostwire.transfers.TransferState;
-import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.FilenameUtils;
 
 import com.frostwire.torrent.CopyrightLicenseBroker;

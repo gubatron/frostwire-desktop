@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.frostwire.transfers.TransferState;
-import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.settings.BittorrentSettings;
