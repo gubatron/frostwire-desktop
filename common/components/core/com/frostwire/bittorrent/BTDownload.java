@@ -93,4 +93,6 @@ public interface BTDownload {
     public void setListener(BTDownloadListener listener);
 
     public boolean isPartial();
+
+    public String makeMagnetUri();
 }

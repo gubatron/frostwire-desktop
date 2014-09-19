@@ -55,8 +55,6 @@ public class BTDownloadImpl implements BTDownload {
 
 
     public BTDownloadImpl(DownloadManager downloadManager) {
-        updateDownloadManager(downloadManager);
-
         _deleteTorrentWhenRemove = false;
         _deleteDataWhenRemove = false;
         
@@ -380,7 +378,8 @@ public class BTDownloadImpl implements BTDownload {
         return _partialDownload;
     }
 
-	@Override
+    // TODO:BITTORRENT
+	/*@Override
 	public void updateDownloadManager(DownloadManager downloadManager) {
 		_downloadManager = downloadManager;		
         _partialDownload = TorrentUtil.isHandpicked(downloadManager);
@@ -396,7 +395,7 @@ public class BTDownloadImpl implements BTDownload {
             _hash = "";
         }
 
-	}
+	}*/
 
     private void updateName(DownloadManager downloadManager) {
         if (TorrentUtil.getNoSkippedFileInfoSet(downloadManager).size() == 1) {

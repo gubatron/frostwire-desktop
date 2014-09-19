@@ -87,7 +87,8 @@ public class TorrentFetcherDownload implements BTDownload {
             if (!isDownloadingTorrent(_hash)) {
                 _torrentDownloader.start();
             } else {
-                BackgroundExecutorService.schedule(new WaitForTorrentReady());
+                // TODO:BITTORRENT
+                //BackgroundExecutorService.schedule(new WaitForTorrentReady());
             }
         } else { // best effort
             _torrentDownloader.start();
@@ -103,6 +104,8 @@ public class TorrentFetcherDownload implements BTDownload {
         return false;
     }
 
+    // TODO:BITTORRENT
+    /*
     private boolean isDownloadingTorrentReady(String hash) {
         for (BTDownload d : BTDownloadMediator.instance().getDownloads()) {
             if (d != this && d.getHash() != null && d.getHash().equals(_hash)) {
@@ -113,7 +116,7 @@ public class TorrentFetcherDownload implements BTDownload {
             }
         }
         return false;
-    }
+    }*/
 
     public TorrentFetcherDownload(String uri, boolean partialDownload, ActionListener postPartialDownloadAction) {
         this(uri, null, getDownloadNameFromMagnetURI(uri), "", -1, partialDownload, postPartialDownloadAction, null);
@@ -232,10 +235,6 @@ public class TorrentFetcherDownload implements BTDownload {
         return _delegate != null ? _delegate.getETA() : 0;
     }
 
-    public DownloadManager getDownloadManager() {
-        return _delegate != null ? _delegate.getDownloadManager() : null;
-    }
-
     public String getPeersString() {
         return _delegate != null ? _delegate.getPeersString() : "";
     }
@@ -325,13 +324,6 @@ public class TorrentFetcherDownload implements BTDownload {
         return _delegate != null ? _delegate.getSize(update) : _size;
     }
 
-    @Override
-    public void updateDownloadManager(DownloadManager downloadManager) {
-        if (_delegate != null) {
-            _delegate.updateDownloadManager(downloadManager);
-        }
-    }
-
     private void onTorrentDownloaderFinished(final File torrentFile) {
         try {
             //single file download straight from a torrent deep search.
@@ -392,6 +384,8 @@ public class TorrentFetcherDownload implements BTDownload {
         }
     }
 
+    // TODO:BITTORRENT
+    /*
     private final class WaitForTorrentReady implements Runnable {
 
         @Override
@@ -423,6 +417,7 @@ public class TorrentFetcherDownload implements BTDownload {
             }
         }
     }
+    */
 
     @Override
     public PaymentOptions getPaymentOptions() {

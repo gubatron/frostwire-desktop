@@ -388,7 +388,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * to automatically clear completed download and if the download is
      * complete.
      *
-     * @param downloader the <tt>Downloader</tt> to remove from the list if it is
+     * @param dloader the <tt>Downloader</tt> to remove from the list if it is
      *                   complete.
      */
     public void remove(BTDownload dloader) {
@@ -781,7 +781,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
             if (download.getHash().equals(btDownloadDataLine.getInitializeObject().getHash())) {
                 btDownloadDataLine.getInitializeObject().getSize(true);
-                btDownloadDataLine.getInitializeObject().updateDownloadManager(download.getDownloadManager());
+                // TODO:BITTORRENT
+                //btDownloadDataLine.getInitializeObject().updateDownloadManager(download.getDownloadManager());
                 TABLE.setSelectedRow(i);
                 return;
             }

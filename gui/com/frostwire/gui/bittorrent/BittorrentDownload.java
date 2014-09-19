@@ -27,7 +27,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
-import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.OSUtils;
 
 import java.io.File;
@@ -142,11 +141,6 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     }
 
     @Override
-    public DownloadManager getDownloadManager() {
-        return null;
-    }
-
-    @Override
     public String getPeersString() {
         return dl.getConnectedPeers() + "/" + dl.getTotalPeers();
     }
@@ -204,11 +198,6 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     }
 
     @Override
-    public void updateDownloadManager(DownloadManager downloadManager) {
-
-    }
-
-    @Override
     public Date getDateCreated() {
         return dl.getDateCreated();
     }
@@ -250,5 +239,9 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
                 }
             });
         }
+    }
+
+    public String makeMagnetUri() {
+        return dl.makeMagnetUri();
     }
 }

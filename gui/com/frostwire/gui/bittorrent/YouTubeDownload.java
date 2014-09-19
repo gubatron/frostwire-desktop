@@ -244,11 +244,6 @@ public class YouTubeDownload implements BTDownload {
     }
 
     @Override
-    public DownloadManager getDownloadManager() {
-        return null;
-    }
-
-    @Override
     public String getPeersString() {
         return "";
     }
@@ -286,11 +281,6 @@ public class YouTubeDownload implements BTDownload {
     @Override
     public boolean isPartialDownload() {
         return false;
-    }
-
-    @Override
-    public void updateDownloadManager(DownloadManager downloadManager) {
-
     }
 
     @Override

@@ -21,8 +21,6 @@ package com.frostwire.gui.bittorrent;
 import java.io.File;
 import java.util.Date;
 
-import org.gudy.azureus2.core3.download.DownloadManager;
-
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 
@@ -68,8 +66,6 @@ public interface BTDownload {
     public double getUploadSpeed();
 
     public long getETA();
-    
-    public DownloadManager getDownloadManager();
 
     public String getPeersString();
 
@@ -90,8 +86,6 @@ public interface BTDownload {
     public String getShareRatio();
 
     public boolean isPartialDownload();
-
-	public void updateDownloadManager(DownloadManager downloadManager);
 
     public Date getDateCreated();
     

@@ -272,4 +272,9 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
     public boolean isPartial() {
         return th.isPartial();
     }
+
+    @Override
+    public String makeMagnetUri() {
+        return th.makeMagnetUri();
+    }
 }

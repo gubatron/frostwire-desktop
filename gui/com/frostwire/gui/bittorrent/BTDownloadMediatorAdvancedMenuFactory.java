@@ -234,10 +234,11 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
         ArrayList<DownloadManager> list = new ArrayList<DownloadManager>(downloaders.length);
         for (BTDownload downloader : downloaders) {
-            DownloadManager dm = downloader.getDownloadManager();
-            if (dm != null) {
-                list.add(dm);
-            }
+            // TODO:BITTORRENT
+//            DownloadManager dm = downloader.getDownloadManager();
+//            if (dm != null) {
+//                list.add(dm);
+//            }
         }
 
         if (list.size() == 0) {

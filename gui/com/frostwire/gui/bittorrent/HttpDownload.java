@@ -241,11 +241,6 @@ public class HttpDownload implements BTDownload {
     }
 
     @Override
-    public DownloadManager getDownloadManager() {
-        return null;
-    }
-
-    @Override
     public String getPeersString() {
         return "";
     }
@@ -283,11 +278,6 @@ public class HttpDownload implements BTDownload {
     @Override
     public boolean isPartialDownload() {
         return false;
-    }
-
-    @Override
-    public void updateDownloadManager(DownloadManager downloadManager) {
-
     }
 
     @Override

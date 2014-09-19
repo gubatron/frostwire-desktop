@@ -3,8 +3,6 @@ package com.frostwire.gui.bittorrent;
 import java.io.File;
 import java.util.Date;
 
-import org.gudy.azureus2.core3.download.DownloadManager;
-
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.I18n;
@@ -88,10 +86,6 @@ public class DuplicateDownload implements BTDownload {
         return 0;
     }
 
-    public DownloadManager getDownloadManager() {
-        return _delegate.getDownloadManager();
-    }
-
     public String getPeersString() {
         return "";
     }
@@ -133,11 +127,6 @@ public class DuplicateDownload implements BTDownload {
     public boolean isPartialDownload() {
         return false;
     }
-
-	@Override
-	public void updateDownloadManager(DownloadManager downloadManager) {
-		_delegate.updateDownloadManager(downloadManager);
-	}
 
     @Override
     public PaymentOptions getPaymentOptions() {
