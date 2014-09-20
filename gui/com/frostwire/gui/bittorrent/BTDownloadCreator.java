@@ -46,8 +46,10 @@ import com.limegroup.gnutella.settings.iTunesSettings;
  * @author aldenml
  *
  */
+// TODO:BITTORRENT
 public class BTDownloadCreator {
 
+    /*
     private final GlobalManager _globalManager;
     private final File _torrentFile;
     private final File _saveDir;
@@ -351,4 +353,5 @@ public class BTDownloadCreator {
             dm.getDownloadState().suppressStateSave(false);
         }
     }
+    */
 }

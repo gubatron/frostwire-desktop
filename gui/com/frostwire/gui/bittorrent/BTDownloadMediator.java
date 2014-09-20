@@ -727,6 +727,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentFileForSeed(final File torrentFile, final File saveDir) {
+        // TODO:BITTORRENT
+        /*
         if (!AzureusStarter.isAzureusCoreStarted()) {
             LOG.error("Azureus core not started");
             return;
@@ -756,6 +758,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
             }
         });
+        */
     }
 
     @Override
@@ -796,6 +799,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
+        // TODO:BITTORRENT
+        /*
         if (!AzureusStarter.isAzureusCoreStarted()) {
             LOG.error("Azureus core not started");
             return;
@@ -836,6 +841,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                 }
             }
         });
+        */
     }
 
     public BTDownload[] getSelectedDownloaders() {

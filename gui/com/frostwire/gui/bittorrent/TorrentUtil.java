@@ -43,53 +43,41 @@
  */
 package com.frostwire.gui.bittorrent;
 
+import org.gudy.azureus2.core3.torrent.TOTorrent;
+
 import java.io.File;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributeView;
-import java.nio.file.attribute.FileTime;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
-import org.gudy.azureus2.core3.disk.DiskManagerFileInfoSet;
-import org.gudy.azureus2.core3.download.DownloadManager;
-import org.gudy.azureus2.core3.global.GlobalManagerDownloadRemovalVetoException;
-import org.gudy.azureus2.core3.internat.MessageText;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLGroup;
-import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLSet;
-import org.gudy.azureus2.core3.util.AERunnable;
-import org.gudy.azureus2.core3.util.AsyncDispatcher;
-import org.gudy.azureus2.core3.util.Debug;
-import org.gudy.azureus2.core3.util.UrlUtils;
-import org.gudy.azureus2.plugins.PluginInterface;
-import org.gudy.azureus2.plugins.download.Download;
-import org.gudy.azureus2.plugins.sharing.ShareManager;
-import org.gudy.azureus2.plugins.sharing.ShareResource;
-import org.gudy.azureus2.plugins.sharing.ShareResourceDir;
-import org.gudy.azureus2.plugins.sharing.ShareResourceFile;
-import org.gudy.azureus2.plugins.tracker.Tracker;
-import org.gudy.azureus2.plugins.tracker.TrackerTorrent;
-import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
-import org.limewire.util.FileUtils;
-import org.limewire.util.NetworkUtils;
-import org.limewire.util.StringUtils;
-
-import com.aelitis.azureus.core.AzureusCoreFactory;
-import com.aelitis.azureus.core.networkmanager.impl.tcp.TCPNetworkManager;
-import com.aelitis.azureus.ui.UIFunctions;
-import com.aelitis.azureus.ui.UIFunctionsManager;
-import com.aelitis.azureus.ui.selectedcontent.SelectedContent;
-import com.frostwire.AzureusStarter;
-import com.frostwire.logging.Logger;
-import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.settings.iTunesImportSettings;
-
+// TODO:BITTORRENT
 public final class TorrentUtil {
 
+    public static Set<File> getIgnorableFiles() {
+        return new HashSet<File>();
+    }
+
+    public static String hashToString(byte[] hash) {
+        return "99999999";
+    }
+
+    public static Set<File> getIncompleteFiles() {
+        return new HashSet<File>();
+    }
+
+    public static Collection<? extends File> getSkipedFiles() {
+        return new HashSet<File>();
+    }
+
+    public static String getMagnet(String hash) {
+        return "99999999";
+    }
+
+    public static String getMagnetURLParameters(Object torrent) {
+        return "99999999";
+    }
+
+    /*
     private static final Logger LOG = Logger.getLogger(TorrentUtil.class);
 
     private static AsyncDispatcher async = new AsyncDispatcher(2000);
@@ -148,7 +136,7 @@ public final class TorrentUtil {
         }
     }
 
-    /** tries to get creation time, if it can't it returns -1 */
+    // tries to get creation time, if it can't it returns -1
     private static long getFileCreationTime(File f) {
         long result = -1;
         
@@ -164,7 +152,7 @@ public final class TorrentUtil {
         return result;
     }
     
-    /** Deletes incomplete files and the save location from the itunes import settings */
+    //Deletes incomplete files and the save location from the itunes import settings
     private static void finalCleanup(DownloadManager downloadManager, long timeDownloadManagerStarted) {
         Set<File> filesToDelete = getSkippedFiles(downloadManager);
         
@@ -199,13 +187,13 @@ public final class TorrentUtil {
         iTunesImportSettings.IMPORT_FILES.remove(downloadManager.getSaveLocation());
     }
 
-    /**
-     * Check if the given file, even though marked as skipped was downloaded in its entirety,
-     * so that we don't delete it by accident during finalCleanup.
-     * @param file
-     * @param downloadManager
-     * @return
-     */
+//    /**
+//     * Check if the given file, even though marked as skipped was downloaded in its entirety,
+//     * so that we don't delete it by accident during finalCleanup.
+//     * @param file
+//     * @param downloadManager
+//     * @return
+//
     private static boolean isSkippedFileComplete(File file, DownloadManager downloadManager) {
         DiskManagerFileInfoSet infoSet = downloadManager.getDiskManagerFileInfoSet();
 
@@ -620,15 +608,15 @@ public final class TorrentUtil {
 
                 dm.setStateQueued();
 
-                /* parg - removed this - why would we want to effectively stop + restart
-                 * torrents that are running? This is what happens if the code is left in.
-                 * e.g. select two torrents, one stopped and one downloading, then hit "queue"
-                 
-                 }else if ( dm.getState() == DownloadManager.STATE_DOWNLOADING || 
-                        dm.getState() == DownloadManager.STATE_SEEDING) {
-                
-                    stop(dm,panel,DownloadManager.STATE_QUEUED);
-                */
+//                /* parg - removed this - why would we want to effectively stop + restart
+//                 * torrents that are running? This is what happens if the code is left in.
+//                 * e.g. select two torrents, one stopped and one downloading, then hit "queue"
+//
+//                 }else if ( dm.getState() == DownloadManager.STATE_DOWNLOADING ||
+//                        dm.getState() == DownloadManager.STATE_SEEDING) {
+//
+//                    stop(dm,panel,DownloadManager.STATE_QUEUED);
+//
             }
         }
     }
@@ -715,4 +703,5 @@ public final class TorrentUtil {
         Set<File> skippedFiles = getSkippedFiles(dm);
         return skippedFiles.size() > 0;
     }
+    */
 }
