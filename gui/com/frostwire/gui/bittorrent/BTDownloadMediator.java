@@ -18,8 +18,6 @@
 
 package com.frostwire.gui.bittorrent;
 
-import com.aelitis.azureus.core.AzureusCore;
-import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.bittorrent.BTEngineFactory;
 import com.frostwire.core.FileDescriptor;

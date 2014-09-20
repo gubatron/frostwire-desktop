@@ -48,7 +48,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import org.apache.commons.io.FilenameUtils;
-import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
@@ -595,8 +594,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         List<String> undeletedFileNames = new ArrayList<String>();
 
         for (File file : selected) {
-            DownloadManager dm = null;
-
             // TODO:BITTORRENT
             // stop seeding if seeding
 //            if ((dm = TorrentUtil.getDownloadManager(file)) != null) {
