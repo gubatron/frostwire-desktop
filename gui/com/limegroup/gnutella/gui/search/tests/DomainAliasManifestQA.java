@@ -1,7 +1,5 @@
 package com.limegroup.gnutella.gui.search.tests;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,14 +8,11 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import com.frostwire.AzureusStarter;
-import com.frostwire.search.CrawlPagedWebSearchPerformer;
 import com.frostwire.search.SearchManager;
 import com.frostwire.search.SearchManagerImpl;
 import com.frostwire.search.SearchManagerListener;
 import com.frostwire.search.SearchPerformer;
 import com.frostwire.search.SearchResult;
-import com.frostwire.search.VuzeMagnetDownloader;
 import com.frostwire.search.WebSearchPerformer;
 import com.frostwire.search.domainalias.DefaultDomainAliasManifestFetcher;
 import com.frostwire.search.domainalias.DomainAliasManifest;
@@ -64,7 +59,7 @@ public class DomainAliasManifestQA {
     }
 
     public static void test(DomainAliasManifest manifest) throws InterruptedException {
-        AzureusStarter.start();
+        /*AzureusStarter.start();
         Map<String, List<String>> aliases = manifest.aliases;
         Set<Entry<String, List<String>>> entrySet = aliases.entrySet();
         List<DomainTestScore> testScores = (List<DomainTestScore>) Collections.synchronizedList(new ArrayList<DomainTestScore>());
@@ -79,6 +74,7 @@ public class DomainAliasManifestQA {
         }
         
         AzureusStarter.getAzureusCore().stop();
+        */
     }
 
     private static void testDomainAliases(String domainName, List<String> domainAliases,List<DomainTestScore> testScores) throws InterruptedException {

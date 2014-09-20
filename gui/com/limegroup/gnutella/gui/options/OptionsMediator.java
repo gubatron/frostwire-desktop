@@ -21,7 +21,6 @@ import javax.swing.JDialog;
 
 import org.limewire.setting.SettingsGroupManager;
 
-import com.frostwire.AzureusStarter;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.LibrarySettings;
@@ -174,7 +173,8 @@ public final class OptionsMediator {
      */
     public final void revertOptions() {
         SettingsGroupManager.instance().revertToDefault();
-        AzureusStarter.revertToDefaultConfiguration();
+        // TODO:BITTORRENT
+        //AzureusStarter.revertToDefaultConfiguration();
         LibrarySettings.setupInitialLibraryFolders();
         GUIMediator.showMessage(I18n.tr("One or more options will take effect the next time FrostWire is restarted."));
     }

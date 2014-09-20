@@ -25,7 +25,6 @@ import org.limewire.setting.FileSetSetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.util.CommonUtils;
 
-import com.frostwire.AzureusStarter;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
@@ -88,13 +87,16 @@ public class LibrarySettings extends LimeProps {
         }
         
         LibrarySettings.DIRECTORIES_TO_INCLUDE.add(fromDeviceFolder);
-        
+
+        // TODO:BITTORRENT
+        /*
         File azureusUserPath = new File(CommonUtils.getUserSettingsDir() + File.separator + "azureus" + File.separator);
         if (!azureusUserPath.exists()) {
             System.setProperty("azureus.config.path", azureusUserPath.getAbsolutePath());
             System.setProperty("azureus.install.path", azureusUserPath.getAbsolutePath());
             AzureusStarter.revertToDefaultConfiguration();
         }
+        */
     }
 
 
