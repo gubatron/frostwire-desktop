@@ -335,17 +335,13 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * @return the total amount of bandwidth being consumed by active downloads.
      */
     private double getBandwidth(boolean download) {
-        if (!AzureusStarter.isAzureusCoreStarted()) {
+        BTEngine engine = BTEngineFactory.getInstance();
+
+        if (!engine.isStarted()) {
             return 0;
         }
 
-        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
-
-        if (azureusCore == null) {
-            return 0;
-        }
-
-        return (download) ? azureusCore.getGlobalManager().getStats().getDataReceiveRate() : azureusCore.getGlobalManager().getStats().getDataSendRate();
+        return (download) ? engine.getDownloadRate() : engine.getUploadRate();
     }
 
     public double getDownloadsBandwidth() {
@@ -873,25 +869,19 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public long getTotalBytesDownloaded() {
-        if (!AzureusStarter.isAzureusCoreStarted()) {
+        BTEngine engine = BTEngineFactory.getInstance();
+        if (!engine.isStarted()) {
             return 0;
         }
-        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
-        if (azureusCore == null) {
-            return 0;
-        }
-        return azureusCore.getGlobalManager().getStats().getTotalDataBytesReceived();
+        return engine.getTotalDownload();
     }
 
     public long getTotalBytesUploaded() {
-        if (!AzureusStarter.isAzureusCoreStarted()) {
+        BTEngine engine = BTEngineFactory.getInstance();
+        if (!engine.isStarted()) {
             return 0;
         }
-        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
-        if (azureusCore == null) {
-            return 0;
-        }
-        return azureusCore.getGlobalManager().getStats().getTotalDataBytesSent();
+        return engine.getTotalUpload();
     }
 
     public boolean isClearable(BTDownload initializeObject) {

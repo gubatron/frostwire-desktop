@@ -46,4 +46,12 @@ public interface BTEngine {
     public void download(File torrent, File saveDir) throws IOException;
 
     public void restoreDownloads(File saveDir);
+
+    public long getDownloadRate();
+
+    public long getUploadRate();
+
+    public long getTotalDownload();
+
+    public long getTotalUpload();
 }

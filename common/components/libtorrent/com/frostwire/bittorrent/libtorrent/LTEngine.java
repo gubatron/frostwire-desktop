@@ -153,6 +153,26 @@ public final class LTEngine implements BTEngine {
         return isFirewalled;
     }
 
+    @Override
+    public long getDownloadRate() {
+        return session.getStatus().getDownloadRate();
+    }
+
+    @Override
+    public long getUploadRate() {
+        return session.getStatus().getUploadRate();
+    }
+
+    @Override
+    public long getTotalDownload() {
+        return session.getStatus().getTotalDownload();
+    }
+
+    @Override
+    public long getTotalUpload() {
+        return session.getStatus().getTotalUpload();
+    }
+
     private void addEngineListener() {
         session.addListener(new AlertListener() {
             @Override
