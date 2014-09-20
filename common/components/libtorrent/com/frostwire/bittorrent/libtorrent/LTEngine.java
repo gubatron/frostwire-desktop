@@ -22,12 +22,10 @@ import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.bittorrent.BTEngineListener;
 import com.frostwire.jlibtorrent.*;
 import com.frostwire.jlibtorrent.alerts.Alert;
+import com.frostwire.jlibtorrent.alerts.AlertType;
 import com.frostwire.jlibtorrent.alerts.SaveResumeDataAlert;
 import com.frostwire.jlibtorrent.alerts.TorrentAlert;
-import com.frostwire.jlibtorrent.swig.block_finished_alert;
 import com.frostwire.jlibtorrent.swig.entry;
-import com.frostwire.jlibtorrent.swig.save_resume_data_alert;
-import com.frostwire.jlibtorrent.swig.torrent_added_alert;
 import com.frostwire.logging.Logger;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -48,6 +46,8 @@ public final class LTEngine implements BTEngine {
 
     private File home;
     private BTEngineListener listener;
+
+    private boolean isFirewalled;
 
     public LTEngine() {
         this.session = new Session();
@@ -118,6 +118,61 @@ public final class LTEngine implements BTEngine {
         }
     }
 
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+// TODO:BITTORRENT
+                    /*
+                    if (AzureusStarter.isAzureusCoreStarted()) {
+						LOG.debug("LifecycleManagerImpl.handleEvent - SHUTINGDOWN - Azureus core pauseDownloads()!");
+						AzureusStarter.getAzureusCore().getGlobalManager().pauseDownloads();
+						AzureusStarter.getAzureusCore().stop();
+					}*/
+
+        // TODO:BITTORRENT
+        // see Session.abort()
+        /*
+        if (AzureusStarter.isAzureusCoreStarted()) {
+            System.out.println("Waiting for Vuze core to shutdown...");
+            AzureusStarter.getAzureusCore().stop();
+            System.out.println("Vuze core shutdown.");
+        }*/
+    }
+
+    @Override
+    public boolean isStarted() {
+        return true;
+    }
+
+    @Override
+    public boolean isFirewalled() {
+        return isFirewalled;
+    }
+
+    @Override
+    public long getDownloadRate() {
+        return session.getStatus().getDownloadRate();
+    }
+
+    @Override
+    public long getUploadRate() {
+        return session.getStatus().getUploadRate();
+    }
+
+    @Override
+    public long getTotalDownload() {
+        return session.getStatus().getTotalDownload();
+    }
+
+    @Override
+    public long getTotalUpload() {
+        return session.getStatus().getTotalUpload();
+    }
+
     private void addEngineListener() {
         session.addListener(new AlertListener() {
             @Override
@@ -132,18 +187,24 @@ public final class LTEngine implements BTEngine {
                     return;
                 }
 
-                int type = alert.getType();
+                AlertType type = alert.getType();
 
-                if (type == torrent_added_alert.alert_type) {
-                    listener.downloadAdded(new LTDownload(((TorrentAlert<?>) alert).getTorrentHandle()));
-                }
-
-                if (type == save_resume_data_alert.alert_type) {
-                    saveResumeData((SaveResumeDataAlert) alert);
-                }
-
-                if (type == block_finished_alert.alert_type) {
-                    doResumeData((TorrentAlert<?>) alert);
+                switch (type) {
+                    case TORRENT_ADDED:
+                        listener.downloadAdded(new LTDownload(((TorrentAlert<?>) alert).getTorrentHandle()));
+                        break;
+                    case SAVE_RESUME_DATA:
+                        saveResumeData((SaveResumeDataAlert) alert);
+                        break;
+                    case BLOCK_FINISHED:
+                        doResumeData((TorrentAlert<?>) alert);
+                        break;
+                    case PORTMAP:
+                        isFirewalled = false;
+                        break;
+                    case PORTMAP_ERROR:
+                        isFirewalled = true;
+                        break;
                 }
             }
         });

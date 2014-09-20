@@ -359,8 +359,9 @@ public class TorrentFetcherDownload implements BTDownload {
                 }
             }
 
-            BTDownloadCreator creator = new BTDownloadCreator(torrentFile, filesSelection);
-            _delegate = creator.createDownload();
+            // TODO:BITTORRENT
+            //BTDownloadCreator creator = new BTDownloadCreator(torrentFile, filesSelection);
+            _delegate = null;//creator.createDownload();
 
             if (_delegate instanceof DuplicateDownload) {
                 cancelDownload();

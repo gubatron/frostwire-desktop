@@ -597,10 +597,11 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         for (File file : selected) {
             DownloadManager dm = null;
 
+            // TODO:BITTORRENT
             // stop seeding if seeding
-            if ((dm = TorrentUtil.getDownloadManager(file)) != null) {
-                dm.stopIt(DownloadManager.STATE_STOPPED, false, false);
-            }
+//            if ((dm = TorrentUtil.getDownloadManager(file)) != null) {
+//                dm.stopIt(DownloadManager.STATE_STOPPED, false, false);
+//            }
 
             // close media player if still playing
             if (MediaPlayer.instance().isThisBeingPlayed(file)) {

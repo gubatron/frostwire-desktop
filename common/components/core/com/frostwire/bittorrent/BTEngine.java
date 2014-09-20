@@ -35,7 +35,23 @@ public interface BTEngine {
 
     public void setListener(BTEngineListener listener);
 
+    public void start();
+
+    public void stop();
+
+    public boolean isStarted();
+
+    public boolean isFirewalled();
+
     public void download(File torrent, File saveDir) throws IOException;
 
     public void restoreDownloads(File saveDir);
+
+    public long getDownloadRate();
+
+    public long getUploadRate();
+
+    public long getTotalDownload();
+
+    public long getTotalUpload();
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.frostwire.bittorrent.BTEngineFactory;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.lifecycle.ServiceRegistry;
 import org.limewire.listener.EventListener;
@@ -16,7 +17,6 @@ import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 
-import com.frostwire.AzureusStarter;
 import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
@@ -110,12 +110,8 @@ public class LifecycleManagerImpl implements LifecycleManager {
 			public void handleEvent(
 					com.limegroup.gnutella.LifecycleManagerImpl.LifeCycleEvent event) {
 				if (event == LifeCycleEvent.SHUTINGDOWN) {
-					
-					if (AzureusStarter.isAzureusCoreStarted()) {
-						LOG.debug("LifecycleManagerImpl.handleEvent - SHUTINGDOWN - Azureus core pauseDownloads()!");
-						AzureusStarter.getAzureusCore().getGlobalManager().pauseDownloads();
-						AzureusStarter.getAzureusCore().stop();
-					}
+
+                    BTEngineFactory.getInstance().stop();
 				} 
 			}
 			
@@ -208,12 +204,8 @@ public class LifecycleManagerImpl implements LifecycleManager {
 
         // save frostwire.props & other settings
         SettingsGroupManager.instance().save();
-		
-        if (AzureusStarter.isAzureusCoreStarted()) {
-            System.out.println("Waiting for Vuze core to shutdown...");
-            AzureusStarter.getAzureusCore().stop();
-            System.out.println("Vuze core shutdown.");
-        }
+
+        BTEngineFactory.getInstance().stop();
         
         shutdownDone.set(true);
     }
