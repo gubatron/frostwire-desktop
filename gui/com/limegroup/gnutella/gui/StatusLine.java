@@ -40,11 +40,10 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.ToolTipManager;
 
-import org.gudy.azureus2.plugins.network.ConnectionManager;
+import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.bittorrent.BTEngineFactory;
 import org.limewire.setting.BooleanSetting;
 
-import com.aelitis.azureus.core.AzureusCore;
-import com.frostwire.AzureusStarter;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.theme.SkinCheckBoxMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
@@ -533,10 +532,9 @@ public final class StatusLine {
      * Updates the firewall text. 
      */
     public void updateFirewall() {
-        if (AzureusStarter.isAzureusCoreStarted()) {
-            AzureusCore azureusCore = AzureusStarter.getAzureusCore();
-            int natStatus = azureusCore.getGlobalManager().getNATStatus();
-            updateFirewallLabel(natStatus == ConnectionManager.NAT_OK || natStatus == ConnectionManager.NAT_PROBABLY_OK);
+        BTEngine engine = BTEngineFactory.getInstance();
+        if (engine.isStarted()) {
+            updateFirewallLabel(!engine.isFirewalled());
         } else {
             updateFirewallLabel(false);
         }
@@ -546,7 +544,7 @@ public final class StatusLine {
      * Updates the bandwidth statistics.
      */
     public void updateBandwidth() {
-        if (AzureusStarter.isAzureusCoreStarted()) {
+        if (BTEngineFactory.getInstance().isStarted()) {
             //  format strings
             String sDown = GUIUtils.rate2speed(GUIMediator.instance().getBTDownloadMediator().getDownloadsBandwidth());
             String sUp = GUIUtils.rate2speed(GUIMediator.instance().getBTDownloadMediator().getUploadsBandwidth());

@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicHTML;
 
+import com.frostwire.bittorrent.BTEngineFactory;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.service.ErrorService;
 import org.limewire.util.I18NConvert;
@@ -30,7 +31,6 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.Stopwatch;
 import org.limewire.util.SystemUtils;
 
-import com.frostwire.AzureusStarter;
 import com.frostwire.logging.Logger;
 import com.frostwire.util.UserAgentGenerator;
 import com.limegroup.gnutella.ExternalControl;
@@ -453,7 +453,7 @@ public final class Initializer {
     private void startAzureusCore() {
     	BackgroundExecutorService.schedule(new Runnable() {
     		public void run() {
-    			AzureusStarter.start();
+                BTEngineFactory.getInstance().start();
     		}
     	});
     }
