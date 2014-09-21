@@ -1157,7 +1157,7 @@ public class BDecoder
     	String	json )
     {
     	Map j_map = JSONUtils.decodeJSON(json);
-    	    	
+
     	return( decodeFromJSONObject( j_map ));
     }
 	

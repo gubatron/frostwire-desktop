@@ -34,10 +34,10 @@ import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.text.NumberFormat;
 
-import org.gudy.azureus2.core3.download.*;
-import org.gudy.azureus2.core3.config.*;
+//import org.gudy.azureus2.core3.download.*;
+//import org.gudy.azureus2.core3.config.*;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.disk.*;
+//import org.gudy.azureus2.core3.disk.*;
 import org.gudy.azureus2.core3.internat.*;
 
 
@@ -87,7 +87,7 @@ DisplayFormatters
 		private static char decimalSeparator;
     
 	static{
-		COConfigurationManager.addAndFireParameterListeners( 
+		/*COConfigurationManager.addAndFireParameterListeners(
 				new String[]{
 					"config.style.useSIUnits",
 					"config.style.forceSIValues",
@@ -138,7 +138,7 @@ DisplayFormatters
 						separate_prot_data_stats = COConfigurationManager.getBooleanParameter("config.style.separateProtDataStats");
 						data_stats_only			 = COConfigurationManager.getBooleanParameter("config.style.dataStatsOnly");
 					}
-				});
+				});*/
 
 		setUnits();
 		
@@ -681,7 +681,7 @@ DisplayFormatters
     }
 
 
-	public static String
+	/*public static String
 	formatDownloaded(
 		DownloadManagerStats	stats )
 	{
@@ -694,8 +694,8 @@ DisplayFormatters
 
 		}else{
 
-			return formatByteCountToKiBEtc(total_received) + " ( " + 
-					DisplayFormatters.formatByteCountToKiBEtc(total_discarded) + " " + 
+			return formatByteCountToKiBEtc(total_received) + " ( " +
+					DisplayFormatters.formatByteCountToKiBEtc(total_discarded) + " " +
 					discarded + " )";
 		}
 	}
@@ -705,17 +705,17 @@ DisplayFormatters
 		DownloadManager		download_manager )
 	{
 		TOTorrent	torrent = download_manager.getTorrent();
-		
+
 		if ( torrent != null ){
-			
+
 			long bad = download_manager.getStats().getHashFailBytes();
-	
+
 					// size can exceed int so ensure longs used in multiplication
-	
+
 			long count = bad / (long)torrent.getPieceLength();
-	
+
 			String result = count + " ( " + formatByteCountToKiBEtc(bad) + " )";
-	
+
 			return result;
 	  	}
 
@@ -727,10 +727,10 @@ DisplayFormatters
 		DownloadManager		manager )
 	{
 		if ( manager == null ){
-			
+
 			return( ManagerItem_error + ": Download is null" );
 		}
-		
+
 		int state = manager.getState();
 
 		String	tmp = "";
@@ -749,35 +749,35 @@ DisplayFormatters
 				DiskManager diskManager = manager.getDiskManager();
 
 				if ( diskManager != null ){
-						
+
 					int	mp = diskManager.getMoveProgress();
-					
+
 					if ( mp != -1 ){
-						
+
 						tmp = ManagerItem_moving + ": "	+ formatPercentFromThousands( mp );
-						
+
 					}else{
 						int done = diskManager.getCompleteRecheckStatus();
-	
+
 						if ( done != -1 ){
-	
+
 							tmp = ManagerItem_seeding + " + " + ManagerItem_checking + ": "	+ formatPercentFromThousands(done);
 						}
 					}
 				}
-				
+
 				if ( tmp == "" ){
-					
+
 					if (manager.getPeerManager() != null && manager.getPeerManager().isSuperSeedMode()) {
-					
+
 						tmp = ManagerItem_superseeding;
-						
+
 					}else{
-						
+
 						tmp = ManagerItem_seeding;
 					}
 				}
-				
+
 				break;
 			}
 			case DownloadManager.STATE_STOPPED:
@@ -803,7 +803,7 @@ DisplayFormatters
 			case DownloadManager.STATE_ALLOCATING:{
 				tmp = ManagerItem_allocating;
 				DiskManager diskManager = manager.getDiskManager();
-				if (diskManager != null){		
+				if (diskManager != null){
 					tmp += ": " + formatPercentFromThousands( diskManager.getPercentDone());
 				}
 				break;
@@ -908,7 +908,7 @@ DisplayFormatters
 		}
 
 		return( tmp );
-	}
+	}*/
 
 	public static String
 	trimDigits(
