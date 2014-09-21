@@ -31,8 +31,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.gudy.azureus2.core3.config.COConfigurationManager;
-import org.gudy.azureus2.core3.config.ParameterListener;
+//import org.gudy.azureus2.core3.config.COConfigurationManager;
+//import org.gudy.azureus2.core3.config.ParameterListener;
 
 
 public class 
@@ -684,13 +684,13 @@ ThreadPool
 											// than running as a static initialiser
 											// due to the dependency between
 											// ThreadPool, Timer and ThreadPool again
-											COConfigurationManager.addAndFireParameterListeners(new String[] { "debug.threadpool.log.enable", "debug.threadpool.debug.trace" }, new ParameterListener()
-											{
-												public void parameterChanged(String name) {
-													debug_thread_pool = COConfigurationManager.getBooleanParameter("debug.threadpool.log.enable", false);
-													debug_thread_pool_log_on = COConfigurationManager.getBooleanParameter("debug.threadpool.debug.trace", false);
-												}
-											});
+//											COConfigurationManager.addAndFireParameterListeners(new String[] { "debug.threadpool.log.enable", "debug.threadpool.debug.trace" }, new ParameterListener()
+//											{
+//												public void parameterChanged(String name) {
+//													debug_thread_pool = COConfigurationManager.getBooleanParameter("debug.threadpool.log.enable", false);
+//													debug_thread_pool_log_on = COConfigurationManager.getBooleanParameter("debug.threadpool.debug.trace", false);
+//												}
+//											});
 											busy_pool_timer_set = true;
 											SimpleTimer.addPeriodicEvent("ThreadPool:timeout", WARN_TIME, new TimerEventPerformer()
 											{

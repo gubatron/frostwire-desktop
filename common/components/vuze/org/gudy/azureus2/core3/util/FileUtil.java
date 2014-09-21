@@ -120,8 +120,8 @@ public class FileUtil {
    * Deletes the given dir and all files/dirs underneath
    */
   public static boolean recursiveDelete(File f) {
-    String defSaveDir = COConfigurationManager.getStringParameter("Default save path");
-    String moveToDir = COConfigurationManager.getStringParameter("Completed Files Directory", "");
+    String defSaveDir = null;//COConfigurationManager.getStringParameter("Default save path");
+    String moveToDir = null;//COConfigurationManager.getStringParameter("Completed Files Directory", "");
     
     try{
   	  moveToDir = new File(moveToDir).getCanonicalPath();
@@ -409,7 +409,7 @@ public class FileUtil {
   {
 	  File parent_dir = new File(SystemProperties.getUserPath());
 	  
-	  boolean use_backups = COConfigurationManager.getBooleanParameter("Use Config File Backups" );
+	  boolean use_backups = false;//COConfigurationManager.getBooleanParameter("Use Config File Backups" );
 
 	  writeResilientFile( parent_dir, file_name, data, use_backups );
   }
@@ -1524,11 +1524,11 @@ public class FileUtil {
       		
     	}else{
     		
-    		boolean	copy_and_delete = COConfigurationManager.getBooleanParameter("Copy And Delete Data Rather Than Move");
+    		boolean	copy_and_delete = false;//COConfigurationManager.getBooleanParameter("Copy And Delete Data Rather Than Move");
     		
     		if ( copy_and_delete ){
     			
-        		boolean	move_if_same_drive = COConfigurationManager.getBooleanParameter("Move If On Same Drive");
+        		boolean	move_if_same_drive = true;//COConfigurationManager.getBooleanParameter("Move If On Same Drive");
 
     			if ( move_if_same_drive ){
     				
@@ -1809,14 +1809,14 @@ public class FileUtil {
 		return new_root + File.separator + file_suffix;
 	}
 	
-	public static void
-	runAsTask(
-		AzureusCoreOperationTask	task )
-	{
-		AzureusCore	core = AzureusCoreFactory.getSingleton();
-		
-		core.createOperation( AzureusCoreOperation.OP_FILE_MOVE, task );
-	}
+//	public static void
+//	runAsTask(
+//		AzureusCoreOperationTask	task )
+//	{
+//		AzureusCore	core = AzureusCoreFactory.getSingleton();
+//
+//		core.createOperation( AzureusCoreOperation.OP_FILE_MOVE, task );
+//	}
 
 	/**
 	 * Makes Directories as long as the directory isn't directly in Volumes (OSX)
