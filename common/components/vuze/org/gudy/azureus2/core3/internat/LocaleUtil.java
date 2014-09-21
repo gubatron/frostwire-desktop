@@ -22,7 +22,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.util.*;
 
-import org.gudy.azureus2.core3.config.COConfigurationManager;
+//import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.util.*;
 
 public class
@@ -106,7 +106,7 @@ LocaleUtil
 		}
 	}
 
-	boolean show_all = COConfigurationManager.getBooleanParameter("File.Decoder.ShowAll" );
+	boolean show_all = true;//COConfigurationManager.getBooleanParameter("File.Decoder.ShowAll" );
 
 	if ( show_all ){
 		
@@ -188,7 +188,7 @@ LocaleUtil
   {
 	LocaleUtilDecoderCandidate[] candidates = new LocaleUtilDecoderCandidate[all_decoders.length];
     
-	boolean show_less_likely_conversions = COConfigurationManager.getBooleanParameter("File.Decoder.ShowLax" );
+	boolean show_less_likely_conversions = false;//COConfigurationManager.getBooleanParameter("File.Decoder.ShowLax" );
 
 	for (int i = 0; i < all_decoders.length; i++){
     	

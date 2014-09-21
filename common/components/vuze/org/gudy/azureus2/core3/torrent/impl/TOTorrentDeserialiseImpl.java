@@ -349,7 +349,7 @@ TOTorrentDeserialiseImpl
 						                	//check to see if the announce url is somewhere in the announce-list
 																			
 						            try{
-						            	urls.add( new URL( StringInterner.intern(url_str) ));		
+						            	urls.add( new URL( StringInterner.intern(url_str) ));
 							    
 						            	if ( url_str.equalsIgnoreCase( announce_url )) {
 						                	

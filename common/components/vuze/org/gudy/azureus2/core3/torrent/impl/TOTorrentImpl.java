@@ -463,9 +463,9 @@ TOTorrentImpl
 			TorrentUtils.addCreatedTorrent( this );
 		}
 		
-		TOTorrentXMLSerialiser	serialiser = new TOTorrentXMLSerialiser( this );
+		//TOTorrentXMLSerialiser	serialiser = new TOTorrentXMLSerialiser( this );
 		
-		serialiser.serialiseToFile( file );
+		//serialiser.serialiseToFile( file );
 	}
 	
 	public byte[]
