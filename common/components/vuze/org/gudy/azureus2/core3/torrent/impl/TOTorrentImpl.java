@@ -31,7 +31,7 @@ import org.gudy.azureus2.core3.logging.LogRelation;
 import org.gudy.azureus2.core3.torrent.*;
 import org.gudy.azureus2.core3.util.*;
 
-import com.aelitis.azureus.core.AzureusCoreFactory;
+//import com.aelitis.azureus.core.AzureusCoreFactory;
 
 public class 
 TOTorrentImpl
@@ -1349,8 +1349,8 @@ TOTorrentImpl
 	public Object[] getQueryableInterfaces() {
 		// yuck
 		try {
-			return new Object[] { AzureusCoreFactory.getSingleton()
-					.getGlobalManager().getDownloadManager(this) };
+			//return new Object[] { AzureusCoreFactory.getSingleton()
+			//		.getGlobalManager().getDownloadManager(this) };
 		} catch (Exception e) {
 		}
 

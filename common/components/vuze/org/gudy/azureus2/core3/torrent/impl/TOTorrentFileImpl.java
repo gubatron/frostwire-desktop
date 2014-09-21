@@ -176,7 +176,7 @@ TOTorrentFileImpl
 	
 				// intern directories as they're likely to repeat
 				if(i < (pc.length - 1))
-					pc[i] = StringInterner.internBytes(pc[i]);
+					pc[i] = pc[i];
 			}
 		}
 	}
