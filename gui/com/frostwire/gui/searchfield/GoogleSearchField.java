@@ -32,8 +32,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONValue;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.limewire.util.LCS;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
@@ -161,7 +161,7 @@ public class GoogleSearchField extends SearchField {
                 String json = httpClient.get(url, HTTP_QUERY_TIMEOUT);
 
                 if (!isCancelled()) {
-                    final List<String> suggestions = readSuggestions((JSONArray) ((JSONArray) JSONValue.parse(json)).get(1));
+                    final List<String> suggestions = readSuggestions((JSONArray) new JSONArray(json).get(1));
 
                     GUIMediator.safeInvokeLater(new Runnable() {
                         public void run() {
@@ -182,11 +182,15 @@ public class GoogleSearchField extends SearchField {
 
         private List<String> readSuggestions(JSONArray array) {
             String t = input.getText();
-            List<String> suggestions = new ArrayList<String>(array.size());
+            List<String> suggestions = new ArrayList<String>(array.length());
             if (!StringUtils.isNullOrEmpty(t, true)) {
-                for (Object obj : array) {
-                    String s = LCS.lcsHtml(t, (String) obj);
-                    suggestions.add(s);
+                for (int i = 0; i < array.length(); i++) {
+                    try {
+                        String s = LCS.lcsHtml(t, array.getString(i));
+                        suggestions.add(s);
+                    } catch (JSONException e) {
+                        //e.printStackTrace();
+                    }
                 }
             }
             return suggestions;
