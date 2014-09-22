@@ -32,6 +32,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.frostwire.search.*;
 import org.limewire.util.I18NConvert;
 import org.limewire.util.StringUtils;
 import org.slf4j.Logger;
@@ -40,16 +41,6 @@ import org.slf4j.LoggerFactory;
 import com.frostwire.gui.filters.SearchFilter;
 import com.frostwire.gui.filters.SearchFilterFactory;
 import com.frostwire.gui.filters.SearchFilterFactoryImpl;
-import com.frostwire.search.CrawlPagedWebSearchPerformer;
-import com.frostwire.search.CrawledSearchResult;
-import com.frostwire.search.DatabaseCrawlCache;
-import com.frostwire.search.FileSearchResult;
-import com.frostwire.search.SearchManager;
-import com.frostwire.search.SearchManagerImpl;
-import com.frostwire.search.SearchManagerListener;
-import com.frostwire.search.SearchPerformer;
-import com.frostwire.search.SearchResult;
-import com.frostwire.search.VuzeMagnetDownloader;
 import com.frostwire.search.archiveorg.ArchiveorgCrawledSearchResult;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
@@ -153,7 +144,7 @@ public final class SearchMediator {
             LOG.error("could not set database crawl cache", t);
         }
 
-        CrawlPagedWebSearchPerformer.setMagnetDownloader(new VuzeMagnetDownloader());
+        CrawlPagedWebSearchPerformer.setMagnetDownloader(new LibTorrentMagnetDownloader());
 
         this.manager = new SearchManagerImpl(SEARCH_MANAGER_NUM_THREADS);
         this.manager.registerListener(new ManagerListener());

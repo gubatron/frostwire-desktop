@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2014,, FrostWire(R). All rights reserved.
  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,18 @@
 
 package com.frostwire.search;
 
+import com.frostwire.bittorrent.libtorrent.LTEngine;
+
 /**
- * 
  * @author gubatron
  * @author aldenml
- *
  */
-public final class MagnetDownloaderFactory {
+public class LibTorrentMagnetDownloader implements MagnetDownloader {
 
-    public static MagnetDownloader newInstance() {
-        return new VuzeMagnetDownloader();
+    public LibTorrentMagnetDownloader() {
+    }
+
+    public byte[] download(String magnet, int timeout) {
+        return LTEngine.getInstance().getSession().fetchMagnet(magnet, timeout);
     }
 }

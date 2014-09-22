@@ -20,9 +20,11 @@ package com.frostwire.bittorrent;
 
 import com.frostwire.bittorrent.libtorrent.LTEngine;
 import com.limegroup.gnutella.settings.SharingSettings;
+import org.gudy.azureus2.core3.util.protocol.AzURLStreamHandlerFactory;
 import org.limewire.util.CommonUtils;
 
 import java.io.File;
+import java.net.URL;
 
 /**
  * @author gubatron
@@ -44,6 +46,9 @@ public final class BTEngineFactory {
     }
 
     private static void setup(BTEngine engine) {
+
+        // this hack is only due to the remaining vuze TOTorrent code
+        URL.setURLStreamHandlerFactory(new AzURLStreamHandlerFactory());
 
         SharingSettings.initTorrentDataDirSetting();
         SharingSettings.initTorrentsDirSetting();
