@@ -2,8 +2,6 @@ package com.frostwire.gui.bittorrent;
 
 import java.util.Map;
 
-import org.gudy.azureus2.core3.download.DownloadManager;
-
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 
@@ -14,9 +12,12 @@ import com.frostwire.torrent.PaymentOptions;
  *
  */
 public class BTInfoAditionalMetadataHolder {
-    private final CopyrightLicenseBroker license;
-    private final PaymentOptions paymentOptions;
+    // TODO:BITTORRENT
+    private final CopyrightLicenseBroker license = null;
+    private final PaymentOptions paymentOptions = null;
 
+    // TODO:BITTORRENT
+    /*
     public BTInfoAditionalMetadataHolder(DownloadManager downloadManager, String paymentOptionsDisplayName) {
         final TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(downloadManager);
         @SuppressWarnings("unchecked")
@@ -43,7 +44,7 @@ public class BTInfoAditionalMetadataHolder {
             paymentOptions = new PaymentOptions(null,null,null,null);
         }
         paymentOptions.setItemName(paymentOptionsDisplayName);
-    }
+    }*/
     
     public CopyrightLicenseBroker getLicenseBroker() {
         return license;

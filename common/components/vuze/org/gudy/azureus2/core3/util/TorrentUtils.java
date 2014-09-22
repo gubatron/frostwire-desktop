@@ -124,8 +124,8 @@ TorrentUtils
 	
 	private static final long		PC_MARKER = RandomUtils.nextLong();
 	
-	private static final List	created_torrents;
-	private static final Set	created_torrents_set;
+	//private static final List	created_torrents;
+	//private static final Set	created_torrents_set;
 	
 	private static ThreadLocal<Map<String,Object>>		tls	= 
 		new ThreadLocal<Map<String,Object>>()
@@ -3365,7 +3365,7 @@ TorrentUtils
 		}
 	}*/
 	
-	public static boolean
+	/*public static boolean
 	isCreatedTorrent(
 		TOTorrent		torrent )
 	{
@@ -3395,7 +3395,7 @@ TorrentUtils
 				
 			}
 		}
-	}
+	}*/
 		
 	/*public static TOTorrent
 	download(

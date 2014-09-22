@@ -50,8 +50,6 @@ import javax.swing.JTextArea;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.gudy.azureus2.core3.config.COConfigurationManager;
-import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
@@ -75,6 +73,8 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
     public static SkinMenu createAdvancedSubMenu() {
 
+        // TODO:BITTORRENT
+        /*
         final DownloadManager[] dms = getSingleSelectedDownloadManagers();
         if (dms == null) {
             return null;
@@ -167,6 +167,8 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         }
 
         return menuAdvanced;
+        */
+        return null;
     }
 
     public static SkinMenu createAddToPlaylistSubMenu() {
@@ -211,6 +213,8 @@ final class BTDownloadMediatorAdvancedMenuFactory {
     }
 
     public static SkinMenu createTrackerMenu() {
+        // TODO:BITTORRENT
+        /*
         DownloadManager[] dms = getSingleSelectedDownloadManagers();
         if (dms == null) {
             return null;
@@ -223,8 +227,12 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         menu.add(new SkinMenuItem(new ScrapeTrackerAction(dms[0])));
 
         return menu;
+        */
+        return null;
     }
 
+    // TODO:BITTORRENT
+    /*
     private static DownloadManager[] getSingleSelectedDownloadManagers() {
         BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
 
@@ -246,7 +254,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         }
 
         return list.toArray(new DownloadManager[0]);
-    }
+    }*/
 
     private static void addSpeedMenu(SkinMenu menuAdvanced, boolean isTorrentContext, boolean hasSelection, boolean downSpeedDisabled, boolean downSpeedUnlimited, long totalDownSpeed,
             long downSpeedSetMax, long maxDownload, boolean upSpeedDisabled, boolean upSpeedUnlimited, long totalUpSpeed, long upSpeedSetMax, long maxUpload, final int num_entries,
@@ -473,6 +481,8 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         public void setDownSpeed(int val);
     }
 
+    // TODO:BITTORRENT
+    /*
     public static class EditTrackersAction extends AbstractAction {
 
         private final DownloadManager dm;
@@ -658,5 +668,5 @@ final class BTDownloadMediatorAdvancedMenuFactory {
                 dm.getTrackerClient().resetTrackerUrl(true);
             }
         }
-    }
+    }*/
 }
