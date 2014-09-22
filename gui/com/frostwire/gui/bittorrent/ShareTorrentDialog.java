@@ -64,13 +64,6 @@ import com.limegroup.gnutella.gui.actions.LimeAction;
  */
 public class ShareTorrentDialog extends JDialog {
 
-
-	public class GoogleShortenerResponse {
-		public String kind;
-		public String id;
-		public String longUrl;
-	}
-	
 	private final class URLShortnerHttpClientListener extends
 			HttpClientListenerAdapter {
 

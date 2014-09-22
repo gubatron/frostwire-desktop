@@ -41,6 +41,7 @@ import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
+import org.gudy.azureus2.core3.torrent.TOTorrent;
 
 /**
  * @author gubatron
@@ -413,8 +414,10 @@ final class BTDownloadActions {
 
             BTDownload btDownload = downloaders[0];
 
-            // TODO:BITTORRENT
-            //new ShareTorrentDialog(btDownload.getDownloadManager().getTorrent()).setVisible(true);
+            if (btDownload instanceof BittorrentDownload) {
+                TOTorrent t = ((BittorrentDownload) btDownload).getTOTorrent();
+                new ShareTorrentDialog(t).setVisible(true);
+            }
         }
     }
 
