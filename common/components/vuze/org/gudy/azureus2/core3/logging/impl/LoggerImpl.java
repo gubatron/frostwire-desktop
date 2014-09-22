@@ -21,8 +21,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gudy.azureus2.core3.config.ParameterListener;
-import org.gudy.azureus2.core3.config.impl.ConfigurationManager;
+//import org.gudy.azureus2.core3.config.ParameterListener;
+//import org.gudy.azureus2.core3.config.impl.ConfigurationManager;
 import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.logging.ILogAlertListener;
 import org.gudy.azureus2.core3.logging.ILogEventListener;
@@ -84,19 +84,19 @@ public class LoggerImpl {
 		bEventLoggingEnabled = true;
 		
 		// Shorten from COConfigurationManager To make code more readable
-		final ConfigurationManager config = ConfigurationManager.getInstance();
+		//final ConfigurationManager config = ConfigurationManager.getInstance();
 
 		boolean overrideLog = System.getProperty("azureus.overridelog") != null;
 		if (overrideLog) {
 			bEventLoggingEnabled = true;
 		} else {
-			bEventLoggingEnabled = config.getBooleanParameter("Logger.Enabled");
+			bEventLoggingEnabled = false;//config.getBooleanParameter("Logger.Enabled");
 
-			config.addParameterListener("Logger.Enabled", new ParameterListener() {
-				public void parameterChanged(String parameterName) {
-					bEventLoggingEnabled = config.getBooleanParameter("Logger.Enabled");
-				}
-			});
+//			config.addParameterListener("Logger.Enabled", new ParameterListener() {
+//				public void parameterChanged(String parameterName) {
+//					bEventLoggingEnabled = config.getBooleanParameter("Logger.Enabled");
+//				}
+//			});
 		}
 	}
 

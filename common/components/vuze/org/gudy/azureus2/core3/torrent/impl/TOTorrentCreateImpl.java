@@ -664,7 +664,7 @@ TOTorrentCreateImpl
 	setIgnoreList()
 	{
 		try{
-			ignore_set = TorrentUtils.getIgnoreSet();
+			ignore_set = new HashSet<String>();//TorrentUtils.getIgnoreSet();
 			
 		}catch( NoClassDefFoundError e ){
 			

@@ -53,7 +53,6 @@ import javax.swing.filechooser.FileFilter;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
 import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
@@ -61,14 +60,9 @@ import org.gudy.azureus2.core3.torrent.TOTorrentCreator;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
 import org.gudy.azureus2.core3.torrent.TOTorrentProgressListener;
-import org.gudy.azureus2.core3.util.AEThread2;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.TorrentUtils;
-import org.gudy.azureus2.core3.util.TrackersUtil;
 
-import com.aelitis.azureus.core.AzureusCore;
-import com.aelitis.azureus.core.AzureusCoreFactory;
-import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
@@ -111,7 +105,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
     private static String comment = I18n.tr("Torrent File Created with FrostWire http://www.frostwire.com");
 
-    private static int tracker_type = COConfigurationManager.getIntParameter("CreateTorrent.default.trackertype", TT_EXTERNAL);
+    // TODO:BITTORRENT
+    private static int tracker_type = TT_EXTERNAL;//COConfigurationManager.getIntParameter("CreateTorrent.default.trackertype", TT_EXTERNAL);
 
     // false : singleMode, true: directory
     boolean create_from_dir;
@@ -637,7 +632,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
     protected void setTrackerType(int type) {
         tracker_type = type;
-        COConfigurationManager.setParameter("CreateTorrent.default.trackertype", tracker_type);
+        // TODO:BITTORRENT
+        //COConfigurationManager.setParameter("CreateTorrent.default.trackertype", tracker_type);
     }
 
     protected String getDefaultSaveDir() {
@@ -647,7 +643,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     protected void setDefaultSaveDir(String d) {
         default_save_dir = d;
 
-        COConfigurationManager.setParameter("CreateTorrent.default.save", default_save_dir);
+        // TODO:BITTORRENT
+        //COConfigurationManager.setParameter("CreateTorrent.default.save", default_save_dir);
     }
 
     public boolean makeTorrent() {
@@ -658,7 +655,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         int tracker_type = getTrackerType();
 
         if (tracker_type == TT_EXTERNAL) {
-            TrackersUtil.getInstance().addTracker(trackerURL);
+            // TODO:BITTORRENT
+            //TrackersUtil.getInstance().addTracker(trackerURL);
         }
 
         File f;
@@ -878,30 +876,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
             @Override
             public void run() {
                 GUIMediator.showError(e.getMessage());
-            }
-        });
-    }
-
-    public static void waitForCore(final TriggerInThread triggerInThread, final AzureusCoreRunningListener l) {
-        AzureusCoreFactory.addCoreRunningListener(new AzureusCoreRunningListener() {
-            public void azureusCoreRunning(final AzureusCore core) {
-                if (triggerInThread == TriggerInThread.ANY_THREAD) {
-                    l.azureusCoreRunning(core);
-                } else if (triggerInThread == TriggerInThread.NEW_THREAD) {
-                    new AEThread2("CoreWaiterInvoke", true) {
-                        public void run() {
-                            l.azureusCoreRunning(core);
-                        }
-                    }.start();
-                }
-
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        if (triggerInThread == TriggerInThread.SWT_THREAD) {
-                            l.azureusCoreRunning(core);
-                        }
-                    }
-                });
             }
         });
     }

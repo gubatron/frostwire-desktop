@@ -7,7 +7,6 @@ import java.io.IOException;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
-import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.I18n;
@@ -135,12 +134,12 @@ public final class ProxyLoginPaneItem extends AbstractPaneItem {
         ConnectionSettings.PROXY_USERNAME.setValue(username);
         ConnectionSettings.PROXY_PASS.setValue(password);
         ConnectionSettings.PROXY_AUTHENTICATE.setValue(authenticate);
-        
+
+        // TODO:BITTORRENT
         // put proxy configuration in vuze options
-        COConfigurationManager.setParameter("Proxy.Username", username);
-        COConfigurationManager.setParameter("Proxy.Password", password);
-        
-        COConfigurationManager.save();
+        //COConfigurationManager.setParameter("Proxy.Username", username);
+        //COConfigurationManager.setParameter("Proxy.Password", password);
+        //COConfigurationManager.save();
 
         return false;
     }

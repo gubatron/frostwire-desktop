@@ -25,9 +25,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.io.IOUtils;
-import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
-import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
-import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
+//import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
+//import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
+//import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +39,7 @@ import com.limegroup.gnutella.settings.SharingSettings;
  * @author aldenml
  *
  */
+// TODO:BITTORRENT
 public class VuzeMagnetDownloader implements MagnetDownloader {
 
     private static final Logger LOG = LoggerFactory.getLogger(VuzeMagnetDownloader.class);
@@ -51,6 +52,7 @@ public class VuzeMagnetDownloader implements MagnetDownloader {
 
     public byte[] download(String magnet, int timeout) {
 
+        /*
         CountDownLatch signal = new CountDownLatch(1);
 
         TorrentDownloaderListener listener = new TorrentDownloaderListener(signal);
@@ -74,12 +76,16 @@ public class VuzeMagnetDownloader implements MagnetDownloader {
         new File(saveFile).delete(); // one more intent
 
         return listener.getData();
+        */
+        return  null;
     }
 
     private String newSaveFile() {
         return new File(SharingSettings.TORRENTS_DIR_SETTING.getValue(), rnd.nextInt(Integer.MAX_VALUE) + ".dat").getAbsolutePath();
     }
 
+    // TODO:BITTORRENT
+    /*
     private final class TorrentDownloaderListener implements TorrentDownloaderCallBackInterface {
 
         private final AtomicBoolean finished = new AtomicBoolean(false);
@@ -143,5 +149,5 @@ public class VuzeMagnetDownloader implements MagnetDownloader {
                 LOG.debug("VuzeMagnetDownloader deleted temporary .torrent " + torrent.getAbsolutePath());
             }
         }
-    }
+    }*/
 }

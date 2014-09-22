@@ -26,9 +26,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.gudy.azureus2.core3.config.COConfigurationListener;
-import org.gudy.azureus2.core3.config.ParameterListener;
-import org.gudy.azureus2.core3.config.impl.ConfigurationManager;
+//import org.gudy.azureus2.core3.config.COConfigurationListener;
+//import org.gudy.azureus2.core3.config.ParameterListener;
+//import org.gudy.azureus2.core3.config.impl.ConfigurationManager;
 import org.gudy.azureus2.core3.logging.*;
 import org.gudy.azureus2.core3.util.Debug;
 
@@ -64,7 +64,7 @@ public class FileLogging implements ILogEventListener {
 
 	public void initialize() {
 		// Shorten from COConfigurationManager To make code more readable
-		final ConfigurationManager config = ConfigurationManager.getInstance();
+		//final ConfigurationManager config = ConfigurationManager.getInstance();
 		boolean overrideLog = System.getProperty("azureus.overridelog") != null;
 
 		for (int i = 0; i < ignoredComponents.length; i++) {
@@ -72,27 +72,27 @@ public class FileLogging implements ILogEventListener {
 		}
 
 		if (!overrideLog) {
-			config.addListener(new COConfigurationListener() {
-				public void configurationSaved() {
-					checkLoggingConfig();
-				}
-			});
+//			config.addListener(new COConfigurationListener() {
+//				public void configurationSaved() {
+//					checkLoggingConfig();
+//				}
+//			});
 		}
 
 		checkLoggingConfig();
-		config.addParameterListener(CFG_ENABLELOGTOFILE, new ParameterListener() {
-			public void parameterChanged(String parameterName) {
-				FileLogging.this.reloadLogToFileParam();
-			}
-		});
+//		config.addParameterListener(CFG_ENABLELOGTOFILE, new ParameterListener() {
+//			public void parameterChanged(String parameterName) {
+//				FileLogging.this.reloadLogToFileParam();
+//			}
+//		});
 	}
 
 	/**
 	 * 
 	 */
 	protected void reloadLogToFileParam() {
-		final ConfigurationManager config = ConfigurationManager.getInstance();
-		boolean bNewLogToFile = System.getProperty("azureus.overridelog") != null || config.getBooleanParameter(CFG_ENABLELOGTOFILE);
+		//final ConfigurationManager config = ConfigurationManager.getInstance();
+		boolean bNewLogToFile = System.getProperty("azureus.overridelog") != null || false;//config.getBooleanParameter(CFG_ENABLELOGTOFILE);
 		if (bNewLogToFile != bLogToFile) {
 			bLogToFile = bNewLogToFile;
 			if (bLogToFile)
@@ -111,57 +111,6 @@ public class FileLogging implements ILogEventListener {
 	}
 
 	private void checkLoggingConfig() {
-		try {
-			// Shorten from COConfigurationManager To make code more readable
-			final ConfigurationManager config = ConfigurationManager.getInstance();
-			
-			String timeStampFormat;
-
-			boolean overrideLog = System.getProperty("azureus.overridelog") != null;
-			if (overrideLog) {
-				
-				// Don't set this - reloadLogToFileParam will do it.
-				//bLogToFile = true;
-				sLogDir = System.getProperty("azureus.overridelogdir", ".");
-				iLogFileMaxMB = 2;
-				timeStampFormat = "HH:mm:ss.SSS ";
-
-				for (int i = 0; i < ignoredComponents.length; i++) {
-					ignoredComponents[i].clear();
-				}
-				
-				reloadLogToFileParam();
-			} else {
-				reloadLogToFileParam();
-
-				sLogDir = config.getStringParameter("Logging Dir", "");
-
-				iLogFileMaxMB = config.getIntParameter("Logging Max Size");
-				
-				timeStampFormat = config.getStringParameter("Logging Timestamp")+" ";
-
-				for (int i = 0; i < ignoredComponents.length; i++) {
-					ignoredComponents[i].clear();
-					int logType = indexToLogType(i);
-					for (int j = 0; j < configurableLOGIDs.length; j++) {
-						if (!config.getBooleanParameter("bLog." + logType + "."
-								+ configurableLOGIDs[j], true))
-							ignoredComponents[i].add(configurableLOGIDs[j]);
-					}
-				}
-			}
-			
-			synchronized (Logger.class) {
-				// Create the date format first *before* we do checkAndSwapLog,
-				// just in case we end up invoking logToFile...
-				format = new SimpleDateFormat(timeStampFormat);
-				checkAndSwapLog();
-			}
-			
-			
-		} catch (Throwable t) {
-			Debug.printStackTrace(t);
-		}
 	}
 
 	private void logToFile(String str) {

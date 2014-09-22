@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.limewire.util.NetworkUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -163,8 +162,9 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 	        ConnectionSettings.DISABLE_UPNP.setValue(false);
 	        if(!oldUPNP)
 	            restart = true;
-	        
-	        COConfigurationManager.setParameter("upnp.enable", true);
+
+            // TODO:BITTORRENT
+	        //COConfigurationManager.setParameter("upnp.enable", true);
         } else { // PORT.isSelected()
             int forcedTcpPort = TCP_PORT_FIELD.getValue();
             int forcedUdpPort = UDP_PORT_FIELD.getValue();
@@ -184,14 +184,16 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
             ConnectionSettings.UDP_PORT.setValue(forcedUdpPort);
             
             // put upnp port configuration
-            COConfigurationManager.setParameter("TCP.Listen.Port", forcedTcpPort);
-            COConfigurationManager.setParameter("UDP.Listen.Port", forcedUdpPort);
-            COConfigurationManager.setParameter("upnp.enable", false);
+            // TODO:BITTORRENT
+            //COConfigurationManager.setParameter("TCP.Listen.Port", forcedTcpPort);
+            //COConfigurationManager.setParameter("UDP.Listen.Port", forcedUdpPort);
+            //COConfigurationManager.setParameter("upnp.enable", false);
             
             restart = true;
         }
-	    
-	    COConfigurationManager.save();
+
+        // TODO:BITTORRENT
+	    //COConfigurationManager.save();
         
         // Notify that the address changed if:
         //    1) The 'forced address' status changed.

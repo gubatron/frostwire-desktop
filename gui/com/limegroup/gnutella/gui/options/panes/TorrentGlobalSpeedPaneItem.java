@@ -10,8 +10,6 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.gudy.azureus2.core3.config.COConfigurationManager;
-
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 
@@ -131,7 +129,8 @@ public class TorrentGlobalSpeedPaneItem extends AbstractPaneItem {
 
 	@Override
 	public void initOptions() {
-		storedDownloadSpeed = COConfigurationManager.getIntParameter(globalDownloadSpeedConfigKey);
+        // TODO:BITTORRENT
+		//storedDownloadSpeed = COConfigurationManager.getIntParameter(globalDownloadSpeedConfigKey);
 		
 		if (storedDownloadSpeed == 0) {
 			DOWNLOAD_SLIDER.setValue(101*1024);
@@ -142,7 +141,8 @@ public class TorrentGlobalSpeedPaneItem extends AbstractPaneItem {
 		
 		updateSpeedLabel(DOWNLOAD_SLIDER, DOWNLOAD_SLIDER_LABEL);
 
-		storedUploadSpeed = COConfigurationManager.getIntParameter(globalUploadSpeedConfigKey);
+        // TODO:BITTORRENT
+		//storedUploadSpeed = COConfigurationManager.getIntParameter(globalUploadSpeedConfigKey);
 		
 		if (storedUploadSpeed == 0) {
 			UPLOAD_SLIDER.setValue(101*1024);
@@ -180,14 +180,16 @@ public class TorrentGlobalSpeedPaneItem extends AbstractPaneItem {
 			newUpload = 0;
 		}
 		*/
-		
-		COConfigurationManager.setParameter(globalDownloadSpeedConfigKey, newDownload);
-		COConfigurationManager.setParameter(globalUploadSpeedConfigKey, newUpload);
+
+        // TODO:BITTORRENT
+		//COConfigurationManager.setParameter(globalDownloadSpeedConfigKey, newDownload);
+		//COConfigurationManager.setParameter(globalUploadSpeedConfigKey, newUpload);
 		
 		DOWNLOAD_SLIDER.setValue((newDownload == 0) ? MAX_SLIDER_VALUE : newDownload);
 		UPLOAD_SLIDER.setValue((newUpload == 0) ? MAX_SLIDER_VALUE : newUpload);
-		
-		COConfigurationManager.save();
+
+        // TODO:BITTORRENT
+		//COConfigurationManager.save();
 		
 		updateSpeedLabel(UPLOAD_SLIDER, UPLOAD_SLIDER_LABEL);
 		updateSpeedLabel(DOWNLOAD_SLIDER, DOWNLOAD_SLIDER_LABEL);

@@ -8,7 +8,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -168,14 +167,14 @@ public final class ProxyPaneItem extends AbstractPaneItem {
         ConnectionSettings.PROXY_PORT.setValue(proxyPort);
         ConnectionSettings.CONNECTION_METHOD.setValue(connectionMethod);
         ConnectionSettings.PROXY_HOST.setValue(proxyHost);
-        
+
+        // TODO:BITTORRENT
         // put proxy configuration in vuze options
-        COConfigurationManager.setParameter("Enable.Proxy", connectionMethod != ConnectionSettings.C_NO_PROXY);
-        COConfigurationManager.setParameter("Enable.SOCKS", connectionMethod == ConnectionSettings.C_SOCKS4_PROXY || connectionMethod == ConnectionSettings.C_SOCKS5_PROXY);
-        COConfigurationManager.setParameter("Proxy.Host", proxyHost);
-        COConfigurationManager.setParameter("Proxy.Port", String.valueOf(proxyPort));
-        
-        COConfigurationManager.save();
+        //COConfigurationManager.setParameter("Enable.Proxy", connectionMethod != ConnectionSettings.C_NO_PROXY);
+        //COConfigurationManager.setParameter("Enable.SOCKS", connectionMethod == ConnectionSettings.C_SOCKS4_PROXY || connectionMethod == ConnectionSettings.C_SOCKS5_PROXY);
+        //COConfigurationManager.setParameter("Proxy.Host", proxyHost);
+        //COConfigurationManager.setParameter("Proxy.Port", String.valueOf(proxyPort));
+        //COConfigurationManager.save();
 
         return false;
     }

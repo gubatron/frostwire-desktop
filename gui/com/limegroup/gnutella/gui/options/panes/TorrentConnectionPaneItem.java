@@ -2,8 +2,6 @@ package com.limegroup.gnutella.gui.options.panes;
 
 import java.io.IOException;
 
-import org.gudy.azureus2.core3.config.COConfigurationManager;
-import org.gudy.azureus2.core3.config.impl.ConfigurationManager;
 import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -74,31 +72,35 @@ public class TorrentConnectionPaneItem extends AbstractPaneItem {
 
 	@Override
 	public boolean isDirty() {
-		return (BittorrentSettings.TORRENT_MAX_ACTIVE_DOWNLOADS.getValue() != MAX_ACTIVE_DOWNLOADS_FIELD.getValue()) ||
-			(COConfigurationManager.getIntParameter("Max.Peer.Connections.Total") != MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue()) ||
-			(COConfigurationManager.getIntParameter("Max.Peer.Connections.Per.Torrent") != MAX_PEERS_PER_TORRENT_FIELD.getValue()) ||
-			(COConfigurationManager.getIntParameter("Max Uploads") != MAX_UPLOAD_SLOTS_FIELD.getValue());// || isThrottleSliderDirty();
+        // TODO:BITTORRENT
+        return true;
+		//return (BittorrentSettings.TORRENT_MAX_ACTIVE_DOWNLOADS.getValue() != MAX_ACTIVE_DOWNLOADS_FIELD.getValue()) ||
+		//	(COConfigurationManager.getIntParameter("Max.Peer.Connections.Total") != MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue()) ||
+		//	(COConfigurationManager.getIntParameter("Max.Peer.Connections.Per.Torrent") != MAX_PEERS_PER_TORRENT_FIELD.getValue()) ||
+		//	(COConfigurationManager.getIntParameter("Max Uploads") != MAX_UPLOAD_SLOTS_FIELD.getValue());// || isThrottleSliderDirty();
 	}
 
 	@Override
 	public void initOptions() {
-		ConfigurationManager.getInstance().load();
-		MAX_ACTIVE_DOWNLOADS_FIELD.setValue(BittorrentSettings.TORRENT_MAX_ACTIVE_DOWNLOADS.getValue());
-		MAX_GLOBAL_NUM_CONNECTIONS_FIELD.setValue(COConfigurationManager.getIntParameter("Max.Peer.Connections.Total"));
-		MAX_PEERS_PER_TORRENT_FIELD.setValue(COConfigurationManager.getIntParameter("Max.Peer.Connections.Per.Torrent"));
-		MAX_UPLOAD_SLOTS_FIELD.setValue(COConfigurationManager.getIntParameter("Max Uploads"));
+        // TODO:BITTORRENT
+		//ConfigurationManager.getInstance().load();
+		//MAX_ACTIVE_DOWNLOADS_FIELD.setValue(BittorrentSettings.TORRENT_MAX_ACTIVE_DOWNLOADS.getValue());
+		//MAX_GLOBAL_NUM_CONNECTIONS_FIELD.setValue(COConfigurationManager.getIntParameter("Max.Peer.Connections.Total"));
+		//MAX_PEERS_PER_TORRENT_FIELD.setValue(COConfigurationManager.getIntParameter("Max.Peer.Connections.Per.Torrent"));
+		//MAX_UPLOAD_SLOTS_FIELD.setValue(COConfigurationManager.getIntParameter("Max Uploads"));
 	}
 
 	@Override
 	public boolean applyOptions() throws IOException {
+        // TODO:BITTORRENT
 		BittorrentSettings.TORRENT_MAX_ACTIVE_DOWNLOADS.setValue(MAX_ACTIVE_DOWNLOADS_FIELD.getValue());
-		COConfigurationManager.setParameter("Max.Peer.Connections.Total",MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue());
-		COConfigurationManager.setParameter("Max.Peer.Connections.Per.Torrent",MAX_PEERS_PER_TORRENT_FIELD.getValue());
+		//COConfigurationManager.setParameter("Max.Peer.Connections.Total",MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue());
+		//COConfigurationManager.setParameter("Max.Peer.Connections.Per.Torrent",MAX_PEERS_PER_TORRENT_FIELD.getValue());
 	
-		COConfigurationManager.setParameter("Max Uploads",MAX_UPLOAD_SLOTS_FIELD.getValue());
-		COConfigurationManager.setParameter("Max Uploads Seeding",MAX_UPLOAD_SLOTS_FIELD.getValue());
+		//COConfigurationManager.setParameter("Max Uploads",MAX_UPLOAD_SLOTS_FIELD.getValue());
+		//COConfigurationManager.setParameter("Max Uploads Seeding",MAX_UPLOAD_SLOTS_FIELD.getValue());
 		
-		COConfigurationManager.save();
+		//COConfigurationManager.save();
 		return false;
 	}
 

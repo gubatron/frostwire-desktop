@@ -23,8 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
-import org.gudy.azureus2.core3.config.COConfigurationManager;
-
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.ConnectionSettings;
@@ -158,11 +156,14 @@ public class NetworkInterfacePaneItem extends AbstractPaneItem {
         }
         
         if (ConnectionSettings.CUSTOM_NETWORK_INTERFACE.getValue()) {
-            COConfigurationManager.setParameter("Bind IP", ConnectionSettings.CUSTOM_INETADRESS.getValue());
+            // TODO:BITTORRENT
+            //COConfigurationManager.setParameter("Bind IP", ConnectionSettings.CUSTOM_INETADRESS.getValue());
         } else {
-            COConfigurationManager.setParameter("Bind IP", "");
+            // TODO:BITTORRENT
+            //COConfigurationManager.setParameter("Bind IP", "");
         }
-        COConfigurationManager.save();
+        // TODO:BITTORRENT
+        //COConfigurationManager.save();
         
         return false;
     }

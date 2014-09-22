@@ -17,8 +17,8 @@
 package org.gudy.azureus2.core3.logging;
 
 import com.aelitis.azureus.core.util.GeneralUtils;
-import org.gudy.azureus2.core3.config.COConfigurationManager;
-import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
+//import org.gudy.azureus2.core3.config.COConfigurationManager;
+//import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
 import java.util.ArrayList;
 
 /**
@@ -138,7 +138,7 @@ public class LogAlert implements org.gudy.azureus2.plugins.logging.LogAlert {
 	
 	public int getTimeoutSecs() {
 		if (this.timeoutSecs != -1) {return this.timeoutSecs;}
-		return COConfigurationManager.getIntParameter("Message Popup Autoclose in Seconds");
+		return 1000;//COConfigurationManager.getIntParameter("Message Popup Autoclose in Seconds");
 	}
 	
 	public String getPlainText() {

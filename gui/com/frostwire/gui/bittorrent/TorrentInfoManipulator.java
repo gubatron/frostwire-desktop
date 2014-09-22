@@ -24,7 +24,6 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
-import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
 import org.gudy.azureus2.core3.torrent.impl.TOTorrentDeserialiseImpl;
@@ -37,9 +36,10 @@ public class TorrentInfoManipulator {
         initAdditionalInfoPropertiesReference(torrent);
     }
 
-    public TorrentInfoManipulator(DownloadManager downloadManager) {
-        this(TorrentInfoManipulator.getTOTorrentDeserializeImplDelegate(downloadManager));
-    }
+    // TODO:BITTORRENT
+//    public TorrentInfoManipulator(DownloadManager downloadManager) {
+//        this(TorrentInfoManipulator.getTOTorrentDeserializeImplDelegate(downloadManager));
+//    }
     
     public TorrentInfoManipulator(File torrentFile) {
         FileInputStream fileInputStream = null;
@@ -88,7 +88,9 @@ public class TorrentInfoManipulator {
             }
         }
     }
-    
+
+    // TODO:BITTORRENT
+    /*
     private static TOTorrentDeserialiseImpl getTOTorrentDeserializeImplDelegate(DownloadManager downloadManager) {
         TOTorrentDeserialiseImpl result = null;
         Class<? extends TOTorrent> class1 = downloadManager.getTorrent().getClass();
@@ -118,5 +120,5 @@ public class TorrentInfoManipulator {
             e.printStackTrace();
         }
         return result;
-    }
+    }*/
 }

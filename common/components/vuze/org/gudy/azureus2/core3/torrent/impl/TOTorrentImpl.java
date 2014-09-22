@@ -149,7 +149,7 @@ TOTorrentImpl
 		
 		if ( created ){
 			
-			TorrentUtils.addCreatedTorrent( this );
+			//TorrentUtils.addCreatedTorrent( this );
 		}
 		
 		byte[]	res = serialiseToByteArray();
@@ -280,7 +280,7 @@ TOTorrentImpl
 	{
 		if ( created ){
 			
-			TorrentUtils.addCreatedTorrent( this );
+			//TorrentUtils.addCreatedTorrent( this );
 		}
 		
 		Map	root = serialiseToMap();
@@ -309,7 +309,7 @@ TOTorrentImpl
 			try{
 				serialising	= true;	// not thread safe but we can live without the hassle of using TLS or whatever
 					
-				TorrentUtils.addCreatedTorrent( this );
+				//TorrentUtils.addCreatedTorrent( this );
 				
 			}finally{
 				
@@ -460,7 +460,7 @@ TOTorrentImpl
 	{
 		if ( created ){
 			
-			TorrentUtils.addCreatedTorrent( this );
+			//TorrentUtils.addCreatedTorrent( this );
 		}
 		
 		//TOTorrentXMLSerialiser	serialiser = new TOTorrentXMLSerialiser( this );

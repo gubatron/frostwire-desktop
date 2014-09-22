@@ -38,14 +38,14 @@ import com.aelitis.azureus.core.*;
 import com.aelitis.azureus.core.util.CopyOnWriteList;
 import com.aelitis.azureus.core.util.DNSUtils;
 
-import org.gudy.azureus2.core3.config.COConfigurationManager;
-import org.gudy.azureus2.core3.config.ParameterListener;
+//import org.gudy.azureus2.core3.config.COConfigurationManager;
+//import org.gudy.azureus2.core3.config.ParameterListener;
 import org.gudy.azureus2.core3.internat.*;
 import org.gudy.azureus2.core3.logging.LogRelation;
 import org.gudy.azureus2.core3.torrent.*;
-import org.gudy.azureus2.core3.disk.*;
-import org.gudy.azureus2.core3.download.*;
-import org.gudy.azureus2.pluginsimpl.local.utils.resourcedownloader.ResourceDownloaderFactoryImpl;
+//import org.gudy.azureus2.core3.disk.*;
+//import org.gudy.azureus2.core3.download.*;
+//import org.gudy.azureus2.pluginsimpl.local.utils.resourcedownloader.ResourceDownloaderFactoryImpl;
 
 
 public class 
@@ -54,7 +54,7 @@ TorrentUtils
 	private static final String NO_VALID_URL_URL = "http://no.valid.urls.defined/announce";
 	
 	static{
-		AEDiagnostics.addEvidenceGenerator(
+		/*AEDiagnostics.addEvidenceGenerator(
 			new AEDiagnosticsEvidenceGenerator()
 			{
 				public void 
@@ -102,7 +102,7 @@ TorrentUtils
 						writer.exdent();
 					}
 				}
-			});
+			});*/
 	}
 	
 	public static final int TORRENT_FLAG_LOW_NOISE			= 0x00000001;
@@ -175,7 +175,7 @@ TorrentUtils
 	static DNSUtils.DNSUtilsIntf dns_utils = DNSUtils.getSingleton();
 	
 	static {
-		COConfigurationManager.addAndFireParameterListeners(
+		/*COConfigurationManager.addAndFireParameterListeners(
 			new String[]{ 
 				"Save Torrent Backup", 
 				"Tracker DNS Records Enable",
@@ -202,7 +202,7 @@ TorrentUtils
 		while( it.hasNext()){
 			
 			created_torrents_set.add( new HashWrapper((byte[])it.next()));
-		}
+		}*/
 	}
 
 	public static TOTorrent
@@ -1398,12 +1398,12 @@ TorrentUtils
 		return( found );
 	}
 	
-	public static void
-	setResumeDataCompletelyValid(
-		DownloadManagerState	download_manager_state )
-	{
-		DiskManagerFactory.setResumeDataCompletelyValid( download_manager_state );
-	}
+//	public static void
+//	setResumeDataCompletelyValid(
+//		DownloadManagerState	download_manager_state )
+//	{
+//		DiskManagerFactory.setResumeDataCompletelyValid( download_manager_state );
+//	}
 	
 	public static String
 	getLocalisedName(
@@ -1450,14 +1450,14 @@ TorrentUtils
 		if ( hash != null ){
 			
 			try{
-				AzureusCore	core = AzureusCoreFactory.getSingleton();
+				/*AzureusCore	core = AzureusCoreFactory.getSingleton();
 				
 				DownloadManager dm = core.getGlobalManager().getDownloadManager( hash );
 				
 				if ( dm != null ){
 							
 					return( dm.getTorrent());
-				}
+				}*/
 			}catch( Throwable e ){
 				
 				Debug.printStackTrace(e);
@@ -2142,7 +2142,7 @@ TorrentUtils
 		}
 	}
 	
-	public static Set<String>
+	/*public static Set<String>
 	getIgnoreSet()
 	{
 		return(getIgnoreSetSupport(false));
@@ -2206,7 +2206,7 @@ TorrentUtils
 		}
 		
 		return( ignore_set );
-	}
+	}*/
 	
 	
 	
@@ -3151,7 +3151,7 @@ TorrentUtils
 	 * @return File after it's been copied (may be the same as f)
 	 * @throws IOException
 	 */
-	public static File copyTorrentFileToSaveDir(File f, boolean persistent)
+	/*public static File copyTorrentFileToSaveDir(File f, boolean persistent)
 			throws IOException {
 		File torrentDir;
 		boolean saveTorrents = persistent
@@ -3193,7 +3193,7 @@ TorrentUtils
 		}
 
 		return fDest;
-	}
+	}*/
 
 	/**
 	 * Get the DownloadManager related to a torrent's hashBytes
@@ -3201,14 +3201,14 @@ TorrentUtils
 	 * @param hashBytes
 	 * @return
 	 */
-  public static DownloadManager getDownloadManager( HashWrapper	hash ) {
-		try {
-			return AzureusCoreFactory.getSingleton().getGlobalManager()
-					.getDownloadManager(hash);
-		} catch (Exception e) {
-			return null;
-		}
-	}
+//  public static DownloadManager getDownloadManager( HashWrapper	hash ) {
+//		try {
+//			return AzureusCoreFactory.getSingleton().getGlobalManager()
+//					.getDownloadManager(hash);
+//		} catch (Exception e) {
+//			return null;
+//		}
+//	}
 
 	/**
 	 * Deletes the given dir and all dirs underneath if empty.
@@ -3228,11 +3228,11 @@ TorrentUtils
 	 * @param f Dir to delete
 	 * @param log_warnings Whether to log warning
 	 */
-	public static void recursiveEmptyDirDelete(File f, boolean log_warnings) {
-		Set ignore_map = getIgnoreSet();
-
-		FileUtil.recursiveEmptyDirDelete(f, ignore_map, log_warnings);
-	}
+//	public static void recursiveEmptyDirDelete(File f, boolean log_warnings) {
+//		Set ignore_map = getIgnoreSet();
+//
+//		FileUtil.recursiveEmptyDirDelete(f, ignore_map, log_warnings);
+//	}
 
 	/**
 	 * A nice string of a Torrent's hash
@@ -3298,39 +3298,39 @@ TorrentUtils
 	  }
 	}
 	
-	public static void
+	/*public static void
 	addCreatedTorrent(
 		TOTorrent		torrent )
 	{
 		synchronized( created_torrents ){
-			
+
 			try{
 				byte[]	hash = torrent.getHash();
-				
+
 				//System.out.println( "addCreated:" + new String(torrent.getName()) + "/" + ByteFormatter.encodeString( hash ));
-				
+
 				if ( created_torrents.size() == 0 ){
-					
+
 					COConfigurationManager.setParameter( "my.created.torrents", created_torrents );
 				}
-				
+
 				HashWrapper	hw = new HashWrapper( hash );
-				
+
 				if ( !created_torrents_set.contains( hw )){
-					
+
 					created_torrents.add( hash );
-				
+
 					created_torrents_set.add( hw );
-				
+
 					COConfigurationManager.setDirty();
 				}
 			}catch( TOTorrentException e ){
-				
+
 			}
 		}
-	}
+	}*/
 	
-	public static void
+	/*public static void
 	removeCreatedTorrent(
 		TOTorrent		torrent )
 	{
@@ -3363,7 +3363,7 @@ TorrentUtils
 				
 			}
 		}
-	}
+	}*/
 	
 	public static boolean
 	isCreatedTorrent(
@@ -3397,7 +3397,7 @@ TorrentUtils
 		}
 	}
 		
-	public static TOTorrent
+	/*public static TOTorrent
 	download(
 		URL		url )
 	
@@ -3416,7 +3416,7 @@ TorrentUtils
 			
 			throw( new IOException( Debug.getNestedExceptionMessage( e )));
 		}
-	}
+	}*/
 	
 	private static void
 	fireAttributeListener(
@@ -3627,7 +3627,7 @@ TorrentUtils
 											txts_cache.add( str.getBytes( "UTF-8" ));
 										}
 										
-										List old_txts_cache = COConfigurationManager.getListParameter( config_key, null );
+										List old_txts_cache = null;//COConfigurationManager.getListParameter( config_key, null );
 
 										boolean	same = false;
 										
@@ -3651,7 +3651,7 @@ TorrentUtils
 										
 										if ( !same ){
 											
-											COConfigurationManager.setParameter( config_key, txts_cache );
+											//COConfigurationManager.setParameter( config_key, txts_cache );
 										
 											f_txt_entry.getSemaphore().reserve();
 											
@@ -3672,7 +3672,7 @@ TorrentUtils
 							}
 						});
 					
-					List txts_cache = COConfigurationManager.getListParameter( config_key, null );
+					List txts_cache = null;//COConfigurationManager.getListParameter( config_key, null );
 
 						// if we have a cache and this isn't a force update and start of day then well just go with the cache
 					
@@ -3718,7 +3718,7 @@ TorrentUtils
 								txts_cache.add( str.getBytes( "UTF-8" ));
 							}
 							
-							COConfigurationManager.setParameter( config_key, txts_cache );
+							//COConfigurationManager.setParameter( config_key, txts_cache );
 						}
 					}catch( Throwable e ){
 						
