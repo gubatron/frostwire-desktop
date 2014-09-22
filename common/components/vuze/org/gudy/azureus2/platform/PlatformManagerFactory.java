@@ -44,7 +44,7 @@ PlatformManagerFactory
 		
 			if ( platform_manager == null && !force_dummy ){
 										  
-				try{
+				/*try{
 					String cla = System.getProperty( "az.factory.platformmanager.impl", "" );
 
 					if ( cla.length()> 0 ){
@@ -72,7 +72,7 @@ PlatformManagerFactory
 				}catch( Throwable e ){
 					
 					Debug.printStackTrace(e);
-				}
+				}*/
 			}
 			
 			if ( platform_manager == null ){

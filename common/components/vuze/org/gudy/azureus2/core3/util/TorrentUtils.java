@@ -506,7 +506,7 @@ TorrentUtils
 	    }
 	}
 	
-	public static void
+	/*public static void
 	delete(
 		File 		torrent_file,
 		boolean		force_no_recycle )
@@ -517,7 +517,7 @@ TorrentUtils
     	}
 	
     	new File( torrent_file.toString() + ".bak" ).delete();
-	}
+	}*/
 	
 	public static boolean
 	move(
