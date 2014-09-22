@@ -27,6 +27,7 @@ import com.frostwire.jlibtorrent.alerts.SaveResumeDataAlert;
 import com.frostwire.jlibtorrent.alerts.TorrentAlert;
 import com.frostwire.jlibtorrent.swig.entry;
 import com.frostwire.logging.Logger;
+import com.frostwire.util.OSUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
@@ -184,6 +185,16 @@ public final class LTEngine implements BTEngine {
         return session.getSettings().getDownloadRateLimit();
     }
 
+    @Override
+    public void revertToDefaultConfiguration() {
+        if (OSUtils.isAndroid()) {
+            // need to test
+            session.setSettings(SessionSettings.newMinMemoryUsage());
+        } else {
+            session.setSettings(SessionSettings.newDefaults());
+        }
+    }
+
     private void addEngineListener() {
         session.addListener(new AlertListener() {
             @Override
@@ -293,6 +304,8 @@ public final class LTEngine implements BTEngine {
             if (f.exists()) {
                 byte[] data = FileUtils.readFileToByteArray(f);
                 session.loadState(data);
+            } else {
+                revertToDefaultConfiguration();
             }
         } catch (IOException e) {
             LOG.error("Error loading session state", e);

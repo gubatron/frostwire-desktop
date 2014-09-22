@@ -18,25 +18,24 @@
 
 package com.limegroup.gnutella.settings;
 
-import java.io.File;
-
+import com.frostwire.bittorrent.BTEngineFactory;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.FileSetSetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.util.CommonUtils;
 
-import com.limegroup.gnutella.util.FrostWireUtils;
+import java.io.File;
 
 /**
  * @author gubatron
  * @author aldenml
- * 
  */
 public class LibrarySettings extends LimeProps {
 
     private LibrarySettings() {
     }
-    
+
     private static final File PORTABLE_ROOT_FOLDER = CommonUtils.getPortableRootFolder();
 
     public static final File LIBRARY_DATABASE = new File(CommonUtils.getUserSettingsDir(), "library_db");
@@ -44,7 +43,7 @@ public class LibrarySettings extends LimeProps {
     public static final File DEFAULT_LIBRARY_FROM_DEVICE_DATA_DIR = new File((PORTABLE_ROOT_FOLDER == null) ? FrostWireUtils.getFrostWireRootFolder() : PORTABLE_ROOT_FOLDER, "From Device");
 
     /**
-     * The include directories. 
+     * The include directories.
      */
     public static final FileSetSetting DIRECTORIES_TO_INCLUDE = FACTORY.createFileSetSetting("DIRECTORIES_TO_INCLUDE_FOR_FILES", new File[0]);
 
@@ -53,19 +52,19 @@ public class LibrarySettings extends LimeProps {
     public static final FileSetSetting DIRECTORIES_TO_INCLUDE_FROM_FROSTWIRE4 = FACTORY.createFileSetSetting("DIRECTORIES_TO_INCLUDE_FROM_FROSTWIRE4", new File[0]);
 
     public static final FileSetting USER_MUSIC_FOLDER = FACTORY.createFileSetting("USER_MUSIC_FOLDER", FrostWireUtils.getUserMusicFolder());
-    
+
     public static final FileSetting USER_VIDEO_FOLDER = FACTORY.createFileSetting("USER_VIDEO_FOLDER", FrostWireUtils.getUserVideoFolder());
 
     public static final FileSetting LIBRARY_FROM_DEVICE_DATA_DIR_SETTING = FACTORY.createFileSetting("LIBRARY_FROM_DEVICE_DATA_DIR_SETTING", DEFAULT_LIBRARY_FROM_DEVICE_DATA_DIR).setAlwaysSave(true);
 
     public static final BooleanSetting LIBRARY_WIFI_SHARING_ENABLED = FACTORY.createBooleanSetting("LIBRARY_WIFI_SHARING_ENABLED", true);
 
-    
+
     public static void setupInitialLibraryFolders() {
         SharingSettings.initTorrentDataDirSetting();
-        
+
         LibrarySettings.DIRECTORIES_TO_INCLUDE.add(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
-        
+
         for (File f : FrostWireUtils.getFrostWire4SaveDirectories()) {
             LibrarySettings.DIRECTORIES_TO_INCLUDE.add(f);
             LibrarySettings.DIRECTORIES_TO_INCLUDE_FROM_FROSTWIRE4.add(f);
@@ -75,28 +74,20 @@ public class LibrarySettings extends LimeProps {
             if (LibrarySettings.USER_MUSIC_FOLDER.getValue().exists()) {
                 LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.USER_MUSIC_FOLDER.getValue());
             }
-            
+
             if (LibrarySettings.USER_VIDEO_FOLDER.getValue().exists()) {
                 LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.USER_VIDEO_FOLDER.getValue());
             }
         }
-        
+
         File fromDeviceFolder = LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.getValue();
         if (!fromDeviceFolder.exists()) {
             fromDeviceFolder.mkdir();
         }
-        
+
         LibrarySettings.DIRECTORIES_TO_INCLUDE.add(fromDeviceFolder);
 
-        // TODO:BITTORRENT
-        /*
-        File azureusUserPath = new File(CommonUtils.getUserSettingsDir() + File.separator + "azureus" + File.separator);
-        if (!azureusUserPath.exists()) {
-            System.setProperty("azureus.config.path", azureusUserPath.getAbsolutePath());
-            System.setProperty("azureus.install.path", azureusUserPath.getAbsolutePath());
-            AzureusStarter.revertToDefaultConfiguration();
-        }
-        */
+        BTEngineFactory.getInstance().revertToDefaultConfiguration();
     }
 
 

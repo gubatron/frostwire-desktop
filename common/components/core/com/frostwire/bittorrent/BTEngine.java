@@ -58,4 +58,6 @@ public interface BTEngine {
     public int getDownloadRateLimit();
 
     public int getUploadRateLimit();
+
+    public void revertToDefaultConfiguration();
 }

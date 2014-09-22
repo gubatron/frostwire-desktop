@@ -32,6 +32,7 @@ public final class OSUtils {
     static {
         String vmName = System.getProperty("java.vm.name", "");
 
+        // maybe this code needs to change due the new ART runtime.
         isAndroid = vmName != null && vmName.equalsIgnoreCase("Dalvik");
     }
 
