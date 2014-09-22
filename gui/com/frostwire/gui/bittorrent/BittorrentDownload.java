@@ -52,6 +52,10 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
         dl.resume();
     }
 
+    public BTDownload getDl() {
+        return dl;
+    }
+
     @Override
     public long getSize() {
         return dl.getSize();

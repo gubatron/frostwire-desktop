@@ -97,4 +97,12 @@ public interface BTDownload {
     public boolean isPartial();
 
     public String makeMagnetUri();
+
+    public int getDownloadRateLimit();
+
+    public void setDownloadRateLimit(int limit);
+
+    public int getUploadRateLimit();
+
+    public void setUploadRateLimit(int limit);
 }

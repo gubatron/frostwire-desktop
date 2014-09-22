@@ -54,4 +54,8 @@ public interface BTEngine {
     public long getTotalDownload();
 
     public long getTotalUpload();
+
+    public int getDownloadRateLimit();
+
+    public int getUploadRateLimit();
 }

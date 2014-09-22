@@ -276,4 +276,24 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
     public String makeMagnetUri() {
         return th.makeMagnetUri();
     }
+
+    @Override
+    public int getDownloadRateLimit() {
+        return th.getDownloadLimit();
+    }
+
+    @Override
+    public void setDownloadRateLimit(int limit) {
+        th.setDownloadLimit(limit);
+    }
+
+    @Override
+    public int getUploadRateLimit() {
+        return th.getUploadLimit();
+    }
+
+    @Override
+    public void setUploadRateLimit(int limit) {
+        th.setUploadLimit(limit);
+    }
 }

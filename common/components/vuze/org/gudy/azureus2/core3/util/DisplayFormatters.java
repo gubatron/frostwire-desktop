@@ -209,7 +209,7 @@ DisplayFormatters
     }
 
     
-    per_sec = getResourceString( "Formats.units.persec", "/s" );
+    per_sec = "/s";//getResourceString( "Formats.units.persec", "/s" );
 
     units_base10 = 
     	new String[]{ 
@@ -237,7 +237,7 @@ DisplayFormatters
 	getUnit(
 		String	key )
 	{
-		String res = " " + getResourceString( "Formats.units." + key, key );
+		String res = " " + key;//getResourceString( "Formats.units." + key, key );
 		  	  
 		return( res );
 	}

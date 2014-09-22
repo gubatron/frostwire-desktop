@@ -173,6 +173,16 @@ public final class LTEngine implements BTEngine {
         return session.getStatus().getTotalUpload();
     }
 
+    @Override
+    public int getDownloadRateLimit() {
+        return session.getSettings().getDownloadRateLimit();
+    }
+
+    @Override
+    public int getUploadRateLimit() {
+        return session.getSettings().getDownloadRateLimit();
+    }
+
     private void addEngineListener() {
         session.addListener(new AlertListener() {
             @Override

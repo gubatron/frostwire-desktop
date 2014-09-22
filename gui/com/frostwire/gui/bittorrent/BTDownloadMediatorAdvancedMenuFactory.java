@@ -48,6 +48,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.bittorrent.BTEngineFactory;
 import net.miginfocom.swing.MigLayout;
 
 import org.gudy.azureus2.core3.torrent.TOTorrent;
@@ -73,9 +75,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
     public static SkinMenu createAdvancedSubMenu() {
 
-        // TODO:BITTORRENT
-        /*
-        final DownloadManager[] dms = getSingleSelectedDownloadManagers();
+        final com.frostwire.bittorrent.BTDownload[] dms = getSingleSelectedDownloadManagers();
         if (dms == null) {
             return null;
         }
@@ -91,10 +91,10 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         long downSpeedSetMax = 0;
 
         for (int i = 0; i < dms.length; i++) {
-            DownloadManager dm = (DownloadManager) dms[i];
+            com.frostwire.bittorrent.BTDownload dm = (com.frostwire.bittorrent.BTDownload) dms[i];
 
             try {
-                int maxul = dm.getStats().getUploadRateLimitBytesPerSecond();
+                int maxul = dm.getUploadRateLimit();
                 if (maxul == 0) {
                     upSpeedUnlimited = true;
                 } else {
@@ -108,7 +108,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
                 }
                 totalUpSpeed += maxul;
 
-                int maxdl = dm.getStats().getDownloadRateLimitBytesPerSecond();
+                int maxdl = dm.getDownloadRateLimit();
                 if (maxdl == 0) {
                     downSpeedUnlimited = true;
                 } else {
@@ -131,33 +131,22 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
         // advanced > Download Speed Menu //
 
-        long maxDownload = COConfigurationManager.getIntParameter("Max Download Speed KBs", 0) * 1024;
-        long maxUpload = COConfigurationManager.getIntParameter("Max Upload Speed KBs", 0) * 1024;
+        BTEngine engine = BTEngineFactory.getInstance();
+        long maxDownload = engine.getDownloadRateLimit();
+        long maxUpload = engine.getUploadRateLimit();
 
         addSpeedMenu(menuAdvanced, true, true, downSpeedDisabled, downSpeedUnlimited, totalDownSpeed, downSpeedSetMax, maxDownload, upSpeedDisabled, upSpeedUnlimited, totalUpSpeed, upSpeedSetMax,
                 maxUpload, dms.length, new SpeedAdapter() {
                     public void setDownSpeed(final int speed) {
                         for (int i = 0; i < dms.length; i++) {
-                            dms[i].getStats().setDownloadRateLimitBytesPerSecond(speed);
+                            dms[i].setDownloadRateLimit(speed);
                         }
-                        //                        DMTask task = new DMTask(dms) {
-                        //                            public void run(DownloadManager dm) {
-                        //                                dm.getStats().setDownloadRateLimitBytesPerSecond(speed);
-                        //                            }
-                        //                        };
-                        //                        task.go();
                     }
 
                     public void setUpSpeed(final int speed) {
                         for (int i = 0; i < dms.length; i++) {
-                            dms[i].getStats().setUploadRateLimitBytesPerSecond(speed);
+                            dms[i].setUploadRateLimit(speed);
                         }
-                        //                        DMTask task = new DMTask(dms) {
-                        //                            public void run(DownloadManager dm) {
-                        //                                dm.getStats().setUploadRateLimitBytesPerSecond(speed);
-                        //                            }
-                        //                        };
-                        //                        task.go();
                     }
                 });
 
@@ -167,8 +156,6 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         }
 
         return menuAdvanced;
-        */
-        return null;
     }
 
     public static SkinMenu createAddToPlaylistSubMenu() {
@@ -231,30 +218,29 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         return null;
     }
 
-    // TODO:BITTORRENT
-    /*
-    private static DownloadManager[] getSingleSelectedDownloadManagers() {
+    private static com.frostwire.bittorrent.BTDownload[] getSingleSelectedDownloadManagers() {
         BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
 
         if (downloaders.length != 1) {
             return null;
         }
 
-        ArrayList<DownloadManager> list = new ArrayList<DownloadManager>(downloaders.length);
+        ArrayList<com.frostwire.bittorrent.BTDownload> list = new ArrayList<com.frostwire.bittorrent.BTDownload>(downloaders.length);
         for (BTDownload downloader : downloaders) {
-            // TODO:BITTORRENT
-//            DownloadManager dm = downloader.getDownloadManager();
-//            if (dm != null) {
-//                list.add(dm);
-//            }
+            if (downloader instanceof BittorrentDownload){
+                com.frostwire.bittorrent.BTDownload dm = ((BittorrentDownload) downloader).getDl();
+                if (dm != null) {
+                    list.add(dm);
+                }
+            }
         }
 
         if (list.size() == 0) {
             return null;
         }
 
-        return list.toArray(new DownloadManager[0]);
-    }*/
+        return list.toArray(new com.frostwire.bittorrent.BTDownload[0]);
+    }
 
     private static void addSpeedMenu(SkinMenu menuAdvanced, boolean isTorrentContext, boolean hasSelection, boolean downSpeedDisabled, boolean downSpeedUnlimited, long totalDownSpeed,
             long downSpeedSetMax, long maxDownload, boolean upSpeedDisabled, boolean upSpeedUnlimited, long totalUpSpeed, long upSpeedSetMax, long maxUpload, final int num_entries,
