@@ -18,15 +18,13 @@
 
 package com.frostwire.search.torrent;
 
-import org.apache.commons.io.FilenameUtils;
-
 import com.frostwire.search.AbstractCrawledSearchResult;
-import com.frostwire.torrent.TOTorrentFile;
+import org.apache.commons.io.FilenameUtils;
+import org.gudy.azureus2.core3.torrent.TOTorrentFile;
 
 /**
  * @author gubatron
  * @author aldenml
- * 
  */
 public class TorrentCrawledSearchResult extends AbstractCrawledSearchResult implements TorrentSearchResult {
 
@@ -83,7 +81,7 @@ public class TorrentCrawledSearchResult extends AbstractCrawledSearchResult impl
     public String getHash() {
         return sr.getHash();
     }
-    
+
     @Override
     public String getThumbnailUrl() {
         return sr.getThumbnailUrl();
