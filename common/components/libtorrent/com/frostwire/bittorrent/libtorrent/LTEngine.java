@@ -120,11 +120,12 @@ public final class LTEngine implements BTEngine {
 
     @Override
     public void start() {
-
+        loadSettings();
     }
 
     @Override
     public void stop() {
+        saveSettings();
 // TODO:BITTORRENT
                     /*
                     if (AzureusStarter.isAzureusCoreStarted()) {
@@ -259,6 +260,10 @@ public final class LTEngine implements BTEngine {
         return new File(home, infoHash + ".resume");
     }
 
+    File stateFile() {
+        return new File(home, "settings.dat");
+    }
+
     File readTorrentPath(String infoHash) {
         File torrent = null;
 
@@ -271,5 +276,26 @@ public final class LTEngine implements BTEngine {
         }
 
         return torrent;
+    }
+
+    private void saveSettings() {
+        byte[] data = session.saveState();
+        try {
+            FileUtils.writeByteArrayToFile(stateFile(), data);
+        } catch (Throwable e) {
+            LOG.error("Error saving session state", e);
+        }
+    }
+
+    private void loadSettings() {
+        try {
+            File f = stateFile();
+            if (f.exists()) {
+                byte[] data = FileUtils.readFileToByteArray(f);
+                session.loadState(data);
+            }
+        } catch (IOException e) {
+            LOG.error("Error loading session state", e);
+        }
     }
 }
