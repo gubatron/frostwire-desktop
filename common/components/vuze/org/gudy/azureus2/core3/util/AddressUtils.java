@@ -33,10 +33,10 @@ import java.util.Map;
 
 import org.bouncycastle.util.encoders.Base64;
 
-import com.aelitis.azureus.core.AzureusCoreFactory;
-import com.aelitis.azureus.core.instancemanager.AZInstance;
-import com.aelitis.azureus.core.instancemanager.AZInstanceManager;
-import com.aelitis.azureus.core.proxy.AEProxyFactory;
+//import com.aelitis.azureus.core.AzureusCoreFactory;
+//import com.aelitis.azureus.core.instancemanager.AZInstance;
+//import com.aelitis.azureus.core.instancemanager.AZInstanceManager;
+//import com.aelitis.azureus.core.proxy.AEProxyFactory;
 
 public class 
 AddressUtils 
@@ -45,11 +45,11 @@ AddressUtils
 	public static final byte LAN_LOCAL_YES		= 1;
 	public static final byte LAN_LOCAL_NO		= 2;
 	
-	private static AZInstanceManager	instance_manager;
+	//private static AZInstanceManager	instance_manager;
 	
 	private static Map	host_map = null;
 	
-	public static URL
+	/*public static URL
 	adjustURL(
 		URL		url )
 	{
@@ -95,7 +95,7 @@ AddressUtils
 		}
 		
 		return( url );
-	}
+	}*/
 	
 	public static synchronized void
 	addHostRedirect(
@@ -119,7 +119,7 @@ AddressUtils
 		host_map = new_map;
 	}
 	
-	public static InetSocketAddress
+	/*public static InetSocketAddress
 	adjustTCPAddress(
 		InetSocketAddress	address,
 		boolean				ext_to_lan )
@@ -186,9 +186,9 @@ AddressUtils
 		}
 		
 		return( adjusted_address );
-	}
+	}*/
 	
-	public static List
+	/*public static List
 	getLANAddresses(
 		String		address )
 	{
@@ -246,9 +246,9 @@ AddressUtils
 		}
 		
 		return( result );
-	}
+	}*/
 	
-	public static byte
+	/*public static byte
 	isLANLocalAddress(
 		InetSocketAddress	socket_address )
 	{
@@ -309,7 +309,7 @@ AddressUtils
 		}
 		
 		return is_lan_local;
-	}
+	}*/
 	
 	/**
 	 * checks if the provided address is a global-scope ipv6 unicast address

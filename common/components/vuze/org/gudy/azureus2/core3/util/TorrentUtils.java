@@ -384,7 +384,7 @@ TorrentUtils
 	    	
 	    	File torrent_file = new File(str);
 	    	
-	    	if ( 	( force_backup ||COConfigurationManager.getBooleanParameter("Save Torrent Backup")) &&
+	    	if ( 	( force_backup ||false/*COConfigurationManager.getBooleanParameter("Save Torrent Backup")*/) &&
 	    			torrent_file.exists()) {
 	    		
 	    		File torrent_file_bak = new File(str + ".bak");
@@ -3217,9 +3217,9 @@ TorrentUtils
 	 * Files defined to be ignored for the sake of torrent creation are automatically deleted
 	 * For example, by default this includes thumbs.db
 	 */
-	public static void recursiveEmptyDirDelete(File f) {
-		TorrentUtils.recursiveEmptyDirDelete(f, true);
-	}
+//	public static void recursiveEmptyDirDelete(File f) {
+//		TorrentUtils.recursiveEmptyDirDelete(f, true);
+//	}
 
 	/**
 	 * Same as #recursiveEmptyDirDelete(File), except allows disabling of logging

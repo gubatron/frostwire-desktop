@@ -28,19 +28,19 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.gudy.azureus2.core3.config.COConfigurationManager;
+//import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.logging.LogEvent;
 import org.gudy.azureus2.core3.logging.LogIDs;
 import org.gudy.azureus2.core3.logging.Logger;
-import org.gudy.azureus2.platform.PlatformManager;
-import org.gudy.azureus2.platform.PlatformManagerCapabilities;
-import org.gudy.azureus2.platform.PlatformManagerFactory;
-import org.gudy.azureus2.plugins.platform.PlatformManagerException;
+//import org.gudy.azureus2.platform.PlatformManager;
+//import org.gudy.azureus2.platform.PlatformManagerCapabilities;
+//import org.gudy.azureus2.platform.PlatformManagerFactory;
+//import org.gudy.azureus2.plugins.platform.PlatformManagerException;
 
-import com.aelitis.azureus.core.AzureusCore;
-import com.aelitis.azureus.core.AzureusCoreFactory;
-import com.aelitis.azureus.core.AzureusCoreOperation;
-import com.aelitis.azureus.core.AzureusCoreOperationTask;
+//import com.aelitis.azureus.core.AzureusCore;
+//import com.aelitis.azureus.core.AzureusCoreFactory;
+//import com.aelitis.azureus.core.AzureusCoreOperation;
+//import com.aelitis.azureus.core.AzureusCoreOperationTask;
 
 /**
  * File utility class.
@@ -219,7 +219,7 @@ public class FileUtil {
   	}
   }
   
-  protected static void 
+  /*protected static void
   recursiveEmptyDirDelete(
   	File	f,
 	Set		ignore_set,
@@ -309,7 +309,7 @@ public class FileUtil {
       }
 
     } catch (Exception e) { Debug.out(e.toString()); }
-  }
+  }*/
   
   public static String
   convertOSSpecificChars(
@@ -567,7 +567,7 @@ public class FileUtil {
   	{
  		File parent_dir = new File(SystemProperties.getUserPath());
 
- 		boolean use_backups = COConfigurationManager.getBooleanParameter("Use Config File Backups" );
+ 		boolean use_backups = false;//COConfigurationManager.getBooleanParameter("Use Config File Backups" );
 
  		return( new File( parent_dir, name ).exists() ||
  				( use_backups && new File( parent_dir, name + ".bak" ).exists()));
@@ -579,7 +579,7 @@ public class FileUtil {
 	{
  		File parent_dir = new File(SystemProperties.getUserPath());
   		
- 		boolean use_backups = COConfigurationManager.getBooleanParameter("Use Config File Backups" );
+ 		boolean use_backups = false;//COConfigurationManager.getBooleanParameter("Use Config File Backups" );
 
  		return( readResilientFile( parent_dir, file_name, use_backups ));
 	}
@@ -1715,7 +1715,7 @@ public class FileUtil {
     	}
     }
     
-	public static boolean
+	/*public static boolean
 	deleteWithRecycle(
 		File		file,
 		boolean		force_no_recycle )
@@ -1743,7 +1743,7 @@ public class FileUtil {
 			
 			return( file.delete());
 		}
-	}
+	}*/
 	
 	public static String 
 	translateMoveFilePath(

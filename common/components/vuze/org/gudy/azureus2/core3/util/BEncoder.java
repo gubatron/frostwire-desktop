@@ -24,11 +24,12 @@ import java.net.URLEncoder;
 import java.nio.ByteBuffer;
 import java.util.*;
 
-import org.gudy.azureus2.core3.xml.util.XUXmlWriter;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+//import org.gudy.azureus2.core3.xml.util.XUXmlWriter;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import com.aelitis.azureus.util.JSONUtils;
+//import com.aelitis.azureus.util.JSONUtils;
 
 /**
  * A set of utility methods to encode a Map into a bencoded array of byte.
@@ -746,7 +747,7 @@ BEncoder
     	}
     }
     
-    public static StringBuffer
+    /*public static StringBuffer
     encodeToXML(
     	Map			map,
     	boolean		simple )
@@ -754,7 +755,7 @@ BEncoder
      	XMLEncoder writer = new XMLEncoder();
   
      	return( writer.encode( map, simple ));
-    }    
+    } */
     
     	// JSON
     
@@ -784,7 +785,7 @@ BEncoder
     	
     	for ( Object o: b_list ){
     		
-    		j_list.add( encodeToJSONGeneric( o ));
+    		j_list.put(encodeToJSONGeneric(o));
     	}
     	
     	return( j_list );
@@ -801,9 +802,13 @@ BEncoder
     		
     		Object	key = entry.getKey();
     		Object	val	= entry.getValue();
-    		
-    		j_map.put((String)key, encodeToJSONGeneric( val ));
-    	}
+
+            try {
+                j_map.put((String)key, encodeToJSONGeneric( val ));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     	
     	return( j_map );
     }
@@ -814,7 +819,8 @@ BEncoder
     {
     	JSONObject j_map = encodeToJSONObject( b_map );
     	
-    	return( JSONUtils.encodeToJSON( j_map ));
+    	//return( JSONUtils.encodeToJSON( j_map ));
+        return j_map.toString();
     }
     
     	/*
@@ -899,7 +905,7 @@ BEncoder
         return charPos;
     }
     
-    protected static class
+    /*protected static class
     XMLEncoder
     	extends XUXmlWriter
     {
@@ -925,7 +931,7 @@ BEncoder
     		
     		return( writer.getBuffer());
     	}
-    }
+    }*/
     
     public static void
     main(

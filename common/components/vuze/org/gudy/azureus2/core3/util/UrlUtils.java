@@ -29,18 +29,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.bouncycastle.util.encoders.Base64;
-import org.gudy.azureus2.core3.config.COConfigurationManager;
-import org.gudy.azureus2.core3.download.DownloadManager;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.plugins.download.Download;
-import org.gudy.azureus2.plugins.torrent.Torrent;
-import org.gudy.azureus2.plugins.torrent.TorrentAnnounceURLList;
-import org.gudy.azureus2.plugins.torrent.TorrentAnnounceURLListSet;
-import org.gudy.azureus2.plugins.utils.resourcedownloader.ResourceDownloader;
-import org.gudy.azureus2.plugins.utils.resourceuploader.ResourceUploader;
-import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
+//import org.gudy.azureus2.core3.config.COConfigurationManager;
+//import org.gudy.azureus2.core3.download.DownloadManager;
+//import org.gudy.azureus2.core3.torrent.TOTorrent;
+//import org.gudy.azureus2.plugins.download.Download;
+//import org.gudy.azureus2.plugins.torrent.Torrent;
+//import org.gudy.azureus2.plugins.torrent.TorrentAnnounceURLList;
+//import org.gudy.azureus2.plugins.torrent.TorrentAnnounceURLListSet;
+//import org.gudy.azureus2.plugins.utils.resourcedownloader.ResourceDownloader;
+//import org.gudy.azureus2.plugins.utils.resourceuploader.ResourceUploader;
+//import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
 
-import com.aelitis.net.magneturi.MagnetURIHandler;
+//import com.aelitis.net.magneturi.MagnetURIHandler;
 
 /**
  * @author TuxPaper
@@ -109,8 +109,8 @@ public class UrlUtils
 			return( "&dn=" + UrlUtils.encode(name));
 		}
 	}
-	/*
-	private static String
+
+    private static String
 	encodeNetworks(
 		String[]	networks )
 	{
@@ -132,7 +132,7 @@ public class UrlUtils
 		return( net_str );
 	}
 	
-	public static String
+	/*public static String
 	getMagnetURI(
 		Download		download )
 	{
@@ -575,7 +575,7 @@ public class UrlUtils
 		return null;
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		
 		MagnetURIHandler.getSingleton();
 		byte[] infohash = ByteFormatter.decodeString("1234567890123456789012345678901234567890");
@@ -611,7 +611,7 @@ public class UrlUtils
 			System.out.println("encode: " + txt + " -> " + encode(txt));
 		}
 
-	}
+	}*/
 
 	/**
 	 * Like URLEncoder.encode, except translates spaces into %20 instead of +
@@ -725,12 +725,12 @@ public class UrlUtils
 		connection.connect();
 	}
 	
-	private static String	last_headers = COConfigurationManager.getStringParameter( "metasearch.web.last.headers", null );
+	//private static String	last_headers = COConfigurationManager.getStringParameter( "metasearch.web.last.headers", null );
 	
 	// private static final String default_headers = "SG9zdDogbG9jYWxob3N0OjQ1MTAwClVzZXItQWdlbnQ6IE1vemlsbGEvNS4wIChXaW5kb3dzOyBVOyBXaW5kb3dzIE5UIDUuMTsgZW4tVVM7IHJ2OjEuOC4xLjE0KSBHZWNrby8yMDA4MDQwNCBGaXJlZm94LzIuMC4wLjE0CkFjY2VwdDogdGV4dC94bWwsYXBwbGljYXRpb24veG1sLGFwcGxpY2F0aW9uL3hodG1sK3htbCx0ZXh0L2h0bWw7cT0wLjksdGV4dC9wbGFpbjtxPTAuOCxpbWFnZS9wbmcsKi8qO3E9MC41CkFjY2VwdC1MYW5ndWFnZTogZW4tdXMsZW47cT0wLjUKQWNjZXB0LUVuY29kaW5nOiBnemlwLGRlZmxhdGUKQWNjZXB0LUNoYXJzZXQ6IElTTy04ODU5LTEsdXRmLTg7cT0wLjcsKjtxPTAuNwpLZWVwLUFsaXZlOiAzMDAKQ29ubmVjdGlvbjoga2VlcC1hbGl2ZQ==";
 	private static final String default_headers = "QWNjZXB0OiB0ZXh0L2h0bWwsYXBwbGljYXRpb24veGh0bWwreG1sLGFwcGxpY2F0aW9uL3htbDtxPTAuOSwqLyo7cT0wLjgKQWNjZXB0LUNoYXJzZXQ6IElTTy04ODU5LTEsdXRmLTg7cT0wLjcsKjtxPTAuMwpBY2NlcHQtRW5jb2Rpbmc6IGd6aXAsZGVmbGF0ZQpBY2NlcHQtTGFuZ3VhZ2U6IGVuLVVTLGVuO3E9MC44CkNhY2hlLUNvbnRyb2w6IG1heC1hZ2U9MApDb25uZWN0aW9uOiBrZWVwLWFsaXZlClVzZXItQWdlbnQ6IE1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDYuMTsgV09XNjQpIEFwcGxlV2ViS2l0LzUzNi4xMSAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS8yMC4wLjExMzIuNDcgU2FmYXJpLzUzNi4xMQ==";
 
-	public static void
+	/*public static void
 	setBrowserHeaders(
 		ResourceDownloader		rd,
 		String					referer )
@@ -940,7 +940,7 @@ public class UrlUtils
 		}
 		
 		return( headers_to_use );
-	}
+	}*/
 	
 	public static boolean queryHasParameter(String query_string, String param_name, boolean case_sensitive) {
 		if (!case_sensitive) {

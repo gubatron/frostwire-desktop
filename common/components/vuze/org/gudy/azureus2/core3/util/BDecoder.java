@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import com.aelitis.azureus.util.JSONUtils;
+//import com.aelitis.azureus.util.JSONUtils;
 
 /**
  * A set of utility methods to decode a bencoded array of byte into a Map.
@@ -1152,14 +1152,14 @@ public class BDecoder
     	return( b_map );
     }
     
-    public static Map
-    decodeFromJSON(
-    	String	json )
-    {
-    	Map j_map = JSONUtils.decodeJSON(json);
-
-    	return( decodeFromJSONObject( j_map ));
-    }
+//    public static Map
+//    decodeFromJSON(
+//    	String	json )
+//    {
+//    	Map j_map = JSONUtils.decodeJSON(json);
+//
+//    	return( decodeFromJSONObject( j_map ));
+//    }
 	
 	
 /*
