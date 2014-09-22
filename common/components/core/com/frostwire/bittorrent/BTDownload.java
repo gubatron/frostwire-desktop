@@ -21,6 +21,7 @@ package com.frostwire.bittorrent;
 import com.frostwire.transfers.TransferState;
 
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @author gubatron
@@ -105,4 +106,12 @@ public interface BTDownload {
     public int getUploadRateLimit();
 
     public void setUploadRateLimit(int limit);
+
+    public void requestTrackerAnnounce();
+
+    public void requestTrackerScrape();
+
+    public Set<String> getTrackers();
+
+    public void setTrackers(Set<String> trackers);
 }

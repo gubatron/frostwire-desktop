@@ -26,7 +26,7 @@ import com.frostwire.logging.Logger;
 import com.frostwire.transfers.TransferState;
 
 import java.io.File;
-import java.util.Date;
+import java.util.*;
 
 /**
  * @author gubatron
@@ -295,5 +295,40 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
     @Override
     public void setUploadRateLimit(int limit) {
         th.setUploadLimit(limit);
+    }
+
+    @Override
+    public void requestTrackerAnnounce() {
+        th.forceReannounce();
+    }
+
+    @Override
+    public void requestTrackerScrape() {
+        th.scrapeTracker();
+    }
+
+    @Override
+    public Set<String> getTrackers() {
+        List<AnnounceEntry> trackers = th.getTrackers();
+
+        Set<String> urls = new HashSet<String>(trackers.size());
+
+        for (AnnounceEntry e : trackers) {
+            urls.add(e.getUrl());
+        }
+
+        return urls;
+    }
+
+    @Override
+    public void setTrackers(Set<String> trackers) {
+        List<AnnounceEntry> list = new ArrayList<AnnounceEntry>(trackers.size());
+
+        for (String url : trackers) {
+            list.add(new AnnounceEntry(url));
+        }
+
+        th.replaceTrackers(list);
+        th.saveResumeData();
     }
 }

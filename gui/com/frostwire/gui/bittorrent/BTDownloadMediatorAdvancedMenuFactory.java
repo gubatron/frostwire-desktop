@@ -200,9 +200,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
     }
 
     public static SkinMenu createTrackerMenu() {
-        // TODO:BITTORRENT
-        /*
-        DownloadManager[] dms = getSingleSelectedDownloadManagers();
+        com.frostwire.bittorrent.BTDownload[] dms = getSingleSelectedDownloadManagers();
         if (dms == null) {
             return null;
         }
@@ -214,8 +212,6 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         menu.add(new SkinMenuItem(new ScrapeTrackerAction(dms[0])));
 
         return menu;
-        */
-        return null;
     }
 
     private static com.frostwire.bittorrent.BTDownload[] getSingleSelectedDownloadManagers() {
@@ -467,13 +463,11 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         public void setDownSpeed(int val);
     }
 
-    // TODO:BITTORRENT
-    /*
     public static class EditTrackersAction extends AbstractAction {
 
-        private final DownloadManager dm;
+        private final com.frostwire.bittorrent.BTDownload dm;
 
-        public EditTrackersAction(DownloadManager dm) {
+        public EditTrackersAction(com.frostwire.bittorrent.BTDownload dm) {
             this.dm = dm;
 
             putValue(Action.NAME, I18n.tr("Edit Trackers"));
@@ -487,9 +481,9 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
     public static class UpdateTrackerAction extends AbstractAction {
 
-        private final DownloadManager dm;
+        private final com.frostwire.bittorrent.BTDownload dm;
 
-        public UpdateTrackerAction(DownloadManager dm) {
+        public UpdateTrackerAction(com.frostwire.bittorrent.BTDownload dm) {
             this.dm = dm;
 
             putValue(Action.NAME, I18n.tr("Update Tracker"));
@@ -500,7 +494,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    dm.requestTrackerAnnounce(false);
+                    dm.requestTrackerAnnounce();
                 }
             }).start();
         }
@@ -508,9 +502,9 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
     public static class ScrapeTrackerAction extends AbstractAction {
 
-        private final DownloadManager dm;
+        private final com.frostwire.bittorrent.BTDownload dm;
 
-        public ScrapeTrackerAction(DownloadManager dm) {
+        public ScrapeTrackerAction(com.frostwire.bittorrent.BTDownload dm) {
             this.dm = dm;
 
             putValue(Action.NAME, I18n.tr("Scrape Tracker"));
@@ -521,7 +515,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    dm.requestTrackerScrape(true);
+                    dm.requestTrackerScrape();
                 }
             }).start();
         }
@@ -529,9 +523,9 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
     private static final class EditTrackerDialog extends JDialog {
 
-        private final DownloadManager dm;
+        private final com.frostwire.bittorrent.BTDownload dm;
 
-        public EditTrackerDialog(JFrame frame, DownloadManager dm) {
+        public EditTrackerDialog(JFrame frame, com.frostwire.bittorrent.BTDownload dm) {
             super(frame);
             this.dm = dm;
             setupUI();
@@ -587,14 +581,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         }
 
         private void fillTrackers(JTextArea textTrackers) {
-            TOTorrent torrent = dm.getTorrent();
-            List<List<String>> list = TorrentUtils.announceGroupsToList(torrent);
-            Set<String> set = new HashSet<String>();
-            for (List<String> group : list) {
-                for (String tracker : group) {
-                    set.add(tracker.trim());
-                }
-            }
+            Set<String> set = dm.getTrackers();
             for (String tracker : set) {
                 if (!StringUtils.isNullOrEmpty(tracker, true)) {
                     textTrackers.append(tracker.trim() + System.lineSeparator());
@@ -637,22 +624,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
         }
 
         private void setTrackersUrls(List<String> urls) {
-            List<List<String>> group = new ArrayList<List<String>>();
-            group.add(urls);
-
-            TOTorrent torrent = dm.getTorrent();
-
-            TorrentUtils.listToAnnounceGroups(group, torrent);
-
-            try {
-                TorrentUtils.writeToFile(torrent);
-            } catch (Throwable e) {
-                Debug.printStackTrace(e);
-            }
-
-            if (dm.getTrackerClient() != null) {
-                dm.getTrackerClient().resetTrackerUrl(true);
-            }
+            dm.setTrackers(new HashSet<String>(urls));
         }
-    }*/
+    }
 }
