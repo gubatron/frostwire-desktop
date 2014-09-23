@@ -21,6 +21,7 @@ package com.frostwire.bittorrent;
 import com.frostwire.transfers.Transfer;
 import com.frostwire.transfers.TransferState;
 
+import java.io.File;
 import java.util.Date;
 import java.util.Set;
 
@@ -117,4 +118,6 @@ public interface BTDownload extends Transfer {
     public Set<String> getTrackers();
 
     public void setTrackers(Set<String> trackers);
+
+    public File getTorrentFile();
 }

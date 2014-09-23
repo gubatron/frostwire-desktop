@@ -245,7 +245,7 @@ public final class LTEngine implements BTEngine {
             TorrentInfo ti = new TorrentInfo(torrent);
             byte[] arr = FileUtils.readFileToByteArray(torrent);
             entry e = entry.bdecode(Vectors.bytes2char_vector(arr));
-            e.dict().set("torrent_path", new entry(torrent.getAbsolutePath()));
+            e.dict().set("torrent_orig_path", new entry(torrent.getAbsolutePath()));
             arr = Vectors.char_vector2bytes(e.bencode());
             FileUtils.writeByteArrayToFile(resumeTorrentFile(ti.getInfoHash().toString()), arr);
         } catch (Throwable e) {
@@ -289,7 +289,7 @@ public final class LTEngine implements BTEngine {
         try {
             byte[] arr = FileUtils.readFileToByteArray(resumeTorrentFile(infoHash));
             entry e = entry.bdecode(Vectors.bytes2char_vector(arr));
-            torrent = new File(e.dict().get("torrent_path").string());
+            torrent = new File(e.dict().get("torrent_orig_path").string());
         } catch (Throwable e) {
             // can't recover original torrent path
         }

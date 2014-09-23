@@ -369,4 +369,9 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
 
         return l;
     }
+
+    @Override
+    public File getTorrentFile() {
+        return LTEngine.getInstance().readTorrentPath(this.getInfoHash());
+    }
 }

@@ -18,29 +18,28 @@
 
 package com.frostwire.gui.bittorrent;
 
+import org.apache.commons.io.IOUtils;
+import org.gudy.azureus2.core3.torrent.TOTorrent;
+import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
+import org.gudy.azureus2.core3.util.LightHashMap;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
-import org.gudy.azureus2.core3.torrent.impl.TOTorrentDeserialiseImpl;
-import org.gudy.azureus2.core3.util.LightHashMap;
-
-public class TorrentInfoManipulator {
+/**
+ * @author gubatron
+ * @author aldenml
+ */
+public final class TorrentInfoManipulator {
     private Map additional_info_properties = new LightHashMap(4);
 
     public TorrentInfoManipulator(TOTorrent torrent) {
         initAdditionalInfoPropertiesReference(torrent);
     }
 
-    // TODO:BITTORRENT
-//    public TorrentInfoManipulator(DownloadManager downloadManager) {
-//        this(TorrentInfoManipulator.getTOTorrentDeserializeImplDelegate(downloadManager));
-//    }
-    
+
     public TorrentInfoManipulator(File torrentFile) {
         FileInputStream fileInputStream = null;
         try {
@@ -65,13 +64,13 @@ public class TorrentInfoManipulator {
     public Map getAdditionalInfoProperties() {
         return (additional_info_properties);
     }
-    
+
     private void initAdditionalInfoPropertiesReference(TOTorrent delegate) {
         if (delegate != null) {
             initAdditionalInfoProperties(delegate);
         }
     }
-    
+
     private void initAdditionalInfoProperties(TOTorrent delegate) {
         if (delegate != null) {
             try {
@@ -79,7 +78,7 @@ public class TorrentInfoManipulator {
                 additional_info_properties_field.setAccessible(true);
                 Object additional_info_object = additional_info_properties_field.get(delegate);
                 additional_info_properties_field.setAccessible(false);
-                
+
                 if (additional_info_object != null) {
                     additional_info_properties = (Map) additional_info_object;
                 }
@@ -88,37 +87,4 @@ public class TorrentInfoManipulator {
             }
         }
     }
-
-    // TODO:BITTORRENT
-    /*
-    private static TOTorrentDeserialiseImpl getTOTorrentDeserializeImplDelegate(DownloadManager downloadManager) {
-        TOTorrentDeserialiseImpl result = null;
-        Class<? extends TOTorrent> class1 = downloadManager.getTorrent().getClass();
-        try {
-            Field firstDelegateField = class1.getDeclaredField("delegate");
-            
-            firstDelegateField.setAccessible(true);
-            Object delegate1 = firstDelegateField.get(downloadManager.getTorrent());
-            firstDelegateField.setAccessible(false);
-            
-            if (delegate1 instanceof TOTorrentDeserialiseImpl) {
-                result = (TOTorrentDeserialiseImpl) delegate1;
-            } else {
-            
-                Field delegate2 = delegate1.getClass().getDeclaredField("delegate");
-                if (delegate2 != null) {
-                    delegate2.setAccessible(true);
-                    Object theTorrent = delegate2.get(delegate1);
-                    delegate2.setAccessible(false);
-                    
-                    if (theTorrent instanceof TOTorrentDeserialiseImpl) {
-                        result = (TOTorrentDeserialiseImpl) theTorrent;
-                    }
-                }
-            }
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        return result;
-    }*/
 }

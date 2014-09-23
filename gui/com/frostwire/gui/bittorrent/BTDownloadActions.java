@@ -416,7 +416,9 @@ final class BTDownloadActions {
 
             if (btDownload instanceof BittorrentDownload) {
                 TOTorrent t = ((BittorrentDownload) btDownload).getTOTorrent();
-                new ShareTorrentDialog(t).setVisible(true);
+                if (t != null) { // avoid NPE due to an invalid torrent handle
+                    new ShareTorrentDialog(t).setVisible(true);
+                }
             }
         }
     }
