@@ -49,6 +49,11 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
 
     @Override
     public String getName() {
+        return th.getName();
+    }
+
+    @Override
+    public String getDisplayName() {
         return th.getDisplayName();
     }
 

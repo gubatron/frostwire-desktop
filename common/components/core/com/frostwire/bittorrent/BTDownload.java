@@ -31,6 +31,8 @@ public interface BTDownload {
 
     public String getName();
 
+    public String getDisplayName();
+
     public long getSize();
 
     public boolean isPaused();

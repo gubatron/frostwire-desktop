@@ -21,6 +21,9 @@ import com.frostwire.bittorrent.BTEngineFactory;
 import com.frostwire.bittorrent.BTEngineListener;
 import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.settings.UpdateSettings;
+
+import java.io.File;
 
 public class DownloadManagerImpl implements DownloadManager {
 
@@ -45,13 +48,19 @@ public class DownloadManagerImpl implements DownloadManager {
         engine.setListener(new BTEngineListener() {
             @Override
             public void downloadAdded(BTDownload dl) {
+                String name = dl.getName();
+                if (name != null && name.contains("fetchMagnet - ")) {
+                    return;
+                }
+
+                String savePath = dl.getSavePath();
+
+                if (savePath != null && new File(savePath).getParentFile().getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
+                    LOG.info("Update download: " + savePath);
+                    return;
+                }
 
                 //TODO:BITTORRENT
-//                if (downloadManager.getSaveLocation().getParentFile().getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
-//                    LOG.info("Update download: " + downloadManager.getSaveLocation());
-//                    continue;
-//                }
-
 //                if (CommonUtils.isPortable()) {
 //                    updateDownloadManagerPortableSaveLocation(downloadManager);
 //                }
