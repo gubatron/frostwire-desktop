@@ -113,7 +113,9 @@ class LibraryPlaylistsTransferHandler extends TransferHandler {
                             playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.PlaylistItemContainer) transferData);
                         }
                         
-                        LibraryUtils.createNewPlaylist(playlistItems);
+                        if (playlistItems != null) {
+                            LibraryUtils.createNewPlaylist(playlistItems);
+                        }
                     } else {
                         File[] files = DNDUtils.getFiles(support.getTransferable());
                         if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
