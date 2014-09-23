@@ -48,15 +48,13 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import com.frostwire.bittorrent.BTDownload;
+import com.frostwire.gui.bittorrent.*;
 import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.Librarian;
-import com.frostwire.gui.bittorrent.CreateTorrentDialog;
-import com.frostwire.gui.bittorrent.PaymentOptionsRenderer;
-import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.theme.SkinMenu;
@@ -596,9 +594,11 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         for (File file : selected) {
             // stop seeding if seeding
-            BTDownload dm = null;
+            BittorrentDownload dm = null;
             if ((dm = TorrentUtil.getDownloadManager(file)) != null) {
-                dm.stop(false, false);
+                dm.setDeleteDataWhenRemove(false);
+                dm.setDeleteTorrentWhenRemove(false);
+                BTDownloadMediator.instance().remove(dm);
             }
 
             // close media player if still playing

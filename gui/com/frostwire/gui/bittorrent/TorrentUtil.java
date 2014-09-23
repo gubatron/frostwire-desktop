@@ -250,17 +250,18 @@ public final class TorrentUtil {
         return set;
     }*/
 
-    public static com.frostwire.bittorrent.BTDownload getDownloadManager(File f) {
+    public static BittorrentDownload getDownloadManager(File f) {
         List<BTDownload> downloads = BTDownloadMediator.instance().getDownloads();
         for (BTDownload d : downloads) {
             if (d instanceof BittorrentDownload) {
-                com.frostwire.bittorrent.BTDownload dl = ((BittorrentDownload) d).getDl();
+                BittorrentDownload bt = (BittorrentDownload) d;
+                com.frostwire.bittorrent.BTDownload dl = bt.getDl();
 
                 List<TransferItem> items = dl.getItems();
 
                 for (TransferItem item : items) {
                     if (f.equals(item.getFile())) {
-                        return dl;
+                        return bt;
                     }
                 }
             }
