@@ -29,27 +29,14 @@ dependencies {
 sourceSets {
     main {
         java {
-            // exclusion rules
-            exclude '**/bouncycastle/**'            
-            exclude '**/jman/**'
-            exclude '**/systray/**'
-            exclude '**/tests/**'
-            exclude '**/swt/**'
-            exclude '**/vuze*swing/**'
-
             // common/components
             srcDir 'common/components/gson'
             srcDir 'common/components/json'
             srcDir 'common/components/apache'
             srcDir 'common/components/jmdns'
             srcDir 'common/components/jdownloader'
-            srcDir 'common/components/minicastle'
             srcDir 'common/components/mp4parser'
             srcDir 'common/components/httpserver'
-
-            srcDir 'common/vuze/azureus2/src'
-            srcDir 'common/vuze/azureus3/src'
-            srcDir 'common/vuze/plugins'
 
             // our common/components/core and vuze common wrapping/utilities.
             srcDir 'common/components/core'
