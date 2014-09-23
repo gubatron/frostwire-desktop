@@ -18,6 +18,7 @@
 
 package com.frostwire.bittorrent.libtorrent;
 
+import com.frostwire.bittorrent.BTDownload;
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.bittorrent.BTEngineListener;
 import com.frostwire.jlibtorrent.*;
@@ -34,6 +35,7 @@ import org.apache.commons.io.FilenameUtils;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author gubatron
@@ -195,6 +197,12 @@ public final class LTEngine implements BTEngine {
         }
     }
 
+    @Override
+    public List<BTDownload> getDownloads() {
+        //session.
+        return null;
+    }
+
     private void addEngineListener() {
         session.addListener(new AlertListener() {
             @Override
@@ -236,10 +244,10 @@ public final class LTEngine implements BTEngine {
         try {
             TorrentInfo ti = new TorrentInfo(torrent);
             byte[] arr = FileUtils.readFileToByteArray(torrent);
-            entry e = LibTorrent.bytes2entry(arr);
+            entry e = entry.bdecode(Vectors.bytes2char_vector(arr));
             e.dict().set("torrent_path", new entry(torrent.getAbsolutePath()));
-            arr = LibTorrent.entry2bytes(e);
-            FileUtils.writeByteArrayToFile(resumeTorrentFile(ti.getInfoHash()), arr);
+            arr = Vectors.char_vector2bytes(e.bencode());
+            FileUtils.writeByteArrayToFile(resumeTorrentFile(ti.getInfoHash().toString()), arr);
         } catch (Throwable e) {
             LOG.warn("Error saving resume torrent", e);
         }
@@ -249,8 +257,8 @@ public final class LTEngine implements BTEngine {
         try {
             TorrentHandle th = alert.getTorrentHandle();
             entry d = alert.getResumeData();
-            byte[] arr = LibTorrent.entry2bytes(d);
-            FileUtils.writeByteArrayToFile(resumeDataFile(th.getInfoHash()), arr);
+            byte[] arr = Vectors.char_vector2bytes(d.bencode());
+            FileUtils.writeByteArrayToFile(resumeDataFile(th.getInfoHash().toString()), arr);
         } catch (Throwable e) {
             LOG.warn("Error saving resume data", e);
         }
@@ -280,7 +288,7 @@ public final class LTEngine implements BTEngine {
 
         try {
             byte[] arr = FileUtils.readFileToByteArray(resumeTorrentFile(infoHash));
-            entry e = LibTorrent.bytes2entry(arr);
+            entry e = entry.bdecode(Vectors.bytes2char_vector(arr));
             torrent = new File(e.dict().get("torrent_path").string());
         } catch (Throwable e) {
             // can't recover original torrent path

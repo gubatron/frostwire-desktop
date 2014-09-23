@@ -23,6 +23,7 @@ import com.frostwire.bittorrent.BTDownloadListener;
 import com.frostwire.jlibtorrent.*;
 import com.frostwire.jlibtorrent.alerts.TorrentFinishedAlert;
 import com.frostwire.logging.Logger;
+import com.frostwire.transfers.TransferItem;
 import com.frostwire.transfers.TransferState;
 
 import java.io.File;
@@ -177,12 +178,12 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
 
     @Override
     public String getInfoHash() {
-        return th.getInfoHash();
+        return th.getInfoHash().toString();
     }
 
     @Override
     public Date getDateCreated() {
-        return new Date(th.getStatus().addedTime);
+        return new Date(th.getStatus().getAddedTime());
     }
 
     @Override
@@ -290,6 +291,7 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
     @Override
     public void setDownloadRateLimit(int limit) {
         th.setDownloadLimit(limit);
+        th.saveResumeData();
     }
 
     @Override
@@ -300,6 +302,7 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
     @Override
     public void setUploadRateLimit(int limit) {
         th.setUploadLimit(limit);
+        th.saveResumeData();
     }
 
     @Override
@@ -335,5 +338,35 @@ public final class LTDownload extends TorrentAlertAdapter implements BTDownload 
 
         th.replaceTrackers(list);
         th.saveResumeData();
+    }
+
+    @Override
+    public List<TransferItem> getItems() {
+        if (!th.isValid()) {
+            return Collections.emptyList();
+        }
+
+        TorrentInfo ti = th.getTorrentInfo();
+        if (ti == null || !ti.isValid()) {
+            return Collections.emptyList();
+        }
+
+        FileStorage fs = ti.getFiles();
+
+        if (!fs.isValid()) {
+            return Collections.emptyList();
+        }
+
+        int numFiles = fs.geNumFiles();
+        String savePath = th.getSavePath();
+
+        List<TransferItem> l = new ArrayList<TransferItem>(numFiles);
+
+        for (int i = 0; i < numFiles; i++) {
+            File f = new File(fs.getFilePath(i, savePath));
+            l.add(new LTDownloadItem(f));
+        }
+
+        return l;
     }
 }

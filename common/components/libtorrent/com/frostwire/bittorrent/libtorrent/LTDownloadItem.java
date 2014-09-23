@@ -16,51 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.bittorrent;
+package com.frostwire.bittorrent.libtorrent;
+
+import com.frostwire.bittorrent.BTDownloadItem;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
 
 /**
  * @author gubatron
  * @author aldenml
  */
-public interface BTEngine {
+public final class LTDownloadItem implements BTDownloadItem {
 
-    public File getHome();
+    private final File file;
 
-    public void setHome(File home);
+    public LTDownloadItem(File file) {
+        this.file = file;
+    }
 
-    public BTEngineListener getListener();
-
-    public void setListener(BTEngineListener listener);
-
-    public void start();
-
-    public void stop();
-
-    public boolean isStarted();
-
-    public boolean isFirewalled();
-
-    public void download(File torrent, File saveDir) throws IOException;
-
-    public void restoreDownloads(File saveDir);
-
-    public long getDownloadRate();
-
-    public long getUploadRate();
-
-    public long getTotalDownload();
-
-    public long getTotalUpload();
-
-    public int getDownloadRateLimit();
-
-    public int getUploadRateLimit();
-
-    public void revertToDefaultConfiguration();
-
-    public List<BTDownload> getDownloads();
+    public File getFile() {
+        return file;
+    }
 }

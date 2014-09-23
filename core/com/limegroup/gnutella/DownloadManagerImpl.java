@@ -60,7 +60,6 @@ public class DownloadManagerImpl implements DownloadManager {
                     return;
                 }
 
-                //TODO:BITTORRENT
 //                if (CommonUtils.isPortable()) {
 //                    updateDownloadManagerPortableSaveLocation(downloadManager);
 //                }
@@ -73,7 +72,6 @@ public class DownloadManagerImpl implements DownloadManager {
     }
 
     /*
-    TODO:BITTORRENT
     private void updateDownloadManagerPortableSaveLocation(org.gudy.azureus2.core3.download.DownloadManager downloadManager) {
         boolean hadToPauseIt = false;
         if (downloadManager.getState() != org.gudy.azureus2.core3.download.DownloadManager.STATE_STOPPED) {

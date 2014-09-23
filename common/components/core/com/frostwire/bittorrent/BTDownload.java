@@ -18,6 +18,7 @@
 
 package com.frostwire.bittorrent;
 
+import com.frostwire.transfers.Transfer;
 import com.frostwire.transfers.TransferState;
 
 import java.util.Date;
@@ -27,7 +28,7 @@ import java.util.Set;
  * @author gubatron
  * @author aldenml
  */
-public interface BTDownload {
+public interface BTDownload extends Transfer {
 
     public String getName();
 

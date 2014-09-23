@@ -43,11 +43,12 @@
  */
 package com.frostwire.gui.bittorrent;
 
-import org.gudy.azureus2.core3.torrent.TOTorrent;
+import com.frostwire.transfers.TransferItem;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 // TODO:BITTORRENT
@@ -247,31 +248,27 @@ public final class TorrentUtil {
             }
         }
         return set;
-    }
+    }*/
 
-    public static DownloadManager getDownloadManager(File f) {
-    	if (AzureusStarter.isAzureusCoreStarted()) {
-            List<?> dms = AzureusStarter.getAzureusCore().getGlobalManager().getDownloadManagers();
-            for (Object obj : dms) {
-                DownloadManager dm = (DownloadManager) obj;
+    public static com.frostwire.bittorrent.BTDownload getDownloadManager(File f) {
+        List<BTDownload> downloads = BTDownloadMediator.instance().getDownloads();
+        for (BTDownload d : downloads) {
+            if (d instanceof BittorrentDownload) {
+                com.frostwire.bittorrent.BTDownload dl = ((BittorrentDownload) d).getDl();
 
-                DiskManagerFileInfoSet infoSet = dm.getDiskManagerFileInfoSet();
-                for (DiskManagerFileInfo fileInfo : infoSet.getFiles()) {
-                    try {
-                    	
-                    	if (f.equals(fileInfo.getFile(false)) ) {
-                    		return dm;
-                    	}
-                    	
-                    } catch (Throwable e) {
-                        LOG.error("Error getting file information", e);
+                List<TransferItem> items = dl.getItems();
+
+                for (TransferItem item : items) {
+                    if (f.equals(item.getFile())) {
+                        return dl;
                     }
                 }
             }
         }
-    	return null;
+
+        return null;
     }
-    
+    /*
     public static Set<File> getIncompleteFiles() {
         Set<File> set = new HashSet<File>();
 

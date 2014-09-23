@@ -47,6 +47,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import com.frostwire.bittorrent.BTDownload;
 import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
@@ -594,11 +595,11 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         List<String> undeletedFileNames = new ArrayList<String>();
 
         for (File file : selected) {
-            // TODO:BITTORRENT
             // stop seeding if seeding
-//            if ((dm = TorrentUtil.getDownloadManager(file)) != null) {
-//                dm.stopIt(DownloadManager.STATE_STOPPED, false, false);
-//            }
+            BTDownload dm = null;
+            if ((dm = TorrentUtil.getDownloadManager(file)) != null) {
+                dm.stop(false, false);
+            }
 
             // close media player if still playing
             if (MediaPlayer.instance().isThisBeingPlayed(file)) {
