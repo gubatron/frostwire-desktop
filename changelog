@@ -9,9 +9,12 @@ frostwire (5.7.7) stable; urgency=high
     not be set. Thanks @foutrelis.
   * Fixes Null Pointer Exception when trying to shutdown and hide
     an MPlayerWindow that may have not been instantiated.
+  * Fixes issue where user could not create new playlist by dropping
+    songs from existing playlist into 'New Playlist' list item in
+    the library.
   * Updated MigLayout source code to version 4.0
 
- -- FrostWire Team <contact@frostwire.com>  Tue, 23 September 2014 15:39:35 -0500
+ -- FrostWire Team <contact@frostwire.com>  Tue, 23 September 2014 17:13:20 -0500
 
 frostwire (5.7.6) stable; urgency=high
   * New: Filter search results by file extension, source name.
