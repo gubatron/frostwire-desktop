@@ -24,7 +24,7 @@
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/jaudiotagger/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/core" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gui" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/components/resources/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
     </content>
     <content url="file://$MODULE_DIR$/../frostwire-jlibtorrent">
       <sourceFolder url="file://$MODULE_DIR$/../frostwire-jlibtorrent/src" isTestSource="false" />
