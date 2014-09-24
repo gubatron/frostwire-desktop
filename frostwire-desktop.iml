@@ -26,23 +26,8 @@
       <sourceFolder url="file://$MODULE_DIR$/components/resources/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/libtorrent" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common/components/vuze" isTestSource="false" />
-      <excludeFolder url="file://$MODULE_DIR$/common/components/vuze/com/frostwire" />
-      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/dht/netcoords/vivaldi/ver1/impl/tests" />
-      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/networkmanager/admin/impl/swt" />
-      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/pairing/impl/swt" />
-      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/core/proxy/impl/swt" />
-      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/plugins/magnet/swt" />
-      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/plugins/net/buddy/swt" />
-      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/plugins/net/netstatus/swt" />
-      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/plugins/startstoprules/defaultplugin/ui/swt" />
-      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/com/aelitis/azureus/ui/swt" />
-      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/bouncycastle" />
-      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/eclipse/swt/widgets" />
-      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/gudy/azureus2/ui/swt" />
-      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus2/src/org/gudy/azureus2/ui/systray" />
-      <excludeFolder url="file://$MODULE_DIR$/common/vuze/azureus3/src/com/aelitis/azureus/ui/swt" />
     </content>
-    <content url="file://$MODULE_DIR$/../frostwire-jlibtorrent/src">
+    <content url="file://$MODULE_DIR$/../frostwire-jlibtorrent">
       <sourceFolder url="file://$MODULE_DIR$/../frostwire-jlibtorrent/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
