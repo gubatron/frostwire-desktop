@@ -22,9 +22,8 @@
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/lucene-3.5.0" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/slf4j-api/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/jaudiotagger/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/core" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/gui" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../frostwire-jlibtorrent">
       <sourceFolder url="file://$MODULE_DIR$/../frostwire-jlibtorrent/src" isTestSource="false" />
