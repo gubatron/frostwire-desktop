@@ -4,28 +4,30 @@
     <output url="file://$MODULE_DIR$/build/classes/main" />
     <output-test url="file://$MODULE_DIR$/build/classes/test" />
     <exclude-output />
+    <content url="file://$MODULE_DIR$/../frostwire-common">
+      <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/jmdns" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/httpserver" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/gson" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/json" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/core" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/jdownloader" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/mp4parser" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/libtorrent" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/vuze" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/apache" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/h2-1.3.164" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/common/components/jmdns" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/metadata-extractor-2.6.2-src/Source" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/common/components/apache" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/lucene-3.5.0" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/common/components/gson" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/slf4j-api/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/common/components/json" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/common/components/core" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/osx_stub/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/common/components/httpserver" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/common/components/jdownloader" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/common/src/main" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/alexandria/src/main" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/jaudiotagger/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/core" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gui" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/common/components/mp4parser" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/resources/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/common/components/libtorrent" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/common/components/vuze" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../frostwire-jlibtorrent">
       <sourceFolder url="file://$MODULE_DIR$/../frostwire-jlibtorrent/src" isTestSource="false" />
