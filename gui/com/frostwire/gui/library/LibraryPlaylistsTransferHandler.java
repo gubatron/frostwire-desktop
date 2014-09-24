@@ -103,8 +103,19 @@ class LibraryPlaylistsTransferHandler extends TransferHandler {
                 try {
                     Transferable transferable = support.getTransferable();
                     if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
-                        PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable.getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
-                        LibraryUtils.createNewPlaylist(playlistItems);
+                        Object transferData = transferable.getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY);
+                        
+                        PlaylistItem[] playlistItems = null;
+                        
+                        if (transferData instanceof LibraryPlaylistsTableTransferable.Item[]) {
+                            playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferData);
+                        } else if (transferData instanceof LibraryPlaylistsTableTransferable.PlaylistItemContainer) {
+                            playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.PlaylistItemContainer) transferData);
+                        }
+                        
+                        if (playlistItems != null) {
+                            LibraryUtils.createNewPlaylist(playlistItems);
+                        }
                     } else {
                         File[] files = DNDUtils.getFiles(support.getTransferable());
                         if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
@@ -116,6 +127,7 @@ class LibraryPlaylistsTransferHandler extends TransferHandler {
                     list.setSelectedIndex(list.getModel().getSize() - 1);
                     LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
                 } catch (Exception e) {
+                    e.printStackTrace();
                     return false;
                 }
             } else {
