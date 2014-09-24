@@ -14,6 +14,14 @@ if (!System.getenv('ANT_HOME')?.trim()) {
     //throw new GradleException("ERROR: ANT_HOME environment variable not set.\n\n(e.g. on MacOSX: /usr/local/Cellar/ant/1.9.3/libexec\n      on Linux:  /usr/share/ant)")
 }
 
+if (!new File("../frostwire-common").exists()) {
+    throw new GradleException("ERROR: You need to checkout the dependency frostwire-common")
+}
+
+if (!new File("../frostwire-jlibtorrent").exists()) {
+    throw new GradleException("ERROR: You need to checkout the dependency frostwire-jlibtorrent")
+}
+
 sourceCompatibility = 1.7
 
 compileJava {
@@ -29,23 +37,19 @@ dependencies {
 sourceSets {
     main {
         java {
-            // common/components
-            srcDir 'common/components/gson'
-            srcDir 'common/components/json'
-            srcDir 'common/components/apache'
-            srcDir 'common/components/jmdns'
-            srcDir 'common/components/jdownloader'
-            srcDir 'common/components/mp4parser'
-            srcDir 'common/components/httpserver'
+            // frostwire-common
+            srcDir '../frostwire-common/apache'
+            srcDir '../frostwire-common/gson'
+            srcDir '../frostwire-common/jdownloader'
+            srcDir '../frostwire-common/jmdns'
+            srcDir '../frostwire-common/json'
+            srcDir '../frostwire-common/libtorrent'
+            srcDir '../frostwire-common/mp4parser'
+            srcDir '../frostwire-common/vuze'
+            srcDir '../frostwire-common/core'
 
-            // our common/components/core and vuze common wrapping/utilities.
-            srcDir 'common/components/core'
-            srcDir 'common/components/vuze'
-
-            // components, alexandria (library gui), osx_stub 
-            srcDir 'components/common/src/main'
-            srcDir 'components/alexandria/src/main'
-            srcDir 'components/osx_stub/src'
+            // frostwire-jlibtorrent
+            srcDir '../frostwire-jlibtorrent/src'
 
             // jars-src (other third parties dependencies, we keep their sources
             // so that we can properly create the .deb sources for debian based mantainers
@@ -57,12 +61,11 @@ sourceSets {
             srcDir 'lib/jars-src/slf4j-api/src/main/java'
             srcDir 'lib/jars-src/metadata-extractor-2.6.2-src/Source'
 
-            srcDir 'core'
-            srcDir 'gui'
+            srcDir 'src'
         }
 
         resources {
-            srcDir 'components/resources/src/main/resources'
+            srcDir 'resources'
             include '**/*.properties'
             include '**/*.png'
             include '**/*.gif'
@@ -74,12 +77,7 @@ sourceSets {
             include '**/*.icc'
             exclude '**/*.DS_Store'
 
-            srcDir 'common/vuze/azureus2/src'
-            include '**/Messages*.properties'
-            exclude '**/*.class'
-            exclude '**/*.java'
-			
-			srcDir 'common/components/mp4parser'
+			srcDir '../frostwire-common/components/mp4parser'
 			include '**/*.properties'
 			exclude '**/*.java'
         }
@@ -121,16 +119,7 @@ task gettextExtract {
         ant.gettextExtract(keysFile:'frostwire.pot',
                            poDirectory:'lib/messagebundles',
                            keywords:'-kgetStringResource -kgetFormattedStringResource -ktrc -ktr -kmarktr -ktrn:1,2 -ktrl') {
-            fileset(dir:"components") { 
-                include (name:'**/*.java')
-                exclude (name:'azureus/**')
-            }
-
-            fileset(dir:"core") {
-                include(name:'**/*.java')
-            }
-
-            fileset(dir:"gui") {
+            fileset(dir:"src") {
                 include(name:'**/*.java')
             }
         }
