@@ -21,7 +21,6 @@ package com.limegroup.gnutella.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.frostwire.util.VPNs;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
 /**
