@@ -108,7 +108,7 @@ class BitTorrentSettingsWindow extends SetupWindow {
 
     private void applyTorrentSeedingSeetings(List<String> errors) {
         if (!_torrentSeedingSettingComponent.hasOneBeenSelected()) {
-            errors.add(I18n.tr("<html><p>You forgot to select your finished downloads \"Seeding\" setting.</p>\n<p></p><p align=\"right\"><a href=\"{0}\">What is \"Seeding\"?</a></p></html>", LEARN_MORE_URL));
+            errors.add(I18n.tr("<html><p>You forgot to select your finished downloads \"Seeding\" setting.</p>\n<p></p><p align=\"right\"><a href=\"{0}\">What is \"Seeding\"?</a></p></html>", "http://support.frostwire.com/hc/en-us/articles/200302295-What-is-seeding-"));
             return;
         }
 
