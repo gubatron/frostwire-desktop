@@ -137,12 +137,12 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public double getDownloadSpeed() {
-        return dl.getDownloadSpeed();
+        return dl.getDownloadSpeed() / 1024;
     }
 
     @Override
     public double getUploadSpeed() {
-        return dl.getUploadSpeed();
+        return dl.getUploadSpeed() / 1024;
     }
 
     @Override
