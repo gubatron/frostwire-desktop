@@ -172,5 +172,7 @@ task gettextBundle {
     }
 }
 
+//mainClassName = "com.limegroup.gnutella.gui.Main"
+
 gettextExtract.dependsOn gettextInit
 gettextBundle.dependsOn gettextInit
