@@ -786,16 +786,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
     }
 
-    public void openTorrentFile2(final File torrentFile, final boolean partialDownload) {
-        try {
-            File saveDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
-            BTEngine engine = BTEngineFactory.getInstance();
-            engine.download(torrentFile, saveDir);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-    }
-
     public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
         if (!BTEngineFactory.getInstance().isStarted()) {
             LOG.error("Bittorrent core not started");
@@ -816,12 +806,13 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                         }
                     }
 
-                    BTDownload download = BTDownloadCreator.createDownload(torrentFile, filesSelection);
-                    if (!(download instanceof DuplicateDownload)) {
-                        add(download);
-                    } else {
-                        selectRowByDownload(download);
-                    }
+                    BTDownloadCreator.createDownload(torrentFile, filesSelection);
+                    // TODO:BITTORRENT
+//                    if (!(download instanceof DuplicateDownload)) {
+//                        add(download);
+//                    } else {
+//                        selectRowByDownload(download);
+//                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();

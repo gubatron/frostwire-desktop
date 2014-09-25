@@ -58,10 +58,6 @@ public final class TorrentUtil {
         return new HashSet<File>();
     }
 
-    public static String hashToString(byte[] hash) {
-        return "99999999";
-    }
-
     public static Set<File> getIncompleteFiles() {
         return new HashSet<File>();
     }
@@ -269,6 +265,23 @@ public final class TorrentUtil {
 
         return null;
     }
+
+    public static BittorrentDownload getDownloadManager(String hash) {
+        List<BTDownload> downloads = BTDownloadMediator.instance().getDownloads();
+        for (BTDownload d : downloads) {
+            if (d instanceof BittorrentDownload) {
+                BittorrentDownload bt = (BittorrentDownload) d;
+                com.frostwire.bittorrent.BTDownload dl = bt.getDl();
+
+                if (dl.getInfoHash().equals(hash)) {
+                    return bt;
+                }
+            }
+        }
+
+        return null;
+    }
+
     /*
     public static Set<File> getIncompleteFiles() {
         Set<File> set = new HashSet<File>();
@@ -677,7 +690,7 @@ public final class TorrentUtil {
 
         return sb.toString();
     }
-
+*/
     public static String hashToString(byte[] hash) {
         String hex = "";
         for (int i = 0; i < hash.length; i++) {
@@ -691,6 +704,7 @@ public final class TorrentUtil {
         return hex;
     }
 
+    /*
     public static Set<File> getIgnorableFiles() {
         Set<File> set = TorrentUtil.getIncompleteFiles();
         set.addAll(TorrentUtil.getSkipedFiles());

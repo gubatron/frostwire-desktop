@@ -342,7 +342,7 @@ public class InstallerUpdater implements Runnable {
             return;
         }
 
-        System.out.println("InstallerUpdater.stateChanged() - " + state + " completed: " + manager.isFinished());
+        System.out.println("InstallerUpdater.stateChanged() - " + state + " completed: " + manager.getStatus().isFinished());
         if (state == TorrentStatus.State.SEEDING) {
             isDownloadingUpdate = false;
             System.out.println("InstallerUpdater.stateChanged() - SEEDING!");
@@ -449,7 +449,7 @@ public class InstallerUpdater implements Runnable {
             return false;
         }
 
-        return _manager.isFinished() || _manager.isSeeding();
+        return _manager.getStatus().isFinished() || _manager.getStatus().isSeeding();
 
         /*
         String saveLocation = UpdateSettings.UPDATES_DIR.getAbsolutePath();

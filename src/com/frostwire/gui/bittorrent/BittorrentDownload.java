@@ -228,6 +228,10 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
         return licenseBroker;
     }
 
+    public void refresh() {
+        // TODO:BITTORRENT
+    }
+
     private class StatusListener implements BTDownloadListener {
 
         @Override
