@@ -797,10 +797,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
-        // TODO:BITTORRENT
-        /*
-        if (!AzureusStarter.isAzureusCoreStarted()) {
-            LOG.error("Azureus core not started");
+        if (!BTEngineFactory.getInstance().isStarted()) {
+            LOG.error("Bittorrent core not started");
             return;
         }
         GUIMediator.safeInvokeLater(new Runnable() {
@@ -818,8 +816,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                         }
                     }
 
-                    BTDownloadCreator creator = new BTDownloadCreator(torrentFile, null, false, filesSelection);
-                    BTDownload download = creator.createDownload();
+                    BTDownload download = BTDownloadCreator.createDownload(torrentFile, filesSelection);
                     if (!(download instanceof DuplicateDownload)) {
                         add(download);
                     } else {
@@ -839,7 +836,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                 }
             }
         });
-        */
     }
 
     public BTDownload[] getSelectedDownloaders() {

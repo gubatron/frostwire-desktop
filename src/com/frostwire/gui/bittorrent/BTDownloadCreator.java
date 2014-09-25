@@ -18,12 +18,20 @@
 
 package com.frostwire.gui.bittorrent;
 
+import java.io.File;
+
 /**
  * @author gubatron
  * @author aldenml
  */
 // TODO:BITTORRENT
-public class BTDownloadCreator {
+public final class BTDownloadCreator {
+
+    public static BTDownload createDownload(File torrentFile, boolean[] filesSelection) {
+
+
+        return null;
+    }
 
     /*
     private final GlobalManager _globalManager;
