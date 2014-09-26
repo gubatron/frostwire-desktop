@@ -44,8 +44,15 @@
 package com.frostwire.gui.bittorrent;
 
 import com.frostwire.transfers.TransferItem;
+import com.frostwire.util.StringUtils;
+import org.gudy.azureus2.core3.torrent.TOTorrent;
+import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLGroup;
+import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLSet;
+import org.gudy.azureus2.core3.util.UrlUtils;
+import org.limewire.util.NetworkUtils;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -64,14 +71,6 @@ public final class TorrentUtil {
 
     public static Collection<? extends File> getSkipedFiles() {
         return new HashSet<File>();
-    }
-
-    public static String getMagnet(String hash) {
-        return "99999999";
-    }
-
-    public static String getMagnetURLParameters(Object torrent) {
-        return "99999999";
     }
 
     /*
@@ -631,14 +630,7 @@ public final class TorrentUtil {
             }
         }
     }
-
-    public static void start(DownloadManager dm) {
-        if (dm != null && dm.getState() == DownloadManager.STATE_STOPPED) {
-
-            //dm.setStateWaiting();
-            dm.initialize();
-        }
-    }
+*/
 
     public static String getMagnet(byte[] hash) {
         return "magnet:?xt=urn:btih:" + hashToString(hash);
@@ -674,6 +666,7 @@ public final class TorrentUtil {
         }
 
         //iipp = internal ip port, for lan
+        /*
         try {
             String localAddress = NetworkUtils.getLocalAddress().getHostAddress();
             int localPort = TCPNetworkManager.getSingleton().getTCPListeningPortNumber();
@@ -687,10 +680,11 @@ public final class TorrentUtil {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        */
 
         return sb.toString();
     }
-*/
+
     public static String hashToString(byte[] hash) {
         String hex = "";
         for (int i = 0; i < hash.length; i++) {
