@@ -204,7 +204,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public boolean isPartialDownload() {
-        return false;
+        return dl.isPartial();
     }
 
     @Override
@@ -258,6 +258,18 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
                     BTDownloadMediator.instance().updateTableFilters();
                 }
             });
+        }
+
+        @Override
+        public void stopped(BTDownload dl) {
+            // TODO:BITTORRENT
+            // check it works
+            long timeStarted = getDateCreated().getTime();
+            if (TorrentUtil.isHandpicked(dl) &&
+                    (!SharingSettings.SEED_FINISHED_TORRENTS.getValue() || !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue()) &&
+                    dl.isFinished()) {
+                TorrentUtil.finalCleanup(dl, timeStarted);
+            }
         }
     }
 
