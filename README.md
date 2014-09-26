@@ -30,7 +30,7 @@ simple for them.
 
 
 FrostWire will connect to all the major BitTorrent indexes of the internet and
-pre-fetch torrents (via the Azureus DHT or via HTTP if it can't find it on the
+pre-fetch torrents (via the libtorrent DHT or via HTTP if it can't find it on the
 DHT), it will then index locally all the available metadata that's indexed by
 the torrent file, as the user searches, the local index gets better and better
 to yield richer and instant results.
@@ -40,9 +40,10 @@ of files on the bittorrent network, sometimes it will find files that even the
 best BitTorrent indexes won't yield in the search results.
 
 The main software architecture (how things are organized) depends on the late
-*LimeWire 4,*
+*LimeWire 4,* but it has evolved through FrostWire 5, and now the source code
+layout has been simplified enourmously for FrostWire 6.
 
-    -   The BitTorrent power comes from the Azureus project (aka Vuze)
+    -   The BitTorrent power comes from the frostwire-jlibtorrent library.
 
     -   Media playback comes from the *mplayer* project
 
