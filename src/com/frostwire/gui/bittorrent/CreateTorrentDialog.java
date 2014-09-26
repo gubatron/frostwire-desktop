@@ -76,6 +76,7 @@ import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LimeTextField;
 import com.limegroup.gnutella.settings.SharingSettings;
+import org.gudy.azureus2.core3.util.TrackersUtil;
 
 /**
  * @author gubatron
@@ -105,8 +106,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
     private static String comment = I18n.tr("Torrent File Created with FrostWire http://www.frostwire.com");
 
-    // TODO:BITTORRENT
-    private static int tracker_type = TT_EXTERNAL;//COConfigurationManager.getIntParameter("CreateTorrent.default.trackertype", TT_EXTERNAL);
+    private static int tracker_type = TT_EXTERNAL;
 
     // false : singleMode, true: directory
     boolean create_from_dir;
@@ -632,19 +632,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
     protected void setTrackerType(int type) {
         tracker_type = type;
-        // TODO:BITTORRENT
-        //COConfigurationManager.setParameter("CreateTorrent.default.trackertype", tracker_type);
-    }
-
-    protected String getDefaultSaveDir() {
-        return (default_save_dir);
-    }
-
-    protected void setDefaultSaveDir(String d) {
-        default_save_dir = d;
-
-        // TODO:BITTORRENT
-        //COConfigurationManager.setParameter("CreateTorrent.default.save", default_save_dir);
     }
 
     public boolean makeTorrent() {
@@ -655,8 +642,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         int tracker_type = getTrackerType();
 
         if (tracker_type == TT_EXTERNAL) {
-            // TODO:BITTORRENT
-            //TrackersUtil.getInstance().addTracker(trackerURL);
+            TrackersUtil.getInstance().addTracker(trackerURL);
         }
 
         File f;
@@ -793,7 +779,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
      * Sends HEAD request to the mirror location along with the test path to see if the file exists.
      * Read http://getright.com/seedtorrent.html to find out how mirror urls are interpreted
      * @param mirror
-     * @param testPath
      * @return
      */
     private boolean checkWebSeedMirror(String mirror, TOTorrent torrent, boolean isMultiFile) {
