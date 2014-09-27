@@ -43,6 +43,7 @@ public final class BTDownloadCreator {
         if (saveDir == null) {
             saveDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
         }
+
         if (!saveDir.exists()) {
             saveDir.mkdirs();
         }
@@ -103,6 +104,18 @@ public final class BTDownloadCreator {
         }
 
         return bittorrentDownload;
+    }
+
+    public static BTDownload createDownload(File torrentFile, boolean[] filesSelection) throws TOTorrentException, IOException {
+        return createDownload(torrentFile, filesSelection, null);
+    }
+
+    public static BTDownload createDownload(File torrentFile, File saveDir) throws TOTorrentException, IOException {
+        return createDownload(torrentFile, null, saveDir);
+    }
+
+    public static BTDownload createDownload(File torrentFile) throws TOTorrentException, IOException {
+        return createDownload(torrentFile, null, null);
     }
 
     private static boolean isDownloadingEntireContents(boolean[] prevSelection) {
