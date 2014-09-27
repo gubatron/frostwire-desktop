@@ -30,6 +30,7 @@ import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
+import org.gudy.azureus2.core3.util.UrlUtils;
 
 /**
  * 
@@ -132,8 +133,7 @@ public class TorrentFetcherDownload implements BTDownload {
             String[] split = uri.split("&");
             for (String s : split) {
                 if (s.toLowerCase().startsWith("dn=") && s.length() > 3) {
-                    // TODO:BITTORRENT
-                    return "";//UrlUtils.decode(s.split("=")[1]);
+                    return UrlUtils.decode(s.split("=")[1]);
                 }
             }
         }

@@ -899,15 +899,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         return DATA_MODEL.isDownloading(hash);
     }
 
-    // TODO:BITTORRENT
-    /*
-    public void addDownloadManager(DownloadManager mgr) {
-        try {
-            add(BTDownloadCreator.createDownload(mgr, true, true));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 
     public void addDownload(com.frostwire.bittorrent.BTDownload dl) {
         try {
