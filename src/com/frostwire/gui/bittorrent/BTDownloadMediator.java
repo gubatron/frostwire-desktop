@@ -383,7 +383,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * complete.
      *
      * @param dloader the <tt>Downloader</tt> to remove from the list if it is
-     *                   complete.
+     *                complete.
      */
     public void remove(BTDownload dloader) {
         //        DownloadStatus state = dloader.getState();
@@ -778,8 +778,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
             if (download.getHash().equals(btDownloadDataLine.getInitializeObject().getHash())) {
                 btDownloadDataLine.getInitializeObject().getSize(true);
-                // TODO:BITTORRENT
-                //btDownloadDataLine.getInitializeObject().updateDownloadManager(download.getDownloadManager());
+                if (download instanceof BittorrentDownload) {
+                    ((BittorrentDownload) download).refresh();
+                }
                 TABLE.setSelectedRow(i);
                 return;
             }
@@ -806,13 +807,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                         }
                     }
 
-                    BTDownloadCreator.createDownload(torrentFile, filesSelection);
-                    // TODO:BITTORRENT
-//                    if (!(download instanceof DuplicateDownload)) {
-//                        add(download);
-//                    } else {
-//                        selectRowByDownload(download);
-//                    }
+                    BTDownload download = BTDownloadCreator.createDownload(torrentFile, filesSelection);
+                    if (download != null) {
+                        selectRowByDownload(download);
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();

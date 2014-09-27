@@ -36,7 +36,7 @@ import java.util.List;
  */
 public final class BTDownloadCreator {
 
-    public static void createDownload(File torrentFile, boolean[] filesSelection) throws TOTorrentException, IOException {
+    public static BTDownload createDownload(File torrentFile, boolean[] filesSelection) throws TOTorrentException, IOException {
         BTEngine engine = BTEngineFactory.getInstance();
 
         File saveDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
@@ -65,12 +65,12 @@ public final class BTDownloadCreator {
                 if (prevSelection.length != filesSelection.length) {
                     //wtf
                     System.out.println("BTDownloadCreator::constructor warning: inconsistency between file selection count, from old state to new state. Is this the same torrent?");
-                    return;
+                    return bittorrentDownload;
                 }
 
                 //he was already downloading the whole torrent, you'll get the file eventually when it finishes.
                 if (isDownloadingEntireContents(prevSelection)) {
-                    return;
+                    return bittorrentDownload;
                 }
 
                 //let the new _fileSelection know about the older files that were selected for download
@@ -85,7 +85,7 @@ public final class BTDownloadCreator {
                 boolean[] prevSelection = getPreviousFileSelections(bittorrentDownload.getDl());
                 if (isDownloadingEntireContents(prevSelection)) {
                     //oh, it was already downloading the whole thing
-                    return;
+                    return bittorrentDownload;
                 }
 
                 filesSelection = prevSelection;
@@ -98,6 +98,8 @@ public final class BTDownloadCreator {
             bittorrentDownload.getDl().setFilesSelection(filesSelection);
             bittorrentDownload.refresh();
         }
+
+        return bittorrentDownload;
     }
 
     private static boolean isDownloadingEntireContents(boolean[] prevSelection) {
