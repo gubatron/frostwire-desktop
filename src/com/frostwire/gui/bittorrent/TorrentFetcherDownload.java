@@ -24,21 +24,27 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.frostwire.transfers.TransferState;
+import org.gudy.azureus2.core3.torrent.TOTorrent;
+import org.gudy.azureus2.core3.torrent.TOTorrentException;
+import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
+import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
+import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
+import org.gudy.azureus2.core3.util.TorrentUtils;
+import org.gudy.azureus2.core3.util.UrlUtils;
 
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.SharingSettings;
-import org.gudy.azureus2.core3.util.UrlUtils;
 
 /**
- * 
+ *
  * @author gubatron
  * @author aldenml
  *
  */
-// TODO:BITTORRENT
 public class TorrentFetcherDownload implements BTDownload {
 
     private static final String STATE_DOWNLOADING = I18n.tr("Downloading Torrent");
@@ -48,14 +54,14 @@ public class TorrentFetcherDownload implements BTDownload {
 
     private String _uri;
     private final String _torrentSaveDir;
-    //private TorrentDownloader _torrentDownloader;
+    private TorrentDownloader _torrentDownloader;
     private final String _displayName;
     private final String _hash;
     private final long _size;
     private final boolean _partialDownload;
     private final Date dateCreated;
 
-    private String _state;
+    private TransferState _state;
     private boolean _removed;
     private BTDownload _delegate;
     private String relativePath;
@@ -65,7 +71,7 @@ public class TorrentFetcherDownload implements BTDownload {
     public TorrentFetcherDownload(String uri, String referrer, String displayName, String hash, long size, boolean partialDownload, final String relativePath) {
         _uri = uri;
         _torrentSaveDir = SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath();
-        //_torrentDownloader = TorrentDownloaderFactory.create(new TorrentDownloaderListener(), _uri, referrer, _torrentSaveDir);
+        _torrentDownloader = TorrentDownloaderFactory.create(new TorrentDownloaderListener(), _uri, referrer, _torrentSaveDir);
         _displayName = displayName;
         _hash = hash != null ? hash : "";
         _size = size;
@@ -73,17 +79,16 @@ public class TorrentFetcherDownload implements BTDownload {
         this.dateCreated = new Date();
         this.relativePath = relativePath;
 
-        _state = STATE_DOWNLOADING;
+        _state = TransferState.DOWNLOADING;
 
         if (_hash.length() > 0 && relativePath != null) {
             if (!isDownloadingTorrent(_hash)) {
-                //_torrentDownloader.start();
+                _torrentDownloader.start();
             } else {
-                // TODO:BITTORRENT
-                //BackgroundExecutorService.schedule(new WaitForTorrentReady());
+                BackgroundExecutorService.schedule(new WaitForTorrentReady());
             }
         } else { // best effort
-            //_torrentDownloader.start();
+            _torrentDownloader.start();
         }
     }
 
@@ -96,19 +101,16 @@ public class TorrentFetcherDownload implements BTDownload {
         return false;
     }
 
-    // TODO:BITTORRENT
-    /*
     private boolean isDownloadingTorrentReady(String hash) {
         for (BTDownload d : BTDownloadMediator.instance().getDownloads()) {
             if (d != this && d.getHash() != null && d.getHash().equals(_hash)) {
-                DownloadManager dm = d.getDownloadManager();
-                if (dm != null) {
+                if (d instanceof BittorrentDownload) {
                     return true;
                 }
             }
         }
         return false;
-    }*/
+    }
 
     public TorrentFetcherDownload(String uri, boolean partialDownload) {
         this(uri, null, getDownloadNameFromMagnetURI(uri), "", -1, partialDownload, null);
@@ -160,7 +162,7 @@ public class TorrentFetcherDownload implements BTDownload {
     }
 
     public TransferState getState() {
-        return _delegate != null ? _delegate.getState() : TransferState.DOWNLOADING;
+        return _delegate != null ? _delegate.getState() : _state;
     }
 
     public void remove() {
@@ -169,15 +171,13 @@ public class TorrentFetcherDownload implements BTDownload {
         } else {
             _removed = true;
             try {
-                // TODO:BITTORRENT
-                //_torrentDownloader.cancel();
+                _torrentDownloader.cancel();
             } catch (Throwable e) {
                 // ignore, I can't do anything
                 //e.printStackTrace();
             }
             try {
-                // TODO:BITTORRENT
-                //_torrentDownloader.getFile().delete();
+                _torrentDownloader.getFile().delete();
             } catch (Throwable e) {
                 // ignore, I can't do anything
                 //e.printStackTrace();
@@ -273,7 +273,6 @@ public class TorrentFetcherDownload implements BTDownload {
         return _delegate != null ? _delegate.isPartialDownload() : _partialDownload;
     }
 
-    /*
     private final class TorrentDownloaderListener implements TorrentDownloaderCallBackInterface {
         private AtomicBoolean finished = new AtomicBoolean(false);
 
@@ -287,22 +286,22 @@ public class TorrentFetcherDownload implements BTDownload {
                 if (_hash != null && !_hash.trim().equals("") && (_uri.toLowerCase().startsWith("http://") || _uri.toLowerCase().startsWith("https://"))) {
                     _uri = TorrentUtil.getMagnet(_hash);
                     _torrentDownloader = TorrentDownloaderFactory.create(new TorrentDownloaderListener(), _uri, null, _torrentSaveDir);
-                    _state = STATE_DOWNLOADING;
+                    _state = TransferState.DOWNLOADING;
                     _torrentDownloader.start();
                 } else {
                     if (inf.getURL().startsWith("magnet:?")) {
-                        _state = STATE_ERROR_NOT_ENOUGH_SEEDS;    
+                        _state = TransferState.ERROR;
                     } else {
-                        _state = STATE_ERROR;
+                        _state = TransferState.ERROR;
                     }
                 }
             }
         }
 
-    }*/
+    }
 
     private void cancelDownload() {
-        _state = STATE_CANCELED;
+        _state = TransferState.CANCELED;
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 BTDownloadMediator.instance().remove(TorrentFetcherDownload.this);
@@ -315,7 +314,6 @@ public class TorrentFetcherDownload implements BTDownload {
         return _delegate != null ? _delegate.getSize(update) : _size;
     }
 
-    /*
     private void onTorrentDownloaderFinished(final File torrentFile) {
         try {
             //single file download straight from a torrent deep search.
@@ -345,14 +343,6 @@ public class TorrentFetcherDownload implements BTDownload {
                 if (filesSelection == null) {
                     cancelDownload();
                     return;
-                } else {
-                    if (_postPartialDownloadAction != null) {
-                        try {
-                            _postPartialDownloadAction.actionPerformed(null);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
                 }
             }
 
@@ -372,13 +362,11 @@ public class TorrentFetcherDownload implements BTDownload {
             }
 
         } catch (Exception e) {
-            _state = STATE_ERROR;
+            _state = TransferState.ERROR;
             e.printStackTrace();
         }
-    }*/
+    }
 
-    // TODO:BITTORRENT
-    /*
     private final class WaitForTorrentReady implements Runnable {
 
         @Override
@@ -391,8 +379,9 @@ public class TorrentFetcherDownload implements BTDownload {
             } while (!isDownloadingTorrentReady(_hash));
 
             try {
-                BTDownloadCreator creator = new BTDownloadCreator(_hash, relativePath);
-                _delegate = creator.createDownload();
+                // TODO:BITTORRENT
+                //BTDownloadCreator creator = new BTDownloadCreator(_hash, relativePath);
+                _delegate = null;//creator.createDownload();
 
                 if (_delegate instanceof DuplicateDownload) {
                     cancelDownload();
@@ -405,12 +394,11 @@ public class TorrentFetcherDownload implements BTDownload {
                     });
                 }
             } catch (Throwable e) {
-                _state = STATE_ERROR;
+                _state = TransferState.ERROR;
                 e.printStackTrace();
             }
         }
     }
-    */
 
     @Override
     public PaymentOptions getPaymentOptions() {
