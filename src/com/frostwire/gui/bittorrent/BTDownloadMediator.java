@@ -58,7 +58,6 @@ import org.limewire.util.OSUtils;
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -902,6 +901,16 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     public void addDownload(com.frostwire.bittorrent.BTDownload dl) {
         try {
+            List<BTDownload> downloads = getDownloads();
+            for (BTDownload d : downloads) {
+                if (d instanceof TorrentFetcherDownload) {
+                    TorrentFetcherDownload fd = (TorrentFetcherDownload) d;
+                    if (dl.getInfoHash().equals(fd.getHash())) {
+                        fd.updateDelegate(new BittorrentDownload(dl));
+                        return;
+                    }
+                }
+            }
             add(new BittorrentDownload(dl));
         } catch (Exception e) {
             e.printStackTrace();

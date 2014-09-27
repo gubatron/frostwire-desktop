@@ -20,6 +20,7 @@ package com.frostwire.gui.bittorrent;
 
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.bittorrent.BTEngineFactory;
+import com.frostwire.bittorrent.libtorrent.LTDownloadItem;
 import com.frostwire.transfers.TransferItem;
 import com.limegroup.gnutella.settings.SharingSettings;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
@@ -122,5 +123,24 @@ public final class BTDownloadCreator {
         }
 
         return fileSelections;
+    }
+
+    public static BTDownload modifyDownload(String hash, String relativePath) {
+        BittorrentDownload bittorrentDownload = TorrentUtil.getDownloadManager(hash);
+
+        if (bittorrentDownload != null) {
+            boolean[] selection = getPreviousFileSelections(bittorrentDownload.getDl());
+            List<TransferItem> items = bittorrentDownload.getDl().getItems();
+            for (int i = 0; i < items.size(); i++) {
+                LTDownloadItem item = (LTDownloadItem) items.get(i);
+                if (item.getFile().getAbsolutePath().contains(relativePath)) {
+                    selection[item.getIndex()] = true;
+                }
+            }
+
+            bittorrentDownload.getDl().setFilesSelection(selection);
+        }
+
+        return bittorrentDownload;
     }
 }
