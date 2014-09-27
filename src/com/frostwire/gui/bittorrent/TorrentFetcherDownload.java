@@ -53,7 +53,6 @@ public class TorrentFetcherDownload implements BTDownload {
     private final String _hash;
     private final long _size;
     private final boolean _partialDownload;
-    private final ActionListener _postPartialDownloadAction;
     private final Date dateCreated;
 
     private String _state;
@@ -63,7 +62,7 @@ public class TorrentFetcherDownload implements BTDownload {
 
     private boolean[] filesSelection;
 
-    public TorrentFetcherDownload(String uri, String referrer, String displayName, String hash, long size, boolean partialDownload, ActionListener postPartialDownloadAction, final String relativePath) {
+    public TorrentFetcherDownload(String uri, String referrer, String displayName, String hash, long size, boolean partialDownload, final String relativePath) {
         _uri = uri;
         _torrentSaveDir = SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath();
         //_torrentDownloader = TorrentDownloaderFactory.create(new TorrentDownloaderListener(), _uri, referrer, _torrentSaveDir);
@@ -71,7 +70,6 @@ public class TorrentFetcherDownload implements BTDownload {
         _hash = hash != null ? hash : "";
         _size = size;
         _partialDownload = partialDownload;
-        _postPartialDownloadAction = postPartialDownloadAction;
         this.dateCreated = new Date();
         this.relativePath = relativePath;
 
@@ -112,16 +110,16 @@ public class TorrentFetcherDownload implements BTDownload {
         return false;
     }*/
 
-    public TorrentFetcherDownload(String uri, boolean partialDownload, ActionListener postPartialDownloadAction) {
-        this(uri, null, getDownloadNameFromMagnetURI(uri), "", -1, partialDownload, postPartialDownloadAction, null);
+    public TorrentFetcherDownload(String uri, boolean partialDownload) {
+        this(uri, null, getDownloadNameFromMagnetURI(uri), "", -1, partialDownload, null);
     }
 
-    public TorrentFetcherDownload(String uri, String relativePath, ActionListener postPartialDownloadAction) {
-        this(uri, null, getDownloadNameFromMagnetURI(uri), "", -1, true, postPartialDownloadAction, relativePath);
+    public TorrentFetcherDownload(String uri, String relativePath) {
+        this(uri, null, getDownloadNameFromMagnetURI(uri), "", -1, true, relativePath);
     }
 
-    public TorrentFetcherDownload(String uri, String referrer, String relativePath, String hash, ActionListener postPartialDownloadAction) {
-        this(uri, referrer, getDownloadNameFromMagnetURI(uri), hash, -1, true, postPartialDownloadAction, relativePath);
+    public TorrentFetcherDownload(String uri, String referrer, String relativePath, String hash) {
+        this(uri, referrer, getDownloadNameFromMagnetURI(uri), hash, -1, true, relativePath);
     }
 
     private static String getDownloadNameFromMagnetURI(String uri) {

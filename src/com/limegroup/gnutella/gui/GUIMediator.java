@@ -740,11 +740,7 @@ public final class GUIMediator {
     }
 
     public final void openTorrentSearchResult(TorrentSearchResult sr, boolean partialDownload) {
-        openTorrentSearchResult(sr, partialDownload, null);
-    }
-
-    public final void openTorrentSearchResult(TorrentSearchResult sr, boolean partialDownload, ActionListener postPartialDownloadAction) {
-        getBTDownloadMediator().openTorrentSearchResult(sr, partialDownload, postPartialDownloadAction);
+        getBTDownloadMediator().openTorrentSearchResult(sr, partialDownload);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
@@ -759,7 +755,7 @@ public final class GUIMediator {
     }
 
     public final void openTorrentURI(String uri, boolean partialDownload) {
-        getBTDownloadMediator().openTorrentURI(uri, partialDownload, null);
+        getBTDownloadMediator().openTorrentURI(uri, partialDownload);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
@@ -1684,7 +1680,7 @@ public final class GUIMediator {
     }
 
     public void openTorrentSearchResult(TorrentSearchResult sr, String relativePath) {
-        getBTDownloadMediator().openTorrentURI(sr.getTorrentUrl(), sr.getDetailsUrl(), relativePath, sr.getHash(), null);
+        getBTDownloadMediator().openTorrentURI(sr.getTorrentUrl(), sr.getDetailsUrl(), relativePath, sr.getHash());
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 

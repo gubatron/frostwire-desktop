@@ -687,38 +687,38 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         removeYouTubeAction.setEnabled(false);
     }
 
-    public void openTorrentSearchResult(final TorrentSearchResult sr, final boolean partialDownload, final ActionListener postPartialDownloadAction) {
+    public void openTorrentSearchResult(final TorrentSearchResult sr, final boolean partialDownload) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), sr.getDetailsUrl(), sr.getDisplayName(), sr.getHash(), sr.getSize(), partialDownload, postPartialDownloadAction,
+                BTDownload downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), sr.getDetailsUrl(), sr.getDisplayName(), sr.getHash(), sr.getSize(), partialDownload,
                         null);
                 add(downloader);
             }
         });
     }
 
-    public void openTorrentURI(final String uri, final boolean partialDownload, final ActionListener postPartialDownloadAction) {
+    public void openTorrentURI(final String uri, final boolean partialDownload) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(uri, partialDownload, postPartialDownloadAction);
+                BTDownload downloader = new TorrentFetcherDownload(uri, partialDownload);
                 add(downloader);
             }
         });
     }
 
-    public void openTorrentURI(final String uri, final String relativePath, final ActionListener postPartialDownloadAction) {
+    public void openTorrentURI(final String uri, final String relativePath) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(uri, relativePath, postPartialDownloadAction);
+                BTDownload downloader = new TorrentFetcherDownload(uri, relativePath);
                 add(downloader);
             }
         });
     }
 
-    public void openTorrentURI(final String uri, final String referrer, final String relativePath, final String hash, final ActionListener postPartialDownloadAction) {
+    public void openTorrentURI(final String uri, final String referrer, final String relativePath, final String hash) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(uri, referrer, relativePath, hash, postPartialDownloadAction);
+                BTDownload downloader = new TorrentFetcherDownload(uri, referrer, relativePath, hash);
                 add(downloader);
             }
         });
