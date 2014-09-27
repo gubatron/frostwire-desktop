@@ -36,10 +36,12 @@ import java.util.List;
  */
 public final class BTDownloadCreator {
 
-    public static BTDownload createDownload(File torrentFile, boolean[] filesSelection) throws TOTorrentException, IOException {
+    public static BTDownload createDownload(File torrentFile, boolean[] filesSelection, File saveDir) throws TOTorrentException, IOException {
         BTEngine engine = BTEngineFactory.getInstance();
 
-        File saveDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
+        if (saveDir == null) {
+            saveDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
+        }
         if (!saveDir.exists()) {
             saveDir.mkdirs();
         }
