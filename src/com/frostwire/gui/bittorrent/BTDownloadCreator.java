@@ -21,11 +21,10 @@ package com.frostwire.gui.bittorrent;
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.bittorrent.BTEngineFactory;
 import com.frostwire.bittorrent.libtorrent.LTDownloadItem;
+import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.transfers.TransferItem;
 import com.limegroup.gnutella.settings.SharingSettings;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
-import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +36,7 @@ import java.util.List;
  */
 public final class BTDownloadCreator {
 
-    public static BTDownload createDownload(File torrentFile, boolean[] filesSelection, File saveDir) throws TOTorrentException, IOException {
+    public static BTDownload createDownload(File torrentFile, boolean[] filesSelection, File saveDir) throws IOException {
         BTEngine engine = BTEngineFactory.getInstance();
 
         if (saveDir == null) {
@@ -48,8 +47,8 @@ public final class BTDownloadCreator {
             saveDir.mkdirs();
         }
 
-        TOTorrent torrent = TOTorrentFactory.deserialiseFromBEncodedFile(torrentFile);
-        String hash = TorrentUtil.hashToString(torrent.getHash());
+        TorrentInfo tinfo = new TorrentInfo(torrentFile);
+        String hash = tinfo.getHash();
 
         BittorrentDownload bittorrentDownload = TorrentUtil.getDownloadManager(hash);
 
@@ -106,11 +105,11 @@ public final class BTDownloadCreator {
         return bittorrentDownload;
     }
 
-    public static BTDownload createDownload(File torrentFile, boolean[] filesSelection) throws TOTorrentException, IOException {
+    public static BTDownload createDownload(File torrentFile, boolean[] filesSelection) throws IOException {
         return createDownload(torrentFile, filesSelection, null);
     }
 
-    public static BTDownload createDownload(File torrentFile, File saveDir) throws TOTorrentException, IOException {
+    public static BTDownload createDownload(File torrentFile, File saveDir) throws IOException {
         return createDownload(torrentFile, null, saveDir);
     }
 
