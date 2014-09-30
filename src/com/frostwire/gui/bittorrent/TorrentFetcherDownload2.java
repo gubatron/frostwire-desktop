@@ -18,9 +18,14 @@
 
 package com.frostwire.gui.bittorrent;
 
+import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.jlibtorrent.TorrentInfo;
+import com.frostwire.logging.Logger;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.transfers.TransferState;
+import com.frostwire.util.HttpClientFactory;
+import com.limegroup.gnutella.gui.GUIMediator;
 
 import java.io.File;
 import java.util.Date;
@@ -30,6 +35,8 @@ import java.util.Date;
  * @author aldenml
  */
 public class TorrentFetcherDownload2 implements BTDownload {
+
+    private static final Logger LOG = Logger.getLogger(TorrentFetcherDownload2.class);
 
     private final String uri;
     private final String referer;
@@ -47,6 +54,10 @@ public class TorrentFetcherDownload2 implements BTDownload {
         this.dateCreated = new Date();
 
         state = TransferState.DOWNLOADING;
+
+        Thread t = new Thread(new FetcherRunnable(), "Torrent-Fetcher - " + uri);
+        t.setDaemon(true);
+        t.start();
     }
 
     public long getSize() {
@@ -74,6 +85,12 @@ public class TorrentFetcherDownload2 implements BTDownload {
     }
 
     public void remove() {
+        state = TransferState.CANCELED;
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                BTDownloadMediator.instance().remove(TorrentFetcherDownload2.this);
+            }
+        });
     }
 
     public void pause() {
@@ -164,5 +181,32 @@ public class TorrentFetcherDownload2 implements BTDownload {
     @Override
     public CopyrightLicenseBroker getCopyrightLicenseBroker() {
         return null;
+    }
+
+    private class FetcherRunnable implements Runnable {
+
+        @Override
+        public void run() {
+            if (state == TransferState.CANCELED) {
+                return;
+            }
+
+            try {
+                byte[] data = null;
+                if (uri.startsWith("http")) {
+                    // use our http client, since we can handle referer
+                    data = HttpClientFactory.newInstance().getBytes(uri, 30000, referer);
+                } else {
+                    data = BTEngine.getInstance().fetchMagnet(uri, 30000);
+                }
+
+                if (data != null && state != TransferState.CANCELED) {
+                    TorrentInfo ti = TorrentInfo.bdecode(data);
+                    BTEngine.getInstance().download(ti, null);
+                }
+            } catch (Throwable e) {
+                LOG.error("Error downloading torrent from uri", e);
+            }
+        }
     }
 }

@@ -289,6 +289,10 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     }
 
     private void setupMetadataHolder() {
+        // TODO:BITTORRENT
+        if (true) {
+            return;
+        }
         if (holder == null) {
             try {
                 File torrent = dl.getTorrentFile();

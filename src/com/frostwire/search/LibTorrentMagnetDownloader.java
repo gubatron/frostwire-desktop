@@ -18,7 +18,6 @@
 package com.frostwire.search;
 
 import com.frostwire.bittorrent.BTEngine;
-import com.frostwire.jlibtorrent.Downloader;
 
 /**
  * @author gubatron
@@ -26,13 +25,10 @@ import com.frostwire.jlibtorrent.Downloader;
  */
 public class LibTorrentMagnetDownloader implements MagnetDownloader {
 
-    private final Downloader downloader;
-
     public LibTorrentMagnetDownloader() {
-        this.downloader = new Downloader(BTEngine.getInstance().getSession());
     }
 
     public byte[] download(String magnet, int timeout) {
-        return downloader.fetchMagnet(magnet, timeout);
+        return BTEngine.getInstance().fetchMagnet(magnet, timeout);
     }
 }
