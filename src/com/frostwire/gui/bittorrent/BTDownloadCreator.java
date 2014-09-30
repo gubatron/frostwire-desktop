@@ -18,9 +18,9 @@
 
 package com.frostwire.gui.bittorrent;
 
+import com.frostwire.bittorrent.BTDownloadItem;
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.bittorrent.BTEngineFactory;
-import com.frostwire.bittorrent.libtorrent.LTDownloadItem;
 import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.transfers.TransferItem;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -144,7 +144,7 @@ public final class BTDownloadCreator {
             boolean[] selection = getPreviousFileSelections(bittorrentDownload.getDl());
             List<TransferItem> items = bittorrentDownload.getDl().getItems();
             for (int i = 0; i < items.size(); i++) {
-                LTDownloadItem item = (LTDownloadItem) items.get(i);
+                BTDownloadItem item = (BTDownloadItem) items.get(i);
                 if (item.getFile().getAbsolutePath().contains(relativePath)) {
                     selection[item.getIndex()] = true;
                 }

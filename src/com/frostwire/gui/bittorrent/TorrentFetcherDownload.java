@@ -18,7 +18,7 @@
 
 package com.frostwire.gui.bittorrent;
 
-import com.frostwire.bittorrent.libtorrent.LTEngine;
+import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.transfers.TransferState;
@@ -290,7 +290,7 @@ public class TorrentFetcherDownload implements BTDownload {
                     if (_uri.startsWith("magnet:?")) {
                         _state = TransferState.DOWNLOADING;
                         try {
-                            byte[] data = LTEngine.getInstance().getSession().fetchMagnet(_uri, 10000);
+                            byte[] data = BTEngine.getInstance().getSession().fetchMagnet(_uri, 10000);
                             TOTorrent torrent = TOTorrentFactory.deserialiseFromBEncodedByteArray(data);
                             File f = new File(_torrentSaveDir, TorrentUtil.hashToString(torrent.getHash()) + ".torrent");
                             FileUtils.writeByteArrayToFile(f, data);

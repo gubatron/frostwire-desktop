@@ -18,21 +18,7 @@
 
 package com.frostwire.gui.updates;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.net.URISyntaxException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.JOptionPane;
-
-import com.frostwire.bittorrent.libtorrent.LTEngine;
+import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.jlibtorrent.Session;
 import com.frostwire.jlibtorrent.TorrentAlertAdapter;
 import com.frostwire.jlibtorrent.TorrentHandle;
@@ -40,10 +26,6 @@ import com.frostwire.jlibtorrent.TorrentStatus;
 import com.frostwire.jlibtorrent.alerts.BlockFinishedAlert;
 import com.frostwire.jlibtorrent.alerts.FileErrorAlert;
 import com.frostwire.jlibtorrent.alerts.TorrentFinishedAlert;
-import org.limewire.util.CommonUtils;
-import org.limewire.util.FilenameUtils;
-import org.limewire.util.OSUtils;
-
 import com.frostwire.logging.Logger;
 import com.frostwire.util.DigestUtils;
 import com.frostwire.util.HttpClient;
@@ -52,11 +34,19 @@ import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.UpdateSettings;
+import org.limewire.util.CommonUtils;
+import org.limewire.util.FilenameUtils;
+import org.limewire.util.OSUtils;
+
+import javax.swing.*;
+import java.io.*;
+import java.net.URISyntaxException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author gubatron
  * @author aldenml
- *
  */
 public class InstallerUpdater implements Runnable {
 
@@ -158,7 +148,7 @@ public class InstallerUpdater implements Runnable {
     }
 
     private final TorrentHandle startTorrentDownload(String torrentFile, String saveDataPath) throws Exception {
-        final Session session = LTEngine.getInstance().getSession();
+        final Session session = BTEngine.getInstance().getSession();
 
         TorrentHandle th = session.addTorrent(new File(torrentFile), new File(saveDataPath));
 
@@ -204,16 +194,16 @@ public class InstallerUpdater implements Runnable {
                         }
 
                         if (OSUtils.isWindows()) {
-                            String[] commands = new String[] { "CMD.EXE", "/C", _executableFile.getAbsolutePath() };
+                            String[] commands = new String[]{"CMD.EXE", "/C", _executableFile.getAbsolutePath()};
 
                             ProcessBuilder pbuilder = new ProcessBuilder(commands);
                             pbuilder.start();
                         } else if (OSUtils.isLinux() && OSUtils.isUbuntu()) {
                             UpdateMediator.instance().installUbuntu(_executableFile);
                         } else if (OSUtils.isMacOSX()) {
-                            String[] mountCommand = new String[] { "hdiutil", "attach", _executableFile.getAbsolutePath() };
+                            String[] mountCommand = new String[]{"hdiutil", "attach", _executableFile.getAbsolutePath()};
 
-                            String[] finderShowCommand = new String[] { "open", "/Volumes/" + FilenameUtils.getBaseName(_executableFile.getName()) };
+                            String[] finderShowCommand = new String[]{"open", "/Volumes/" + FilenameUtils.getBaseName(_executableFile.getName())};
 
                             ProcessBuilder pbuilder = new ProcessBuilder(mountCommand);
                             Process mountingProcess = pbuilder.start();
@@ -361,7 +351,7 @@ public class InstallerUpdater implements Runnable {
             //try to restart the download. delete torrent and data
             //manager.stopIt(DownloadManager.STATE_READY, false, true);
             try {
-                LTEngine.getInstance().getSession().removeTorrent(manager, Session.Options.DELETE_FILES);
+                BTEngine.getInstance().getSession().removeTorrent(manager, Session.Options.DELETE_FILES);
                 //processMessage(_updateMessage);
             } catch (Throwable e) {
                 LOG.error("Error removing download manager on error", e);

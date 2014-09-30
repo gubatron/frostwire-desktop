@@ -18,7 +18,6 @@
 
 package com.frostwire.bittorrent;
 
-import com.frostwire.bittorrent.libtorrent.LTEngine;
 import com.limegroup.gnutella.settings.SharingSettings;
 import org.gudy.azureus2.core3.util.protocol.AzURLStreamHandlerFactory;
 import org.limewire.util.CommonUtils;
@@ -39,7 +38,7 @@ public final class BTEngineFactory {
 
     public static BTEngine getInstance() {
         if (instance == null) {
-            instance = LTEngine.getInstance();
+            instance = BTEngine.getInstance();
             setup(instance);
         }
         return instance;

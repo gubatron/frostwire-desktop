@@ -17,7 +17,7 @@
 
 package com.frostwire.search;
 
-import com.frostwire.bittorrent.libtorrent.LTEngine;
+import com.frostwire.bittorrent.BTEngine;
 
 /**
  * @author gubatron
@@ -29,6 +29,6 @@ public class LibTorrentMagnetDownloader implements MagnetDownloader {
     }
 
     public byte[] download(String magnet, int timeout) {
-        return LTEngine.getInstance().getSession().fetchMagnet(magnet, timeout);
+        return BTEngine.getInstance().getSession().fetchMagnet(magnet, timeout);
     }
 }
