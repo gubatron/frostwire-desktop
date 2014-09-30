@@ -356,7 +356,8 @@ public class TorrentFetcherDownload implements BTDownload {
                 }
             }
 
-            BTDownload d = BTDownloadCreator.createDownload(torrentFile, filesSelection);
+            // TODO:BITTORRENT
+            BTDownload d = null;//BTDownloadCreator.createDownload(torrentFile, filesSelection);
 
             if (d != null) {
                 _delegate = d;
@@ -388,7 +389,8 @@ public class TorrentFetcherDownload implements BTDownload {
             } while (!isDownloadingTorrentReady(_hash));
 
             try {
-                BTDownload d = BTDownloadCreator.modifyDownload(_hash, relativePath);
+                // TODO:BITTORRENT
+                BTDownload d = null;//BTDownloadCreator.modifyDownload(_hash, relativePath);
 
                 if (d != null) {
                     _delegate = d;
