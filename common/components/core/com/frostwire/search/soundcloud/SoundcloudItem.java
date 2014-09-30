@@ -39,4 +39,5 @@ public class SoundcloudItem {
     public boolean downloadable;
     public String download_url;
     public long original_content_size;
+    public String original_format;
 }

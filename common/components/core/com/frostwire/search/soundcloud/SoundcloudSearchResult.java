@@ -25,6 +25,7 @@ import java.util.Locale;
 import com.frostwire.search.AbstractFileSearchResult;
 import com.frostwire.search.HttpSearchResult;
 import com.frostwire.search.StreamableSearchResult;
+import com.frostwire.util.StringUtils;
 
 /**
  * @author gubatron
@@ -49,7 +50,8 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
         this.displayName = item.title;
         this.username = buildUsername(item);
         this.trackUrl = item.permalink_url;
-        this.filename = item.permalink + "-soundcloud.mp3";
+        this.filename = item.permalink + "-soundcloud." + ((!StringUtils.isNullOrEmpty(item.original_format) ?
+                item.original_format : "mp3"));
         this.size = buildSize(item);
         this.source = buildSource(item);
         
@@ -61,6 +63,7 @@ public class SoundcloudSearchResult extends AbstractFileSearchResult implements 
 
         this.date = buildDate(item.created_at);
         this.downloadUrl = buildDownloadUrl(item, clientId, appVersion);
+
         System.out.println("SoundCloudSearchResult().downloadUrl => " + this.downloadUrl);
     }
 

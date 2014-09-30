@@ -18,17 +18,6 @@
 
 package com.frostwire.gui.bittorrent;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
-import org.apache.commons.io.FilenameUtils;
-import org.gudy.azureus2.core3.download.DownloadManager;
-
 import com.frostwire.mp3.ID3Wrapper;
 import com.frostwire.mp3.ID3v1Tag;
 import com.frostwire.mp3.ID3v23Tag;
@@ -41,6 +30,16 @@ import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
+import org.apache.commons.io.FilenameUtils;
+import org.gudy.azureus2.core3.download.DownloadManager;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * @author gubatron
