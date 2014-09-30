@@ -50,6 +50,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
+import com.frostwire.search.torrent.TorrentCrawledSearchResult;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.service.ErrorService;
@@ -1681,6 +1683,11 @@ public final class GUIMediator {
 
     public void openTorrentSearchResult(TorrentSearchResult sr, String relativePath) {
         getBTDownloadMediator().openTorrentURI(sr.getTorrentUrl(), sr.getDetailsUrl(), relativePath, sr.getHash());
+        setWindow(GUIMediator.Tabs.SEARCH);
+    }
+
+    public void openTorrentSearchResult(TorrentCrawledSearchResult sr) {
+        getBTDownloadMediator().openSearchResult(sr);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 

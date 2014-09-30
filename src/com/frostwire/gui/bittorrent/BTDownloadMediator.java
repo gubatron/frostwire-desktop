@@ -35,6 +35,7 @@ import com.frostwire.search.soundcloud.SoundCloudRedirectResponse;
 import com.frostwire.search.soundcloud.SoundcloudItem;
 import com.frostwire.search.soundcloud.SoundcloudPlaylist;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
+import com.frostwire.search.torrent.TorrentCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.frostwire.torrent.PaymentOptions;
@@ -818,6 +819,18 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                 }
             }
         });
+    }
+
+    public void openSearchResult(TorrentCrawledSearchResult sr) {
+        try {
+            if (!BTEngine.getInstance().isStarted()) {
+                LOG.error("Bittorrent core not started");
+                return;
+            }
+            BTEngine.getInstance().download(sr, SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
+        } catch (Throwable e) {
+            LOG.error("Unable to start download from search result", e);
+        }
     }
 
     public BTDownload[] getSelectedDownloaders() {

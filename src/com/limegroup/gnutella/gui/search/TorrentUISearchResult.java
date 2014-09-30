@@ -53,7 +53,7 @@ public class TorrentUISearchResult extends AbstractUISearchResult {
     @Override
     public void download(boolean partial) {
         if (sr instanceof TorrentCrawledSearchResult) {
-            GUIMediator.instance().openTorrentSearchResult(sr, ((TorrentCrawledSearchResult) sr).getRelativePath());
+            GUIMediator.instance().openTorrentSearchResult((TorrentCrawledSearchResult) sr);
         } else {
             GUIMediator.instance().openTorrentSearchResult(sr, partial);
         }

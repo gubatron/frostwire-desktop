@@ -289,15 +289,13 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     private void setupMetadataHolder() {
         if (holder == null) {
-            File torrent = dl.getTorrentFile();
-            if (torrent.exists()) {
-                try {
-                    holder = new BTInfoAditionalMetadataHolder(torrent, getDisplayName());
-                    licenseBroker = holder.getLicenseBroker();
-                    paymentOptions = holder.getPaymentOptions();
-                } catch (Throwable e) {
-                    LOG.error("Unable to read torrent file: " + torrent);
-                }
+            try {
+                File torrent = dl.getTorrentFile();
+                holder = new BTInfoAditionalMetadataHolder(torrent, getDisplayName());
+                licenseBroker = holder.getLicenseBroker();
+                paymentOptions = holder.getPaymentOptions();
+            } catch (Throwable e) {
+                LOG.error("Unable to setup licence holder");
             }
         }
     }

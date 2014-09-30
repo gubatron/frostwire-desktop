@@ -48,7 +48,7 @@ public final class BTDownloadCreator {
         }
 
         TorrentInfo tinfo = new TorrentInfo(torrentFile);
-        String hash = tinfo.getHash();
+        String hash = tinfo.getInfoHashStr();
 
         BittorrentDownload bittorrentDownload = TorrentUtil.getDownloadManager(hash);
 
