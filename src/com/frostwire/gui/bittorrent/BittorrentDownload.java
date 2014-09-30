@@ -77,7 +77,8 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public String getDisplayName() {
-        return dl.getDisplayName();
+        // TODO:BITTORRENT
+        return dl.getName();
     }
 
     @Override

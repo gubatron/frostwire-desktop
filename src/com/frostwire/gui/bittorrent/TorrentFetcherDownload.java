@@ -290,7 +290,8 @@ public class TorrentFetcherDownload implements BTDownload {
                     if (_uri.startsWith("magnet:?")) {
                         _state = TransferState.DOWNLOADING;
                         try {
-                            byte[] data = BTEngine.getInstance().getSession().fetchMagnet(_uri, 10000);
+                            // TODO:BITTORRENT
+                            byte[] data = null;//BTEngine.getInstance().getSession().fetchMagnet(_uri, 10000);
                             TOTorrent torrent = TOTorrentFactory.deserialiseFromBEncodedByteArray(data);
                             File f = new File(_torrentSaveDir, TorrentUtil.hashToString(torrent.getHash()) + ".torrent");
                             FileUtils.writeByteArrayToFile(f, data);
