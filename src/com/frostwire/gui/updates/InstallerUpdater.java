@@ -165,19 +165,19 @@ public class InstallerUpdater implements Runnable {
         session.addListener(new TorrentAlertAdapter(th) {
 
             @Override
-            public void onFileError(FileErrorAlert alert) {
-                stateChanged(th, th.getStatus().getState());
+            public void fileError(FileErrorAlert alert) {
+                onStateChanged(th, th.getStatus().getState());
             }
 
             @Override
-            public void onBlockFinished(BlockFinishedAlert alert) {
-                stateChanged(th, th.getStatus().getState());
+            public void blockFinished(BlockFinishedAlert alert) {
+                onStateChanged(th, th.getStatus().getState());
             }
 
             @Override
-            public void onTorrentFinished(TorrentFinishedAlert alert) {
+            public void torrentFinished(TorrentFinishedAlert alert) {
                 session.removeListener(this);
-                stateChanged(th, th.getStatus().getState());
+                onStateChanged(th, th.getStatus().getState());
                 downloadComplete(th);
             }
         });
@@ -329,7 +329,7 @@ public class InstallerUpdater implements Runnable {
         }
     }
 
-    private void stateChanged(TorrentHandle manager, TorrentStatus.State state) {
+    private void onStateChanged(TorrentHandle manager, TorrentStatus.State state) {
         if (_manager == null && manager != null) {
             _manager = manager;
         }
