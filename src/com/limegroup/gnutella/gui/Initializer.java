@@ -15,22 +15,7 @@
 
 package com.limegroup.gnutella.gui;
 
-import java.awt.Frame;
-import java.lang.reflect.InvocationTargetException;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import javax.swing.plaf.basic.BasicHTML;
-
-import com.frostwire.bittorrent.BTEngineFactory;
-import org.limewire.i18n.I18nMarker;
-import org.limewire.service.ErrorService;
-import org.limewire.util.I18NConvert;
-import org.limewire.util.OSUtils;
-import org.limewire.util.Stopwatch;
-import org.limewire.util.SystemUtils;
-
+import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.logging.Logger;
 import com.frostwire.util.UserAgentGenerator;
 import com.limegroup.gnutella.ExternalControl;
@@ -42,56 +27,76 @@ import com.limegroup.gnutella.gui.init.SetupManager;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.ApplicationSettings;
+import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.MacOSXUtils;
+import org.gudy.azureus2.core3.util.protocol.AzURLStreamHandlerFactory;
+import org.limewire.i18n.I18nMarker;
+import org.limewire.service.ErrorService;
+import org.limewire.util.*;
 
-/** Initializes (creates, starts, & displays) the LimeWire Core & UI. */
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicHTML;
+import java.awt.*;
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+
+/**
+ * Initializes (creates, starts, & displays) the LimeWire Core & UI.
+ */
 public final class Initializer {
     private final Logger LOG;
-        
-    /** True if is running from a system startup. */
+
+    /**
+     * True if is running from a system startup.
+     */
     private volatile boolean isStartup = false;
-    
-    /** The start memory -- only set if debugging. */
+
+    /**
+     * The start memory -- only set if debugging.
+     */
     private long startMemory;
-    
-    /** A stopwatch for debug logging. */
+
+    /**
+     * A stopwatch for debug logging.
+     */
     private final Stopwatch stopwatch;
-    
+
     Initializer() {
         LOG = Logger.getLogger(Initializer.class);
-        
+
         startMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         LOG.info("START Initializer, using: " + startMemory + " memory");
-        
+
         stopwatch = new Stopwatch(LOG);
     }
-    
+
     /**
      * Initializes all of the necessary application classes.
-     * 
+     * <p/>
      * If this throws any exceptions, then LimeWire was not able to construct
      * properly and must be shut down.
      */
-     void initialize(String args[], Frame awtSplash) throws Throwable {
+    void initialize(String args[], Frame awtSplash) throws Throwable {
         // ** THE VERY BEGINNING -- DO NOT ADD THINGS BEFORE THIS **
         //System.out.println("Initializer.initialize() preinit()");
-        preinit();        
-        
+        preinit();
+
         // Various startup tasks...
         //System.out.println("Initializer.initialize() setup callbacks and listeners");
-        setupCallbacksAndListeners();     
-        validateStartup(args);        
-        
+        setupCallbacksAndListeners();
+        validateStartup(args);
+
         // Creates LimeWire itself.
         //System.out.println("Initializer.initialize() create Limewire");
-        LimeWireGUI limewireGUI = createLimeWire(); 
+        LimeWireGUI limewireGUI = createLimeWire();
         LimeWireCore limeWireCore = limewireGUI.getLimeWireCore();
 
         // Various tasks that can be done after core is glued & started.
         //System.out.println("Initializer.initialize() glue core");
-        glueCore(limeWireCore);       
-        
+        glueCore(limeWireCore);
+
         // Validate any arguments or properties outside of the LW environment.
         //System.out.println("Initializer.initialize() run external checks");
         runExternalChecks(limeWireCore, args);
@@ -101,12 +106,12 @@ public final class Initializer {
         //System.out.println("Initializer.initialize() monitor deadlocks");
         DeadlockSupport.startDeadlockMonitoring();
         //stopwatch.resetAndLog("Start deadlock monitor");
-        
+
         // Installs properties & resources.
         //System.out.println("Initializer.initialize() install properties");
-        installProperties();        
+        installProperties();
         installResources();
-        
+
         // Construct the SetupManager, which may or may not be shown.
         final SetupManager setupManager = new SetupManager();
         //stopwatch.resetAndLog("construct SetupManager");
@@ -115,129 +120,137 @@ public final class Initializer {
         //System.out.println("Initializer.initialize() switch splashes");
         switchSplashes(awtSplash);
         startEarlyCore(setupManager, limeWireCore);
-        
+
         // Initialize early UI components, display the setup manager (if necessary),
         // and ensure the save directory is valid.
         //System.out.println("Initializer.initialize() init early UI");
         initializeEarlyUI();
         startSetupManager(setupManager);
         validateSaveDirectory();
-        
+
         // Load the UI, system tray & notification handlers,
         // and hide the splash screen & display the UI.
         //System.out.println("Initializer.initialize() load UI");
         loadUI();
         loadTrayAndNotifications();
         hideSplashAndShowUI();
-        
+
         // Initialize late tasks, like Icon initialization & install listeners.
         loadLateTasksForUI();
-        
+
         // Start the core & run any queued control requests, and load DAAP.
         //System.out.println("Initializer.initialize() start core");
         startCore(limeWireCore);
         runQueuedRequests(limeWireCore);
-        
-        startAzureusCore();
-        
+
+        startBittorrentCore();
+
         // Run any after-init tasks.
         postinit();
     }
-    
-    /** Initializes the very early things. */
+
+    /**
+     * Initializes the very early things.
+     */
     /*
      * DO NOT CHANGE THIS WITHOUT KNOWING WHAT YOU'RE DOING.
      * PREINSTALL MUST BE DONE BEFORE ANYTHING ELSE IS REFERENCED.
      * (Because it sets the preference directory in CommonUtils.)
      */
-    private void preinit() {        
+    private void preinit() {
         // Make sure the settings directory is set.
         try {
-        	LimeCoreGlue.preinstall();
-        } catch(InstallFailedException ife) {
+            LimeCoreGlue.preinstall();
+        } catch (InstallFailedException ife) {
             failPreferencesPermissions();
         }
     }
-    
-    /** Installs all callbacks & listeners. */
-    private void setupCallbacksAndListeners() {        
+
+    /**
+     * Installs all callbacks & listeners.
+     */
+    private void setupCallbacksAndListeners() {
         // Set the error handler so we can receive core errors.
         ErrorService.setErrorCallback(new ErrorHandler());
         //stopwatch.resetAndLog("ErrorHandler install");
-        
+
         // Set the messaging handler so we can receive core messages
         org.limewire.service.MessageService.setCallback(new MessageHandler());
         //stopwatch.resetAndLog("MessageHandler install");
-        
+
         // Set the default event error handler so we can receive uncaught
         // AWT errors.
         DefaultErrorCatcher.install();
         //stopwatch.resetAndLog("DefaultErrorCatcher install");
-        
+
         if (OSUtils.isMacOSX()) {
             // Raise the number of allowed concurrent open files to 1024.
             SystemUtils.setOpenFileLimit(1024);
             stopwatch.resetAndLog("Open file limit raise");
-            
+
             MacEventHandler.instance();
             stopwatch.resetAndLog("MacEventHandler instance");
         }
     }
-    
+
     /**
      * Ensures this should continue running, by checking
-     * for expiration failures or startup settings. 
+     * for expiration failures or startup settings.
      */
     private void validateStartup(String[] args) {
-        
+
         // Yield so any other events can be run to determine
         // startup status, but only if we're going to possibly
         // be starting...
-        if(StartupSettings.RUN_ON_STARTUP.getValue()) {
+        if (StartupSettings.RUN_ON_STARTUP.getValue()) {
             stopwatch.reset();
             Thread.yield();
             //stopwatch.resetAndLog("Thread yield");
         }
-        
-        if ( OSUtils.isMacOSX() ) {
+
+        if (OSUtils.isMacOSX()) {
             MacOSXUtils.setLoginStatus(StartupSettings.RUN_ON_STARTUP.getValue());
         }
-        
+
         if (args.length >= 1 && "-startup".equals(args[0]))
             isStartup = true;
-        
+
         if (isStartup) {
             // if the user doesn't want to start on system startup, exit the
             // JVM immediately
-            if(!StartupSettings.RUN_ON_STARTUP.getValue())
+            if (!StartupSettings.RUN_ON_STARTUP.getValue())
                 System.exit(0);
         }
     }
-    
-    /** Wires together LimeWire. */
+
+    /**
+     * Wires together LimeWire.
+     */
     private LimeWireGUI createLimeWire() {
         LimeWireGUI limeWireGUI = LimeWireModule.instance().getLimeWireGUIModule().getLimeWireGUI();
         return limeWireGUI;
     }
-    
-    /** Wires together remaining non-Guiced pieces. */
+
+    /**
+     * Wires together remaining non-Guiced pieces.
+     */
     private void glueCore(LimeWireCore limeWireCore) {
         limeWireCore.getLimeCoreGlue().install();
     }
-    
+
     /**
      * Initializes any code that is dependent on external controls.
      * Specifically, GURLHandler & MacEventHandler on OS X,
      * ensuring that multiple LimeWire's can't run at once,
      * and processing any arguments that were passed to LimeWire.
-     */ 
-    private void runExternalChecks(LimeWireCore limeWireCore, String[] args) {        
+     */
+    private void runExternalChecks(LimeWireCore limeWireCore, String[] args) {
         ExternalControl externalControl = limeWireCore.getExternalControl();
-        if(OSUtils.isMacOSX()) {
+        if (OSUtils.isMacOSX()) {
             GURLHandler.getInstance().enable(externalControl);
             MacEventHandler.instance().enable(externalControl, this);
         }
-        
+
         // Test for preexisting FrostWire and pass it a magnet URL if one
         // has been passed in.
         if (args.length > 0 && !args[0].equals("-startup")) {
@@ -250,19 +263,23 @@ public final class Initializer {
             externalControl.checkForActiveFrostWire();
         }
     }
-    
-    /** Installs any system properties. */
-    private void installProperties() {        
+
+    /**
+     * Installs any system properties.
+     */
+    private void installProperties() {
         System.setProperty("http.agent", UserAgentGenerator.getUserAgent());
         stopwatch.resetAndLog("set system properties");
-        
+
         if (OSUtils.isMacOSX()) {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
             stopwatch.resetAndLog("set OSX properties");
         }
     }
-    
-    /** Sets up ResourceManager. */
+
+    /**
+     * Sets up ResourceManager.
+     */
     private void installResources() {
         GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
@@ -273,39 +290,45 @@ public final class Initializer {
         });
         //stopwatch.resetAndLog("come back from evt queue");
     }
-    
-    /** Starts any early core-related functionality. */
-    private void startEarlyCore(SetupManager setupManager, LimeWireCore limeWireCore) {        
+
+    /**
+     * Starts any early core-related functionality.
+     */
+    private void startEarlyCore(SetupManager setupManager, LimeWireCore limeWireCore) {
         // Add this running program to the Windows Firewall Exceptions list
         boolean inFirewallException = FirewallUtils.addToFirewall();
         //stopwatch.resetAndLog("add firewall exception");
-        
-        if(!inFirewallException) {
+
+        if (!inFirewallException) {
             limeWireCore.getLifecycleManager().loadBackgroundTasks();
             //stopwatch.resetAndLog("load background tasks");
         }
     }
-    
-    /** Switches from the AWT splash to the Swing splash. */
+
+    /**
+     * Switches from the AWT splash to the Swing splash.
+     */
     private void switchSplashes(Frame awtSplash) {
         GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
                 // Show the splash screen if we're not starting automatically on 
                 // system startup
-                if(!isStartup) {
+                if (!isStartup) {
                     SplashWindow.instance().begin();
                     //stopwatch.resetAndLog("begin splash window");
                 }
             }
         });
-        
-        if(awtSplash != null) {
+
+        if (awtSplash != null) {
             awtSplash.dispose();
             //stopwatch.resetAndLog("dispose AWT splash");
         }
     }
-    
-    /** Initializes any early UI tasks, such as HTML loading & the Bug Manager. */
+
+    /**
+     * Initializes any early UI tasks, such as HTML loading & the Bug Manager.
+     */
     private void initializeEarlyUI() {
         // Load up the HTML engine.
         GUIMediator.setSplashScreenString(I18n.tr("Loading HTML Engine..."));
@@ -331,83 +354,93 @@ public final class Initializer {
         BugManager.instance();
         //stopwatch.resetAndLog("BugManager instance");
     }
-    
-    /** Starts the SetupManager, if necessary. */
-    private void startSetupManager(final SetupManager setupManager) {        
+
+    /**
+     * Starts the SetupManager, if necessary.
+     */
+    private void startSetupManager(final SetupManager setupManager) {
         // Run through the initialization sequence -- this must always be
         // called before GUIMediator constructs the LibraryTree!
         GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
                 //stopwatch.resetAndLog("event evt queue");
                 // Then create the setup manager if needed.
-                setupManager.createIfNeeded();     
+                setupManager.createIfNeeded();
                 //stopwatch.resetAndLog("create setupManager if needed");
             }
         });
         //stopwatch.resetAndLog("return from evt queue");
     }
-    
-    /** Ensures the save directory is valid. */
-    private void validateSaveDirectory() {        
+
+    /**
+     * Ensures the save directory is valid.
+     */
+    private void validateSaveDirectory() {
         // Make sure the save directory is valid.
         SaveDirectoryHandler.handleSaveDirectory();
         //stopwatch.resetAndLog("check save directory validity");
     }
-    
-    /** Loads the UI. */
+
+    /**
+     * Loads the UI.
+     */
     private void loadUI() {
         GUIMediator.setSplashScreenString(I18n.tr("Loading User Interface..."));
         stopwatch.resetAndLog("update splash for UI");
 
-		GUIMediator.safeInvokeAndWait(new Runnable() {
-			public void run() {
-				// stopwatch.resetAndLog("enter evt queue");
-				GUIMediator.instance();
-				// stopwatch.resetAndLog("GUImediator instance");
-			}
-		});
-        
+        GUIMediator.safeInvokeAndWait(new Runnable() {
+            public void run() {
+                // stopwatch.resetAndLog("enter evt queue");
+                GUIMediator.instance();
+                // stopwatch.resetAndLog("GUImediator instance");
+            }
+        });
+
         GUIMediator.setSplashScreenString(I18n.tr("Loading Core Components..."));
         //stopwatch.resetAndLog("update splash for core");
     }
-    
-    /** Loads the system tray & other notifications. */
-    private void loadTrayAndNotifications() {        
+
+    /**
+     * Loads the system tray & other notifications.
+     */
+    private void loadTrayAndNotifications() {
         // Create the user desktop notifier object.
         // This must be done before the GUI is made visible,
         // otherwise the user can close it and not see the
         // tray icon.
         GUIMediator.safeInvokeAndWait(new Runnable() {
-                public void run() {
-                    //stopwatch.resetAndLog("enter evt queue");
-                    
-                    NotifyUserProxy.instance();
-                    //stopwatch.resetAndLog("NotifYUserProxy instance");
-                    
-                    if (!ApplicationSettings.DISPLAY_TRAY_ICON.getValue())
-                        NotifyUserProxy.instance().hideTrayIcon();
-                    
-                    SettingsWarningManager.checkSettingsLoadSaveFailure();
-                    
-                    //stopwatch.resetAndLog("end notify runner");
-                }
+            public void run() {
+                //stopwatch.resetAndLog("enter evt queue");
+
+                NotifyUserProxy.instance();
+                //stopwatch.resetAndLog("NotifYUserProxy instance");
+
+                if (!ApplicationSettings.DISPLAY_TRAY_ICON.getValue())
+                    NotifyUserProxy.instance().hideTrayIcon();
+
+                SettingsWarningManager.checkSettingsLoadSaveFailure();
+
+                //stopwatch.resetAndLog("end notify runner");
+            }
         });
         //stopwatch.resetAndLog("return from evt queue");
     }
-    
-    /** Hides the splash screen and sets the UI for allowing viz. */
-    private void hideSplashAndShowUI() {        
+
+    /**
+     * Hides the splash screen and sets the UI for allowing viz.
+     */
+    private void hideSplashAndShowUI() {
         // Hide the splash screen and recycle its memory.
-        if(!isStartup) {
+        if (!isStartup) {
             SplashWindow.instance().dispose();
             stopwatch.resetAndLog("hide splash");
         }
-        
+
         GUIMediator.allowVisibility();
         stopwatch.resetAndLog("allow viz");
-        
+
         // Make the GUI visible.
-        if(!isStartup) {
+        if (!isStartup) {
             GUIMediator.setAppVisible(true);
             stopwatch.resetAndLog("set app visible TRUE");
         } else {
@@ -415,9 +448,11 @@ public final class Initializer {
             stopwatch.resetAndLog("start hidden");
         }
     }
-    
-    /** Runs any late UI tasks, such as initializing Icons, I18n support. */
-    private void loadLateTasksForUI() {        
+
+    /**
+     * Runs any late UI tasks, such as initializing Icons, I18n support.
+     */
+    private void loadLateTasksForUI() {
         // Initialize IconManager.
         //GUIMediator.setSplashScreenString(I18n.tr("Loading Icons..."));
         GUIMediator.safeInvokeAndWait(new Runnable() {
@@ -433,14 +468,16 @@ public final class Initializer {
         I18NConvert.instance();
         stopwatch.resetAndLog("I18nConvert instance");
     }
-    
-    /** Starts the core. */
-    private void startCore(LimeWireCore limeWireCore) {        
+
+    /**
+     * Starts the core.
+     */
+    private void startCore(LimeWireCore limeWireCore) {
         // Start the backend threads.  Note that the GUI is not yet visible,
         // but it needs to be constructed at this point  
         limeWireCore.getLifecycleManager().start();
         stopwatch.resetAndLog("lifecycle manager start");
-        
+
         // Instruct the gui to perform tasks that can only be performed
         // after the backend has been constructed.
         GUIMediator.instance().coreInitialized();
@@ -448,52 +485,76 @@ public final class Initializer {
         limeWireCore.getDownloadManager().loadSavedDownloadsAndScheduleWriting();
         stopwatch.resetAndLog("core initialized");
     }
-    
-    /** Start Azureus Core. */
-    private void startAzureusCore() {
-    	BackgroundExecutorService.schedule(new Runnable() {
-    		public void run() {
-                BTEngineFactory.getInstance().start();
-    		}
-    	});
+
+    private void startBittorrentCore() {
+        BackgroundExecutorService.schedule(new Runnable() {
+            public void run() {
+                // this hack is only due to the remaining vuze TOTorrent code
+                URL.setURLStreamHandlerFactory(new AzURLStreamHandlerFactory());
+
+                SharingSettings.initTorrentDataDirSetting();
+                SharingSettings.initTorrentsDirSetting();
+
+                BTEngine engine = BTEngine.getInstance();
+
+                File homeDir = new File(CommonUtils.getUserSettingsDir() + File.separator + "libtorrent" + File.separator);
+                if (!homeDir.exists()) {
+                    homeDir.mkdirs();
+                }
+
+                engine.setHomeDir(homeDir);
+                engine.setTorrentsDir(SharingSettings.TORRENTS_DIR_SETTING.getValue());
+                engine.setDataDir(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
+
+                engine.start();
+            }
+        });
     }
-    
-    /** Runs control requests that we queued early in initializing. */
-    private void runQueuedRequests(LimeWireCore limeWireCore) {        
+
+    /**
+     * Runs control requests that we queued early in initializing.
+     */
+    private void runQueuedRequests(LimeWireCore limeWireCore) {
         // Activate a download for magnet URL locally if one exists
         limeWireCore.getExternalControl().runQueuedControlRequest();
         stopwatch.resetAndLog("run queued control req");
     }
-    
-    /** Runs post initialization tasks. */
+
+    /**
+     * Runs post initialization tasks.
+     */
     private void postinit() {
         // Tell the GUI that loading is all done.
         GUIMediator.instance().loadFinished();
         stopwatch.resetAndLog("load finished");
-                
+
         long stopMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         LOG.info("STOP Initializer, using: " + stopMemory + " memory, consumed: " + (stopMemory - startMemory));
     }
-    
+
     /**
      * Sets the startup property to be true.
      */
     void setStartup() {
         isStartup = true;
     }
-        
-    /** Fails because preferences can't be set. */
+
+    /**
+     * Fails because preferences can't be set.
+     */
     private void failPreferencesPermissions() {
         fail(I18nMarker
                 .marktr("FrostWire could not create a temporary preferences folder.\n\nThis is generally caused by a lack of permissions.  Please make sure that FrostWire (and you) have access to create files/folders on your computer.  If the problem persists, please visit www.frostwire.com and click the 'Support' link.\n\nFrostWire will now exit.  Thank You."));
     }
-    
-    /** Shows a msg & fails. */
+
+    /**
+     * Shows a msg & fails.
+     */
     private void fail(final String msgKey) {
         try {
             SwingUtilities.invokeAndWait(new Runnable() {
                 public void run() {
-                    JOptionPane.showMessageDialog(null, 
+                    JOptionPane.showMessageDialog(null,
                             new MultiLineLabel(I18n.tr(msgKey), 400),
                             I18n.tr("Error"),
                             JOptionPane.ERROR_MESSAGE);
@@ -502,12 +563,12 @@ public final class Initializer {
         } catch (InterruptedException ignored) {
         } catch (InvocationTargetException e) {
             Throwable cause = e.getCause();
-            if(cause instanceof RuntimeException)
-                throw (RuntimeException)cause;
-            if(cause instanceof Error)
-                throw (Error)cause;
+            if (cause instanceof RuntimeException)
+                throw (RuntimeException) cause;
+            if (cause instanceof Error)
+                throw (Error) cause;
             throw new RuntimeException(cause);
         }
         System.exit(1);
-    }      
+    }
 }

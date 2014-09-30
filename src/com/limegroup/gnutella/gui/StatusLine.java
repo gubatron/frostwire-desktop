@@ -41,7 +41,6 @@ import javax.swing.SwingConstants;
 import javax.swing.ToolTipManager;
 
 import com.frostwire.bittorrent.BTEngine;
-import com.frostwire.bittorrent.BTEngineFactory;
 import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
@@ -532,7 +531,7 @@ public final class StatusLine {
      * Updates the firewall text. 
      */
     public void updateFirewall() {
-        BTEngine engine = BTEngineFactory.getInstance();
+        BTEngine engine = BTEngine.getInstance();
         if (engine.isStarted()) {
             updateFirewallLabel(!engine.isFirewalled());
         } else {
@@ -544,7 +543,7 @@ public final class StatusLine {
      * Updates the bandwidth statistics.
      */
     public void updateBandwidth() {
-        if (BTEngineFactory.getInstance().isStarted()) {
+        if (BTEngine.getInstance().isStarted()) {
             //  format strings
             String sDown = GUIUtils.rate2speed(GUIMediator.instance().getBTDownloadMediator().getDownloadsBandwidth());
             String sUp = GUIUtils.rate2speed(GUIMediator.instance().getBTDownloadMediator().getUploadsBandwidth());

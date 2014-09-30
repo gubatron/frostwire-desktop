@@ -18,7 +18,7 @@
 
 package com.limegroup.gnutella.settings;
 
-import com.frostwire.bittorrent.BTEngineFactory;
+import com.frostwire.bittorrent.BTEngine;
 import com.limegroup.gnutella.util.FrostWireUtils;
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.FileSetSetting;
@@ -87,7 +87,7 @@ public class LibrarySettings extends LimeProps {
 
         LibrarySettings.DIRECTORIES_TO_INCLUDE.add(fromDeviceFolder);
 
-        BTEngineFactory.getInstance().revertToDefaultConfiguration();
+        BTEngine.getInstance().revertToDefaultConfiguration();
     }
 
 

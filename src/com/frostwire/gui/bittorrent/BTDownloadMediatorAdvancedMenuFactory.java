@@ -24,41 +24,9 @@
 
 package com.frostwire.gui.bittorrent;
 
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-
-import com.frostwire.bittorrent.BTEngine;
-import com.frostwire.bittorrent.BTEngineFactory;
-import net.miginfocom.swing.MigLayout;
-
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.util.Debug;
-import org.gudy.azureus2.core3.util.DisplayFormatters;
-import org.gudy.azureus2.core3.util.TorrentUtils;
-
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
+import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.gui.bittorrent.BTDownloadActions.AddToPlaylistAction;
 import com.frostwire.gui.bittorrent.BTDownloadActions.CreateNewPlaylistAction;
 import com.frostwire.gui.library.LibraryMediator;
@@ -70,6 +38,19 @@ import com.frostwire.util.StringUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
+import net.miginfocom.swing.MigLayout;
+import org.gudy.azureus2.core3.util.Debug;
+import org.gudy.azureus2.core3.util.DisplayFormatters;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.*;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 final class BTDownloadMediatorAdvancedMenuFactory {
 
@@ -131,7 +112,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
         // advanced > Download Speed Menu //
 
-        BTEngine engine = BTEngineFactory.getInstance();
+        BTEngine engine = BTEngine.getInstance();
         long maxDownload = engine.getDownloadRateLimit();
         long maxUpload = engine.getUploadRateLimit();
 
@@ -223,7 +204,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
         ArrayList<com.frostwire.bittorrent.BTDownload> list = new ArrayList<com.frostwire.bittorrent.BTDownload>(downloaders.length);
         for (BTDownload downloader : downloaders) {
-            if (downloader instanceof BittorrentDownload){
+            if (downloader instanceof BittorrentDownload) {
                 com.frostwire.bittorrent.BTDownload dm = ((BittorrentDownload) downloader).getDl();
                 if (dm != null) {
                     list.add(dm);
@@ -239,8 +220,8 @@ final class BTDownloadMediatorAdvancedMenuFactory {
     }
 
     private static void addSpeedMenu(SkinMenu menuAdvanced, boolean isTorrentContext, boolean hasSelection, boolean downSpeedDisabled, boolean downSpeedUnlimited, long totalDownSpeed,
-            long downSpeedSetMax, long maxDownload, boolean upSpeedDisabled, boolean upSpeedUnlimited, long totalUpSpeed, long upSpeedSetMax, long maxUpload, final int num_entries,
-            final SpeedAdapter adapter) {
+                                     long downSpeedSetMax, long maxDownload, boolean upSpeedDisabled, boolean upSpeedUnlimited, long totalUpSpeed, long upSpeedSetMax, long maxUpload, final int num_entries,
+                                     final SpeedAdapter adapter) {
         // advanced > Download Speed Menu //
 
         final SkinMenu menuDownSpeed = new SkinMenu(I18n.tr("Set Down Speed"));

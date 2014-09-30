@@ -19,7 +19,6 @@
 package com.frostwire.gui.bittorrent;
 
 import com.frostwire.bittorrent.BTEngine;
-import com.frostwire.bittorrent.BTEngineFactory;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleMediaFileAction;
 import com.frostwire.gui.components.slides.Slide;
@@ -333,7 +332,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * @return the total amount of bandwidth being consumed by active downloads.
      */
     private double getBandwidth(boolean download) {
-        BTEngine engine = BTEngineFactory.getInstance();
+        BTEngine engine = BTEngine.getInstance();
 
         if (!engine.isStarted()) {
             return 0;
@@ -725,7 +724,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentFileForSeed(final File torrentFile, final File saveDir) {
-        if (!BTEngineFactory.getInstance().isStarted()) {
+        if (!BTEngine.getInstance().isStarted()) {
             LOG.error("Bittorrent core not started");
             return;
         }
@@ -782,7 +781,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
-        if (!BTEngineFactory.getInstance().isStarted()) {
+        if (!BTEngine.getInstance().isStarted()) {
             LOG.error("Bittorrent core not started");
             return;
         }
@@ -864,7 +863,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public long getTotalBytesDownloaded() {
-        BTEngine engine = BTEngineFactory.getInstance();
+        BTEngine engine = BTEngine.getInstance();
         if (!engine.isStarted()) {
             return 0;
         }
@@ -872,7 +871,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public long getTotalBytesUploaded() {
-        BTEngine engine = BTEngineFactory.getInstance();
+        BTEngine engine = BTEngine.getInstance();
         if (!engine.isStarted()) {
             return 0;
         }

@@ -20,7 +20,6 @@ package com.frostwire.gui.bittorrent;
 
 import com.frostwire.bittorrent.BTDownloadItem;
 import com.frostwire.bittorrent.BTEngine;
-import com.frostwire.bittorrent.BTEngineFactory;
 import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.transfers.TransferItem;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -37,7 +36,7 @@ import java.util.List;
 public final class BTDownloadCreator {
 
     public static BTDownload createDownload(File torrentFile, boolean[] filesSelection, File saveDir) throws IOException {
-        BTEngine engine = BTEngineFactory.getInstance();
+        BTEngine engine = BTEngine.getInstance();
 
         if (saveDir == null) {
             saveDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
@@ -48,7 +47,7 @@ public final class BTDownloadCreator {
         }
 
         TorrentInfo tinfo = new TorrentInfo(torrentFile);
-        String hash = tinfo.getInfoHashStr();
+        String hash = tinfo.getInfoHash().toString();
 
         BittorrentDownload bittorrentDownload = TorrentUtil.getDownloadManager(hash);
 

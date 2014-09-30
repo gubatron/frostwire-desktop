@@ -17,7 +17,6 @@ package com.limegroup.gnutella;
 
 import com.frostwire.bittorrent.BTDownload;
 import com.frostwire.bittorrent.BTEngine;
-import com.frostwire.bittorrent.BTEngineFactory;
 import com.frostwire.bittorrent.BTEngineListener;
 import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -43,7 +42,7 @@ public class DownloadManagerImpl implements DownloadManager {
 
     public void loadSavedDownloadsAndScheduleWriting() {
 
-        BTEngine engine = BTEngineFactory.getInstance();
+        BTEngine engine = BTEngine.getInstance();
 
         engine.setListener(new BTEngineListener() {
             @Override
@@ -68,7 +67,7 @@ public class DownloadManagerImpl implements DownloadManager {
             }
         });
 
-        engine.restoreDownloads(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
+        engine.restoreDownloads();
     }
 
     /*

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.frostwire.bittorrent.BTEngineFactory;
+import com.frostwire.bittorrent.BTEngine;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.lifecycle.ServiceRegistry;
 import org.limewire.listener.EventListener;
@@ -95,7 +95,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
         preinitializeDone.set(true);
 
         //NEW, for azureus core to be notified of FrostWire's lifecycle events.
-        installAzureusCoreListeners();
+        installBittorrentListeners();
     }
     
     
@@ -103,7 +103,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
      * Make sure the azureus core knows about our LifeCycleEvents and does the right thing
      * when we shut down.
      */
-    private void installAzureusCoreListeners() {
+    private void installBittorrentListeners() {
     	addListener(new EventListener<LifecycleManagerImpl.LifeCycleEvent>() {
 
 			@Override
@@ -111,7 +111,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
 					com.limegroup.gnutella.LifecycleManagerImpl.LifeCycleEvent event) {
 				if (event == LifeCycleEvent.SHUTINGDOWN) {
 
-                    BTEngineFactory.getInstance().stop();
+                    BTEngine.getInstance().stop();
 				} 
 			}
 			
@@ -205,7 +205,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
         // save frostwire.props & other settings
         SettingsGroupManager.instance().save();
 
-        BTEngineFactory.getInstance().stop();
+        BTEngine.getInstance().stop();
         
         shutdownDone.set(true);
     }
