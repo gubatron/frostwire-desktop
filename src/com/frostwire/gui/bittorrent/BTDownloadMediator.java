@@ -800,10 +800,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                         }
                     }
 
-                    BTDownload download = BTDownloadCreator.createDownload(torrentFile, filesSelection);
-                    if (download != null) {
-                        selectRowByDownload(download);
-                    }
+                    BTEngine.getInstance().download(torrentFile, null, filesSelection);
 
                 } catch (Exception e) {
                     e.printStackTrace();
