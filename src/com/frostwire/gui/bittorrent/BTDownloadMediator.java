@@ -731,11 +731,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 try {
-                    BTDownload download = BTDownloadCreator.createDownload(torrentFile, saveDir);
-
-                    if (download != null) {
-                        selectRowByDownload(download);
-                    }
+                    BTEngine.getInstance().download(torrentFile, saveDir);
                 } catch (Exception e) {
                     e.printStackTrace();
                     if (!e.toString().contains("No files selected by user")) {

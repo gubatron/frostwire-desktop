@@ -21,8 +21,11 @@ import com.frostwire.bittorrent.BTEngineListener;
 import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
+import org.gudy.azureus2.core3.util.protocol.AzURLStreamHandlerFactory;
+import org.limewire.util.CommonUtils;
 
 import java.io.File;
+import java.net.URL;
 
 public class DownloadManagerImpl implements DownloadManager {
 
@@ -66,6 +69,21 @@ public class DownloadManagerImpl implements DownloadManager {
                 addDownload(dl);
             }
         });
+
+        // this hack is only due to the remaining vuze TOTorrent code
+        URL.setURLStreamHandlerFactory(new AzURLStreamHandlerFactory());
+
+        SharingSettings.initTorrentDataDirSetting();
+        SharingSettings.initTorrentsDirSetting();
+
+        File homeDir = new File(CommonUtils.getUserSettingsDir() + File.separator + "libtorrent" + File.separator);
+        if (!homeDir.exists()) {
+            homeDir.mkdirs();
+        }
+
+        engine.setHomeDir(homeDir);
+        engine.setTorrentsDir(SharingSettings.TORRENTS_DIR_SETTING.getValue());
+        engine.setDataDir(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
 
         engine.restoreDownloads();
     }
