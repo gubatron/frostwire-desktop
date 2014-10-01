@@ -21,13 +21,10 @@ import org.limewire.setting.IntSetting;
 /**
  * Bittorrent settings
  */
-public class BittorrentSettings extends LimeProps {
+public final class BittorrentSettings extends LimeProps {
 
     private BittorrentSettings() {
     }
-
-    /** maximum simultaneous torrent downloads */
-    public static IntSetting TORRENT_MAX_ACTIVE_DOWNLOADS = FACTORY.createIntSetting("TORRENT_MAX_ACTIVE_DOWNLOADS", 10);
 
     /**
      * Records what was the last sorting order of the sort column for the transfer manager.
