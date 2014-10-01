@@ -10,6 +10,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.frostwire.bittorrent.BTConfigurator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 
@@ -129,8 +130,7 @@ public class TorrentGlobalSpeedPaneItem extends AbstractPaneItem {
 
 	@Override
 	public void initOptions() {
-        // TODO:BITTORRENT
-		//storedDownloadSpeed = COConfigurationManager.getIntParameter(globalDownloadSpeedConfigKey);
+        storedDownloadSpeed = BTConfigurator.getDownloadSpeedLimit() / 1024;
 		
 		if (storedDownloadSpeed == 0) {
 			DOWNLOAD_SLIDER.setValue(101*1024);
@@ -181,8 +181,8 @@ public class TorrentGlobalSpeedPaneItem extends AbstractPaneItem {
 		}
 		*/
 
+        BTConfigurator.setDownloadSpeedLimit(newDownload * 1024);
         // TODO:BITTORRENT
-		//COConfigurationManager.setParameter(globalDownloadSpeedConfigKey, newDownload);
 		//COConfigurationManager.setParameter(globalUploadSpeedConfigKey, newUpload);
 		
 		DOWNLOAD_SLIDER.setValue((newDownload == 0) ? MAX_SLIDER_VALUE : newDownload);
