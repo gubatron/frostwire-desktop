@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui.options.panes;
 
 import java.io.IOException;
 
+import com.frostwire.bittorrent.BTConfigurator;
 import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -77,7 +78,7 @@ public class TorrentConnectionPaneItem extends AbstractPaneItem {
 		//return (BittorrentSettings.TORRENT_MAX_ACTIVE_DOWNLOADS.getValue() != MAX_ACTIVE_DOWNLOADS_FIELD.getValue()) ||
 		//	(COConfigurationManager.getIntParameter("Max.Peer.Connections.Total") != MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue()) ||
 		//	(COConfigurationManager.getIntParameter("Max.Peer.Connections.Per.Torrent") != MAX_PEERS_PER_TORRENT_FIELD.getValue()) ||
-		//	(COConfigurationManager.getIntParameter("Max Uploads") != MAX_UPLOAD_SLOTS_FIELD.getValue());// || isThrottleSliderDirty();
+		//	(COConfigurationManager.getIntParameter("Max Uploads") != MAX_UPLOAD_SLOTS_FIELD.getValue());
 	}
 
 	@Override
@@ -87,7 +88,7 @@ public class TorrentConnectionPaneItem extends AbstractPaneItem {
 		//MAX_ACTIVE_DOWNLOADS_FIELD.setValue(BittorrentSettings.TORRENT_MAX_ACTIVE_DOWNLOADS.getValue());
 		//MAX_GLOBAL_NUM_CONNECTIONS_FIELD.setValue(COConfigurationManager.getIntParameter("Max.Peer.Connections.Total"));
 		//MAX_PEERS_PER_TORRENT_FIELD.setValue(COConfigurationManager.getIntParameter("Max.Peer.Connections.Per.Torrent"));
-		//MAX_UPLOAD_SLOTS_FIELD.setValue(COConfigurationManager.getIntParameter("Max Uploads"));
+        MAX_UPLOAD_SLOTS_FIELD.setValue(BTConfigurator.getMaxUploads());
 	}
 
 	@Override
@@ -96,11 +97,8 @@ public class TorrentConnectionPaneItem extends AbstractPaneItem {
 		BittorrentSettings.TORRENT_MAX_ACTIVE_DOWNLOADS.setValue(MAX_ACTIVE_DOWNLOADS_FIELD.getValue());
 		//COConfigurationManager.setParameter("Max.Peer.Connections.Total",MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue());
 		//COConfigurationManager.setParameter("Max.Peer.Connections.Per.Torrent",MAX_PEERS_PER_TORRENT_FIELD.getValue());
-	
-		//COConfigurationManager.setParameter("Max Uploads",MAX_UPLOAD_SLOTS_FIELD.getValue());
-		//COConfigurationManager.setParameter("Max Uploads Seeding",MAX_UPLOAD_SLOTS_FIELD.getValue());
-		
-		//COConfigurationManager.save();
+        BTConfigurator.setMaxUploads(MAX_UPLOAD_SLOTS_FIELD.getValue());
+
 		return false;
 	}
 
