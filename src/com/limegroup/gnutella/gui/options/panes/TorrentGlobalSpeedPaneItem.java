@@ -141,8 +141,7 @@ public class TorrentGlobalSpeedPaneItem extends AbstractPaneItem {
 		
 		updateSpeedLabel(DOWNLOAD_SLIDER, DOWNLOAD_SLIDER_LABEL);
 
-        // TODO:BITTORRENT
-		//storedUploadSpeed = COConfigurationManager.getIntParameter(globalUploadSpeedConfigKey);
+        storedUploadSpeed = BTConfigurator.getUploadSpeedLimit() / 1024;
 		
 		if (storedUploadSpeed == 0) {
 			UPLOAD_SLIDER.setValue(101*1024);
@@ -182,15 +181,11 @@ public class TorrentGlobalSpeedPaneItem extends AbstractPaneItem {
 		*/
 
         BTConfigurator.setDownloadSpeedLimit(newDownload * 1024);
-        // TODO:BITTORRENT
-		//COConfigurationManager.setParameter(globalUploadSpeedConfigKey, newUpload);
+        BTConfigurator.setUploadSpeedLimit(newUpload * 1024);
 		
 		DOWNLOAD_SLIDER.setValue((newDownload == 0) ? MAX_SLIDER_VALUE : newDownload);
 		UPLOAD_SLIDER.setValue((newUpload == 0) ? MAX_SLIDER_VALUE : newUpload);
 
-        // TODO:BITTORRENT
-		//COConfigurationManager.save();
-		
 		updateSpeedLabel(UPLOAD_SLIDER, UPLOAD_SLIDER_LABEL);
 		updateSpeedLabel(DOWNLOAD_SLIDER, DOWNLOAD_SLIDER_LABEL);
 		
