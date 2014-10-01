@@ -1681,20 +1681,10 @@ public final class GUIMediator {
         _remoteDownloadsAllowed = remoteDownloadsAllowed;
     }
 
-    public void openTorrentSearchResult(TorrentSearchResult sr, String relativePath) {
-        getBTDownloadMediator().openTorrentURI(sr.getTorrentUrl(), sr.getDetailsUrl(), relativePath, sr.getHash());
-        setWindow(GUIMediator.Tabs.SEARCH);
-    }
-
     public void openTorrentSearchResult(TorrentCrawledSearchResult sr) {
         getBTDownloadMediator().openSearchResult(sr);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
-
-//    public void openYouTubeVideoUrl(String videoUrl) {
-//        getBTDownloadMediator().openYouTubeVideoUrl(videoUrl);
-//        setWindow(GUIMediator.Tabs.SEARCH);
-//    }
 
     public void openSoundcloudTrackUrl(String trackUrl, String title) {
         getBTDownloadMediator().downloadSoundcloudFromTrackUrlOrSearchResult(trackUrl, title, null);

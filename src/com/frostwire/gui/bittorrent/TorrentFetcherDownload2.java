@@ -26,6 +26,7 @@ import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.transfers.TransferState;
 import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
+import org.gudy.azureus2.core3.util.UrlUtils;
 
 import java.io.File;
 import java.util.Date;
@@ -60,6 +61,10 @@ public class TorrentFetcherDownload2 implements BTDownload {
         Thread t = new Thread(new FetcherRunnable(), "Torrent-Fetcher - " + uri);
         t.setDaemon(true);
         t.start();
+    }
+
+    public TorrentFetcherDownload2(String uri, boolean partial) {
+        this(uri, null, getDownloadNameFromMagnetURI(uri), partial);
     }
 
     public long getSize() {
@@ -206,6 +211,23 @@ public class TorrentFetcherDownload2 implements BTDownload {
         });
     }
 
+    private static String getDownloadNameFromMagnetURI(String uri) {
+        if (!uri.startsWith("magnet:")) {
+            return uri;
+        }
+
+        if (uri.contains("dn=")) {
+            String[] split = uri.split("&");
+            for (String s : split) {
+                if (s.toLowerCase().startsWith("dn=") && s.length() > 3) {
+                    return UrlUtils.decode(s.split("=")[1]);
+                }
+            }
+        }
+
+        return uri;
+    }
+
     private class FetcherRunnable implements Runnable {
 
         @Override
@@ -228,13 +250,13 @@ public class TorrentFetcherDownload2 implements BTDownload {
                 }
             } catch (Throwable e) {
                 LOG.error("Error downloading torrent from uri", e);
+            } finally {
+                GUIMediator.safeInvokeLater(new Runnable() {
+                    public void run() {
+                        BTDownloadMediator.instance().remove(TorrentFetcherDownload2.this);
+                    }
+                });
             }
-
-            GUIMediator.safeInvokeLater(new Runnable() {
-                public void run() {
-                    BTDownloadMediator.instance().remove(TorrentFetcherDownload2.this);
-                }
-            });
         }
     }
 }

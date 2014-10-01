@@ -698,25 +698,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     public void openTorrentURI(final String uri, final boolean partialDownload) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(uri, partialDownload);
-                add(downloader);
-            }
-        });
-    }
-
-    public void openTorrentURI(final String uri, final String relativePath) {
-        GUIMediator.safeInvokeLater(new Runnable() {
-            public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(uri, relativePath);
-                add(downloader);
-            }
-        });
-    }
-
-    public void openTorrentURI(final String uri, final String referrer, final String relativePath, final String hash) {
-        GUIMediator.safeInvokeLater(new Runnable() {
-            public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(uri, referrer, relativePath, hash);
+                BTDownload downloader = new TorrentFetcherDownload2(uri, partialDownload);
                 add(downloader);
             }
         });
@@ -905,19 +887,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     public void addDownload(com.frostwire.bittorrent.BTDownload dl) {
         try {
-            List<BTDownload> downloads = getDownloads();
-            for (BTDownload d : downloads) {
-                if (d instanceof TorrentFetcherDownload) {
-                    TorrentFetcherDownload fd = (TorrentFetcherDownload) d;
-                    if (dl.getInfoHash().equals(fd.getHash())) {
-                        fd.updateDelegate(new BittorrentDownload(dl));
-                        return;
-                    }
-                }
-            }
             add(new BittorrentDownload(dl));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Throwable e) {
+            LOG.error("Error adding bittorrent download", e);
         }
     }
 
