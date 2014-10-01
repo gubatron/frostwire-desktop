@@ -1,6 +1,8 @@
 frostwire (5.7.7) stable; urgency=high
   * New: VPN connection status indicator.
   * New: Stop media playback by long pressing play/pause button.
+  * Fix: Freeze when opening FrostWire from the first time out of
+    clicking on a magnet link or .torrent file.
   * Fix: Bug where files couldn't be played with the main player button.
   * Fix: Bug where the speaker icon on the library would still show
     after the media player had stopped.
@@ -15,7 +17,7 @@ frostwire (5.7.7) stable; urgency=high
     the library.
   * Updated MigLayout source code to version 4.0
 
- -- FrostWire Team <contact@frostwire.com>  Mon, 29 September 2014 15:16:55 -0500
+ -- FrostWire Team <contact@frostwire.com>  Wed, 01 October 2014 17:00:00 -0500
 
 frostwire (5.7.6) stable; urgency=high
   * New: Filter search results by file extension, source name.
