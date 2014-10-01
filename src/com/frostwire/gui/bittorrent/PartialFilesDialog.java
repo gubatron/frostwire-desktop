@@ -50,6 +50,7 @@ import javax.swing.table.TableRowSorter;
 
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
+import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
@@ -93,11 +94,19 @@ public class PartialFilesDialog extends JDialog {
     protected boolean tablePainted;
 
     public PartialFilesDialog(JFrame frame, File torrentFile) throws TOTorrentException {
+        this(frame, TorrentUtils.readFromFile(torrentFile, false), torrentFile.getName());
+    }
+
+    public PartialFilesDialog(JFrame frame, byte[] bytes, String name) throws TOTorrentException {
+        this(frame, TOTorrentFactory.deserialiseFromBEncodedByteArray(bytes), name);
+    }
+
+    public PartialFilesDialog(JFrame frame, TOTorrent torrent, String name) throws TOTorrentException {
         super(frame, I18n.tr("Select files to download"));
 
-        _torrent = TorrentUtils.readFromFile(torrentFile, false);
+        this._torrent = torrent;
 
-        _name = torrentFile.getName();
+        this._name = name;
         _model = new TorrentTableModel(_torrent);
 
         addWindowListener(new WindowAdapter() {

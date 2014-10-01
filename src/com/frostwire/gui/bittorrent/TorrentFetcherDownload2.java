@@ -41,19 +41,21 @@ public class TorrentFetcherDownload2 implements BTDownload {
     private final String uri;
     private final String referer;
     private final String displayName;
+    private final boolean partial;
 
     private final Date dateCreated;
 
     private TransferState state;
 
-    public TorrentFetcherDownload2(String uri, String referrer, String displayName) {
+    public TorrentFetcherDownload2(String uri, String referrer, String displayName, boolean partial) {
         this.uri = uri;
         this.referer = referrer;
         this.displayName = displayName;
+        this.partial = partial;
 
         this.dateCreated = new Date();
 
-        state = TransferState.DOWNLOADING;
+        state = TransferState.DOWNLOADING_TORRENT;
 
         Thread t = new Thread(new FetcherRunnable(), "Torrent-Fetcher - " + uri);
         t.setDaemon(true);
@@ -86,11 +88,6 @@ public class TorrentFetcherDownload2 implements BTDownload {
 
     public void remove() {
         state = TransferState.CANCELED;
-        GUIMediator.safeInvokeLater(new Runnable() {
-            public void run() {
-                BTDownloadMediator.instance().remove(TorrentFetcherDownload2.this);
-            }
-        });
     }
 
     public void pause() {
@@ -183,6 +180,32 @@ public class TorrentFetcherDownload2 implements BTDownload {
         return null;
     }
 
+    private void downloadTorrent(final byte[] data) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                try {
+
+                    boolean[] selection = null;
+
+                    if (partial) {
+                        PartialFilesDialog dlg = new PartialFilesDialog(GUIMediator.getAppFrame(), data, displayName);
+                        dlg.setVisible(true);
+                        selection = dlg.getFilesSelection();
+                        if (selection == null) {
+                            return;
+                        }
+                    }
+
+                    TorrentInfo ti = TorrentInfo.bdecode(data);
+                    BTEngine.getInstance().download(ti, null, selection);
+
+                } catch (Throwable e) {
+                    LOG.error("Error downloading torrent", e);
+                }
+            }
+        });
+    }
+
     private class FetcherRunnable implements Runnable {
 
         @Override
@@ -201,12 +224,17 @@ public class TorrentFetcherDownload2 implements BTDownload {
                 }
 
                 if (data != null && state != TransferState.CANCELED) {
-                    TorrentInfo ti = TorrentInfo.bdecode(data);
-                    BTEngine.getInstance().download(ti, null);
+                    downloadTorrent(data);
                 }
             } catch (Throwable e) {
                 LOG.error("Error downloading torrent from uri", e);
             }
+
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    BTDownloadMediator.instance().remove(TorrentFetcherDownload2.this);
+                }
+            });
         }
     }
 }
