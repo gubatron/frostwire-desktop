@@ -1,19 +1,34 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.options.panes;
 
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.io.IOException;
-
-import javax.swing.JCheckBox;
-import javax.swing.JTextField;
-
-import org.limewire.i18n.I18nMarker;
-
+import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.jlibtorrent.ProxySettings;
+import com.frostwire.jlibtorrent.Session;
+import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.SizedTextField;
-import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
 import com.limegroup.gnutella.settings.ConnectionSettings;
+import org.limewire.i18n.I18nMarker;
+
+import javax.swing.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.IOException;
 
 /**
  * This class defines the panel in the options window that allows the user to
@@ -22,7 +37,7 @@ import com.limegroup.gnutella.settings.ConnectionSettings;
 public final class ProxyLoginPaneItem extends AbstractPaneItem {
 
     public final static String TITLE = I18n.tr("Login Details");
-    
+
     public final static String LABEL = I18n.tr("Configure username and password to be used for the proxy.");
 
     /**
@@ -31,33 +46,33 @@ public final class ProxyLoginPaneItem extends AbstractPaneItem {
      * proxy.
      */
     private final String PROXY_AUTHENTICATE_CHECK_BOX_LABEL =
-        I18nMarker.marktr("Enable Authentication (Does Not Work for HTTP Proxies):");
+            I18nMarker.marktr("Enable Authentication:");
 
     /**
      * Constant for the key of the locale-specific <tt>String</tt> for the
      * label on the username field.
      */
     private final String PROXY_USERNAME_LABEL_KEY =
-        I18nMarker.marktr("Username:");
+            I18nMarker.marktr("Username:");
 
     /**
      * Constant for the key of the locale-specific <tt>String</tt> for the
      * label on the password field.
      */
     private final String PROXY_PASSWORD_LABEL_KEY =
-        I18nMarker.marktr("Password:");
+            I18nMarker.marktr("Password:");
 
     /**
      * Constant <tt>JTextField</tt> instance that holds the username.
      */
     private final JTextField PROXY_USERNAME_FIELD =
-        new SizedTextField(12, SizePolicy.RESTRICT_BOTH);
+            new SizedTextField(12, SizePolicy.RESTRICT_BOTH);
 
     /**
      * Constant <tt>JTextField</tt> instance that holds the pasword.
      */
     private final JTextField PROXY_PASSWORD_FIELD =
-        new SizedTextField(12, SizePolicy.RESTRICT_BOTH);
+            new SizedTextField(12, SizePolicy.RESTRICT_BOTH);
 
     /**
      * Constant for the check box that determines whether or not to
@@ -66,40 +81,39 @@ public final class ProxyLoginPaneItem extends AbstractPaneItem {
     private final JCheckBox CHECK_BOX = new JCheckBox();
 
     /**
-	 * The constructor constructs all of the elements of this
-	 * <tt>AbstractPaneItem</tt>.
-	 * 
-	 * @param key the key for this <tt>AbstractPaneItem</tt> that the
-	 *        superclass uses to generate locale-specific keys
-	 */
-	public ProxyLoginPaneItem() {
-	    super(TITLE, LABEL);
+     * The constructor constructs all of the elements of this
+     * <tt>AbstractPaneItem</tt>.
+     *
+     */
+    public ProxyLoginPaneItem() {
+        super(TITLE, LABEL);
 
-		CHECK_BOX.addItemListener(new LocalAuthenticateListener());
+        CHECK_BOX.addItemListener(new LocalAuthenticateListener());
 
-		LabeledComponent checkBox = new LabeledComponent(
-				PROXY_AUTHENTICATE_CHECK_BOX_LABEL, CHECK_BOX,
-				LabeledComponent.LEFT_GLUE, LabeledComponent.LEFT);
-		LabeledComponent username = new LabeledComponent(
-				PROXY_USERNAME_LABEL_KEY, PROXY_USERNAME_FIELD,
-				LabeledComponent.LEFT_GLUE, LabeledComponent.LEFT);
-		LabeledComponent password = new LabeledComponent(
-				PROXY_PASSWORD_LABEL_KEY, PROXY_PASSWORD_FIELD,
-				LabeledComponent.LEFT_GLUE, LabeledComponent.LEFT);
+        LabeledComponent checkBox = new LabeledComponent(
+                PROXY_AUTHENTICATE_CHECK_BOX_LABEL, CHECK_BOX,
+                LabeledComponent.LEFT_GLUE, LabeledComponent.LEFT);
+        LabeledComponent username = new LabeledComponent(
+                PROXY_USERNAME_LABEL_KEY, PROXY_USERNAME_FIELD,
+                LabeledComponent.LEFT_GLUE, LabeledComponent.LEFT);
+        LabeledComponent password = new LabeledComponent(
+                PROXY_PASSWORD_LABEL_KEY, PROXY_PASSWORD_FIELD,
+                LabeledComponent.LEFT_GLUE, LabeledComponent.LEFT);
 
-		add(checkBox.getComponent());
-		add(getVerticalSeparator());
-		add(username.getComponent());
-		add(getVerticalSeparator());
-		add(password.getComponent());
-	}
+        add(checkBox.getComponent());
+        add(getVerticalSeparator());
+        add(username.getComponent());
+        add(getVerticalSeparator());
+        add(password.getComponent());
+    }
+
     /**
-	 * Defines the abstract method in <tt>AbstractPaneItem</tt>.
-	 * <p>
-	 * 
-	 * Sets the options for the fields in this <tt>PaneItem</tt> when the
-	 * window is shown.
-	 */
+     * Defines the abstract method in <tt>AbstractPaneItem</tt>.
+     * <p/>
+     * <p/>
+     * Sets the options for the fields in this <tt>PaneItem</tt> when the
+     * window is shown.
+     */
     public void initOptions() {
         String username = ConnectionSettings.PROXY_USERNAME.getValue();
         String password = ConnectionSettings.PROXY_PASS.getValue();
@@ -108,23 +122,18 @@ public final class ProxyLoginPaneItem extends AbstractPaneItem {
         PROXY_USERNAME_FIELD.setText(username);
         PROXY_PASSWORD_FIELD.setText(password);
 
-        //HTTP Authentication is not yet supported
-        CHECK_BOX.setSelected(
-            authenticate
-                && ConnectionSettings.CONNECTION_METHOD.getValue()
-                    != ConnectionSettings.C_HTTP_PROXY);
+        CHECK_BOX.setSelected(authenticate);
         updateState();
     }
 
     /**
      * Defines the abstract method in <tt>AbstractPaneItem</tt>.
-     * <p>
-     * 
+     * <p/>
+     * <p/>
      * Applies the options currently set in this window, displaying an error
      * message to the user if a setting could not be applied.
-     * 
-     * @throws IOException
-     *             if the options could not be applied for some reason
+     *
+     * @throws IOException if the options could not be applied for some reason
      */
     public boolean applyOptions() throws IOException {
         final String username = PROXY_USERNAME_FIELD.getText();
@@ -135,21 +144,30 @@ public final class ProxyLoginPaneItem extends AbstractPaneItem {
         ConnectionSettings.PROXY_PASS.setValue(password);
         ConnectionSettings.PROXY_AUTHENTICATE.setValue(authenticate);
 
-        // TODO:BITTORRENT
-        // put proxy configuration in vuze options
-        //COConfigurationManager.setParameter("Proxy.Username", username);
-        //COConfigurationManager.setParameter("Proxy.Password", password);
-        //COConfigurationManager.save();
+        // aldenml: OK, I will shortcut directly to the jlibtorrent session
+        Session session = BTEngine.getInstance().getSession();
+        ProxySettings proxy = session.getProxy();
+        if (authenticate) {
+            if (ProxySettings.ProxyType.HTTP.equals(proxy.getType())) {
+                proxy.setType(ProxySettings.ProxyType.HTTP_PW);
+            } else if (ProxySettings.ProxyType.SOCKS5.equals(proxy.getType())) {
+                proxy.setType(ProxySettings.ProxyType.SOCKS5_PW);
+            }
+        }
+        proxy.setUsername(username);
+        proxy.setPassword(password);
+        session.setProxy(proxy);
+        BTEngine.getInstance().saveSettings();
 
         return false;
     }
-    
+
     public boolean isDirty() {
         return !ConnectionSettings.PROXY_USERNAME.getValue().equals(PROXY_USERNAME_FIELD.getText()) ||
-               !ConnectionSettings.PROXY_PASS.getValue().equals(PROXY_PASSWORD_FIELD.getText()) ||
-               ConnectionSettings.PROXY_AUTHENTICATE.getValue() != CHECK_BOX.isSelected();
+                !ConnectionSettings.PROXY_PASS.getValue().equals(PROXY_PASSWORD_FIELD.getText()) ||
+                ConnectionSettings.PROXY_AUTHENTICATE.getValue() != CHECK_BOX.isSelected();
     }
-    
+
     private void updateState() {
         PROXY_USERNAME_FIELD.setEnabled(CHECK_BOX.isSelected());
         PROXY_PASSWORD_FIELD.setEnabled(CHECK_BOX.isSelected());
