@@ -31,17 +31,17 @@ public final class TorrentConnectionPaneItem extends AbstractPaneItem {
 
     public final static String MAX_GLOBAL_NUM_CONNECTIONS = I18n.tr("Global maximum number of connections");
 
-    public final static String MAX_PEERS_PER_TORRENT = I18n.tr("Maximum number of connected peers per torrent");
+    public final static String MAX_PEERS = I18n.tr("Maximum number of peers");
 
-    public final static String MAX_UPLOAD_SLOTS = I18n.tr("Number of upload slots per torrent");
+    public final static String MAX_ACTIVE_SEEDS = I18n.tr("Maximum active seeds");
 
     private WholeNumberField MAX_ACTIVE_DOWNLOADS_FIELD = new SizedWholeNumberField(4);
 
     private WholeNumberField MAX_GLOBAL_NUM_CONNECTIONS_FIELD = new SizedWholeNumberField(4);
 
-    private WholeNumberField MAX_PEERS_PER_TORRENT_FIELD = new SizedWholeNumberField(4);
+    private WholeNumberField MAX_PEERS_FIELD = new SizedWholeNumberField(4);
 
-    private WholeNumberField MAX_UPLOAD_SLOTS_FIELD = new SizedWholeNumberField(4);
+    private WholeNumberField MAX_ACTIVE_SEEDS_FIELD = new SizedWholeNumberField(4);
 
     public TorrentConnectionPaneItem() {
         super(TITLE, TEXT);
@@ -56,6 +56,13 @@ public final class TorrentConnectionPaneItem extends AbstractPaneItem {
         panel.addVerticalComponentGap();
 
         comp = new LabeledComponent(
+                I18nMarker.marktr(MAX_ACTIVE_SEEDS),
+                MAX_ACTIVE_SEEDS_FIELD, LabeledComponent.LEFT_GLUE,
+                LabeledComponent.LEFT);
+        panel.add(comp.getComponent());
+        panel.addVerticalComponentGap();
+
+        comp = new LabeledComponent(
                 I18nMarker.marktr(MAX_GLOBAL_NUM_CONNECTIONS),
                 MAX_GLOBAL_NUM_CONNECTIONS_FIELD, LabeledComponent.LEFT_GLUE,
                 LabeledComponent.LEFT);
@@ -63,15 +70,8 @@ public final class TorrentConnectionPaneItem extends AbstractPaneItem {
         panel.addVerticalComponentGap();
 
         comp = new LabeledComponent(
-                I18nMarker.marktr(MAX_PEERS_PER_TORRENT),
-                MAX_PEERS_PER_TORRENT_FIELD, LabeledComponent.LEFT_GLUE,
-                LabeledComponent.LEFT);
-        panel.add(comp.getComponent());
-        panel.addVerticalComponentGap();
-
-        comp = new LabeledComponent(
-                I18nMarker.marktr(MAX_UPLOAD_SLOTS),
-                MAX_UPLOAD_SLOTS_FIELD, LabeledComponent.LEFT_GLUE,
+                I18nMarker.marktr(MAX_PEERS),
+                MAX_PEERS_FIELD, LabeledComponent.LEFT_GLUE,
                 LabeledComponent.LEFT);
         panel.add(comp.getComponent());
         panel.addVerticalComponentGap();
@@ -82,30 +82,26 @@ public final class TorrentConnectionPaneItem extends AbstractPaneItem {
 
     @Override
     public boolean isDirty() {
-        // TODO:BITTORRENT
-        return true;
-        //return (BittorrentSettings.TORRENT_MAX_ACTIVE_DOWNLOADS.getValue() != MAX_ACTIVE_DOWNLOADS_FIELD.getValue()) ||
-        //	(COConfigurationManager.getIntParameter("Max.Peer.Connections.Total") != MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue()) ||
-        //	(COConfigurationManager.getIntParameter("Max.Peer.Connections.Per.Torrent") != MAX_PEERS_PER_TORRENT_FIELD.getValue()) ||
-        //	(COConfigurationManager.getIntParameter("Max Uploads") != MAX_UPLOAD_SLOTS_FIELD.getValue());
+        return (BTConfigurator.getMaxActiveDownloads() != MAX_ACTIVE_DOWNLOADS_FIELD.getValue()) ||
+                (BTConfigurator.getMaxConnections() != MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue()) ||
+                (BTConfigurator.getMaxPeers() != MAX_PEERS_FIELD.getValue()) ||
+                (BTConfigurator.getMaxActiveSeeds() != MAX_ACTIVE_SEEDS_FIELD.getValue());
     }
 
     @Override
     public void initOptions() {
-        // TODO:BITTORRENT
-        //MAX_GLOBAL_NUM_CONNECTIONS_FIELD.setValue(COConfigurationManager.getIntParameter("Max.Peer.Connections.Total"));
-        //MAX_PEERS_PER_TORRENT_FIELD.setValue(COConfigurationManager.getIntParameter("Max.Peer.Connections.Per.Torrent"));
-        MAX_ACTIVE_DOWNLOADS_FIELD.setValue(BTConfigurator.getMaxDownloads());
-        MAX_UPLOAD_SLOTS_FIELD.setValue(BTConfigurator.getMaxUploads());
+        MAX_GLOBAL_NUM_CONNECTIONS_FIELD.setValue(BTConfigurator.getMaxConnections());
+        MAX_PEERS_FIELD.setValue(BTConfigurator.getMaxPeers());
+        MAX_ACTIVE_DOWNLOADS_FIELD.setValue(BTConfigurator.getMaxActiveDownloads());
+        MAX_ACTIVE_SEEDS_FIELD.setValue(BTConfigurator.getMaxActiveSeeds());
     }
 
     @Override
     public boolean applyOptions() throws IOException {
-        // TODO:BITTORRENT
-        //COConfigurationManager.setParameter("Max.Peer.Connections.Total",MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue());
-        //COConfigurationManager.setParameter("Max.Peer.Connections.Per.Torrent",MAX_PEERS_PER_TORRENT_FIELD.getValue());
-        BTConfigurator.setMaxDownloads(MAX_ACTIVE_DOWNLOADS_FIELD.getValue());
-        BTConfigurator.setMaxUploads(MAX_UPLOAD_SLOTS_FIELD.getValue());
+        BTConfigurator.setMaxConnections(MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue());
+        BTConfigurator.setMaxPeers(MAX_PEERS_FIELD.getValue());
+        BTConfigurator.setMaxActiveDownloads(MAX_ACTIVE_DOWNLOADS_FIELD.getValue());
+        BTConfigurator.setMaxActiveSeeds(MAX_ACTIVE_SEEDS_FIELD.getValue());
 
         return false;
     }
