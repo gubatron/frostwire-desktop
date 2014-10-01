@@ -185,6 +185,15 @@ public class TorrentFetcherDownload implements BTDownload {
         return null;
     }
 
+    private void cancel() {
+        state = TransferState.CANCELED;
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                BTDownloadMediator.instance().remove(TorrentFetcherDownload.this);
+            }
+        });
+    }
+
     private void downloadTorrent(final byte[] data) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
@@ -245,17 +254,22 @@ public class TorrentFetcherDownload implements BTDownload {
                     data = BTEngine.getInstance().fetchMagnet(uri, 30000);
                 }
 
-                if (data != null && state != TransferState.CANCELED) {
-                    downloadTorrent(data);
+                if (state == TransferState.CANCELED) {
+                    return;
+                }
+
+                if (data != null) {
+                    try {
+                        downloadTorrent(data);
+                    } finally {
+                        cancel();
+                    }
+                } else {
+                    state = TransferState.ERROR;
                 }
             } catch (Throwable e) {
+                state = TransferState.ERROR;
                 LOG.error("Error downloading torrent from uri", e);
-            } finally {
-                GUIMediator.safeInvokeLater(new Runnable() {
-                    public void run() {
-                        BTDownloadMediator.instance().remove(TorrentFetcherDownload.this);
-                    }
-                });
             }
         }
     }
