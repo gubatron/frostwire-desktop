@@ -35,9 +35,9 @@ import java.util.Date;
  * @author gubatron
  * @author aldenml
  */
-public class TorrentFetcherDownload2 implements BTDownload {
+public class TorrentFetcherDownload implements BTDownload {
 
-    private static final Logger LOG = Logger.getLogger(TorrentFetcherDownload2.class);
+    private static final Logger LOG = Logger.getLogger(TorrentFetcherDownload.class);
 
     private final String uri;
     private final String referer;
@@ -48,7 +48,7 @@ public class TorrentFetcherDownload2 implements BTDownload {
 
     private TransferState state;
 
-    public TorrentFetcherDownload2(String uri, String referrer, String displayName, boolean partial) {
+    public TorrentFetcherDownload(String uri, String referrer, String displayName, boolean partial) {
         this.uri = uri;
         this.referer = referrer;
         this.displayName = displayName;
@@ -63,7 +63,7 @@ public class TorrentFetcherDownload2 implements BTDownload {
         t.start();
     }
 
-    public TorrentFetcherDownload2(String uri, boolean partial) {
+    public TorrentFetcherDownload(String uri, boolean partial) {
         this(uri, null, getDownloadNameFromMagnetURI(uri), partial);
     }
 
@@ -253,7 +253,7 @@ public class TorrentFetcherDownload2 implements BTDownload {
             } finally {
                 GUIMediator.safeInvokeLater(new Runnable() {
                     public void run() {
-                        BTDownloadMediator.instance().remove(TorrentFetcherDownload2.this);
+                        BTDownloadMediator.instance().remove(TorrentFetcherDownload.this);
                     }
                 });
             }
