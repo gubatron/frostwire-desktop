@@ -28,6 +28,7 @@ import com.limegroup.gnutella.gui.init.SetupManager;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.ApplicationSettings;
+import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.MacOSXUtils;
@@ -499,10 +500,28 @@ public final class Initializer {
             homeDir.mkdirs();
         }
 
+        int port0 = 0;
+        int port1 = 0;
+
+        if (ConnectionSettings.MANUAL_PORT_RANGE.getValue()) {
+            port0 = ConnectionSettings.PORT_RANGE_0.getValue();
+            port1 = ConnectionSettings.PORT_RANGE_1.getValue();
+        }
+
+        String iface = "0.0.0.0";
+
+        if (ConnectionSettings.CUSTOM_NETWORK_INTERFACE.getValue()) {
+            iface = ConnectionSettings.CUSTOM_INETADRESS.getValue();
+        }
+
         BTContext ctx = new BTContext();
         ctx.homeDir = homeDir;
         ctx.torrentsDir = SharingSettings.TORRENTS_DIR_SETTING.getValue();
         ctx.dataDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
+        ctx.port0 = port0;
+        ctx.port1 = port1;
+        ctx.iface = iface;
+
         BTEngine.ctx = ctx;
 
         BTEngine.getInstance().loadSettings();

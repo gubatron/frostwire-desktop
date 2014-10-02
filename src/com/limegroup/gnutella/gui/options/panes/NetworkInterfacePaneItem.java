@@ -170,16 +170,6 @@ public class NetworkInterfacePaneItem extends AbstractPaneItem {
             }
         }
         
-        if (ConnectionSettings.CUSTOM_NETWORK_INTERFACE.getValue()) {
-            // TODO:BITTORRENT
-            //COConfigurationManager.setParameter("Bind IP", ConnectionSettings.CUSTOM_INETADRESS.getValue());
-        } else {
-            // TODO:BITTORRENT
-            //COConfigurationManager.setParameter("Bind IP", "");
-        }
-        // TODO:BITTORRENT
-        //COConfigurationManager.save();
-        
         return true;
     }
     

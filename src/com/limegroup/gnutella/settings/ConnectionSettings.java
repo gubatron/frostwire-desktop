@@ -41,25 +41,14 @@ public final class ConnectionSettings extends LimeProps {
     public static final BooleanSetting FORCE_IP_ADDRESS =
         FACTORY.createBooleanSetting("FORCE_IP_ADDRESS", false);
     
-    public static final IntSetting TCP_PORT =
-        FACTORY.createIntSetting("TCP_PORT", 55256);
+    public static final IntSetting PORT_RANGE_0 =
+        FACTORY.createIntSetting("PORT_RANGE_0", 40256);
     
-    public static final IntSetting UDP_PORT =
-        FACTORY.createIntSetting("UDP_PORT", 55256);
-    
-    /**
-     * Whether we should not try to use UPnP to open ports.
-     */
-    public static final BooleanSetting DISABLE_UPNP =
-    	FACTORY.createBooleanSetting("DISABLE_UPNP", false);
-    
-    /**
-     * Whether we are currently using UPNP - used to detect whether clearing
-     * of the mappings on shutdown was definitely not successful.  Since the
-     * shutdown hooks may fail, this cannot guarantee if it was successful. 
-     */
-    public static final BooleanSetting UPNP_IN_USE =
-    	FACTORY.createBooleanSetting("UPNP_IN_USE", true);
+    public static final IntSetting PORT_RANGE_1 =
+        FACTORY.createIntSetting("PORT_RANGE_1", 50256);
+
+    public static final BooleanSetting MANUAL_PORT_RANGE =
+            FACTORY.createBooleanSetting("MANUAL_PORT_RANGE", false);
         
     /** Whether or not to bind to a specific address for outgoing connections. */
     public static final BooleanSetting CUSTOM_NETWORK_INTERFACE =

@@ -52,19 +52,19 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 	 * Constant <tt>WholeNumberField</tt> instance that holds the port 
 	 * to force to.
 	 */
-	private final WholeNumberField TCP_PORT_FIELD = new SizedWholeNumberField();
+	private final WholeNumberField PORT_0_FIELD = new SizedWholeNumberField();
 	
-	private final WholeNumberField UDP_PORT_FIELD = new SizedWholeNumberField();
+	private final WholeNumberField PORT_1_FIELD = new SizedWholeNumberField();
 	
     /**
      * Constant handle to the check box that enables or disables this feature.
      */
     private final ButtonGroup BUTTONS = new ButtonGroup();
     private final JRadioButton RANDOM_PORT = new JRadioButton(I18n.tr("Use random port (Recommended)"));
-    private final JRadioButton MANUAL_PORT = new JRadioButton(I18n.tr("Manual Port Forward"));
+    private final JRadioButton MANUAL_PORT = new JRadioButton(I18n.tr("Manual port range"));
     
-    private JLabel _labelTCP;
-    private JLabel _labelUDP;
+    private JLabel _labelPort0;
+    private JLabel _labelPort1;
     
 	/**
 	 * The constructor constructs all of the elements of this 
@@ -86,25 +86,25 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		panel.add(MANUAL_PORT, c);
 		
-		_labelTCP = new JLabel(I18n.tr("TCP:"));
+		_labelPort0 = new JLabel(I18n.tr("TCP port start:"));
 		c = new GridBagConstraints();
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 0, 5);
-		panel.add(_labelTCP, c);
+		panel.add(_labelPort0, c);
 		c = new GridBagConstraints();
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.anchor = GridBagConstraints.WEST;
-		panel.add(TCP_PORT_FIELD, c);
+		panel.add(PORT_0_FIELD, c);
 		
-		_labelUDP = new JLabel(I18n.tr("UDP:"));
+		_labelPort1 = new JLabel(I18n.tr("TCP port end:"));
 		c = new GridBagConstraints();
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		c.insets = new Insets(0, 10, 0, 5);
-		panel.add(_labelUDP, c);
+		panel.add(_labelPort1, c);
 		c = new GridBagConstraints();
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.anchor = GridBagConstraints.WEST;
-		panel.add(UDP_PORT_FIELD, c);
+		panel.add(PORT_1_FIELD, c);
 		
         c.weightx = 1;
         c.weighty = 1;
@@ -116,10 +116,10 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 	}
 	
 	private void updateState() {
-	    _labelTCP.setEnabled(MANUAL_PORT.isSelected());
-	    _labelUDP.setEnabled(MANUAL_PORT.isSelected());
-	    TCP_PORT_FIELD.setEnabled(MANUAL_PORT.isSelected());
-        UDP_PORT_FIELD.setEnabled(MANUAL_PORT.isSelected());
+	    _labelPort0.setEnabled(MANUAL_PORT.isSelected());
+	    _labelPort1.setEnabled(MANUAL_PORT.isSelected());
+	    PORT_0_FIELD.setEnabled(MANUAL_PORT.isSelected());
+        PORT_1_FIELD.setEnabled(MANUAL_PORT.isSelected());
     }
 
     /** 
@@ -142,14 +142,10 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 	 * window is shown.
 	 */
 	public void initOptions() {
-        if (ConnectionSettings.FORCE_IP_ADDRESS.getValue() && !ConnectionSettings.UPNP_IN_USE.getValue()) {
-            MANUAL_PORT.setSelected(true);
-        } else {
-            RANDOM_PORT.setSelected(true);
-        }
-	        
-        TCP_PORT_FIELD.setValue(ConnectionSettings.TCP_PORT.getValue());
-        UDP_PORT_FIELD.setValue(ConnectionSettings.UDP_PORT.getValue());
+        RANDOM_PORT.setSelected(!ConnectionSettings.MANUAL_PORT_RANGE.getValue());
+        MANUAL_PORT.setSelected(ConnectionSettings.MANUAL_PORT_RANGE.getValue());
+        PORT_0_FIELD.setValue(ConnectionSettings.PORT_RANGE_0.getValue());
+        PORT_1_FIELD.setValue(ConnectionSettings.PORT_RANGE_1.getValue());
         
 		updateState();
 	}
@@ -164,66 +160,41 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 	 */
 	public boolean applyOptions() throws IOException {
 	    
-	    boolean restart = false;
-	    boolean oldUPNP = ConnectionSettings.UPNP_IN_USE.getValue();
-        //int oldTcpPort = ConnectionSettings.TCP_PORT.getValue();
-        //int oldUdpPort = ConnectionSettings.UDP_PORT.getValue();
-        //boolean oldForce = ConnectionSettings.FORCE_IP_ADDRESS.getValue();
-
-	    
 	    if(RANDOM_PORT.isSelected()) {
-	        if(!ConnectionSettings.UPNP_IN_USE.getValue())
-	            ConnectionSettings.FORCE_IP_ADDRESS.setValue(false);
-	        ConnectionSettings.DISABLE_UPNP.setValue(false);
-	        if(!oldUPNP)
-	            restart = true;
-
-            // TODO:BITTORRENT
-	        //COConfigurationManager.setParameter("upnp.enable", true);
+            ConnectionSettings.MANUAL_PORT_RANGE.setValue(false);
         } else { // PORT.isSelected()
-            int forcedTcpPort = TCP_PORT_FIELD.getValue();
-            int forcedUdpPort = UDP_PORT_FIELD.getValue();
+            int forcedTcpPort = PORT_0_FIELD.getValue();
+            int forcedUdpPort = PORT_1_FIELD.getValue();
             if(!NetworkUtils.isValidPort(forcedTcpPort)) {
-                GUIMediator.showError(I18n.tr("You must enter a port between 1 and 65535 when manually forcing your TCP port."));
+                GUIMediator.showError(I18n.tr("You must enter a port between 1 and 65535 when manually forcing port."));
                 throw new IOException("bad port: "+forcedTcpPort);
             }
             if(!NetworkUtils.isValidPort(forcedUdpPort)) {
-                GUIMediator.showError(I18n.tr("You must enter a port between 1 and 65535 when manually forcing your UDP port."));
+                GUIMediator.showError(I18n.tr("You must enter a port between 1 and 65535 when manually forcing port."));
+                throw new IOException("bad port: "+forcedUdpPort);
+            }
+
+            if (forcedTcpPort < 0 || forcedUdpPort < forcedTcpPort) {
+                GUIMediator.showError(I18n.tr("You must enter a valid port range."));
                 throw new IOException("bad port: "+forcedUdpPort);
             }
             
-            ConnectionSettings.DISABLE_UPNP.setValue(false);
-            ConnectionSettings.FORCE_IP_ADDRESS.setValue(true);
-            ConnectionSettings.UPNP_IN_USE.setValue(false);
-            ConnectionSettings.TCP_PORT.setValue(forcedTcpPort);
-            ConnectionSettings.UDP_PORT.setValue(forcedUdpPort);
-            
-            // put upnp port configuration
-            // TODO:BITTORRENT
-            //COConfigurationManager.setParameter("TCP.Listen.Port", forcedTcpPort);
-            //COConfigurationManager.setParameter("UDP.Listen.Port", forcedUdpPort);
-            //COConfigurationManager.setParameter("upnp.enable", false);
-            
-            restart = true;
+            ConnectionSettings.MANUAL_PORT_RANGE.setValue(true);
+            ConnectionSettings.PORT_RANGE_0.setValue(forcedTcpPort);
+            ConnectionSettings.PORT_RANGE_1.setValue(forcedUdpPort);
         }
         
-        return restart;
+        return true;
     }
-    
+
     public boolean isDirty() {
-		
-		if(ConnectionSettings.FORCE_IP_ADDRESS.getValue() && 
-				!ConnectionSettings.UPNP_IN_USE.getValue()) {
-			if (!MANUAL_PORT.isSelected()) {
-				return true;
-			}
-		} else {
-			if (!RANDOM_PORT.isSelected()) {
-				return true;
-			}
-		}
-		return MANUAL_PORT.isSelected() 
-			&& (TCP_PORT_FIELD.getValue() != ConnectionSettings.TCP_PORT.getValue() ||
-			    UDP_PORT_FIELD.getValue() != ConnectionSettings.UDP_PORT.getValue());
+
+        if (ConnectionSettings.MANUAL_PORT_RANGE.getValue() != MANUAL_PORT.isSelected()) {
+            return true;
+        }
+
+        return MANUAL_PORT.isSelected()
+                && (PORT_0_FIELD.getValue() != ConnectionSettings.PORT_RANGE_0.getValue() ||
+                PORT_1_FIELD.getValue() != ConnectionSettings.PORT_RANGE_1.getValue());
     }
 }
