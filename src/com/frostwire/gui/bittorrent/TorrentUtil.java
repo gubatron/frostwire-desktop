@@ -117,30 +117,11 @@ public final class TorrentUtil {
             if (d instanceof BittorrentDownload) {
                 BittorrentDownload bt = (BittorrentDownload) d;
                 com.frostwire.bittorrent.BTDownload dl = bt.getDl();
-
-                List<TransferItem> infoSet = dl.getItems();
-                for (TransferItem fileInfo : infoSet) {
-                    try {
-                        if (getDownloadPercent(fileInfo) < 100) {
-                            set.add(fileInfo.getFile());
-                        }
-                    } catch (Throwable e) {
-                        LOG.error("Error getting file information", e);
-                    }
-                }
+                set.addAll(dl.getIncompleteFiles());
             }
         }
 
         return set;
-    }
-
-    public static int getDownloadPercent(TransferItem fileInfo) {
-        long length = fileInfo.getSize();
-        if (length == 0 || fileInfo.getDownloaded() == length) {
-            return 100;
-        } else {
-            return (int) (fileInfo.getDownloaded() * 100 / length);
-        }
     }
 
     public static String getMagnet(String hash) {
