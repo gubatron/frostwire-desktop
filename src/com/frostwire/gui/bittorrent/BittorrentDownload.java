@@ -260,60 +260,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
         public void stopped(BTDownload dl) {
             // TODO:BITTORRENT
             // check it works
-            long timeStarted = getDateCreated().getTime();
-            if (TorrentUtil.isHandpicked(dl) &&
-                    (!SharingSettings.SEED_FINISHED_TORRENTS.getValue() || !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue()) &&
-                    dl.isFinished()) {
-                TorrentUtil.finalCleanup(dl, timeStarted);
-            }
-        }
-    }
-
-    public String makeMagnetUri() {
-        return dl.makeMagnetUri();
-    }
-
-    public TOTorrent getTOTorrent() {
-        File torrent = dl.getTorrentFile();
-        try {
-            return TOTorrentFactory.deserialiseFromBEncodedFile(torrent);
-        } catch (TOTorrentException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private void setupMetadataHolder() {
-        // TODO:BITTORRENT
-        if (true) {
-            return;
-        }
-        if (holder == null) {
-            try {
-                File torrent = dl.getTorrentFile();
-                holder = new BTInfoAditionalMetadataHolder(torrent, getDisplayName());
-                licenseBroker = holder.getLicenseBroker();
-                paymentOptions = holder.getPaymentOptions();
-            } catch (Throwable e) {
-                LOG.error("Unable to setup licence holder");
-            }
-        }
-    }
-}
-
-// TODO:BITTORRENT
-/*
-public class BTDownloadImpl implements BTDownload {
-
-
-    public BTDownloadImpl(DownloadManager downloadManager) {
-        _deleteTorrentWhenRemove = false;
-        _deleteDataWhenRemove = false;
-
-        BTInfoAditionalMetadataHolder holder = new BTInfoAditionalMetadataHolder(downloadManager, _displayName);
-        licenseBroker = holder.getLicenseBroker();
-        paymentOptions = holder.getPaymentOptions();
-    }
+            /*
 
     public void updateSize(DownloadManager downloadManager) {
 		if (_partialDownload) {
@@ -369,3 +316,39 @@ public class BTDownloadImpl implements BTDownload {
 
 }
  */
+            long timeStarted = getDateCreated().getTime();
+            if (TorrentUtil.isHandpicked(dl) &&
+                    (!SharingSettings.SEED_FINISHED_TORRENTS.getValue() || !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue()) &&
+                    dl.isFinished()) {
+                TorrentUtil.finalCleanup(dl, timeStarted);
+            }
+        }
+    }
+
+    public String makeMagnetUri() {
+        return dl.makeMagnetUri();
+    }
+
+    public TOTorrent getTOTorrent() {
+        File torrent = dl.getTorrentFile();
+        try {
+            return TOTorrentFactory.deserialiseFromBEncodedFile(torrent);
+        } catch (TOTorrentException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void setupMetadataHolder() {
+        if (holder == null) {
+            try {
+                File torrent = dl.getTorrentFile();
+                holder = new BTInfoAditionalMetadataHolder(torrent, getDisplayName());
+                licenseBroker = holder.getLicenseBroker();
+                paymentOptions = holder.getPaymentOptions();
+            } catch (Throwable e) {
+                LOG.error("Unable to setup licence holder");
+            }
+        }
+    }
+}
