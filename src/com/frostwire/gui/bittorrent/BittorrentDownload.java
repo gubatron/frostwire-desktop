@@ -32,7 +32,6 @@ import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.iTunesImportSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
@@ -213,10 +212,6 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     @Override
     public PaymentOptions getPaymentOptions() {
         setupMetadataHolder();
-        if (paymentOptions != null) {
-            paymentOptions.setItemName(getDisplayName());
-        }
-
         return paymentOptions;
     }
 
@@ -263,10 +258,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
         @Override
         public void removed(BTDownload dl, Set<File> incompleteFiles) {
-            long timeStarted = getDateCreated().getTime();
-            if (!incompleteFiles.isEmpty()) {
-                finalCleanup(incompleteFiles);
-            }
+            finalCleanup(incompleteFiles);
         }
     }
 
@@ -275,11 +267,11 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     }
 
     public TOTorrent getTOTorrent() {
-        File torrent = dl.getTorrentFile();
         try {
+            File torrent = dl.getTorrentFile();
             return TOTorrentFactory.deserialiseFromBEncodedFile(torrent);
-        } catch (TOTorrentException e) {
-            e.printStackTrace();
+        } catch (Throwable e) {
+            LOG.error("Error building vuze torrent from file", e);
         }
         return null;
     }
@@ -291,6 +283,10 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
                 holder = new BTInfoAditionalMetadataHolder(torrent, getDisplayName());
                 licenseBroker = holder.getLicenseBroker();
                 paymentOptions = holder.getPaymentOptions();
+
+                if (paymentOptions != null) {
+                    paymentOptions.setItemName(getDisplayName());
+                }
             } catch (Throwable e) {
                 LOG.error("Unable to setup licence holder");
             }
@@ -313,7 +309,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
         iTunesImportSettings.IMPORT_FILES.remove(saveLocation);
     }
 
-    public long calculateSize(BTDownload dl) {
+    private long calculateSize(BTDownload dl) {
         long size = dl.getSize();
 
         boolean partial = dl.isPartial();
