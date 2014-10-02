@@ -30,7 +30,7 @@ simple for them.
 
 
 FrostWire will connect to all the major BitTorrent indexes of the internet and
-pre-fetch torrents (via the Azureus DHT or via HTTP if it can't find it on the
+pre-fetch torrents (via the libtorrent DHT or via HTTP if it can't find it on the
 DHT), it will then index locally all the available metadata that's indexed by
 the torrent file, as the user searches, the local index gets better and better
 to yield richer and instant results.
@@ -40,9 +40,10 @@ of files on the bittorrent network, sometimes it will find files that even the
 best BitTorrent indexes won't yield in the search results.
 
 The main software architecture (how things are organized) depends on the late
-*LimeWire 4,*
+*LimeWire 4,* but it has evolved through FrostWire 5, and now the source code
+layout has been simplified enourmously for FrostWire 6.
 
-    -   The BitTorrent power comes from the Azureus project (aka Vuze)
+    -   The BitTorrent power comes from the frostwire-jlibtorrent library.
 
     -   Media playback comes from the *mplayer* project
 
@@ -96,9 +97,9 @@ correctly. If you are a Windows or Mac user the process is fairly similar.
 
 
 
-We recommend using [Eclipse][1] as your development environment.
+We recommend using [IntelliJ Idea][1] as your development environment.
 
-[1]: <http://www.eclipse.org/downloads/>
+[1]: <http://www.jetbrains.com/idea/>
 
 
 
@@ -110,6 +111,8 @@ GETTING THE SOURCE
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+git clone https://github.com/frostwire/frostwire-common.git
+git clone https://github.com/frostwire/frostwire-jlibtorrent.git
 git clone https://github.com/frostwire/frostwire-desktop.git
 cd frostwire-desktop/
 git pull
@@ -175,10 +178,9 @@ HOW CODE IS ORGANIZED
 
 | Location        | Contains    |
 | ------------- |:-------------:| 
-| **core/**     | Search, mp3 parsing, Json Engine, mplayer integration. | 
-| **gui/**      | Everything the user sees on screen is here.Like Java Swing? this is  probably a great place to learn more about it. If you're going to be adding new UI elements make sure you put them inside **com.frostwire.gui.\*** (Most of the stuff on **com.limewire.gui** are legacy code from LimeWire) Good starting points to see how it all works are the **\*Mediator.java** files. Being the McDaddy **GUIMediator.java** | 
-| **components/** | This is the new school of thought in the process. Everytime we create new functionality we try to make it self containable and we put the code inside a component folder. Two good examples are the azureus core, and the core code for the Library which is kept under "alexandria" (in honor to the Library of Alexandria)     | 
-| **components/resources** | This is where most graphical assets are stored.      | 
+| **src/com/frostwire/**     | Search, mp3 parsing, Json Engine, mplayer integration, bittorrent, . | 
+| **src/com/limegroup/gnutella/gui/**      | Everything the user sees on screen is here.Like Java Swing? this is  probably a great place to learn more about it. If you're going to be adding new UI elements make sure you put them inside **com.frostwire.gui.\*** (Most of the stuff on **com.limewire.gui** are legacy code from LimeWire) Good starting points to see how it all works are the **\*Mediator.java** files. Being the McDaddy **GUIMediator.java** | 
+| **resources/** | This is where most graphical assets are stored.      | 
 | **lib/jars** | This is where we keep pre-compiled jars from projects we don't maintain.     | 
 | **lib/jars-src** | This is where we keep the sources of those third party projects. We do this because we hope one day we'll be accepted into  debian or ubuntu and it's a requirement that your packages  can be compiled without any binary dependency. This also helps us help those projects, sometimes we fix bugs that affect us and we send patches back to those projects.  Also on eclipse it's awesome to be able to browse the source  of those dependencies and to step-by-step debug to see what  the hell those developers were thinking.|
 |   **lib/messagebundles**  |   Where we keep the translation files. |
@@ -189,7 +191,7 @@ HOW CODE IS ORGANIZED
 SOURCE CODING STYLE
 ---------------------
 
-If you're using Eclipse, we suggest you use the "eclipse.formatter.xml" on your
+If you're using Eclipse as your IDE, we suggest you use the "eclipse.formatter.xml" on your
 project. We try to stick as much as we remember to the Google Java code style
 except for a few things we don't like because we all work on eclipse and we do
 have monitors with over 1200 pixels of width.
@@ -203,6 +205,7 @@ Basically, Keep it simple and try not to repeat yourself at all.
 
 CONTRIBUTE
 ------------
+Every countribution merged to the master branch will automatically receive a tip of 1% of whatever funds are available on the [tip4commit fund](https://tip4commit.com/github/frostwire/frostwire-android).
 
 If you want to contribute code, start by looking at the open issues on
 github.com 
