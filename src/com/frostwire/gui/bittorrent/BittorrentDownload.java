@@ -77,8 +77,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public String getDisplayName() {
-        // TODO:BITTORRENT
-        return dl.getName();
+        return dl.getDisplayName();
     }
 
     @Override
@@ -227,10 +226,6 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     public CopyrightLicenseBroker getCopyrightLicenseBroker() {
         setupMetadataHolder();
         return licenseBroker;
-    }
-
-    public void refresh() {
-        // TODO:BITTORRENT
     }
 
     private class StatusListener implements BTDownloadListener {

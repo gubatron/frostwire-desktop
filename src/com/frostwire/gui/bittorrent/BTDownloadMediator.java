@@ -743,20 +743,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         tc.setCellEditor(new GenericCellEditor(new PaymentOptionsRenderer()));
     }
 
-    protected void selectRowByDownload(BTDownload download) {
-        for (int i = 0; i < TABLE.getRowCount(); i++) {
-            BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
-            if (download.getHash().equals(btDownloadDataLine.getInitializeObject().getHash())) {
-                btDownloadDataLine.getInitializeObject().getSize(true);
-                if (download instanceof BittorrentDownload) {
-                    ((BittorrentDownload) download).refresh();
-                }
-                TABLE.setSelectedRow(i);
-                return;
-            }
-        }
-    }
-
     public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
         if (!BTEngine.getInstance().isStarted()) {
             LOG.error("Bittorrent core not started");
