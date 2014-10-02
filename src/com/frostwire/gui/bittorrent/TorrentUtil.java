@@ -82,41 +82,7 @@ public final class TorrentUtil {
         return result;
     }
 
-    //Deletes incomplete files and the save location from the itunes import settings
-    static void finalCleanup(com.frostwire.bittorrent.BTDownload downloadManager, long timeDownloadManagerStarted) {
-        Set<File> filesToDelete = getSkippedFiles(downloadManager);
 
-        for (File f : filesToDelete) {
-            try {
-
-                if (isSkippedFileComplete(f, downloadManager)) {
-
-                    long fileCreationModificationTime = getFileCreationTime(f);
-
-                    //fallback to modified time
-                    if (fileCreationModificationTime == -1) {
-                        fileCreationModificationTime = f.lastModified();
-                    }
-
-                    //keep files from older sessions, or if you don't know when this
-                    //download manager started.
-                    if (fileCreationModificationTime < timeDownloadManagerStarted ||
-                            timeDownloadManagerStarted == -1) {
-                        continue;
-                    }
-                }
-
-                if (f.exists() && !f.delete()) {
-                    System.out.println("Can't delete file: " + f);
-                }
-            } catch (Exception e) {
-                System.out.println("Can't delete file: " + f + ", ex: " + e.getMessage());
-            }
-        }
-        File saveLocation = new File(downloadManager.getSavePath());
-        FileUtils.deleteEmptyDirectoryRecursive(saveLocation);
-        iTunesImportSettings.IMPORT_FILES.remove(saveLocation);
-    }
 
     //    /**
 //     * Check if the given file, even though marked as skipped was downloaded in its entirety,

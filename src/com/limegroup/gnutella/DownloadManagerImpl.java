@@ -15,18 +15,13 @@
 
 package com.limegroup.gnutella;
 
-import com.frostwire.bittorrent.BTContext;
 import com.frostwire.bittorrent.BTDownload;
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.bittorrent.BTEngineListener;
 import com.frostwire.logging.Logger;
-import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
-import org.gudy.azureus2.core3.util.protocol.AzURLStreamHandlerFactory;
-import org.limewire.util.CommonUtils;
 
 import java.io.File;
-import java.net.URL;
 
 public class DownloadManagerImpl implements DownloadManager {
 
@@ -56,9 +51,9 @@ public class DownloadManagerImpl implements DownloadManager {
                     return;
                 }
 
-                String savePath = dl.getSavePath();
+                File savePath = dl.getSavePath();
 
-                if (savePath != null && new File(savePath).getParentFile().getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
+                if (savePath != null && savePath.getParentFile().getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
                     LOG.info("Update download: " + savePath);
                     return;
                 }

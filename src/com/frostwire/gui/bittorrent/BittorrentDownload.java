@@ -28,14 +28,17 @@ import com.frostwire.transfers.TransferState;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.settings.iTunesImportSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
+import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @author gubatron
@@ -102,7 +105,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public void remove() {
-        dl.stop(deleteTorrentWhenRemove, deleteDataWhenRemove);
+        dl.remove(deleteTorrentWhenRemove, deleteDataWhenRemove);
     }
 
     @Override
@@ -112,7 +115,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public File getSaveLocation() {
-        return new File(dl.getSavePath());
+        return dl.getSavePath();
     }
 
     @Override
@@ -231,35 +234,8 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     private class StatusListener implements BTDownloadListener {
 
         @Override
-        public void finished(BTDownload dl) {
-            if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue() || (dl.isPartial() && !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue())) {
-                dl.pause();
-            }
-
-            File saveLocation = new File(dl.getSavePath());
-
-            if (iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(saveLocation)) {
-                if ((OSUtils.isMacOSX() || OSUtils.isWindows())) {
-                    iTunesMediator.instance().scanForSongs(saveLocation);
-                }
-            }
-
-            if (!LibraryMediator.instance().isScanned(dl.hashCode())) {
-                LibraryMediator.instance().scan(dl.hashCode(), saveLocation);
-            }
-
-            //if you have to hide seeds, do so.
-            GUIMediator.safeInvokeLater(new Runnable() {
-                public void run() {
-                    BTDownloadMediator.instance().updateTableFilters();
-                }
-            });
-        }
-
-        @Override
-        public void stopped(BTDownload dl) {
+        public void update(BTDownload dl) {
             // TODO:BITTORRENT
-            // check it works
             /*
 
     public void updateSize(DownloadManager downloadManager) {
@@ -316,11 +292,39 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
 }
  */
+        }
+
+        @Override
+        public void finished(BTDownload dl) {
+            if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue() || (dl.isPartial() && !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue())) {
+                dl.pause();
+            }
+
+            File saveLocation = dl.getSavePath();
+
+            if (iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(saveLocation)) {
+                if ((OSUtils.isMacOSX() || OSUtils.isWindows())) {
+                    iTunesMediator.instance().scanForSongs(saveLocation);
+                }
+            }
+
+            if (!LibraryMediator.instance().isScanned(dl.hashCode())) {
+                LibraryMediator.instance().scan(dl.hashCode(), saveLocation);
+            }
+
+            //if you have to hide seeds, do so.
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    BTDownloadMediator.instance().updateTableFilters();
+                }
+            });
+        }
+
+        @Override
+        public void removed(BTDownload dl, Set<File> incompleteFiles) {
             long timeStarted = getDateCreated().getTime();
-            if (TorrentUtil.isHandpicked(dl) &&
-                    (!SharingSettings.SEED_FINISHED_TORRENTS.getValue() || !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue()) &&
-                    dl.isFinished()) {
-                TorrentUtil.finalCleanup(dl, timeStarted);
+            if (!incompleteFiles.isEmpty()) {
+                finalCleanup(incompleteFiles);
             }
         }
     }
@@ -350,5 +354,40 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
                 LOG.error("Unable to setup licence holder");
             }
         }
+    }
+
+    //Deletes incomplete files and the save location from the itunes import settings
+    private void finalCleanup(Set<File> incompleteFiles) {
+        for (File f : incompleteFiles) {
+            try {
+
+                /*
+                if (isSkippedFileComplete(f, downloadManager)) {
+
+                    long fileCreationModificationTime = getFileCreationTime(f);
+
+                    //fallback to modified time
+                    if (fileCreationModificationTime == -1) {
+                        fileCreationModificationTime = f.lastModified();
+                    }
+
+                    //keep files from older sessions, or if you don't know when this
+                    //download manager started.
+                    if (fileCreationModificationTime < timeDownloadManagerStarted ||
+                            timeDownloadManagerStarted == -1) {
+                        continue;
+                    }
+                }*/
+
+                if (f.exists() && !f.delete()) {
+                    System.out.println("Can't delete file: " + f);
+                }
+            } catch (Exception e) {
+                System.out.println("Can't delete file: " + f + ", ex: " + e.getMessage());
+            }
+        }
+        File saveLocation = dl.getSavePath();
+        FileUtils.deleteEmptyDirectoryRecursive(saveLocation);
+        iTunesImportSettings.IMPORT_FILES.remove(saveLocation);
     }
 }
