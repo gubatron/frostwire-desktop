@@ -532,29 +532,23 @@ public final class StatusLine {
      */
     public void updateFirewall() {
         BTEngine engine = BTEngine.getInstance();
-        if (engine.isStarted()) {
-            updateFirewallLabel(!engine.isFirewalled());
-        } else {
-            updateFirewallLabel(false);
-        }
+        updateFirewallLabel(!engine.isFirewalled());
     }
 
     /**
      * Updates the bandwidth statistics.
      */
     public void updateBandwidth() {
-        if (BTEngine.getInstance().isStarted()) {
-            //  format strings
-            String sDown = GUIUtils.rate2speed(GUIMediator.instance().getBTDownloadMediator().getDownloadsBandwidth());
-            String sUp = GUIUtils.rate2speed(GUIMediator.instance().getBTDownloadMediator().getUploadsBandwidth());
+        //  format strings
+        String sDown = GUIUtils.rate2speed(GUIMediator.instance().getBTDownloadMediator().getDownloadsBandwidth());
+        String sUp = GUIUtils.rate2speed(GUIMediator.instance().getBTDownloadMediator().getUploadsBandwidth());
 
-            // number of uploads (seeding) and downloads
-            int downloads = GUIMediator.instance().getCurrentDownloads();
-            int uploads = GUIMediator.instance().getCurrentUploads();
+        // number of uploads (seeding) and downloads
+        int downloads = GUIMediator.instance().getCurrentDownloads();
+        int uploads = GUIMediator.instance().getCurrentUploads();
 
-            _bandwidthUsageDown.setText(downloads + " @ " + sDown);
-            _bandwidthUsageUp.setText(uploads + " @ " + sUp);
-        }
+        _bandwidthUsageDown.setText(downloads + " @ " + sDown);
+        _bandwidthUsageUp.setText(uploads + " @ " + sUp);
     }
 
     /**

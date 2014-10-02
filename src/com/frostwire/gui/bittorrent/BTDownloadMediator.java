@@ -334,10 +334,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     private double getBandwidth(boolean download) {
         BTEngine engine = BTEngine.getInstance();
 
-        if (!engine.isStarted()) {
-            return 0;
-        }
-
         return (download) ? engine.getDownloadRate() : engine.getUploadRate();
     }
 
@@ -705,10 +701,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentFileForSeed(final File torrentFile, final File saveDir) {
-        if (!BTEngine.getInstance().isStarted()) {
-            LOG.error("Bittorrent core not started");
-            return;
-        }
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 try {
@@ -744,10 +736,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
-        if (!BTEngine.getInstance().isStarted()) {
-            LOG.error("Bittorrent core not started");
-            return;
-        }
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 try {
@@ -782,10 +770,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     public void openSearchResult(TorrentCrawledSearchResult sr) {
         try {
-            if (!BTEngine.getInstance().isStarted()) {
-                LOG.error("Bittorrent core not started");
-                return;
-            }
             BTEngine.getInstance().download(sr, SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
         } catch (Throwable e) {
             LOG.error("Unable to start download from search result", e);
@@ -824,17 +808,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     public long getTotalBytesDownloaded() {
         BTEngine engine = BTEngine.getInstance();
-        if (!engine.isStarted()) {
-            return 0;
-        }
         return engine.getTotalDownload();
     }
 
     public long getTotalBytesUploaded() {
         BTEngine engine = BTEngine.getInstance();
-        if (!engine.isStarted()) {
-            return 0;
-        }
         return engine.getTotalUpload();
     }
 

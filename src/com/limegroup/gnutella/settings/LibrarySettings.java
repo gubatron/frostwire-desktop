@@ -86,8 +86,6 @@ public class LibrarySettings extends LimeProps {
         }
 
         LibrarySettings.DIRECTORIES_TO_INCLUDE.add(fromDeviceFolder);
-
-        BTEngine.getInstance().revertToDefaultConfiguration();
     }
 
 
