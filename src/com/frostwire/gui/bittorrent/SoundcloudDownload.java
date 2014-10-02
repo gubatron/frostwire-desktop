@@ -38,7 +38,6 @@ import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.settings.SharingSettings;
 import org.apache.commons.io.FilenameUtils;
-import org.gudy.azureus2.core3.download.DownloadManager;
 
 import java.io.File;
 import java.io.IOException;
