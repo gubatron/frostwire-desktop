@@ -180,7 +180,7 @@ public class NetworkInterfacePaneItem extends AbstractPaneItem {
         // TODO:BITTORRENT
         //COConfigurationManager.save();
         
-        return false;
+        return true;
     }
     
     public boolean isDirty() {

@@ -15,6 +15,7 @@
 
 package com.limegroup.gnutella.gui;
 
+import com.frostwire.bittorrent.BTContext;
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.logging.Logger;
 import com.frostwire.util.UserAgentGenerator;
@@ -128,6 +129,8 @@ public final class Initializer {
         startSetupManager(setupManager);
         validateSaveDirectory();
 
+        startBittorrentCore();
+
         // Load the UI, system tray & notification handlers,
         // and hide the splash screen & display the UI.
         //System.out.println("Initializer.initialize() load UI");
@@ -142,8 +145,6 @@ public final class Initializer {
         //System.out.println("Initializer.initialize() start core");
         startCore(limeWireCore);
         runQueuedRequests(limeWireCore);
-
-        startBittorrentCore();
 
         // Run any after-init tasks.
         postinit();
@@ -487,11 +488,24 @@ public final class Initializer {
     }
 
     private void startBittorrentCore() {
-        BackgroundExecutorService.schedule(new Runnable() {
-            public void run() {
-                BTEngine.getInstance().start();
-            }
-        });
+        // this hack is only due to the remaining vuze TOTorrent code
+        URL.setURLStreamHandlerFactory(new AzURLStreamHandlerFactory());
+
+        SharingSettings.initTorrentDataDirSetting();
+        SharingSettings.initTorrentsDirSetting();
+
+        File homeDir = new File(CommonUtils.getUserSettingsDir() + File.separator + "libtorrent" + File.separator);
+        if (!homeDir.exists()) {
+            homeDir.mkdirs();
+        }
+
+        BTContext ctx = new BTContext();
+        ctx.homeDir = homeDir;
+        ctx.torrentsDir = SharingSettings.TORRENTS_DIR_SETTING.getValue();
+        ctx.dataDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
+        BTEngine.ctx = ctx;
+
+        BTEngine.getInstance().loadSettings();
     }
 
     /**

@@ -15,6 +15,7 @@
 
 package com.limegroup.gnutella;
 
+import com.frostwire.bittorrent.BTContext;
 import com.frostwire.bittorrent.BTDownload;
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.bittorrent.BTEngineListener;
@@ -69,21 +70,6 @@ public class DownloadManagerImpl implements DownloadManager {
                 addDownload(dl);
             }
         });
-
-        // this hack is only due to the remaining vuze TOTorrent code
-        URL.setURLStreamHandlerFactory(new AzURLStreamHandlerFactory());
-
-        SharingSettings.initTorrentDataDirSetting();
-        SharingSettings.initTorrentsDirSetting();
-
-        File homeDir = new File(CommonUtils.getUserSettingsDir() + File.separator + "libtorrent" + File.separator);
-        if (!homeDir.exists()) {
-            homeDir.mkdirs();
-        }
-
-        engine.setHomeDir(homeDir);
-        engine.setTorrentsDir(SharingSettings.TORRENTS_DIR_SETTING.getValue());
-        engine.setDataDir(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
 
         engine.restoreDownloads();
     }
