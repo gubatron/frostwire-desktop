@@ -24,6 +24,7 @@ import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.logging.Logger;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.transfers.TransferItem;
 import com.frostwire.transfers.TransferState;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.iTunesMediator;
@@ -38,6 +39,7 @@ import org.limewire.util.OSUtils;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -50,6 +52,10 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     private final BTDownload dl;
 
+    private String displayName;
+    private long size;
+    private boolean partial;
+
     private boolean deleteTorrentWhenRemove;
     private boolean deleteDataWhenRemove;
 
@@ -61,6 +67,10 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
         this.dl = dl;
         this.dl.setListener(new StatusListener());
 
+        this.displayName = dl.getDisplayName();
+        this.size = calculateSize(dl);
+        this.partial = dl.isPartial();
+
         dl.resume();
     }
 
@@ -70,12 +80,12 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public long getSize() {
-        return dl.getSize();
+        return size;
     }
 
     @Override
     public String getDisplayName() {
-        return dl.getDisplayName();
+        return displayName;
     }
 
     @Override
@@ -192,7 +202,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public boolean isPartialDownload() {
-        return dl.isPartial();
+        return partial;
     }
 
     @Override
@@ -220,63 +230,9 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
         @Override
         public void update(BTDownload dl) {
-            // TODO:BITTORRENT
-            /*
-
-    public void updateSize(DownloadManager downloadManager) {
-		if (_partialDownload) {
-            _fileInfoSet = TorrentUtil.getNoSkippedFileInfoSet(downloadManager);
-
-            if (_fileInfoSet.isEmpty()) {
-            	_size = downloadManager.getSize();
-            } else {
-	            long size = 0;
-	            for (DiskManagerFileInfo fileInfo : _fileInfoSet) {
-	                size += fileInfo.getLength();
-	            }
-            _size = size;
-            }
-        } else {
-            _fileInfoSet = null;
-            _size = downloadManager.getSize();
-        }
-	}
-
-
-
-    @Override
-	public void updateDownloadManager(DownloadManager downloadManager) {
-		_downloadManager = downloadManager;
-        _partialDownload = TorrentUtil.isHandpicked(downloadManager);
-
-        updateSize(downloadManager);
-
-        updateName(downloadManager);
-
-        try {
-            _hash = TorrentUtil.hashToString(downloadManager.getTorrent().getHash());
-        } catch (Exception e) {
-        	e.printStackTrace();
-            _hash = "";
-        }
-
-	}
-
-    private void updateName(DownloadManager downloadManager) {
-        if (TorrentUtil.getNoSkippedFileInfoSet(downloadManager).size() == 1) {
-            try {
-                byte[][] temp = TorrentUtil.getNoSkippedFileInfoSet(downloadManager).toArray(new DiskManagerFileInfo[0])[0].getTorrentFile().getPathComponents();
-                _displayName = StringUtils.getUTF8String(temp[temp.length - 1]);
-            } catch (Throwable e) {
-                _displayName = TorrentUtil.getNoSkippedFileInfoSet(downloadManager).toArray(new DiskManagerFileInfo[0])[0].getFile(false).getName();
-            }
-        } else {
-            _displayName = _downloadManager.getDisplayName();
-        }
-    }
-
-}
- */
+            displayName = dl.getDisplayName();
+            size = calculateSize(dl);
+            partial = dl.isPartial();
         }
 
         @Override
@@ -345,34 +301,37 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     private void finalCleanup(Set<File> incompleteFiles) {
         for (File f : incompleteFiles) {
             try {
-
-                /*
-                if (isSkippedFileComplete(f, downloadManager)) {
-
-                    long fileCreationModificationTime = getFileCreationTime(f);
-
-                    //fallback to modified time
-                    if (fileCreationModificationTime == -1) {
-                        fileCreationModificationTime = f.lastModified();
-                    }
-
-                    //keep files from older sessions, or if you don't know when this
-                    //download manager started.
-                    if (fileCreationModificationTime < timeDownloadManagerStarted ||
-                            timeDownloadManagerStarted == -1) {
-                        continue;
-                    }
-                }*/
-
                 if (f.exists() && !f.delete()) {
-                    System.out.println("Can't delete file: " + f);
+                    LOG.warn("Can't delete file: " + f);
                 }
-            } catch (Exception e) {
-                System.out.println("Can't delete file: " + f + ", ex: " + e.getMessage());
+            } catch (Throwable e) {
+                LOG.warn("Can't delete file: " + f + ", ex: " + e.getMessage());
             }
         }
         File saveLocation = dl.getSavePath();
         FileUtils.deleteEmptyDirectoryRecursive(saveLocation);
         iTunesImportSettings.IMPORT_FILES.remove(saveLocation);
+    }
+
+    public long calculateSize(BTDownload dl) {
+        long size = dl.getSize();
+
+        boolean partial = dl.isPartial();
+        if (partial) {
+            List<TransferItem> items = dl.getItems();
+
+            long totalSize = 0;
+            for (TransferItem item : items) {
+                if (!item.isSkipped()) {
+                    totalSize += item.getSize();
+                }
+            }
+
+            if (totalSize > 0) {
+                size = totalSize;
+            }
+        }
+
+        return size;
     }
 }
