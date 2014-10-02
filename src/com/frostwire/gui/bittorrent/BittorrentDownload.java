@@ -164,18 +164,8 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     }
 
     @Override
-    public boolean isDeleteTorrentWhenRemove() {
-        return deleteTorrentWhenRemove;
-    }
-
-    @Override
     public void setDeleteTorrentWhenRemove(boolean deleteTorrentWhenRemove) {
         this.deleteTorrentWhenRemove = deleteTorrentWhenRemove;
-    }
-
-    @Override
-    public boolean isDeleteDataWhenRemove() {
-        return deleteDataWhenRemove;
     }
 
     @Override

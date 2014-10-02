@@ -232,16 +232,6 @@ public class YouTubeDownload implements BTDownload {
     }
 
     @Override
-    public boolean isDeleteTorrentWhenRemove() {
-        return false;
-    }
-
-    @Override
-    public boolean isDeleteDataWhenRemove() {
-        return false;
-    }
-
-    @Override
     public String getHash() {
         return sr.getDownloadUrl();
     }

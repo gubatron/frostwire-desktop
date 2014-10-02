@@ -139,17 +139,7 @@ public class BTPeerHttpUpload implements BTDownload {
     }
 
     @Override
-    public boolean isDeleteTorrentWhenRemove() {
-        return false;
-    }
-
-    @Override
     public void setDeleteTorrentWhenRemove(boolean deleteTorrentWhenRemove) {
-    }
-
-    @Override
-    public boolean isDeleteDataWhenRemove() {
-        return false;
     }
 
     @Override

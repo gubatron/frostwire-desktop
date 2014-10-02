@@ -242,16 +242,6 @@ public class HttpDownload implements BTDownload {
     }
 
     @Override
-    public boolean isDeleteTorrentWhenRemove() {
-        return false;
-    }
-
-    @Override
-    public boolean isDeleteDataWhenRemove() {
-        return deleteDataWhenCancelled;
-    }
-
-    @Override
     public String getHash() {
         return md5;
     }
