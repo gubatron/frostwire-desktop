@@ -50,11 +50,6 @@ public class BTPeerHttpUpload implements BTDownload {
     }
 
     @Override
-    public long getSize(boolean update) {
-        return getSize();
-    }
-
-    @Override
     public String getDisplayName() {
         return upload.getDisplayName();
     }

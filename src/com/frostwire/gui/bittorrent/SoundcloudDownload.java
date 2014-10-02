@@ -96,11 +96,6 @@ public class SoundcloudDownload implements BTDownload {
     }
 
     @Override
-    public long getSize(boolean update) {
-        return size;
-    }
-
-    @Override
     public String getDisplayName() {
         return sr.getDisplayName();
     }

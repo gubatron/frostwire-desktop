@@ -124,11 +124,6 @@ public class HttpDownload implements BTDownload {
     }
 
     @Override
-    public long getSize(boolean update) {
-        return size;
-    }
-
-    @Override
     public String getDisplayName() {
         return title;
     }
