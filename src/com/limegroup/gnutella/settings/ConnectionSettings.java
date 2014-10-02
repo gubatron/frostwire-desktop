@@ -19,10 +19,8 @@ import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.IntSetting;
 import org.limewire.setting.StringSetting;
 
-import com.limegroup.gnutella.SpeedConstants;
-
 /**
- * Settings for Gnutella TCP connections.
+ * Settings for connections.
  */
 public final class ConnectionSettings extends LimeProps {
     
@@ -35,13 +33,7 @@ public final class ConnectionSettings extends LimeProps {
     public static final int C_SOCKS4_PROXY = 4;
     public static final int C_SOCKS5_PROXY = 5;
     public static final int C_HTTP_PROXY = 1;
-    
-	/**
-	 * The connection speed in kbyte/s
-	 */
-    public static final IntSetting CONNECTION_SPEED = 
-        FACTORY.createIntSetting("CONNECTION_SPEED", SpeedConstants.CABLE_SPEED_INT);
-    
+
     /**
 	 * Sets whether or not the users ip address should be forced to
 	 * the value they have entered.
@@ -119,26 +111,5 @@ public final class ConnectionSettings extends LimeProps {
      */
     public static final BooleanSetting USE_LOCALE_PREF =
         FACTORY.createBooleanSetting("USE_LOCALE_PREF", true);
-
-    /**
-     * Helper method left from Settings Manager
-     *
-	 * Returns the maximum number of connections for the given connection
-     * speed.
-	 */
-    public static final int getMaxConnections() {
-        int speed = CONNECTION_SPEED.getValue();
-        
-        if (speed <= SpeedConstants.MODEM_SPEED_INT) {
-            return 3;
-        } else if (speed <= SpeedConstants.CABLE_SPEED_INT) {
-            return 6;
-        } else if (speed <= SpeedConstants.T1_SPEED_INT) {
-            return 10;
-        } else if (speed >= SpeedConstants.T3_SPEED_INT) {                 //T3: no limit
-            return 24; //used to be 12
-        }
-        return 24;
-    }
 }
 

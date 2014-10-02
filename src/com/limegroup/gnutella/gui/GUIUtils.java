@@ -68,7 +68,6 @@ import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.logging.Logger;
-import com.limegroup.gnutella.SpeedConstants;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
 /**
@@ -252,25 +251,6 @@ public final class GUIUtils {
     }
     
     /**
-     * Converts the following bandwidth value, in kbytes/second, to
-     * a human readable.
-     */
-    public static String speed2name(int rate) {
-        if (rate <= SpeedConstants.MODEM_SPEED_INT)
-            return GUIConstants.MODEM_SPEED;
-        else if (rate <= SpeedConstants.CABLE_SPEED_INT)
-            return GUIConstants.CABLE_SPEED;
-        else if (rate <= SpeedConstants.T1_SPEED_INT)
-            return GUIConstants.T1_SPEED;
-        else if (rate == SpeedConstants.THIRD_PARTY_SPEED_INT)
-            return GUIConstants.THIRD_PARTY_RESULTS_SPEED;
-        else if (rate < Integer.MAX_VALUE - 1)
-            return GUIConstants.T3_SPEED;
-        else
-            return GUIConstants.MULTICAST_SPEED;
-    }
-    
-    /**
      * Converts an rate into a human readable and localized KB/s speed.
      */
     public static String rate2speed(double rate) {
@@ -374,9 +354,6 @@ public final class GUIUtils {
      * @param c component for which the keybinding is installed
      * @param key the key that triggers the action
      * @param a the action
-     * @param focusScope one of {@link JComponent.WHEN_FOCUSED},
-     * {@link JComponent.WHEN_IN_FOCUSED_WINDOW},
-     * {@link JComponent.WHEN_ANCESTOR_OF_FOCUSED_WINDOW}
      */
     public static void bindKeyToAction(JComponent c, KeyStroke key, Action a,
     		int focusScope) {

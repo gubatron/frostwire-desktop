@@ -191,17 +191,6 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
             
             restart = true;
         }
-
-        // TODO:BITTORRENT
-	    //COConfigurationManager.save();
-        
-        // Notify that the address changed if:
-        //    1) The 'forced address' status changed.
-        // or 2) We're forcing and the ports are different.
-//        boolean newForce = ConnectionSettings.FORCE_IP_ADDRESS.getValue();
-//        int newPort = ConnectionSettings.FORCED_PORT.getValue();        
-//        if(oldForce != newForce || (newForce && (oldPort != newPort)))
-//            networkManager.addressChanged();
         
         return restart;
     }
