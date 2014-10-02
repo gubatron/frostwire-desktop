@@ -46,18 +46,13 @@ package com.frostwire.gui.bittorrent;
 import com.frostwire.logging.Logger;
 import com.frostwire.transfers.TransferItem;
 import com.frostwire.util.StringUtils;
-import com.limegroup.gnutella.settings.iTunesImportSettings;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLGroup;
 import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLSet;
 import org.gudy.azureus2.core3.util.UrlUtils;
-import org.limewire.util.FileUtils;
 
 import java.io.File;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributeView;
-import java.nio.file.attribute.FileTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,48 +60,6 @@ import java.util.Set;
 public final class TorrentUtil {
 
     private static final Logger LOG = Logger.getLogger(TorrentUtil.class);
-
-    // tries to get creation time, if it can't it returns -1
-    private static long getFileCreationTime(File f) {
-        long result = -1;
-
-        try {
-            BasicFileAttributeView fileAttributeView = Files.getFileAttributeView(f.toPath(), BasicFileAttributeView.class);
-            FileTime creationTime = fileAttributeView.readAttributes().creationTime();
-            result = creationTime.toMillis();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("just printing exception, returning -1");
-        }
-
-        return result;
-    }
-
-
-
-    //    /**
-//     * Check if the given file, even though marked as skipped was downloaded in its entirety,
-//     * so that we don't delete it by accident during finalCleanup.
-//     * @param file
-//     * @param downloadManager
-//     * @return
-//
-    private static boolean isSkippedFileComplete(File file, com.frostwire.bittorrent.BTDownload downloadManager) {
-        List<TransferItem> infoSet = downloadManager.getItems();
-
-        //search for the given file on the disk manager for this download manager
-        for (TransferItem fileInfo : infoSet) {
-            if (fileInfo.isSkipped()) {
-                File f = fileInfo.getFile();
-
-                //1. found the path of our file in here.
-                if (f.getAbsolutePath().equalsIgnoreCase(file.getAbsolutePath())) {
-                    return fileInfo.getSize() == file.length();
-                }
-            }
-        }
-        return false;
-    }
 
     public static Set<File> getSkipedFiles() {
         Set<File> set = new HashSet<File>();
@@ -136,17 +89,6 @@ public final class TorrentUtil {
         return set;
     }
 
-    public static Set<TransferItem> getNoSkippedFileInfoSet(com.frostwire.bittorrent.BTDownload dm) {
-        Set<TransferItem> set = new HashSet<TransferItem>();
-        List<TransferItem> infoSet = dm.getItems();
-        for (TransferItem fileInfo : infoSet) {
-            if (!fileInfo.isSkipped()) {
-                set.add(fileInfo);
-            }
-        }
-        return set;
-    }
-
     public static BittorrentDownload getDownloadManager(File f) {
         List<BTDownload> downloads = BTDownloadMediator.instance().getDownloads();
         for (BTDownload d : downloads) {
@@ -160,22 +102,6 @@ public final class TorrentUtil {
                     if (f.equals(item.getFile())) {
                         return bt;
                     }
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public static BittorrentDownload getDownloadManager(String hash) {
-        List<BTDownload> downloads = BTDownloadMediator.instance().getDownloads();
-        for (BTDownload d : downloads) {
-            if (d instanceof BittorrentDownload) {
-                BittorrentDownload bt = (BittorrentDownload) d;
-                com.frostwire.bittorrent.BTDownload dl = bt.getDl();
-
-                if (dl.getInfoHash().equals(hash)) {
-                    return bt;
                 }
             }
         }
@@ -215,10 +141,6 @@ public final class TorrentUtil {
         } else {
             return (int) (fileInfo.getDownloaded() * 100 / length);
         }
-    }
-
-    public static String getMagnet(byte[] hash) {
-        return "magnet:?xt=urn:btih:" + hashToString(hash);
     }
 
     public static String getMagnet(String hash) {
@@ -287,9 +209,5 @@ public final class TorrentUtil {
         Set<File> set = TorrentUtil.getIncompleteFiles();
         set.addAll(TorrentUtil.getSkipedFiles());
         return set;
-    }
-
-    public static boolean isHandpicked(com.frostwire.bittorrent.BTDownload dm) {
-        return dm.isPartial();
     }
 }
