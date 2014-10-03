@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-30 01:28-0400\n"
-"PO-Revision-Date: 2014-10-03 18:31+0400\n"
+"PO-Revision-Date: 2014-10-03 20:59+0400\n"
 "Last-Translator: X-NicON <x-icon@ya.ru>\n"
 "Language-Team: Russian Team\n"
 "Language: ru\n"
@@ -386,7 +386,7 @@ msgstr "Лицензия:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:329
 msgid "ETA"
-msgstr ""
+msgstr "ETA"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:454
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:422
@@ -562,7 +562,7 @@ msgstr "Информация о лицензии"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:51
 msgid "Open Source"
-msgstr ""
+msgstr "Open Source"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:52
 msgid "Public Domain"
@@ -662,7 +662,7 @@ msgstr "Авторское право"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:212
 msgid "Payments/Tips"
-msgstr ""
+msgstr "Платежи/Чаевые"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:229
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:931
@@ -690,13 +690,12 @@ msgid "Click here to select a single file or a folder as the content indexed by 
 msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:255
-#, fuzzy
 msgid "Tracking"
-msgstr "Дорожка"
+msgstr "Отслеживание"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:257
 msgid "Trackerless Torrent (DHT)"
-msgstr ""
+msgstr "DHT"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:258
 msgid "Select this option to create torrents that don't need trackers, completely descentralized. (Recommended)"
@@ -714,7 +713,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:266
 msgid "Tracker Announce URLs"
-msgstr ""
+msgstr "Ссылки на аннонсеры текеров"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:266
 msgid "One tracker per line"
@@ -728,7 +727,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:278
 msgid "Web Seeds Mirror URLs"
-msgstr ""
+msgstr "Ссылки на зеркала раздачи в Веб"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:279
 msgid "If these files can be downloaded from the web, enter the URLs of each possible mirror, one per line (GetRight style)."
@@ -810,29 +809,29 @@ msgstr "файлы \".торрент\""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:711
 msgid "wizard.addingmt"
-msgstr ""
+msgstr "wizard.addingmt"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:715
 msgid "wizard.savingfile"
-msgstr ""
+msgstr "wizard.savingfile"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:720
 msgid "wizard.filesaved"
-msgstr ""
+msgstr "wizard.filesaved"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:738
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:743
 msgid "wizard.operationfailed"
-msgstr ""
+msgstr "wizard.operationfailed"
 
 #. check just the first file on all mirrors.
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:759
 msgid "Checking Web seed mirror URLs..."
-msgstr ""
+msgstr "Проверка зеркал Беб-сидов..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:768
 msgid "Web seed not reachable."
-msgstr ""
+msgstr "Не могу добраться до Веб-сида."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:866
 msgid "Saving Torrent..."
@@ -965,42 +964,42 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:126
 msgid "<strong>Bitcoin</strong> receiving wallet address"
-msgstr ""
+msgstr "Адрес кошелька <strong>Bitcoin</strong>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:131
 msgid "<strong>Litecoin</strong> receiving wallet address"
-msgstr ""
+msgstr "Адрес кошелька <strong>Litecoin</strong>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:136
 msgid "<strong>Dogecoin</strong> receiving wallet address"
-msgstr ""
+msgstr "Адрес кошелька <strong>Dogecoin</strong>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:141
 msgid "<strong>Paypal</strong> payment/donation page url"
-msgstr ""
+msgstr "Ссылка на страницу <strong>Paypal</strong> платежа/пожертвования"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:151
 msgid "\"Name your price\", \"Tips\", \"Donations\" payment options"
-msgstr ""
+msgstr "Варианты оплаты: \"Ваша цена\", \"Чаевые\", \"Пожертвование\""
 
 #. We use "Bitcoin" for the protocol (upper case B), and "bitcoins" for the units of currency (lower case b)
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:97
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:98
 msgid "Name your price, Send a Tip or Donation in "
-msgstr ""
+msgstr "Назначьте цену, отправьте чаевые или пожертвование"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 msgid "bitcoins"
-msgstr ""
+msgstr "bitcoins"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:97
 msgid "litecoins"
-msgstr ""
+msgstr "litecoins"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:98
 msgid "dogecoins"
-msgstr ""
+msgstr "dogecoins"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:99
 msgid "Name your price, Send a Tip or Donation via Paypal"
@@ -1067,7 +1066,7 @@ msgstr "Все готово! Теперь можете поделиться сс
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:419
 msgid "Twitter it"
-msgstr ""
+msgstr "Twitter"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:420
 msgid "Send the message above to Twitter"
@@ -1107,7 +1106,7 @@ msgstr "Копировать Magnet-ссылки в буфер"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/SlideDownload.java:42
 msgid "Error: Corrupted download"
-msgstr ""
+msgstr "Ошибка: невозможно скачать"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:50
 msgid "Downloading Torrent"
@@ -1179,7 +1178,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/TorrentUtil.java:446
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/bittorrent/TorrentUtil.java:547
 msgid "globalmanager.download.remove.veto"
-msgstr ""
+msgstr "globalmanager.download.remove.veto"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:133
 msgid "Leave a tip"
@@ -1187,7 +1186,7 @@ msgstr "Оставить чаевые"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:155
 msgid "on"
-msgstr ""
+msgstr "на"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:244
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/components/slides/SlideControlsOverlay.java:245
@@ -1263,7 +1262,7 @@ msgstr "Достигнут лимит выгрузок"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/DeviceUploadDialog.java:117
 msgid "Waiting for device authorization..."
-msgstr ""
+msgstr "Ожиданеи авторизации устройств..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/DeviceUploadTask.java:72
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/DeviceUploadTask.java:84
@@ -1357,7 +1356,7 @@ msgstr "Вы искали "
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryExplorer.java:145
 msgid "'s "
-msgstr ""
+msgstr " "
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryExplorer.java:162
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryPlaylists.java:317
@@ -1372,7 +1371,7 @@ msgstr "Папка для сохранения по умолчанию"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryExplorer.java:224
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:36
 msgid "Wi-Fi Sharing"
-msgstr ""
+msgstr "Wi-Fi Sharing"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryExplorer.java:246
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryPlaylists.java:184
@@ -1400,7 +1399,7 @@ msgstr "Открыть папку"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryFilesTableDataLine.java:331
 msgid "Wi-Fi Shared"
-msgstr ""
+msgstr "Wi-Fi Shared"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryFilesTableDataLine.java:341
 msgid "Path"
@@ -1508,7 +1507,7 @@ msgstr "Извлечение звуковых дорожек из выбранн
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1078
 msgid "failed"
-msgstr ""
+msgstr "не удалось"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1079
 msgid "Done extracting audio."
@@ -1517,7 +1516,7 @@ msgstr "Извлечение завершено"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1132
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1133
 msgid "out  of "
-msgstr ""
+msgstr "из"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1135
 msgid "Could not extract audio from"
@@ -1535,7 +1534,7 @@ msgstr "Закрыть доступ"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:1235
 msgid "file on local Wi-Fi network"
-msgstr ""
+msgstr "Файл в локальной Wi-Fi сети"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:49
 msgid "Bookmarked"
@@ -1602,7 +1601,7 @@ msgstr "Удалить Радиостанцию"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:612
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:613
 msgid "Copy Stream URL"
-msgstr ""
+msgstr "Копировать ссылку на поток"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryMediator.java:106
 msgid "Loading Library Window..."
@@ -1690,7 +1689,7 @@ msgstr "Экспортировать плейлисты в папку"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryPlaylists.java:849
 msgid "Copy all playlist files to a folder of your choosing"
-msgstr ""
+msgstr "Скопируйте все плейлисты в папку по вашему выбору"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryPlaylists.java:867
 msgid "Where do you want the playlist files copied to?"
@@ -1704,7 +1703,7 @@ msgstr "Выберите плейлист (.m3u)"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryPlaylists.java:922
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:814
 msgid "Export this playlist into a .m3u file"
-msgstr ""
+msgstr "Экспортировать этот плейлист в файл .m3u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryPlaylists.java:936
 msgid "Export Playlist to iTunes"
@@ -1712,11 +1711,11 @@ msgstr "Экспортровать плейлист в iTunes"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryPlaylists.java:937
 msgid "Export this playlist into an iTunes playlist"
-msgstr ""
+msgstr "Экспортировать плейлист в iTunes плейлист"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:40
 msgid "Index"
-msgstr ""
+msgstr "Индекс"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:50
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/StarredDirectoryHolder.java:47
@@ -1736,7 +1735,7 @@ msgstr "Дорожка"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:98
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:293
 msgid "Comment"
-msgstr ""
+msgstr "Комментарий"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:278
 msgid "Duration"
@@ -1766,7 +1765,7 @@ msgstr "Искать в Библиотеке"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:38
 msgid "Importing"
-msgstr ""
+msgstr "Импортируется"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryUtils.java:174
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryUtils.java:206
@@ -1780,11 +1779,11 @@ msgstr "Обновить"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryUtils.java:738
 msgid "Importing from"
-msgstr ""
+msgstr "Импортируется из"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/LibraryUtils.java:756
 msgid "Error importing Radio Station from"
-msgstr ""
+msgstr "Ошибка импорта радио станции из"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:67
 msgid "Holds the Results for "
@@ -1824,11 +1823,11 @@ msgstr "Документы"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/UITool.java:109
 msgid "Pictures"
-msgstr ""
+msgstr "Изображения"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/UITool.java:111
 msgid "Ringtones"
-msgstr ""
+msgstr "Рингтоны"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/library/UITool.java:115
 msgid "Unkown file type"
@@ -1836,15 +1835,15 @@ msgstr "Ссылки и типы файлов"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/mplayer/MPlayer.java:384
 msgid "azemp.failed.nocodec"
-msgstr ""
+msgstr "azemp.failed.nocodec"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/mplayer/MPlayer.java:390
 msgid "azemp.failed.d3dbad"
-msgstr ""
+msgstr "azemp.failed.d3dbad"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:79
 msgid "Streaming Audio"
-msgstr ""
+msgstr "Потовое аудио"
 
 #. *
 #. * Constant for the play button.
@@ -1869,7 +1868,7 @@ msgstr "Предыдущий"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:196
 msgid "Volume"
-msgstr ""
+msgstr "Громкость"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:249
 msgid "Send this file to a friend"
@@ -1885,53 +1884,53 @@ msgstr "Случайный порядок"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:327
 msgid "Repeat songs"
-msgstr ""
+msgstr "Повторять звуки"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:902
 msgid "this artist(s)"
-msgstr ""
+msgstr "Артист(ы)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:906
 msgid "Open Facebook page of"
-msgstr ""
+msgstr "Открыть Facebook страницу"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:908
 msgid "Open Twitter page of"
-msgstr ""
+msgstr "Открыть Twitter страницу"
 
 #. won't be shown in 5.6.x, code here for 6.x
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:1015
 msgid "Playing local file"
-msgstr ""
+msgstr "Воспроизвести локальный файл"
 
 #. won't be shown in 5.6.x, code here for 6.x
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:1018
 msgid "Playing track from"
-msgstr ""
+msgstr "Воспроизведение звуковой дорожки из"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:1021
 msgid "Open YouTube source page"
-msgstr ""
+msgstr "Открыть страницу оригинала на YouTube "
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:1025
 msgid "Open SoundCloud source page"
-msgstr ""
+msgstr "Открыть страницу оригинала на SoundCloud"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:1029
 msgid "Open Archive.org source page"
-msgstr ""
+msgstr "Открыть страницу оригинала на Archive.org"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:1033
 msgid "Playing Internet Radio"
-msgstr ""
+msgstr "Воспроизведение Интернет-Радио"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:1036
 msgid "Playing local Wi-Fi Stream from"
-msgstr ""
+msgstr "Воспроизвести поток по локальной сети Wi-Fi из"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:1050
 msgid "unknown device"
-msgstr ""
+msgstr "неизвестное устройство"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerComponent.java:1061
 msgid "playlist"
@@ -1951,7 +1950,7 @@ msgstr "Папка:"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:67
 #, java-format
 msgid "Do you want to send this {0} to a friend?"
-msgstr ""
+msgstr "Вы хотите послать {0} друзьям?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/player/MediaPlayerLinux.java:27
 msgid "<br><br>To Install <b>mplayer</b> in Ubuntu open a terminal window and type \"<b>sudo apt-get install mplayer</b>\".<br><br>If you have installed mplayer already at a custom location, <b>make sure to have a symlink pointing to your mplayer executable</b> at <b><font color=\"blue\">"
@@ -1967,19 +1966,19 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/searchfield/GoogleSearchField.java:64
 msgid "Hints by Google"
-msgstr ""
+msgstr "Подсказки от Google"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/searchfield/RecentSearches.java:320
 msgid "SearchField.noRecentsText"
-msgstr ""
+msgstr "SearchField.noRecentsText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/searchfield/RecentSearches.java:324
 msgid "SearchField.recentsMenuTitle"
-msgstr ""
+msgstr "SearchField.recentsMenuTitle"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/searchfield/RecentSearches.java:335
 msgid "SearchField.clearRecentsText"
-msgstr ""
+msgstr "SearchField.clearRecentsText"
 
 #. *
 #. * The undo action.
@@ -2030,7 +2029,7 @@ msgstr "Очистить журнал"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/searchfield/SearchFieldUI.java:410
 msgid "SearchField.popupSource"
-msgstr ""
+msgstr "SearchField.popupSource"
 
 #. library
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/tabs/LibraryTab.java:55
@@ -2040,7 +2039,7 @@ msgstr "Библиотека"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/tabs/LibraryTab.java:55
 msgid "Browse, Search and Play files in your computer. Wi-Fi sharing, Internet Radio and more."
-msgstr ""
+msgstr "Поиск и воспроизведение файлов на вашем компьютере. Wi-Fi sharing, интернет-радио и многое другое."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/tabs/SearchDownloadTab.java:51
 msgid "Search and Download Files from the Internet."
@@ -2048,106 +2047,106 @@ msgstr "Поиск и загрузка файлов"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:531
 msgid "FileChooser.lookInLabelText"
-msgstr ""
+msgstr "FileChooser.lookInLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:532
 msgid "FileChooser.saveInLabelText"
-msgstr ""
+msgstr "FileChooser.saveInLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:535
 msgid "FileChooser.fileNameLabelText"
-msgstr ""
+msgstr "FileChooser.fileNameLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:537
 msgid "FileChooser.folderNameLabelText"
-msgstr ""
+msgstr "FileChooser.folderNameLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:540
 msgid "FileChooser.filesOfTypeLabelText"
-msgstr ""
+msgstr "FileChooser.filesOfTypeLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:542
 msgid "FileChooser.upFolderToolTipText"
-msgstr ""
+msgstr "FileChooser.upFolderToolTipText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:543
 msgid "FileChooser.upFolderAccessibleName"
-msgstr ""
+msgstr "FileChooser.upFolderAccessibleName"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:545
 msgid "FileChooser.homeFolderToolTipText"
-msgstr ""
+msgstr "FileChooser.homeFolderToolTipText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:546
 msgid "FileChooser.homeFolderAccessibleName"
-msgstr ""
+msgstr "FileChooser.homeFolderAccessibleName"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:548
 msgid "FileChooser.newFolderToolTipText"
-msgstr ""
+msgstr "FileChooser.newFolderToolTipText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:549
 msgid "FileChooser.newFolderAccessibleName"
-msgstr ""
+msgstr "FileChooser.newFolderAccessibleName"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:551
 msgid "FileChooser.listViewButtonToolTipText"
-msgstr ""
+msgstr "FileChooser.listViewButtonToolTipText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:552
 msgid "FileChooser.listViewButtonAccessibleName"
-msgstr ""
+msgstr "FileChooser.listViewButtonAccessibleName"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:554
 msgid "FileChooser.detailsViewButtonToolTipText"
-msgstr ""
+msgstr "FileChooser.detailsViewButtonToolTipText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/BaseFileChooserUI.java:555
 msgid "FileChooser.detailsViewButtonAccessibleName"
-msgstr ""
+msgstr "FileChooser.detailsViewButtonAccessibleName"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/FilePane.java:514
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/FilePaneEx.java:44
 msgid "FileChooser.viewMenuLabelText"
-msgstr ""
+msgstr "FileChooser.viewMenuLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/FilePane.java:516
 msgid "FileChooser.refreshActionLabelText"
-msgstr ""
+msgstr "FileChooser.refreshActionLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/FilePane.java:518
 msgid "FileChooser.newFolderActionLabelText"
-msgstr ""
+msgstr "FileChooser.newFolderActionLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/FilePane.java:522
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/FilePaneEx.java:47
 msgid "FileChooser.listViewActionLabelText"
-msgstr ""
+msgstr "FileChooser.listViewActionLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/FilePane.java:524
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/FilePaneEx.java:48
 msgid "FileChooser.detailsViewActionLabelText"
-msgstr ""
+msgstr "FileChooser.detailsViewActionLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/FilePane.java:526
 msgid "FileChooser.fileSizeKiloBytes"
-msgstr ""
+msgstr "FileChooser.fileSizeKiloBytes"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/FilePane.java:527
 msgid "FileChooser.fileSizeMegaBytes"
-msgstr ""
+msgstr "FileChooser.fileSizeMegaBytes"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/FilePane.java:528
 msgid "FileChooser.fileSizeGigaBytes"
-msgstr ""
+msgstr "FileChooser.fileSizeGigaBytes"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/FilePane.java:531
 msgid "FileChooser.renameErrorTitleText"
-msgstr ""
+msgstr "FileChooser.renameErrorTitleText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/theme/FilePane.java:532
 msgid "FileChooser.renameErrorText"
-msgstr ""
+msgstr "FileChooser.renameErrorText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/transfers/PeerHttpUpload.java:153
 msgid "Streaming"
@@ -2172,11 +2171,11 @@ msgstr "Распаковка файлов"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/updates/ProgressMonitor.java:155
 msgid "OptionPane.cancelButtonText"
-msgstr ""
+msgstr "OptionPane.cancelButtonText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/frostwire/gui/updates/ProgressMonitor.java:314
 msgid "ProgressMonitor.progressText"
-msgstr ""
+msgstr "ProgressMonitor.progressText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:58
 msgid "About FrostWire"
@@ -2190,7 +2189,7 @@ msgstr "FrostWire Client"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:88
 msgid "End User License Agreement"
-msgstr ""
+msgstr "Лицензионное Соглашение Конечного Пользователя"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:94
 msgid "Close This Window"
@@ -2199,19 +2198,19 @@ msgstr "Закрыть окно"
 #. introduction
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:181
 msgid "<h1>FrostWire Logo Designer</h1>"
-msgstr ""
+msgstr "<h1>Дизайнер логотипа FrostWire</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:184
 msgid "<h1>FrostWire Graphics Designers/Photographers</h1>"
-msgstr ""
+msgstr "<h1>Дизайнеры/фотографы FrostWire</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:194
 msgid "<h1>Thanks to Former FrostWire Developers</h1>"
-msgstr ""
+msgstr "<h1>Спасибо бывшем разработчикам FrostWire</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:199
 msgid "<h1>Thanks to the FrostWire Chat Community!</h1>"
-msgstr ""
+msgstr "<h1>Спасибо сообществу FrostWire!</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:200
 msgid "Thanks to everybody that has helped us everyday in the forums and chatrooms, you not only help new users but you also warn the FrostWire team of any problem that occur on our networks. Thank you all, without you this wouldn't be possible!"
@@ -2223,20 +2222,20 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:206
 msgid "<h1>FrostWire Chat Operators</h1>"
-msgstr ""
+msgstr "<h1>Чат Операторов FrostWire</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:211
 msgid "<h1>FrostWire Forum Moderators</h1>"
-msgstr ""
+msgstr "<h1>Модераторы форума FrostWire</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:223
 msgid "And also to the Support Volunteer Helpers:"
-msgstr ""
+msgstr "И поддержка добровольцев:"
 
 #. developers
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:236
 msgid "<h1>Thanks to the LimeWire Developer Team</h1>"
-msgstr ""
+msgstr "<h1>Спасибо команде разработчиков LimeWire</h1>"
 
 #. community VIPs
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:254
@@ -2245,31 +2244,31 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:274
 msgid "<h1>Thanks to the PJIRC Staff</h1>"
-msgstr ""
+msgstr "<h1>Спасибо сотрудникам PJIRC</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:283
 msgid "<h1>Thanks to the Automatix Team</h1>"
-msgstr ""
+msgstr "<h1>Спасибо команде Automatix</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:292
 msgid "<h1>Thanks to Ubuntu/Kubuntu Teams</h1>"
-msgstr ""
+msgstr "<h1>Спасибо команде Ubuntu/Kubuntu</ h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:293
 msgid "<p>For making the world a better place with such an excellent distro, you'll be the ones to make a difference on the desktop.</p>"
-msgstr ""
+msgstr "<р>За то, что делает мир лучше с таким отличным дистрибутивом</p>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:295
 msgid "<h1>Thanks to the NSIS Project</h1>"
-msgstr ""
+msgstr "<h1>Спасибо проекту NSIS</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:296
 msgid "<p>Thanks for such an awesome installer builder system and documentation.</p>"
-msgstr ""
+msgstr "<р>Спасибо за такую замечательную систему сборки установщика и документацию.</p>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:298
 msgid "<h1>Thanks to our families</h1>"
-msgstr ""
+msgstr "<h1>Спасибо нашим семьям</ h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:299
 msgid "For being patient during our many sleepless nights"
@@ -2277,15 +2276,15 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/AboutWindow.java:304
 msgid "BitTorrent, the BitTorrent Logo, and Torrent are trademarks of BitTorrent, Inc."
-msgstr ""
+msgstr "BitTorrent, Логотип BitTorrent, и Торрент являются товарными знаками компании BitTorrent, Inc."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/ApplicationHeader.java:188
 msgid "Search or enter URL"
-msgstr ""
+msgstr "Найти или введите URL-адрес"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/ApplicationHeader.java:200
 msgid "A new update has been downloaded."
-msgstr ""
+msgstr "Обновление было загружено."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/ApplicationHeader.java:225
 msgid "Chat"
@@ -2293,11 +2292,11 @@ msgstr "Чат..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/ApplicationHeader.java:245
 msgid "Show our community chat"
-msgstr ""
+msgstr "Показать чат сообщества"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/CheckBoxList.java:605
 msgid "Marks all Items as Selected"
-msgstr ""
+msgstr "Отмечает все элементы как выбранные"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/CheckBoxList.java:628
 msgid "Deselect All"
@@ -2305,7 +2304,7 @@ msgstr "Выделить всё"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/CheckBoxList.java:630
 msgid "Deselects all Items in the List"
-msgstr ""
+msgstr "Отменить выбор всех элементов в списке"
 
 #. NOTE: The IDs are serialized to disk, and should never change.
 #. *
@@ -2326,27 +2325,27 @@ msgstr "Нет"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/DonationButtons.java:55
 msgid "Support FrostWire development with a Bitcoin donation"
-msgstr ""
+msgstr "Поддержи развитие FrostWire с помощью Bitcoin"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/DonationButtons.java:56
 msgid "Support FrostWire development with a USD $1 donation"
-msgstr ""
+msgstr "Поддержи развитие FrostWire пожертвовав USD $1 через Bitcoin"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/DonationButtons.java:57
 msgid "Support FrostWire development with a USD $5 donation"
-msgstr ""
+msgstr "Поддержи развитие FrostWire пожертвовав USD $5 через Bitcoin"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/DonationButtons.java:58
 msgid "Support FrostWire development with a USD $10 donation"
-msgstr ""
+msgstr "Поддержи развитие FrostWire пожертвовав USD $10 через Bitcoin"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/DonationButtons.java:59
 msgid "Support FrostWire development with a USD $25 donation"
-msgstr ""
+msgstr "Поддержи развитие FrostWire пожертвовав USD $25 через Bitcoin"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/DonationButtons.java:60
 msgid "Support FrostWire development with a Paypal donation"
-msgstr ""
+msgstr "Поддержи развитие FrostWire пожертвовав через Paypal"
 
 #. new Font("Helvetica", Font.BOLD, 12);
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/DonationButtons.java:65
@@ -2372,11 +2371,11 @@ msgstr "Все папки"
 #.
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/GUIConstants.java:46
 msgid "Dial Up"
-msgstr ""
+msgstr "Dial Up"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/GUIConstants.java:47
 msgid "Broadband"
-msgstr ""
+msgstr "Широкополосный"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/GUIConstants.java:48
 msgid "T1"
@@ -2414,7 +2413,7 @@ msgstr ""
 #.
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/GUIMediator.java:265
 msgid "FrostWire: Share Big Files"
-msgstr ""
+msgstr "FrostWire: Раздача больших файлов"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/GUIMediator.java:407
 msgid "FrostWire has encountered a problem during startup and cannot proceed. You may be able to fix this problem by changing FrostWire's Windows Compatibility. Right-click on the FrostWire icon on your Desktop and select 'Properties' from the popup menu. Click the 'Compatibility' tab at the top, then click the 'Run this program in compatibility mode for' check box, and then select 'Windows 2000' in the box below the check box. Then click the 'OK' button at the bottom and restart FrostWire."
@@ -2509,7 +2508,7 @@ msgstr "Ввод"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/bugs/BugManager.java:537
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:38
 msgid "OK"
-msgstr ""
+msgstr "ОК"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/InputFieldDialog.java:93
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:44
@@ -2540,7 +2539,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:97
 msgid "Current Java Version : "
-msgstr ""
+msgstr "Текущая версия Java: "
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:98
 msgid "Required Java Version: "
@@ -2548,7 +2547,7 @@ msgstr "Требуемая версия Java: "
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:108
 msgid "Visit "
-msgstr ""
+msgstr "Посетить"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:120
 msgid "Upgrade Later"
@@ -2565,7 +2564,7 @@ msgstr "Дополнительные настройки"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:179
 #, java-format
 msgid "Visit {0}"
-msgstr ""
+msgstr "Посещений {0}"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:187
 msgid "Remind Me Later"
@@ -2589,7 +2588,7 @@ msgstr "Помощь по использованию FrostWire"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/LanguageWindow.java:212
 msgid "Show Language in status bar"
-msgstr ""
+msgstr "Показывать Язык в статус баре"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/MessageService.java:67
 msgid "Loading Messages..."
@@ -2683,15 +2682,15 @@ msgstr "Инициализация пользовательского интер
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/StatusLine.java:189
 msgid "Follow us @frostwire"
-msgstr ""
+msgstr "Следить за нами @frostwire"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/StatusLine.java:194
 msgid "Like FrostWire on Facebook and stay in touch with the community. Get Help and Help Others."
-msgstr ""
+msgstr "Подпишись на FrostWire в Facebook, чтобы оставаться на связи с сообществом. Получить помощь или помочь другим."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/StatusLine.java:200
 msgid "Circle FrostWire on G+"
-msgstr ""
+msgstr "Круг FrostWire на G+"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/StatusLine.java:223
 msgid "<html><b>Seeding</b><p>completed torrent downloads.</html>"
@@ -2703,11 +2702,11 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/StatusLine.java:483
 msgid "<html><b>Seeding</b></html>"
-msgstr ""
+msgstr "<html><b>Раздача</b></html>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/StatusLine.java:483
 msgid "<html><b>Not Seeding</b></html>"
-msgstr ""
+msgstr "<html><b>Не раздаётся</b></html>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/StatusLine.java:514
 msgid "FrostWire has not detected a firewall"
@@ -2723,7 +2722,7 @@ msgstr "Неподключено"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/StatusLine.java:602
 msgid "Check your internet connection, FrostWire can't connect."
-msgstr ""
+msgstr "Проверьте подключение к Интернету, FrostWire не может подключиться."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/StatusLine.java:605
 msgid "Turbo-Charged"
@@ -2747,11 +2746,11 @@ msgstr "Показывать советы при запуске"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/StatusLine.java:773
 msgid "Show Bandwidth Consumption"
-msgstr ""
+msgstr "Показывать трафик"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/StatusLine.java:790
 msgid "Show Donation Buttons"
-msgstr ""
+msgstr "Показывать кнопки для пожартвоания"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/StatusLine.java:826
 msgid "Downloads:"
@@ -2763,11 +2762,11 @@ msgstr "Выгрузка"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/StatusLine.java:827
 msgid "Total Downstream:"
-msgstr ""
+msgstr "Всего роздано:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/StatusLine.java:827
 msgid "Total Upstream:"
-msgstr ""
+msgstr "Всего скачено:"
 
 #. *
 #. * The title for the TOTD window.
@@ -2974,7 +2973,7 @@ msgstr "Обновить сейчас"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/UpdateDialog.java:164
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/UpdateDialog.java:197
 msgid "Visit http://www.frostwire.com to update!"
-msgstr ""
+msgstr "Посетите http://www.frostwire.com"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/UpdateDialog.java:174
 msgid "FrostWire needs to be restarted to install the update. If you choose not to update now, FrostWire will update automatically when you close. Would you like to update now?"
@@ -2995,15 +2994,15 @@ msgstr "Появилась новая версия, обновить?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:60
 msgid "O&pen .Torrent or Magnet"
-msgstr ""
+msgstr "&Открыть .torrent или Magnet-ссылку"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:62
 msgid "Opens a magnet link or torrent file"
-msgstr ""
+msgstr "Открываю magnet-ссылку или торрент файл"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:86
 msgid "Download .Torrent or Magnet or YouTube video link"
-msgstr ""
+msgstr "Скачать торрент, Magnet, или ссылки на видео YouTube"
 
 #. panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, the file path or web address of a torrent file, or a YouTube Web address and FrostWire will start downloading it for you."),
 #. true), constraints);
@@ -3013,7 +3012,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:127
 msgid "Open:"
-msgstr ""
+msgstr "Открыть:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:228
 msgid "FrostWire cannot download this address. Make sure you typed it correctly, and then try again."
@@ -3187,7 +3186,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/init/IntentPanel.java:63
 msgid "You're almost done!"
-msgstr ""
+msgstr "Вы почти у цели!"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/init/IntentPanel.java:64
 msgid "State your intent below to start using FrostWire "
@@ -3217,7 +3216,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/init/IntentWindow.java:42
 msgid "One more thing..."
-msgstr ""
+msgstr "Еще одна вещь..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/init/LanguagePanel.java:95
 msgid "Language:"
@@ -3225,7 +3224,7 @@ msgstr "Язык:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/init/MiscWindow.java:58
 msgid "Miscellaneous Settings"
-msgstr ""
+msgstr "Прочие параметры"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/init/MiscWindow.java:58
 msgid "Below, are several options that affect the functionality of FrostWire."
@@ -3246,7 +3245,7 @@ msgstr "Хотите ли вы, чтобы FrostWire загружался при
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/init/SetupManager.java:247
 msgid "FrostWire Setup Wizard"
-msgstr ""
+msgstr "Мастер настройки FrostWire"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/init/SetupManager.java:520
 msgid "Next >>"
@@ -3263,7 +3262,7 @@ msgstr "Закончить"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/init/SetupWindow.java:140
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/AbstractPaneItem.java:80
 msgid "Learn more about this option..."
-msgstr ""
+msgstr "Узнайть больше об этой опции ..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:39
 msgid "FrostWire is a Peer to Peer Application that enables you to share files of your choosing with other users connected to the BitTorrent network."
@@ -3311,7 +3310,7 @@ msgstr "Ответы на часто задаваемые вопросы по Fr
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:48
 msgid "How to use FrostWire (Video)"
-msgstr ""
+msgstr "Как использовать FrostWire (Видео)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:50
 msgid "FrostWire for Android"
@@ -3347,7 +3346,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:61
 msgid "FrostClick.com"
-msgstr ""
+msgstr "FrostClick.com"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:61
 msgid "Free Legal Downloads"
@@ -3363,7 +3362,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:67
 msgid "Follow us on Twitter"
-msgstr ""
+msgstr "Следите за нами в Twitter"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:69
 msgid "Foru&m"
@@ -3435,11 +3434,11 @@ msgstr "Показать экран настройки"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:103
 msgid "&Update FrostWire"
-msgstr ""
+msgstr "Обновить FrostWire (&U)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:104
 msgid "Update FrostWire to the latest version"
-msgstr ""
+msgstr "Обновление FrostWire до последней версии"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:117
 msgid "You are up to date with FrostWire"
@@ -3451,7 +3450,7 @@ msgstr "Загрузка обновлений"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:127
 msgid "Install update"
-msgstr ""
+msgstr "установить обновления"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:132
 msgid "Check for update"
@@ -3495,11 +3494,11 @@ msgstr "Уменьшает размер шрифта"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:56
 msgid "&Reset Font Size"
-msgstr ""
+msgstr "Сбросить Размер Шрифта (&R)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:56
 msgid "Reset the Table Font Size"
-msgstr ""
+msgstr "Сбросить размер шрифта"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:66
 msgid "C&hange Language"
@@ -3546,7 +3545,7 @@ msgstr "БитТоррент"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:273
 msgid "Basic"
-msgstr ""
+msgstr "Основные"
 
 #. player
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:280
@@ -3561,11 +3560,11 @@ msgstr "Поиск"
 #. status bar
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:286
 msgid "Status Bar"
-msgstr ""
+msgstr "Строка состояния"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:290
 msgid "iTunes"
-msgstr ""
+msgstr "iTunes"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:295
 msgid "Helper Apps"
@@ -3613,7 +3612,7 @@ msgstr "Запускаться при старте системы:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
 msgid "Usage Statistics"
-msgstr ""
+msgstr "Статистика использования"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:323
 msgid "System Tray"
@@ -3685,7 +3684,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:24
 msgid "Download new installers for me (Recommended)"
-msgstr ""
+msgstr "Скачать новый установщик (Рекомендуется)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:28
 msgid "Browser Options"
@@ -3720,7 +3719,7 @@ msgstr "Автоматически отправлять ошибкы если Fr
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:40
 msgid "Details Page"
-msgstr ""
+msgstr "Подробности"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:42
 msgid "Show details web page after a download starts."
@@ -3752,15 +3751,15 @@ msgstr "Ничего не делать (не рекомендуется)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:50
 msgid "Manual Port Forward"
-msgstr ""
+msgstr "Указать порт вручную"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:75
 msgid "TCP:"
-msgstr ""
+msgstr "TCP:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:85
 msgid "UDP:"
-msgstr ""
+msgstr "UDP:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:172
 msgid "You must enter a port between 1 and 65535 when manually forcing your TCP port."
@@ -3813,7 +3812,7 @@ msgstr "Вы можете выбрать папки, доступ к котор�
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:18
 msgid "Internet Radio Stations"
-msgstr ""
+msgstr "Интернет-радиостанция"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:20
 msgid "You can restore the default internet radio stations."
@@ -3821,7 +3820,7 @@ msgstr "Вы можете задать поведение при закрыти�
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:42
 msgid "Total Radio Stations"
-msgstr ""
+msgstr "Всего радио станций"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:46
 msgid "Restore default Radio Stations"
@@ -3866,7 +3865,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:50
 msgid "Use a specific network interface."
-msgstr ""
+msgstr "Использовать определенный сетевой интерфейс."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:110
 msgid "FrostWire was unable to determine which network interfaces are available on this machine. Outgoing connections will bind to any arbitrary interface."
@@ -3882,7 +3881,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:25
 msgid "Show Notifications:"
-msgstr ""
+msgstr "Показывать Уведомления:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:19
 msgid "Partial Files"
@@ -4046,15 +4045,15 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:47
 msgid "Enable Smart Search"
-msgstr ""
+msgstr "Включить умный поиск"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:49
 msgid "Total torrents indexed"
-msgstr ""
+msgstr " Всего торрентов проиндексировано"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:53
 msgid "Reset Smart Search Database"
-msgstr ""
+msgstr "Сбросить базу знаний умного поиска"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:80
 msgid "If you continue you will erase all the information related to\n"
@@ -4102,7 +4101,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:30
 msgid "Show Firewall Indicator:"
-msgstr ""
+msgstr "Показывать индикатор Брандмауэра:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:18
 msgid "BitTorrent Connection Settings"
@@ -4118,19 +4117,19 @@ msgstr "Ограничение количества загрузок"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:24
 msgid "Global maximum number of connections"
-msgstr ""
+msgstr "Общее максимальное количество соединений"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:26
 msgid "Maximum number of connected peers per torrent"
-msgstr ""
+msgstr "Максимальное количество пиров на торрент"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:28
 msgid "Number of upload slots per torrent"
-msgstr ""
+msgstr "Количество слотов отдачи для одного торрента"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:22
 msgid "BitTorrent Global Tranfer Speeds"
-msgstr ""
+msgstr "Общая скорость всех передач в BitTorrent"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:24
 msgid ""
@@ -4153,12 +4152,12 @@ msgstr "Скорость выгрузки:"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:60
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:88
 msgid "Min speed"
-msgstr ""
+msgstr "Мин. скорость"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:61
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:89
 msgid "Max speed"
-msgstr ""
+msgstr "Макс. скорость"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:44
 msgid "Choose the folder where downloads will be saved to"
@@ -4170,7 +4169,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:36
 msgid "Anonymous Usage Statistics"
-msgstr ""
+msgstr "Анонимная статистика использования"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:38
 msgid "Send anonymous usage statistics so that FrostWire can be improved more effectively. No information regarding content searched, shared or played nor any information that can personally identify you will be stored on disk or sent through the network."
@@ -4217,11 +4216,11 @@ msgstr "Разрешить импорт в iTunes:"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:108
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:110
 msgid "Max"
-msgstr ""
+msgstr "Макс."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/search/SchemaBox.java:116
 msgid "No results so far..."
-msgstr ""
+msgstr "Результатов пока нет..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/search/SchemaBox.java:150
 msgid "%s Audio files found (including .mp3, .wav, .ogg, and more)"
@@ -4289,15 +4288,15 @@ msgstr "Подключение к прокси"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/search/SearchMediator.java:106
 msgid "View in YouTube"
-msgstr ""
+msgstr "Посмотреть на YouTube"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/search/SearchMediator.java:108
 msgid "View in Soundcloud"
-msgstr ""
+msgstr "Посмотреть на Soundcloud"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/search/SearchMediator.java:110
 msgid "View in Archive.org"
-msgstr ""
+msgstr "Посмотреть на Archive.org"
 
 #. Set the splash screen text...
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/search/SearchMediator.java:136
@@ -4315,7 +4314,7 @@ msgstr "Строка поиска слишком длинная. Пожалуй�
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:107
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:109
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/gui/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:194
 msgid "has been disabled on your FrostWire Search Options. (Go to Tools > Options > Search to enable)"
@@ -4483,2369 +4482,3 @@ msgstr "Этот файл уже был загружен."
 #, java-format
 msgid "The path of the parent folder exceeds the maximum length of paths on the filesystem. {0} "
 msgstr ""
-
-#~ msgid "Loading Community Chat Window..."
-#~ msgstr "Инициализация окна монитора..."
-
-#~ msgid "Torrent Properties"
-#~ msgstr "Настройки БитТоррента"
-
-#~ msgid "Stopped"
-#~ msgstr "Стоп"
-
-#~ msgid ""
-#~ "Unable to rename the file '{0}'. It may be in use by another application."
-#~ msgstr ""
-#~ "Не могу переименовать файл {0} . Возможно, он используется другим "
-#~ "приложением."
-
-#, fuzzy
-#~ msgid " selected videos..."
-#~ msgstr "Выберите папку"
-
-#~ msgid "C&hat"
-#~ msgstr "Завершить чат"
-
-#~ msgid "Chat Community"
-#~ msgstr "Общение"
-
-#~ msgid "language"
-#~ msgstr "Язык:"
-
-#~ msgid "lngextension"
-#~ msgstr "Расширения:"
-
-#~ msgid "backuplanguage"
-#~ msgstr "Язык:"
-
-#~ msgid "quitmessage"
-#~ msgstr "Сообщение"
-
-#~ msgid "userid"
-#~ msgstr "Приостановлен"
-
-#~ msgid "Language"
-#~ msgstr "Язык:"
-
-#~ msgid "Comments"
-#~ msgstr "Комментарии:"
-
-#~ msgid "License Type"
-#~ msgstr "Типа лицензии:"
-
-#~ msgid "Director"
-#~ msgstr "Режиссёр"
-
-#~ msgid "Producer"
-#~ msgstr "Продюсер"
-
-#~ msgid "Studio"
-#~ msgstr "Студия"
-
-#~ msgid "Stars"
-#~ msgstr "Исполнители"
-
-#~ msgid "Subtitles"
-#~ msgstr "Субтитры"
-
-#~ msgid "Rating"
-#~ msgstr "Рейтинг"
-
-#~ msgid "Height"
-#~ msgstr "Высота"
-
-#~ msgid "Width"
-#~ msgstr "Ширина"
-
-#~ msgid "Image"
-#~ msgstr "Картинки"
-
-#~ msgid "Document"
-#~ msgstr "Документы"
-
-#~ msgid "Topic"
-#~ msgstr "Тема"
-
-#~ msgid "Application"
-#~ msgstr "Приложение"
-
-#~ msgid "Platform"
-#~ msgstr "сборка"
-
-#~ msgid "Send audio to iTunes"
-#~ msgstr "Сохранить текущий плейлист"
-
-#~ msgid " (Partial)"
-#~ msgstr "Частично загруженные файлы"
-
-#~ msgid "Finished Downloads"
-#~ msgstr "Открывать доступ к выполненным загрузкам:"
-
-#~ msgid "Devices"
-#~ msgstr "Просмотреть"
-
-#~ msgid "Search in "
-#~ msgstr "Поиск"
-
-#~ msgid "View Repository of Saved Files"
-#~ msgstr "Просмотр хранилища файлов"
-
-#~ msgid "Automatically Scroll"
-#~ msgstr "Прокручивать текст"
-
-#~ msgid "This Alpha version has expired.  Press Ok to exit. "
-#~ msgstr "Alpha-версия еще не годен. Нажмить ОК чтобы выйти из системы. "
-
-#~ msgid "Download Page"
-#~ msgstr "Страница загрузки"
-
-#~ msgid "File Listing for"
-#~ msgstr "Список файлов для"
-
-#~ msgid "Magnet Links for Fast Downloads (if you have FrostWire installed)"
-#~ msgstr "Magnet-ссылок быстрой загрузки (если у вас установлен FrostWire)"
-
-#~ msgid "Add..."
-#~ msgstr "Добавить"
-
-#~ msgid "Add New List Item"
-#~ msgstr "Добавить новый пункт в список"
-
-#~ msgid "Remove Selected Item"
-#~ msgstr "Удалить выбранные пункты"
-
-#~ msgid "Always Ask"
-#~ msgstr "Всегда"
-
-#~ msgid "Choose a Default Action:"
-#~ msgstr "Выберите место для сохранения"
-
-#~ msgid "Warning: {0}"
-#~ msgstr "Предупреждение: {0}"
-
-#~ msgid "Error: {0}"
-#~ msgstr "Ошибка: {0}"
-
-#~ msgid ""
-#~ "<b>Note</b>: A file with the same content already exists in the library "
-#~ "at {0}"
-#~ msgstr ""
-#~ "<b>Внимание</b>: файл с таким же содержимым уже имеется в библиотеке под "
-#~ "именем {0}"
-
-#~ msgid "Overwrite"
-#~ msgstr "Перезаписать"
-
-#~ msgid "Overwrite the Existing File"
-#~ msgstr "Перезаписать существующий файл"
-
-#~ msgid "Choose a different location for the Download"
-#~ msgstr "Выберите расположение файла для загрузки"
-
-#~ msgid "Append (#)"
-#~ msgstr "Потеряно (I/O)"
-
-#~ msgid "Cancel the Download"
-#~ msgstr "Отказаться от загрузки"
-
-#~ msgid "You are already downloading this file to \"{0}\"."
-#~ msgstr "Вы уже загружаете этот файл в \"{0}\"."
-
-#~ msgid "You already have the exact same file at {0}"
-#~ msgstr "Файл с точно таким же содержимым у вас уже есть под именем {0}"
-
-#~ msgid "Do you want to continue downloading anyway?"
-#~ msgstr "Всё равно продолжить загрузку?"
-
-#~ msgid "Continue"
-#~ msgstr "Продолжить"
-
-#~ msgid "Same File Already In Library"
-#~ msgstr "Такой же файл уже есть в библиотеке"
-
-#~ msgid "Save Download As"
-#~ msgstr "Сохранить загрузку как..."
-
-#~ msgid "Filter&s"
-#~ msgstr "Фильтры"
-
-#~ msgid "Configure FrostWire's Content Filtering Options"
-#~ msgstr "Настройка параметров общего доступа"
-
-#~ msgid "&Learn More..."
-#~ msgstr "Искать ещё"
-
-#~ msgid "&Navigation"
-#~ msgstr "Навигация (&N)"
-
-#~ msgid "&Resources"
-#~ msgstr "Ресурсы (&R)"
-
-#~ msgid "Result &Filters"
-#~ msgstr "Фильтры результатов (&F)"
-
-#~ msgid "Show Search Result Filters"
-#~ msgstr "Показывать фильтры результатов"
-
-#~ msgid "Sho&w/Hide"
-#~ msgstr "Показать/скрыть (&W)"
-
-#~ msgid "&Apply Skins"
-#~ msgstr "Применить темы (&A)"
-
-#~ msgid "Use &Default"
-#~ msgstr "Использовать стандартную (&D)"
-
-#~ msgid "Use your default skin"
-#~ msgstr "Использовать стандартную тему"
-
-#~ msgid "Content Filters"
-#~ msgstr "Фильтры результатов (&F)"
-
-#~ msgid "File Already Exists Behavior"
-#~ msgstr "Файл уже существует"
-
-#~ msgid "Always Ask What to do"
-#~ msgstr "Всегда предлагать просмотреть"
-
-#~ msgid "Shared Extensions"
-#~ msgstr "Типы файлов для раздачи"
-
-#~ msgid "You can choose which file extensions you would like to share."
-#~ msgstr "К файлам с этими расширениями будет открыт доступ."
-
-#~ msgid "Extensions:"
-#~ msgstr "Расширения:"
-
-#~ msgid "Use Defaults"
-#~ msgstr "По умолчанию"
-
-#~ msgid "Share the Default File Extensions"
-#~ msgstr "Вернуться к стандартному списку расширений"
-
-#~ msgid "Filter Result Types"
-#~ msgstr "Фильтр результатов по типу"
-
-#~ msgid "You can specify general types of search results to filter."
-#~ msgstr "Вы можете указать типы контента, которые будут отфильтрованы."
-
-#~ msgid "Ignore .htm/.html Files"
-#~ msgstr "Игнорировать файлы .htm/.html"
-
-#~ msgid "Ignore .vbs Files"
-#~ msgstr "Игнорировать файлы .vbs"
-
-#~ msgid "Ignore .wmv, .wma, .au, .asf files"
-#~ msgstr "Игнорировать файлы .vbs"
-
-#~ msgid " torrents and "
-#~ msgstr "Открыт доступ к"
-
-#~ msgid "All"
-#~ msgstr "Все"
-
-#~ msgid "Select Search Types:"
-#~ msgstr "Выберите тип:"
-
-#~ msgid "Filter"
-#~ msgstr "Фильтры"
-
-#~ msgid "Show search result filter controls"
-#~ msgstr "Показывать фильтры результатов"
-
-#~ msgid "Hide search result filter controls"
-#~ msgstr "Показывать фильтры результатов"
-
-#~ msgid ""
-#~ "Please wait, FrostWire must finish loading before a search can be started."
-#~ msgstr ""
-#~ "Подождите, пожалуйста, FrostWire нужен выполнить полную загрузку перед "
-#~ "начале поиска."
-
-#~ msgid "Speed"
-#~ msgstr "Скорость:"
-
-#~ msgid "Vendor"
-#~ msgstr "Вендор"
-
-#~ msgid "Media"
-#~ msgstr "Тип файлов"
-
-#~ msgid "Uploading "
-#~ msgstr "Выгрузка"
-
-#~ msgid "More Search Options"
-#~ msgstr "Дополнительные опции поиска"
-
-#~ msgid ""
-#~ "Your search is too specific. Please make your search smaller and try "
-#~ "again."
-#~ msgstr ""
-#~ "В поисковом запросе слишком много условий или строка поиска слишком "
-#~ "длинная. Пожалуйста, уменьшите запрос и попытайтесь снова."
-
-#~ msgid "Loading phones and tablets..."
-#~ msgstr "Инициализация распространяемых файлов..."
-
-#~ msgid "Videos"
-#~ msgstr "Видео"
-
-#~ msgid "Sort:"
-#~ msgstr "Низкое"
-
-#~ msgid "None"
-#~ msgstr "Нет"
-
-#~ msgid "Name Asc"
-#~ msgstr "Именовать"
-
-#~ msgid "Name Desc"
-#~ msgstr "Именовать"
-
-#~ msgid "Kind Asc"
-#~ msgstr "Тип:"
-
-#~ msgid "Size Asc"
-#~ msgstr "Сохранить"
-
-#~ msgid "Size Desc"
-#~ msgstr "Размер:"
-
-#~ msgid "Open"
-#~ msgstr "Открыть..."
-
-#~ msgid "Delete Files"
-#~ msgstr "Удалить выбранные файлы"
-
-#~ msgid "System"
-#~ msgstr "Завершение работы"
-
-#~ msgid "Error deleting file"
-#~ msgstr "Выгрузка"
-
-#~ msgid "Connected"
-#~ msgstr "Подключено с"
-
-#~ msgid "New Folder"
-#~ msgstr "Папка:"
-
-#~ msgid "File Transfers"
-#~ msgstr "Выйти по завершении перекачки"
-
-#~ msgid "Cancel All"
-#~ msgstr "Отказаться от изменений."
-
-#~ msgid "Clear Finished"
-#~ msgstr "Убрать все неактивные загрузки"
-
-#~ msgid "Should I stop all transfers?"
-#~ msgstr "Выйти после завершения текущих загрузок/выгрузок"
-
-#~ msgid "one file"
-#~ msgstr "Выгрузка"
-
-#~ msgid "pending"
-#~ msgstr "Поиск"
-
-#~ msgid "error"
-#~ msgstr "Ошибка"
-
-#~ msgid "Upload"
-#~ msgstr "Выгрузка"
-
-#~ msgid "to"
-#~ msgstr "Стоп"
-
-#~ msgid "Preparing selected folder"
-#~ msgstr "Просмотр выбранной загрузки"
-
-#~ msgid "Open in Folder"
-#~ msgstr "Открыть папку"
-
-#~ msgid "Open Folder Containing a Selected File"
-#~ msgstr "Удалить выбранные файлы"
-
-#~ msgid "Enqueue"
-#~ msgstr "В плейлист"
-
-#~ msgid "Add Selected Files to the Playlist"
-#~ msgstr "Добавть выбранные файлы в плейлист (список для проигрывания)"
-
-#~ msgid "Delete from playlist"
-#~ msgstr "Удалить выбранные файлы из плейлиста"
-
-#~ msgid "Show {0} Window"
-#~ msgstr "Показывать {0} окно"
-
-#~ msgid "Connection"
-#~ msgstr "Качество:"
-
-#~ msgid "Show Media Player"
-#~ msgstr "Проигрыватель FrostWire"
-
-#~ msgid "Send File..."
-#~ msgstr "Сохранение файла..."
-
-#~ msgid "Generate &Error"
-#~ msgstr "Сгенерировать ошибку (&E)"
-
-#~ msgid "Generate a Popup Error for Testing"
-#~ msgstr "Сгенерировать сообщение об ошибке для тестирования"
-
-#~ msgid "Folder:"
-#~ msgstr "Папка:"
-
-#~ msgid "You can choose the folder for saving files."
-#~ msgstr "Вы можете выбрать папку для сохранения загруженных файлов."
-
-#~ msgid ""
-#~ "The selected save folder is invalid. You may not have permissions to "
-#~ "write to the selected folder. FrostWire will revert to your previously "
-#~ "selected folder."
-#~ msgstr ""
-#~ "Выбранная папка для сохранения неверна. Возможно, у вас нет доступа к "
-#~ "ней. FrostWire вернётся к папке которая использовалась ранее."
-
-#~ msgid "Player Options"
-#~ msgstr "Проигрыватель"
-
-#~ msgid ""
-#~ "You can choose to play media with FrostWire or your system's default "
-#~ "player. The media player and playlist will appear only if this option is "
-#~ "set. A restart will be required when enabling or disabling the media "
-#~ "controls."
-#~ msgstr ""
-#~ "Вы можете использовать встроенный или системный MP3 проигрыватель. "
-#~ "Включение или выключение встроенного проигрывателя требует перезапуска "
-#~ "программы."
-
-#~ msgid "Seeding Status"
-#~ msgstr "Поиск"
-
-#~ msgid ""
-#~ "FrostWire was unable to set up a port to listen for incoming connections. "
-#~ "Some features of FrostWire may not work as expected."
-#~ msgstr ""
-#~ "FrostWire не может назначить порт для обработки входящих соединений. "
-#~ "Некоторые возможности FrostWire могут не работать."
-
-#~ msgid ""
-#~ "Sorry, FrostWire couldn't read your old downloads.  You can restart them "
-#~ "by going to your Library, viewing your 'Incomplete Files', and clicking "
-#~ "to 'Resume' your downloads."
-#~ msgstr ""
-#~ "Извините, но FrostWire не может прочитать ваши старые закачки. Что-бы "
-#~ "перезапустить их, зайдите в раздел Библотека, просмотрите в "
-#~ "\"Недозагруженных файлах\" и кликните \"Восстановить\"  на них"
-
-#~ msgid ""
-#~ "Sorry, FrostWire couldn't read some of your old downloads.  You can "
-#~ "restart them by going to your Library, viewing your 'Incomplete Files', "
-#~ "and clicking to 'Resume' your downloads."
-#~ msgstr ""
-#~ "Извините, но FrostWire не может прочитать некоторые из ваших старых "
-#~ "закачек. Что-бы перезапустить их, зайдите в раздел Библотека, просмотрите "
-#~ "в \"Недозагруженных файлах\" и кликните \"Восстановить\" на них"
-
-#~ msgid "Loading TLS Encryption..."
-#~ msgstr "Инициалищация шифрования TLS"
-
-#~ msgid "Loading Safe Content Management..."
-#~ msgstr "Инициализация обработчика неактуальных соединений..."
-
-#~ msgid "Loading Message Router..."
-#~ msgstr "Инициализация маршрутизатора сообщений..."
-
-#~ msgid "Loading Upload Management..."
-#~ msgstr "Инициализация управления соединениями..."
-
-#~ msgid "Loading Connection Listener..."
-#~ msgstr "Инициализация обработчика соединений..."
-
-#~ msgid "Loading Connection Management..."
-#~ msgstr "Инициализация управления соединениями..."
-
-#~ msgid "Loading Download Management..."
-#~ msgstr "Инициализация управления соединениями..."
-
-#~ msgid "Loading Ultrapeer/DHT Management..."
-#~ msgstr "Инициализация обработчика неактуальных соединений..."
-
-#~ msgid "Locating Peers..."
-#~ msgstr "Поиск других пользователей сети..."
-
-#~ msgid "Loading BitTorrent Management..."
-#~ msgstr "Загрузка управляющих компонентов BitTorrent"
-
-#~ msgid "Loading Directed Querier..."
-#~ msgstr "Инициализация направленных запросов..."
-
-#~ msgid "Loading Magnet Listener..."
-#~ msgstr "Инициализация обработчика MAGNET-ссылок..."
-
-#~ msgid "Loading Peer Listener..."
-#~ msgstr "Инициализация обработчика соединений с другими пользователями..."
-
-#~ msgid "Loading Stale Connection Management..."
-#~ msgstr "Инициализация обработчика неактуальных соединений..."
-
-#~ msgid "Loading Saved Files..."
-#~ msgstr "Инициализация сохранённых файлов..."
-
-#~ msgid "Loading Spam Management..."
-#~ msgstr "Инициализация управления соединениями..."
-
-#~ msgid "Loading Network Listeners..."
-#~ msgstr "Загрузка сетевых обработчиков"
-
-#~ msgid "Could not process bad MAGNET link {0}"
-#~ msgstr "Невозможно обработать некорректную ссылку MAGNET {0}"
-
-#~ msgid ""
-#~ "One or more URLs in the MAGNET link were invalid. Your file may not "
-#~ "download correctly."
-#~ msgstr ""
-#~ "Один или несколько URL-ов в MAGNET-ссылке некорректны. Файл может не "
-#~ "загрузиться."
-
-#~ msgid "You have already downloaded {0}"
-#~ msgstr "Этот файл уже загружен в \"{0}\"."
-
-#~ msgid "You are already downloading this file to {0}"
-#~ msgstr "Вы уже загружаете этот файл в \"{0}\"."
-
-#~ msgid "&Refresh Connections ("
-#~ msgstr "Качество:"
-
-#~ msgid "&Refreshing Connections ("
-#~ msgstr "Качество:"
-
-#~ msgid "The selected .torrent file may contain a security hazard."
-#~ msgstr "Возможно выбранный файл содержит угроза безопасности."
-
-#~ msgid "FrostWire could not download a .torrent file from the provided URL."
-#~ msgstr "FrostWire не может загрузить файл .торрент от добавленной URL."
-
-#~ msgid "Automatically start torrents"
-#~ msgstr "Автоматически запускать торренты"
-
-#~ msgid ""
-#~ "You can choose whether to automatically start torrents downloaded from "
-#~ "Gnutella."
-#~ msgstr "У вас выбор автоматически запускать торренты, загружены Gnutellа."
-
-#~ msgid "Start automatically"
-#~ msgstr "Запускать автоматически"
-
-#~ msgid "Clear"
-#~ msgstr "Убрать"
-
-#~ msgid "What's New"
-#~ msgstr "Что нового?"
-
-#~ msgid ""
-#~ "FrostWire encountered an error in the Digital Audio Access Protocol (for "
-#~ "sharing files in iTunes). This feature will be turned off. You can turn "
-#~ "it back on in options, under iTunes -> Sharing."
-#~ msgstr ""
-#~ "Произошла ошибка при инициализации Протокола Доступа к Цифровому Аудио "
-#~ "(DAAP, для iTunes). DAAP будет отключен. Вы можете включить его в "
-#~ "настройках, в разделе iTunes."
-
-#~ msgid ""
-#~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
-#~ "sharing files in iTunes) because a Microsoft patch is required or a "
-#~ "firewall is blocking access. LimeWire can direct you to Microsoft's page "
-#~ "with information if you want to use this feature. Click 'Yes' to go to "
-#~ "the patch, 'No' to disable this feature, or 'Cancel' to decide later."
-#~ msgstr ""
-#~ "FrostWire не может запустить Протокол Доступа к Цифровому Аудио (DAAP, "
-#~ "для iTunes) так как требуется патч от Microsoft. Если вы хотите "
-#~ "использовать DAAP, FrostWire может направить вас на соответствующую "
-#~ "страницу на сервере Microsoft, где вы получите дополнительные сведения. "
-#~ "Щёлкните \"Да\" для перехода на страницу информации о патче, \"Нет\" для "
-#~ "отключения DAAP, или \"Отказ\" чтобы разобраться позже."
-
-#~ msgid ""
-#~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
-#~ "sharing files in iTunes) because a firewall is blocking access. To "
-#~ "continue using this feature, click 'Yes' and change your firewall to "
-#~ "allow 'LimeWire.exe' full access to incoming and outgoing connections. To "
-#~ "disable this feature, click 'No'."
-#~ msgstr ""
-#~ "FrostWire не может запустить Протокол Доступа к Цифровому Аудио (DAAP, "
-#~ "для iTunes): a firewall is blocking access. To continue using this "
-#~ "feature, click 'Yes' and change your firewall allow 'FrostWire.exe' full "
-#~ "access to incoming and outgoing connections. To disable this feature, "
-#~ "click 'No'."
-
-#~ msgid "&Monitor"
-#~ msgstr "Монитор"
-
-#~ msgid "&Connections"
-#~ msgstr "Качество:"
-
-#~ msgid "C&onsole"
-#~ msgstr "Соединиться (&O)"
-
-#~ msgid "Loading Digital Audio Access Protocol..."
-#~ msgstr "Инициализация Digital Audio Access Protocol..."
-
-#~ msgid ""
-#~ "FrostWire was unable to start the Digital Audio Access Protocol Service "
-#~ "(for sharing files in iTunes). This feature will be turned off. You can "
-#~ "turn it back on in options, under iTunes -> Sharing."
-#~ msgstr ""
-#~ "FrostWire не может запустить Протокол Доступа к Цифровому Аудио (DAAP, "
-#~ "для iTunes). DAAP будет отключен. Вы можете включить его в настройках, в "
-#~ "разделе iTunes."
-
-#~ msgid ""
-#~ "FrostWire was unable to initialize and start. This is usually due to a "
-#~ "firewall program blocking FrostWire's access to the internet or loopback "
-#~ "connections on the local machine. Please allow FrostWire access to the "
-#~ "internet and restart FrostWire."
-#~ msgstr ""
-#~ "FrostWire не может подключиться к файлообменной сети. Обычно это "
-#~ "происходит если файрволл блокирует доступ к Интернет или к локальной "
-#~ "машине. Пожалуйста, проверьте настройки вашего файрволла, разрешите "
-#~ "доступ и перезапустите FrostWire."
-
-#~ msgid "Verify"
-#~ msgstr "Проверить"
-
-#~ msgid "FrostWire was unable to locate the details of this license."
-#~ msgstr "FrostWire не может открыть доступ к файлу \"{0}\"."
-
-#~ msgid "View Claimed License Deed"
-#~ msgstr "Просмотреть лицензию"
-
-#~ msgid "View Verification Page"
-#~ msgstr "Видеть страница верификации."
-
-#~ msgid "License Details:"
-#~ msgstr "Подключение к прокси"
-
-#~ msgid "View License Deed"
-#~ msgstr "Просмотреть лицензию"
-
-#~ msgid "Creative Commons Details"
-#~ msgstr "Информация о лицензии"
-
-#~ msgid "FrostWire was unable to locate the details of this Weed file."
-#~ msgstr "FrostWire не может открыть доступ к файлу \"{0}\"."
-
-#~ msgid "Weedshare Details"
-#~ msgstr "Magnet-ссылка для файла"
-
-#~ msgid "This file may require a license in order to open and view."
-#~ msgstr ""
-#~ "Этот файл может требовать лицензию для открытия/просмотра/проигрывания."
-
-#~ msgid "License Details"
-#~ msgstr "Подключение к прокси"
-
-#~ msgid "Loading Monitor Window..."
-#~ msgstr "Инициализация окна монитора..."
-
-#~ msgid "Show Incoming Searches"
-#~ msgstr "Входящие запросы поиска"
-
-#~ msgid ""
-#~ "Your client is a leaf node shielded by an Ultrapeer. Hence you will see "
-#~ "few or no searches in the monitor window."
-#~ msgstr ""
-#~ "Ваш клиент лишь \"лист\" в древовидной структуре сети. Основные запросы "
-#~ "получает Ultrapeer, к которому вы подключены. В связи с этим, вы увидите "
-#~ "очень немного (или вообще не увидите) входящих запросов в окне монитора."
-
-#~ msgid ""
-#~ "Your save folder is not valid. It may have been deleted, you may not have "
-#~ "permissions to write to it, or there may be another problem. Please "
-#~ "choose a different folder."
-#~ msgstr ""
-#~ "Папка для сохранения файлов недействительна. Возможно, она была удалена "
-#~ "или у вас нет доступа к ней. Пожалуйста, выберите другую папку."
-
-#~ msgid "You are not connected to the FrostWire VIP Area"
-#~ msgstr "В данный момент вы подключаетесь к сети."
-
-#~ msgid ""
-#~ "You are disconnected from the network. To connect, choose Connect from "
-#~ "the File menu."
-#~ msgstr ""
-#~ "Вы не подключены к сети. Чтобы подключиться, выберите \"Соединиться\" из "
-#~ "меню \"Файл\"."
-
-#~ msgid "You are currently connecting to the network"
-#~ msgstr "В данный момент вы подключаетесь к сети."
-
-#~ msgid "Poor"
-#~ msgstr "Низкое"
-
-#~ msgid ""
-#~ "You are connected to few hosts and have an unstable connection the network"
-#~ msgstr ""
-#~ "Вы подключены лишь к нескольким хостам, соединение с сетью нестабильное."
-
-#~ msgid "Fair"
-#~ msgstr "Посредственное"
-
-#~ msgid "Your connection to the network is getting stronger"
-#~ msgstr "Ваше соединение с сетью улучшается."
-
-#~ msgid "Good"
-#~ msgstr "Хорошее"
-
-#~ msgid ""
-#~ "You are not yet fully connected to the network, but have a very good "
-#~ "connection"
-#~ msgstr ""
-#~ "Вы ещё не полностью подключились к сети, но соединение очень хорошее."
-
-#~ msgid "Excellent"
-#~ msgstr "Отличное"
-
-#~ msgid "Your connection to the network is very strong"
-#~ msgstr "Вы полностью включены в сеть, отличное соединение."
-
-#~ msgid "Waking Up"
-#~ msgstr "Просыпаюсь"
-
-#~ msgid "Show Shared Files Count"
-#~ msgstr "Общедоступные файлы"
-
-#~ msgid "Show Store Indicator"
-#~ msgstr "Общедоступные файлы"
-
-#~ msgid ""
-#~ "Want to share a large file? FrostWire supports file sizes up to 1 TB "
-#~ "(terabyte)."
-#~ msgstr "Хотите сделать доступным большые файлы? FrostWire"
-
-#~ msgid "Upgrade to FrostWire?"
-#~ msgstr "Использование FrostWire (&U)"
-
-#~ msgid "Upgrade Your Java"
-#~ msgstr "Обновите вашу версию Java"
-
-#~ msgid ""
-#~ "FrostWire has detected that you are using an out-of-date version of Java. "
-#~ "FrostWire looks and acts much better with newer versions of Java. "
-#~ "Features include support for scroll-wheels on mice, a Windows XP look, "
-#~ "and many other improvements."
-#~ msgstr ""
-#~ "FrostWire обнаружил что вы успользуете устаревшую версию Java. FrostWire "
-#~ "выглядит и работает лучше с последними версиями Java."
-
-#~ msgid "Would you like to get your free Java upgrade?"
-#~ msgstr "Вы хотите обновить вашу версию Java?"
-
-#~ msgid "Why"
-#~ msgstr "Зачем?"
-
-#~ msgid "Later"
-#~ msgstr "Вставить"
-
-#~ msgid ""
-#~ "FrostWire has detected a corruption in the file {0}. Do you want to "
-#~ "continue the download?"
-#~ msgstr ""
-#~ "FrostWire определил, что данный файл испорчен. Имя файла: {0} Вы хотите "
-#~ "продолжить загрузку?"
-
-#~ msgid ""
-#~ "<html><b>Your FrostWire may have been corrupted by a virus or trojan!</"
-#~ "b><br><br>Please visit <a href=\"http://www.frostwire.com/download\">www."
-#~ "frostwire.com</a> and download the newest official version of FrostWire.</"
-#~ "html>"
-#~ msgstr ""
-#~ "Может быть ваша программа \"FrostWire\" была искажена вирусом или "
-#~ "трояном! Посетите, пожалуйста <a href=\"http://www.frostwire.com/corrupted"
-#~ "\">сюда</a> и загрузить самая новейшая версия FrostWire'а."
-
-#~ msgid "Lookup File with Bitzi"
-#~ msgstr "Bitzi-поиск..."
-
-#~ msgid "Copy the Magnet Links of the Selected Files to the Clipboard"
-#~ msgstr "Копировать Magnet-ссылки для выбранных файлов в буфер обмена"
-
-#~ msgid ""
-#~ "One or more of the created magnet links may not be accessible since their "
-#~ "hosts are firewalled."
-#~ msgstr ""
-#~ "Некоторые из созданных magnet-ссылок могут быть недоступны, т.к. их хосты "
-#~ "закрыты файрволлом."
-
-#~ msgid "C&onnect"
-#~ msgstr "Соединиться (&O)"
-
-#~ msgid "Connect to the Network"
-#~ msgstr "Соединиться с сетью"
-
-#~ msgid "D&isconnect"
-#~ msgstr "Отключиться (&I)"
-
-#~ msgid "Disconnect from the Network"
-#~ msgstr "Отключиться от сети"
-
-#~ msgid "Search for {0}: {1}"
-#~ msgstr "Искать в {0}: {1}"
-
-#~ msgid "Share New File..."
-#~ msgstr "Открыть доступ к новому файлу..."
-
-#~ msgid "The file \"{0}\" is already shared."
-#~ msgstr "Доступ к файлу \"{0}\" уже открыт."
-
-#~ msgid "FrostWire was unable to share the file \"{0}\"."
-#~ msgstr "FrostWire не может открыть доступ к файлу \"{0}\"."
-
-#~ msgid "Opens a Window and Lets You Choose a New Folder to Share"
-#~ msgstr "Выбрать папку к которой будет открыт доступ"
-
-#~ msgid "Block Host"
-#~ msgstr "Блокировать хост"
-
-#~ msgid "Send Message"
-#~ msgstr "Послать сообщение"
-
-#~ msgid "Block Current Host"
-#~ msgstr "Блокировать текущий хост"
-
-#~ msgid "Send a Message to a Host"
-#~ msgstr "Послать сообщение хосту"
-
-#~ msgid "Chatting with"
-#~ msgstr "Разговор с"
-
-#~ msgid "Host is unavailable"
-#~ msgstr "Хост недоступен"
-
-#~ msgid "You"
-#~ msgstr "Вы"
-
-#~ msgid "A connection error has occurred"
-#~ msgstr "Произошла ошибка соединения."
-
-#~ msgid "Could not send chat message"
-#~ msgstr "Не могу просмотреть хост {0} ."
-
-#~ msgid "Browse Host"
-#~ msgstr "Браузер"
-
-#~ msgid "Create a New Outgoing Connection"
-#~ msgstr "Создать новое исходящее соединение"
-
-#~ msgid "Remove the Selected Connections"
-#~ msgstr "Удалить выбранные соединения"
-
-#~ msgid "View All Files on the Selected Computer"
-#~ msgstr "Просмотреть все файлы на выбранном компьютере"
-
-#~ msgid "Host"
-#~ msgstr "Хост:"
-
-#~ msgid "Messages (I/O)"
-#~ msgstr "Сообщений (I/O)"
-
-#~ msgid "Bandwidth (I/O)"
-#~ msgstr "Траффик (I/O)"
-
-#~ msgid "Dropped (I/O)"
-#~ msgstr "Потеряно (I/O)"
-
-#~ msgid "Protocol"
-#~ msgstr "Протокол"
-
-#~ msgid "Vendor/Version"
-#~ msgstr "Вендор"
-
-#~ msgid "Compressed (I/O)"
-#~ msgstr "Сжато (I/O)"
-
-#~ msgid "Connecting..."
-#~ msgstr "Качество:"
-
-#~ msgid "Outgoing"
-#~ msgstr "Исходящее"
-
-#~ msgid "Incoming"
-#~ msgstr "Входящее"
-
-#~ msgid "Ultrapeer"
-#~ msgstr "Ultrapeer-ов"
-
-#~ msgid "Leaf"
-#~ msgstr "\"Листьев\""
-
-#~ msgid "Leaves"
-#~ msgstr "\"Листьев\""
-
-#~ msgid "Ultrapeers"
-#~ msgstr "Ultrapeer-ов"
-
-#~ msgid "Standard"
-#~ msgstr "стандартных"
-
-#~ msgid "Loading Connections Window..."
-#~ msgstr "Инициализация окна соединений..."
-
-#~ msgid "Connection Status:"
-#~ msgstr "Статус соединения:"
-
-#~ msgid "Add Gnutella Connection"
-#~ msgstr "Качество:"
-
-#~ msgid "Host:"
-#~ msgstr "Хост:"
-
-#~ msgid "Peer"
-#~ msgstr "Peer"
-
-#~ msgid "0.6"
-#~ msgstr "0.6"
-
-#~ msgid "Share Dropped Files?"
-#~ msgstr "Общедоступные файлы"
-
-#~ msgid "Yes, Try Again"
-#~ msgstr "Правильно, пытайся еще раз."
-
-#~ msgid "No, Share Nothing"
-#~ msgstr "Открыт доступ к"
-
-#~ msgid "Queue"
-#~ msgstr "Очередь"
-
-#~ msgid "Queued"
-#~ msgstr "Очередь"
-
-#~ msgid "Connecting ({0} hosts tried)..."
-#~ msgstr "Соединяется({0} хостов разысканы)..."
-
-#~ msgid "Waiting On Busy Hosts"
-#~ msgstr "Ожидание занятых хостов"
-
-#~ msgid "Aborted"
-#~ msgstr "Неудачный"
-
-#~ msgid "Awaiting Sources"
-#~ msgstr "Ожидание источников"
-
-#~ msgid "Downloading from"
-#~ msgstr "Загружаю с"
-
-#~ msgid "Disk Problem"
-#~ msgstr "Не могу переместить файл в библиотеку"
-
-#~ msgid "File Corrupted"
-#~ msgstr "Файл испорчен"
-
-#~ msgid "Waiting {0}s for Sources"
-#~ msgstr "Жду источники {0}сек."
-
-#~ msgid "Need More Sources"
-#~ msgstr "Необходимо больше источников"
-
-#~ msgid "Waiting for Stable Connections"
-#~ msgstr "Ожидание стабильного соединения"
-
-#~ msgid "Waiting in Line, Position"
-#~ msgstr "Жду в очереди, позиция"
-
-#~ msgid "Verifying File Contents..."
-#~ msgstr "Проверка содержимого файла..."
-
-#~ msgid "Content Removed"
-#~ msgstr "содержимое удалено"
-
-#~ msgid "Resuming..."
-#~ msgstr "Приостановка..."
-
-#~ msgid "Downloading .torrent file..."
-#~ msgstr "Инициализация сохранённых файлов..."
-
-#~ msgid "Average Bandwidth"
-#~ msgstr "Средняя пропускная способность"
-
-#~ msgid "Valid Alternate Locations"
-#~ msgstr "Действительные альтернативные расположения"
-
-#~ msgid "Invalid Alternate Locations"
-#~ msgstr "Недействительные альтернативные расположения"
-
-#~ msgid "Finished On"
-#~ msgstr "Завершено"
-
-#~ msgid "Time Spent"
-#~ msgstr "Затрачено времени"
-
-#~ msgid "Chunks"
-#~ msgstr "Фрагменты"
-
-#~ msgid "Lost To Corruption"
-#~ msgstr "Потеряно испорченного"
-
-#~ msgid "hosts"
-#~ msgstr "хостов"
-
-#~ msgid "host"
-#~ msgstr "-го хоста"
-
-#~ msgid "A more specific search may be required..."
-#~ msgstr "Может потребоваться более точный поиск..."
-
-#~ msgid "Possible Hosts"
-#~ msgstr "Возможные хосты"
-
-#~ msgid "Busy Hosts"
-#~ msgstr "Занятые хосты"
-
-#~ msgid "Remotely Queued"
-#~ msgstr "В очереди на удалённом хосте"
-
-#~ msgid "Locating Sources..."
-#~ msgstr "Ищу источники...."
-
-#~ msgid "FrostWire cannot download this torrent.  The tracker responded"
-#~ msgstr "не может загрузить этот торрент. Отслеживатель отвечает"
-
-#~ msgid "Priority"
-#~ msgstr "Приоритет"
-
-#~ msgid "Downloads"
-#~ msgstr "Загрузить"
-
-#~ msgid "Find More Sources for Download"
-#~ msgstr "Найти больше источников для загрузки"
-
-#~ msgid "Try to Find Additional Sources for Downloads"
-#~ msgstr "Попытаться найти источники для неуспешных загрузок"
-
-#~ msgid "&Refresh Skins"
-#~ msgstr "Обновить темы (&R)"
-
-#~ msgid ""
-#~ "You have downloaded a new skin titled {0}. Would you like to use this new "
-#~ "skin?"
-#~ msgstr "Вы загрузили новую тему - \"{0}.\" Установить эту тему сейчас?"
-
-#~ msgid "Choose Save Location"
-#~ msgstr "Выберите место для сохранения"
-
-#~ msgid ""
-#~ "Invalid folder for saving files. Please use another folder or revert to "
-#~ "the default."
-#~ msgstr ""
-#~ "Неверная папка для сохранения файлов. Пожалуйста, используйте другую или "
-#~ "вернитесь к умалчиваемой."
-
-#~ msgid "Search..."
-#~ msgstr "запросов"
-
-#~ msgid "Clear Download"
-#~ msgstr "Убрать"
-
-#~ msgid "Clear Selected Downloads"
-#~ msgstr "Убрать выбранные загрузки"
-
-#~ msgid "Launch Download"
-#~ msgstr "Запуск"
-
-#~ msgid "Launch Selected Downloads"
-#~ msgstr "Запуск выбранных загрузок"
-
-#~ msgid "Preview Download"
-#~ msgstr "Просмотр файла"
-
-#~ msgid "Chat with Host"
-#~ msgstr "Чат с хостом"
-
-#~ msgid "Remove Inactive Downloads"
-#~ msgstr "Убрать неактивные загрузки"
-
-#~ msgid "Move the Selected Download Closer to Becoming Active"
-#~ msgstr "Постараться сохранить выбранные загрузки активными"
-
-#~ msgid "Move the Selected Download Further from Becoming Active"
-#~ msgstr "Назначить этим загрузкам более низкий приоритет"
-
-#~ msgid "Change File Location..."
-#~ msgstr "Изменить расположение файла..."
-
-#~ msgid "Edit the Final Filename of the Download"
-#~ msgstr "Корректировка имени файла для сохранения загрузки"
-
-#~ msgid ""
-#~ "FrostWire may not be able to start the download you have selected unless "
-#~ "you start a search for it."
-#~ msgstr ""
-#~ "FrostWire не сможет начать эту загрузку пока вы не запустите поиск для "
-#~ "неё."
-
-#~ msgid "No Filename"
-#~ msgstr "Нет имени файла"
-
-#~ msgid "Active"
-#~ msgstr "Действие:"
-
-#~ msgid "Firewall Setup"
-#~ msgstr "Файрволл"
-
-#~ msgid "Shared Folders"
-#~ msgstr "Папки переданные в общий доступ"
-
-#~ msgid ""
-#~ "FrostWire was unable to use the specified folder for saving files. Please "
-#~ "try a different folder."
-#~ msgstr ""
-#~ "Указанную папку невозможно использовать для сохранения файлов. "
-#~ "Пожалуйста, выберите другую."
-
-#~ msgid "Individual Store Files"
-#~ msgstr "Отдельные общедоступные файлы"
-
-#~ msgid "List of All Individual Purchased Files"
-#~ msgstr "Список всех файлов, доступ к которым открыт индивидуально"
-
-#~ msgid "Configure..."
-#~ msgstr "Настроить..."
-
-#~ msgid "Search In Shared Files:"
-#~ msgstr "Поиск и загрузка файлов"
-
-#~ msgid "Uploads"
-#~ msgstr "Выгрузка"
-
-#~ msgid "Hits"
-#~ msgstr "Хиты"
-
-#~ msgid ""
-#~ "The file \"{0}\" is not a valid incomplete file and cannot be resumed."
-#~ msgstr ""
-#~ "Файл {0} не является недозагруженным файлом и его загрузка не может быть "
-#~ "продолжена."
-
-#~ msgid "Describe..."
-#~ msgstr "Описание..."
-
-#~ msgid "Add Description to Selected File"
-#~ msgstr "Создать/изменить описание для выбранного файла"
-
-#~ msgid "Publish..."
-#~ msgstr "Приостановка..."
-
-#~ msgid "Edit License..."
-#~ msgstr "Просмотреть лицензию"
-
-#~ msgid "Continue Downloading Selected Incomplete File"
-#~ msgstr "Продолжить загрузку выбранного недозагруженного файла"
-
-#~ msgid "Stop Sharing File"
-#~ msgstr "Отменить доступ к файлу"
-
-#~ msgid "Share Folder"
-#~ msgstr "Папки переданные в общий доступ"
-
-#~ msgid "Stop Sharing Folder"
-#~ msgstr "Отменить доступ к файлу"
-
-#~ msgid "View License"
-#~ msgstr "Просмотреть лицензию"
-
-#~ msgid "Saved Files"
-#~ msgstr "Сохранённые файлы"
-
-#~ msgid "FrostWire cannot stop sharing this folder."
-#~ msgstr "FrostWire не может отменить доступ к этой папке."
-
-#~ msgid "Are you sure you want to stop sharing this folder?"
-#~ msgstr "Отменить доступ к этой папке?"
-
-#~ msgid "Shared Files"
-#~ msgstr "Общедоступные файлы"
-
-#~ msgid "Hide .torrent Files"
-#~ msgstr "Скрыть файлы .торрент"
-
-#~ msgid "Show .torrent Files"
-#~ msgstr "Общедоступные файлы"
-
-#~ msgid "Reload Shared Folders"
-#~ msgstr "Обновить папки общего доступа"
-
-#~ msgid "Folders to share"
-#~ msgstr "Распределенные папки"
-
-#~ msgid "Folder is fully shared including all subfolders."
-#~ msgstr "Папка  полностью распределена, включая все подпапки"
-
-#~ msgid "Individually Shared Files"
-#~ msgstr "Отдельные общедоступные файлы"
-
-#~ msgid "List of All Individually Shared Files"
-#~ msgstr "Список всех файлов, доступ к которым открыт индивидуально"
-
-#~ msgid "Loading Logging Window..."
-#~ msgstr "Инициализация окна настроек..."
-
-#~ msgid "&Using FrostWire"
-#~ msgstr "Использование FrostWire (&U)"
-
-#~ msgid "&Get More Skins"
-#~ msgstr "Дополнительные темы (&G)"
-
-#~ msgid "Find more skins from frostwire.com"
-#~ msgstr "Найти дополнительные темы на frostwire.com"
-
-#~ msgid "Reload available skins from disk"
-#~ msgstr "Перечитать доступные темы с диска"
-
-#~ msgid "Saving"
-#~ msgstr "Сохранение"
-
-#~ msgid "Slots"
-#~ msgstr "Ограничения"
-
-#~ msgid "Connections"
-#~ msgstr "Качество:"
-
-#~ msgid "Junk"
-#~ msgstr "Фрагменты"
-
-#~ msgid "Hosts"
-#~ msgstr "Хосты"
-
-#~ msgid "Preferencing"
-#~ msgstr "Предпочтение"
-
-#~ msgid "Allow Hosts"
-#~ msgstr "Разрешённые хосты"
-
-#~ msgid ""
-#~ "You can allow messages from specific hosts by adding their IP addresses "
-#~ "(e.g. \"192.168.0.1\", \"192.*.*.*\", \"192.168.12.16/255.255.255.240\" "
-#~ "or \"192.168.12.16/28\") to the allow list. This list is only needed to "
-#~ "override the banned list."
-#~ msgstr ""
-#~ "Вы можете разрешить сообщения/результаты с указанных хостов. Укажите их "
-#~ "IP-адреса или шаблоны IP-адресов. Этот список нужен только для перекрытия "
-#~ "списка запрещённых хостов."
-
-#~ msgid "Clear Downloads"
-#~ msgstr "Очистка списка загрузок"
-
-#~ msgid ""
-#~ "You can choose whether or not to automatically clear downloads that have "
-#~ "completed."
-#~ msgstr ""
-#~ "Вы можете указать, будут ли выполненные загрузки автоматически убираться "
-#~ "из списка."
-
-#~ msgid ""
-#~ "You can choose whether or not to automatically clear uploads that have "
-#~ "completed."
-#~ msgstr ""
-#~ "Вы можете указать, будут ли выполненные выгрузки автоматически убираться "
-#~ "из списка."
-
-#~ msgid "Automatically Clear Completed Uploads:"
-#~ msgstr "Автоматически вычищать выполненные выгрузки:"
-
-#~ msgid "Host Communication"
-#~ msgstr "Общение"
-
-#~ msgid "Chat Configuration"
-#~ msgstr "Конфигурация маршрутизатора"
-
-#~ msgid "You can turn chat on or off."
-#~ msgstr ""
-#~ "Вы можете включить или выключить возможность чата (беседы) с другими "
-#~ "хостами."
-
-#~ msgid "Enable Chat:"
-#~ msgstr "Разрешить чат:"
-
-#~ msgid "Connect on Startup"
-#~ msgstr "Подключение при запуске"
-
-#~ msgid ""
-#~ "You can choose whether or not to automatically connect to the network "
-#~ "when the application starts up."
-#~ msgstr ""
-#~ "Вы можете указать, будет ли FrostWire при запуске сразу подключаться к "
-#~ "сети."
-
-#~ msgid "Connect on Startup:"
-#~ msgstr "Подключаться при запуске:"
-
-#~ msgid "Connection Preferencing"
-#~ msgstr "Предпочтение соединений"
-
-#~ msgid ""
-#~ "You can limit who is able to connect to you based on the number of files "
-#~ "they share."
-#~ msgstr ""
-#~ "Вы можете указать, к какому количеству файлов должен открыть доступ "
-#~ "пользователь, чтобы иметь возможность соединиться с вами. Если доступ "
-#~ "открыт к меньшему количеству файлов, то пользователь считается Freeloader-"
-#~ "ом. (Freeloader - тот кто только загружает, но сам не раздаёт)."
-
-#~ msgid "Files You Must Share to Not be a Freeloader:"
-#~ msgstr "Сколько файлов должно быть в открытом доступе:"
-
-#~ msgid "Allow Freeloaders:"
-#~ msgstr "Разрешать доступ Freeloader-ам:"
-
-#~ msgid "Rarely"
-#~ msgstr "Редко"
-
-#~ msgid "Always"
-#~ msgstr "Всегда"
-
-#~ msgid "Buffer Size"
-#~ msgstr "размер буфера"
-
-#~ msgid "Password Protection"
-#~ msgstr "Защита паролем"
-
-#~ msgid "You can limit the access to this service with a password."
-#~ msgstr "Вы можете ограничить доступ к этому сервису защитив его паролем."
-
-#~ msgid ""
-#~ "You can share your Music on the Local Area Network and make it accessible "
-#~ "for iTunes and other Digital Audio Access Protocol (DAAP) enabled Players."
-#~ msgstr ""
-#~ "Вы можете раздать свою музыку в локальной сети и сделать её доступной для "
-#~ "iTunes и других проигрывателей поддерживающих Протокол Доступа к "
-#~ "Цифровому Аудио (Digital Audio Access Protocol, DAAP).\n"
-#~ "\n"
-#~ "При наличии проблем включите режим совместимости."
-
-#~ msgid "Share My Music:"
-#~ msgstr "Открыть доступ к моей музыке:"
-
-#~ msgid "Shared Name:"
-#~ msgstr "Имя ресурса:"
-
-#~ msgid "Disable Ultrapeer Capabilities:"
-#~ msgstr "Запретить переход в режим Ultrapeer:"
-
-#~ msgid "Disable Mojito DHT Capabilities:"
-#~ msgstr "Запретить переход в режим Ultrapeer:"
-
-#~ msgid "Disable TLS Capabilities:"
-#~ msgstr "Запретить переход в режим Ultrapeer:"
-
-#~ msgid "OOB Searching"
-#~ msgstr "Внеполосный поиск"
-
-#~ msgid ""
-#~ "Out-Of-Band Searching results in faster result delivery to your client, "
-#~ "though some internet connections may not work well with this feature."
-#~ msgstr ""
-#~ "При внеполосном (Out-Of-Band) поиске результаты будут получены быстрее, "
-#~ "однако на некоторых интернет-соединениях он может работать плохо."
-
-#~ msgid "Enable OOB Searching:"
-#~ msgstr "Разрешить внеполосный поиск:"
-
-#~ msgid "Download Bandwidth"
-#~ msgstr "Ограничение скорости загрузки"
-
-#~ msgid "You can set the percentage of your bandwidth devoted to downloads."
-#~ msgstr ""
-#~ "Вы можете ограничить скорость загрузки, указав какую часть пропускной "
-#~ "способности вашего канала следует отдать под загрузку."
-
-#~ msgid "Display junk at the bottom of search results"
-#~ msgstr "Отображать брак у конца результатов поиска"
-
-#~ msgid "Do not display junk"
-#~ msgstr "Больше не показывать это сообщение"
-
-#~ msgid "Filter Hosts"
-#~ msgstr "Фильтр хостов"
-
-#~ msgid ""
-#~ "You can disallow messages from specific hosts by adding their IP "
-#~ "addresses (e.g. \"192.168.0.1\", \"192.*.*.*\", "
-#~ "\"192.168.12.16/255.255.255.240\" or \"192.168.12.16/28\") to the banned "
-#~ "list."
-#~ msgstr ""
-#~ "Вы можете запретить сообщения/результаты с указанных хостов. Укажите их "
-#~ "IP-адреса или шаблоны IP-адресов. Пример: \"192.168.0.1\", \"192.*.*.*\", "
-#~ "\"192.168.12.16/255.255.255.240\" или \"192.168.12.16/28\"."
-
-#~ msgid "You can set the maximum number of simultaneous downloads."
-#~ msgstr ""
-#~ "Вы можете установить максимальное количество загрузок которые могут "
-#~ "загружаться одновременно."
-
-#~ msgid "Maximum Downloads:"
-#~ msgstr "Максимальное количество загрузок:"
-
-#~ msgid "Max Upload Slots"
-#~ msgstr "Ограничение количества выгрузок"
-
-#~ msgid ""
-#~ "Never allow more than this many uploads. This value will only be reached "
-#~ "if you have enough bandwidth."
-#~ msgstr ""
-#~ "Определяет максимальное количество одновременных выгрузок. Это значение "
-#~ "будет достигнуто только если ваш канал имеете достаточную пропускную "
-#~ "способность."
-
-#~ msgid "Max Upload Slots:"
-#~ msgstr "Максимальное количество выгрузок:"
-
-#~ msgid "Media Type"
-#~ msgstr "Тип файлов"
-
-#~ msgid "Open Dialog to Select a Folder"
-#~ msgstr "Выбрать папку"
-
-#~ msgid "Reset"
-#~ msgstr "Сброс"
-
-#~ msgid "Reset to Default Download Folder"
-#~ msgstr "Использовать общую папку загрузки"
-
-#~ msgid "Uploads Per Person"
-#~ msgstr "Количество выгрузок на человека"
-
-#~ msgid "Allow this many uploads per person."
-#~ msgstr ""
-#~ "Опеределяет максимальное количество одновременных выгрузок для одного "
-#~ "клиента."
-
-#~ msgid "Uploads Per Person:"
-#~ msgstr "Количество выгрузок на человека:"
-
-#~ msgid "Listening Port"
-#~ msgstr "Порт для ожидания входящих соединений"
-
-#~ msgid ""
-#~ "You can set the local network port that listens for incoming connections. "
-#~ "This port can be freely changed in case of conflict with another service "
-#~ "on your system, or if a specific port number is required by the "
-#~ "configuration of your firewall to direct incoming connections to your "
-#~ "host."
-#~ msgstr ""
-#~ "Вы можете указать, на каком порту FrostWire будет ожидать входящие "
-#~ "соединения. Вы можете изменить стандартное значение в случае конфликта с "
-#~ "другими сервисами на вашем компьютере, или если конфигурация вашего "
-#~ "файрволла требует определённого номера порта для перенаправления входящих "
-#~ "соединений на ваш хост."
-
-#~ msgid "Listen on Port:"
-#~ msgstr "Порт для ожидания входящих соединений:"
-
-#~ msgid "Port not available. Please select a different port."
-#~ msgstr "Порт не доступен. Пожалуйста, выберите другой порт."
-
-#~ msgid "Please enter a port between 1 and 65535."
-#~ msgstr "Пожалуйста, введите номер порта в диапазоне от 1 до 65535."
-
-#~ msgid "You can automatically delete old incomplete download files."
-#~ msgstr "Старые недозагруженные файлы могут удаляться автоматически."
-
-#~ msgid "Days to Keep Incomplete Files:"
-#~ msgstr "Сколько дней хранить недозагруженные файлы:"
-
-#~ msgid "You can specify a download location for each media type."
-#~ msgstr "Файлы различного типа могут сохраняться в отдельные папки."
-
-#~ msgid ""
-#~ "Would you like to share your new save folders? The following new folders "
-#~ "will be shared:"
-#~ msgstr ""
-#~ "Вы хотите открыть доступ к вашим новым папкам для сохранения? Доступ "
-#~ "будет открыт к следующим папкам:"
-
-#~ msgid "Search Result Quality"
-#~ msgstr "Качество результатов поиска"
-
-#~ msgid ""
-#~ "You can select the \"quality\" of search results to display. Four star "
-#~ "results indicate that the host returning the result is not firewalled and "
-#~ "has free upload slots."
-#~ msgstr ""
-#~ "Вы можете указать, какому \"качеству\" должны удовлетворять результаты "
-#~ "поиска. Четыре звёздочки означают что на хосте, вернувшем результат, не "
-#~ "достигнуто максимальное количество выгрузок и этот хост не закрыт "
-#~ "файрволлом."
-
-#~ msgid "Show Only Four Star Results"
-#~ msgstr "Показывать только четырёхзвёздные результаты"
-
-#~ msgid "Show Only Three and Four Star Results"
-#~ msgstr "Показывать только трёх- и четырёхзвёздные результаты"
-
-#~ msgid "Show Only Two, Three, and Four Star Results"
-#~ msgstr "Показывать только двух-, трёх- и четырёхзвёздные результаты"
-
-#~ msgid "Show All Qualities"
-#~ msgstr "Показывать результаты любого качества"
-
-#~ msgid "Search Result Speed"
-#~ msgstr "Скорость хостов, вернувших результаты поиска"
-
-#~ msgid "You can select the minimum speed of search results to display."
-#~ msgstr ""
-#~ "Вы можете указать какая скорость подключения к интернет должна быть у "
-#~ "хостов, вернувших результаты поиска."
-
-#~ msgid "Show Only Results of T3 Speed or Higher"
-#~ msgstr "Показывать только результаты со скоростью T3 или выше"
-
-#~ msgid "Show Only Results of T1 Speed or Higher"
-#~ msgstr "Показывать только результаты со скоростью T1 или выше"
-
-#~ msgid "Show Only Results of Cable/DSL Speed or Higher"
-#~ msgstr ""
-#~ "<html>Показывать только результаты со скоростью кабельного<br>или DSL-"
-#~ "подключения или выше</html>"
-
-#~ msgid "Show All Speeds"
-#~ msgstr "Показывать результаты с любой скоростью"
-
-#~ msgid "Download Sharing"
-#~ msgstr "Страница загрузки"
-
-#~ msgid "You can share files that you download to unshared folders."
-#~ msgstr ""
-#~ "Вы можете открыть доступ к файлам, загруженным в папки доступ к которым "
-#~ "закрыт."
-
-#~ msgid "You can automatically share .torrent files."
-#~ msgstr "Старые недозагруженные файлы могут удаляться автоматически."
-
-#~ msgid "Start Upload Slots:"
-#~ msgstr "Максимальное количество выгрузок:"
-
-#~ msgid "Adjust the sensitivity of FrostWire's junk filter"
-#~ msgstr "Отрегулировать реактивность фильтра бракаП"
-
-#~ msgid "Relaxed"
-#~ msgstr "Переименовать"
-
-#~ msgid "Connection Speed"
-#~ msgstr "Качество:"
-
-#~ msgid ""
-#~ "You can specify your connection speed so that FrostWire can optimize "
-#~ "performance."
-#~ msgstr ""
-#~ "Вы можете указать скорость вашего Интернет-соединения, имея эту "
-#~ "информацию FrostWire сможет настроиться на оптимальную производительность."
-
-#~ msgid "Speed:"
-#~ msgstr "Скорость:"
-
-#~ msgid "LimeWire Store Indicator"
-#~ msgstr "Файрволл"
-
-#~ msgid "Show LimeWire Store Indicator:"
-#~ msgstr "Общедоступные файлы"
-
-#~ msgid "Shared Files Indicator"
-#~ msgstr "Общедоступные файлы"
-
-#~ msgid "Show Shared Files Indicator:"
-#~ msgstr "Общедоступные файлы"
-
-#~ msgid ""
-#~ "You can choose the folder for saving files purchased from the LimeWire "
-#~ "Store."
-#~ msgstr "Вы можете выбрать папку для сохранения загруженных файлов."
-
-#~ msgid "System Tray Icon"
-#~ msgstr "Завершение работы"
-
-#~ msgid "Show System Tray Icon:"
-#~ msgstr "Завершение работы"
-
-#~ msgid ""
-#~ "You can choose when you want to be notified of new FrostWire releases."
-#~ msgstr ""
-#~ "Вы можете указать когда FrostWire будет сообщать вам о новых версиях."
-
-#~ msgid "Beta Releases"
-#~ msgstr "Beta-версии"
-
-#~ msgid "Service Releases"
-#~ msgstr "Обновления основных версий"
-
-#~ msgid "Major Releases"
-#~ msgstr "Основные версии"
-
-#~ msgid "Upload Bandwidth"
-#~ msgstr "Ограничение скорости выгрузки"
-
-#~ msgid ""
-#~ "You can set the percentage of your bandwidth devoted to uploads. To turn "
-#~ "off uploads, reduce your upload slots to zero."
-#~ msgstr ""
-#~ "Вы можете ограничить скорость выгрузки, указав какую часть пропускной "
-#~ "способности вашего канала следует отдать под выгрузку. Чтобы полностью "
-#~ "отключить выгрузку, установите ограничение количества выгрузок в ноль."
-
-#~ msgid "Open an Existing Playlist"
-#~ msgstr "Открыть плейлист"
-
-#~ msgid "Save the Current Playlist to a File"
-#~ msgstr "Сохранить текущий плейлист"
-
-#~ msgid "#"
-#~ msgstr "#"
-
-#~ msgid "Loading Playlist Window..."
-#~ msgstr "Инициализация окна плейлиста..."
-
-#~ msgid "Play Options:"
-#~ msgstr "Настройки проигрывания:"
-
-#~ msgid "Continuous"
-#~ msgstr "Непрерывное"
-
-#~ msgid "Multiple"
-#~ msgstr "Многочисленные"
-
-#~ msgid "Option"
-#~ msgstr "Настройка"
-
-#~ msgid "Filter Results:"
-#~ msgstr "Фильтр результатов:"
-
-#~ msgid "Back To Search"
-#~ msgstr "Вернуться к поиску"
-
-#~ msgid "Download As..."
-#~ msgstr "Загрузить как..."
-
-#~ msgid "Would you like to start downloads from the following magnets?"
-#~ msgstr "Вы хотите начать загрузку этих magnet-ссылок?"
-
-#~ msgid "Getting Started"
-#~ msgstr "Начнём!"
-
-#~ msgid ""
-#~ "To start using FrostWire, find the text field on the left, type in what "
-#~ "you are looking for and click the \"Search\" button. If you are looking "
-#~ "for only one type of content (music, video, etc...), you can narrow your "
-#~ "search results by using the buttons above the text field."
-#~ msgstr ""
-#~ "Слева находится поле для ввода данных поиска. Введите данные и нажмите "
-#~ "кнопку \"Искать\". Если вас интересует только один тип контента (только "
-#~ "музыка или только видео, и т.д.), вы можете уточнить тип используя кнопки "
-#~ "над полем ввода."
-
-#~ msgid ""
-#~ "Better search results\n"
-#~ "Turbo-Charged download speeds\n"
-#~ "Connections to more sources\n"
-#~ "Personalized tech support\n"
-#~ "Six months of free updates"
-#~ msgstr ""
-#~ "Улучшенные возможности поиска\n"
-#~ "Турбозагрузка\n"
-#~ "Соединение с большим количеством источников\n"
-#~ "Персональная техподдержка\n"
-#~ "Шесть месяцев бесплатных обновлений"
-
-#~ msgid "Not Junk"
-#~ msgstr "Не брак"
-
-#~ msgid "Mark selected search results as Junk"
-#~ msgstr "Сделать браком избранные результатов поиска."
-
-#~ msgid ""
-#~ "Do you want to block search results from the following list of hosts?"
-#~ msgstr "Блокировать результаты поиска от хоста"
-
-#~ msgid "View All Files on Selected Computer"
-#~ msgstr "Просмотреть все файлы на выбранном компьютере"
-
-#~ msgid "Stop Collecting Search Results for Selected Tab"
-#~ msgstr "Прекратить поиск для текущей закладки"
-
-#~ msgid "New"
-#~ msgstr "Новое"
-
-#~ msgid "Keyword"
-#~ msgstr "Ключевые слова"
-
-#~ msgid "Direct Connect"
-#~ msgstr "Отключиться (&I)"
-
-#~ msgid "Got Friends?"
-#~ msgstr "Есть друзья?"
-
-#~ msgid "When your friends want to connect to you, they should enter"
-#~ msgstr ""
-#~ "Если ваши друзья захотят подключиться к вам, они должны будут ввести"
-
-#~ msgid ""
-#~ "Your computer is behind a firewall or router and cannot receive direct "
-#~ "connections."
-#~ msgstr ""
-#~ "Ваш компьютер находится за файрволлом или маршрутизатором и не может "
-#~ "принимать входящие соединения."
-
-#~ msgid "Don't Know"
-#~ msgstr "Даже и не знаете"
-
-#~ msgid "What To Look For?"
-#~ msgstr "чего бы поискать?"
-
-#~ msgid ""
-#~ "A \"What's New\" search will search for files that have been recently "
-#~ "added to the network."
-#~ msgstr ""
-#~ "Поиск \"Что нового?\" будет искать файлы недавно появившиеся в сети."
-
-#~ msgid "Hide Adult Content"
-#~ msgstr "<html>Скрывать контент<br>\"только для взрослых\"</html>"
-
-#~ msgid "Filename"
-#~ msgstr "Имя файла"
-
-#~ msgid "Search the Network for the Given Words"
-#~ msgstr "Поиск в сети по заданным словам"
-
-#~ msgid "The address format is incorrect, please use host:port."
-#~ msgstr "формат адреса неправильно, используетесь, пожалуйста, host:port."
-
-#~ msgid "Chat With Host"
-#~ msgstr "Чат с хостом"
-
-#~ msgid "Block Hosts"
-#~ msgstr "Блокировать хост"
-
-#~ msgid "Mark As"
-#~ msgstr "Отметить как"
-
-#~ msgid "Get More Results"
-#~ msgstr "Вернуть умалчиваемые"
-
-#~ msgid ""
-#~ "You are not connected to the network. To connect, select \"Connect\" from "
-#~ "the \"File\" menu. Your search may not return any results until you "
-#~ "connect."
-#~ msgstr ""
-#~ "Вы не подключены к сети. Чтобы подключиться, выберите \"Соединиться\" из "
-#~ "меню \"Файл\"."
-
-#~ msgid ""
-#~ "FrostWire is currently connecting to the network. Your search may not "
-#~ "return many results until you are fully connected to the network."
-#~ msgstr ""
-#~ "В данный момент FrostWire находится в процессе подключения к сети. Ваш "
-#~ "поиск может не дать достаточно результатов, пока полное подключение не "
-#~ "будет установлено."
-
-#~ msgid ""
-#~ "One of the selected files is an executable program and could contain a "
-#~ "virus. Are you sure you want to download it?"
-#~ msgstr ""
-#~ "Один из выбранных файлов является выполняемой программой и может "
-#~ "содержать вирус. Вы уверены что хототе загрузить этот файл?"
-
-#~ msgid "Location"
-#~ msgstr "Расположение"
-
-#~ msgid "Junk Rating"
-#~ msgstr "Рейтинг"
-
-#~ msgid "Show Connections to Other Clients"
-#~ msgstr "Соединения с другими пользователями сети"
-
-#~ msgid "Console"
-#~ msgstr "Закрыть (&C)"
-
-#~ msgid "View Console Messages"
-#~ msgstr "Послать сообщение"
-
-#~ msgid "View Logging Messages"
-#~ msgstr "Загрузка сообщений..."
-
-#~ msgid "Monitor"
-#~ msgstr "Монитор"
-
-#~ msgid "View Searches and Uploads"
-#~ msgstr "Просмотр входящих запросов и выгрузки"
-
-#~ msgid "Test action!"
-#~ msgstr "Описание"
-
-#~ msgid ""
-#~ "The skin file you selected does not exist or is invalid. Please choose "
-#~ "another file, or use the default."
-#~ msgstr ""
-#~ "Файл с выбранной темой не существует или испорчен. Выберите другой или "
-#~ "используйте стандартную тему."
-
-#~ msgid "Invalid Skin"
-#~ msgstr "Тема испорчена."
-
-#~ msgid ""
-#~ "The skin you selected is out of date. Please download the latest version "
-#~ "of the skin."
-#~ msgstr ""
-#~ "Выбранная тема нуждается в обновлении. Пожалуйста загрузите последнюю "
-#~ "версию темы."
-
-#~ msgid "Get New Skins"
-#~ msgstr "Загрузить новые темы"
-
-#~ msgid ""
-#~ "The theme you are applying is invalid. FrostWire will revert to the "
-#~ "default theme."
-#~ msgstr ""
-#~ "Не могу установить заданную тему. Будет установлена стандартная тема."
-
-#~ msgid "Kill Upload"
-#~ msgstr "Очистка списка выгрузок"
-
-#~ msgid "Stop Selected Uploads"
-#~ msgstr "Прервать выбранные выгрузки"
-
-#~ msgid "Remove Inactive Uploads"
-#~ msgstr "Убрать неактивные выгрузки"
-
-#~ msgid "Freeloader Uploading"
-#~ msgstr "Freeloader выгружает"
-
-#~ msgid "Transfer Interrupted"
-#~ msgstr "Передача прервана"
-
-#~ msgid "File Not Found"
-#~ msgstr "Файл не найден"
-
-#~ msgid "Queued at"
-#~ msgstr "В очереди как"
-
-#~ msgid "Range Unavailable"
-#~ msgstr "Диапазон недоступен"
-
-#~ msgid "Malformed Request"
-#~ msgstr "Некорректный запрос"
-
-#~ msgid "Banned Greedy Servent"
-#~ msgstr "Заблокированный жадина"
-
-#~ msgid "Uploading Hash Tree"
-#~ msgstr "Выгрузка дерева хешей"
-
-#~ msgid "Suspended"
-#~ msgstr "Скорость:"
-
-#~ msgid "Awaiting Requests"
-#~ msgstr "Ожидание источников"
-
-#~ msgid "Swarm for {0}"
-#~ msgstr "Искать: {0}"
-
-#~ msgid "Loading Upload Window..."
-#~ msgstr "Инициализация окна выгрузки..."
-
-#~ msgid "Info"
-#~ msgstr "Информация"
-
-#~ msgid "Publish License"
-#~ msgstr "Просмотреть лицензию"
-
-#~ msgid "How does it work?"
-#~ msgstr "Как это функционирует?"
-
-#~ msgid "ShareAlike"
-#~ msgstr "Открыть доступ к файлу"
-
-#~ msgid "Copyright Holder:"
-#~ msgstr "Владелец автррских правах."
-
-#~ msgid "Copyright Year:"
-#~ msgstr "год авторского права"
-
-#~ msgid "Title of Work:"
-#~ msgstr "Порт для ожидания входящих соединений:"
-
-#~ msgid "Size:"
-#~ msgstr "Размер:"
-
-#~ msgid "Internal Document Error. Data could not be saved."
-#~ msgstr "Ошибка в документе. Данные не сохранены."
-
-#~ msgid "Internal Error. Data could not be saved."
-#~ msgstr "Внутренняя ошибка. Данные не сохранены."
-
-#~ msgid "Nothing to save."
-#~ msgstr "Сохранять нечего."
-
-#~ msgid "File not found or corrupt file. Data could not be saved"
-#~ msgstr "Файл не найден или испорчен. Данные не сохранены."
-
-#~ msgid "Read Write Error. Data could not be saved."
-#~ msgstr "Ошибка при чтении/записи. Данные не сохранены."
-
-#~ msgid "Incorrect format entered. Changes will not be saved."
-#~ msgstr "Указан неверный формат. Изменения не сохранены."
-
-#~ msgid "Unable to remove data."
-#~ msgstr "Не могу удалить данные."
-
-#~ msgid "Title:"
-#~ msgstr "Название:"
-
-#~ msgid "Artist:"
-#~ msgstr "Исполнитель:"
-
-#~ msgid "Album:"
-#~ msgstr "Альбом:"
-
-#~ msgid "Genre:"
-#~ msgstr "Жанр:"
-
-#~ msgid "Year:"
-#~ msgstr "Год:"
-
-#~ msgid "Type:"
-#~ msgstr "Тип:"
-
-#~ msgid "Track:"
-#~ msgstr "Дорожка:"
-
-#~ msgid "Length:"
-#~ msgstr "Длительность:"
-
-#~ msgid "Bitrate:"
-#~ msgstr "Битрейт:"
-
-#~ msgid "Comments:"
-#~ msgstr "Комментарии:"
-
-#~ msgid "SHA1:"
-#~ msgstr "SHA1:"
-
-#~ msgid "Price:"
-#~ msgstr "Цена:"
-
-#~ msgid "Link:"
-#~ msgstr "Ссылка:"
-
-#~ msgid "Action:"
-#~ msgstr "Действие:"
-
-#~ msgid "License:"
-#~ msgstr "Лицензия:"
-
-#~ msgid "Rating:"
-#~ msgstr "Рейтинг"
-
-#~ msgid "Director:"
-#~ msgstr "Режиссёр"
-
-#~ msgid "Studio:"
-#~ msgstr "Студия"
-
-#~ msgid "Stars: (Please separate with comma)"
-#~ msgstr "Исполнители:"
-
-#~ msgid "Producer: (Please separate with comma)"
-#~ msgstr "Исполнители:"
-
-#~ msgid "Subtitles: (Please separate with comma)"
-#~ msgstr "Исполнители:"
-
-#~ msgid "Topic:"
-#~ msgstr "Тема:"
-
-#~ msgid "Description:"
-#~ msgstr "Действие:"
-
-#~ msgid "MPEG-1 Audio Layer 3"
-#~ msgstr "MPEG-1 Audio Layer 3"
-
-#~ msgid "MPEG-4 Audio"
-#~ msgstr "MPEG-4 Audio"
-
-#~ msgid "Ogg Vorbis"
-#~ msgstr "Ogg Vorbis"
-
-#~ msgid ""
-#~ "FrostWire is translated into many different languages including Chinese, "
-#~ "French, German, Japanese, Italian, Spanish and many more. Visit "
-#~ "FrostWire's <a href=\"{0}\">internationalization page</a> for information "
-#~ "on how you can help translation efforts! "
-#~ msgstr ""
-#~ "FrostWire переведен разных языках, в том числе- китайский, французский, "
-#~ "немецкий, японский, итальянский, испанский и др. Посетите <a href="
-#~ "\"{0}\">международную страницу</a> FrostWire'а и узнавайте о участии в "
-#~ "этом проекте. "
-
-#~ msgid ""
-#~ "Sport the FrostWire look! Visit our <a href=\"{0}\">FrostWire gear</a> "
-#~ "page and purchase a t-shirt or hat!"
-#~ msgstr ""
-#~ "Оденься в стиле \"FrostWire\"! Посетите наша страница <a href="
-#~ "\"{0}\">FrostWire gear</a> и купите футболку или шляпку."
-
-#~ msgid "Support FrostWire and independent media content. Get PRO."
-#~ msgstr "Поддержите файлообменные сети."
-
-#~ msgid "Loading bittorrent Management..."
-#~ msgstr "Инициализация управления соединениями..."
-
-#~ msgid ""
-#~ "A file used to save your preferences was corrupted. FrostWire will use "
-#~ "default values."
-#~ msgstr ""
-#~ "Файл настроек испорчен. FrostWire вернётся к настройкам по умолчани."
-
-#~ msgid "I"
-#~ msgstr "I"
-
-#~ msgid "H"
-#~ msgstr "H"
-
-#~ msgid "Upstream"
-#~ msgstr "Исходящий"
-
-#~ msgid "Downstream"
-#~ msgstr "Входящий"
-
-#~ msgid "Sorry, but FrostWire was unable to restart your old downloads."
-#~ msgstr "Извините, но FrostWire не может возобновить ваши старые загрузки."
-
-#~ msgid "Loading magnet Management..."
-#~ msgstr "Инициализация управления соединениями..."
-
-#~ msgid "Modem"
-#~ msgstr "Модем"
-
-#~ msgid "Cable/DSL"
-#~ msgstr "Кабель/DSL"
-
-#~ msgid "United States"
-#~ msgstr "Обновления"
-
-#~ msgid "English"
-#~ msgstr "Закончить"
-
-#~ msgid "Loading Languages"
-#~ msgstr "Инициализация меню..."
-
-#~ msgid "false"
-#~ msgstr "Вставить"
-
-#~ msgid "You are sharing {0} files (Loading...)"
-#~ msgstr "Открыт доступ к {0} файлов (инициализация...)"
-
-#~ msgid "You are sharing {0} files"
-#~ msgstr "Открыт доступ к {0} файлов"
-
-#~ msgid ""
-#~ "You are attempting to share a folder that is likely to contain sensitive "
-#~ "information:\n"
-#~ "\n"
-#~ "{0}\n"
-#~ "\n"
-#~ "Share this folder?"
-#~ msgstr ""
-#~ "Возможно, эта папка содержит важную информацию, к которой не следует "
-#~ "открывать доступ:\n"
-#~ "\n"
-#~ "{0}\n"
-#~ "\n"
-#~ "Открыть доступ к этой папке?"
-
-#~ msgid "Search \"What''s New\" for: {0}"
-#~ msgstr "Искать \"Что нового\" в: {0}"
-
-#~ msgid "Finish Setup"
-#~ msgstr "Настройка завершена"
-
-#~ msgid ""
-#~ "Your FrostWire setup has successfully completed. Please press the \"Finish"
-#~ "\" button to begin using FrostWire."
-#~ msgstr ""
-#~ "Настройка FrostWire выполнена. Щёлкните кнопку \"Закончить\", и можете "
-#~ "начать работу с программой."
-
-#~ msgid "Language Options"
-#~ msgstr "Просмотрщик изображений"
-
-#~ msgid "Choose Language:"
-#~ msgstr "Язык:"
-
-#~ msgid ""
-#~ "Please choose a folder where you would like your files to be downloaded. "
-#~ "This folder will also be shared with other gnutella users by default."
-#~ msgstr ""
-#~ "Пожалуйста, выберите папку в которой будут храниться загруженные файлы. "
-#~ "По умолчанию, доступ к этой папке будет открыт для других пользователей "
-#~ "сети Gnutella."
-
-#~ msgid "Confirm Scan"
-#~ msgstr "Подтвердите результаты сканирования"
-
-#~ msgid ""
-#~ "We identified the folders below as ones that you might like to share. If "
-#~ "you would like to share one of these folders, simply check its associated "
-#~ "checkbox. Subfolders of shared folders will also be shared."
-#~ msgstr ""
-#~ "Эти папки содержат мультимедийные файлы, и неплохо было бы открыть к ним "
-#~ "доступ. Чтобы сделать это, просто поставте галочку напротив папки. Доступ "
-#~ "будет открыт и к вложенным папкам."
-
-#~ msgid ""
-#~ "FrostWire was unable to locate any files that may be shared. To continue "
-#~ "configuring FrostWire, click \"Next\"."
-#~ msgstr ""
-#~ "FrostWire не смог найти файлы к которым следовало бы открыть доступ.Чтобы "
-#~ "продолжить, щёлкните \"Вперёд\"."
-
-#~ msgid "Scan for Files"
-#~ msgstr "Поиск файлов"
-
-#~ msgid ""
-#~ "Would you like FrostWire to quickly scan your hard drive for other media "
-#~ "files? You will have the opportunity to specify which folders you would "
-#~ "like to share when the scan is complete."
-#~ msgstr ""
-#~ "Хотите ли вы, чтобы FrostWire просканировал ваш жёсткий диск на наличие "
-#~ "мультимедийных файлов? Когда сканирование закончиться, у вас будет "
-#~ "возможность выбрать, к каким папкам можно открыть доступ."
-
-#~ msgid "Scan Hard Drive?"
-#~ msgstr "Сканирование жёсткого диска"
-
-#~ msgid ""
-#~ "Please choose the speed of your Internet connection. Setting this speed "
-#~ "correctly is important for optimum network performance. If you are not "
-#~ "sure what type of Internet connection you have, or if your connection "
-#~ "type is not listed, simply select whichever one seems the most "
-#~ "appropriate."
-#~ msgstr ""
-#~ "Выберите скорость вашего соединения с Internet. Правильный выбор скорости "
-#~ "важен для оптимальной производительности. Если вы не знаете точно, какой "
-#~ "тип соединения у вас используется, выберите пункт который выглядит "
-#~ "наиболее подходящим."
-
-#~ msgid "Scanning Hard Drive"
-#~ msgstr "Сканирование жёсткого диска"
-
-#~ msgid "Please wait as FrostWire scans your hard drive..."
-#~ msgstr ""
-#~ "Пожалуйста подождите, пока FrostWire просканирует ваш жёсткий диск..."
-
-#~ msgid "Scanning Hard Drive..."
-#~ msgstr "Сканирование жёсткого диска"
-
-#~ msgid ""
-#~ "Your search must be at least three characters long to avoid too many "
-#~ "meaningless results."
-#~ msgstr "Строка поиска должна содержать как минимум три символа."
-
-#~ msgid "&MagnetMix"
-#~ msgstr "&MagnetMix"
-
-#~ msgid ". The file type is not recognized."
-#~ msgstr ". Нераспознанный тип файла."
-
-#~ msgid ". The file cannot be found."
-#~ msgstr ". Файл не найден."
-
-#~ msgid ". The file is corrupt."
-#~ msgstr ". Файл испорчен."
-
-#~ msgid ". There is an unknown error with the audio file."
-#~ msgstr ". Неизвестная ошибка."
-
-#~ msgid ". The file cannot be parsed."
-#~ msgstr ". Ошибка при разборе файла."
-
-#~ msgid ""
-#~ "You have made changes to some settings. Would you like to save these "
-#~ "changes?"
-#~ msgstr "Вы изменили некоторые настройки. Сохранить изменения?"
-
-#~ msgid ""
-#~ "You have some songs in the playlist.  Would you like to clear them and "
-#~ "start a new playlist?"
-#~ msgstr "Вы изменили некоторые настройки. Сохранить изменения?"
-
-#~ msgid ""
-#~ "Enter the IP address of a friend you'd like to connect to, click 'Direct "
-#~ "Connect', and FrostWire will try to browse the files of that user."
-#~ msgstr ""
-#~ "Введите IP-адрес вашего друга, щёлкните \"Прямое соединение\" и FrostWire "
-#~ "попытается просмотреть файлы этого пользователя."
-
-#~ msgid "Annotating file"
-#~ msgstr "Аннотации к файлу"
-
-#~ msgid "Edit annotation of type:"
-#~ msgstr "Редактировать аннотации для типа:"
-
-#~ msgid "Add annotation of type:"
-#~ msgstr "Добавить аннотации для типа:"
-
-#~ msgid "Cannot remove unsaved info."
-#~ msgstr "Не могу удалить несохранённую информацию."
-
-#~ msgid ""
-#~ "Please wait while FrostWire is uploading your files to the Internet "
-#~ "Archive"
-#~ msgstr ""
-#~ "Пожалуйста подождите, пока FrostWire просканирует ваш жёсткий диск..."
-
-#~ msgid "Connecting to the Internet Archive..."
-#~ msgstr "Соединиться с сетью"
-
-#~ msgid "Connected..."
-#~ msgstr "Подключено с"
-
-#~ msgid "Close the Window"
-#~ msgstr "Закрыть окно."
-
-#~ msgid "P"
-#~ msgstr "P"
-
-#~ msgid "N"
-#~ msgstr "N"
-
-#~ msgid "V"
-#~ msgstr "V"
-
-#~ msgid "W"
-#~ msgstr "W"
-
-#~ msgid "Show or Hide individual tabs"
-#~ msgstr "Показать или скрыть отдельные закладки"
-
-#~ msgid "Display the Statistics Screen"
-#~ msgstr "Показать экран статистики"
-
-#~ msgid "U"
-#~ msgstr "U"
-
-#~ msgid "E"
-#~ msgstr "E"
-
-#~ msgid "G"
-#~ msgstr "G"
-
-#~ msgid "Files"
-#~ msgstr "Файлов"
-
-#~ msgid "Recovery Failed"
-#~ msgstr "Исправить не удалось"
-
-#~ msgid "Querying Network"
-#~ msgstr "Опрашиваю сеть"
-
-#~ msgid "s for Sources"
-#~ msgstr "сек."
-
-#~ msgid "Gnutella"
-#~ msgstr "Gnutella"
-
-#~ msgid "files (Loading...)"
-#~ msgstr "файлов (инициализация...)"
-
-#~ msgid "Stop Chatting with a Host"
-#~ msgstr "Завершить разговор с хостом"
-
-#~ msgid "Loading Statistics Window..."
-#~ msgstr "Инициализация окна статистики..."
-
-#~ msgid ""
-#~ "Could not find a port to use for incoming connections.\n"
-#~ "Please specify a port from the configuration window."
-#~ msgstr ""
-#~ "Не могу назначить порт для обработки входящих соединений.\n"
-#~ "Пожалуйста, укажите порт в окне конфигурации."
-
-#~ msgid "Network"
-#~ msgstr "Сеть"
-
-#~ msgid ". No line is available for output."
-#~ msgstr ". Нет доступных устройств вывода."
-
-#~ msgid ""
-#~ "Your machine does not appear to have an active Internet connection or a "
-#~ "firewall is blocking FrostWire from accessing the internet. Please check "
-#~ "your connection or firewall settings and then select \"Connect\" from the "
-#~ "File menu to connect FrostWire to the network."
-#~ msgstr ""
-#~ "FrostWire не может подключиться к файлообменной сети. Возможно вы не "
-#~ "подключены к Интернет или файрволл блокирует доступ. Пожалуйста, "
-#~ "проверьте ваше соединение или настройку файрволла. Для подключения к "
-#~ "файлообменной сети выберите пункт \"Соединиться\" из меню \"Файл\"."
-
-#~ msgid ""
-#~ "Total bandwidth used to send outgoing data, either through uploads or "
-#~ "Gnutella messages."
-#~ msgstr ""
-#~ "Информация об исходящем потоке, включает в себя выгрузку и исходящие "
-#~ "сообщения."
-
-#~ msgid ""
-#~ "Total bandwidth used to receive incoming data, either through downloads "
-#~ "or Gnutella messages."
-#~ msgstr ""
-#~ "Информация об входящем потоке, включает в себя загрузку и входящие "
-#~ "сообщения."
-
-#~ msgid ""
-#~ "Bandwidth statistics include complete information on all bandwidth sent "
-#~ "upstream and downstream. Click on one of the categories to see the "
-#~ "desired statistics."
-#~ msgstr ""
-#~ "Статистика по потокам включает полную информацию по входящим и исходящим "
-#~ "данным. Щёлкните на раздел, чтобы увидеть статистику."
-
-#~ msgid ""
-#~ "Statistics on the current state of the network. These statistics are "
-#~ "quite inaccurate due to the dynamic, distributed nature of Gnutella and "
-#~ "should not be taken too literally. They can, however, give you a general "
-#~ "idea regarding the current state of your connection."
-#~ msgstr ""
-#~ "Статистика текущего состояния сети. Эта данные являются весьма "
-#~ "приблизительными в связи с динамической, распределённой природой сети "
-#~ "Gnutella и не должны приниматься как точные. Они могут, однако, дать "
-#~ "общее представление о текущем состоянии вашего соединения."
-
-#~ msgid ""
-#~ "Advanced statistics include detailed information for Gnutella messages "
-#~ "and HTTP traffic. This information can be useful for advanced users as "
-#~ "well as for researchers working on the Gnutella network. Advanced "
-#~ "statistics are not displayed by default and are not recommended for most "
-#~ "users."
-#~ msgstr ""
-#~ "Расширенная статистика включает детальную информацию по служебным "
-#~ "сообщениям сети Gnutella и по HTTP-траффику. Эта информация может быть "
-#~ "полезной для продвинутых пользователей или для разработчиков и "
-#~ "исследователей сети Gnutella. Так как для большинства пользователей "
-#~ "расширенная статистика не нужна, то по умолчанию она не показывается."
-
-#~ msgid "Enable Content Filtering"
-#~ msgstr "Разрешить импорт в iTunes:"
-
-#~ msgid "Autocompletion"
-#~ msgstr "Автодополнение текста"
-
-#~ msgid "Content"
-#~ msgstr "Соединиться (&O)"
-
-#~ msgid "Firewall Config"
-#~ msgstr "Файрволл"
-
-#~ msgid "The Most Advanced File Sharing Program on the Planet!"
-#~ msgstr "Лучшая файлообменная программа!"
-
-#~ msgid "More Info..."
-#~ msgstr "Дополнительная информация"
