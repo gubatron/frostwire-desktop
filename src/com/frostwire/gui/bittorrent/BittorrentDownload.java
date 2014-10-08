@@ -315,7 +315,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
         boolean partial = dl.isPartial();
         if (partial) {
-            List<BTDownloadItem> items = dl.getItems();
+            List<TransferItem> items = dl.getItems();
 
             long totalSize = 0;
             for (TransferItem item : items) {
