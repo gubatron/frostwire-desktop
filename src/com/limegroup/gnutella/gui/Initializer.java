@@ -16,7 +16,7 @@
 package com.limegroup.gnutella.gui;
 
 import com.frostwire.bittorrent.BTContext;
-import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.bittorrent.BTEngine2;
 import com.frostwire.logging.Logger;
 import com.frostwire.util.UserAgentGenerator;
 import com.limegroup.gnutella.ExternalControl;
@@ -522,9 +522,9 @@ public final class Initializer {
         ctx.port1 = port1;
         ctx.iface = iface;
 
-        BTEngine.ctx = ctx;
+        BTEngine2.ctx = ctx;
 
-        BTEngine.getInstance().loadSettings();
+        BTEngine2.getInstance().start();
     }
 
     /**

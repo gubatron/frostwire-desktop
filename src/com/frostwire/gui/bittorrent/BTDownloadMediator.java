@@ -18,7 +18,7 @@
 
 package com.frostwire.gui.bittorrent;
 
-import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.bittorrent.BTEngine2;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleMediaFileAction;
 import com.frostwire.gui.components.slides.Slide;
@@ -332,7 +332,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * @return the total amount of bandwidth being consumed by active downloads.
      */
     private double getBandwidth(boolean download) {
-        BTEngine engine = BTEngine.getInstance();
+        BTEngine2 engine = BTEngine2.getInstance();
 
         return (download) ? engine.getDownloadRate() : engine.getUploadRate();
     }
@@ -704,7 +704,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 try {
-                    BTEngine.getInstance().download(torrentFile, saveDir);
+                    BTEngine2.getInstance().download(torrentFile, saveDir);
                 } catch (Throwable e) {
                     e.printStackTrace();
                     if (!e.toString().contains("No files selected by user")) {
@@ -751,7 +751,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                         }
                     }
 
-                    BTEngine.getInstance().download(torrentFile, null, filesSelection);
+                    BTEngine2.getInstance().download(torrentFile, null, filesSelection);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -770,7 +770,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     public void openSearchResult(TorrentCrawledSearchResult sr) {
         try {
-            BTEngine.getInstance().download(sr, SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
+            BTEngine2.getInstance().download(sr, SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
         } catch (Throwable e) {
             LOG.error("Unable to start download from search result", e);
         }
@@ -807,12 +807,12 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public long getTotalBytesDownloaded() {
-        BTEngine engine = BTEngine.getInstance();
+        BTEngine2 engine = BTEngine2.getInstance();
         return engine.getTotalDownload();
     }
 
     public long getTotalBytesUploaded() {
-        BTEngine engine = BTEngine.getInstance();
+        BTEngine2 engine = BTEngine2.getInstance();
         return engine.getTotalUpload();
     }
 

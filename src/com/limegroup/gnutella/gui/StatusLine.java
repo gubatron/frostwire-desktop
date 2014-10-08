@@ -40,7 +40,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.ToolTipManager;
 
-import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.bittorrent.BTEngine2;
 import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
@@ -531,7 +531,7 @@ public final class StatusLine {
      * Updates the firewall text. 
      */
     public void updateFirewall() {
-        BTEngine engine = BTEngine.getInstance();
+        BTEngine2 engine = BTEngine2.getInstance();
         updateFirewallLabel(!engine.isFirewalled());
     }
 

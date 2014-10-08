@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.bittorrent.BTEngine2;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.lifecycle.ServiceRegistry;
 import org.limewire.listener.EventListener;
@@ -111,7 +111,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
 					com.limegroup.gnutella.LifecycleManagerImpl.LifeCycleEvent event) {
 				if (event == LifeCycleEvent.SHUTINGDOWN) {
 
-                    BTEngine.getInstance().stop();
+                    BTEngine2.getInstance().stop();
 				} 
 			}
 			
@@ -205,7 +205,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
         // save frostwire.props & other settings
         SettingsGroupManager.instance().save();
 
-        BTEngine.getInstance().stop();
+        BTEngine2.getInstance().stop();
         
         shutdownDone.set(true);
     }
