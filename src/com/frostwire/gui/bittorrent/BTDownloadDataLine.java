@@ -18,6 +18,8 @@ package com.frostwire.gui.bittorrent;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -54,13 +56,13 @@ import com.limegroup.gnutella.settings.iTunesSettings;
  * instance.
  */
 final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
-
+    
     private static final String PARTIAL_DOWNLOAD_TEXT = I18n.tr(" (Handpicked)");
 
     /**
      * Variable for the status of the download.
      */
-    private String _status;
+    private TransferState _transferState;
 
     /**
      * Variable for the amount of the file that has been read.
@@ -187,6 +189,34 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
         return NUMBER_OF_COLUMNS;
     }
 
+    public static Map<TransferState, String> TRANSFER_STATE_STRING_MAP =
+            new HashMap<TransferState, String>();
+
+    static {
+        TRANSFER_STATE_STRING_MAP.put(TransferState.QUEUED_FOR_CHECKING, I18n.tr("Queued for checking"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.CHECKING, I18n.tr("Checking..."));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.DOWNLOADING_METADATA, I18n.tr("Downloading metadata"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.DOWNLOADING_TORRENT, I18n.tr("Downloading torrent"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.DOWNLOADING, I18n.tr("Downloading"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.FINISHED, I18n.tr("Finished"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.SEEDING, I18n.tr("Seeding"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.ALLOCATING, I18n.tr("Allocating"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.PAUSED, I18n.tr("Paused"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.ERROR, I18n.tr("Error"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.ERROR_MOVING_INCOMPLETE, I18n.tr("Error: Moving incomplete"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.ERROR_HASH_MD5, I18n.tr("Error: Wrong md5 hash"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.ERROR_SIGNATURE, I18n.tr("Error: Wrong signature"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.STOPPED, I18n.tr("Stopped"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.PAUSING, I18n.tr("Pausing"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.CANCELING, I18n.tr("Canceling"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.CANCELED, I18n.tr("Canceled"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.WAITING, I18n.tr("Waiting"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.COMPLETE, I18n.tr("Complete"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.UPLOADING, I18n.tr("Uploading"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.UNCOMPRESSING, I18n.tr("Uncompressing"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.DEMUXING, I18n.tr("Demuxing"));
+    }
+
     /**
      * Must initialize data.
      *
@@ -230,7 +260,11 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
                 return new SizeHolder(_size);
             }
         case STATUS_INDEX:
-            return _status;
+            String status = TRANSFER_STATE_STRING_MAP.get(_transferState);
+            if (status == null) {
+                status = I18n.tr("Unknown status");
+            }
+            return status;
         case PROGRESS_INDEX:
             return Integer.valueOf(_progress);
         case BYTES_DOWNLOADED_INDEX:
@@ -365,7 +399,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
      * @implements DataLine interface
      */
     public void update() {
-        _status = I18n.tr(initializer.getState().name());
+        _transferState = initializer.getState();
         _progress = initializer.getProgress();
         _download = initializer.getBytesReceived();
         _upload = initializer.getBytesSent();
