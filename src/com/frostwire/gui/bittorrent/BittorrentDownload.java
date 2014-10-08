@@ -19,6 +19,7 @@
 package com.frostwire.gui.bittorrent;
 
 import com.frostwire.bittorrent.BTDownload;
+import com.frostwire.bittorrent.BTDownloadItem;
 import com.frostwire.bittorrent.BTDownloadListener;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.logging.Logger;
@@ -206,7 +207,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public Date getDateCreated() {
-        return dl.getDateCreated();
+        return dl.getCreated();
     }
 
     @Override
@@ -314,7 +315,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
         boolean partial = dl.isPartial();
         if (partial) {
-            List<TransferItem> items = dl.getItems();
+            List<BTDownloadItem> items = dl.getItems();
 
             long totalSize = 0;
             for (TransferItem item : items) {

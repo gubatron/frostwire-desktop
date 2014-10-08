@@ -43,6 +43,7 @@
  */
 package com.frostwire.gui.bittorrent;
 
+import com.frostwire.bittorrent.BTDownloadItem;
 import com.frostwire.logging.Logger;
 import com.frostwire.transfers.TransferItem;
 import com.frostwire.util.StringUtils;
@@ -76,7 +77,7 @@ public final class TorrentUtil {
 
     public static Set<File> getSkippedFiles(com.frostwire.bittorrent.BTDownload dm) {
         Set<File> set = new HashSet<File>();
-        List<TransferItem> infoSet = dm.getItems();
+        List<BTDownloadItem> infoSet = dm.getItems();
         for (TransferItem fileInfo : infoSet) {
             try {
                 if (fileInfo.isSkipped()) {
@@ -96,7 +97,7 @@ public final class TorrentUtil {
                 BittorrentDownload bt = (BittorrentDownload) d;
                 com.frostwire.bittorrent.BTDownload dl = bt.getDl();
 
-                List<TransferItem> items = dl.getItems();
+                List<BTDownloadItem> items = dl.getItems();
 
                 for (TransferItem item : items) {
                     if (f.equals(item.getFile())) {
