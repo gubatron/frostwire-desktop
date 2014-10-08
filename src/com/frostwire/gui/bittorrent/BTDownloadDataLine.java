@@ -201,7 +201,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
         TRANSFER_STATE_STRING_MAP.put(TransferState.FINISHED, I18n.tr("Finished"));
         TRANSFER_STATE_STRING_MAP.put(TransferState.SEEDING, I18n.tr("Seeding"));
         TRANSFER_STATE_STRING_MAP.put(TransferState.ALLOCATING, I18n.tr("Allocating"));
-        TRANSFER_STATE_STRING_MAP.put(TransferState.PAUSED, I18n.tr("Pause"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.PAUSED, I18n.tr("Paused"));
         TRANSFER_STATE_STRING_MAP.put(TransferState.ERROR, I18n.tr("Error"));
         TRANSFER_STATE_STRING_MAP.put(TransferState.ERROR_MOVING_INCOMPLETE, I18n.tr("Error: Moving incomplete"));
         TRANSFER_STATE_STRING_MAP.put(TransferState.ERROR_HASH_MD5, I18n.tr("Error: Wrong md5 hash"));
