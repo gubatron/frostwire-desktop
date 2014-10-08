@@ -15,7 +15,7 @@
 
 package com.limegroup.gnutella.gui.options.panes;
 
-import com.frostwire.bittorrent.BTEngine2;
+import com.frostwire.bittorrent.BTEngine;
 import com.limegroup.gnutella.gui.*;
 import org.limewire.i18n.I18nMarker;
 
@@ -82,26 +82,26 @@ public final class TorrentConnectionPaneItem extends AbstractPaneItem {
 
     @Override
     public boolean isDirty() {
-        return (BTEngine2.getInstance().getMaxActiveDownloads() != MAX_ACTIVE_DOWNLOADS_FIELD.getValue()) ||
-                (BTEngine2.getInstance().getMaxConnections() != MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue()) ||
-                (BTEngine2.getInstance().getMaxPeers() != MAX_PEERS_FIELD.getValue()) ||
-                (BTEngine2.getInstance().getMaxActiveSeeds() != MAX_ACTIVE_SEEDS_FIELD.getValue());
+        return (BTEngine.getInstance().getMaxActiveDownloads() != MAX_ACTIVE_DOWNLOADS_FIELD.getValue()) ||
+                (BTEngine.getInstance().getMaxConnections() != MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue()) ||
+                (BTEngine.getInstance().getMaxPeers() != MAX_PEERS_FIELD.getValue()) ||
+                (BTEngine.getInstance().getMaxActiveSeeds() != MAX_ACTIVE_SEEDS_FIELD.getValue());
     }
 
     @Override
     public void initOptions() {
-        MAX_GLOBAL_NUM_CONNECTIONS_FIELD.setValue(BTEngine2.getInstance().getMaxConnections());
-        MAX_PEERS_FIELD.setValue(BTEngine2.getInstance().getMaxPeers());
-        MAX_ACTIVE_DOWNLOADS_FIELD.setValue(BTEngine2.getInstance().getMaxActiveDownloads());
-        MAX_ACTIVE_SEEDS_FIELD.setValue(BTEngine2.getInstance().getMaxActiveSeeds());
+        MAX_GLOBAL_NUM_CONNECTIONS_FIELD.setValue(BTEngine.getInstance().getMaxConnections());
+        MAX_PEERS_FIELD.setValue(BTEngine.getInstance().getMaxPeers());
+        MAX_ACTIVE_DOWNLOADS_FIELD.setValue(BTEngine.getInstance().getMaxActiveDownloads());
+        MAX_ACTIVE_SEEDS_FIELD.setValue(BTEngine.getInstance().getMaxActiveSeeds());
     }
 
     @Override
     public boolean applyOptions() throws IOException {
-        BTEngine2.getInstance().setMaxConnections(MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue());
-        BTEngine2.getInstance().setMaxPeers(MAX_PEERS_FIELD.getValue());
-        BTEngine2.getInstance().setMaxActiveDownloads(MAX_ACTIVE_DOWNLOADS_FIELD.getValue());
-        BTEngine2.getInstance().setMaxActiveSeeds(MAX_ACTIVE_SEEDS_FIELD.getValue());
+        BTEngine.getInstance().setMaxConnections(MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue());
+        BTEngine.getInstance().setMaxPeers(MAX_PEERS_FIELD.getValue());
+        BTEngine.getInstance().setMaxActiveDownloads(MAX_ACTIVE_DOWNLOADS_FIELD.getValue());
+        BTEngine.getInstance().setMaxActiveSeeds(MAX_ACTIVE_SEEDS_FIELD.getValue());
 
         return false;
     }

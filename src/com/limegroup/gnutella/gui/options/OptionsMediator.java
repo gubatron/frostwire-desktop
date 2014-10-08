@@ -19,7 +19,7 @@ import java.io.IOException;
 
 import javax.swing.JDialog;
 
-import com.frostwire.bittorrent.BTEngine2;
+import com.frostwire.bittorrent.BTEngine;
 import org.limewire.setting.SettingsGroupManager;
 
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -174,7 +174,7 @@ public final class OptionsMediator {
      */
     public final void revertOptions() {
         SettingsGroupManager.instance().revertToDefault();
-        BTEngine2.getInstance().revertToDefaultConfiguration();
+        BTEngine.getInstance().revertToDefaultConfiguration();
         LibrarySettings.setupInitialLibraryFolders();
         GUIMediator.showMessage(I18n.tr("One or more options will take effect the next time FrostWire is restarted."));
     }

@@ -26,7 +26,7 @@ package com.frostwire.gui.bittorrent;
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
-import com.frostwire.bittorrent.BTEngine2;
+import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.gui.bittorrent.BTDownloadActions.AddToPlaylistAction;
 import com.frostwire.gui.bittorrent.BTDownloadActions.CreateNewPlaylistAction;
 import com.frostwire.gui.library.LibraryMediator;
@@ -112,7 +112,7 @@ final class BTDownloadMediatorAdvancedMenuFactory {
 
         // advanced > Download Speed Menu //
 
-        BTEngine2 engine = BTEngine2.getInstance();
+        BTEngine engine = BTEngine.getInstance();
         long maxDownload = engine.getDownloadRateLimit();
         long maxUpload = engine.getUploadRateLimit();
 

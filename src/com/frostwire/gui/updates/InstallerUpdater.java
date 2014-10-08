@@ -18,7 +18,7 @@
 
 package com.frostwire.gui.updates;
 
-import com.frostwire.bittorrent.BTEngine2;
+import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.jlibtorrent.Session;
 import com.frostwire.jlibtorrent.TorrentAlertAdapter;
 import com.frostwire.jlibtorrent.TorrentHandle;
@@ -148,7 +148,7 @@ public class InstallerUpdater implements Runnable {
     }
 
     private final TorrentHandle startTorrentDownload(String torrentFile, String saveDataPath) throws Exception {
-        final Session session = BTEngine2.getInstance().getSession();
+        final Session session = BTEngine.getInstance().getSession();
 
         TorrentHandle th = session.addTorrent(new File(torrentFile), new File(saveDataPath));
 
@@ -351,7 +351,7 @@ public class InstallerUpdater implements Runnable {
             //try to restart the download. delete torrent and data
             //manager.stopIt(DownloadManager.STATE_READY, false, true);
             try {
-                BTEngine2.getInstance().getSession().removeTorrent(manager, Session.Options.DELETE_FILES);
+                BTEngine.getInstance().getSession().removeTorrent(manager, Session.Options.DELETE_FILES);
                 //processMessage(_updateMessage);
             } catch (Throwable e) {
                 LOG.error("Error removing download manager on error", e);

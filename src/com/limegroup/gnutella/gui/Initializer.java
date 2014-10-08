@@ -16,7 +16,7 @@
 package com.limegroup.gnutella.gui;
 
 import com.frostwire.bittorrent.BTContext;
-import com.frostwire.bittorrent.BTEngine2;
+import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.logging.Logger;
 import com.frostwire.util.UserAgentGenerator;
 import com.limegroup.gnutella.ExternalControl;
@@ -26,7 +26,6 @@ import com.limegroup.gnutella.LimeWireCore;
 import com.limegroup.gnutella.gui.bugs.BugManager;
 import com.limegroup.gnutella.gui.init.SetupManager;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -522,9 +521,9 @@ public final class Initializer {
         ctx.port1 = port1;
         ctx.iface = iface;
 
-        BTEngine2.ctx = ctx;
+        BTEngine.ctx = ctx;
 
-        BTEngine2.getInstance().start();
+        BTEngine.getInstance().start();
     }
 
     /**

@@ -15,7 +15,7 @@
 
 package com.limegroup.gnutella.gui.options.panes;
 
-import com.frostwire.bittorrent.BTEngine2;
+import com.frostwire.bittorrent.BTEngine;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 
@@ -143,7 +143,7 @@ public final class TorrentGlobalSpeedPaneItem extends AbstractPaneItem {
 
     @Override
     public void initOptions() {
-        storedDownloadSpeed = BTEngine2.getInstance().getDownloadSpeedLimit() / 1024;
+        storedDownloadSpeed = BTEngine.getInstance().getDownloadSpeedLimit() / 1024;
 
         if (storedDownloadSpeed == 0) {
             DOWNLOAD_SLIDER.setValue(101 * 1024);
@@ -154,7 +154,7 @@ public final class TorrentGlobalSpeedPaneItem extends AbstractPaneItem {
 
         updateSpeedLabel(DOWNLOAD_SLIDER, DOWNLOAD_SLIDER_LABEL);
 
-        storedUploadSpeed = BTEngine2.getInstance().getUploadSpeedLimit() / 1024;
+        storedUploadSpeed = BTEngine.getInstance().getUploadSpeedLimit() / 1024;
 
         if (storedUploadSpeed == 0) {
             UPLOAD_SLIDER.setValue(101 * 1024);
@@ -193,8 +193,8 @@ public final class TorrentGlobalSpeedPaneItem extends AbstractPaneItem {
          }
          */
 
-        BTEngine2.getInstance().setDownloadSpeedLimit(newDownload * 1024);
-        BTEngine2.getInstance().setUploadSpeedLimit(newUpload * 1024);
+        BTEngine.getInstance().setDownloadSpeedLimit(newDownload * 1024);
+        BTEngine.getInstance().setUploadSpeedLimit(newUpload * 1024);
 
         DOWNLOAD_SLIDER.setValue((newDownload == 0) ? MAX_SLIDER_VALUE : newDownload);
         UPLOAD_SLIDER.setValue((newUpload == 0) ? MAX_SLIDER_VALUE : newUpload);

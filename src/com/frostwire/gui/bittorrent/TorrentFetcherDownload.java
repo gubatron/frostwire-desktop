@@ -18,7 +18,7 @@
 
 package com.frostwire.gui.bittorrent;
 
-import com.frostwire.bittorrent.BTEngine2;
+import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.logging.Logger;
 import com.frostwire.torrent.CopyrightLicenseBroker;
@@ -211,7 +211,7 @@ public class TorrentFetcherDownload implements BTDownload {
                     }
 
                     TorrentInfo ti = TorrentInfo.bdecode(data);
-                    BTEngine2.getInstance().download(ti, null, selection);
+                    BTEngine.getInstance().download(ti, null, selection);
 
                 } catch (Throwable e) {
                     LOG.error("Error downloading torrent", e);
@@ -251,7 +251,7 @@ public class TorrentFetcherDownload implements BTDownload {
                     // use our http client, since we can handle referer
                     data = HttpClientFactory.newInstance().getBytes(uri, 30000, referer);
                 } else {
-                    data = BTEngine2.getInstance().fetchMagnet(uri, 30000);
+                    data = BTEngine.getInstance().fetchMagnet(uri, 30000);
                 }
 
                 if (state == TransferState.CANCELED) {

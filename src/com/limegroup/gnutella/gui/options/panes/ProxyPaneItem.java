@@ -15,7 +15,7 @@
 
 package com.limegroup.gnutella.gui.options.panes;
 
-import com.frostwire.bittorrent.BTEngine2;
+import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.jlibtorrent.ProxySettings;
 import com.frostwire.jlibtorrent.Session;
 import com.limegroup.gnutella.gui.*;
@@ -176,7 +176,7 @@ public final class ProxyPaneItem extends AbstractPaneItem {
         ConnectionSettings.PROXY_HOST.setValue(proxyHost);
 
         // aldenml: OK, I will shortcut directly to the jlibtorrent session
-        Session session = BTEngine2.getInstance().getSession();
+        Session session = BTEngine.getInstance().getSession();
         ProxySettings proxy = session.getProxy();
         if (connectionMethod == ConnectionSettings.C_NO_PROXY) {
             proxy.setType(ProxySettings.ProxyType.NONE);
@@ -190,7 +190,7 @@ public final class ProxyPaneItem extends AbstractPaneItem {
         proxy.setHostname(proxyHost);
         proxy.setPort(proxyPort);
         session.setProxy(proxy);
-        BTEngine2.getInstance().saveSettings();
+        BTEngine.getInstance().saveSettings();
 
         return false;
     }

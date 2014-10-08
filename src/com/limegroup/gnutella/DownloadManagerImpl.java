@@ -16,7 +16,7 @@
 package com.limegroup.gnutella;
 
 import com.frostwire.bittorrent.BTDownload;
-import com.frostwire.bittorrent.BTEngine2;
+import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.bittorrent.BTEngineListener;
 import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.settings.UpdateSettings;
@@ -41,7 +41,7 @@ public class DownloadManagerImpl implements DownloadManager {
 
     public void loadSavedDownloadsAndScheduleWriting() {
 
-        BTEngine2 engine = BTEngine2.getInstance();
+        BTEngine engine = BTEngine.getInstance();
 
         engine.setListener(new BTEngineListener() {
             @Override
