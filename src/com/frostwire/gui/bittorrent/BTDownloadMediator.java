@@ -705,7 +705,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             public void run() {
                 try {
                     BTEngine.getInstance().download(torrentFile, saveDir);
-                } catch (Exception e) {
+                } catch (Throwable e) {
                     e.printStackTrace();
                     if (!e.toString().contains("No files selected by user")) {
                         // could not read torrent file or bad torrent file.

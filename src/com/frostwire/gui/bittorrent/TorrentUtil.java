@@ -43,6 +43,7 @@
  */
 package com.frostwire.gui.bittorrent;
 
+import com.frostwire.bittorrent.BTDownloadItem;
 import com.frostwire.logging.Logger;
 import com.frostwire.transfers.TransferItem;
 import com.frostwire.util.StringUtils;

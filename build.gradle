@@ -77,7 +77,7 @@ sourceSets {
             include '**/*.icc'
             exclude '**/*.DS_Store'
 
-			srcDir '../frostwire-common/components/mp4parser'
+			srcDir '../frostwire-common/mp4parser'
 			include '**/*.properties'
 			exclude '**/*.java'
         }
