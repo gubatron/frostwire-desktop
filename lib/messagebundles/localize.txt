@@ -1,4 +1,4 @@
-Localization notes:
+﻿Localization notes:
 Copyright (c)2002 the LimeWire project team. www.limewire.com
 
 This is the current list of supported locales.
@@ -324,7 +324,7 @@ private final LocaleDef[] LANGUAGES = {
 		{"RO", "HU", "MD", "YU", "UK", "IL"}),
 	new LocaleDef("hr", "Croatian", "Hrvatski",	// Latin-based script
 		"HR", new String[]
-		{"HR", "BH", "SI"}),
+		{"HR", "BH", "SI", "SRB"}),
 	new LocaleDef("da", "Danish", "Dansk",
 		"DK", new String[]
 		{"DK"}),
