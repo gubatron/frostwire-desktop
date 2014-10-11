@@ -1840,7 +1840,7 @@ msgstr "Otvori direktorij kolekcije."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:347
 msgid "Legend"
-msgstr ""
+msgstr "Legenda"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:356
 msgid "Folder and subfolders are included in the Library."
@@ -1869,7 +1869,7 @@ msgstr "Dokumenti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/UITool.java:109
 msgid "Pictures"
-msgstr ""
+msgstr "Slike"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/UITool.java:111
 msgid "Ringtones"
@@ -1924,7 +1924,7 @@ msgstr "Prethodni"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:196
 msgid "Volume"
-msgstr ""
+msgstr "Glasnoca"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:251
 msgid "Send this file to a friend"
@@ -1940,7 +1940,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:329
 msgid "Repeat songs"
-msgstr ""
+msgstr "Ponovi pjesme"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:915
 msgid "this artist(s)"
@@ -1986,7 +1986,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1063
 msgid "unknown device"
-msgstr ""
+msgstr "nepoznat uredjaj"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1074
 #, fuzzy
@@ -2222,12 +2222,12 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/transfers/PeerHttpUpload.java:153
 #, fuzzy
 msgid "Streaming"
-msgstr "Spajam"
+msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/transfers/PeerHttpUpload.java:156
 #, fuzzy
 msgid "Complete"
-msgstr "Komentari"
+msgstr "Zavrseno"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/transfers/PeerHttpUpload.java:159
 #, fuzzy
@@ -2242,7 +2242,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/updates/PortableUpdater.java:77
 #, fuzzy
 msgid "Uncompressing files"
-msgstr "Pokreni oznacene file-ove."
+msgstr "Otpakiravam datoteke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/updates/ProgressMonitor.java:155
 msgid "OptionPane.cancelButtonText"
@@ -2271,7 +2271,7 @@ msgstr "Slike"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/MediaType.java:50
 msgid "Torrents"
-msgstr "Komentari"
+msgstr "Torrenti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:58
 msgid "About FrostWire"
@@ -2438,33 +2438,33 @@ msgstr "Ne"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/DonationButtons.java:55
 msgid "Support FrostWire development with a Bitcoin donation"
-msgstr ""
+msgstr "Podrzi razvoj FrostWire-a sa BitCoin donacijom"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/DonationButtons.java:56
 msgid "Support FrostWire development with a USD $1 donation"
-msgstr ""
+msgstr "Podrzi razvoj FrostWire-a sa donacijom od $1 USD"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/DonationButtons.java:57
 msgid "Support FrostWire development with a USD $5 donation"
-msgstr ""
+msgstr "Podrzi razvoj FrostWire-a sa donacijom od $5 USD"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/DonationButtons.java:58
 msgid "Support FrostWire development with a USD $10 donation"
-msgstr ""
+msgstr "Podrzi razvoj FrostWire-a sa donacijom od $10 USD"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/DonationButtons.java:59
 msgid "Support FrostWire development with a USD $25 donation"
-msgstr ""
+msgstr "Podrzi razvoj FrostWire-a sa donacijom od $25 USD"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/DonationButtons.java:60
 msgid "Support FrostWire development with a Paypal donation"
-msgstr ""
+msgstr "Podrzi razvoj FrostWire-a sa Paypal donacijom"
 
 #. new Font("Helvetica", Font.BOLD, 12);
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/DonationButtons.java:65
 #, fuzzy
 msgid "Donate"
-msgstr "Download"
+msgstr "Doniraj"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/FileChooserHandler.java:81
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/FileChooserHandler.java:99
@@ -2489,7 +2489,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIConstants.java:47
 msgid "Broadband"
-msgstr ""
+msgstr "Sirokopojasna veza"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIConstants.java:48
 msgid "T1"
@@ -2511,17 +2511,17 @@ msgid ""
 "automatically keep trying to connect you to the network unless you select "
 "\"Disconnect\" from the File menu."
 msgstr ""
-"Vaš kompjutor nema aktivnu intenet vezu ili vaš firewal blokira LimWire da "
-"pristupi internetu. FrostWire će vas automatski pokušavati konektirati na "
-"internet osim ako ne odaberete \"Diskonektiraj\" iz menija Datoteka."
+"Vaše računalo nema aktivnu intenet vezu ili vaš firewall blokira FrostWire da "
+"pristupi internetu. FrostWire će vas automatski pokušavati spojiti na "
+"internet osim ako ne odaberete \"Odspoji\" iz menija Datoteka."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIMediator.java:133
 msgid "&Search"
-msgstr "i traži"
+msgstr "&Trazi"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIMediator.java:133
 msgid "&Library"
-msgstr "i biblioteka"
+msgstr "&Biblioteka"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIMediator.java:145
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIMediator.java:173
@@ -2658,7 +2658,7 @@ msgstr "Primjeni radnju"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/InputFieldDialog.java:94
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:45
 msgid "Cancel Operation"
-msgstr "Odustani od radnje."
+msgstr "Odustani od radnje"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:70
 msgid ""
@@ -2694,7 +2694,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:108
 #, fuzzy
 msgid "Visit "
-msgstr "Posjeti {0}"
+msgstr "Posjeti "
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:120
 #, fuzzy
@@ -2704,7 +2704,7 @@ msgstr "Nadogradi Javu"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:121
 #, fuzzy
 msgid "Exit FrostWire"
-msgstr "FrostWire"
+msgstr "Izadji iz FrostWire-a"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:178
 msgid "More Information"
@@ -2721,7 +2721,7 @@ msgstr "Podsjeti me kasnije"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:194
 msgid "Do not Show Again"
-msgstr "Ne pokazuj ponovno"
+msgstr "Ne prikazuj ponovno"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/LanguageWindow.java:192
 msgid "FrostWire must be restarted for the new language to take effect."
