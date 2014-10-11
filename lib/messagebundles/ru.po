@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-05 18:22+0400\n"
-"PO-Revision-Date: 2014-10-07 13:29+0400\n"
+"PO-Revision-Date: 2014-10-10 15:07+0400\n"
 "Last-Translator: X-NicON <x-icon@ya.ru>\n"
 "Language-Team: Russian Team\n"
 "Language: ru\n"
@@ -817,7 +817,7 @@ msgstr "Закрыть (&C)"
 #: src/com/limegroup/gnutella/gui/FileChooserHandler.java:487
 #: src/com/limegroup/gnutella/gui/FileChooserHandler.java:509
 msgid "Select"
-msgstr "Выделить всё"
+msgstr "Выбрать"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:383
 msgid "Unkown error. Try again please."
@@ -944,7 +944,7 @@ msgstr "Проверяется"
 #: src/com/frostwire/gui/bittorrent/HttpDownload.java:64
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1131
 msgid "Finished"
-msgstr "Закончить"
+msgstr "Завершить"
 
 #: src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:105
 msgid "Select files to download"
@@ -1191,16 +1191,16 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:160
 msgid "Use Default"
-msgstr "Использовать стандартную (&D)"
+msgstr "По умолчанию"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:161
 msgid "Use the Default Folder"
-msgstr "Использовать общую папку загрузки"
+msgstr "Использовать папку по умолчанию"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:174
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:200
 msgid "Browse..."
-msgstr "Браузер"
+msgstr "Обзор..."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:175
 msgid "Choose Another Folder"
@@ -1217,9 +1217,9 @@ msgid ""
 "the internet will be able<br/>to download file chunks of the data your "
 "torrents seed. (Recommended)</html>"
 msgstr ""
-"<html><strong>Сид завершил загрузку торрента</strong> Пользователи "
-"BitTorrent в Интернете смогут<br/>скачать части файлов от торрента "
-"раздающего. (Рекомендуется)</html>"
+"<html><strong>Раздавать завершённые торренты</strong> Пользователи "
+"BitTorrent в Интернете смогут<br/>скачивать части файлов от раздоваемого "
+"торрента. (Рекомендуется)</html>"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:77
 msgid ""
@@ -1229,7 +1229,7 @@ msgid ""
 "penalize this Leeching behavior</strong>.</html>"
 msgstr ""
 "<html><strong>Не раздавать торрент после загрузки.</strong> BitTorrent "
-"пользователи интернета могут<br/>скачать файл от вас только  частями, пока "
+"пользователи в Интернете могут<br/>скачать файл от вас только  частями, пока "
 "вы сами осуществляете<br/> загрузку торрента. <strong>Некоторые трекеры "
 "будут наказывать за такое поведение</strong>.</html>"
 
@@ -1245,7 +1245,7 @@ msgstr ""
 "загрузки (частичной загрузки) могут привести к раздаче частей соседних, не "
 "докаченных файлов.<br/>Эта функция <strong>рекомендуется только для "
 "продвинутых пользователей</strong>, так как это может привести к загрузке "
-"частей файлов, которые вы не выбирали для загрузки.</html>"
+"файлов, которые вы не выбирали для загрузки.</html>"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:133
 msgid "Leave a tip"
@@ -3731,10 +3731,10 @@ msgid ""
 "Please select if you want to \"Seed\" or to not \"Seed\" finished downloads. "
 "The link below has more information about \"Seeding\"."
 msgstr ""
-"Выберите папку, для хранения файлов, которые будут загружены из сети "
-"BitTorrent. \n"
+"Выберите папку, для загрузки файлов из сети BitTorrent. \n"
 "Пожалуйста, выберите, если вы даже не собираетесь раздавать загруженные "
-"файлы. Ссылка ниже содержит больше информации о том как раздавать файлы."
+"файлы. Ссылка ниже содержит более подробную информацию о том как раздавать "
+"файлы."
 
 #: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:111
 #, java-format
@@ -3743,7 +3743,8 @@ msgid ""
 "p>\n"
 "<p></p><p align=\"right\"><a href=\"{0}\">What is \"Seeding\"?</a></p></html>"
 msgstr ""
-"<html><p>Вы не выбрали, что делать после завершения загрузки, то есть с \"Раздачей\".</p>\n"
+"<html><p>Вы не выбрали, что делать после завершения загрузки, то есть с "
+"\"Раздачей\".</p>\n"
 "<p align=\"right\"><a href=\"{0}\">Что такое \"Раздача\"?</a></p></html>"
 
 #: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:125
@@ -3809,8 +3810,7 @@ msgstr "Прочие параметры"
 
 #: src/com/limegroup/gnutella/gui/init/MiscWindow.java:58
 msgid "Below, are several options that affect the functionality of FrostWire."
-msgstr ""
-"Ниже несколько вариантов, которые определяют функциональность FrostWire."
+msgstr "Помощь в отладке и разработке FrostWire."
 
 #: src/com/limegroup/gnutella/gui/init/MiscWindow.java:71
 #: src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:22
@@ -3848,7 +3848,7 @@ msgstr "Закончить"
 #: src/com/limegroup/gnutella/gui/init/SetupWindow.java:140
 #: src/com/limegroup/gnutella/gui/options/panes/AbstractPaneItem.java:80
 msgid "Learn more about this option..."
-msgstr "Узнайть больше об этой опции ..."
+msgstr "Подробнее о раздаче файлов..."
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:39
 msgid ""

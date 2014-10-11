@@ -37,7 +37,7 @@ public final class UXStatsPaneItem extends AbstractPaneItem {
 
     public final static String LABEL = I18n.tr("Send anonymous usage statistics so that FrostWire can be improved more effectively. No information regarding content searched, shared or played nor any information that can personally identify you will be stored on disk or sent through the network.");
 
-    public final static String CHECK_BOX_LABEL = I18nMarker.marktr("Send anonymous usage statistics");
+    public final static String CHECK_BOX_LABEL = I18n.tr("Send anonymous usage statistics");
 
     private final JCheckBox CHECK_BOX = new JCheckBox();
 
