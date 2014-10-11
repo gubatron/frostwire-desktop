@@ -19,7 +19,6 @@
 package com.frostwire.gui.bittorrent;
 
 import com.frostwire.bittorrent.BTDownload;
-import com.frostwire.bittorrent.BTDownloadItem;
 import com.frostwire.bittorrent.BTDownloadListener;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.logging.Logger;
@@ -71,7 +70,9 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
         this.size = calculateSize(dl);
         this.partial = dl.isPartial();
 
-        dl.resume();
+        if (dl.getSavedState() != TransferState.PAUSED) {
+            dl.resume();
+        }
     }
 
     public BTDownload getDl() {
