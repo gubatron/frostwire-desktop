@@ -81,56 +81,64 @@ public abstract class SearchEngine {
     public static final SearchEngine MININOVA = new SearchEngine(MININOVA_ID, "Mininova", SearchEnginesSettings.MININOVA_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("www.mininova.org")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new MininovaSearchPerformer(SearchEngine.MININOVA.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("www.mininova.org");
+            return new MininovaSearchPerformer(m, token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine KAT = new SearchEngine(KAT_ID, "KAT", SearchEnginesSettings.KAT_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("kickass.to")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new KATSearchPerformer(SearchEngine.KAT.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("kickass.to");
+            return new KATSearchPerformer(m, token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine EXTRATORRENT = new SearchEngine(EXTRATORRENT_ID, "Extratorrent", SearchEnginesSettings.EXTRATORRENT_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("extratorrent.cc")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new ExtratorrentSearchPerformer(SearchEngine.EXTRATORRENT.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("extratorrent.cc");
+            return new ExtratorrentSearchPerformer(m, token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine TPB = new SearchEngine(TPB_ID, "TPB", SearchEnginesSettings.TPB_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("thepiratebay.se")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new TPBSearchPerformer(SearchEngine.TPB.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("thepiratebay.se");
+            return new TPBSearchPerformer(m, token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine MONOVA = new SearchEngine(MONOVA_ID, "Monova", SearchEnginesSettings.MONOVA_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("www.monova.org")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new MonovaSearchPerformer(SearchEngine.MONOVA.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("www.monova.org");
+            return new MonovaSearchPerformer(m, token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine YOUTUBE = new SearchEngine(YOUTUBE_ID, "YouTube", SearchEnginesSettings.YOUTUBE_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("gdata.youtube.com")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new YouTubeSearchPerformer(SearchEngine.YOUTUBE.getDomainAliasManager(),token, keywords, DEFAULT_TIMEOUT);
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("gdata.youtube.com");
+            return new YouTubeSearchPerformer(m,token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine SOUNDCLOUD = new SearchEngine(SOUNDCLOUD_ID, "Soundcloud", SearchEnginesSettings.SOUNDCLOUD_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("api.sndcdn.com")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new SoundcloudSearchPerformer(SearchEngine.SOUNDCLOUD.getDomainAliasManager(),token, keywords, DEFAULT_TIMEOUT);
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("api.sndcdn.com");
+            return new SoundcloudSearchPerformer(m,token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine ARCHIVEORG = new SearchEngine(ARCHIVEORG_ID, "Archive.org", SearchEnginesSettings.ARCHIVEORG_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("archive.org")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new ArchiveorgSearchPerformer(SearchEngine.ARCHIVEORG.getDomainAliasManager(),token, keywords, DEFAULT_TIMEOUT);
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("archive.org");
+            return new ArchiveorgSearchPerformer(m,token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
@@ -139,42 +147,48 @@ public abstract class SearchEngine {
 
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new FrostClickSearchPerformer(SearchEngine.FROSTCLICK.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT, userAgent);
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("api.frostclick.com");
+            return new FrostClickSearchPerformer(m, token, keywords, DEFAULT_TIMEOUT, userAgent);
         }
     };
 
     public static final SearchEngine BITSNOOP = new SearchEngine(BITSNOOP_ID, "BitSnoop", SearchEnginesSettings.BITSNOOP_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("bitsnoop.com")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new BitSnoopSearchPerformer(SearchEngine.BITSNOOP.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("bitsnoop.com");
+            return new BitSnoopSearchPerformer(m, token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine TORLOCK = new SearchEngine(TORLOCK_ID, "TorLock", SearchEnginesSettings.TORLOCK_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("www.torlock.com")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new TorLockSearchPerformer(SearchEngine.TORLOCK.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("www.torlock.com");
+            return new TorLockSearchPerformer(m, token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine EZTV = new SearchEngine(EZTV_ID, "Eztv", SearchEnginesSettings.EZTV_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("eztv.it")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new EztvSearchPerformer(SearchEngine.EZTV.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("eztv.it");
+            return new EztvSearchPerformer(m, token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
     public static final SearchEngine TORRENTS = new SearchEngine(TORRENTS_ID, "Torrents", SearchEnginesSettings.TORRENTS_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("torrents.fm")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new TorrentsfmSearchPerformer(SearchEngine.TORRENTS.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("torrents.fm");
+            return new TorrentsfmSearchPerformer(m, token, keywords, DEFAULT_TIMEOUT);
         }
     };
     
     public static final SearchEngine YIFY = new SearchEngine(YIFI_ID, "Yify", SearchEnginesSettings.YIFY_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("www.yify-torrent.org")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            return new YifySearchPerformer(SearchEngine.YIFY.getDomainAliasManager(), token, keywords, DEFAULT_TIMEOUT);
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("www.yify-torrent.org");
+            return new YifySearchPerformer(m, token, keywords, DEFAULT_TIMEOUT);
         }
     };
 
