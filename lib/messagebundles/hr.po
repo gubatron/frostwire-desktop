@@ -47,7 +47,7 @@ msgstr "Sakrij"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/HideExitDialog.java:103
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/notify/TrayNotifier.java:112
 msgid "Exit"
-msgstr "Izađi"
+msgstr "Izaci"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:75
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:999
@@ -3262,7 +3262,7 @@ msgstr "Azurirati sada"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:164
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:197
-msgid "Visit "http://www.frostwire.com to update!
+msgid "Visit http://www.frostwire.com to update!"
 msgstr "Posjetite http://www.frostwire.com kako biste azurirali "
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:174
@@ -3334,10 +3334,6 @@ msgstr "&Zatvoriti"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:315
 msgid "Close the program's main window"
 msgstr "Zatvori program."
-
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:326
-msgid "Exit"
-msgstr "Izaci"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:327
 msgid "Close and exit the program"
@@ -4533,7 +4529,7 @@ msgstr "Resetirati bazu podataka pametnog pretrazivanja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:80
 msgid "If you continue you will erase all the information related to\n"
-msgstr "Ukoliko nastavite izbrisati ce te sve informacije u vezi/n"
+msgstr "Ukoliko nastavite izbrisati ce te sve informacije u vezi\n"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:24
 msgid ""
