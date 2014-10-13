@@ -1,10 +1,11 @@
 frostwire (6.0.0) unstable; urgency=high
-  * New BitTorrent engine based on frostwire-jlibtorrent a
-    libtorrent wrapper api created by FrostWire.
+  * New BitTorrent engine based on frostwire-jlibtorrent,
+    a libtorrent wrapper api created by FrostWire.
   * Russian translation updates.
+  * Croatian translation updates.
   * Multiple bug fixes.
 
- -- FrostWire Team <contact@frostwire.com>  Thu, 09 October 2014 23:58:07 -0500
+ -- FrostWire Team <contact@frostwire.com>  Mon, 13 October 2014 00:35:07 -0500
 
 frostwire (5.7.7) stable; urgency=high
   * New: VPN connection status indicator.
