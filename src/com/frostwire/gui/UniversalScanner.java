@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.limewire.util.FilenameUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.StringUtils;
 
 import com.drew.imaging.ImageMetadataReader;

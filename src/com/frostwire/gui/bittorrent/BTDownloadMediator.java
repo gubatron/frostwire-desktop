@@ -52,7 +52,7 @@ import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.settings.*;
-import org.limewire.util.FilenameUtils;
+import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import javax.swing.*;
@@ -628,7 +628,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     private boolean selectionHasMP4s(File saveLocation) {
         boolean hasMP4Files = saveLocation != null
-                && (LibraryUtils.directoryContainsExtension(saveLocation, 4, "mp4") || (saveLocation.isFile() && FilenameUtils.hasExtension(saveLocation.getAbsolutePath(), "mp4")));
+                && (LibraryUtils.directoryContainsExtension(saveLocation, 4, "mp4") || (saveLocation.isFile() && FileUtils.hasExtension(saveLocation.getAbsolutePath(), "mp4")));
         return hasMP4Files;
     }
 

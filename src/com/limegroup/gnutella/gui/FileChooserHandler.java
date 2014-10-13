@@ -12,6 +12,7 @@ import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 
+import org.apache.commons.io.FilenameUtils;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
@@ -657,10 +658,10 @@ public final class FileChooserHandler {
 			if(dir != null && file != null) {
 				
 				if (suggestedFile!=null ) {
-					String suggestedFileExtension = FileUtils
-							.getFileExtension(suggestedFile);
+					String suggestedFileExtension = FilenameUtils
+							.getExtension(suggestedFile.getName());
 					
-					String newFileExtension = FileUtils.getFileExtension(file);
+					String newFileExtension = FilenameUtils.getExtension(file);
 
 					if (newFileExtension == null && suggestedFileExtension!=null) {
 						file = file + "." + suggestedFileExtension;

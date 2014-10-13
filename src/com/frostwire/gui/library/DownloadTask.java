@@ -27,11 +27,12 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 
-import org.limewire.util.FilenameUtils;
+import com.frostwire.util.OSUtils;
 
 import com.frostwire.core.FileDescriptor;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import org.apache.commons.io.FilenameUtils;
 
 public class DownloadTask extends DeviceTask {
 
@@ -91,7 +92,7 @@ public class DownloadTask extends DeviceTask {
                 try {
                     is = url.openStream();
 
-                    String filename = FilenameUtils.cleanFileName(FilenameUtils.getName(currentFD.filePath));
+                    String filename = OSUtils.escapeFilename(FilenameUtils.getName(currentFD.filePath));
                     File file = buildFile(savePath, filename);
                     Path incompleteFile = buildIncompleteFile(file).toPath();
                     lastFile = file.getAbsoluteFile();

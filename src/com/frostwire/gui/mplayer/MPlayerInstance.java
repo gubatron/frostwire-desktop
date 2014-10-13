@@ -42,7 +42,7 @@ import org.gudy.azureus2.core3.util.SimpleTimer;
 import org.gudy.azureus2.core3.util.SystemTime;
 import org.gudy.azureus2.core3.util.TimerEvent;
 import org.gudy.azureus2.core3.util.TimerEventPerformer;
-import org.limewire.util.FilenameUtils;
+import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 
@@ -219,7 +219,7 @@ MPlayerInstance
                 
                 //workaround for mplayer on windows not being able to decode wma correctly with the wma demuxer.
                 //by passing lavf it'll force mplayer to use ffmpeg's demuxer (libavformat).
-                if (FilenameUtils.hasExtension(fileOrUrl, "wma","wmv","asf")) {
+                if (FileUtils.hasExtension(fileOrUrl, "wma", "wmv", "asf")) {
                     cmdList.add("-demuxer");
                     cmdList.add("lavf");
                 }     

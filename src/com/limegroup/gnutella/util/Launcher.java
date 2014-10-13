@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
@@ -195,8 +196,8 @@ public final class Launcher {
 				"bat", "sys", "com", "js", "scpt");
 
 		if (file.isFile()
-				&& forbiddenExtensions.contains(FileUtils
-						.getFileExtension(file))) {
+				&& forbiddenExtensions.contains(FilenameUtils
+						.getExtension(file.getName()))) {
 			throw new SecurityException();
 		}
 		

@@ -25,6 +25,7 @@ import java.util.Map;
 
 import javax.swing.Icon;
 
+import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.FileUtils;
 
 import com.frostwire.gui.Librarian;
@@ -203,8 +204,8 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         
         if (initializer != null && 
             initializer.isFile() && 
-            FileUtils.getFileExtension(initializer) != null && 
-            FileUtils.getFileExtension(initializer).endsWith("torrent")) {
+            FilenameUtils.getExtension(initializer.getName()) != null &&
+            FilenameUtils.getExtension(initializer.getName()).endsWith("torrent")) {
             
             TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(initializer);
             

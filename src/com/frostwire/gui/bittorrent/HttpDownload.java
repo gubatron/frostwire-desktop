@@ -28,7 +28,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import com.frostwire.transfers.TransferState;
-import org.limewire.util.FilenameUtils;
 
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
@@ -40,6 +39,7 @@ import com.frostwire.util.HttpClient.RangeNotSupportedException;
 import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  * @author gubatron
@@ -50,18 +50,6 @@ public class HttpDownload implements BTDownload {
 
     /** TODO: Make this configurable */
     private static final Executor HTTP_THREAD_POOL = Executors.newFixedThreadPool(6);
-
-    private static final String STATE_DOWNLOADING = I18n.tr("Downloading");
-    private static final String STATE_ERROR = I18n.tr("Error");
-    private static final String STATE_ERROR_MD5 = I18n.tr("Error - corrupted file");
-    private static final String STATE_ERROR_MOVING_INCOMPLETE = I18n.tr("Error - can't save");
-    private static final String STATE_PAUSING = I18n.tr("Pausing");
-    private static final String STATE_PAUSED = I18n.tr("Paused");
-    private static final String STATE_CANCELING = I18n.tr("Canceling");
-    private static final String STATE_CANCELED = I18n.tr("Canceled");
-    private static final String STATE_WAITING = I18n.tr("Waiting");
-    private static final String STATE_CHECKING = I18n.tr("Checking");
-    private static final String STATE_FINISHED = I18n.tr("Finished");
 
     private static final int SPEED_AVERAGE_CALCULATION_INTERVAL_MILLISECONDS = 1000;
 
@@ -394,7 +382,7 @@ public class HttpDownload implements BTDownload {
 
         @Override
         public void onData(HttpClient client, byte[] buffer, int offset, int length) {
-            if (!state.equals(STATE_PAUSING) && !state.equals(STATE_CANCELING)) {
+            if (!state.equals(TransferState.PAUSING) && !state.equals(TransferState.CANCELING)) {
                 bytesReceived += length;
                 updateAverageDownloadSpeed();
                 state = TransferState.DOWNLOADING;
@@ -422,12 +410,12 @@ public class HttpDownload implements BTDownload {
 
         @Override
         public void onCancel(HttpClient client) {
-            if (state.equals(STATE_CANCELING)) {
+            if (state.equals(TransferState.CANCELING)) {
                 if (deleteDataWhenCancelled) {
                     cleanup();
                 }
                 state = TransferState.CANCELED;
-            } else if (state.equals(STATE_PAUSING)) {
+            } else if (state.equals(TransferState.PAUSING)) {
                 state = TransferState.PAUSED;
             } else {
                 state = TransferState.CANCELED;

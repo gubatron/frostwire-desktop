@@ -1146,15 +1146,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      * Sets an icon based on the filename extension.      */
     private static class FileNameListCellRenderer extends DefaultListCellRenderer {
 
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 5064313639046811749L;
-
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            String extension = FileUtils.getFileExtension(value.toString());
+            String extension = FilenameUtils.getExtension(value.toString());
             if (extension != null) {
                 setIcon(IconManager.instance().getIconForExtension(extension));
             }
@@ -1168,7 +1163,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     private class FileTextProvider implements CheckBoxList.TextProvider<File> {
 
         public Icon getIcon(File obj) {
-            String extension = FileUtils.getFileExtension(obj);
+            String extension = FilenameUtils.getExtension(obj.getName());
             if (extension != null) {
                 return IconManager.instance().getIconForExtension(extension);
             }

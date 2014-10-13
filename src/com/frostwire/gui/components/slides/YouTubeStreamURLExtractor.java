@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
+import com.frostwire.util.OSUtils;
 import jd.http.Browser;
 import jd.http.Request;
 import jd.nutils.encoding.Encoding;
@@ -380,7 +381,7 @@ class YouTubeStreamURLExtractor {
                     String name = null;
                     if (convertTo != DestinationFormat.AUDIOMP3) {
                         name = YT_FILENAME + info.desc + convertTo.getExtFirst();
-                        name = FileUtils.getValidFileName(name);
+                        name = OSUtils.escapeFilename(name);
                         thislink.setFileName(name);
                     } else {
                         /*

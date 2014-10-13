@@ -40,8 +40,6 @@ import com.limegroup.gnutella.gui.I18n;
 
 public class SlideDownload extends HttpDownload {
 	
-	private static final String STATE_ERROR_INVALID_SIGNATURE = I18n.tr("Error: Corrupted download");
-
 	private static final Logger LOG = Logger.getLogger(SlideDownload.class);
     private final Slide slide;
     

@@ -40,8 +40,8 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import org.apache.commons.io.FilenameUtils;
 import org.limewire.concurrent.ThreadExecutor;
-import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

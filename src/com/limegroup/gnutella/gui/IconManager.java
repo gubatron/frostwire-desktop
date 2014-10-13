@@ -5,6 +5,7 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.SwingUtilities;
 
+import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
@@ -68,11 +69,13 @@ public class IconManager {
     public Icon getIconForFile(File f) {
         validate();
 
-        if (f != null && FileUtils.getFileExtension(f) != null && FileUtils.getFileExtension(f).toLowerCase().endsWith("torrent")) {
+        String ext = f != null ? FilenameUtils.getExtension(f.getName()) : null;
+
+        if (f != null && ext != null && ext.toLowerCase().endsWith("torrent")) {
             return GUIMediator.getThemeImage("frosthires");
         }
         
-        if (f != null && FileUtils.getFileExtension(f) != null && FileUtils.getFileExtension(f).toLowerCase().endsWith("youtube")) {
+        if (f != null && ext != null && ext.toLowerCase().endsWith("youtube")) {
             return GUIMediator.getThemeImage("youtube");
         }
 

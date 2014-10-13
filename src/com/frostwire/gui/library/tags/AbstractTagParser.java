@@ -24,10 +24,9 @@ import java.io.File;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
-import org.limewire.util.FilenameUtils;
-
 import com.frostwire.jpeg.JPEGImageIO;
 import com.frostwire.logging.Logger;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  * 

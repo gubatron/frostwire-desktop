@@ -271,15 +271,7 @@ public class OSUtils {
     public static boolean isWindows8() {
         return _isWindows8;
     }
-    
-    /**
-     * @return true if the application is running on a windows with
-     * the 10 socket limit.
-     */
-    public static boolean isSocketChallengedWindows() {
-        return isWindowsVista() || isWindowsXP();
-    }
-    
+
     /**
      * @return true if the application is running on a windows 
      * that supports native theme.
@@ -443,10 +435,6 @@ public class OSUtils {
         else {
             return 1024 - 1;
         }
-    }
-    
-    public static boolean supportsTLS() {
-        return true;
     }
 
 	public static String getArchitecture() {

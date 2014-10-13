@@ -34,8 +34,8 @@ import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.UpdateSettings;
+import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.CommonUtils;
-import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import javax.swing.*;

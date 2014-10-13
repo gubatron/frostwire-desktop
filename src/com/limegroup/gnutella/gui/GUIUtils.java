@@ -60,6 +60,7 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.table.TableModel;
 
+import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
@@ -556,7 +557,7 @@ public final class GUIUtils {
      *          than immediately playing it, otherwise will play immediately
      */
     private static boolean launchFile(final File file, boolean playOneTime, boolean isPlaying ) {
-        String extension = FileUtils.getFileExtension(file); 
+        String extension = FilenameUtils.getExtension(file.getName());
         if(extension != null && extension.equals("torrent")) {
             GUIMediator.instance().openTorrentFile(file, true);
             return false;

@@ -34,9 +34,9 @@ import java.util.concurrent.ExecutorService;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
+import org.apache.commons.io.FilenameUtils;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.FileUtils;
-import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.IcyInputStream;
@@ -90,7 +90,7 @@ public class LibraryUtils {
         try {
             LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Importing") + " " + file.getName());
             TagsData mt = new TagsReader(file).parse();
-            PlaylistItem item = playlist.newItem(file.getAbsolutePath(), file.getName(), file.length(), FileUtils.getFileExtension(file), mt.getTitle(), mt.getDuration(), mt.getArtist(), mt.getAlbum(), "",// TODO: cover art path
+            PlaylistItem item = playlist.newItem(file.getAbsolutePath(), file.getName(), file.length(), FilenameUtils.getExtension(file.getName()), mt.getTitle(), mt.getDuration(), mt.getArtist(), mt.getAlbum(), "",// TODO: cover art path
                     mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear(), starred);
 
             List<PlaylistItem> items = playlist.getItems();
@@ -572,7 +572,7 @@ public class LibraryUtils {
 
             for (File childFile : directory.listFiles()) {
                 if (!childFile.isDirectory()) {
-                    if (FilenameUtils.hasExtension(childFile.getAbsolutePath(), extensionWithoutDot) && !ignore.contains(childFile)) {
+                    if (FileUtils.hasExtension(childFile.getAbsolutePath(), extensionWithoutDot) && !ignore.contains(childFile)) {
                         return true;
                     }
                 } else {

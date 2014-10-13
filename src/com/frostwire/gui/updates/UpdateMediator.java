@@ -23,8 +23,8 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.CommonUtils;
-import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.logging.Logger;

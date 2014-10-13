@@ -11,7 +11,7 @@ import java.util.TreeSet;
 
 import org.limewire.collection.Comparators;
 import org.limewire.i18n.I18nMarker;
-import org.limewire.util.FilenameUtils;
+import org.limewire.util.FileUtils;
 
 /**
  * A generic type of media, i.e., "video" or "audio".
@@ -241,7 +241,7 @@ public class MediaType implements Serializable {
         if (exts == null)
             return true;
 
-        return FilenameUtils.hasExtension(filename, extsArray);
+        return FileUtils.hasExtension(filename, extsArray);
     }
     
     /** 

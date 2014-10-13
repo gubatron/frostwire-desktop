@@ -37,10 +37,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.FileUtils;
-import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.coremedia.iso.BoxParser;
@@ -288,14 +288,15 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     }
 
     private void calculateDurationInSecs(File f) {
-        if (FileUtils.getFileExtension(f) == null || !FileUtils.getFileExtension(f).toLowerCase().endsWith("mp3") || !FileUtils.getFileExtension(f).toLowerCase().endsWith("m4a")) {
+        String ext = FilenameUtils.getExtension(f.getName());
+        if (ext== null || !ext.toLowerCase().endsWith("mp3") || !ext.toLowerCase().endsWith("m4a")) {
             durationInSeconds = -1;
             return;
         }
 
-        if (FileUtils.getFileExtension(f).toLowerCase().endsWith("mp3")) {
+        if (ext.toLowerCase().endsWith("mp3")) {
             durationInSeconds = getDurationFromMP3(f);
-        } else if (FileUtils.getFileExtension(f).toLowerCase().endsWith("m4a")) {
+        } else if (ext.toLowerCase().endsWith("m4a")) {
             durationInSeconds = getDurationFromM4A(f);
         }
     }
@@ -493,7 +494,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     }
 
     public static boolean isPlayableFile(String filename) {
-        return FilenameUtils.hasExtension(filename, getPlayableExtensions());
+        return FileUtils.hasExtension(filename, getPlayableExtensions());
     }
 
     public static String[] getPlayableExtensions() {

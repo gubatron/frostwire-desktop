@@ -48,11 +48,11 @@ import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 
+import org.apache.commons.io.FilenameUtils;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
 import org.gudy.azureus2.core3.util.TorrentUtils;
-import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;

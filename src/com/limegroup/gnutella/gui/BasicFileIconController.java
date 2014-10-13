@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.swing.Icon;
 
+import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.FileUtils;
 
 import com.limegroup.gnutella.gui.search.NamedMediaType;
@@ -18,7 +19,7 @@ public class BasicFileIconController implements FileIconController {
         if(f == null)
             return null;
         
-        String extension = FileUtils.getFileExtension(f);
+        String extension = FilenameUtils.getExtension(f.getName());
         if(extension != null)
             return getIconForExtension(extension);
         else

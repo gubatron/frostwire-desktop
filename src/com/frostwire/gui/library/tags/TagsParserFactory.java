@@ -17,11 +17,11 @@
 
 package com.frostwire.gui.library.tags;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-
-import org.limewire.util.FilenameUtils;
 
 /**
  * 

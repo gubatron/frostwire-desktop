@@ -16,6 +16,7 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.filechooser.FileView;
 import javax.swing.plaf.FileChooserUI;
 
+import org.apache.commons.io.FilenameUtils;
 import org.limewire.collection.FixedsizeForgetfulHashMap;
 import org.limewire.collection.FixedsizeForgetfulHashSet;
 import org.limewire.concurrent.ExecutorsHelper;
@@ -161,7 +162,7 @@ public class NativeFileIconController implements FileIconController {
         if(VIEW.isIconCached(f) || f.exists()) {
             return VIEW.getIcon(f);
         } else {
-            String extension = FileUtils.getFileExtension(f);
+            String extension = FilenameUtils.getExtension(f.getName());
             if (extension != null)
                 return getIconForExtension(extension);
             else

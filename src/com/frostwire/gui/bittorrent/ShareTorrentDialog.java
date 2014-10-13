@@ -379,29 +379,6 @@ public class ShareTorrentDialog extends JDialog {
 		_feedbackLabel.setLocation((int) (x-getLocationOnScreen().getX()), startY);
 		_feedbackLabel.setVisible(true);
 		_feedbackLabel.setText(title);
-		
-		//Animate
-		//int Y_DISPLACEMENT = 50;
-		
-//		Timeline timeline = new Timeline(new TimelineJLabel(_feedbackLabel));
-//
-//		timeline.addCallback(new TimelineCallbackAdapter() {
-//			
-//			@Override
-//			public void onTimelineStateChanged(TimelineState oldState,
-//					TimelineState newState, float durationFraction,
-//					float timelinePosition) {
-//				if (newState == TimelineState.DONE) {
-//					_feedbackLabel.setVisible(false);
-//				}
-//			}
-//		});
-//		
-//		timeline.setDuration(800);
-//		timeline.addPropertyToInterpolate("y", startY,(int) startY-Y_DISPLACEMENT);
-//		timeline.addPropertyToInterpolate("color",Color.BLACK, _feedbackLabel.getBackground());
-//		timeline.play();
-		
 	}
 
 	private class TwitterAction extends AbstractAction {

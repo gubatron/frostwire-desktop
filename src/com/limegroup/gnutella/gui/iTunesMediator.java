@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.CommonUtils;
@@ -101,7 +102,7 @@ public final class iTunesMediator {
         File[] files;
         if (file.isDirectory()) {
             files = FileUtils.getFilesRecursive(file, iTunesSettings.ITUNES_SUPPORTED_FILE_TYPES.getValue());
-        } else if (file.isFile() && isSupported(FileUtils.getFileExtension(file))) {
+        } else if (file.isFile() && isSupported(FilenameUtils.getExtension(file.getName()))) {
             files = new File[] { file };
         } else {
             return;
@@ -125,7 +126,7 @@ public final class iTunesMediator {
                 continue;
             }
 
-            if (f.exists() && f.isFile() && isSupported(FileUtils.getFileExtension(f))) {
+            if (f.exists() && f.isFile() && isSupported(FilenameUtils.getExtension(f.getName()))) {
                 completeFiles.add(f);
             }
         }

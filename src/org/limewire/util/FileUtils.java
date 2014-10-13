@@ -40,6 +40,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import com.frostwire.logging.Logger;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  * Provides file manipulation methods; ensures a file exists, makes a file 
@@ -56,8 +57,6 @@ public class FileUtils {
     
     /**
      * Writes the passed Object to corresponding file
-     * @param file The file to which to write 
-     * @param map The Object to be stored
      */
     public static void writeObject(File f, Object obj)
         throws IOException {
@@ -150,38 +149,10 @@ public class FileUtils {
         }
         return false;
     }
-
-    /** 
-     * Detects attempts at directory traversal by testing if testDirectory 
-     * really is the parent of testPath.  This method should be used to make
-     * sure directory traversal tricks aren't being used to trick
-     * LimeWire into reading or writing to unexpected places.
-     * 
-     * Directory traversal security problems occur when software doesn't 
-     * check if input paths contain characters (such as "../") that cause the
-     * OS to go up a directory.  This function will ignore benign cases where
-     * the path goes up one directory and then back down into the original directory.
-     * 
-     * @return false if testParent is not the parent of testChild.
-     * @throws IOException if getCanonicalPath throws IOException for either input file
-     */
-    public static final boolean isReallyParent(File testParent, File testChild) throws IOException {
-        // Don't check testDirectory.isDirectory... 
-        // If it's not a directory, it won't be the parent anyway.
-        // This makes the tests more simple.
-        
-        String testParentName = getCanonicalPath(testParent);
-        String testChildParentName = getCanonicalPath(testChild.getAbsoluteFile().getParentFile());
-        if (! testParentName.equals(testChildParentName))
-            return false;
-        
-        return true;
-    }
     
     /**
      * Detects attempts at directory traversal by testing if testDirectory 
      * really is a parent of testPath.
-     * @see isReallyParent
      */
     public static final boolean isReallyInParentPath(File testParent, File testChild) throws IOException {
 
@@ -191,47 +162,6 @@ public class FileUtils {
             testChildParentFile = testChild.getAbsoluteFile();
     	String testChildParentName = getCanonicalPath(testChildParentFile);
     	return testChildParentName.startsWith(testParentName);
-    }
-    
-    /**
-     * Utility method that returns the file extension of the given file.
-     * 
-     * @param f the <tt>File</tt> instance from which the extension 
-     *   should be extracted
-     * @return the file extension string, or <tt>null</tt> if the extension
-     *   could not be extracted
-     */
-    public static String getFileExtension(File f) {
-        String name = f.getName();
-        return getFileExtension(name);
-    }
-     
-    /**
-     * Utility method that returns the file extension of the given file.
-     * 
-     * @param name the file name <tt>String</tt> from which the extension
-     *  should be extracted
-     * @return the file extension string (without the dot), or <tt>null</tt> if the extension
-     *   could not be extracted
-     */
-    public static String getFileExtension(String name) {
-        int index = name.lastIndexOf(".");
-        if (index == -1) {
-            return null;
-        }
-
-        // the file must have a name other than the extension
-        if (index == 0) {
-            return null;
-        }
-
-        // if the last character of the string is the ".", then there's
-        // no extension
-        if (index == (name.length() - 1)) {
-            return null;
-        }
-
-        return name.substring(index + 1);
     }
     
     /**
@@ -324,7 +254,7 @@ public class FileUtils {
                     if (filter == null)
                         shouldAdd = true;
                     else {
-                        String ext = FileUtils.getFileExtension(currFile);
+                        String ext = FilenameUtils.getExtension(currFile.getName());
                         for (int j = 0; (j < filter.length) && (ext != null); j++) {
                             if (ext.equalsIgnoreCase(filter[j]))  {
                                 shouldAdd = true;
@@ -349,49 +279,6 @@ public class FileUtils {
 
         return retArray;
     }
-    
-    /** Given a folder path it'll return all the files contained within it and it's subfolders
-     * as a flat set of Files.
-     * 
-     * Non-recursive implementation, up to 20% faster in tests than recursive implementation. :)
-     * 
-     * @author gubatron
-     * @param folder
-     * @param extensions If you only need certain files filtered by their extensions, use this string array (without the "."). or set to null if you want all files. e.g. ["txt","jpg"] if you only want text files and jpegs.
-     * 
-     * @return The set of files.
-     */
-    public static Collection<File> getAllFolderFiles(File folder, String[] extensions) {
-        Set<File> results = new HashSet<File>();
-        Stack<File> subFolders = new Stack<File>();
-        File currentFolder = folder;
-        while (currentFolder != null && currentFolder.isDirectory() && currentFolder.canRead()) {
-            File[] fs = null;
-            try {
-                fs = currentFolder.listFiles();
-            } catch (SecurityException e) {
-            }
-            
-            if (fs != null && fs.length > 0) {
-                for (File f : fs) {
-                    if (!f.isDirectory()) {
-                        if (extensions == null || FilenameUtils.isExtension(f.getName(), extensions)) {
-                            results.add(f);
-                        }
-                    } else {
-                        subFolders.push(f);
-                    }
-                }
-            }
-            
-            if (!subFolders.isEmpty()) {
-                currentFolder = subFolders.pop();
-            } else {
-                currentFolder = null;
-            }
-        }
-        return results;
-    }    
 
     /**
      * Deletes the given file or directory, moving it to the trash can or 
@@ -521,43 +408,6 @@ public class FileUtils {
 
 		return directory.delete();
 	}
-    
-    /**
-     * @return true if the two files are the same.  If they are both
-     * directories returns true if there is at least one file that 
-     * conflicts.
-     */
-    public static boolean conflictsAny(File a, File b) {
-    	if (a.equals(b))
-    		return true;
-    	Set<File> unique = new HashSet<File>();
-    	unique.add(a);
-    	for (File recursive: getFilesRecursive(a,null))
-    		unique.add(recursive);
-    	
-    	if (unique.contains(b))
-    		return true;
-    	for (File recursive: getFilesRecursive(b,null)) {
-    		if (unique.contains(recursive))
-    			return true;
-    	}
-    	
-    	return false;
-    	
-    }
-    
-    /**
-     * Returns total length of all files by going through
-     * the given directory (if it's a directory).
-     */
-    public static long getLengthRecursive(File f) {
-    	if (!f.isDirectory())
-    		return f.length();
-    	long ret = 0;
-    	for (File file : getFilesRecursive(f,null))
-    		ret += file.length();
-    	return ret;
-    }
 
     /**
      * A utility method to close Closeable objects (Readers, Writers, 
@@ -671,17 +521,6 @@ public class FileUtils {
         
         throw iox;
     }
-
-    public static File getJarFromClasspath(String markerFile) {
-        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        if (classLoader == null) {
-            classLoader = FileUtils.class.getClassLoader();
-        }
-        if (classLoader == null) {
-            return null;
-        }
-        return getJarFromClasspath(classLoader, markerFile);
-    }
     
     public static File getJarFromClasspath(ClassLoader classLoader, String markerFile) {
         if (classLoader == null) {
@@ -699,22 +538,6 @@ public class FileUtils {
         }
 
         return null;
-    }
-
-    public static void copyDirectoryRecursively(File srcDir, File targetDir) {
-    	if (!targetDir.exists()) {
-    		targetDir.mkdir();
-    		targetDir.setWritable(true);
-    	}
-    	
-    	for (File srcElement : srcDir.listFiles()) {
-    		if (srcElement.isFile()) {
-    			FileUtils.copy(srcElement, 
-    					new File(targetDir + File.separator + srcElement.getName()));
-    		} else if (srcElement.isDirectory()) {
-    			FileUtils.copyDirectoryRecursively(srcElement, new File(targetDir,srcElement.getName()));
-    		}
-    	}
     }
     
     public static boolean deleteEmptyDirectoryRecursive(File directory) {
@@ -752,11 +575,6 @@ public class FileUtils {
         return canDelete ? directory.delete() : false;
     }
     
-    public static String getValidFileName(String fileName) {
-        String newFileName = fileName.replaceAll("[\\\\/:*?\"<>|\\[\\]]+", "_");
-        return newFileName;
-    }
-    
     public static File[] listFiles(File directoryFile) {
         List<File> files = new LinkedList<File>();
         DirectoryStream<Path> dir = null;
@@ -770,5 +588,18 @@ public class FileUtils {
         }
 
         return files.toArray(new File[0]);
+    }
+
+    public static boolean hasExtension(String filename, String ... extensionsWithoutDot) {
+
+        String extension = FilenameUtils.getExtension(filename).toLowerCase();
+
+        for (String ext : extensionsWithoutDot) {
+            if (ext.equalsIgnoreCase(extension)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
