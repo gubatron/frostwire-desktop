@@ -70,7 +70,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
         this.size = calculateSize(dl);
         this.partial = dl.isPartial();
 
-        if (dl.getSavedState() != TransferState.PAUSED) {
+        if (!dl.wasPaused()) {
             dl.resume();
         }
     }
