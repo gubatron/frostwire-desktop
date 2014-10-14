@@ -349,7 +349,7 @@ msgstr "Compartidos"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:166
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:326
 msgid "Peers"
-msgstr "Pares"
+msgstr "Compañeros"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:169
 msgid "Share Ratio"
@@ -5028,11 +5028,11 @@ msgstr "Reproductor de video"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:38
 msgid "You can see and share your file with peers in your local Wi-Fi network."
-msgstr "Puedes ver y compartir tu archivo con pares en tu red local Wi-Fi."
+msgstr "Puedes ver y compartir tu archivo con compañeros en tu red local Wi-Fi."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:45
 msgid "Active search and discovery of local peer files."
-msgstr "Activa búsqueda y descubrimiento de archivos de pares locales."
+msgstr "Activa búsqueda y descubrimiento de archivos de compañeros locales."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:40
 msgid "You can have FrostWire import newly downloaded songs into iTunes."
@@ -5366,7 +5366,7 @@ msgstr ""
 #~ msgstr "Descargando torrent"
 
 #~ msgid "Couldn't download Torrent, not enough peers."
-#~ msgstr "No se puede descargar Torrent, no hay suficientes pares."
+#~ msgstr "No se puede descargar Torrent, no hay suficientes compañeros."
 
 #~ msgid "globalmanager.download.remove.veto"
 #~ msgstr "globalmanager.download.remove.veto"
