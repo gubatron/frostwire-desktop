@@ -4633,7 +4633,7 @@ msgstr "Brzina upload-anja"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:72
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:100
 msgid "Min speed"
-msgstr ""
+msgstr "Minimalna brzina"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:73
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:101
@@ -4673,7 +4673,7 @@ msgstr "Još postavki"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:30
 msgid "You can choose which video player to use."
-msgstr ""
+msgstr "Mozete izabrati koji video igrac zelite koristiti"
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4682,45 +4682,45 @@ msgstr ""
 #.
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:37
 msgid "Video Player"
-msgstr ""
+msgstr "Video igrac"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:38
 msgid "You can see and share your file with peers in your local Wi-Fi network."
-msgstr ""
+msgstr "Mozete vidjeti i dijeliti vase datoteke sa peer-ovima u vasoj lokalnoj Wi-Fi konekciji."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:45
 msgid "Active search and discovery of local peer files."
-msgstr ""
+msgstr "Aktivna pretraga i otkrivanje lokalnih peer dokumenata"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:40
 msgid "You can have FrostWire import newly downloaded songs into iTunes."
-msgstr ""
+msgstr "FrostWire moze uvesti novo preuzene pjesme u iTunes."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:42
 msgid "Enable iTunes importing:"
-msgstr ""
+msgstr "Ukljuciti iTunes uvoz"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/LabeledRangeSlider.java:60
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:108
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:110
 msgid "Max"
-msgstr ""
+msgstr "Maksimalno"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SchemaBox.java:116
 msgid "No results so far..."
-msgstr ""
+msgstr "Jos uvijek nema rezultata..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SchemaBox.java:150
 msgid "%s Audio files found (including .mp3, .wav, .ogg, and more)"
-msgstr ""
+msgstr "%s Audio datoteke pronadene (ukljucujuci .mp3, .wav, .ogg i jos vise)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SchemaBox.java:155
 msgid "%s Video files found (including .avi, .mpg, .wmv, and more)"
-msgstr ""
+msgstr "%s Video datoteke pronadene (ukljucujuci .avi, .mpg, .wmv i jos vise)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SchemaBox.java:160
 msgid "%s Image files found (including .jpg, .gif, .png and more)"
-msgstr ""
+msgstr "%s Dadoteke slika pronadene (ukljucujuci .jpg, .gif, .png i jos vise)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SchemaBox.java:166
 msgid "%s Document files found (including .html, .txt, .pdf, and more)"
@@ -4728,7 +4728,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SchemaBox.java:171
 msgid "%s Program files found (including .exe, .zip, .gz, and more)"
-msgstr ""
+msgstr "%s Dokumenti progrrama pronadeni (ukljucujuci .exe, .zip, .gz i jos vise)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SchemaBox.java:176
 msgid ""
@@ -4742,11 +4742,11 @@ msgstr "Stani"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchButtons.java:48
 msgid "Open Options dialog"
-msgstr "Još postavki"
+msgstr "Otvoriti opcije dijaloga"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchButtons.java:49
 msgid "Download All Selected Files"
-msgstr "Download-aj sve označene file-ove."
+msgstr "Preuzeti sve odaberene datoteke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchButtons.java:50
 msgid ""
@@ -4755,7 +4755,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchButtons.java:51
 msgid "Stop current search"
-msgstr "Zatvori pretragu"
+msgstr "Zatvori trenutacnu pretragu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:87
 msgid "Close Search"
@@ -4763,31 +4763,31 @@ msgstr "Zatvori pretragu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:89
 msgid "Launch Action"
-msgstr "Pokreni"
+msgstr "Pokrenuti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:91
 msgid "Repeat Search"
-msgstr "Zatvori pretragu"
+msgstr "Ponoviti pretragu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:93
 msgid "Download Partial Files"
-msgstr "Stranica preuzimanja datoteka"
+msgstr "Preuzeti djelomicne datoteke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:95
 msgid "Torrent Details"
-msgstr "BitTorent postavke"
+msgstr "Detalji torrenta"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:97
 msgid "View in YouTube"
-msgstr ""
+msgstr "Pogledati u YouTube-u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:99
 msgid "View in Soundcloud"
-msgstr ""
+msgstr "Pogledati u SoundCloud-u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:101
 msgid "View in Archive.org"
-msgstr ""
+msgstr "Pogledati u Archive.org-u"
 
 #. Set the splash screen text...
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:127
@@ -4802,16 +4802,16 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:217
 msgid "Your search is too long. Please make your search smaller and try again."
-msgstr ""
+msgstr "Vase pretrazivanje je pre veliko. Molimo napravite vase pretrazivanje manje i pokusajte ponovno."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:107
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:109
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:127
 msgid "Name|Source|Ext."
-msgstr ""
+msgstr "Ime|Izvor|Prosirenje."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:194
 msgid ""
@@ -4823,39 +4823,39 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/tables/AbstractActionsRenderer.java:85
 #, fuzzy
 msgid "Play/Preview"
-msgstr "Prethodni"
+msgstr "Igrati/Pregled"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:111
 #, fuzzy
 msgid "Select content to download from this torrent."
-msgstr "Zaustavi oznacene download-e."
+msgstr "Odabrati sadrzaj za preuzeti iz ovog torrenta."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultDisplayer.java:579
 #, fuzzy
 msgid "results"
-msgstr "Prikaži filtere rezultata pretrage."
+msgstr "Rezultati"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:357
 msgid "Copy Hash"
-msgstr "Kopiraj"
+msgstr "Kopirati"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:371
 msgid "Search More"
-msgstr ""
+msgstr "Traziti vise"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:708
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:709
 #, fuzzy
 msgid "Search tools"
-msgstr "Pretrage"
+msgstr "Pretrazni alati"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchTableColumns.java:50
 msgid "Source"
-msgstr "Nadji izvore"
+msgstr "Izvor"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchTableColumns.java:53
 msgid "Created"
-msgstr "Stvoren"
+msgstr "Stvoreno"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/shell/FrostAssociations.java:104
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/shell/FrostAssociations.java:116
@@ -4878,7 +4878,7 @@ msgstr "Povrati osnovne postavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:56
 msgid "More Options"
-msgstr "Još postavki"
+msgstr "Jos postavki"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:62
 msgid "Stripe Rows"
@@ -4894,23 +4894,23 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:189
 msgid "You cannot turn off all columns."
-msgstr ""
+msgstr "Ne mozete zatvoriti sve stupce."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:37
 msgid "Invalid Filename"
-msgstr "Nevažeće alternativne lokacije"
+msgstr "Nevazace ime dokumenta"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:40
 msgid "Download Already Finished"
-msgstr "Download-aj sve označene file-ove."
+msgstr "Preuzimanje vec zavrseno."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:43
 msgid "No Write Permission"
-msgstr ""
+msgstr "Nema pismene dozvole"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:46
 msgid "Folder Does Not Exist"
-msgstr ""
+msgstr "Mapa ne postoji"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:49
 msgid "File Already Exists"
@@ -4918,7 +4918,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:52
 msgid "Filename Taken"
-msgstr "Ime datoteke se već koristi."
+msgstr "Ime dokumenta vec postoji"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:55
 msgid "Not a Folder"
@@ -4926,7 +4926,7 @@ msgstr "Nanovo ucitaj direktorije za razmjenu."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:58
 msgid "Not a File"
-msgstr ""
+msgstr "Nije dokument"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:61
 msgid "Filesystem Error"
@@ -4934,7 +4934,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:64
 msgid "Same File Already Being Downloaded"
-msgstr "Ista datoteka se već skida."
+msgstr "Ista datoteka vec se preuzima"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:88
 #, java-format
@@ -4945,7 +4945,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:91
 msgid "Could not set the file location, the download is already finished."
-msgstr "Nemoguće postaviti lokaciju, skidanje datoteke već završeno."
+msgstr "Nije moguce postaviti lokaciju dokumenta, preuzimanje je vec svrseno."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:94
 #, java-format
@@ -4963,12 +4963,12 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:102
 #, java-format
 msgid "A file already exists at {0}."
-msgstr ""
+msgstr "Dokument vec postoji u {0}"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:106
 #, java-format
 msgid "Another download is already saving to {0}."
-msgstr ""
+msgstr "Drugo preuzimanje se vec sacuva u {0}"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:110
 #, java-format
@@ -4984,11 +4984,11 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:117
 msgid "Could not set file location due to an error in the filesystem."
-msgstr ""
+msgstr "Nije moguce postaviti lokaciju dokumenta zbog greske u sistemu dokumenata."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:119
 msgid "The same file is already being downloaded."
-msgstr "Ista datoteka se već skida."
+msgstr "Isti dokument se vec preuzima."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:121
 #, java-format
@@ -4998,16 +4998,16 @@ msgid ""
 msgstr ""
 
 #~ msgid "Downloading Torrent"
-#~ msgstr "Download"
+#~ msgstr "Preuzimanje torrenta"
 
 #~ msgid "Number of upload slots per torrent"
-#~ msgstr "Maximalna slanja datoteka po torrentu"
+#~ msgstr "Broj upload-a po torrentu"
 
 #~ msgid "Loading Community Chat Window..."
 #~ msgstr "Učitavanje prozora nadgledavanja.."
 
 #~ msgid "Torrent Properties"
-#~ msgstr "BitTorent postavke"
+#~ msgstr "Torrent svojstva"
 
 #, fuzzy
 #~ msgid "(High Quality)"
@@ -5022,7 +5022,7 @@ msgstr ""
 #~ msgstr "Kvalitet"
 
 #~ msgid "Stopped"
-#~ msgstr "Stani"
+#~ msgstr "Stalo"
 
 #, fuzzy
 #~ msgid " selected videos..."
@@ -5040,7 +5040,7 @@ msgstr ""
 #~ "šanse za uspješno završavanje preuzimanja."
 
 #~ msgid "language"
-#~ msgstr "Jezik"
+#~ msgstr "jezik"
 
 #~ msgid "backuplanguage"
 #~ msgstr "Jezik"
@@ -5097,7 +5097,7 @@ msgstr ""
 #~ msgstr "Aplikacija"
 
 #~ msgid "Publisher"
-#~ msgstr "Izdavač"
+#~ msgstr "Izdavac"
 
 #~ msgid "Platform"
 #~ msgstr "Platforma"
@@ -5112,19 +5112,19 @@ msgstr ""
 #~ msgstr "Magnet linkovi za brža preuzimanja (ako imate instaliran LimWire)"
 
 #~ msgid "Content Filters"
-#~ msgstr "&Filteri rezultata"
+#~ msgstr "Filteri rezultata"
 
 #~ msgid "Use Defaults"
 #~ msgstr "Koristi osnovne postavke"
 
 #~ msgid "Send audio to iTunes"
-#~ msgstr "Spremi detalje u datoteku"
+#~ msgstr "Poslati audio u iTunes"
 
 #~ msgid "Finished Downloads"
 #~ msgstr "Traži i download-aj file-ove."
 
 #~ msgid "Devices"
-#~ msgstr "Pregled"
+#~ msgstr "Uredaji"
 
 #~ msgid "View Repository of Saved Files"
 #~ msgstr "Vidi repozitorij snimljenih file-ova."
@@ -5154,16 +5154,16 @@ msgstr ""
 #~ msgstr "Kvalitet:"
 
 #~ msgid "Save Download As"
-#~ msgstr "Download-i"
+#~ msgstr "Sacuvati preuzimanje kao"
 
 #~ msgid "Filter&s"
-#~ msgstr "file-ova"
+#~ msgstr "Filter&i"
 
 #~ msgid "&Navigation"
 #~ msgstr "&Navigacija"
 
 #~ msgid "&Resources"
-#~ msgstr "Obnovi"
+#~ msgstr "&Resursi"
 
 #~ msgid "Result &Filters"
 #~ msgstr "&Filteri rezultata"
@@ -5223,7 +5223,7 @@ msgstr ""
 #~ msgstr "Slab"
 
 #~ msgid "None"
-#~ msgstr "Ne"
+#~ msgstr "Nista"
 
 #~ msgid "Name Asc"
 #~ msgstr "Ime"
@@ -5241,7 +5241,7 @@ msgstr ""
 #~ msgstr "Velicina"
 
 #~ msgid "Open"
-#~ msgstr "Otvori..."
+#~ msgstr "Otvori"
 
 #~ msgid "Delete Files"
 #~ msgstr "Izbrisi oznacene file-ove."
