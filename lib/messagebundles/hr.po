@@ -1799,7 +1799,7 @@ msgstr "Prikaži filtere rezultata pretrage."
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibrarySearch.java:158
 #, fuzzy
 msgid "Search in Library"
-msgstr "Kolekcije"
+msgstr "Trazi u knjiznici"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryUtils.java:91
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
@@ -2928,7 +2928,7 @@ msgstr "Preuzimanja:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:840
 msgid "Uploads:"
-msgstr "Slanje datoteka"
+msgstr "Uploadovi:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:841
 msgid "Total Downstream:"
@@ -3250,15 +3250,15 @@ msgstr "Nadji još skin-ova na frostwire.com."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:41
 msgid "New Version Available!"
-msgstr ""
+msgstr "Nova verzija dostupna!"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:108
 msgid "A new version of FrostWire is available."
-msgstr ""
+msgstr "Nova verzija FrostWire-a je dostupna."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:161
 msgid "Update Now"
-msgstr "Azurirati sada"
+msgstr "Nadograditi sada"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:164
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:197
@@ -3278,7 +3278,7 @@ msgstr "Azuriranje spremno"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:194
 msgid "Update Later"
-msgstr "Azurirati kasnije"
+msgstr "Nadograditi kasnije"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdatePanel.java:25
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdatePanel.java:43
@@ -3303,11 +3303,11 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:62
 msgid "Opens a magnet link or torrent file"
-msgstr ""
+msgstr "Otvara magnet link ili torrent datoteku"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:86
 msgid "Download .Torrent or Magnet or YouTube video link"
-msgstr ""
+msgstr "Preuzeti .Torrent, Magnet ili YouTube video link"
 
 #. panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, the file path or web address of a torrent file, or a YouTube Web address and FrostWire will start downloading it for you."),
 #. true), constraints);
@@ -3536,7 +3536,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:53
 msgid "BitTorrent Sharing Settings"
-msgstr "BitTorent postavke"
+msgstr "BitTorent postavke dijeljenja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:57
 msgid ""
@@ -3563,7 +3563,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/IntentPanel.java:63
 msgid "You're almost done!"
-msgstr ""
+msgstr "Skoro ste gotovi!"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/IntentPanel.java:64
 msgid "State your intent below to start using FrostWire "
@@ -3631,7 +3631,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/SetupManager.java:247
 msgid "FrostWire Setup Wizard"
-msgstr ""
+msgstr "FrostWire instalacijski carobnjak"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/SetupManager.java:520
 msgid "Next >>"
@@ -3852,16 +3852,16 @@ msgstr "Azurirati Frostwire do zadnje verzije"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:117
 #, fuzzy
 msgid "You are up to date with FrostWire"
-msgstr ""
+msgstr "Nema novih FrostWire nadogradnji"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:122
 #, fuzzy
 msgid "Downloading update..."
-msgstr "Preuzimanje azuracije"
+msgstr "Preuzimanje nadogradnje..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:127
 msgid "Install update"
-msgstr "Preuzeti azuraciju"
+msgstr "Instaliraj nadogradnju"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:132
 #, fuzzy
@@ -4018,7 +4018,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:316
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:58
 msgid "File Associations"
-msgstr ""
+msgstr "Asocijacije datoteka"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:319
 msgid "System Boot"
@@ -6650,7 +6650,7 @@ msgstr ""
 #~ "kako bi vaš doživljaj bio glađi što je moguće."
 
 #~ msgid "Content"
-#~ msgstr "Zadrzaj"
+#~ msgstr "Sadrzaj"
 
 #~ msgid "The Most Advanced File Sharing Program on the Planet!"
 #~ msgstr ""
