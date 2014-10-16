@@ -2114,110 +2114,110 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/tabs/SearchDownloadTab.java:51
 #, fuzzy
 msgid "Search and Download Files from the Internet."
-msgstr "Traži i download-aj file-ove."
+msgstr "Traži i preuzmi datoteke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:531
 msgid "FileChooser.lookInLabelText"
-msgstr ""
+msgstr "FileChooser.lookInLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:532
 msgid "FileChooser.saveInLabelText"
-msgstr ""
+msgstr "FileChooser.saveInLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:535
 msgid "FileChooser.fileNameLabelText"
-msgstr ""
+msgstr "FileChooser.fileNameLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:537
 msgid "FileChooser.folderNameLabelText"
-msgstr ""
+msgstr "FileChooser.folderNameLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:540
 msgid "FileChooser.filesOfTypeLabelText"
-msgstr ""
+msgstr "FileChooser.filesOfTypeLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:542
 msgid "FileChooser.upFolderToolTipText"
-msgstr ""
+msgstr "FileChooser.upFolderToolTipText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:543
 msgid "FileChooser.upFolderAccessibleName"
-msgstr ""
+msgstr "FileChooser.upFolderAccessibleName"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:545
 msgid "FileChooser.homeFolderToolTipText"
-msgstr ""
+msgstr "FileChooser.homeFolderToolTipText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:546
 msgid "FileChooser.homeFolderAccessibleName"
-msgstr ""
+msgstr "FileChooser.homeFolderAccessibleName"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:548
 msgid "FileChooser.newFolderToolTipText"
-msgstr ""
+msgstr "FileChooser.newFolderToolTipText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:549
 msgid "FileChooser.newFolderAccessibleName"
-msgstr ""
+msgstr "FileChooser.newFolderAccessibleName"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:551
 msgid "FileChooser.listViewButtonToolTipText"
-msgstr ""
+msgstr "FileChooser.listViewButtonToolTipText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:552
 msgid "FileChooser.listViewButtonAccessibleName"
-msgstr ""
+msgstr "FileChooser.listViewButtonAccessibleName"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:554
 msgid "FileChooser.detailsViewButtonToolTipText"
-msgstr ""
+msgstr "FileChooser.detailsViewButtonToolTipText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/BaseFileChooserUI.java:555
 msgid "FileChooser.detailsViewButtonAccessibleName"
-msgstr ""
+msgstr "FileChooser.detailsViewButtonAccessibleName"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/FilePane.java:514
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/FilePaneEx.java:44
 msgid "FileChooser.viewMenuLabelText"
-msgstr ""
+msgstr "FileChooser.viewMenuLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/FilePane.java:516
 msgid "FileChooser.refreshActionLabelText"
-msgstr ""
+msgstr "FileChooser.newFolderActionLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/FilePane.java:518
 msgid "FileChooser.newFolderActionLabelText"
-msgstr ""
+msgstr "FileChooser.newFolderActionLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/FilePane.java:522
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/FilePaneEx.java:47
 msgid "FileChooser.listViewActionLabelText"
-msgstr ""
+msgstr "FileChooser.listViewActionLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/FilePane.java:524
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/FilePaneEx.java:48
 msgid "FileChooser.detailsViewActionLabelText"
-msgstr ""
+msgstr "FileChooser.detailsViewActionLabelText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/FilePane.java:526
 msgid "FileChooser.fileSizeKiloBytes"
-msgstr ""
+msgstr "FileChooser.fileSizeKiloBytes"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/FilePane.java:527
 msgid "FileChooser.fileSizeMegaBytes"
-msgstr ""
+msgstr "FileChooser.filesSizeMegaBytes"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/FilePane.java:528
 msgid "FileChooser.fileSizeGigaBytes"
-msgstr ""
+msgstr "FileChooser.filesSizeGigaBytes"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/FilePane.java:531
 msgid "FileChooser.renameErrorTitleText"
-msgstr ""
+msgstr "FileChooser.renameErrorTitleText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/theme/FilePane.java:532
 msgid "FileChooser.renameErrorText"
-msgstr ""
+msgstr "FileChooser.renameErrorText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/transfers/PeerHttpUpload.java:153
 #, fuzzy
@@ -2237,7 +2237,7 @@ msgstr "Odustani"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/updates/InstallerUpdater.java:187
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/updates/UpdateMediator.java:176
 msgid "Update"
-msgstr ""
+msgstr "Updejt"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/updates/PortableUpdater.java:77
 #, fuzzy
@@ -2246,11 +2246,11 @@ msgstr "Otpakiravam datoteke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/updates/ProgressMonitor.java:155
 msgid "OptionPane.cancelButtonText"
-msgstr ""
+msgstr "OptionPane.cancelButtonText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/updates/ProgressMonitor.java:314
 msgid "ProgressMonitor.progressText"
-msgstr ""
+msgstr "ProgressMonitor.progressText"
 
 #. These are used as resource keys to retreive descriptions in the GUI
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/MediaType.java:43
@@ -2259,7 +2259,7 @@ msgstr "Sve Vrste"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/MediaType.java:45
 msgid "Books/Docs"
-msgstr ""
+msgstr "Knjige/Dokumenti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/MediaType.java:46
 msgid "Programs"
@@ -2285,7 +2285,7 @@ msgstr "FrostWire"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:88
 msgid "End User License Agreement"
-msgstr ""
+msgstr "Svrsiti korisnicki sporazum licence"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:94
 msgid "Close This Window"
@@ -2294,15 +2294,15 @@ msgstr "Zatvori ovaj prozor."
 #. introduction
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:181
 msgid "<h1>FrostWire Logo Designer</h1>"
-msgstr ""
+msgstr "<h1>FrostWire logo dizajneri</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:184
 msgid "<h1>FrostWire Graphics Designers/Photographers</h1>"
-msgstr ""
+msgstr "<h1>FrostWire graficki dizajneri/fotograferi</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:194
 msgid "<h1>Thanks to Former FrostWire Developers</h1>"
-msgstr ""
+msgstr "<h1>Hvala prijasnjim FrostWire programerima</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:199
 msgid "<h1>Thanks to the FrostWire Chat Community!</h1>"
@@ -2328,7 +2328,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:211
 msgid "<h1>FrostWire Forum Moderators</h1>"
-msgstr ""
+msgstr "<h1>FrostWire forum moderatori</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:223
 msgid "And also to the Support Volunteer Helpers:"
@@ -2337,7 +2337,7 @@ msgstr ""
 #. developers
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:236
 msgid "<h1>Thanks to the LimeWire Developer Team</h1>"
-msgstr ""
+msgstr "<h1>Hvala LimeWire programerskom timu</h1>"
 
 #. community VIPs
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:254
@@ -2350,15 +2350,15 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:274
 msgid "<h1>Thanks to the PJIRC Staff</h1>"
-msgstr ""
+msgstr "<h1>Hvala PJIRC osoblju</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:283
 msgid "<h1>Thanks to the Automatix Team</h1>"
-msgstr ""
+msgstr "<h1>Hvala Automatix timu</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:292
 msgid "<h1>Thanks to Ubuntu/Kubuntu Teams</h1>"
-msgstr ""
+msgstr "<h1>Hvala Ubuntu/Kubuntu timovima</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:293
 msgid ""
@@ -2368,7 +2368,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:295
 msgid "<h1>Thanks to the NSIS Project</h1>"
-msgstr ""
+msgstr "<h1>Hvala HSIS projektu</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:296
 msgid ""
@@ -2377,11 +2377,11 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:298
 msgid "<h1>Thanks to our families</h1>"
-msgstr ""
+msgstr "<h1>Hvala nasim obiteljima</h1>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:299
 msgid "For being patient during our many sleepless nights"
-msgstr ""
+msgstr "Sto ste bili strpljivi za vrijeme neprospavanih noci"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:304
 msgid ""
@@ -2393,15 +2393,15 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/ApplicationHeader.java:187
 #, fuzzy
 msgid "Search or enter URL"
-msgstr "Spajam"
+msgstr "Trazi ili upisi URL"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/ApplicationHeader.java:199
 msgid "A new update has been downloaded."
-msgstr ""
+msgstr "Novi updejt je bio preuzet"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/ApplicationHeader.java:224
 msgid "Chat"
-msgstr ""
+msgstr "Razgovori"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/ApplicationHeader.java:244
 msgid "Show our community chat"
@@ -2535,7 +2535,7 @@ msgstr "Prikaži {0} ekran"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIMediator.java:267
 #, fuzzy
 msgid "FrostWire: Share Big Files"
-msgstr "FrostWire"
+msgstr "FrostWire: dijeljenje velikih datoteka"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIMediator.java:410
 msgid ""
@@ -2685,11 +2685,11 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:97
 msgid "Current Java Version : "
-msgstr ""
+msgstr "Trenutacna verzija Jave:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:98
 msgid "Required Java Version: "
-msgstr ""
+msgstr "Zahtjevana verzija Jave:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:108
 #, fuzzy
@@ -2796,37 +2796,37 @@ msgstr "Učitavanje prozora statusa..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:141
 msgid "Creating donation buttons so you can give us a hand..."
-msgstr ""
+msgstr "Stvaranje gumbica za donacije tako da nam mozete pomoci"
 
 #. make icons and panels for connection quality
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:145
 #, fuzzy
 msgid "Creating Connection Quality Indicator..."
-msgstr "Učitavanje Veza slušatelj..."
+msgstr "Stvaranje indikator kvalitete mreze"
 
 #. make the 'Language' button
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:149
 #, fuzzy
 msgid "Adding flags here and there..."
-msgstr "Učitavanje korisničkog sučelja..."
+msgstr "Dodavanje zastava ovdje i ondje..."
 
 #. make the 'Firewall Status' label
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:153
 msgid "Playing with pixels for the Firewall indicator..."
-msgstr ""
+msgstr "Igranje sa pixelima na Firewall indikatoru"
 
 #. make the social buttons
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:160
 msgid "Learning to socialize on Facebook..."
-msgstr ""
+msgstr "Ucenje kako socijalizirati na Facebook-u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:162
 msgid "Learning to socialize on Twitter..."
-msgstr ""
+msgstr "Ucenje kako socijalizirati na Twitter-u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:164
 msgid "Learning to socialize on G+..."
-msgstr ""
+msgstr "Ucenje kako socijalizirati na G+"
 
 #. male Seeding status label
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:168
