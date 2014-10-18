@@ -1701,12 +1701,12 @@ msgstr "Preimenuj playlistu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:811
 msgid "Playlist Files (*.m3u)"
-msgstr ""
+msgstr "Datoteke playliste (*.m3u)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:820
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:798
 msgid "Import .m3u to Playlist"
-msgstr ""
+msgstr "Importaj .m3u u playlistu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:821
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:799
@@ -1737,12 +1737,12 @@ msgstr "Gdje želite spremiti adresu za potvrdu?"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:921
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:813
 msgid "Export Playlist to .m3u"
-msgstr ""
+msgstr "Eksportaj playlistu u .m3u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:922
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:814
 msgid "Export this playlist into a .m3u file"
-msgstr ""
+msgstr "Eksportaj ovu playlistu u .m3u datoteku"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:936
 msgid "Export Playlist to iTunes"
@@ -1750,7 +1750,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:937
 msgid "Export this playlist into an iTunes playlist"
-msgstr ""
+msgstr "Eksportal playlistu u iTunes playlistu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:40
 msgid "Index"
@@ -1774,7 +1774,7 @@ msgstr "Traka"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:98
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:293
 msgid "Comment"
-msgstr ""
+msgstr "Komentar"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:278
 msgid "Duration"
@@ -1799,7 +1799,7 @@ msgstr "Prikaži filtere rezultata pretrage."
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibrarySearch.java:158
 #, fuzzy
 msgid "Search in Library"
-msgstr "Kolekcije"
+msgstr "Trazi u knjiznici"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryUtils.java:91
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
@@ -1811,7 +1811,7 @@ msgstr "Uvazam"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryUtils.java:206
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryUtils.java:255
 msgid "Playlist name"
-msgstr ""
+msgstr "Ime playliste"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryUtils.java:682
 msgid "Refreshing"
@@ -1948,11 +1948,11 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:919
 msgid "Open Facebook page of"
-msgstr ""
+msgstr "Otvori Facebook stranicu od"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:921
 msgid "Open Twitter page of"
-msgstr ""
+msgstr "Otvori Twitter stranicu od"
 
 #. won't be shown in 5.6.x, code here for 6.x
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1028
@@ -1991,7 +1991,7 @@ msgstr "nepoznat uredjaj"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1074
 #, fuzzy
 msgid "playlist"
-msgstr "Dodaj oznacene file-ove listi koja svira."
+msgstr "playlist"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1135
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:66
