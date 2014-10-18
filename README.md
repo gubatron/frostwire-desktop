@@ -2,10 +2,7 @@
 ![alt text](http://biz.prlog.org/frostwire/logo.png "Frostwire")
 
 
-Hi there FrostWire Hacker
-
--------------------
-
+# Hi there FrostWire hacker!
 
 
 FrostWire is a file sharing client and media management tool that was made using
@@ -44,24 +41,21 @@ The main software architecture (how things are organized) depends on the late
 *LimeWire 4,* but it has evolved through FrostWire 5, and now the source code
 layout has been simplified enourmously for FrostWire 6.
 
-    -   The BitTorrent power comes from the frostwire-jlibtorrent library.
+    - The BitTorrent power comes from the frostwire-jlibtorrent library.
 
-    -   Media playback comes from the *mplayer* project
+    - Media playback comes from the *mplayer* project
 
-    -   The good looks and skinning system comes from the Substance skinning
-        project (which we've had to maintain on our repo to make it fit
-        FrostWire needs)
+    - The good looks and skinning system comes from the Substance skinning project (which we've had to maintain on our repo to make it fit FrostWire needs)
 
-    -   HTTP interaction comes from the Apache Commons project
+    - HTTP interaction comes from the Apache Commons project
 
-    -   The search is built using the awesome H2 database and Lucene indexes
+    - The search is built using the awesome H2 database and Lucene indexes
 
-    -   JSON parsing comes from google-gson, and so on and so on.
+    - JSON parsing comes from google-gson, and so on and so on.
 
     
 
-BUILD REQUIREMENTS 
--------------------
+# Build requirements
 
 
 
@@ -106,8 +100,7 @@ We recommend using [IntelliJ Idea][1] as your development environment.
 
 
 
-GETTING THE SOURCE 
--------------------
+# Getting the source
 
 
 
@@ -126,8 +119,7 @@ copy of the repository.
 
 
 
-HOW TO BUILD
-------------
+# How to build
 
 Be sure that you're in the project root, else then execute :
 
@@ -144,10 +136,9 @@ gradle build
 
 
 
-HOW TO RUN
-----------
+# How to run
 
-Then run the project with :
+Then run the project with:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ./run
@@ -173,8 +164,7 @@ Then run the project with :
 
 
 
-HOW CODE IS ORGANIZED
----------------------
+# How code is organized
 
 
 | Location        | Contains    |
@@ -189,23 +179,22 @@ HOW CODE IS ORGANIZED
 | **splashes/**  |  Where we keep all the splash screens for each major version of FrostWire. There are tools there to build the splash.jar and to build a collage of pictures with all the splashes for a release. |
 
  
-SOURCE CODING STYLE
----------------------
+# Coding style
 
 If you're using Eclipse as your IDE, we suggest you use the "eclipse.formatter.xml" on your
 project. We try to stick as much as we remember to the Google Java code style
 except for a few things we don't like because we all work on eclipse and we do
 have monitors with over 1200 pixels of width.
 
-OBJECT ORIENTED MANTRAS
--------------------------
+# Object oriented mantras
+
 [5 Object Oriented Programming Principles learned during the last 15 years][3]
 [3]: <http://bit.ly/y0hdR4>
 
 Basically, Keep it simple and try not to repeat yourself at all.
 
-CONTRIBUTE
-------------
+# Contribute
+
 Every countribution merged to the master branch will automatically receive a tip of 1% of whatever funds are available on the [tip4commit fund](https://tip4commit.com/github/frostwire/frostwire-android).
 
 If you want to contribute code, start by looking at the open issues on
@@ -229,8 +218,7 @@ _Repeat and rinse, if you send enough patches to demonstrate you have a good
 coding skills, we'll just give you commit access on the real repo and you will
 be part of the development team._
 
-OFFICIAL FROSTWIRE SITES
----------------------------
+# Official FrostWire sites
 
 Main Website [Frostwire.com][5]
 [5]: <http://www.frostwire.com>
@@ -249,6 +237,6 @@ Twitter [@frostwire][8]
 [Tumblr][10]
 [10]: <http://tumblr.frostwire.com>
 
-###### FrostWire Team  Last updated - February 3rd 2014 15:44:50 EST
+###### FrostWire Team Last updated - February 3rd 2014 15:44:50 EST
 
 [![tip for next commit](http://tip4commit.com/projects/538.svg)](http://tip4commit.com/projects/538)
