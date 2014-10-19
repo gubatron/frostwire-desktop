@@ -3906,7 +3906,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:56
 msgid "&Reset Font Size"
-msgstr ""
+msgstr "&Resetirati velicinu fonta"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:56
 msgid "Reset the Table Font Size"
@@ -3964,7 +3964,7 @@ msgstr "Osnovno"
 #. player
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:280
 msgid "Player"
-msgstr ""
+msgstr "Igrac"
 
 #. search options
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:283
@@ -3974,15 +3974,15 @@ msgstr "Trazenje"
 #. status bar
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:286
 msgid "Status Bar"
-msgstr ""
+msgstr "Traka stanja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:290
 msgid "iTunes"
-msgstr ""
+msgstr "iTunes"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:295
 msgid "Helper Apps"
-msgstr ""
+msgstr "Pomocne aplikacije"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:300
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:302
@@ -3992,7 +3992,7 @@ msgstr "Izgled"
 #. filter options
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:306
 msgid "Filters"
-msgstr ""
+msgstr "Filtari"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:307
 msgid "Keywords"
@@ -4004,11 +4004,11 @@ msgstr "Azuracije"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:312
 msgid "Firewall"
-msgstr ""
+msgstr "Firewall"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:313
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:314
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:48
@@ -4027,7 +4027,7 @@ msgstr "Prikazuj savjete pri pokretanju"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
 #, fuzzy
 msgid "Usage Statistics"
-msgstr "&Statistike"
+msgstr "Statistike koristenja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:324
 msgid "System Tray"
@@ -4037,7 +4037,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:328
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:74
 msgid "Bug Reports"
-msgstr ""
+msgstr "Prijave gresaka"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsMediator.java:82
 msgid "Loading Options Window..."
@@ -4085,15 +4085,15 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:19
 msgid "Text Autocompletion"
-msgstr ""
+msgstr "Dovrsavanje teksta"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:21
 msgid "You can enable or disable autocompletion of text fields."
-msgstr ""
+msgstr "Mozete omoguciti ili onemoguciti dovrsavanje teksta"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:28
 msgid "Enable Autocompletion of Text Fields:"
-msgstr ""
+msgstr "Omoguciti dovrsavanje teksta"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
 msgid "Automatic Installer Download"
@@ -4186,32 +4186,32 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:63
 msgid "Use random port (Recommended)"
-msgstr ""
+msgstr "Koristiti nasumicni port (Preporuceno)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:64
 msgid "Manual port range"
-msgstr ""
+msgstr "Manualni domet porta"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:89
 msgid "TCP port start:"
-msgstr ""
+msgstr "TCP port pocetak:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:99
 msgid "TCP port end:"
-msgstr ""
+msgstr "TCP port kraj:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:169
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:173
 msgid "You must enter a port between 1 and 65535 when manually forcing port."
-msgstr ""
+msgstr "Morate upisati port izmedu 1 i 65535 kada manualno forsirate port."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:178
 msgid "You must enter a valid port range."
-msgstr ""
+msgstr "Morate upisati valjani domet porta."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:23
 msgid "Filter Results"
-msgstr ""
+msgstr "Filtrirati rezultate"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:25
 msgid "You can filter out search results containing specific words."
@@ -4244,11 +4244,11 @@ msgstr "Preglednik slika"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:36
 msgid "Library Included Folders"
-msgstr ""
+msgstr "Mape ukljucene u knjiznicu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:38
 msgid "You can choose the folders for include files when browsing the library."
-msgstr ""
+msgstr "Mozete izabrati koje mape zelite ukljuciti kada pregledavate knjiznicu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:18
 msgid "Internet Radio Stations"
@@ -4281,7 +4281,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:22
 msgid "Maximum Searches"
-msgstr ""
+msgstr "Maksimalno trazenja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:24
 msgid ""
@@ -4295,7 +4295,7 @@ msgstr ""
 #.
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:31
 msgid "Maximum Searches:"
-msgstr ""
+msgstr "Maksimalno trazenja:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:86
 msgid "The maximum parallel searches you can make is "
@@ -4322,7 +4322,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:20
 msgid "Notifications"
-msgstr "Notifikacije"
+msgstr "Obavjestenja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:22
 msgid ""
@@ -4332,11 +4332,11 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:25
 msgid "Show Notifications:"
-msgstr ""
+msgstr "Pokazati obavjestenja:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:19
 msgid "Partial Files"
-msgstr ""
+msgstr "Djelomicne datoteke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:21
 msgid ""
@@ -4346,7 +4346,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:28
 msgid "Allow Partial Sharing:"
-msgstr ""
+msgstr "Dozvoliti djelomicno dijeljenje"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:38
 #, fuzzy
@@ -4424,7 +4424,7 @@ msgstr "Carape v5"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:52
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #. *
 #. * Constant for the key of the locale-specific <tt>String</tt> for the
@@ -4432,7 +4432,7 @@ msgstr ""
 #.
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:58
 msgid "Proxy:"
-msgstr ""
+msgstr "Proxy:"
 
 #. *
 #. * Constant for the key of the locale-specific <tt>String</tt> for the
@@ -4440,7 +4440,7 @@ msgstr ""
 #.
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:64
 msgid "Port:"
-msgstr "Slab"
+msgstr "Port:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/SearchEnginesPaneItem.java:23
 msgid "Search Engines"
@@ -4568,7 +4568,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:21
 msgid "Firewall Indicator"
-msgstr ""
+msgstr "Firewall prikazatelj"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:23
 msgid "You can display your firewall status in the status bar."
@@ -4576,7 +4576,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:30
 msgid "Show Firewall Indicator:"
-msgstr ""
+msgstr "Pokazati Firewall pokazatelj:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:26
 msgid "BitTorrent Connection Settings"
@@ -4586,6 +4586,7 @@ msgstr "BitTorent postavke"
 msgid ""
 "Adjust connection settings to make better use of your internet connection"
 msgstr ""
+"Podesite postavke konekcije da biste bolje koristili vasu internetsku konekciju"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:30
 msgid "Maximum active downloads"
@@ -4593,7 +4594,7 @@ msgstr "Maksimalno aktivnih preuzimanja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:32
 msgid "Global maximum number of connections"
-msgstr ""
+msgstr "Maksimalni broj konekcija globalno"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:34
 #, fuzzy
@@ -4607,7 +4608,7 @@ msgstr "Maksimalno aktivnih seed-ova"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:34
 msgid "BitTorrent Global Tranfer Speeds"
-msgstr ""
+msgstr "Golbalne brzine BitTorrent prijenosa"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:36
 msgid ""
@@ -4628,7 +4629,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:52
 msgid "Upload Speed:"
-msgstr "Brzina upload-anja"
+msgstr "Brzina uploadanja:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:72
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:100
@@ -4653,7 +4654,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:36
 msgid "Anonymous Usage Statistics"
-msgstr ""
+msgstr "Anonimne statistike koristenja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:38
 msgid ""
@@ -4665,7 +4666,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:40
 msgid "Send anonymous usage statistics"
-msgstr ""
+msgstr "Poslati anonimne statistike koristenja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
 msgid "Video Options"
@@ -4752,6 +4753,7 @@ msgstr "Preuzeti sve odaberene datoteke"
 msgid ""
 "See detail web page about the selected torrent (Contents, Comments, Seeds)"
 msgstr ""
+"Vidjeti detalje web stranice o odabranom torrentu (Sadrzaj, Komentari, Seedovi)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchButtons.java:51
 msgid "Stop current search"
@@ -4792,7 +4794,7 @@ msgstr "Pogledati u Archive.org-u"
 #. Set the splash screen text...
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:127
 msgid "Loading Search Window..."
-msgstr ""
+msgstr "Ucitavanje pretraznog prozora..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:214
 msgid ""
@@ -4860,11 +4862,11 @@ msgstr "Stvoreno"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/shell/FrostAssociations.java:104
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/shell/FrostAssociations.java:116
 msgid "\".torrent\" files"
-msgstr ""
+msgstr "\".torrent\" datoteke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/shell/FrostAssociations.java:129
 msgid "\"magnet:\" links"
-msgstr ""
+msgstr "\"magnet:\" linkovi"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:48
 msgid ""
@@ -4914,7 +4916,7 @@ msgstr "Mapa ne postoji"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:49
 msgid "File Already Exists"
-msgstr ""
+msgstr "Datoteka vec postoji"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:52
 msgid "Filename Taken"
@@ -4922,7 +4924,7 @@ msgstr "Ime dokumenta vec postoji"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:55
 msgid "Not a Folder"
-msgstr "Nanovo ucitaj direktorije za razmjenu."
+msgstr "Nije mapa"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:58
 msgid "Not a File"
@@ -4930,7 +4932,7 @@ msgstr "Nije dokument"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:61
 msgid "Filesystem Error"
-msgstr ""
+msgstr "Greska datoteticnog sustava"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:64
 msgid "Same File Already Being Downloaded"
@@ -5004,29 +5006,29 @@ msgstr ""
 #~ msgstr "Broj upload-a po torrentu"
 
 #~ msgid "Loading Community Chat Window..."
-#~ msgstr "Učitavanje prozora nadgledavanja.."
+#~ msgstr "Učitavanje prozora za razgovor..."
 
 #~ msgid "Torrent Properties"
 #~ msgstr "Torrent svojstva"
 
 #, fuzzy
 #~ msgid "(High Quality)"
-#~ msgstr "Kvalitet"
+#~ msgstr "(Visoka kvaiteta)"
 
 #, fuzzy
 #~ msgid "(Medium Quality"
-#~ msgstr "Kvalitet"
+#~ msgstr "(Srednja kvaliteta)"
 
 #, fuzzy
 #~ msgid "(Poor Quality)"
-#~ msgstr "Kvalitet"
+#~ msgstr "(Losa kvaliteta)"
 
 #~ msgid "Stopped"
 #~ msgstr "Stalo"
 
 #, fuzzy
 #~ msgid " selected videos..."
-#~ msgstr "Odaberi mapu"
+#~ msgstr " odabrani videi..."
 
 #~ msgid ""
 #~ "The more stars a search result has, the better the chances of the "
@@ -5145,13 +5147,13 @@ msgstr ""
 #~ msgstr "Snimi kao..."
 
 #~ msgid "Save As..."
-#~ msgstr "Snimi kao..."
+#~ msgstr "Sacuvaj kao..."
 
 #~ msgid "Cancel the Download"
-#~ msgstr "Prekini download"
+#~ msgstr "Otkazi preuzimanje"
 
 #~ msgid "Continue"
-#~ msgstr "Kvalitet:"
+#~ msgstr "Nastavi:"
 
 #~ msgid "Save Download As"
 #~ msgstr "Sacuvati preuzimanje kao"
@@ -5184,16 +5186,16 @@ msgstr ""
 #~ msgstr "Koristi osnovni skin."
 
 #~ msgid " torrents and "
-#~ msgstr "Broj file-ova koje razmjenjujete."
+#~ msgstr " torrenti i "
 
 #~ msgid "All"
 #~ msgstr "Svi"
 
 #~ msgid "Select Search Types:"
-#~ msgstr "Zatvori pretragu"
+#~ msgstr "Odaberi tipove trazenja"
 
 #~ msgid "Filter"
-#~ msgstr "file-ova"
+#~ msgstr "Filtar"
 
 #~ msgid "Show search result filter controls"
 #~ msgstr "Prikaži filtere rezultata pretrage."
@@ -5208,7 +5210,7 @@ msgstr ""
 #~ msgstr "Mediji"
 
 #~ msgid "Uploading "
-#~ msgstr "Upload-i"
+#~ msgstr "Uploadanje"
 
 #~ msgid "More Search Options"
 #~ msgstr "Još opcija za traženje."
@@ -5217,10 +5219,10 @@ msgstr ""
 #~ msgstr "Učitavanje datoteka za razmjenu..."
 
 #~ msgid "Videos"
-#~ msgstr "Video"
+#~ msgstr "Videi"
 
 #~ msgid "Sort:"
-#~ msgstr "Slab"
+#~ msgstr "Vrsta:"
 
 #~ msgid "None"
 #~ msgstr "Nista"
@@ -5244,46 +5246,46 @@ msgstr ""
 #~ msgstr "Otvori"
 
 #~ msgid "Delete Files"
-#~ msgstr "Izbrisi oznacene file-ove."
+#~ msgstr "Izbrisi datoteke"
 
 #~ msgid "System"
 #~ msgstr "Prikazuj savjete pri pokretanju"
 
 #~ msgid "Connected"
-#~ msgstr "Kvalitet:"
+#~ msgstr "Spojen"
 
 #~ msgid "New Folder"
-#~ msgstr "Nanovo ucitaj direktorije za razmjenu."
+#~ msgstr "Nova mapa"
 
 #~ msgid "File Transfers"
-#~ msgstr "Zatvori nakon prijenosa"
+#~ msgstr "Prijenos datoteka"
 
 #~ msgid "Cancel All"
-#~ msgstr "Odustani"
+#~ msgstr "Otkazi sve"
 
 #~ msgid "Clear Finished"
-#~ msgstr "Ocisti neaktivne"
+#~ msgstr "Ocisti zavrseno"
 
 #~ msgid "Should I stop all transfers?"
-#~ msgstr "Zatvori nakon prijenosa"
+#~ msgstr "Trebal li zaustaviti sve prijenose"
 
 #~ msgid "one file"
-#~ msgstr "&Filteri rezultata"
+#~ msgstr "jedna datoteka"
 
 #~ msgid "pending"
-#~ msgstr "Brzina"
+#~ msgstr "u tijeku"
 
 #~ msgid "canceled"
-#~ msgstr "Odustani"
+#~ msgstr "Otkazano"
 
 #~ msgid "error"
 #~ msgstr "Greška"
 
 #~ msgid "Upload"
-#~ msgstr "Upload-i"
+#~ msgstr "Uploadati"
 
 #~ msgid "to"
-#~ msgstr "Stani"
+#~ msgstr "do"
 
 #~ msgid "Preparing selected folder"
 #~ msgstr "Pauziraj oznacene download-e."
@@ -5292,7 +5294,7 @@ msgstr ""
 #~ msgstr "Otvori direktorij kolekcije."
 
 #~ msgid "Open Folder Containing a Selected File"
-#~ msgstr "Izbrisi oznacene file-ove."
+#~ msgstr "Otvoriti mapu koja ima odabrane datoteke"
 
 #~ msgid "Enqueue"
 #~ msgstr "Stavi u red"
