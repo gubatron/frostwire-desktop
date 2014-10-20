@@ -5850,7 +5850,7 @@ msgstr ""
 #~ "pretrage mreže. <a href=\"{0}\">Više informacija</a> je dostupno."
 
 #~ msgid "Upgrade to FrostWire?"
-#~ msgstr "&Korištenje FrostWire-a."
+#~ msgstr "Nadogradi na FrostWire?"
 
 #~ msgid "C&onnect"
 #~ msgstr "&Spoji se"
@@ -5874,31 +5874,31 @@ msgstr ""
 #~ msgstr "Pretražuj..."
 
 #~ msgid "Remove the Selected Connections"
-#~ msgstr "Izbrisi oznacene file-ove."
+#~ msgstr "Izbrisi oznacene konekcije"
 
 #~ msgid "View All Files on the Selected Computer"
-#~ msgstr "Pogledaj sve file-ove na označenom kompjuteru."
+#~ msgstr "Pogledaj sve datoteke na označenom racunalu"
 
 #~ msgid "Connecting..."
-#~ msgstr "Kvalitet:"
+#~ msgstr "Spajam..."
 
 #~ msgid "Incoming"
-#~ msgstr "Ikona"
+#~ msgstr "Nadolazece"
 
 #~ msgid "Add Gnutella Connection"
-#~ msgstr "Kvalitet:"
+#~ msgstr "Dodaj Gnutella konekciju"
 
 #~ msgid "No, Share Nothing"
-#~ msgstr "Broj file-ova koje razmjenjujete."
+#~ msgstr "Ne, nemoj dijeliti nista"
 
 #~ msgid "Queue"
 #~ msgstr "Stavi u red"
 
 #~ msgid "Queued"
-#~ msgstr "Stavi u red"
+#~ msgstr "Stavljeno u red"
 
 #~ msgid "Aborted"
-#~ msgstr "O"
+#~ msgstr "Prekinuto"
 
 #~ msgid "Awaiting Sources"
 #~ msgstr "Nadji izvore"
@@ -5925,7 +5925,7 @@ msgstr ""
 #~ msgstr "Nadji izvore"
 
 #~ msgid "Downloads"
-#~ msgstr "Download-i"
+#~ msgstr "Preuzimanja"
 
 #~ msgid "Find More Sources for Download"
 #~ msgstr "Probaj naci izvore za neuspjesne download-e."
@@ -5952,7 +5952,7 @@ msgstr ""
 #~ msgstr "Natjeraj nastavak"
 
 #~ msgid "Remove Inactive Downloads"
-#~ msgstr "Natjeraj nastavak"
+#~ msgstr "Ukloni neaktivna preuzimanja"
 
 #~ msgid "Shared Folders"
 #~ msgstr "Nanovo ucitaj direktorije za razmjenu."
@@ -5997,10 +5997,10 @@ msgstr ""
 #~ msgstr "Ponovno učitaj dostupne skin-ove s disk-a."
 
 #~ msgid "Saving"
-#~ msgstr "Spajam"
+#~ msgstr "Spremam"
 
 #~ msgid "Connections"
-#~ msgstr "Spojevi"
+#~ msgstr "Konekcije"
 
 #~ msgid "Clear Downloads"
 #~ msgstr "Download-i"
@@ -6018,7 +6018,7 @@ msgstr ""
 #~ msgstr "Kvalitet:"
 
 #~ msgid "Always"
-#~ msgstr "Sviraj"
+#~ msgstr "Uvijek"
 
 #~ msgid "Download Bandwidth"
 #~ msgstr "Prosječna brzina veze"
@@ -6033,7 +6033,7 @@ msgstr ""
 #~ msgstr "Mediji"
 
 #~ msgid "Reset"
-#~ msgstr "Nastavi"
+#~ msgstr "Resetiraj"
 
 #~ msgid "Search Result Quality"
 #~ msgstr "Prikaži filtere rezultata pretrage."
