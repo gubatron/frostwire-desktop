@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-05 18:22+0400\n"
-"PO-Revision-Date: 2014-10-10 15:07+0400\n"
+"POT-Creation-Date: 2014-10-20 18:39+0400\n"
+"PO-Revision-Date: 2014-10-20 17:34+0400\n"
 "Last-Translator: X-NicON <x-icon@ya.ru>\n"
 "Language-Team: Russian Team\n"
 "Language: ru\n"
@@ -207,7 +207,7 @@ msgstr "Очистить неактивные (завершённые) пере�
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:343
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:344
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:345
-#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:472
+#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:449
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:356
 msgid "Copy Magnet"
 msgstr "Скопировать отчёт"
@@ -264,102 +264,217 @@ msgstr "Воспроизвести"
 msgid "Add to playlist "
 msgstr "Добавить в плейлист"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:58
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:60
 msgid " (Handpicked)"
 msgstr "(подобранный)"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:114
-#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:335
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:116
+#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:336
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:52
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:186
 #: src/com/limegroup/gnutella/gui/search/SearchTableColumns.java:44
 msgid "Name"
 msgstr "Именовать"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:118
-#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:345
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:120
+#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:346
 msgid "Tips/Donations"
 msgstr "Чаевые/Пожертвования"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:124
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:328
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:126
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:362
 #: src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:228
 #: src/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:87
-#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:337
+#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:338
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:104
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:140
 #: src/com/limegroup/gnutella/gui/search/SearchTableColumns.java:47
 msgid "Size"
 msgstr "Размер:"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:130
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:320
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:132
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:354
 msgid "Status"
 msgstr "Исполнители"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:136
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:321
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:138
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:355
 msgid "Progress"
 msgstr "Программы"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:142
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:324
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:144
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:358
 msgid "Downloaded"
 msgstr "Загрузить"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:145
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:325
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:147
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:359
 msgid "Uploaded"
 msgstr "Скорость выгрузки:"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:151
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:322
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:153
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:356
 msgid "Down Speed"
 msgstr "Скорость загрузки:"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:154
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:323
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:156
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:357
 msgid "Up Speed"
 msgstr "Скорость:"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:160
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:162
 msgid "Time"
 msgstr "Название:"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:163
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:327
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:165
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:361
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:152
 #: src/com/limegroup/gnutella/gui/search/SearchTableColumns.java:38
 msgid "Seeds"
 msgstr "Скорость:"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:166
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:326
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:168
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:360
 msgid "Peers"
 msgstr "Peer-ов"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:169
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:171
 msgid "Share Ratio"
 msgstr "Открыть доступ к файлу"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:172
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:174
 msgid "Seeds/Peers"
 msgstr "Peer-ов"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:175
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:177
 msgid "Started On"
 msgstr "Начато"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:178
-#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:347
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:180
+#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:348
 msgid "License"
 msgstr "Лицензия:"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:329
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:196
+msgid "Queued for checking"
+msgstr ""
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:197
+#, fuzzy
+msgid "Checking..."
+msgstr "Проверяется"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:198
+#, fuzzy
+msgid "Downloading metadata"
+msgstr "Загрузка обновлений"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:199
+#, fuzzy
+msgid "Downloading torrent"
+msgstr "Загрузить"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:200
+#: src/com/frostwire/gui/library/DownloadTask.java:82
+#: src/com/frostwire/gui/library/DownloadTask.java:118
+msgid "Downloading"
+msgstr "Загрузить"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:201
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1131
+msgid "Finished"
+msgstr "Завершить"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:202
+#, fuzzy
+msgid "Seeding"
+msgstr "Подключение"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:203
+#, fuzzy
+msgid "Allocating"
+msgstr "Приложение"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:204
+msgid "Paused"
+msgstr "Приостановлен"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:205
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:629
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:946
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:730
+#: src/com/frostwire/gui/library/LibraryUtils.java:756
+#: src/com/limegroup/gnutella/gui/Initializer.java:574
+#: src/com/limegroup/gnutella/gui/MessageService.java:103
+#: src/com/limegroup/gnutella/gui/MessageService.java:123
+#: src/com/limegroup/gnutella/gui/MessageService.java:243
+msgid "Error"
+msgstr "Ошибка"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:206
+msgid "Error: Moving incomplete"
+msgstr ""
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:207
+msgid "Error: Wrong md5 hash"
+msgstr ""
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:208
+msgid "Error: Wrong signature"
+msgstr ""
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:209
+#, fuzzy
+msgid "Stopped"
+msgstr "Стоп"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:210
+msgid "Pausing"
+msgstr "Приостановка..."
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:211
+msgid "Canceling"
+msgstr "Отменяется"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:212
+msgid "Canceled"
+msgstr "Отказаться от изменений."
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:213
+msgid "Waiting"
+msgstr "Жду источники"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:214
+#: src/com/frostwire/gui/transfers/PeerHttpUpload.java:156
+msgid "Complete"
+msgstr "Завершено"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:215
+#: src/com/frostwire/gui/library/DeviceUploadTask.java:71
+#: src/com/frostwire/gui/library/DeviceUploadTask.java:83
+#: src/com/frostwire/gui/transfers/PeerHttpUpload.java:153
+msgid "Uploading"
+msgstr "Выгрузка"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:216
+#, fuzzy
+msgid "Uncompressing"
+msgstr "Распаковка файлов"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:217
+msgid "Demuxing"
+msgstr ""
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:265
+#, fuzzy
+msgid "Unknown status"
+msgstr "Неизвестно"
+
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:363
 msgid "ETA"
 msgstr "ETA"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:454
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:488
 #: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:422
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:862
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:517
@@ -367,7 +482,7 @@ msgstr "ETA"
 msgid "Launch"
 msgstr "Запустить файл"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:455
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:489
 #: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:423
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:863
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:518
@@ -375,11 +490,11 @@ msgstr "Запустить файл"
 msgid "Launch Selected Files"
 msgstr "Запустить выбранные файлы"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:474
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:508
 msgid "Show in Library"
 msgstr "Библиотека"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:475
+#: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:509
 msgid "Show Download in Library"
 msgstr "Загружаю с"
 
@@ -804,18 +919,18 @@ msgstr "Закрыть (&C)"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:367
 #: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:180
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:100
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:122
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:144
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:167
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:253
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:272
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:293
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:315
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:447
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:466
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:487
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:509
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:101
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:123
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:145
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:168
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:254
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:273
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:294
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:316
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:448
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:467
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:488
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:510
 msgid "Select"
 msgstr "Выбрать"
 
@@ -891,61 +1006,6 @@ msgstr "Не могу добраться до Веб-сида."
 msgid "Saving Torrent..."
 msgstr "Сохранение файла..."
 
-#: src/com/frostwire/gui/bittorrent/HttpDownload.java:54
-#: src/com/frostwire/gui/library/DownloadTask.java:81
-#: src/com/frostwire/gui/library/DownloadTask.java:117
-msgid "Downloading"
-msgstr "Загрузить"
-
-#: src/com/frostwire/gui/bittorrent/HttpDownload.java:55
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:629
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:946
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:730
-#: src/com/frostwire/gui/library/LibraryUtils.java:756
-#: src/com/limegroup/gnutella/gui/Initializer.java:575
-#: src/com/limegroup/gnutella/gui/MessageService.java:103
-#: src/com/limegroup/gnutella/gui/MessageService.java:123
-#: src/com/limegroup/gnutella/gui/MessageService.java:243
-msgid "Error"
-msgstr "Ошибка"
-
-#: src/com/frostwire/gui/bittorrent/HttpDownload.java:56
-msgid "Error - corrupted file"
-msgstr "Ошибка - файл поврежден"
-
-#: src/com/frostwire/gui/bittorrent/HttpDownload.java:57
-msgid "Error - can't save"
-msgstr "Ошибка - не могу сохранить"
-
-#: src/com/frostwire/gui/bittorrent/HttpDownload.java:58
-msgid "Pausing"
-msgstr "Приостановка..."
-
-#: src/com/frostwire/gui/bittorrent/HttpDownload.java:59
-msgid "Paused"
-msgstr "Приостановлен"
-
-#: src/com/frostwire/gui/bittorrent/HttpDownload.java:60
-msgid "Canceling"
-msgstr "Отменяется"
-
-#: src/com/frostwire/gui/bittorrent/HttpDownload.java:61
-msgid "Canceled"
-msgstr "Отказаться от изменений."
-
-#: src/com/frostwire/gui/bittorrent/HttpDownload.java:62
-msgid "Waiting"
-msgstr "Жду источники"
-
-#: src/com/frostwire/gui/bittorrent/HttpDownload.java:63
-msgid "Checking"
-msgstr "Проверяется"
-
-#: src/com/frostwire/gui/bittorrent/HttpDownload.java:64
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1131
-msgid "Finished"
-msgstr "Завершить"
-
 #: src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:105
 msgid "Select files to download"
 msgstr "Убрать выбранные загрузки"
@@ -962,7 +1022,7 @@ msgid "File"
 msgstr "Файл (&F)"
 
 #: src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:226
-#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:339
+#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:340
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:64
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:198
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:110
@@ -1118,49 +1178,45 @@ msgstr "Чаевые"
 msgid "All done! Now share the link"
 msgstr "Все готово! Теперь можете поделиться ссылкой"
 
-#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:412
+#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:389
 msgid "Twitter it"
 msgstr "Twitter"
 
-#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:413
+#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:390
 msgid "Send the message above to Twitter"
 msgstr "Отправить сообщение в Twitter"
 
-#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:430
+#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:407
 msgid "Copy Text"
 msgstr "Скопировать отчёт"
 
-#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:431
+#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:408
 msgid "Copy entire message to Clipboard"
 msgstr "Копировать Magnet-ссылки в буфер"
 
-#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:438
+#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:415
 msgid "Message copied to clipboard."
 msgstr "Копировать Magnet-ссылки в буфер"
 
-#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:450
+#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:427
 msgid "Copy Link"
 msgstr "Копировать"
 
-#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:451
+#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:428
 msgid "Copy Link to Clipboard"
 msgstr "Копировать Magnet-ссылки в буфер"
 
-#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:458
+#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:435
 msgid "Link copied to clipboard."
 msgstr "Копировать Magnet-ссылки в буфер"
 
-#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:473
+#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:450
 msgid "Copy Magnet URL to Clipboard"
 msgstr "Копировать Magnet-ссылки в буфер"
 
-#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:480
+#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:457
 msgid "Magnet copied to clipboard."
 msgstr "Копировать Magnet-ссылки в буфер"
-
-#: src/com/frostwire/gui/bittorrent/SlideDownload.java:43
-msgid "Error: Corrupted download"
-msgstr "Ошибка: невозможно скачать"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:58
 msgid "Torrent Data Save Folder"
@@ -1333,13 +1389,7 @@ msgstr "Достигнут лимит выгрузок"
 msgid "Waiting for device authorization..."
 msgstr "Ожиданеи авторизации устройств..."
 
-#: src/com/frostwire/gui/library/DeviceUploadTask.java:72
-#: src/com/frostwire/gui/library/DeviceUploadTask.java:84
-#: src/com/frostwire/gui/transfers/PeerHttpUpload.java:153
-msgid "Uploading"
-msgstr "Выгрузка"
-
-#: src/com/frostwire/gui/library/DownloadTask.java:141
+#: src/com/frostwire/gui/library/DownloadTask.java:142
 msgid "Wi-Fi download error. Please try again."
 msgstr "Ошибка загрузки через Wi-Fi. Пожалуйста, попробуйте еще раз."
 
@@ -1352,14 +1402,14 @@ msgid "Internet Radio"
 msgstr "Интернет радио"
 
 #: src/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:51
-#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:329
+#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:330
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:44
 #: src/com/limegroup/gnutella/gui/search/SearchTableColumns.java:35
 msgid "Actions"
 msgstr "Действия"
 
 #: src/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:57
-#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:333
+#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:334
 msgid "Icon"
 msgstr "Входящее"
 
@@ -1467,15 +1517,15 @@ msgstr "Качество:"
 msgid "Open Library Folder"
 msgstr "Открыть папку"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:331
+#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:332
 msgid "Wi-Fi Shared"
 msgstr "Wi-Fi Shared"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:341
+#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:342
 msgid "Path"
 msgstr "Путь"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:343
+#: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:344
 msgid "Last Modified"
 msgstr "Дата модификации:"
 
@@ -1600,17 +1650,17 @@ msgstr "из"
 msgid "Could not extract audio from"
 msgstr "Не возможно извлечь звуковую дорожку из"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1229
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1231
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1224
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1226
 msgid "Share"
 msgstr "Доступ"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1229
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1231
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1224
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1226
 msgid "Unshare"
 msgstr "Закрыть доступ"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1234
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1229
 msgid "file on local Wi-Fi network"
 msgstr "Файл в локальной Wi-Fi сети"
 
@@ -2274,10 +2324,6 @@ msgstr "FileChooser.renameErrorText"
 msgid "Streaming"
 msgstr "Вещание"
 
-#: src/com/frostwire/gui/transfers/PeerHttpUpload.java:156
-msgid "Complete"
-msgstr "Завершено"
-
 #: src/com/frostwire/gui/transfers/PeerHttpUpload.java:159
 msgid "Cancelled"
 msgstr "Отменено"
@@ -2518,17 +2564,17 @@ msgstr "Поддержи развитие FrostWire пожертвовав че�
 msgid "Donate"
 msgstr "Пожертвовать"
 
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:81
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:99
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:121
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:252
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:271
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:446
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:465
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:82
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:100
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:122
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:253
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:272
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:447
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:466
 msgid "Select Folder"
 msgstr "Выберите папку"
 
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:873
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:874
 msgid "All Folders"
 msgstr "Все папки"
 
@@ -2638,53 +2684,53 @@ msgid "FrostWire could not launch the specified file."
 msgstr ""
 "FrostWire не будет запускать указанный файл из соображений безопасности."
 
-#: src/com/limegroup/gnutella/gui/GUIUtils.java:142
+#: src/com/limegroup/gnutella/gui/GUIUtils.java:143
 msgid "KB"
 msgstr "КБ"
 
-#: src/com/limegroup/gnutella/gui/GUIUtils.java:144
+#: src/com/limegroup/gnutella/gui/GUIUtils.java:145
 msgid "MB"
 msgstr "МБ"
 
-#: src/com/limegroup/gnutella/gui/GUIUtils.java:146
+#: src/com/limegroup/gnutella/gui/GUIUtils.java:147
 msgid "GB"
 msgstr "ГБ"
 
-#: src/com/limegroup/gnutella/gui/GUIUtils.java:148
+#: src/com/limegroup/gnutella/gui/GUIUtils.java:149
 msgid "TB"
 msgstr "ТБ"
 
-#: src/com/limegroup/gnutella/gui/GUIUtils.java:150
+#: src/com/limegroup/gnutella/gui/GUIUtils.java:151
 msgid "KB/s"
 msgstr "КБ/сек"
 
 #. Load up the HTML engine.
-#: src/com/limegroup/gnutella/gui/Initializer.java:336
+#: src/com/limegroup/gnutella/gui/Initializer.java:335
 msgid "Loading HTML Engine..."
 msgstr "Инициализация движка HTML..."
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:390
+#: src/com/limegroup/gnutella/gui/Initializer.java:389
 msgid "Loading User Interface..."
 msgstr "Инициализация пользовательского интерфейса..."
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:401
+#: src/com/limegroup/gnutella/gui/Initializer.java:400
 msgid "Loading Core Components..."
 msgstr "Инициализация основных компонентов..."
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:462
+#: src/com/limegroup/gnutella/gui/Initializer.java:461
 msgid "Loading Icons..."
 msgstr "Загрузка значков..."
 
 #. Touch the I18N stuff to ensure it loads properly.
-#: src/com/limegroup/gnutella/gui/Initializer.java:469
+#: src/com/limegroup/gnutella/gui/Initializer.java:468
 msgid "Loading Internationalization Support..."
 msgstr "Загрузка интернационализации..."
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:486
+#: src/com/limegroup/gnutella/gui/Initializer.java:485
 msgid "Loading Old Downloads..."
 msgstr "Инициализация загрузок..."
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:563
+#: src/com/limegroup/gnutella/gui/Initializer.java:562
 msgid ""
 "FrostWire could not create a temporary preferences folder.\n"
 "\n"
@@ -3843,7 +3889,7 @@ msgstr "<< Назад"
 
 #: src/com/limegroup/gnutella/gui/init/SetupManager.java:552
 msgid "Finish"
-msgstr "Закончить"
+msgstr "Завершить"
 
 #: src/com/limegroup/gnutella/gui/init/SetupWindow.java:140
 #: src/com/limegroup/gnutella/gui/options/panes/AbstractPaneItem.java:80
