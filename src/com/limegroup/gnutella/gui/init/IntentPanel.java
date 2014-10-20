@@ -61,7 +61,7 @@ public class IntentPanel extends JPanel {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
 
         JLabel almostDone = new JLabel(I18n.tr("You're almost done!"));
-        JLabel stateIntent = new JLabel(I18n.tr("State your intent below to start using FrostWire " + FrostWireUtils.getFrostWireVersion()));
+        JLabel stateIntent = new JLabel(I18n.tr("State your intent below to start using FrostWire ") + FrostWireUtils.getFrostWireVersion());
         Line line = new Line();
         MultiLineLabel description = new MultiLineLabel(I18n.tr("FrostWire is a peer-to-peer program for sharing authorized files only.  Installing and using the program does not constitute a license for obtaining or distributing unauthorized content."), 500);
         URLLabel findMore = new URLLabel("http://www.frostwire.com/?id=terms", I18n.tr("Find out more..."));

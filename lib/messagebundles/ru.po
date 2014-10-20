@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-20 18:39+0400\n"
-"PO-Revision-Date: 2014-10-20 17:34+0400\n"
+"PO-Revision-Date: 2014-10-20 20:10+0400\n"
 "Last-Translator: X-NicON <x-icon@ya.ru>\n"
 "Language-Team: Russian Team\n"
 "Language: ru\n"
@@ -357,22 +357,19 @@ msgstr "Лицензия:"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:196
 msgid "Queued for checking"
-msgstr ""
+msgstr "В очереди на проверку"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:197
-#, fuzzy
 msgid "Checking..."
-msgstr "Проверяется"
+msgstr "Проверяется..."
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:198
-#, fuzzy
 msgid "Downloading metadata"
-msgstr "Загрузка обновлений"
+msgstr "Загрузка метаданных"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:199
-#, fuzzy
 msgid "Downloading torrent"
-msgstr "Загрузить"
+msgstr "Загрузка торрента"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:200
 #: src/com/frostwire/gui/library/DownloadTask.java:82
@@ -386,14 +383,12 @@ msgid "Finished"
 msgstr "Завершить"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:202
-#, fuzzy
 msgid "Seeding"
-msgstr "Подключение"
+msgstr "Раздача"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:203
-#, fuzzy
 msgid "Allocating"
-msgstr "Приложение"
+msgstr "Выделение"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:204
 msgid "Paused"
@@ -413,20 +408,19 @@ msgstr "Ошибка"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:206
 msgid "Error: Moving incomplete"
-msgstr ""
+msgstr "Ошибка: Перемещение не завершено"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:207
 msgid "Error: Wrong md5 hash"
-msgstr ""
+msgstr "Ошибка: Неправильный MD5 хеш"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:208
 msgid "Error: Wrong signature"
-msgstr ""
+msgstr "Ошибка: Неправильный подпись"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:209
-#, fuzzy
 msgid "Stopped"
-msgstr "Стоп"
+msgstr "Остановлено"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:210
 msgid "Pausing"
@@ -457,18 +451,16 @@ msgid "Uploading"
 msgstr "Выгрузка"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:216
-#, fuzzy
 msgid "Uncompressing"
 msgstr "Распаковка файлов"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:217
 msgid "Demuxing"
-msgstr ""
+msgstr "Демультиплексирование"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:265
-#, fuzzy
 msgid "Unknown status"
-msgstr "Неизвестно"
+msgstr "Неизвестный статус"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:363
 msgid "ETA"
@@ -3804,7 +3796,7 @@ msgstr "Вы почти у цели!"
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:64
 msgid "State your intent below to start using FrostWire "
-msgstr "Заявите о своих намерениях ниже, чтобы начать пользоваться FrostWire"
+msgstr "Подтвердите намерения и начните пользоваться FrostWire "
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:66
 msgid ""
@@ -3812,8 +3804,8 @@ msgid ""
 "Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
 msgstr ""
-"FrostWire - это peer-to-peer программа, для обмена файлами, которые имеют "
-"правовое разрешение на передачу или распространение. Установка и пользование "
+"FrostWire - это peer-to-peer программа, для обмена файлами, которые иногда имеют "
+"прововое ограничение на передачу или распространение. Установка и пользование "
 "программой не дает права на распространения не лицензионного контента."
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:67
