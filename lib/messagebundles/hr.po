@@ -339,7 +339,7 @@ msgstr "Vrijeme"
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:152
 #: src/com/limegroup/gnutella/gui/search/SearchTableColumns.java:38
 msgid "Seeds"
-msgstr ""
+msgstr "Seedovi"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:168
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:360
@@ -365,7 +365,7 @@ msgstr "Dozvola"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:196
 msgid "Queued for checking"
-msgstr ""
+msgstr "Poredano za provjeravanje"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:197
 #, fuzzy
@@ -422,15 +422,15 @@ msgstr "Greska"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:206
 msgid "Error: Moving incomplete"
-msgstr ""
+msgstr "Greska: Pomicanje neuspjesno"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:207
 msgid "Error: Wrong md5 hash"
-msgstr ""
+msgstr "Greska: Krivo md5 mljeveno meso"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:208
 msgid "Error: Wrong signature"
-msgstr ""
+msgstr "Greska: Krivi potpis"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:209
 msgid "Stopped"
@@ -1226,7 +1226,7 @@ msgstr "Izaberite drugi folder"
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:49
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:38
 msgid "Seeding Settings"
-msgstr "Seeding postavke"
+msgstr "Postavke seedanja"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:76
 msgid ""
@@ -1275,7 +1275,7 @@ msgstr "Prethodni"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:284
 msgid "Play Video preview of"
-msgstr ""
+msgstr "Svirati video pregled od"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:301
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:302
@@ -1568,7 +1568,7 @@ msgstr "Spremi detalje u datoteku"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1024
 msgid "Extract Audio"
-msgstr ""
+msgstr "Ekstraktirati audio"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1025
 msgid "Extract .m4a Audio from this .mp4 video"
@@ -1618,7 +1618,7 @@ msgstr "datoteka na lokalnoj Wi-Fi mrezi"
 
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:49
 msgid "Bookmarked"
-msgstr ""
+msgstr "Bukmarkano"
 
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:55
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:204
@@ -1689,7 +1689,7 @@ msgstr "Kopirati URL strima"
 
 #: src/com/frostwire/gui/library/LibraryMediator.java:106
 msgid "Loading Library Window..."
-msgstr ""
+msgstr "Ucitavanje prozora biblioteke"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:190
 msgid "New Playlist"
@@ -1697,15 +1697,15 @@ msgstr "Nova playlista"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:190
 msgid "Creates a new Playlist"
-msgstr ""
+msgstr "Napravilo novu listu pjesama"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:433
 msgid "Open Playlist (.m3u)"
-msgstr ""
+msgstr "Otvoriti listu pjesama (.m3u)"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:505
 msgid "Save Playlist As"
-msgstr ""
+msgstr "Spremiti listu pjesama kao"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:516
 #, java-format
@@ -1717,7 +1717,7 @@ msgstr ""
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:715
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:844
 msgid "Refresh Audio Properties"
-msgstr ""
+msgstr "Osvjezi audio svojstva"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:716
 msgid "Refresh the audio properties based on ID3 tags of selected items"
@@ -1867,20 +1867,20 @@ msgstr "Osvjezi"
 
 #: src/com/frostwire/gui/library/LibraryUtils.java:738
 msgid "Importing from"
-msgstr "Uzavazam iz"
+msgstr "Importanje iz"
 
 #: src/com/frostwire/gui/library/LibraryUtils.java:756
 msgid "Error importing Radio Station from"
-msgstr ""
+msgstr "Greska u importiranju radio postaje od"
 
 #: src/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:67
 msgid "Holds the Results for "
-msgstr ""
+msgstr "Drzati rezultate za"
 
 #: src/com/frostwire/gui/library/NodeRenderer.java:65
 #, fuzzy
 msgid "My files"
-msgstr "file-ova"
+msgstr "Moje datoteke"
 
 #: src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:168
 msgid "Library Folders"
@@ -1930,19 +1930,19 @@ msgstr "Video"
 
 #: src/com/frostwire/gui/library/UITool.java:115
 msgid "Unkown file type"
-msgstr ""
+msgstr "Nepoznati tip datoteke"
 
 #: src/com/frostwire/gui/mplayer/MPlayer.java:384
 msgid "azemp.failed.nocodec"
-msgstr ""
+msgstr "azemp.failed.nocodec"
 
 #: src/com/frostwire/gui/mplayer/MPlayer.java:390
 msgid "azemp.failed.d3dbad"
-msgstr ""
+msgstr "azemp.failed.d3dbad"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:79
 msgid "Streaming Audio"
-msgstr ""
+msgstr "Strimanje audija"
 
 #. *
 #. * Constant for the play button.
@@ -1984,7 +1984,7 @@ msgstr "Pokazi izvor ovog medija"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:322
 msgid "Shuffle songs"
-msgstr ""
+msgstr "Promijesati pjesme"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:329
 msgid "Repeat songs"
@@ -1992,7 +1992,7 @@ msgstr "Ponovi pjesme"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:915
 msgid "this artist(s)"
-msgstr ""
+msgstr "Ovaj umjetnik"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:919
 msgid "Open Facebook page of"
@@ -2005,12 +2005,12 @@ msgstr "Otvori Twitter stranicu od"
 #. won't be shown in 5.6.x, code here for 6.x
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1028
 msgid "Playing local file"
-msgstr ""
+msgstr "Svirati lokalnu datoteku"
 
 #. won't be shown in 5.6.x, code here for 6.x
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1031
 msgid "Playing track from"
-msgstr ""
+msgstr "Svirati pjesmu iz"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1034
 msgid "Open YouTube source page"
@@ -2030,7 +2030,7 @@ msgstr "Sviram Interned radio"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1049
 msgid "Playing local Wi-Fi Stream from"
-msgstr ""
+msgstr "Sviranje strima lokalnog Wi-Fi od"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1063
 msgid "unknown device"
@@ -2082,19 +2082,19 @@ msgstr ""
 
 #: src/com/frostwire/gui/searchfield/GoogleSearchField.java:64
 msgid "Hints by Google"
-msgstr ""
+msgstr "Savjeti od Googla"
 
 #: src/com/frostwire/gui/searchfield/RecentSearches.java:320
 msgid "SearchField.noRecentsText"
-msgstr ""
+msgstr "SearchField.noRecentsText"
 
 #: src/com/frostwire/gui/searchfield/RecentSearches.java:324
 msgid "SearchField.recentsMenuTitle"
-msgstr ""
+msgstr "SearchField.recentsMenuTitle"
 
 #: src/com/frostwire/gui/searchfield/RecentSearches.java:335
 msgid "SearchField.clearRecentsText"
-msgstr ""
+msgstr "SearchField.clearRecentsText"
 
 #. *
 #. * The undo action.
