@@ -47,30 +47,13 @@ import java.net.URL;
  * Initializes (creates, starts, & displays) the LimeWire Core & UI.
  */
 public final class Initializer {
-    private final Logger LOG;
 
     /**
      * True if is running from a system startup.
      */
     private volatile boolean isStartup = false;
 
-    /**
-     * The start memory -- only set if debugging.
-     */
-    private long startMemory;
-
-    /**
-     * A stopwatch for debug logging.
-     */
-    private final Stopwatch stopwatch;
-
     Initializer() {
-        LOG = Logger.getLogger(Initializer.class);
-
-        startMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-        LOG.info("START Initializer, using: " + startMemory + " memory");
-
-        stopwatch = new Stopwatch(LOG);
     }
 
     /**
@@ -187,10 +170,8 @@ public final class Initializer {
         if (OSUtils.isMacOSX()) {
             // Raise the number of allowed concurrent open files to 1024.
             SystemUtils.setOpenFileLimit(1024);
-            stopwatch.resetAndLog("Open file limit raise");
 
             MacEventHandler.instance();
-            stopwatch.resetAndLog("MacEventHandler instance");
         }
     }
 
@@ -204,9 +185,7 @@ public final class Initializer {
         // startup status, but only if we're going to possibly
         // be starting...
         if (StartupSettings.RUN_ON_STARTUP.getValue()) {
-            stopwatch.reset();
             Thread.yield();
-            //stopwatch.resetAndLog("Thread yield");
         }
 
         if (OSUtils.isMacOSX()) {
@@ -270,11 +249,9 @@ public final class Initializer {
      */
     private void installProperties() {
         System.setProperty("http.agent", UserAgentGenerator.getUserAgent());
-        stopwatch.resetAndLog("set system properties");
 
         if (OSUtils.isMacOSX()) {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
-            stopwatch.resetAndLog("set OSX properties");
         }
     }
 
@@ -387,7 +364,6 @@ public final class Initializer {
      */
     private void loadUI() {
         GUIMediator.setSplashScreenString(I18n.tr("Loading User Interface..."));
-        stopwatch.resetAndLog("update splash for UI");
 
         GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
@@ -434,19 +410,15 @@ public final class Initializer {
         // Hide the splash screen and recycle its memory.
         if (!isStartup) {
             SplashWindow.instance().dispose();
-            stopwatch.resetAndLog("hide splash");
         }
 
         GUIMediator.allowVisibility();
-        stopwatch.resetAndLog("allow viz");
 
         // Make the GUI visible.
         if (!isStartup) {
             GUIMediator.setAppVisible(true);
-            stopwatch.resetAndLog("set app visible TRUE");
         } else {
             GUIMediator.startupHidden();
-            stopwatch.resetAndLog("start hidden");
         }
     }
 
@@ -462,12 +434,10 @@ public final class Initializer {
                 IconManager.instance();
             }
         });
-        stopwatch.resetAndLog("IconManager instance");
 
         // Touch the I18N stuff to ensure it loads properly.
         GUIMediator.setSplashScreenString(I18n.tr("Loading Internationalization Support..."));
         I18NConvert.instance();
-        stopwatch.resetAndLog("I18nConvert instance");
     }
 
     /**
@@ -477,14 +447,12 @@ public final class Initializer {
         // Start the backend threads.  Note that the GUI is not yet visible,
         // but it needs to be constructed at this point  
         limeWireCore.getLifecycleManager().start();
-        stopwatch.resetAndLog("lifecycle manager start");
 
         // Instruct the gui to perform tasks that can only be performed
         // after the backend has been constructed.
         GUIMediator.instance().coreInitialized();
         GUIMediator.setSplashScreenString(I18nMarker.marktr("Loading Old Downloads..."));
         limeWireCore.getDownloadManager().loadSavedDownloadsAndScheduleWriting();
-        stopwatch.resetAndLog("core initialized");
     }
 
     private void startBittorrentCore() {
@@ -532,7 +500,6 @@ public final class Initializer {
     private void runQueuedRequests(LimeWireCore limeWireCore) {
         // Activate a download for magnet URL locally if one exists
         limeWireCore.getExternalControl().runQueuedControlRequest();
-        stopwatch.resetAndLog("run queued control req");
     }
 
     /**
@@ -541,10 +508,6 @@ public final class Initializer {
     private void postinit() {
         // Tell the GUI that loading is all done.
         GUIMediator.instance().loadFinished();
-        stopwatch.resetAndLog("load finished");
-
-        long stopMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-        LOG.info("STOP Initializer, using: " + stopMemory + " memory, consumed: " + (stopMemory - startMemory));
     }
 
     /**
