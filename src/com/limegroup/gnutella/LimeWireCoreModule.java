@@ -1,7 +1,5 @@
 package com.limegroup.gnutella;
 
-import org.limewire.common.LimeWireCommonModule;
-
 /**
  * The module that defines what implementations are used within
  * LimeWire's core.  This class can be constructed with or without
@@ -21,25 +19,19 @@ public class LimeWireCoreModule {
     }
  
     private final ActivityCallback activityCallback;
-    private final LimeWireCommonModule limeWireCommonModule;
     private final LifecycleManager lifecycleManager;
     private final DownloadManager downloadManager;
     
     private LimeWireCoreModule(ActivityCallback activitCallback) {
         this.activityCallback = activitCallback;
-        limeWireCommonModule = LimeWireCommonModule.instance();
         downloadManager = new DownloadManagerImpl(activitCallback);
-        lifecycleManager = new LifecycleManagerImpl(LimeCoreGlue.instance(), limeWireCommonModule.getLimeWireCommonLifecycleModule().getServiceRegistry());
+        lifecycleManager = new LifecycleManagerImpl(LimeCoreGlue.instance());
     }
     
     public ActivityCallback getActivityCallback() {
         return activityCallback;
     }
-	
-	public LimeWireCommonModule getLimeWireCommonModule() {
-	    return limeWireCommonModule;
-	}
-	
+
 	public LifecycleManager getLifecycleManager() {
 	    return lifecycleManager;
 	}

@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.frostwire.bittorrent.BTEngine;
 import org.limewire.concurrent.ThreadExecutor;
-import org.limewire.lifecycle.ServiceRegistry;
 import org.limewire.listener.EventListener;
 import org.limewire.listener.EventListenerList;
 import org.limewire.service.ErrorService;
@@ -50,15 +49,11 @@ public class LifecycleManagerImpl implements LifecycleManager {
         STARTING, STARTED, SHUTINGDOWN, SHUTDOWN
     }
 
-    private final ServiceRegistry serviceRegistry;
-    
     
     /**/
     public LifecycleManagerImpl(
-            LimeCoreGlue limeCoreGlue,
-            ServiceRegistry serviceRegistry) {
+            LimeCoreGlue limeCoreGlue) {
         
-        this.serviceRegistry = serviceRegistry;
         this.listenerList = new EventListenerList<LifeCycleEvent>();
 
         this.limeCoreGlue = limeCoreGlue;
@@ -90,8 +85,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         
         LimeCoreGlue.preinstall();
        
-        serviceRegistry.initialize();
-        
         preinitializeDone.set(true);
 
         //NEW, for azureus core to be notified of FrostWire's lifecycle events.
@@ -199,8 +192,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
             LOG.error("Interrupted while waiting to finish starting", ie);
             return;
         }
-        
-        serviceRegistry.stop();
 
         // save frostwire.props & other settings
         SettingsGroupManager.instance().save();
@@ -286,9 +277,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     
     /** Runs all tasks that can be done in the background while the gui inits. */
     private void doBackgroundTasks() {
-        serviceRegistry.start("SuperEarly");
-        serviceRegistry.start("EarlyBackground");
-        
         limeCoreGlue.install(); // ensure glue is set before running tasks.
         
         //acceptor.get().init();

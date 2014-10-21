@@ -1,7 +1,5 @@
 package com.limegroup.gnutella;
 
-import org.limewire.lifecycle.ServiceRegistry;
-
 /**
  * Contains mostly all references to singletons within LimeWire.
  * This class should only be used if it is not possible to inject
@@ -38,9 +36,5 @@ public class LimeWireCore {
     
     public LimeCoreGlue getLimeCoreGlue() {
         return LimeCoreGlue.instance();
-    }
-    
-    public ServiceRegistry getServiceRegistry() {
-        return LimeWireCoreModule.instance(null).getLimeWireCommonModule().getLimeWireCommonLifecycleModule().getServiceRegistry();
     }
 }
