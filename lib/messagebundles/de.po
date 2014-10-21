@@ -35,11 +35,11 @@ msgstr ""
 
 #: src/com/frostwire/gui/HideExitDialog.java:72
 msgid "This way file transfers may continue in the background."
-msgstr ""DasTransferieren der Daten l'uft im Hintergrund weiter. "
+msgstr "DasTransferieren der Daten l'uft im Hintergrund weiter."
 
 #: src/com/frostwire/gui/HideExitDialog.java:79
 msgid "Don't show this again"
-msgstr "Diese Nachricht nicht mehr anzeigen. "
+msgstr "Diese Nachricht nicht mehr anzeigen."
 
 #. hide button
 #: src/com/frostwire/gui/HideExitDialog.java:88
@@ -73,12 +73,12 @@ msgstr "Details"
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:120
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:431
 msgid "Show Details"
-msgstr "Details anzeigen"
+msgstr "Details Anzeigen"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:121
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:432
 msgid "Show Torrent Details"
-msgstr "Torrent-Details anzeigen"
+msgstr "Torrent-Details Anzeigen"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:137
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:138
@@ -373,7 +373,7 @@ msgstr "Lizenz"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:196
 msgid "Queued for checking"
-msgstr "Warteschlange wird überprüft" 
+msgstr "" 
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:197
 #, fuzzy
@@ -430,7 +430,7 @@ msgstr "Fehler"
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:206
 #, fuzzy
 msgid "Error: Moving incomplete"
-msgstr "Error: Datei hochladen abgebrochen"
+msgstr "Error"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:207
 msgid "Error: Wrong md5 hash"
@@ -438,11 +438,11 @@ msgstr "Error: falsches md5 hash"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:208
 msgid "Error: Wrong signature"
-msgstr "Error: Falsche Signatur"
+msgstr "Error: Falsche Signature"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:209
 msgid "Stopped"
-msgstr "gestoppt "
+msgstr "Gestoppt "
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:210
 #, fuzzy
@@ -555,7 +555,7 @@ msgstr "Bricht die ausgewählten Downloads ab."
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediator.java:713
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediator.java:761
 #, java-format
-msgid "java-format"
+msgid ""
 "FrostWire was unable to load the torrent file \"{0}\", - it may be malformed "
 "or FrostWire does not have permission to access this file."
 msgstr ""
@@ -628,7 +628,7 @@ msgstr "Upload-Geschwindigkeit wählen"
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:454
 #, fuzzy
 msgid "Edit Trackers"
-msgstr "Track ändern"
+msgstr "Track"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:470
 #, fuzzy
@@ -642,7 +642,7 @@ msgstr "Scrape Tracker"
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:517
 #, fuzzy
 msgid "Edit trackers"
-msgstr "track ändern "
+msgstr "Track"
 
 #. columns
 #. rows
@@ -676,7 +676,7 @@ msgstr "Quelle"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:52
 msgid "Public Domain"
-msgstr "öffentlich Domain"
+msgstr "Öffentlich Domain"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:96
 #, fuzzy
@@ -694,7 +694,7 @@ msgstr ""
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:101
 #, fuzzy
 msgid "Author's Name"
-msgstr "Autor"
+msgstr "Name des Autors"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:103
 msgid "The name of the creator or creators of this work."
@@ -702,7 +702,7 @@ msgstr "Name des Erfinders dieser Arbeit."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:105
 msgid "Work's Title"
-msgstr "Titel"
+msgstr "Arbeit Titel"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:107
 msgid ""
@@ -716,13 +716,14 @@ msgstr "Album Name , Filmtitel, Buchtitel, Spieltitel"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:110
 msgid "Attribution URL"
-msgstr "link , URL"
+msgstr "Namensnennung URL"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:112
 msgid ""
 "The Content Creator's website to give attribution about this work if shared "
 "by others."
-msgstr "Die Content Creators Websie hat uns die Zustimmung gegeben die Arbeit zu teilen."
+msgstr ""
+"Die Content Creators Website hat uns die Zustimmung gegeben die Arbeit zu teilen."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:124
 msgid ""
