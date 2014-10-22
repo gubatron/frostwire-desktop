@@ -4194,7 +4194,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:99
 msgid "Send Errors Automatically if FrostWire is Frozen"
-msgstr ""
+msgstr "Poskati greske automatski ako je FrostWire zamrznut"
 
 #: src/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:40
 #, fuzzy
@@ -4221,7 +4221,7 @@ msgstr "Pokazati upozorenje licence"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:47
 msgid "Router Configuration"
-msgstr ""
+msgstr "Konfiguracije rutera"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:49
 msgid ""
@@ -4307,11 +4307,11 @@ msgstr "Internetske radio stanice"
 
 #: src/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:20
 msgid "You can restore the default internet radio stations."
-msgstr ""
+msgstr "Mozete obnoviti osnovne internetske radio postaje."
 
 #: src/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:42
 msgid "Total Radio Stations"
-msgstr ""
+msgstr "Ukupne Radio Postaje"
 
 #: src/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:46
 #, fuzzy
@@ -4363,7 +4363,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:63
 msgid "Use a specific network interface."
-msgstr ""
+msgstr "Koristiti odredeno sucelje mreze"
 
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:123
 msgid ""
@@ -4394,6 +4394,8 @@ msgid ""
 "You can choose whether or not to automatically share partially downloaded "
 "files."
 msgstr ""
+"Mozete izabrati zelite ili ne automatski dijeliti djelomicno preuzete"
+"datoteke."
 
 #: src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:28
 msgid "Allow Partial Sharing:"
@@ -4412,7 +4414,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:42
 msgid "Play with the native media player"
-msgstr ""
+msgstr "Svirati sa materinjim sviracem medija"
 
 #: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:44
 msgid "Play search result video previews with internal player"
@@ -4438,7 +4440,7 @@ msgstr "Detalji prijavljivanja"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:41
 msgid "Configure username and password to be used for the proxy."
-msgstr ""
+msgstr "Konfigurirati korisnicko ime i lozinku koje cete koristiti za proxy."
 
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:49
 #, fuzzy
@@ -4467,11 +4469,11 @@ msgstr "Ne proxy"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:48
 msgid "Socks v4"
-msgstr "Carape v4"
+msgstr "Socks v4"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:50
 msgid "Socks v5"
-msgstr "Carape v5"
+msgstr "Socks v5"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:52
 msgid "HTTP"
@@ -4532,15 +4534,15 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:45
 msgid "Enable FrostClick Promotions (highly recommended):"
-msgstr ""
+msgstr "Omoguciti FrostClick promocije (visoko preporuceno):"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:40
 msgid "Shutdown Behavior"
-msgstr ""
+msgstr "Ponasanje gasenja"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:42
 msgid "You can choose the default shutdown behavior."
-msgstr ""
+msgstr "Mozete odabrati zadano ponasanje gasenja."
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:65
 msgid "Shutdown Immediately"
@@ -4552,7 +4554,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:70
 msgid "Show dialog to ask before close"
-msgstr ""
+msgstr "Pokazati dijalog prije nego sto zatvorite"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:22
 msgid "Smart Search"
@@ -4563,6 +4565,8 @@ msgid ""
 "The Smart Search database is used to speed up individual file searches, it's "
 "how FrostWire remembers information about .torrent contents."
 msgstr ""
+"Baza podataka pametnog pretrazivanja se koristi da se pobrza pretrazivanje individualne datoteke, to je"
+"tako kako FrostWire zapamcuje informacije o .torrent sadrzaju."
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:47
 #, fuzzy
@@ -4587,35 +4591,38 @@ msgid ""
 "You can choose whether or not to automatically run FrostWire when your "
 "computer starts."
 msgstr ""
+"Mozete izabrati zelite li automatski pokrenuti FrostWire kada"
+"se vase racunalo upali."
 
 #: src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:31
 msgid "Run on System Startup:"
-msgstr ""
+msgstr "Pokrenuti na paljenju sistema"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:34
 msgid "Bandwidth Indicator"
-msgstr ""
+msgstr "Indikator propusnosti"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:36
 msgid "You can display your bandwidth consumption in the status bar."
-msgstr ""
+msgstr "Mozete prikazati vasu propusnost potrosnje u traci stanja."
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:43
 msgid "Show Bandwidth Indicator:"
-msgstr ""
+msgstr "Pokazati indikator propusnosti"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:21
 msgid "Connection Quality Indicator"
-msgstr ""
+msgstr "Indikator kvalitete mreze"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:23
 msgid ""
 "You can display a measurement of your connection quality in the status bar."
 msgstr ""
+"Mozete pokazati mjerenje vase kvalitete mreze u traku stanja."
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:30
 msgid "Show Connection Quality Indicator:"
-msgstr ""
+msgstr "Pokazati indikator kvalitete mreze:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:21
 msgid "Firewall Indicator"
@@ -4666,6 +4673,8 @@ msgid ""
 "Set the Maximum BitTorrent transfer speeds in KB/s.\n"
 "Tip: Use your keyboard arrows for more precision"
 msgstr ""
+"Postaviti maksimum BitTorrent brzinu prijenosa u KB/s.\n"
+"Savjet: Koristite svoju tipkovnicu da vecu preciznost"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:38
 msgid "Download Speed:"
@@ -4855,6 +4864,8 @@ msgid ""
 "Your search must be at least three characters to avoid congesting the "
 "network."
 msgstr ""
+Vase pretrazivanje mora biti barem tri slova dugacko kako bi izbjegli prepuniti"
+"mrezu."
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:217
 msgid "Your search is too long. Please make your search smaller and try again."
@@ -4876,6 +4887,8 @@ msgid ""
 "has been disabled on your FrostWire Search Options. (Go to Tools > Options > "
 "Search to enable)"
 msgstr ""
+"bilo je onemoguceno na opcijama pretrazivanja FrostWire-a. (Idite na Alati > Opcije >"
+"Traziti kako biste omogucili)"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:85
 #: src/com/limegroup/gnutella/gui/tables/AbstractActionsRenderer.java:85
@@ -4928,7 +4941,8 @@ msgstr "\"magnet:\" linkovi"
 msgid ""
 "One or more files or protocols that FrostWire uses are no longer associated "
 "with FrostWire. Would you like FrostWire to re-associate them?"
-msgstr ""
+msgstr "Jedna ili vise datoteke ili protokola koji FrostWire koristi bise nisu asocijirani "
+"sa FrostWire. Zelite li da FrostWire ponovno asocijira s njima?"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:50
 msgid "Revert To Default"
@@ -4999,7 +5013,8 @@ msgstr "Ista datoteka vec se preuzima"
 msgid ""
 "Could not set file location to {0}, because the filename is invalid and may "
 "corrupt your system."
-msgstr ""
+msgstr "Nemoguce postaviti lokaciju datoteke u {0}, jer ime datoteke je nevaceze i moglo bi"
+"korumpirati vas sistem."
 
 #: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:91
 msgid "Could not set the file location, the download is already finished."
@@ -5011,12 +5026,15 @@ msgid ""
 "Could not save download to the folder {0}, because you do not have write "
 "access to it."
 msgstr ""
+"Nemoguce spremiti preuzimanje u mapu {0}, jer nemate pismenu"
+"dozvolu do toga."
 
 #: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:98
 #, java-format
 msgid ""
 "Could not save download to folder {0}, because the folder does not exist."
 msgstr ""
+"Nemoguce spremiti preuzimanje u mapu {0}, jer mapa ne postoji."
 
 #: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:102
 #, java-format
