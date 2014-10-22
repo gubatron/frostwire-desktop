@@ -708,11 +708,13 @@ msgstr "Arbeit Titel"
 msgid ""
 "The name of this work, i.e. the titleLabel of a music album, the titleLabel "
 "of a book, the titleLabel of a movie, etc."
-msgstr "Name der Arbeit"
+msgstr ""
+"Der Name dieser Arbeit, dh die Titlelabel eines Musik-Album, das Title label"
+"on einem Buch, das Titlelabel eines Films etc."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:108
 msgid "album name, movie title, book title, game title."
-msgstr "Album Name , Filmtitel, Buchtitel, Spieltitel"
+msgstr "Album Name, Filmtitel, Buchtitel, Spieltitel"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:110
 msgid "Attribution URL"
@@ -774,11 +776,11 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:235
 msgid "You have selected the following License"
-msgstr ""
+msgstr "Sie haben die folgende Lizenz ausgewählt"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:394
 msgid "Select what people can and can't do with this work"
-msgstr ""
+msgstr "Wählen Sie, was Menschen und können nicht mit dieser Arbeit zu tun"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:425
 msgid ""
@@ -1088,19 +1090,19 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 msgid "bitcoins"
-msgstr ""
+msgstr "bitcoins"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:97
 msgid "litecoins"
-msgstr ""
+msgstr "litecoins"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:98
 msgid "dogecoins"
-msgstr ""
+msgstr "dogecoins"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:99
 msgid "Name your price, Send a Tip or Donation via Paypal"
-msgstr ""
+msgstr "Nennen Sie Ihren Preis, senden Sie eine Tipp oder Spende per Paypal"
 
 #: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:90
 msgid "Preparing selection"
@@ -1323,17 +1325,17 @@ msgstr "Vorschau"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:284
 msgid "Play Video preview of"
-msgstr ""
+msgstr "Play Video Vorschau"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:301
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:302
 #, fuzzy
 msgid "Audio Preview"
-msgstr "Vorschau"
+msgstr "Audiovorschau"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:303
 msgid "Play Audio preview of"
-msgstr ""
+msgstr "Play Audio Vorschau"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:363
 msgid "Support %s with a tip, donation or voluntary payment"
@@ -1377,6 +1379,7 @@ msgstr "Hinzufügen"
 msgid ""
 "The device is busy with another transfer or did not authorize your request"
 msgstr ""
+"Das Gerät ist mit einem anderen Transfer oder hat Ihre Anfrage nicht genehmigen"
 
 #: src/com/frostwire/gui/library/Device.java:294
 msgid "Transfer failed"
@@ -1388,11 +1391,11 @@ msgstr "Upload-Grenze erreicht"
 
 #: src/com/frostwire/gui/library/DeviceUploadDialog.java:117
 msgid "Waiting for device authorization..."
-msgstr ""
+msgstr "Warten auf Genehmigung Gerät..."
 
 #: src/com/frostwire/gui/library/DownloadTask.java:142
 msgid "Wi-Fi download error. Please try again."
-msgstr ""
+msgstr "WLAN Download-Fehler. Bitte versuchen Sie es erneut."
 
 #: src/com/frostwire/gui/library/InternetRadioDirectoryHolder.java:40
 msgid "Radio"
@@ -1483,7 +1486,7 @@ msgstr ""
 #: src/com/frostwire/gui/library/LibraryExplorer.java:162
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:316
 msgid "tracks"
-msgstr "Track "
+msgstr "Track"
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:222
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:39
@@ -1494,7 +1497,7 @@ msgstr "Verzeichnis:"
 #: src/com/frostwire/gui/library/LibraryExplorer.java:224
 #: src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:36
 msgid "Wi-Fi Sharing"
-msgstr ""
+msgstr "WLAN Freigabe"
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:246
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:183
@@ -1522,7 +1525,7 @@ msgstr "Verzeichnis Öffnen"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:332
 msgid "Wi-Fi Shared"
-msgstr ""
+msgstr "WLAN freigegebenen"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:342
 msgid "Path"
@@ -2018,7 +2021,7 @@ msgstr "azemp.failed.d3dbad"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:77
 msgid "Streaming Audio"
-msgstr ""
+msgstr "Streaming Audio"
 
 #. *
 #. * Constant for the play button.
@@ -2030,7 +2033,7 @@ msgstr "Start"
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:82
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:87
 msgid "Long Press to Stop Playback"
-msgstr ""
+msgstr "Lange drücken, um Wiedergabe stoppen"
 
 #. *
 #. * Constant for the forward button.
@@ -2048,7 +2051,7 @@ msgstr "Zurück"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:194
 msgid "Volume"
-msgstr ""
+msgstr "Volumen"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:249
 msgid "Send this file to a friend"
@@ -2056,7 +2059,7 @@ msgstr "Diese Datei an einen Freund senden"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:254
 msgid "Show the source of this media"
-msgstr ""
+msgstr "Zeigen Sie den Quelltext dieser Medien"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:320
 msgid "Shuffle songs"
@@ -2068,7 +2071,8 @@ msgstr "Titel wiederholen"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:913
 msgid "this artist(s)"
-msgstr ""
+msgstr "
+dieser Künstler"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:917
 msgid "Open Facebook page of"
