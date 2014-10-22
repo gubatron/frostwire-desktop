@@ -23,15 +23,15 @@ public class LimeWireCore {
     }
     
     public DownloadManager getDownloadManager() {
-        return LimeWireCoreModule.instance(null).getDownloadManager();
+        return LimeWireCoreModule.instance().getDownloadManager();
     }
     
     public LifecycleManager getLifecycleManager() {
-        return LimeWireCoreModule.instance(null).getLifecycleManager();
+        return LimeWireCoreModule.instance().getLifecycleManager();
     }
     
     public ExternalControl getExternalControl() {
-        return ExternalControl.instance(LimeWireCoreModule.instance(null).getActivityCallback());
+        return ExternalControl.instance(LimeWireCoreModule.instance().getActivityCallback());
     }
     
     public LimeCoreGlue getLimeCoreGlue() {

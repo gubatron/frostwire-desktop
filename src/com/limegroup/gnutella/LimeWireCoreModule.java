@@ -1,5 +1,7 @@
 package com.limegroup.gnutella;
 
+import com.limegroup.gnutella.gui.VisualConnectionCallback;
+
 /**
  * The module that defines what implementations are used within
  * LimeWire's core.  This class can be constructed with or without
@@ -11,9 +13,9 @@ public class LimeWireCoreModule {
     
     private static LimeWireCoreModule INSTANCE;
     
-    public static LimeWireCoreModule instance(ActivityCallback activitCallback) {
+    public static LimeWireCoreModule instance() {
         if (INSTANCE == null) {
-            INSTANCE = new LimeWireCoreModule(activitCallback);
+            INSTANCE = new LimeWireCoreModule();
         }
         return INSTANCE;
     }
@@ -22,10 +24,10 @@ public class LimeWireCoreModule {
     private final LifecycleManager lifecycleManager;
     private final DownloadManager downloadManager;
     
-    private LimeWireCoreModule(ActivityCallback activitCallback) {
-        this.activityCallback = activitCallback;
-        downloadManager = new DownloadManagerImpl(activitCallback);
-        lifecycleManager = new LifecycleManagerImpl(LimeCoreGlue.instance());
+    private LimeWireCoreModule() {
+        this.activityCallback = VisualConnectionCallback.instance();
+        this.downloadManager = new DownloadManagerImpl(activityCallback);
+        this.lifecycleManager = new LifecycleManagerImpl(LimeCoreGlue.instance());
     }
     
     public ActivityCallback getActivityCallback() {
