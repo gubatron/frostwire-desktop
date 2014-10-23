@@ -832,7 +832,7 @@ msgstr "Traka"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:253
 msgid "Trackerless Torrent (DHT)"
-msgstr ""
+msgstr "Torrent bez pratitelja (DHT)"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:254
 msgid ""
@@ -853,7 +853,7 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:262
 msgid "Tracker Announce URLs"
-msgstr ""
+msgstr "Pratitelj najavljuje URLe"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:262
 msgid "One tracker per line"
@@ -970,7 +970,7 @@ msgstr "wizard.operationfailed"
 #. check just the first file on all mirrors.
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:744
 msgid "Checking Web seed mirror URLs..."
-msgstr ""
+msgstr "Provjeravanje Web seed mirror URLa..."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:753
 msgid "Web seed not reachable."
@@ -1023,6 +1023,8 @@ msgid ""
 "I am the content creator or I have the right to collect financial "
 "contributions for this work."
 msgstr ""
+"Ja sam stvoritelj sadrzaja ili ja imam pravo sakupiti financijske "
+"kontribucije za ovaj posao"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:50
 msgid ""
@@ -1838,7 +1840,7 @@ msgstr "Dodaj oznacene file-ove listi koja svira."
 
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:845
 msgid "Refresh the audio properties based on ID3 tags"
-msgstr ""
+msgstr "Procisti audio postavke bazirano na ID3 tagovima"
 
 #: src/com/frostwire/gui/library/LibrarySearch.java:115
 msgid "search results"
@@ -2145,7 +2147,7 @@ msgstr "Izbriši povijest"
 
 #: src/com/frostwire/gui/searchfield/SearchFieldUI.java:410
 msgid "SearchField.popupSource"
-msgstr ""
+msgstr "SearchField.popupSource"
 
 #. library
 #: src/com/frostwire/gui/tabs/LibraryTab.java:55
@@ -2158,6 +2160,8 @@ msgid ""
 "Browse, Search and Play files in your computer. Wi-Fi sharing, Internet "
 "Radio and more."
 msgstr ""
+"Pretrazuj, pregledavaj i sviraj datoteke na vasem racunalu. Wi-Fi dijeljenje, internet "
+"Radio i jos vise"
 
 #: src/com/frostwire/gui/tabs/SearchDownloadTab.java:51
 #, fuzzy
@@ -2269,7 +2273,7 @@ msgstr "FileChooser.renameErrorText"
 
 #: src/com/frostwire/gui/transfers/PeerHttpUpload.java:153
 msgid "Streaming"
-msgstr ""
+msgstr "Strimanje"
 
 #: src/com/frostwire/gui/transfers/PeerHttpUpload.java:159
 #, fuzzy
@@ -2348,7 +2352,7 @@ msgstr "<h1>Hvala prijasnjim FrostWire programerima</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:199
 msgid "<h1>Thanks to the FrostWire Chat Community!</h1>"
-msgstr ""
+msgstr "<h1>Hvala FrostWire zajednici za razgovore!</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:200
 msgid ""
@@ -2366,7 +2370,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:206
 msgid "<h1>FrostWire Chat Operators</h1>"
-msgstr ""
+msgstr "<h1>FrostWire operateri razgovora</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:211
 msgid "<h1>FrostWire Forum Moderators</h1>"
@@ -2374,7 +2378,7 @@ msgstr "<h1>FrostWire forum moderatori</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:223
 msgid "And also to the Support Volunteer Helpers:"
-msgstr ""
+msgstr "I takoder volonterima pomoci:"
 
 #. developers
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:236
@@ -2813,12 +2817,16 @@ msgid ""
 "FrostWire has encountered problems in managing your settings.  Your settings "
 "changes may not be saved on shutdown."
 msgstr ""
+"FrostWire je naisao na probleme u upravljanju vasih postavki.  Vase promjene "
+"u postavkama se nece sacuvati kada ugasite."
 
 #: src/com/limegroup/gnutella/gui/SettingsWarningManager.java:38
 msgid ""
 "FrostWire has encountered problems in loading your settings.  FrostWire will "
 "attempt to use the default values; however, may behave unexpectedly."
 msgstr ""
+"FrostWire je naisao na problem u ucitavanju vasih postavki.  FrostWire ce "
+"pokusati koristiti osnovne vrijednosti; medutim, moze se ponasati neocekivano."
 
 #: src/com/limegroup/gnutella/gui/ShutdownWindow.java:30
 msgid "Shutting down FrostWire..."
@@ -2883,13 +2891,15 @@ msgstr "Učitavanje korisničkog sučelja..."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:189
 msgid "Follow us @frostwire"
-msgstr ""
+msgstr "Pratite nas na @frostwire"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:194
 msgid ""
 "Like FrostWire on Facebook and stay in touch with the community. Get Help "
 "and Help Others."
 msgstr ""
+"Zavolite FrostWire na Facebook-u i ostanite u dodiru sa zajednicom. Dobiti pomoc "
+"I pomozite ostalima."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:200
 #, fuzzy
@@ -2898,7 +2908,7 @@ msgstr "&Korištenje FrostWire-a."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 msgid "<html><b>Seeding</b><p>completed torrent downloads.</html>"
-msgstr ""
+msgstr "<html><b>Seedanje</b><p>Zavrsena torrent preuzimanja.</html>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 msgid ""
@@ -2908,11 +2918,11 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
 msgid "<html><b>Seeding</b></html>"
-msgstr ""
+msgstr "<html><b>Seedanje</b></html>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
 msgid "<html><b>Not Seeding</b></html>"
-msgstr ""
+msgstr "<html><b>Ne Seeda</b></html>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:516
 msgid "FrostWire has not detected a firewall"
@@ -2928,7 +2938,7 @@ msgstr "Veza prekinuta"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:597
 msgid "Check your internet connection, FrostWire can't connect."
-msgstr ""
+msgstr "Provjerite vasu internet konekciju, FrostWire se ne moze spojiti."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:600
 msgid "Turbo-Charged"
@@ -2957,7 +2967,7 @@ msgstr "Pokaži status firewala"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:787
 msgid "Show Bandwidth Consumption"
-msgstr ""
+msgstr "Pokazati propusnost potrosnje"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:804
 #, fuzzy
@@ -2974,11 +2984,11 @@ msgstr "Slanje datoteka"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:841
 msgid "Total Downstream:"
-msgstr ""
+msgstr "Totalni Downstream:"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:841
 msgid "Total Upstream:"
-msgstr ""
+msgstr "Totalni Upstream:"
 
 #. *
 #. * The title for the TOTD window.
@@ -3032,6 +3042,8 @@ msgid ""
 "You can change the look and feel of FrostWire by going to View &gt; Use "
 "Small Icons, Show Icon Text and Increase-Decrease the Font Size."
 msgstr ""
+"Mozete promijeniti izgled i osjecaj od FrostWire-a tako da idete na Pregled &gt; Koristiti "
+"Make Ikone, Pokazati Tekst Ikona i Povecaj-Smalji Velicinu Fonta"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:26
 #, fuzzy
@@ -3050,6 +3062,8 @@ msgid ""
 "It helps the network if you keep your FrostWire running. Others will connect "
 "to the network easier and searches will perform better."
 msgstr ""
+"Pomaze mrezi ako ostavite FrostWire upaljen. Ostali ce se spojiti "
+"na mrezu lakse i pretrazivanja ce biti bolja."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:28
 #, java-format
