@@ -20,9 +20,8 @@ package com.frostwire.search;
 
 import java.io.IOException;
 
+import com.frostwire.logging.Logger;
 import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.frostwire.content.ContentValues;
 import com.frostwire.content.Context;
@@ -40,7 +39,7 @@ import com.limegroup.gnutella.settings.SearchSettings;
  */
 public final class CrawlCacheDB {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CrawlCacheDB.class);
+    private static final Logger LOG = Logger.getLogger(CrawlCacheDB.class);
 
     static {
         try {

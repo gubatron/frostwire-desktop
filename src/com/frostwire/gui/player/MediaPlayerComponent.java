@@ -42,10 +42,8 @@ import javax.swing.SwingWorker;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.frostwire.logging.Logger;
 import net.miginfocom.swing.MigLayout;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
@@ -71,7 +69,7 @@ import com.limegroup.gnutella.gui.RefreshListener;
  */
 public final class MediaPlayerComponent implements MediaPlayerListener, RefreshListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MediaPlayerComponent.class);
+    private static final Logger LOG = Logger.getLogger(MediaPlayerComponent.class);
 
     private static final int MAX_TITLE_CHARS = 36;
     private static final int BOUND_TITLE_CHARS = 18;

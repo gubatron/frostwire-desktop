@@ -23,9 +23,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.frostwire.logging.Logger;
 import org.limewire.util.OSUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
@@ -47,7 +46,7 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  */
 public final class UpdateMessageReader implements ContentHandler {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UpdateMessageReader.class);
+    private static final Logger LOG = Logger.getLogger(UpdateMessageReader.class);
 
     public HashSet<UpdateMessage> _announcements = null;
 

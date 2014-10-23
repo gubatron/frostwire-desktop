@@ -32,11 +32,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.frostwire.logging.Logger;
 import com.frostwire.search.*;
 import org.limewire.util.I18NConvert;
 import org.limewire.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.frostwire.gui.filters.SearchFilter;
 import com.frostwire.gui.filters.SearchFilterFactory;
@@ -59,7 +58,7 @@ import com.limegroup.gnutella.settings.SearchSettings;
  */
 public final class SearchMediator {
 
-    public static final Logger LOG = LoggerFactory.getLogger(SearchMediator.class);
+    public static final Logger LOG = Logger.getLogger(SearchMediator.class);
 
     /**
      * Query text is valid.

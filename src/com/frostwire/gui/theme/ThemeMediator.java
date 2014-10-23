@@ -66,9 +66,8 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.text.JTextComponent;
 
+import com.frostwire.logging.Logger;
 import org.limewire.util.OSUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import sun.swing.SwingUtilities2;
 
@@ -90,7 +89,7 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  */
 public final class ThemeMediator {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ThemeMediator.class);
+    private static final Logger LOG = Logger.getLogger(ThemeMediator.class);
 
     public static final Font DIALOG_FONT = new Font(Font.DIALOG, Font.PLAIN, 12);
 

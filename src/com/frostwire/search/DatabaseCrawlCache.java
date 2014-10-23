@@ -17,11 +17,9 @@
 
 package com.frostwire.search;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.frostwire.content.ContentValues;
 import com.frostwire.database.Cursor;
+import com.frostwire.logging.Logger;
 import com.frostwire.search.CrawlCacheDB.Columns;
 import com.limegroup.gnutella.settings.SearchSettings;
 
@@ -33,7 +31,7 @@ import com.limegroup.gnutella.settings.SearchSettings;
  */
 public class DatabaseCrawlCache implements CrawlCache {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DatabaseCrawlCache.class);
+    private static final Logger LOG = Logger.getLogger(DatabaseCrawlCache.class);
 
     private CrawlCacheDB db;
 

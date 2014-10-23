@@ -18,7 +18,6 @@
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/h2-1.3.164" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/metadata-extractor-2.6.2-src/Source" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/lucene-3.5.0" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/slf4j-api/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/jaudiotagger/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />

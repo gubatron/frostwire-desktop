@@ -40,11 +40,10 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import com.frostwire.logging.Logger;
 import org.apache.commons.io.FilenameUtils;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.filters.TableLineFilter;
@@ -75,7 +74,7 @@ import com.limegroup.gnutella.util.QueryUtils;
  */
 public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<LibraryDeviceTableModel, LibraryDeviceTableDataLine, FileDescriptor> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(LibraryDeviceTableMediator.class);
+    private static final Logger LOG = Logger.getLogger(LibraryDeviceTableMediator.class);
 
     /**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
