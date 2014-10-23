@@ -580,6 +580,14 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
                 queryTitle = "youtube:" + query;
             }
 
+            if (query.contains("http://youtu.be/")) {
+                query = query.split("be/")[1];
+                if (query.contains("#")) {
+                    query = query.split("#")[0];
+                }
+                queryTitle = "youtube:" + query;
+            }
+
             final SearchInformation info = SearchInformation.createTitledKeywordSearch(query, null, MediaType.getTorrentMediaType(), queryTitle);
 
             // If the search worked, store & clear it.

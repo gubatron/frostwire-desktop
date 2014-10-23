@@ -209,20 +209,16 @@ public final class FileMenuActions {
 
         private class OkAction extends AbstractAction {
 
-            /**
-             * 
-             */
-            private static final long serialVersionUID = -2129198631435809271L;
-
             public OkAction() {
                 super(I18n.tr("OK"));
             }
 
             public void actionPerformed(ActionEvent a) {
-                if (openMagnetOrTorrent(PATH_FIELD.getText(),FileMenuActions.ActionInvocationSource.FROM_FILE_MENU)) {
+                String str = PATH_FIELD.getText();
+                if (openMagnetOrTorrent(str, FileMenuActions.ActionInvocationSource.FROM_FILE_MENU)) {
                     dismissDialog();
-                } else if (PATH_FIELD.getText().contains("youtube.com/watch?")) {
-                    GUIMediator.instance().startSearch(PATH_FIELD.getText());
+                } else if (str.contains("youtube.com/watch?") || str.contains("http://youtu.be/")) {
+                    GUIMediator.instance().startSearch(str);
                     dismissDialog();
                 } else {
                     GUIMediator.showError(I18n.tr("FrostWire cannot download this address. Make sure you typed it correctly, and then try again."));
@@ -263,7 +259,7 @@ public final class FileMenuActions {
             GUIMediator.instance().openTorrentURI(userText, true);
             UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_MAGNET_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_MAGNET_URL_FROM_SEARCH_FIELD);
             return true;
-        } else if (userText.matches(".*youtube.com.*")) {
+        } else if (userText.matches(".*youtube.com.*") || userText.matches(".*youtu.be.*")) {
             UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_CLOUD_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_CLOUD_URL_FROM_SEARCH_FIELD);
             return false;
         } else if (userText.matches(".*soundcloud.com.*")) {

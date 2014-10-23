@@ -21,12 +21,7 @@ import com.limegroup.gnutella.gui.search.SearchMediator;
  */
 public class SearchAction extends AbstractAction {
 
-	/**
-     * 
-     */
-    private static final long serialVersionUID = 580622061093559128L;
-    
-    private SearchInformation info;
+	private SearchInformation info;
 	
 	/**
 	 * Constructs an action that searches a space separated list of keywords.
