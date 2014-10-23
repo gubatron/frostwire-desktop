@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
 
+import org.apache.commons.io.IOUtils;
 import org.limewire.util.FileUtils;
 
 
@@ -211,7 +212,7 @@ public final class SettingsFactory implements Iterable<AbstractSetting> {
             }
 
         } finally {
-            FileUtils.close(fis);
+            IOUtils.closeQuietly(fis);
         }
         
         // Reload all setting values
@@ -323,7 +324,7 @@ public final class SettingsFactory implements Iterable<AbstractSetting> {
         } catch (IOException e) {
             markFailure();
         } finally {
-            FileUtils.close(out);
+            IOUtils.closeQuietly(out);
         }
     }
     

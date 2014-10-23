@@ -41,6 +41,7 @@ import java.util.Stack;
 
 import com.frostwire.logging.Logger;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  * Provides file manipulation methods; ensures a file exists, makes a file 
@@ -49,64 +50,6 @@ import org.apache.commons.io.FilenameUtils;
 public class FileUtils {
     
     private static final Logger LOG = Logger.getLogger(FileUtils.class);
-    
-    public static void writeObject(String fileName, Object obj) 
-    throws IOException{
-        writeObject(new File(fileName),obj);
-    }
-    
-    /**
-     * Writes the passed Object to corresponding file
-     */
-    public static void writeObject(File f, Object obj)
-        throws IOException {
-        
-        try {
-            f = getCanonicalFile(f);
-        } catch (IOException tryAnyway){}
-        
-        ObjectOutputStream out = null;
-        try {
-            //open the file
-            out = new ObjectOutputStream(
-            		new BufferedOutputStream(
-            				new FileOutputStream(f)));
-            //write to the file
-            out.writeObject(obj);	
-            out.flush();
-        } finally {
-            close(out);
-        }
-    }
-    
-    public static Object readObject(String fileName)
-    throws IOException, ClassNotFoundException {
-        return readObject(new File(fileName));
-    }
-    
-    /**
-     * @param file The file from where to read the serialized Object
-     * @return The Object that was read
-     */
-    public static Object readObject(File file)
-        throws IOException, ClassNotFoundException {
-        
-        try {
-            file = getCanonicalFile(file);
-        } catch (IOException tryAnyway){}
-        
-        ObjectInputStream in = null;
-        try {
-            //open the file
-            in = new ObjectInputStream(
-            		new BufferedInputStream(
-            				new FileInputStream(file)));
-            //read and return the object
-            return in.readObject();	
-        } finally {
-            close(in);
-        }    
-    }
 
     /**
      * Gets the canonical path, catching buggy Windows errors
@@ -408,30 +351,6 @@ public class FileUtils {
 
 		return directory.delete();
 	}
-
-    /**
-     * A utility method to close Closeable objects (Readers, Writers, 
-     * Input- and OutputStreams and RandomAccessFiles).
-     */
-    public static void close(Closeable closeable) {
-        if (closeable != null) {
-            try {
-                closeable.close();
-            } catch (IOException ignored) {}
-        }
-    }
-    
-    /**
-     * A utility method to flush Flushable objects (Readers, Writers, 
-     * Input- and OutputStreams and RandomAccessFiles).
-     */
-    public static void flush(Flushable flushable) {
-        if (flushable != null) {
-            try {
-                flushable.flush();
-            } catch (IOException ignored) {}
-        }
-    }
     
     /** 
      * Attempts to copy the first 'amount' bytes of file 'src' to 'dst',
@@ -463,9 +382,13 @@ public class FileUtils {
             }
         } catch (IOException e) {
         } finally {
-            close(in);
-            flush(out);
-            close(out);
+            IOUtils.closeQuietly(in);
+            if (out != null) {
+                try {
+                    out.flush();
+                } catch (IOException ignored) {}
+            }
+            IOUtils.closeQuietly(out);
         }
         return amount-amountToRead;
     }
@@ -502,26 +425,6 @@ public class FileUtils {
         throw iox;
     }
     
-    /**
-     * Creates a temporary file using
-     * {@link File#createTempFile(String, String)}, trying a few times.
-     * This is a workaround for Sun Bug: 6325169: createTempFile occasionally
-     * fails (throwing an IOException).
-     */
-    public static File createTempFile(String prefix, String suffix) throws IOException {
-        IOException iox = null;
-        
-        for(int i = 0; i < 10; i++) {
-            try {
-                return File.createTempFile(prefix, suffix);
-            } catch(IOException x) {
-                iox = x;
-            }
-        }
-        
-        throw iox;
-    }
-    
     public static File getJarFromClasspath(ClassLoader classLoader, String markerFile) {
         if (classLoader == null) {
             throw new IllegalArgumentException();
@@ -538,41 +441,6 @@ public class FileUtils {
         }
 
         return null;
-    }
-    
-    public static boolean deleteEmptyDirectoryRecursive(File directory) {
-        // make sure we only delete canonical children of the parent file we
-        // wish to delete. I have a hunch this might be an issue on OSX and
-        // Linux under certain circumstances.
-        // If anyone can test whether this really happens (possibly related to
-        // symlinks), I would much appreciate it.
-        String canonicalParent;
-        try {
-            canonicalParent = getCanonicalPath(directory);
-        } catch (IOException ioe) {
-            return false;
-        }
-
-        if (!directory.isDirectory())
-            return false;
-        
-        boolean canDelete = true;
-
-        File[] files = directory.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            try {
-                if (!getCanonicalPath(files[i]).startsWith(canonicalParent))
-                    continue;
-            } catch (IOException ioe) {
-                canDelete = false;
-            }
-            
-            if (!deleteEmptyDirectoryRecursive(files[i])) {
-                canDelete = false;
-            }
-        }
-
-        return canDelete ? directory.delete() : false;
     }
     
     public static File[] listFiles(File directoryFile) {

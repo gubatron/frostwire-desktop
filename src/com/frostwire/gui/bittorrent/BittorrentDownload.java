@@ -26,6 +26,7 @@ import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.transfers.TransferItem;
 import com.frostwire.transfers.TransferState;
+import com.frostwire.util.DirectoryUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -307,7 +308,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
             }
         }
         File saveLocation = dl.getSavePath();
-        FileUtils.deleteEmptyDirectoryRecursive(saveLocation);
+        DirectoryUtils.deleteEmptyDirectoryRecursive(saveLocation);
         iTunesImportSettings.IMPORT_FILES.remove(saveLocation);
     }
 
