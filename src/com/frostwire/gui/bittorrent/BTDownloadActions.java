@@ -143,9 +143,9 @@ final class BTDownloadActions {
         public void performAction(ActionEvent e) {
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             if (downloaders.length > 0) {
-                File toExplore = downloaders[0].getSaveLocation();
+                File toExplore = new File(downloaders[0].getSaveLocation(),downloaders[0].getDisplayName());
 
-                if (toExplore == null) {
+                if (toExplore == null || !toExplore.exists()) {
                     return;
                 }
 
@@ -474,7 +474,10 @@ final class BTDownloadActions {
                     return;
                 }
 
-                playlistFiles.add(d.getSaveLocation());
+                File downloadFolder = new File(d.getSaveLocation(),d.getDisplayName());
+                if (downloadFolder.exists()) {
+                    playlistFiles.add(downloadFolder);
+                }
             }
 
             LibraryUtils.createNewPlaylist(playlistFiles.toArray(new File[0]));

@@ -203,8 +203,17 @@ public class LibraryUtils {
         
             @Override
             public void run() {
-		        String input = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, suggestPlaylistName(files));
-		        if (!StringUtils.isNullOrEmpty(input, true)) {
+                File[] mediaFiles = files;
+
+                if (files.length == 1 && files[0].isDirectory()) {
+                    mediaFiles = FileUtils.getFilesRecursive(files[0],null);
+                }
+                String input = (String) ThemeMediator.showInputDialog(GUIMediator.getAppFrame(),
+                        I18n.tr("Playlist name"),
+                        I18n.tr("Playlist name"),
+                        JOptionPane.PLAIN_MESSAGE, null, null,
+                        suggestPlaylistName(mediaFiles));
+                if (!StringUtils.isNullOrEmpty(input, true)) {
 		            plBuilder.append(input);
 		        }
             }
