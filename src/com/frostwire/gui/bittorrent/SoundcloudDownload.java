@@ -141,8 +141,10 @@ public class SoundcloudDownload implements BTDownload {
 
     @Override
     public void pause() {
-        state = TransferState.CANCELING;
-        httpClient.cancel();
+        if (state != TransferState.FINISHED) {
+            state = TransferState.CANCELING;
+            httpClient.cancel();
+        }
     }
 
     @Override
