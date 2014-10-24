@@ -260,7 +260,7 @@ msgstr "Stvori i dodaj u novu playlistu"
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:490
 #, fuzzy
 msgid "Play file"
-msgstr "Sviraj"
+msgstr "Sviraj datoteku"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:491
 msgid "Play media file"
@@ -503,7 +503,7 @@ msgstr "Pokreni odabrane datoteke"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:508
 msgid "Show in Library"
-msgstr "Prikaži u Knjižnici"
+msgstr "Prikaži u Knjiznici"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:509
 msgid "Show Download in Library"
@@ -636,7 +636,7 @@ msgstr ""
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:517
 #, fuzzy
 msgid "Edit trackers"
-msgstr "Podesti trake"
+msgstr "Podesiti pratitelje"
 
 #. columns
 #. rows
@@ -665,7 +665,7 @@ msgstr "Kreativne zajednice"
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:51
 #, fuzzy
 msgid "Open Source"
-msgstr "Otvoreni kod"
+msgstr "Otvoreni izvor"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:52
 msgid "Public Domain"
@@ -680,6 +680,8 @@ msgid ""
 "I am the Content Creator of this work or I have been granted the rights to "
 "share this content under the following license by the Content Creator(s)."
 msgstr ""
+"Ja sam stvaratelj sadrzaja ovog rada ili imam prava da "
+"dijelim ovaj sadrzaj sa licencom od Stvaratelja Sadrzaja."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:101
 #, fuzzy
@@ -746,6 +748,8 @@ msgid ""
 "You allow others to distribute derivative works only under a license "
 "identical to the license that governs your work."
 msgstr ""
+"Vi dozvoljavate ostalima da distribuiraju posao samo pod licencom "
+"identicnom licencom koja ureduje vas posao."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:147
 msgid ""
@@ -774,11 +778,13 @@ msgid ""
 "You can copy, modify, distribute and perform the work, even for commercial "
 "purposes, all without asking permission."
 msgstr ""
+"Mozete kopirati, podesiti, distribuirati i obaviti posao, cak i za komercilajne "
+"upotrebe, sve bez pitanja za dozvolu."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:467
 #, fuzzy
 msgid "License type:"
-msgstr "Vrsta dozvole"
+msgstr "Vrsta dozvole:"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:107
 #, fuzzy
@@ -814,10 +820,12 @@ msgid ""
 "These box shows the contents you've selected for your new .torrent.\n"
 "Either a file, or the contents of a folder."
 msgstr ""
+"Ove kutije pokazuju sadrzaj koji ste odabrali za vesu novu .torrent\n"
+"Ili datoteku, ili sadrzaj mape."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:242
 msgid "Select File or Folder..."
-msgstr "Odaberi mapu"
+msgstr "Odaberi datoteku ili mapu..."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:243
 msgid ""
@@ -839,6 +847,8 @@ msgid ""
 "Select this option to create torrents that don't need trackers, completely "
 "descentralized. (Recommended)"
 msgstr ""
+"Odaberite ovu mogucnost kako biste stvorili torrente koje ne trebaju pratitelje, potpuno "
+"decentralizirano. (Preporuceno)"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:257
 msgid "Start seeding"
@@ -868,13 +878,15 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:274
 msgid "Web Seeds Mirror URLs"
-msgstr ""
+msgstr "Web Seed Zrcano ULRovi"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:275
 msgid ""
 "If these files can be downloaded from the web, enter the URLs of each "
 "possible mirror, one per line (GetRight style)."
 msgstr ""
+"Ako se ove datoteke mogu preuzeti sa interneta, upisite URLove za svakog "
+"moguces zrcala, jedan po redu (GetRight style)."
 
 #. first button will dock all the way east,
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:292
@@ -1051,7 +1063,7 @@ msgstr "<strong>Paypal</strong> isplate/donacije stranica url"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:151
 msgid "\"Name your price\", \"Tips\", \"Donations\" payment options"
-msgstr ""
+msgstr "\"Recite svoju cijenu\", \"Savjeti\", \"Donacije\" mogucnosti isplate"
 
 #. We use "Bitcoin" for the protocol (upper case B), and "bitcoins" for the units of currency (lower case b)
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
@@ -1219,7 +1231,7 @@ msgstr "Koristi osnovne postavke"
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:174
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:200
 msgid "Browse..."
-msgstr "Pretražuj..."
+msgstr "Pretrazuj..."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:175
 msgid "Choose Another Folder"
@@ -1329,6 +1341,7 @@ msgstr "Dodati"
 msgid ""
 "The device is busy with another transfer or did not authorize your request"
 msgstr ""
+"Naprava je zauzeta sa drugim prijenosom ili nije odabrala vas zahtjev"
 
 #: src/com/frostwire/gui/library/Device.java:294
 msgid "Transfer failed"
@@ -1430,7 +1443,7 @@ msgstr "Pretrazite svoj"
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:145
 msgid "'s "
-msgstr "'s"
+msgstr "'s "
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:162
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:317
@@ -1512,6 +1525,8 @@ msgid ""
 "Are you sure you want to delete the selected file(s), thus removing it from "
 "your computer?"
 msgstr ""
+"Jeste li sigurni da zelite obrisati odabrane datoteke, i micanje ih iz "
+"vaseg racunala?"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:584
 #: src/com/limegroup/gnutella/gui/LanguageWindow.java:196
@@ -1715,6 +1730,8 @@ msgid ""
 "Warning: a file with the name {0} already exists in the folder. Overwrite "
 "this file?"
 msgstr ""
+"Upozorenje: datoteka sa imenom {0} vec postoji u mapi. Prebrisati "
+"ovu datoteku?"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:715
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:844
@@ -1723,7 +1740,7 @@ msgstr "Osvjezi audio svojstva"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:716
 msgid "Refresh the audio properties based on ID3 tags of selected items"
-msgstr ""
+msgstr "Osvjezi audio postavke bazirano na ID3 tagovima od odabranih stvari"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:734
 msgid "Delete Playlist"
@@ -1734,6 +1751,8 @@ msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
 msgstr ""
+"Jeste li sugirni da zelite izbrisati ovu traku sviranja?\n"
+"(Nijedna datoteka nece biti izbrisana)"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:763
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:828
@@ -2321,7 +2340,7 @@ msgstr "Torrenti"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:58
 msgid "About FrostWire"
-msgstr "O FrostWireu"
+msgstr "O FrostWire-u"
 
 #. set up limewire version label
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:75
@@ -5066,11 +5085,13 @@ msgid ""
 "Could not set download folder to {0}, because it represents an individual "
 "file, not a folder."
 msgstr ""
+"Nemoguce postaviti mapu za preuzimanje u {0}, jer predstavlja individualnu "
+datoteku, a ne mapu.
 
 #: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:114
 #, java-format
 msgid "Could not set file location to {0}, because it is not a regular file."
-msgstr ""
+msgstr "Nemoguce postaviti lokaciju datoteke u {0} jer nije uobicajena datoteka."
 
 #: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:117
 msgid "Could not set file location due to an error in the filesystem."
@@ -5087,3 +5108,5 @@ msgid ""
 "The path of the parent folder exceeds the maximum length of paths on the "
 "filesystem. {0} "
 msgstr ""
+"Put do roditelja mape prelazi maksimum duzinu putova "
+"u datoteticnom sustavu. {0} "
