@@ -220,7 +220,7 @@ public final class StatusLine {
             public String getToolTipText() {
                 boolean seedingStatus = SharingSettings.SEED_FINISHED_TORRENTS.getValue();
 
-                String tooltip = (seedingStatus) ? I18n.tr("<html><b>Seeding</b><p>completed torrent downloads.</html>") : I18n.tr("<html><b>Not Seeding</b>.<p>File chunks might be shared only during<p>a torrent download.</html>");
+                String tooltip = "<html>"+(seedingStatus ? I18n.tr("<b>Seeding</b><p>completed torrent downloads.</p>") : I18n.tr("<b>Not Seeding</b><p>File chunks might be shared only duringa torrent download.</p>")+"</html>");
                 return tooltip;
             }
         };
@@ -482,7 +482,7 @@ public final class StatusLine {
 
     private void updateSeedingStatus() {
         boolean seedingStatus = SharingSettings.SEED_FINISHED_TORRENTS.getValue();
-        seedingStatusButton.setText(seedingStatus ? I18n.tr("<html><b>Seeding</b></html>") : I18n.tr("<html><b>Not Seeding</b></html>"));
+        seedingStatusButton.setText("<html>"+(seedingStatus ? I18n.tr("<b>Seeding</b>") : I18n.tr("<b>Not Seeding</b>"))+"</html>");
         seedingStatusButton.setIcon(seedingStatus ? GUIMediator.getThemeImage("seeding_small") : GUIMediator.getThemeImage("not_seeding_small"));
     }
 

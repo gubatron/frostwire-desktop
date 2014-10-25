@@ -71,7 +71,7 @@ public class IntentPanel extends JPanel {
         willNot.setLayout(new GridBagLayout());
         gbc.fill = GridBagConstraints.NONE;
         gbc.insets = new Insets(10, 10, 10, 10);
-        willNotButton.setText(I18n.tr("<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>will not</b> use FrostWire {0} for copyright infringement.</div></html>", FrostWireUtils.getFrostWireVersion()));
+        willNotButton.setText("<html><div display=\"block\" color=\"#515151\" size=\"13\">"+I18n.tr("I <b>will not</b> use FrostWire {0} for copyright infringement.", FrostWireUtils.getFrostWireVersion())+"</div></html>");
         willNotButton.setOpaque(false);
         willNotButton.setIconTextGap(10);
         willNot.add(willNotButton, gbc);
@@ -79,7 +79,7 @@ public class IntentPanel extends JPanel {
 
         DitherPanel mightUse = new DitherPanel(ditherer, null);
         mightUse.setLayout(new GridBagLayout());
-        mightUseButton.setText(I18n.tr("<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>might use</b> FrostWire {0} for copyright infringement.</div></html>", FrostWireUtils.getFrostWireVersion()));
+        mightUseButton.setText("<html><div display=\"block\" color=\"#515151\" size=\"13\">"+I18n.tr("I <b>might use</b> FrostWire {0} for copyright infringement.", FrostWireUtils.getFrostWireVersion())+"</div></html>");
         mightUseButton.setOpaque(false);
         mightUseButton.setIconTextGap(10);
         mightUse.add(mightUseButton, gbc);

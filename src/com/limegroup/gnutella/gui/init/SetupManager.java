@@ -532,7 +532,7 @@ public class SetupManager {
         private static final long serialVersionUID = -6355909946850317926L;
 
         public PreviousAction() {
-            super(I18n.tr("<< Back"));
+            super("<< "+I18n.tr("Back"));
         }
 
         public void actionPerformed(ActionEvent e) {
