@@ -4900,7 +4900,7 @@ msgid ""
 "Your search must be at least three characters to avoid congesting the "
 "network."
 msgstr ""
-Vase pretrazivanje mora biti barem tri slova dugacko kako bi izbjegli prepuniti"
+"Vase pretrazivanje mora biti barem tri slova dugacko kako bi izbjegli prepuniti"
 "mrezu."
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:217
@@ -5089,7 +5089,7 @@ msgid ""
 "file, not a folder."
 msgstr ""
 "Nemoguce postaviti mapu za preuzimanje u {0}, jer predstavlja individualnu "
-datoteku, a ne mapu.
+"datoteku, a ne mapu."
 
 #: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:114
 #, java-format
