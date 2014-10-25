@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-20 18:39+0400\n"
-"PO-Revision-Date: 2014-10-25 05:21+0400\n"
+"PO-Revision-Date: 2014-10-25 19:22+0400\n"
 "Last-Translator: X-NicON <x-icon@ya.ru>\n"
 "Language-Team: Russian Team\n"
 "Language: ru\n"
@@ -1908,7 +1908,7 @@ msgid "Error importing Radio Station from"
 msgstr "Ошибка импорта радио станции из"
 
 #: src/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:67
-msgid "Holds the Results for "
+msgid "Holds the Results for"
 msgstr "Фильтр результатов"
 
 #: src/com/frostwire/gui/library/NodeRenderer.java:65

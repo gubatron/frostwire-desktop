@@ -22,7 +22,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 
-import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -62,8 +61,8 @@ public class ShutdownPaneItem extends AbstractPaneItem {
 
         BoxPanel buttonPanel = new BoxPanel();
 
-        String immediateLabel = I18nMarker.marktr("Shutdown Immediately");
-        String minimizeLabel = I18nMarker.marktr("Minimize to System Tray");
+        String immediateLabel = I18n.tr("Shutdown Immediately");
+        String minimizeLabel = I18n.tr("Minimize to System Tray");
         shutdownImmediately = new JRadioButton(I18n.tr(immediateLabel));
         minimizeToTray = new JRadioButton(I18n.tr(minimizeLabel));
 

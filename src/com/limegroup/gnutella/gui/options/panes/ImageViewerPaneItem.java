@@ -10,8 +10,6 @@ import java.io.IOException;
 
 import javax.swing.JTextField;
 
-import org.limewire.i18n.I18nMarker;
-
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.SizedTextField;
@@ -34,7 +32,7 @@ public class ImageViewerPaneItem extends AbstractPaneItem {
 	 * label on the component that allows to user to change the setting for
 	 * this <tt>PaneItem</tt>.
 	 */
-	private final String OPTION_LABEL = I18nMarker.marktr("Image Viewer");
+	private final String OPTION_LABEL = I18n.tr("Image Viewer");
     
     /** 
      * Handle to the <tt>JTextField</tt> that displays the viewer name

@@ -49,7 +49,6 @@ import javax.swing.table.TableColumnModel;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.limewire.i18n.I18nMarker;
 
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.filters.TableLineFilter;
@@ -380,7 +379,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
         String keywords = QueryUtils.createQueryString(line.getFilename());
         SearchInformation info = SearchInformation.createKeywordSearch(keywords, null, MediaType.getAnyTypeMediaType());
         if (SearchMediator.validateInfo(info) == SearchMediator.QUERY_VALID) {
-            menu.add(new SkinMenuItem(new SearchAction(info, I18nMarker.marktr("Search for Keywords: {0}"))));
+            menu.add(new SkinMenuItem(new SearchAction(info, I18n.tr("Search for Keywords: {0}"))));
         }
 
         return menu;

@@ -2,9 +2,8 @@ package com.limegroup.gnutella.gui.search;
 
 import java.util.EventListener;
 
-import org.limewire.i18n.I18nMarker;
-
 import com.limegroup.gnutella.gui.ButtonRow;
+import com.limegroup.gnutella.gui.I18n;
 
 /**
  * This class contains the buttons in the download window, allowing
@@ -12,12 +11,12 @@ import com.limegroup.gnutella.gui.ButtonRow;
  * indeces in the row.
  */
 final class SearchButtons {
-		
+
 	/**
 	 * The row of buttons for the donwload window.
 	 */
 	private final ButtonRow BUTTONS;
-	
+
 	static final int CONFIGURE_SHARING_BUTTON_INDEX = 0;
 
 	/**
@@ -29,7 +28,7 @@ final class SearchButtons {
 	 * The index of the torrent details button in the button row.
 	 */
 	static final int TORRENT_DETAILS_BUTTON_INDEX = 2;
-	
+
 	/** The index of the Stop Current Search button in the button row. */
 	static final int STOP_SEARCH_BUTTON_INDEX = 3;
 
@@ -39,25 +38,25 @@ final class SearchButtons {
 	 */
     SearchButtons(SearchResultMediator rp) {
         String[] buttonLabelKeys = {
-            I18nMarker.marktr("Options"),
-			I18nMarker.marktr("Download"),
-            I18nMarker.marktr("Details"),
-            I18nMarker.marktr("Stop"),
+            I18n.tr("Options"),
+			I18n.tr("Download"),
+            I18n.tr("Details"),
+            I18n.tr("Stop"),
 		};
         String[] buttonTipKeys = {
-            I18nMarker.marktr("Open Options dialog"),
-        	I18nMarker.marktr("Download All Selected Files"),
-            I18nMarker.marktr("See detail web page about the selected torrent (Contents, Comments, Seeds)"),
-            I18nMarker.marktr("Stop current search")
+            I18n.tr("Open Options dialog"),
+        	I18n.tr("Download All Selected Files"),
+            I18n.tr("See detail web page about the selected torrent (Contents, Comments, Seeds)"),
+            I18n.tr("Stop current search")
 		};
-        
+
 		EventListener[] buttonListeners = {
 		    rp.CONFIGURE_SHARING_LISTENER,
 		    rp.DOWNLOAD_LISTENER,
 		    rp.TORRENT_DETAILS_LISTENER,
 		    rp.STOP_SEARCH_LISTENER
 		};
-		
+
 		String[] iconNames =  {
 		    "LIBRARY_SHARING_OPTIONS",
 		    "SEARCH_DOWNLOAD",

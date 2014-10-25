@@ -57,7 +57,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.plaf.InsetsUIResource;
 
-import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
@@ -430,7 +429,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         if (parentFile == null)
             parentFile = CommonUtils.getCurrentDirectory();
 
-        final File selFile = FileChooserHandler.getInputFile(GUIMediator.getAppFrame(), I18nMarker.marktr("Open Playlist (.m3u)"), parentFile, new PlaylistListFileFilter());
+        final File selFile = FileChooserHandler.getInputFile(GUIMediator.getAppFrame(), I18n.tr("Open Playlist (.m3u)"), parentFile, new PlaylistListFileFilter());
 
         // nothing selected? exit.
         if (selFile == null || !selFile.isFile())
@@ -502,7 +501,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
         suggested = new File(suggestedDirectory, suggestedName + ".m3u");
 
-        File selFile = FileChooserHandler.getSaveAsFile(GUIMediator.getAppFrame(), I18nMarker.marktr("Save Playlist As"), suggested, new PlaylistListFileFilter());
+        File selFile = FileChooserHandler.getSaveAsFile(GUIMediator.getAppFrame(), I18n.tr("Save Playlist As"), suggested, new PlaylistListFileFilter());
 
         // didn't select a file?  nothing we can do.
         if (selFile == null) {
@@ -864,7 +863,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
                 suggestedDirectory = new File(CommonUtils.getUserHomeDir(), "Desktop");
             }
 
-            final File selFolder = FileChooserHandler.getSaveAsDir(GUIMediator.getAppFrame(), I18nMarker.marktr("Where do you want the playlist files copied to?"), suggestedDirectory);
+            final File selFolder = FileChooserHandler.getSaveAsDir(GUIMediator.getAppFrame(), I18n.tr("Where do you want the playlist files copied to?"), suggestedDirectory);
 
             if (selFolder == null) {
                 return;

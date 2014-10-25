@@ -64,7 +64,7 @@ public class MediaTypeSavedFilesDirectoryHolder implements DirectoryHolder {
     }
 
     public String getDescription() {
-        return I18n.tr("Holds the Results for ") + type.getDescriptionKey();
+        return I18n.tr("Holds the Results for") + " " + type.getDescriptionKey();
     }
 
     public File getDirectory() {

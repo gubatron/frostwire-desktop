@@ -22,7 +22,6 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
@@ -42,7 +41,7 @@ public final class ShowPromoOverlaysPaneItem extends AbstractPaneItem {
 	 * frostclick promotions enabled check box label..
 	 */
     private final String SHOW_PROMOTION_OVERLAYS_LABEL = 
-        I18nMarker.marktr("Enable FrostClick Promotions (highly recommended):");
+        I18n.tr("Enable FrostClick Promotions (highly recommended):");
     
     /**
 	 * Constant for the check box that specifies whether to enable or 

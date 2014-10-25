@@ -54,7 +54,6 @@ import javax.swing.undo.UndoManager;
 
 import org.limewire.collection.AutoCompleteDictionary;
 import org.limewire.collection.StringTrieSet;
-import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.theme.SkinMenuItem;
@@ -229,7 +228,7 @@ public class SearchField extends JXSearchField {
     /**
      * The undo action.
      */
-    private static Action UNDO_ACTION = new FieldAction(I18nMarker.marktr("Undo")) {
+    private static Action UNDO_ACTION = new FieldAction(I18n.tr("Undo")) {
 
         public void actionPerformed(ActionEvent e) {
             getField(e).undo();
@@ -239,7 +238,7 @@ public class SearchField extends JXSearchField {
     /**
      * The cut action
      */
-    private static Action CUT_ACTION = new FieldAction(I18nMarker.marktr("Cut")) {
+    private static Action CUT_ACTION = new FieldAction(I18n.tr("Cut")) {
 
         public void actionPerformed(ActionEvent e) {
             getField(e).cut();
@@ -249,7 +248,7 @@ public class SearchField extends JXSearchField {
     /**
      * The copy action.
      */
-    private static Action COPY_ACTION = new FieldAction(I18nMarker.marktr("Copy")) {
+    private static Action COPY_ACTION = new FieldAction(I18n.tr("Copy")) {
 
         public void actionPerformed(ActionEvent e) {
             getField(e).copy();
@@ -259,7 +258,7 @@ public class SearchField extends JXSearchField {
     /**
      * The paste action.
      */
-    private static Action PASTE_ACTION = new FieldAction(I18nMarker.marktr("Paste")) {
+    private static Action PASTE_ACTION = new FieldAction(I18n.tr("Paste")) {
 
         public void actionPerformed(ActionEvent e) {
             getField(e).paste();
@@ -269,7 +268,7 @@ public class SearchField extends JXSearchField {
     /**
      * The delete action.
      */
-    private static Action DELETE_ACTION = new FieldAction(I18nMarker.marktr("Delete")) {
+    private static Action DELETE_ACTION = new FieldAction(I18n.tr("Delete")) {
 
         public void actionPerformed(ActionEvent e) {
             getField(e).replaceSelection("");
@@ -279,7 +278,7 @@ public class SearchField extends JXSearchField {
     /**
      * The select all action.
      */
-    private static Action SELECT_ALL_ACTION = new FieldAction(I18nMarker.marktr("Select All")) {
+    private static Action SELECT_ALL_ACTION = new FieldAction(I18n.tr("Select All")) {
 
         public void actionPerformed(ActionEvent e) {
             getField(e).selectAll();

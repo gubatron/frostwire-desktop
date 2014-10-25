@@ -27,7 +27,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.theme.ThemeMediator;
@@ -55,7 +54,7 @@ final class MiscWindow extends SetupWindow {
      * Creates the window and its components.
      */
     MiscWindow(SetupManager manager) {
-        super(manager, I18nMarker.marktr("Miscellaneous Settings"), I18nMarker.marktr("Below, are several options that affect the functionality of FrostWire."));
+        super(manager, I18n.tr("Miscellaneous Settings"), I18n.tr("Below, are several options that affect the functionality of FrostWire."));
     }
 
     protected void createWindow() {

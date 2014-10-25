@@ -22,8 +22,6 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
-
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.settings.UpdateManagerSettings;
@@ -42,7 +40,7 @@ public final class ShowFrostWireRecommendationsPaneItem extends AbstractPaneItem
 	 * frostclick promotions enabled check box label..
 	 */
     private final String SHOW_FROSTWIRE_RECOMMENDATIONS_LABEL = 
-        I18nMarker.marktr("Enable FrostWire Recommendations (highly recommended):");
+        I18n.tr("Enable FrostWire Recommendations (highly recommended):");
     
     /**
 	 * Constant for the check box that specifies whether to enable or 

@@ -2,8 +2,6 @@ package com.limegroup.gnutella.gui.shell;
 
 import java.util.Collection;
 
-import org.limewire.i18n.I18nMarker;
-
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -55,7 +53,7 @@ public class ShellAssociationManager {
                         association.setEnabled(true);
                 }
             } else if(answer == DialogOption.OTHER) {
-                new ConfigureOptionsAction(I18nMarker.marktr("File Associations")).actionPerformed(null);
+                new ConfigureOptionsAction(I18n.tr("File Associations")).actionPerformed(null);
             }
         }
 		

@@ -2,7 +2,6 @@ package com.limegroup.gnutella.gui.options.panes;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.I18n;
@@ -28,7 +27,7 @@ public final class StartupPaneItem extends AbstractPaneItem {
      * upload pane check box label in the options window.
      */
     private final String CHECK_BOX_LABEL = 
-        I18nMarker.marktr("Run on System Startup:");
+        I18n.tr("Run on System Startup:");
 
     /**
      * Constant for the check box that specifies whether or not uploads 

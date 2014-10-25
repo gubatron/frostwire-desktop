@@ -1,7 +1,5 @@
 package com.limegroup.gnutella.gui;
 
-import org.limewire.i18n.I18nMarker;
-
 /** All kinds of options a dialog can return. */
 public enum DialogOption {
     
@@ -11,19 +9,19 @@ public enum DialogOption {
      * Constant for when the user selects the yes button
      * in a message.
      */
-    YES(I18nMarker.marktr("Yes"), 101),
+    YES(I18n.tr("Yes"), 101),
     
     /**
      * Constant for when the user selects the no button
      * in a message.
      */
-    NO(I18nMarker.marktr("No"), 102),
+    NO(I18n.tr("No"), 102),
     
     /**
      * Constant for when the user selects the cancel button
      * in a message giving the user a cancel option.
      */
-    CANCEL(I18nMarker.marktr("Cancel"), 103),
+    CANCEL(I18n.tr("Cancel"), 103),
     
     /**
      * Constant for when the user selects an "other" button

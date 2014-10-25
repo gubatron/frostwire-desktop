@@ -10,8 +10,9 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.limewire.collection.Comparators;
-import org.limewire.i18n.I18nMarker;
 import org.limewire.util.FileUtils;
+
+import com.limegroup.gnutella.gui.I18n;
 
 /**
  * A generic type of media, i.e., "video" or "audio".
@@ -40,14 +41,14 @@ public class MediaType implements Serializable {
     public static final String SCHEMA_OTHER = "other";
     
     // These are used as resource keys to retreive descriptions in the GUI 
-    public static final String ANY_TYPE = I18nMarker.marktr("All Types");
+    public static final String ANY_TYPE = I18n.tr("All Types");
     
-    public static final String DOCUMENTS = I18nMarker.marktr("Books/Docs");
-    public static final String PROGRAMS = I18nMarker.marktr("Programs");
-    public static final String AUDIO = I18nMarker.marktr("Audio");
-    public static final String VIDEO = I18nMarker.marktr("Video");
-    public static final String IMAGES = I18nMarker.marktr("Images");
-    public static final String TORRENTS = I18nMarker.marktr("Torrents");
+    public static final String DOCUMENTS = I18n.tr("Books/Docs");
+    public static final String PROGRAMS = I18n.tr("Programs");
+    public static final String AUDIO = I18n.tr("Audio");
+    public static final String VIDEO = I18n.tr("Video");
+    public static final String IMAGES = I18n.tr("Images");
+    public static final String TORRENTS = I18n.tr("Torrents");
     
     /**
      * Type for 'any file'
