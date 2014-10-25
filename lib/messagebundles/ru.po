@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-20 18:39+0400\n"
-"PO-Revision-Date: 2014-10-25 01:16+0400\n"
+"PO-Revision-Date: 2014-10-25 05:21+0400\n"
 "Last-Translator: X-NicON <x-icon@ya.ru>\n"
 "Language-Team: Russian Team\n"
 "Language: ru\n"
@@ -2362,12 +2362,6 @@ msgstr "Торренты"
 msgid "About FrostWire"
 msgstr "О программе"
 
-#. set up limewire version label
-#: src/com/limegroup/gnutella/gui/AboutWindow.java:75
-#: src/com/limegroup/gnutella/gui/notify/TrayNotifier.java:56
-msgid "FrostWire"
-msgstr "FrostWire Client"
-
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:88
 msgid "End User License Agreement"
 msgstr "Лицензионное соглашение"
@@ -2453,18 +2447,15 @@ msgstr "<h1>Спасибо команде Ubuntu/Kubuntu</h1>"
 msgid ""
 "<p>For making the world a better place with such an excellent distro, you'll "
 "be the ones to make a difference on the desktop.</p>"
-msgstr "<р>За то, что делает мир лучше с таким отличным дистрибутивом</p>"
+msgstr "<p>За то, что делает мир лучше с таким отличным дистрибутивом</p>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:295
 msgid "<h1>Thanks to the NSIS Project</h1>"
 msgstr "<h1>Спасибо проекту NSIS</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:296
-msgid ""
-"<p>Thanks for such an awesome installer builder system and documentation.</p>"
-msgstr ""
-"<р>Спасибо за такую замечательную систему сборки установщика и документацию."
-"</p>"
+msgid "<p>Thanks for such an awesome installer builder system and documentation.</p>"
+msgstr "<p>Спасибо за такую замечательную систему сборки установщика и документацию.</p>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:298
 msgid "<h1>Thanks to our families</h1>"
@@ -2842,7 +2833,7 @@ msgstr "Помочь с переводом FrostWire"
 
 #: src/com/limegroup/gnutella/gui/LanguageWindow.java:212
 msgid "Show Language in status bar"
-msgstr "Показывать иконку языка в строке состояни"
+msgstr "Показывать иконку языка в строке состояния"
 
 #: src/com/limegroup/gnutella/gui/MessageService.java:67
 msgid "Loading Messages..."
@@ -3034,11 +3025,11 @@ msgstr "Показывать кнопки для пожартвоания"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:840
 msgid "Downloads:"
-msgstr "Загрузить"
+msgstr "Загрузка:"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:840
 msgid "Uploads:"
-msgstr "Выгрузка"
+msgstr "Раздача:"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:841
 msgid "Total Downstream:"
@@ -4114,7 +4105,7 @@ msgstr "Обновление FrostWire до последней версии"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:117
 msgid "You are up to date with FrostWire"
-msgstr "Быть в курсе FrostWire"
+msgstr "Обновить FrostWire до"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:122
 msgid "Downloading update..."

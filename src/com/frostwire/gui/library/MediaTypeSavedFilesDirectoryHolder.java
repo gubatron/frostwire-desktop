@@ -30,7 +30,7 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
 
 /**
- * 
+ *
  * @author gubatron
  * @author aldenml
  *
@@ -38,18 +38,18 @@ import com.limegroup.gnutella.gui.search.NamedMediaType;
 public class MediaTypeSavedFilesDirectoryHolder implements DirectoryHolder {
 
 	private MediaType type;
-	
+
 	private Set<File> cache;
-	
+
 	public MediaTypeSavedFilesDirectoryHolder(MediaType type) {
 		this.type = type;
 		cache = new HashSet<File>();
 	}
-	
+
 	public MediaType getMediaType() {
 	    return type;
 	}
-	
+
 	public boolean accept(File file) {
 		return type.matches(file.getName());
 	}
@@ -64,7 +64,7 @@ public class MediaTypeSavedFilesDirectoryHolder implements DirectoryHolder {
     }
 
     public String getDescription() {
-        return I18n.tr("Holds the Results for " + type.getDescriptionKey());
+        return I18n.tr("Holds the Results for ") + type.getDescriptionKey();
     }
 
     public File getDirectory() {
@@ -82,15 +82,15 @@ public class MediaTypeSavedFilesDirectoryHolder implements DirectoryHolder {
     public boolean isEmpty() {
         return true;
     }
-    
+
     public Set<File> getCache() {
         return cache;
     }
-    
+
     public void addToCache(List<File> files) {
         cache.addAll(files);
     }
-    
+
     public void clearCache() {
         cache.clear();
     }
