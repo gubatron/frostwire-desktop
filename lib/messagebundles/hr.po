@@ -4075,7 +4075,7 @@ msgstr "Izgled"
 #. filter options
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:306
 msgid "Filters"
-msgstr "Filtari"
+msgstr "Filteri"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:307
 msgid "Keywords"
@@ -4083,7 +4083,7 @@ msgstr "Kljucne rijeci"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:311
 msgid "Updates"
-msgstr "Azuracije"
+msgstr "Nadogradnje"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:312
 msgid "Firewall"
@@ -4096,7 +4096,7 @@ msgstr "Proxy"
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:314
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:48
 msgid "Network Interface"
-msgstr ""
+msgstr "Mrezni interface"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:316
 #: src/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:58
@@ -4164,7 +4164,7 @@ msgstr "Mozete izabrati koji Audio svirac zelite koristiti"
 #.
 #: src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:31
 msgid "Audio Player"
-msgstr ""
+msgstr "Player zvuka"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:19
 msgid "Text Autocompletion"
@@ -4180,7 +4180,7 @@ msgstr "Omoguciti dovrsavanje teksta"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
 msgid "Automatic Installer Download"
-msgstr "Automatsko pomicanje"
+msgstr "Automatsko preuzimanje instalacijskog carobnjaka"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:16
 msgid ""
@@ -4269,7 +4269,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:63
 msgid "Use random port (Recommended)"
-msgstr "Koristiti nasumicni port (Preporuceno)"
+msgstr "Koristiti nasumicni port (preporuceno)"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:64
 msgid "Manual port range"
@@ -4371,6 +4371,7 @@ msgstr "Maksimalno trazenja"
 msgid ""
 "You can set the maximum number of simultaneous searches you can perform."
 msgstr ""
+"Mozete postaviti maksimalni broj istovremenih pretrazivanja."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4383,7 +4384,7 @@ msgstr "Maksimalno trazenja:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:86
 msgid "The maximum parallel searches you can make is "
-msgstr ""
+msgstr "Maksimum paralelnih pretrazivanja koje mozete napraviti je "
 
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:50
 msgid ""
@@ -4608,7 +4609,7 @@ msgstr "Omoguciti pametno pretrazivanje"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:49
 msgid "Total torrents indexed"
-msgstr ""
+msgstr "Torrenata indeksirano"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:53
 #, fuzzy
@@ -4832,6 +4833,8 @@ msgid ""
 "%s Torrent files found (includes only .torrent files. Torrent files point to "
 "collections of files shared on the BitTorrent network.)"
 msgstr ""
+"%s torrent datoteka nadjeno (sadrzi samo .torrent datoteke. Torrent datoteke pokazuju na "
+"kolekcije datoteka dijeljene na BitTorrent mrezi.)"
 
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:45
 msgid "Stop"
@@ -4861,7 +4864,7 @@ msgstr "Zatvori pretragu"
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:89
 msgid "Launch Action"
-msgstr "Pokrenuti"
+msgstr "Pokrenuti akciju"
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:91
 msgid "Repeat Search"
@@ -4897,7 +4900,7 @@ msgid ""
 "Your search must be at least three characters to avoid congesting the "
 "network."
 msgstr ""
-Vase pretrazivanje mora biti barem tri slova dugacko kako bi izbjegli prepuniti"
+"Vase pretrazivanje mora biti barem tri slova dugacko kako bi izbjegli prepuniti"
 "mrezu."
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:217
@@ -4941,7 +4944,7 @@ msgstr "Rezultati"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:357
 msgid "Copy Hash"
-msgstr "Kopirati"
+msgstr "Kopirati smjesu"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:371
 msgid "Search More"
@@ -5086,7 +5089,7 @@ msgid ""
 "file, not a folder."
 msgstr ""
 "Nemoguce postaviti mapu za preuzimanje u {0}, jer predstavlja individualnu "
-datoteku, a ne mapu.
+"datoteku, a ne mapu."
 
 #: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:114
 #, java-format
