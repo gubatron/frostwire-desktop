@@ -240,7 +240,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
 
         public AddToPlaylistAction(Playlist playlist) {
             super(getTruncatedString(playlist.getName(),MAX_VISIBLE_PLAYLIST_NAME_LENGTH_IN_MENU));
-            putValue(Action.LONG_DESCRIPTION, I18n.tr("Add to playlist ") + "\"" + playlist.getName() + "\"");
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Add to playlist") + " \"" + playlist.getName() + "\"");
             this.playlist = playlist;
         }
         

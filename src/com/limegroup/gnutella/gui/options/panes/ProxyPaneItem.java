@@ -39,15 +39,6 @@ public final class ProxyPaneItem extends AbstractPaneItem {
 
     /**
      * Constant for the key of the locale-specific <tt>String</tt> for the
-     * label on the RadioButtons.
-     */
-    private final String NO_PROXY_LABEL_KEY     = I18n.tr("No Proxy");
-    private final String SOCKS4_PROXY_LABEL_KEY = "Socks v4";
-    private final String SOCKS5_PROXY_LABEL_KEY = "Socks v5";
-    private final String HTTP_PROXY_LABEL_KEY   = "HTTP";
-
-    /**
-     * Constant for the key of the locale-specific <tt>String</tt> for the
      * label on the proxy host field.
      */
     private final String PROXY_HOST_LABEL_KEY = I18n.tr("Proxy:");
@@ -62,14 +53,10 @@ public final class ProxyPaneItem extends AbstractPaneItem {
      * Constant handle to the check box that enables or disables this feature.
      */
     private final ButtonGroup BUTTONS = new ButtonGroup();
-    private final JRadioButton NO_PROXY_BUTTON =
-            new JRadioButton(I18n.tr(NO_PROXY_LABEL_KEY));
-    private final JRadioButton SOCKS4_PROXY_BUTTON =
-            new JRadioButton(I18n.tr(SOCKS4_PROXY_LABEL_KEY));
-    private final JRadioButton SOCKS5_PROXY_BUTTON =
-            new JRadioButton(I18n.tr(SOCKS5_PROXY_LABEL_KEY));
-    private final JRadioButton HTTP_PROXY_BUTTON =
-            new JRadioButton(I18n.tr(HTTP_PROXY_LABEL_KEY));
+    private final JRadioButton NO_PROXY_BUTTON     = new JRadioButton(I18n.tr("No Proxy"));
+    private final JRadioButton SOCKS4_PROXY_BUTTON = new JRadioButton("Socks v4");
+    private final JRadioButton SOCKS5_PROXY_BUTTON = new JRadioButton("Socks v5");
+    private final JRadioButton HTTP_PROXY_BUTTON   = new JRadioButton("HTTP");
 
     /**
      * Constant <tt>JTextField</tt> instance that holds the ip address to use

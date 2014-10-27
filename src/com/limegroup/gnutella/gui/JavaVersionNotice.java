@@ -92,8 +92,8 @@ class JavaVersionNotice {
             String text = String.format(I18n.tr("FrostWire requires Java %s or higher in order to run. " +
             "You are currently running an out-of-date version of Java \n" +
             "Please visit %s in order to upgrade your version of Java"), REQUIRED, URL)+ "\n\n" +
-            I18n.tr("Current Java Version : ") + VersionUtils.getJavaVersion() + "\n" +
-            I18n.tr("Required Java Version: ") + REQUIRED + "\n\n";
+            I18n.tr("Current Java Version:") + " " + VersionUtils.getJavaVersion() + "\n" +
+            I18n.tr("Required Java Version:") + " " + REQUIRED + "\n\n";
             MultiLineLabel label = new MultiLineLabel(text, 500);
 
             JPanel labelPanel = new JPanel();
@@ -103,7 +103,7 @@ class JavaVersionNotice {
 
             JPanel buttonPanel = new JPanel();
             JButton now = new JButton(I18n.tr("Upgrade Java"));
-            now.setToolTipText(I18n.tr("Visit ") + URL);
+            now.setToolTipText(I18n.tr("Visit") + " " + URL);
             now.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     try {

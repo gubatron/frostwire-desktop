@@ -101,7 +101,7 @@ final class WelcomeWindow extends SetupWindow {
         c.insets = new Insets(10, 10, 10, 10);
         panel.add(label2, c);
 
-        com.limegroup.gnutella.gui.MultiLineLabel label3 = new com.limegroup.gnutella.gui.MultiLineLabel(I18n.tr("FrostWire is free software, "), 400);
+        com.limegroup.gnutella.gui.MultiLineLabel label3 = new com.limegroup.gnutella.gui.MultiLineLabel(I18n.tr("FrostWire is free software,")+" ", 400);
         label3.setFont(label3.getFont().deriveFont(16f));
         label3.setForeground(GUIUtils.hexToColor("333333"));
 

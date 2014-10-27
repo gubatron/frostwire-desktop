@@ -669,8 +669,8 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             } else if (OSUtils.isLinux()) {
                 os = "Linux";
             }
-            putValue(Action.NAME, I18n.tr("Launch in ") + os);
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Launch Selected Files in ") + os);
+            putValue(Action.NAME, I18n.tr("Launch in") + " " + os);
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Launch Selected Files in") + " " + os);
             putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH");
         }
 
