@@ -13,7 +13,6 @@ import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.io.FilenameUtils;
-import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
@@ -79,7 +78,7 @@ public final class FileChooserHandler {
      */
 	public static File getInputDirectory(Component parent) {
 		return getInputDirectory(parent, 
-								 I18nMarker.marktr("Select Folder"), 
+								 I18n.tr("Select Folder"), 
 								 getLastInputDirectory());
 	}
 
@@ -97,8 +96,8 @@ public final class FileChooserHandler {
 	public static File getInputDirectory(Component parent, 
 										 File directory) {
 		return getInputDirectory(parent, 
-								 I18nMarker.marktr("Select Folder"), 
-								 I18nMarker.marktr("Select"),
+								 I18n.tr("Select Folder"), 
+								 I18n.tr("Select"),
 								 directory);
 	}
 
@@ -119,8 +118,8 @@ public final class FileChooserHandler {
 										 File directory,
 										 FileFilter filter) {
 		return getInputDirectory(parent, 
-								 I18nMarker.marktr("Select Folder"),  
-								 I18nMarker.marktr("Select"),
+								 I18n.tr("Select Folder"),  
+								 I18n.tr("Select"),
 								 directory,
 								 filter);
 	}
@@ -142,7 +141,7 @@ public final class FileChooserHandler {
 										 File directory) {
 		return getInputDirectory(parent, 
 								 titleKey, 
-								 I18nMarker.marktr("Select"),
+								 I18n.tr("Select"),
 								 directory);
 	}
 
@@ -165,7 +164,7 @@ public final class FileChooserHandler {
 										 File directory, FileFilter filter) {
 		return getInputDirectory(parent, 
 								 titleKey, 
-								 I18nMarker.marktr("Select"),
+								 I18n.tr("Select"),
 								 directory,
 								 filter);
 	}
@@ -250,8 +249,8 @@ public final class FileChooserHandler {
      */
 	public static File getInputFile(Component parent) {
 		return getInputFile(parent, 
-							I18nMarker.marktr("Select Folder"), 
-							I18nMarker.marktr("Select"),
+							I18n.tr("Select Folder"), 
+							I18n.tr("Select"),
 							getLastInputDirectory());
 	}
 
@@ -269,8 +268,8 @@ public final class FileChooserHandler {
      */
 	public static File getInputFile(Component parent, FileFilter filter) {
 		return getInputFile(parent, 
-							I18nMarker.marktr("Select Folder"), 
-							I18nMarker.marktr("Select"),
+							I18n.tr("Select Folder"), 
+							I18n.tr("Select"),
                             getLastInputDirectory(),
 							filter);
 	}
@@ -291,7 +290,7 @@ public final class FileChooserHandler {
 									File directory) {
 		return getInputFile(parent, 
 							titleKey, 
-							I18nMarker.marktr("Select"),
+							I18n.tr("Select"),
 							directory);
 	}
 
@@ -313,7 +312,7 @@ public final class FileChooserHandler {
 									File directory, FileFilter filter) {
 		return getInputFile(parent, 
 							titleKey, 
-							I18nMarker.marktr("Select"),
+							I18n.tr("Select"),
 							directory,
 							filter);
 	}
@@ -444,8 +443,8 @@ public final class FileChooserHandler {
      */
     public static List<File> getMultiInputFile(Component parent) {
         return getMultiInputFile(parent, 
-                                 I18nMarker.marktr("Select Folder"), 
-                                 I18nMarker.marktr("Select"),
+                                 I18n.tr("Select Folder"), 
+                                 I18n.tr("Select"),
                                  getLastInputDirectory());
     }
 
@@ -463,8 +462,8 @@ public final class FileChooserHandler {
      */
     public static List<File> getMultiInputFile(Component parent, FileFilter filter) {
         return getMultiInputFile(parent, 
-                                 I18nMarker.marktr("Select Folder"), 
-                                 I18nMarker.marktr("Select"),
+                                 I18n.tr("Select Folder"), 
+                                 I18n.tr("Select"),
                                  getLastInputDirectory(),
                                  filter);
     }
@@ -485,7 +484,7 @@ public final class FileChooserHandler {
                                     File directory) {
         return getMultiInputFile(parent, 
                                  titleKey, 
-                                 I18nMarker.marktr("Select"),
+                                 I18n.tr("Select"),
                                  directory);
     }
 
@@ -507,7 +506,7 @@ public final class FileChooserHandler {
                                     File directory, FileFilter filter) {
         return getMultiInputFile(parent, 
                                  titleKey, 
-                                 I18nMarker.marktr("Select"),
+                                 I18n.tr("Select"),
                                  directory,
                                  filter);
     }

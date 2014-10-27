@@ -22,8 +22,6 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
-
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.settings.PlayerSettings;
@@ -39,7 +37,7 @@ public final class PlayerPaneItem extends AbstractPaneItem {
 
     public final static String LABEL = I18n.tr("You can play your media with the native operating system player if the format is supported.");
 
-    private final String CHECK_BOX_LABEL = I18nMarker.marktr("Play with the native media player");
+    private final String CHECK_BOX_LABEL = I18n.tr("Play with the native media player");
     
     private final String VIDEO_PREVIEW_WITH_INTERNAL_PLAYER_CHECK_BOX_LABEL = I18n.tr("Play search result video previews with internal player");
 

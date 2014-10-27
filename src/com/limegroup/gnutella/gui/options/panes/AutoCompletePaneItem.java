@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
@@ -25,7 +24,7 @@ public final class AutoCompletePaneItem extends AbstractPaneItem {
 	 * autocompletion enabled check box label..
 	 */
     private final String AUTOCOMPLETE_LABEL = 
-        I18nMarker.marktr("Enable Autocompletion of Text Fields:");
+        I18n.tr("Enable Autocompletion of Text Fields:");
     
     /**
 	 * Constant for the check box that specifies whether to enable or 

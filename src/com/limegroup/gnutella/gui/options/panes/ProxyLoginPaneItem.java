@@ -23,7 +23,6 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.SizedTextField;
 import com.limegroup.gnutella.settings.ConnectionSettings;
-import org.limewire.i18n.I18nMarker;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
@@ -46,21 +45,21 @@ public final class ProxyLoginPaneItem extends AbstractPaneItem {
      * proxy.
      */
     private final String PROXY_AUTHENTICATE_CHECK_BOX_LABEL =
-            I18nMarker.marktr("Enable Authentication:");
+            I18n.tr("Enable Authentication:");
 
     /**
      * Constant for the key of the locale-specific <tt>String</tt> for the
      * label on the username field.
      */
     private final String PROXY_USERNAME_LABEL_KEY =
-            I18nMarker.marktr("Username:");
+            I18n.tr("Username:");
 
     /**
      * Constant for the key of the locale-specific <tt>String</tt> for the
      * label on the password field.
      */
     private final String PROXY_PASSWORD_LABEL_KEY =
-            I18nMarker.marktr("Password:");
+            I18n.tr("Password:");
 
     /**
      * Constant <tt>JTextField</tt> instance that holds the username.

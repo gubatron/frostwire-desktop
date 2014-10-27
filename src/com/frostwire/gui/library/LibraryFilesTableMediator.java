@@ -90,10 +90,10 @@ import com.limegroup.gnutella.util.QueryUtils;
  * This class wraps the JTable that displays files in the library,
  * controlling access to the table and the various table properties.
  * It is the Mediator to the Table part of the Library display.
- * 
+ *
  * @author gubatron
  * @author aldenml
- * 
+ *
  */
 final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<LibraryFilesTableModel, LibraryFilesTableDataLine, File> {
 
@@ -112,7 +112,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     private Action SEND_TO_ITUNES_ACTION;
     private Action WIFI_UNSHARE_ACTION;
     private Action WIFI_SHARE_ACTION;
-    
+
     /**
      * instance, for singleton access
      */
@@ -382,7 +382,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         tc = model.getColumn(LibraryFilesTableDataLine.ACTIONS_IDX);
         tc.setCellEditor(new GenericCellEditor(getAbstractActionsRenderer()));
-        
+
         tc = model.getColumn(LibraryFilesTableDataLine.PAYMENT_OPTIONS_IDX);
         tc.setCellEditor(new GenericCellEditor(new PaymentOptionsRenderer()));
     }
@@ -517,8 +517,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
     /**
      * Returns the options offered to the user when removing files.
-     * 
-     * Depending on the platform these can be a subset of 
+     *
+     * Depending on the platform these can be a subset of
      * MOVE_TO_TRASH, DELETE, CANCEL.
      */
     private static Object[] createRemoveOptions() {
@@ -632,7 +632,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     }
 
     /**
-     * Creates a JList of files and sets and makes it non-selectable. 
+     * Creates a JList of files and sets and makes it non-selectable.
      */
     private static JList<String> createFileList(List<String> fileNames) {
         JList<String> fileList = new JList<String>(fileNames.toArray(new String[0]));
@@ -646,7 +646,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
     /**
      * Returns the human readable file name for incomplete files or
-     * just the regular file name otherwise. 
+     * just the regular file name otherwise.
      */
     private String getCompleteFileName(File file) {
         return file.getName();
@@ -670,7 +670,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             //file = ltm.getFile(rows[i]);
             // if it's a directory try to select it in the library tree
             // if it could be selected return
-            //			if (file.isDirectory() 
+            //			if (file.isDirectory()
             //				&& LibraryMediator.setSelectedDirectory(file))
             //				return;
         }
@@ -730,7 +730,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      * Handles the selection rows in the library window,
      * enabling or disabling buttons and chat menu items depending on
      * the values in the selected rows.
-     * 
+     *
      * @param row the index of the first row that is selected
      */
     public void handleSelection(int row) {
@@ -753,7 +753,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         if (selectedFile != null) {
             SEND_TO_FRIEND_ACTION.setEnabled(sel.length == 1);
-            
+
             if (getMediaType().equals(MediaType.getAnyTypeMediaType())) {
                 boolean atLeastOneIsPlayable = false;
 
@@ -803,7 +803,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
     /**
      * Refreshes the enabledness of the Enqueue button based
-     * on the player enabling state. 
+     * on the player enabling state.
      */
     public void setPlayerEnabled(boolean value) {
         handleSelection(TABLE.getSelectedRow());
@@ -822,7 +822,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     private boolean hasExploreAction() {
         return OSUtils.isWindows() || OSUtils.isMacOSX();
     }
-    
+
     /**
      * Split a collection in Lists of up to partitionSize elements.
      * @param <T>
@@ -832,7 +832,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      */
     public static <T> List<List<T>> split(int partitionSize, List<T> collection) {
         List<List<T>> lists = new LinkedList<List<T>>();
-        
+
         for (int i = 0; i < collection.size(); i+=partitionSize) {
             //the compiler might not know if the collection has changed size
             //so it might not optimize this by itself.
@@ -843,7 +843,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             }
             lists.add(newList);
         }
-        
+
         return lists;
     }
 
@@ -854,7 +854,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     private final class LaunchAction extends AbstractAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 949208465372392591L;
 
@@ -872,7 +872,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     private final class LaunchOSAction extends AbstractAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 949208465372392592L;
 
@@ -886,7 +886,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 os = "Linux";
             }
             putValue(Action.NAME, I18n.tr("Launch in ") + os);
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Launch Selected Files in " + os));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Launch Selected Files in ") + os);
             putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH");
         }
 
@@ -898,7 +898,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     private final class OpenInFolderAction extends AbstractAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 1693310684299300459L;
 
@@ -957,7 +957,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     private final class RemoveAction extends AbstractAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = -8704093935791256631L;
 
@@ -975,14 +975,14 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     private final class RenameAction extends AbstractAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 2673219925804729384L;
 
         public RenameAction() {
             putValue(Action.NAME, I18n.tr("Rename"));
             //  "LIBRARY_RENAME"   ???
-            //  "LIBRARY_RENAME_BUTTON_TIP"   ???			
+            //  "LIBRARY_RENAME_BUTTON_TIP"   ???
         }
 
         public void actionPerformed(ActionEvent ae) {

@@ -80,10 +80,10 @@ import com.limegroup.gnutella.util.QueryUtils;
  * This class wraps the JTable that displays files in the library,
  * controlling access to the table and the various table properties.
  * It is the Mediator to the Table part of the Library display.
- * 
+ *
  * @author gubatron
  * @author aldenml
- * 
+ *
  */
 final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<LibraryPlaylistsTableModel, LibraryPlaylistsTableDataLine, PlaylistItem> {
 
@@ -351,7 +351,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
                 }
             }
         });
-        
+
         tc = model.getColumn(LibraryPlaylistsTableDataLine.ACTIONS_IDX);
         tc.setCellEditor(new GenericCellEditor(new LibraryActionsRenderer()));
     }
@@ -568,7 +568,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
      * Handles the selection rows in the library window,
      * enabling or disabling buttons and chat menu items depending on
      * the values in the selected rows.
-     * 
+     *
      * @param row the index of the first row that is selected
      */
     public void handleSelection(int row) {
@@ -621,7 +621,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
     /**
      * Refreshes the enabledness of the Enqueue button based
-     * on the player enabling state. 
+     * on the player enabling state.
      */
     public void setPlayerEnabled(boolean value) {
         handleSelection(TABLE.getSelectedRow());
@@ -638,7 +638,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     private final class LaunchAction extends AbstractAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 949208465372392591L;
 
@@ -656,7 +656,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     private final class LaunchOSAction extends AbstractAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 949208465372392592L;
 
@@ -670,7 +670,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
                 os = "Linux";
             }
             putValue(Action.NAME, I18n.tr("Launch in ") + os);
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Launch Selected Files in " + os));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Launch Selected Files in ") + os);
             putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH");
         }
 
@@ -682,7 +682,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     private final class OpenInFolderAction extends AbstractAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 1693310684299300459L;
 
@@ -762,7 +762,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     private final class RemoveFromPlaylistAction extends AbstractAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = -8704093935791256631L;
 

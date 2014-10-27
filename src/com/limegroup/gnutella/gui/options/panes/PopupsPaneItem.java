@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
@@ -26,7 +25,7 @@ public final class PopupsPaneItem extends AbstractPaneItem {
 	 * chat enabled check box label in the options window.
 	 */
 	private final String CHECK_BOX_LABEL = 
-		I18nMarker.marktr("Revert to Default:");
+		I18n.tr("Revert to Default:");
 
 	/**
 	 * Constant for the check box that specifies whether or not downloads 

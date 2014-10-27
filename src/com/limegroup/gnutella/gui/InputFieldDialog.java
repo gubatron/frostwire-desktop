@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.JDialog;
 
-import org.limewire.i18n.I18nMarker;
 
 /**
  * This class creates a generic input field that gets a line of text input
@@ -64,7 +63,7 @@ public final class InputFieldDialog {
 	 * @param LABEL_KEY the key for the locale-specific label of the field
 	 */
 	public InputFieldDialog(final String LABEL_KEY) {
-		this(I18nMarker.marktr("Input"), LABEL_KEY);
+		this(I18n.tr("Input"), LABEL_KEY);
 	}
 
 	/**
@@ -85,13 +84,13 @@ public final class InputFieldDialog {
 								 LabeledComponent.LEFT_GLUE);
 		
 		String[] buttonLabelKeys = {
-			I18nMarker.marktr("OK"),
-			I18nMarker.marktr("Cancel")
+			I18n.tr("OK"),
+			I18n.tr("Cancel")
 		};
 
 		String[] buttonLabelTips = {
-			I18nMarker.marktr("Apply Operation"),
-			I18nMarker.marktr("Cancel Operation")
+			I18n.tr("Apply Operation"),
+			I18n.tr("Cancel Operation")
 		};
 
 		ActionListener[] buttonListeners = {

@@ -28,8 +28,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import org.limewire.i18n.I18nMarker;
-
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.Line;
@@ -50,7 +48,7 @@ public class AssociationsWindow extends SetupWindow {
     private JRadioButton always, never, ask;
 
     AssociationsWindow(SetupManager manager) {
-        super(manager, I18nMarker.marktr("File & Protocol Associations"), I18nMarker.marktr("What type of resources should FrostWire open?"));
+        super(manager, I18n.tr("File & Protocol Associations"), I18n.tr("What type of resources should FrostWire open?"));
     }
 
     protected void createWindow() {

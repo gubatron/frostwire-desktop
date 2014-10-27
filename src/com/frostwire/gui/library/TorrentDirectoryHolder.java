@@ -24,22 +24,23 @@ import javax.swing.Icon;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.gui.I18n;
 
 public class TorrentDirectoryHolder extends FileSettingDirectoryHolder {
-    
-    private final MediaType type;
-	
+
+  private final MediaType type;
+
 	public TorrentDirectoryHolder() {
-		super(SharingSettings.TORRENTS_DIR_SETTING, "Torrents");
+    super(SharingSettings.TORRENTS_DIR_SETTING, I18n.tr("Torrents"));
 		type = MediaType.getTorrentMediaType();
 	}
-	
+
 	public Icon getIcon() {
 		NamedMediaType nmt = NamedMediaType.getFromMediaType(type);
 		return nmt.getIcon();
 	}
-	
+
 	public boolean accept(File file) {
-        return super.accept(file) && type.matches(file.getName());
-    }
+    return super.accept(file) && type.matches(file.getName());
+  }
 }

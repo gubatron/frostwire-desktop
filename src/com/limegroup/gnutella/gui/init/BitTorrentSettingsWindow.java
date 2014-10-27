@@ -23,7 +23,6 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import org.limewire.i18n.I18nMarker;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
@@ -50,11 +49,11 @@ class BitTorrentSettingsWindow extends SetupWindow {
      * Creates the window and its components
      */
     BitTorrentSettingsWindow(SetupManager manager) {
-        super(manager, I18nMarker.marktr("BitTorrent Sharing Settings"), describeText(), LEARN_MORE_URL);
+        super(manager, I18n.tr("BitTorrent Sharing Settings"), describeText(), LEARN_MORE_URL);
     }
 
     private static String describeText() {
-        return I18nMarker.marktr("Choose a folder where files downloaded from the BitTorrent network should be saved to.\nPlease select if you want to \"Seed\" or to not \"Seed\" finished downloads. The link below has more information about \"Seeding\".");
+        return I18n.tr("Choose a folder where files downloaded from the BitTorrent network should be saved to.\nPlease select if you want to \"Seed\" or to not \"Seed\" finished downloads. The link below has more information about \"Seeding\".");
     }
 
     protected void createWindow() {

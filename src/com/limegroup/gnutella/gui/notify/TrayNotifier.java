@@ -53,7 +53,7 @@ public class TrayNotifier implements NotifyUser {
 		    iconFileName += "_linux";
 		}
 
-		buildTrayIcon(I18n.tr("FrostWire"), iconFileName);
+		buildTrayIcon("FrostWire", iconFileName);
 		buildNotificationWindow();
 	}
 

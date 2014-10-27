@@ -19,7 +19,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
 
-import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.updates.UpdateMediator;
@@ -36,8 +35,8 @@ final class ToolsMenu extends AbstractMenu {
     private final UpdateAction updateAction;
 
     /**
-     * Creates a new <tt>ToolsMenu</tt>, using the <tt>key</tt> 
-     * argument for setting the locale-specific title and 
+     * Creates a new <tt>ToolsMenu</tt>, using the <tt>key</tt>
+     * argument for setting the locale-specific title and
      * accessibility text.
      *
      * @param key the key for locale-specific string resources unique
@@ -67,7 +66,7 @@ final class ToolsMenu extends AbstractMenu {
 
         public RebuildiTunesPlaylist() {
             super(I18n.tr("Rebuild iTunes \"FrostWire\" Playlist"));
-            putValue(LONG_DESCRIPTION, I18nMarker.marktr("Deletes and re-builds the \"FrostWire\" playlist on iTunes with all the audio files found on your Torrent Data Folder."));
+            putValue(LONG_DESCRIPTION, I18n.tr("Deletes and re-builds the \"FrostWire\" playlist on iTunes with all the audio files found on your Torrent Data Folder."));
         }
 
         @Override
@@ -87,7 +86,7 @@ final class ToolsMenu extends AbstractMenu {
 
         public ShowOptionsAction() {
             super(I18n.tr("&Options"));
-            putValue(LONG_DESCRIPTION, I18nMarker.marktr("Display the Options Screen"));
+            putValue(LONG_DESCRIPTION, I18n.tr("Display the Options Screen"));
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -114,7 +113,7 @@ final class ToolsMenu extends AbstractMenu {
 
         public void refresh() {
             if (UpdateMediator.instance().isUpdated()) {
-                String text = I18n.tr("You are up to date with FrostWire") + " " + "v." + UpdateMediator.instance().getLatestVersion();
+                String text = I18n.tr("You are up to date with FrostWire") + " v." + UpdateMediator.instance().getLatestVersion();
                 putValue(NAME, text);
                 putValue(LONG_DESCRIPTION, text);
                 this.setEnabled(false);
@@ -124,7 +123,7 @@ final class ToolsMenu extends AbstractMenu {
                 putValue(LONG_DESCRIPTION, text);
                 this.setEnabled(false);
             } else if (UpdateMediator.instance().isUpdateDownloaded()) {
-                String text = I18n.tr("Install update") + " " + "v." + UpdateMediator.instance().getLatestVersion();
+                String text = I18n.tr("Install update") + " v." + UpdateMediator.instance().getLatestVersion();
                 putValue(NAME, text);
                 putValue(LONG_DESCRIPTION, text);
                 this.setEnabled(true);

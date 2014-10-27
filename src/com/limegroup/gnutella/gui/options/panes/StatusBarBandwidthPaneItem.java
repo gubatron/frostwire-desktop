@@ -18,7 +18,6 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -40,7 +39,7 @@ public final class StatusBarBandwidthPaneItem extends AbstractPaneItem {
      * the firewall status should be displayed in the status bar.
      */
     private final String CHECK_BOX_LABEL = 
-        I18nMarker.marktr("Show Bandwidth Indicator:");
+        I18n.tr("Show Bandwidth Indicator:");
 
     private final JCheckBox CHECK_BOX = new JCheckBox();
 

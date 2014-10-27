@@ -6,8 +6,6 @@ import java.text.MessageFormat;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
-import org.limewire.i18n.I18nMarker;
-
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -32,7 +30,7 @@ public class SearchAction extends AbstractAction {
 	public SearchAction(String keywords) {
 		this(SearchInformation.createKeywordSearch
 				(keywords, null, MediaType.getTorrentMediaType()),
-				I18nMarker.marktr("Search for Keywords: {0}"));
+				I18n.tr("Search for Keywords: {0}"));
 		
 	}
 	
@@ -44,7 +42,7 @@ public class SearchAction extends AbstractAction {
 	 * {@link SearchMediator#validateInfo(SearchInformation) valid}
 	 */
 	public SearchAction(SearchInformation info) {
-		this(info, I18nMarker.marktr("Search for: {0}")); 
+		this(info, I18n.tr("Search for: {0}")); 
 	}
 	
 	/**

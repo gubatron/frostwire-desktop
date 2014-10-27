@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
@@ -22,7 +21,7 @@ public final class NotificationsPaneItem extends AbstractPaneItem {
     public final static String LABEL = I18n.tr("FrostWire can display popups to notify you when certain things happen, such as a download completing. ");
 
 	private final String SHOW_NOTIFICATIONS_LABEL = 
-		I18nMarker.marktr("Show Notifications:");
+		I18n.tr("Show Notifications:");
 
 	private final JCheckBox SHOW_NOTIFICATIONS_CHECK_BOX = new JCheckBox();
 

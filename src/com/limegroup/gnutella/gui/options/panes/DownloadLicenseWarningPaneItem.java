@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.I18n;
@@ -27,7 +26,7 @@ public class DownloadLicenseWarningPaneItem extends AbstractPaneItem {
      * download pane check box label in the options window.
      */
     private final String CHECK_BOX_LABEL = 
-        I18nMarker.marktr("Show License Warning:");
+        I18n.tr("Show License Warning:");
     
     /**
      * Constant for the check box that specifies whether or not downloads 

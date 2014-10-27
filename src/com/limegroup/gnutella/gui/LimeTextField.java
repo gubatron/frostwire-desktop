@@ -31,8 +31,6 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 
-import org.limewire.i18n.I18nMarker;
-
 import com.frostwire.gui.searchfield.PromptSupport;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
@@ -51,7 +49,7 @@ public class LimeTextField extends JTextField {
     /**
      * The undo action.
      */
-    private static Action UNDO_ACTION = new FieldAction(I18nMarker.marktr("Undo")) {
+    private static Action UNDO_ACTION = new FieldAction(I18n.tr("Undo")) {
         /**
          * 
          */
@@ -65,7 +63,7 @@ public class LimeTextField extends JTextField {
     /**
      * The cut action
      */
-    private static Action CUT_ACTION = new FieldAction(I18nMarker.marktr("Cut")) {
+    private static Action CUT_ACTION = new FieldAction(I18n.tr("Cut")) {
         /**
          * 
          */
@@ -79,7 +77,7 @@ public class LimeTextField extends JTextField {
     /**
      * The copy action.
      */
-    private static Action COPY_ACTION = new FieldAction(I18nMarker.marktr("Copy")) {
+    private static Action COPY_ACTION = new FieldAction(I18n.tr("Copy")) {
         /**
          * 
          */
@@ -93,7 +91,7 @@ public class LimeTextField extends JTextField {
     /**
      * The paste action.
      */
-    private static Action PASTE_ACTION = new FieldAction(I18nMarker.marktr("Paste")) {
+    private static Action PASTE_ACTION = new FieldAction(I18n.tr("Paste")) {
         /**
          * 
          */
@@ -107,7 +105,7 @@ public class LimeTextField extends JTextField {
     /**
      * The delete action.
      */
-    private static Action DELETE_ACTION = new FieldAction(I18nMarker.marktr("Delete")) {
+    private static Action DELETE_ACTION = new FieldAction(I18n.tr("Delete")) {
         /**
          * 
          */
@@ -121,7 +119,7 @@ public class LimeTextField extends JTextField {
     /**
      * The select all action.
      */      
-    private static Action SELECT_ALL_ACTION = new FieldAction(I18nMarker.marktr("Select All")) {
+    private static Action SELECT_ALL_ACTION = new FieldAction(I18n.tr("Select All")) {
         /**
          * 
          */

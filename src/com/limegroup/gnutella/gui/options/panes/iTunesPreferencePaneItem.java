@@ -22,7 +22,6 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
@@ -39,7 +38,7 @@ public final class iTunesPreferencePaneItem extends AbstractPaneItem {
 
     public final static String LABEL = I18n.tr("You can have FrostWire import newly downloaded songs into iTunes.");
 
-    private final String CHECK_BOX_LABEL = I18nMarker.marktr("Enable iTunes importing:");
+    private final String CHECK_BOX_LABEL = I18n.tr("Enable iTunes importing:");
 
     /**
      * Constant for the check box that specifies whether or not downloads 

@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
-
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.settings.ConnectionSettings;
@@ -21,7 +19,7 @@ public final class LocalePreferencingPaneItem extends AbstractPaneItem {
     public final static String LABEL = I18n.tr("You can choose to preference hosts using the same language as you.");
     
     private final String LOCALE_PREF_LABEL_CHECK_BOX = 
-        I18nMarker.marktr("Turn preferencing on:");
+        I18n.tr("Turn preferencing on:");
 
     private final JCheckBox CHECK_BOX = new JCheckBox();
 
