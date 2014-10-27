@@ -48,28 +48,28 @@ public final class TorrentConnectionPaneItem extends AbstractPaneItem {
         BoxPanel panel = new BoxPanel();
 
         LabeledComponent comp = new LabeledComponent(
-                I18n.tr(MAX_ACTIVE_DOWNLOADS),
+                MAX_ACTIVE_DOWNLOADS,
                 MAX_ACTIVE_DOWNLOADS_FIELD, LabeledComponent.LEFT_GLUE,
                 LabeledComponent.LEFT);
         panel.add(comp.getComponent());
         panel.addVerticalComponentGap();
 
         comp = new LabeledComponent(
-                I18n.tr(MAX_ACTIVE_SEEDS),
+                MAX_ACTIVE_SEEDS,
                 MAX_ACTIVE_SEEDS_FIELD, LabeledComponent.LEFT_GLUE,
                 LabeledComponent.LEFT);
         panel.add(comp.getComponent());
         panel.addVerticalComponentGap();
 
         comp = new LabeledComponent(
-                I18n.tr(MAX_GLOBAL_NUM_CONNECTIONS),
+                MAX_GLOBAL_NUM_CONNECTIONS,
                 MAX_GLOBAL_NUM_CONNECTIONS_FIELD, LabeledComponent.LEFT_GLUE,
                 LabeledComponent.LEFT);
         panel.add(comp.getComponent());
         panel.addVerticalComponentGap();
 
         comp = new LabeledComponent(
-                I18n.tr(MAX_PEERS),
+                MAX_PEERS,
                 MAX_PEERS_FIELD, LabeledComponent.LEFT_GLUE,
                 LabeledComponent.LEFT);
         panel.add(comp.getComponent());

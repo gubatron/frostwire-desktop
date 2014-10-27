@@ -227,7 +227,7 @@ public class ShareTorrentDialog extends JDialog {
 		JPanel glass = (JPanel) getGlassPane();
 		glass.setLayout(null);
 		glass.setVisible(true);
-		_feedbackLabel=new JLabel("Feedback here to clipboard");
+		_feedbackLabel=new JLabel(I18n.tr("Feedback here to clipboard"));
 		_feedbackLabel.setVisible(false);
 		_feedbackLabel.setFont(new Font("Arial",Font.BOLD,14));
 		glass.add(_feedbackLabel);

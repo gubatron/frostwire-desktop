@@ -41,14 +41,10 @@ public final class ProxyPaneItem extends AbstractPaneItem {
      * Constant for the key of the locale-specific <tt>String</tt> for the
      * label on the RadioButtons.
      */
-    private final String NO_PROXY_LABEL_KEY =
-            I18n.tr("No Proxy");
-    private final String SOCKS4_PROXY_LABEL_KEY =
-            I18n.tr("Socks v4");
-    private final String SOCKS5_PROXY_LABEL_KEY =
-            I18n.tr("Socks v5");
-    private final String HTTP_PROXY_LABEL_KEY =
-            I18n.tr("HTTP");
+    private final String NO_PROXY_LABEL_KEY     = I18n.tr("No Proxy");
+    private final String SOCKS4_PROXY_LABEL_KEY = "Socks v4";
+    private final String SOCKS5_PROXY_LABEL_KEY = "Socks v5";
+    private final String HTTP_PROXY_LABEL_KEY   = "HTTP";
 
     /**
      * Constant for the key of the locale-specific <tt>String</tt> for the
