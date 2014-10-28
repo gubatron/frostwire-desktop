@@ -220,7 +220,7 @@ public final class StatusLine {
             public String getToolTipText() {
                 boolean seedingStatus = SharingSettings.SEED_FINISHED_TORRENTS.getValue();
 
-                String tooltip = "<html>"+(seedingStatus ? I18n.tr("<b>Seeding</b><p>completed torrent downloads.</p>") : I18n.tr("<b>Not Seeding</b><p>File chunks might be shared only duringa torrent download.</p>")+"</html>");
+                String tooltip = "<html>"+(seedingStatus ? I18n.tr("<b>Seeding</b><p>completed torrent downloads.</p>") : I18n.tr("<b>Not Seeding</b><p>File chunks might be shared only during a torrent download.</p>")+"</html>");
                 return tooltip;
             }
         };
