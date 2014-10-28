@@ -280,7 +280,7 @@ msgstr "Añadir a la lista de reproducción"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:60
 msgid " (Handpicked)"
-msgstr ""
+msgstr " (Elegido a mano)"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:116
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:336
@@ -371,7 +371,7 @@ msgstr "Licencia"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:196
 msgid "Queued for checking"
-msgstr ""
+msgstr "Encolado para comprobar"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:197
 #, fuzzy
@@ -427,15 +427,15 @@ msgstr "Error"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:206
 msgid "Error: Moving incomplete"
-msgstr ""
+msgstr "Error: No terminó de mover archivos"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:207
 msgid "Error: Wrong md5 hash"
-msgstr ""
+msgstr "Error: Hash md5 erroneo"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:208
 msgid "Error: Wrong signature"
-msgstr ""
+msgstr "Error: Firma incorrecta"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:209
 #, fuzzy
@@ -477,7 +477,7 @@ msgstr "Descomprimiendo archivos"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:217
 msgid "Demuxing"
-msgstr ""
+msgstr "Demuxeando"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:265
 #, fuzzy
@@ -629,7 +629,7 @@ msgstr "Actualizar tracker"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:491
 msgid "Scrape Tracker"
-msgstr ""
+msgstr "Raspa el Tracker"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:517
 msgid "Edit trackers"
@@ -908,6 +908,8 @@ msgid ""
 "If these files can be downloaded from the web, enter the URLs of each "
 "possible mirror, one per line (GetRight style)."
 msgstr ""
+"Si estos archivos pueden ser descargados del web, introduzca las URLs de"
+"cada posible espejo, uno por linea (Tipo GetRight)"
 
 #. first button will dock all the way east,
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:292
@@ -1005,7 +1007,7 @@ msgstr "wizard.operationfailed"
 #. check just the first file on all mirrors.
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:744
 msgid "Checking Web seed mirror URLs..."
-msgstr ""
+msgstr "Verificando los espejos de las semillas Web"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:753
 msgid "Web seed not reachable."
@@ -2021,7 +2023,7 @@ msgstr "azemp.failed.d3dbad"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:77
 msgid "Streaming Audio"
-msgstr ""
+msgstr "Streaming de Audio"
 
 #. *
 #. * Constant for the play button.
@@ -2033,7 +2035,7 @@ msgstr "Reproducir"
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:82
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:87
 msgid "Long Press to Stop Playback"
-msgstr ""
+msgstr "Click sostenido para detener la reproducción"
 
 #. *
 #. * Constant for the forward button.
@@ -2109,7 +2111,7 @@ msgstr "Reproduciendo Radio de Internet"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1047
 msgid "Playing local Wi-Fi Stream from"
-msgstr ""
+msgstr "Tocando stream local Wi-Fi desde"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1061
 msgid "unknown device"
@@ -2410,7 +2412,7 @@ msgstr "Acuerdo de licencia de usuario final"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:89
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Política de Privacidad"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:94
 msgid "Close This Window"
@@ -2512,6 +2514,8 @@ msgid ""
 "For helping distribute Frostwire to opensource communities in a very simple "
 "manner."
 msgstr ""
+"Por ayudar a distribuir FrostWire a comunidades de código abierto de"
+"una manera muy simple"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:292
 #, fuzzy
@@ -3598,13 +3602,15 @@ msgstr "Hay una nueva versión disponible. ¿Desea actualizar?"
 msgid ""
 "FrostWire has detected a VPN connection, your privacy is safe from prying "
 "eyes."
-msgstr ""
+msgstr "FrostWire ha detectado una conexión VPN, tu privacidad está a salvo"
 
 #: src/com/limegroup/gnutella/gui/VPNStatusButton.java:64
 msgid ""
 "FrostWire can't detect an encrypted VPN connection, your privacy is at risk. "
 "Click icon to set up an encrypted VPN connection."
 msgstr ""
+"FrostWire no puede detectar una conexión VPN encriptada, tu privacidad está a riesgo. "
+"Haga click en el ícono para configurar una conexión VPN."
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:60
 msgid "O&pen .Torrent or Magnet"
@@ -3878,7 +3884,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:110
 msgid "You forgot to select your finished downloads \"Seeding\" setting."
-msgstr ""
+msgstr "Olvidó seleccionar la configuracion de \"Seeding\" para descargas finalizadas"
 
 #: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:112
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
@@ -4067,12 +4073,13 @@ msgstr "Aprende sobre compartir en BitTorrent"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid "What is a VPN?"
-msgstr ""
+msgstr "Que es un VPN?"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid ""
 "Learn about how to protect your internet connection and your privacy online"
 msgstr ""
+"Aprende sobre como proteger tu conexión de internet y tu privacidad en línea"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 #, fuzzy
@@ -4568,11 +4575,11 @@ msgstr "Redirección de puerto manual"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:89
 msgid "TCP port start:"
-msgstr ""
+msgstr "Puerto TCP (inicio de rango)"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:99
 msgid "TCP port end:"
-msgstr ""
+msgstr "Puerto TCP (fin de rango)"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:169
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:173
@@ -4583,7 +4590,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:178
 msgid "You must enter a valid port range."
-msgstr ""
+msgstr "Debe introducir un puerto en el rango válido"
 
 #: src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:22
 msgid "Filter Results"
@@ -5022,7 +5029,7 @@ msgstr "Velocidad de descarga:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
 msgid "Set the Maximum BitTorrent upload speed in KB/s."
-msgstr ""
+msgstr "Máxima velocidad de subida BitTorrent en KB/s."
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
 #, fuzzy
@@ -5154,6 +5161,8 @@ msgid ""
 "%s Torrent files found (includes only .torrent files. Torrent files point to "
 "collections of files shared on the BitTorrent network.)"
 msgstr ""
+"%s archivos Torrent encontrados (incluye unicamente archivos .torrent. Los archivos "
+"Torrent apuntan a colecciones de archivos compartidos en la red BitTorrent)"
 
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:44
 msgid "Stop"
@@ -5235,7 +5244,7 @@ msgstr "0"
 
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:127
 msgid "Name|Source|Ext."
-msgstr ""
+msgstr "Nombre|Fuente|Ext."
 
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:194
 msgid ""

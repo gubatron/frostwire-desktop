@@ -185,6 +185,7 @@ msgid ""
 msgstr ""
 "Jeste li sigurni da želite ukloniti datoteke s vaseg racunala?\n"
 "\n"
+"Vi nećete biti u mogućnosti da se oporavim datoteke."
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:288
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:379
