@@ -3035,7 +3035,7 @@ msgstr "Pokazati propusnost potrosnje"
 #: src/com/limegroup/gnutella/gui/StatusLine.java:804
 #, fuzzy
 msgid "Show Donation Buttons"
-msgstr "Prikaži MagnetMix gumb."
+msgstr "Prikaži gumbe donacija"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:840
 msgid "Downloads:"
@@ -3043,15 +3043,15 @@ msgstr "Preuzimanja:"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:840
 msgid "Uploads:"
-msgstr "Slanje datoteka"
+msgstr "Slanja:"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:841
 msgid "Total Downstream:"
-msgstr "Totalni Downstream:"
+msgstr "Totalni downstream:"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:841
 msgid "Total Upstream:"
-msgstr "Totalni Upstream:"
+msgstr "Totalni upstream:"
 
 #. *
 #. * The title for the TOTD window.
@@ -3278,6 +3278,8 @@ msgid ""
 "You can find out which version of FrostWire you are using by choosing 'About "
 "FrostWire' from the FrostWire menu."
 msgstr ""
+"Mozete saznati koju verziju FrostWire-a koristite tako da izaberete 'O "
+"FrostWire-u' u FrostWire meniu."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:68
 msgid ""
@@ -3383,7 +3385,7 @@ msgstr "Updejtati sada"
 #: src/com/limegroup/gnutella/gui/UpdateDialog.java:164
 #: src/com/limegroup/gnutella/gui/UpdateDialog.java:197
 msgid "Visit http://www.frostwire.com to update!"
-msgstr "Posjetite http://www.frostwire.com kako biste azurirali "
+msgstr "Posjetite http://www.frostwire.com kako biste nadogradili FrostWire!"
 
 #: src/com/limegroup/gnutella/gui/UpdateDialog.java:174
 msgid ""
@@ -3394,16 +3396,16 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/UpdateDialog.java:175
 msgid "Update Ready"
-msgstr "Azuriranje spremno"
+msgstr "Nadogradnja spremna"
 
 #: src/com/limegroup/gnutella/gui/UpdateDialog.java:194
 msgid "Update Later"
-msgstr "Azurirati kasnije"
+msgstr "Nadogradi kasnije"
 
 #: src/com/limegroup/gnutella/gui/UpdatePanel.java:25
 #: src/com/limegroup/gnutella/gui/UpdatePanel.java:43
 msgid "A newer version is available, update?"
-msgstr "Nova verzija je dostupna, updejtati?"
+msgstr "Nova verzija je dostupna, nadograditi?"
 
 #: src/com/limegroup/gnutella/gui/VPNStatusButton.java:59
 msgid ""
@@ -3743,7 +3745,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/init/MiscWindow.java:72
 msgid "Start Automatically"
-msgstr "Automatski razvrstaj"
+msgstr "Automatski pokreni"
 
 #: src/com/limegroup/gnutella/gui/init/MiscWindow.java:75
 msgid ""
