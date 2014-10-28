@@ -93,9 +93,9 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
         setBorder(BorderFactory.createEmptyBorder(0,0,2,0));
 
         //We use "Bitcoin" for the protocol (upper case B), and "bitcoins" for the units of currency (lower case b)
-        labelBitcoin.setToolTipText(I18n.tr("Name your price, Send a Tip or Donation in ") + I18n.tr("bitcoins"));
-        labelLitecoin.setToolTipText(I18n.tr("Name your price, Send a Tip or Donation in ") + I18n.tr("litecoins"));
-        labelDogecoin.setToolTipText(I18n.tr("Name your price, Send a Tip or Donation in ") + I18n.tr("dogecoins"));
+        labelBitcoin.setToolTipText(I18n.tr("Name your price, Send a Tip or Donation in") +" "+ I18n.tr("bitcoins"));
+        labelLitecoin.setToolTipText(I18n.tr("Name your price, Send a Tip or Donation in") +" "+ I18n.tr("litecoins"));
+        labelDogecoin.setToolTipText(I18n.tr("Name your price, Send a Tip or Donation in") +" "+ I18n.tr("dogecoins"));
         labelPaypal.setToolTipText(I18n.tr("Name your price, Send a Tip or Donation via Paypal"));
 
         initMouseListeners();

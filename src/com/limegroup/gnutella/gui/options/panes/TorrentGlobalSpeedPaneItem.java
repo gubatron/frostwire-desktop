@@ -47,7 +47,7 @@ public final class TorrentGlobalSpeedPaneItem extends AbstractPaneItem {
 
     private int storedDownloadSpeed;
 
-    public final static String DESCRIPTION_UPLOAD_SPEED = I18n.tr("<html>Set the Maximum BitTorrent upload speed in KB/s.<p>Note: Too low upload speeds (leeching) could be penalized by some trackers, resulting in slower downloads.</html>");
+    public final static String DESCRIPTION_UPLOAD_SPEED = "<html>"+I18n.tr("Set the Maximum BitTorrent upload speed in KB/s.")+"<p>"+ I18n.tr("Note: Too low upload speeds (leeching) could be penalized by some trackers, resulting in slower downloads.")+"</p></html>";
 
     private final String LABEL_UPLOAD_SPEED = I18n.tr("Upload Speed:");
 

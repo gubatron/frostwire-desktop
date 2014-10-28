@@ -885,8 +885,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             } else if (OSUtils.isLinux()) {
                 os = "Linux";
             }
-            putValue(Action.NAME, I18n.tr("Launch in ") + os);
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Launch Selected Files in ") + os);
+            putValue(Action.NAME, I18n.tr("Launch in") + " " + os);
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Launch Selected Files in") + " " + os);
             putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH");
         }
 
@@ -1128,8 +1128,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                             if (demuxSuccess) {
                                 add(demuxed, 0);
                                 update(demuxed);
-                                LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Finished") + " " + demuxedFiles.size() + " " + I18n.tr("out  of ") + totalDemuxed + ". Extracting audio...");
-                                System.out.println("Finished " + demuxedFiles.size() + " " + I18n.tr("out  of ") + totalDemuxed + ". Extracting audio...");
+                                LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Finished") + " " + demuxedFiles.size() + " " + I18n.tr("out of") + " " + totalDemuxed + ". Extracting audio...");
+                                System.out.println("Finished" + demuxedFiles.size() + " out of " + totalDemuxed + ". Extracting audio...");
                             } else {
                                 LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Could not extract audio from") + " " + demuxed.getName());
                             }
