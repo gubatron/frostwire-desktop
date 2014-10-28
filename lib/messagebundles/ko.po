@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-20 18:39+0400\n"
+"POT-Creation-Date: 2014-10-28 14:37+0300\n"
 "PO-Revision-Date: 2012-04-13 15:39-0500\n"
 "Last-Translator: FTA <Unknown>\n"
 "Language-Team: none\n"
@@ -62,8 +62,8 @@ msgid "Send files to iTunes"
 msgstr "iTunes에 오디오 파일 보내기"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:119
-#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:44
-#: src/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:50
+#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:43
+#: src/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:48
 msgid "Details"
 msgstr "상세정보"
 
@@ -137,7 +137,7 @@ msgstr "다운로드 일시정지"
 #. * Constant for the pause button.
 #.
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:242
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:89
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:87
 msgid "Pause"
 msgstr "일시정지"
 
@@ -189,7 +189,7 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:288
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:379
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:744
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:743
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:81
 msgid "Are you sure?"
 msgstr "계속하시겠습니까?"
@@ -217,7 +217,7 @@ msgstr ""
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:344
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:345
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:449
-#: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:356
+#: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:355
 msgid "Copy Magnet"
 msgstr "마그넷 복사"
 
@@ -260,18 +260,20 @@ msgstr "새로운 재생목록 생성"
 msgid "Create and add to a new playlist"
 msgstr "재생 목록에 생성 및 추가"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:490
+#: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:493
 #, fuzzy
 msgid "Play file"
 msgstr "플레이어"
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:491
+#: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:494
 msgid "Play media file"
 msgstr ""
 
-#: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:519
+#: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:522
+#: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:165
+#: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:175
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
-msgid "Add to playlist "
+msgid "Add to playlist"
 msgstr "재생목록에 추가"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:60
@@ -414,8 +416,8 @@ msgstr "일시정지"
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:629
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:946
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:730
-#: src/com/frostwire/gui/library/LibraryUtils.java:756
-#: src/com/limegroup/gnutella/gui/Initializer.java:574
+#: src/com/frostwire/gui/library/LibraryUtils.java:765
+#: src/com/limegroup/gnutella/gui/Initializer.java:535
 #: src/com/limegroup/gnutella/gui/MessageService.java:103
 #: src/com/limegroup/gnutella/gui/MessageService.java:123
 #: src/com/limegroup/gnutella/gui/MessageService.java:243
@@ -488,7 +490,7 @@ msgid "ETA"
 msgstr "ETA"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:488
-#: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:422
+#: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:421
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:862
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:517
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:646
@@ -496,7 +498,7 @@ msgid "Launch"
 msgstr "시작"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:489
-#: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:423
+#: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:422
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:863
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:518
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:647
@@ -534,12 +536,12 @@ msgstr "다운로드 취소"
 #: src/com/frostwire/gui/library/DeviceUploadDialog.java:89
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:527
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:529
-#: src/com/limegroup/gnutella/gui/DialogOption.java:26
-#: src/com/limegroup/gnutella/gui/InputFieldDialog.java:89
+#: src/com/limegroup/gnutella/gui/DialogOption.java:24
+#: src/com/limegroup/gnutella/gui/InputFieldDialog.java:88
 #: src/com/limegroup/gnutella/gui/LanguageWindow.java:210
-#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:241
-#: src/com/limegroup/gnutella/gui/init/SetupManager.java:504
-#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:39
+#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:237
+#: src/com/limegroup/gnutella/gui/init/SetupManager.java:503
+#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:38
 msgid "Cancel"
 msgstr "취소"
 
@@ -563,11 +565,6 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:310
 msgid "Advanced"
 msgstr "고급"
-
-#: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:165
-#: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:175
-msgid "Add to playlist"
-msgstr "재생목록에 추가"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:189
 #, fuzzy
@@ -809,7 +806,7 @@ msgstr ""
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:224
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:930
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:714
-#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:339
+#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:335
 msgid "Create New Torrent"
 msgstr "새로운 토렌트 생성"
 
@@ -911,18 +908,18 @@ msgstr "닫기"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:367
 #: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:180
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:101
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:123
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:145
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:168
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:254
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:273
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:294
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:316
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:448
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:467
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:488
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:510
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:100
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:122
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:144
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:167
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:253
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:272
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:293
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:315
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:447
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:466
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:487
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:509
 msgid "Select"
 msgstr "선택"
 
@@ -1075,7 +1072,7 @@ msgstr ""
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:97
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:98
-msgid "Name your price, Send a Tip or Donation in "
+msgid "Name your price, Send a Tip or Donation in"
 msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
@@ -1110,8 +1107,8 @@ msgstr "보낼 내용 선택"
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:263
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:264
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:265
-#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:43
-#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:85
+#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:42
+#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:84
 #: src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:98
 #: src/com/limegroup/gnutella/gui/tables/AbstractActionsRenderer.java:98
 msgid "Download"
@@ -1156,6 +1153,11 @@ msgstr ""
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:223
 msgid "Tips"
 msgstr "팁"
+
+#: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:230
+#, fuzzy
+msgid "Feedback here to clipboard"
+msgstr "클립보드에 메세지가 복사됨"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:301
 msgid "All done! Now share the link"
@@ -1214,7 +1216,7 @@ msgid "Please enter a valid path for the Torrent Data Folder"
 msgstr "토렌트 데이터 폴더의 유효한 경로를 입력하십시오"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:132
-msgid "The Torrent Data Folder cannot be inside the "
+msgid "The Torrent Data Folder cannot be inside the"
 msgstr "토렌트 데이터 폴더는 이곳에 위치할 수 없음"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:136
@@ -1223,7 +1225,7 @@ msgid "Could not resolve folder path."
 msgstr "폴더 경로를 확인할 수 없음."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:143
-msgid "The Torrent Data Folder cannot be a parent folder of the "
+msgid "The Torrent Data Folder cannot be a parent folder of the"
 msgstr "토렌트 데이터 폴더는 부모 폴더가 될 수 없음"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:160
@@ -1249,20 +1251,22 @@ msgid "Seeding Settings"
 msgstr "배포 설정"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:76
+#, fuzzy
 msgid ""
-"<html><strong>Seed finished torrent downloads.</strong> BitTorrent users on "
-"the internet will be able<br/>to download file chunks of the data your "
-"torrents seed. (Recommended)</html>"
+"<strong>Seed finished torrent downloads.</strong> BitTorrent users on the "
+"internet will be able<br/>to download file chunks of the data your torrents "
+"seed. (Recommended)"
 msgstr ""
 "<html><strong>완료된 토렌트 다운로드 배포.</strong> BitTorrent 사용자는<br/>"
 "배포한 토렌트 파일의 일부를 다운로드 할 수 있습니다 (추천)</html>"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:77
+#, fuzzy
 msgid ""
-"<html><strong>Don't seed finished torrent downloads.</strong> BitTorrent "
-"users on the internet may<br/>only download file chunks of that torrent from "
-"you while you're downloading its<br/>data files. <strong>Some trackers will "
-"penalize this Leeching behavior</strong>.</html>"
+"<strong>Don't seed finished torrent downloads.</strong> BitTorrent users on "
+"the internet may<br/>only download file chunks of that torrent from you "
+"while you're downloading its<br/>data files. <strong>Some trackers will "
+"penalize this Leeching behavior</strong>."
 msgstr ""
 "<html><strong>완료된 토렌트 다운로드를 배포하지 않음.</strong> BitTorrent 사"
 "용자는<br/> 귀하가 데이터 파일을 다운로드하는 동안에만 파일 부부분을 다운로"
@@ -1271,11 +1275,11 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:92
 msgid ""
-"<html><strong>Seed handpicked torrent files.</strong> Handpicked file "
-"torrents downloads (Partial Downloads) can result in seeding data chunks of "
+"<strong>Seed handpicked torrent files.</strong> Handpicked file torrents "
+"downloads (Partial Downloads) can result in seeding data chunks of "
 "neighboring incomplete files.<br/>This feature is <strong>recommended for "
 "advanced users only</strong> as it can lead to downloading parts of files "
-"you may have not explicitly chosen for download.</html>"
+"you may have not explicitly chosen for download."
 msgstr ""
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:133
@@ -1320,8 +1324,8 @@ msgstr ""
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:171
 #: src/com/limegroup/gnutella/gui/StatusLine.java:231
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:185
-#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:42
-#: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:308
+#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:41
+#: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:307
 msgid "Options"
 msgstr "옵션"
 
@@ -1330,7 +1334,7 @@ msgid "You can configure the folders you share in FrostWire's Options."
 msgstr "FrostWire의 옵션으로 공유하는 폴더를 설정할 수 있습니다"
 
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:263
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:360
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:359
 msgid "Send"
 msgstr "송신"
 
@@ -1339,7 +1343,7 @@ msgid "Do you want to send this file to a friend?"
 msgstr "해당 파일을 친구에게 전송하시겠습니까?"
 
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:277
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1136
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1134
 #: src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:67
 msgid "Send files with FrostWire"
 msgstr "FrostWire로 파일 전송하기"
@@ -1427,7 +1431,7 @@ msgstr "데이터 추가됨"
 msgid "Date Modified"
 msgstr "수정된 날짜"
 
-#: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:146
+#: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:145
 #: src/com/frostwire/gui/library/LibraryExplorer.java:145
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:322
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:166
@@ -1437,19 +1441,19 @@ msgstr "수정된 날짜"
 msgid "Search"
 msgstr "검색"
 
+#: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:436
 #: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:437
-#: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:438
 msgid "Save"
 msgstr "저장"
 
-#: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:439
+#: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:438
 msgid "Save Selected Files To Folder"
 msgstr "선택된 파일을 폴더에 저장"
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:143
 #: src/com/frostwire/gui/library/LibraryExplorer.java:197
 #, fuzzy
-msgid "Search your "
+msgid "Search your"
 msgstr "더깊이 검색"
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:145
@@ -1457,7 +1461,7 @@ msgid "'s "
 msgstr ""
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:162
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:317
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:316
 msgid "tracks"
 msgstr "트랙 "
 
@@ -1473,22 +1477,22 @@ msgid "Wi-Fi Sharing"
 msgstr ""
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:246
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:184
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:183
 msgid "Configure Options"
 msgstr "설정 옵션"
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:246
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:184
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:183
 msgid "You can configure the FrostWire's Options."
 msgstr "FrostWire의 옵션을 설정할 수 있습니다."
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:675
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:700
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:699
 msgid "Refresh"
 msgstr "갱신"
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:676
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:701
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:700
 msgid "Refresh selected"
 msgstr "라이브러리 폴더 열기"
 
@@ -1523,10 +1527,10 @@ msgstr "휴지통으로 이동"
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:529
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:965
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:554
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:733
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:732
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:770
-#: src/com/frostwire/gui/searchfield/SearchField.java:272
-#: src/com/limegroup/gnutella/gui/LimeTextField.java:110
+#: src/com/frostwire/gui/searchfield/SearchField.java:271
+#: src/com/limegroup/gnutella/gui/LimeTextField.java:108
 msgid "Delete"
 msgstr "삭제"
 
@@ -1566,17 +1570,19 @@ msgstr ""
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:888
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:672
-msgid "Launch in "
+#, fuzzy
+msgid "Launch in"
 msgstr "실행"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:889
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:673
-msgid "Launch Selected Files in "
+#, fuzzy
+msgid "Launch Selected Files in"
 msgstr "선택된 파일 실행"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:931
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:715
-#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:340
+#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:336
 msgid "Create a new .torrent file"
 msgstr "새 토렌트 파일 생성"
 
@@ -1585,7 +1591,7 @@ msgid "Delete Selected Files"
 msgstr "선택한 파일을 삭제"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:983
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:782
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:781
 msgid "Rename"
 msgstr "이름 변경"
 
@@ -1620,8 +1626,7 @@ msgid "Done extracting audio."
 msgstr ""
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1131
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1132
-msgid "out  of "
+msgid "out of"
 msgstr ""
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1134
@@ -1714,43 +1719,43 @@ msgstr "스트림 URL 복사"
 msgid "Loading Library Window..."
 msgstr "라이브러리 윈도우를 불러오는 중..."
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:190
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:189
 msgid "New Playlist"
 msgstr "새 재생목록"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:190
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:189
 msgid "Creates a new Playlist"
 msgstr "새 재생목록 생성"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:433
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:432
 msgid "Open Playlist (.m3u)"
 msgstr "재생 리스트를 선택 (. m3u)"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:505
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:504
 msgid "Save Playlist As"
 msgstr "재생 리스트를 별명으로 다른 이름으로 저장..."
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:516
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:515
 #, java-format
 msgid ""
 "Warning: a file with the name {0} already exists in the folder. Overwrite "
 "this file?"
 msgstr "경고: 폴더에 파일 이름{0}이 이미 존재합니다. 덮어쓰기 하시겠습니까?"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:715
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:714
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:844
 msgid "Refresh Audio Properties"
 msgstr "오디오 속성 갱신"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:716
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:715
 msgid "Refresh the audio properties based on ID3 tags of selected items"
 msgstr "선택된 항목의 ID3 태그를 기준으로 오디오 속성 갱신"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:734
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:733
 msgid "Delete Playlist"
 msgstr "재생목록 삭제"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:744
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:743
 msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
@@ -1758,74 +1763,74 @@ msgstr ""
 "재생목록을 삭제하시겠습니까?\n"
 "(파일은 삭제되지 않음)"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:763
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:762
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:828
 msgid "Cleanup playlist"
 msgstr "재생목록 정리"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:764
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:763
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:829
 msgid "Remove the deleted items"
 msgstr "삭제된 항목 제거"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:783
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:782
 msgid "Rename Playlist"
 msgstr "재생목록 이름 변경"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:811
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:810
 msgid "Playlist Files (*.m3u)"
 msgstr "재생 리스트 파일 (*. m3u)"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:820
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:819
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:798
 msgid "Import .m3u to Playlist"
 msgstr "재생목록에 .m3u 가져오기"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:821
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:820
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:799
 msgid "Import a .m3u file into the selected playlist"
 msgstr "선택된 재생목록에 .m3u 파일 가져오기"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:835
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:834
 msgid "Import .m3u to New Playlist"
 msgstr "새 재생목록에 .m3u 가져오기"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:836
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:835
 msgid "Import a .m3u file to a new playlist"
 msgstr "새 재생목록에 .m3u 파일 가져오기"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:848
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:847
 #, fuzzy
 msgid "Export playlist files to folder"
 msgstr "재생목록에 .m3u 파일 보내기"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:849
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:848
 msgid "Copy all playlist files to a folder of your choosing"
 msgstr ""
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:867
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:866
 #, fuzzy
 msgid "Where do you want the playlist files copied to?"
 msgstr ""
 "재생목록을 삭제하시겠습니까?\n"
 "(파일은 삭제되지 않음)"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:921
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:920
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:813
 msgid "Export Playlist to .m3u"
 msgstr "재생목록 .m3u 보내기"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:922
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:921
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:814
 msgid "Export this playlist into a .m3u file"
 msgstr "재생목록에 .m3u 파일 보내기"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:936
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:935
 #, fuzzy
 msgid "Export Playlist to iTunes"
 msgstr "재생목록 .m3u 보내기"
 
-#: src/com/frostwire/gui/library/LibraryPlaylists.java:937
+#: src/com/frostwire/gui/library/LibraryPlaylists.java:936
 #, fuzzy
 msgid "Export this playlist into an iTunes playlist"
 msgstr "재생목록에 .m3u 파일 보내기"
@@ -1881,30 +1886,32 @@ msgstr "라이브러리에 보이기"
 
 #: src/com/frostwire/gui/library/LibraryUtils.java:91
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
-#: src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:38
+#: src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:37
 msgid "Importing"
 msgstr "가져오는 중"
 
 #: src/com/frostwire/gui/library/LibraryUtils.java:174
-#: src/com/frostwire/gui/library/LibraryUtils.java:206
-#: src/com/frostwire/gui/library/LibraryUtils.java:255
+#: src/com/frostwire/gui/library/LibraryUtils.java:212
+#: src/com/frostwire/gui/library/LibraryUtils.java:213
+#: src/com/frostwire/gui/library/LibraryUtils.java:264
 msgid "Playlist name"
 msgstr "재생목록 이름"
 
-#: src/com/frostwire/gui/library/LibraryUtils.java:682
+#: src/com/frostwire/gui/library/LibraryUtils.java:691
 msgid "Refreshing"
 msgstr "갱신"
 
-#: src/com/frostwire/gui/library/LibraryUtils.java:738
+#: src/com/frostwire/gui/library/LibraryUtils.java:747
 msgid "Importing from"
 msgstr "가져오는 중"
 
-#: src/com/frostwire/gui/library/LibraryUtils.java:756
+#: src/com/frostwire/gui/library/LibraryUtils.java:765
 msgid "Error importing Radio Station from"
 msgstr "라디오 스테이션으로부터 가져오기 오류"
 
 #: src/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:67
-msgid "Holds the Results for "
+#, fuzzy
+msgid "Holds the Results for"
 msgstr "라이브러리 폴더"
 
 #: src/com/frostwire/gui/library/NodeRenderer.java:65
@@ -1932,12 +1939,17 @@ msgstr "라이브러리에 폴더 및 서브폴더가 포함되지 않았습니�
 msgid "Folder's files and some subfolders are included in the Library."
 msgstr "라이브러리에 폴더 및 서브 폴더가 포함되었습니다."
 
+#: src/com/frostwire/gui/library/TorrentDirectoryHolder.java:34
+#: src/com/limegroup/gnutella/MediaType.java:51
+msgid "Torrents"
+msgstr "토렌트"
+
 #: src/com/frostwire/gui/library/UITool.java:103
 msgid "Applications"
 msgstr "어플리케이션"
 
 #: src/com/frostwire/gui/library/UITool.java:105
-#: src/com/limegroup/gnutella/MediaType.java:47
+#: src/com/limegroup/gnutella/MediaType.java:48
 msgid "Audio"
 msgstr "오디오"
 
@@ -1954,7 +1966,7 @@ msgid "Ringtones"
 msgstr "벨소리"
 
 #: src/com/frostwire/gui/library/UITool.java:113
-#: src/com/limegroup/gnutella/MediaType.java:48
+#: src/com/limegroup/gnutella/MediaType.java:49
 msgid "Video"
 msgstr "비디오"
 
@@ -1970,119 +1982,119 @@ msgstr "azemp.failed.nocodec"
 msgid "azemp.failed.d3dbad"
 msgstr "azemp.failed.d3dbad"
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:79
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:77
 msgid "Streaming Audio"
 msgstr ""
 
 #. *
 #. * Constant for the play button.
 #.
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:84
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:82
 msgid "Play"
 msgstr "재생"
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:84
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:89
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:82
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:87
 msgid "Long Press to Stop Playback"
 msgstr ""
 
 #. *
 #. * Constant for the forward button.
 #.
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:96
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:94
 msgid "Next"
 msgstr "다음"
 
 #. *
 #. * Constant for the rewind button.
 #.
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:101
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:99
 msgid "Previous"
 msgstr "이전"
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:196
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:194
 msgid "Volume"
 msgstr ""
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:251
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:249
 msgid "Send this file to a friend"
 msgstr "친구에게 파일 보내기"
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:256
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:254
 msgid "Show the source of this media"
 msgstr ""
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:322
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:320
 msgid "Shuffle songs"
 msgstr "노래 셔플"
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:329
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:327
 msgid "Repeat songs"
 msgstr "음악 반복"
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:915
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:913
 msgid "this artist(s)"
 msgstr ""
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:919
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:917
 msgid "Open Facebook page of"
 msgstr ""
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:921
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:919
 msgid "Open Twitter page of"
 msgstr ""
 
 #. won't be shown in 5.6.x, code here for 6.x
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1028
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1026
 msgid "Playing local file"
 msgstr ""
 
 #. won't be shown in 5.6.x, code here for 6.x
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1031
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1029
 msgid "Playing track from"
 msgstr ""
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1034
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1032
 msgid "Open YouTube source page"
 msgstr ""
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1038
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1036
 msgid "Open SoundCloud source page"
 msgstr ""
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1042
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1040
 msgid "Open Archive.org source page"
 msgstr ""
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1046
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1044
 #, fuzzy
 msgid "Playing Internet Radio"
 msgstr "인터넷 라디오"
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1049
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1047
 msgid "Playing local Wi-Fi Stream from"
 msgstr ""
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1063
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1061
 msgid "unknown device"
 msgstr ""
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1074
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1072
 #, fuzzy
 msgid "playlist"
 msgstr "새 재생목록"
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1135
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1133
 #: src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:66
 msgid "file"
 msgstr "파일"
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1135
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1133
 #: src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:66
 msgid "folder"
 msgstr "폴더"
 
-#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1136
+#: src/com/frostwire/gui/player/MediaPlayerComponent.java:1134
 #: src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:67
 #, java-format
 msgid "Do you want to send this {0} to a friend?"
@@ -2130,32 +2142,32 @@ msgstr ""
 #. *
 #. * The undo action.
 #.
-#: src/com/frostwire/gui/searchfield/SearchField.java:232
-#: src/com/limegroup/gnutella/gui/LimeTextField.java:54
+#: src/com/frostwire/gui/searchfield/SearchField.java:231
+#: src/com/limegroup/gnutella/gui/LimeTextField.java:52
 msgid "Undo"
 msgstr "되돌리기"
 
 #. *
 #. * The cut action
 #.
-#: src/com/frostwire/gui/searchfield/SearchField.java:242
-#: src/com/limegroup/gnutella/gui/LimeTextField.java:68
+#: src/com/frostwire/gui/searchfield/SearchField.java:241
+#: src/com/limegroup/gnutella/gui/LimeTextField.java:66
 msgid "Cut"
 msgstr "자르기"
 
 #. *
 #. * The copy action.
 #.
-#: src/com/frostwire/gui/searchfield/SearchField.java:252
-#: src/com/limegroup/gnutella/gui/LimeTextField.java:82
+#: src/com/frostwire/gui/searchfield/SearchField.java:251
+#: src/com/limegroup/gnutella/gui/LimeTextField.java:80
 msgid "Copy"
 msgstr "복사"
 
 #. *
 #. * The paste action.
 #.
-#: src/com/frostwire/gui/searchfield/SearchField.java:262
-#: src/com/limegroup/gnutella/gui/LimeTextField.java:96
+#: src/com/frostwire/gui/searchfield/SearchField.java:261
+#: src/com/limegroup/gnutella/gui/LimeTextField.java:94
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:184
 msgid "Paste"
 msgstr "붙이기"
@@ -2163,13 +2175,13 @@ msgstr "붙이기"
 #. *
 #. * The select all action.
 #.
-#: src/com/frostwire/gui/searchfield/SearchField.java:282
+#: src/com/frostwire/gui/searchfield/SearchField.java:281
 #: src/com/limegroup/gnutella/gui/CheckBoxList.java:604
-#: src/com/limegroup/gnutella/gui/LimeTextField.java:124
+#: src/com/limegroup/gnutella/gui/LimeTextField.java:122
 msgid "Select All"
 msgstr "모두 선택"
 
-#: src/com/frostwire/gui/searchfield/SearchField.java:628
+#: src/com/frostwire/gui/searchfield/SearchField.java:627
 #: src/com/limegroup/gnutella/gui/ClearableAutoCompleteTextField.java:326
 msgid "Clear History"
 msgstr "이력 지움"
@@ -2327,38 +2339,32 @@ msgid "ProgressMonitor.progressText"
 msgstr ""
 
 #. These are used as resource keys to retreive descriptions in the GUI
-#: src/com/limegroup/gnutella/MediaType.java:43
+#: src/com/limegroup/gnutella/MediaType.java:44
 msgid "All Types"
 msgstr "모든 종류"
 
-#: src/com/limegroup/gnutella/MediaType.java:45
+#: src/com/limegroup/gnutella/MediaType.java:46
 msgid "Books/Docs"
 msgstr "책/문서"
 
-#: src/com/limegroup/gnutella/MediaType.java:46
+#: src/com/limegroup/gnutella/MediaType.java:47
 msgid "Programs"
 msgstr "프로그램"
 
-#: src/com/limegroup/gnutella/MediaType.java:49
+#: src/com/limegroup/gnutella/MediaType.java:50
 msgid "Images"
 msgstr "이미지"
-
-#: src/com/limegroup/gnutella/MediaType.java:50
-msgid "Torrents"
-msgstr "토렌트"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:58
 msgid "About FrostWire"
 msgstr "FrostWire 정보"
 
-#. set up limewire version label
-#: src/com/limegroup/gnutella/gui/AboutWindow.java:75
-#: src/com/limegroup/gnutella/gui/notify/TrayNotifier.java:56
-msgid "FrostWire"
-msgstr "FrostWire"
-
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:88
 msgid "End User License Agreement"
+msgstr ""
+
+#: src/com/limegroup/gnutella/gui/AboutWindow.java:89
+msgid "Privacy Policy"
 msgstr ""
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:94
@@ -2367,19 +2373,23 @@ msgstr "현재 창 닫기"
 
 #. introduction
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:181
-msgid "<h1>FrostWire Logo Designer</h1>"
+#, fuzzy
+msgid "FrostWire Logo Designer"
 msgstr "<h1>FrostWire 로고 디자이너</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:184
-msgid "<h1>FrostWire Graphics Designers/Photographers</h1>"
+#, fuzzy
+msgid "FrostWire Graphics Designers/Photographers"
 msgstr "<h1>FrostWire 그래픽 디자이너/포토그래프 </h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:194
-msgid "<h1>Thanks to Former FrostWire Developers</h1>"
+#, fuzzy
+msgid "Thanks to Former FrostWire Developers"
 msgstr "<h1> FrostWire 개발자들에게 감사의 인사</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:199
-msgid "<h1>Thanks to the FrostWire Chat Community!</h1>"
+#, fuzzy
+msgid "Thanks to the FrostWire Chat Community!"
 msgstr "<h1>FrostWire 채팅 커뮤니티에 감사의 인사</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:200
@@ -2400,20 +2410,34 @@ msgid ""
 msgstr "br><br>채팅방 관리인 및 포럼 수정인들에게 감사의 인사를 전합니다"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:206
-msgid "<h1>FrostWire Chat Operators</h1>"
+#, fuzzy
+msgid "FrostWire Chat Operators"
 msgstr "<h1>FrostWire 채팅 관리인</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:211
-msgid "<h1>FrostWire Forum Moderators</h1>"
+#, fuzzy
+msgid "FrostWire Forum Moderators"
 msgstr "<h1>FrostWire 포럼 수정인</h1>"
+
+#: src/com/limegroup/gnutella/gui/AboutWindow.java:217
+#, fuzzy
+msgid "Many Former Chat Operators"
+msgstr "<h1>FrostWire 채팅 관리인</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:223
 msgid "And also to the Support Volunteer Helpers:"
 msgstr "지원 봉사 지원자들에게 감사드립니다:"
 
+#. azureus/vuze devs.
+#: src/com/limegroup/gnutella/gui/AboutWindow.java:229
+#, fuzzy
+msgid "Thanks to the Azureus Core Developers"
+msgstr "<h1> FrostWire 개발자들에게 감사의 인사</h1>"
+
 #. developers
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:236
-msgid "<h1>Thanks to the LimeWire Developer Team</h1>"
+#, fuzzy
+msgid "Thanks to the LimeWire Developer Team"
 msgstr "<h1>LimeWire 개발 팀에게 감사드립닏</h1>"
 
 #. community VIPs
@@ -2424,36 +2448,48 @@ msgid ""
 msgstr "그누테라 커뮤니티의 모든 동료분들께 감사의 말씀 올립니다. 참조："
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:274
-msgid "<h1>Thanks to the PJIRC Staff</h1>"
+#, fuzzy
+msgid "Thanks to the PJIRC Staff"
 msgstr "<h1>PJIRC 직원들에게 감사드립니다</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:283
-msgid "<h1>Thanks to the Automatix Team</h1>"
+#, fuzzy
+msgid "Thanks to the Automatix Team"
 msgstr "<h1> Automatix 직원들에게 감사드립니다</h1>"
 
+#: src/com/limegroup/gnutella/gui/AboutWindow.java:284
+msgid ""
+"For helping distribute Frostwire to opensource communities in a very simple "
+"manner."
+msgstr ""
+
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:292
-msgid "<h1>Thanks to Ubuntu/Kubuntu Teams</h1>"
+#, fuzzy
+msgid "Thanks to Ubuntu/Kubuntu Teams"
 msgstr "<h1> Ubuntu/Kubuntu 직원들에게 감사드립니다</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:293
+#, fuzzy
 msgid ""
-"<p>For making the world a better place with such an excellent distro, you'll "
-"be the ones to make a difference on the desktop.</p>"
+"For making the world a better place with such an excellent distro, you'll be "
+"the ones to make a difference on the desktop."
 msgstr ""
 "<p>뛰어난 배포로 세상을 보다 편하게, 데스크탑을 통하여 변화를 만드는 것은 당"
 "신입니다.</p>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:295
-msgid "<h1>Thanks to the NSIS Project</h1>"
+#, fuzzy
+msgid "Thanks to the NSIS Project"
 msgstr "<h1> NSIS 프로젝트에 감사드립니다</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:296
-msgid ""
-"<p>Thanks for such an awesome installer builder system and documentation.</p>"
+#, fuzzy
+msgid "Thanks for such an awesome installer builder system and documentation."
 msgstr "<p>뛰어난 설치기 제조 시스템 및 문서에 감사드립니다.</p>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:298
-msgid "<h1>Thanks to our families</h1>"
+#, fuzzy
+msgid "Thanks to our families"
 msgstr "<h1>저희의 가족들에게 감사드립니다</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:299
@@ -2502,7 +2538,7 @@ msgstr "리스트 안의 모든 아이템 선택해제"
 #. * Constant for when the user selects the yes button
 #. * in a message.
 #.
-#: src/com/limegroup/gnutella/gui/DialogOption.java:14
+#: src/com/limegroup/gnutella/gui/DialogOption.java:12
 msgid "Yes"
 msgstr "네"
 
@@ -2510,7 +2546,7 @@ msgstr "네"
 #. * Constant for when the user selects the no button
 #. * in a message.
 #.
-#: src/com/limegroup/gnutella/gui/DialogOption.java:20
+#: src/com/limegroup/gnutella/gui/DialogOption.java:18
 msgid "No"
 msgstr "아니오"
 
@@ -2544,17 +2580,17 @@ msgstr ""
 msgid "Donate"
 msgstr "다운로드됨"
 
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:82
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:100
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:122
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:253
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:272
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:447
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:466
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:81
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:99
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:121
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:252
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:271
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:446
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:465
 msgid "Select Folder"
 msgstr "폴더를 선택"
 
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:874
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:873
 msgid "All Folders"
 msgstr "모든 폴더"
 
@@ -2581,8 +2617,11 @@ msgstr "T3 이상"
 msgid "Ethernet"
 msgstr "이더넷"
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:123
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1405
+#. *
+#. * Message key for the disconnected message
+#.
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:121
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1403
 msgid ""
 "Your machine does not appear to have an active Internet connection or a "
 "firewall is blocking FrostWire from accessing the internet. FrostWire will "
@@ -2593,16 +2632,16 @@ msgstr ""
 "을 차단 하고 있습니다. FrostWire는 당신이 파일 메뉴에서 \"Disconnect\"를 누"
 "를 때 까지 자동적으로 접속을 시도 할 것 입니다."
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:133
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:131
 msgid "&Search"
 msgstr "&검색"
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:133
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:131
 msgid "&Library"
 msgstr "&라이브러리"
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:145
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:173
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:143
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:171
 #, java-format
 msgid "Display the {0} Screen"
 msgstr "{0} 화면 표시"
@@ -2610,12 +2649,12 @@ msgstr "{0} 화면 표시"
 #. *
 #. * String to be displayed in title bar of LW client.
 #.
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:267
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:265
 #, fuzzy
 msgid "FrostWire: Share Big Files"
 msgstr "파일 공유 없음"
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:410
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:408
 msgid ""
 "FrostWire has encountered a problem during startup and cannot proceed. You "
 "may be able to fix this problem by changing FrostWire's Windows "
@@ -2631,7 +2670,7 @@ msgstr ""
 "서 프로그램 실행'을 체크한 후, 박스 아래의 'Windows 2000'을 선택하십시오. 아"
 "래의 '확인'버튼을 클릭하신 후 FrostWire를 재시작합니다."
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1315
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1313
 #, java-format
 msgid ""
 "FrostWire could not locate your web browser to display the following "
@@ -2640,13 +2679,13 @@ msgstr ""
 "FrostWire 는 다음 웹페이지를 표시하기 위한 웹브라우저를 찾을 수 없습니다: "
 "{0}."
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1335
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1358
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1333
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1356
 msgid "FrostWire will not launch the specified file for security reasons."
 msgstr "보안상의 이유로, FrostWire는 지정 파일을 실행하지 않을 것입니다."
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1337
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1360
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1335
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1358
 #, java-format
 msgid ""
 "FrostWire could not launch the specified file.\n"
@@ -2657,8 +2696,8 @@ msgstr ""
 "\n"
 "실행된 명령: {0}."
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1339
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1362
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1337
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1360
 msgid "FrostWire could not launch the specified file."
 msgstr "FrostWire 지정된 파일을 시작할 수 없습니다."
 
@@ -2683,32 +2722,32 @@ msgid "KB/s"
 msgstr "KB/초"
 
 #. Load up the HTML engine.
-#: src/com/limegroup/gnutella/gui/Initializer.java:335
+#: src/com/limegroup/gnutella/gui/Initializer.java:311
 msgid "Loading HTML Engine..."
 msgstr "Loading HTML 엔진..."
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:389
+#: src/com/limegroup/gnutella/gui/Initializer.java:365
 msgid "Loading User Interface..."
 msgstr "유저 인터페이스를 불러오는 중..."
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:400
+#: src/com/limegroup/gnutella/gui/Initializer.java:375
 msgid "Loading Core Components..."
 msgstr "코어 컴퍼넌트를 불러오는 중..."
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:461
+#: src/com/limegroup/gnutella/gui/Initializer.java:432
 msgid "Loading Icons..."
 msgstr "아이콘을 불러오는 중..."
 
 #. Touch the I18N stuff to ensure it loads properly.
-#: src/com/limegroup/gnutella/gui/Initializer.java:468
+#: src/com/limegroup/gnutella/gui/Initializer.java:438
 msgid "Loading Internationalization Support..."
 msgstr "국제화 서포트를 불러오는 중..."
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:485
+#: src/com/limegroup/gnutella/gui/Initializer.java:453
 msgid "Loading Old Downloads..."
 msgstr "오래된 다운로드를 불러오는 중..."
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:562
+#: src/com/limegroup/gnutella/gui/Initializer.java:523
 msgid ""
 "FrostWire could not create a temporary preferences folder.\n"
 "\n"
@@ -2727,30 +2766,30 @@ msgstr ""
 "\n"
 "rostWire가 종료됩니다. 감사합니다."
 
-#: src/com/limegroup/gnutella/gui/InputFieldDialog.java:67
+#: src/com/limegroup/gnutella/gui/InputFieldDialog.java:66
 msgid "Input"
 msgstr "입력"
 
-#: src/com/limegroup/gnutella/gui/InputFieldDialog.java:88
+#: src/com/limegroup/gnutella/gui/InputFieldDialog.java:87
 #: src/com/limegroup/gnutella/gui/LanguageWindow.java:209
-#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:218
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:537
-#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:38
+#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:213
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:536
+#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:37
 msgid "OK"
 msgstr "확인"
 
-#: src/com/limegroup/gnutella/gui/InputFieldDialog.java:93
-#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:44
-#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:46
+#: src/com/limegroup/gnutella/gui/InputFieldDialog.java:92
+#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:43
+#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:45
 msgid "Apply Operation"
 msgstr "실행 적용"
 
-#: src/com/limegroup/gnutella/gui/InputFieldDialog.java:94
-#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:45
+#: src/com/limegroup/gnutella/gui/InputFieldDialog.java:93
+#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:44
 msgid "Cancel Operation"
 msgstr "실행 취소"
 
-#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:70
+#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:68
 msgid ""
 "You are currently using a beta or pre-release version of Java 1.6.0. This "
 "version is known to have caused problems with FrostWire. Please upgrade to "
@@ -2759,57 +2798,58 @@ msgstr ""
 "Java 1.6.0.의 사전-출간 버전 및 베타 버전을 사용 중입니다. FrostWire에 문제"
 "를 야기하는 버전입니다. 최종  1.6.0  출간 버전으로 업그레이드 하십시오.\n"
 
-#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:85
-#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:107
-#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:161
+#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:83
+#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:105
+#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:159
 msgid "Upgrade Java"
 msgstr "Java 업그레이드"
 
-#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:94
+#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:92
 msgid ""
 "FrostWire requires Java %s or higher in order to run. You are currently "
 "running an out-of-date version of Java \n"
 "Please visit %s in order to upgrade your version of Java"
 msgstr ""
 
-#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:97
-msgid "Current Java Version : "
-msgstr ""
-
-#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:98
+#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:95
 #, fuzzy
-msgid "Required Java Version: "
+msgid "Current Java Version:"
 msgstr "비밀번호 사용："
 
-#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:108
+#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:96
 #, fuzzy
-msgid "Visit "
+msgid "Required Java Version:"
+msgstr "비밀번호 사용："
+
+#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:106
+#, fuzzy
+msgid "Visit"
 msgstr "방문 {0}"
 
-#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:120
+#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:118
 #, fuzzy
 msgid "Upgrade Later"
 msgstr "다음에 업데이트"
 
-#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:121
+#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:119
 #, fuzzy
 msgid "Exit FrostWire"
 msgstr "FrostWire 이용"
 
-#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:178
+#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:176
 msgid "More Information"
 msgstr "더 많은 정보"
 
-#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:179
+#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:177
 #, java-format
 msgid "Visit {0}"
 msgstr "방문 {0}"
 
-#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:187
+#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:185
 msgid "Remind Me Later"
 msgstr "나중에 알리기"
 
-#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:194
+#: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:192
 msgid "Do not Show Again"
 msgstr "보이지 않기"
 
@@ -2836,7 +2876,7 @@ msgstr "메시지를 불러오는 중..."
 #: src/com/limegroup/gnutella/gui/MessageService.java:142
 #: src/com/limegroup/gnutella/gui/MessageService.java:158
 #: src/com/limegroup/gnutella/gui/MessageService.java:246
-#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:76
+#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:75
 msgid "Warning"
 msgstr "경고"
 
@@ -2951,23 +2991,27 @@ msgid "Circle FrostWire on G+"
 msgstr "FrostWire PRO 를 금방 구입"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
-msgid "<html><b>Seeding</b><p>completed torrent downloads.</html>"
+#, fuzzy
+msgid "<b>Seeding</b><p>completed torrent downloads.</p>"
 msgstr "<html><b>완료된</b><p>토렌트 다운로드 배포.</html>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
+#, fuzzy
 msgid ""
-"<html><b>Not Seeding</b>.<p>File chunks might be shared only during<p>a "
-"torrent download.</html>"
+"<b>Not Seeding</b><p>File chunks might be shared only duringa torrent "
+"download.</p>"
 msgstr ""
 "<html><b>배포하지 않음</b>.<p>토렌트 다운로드 중에만 파일을<p>공유할 수 있습"
 "니다.</html>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
-msgid "<html><b>Seeding</b></html>"
+#, fuzzy
+msgid "<b>Seeding</b>"
 msgstr "<html><b>배포</b></html>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
-msgid "<html><b>Not Seeding</b></html>"
+#, fuzzy
+msgid "<b>Not Seeding</b>"
 msgstr "<html><b>배포하지 않음</b></html>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:516
@@ -3075,7 +3119,7 @@ msgstr "이전 팁"
 msgid "Loading tips..."
 msgstr "팁을 읽어오고 있습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:7
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:5
 #, fuzzy
 msgid ""
 "Tired of downloads stopping halfway through? It helps to pick search results "
@@ -3089,7 +3133,7 @@ msgstr ""
 "타날 경우를 대비하여,FrostWire의 정크 필터를 단련하기 위하여<font color="
 "\"185ea8\">정크</font> 버튼을 사용하십시오."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:25
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:23
 #, fuzzy
 msgid ""
 "You can change the look and feel of FrostWire by going to View &gt; Use "
@@ -3098,7 +3142,7 @@ msgstr ""
 "FrostWire 에 새로운 스킨을 선택하여 적용함으로써 외관과 느낌을 변경할 수 있습"
 "니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:26
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:24
 #, fuzzy
 msgid ""
 "You can sort your search results by clicking on a column. The most useful "
@@ -3109,7 +3153,7 @@ msgstr ""
 "콜룸을 클릭하면 검색 결과를 분류할 수 있습니다. 가장 유용한 분류는 '배포' 콜"
 "룸으로, 전체 파일을 가진 온라인 컴퓨터의 대략적인 수를 나타냅니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:27
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:25
 msgid ""
 "It helps the network if you keep your FrostWire running. Others will connect "
 "to the network easier and searches will perform better."
@@ -3117,7 +3161,7 @@ msgstr ""
 "FrostWire를 계속 실행하며 네트워크를 돕습니다. 더 나은 네트워크 접속과 검색 "
 "실행력이 높아집니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:28
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:26
 #, java-format
 msgid ""
 "Passionate about digital rights? Visit the <a href=\"{0}\">Electronic "
@@ -3126,7 +3170,7 @@ msgstr ""
 "디지털 권리에 관하여 흥미있으신가요? <a href=\"{0}\">전자 프론티어 파운데이션"
 "</a>을 방문하십시오."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:29
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:27
 msgid ""
 "FrostWire is translated into many different languages including Chinese, "
 "French, German, Japanese, Italian, Spanish and many more. Visit FrostWire's "
@@ -3137,7 +3181,7 @@ msgstr ""
 "다수의 언어들로 번역되었습니다.  FrostWire의 <a href=\"{0}\">국제화 페이지/a>"
 "를 방문하시어 더 많은 정보를 보십시오!"
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:30
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:28
 msgid ""
 "Small variations in the search title will still work. For example, if your "
 "buddy is sharing 'Frosty' but you searched for 'My Frosty', your buddy's "
@@ -3147,7 +3191,7 @@ msgstr ""
 "를 공유하고 있을때, 당신이 ''My Frosty'를 검색할 경우, 친구의 파일이 여전히 "
 "검색됩니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:31
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:29
 msgid ""
 "Are you behind a firewall? At the bottom of FrostWire in the status bar, "
 "look for the globe. If there is a brick wall in front of it, your Internet "
@@ -3156,7 +3200,7 @@ msgstr ""
 "방화벽을 가지고 있습니까? FrostWire  상태바에서, 지구본을 찾으십시오. 만일 벽"
 "돌 모양이 나타날 경우, 당신의 인터넷 연결은 방화벽에 의하여 차단되었습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:32
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:30
 msgid ""
 "The numbers next to the up and down arrows in the status bar at the bottom "
 "of FrostWire show how fast all of your files are downloading or uploading "
@@ -3165,7 +3209,7 @@ msgstr ""
 "FrostWire  상태바 아래의 위, 아래를 향하는 화살표는 파일의 다운로딩 또는 업로"
 "딩을 나타냅니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:33
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:31
 msgid ""
 "You can increase the text size via <font color=\"185ea8\">View</font> &gt; "
 "<font color=\"185ea8\">Increase Font Size</font>."
@@ -3173,7 +3217,7 @@ msgstr ""
 "폰트 크기를 증가시킬 수 있습니다 <font color=\"185ea8\">View</font> &gt; "
 "<font color=\"185ea8\">Increase Font Size</font>."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:36
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:34
 msgid ""
 "Be careful not to share sensitive information like tax documents, passwords, "
 "etc. The torrents you are seeding are accesible by everyone on the network "
@@ -3182,7 +3226,7 @@ msgstr ""
 "세금 문서, 비밀번호와 같은 중요한 문서를 공유하지 마십시오. 배포 중인 토렌트"
 "는 토렌트 또는 (마그넷)링크를 가진 모든이들에 의하여 접근이 가능합니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:37
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:35
 msgid ""
 "Unlike other peer-to-peer file-sharing programs, FrostWire can transfer "
 "files even if both parties are behind a firewall. You don't have to do "
@@ -3192,7 +3236,7 @@ msgstr ""
 "화벽을 가졌더라도 파일 전송이 가능합니다. 자동으로 실행되므로 다른 동작을 취"
 "하실 필요가 없습니다!"
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:38
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:36
 #, fuzzy
 msgid ""
 "Want to share a large file? Send several hundred gigabytes with no problems "
@@ -3204,7 +3248,7 @@ msgstr ""
 "친구가 다운로드하는 동안 FrostWire 를 실행하는 것을 잊지마십시오. 당신 또는 "
 "타인이 같은 내용을 배포하는 동안 다운로드 정지 및 재생이 가능합니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:39
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:37
 msgid ""
 "Magnet links allow users to download files through FrostWire from a web "
 "page. When you put a magnet link on your web page (in the 'href' attribute "
@@ -3215,14 +3259,14 @@ msgstr ""
 "다. 웹페이지에 마그넷 링크를 등록하시면( 'href' 태그 사용), 사용자가 링크를 "
 "클릭하면,  FrostWire를 통하여 다운로드가 가능합니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:40
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:38
 #, fuzzy
 msgid ""
 "Don't want to seed? Go to Tools &gt; Options &gt; Bittorrent or select the "
 "Seeding - No Seeding icon at the bottom bar"
 msgstr "배포를 원하지 않으십니까? 도구 &gt; 옵션&gt; Bittorrent"
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:51
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:49
 msgid ""
 "You can find out which version of FrostWire you are using by choosing 'About "
 "FrostWire' from the Help menu."
@@ -3230,8 +3274,8 @@ msgstr ""
 "도움 메뉴의 'FrostWire 소개'를 선택하여 사용중인 FrostWire 버전을 찾으실 수 "
 "있습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:52
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:69
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:50
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:67
 msgid ""
 "Be a good network participant, don't close FrostWire if someone is uploading "
 "from you."
@@ -3239,7 +3283,7 @@ msgstr ""
 "좋은 네트워크 참가자가 되십시오, 누군가 당신으로부터 업로딩 중일 경우 "
 "FrostWire 를 닫지 마십시오."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:53
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:51
 #, fuzzy
 msgid ""
 "You can turn autocomplete for searching on or off by choosing 'Options' from "
@@ -3248,7 +3292,7 @@ msgstr ""
 "'도구' 메뉴의 '옵션'을 선택함으로써 검색 자동 완성을 켜고 끌 수 있으며, '보"
 "기' 옵션아래에서 '텍스트 자동완성' 값을 변경할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:54
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:52
 #, fuzzy
 msgid ""
 "Want to see dialogs for questions which you previously marked 'Do not "
@@ -3259,7 +3303,7 @@ msgstr ""
 "다이얼로그를 보시겠습니까? 도구;옵션 그리고 '기본으로 되돌리기' 팝업을 보십시"
 "오."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:55
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:53
 msgid ""
 "You can ban certain words from appearing in your search results by choosing "
 "'Options' from the 'Tools' menu and adding new words to those listed under "
@@ -3268,7 +3312,7 @@ msgstr ""
 "'도구'메뉴의 '옵션'을 선택함으로써 특정 단어를 금지할 수 있으며 필터 키워드"
 "에 새로운 단어들을 목록화하여 추가할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:56
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:54
 msgid ""
 "Hate tool tips? Love tool tips? You can turn them on or off in most tables "
 "by right-clicking on the column headers and choosing 'More Options'. You can "
@@ -3278,7 +3322,7 @@ msgstr ""
 "툴 팁이 싫으신가요? 툴 팁이 좋으신가요? '더 많은 옵션'을 선택하심으로써 대부"
 "분의 테이블에서 켜고 끄는 것이 가능합니다. 다른 옵션을 토글할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:57
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:55
 msgid ""
 "You can sort uploads, downloads, etc..., by clicking on a column. The table "
 "keeps resorting as the information changes. You can turn this automatic-"
@@ -3289,7 +3333,7 @@ msgstr ""
 "면 테이블이 재분류됩니다. '더 많은 옵션'을 선택한 후 '자동분류' 선택을 해제하"
 "면 자동-분류를 끌 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:58
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:56
 msgid ""
 "Are you unhappy with the small number of search results you received? Right-"
 "click a search result, then choose Search More, then Get More Results."
@@ -3297,7 +3341,7 @@ msgstr ""
 "소수의 검색 결과에 만족하시나요? 검색 결과를 오른쪽으로 클릭하신 후, 더 검색"
 "을 통하여 더 많은 결과를 얻으십시오."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:68
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:66
 msgid ""
 "You can find out which version of FrostWire you are using by choosing 'About "
 "FrostWire' from the FrostWire menu."
@@ -3305,7 +3349,7 @@ msgstr ""
 "도움 메뉴의 'FrostWire 소개'를 선택하여 사용중인 FrostWire 버전을 찾으실 수 "
 "있습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:70
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:68
 #, fuzzy
 msgid ""
 "You can turn autocomplete for searching on or off by choosing 'Tools' from "
@@ -3315,7 +3359,7 @@ msgstr ""
 "'도구' 메뉴의 '옵션'을 선택함으로써 검색 자동 완성을 켜고 끌 수 있으며, '보"
 "기' 옵션아래에서 '텍스트 자동완성' 값을 변경할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:71
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:69
 #, fuzzy
 msgid ""
 "Want to see dialogs for questions which you previously marked 'Do not "
@@ -3327,7 +3371,7 @@ msgstr ""
 "다이얼로그를 보시겠습니까? 도구;옵션 그리고 '기본으로 되돌리기' 팝업을 보십시"
 "오."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:72
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:70
 #, fuzzy
 msgid ""
 "You can ban certain words from appearing in your search results by choosing "
@@ -3337,7 +3381,7 @@ msgstr ""
 "'도구'메뉴의 '옵션'을 선택함으로써 특정 단어를 금지할 수 있으며 필터 키워드"
 "에 새로운 단어들을 목록화하여 추가할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:73
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:71
 msgid ""
 "Hate tool tips? Love tool tips? You can turn them on or off in most tables "
 "by control-clicking on the column headers and choosing 'More Options'. You "
@@ -3347,7 +3391,7 @@ msgstr ""
 "툴 팁이 싫으신가요? 툴 팁이 좋으신가요? '더 많은 옵션'을 선택하심으로써 대부"
 "분의 테이블에서 켜고 끄는 것이 가능합니다. 다른 옵션을 토글할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:74
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:72
 msgid ""
 "You can sort uploads, downloads, etc..., by clicking on a column. The table "
 "keeps resorting as the information changes. You can turn this automatic-"
@@ -3358,7 +3402,7 @@ msgstr ""
 "면 테이블이 재분류됩니다. '더 많은 옵션'을 선택한 후 '자동분류' 선택을 해제하"
 "면 자동-분류를 끌 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:75
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:73
 msgid ""
 "FrostWire's Library is a file manager, not just an MP3 Playlist. That means "
 "that when you delete a file from the Library, you have the option to either "
@@ -3368,8 +3412,8 @@ msgstr ""
 "이브러리에서 파일을 삭제하시면, 컴퓨터에서 파일을 영구 삭제하거나 또는 휴지통"
 "으로 이동하는 것을 선택하실 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:76
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:97
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:74
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:95
 #, fuzzy
 msgid ""
 "Want to play music in your default media player instead of in FrostWire? go "
@@ -3379,7 +3423,7 @@ msgstr ""
 "FrostWire 대신 기본 미디어 플레이어로 음악을 재생하고 싶으신가요? FrostWire"
 "의 상태바를 컨트롤-클릭하신 후 '미디어 플레이어 보이기'를 선택 해제하십시오."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:77
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:75
 #, fuzzy
 msgid ""
 "Make FrostWire's block more results by making the filter stricter. Adjust "
@@ -3388,7 +3432,7 @@ msgstr ""
 "FrostWire의 정크 필터 제한을 사용하여 더 많은 결과를 차단하십시오. FrostWire"
 "에서 선호 필터 정크를 사용하여 조절할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:86
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:84
 #, fuzzy
 msgid ""
 "The icons that you see next to your search results in the '?' column are "
@@ -3400,7 +3444,7 @@ msgstr ""
 "일과 연계된 프로그램을 변경하려면, 윈도우즈 익스플로어의 폴더 옵션으로 가십시"
 "오(도구 메뉴). FrostWire의 설정이 아닌, 윈도우즈 설정입니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:87
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:85
 msgid ""
 "FrostWire's Library is a file manager, not just an MP3 Playlist. That means "
 "that when you delete a file from the Library, you have the option to either "
@@ -3410,7 +3454,7 @@ msgstr ""
 "이브러리에서 파일을 삭제하시면, 컴퓨터에서 파일을 영구 삭제하거나 또는 휴지통"
 "으로 이동하는 것을 선택하실 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:88
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:86
 msgid ""
 "When you close FrostWire, it minimizes to the system tray. To exit, right-"
 "click the system tray icon (next to the time), and select Exit. You can "
@@ -3420,11 +3464,11 @@ msgstr ""
 "이 아이콘을 오른쪽 클릭(시간 옆)하신 후, 나가기를 선택하십시오. 도구;옵션;시"
 "스템 트레이를 통하여 변경이 가능합니다."
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:114
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:112
 msgid "Thank you for using FrostWire"
 msgstr "FrostWire를 사용해주셔서 감사합니다"
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:115
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:113
 msgid "Visit us at www.frostwire.com"
 msgstr "www.frostwire.com을 방문하십시오"
 
@@ -3506,7 +3550,7 @@ msgstr ""
 msgid "Open:"
 msgstr "열기:"
 
-#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:228
+#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:224
 msgid ""
 "FrostWire cannot download this address. Make sure you typed it correctly, "
 "and then try again."
@@ -3514,46 +3558,46 @@ msgstr ""
 "FrostWire가 해당 주소를 다운로드 할 수 없습니다. 정확하게 입력하신 후, 다시 "
 "시도하십시오."
 
-#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:314
+#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:310
 msgid "&Close"
 msgstr "닫기 (&C)"
 
-#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:315
+#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:311
 msgid "Close the program's main window"
 msgstr "프로그램의 메인 창 닫기"
 
-#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:326
+#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:322
 msgid "E&xit"
 msgstr "종료"
 
-#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:327
+#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:323
 msgid "Close and exit the program"
 msgstr "프로그램 종료 후 나가기"
 
-#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:354
+#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:350
 msgid "Send File or Folder..."
 msgstr "파일 또는 폴더 보내기"
 
-#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:355
+#: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:351
 msgid "Send a file or a folder to a friend"
 msgstr "파일 또는 폴더를 친구에게 보내기"
 
-#: src/com/limegroup/gnutella/gui/actions/SearchAction.java:40
-#: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:383
+#: src/com/limegroup/gnutella/gui/actions/SearchAction.java:33
+#: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:382
 #, java-format
 msgid "Search for Keywords: {0}"
 msgstr "키워드 검색： {0}"
 
-#: src/com/limegroup/gnutella/gui/actions/SearchAction.java:52
+#: src/com/limegroup/gnutella/gui/actions/SearchAction.java:45
 #, java-format
 msgid "Search for: {0}"
 msgstr "{0}을 검색"
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:82
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:81
 msgid "Internal Error"
 msgstr "내부의 에러"
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:320
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:319
 msgid ""
 "FrostWire has encountered an internal error. It is possible for FrostWire to "
 "recover and continue running normally. To aid with debugging, please click "
@@ -3564,7 +3608,7 @@ msgstr ""
 "다. FrostWire의 버그 수정을 위해서 \"송신\" 버튼을 클릭하여 정보를 보내주세"
 "요. 또, 에러를 재검토하고 싶으면\"재검토\" 버튼을 클릭해 주세요. 감사합니다."
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:322
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:321
 msgid ""
 "FrostWire has encountered an internal error. It is possible for FrostWire to "
 "recover and continue running normally. To continue using FrostWire, click "
@@ -3575,7 +3619,7 @@ msgstr ""
 "FrostWire의 버그 수정을 위해서 \"송신\" 버튼을 클릭하여 정보를 발송. 또, 에러"
 "를 재검토하고 싶으면 \"재검토\" 버튼을 클릭하여 주세요."
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:340
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:339
 msgid ""
 "Please add any comments you may have (e.g what caused the error).\n"
 "Thank you and please use English."
@@ -3583,30 +3627,30 @@ msgstr ""
 "코멘트를 입력하십시오 (예. 오류 발생 경위).\n"
 "감사합니다. 영어를 사용하십시오."
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:369
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:368
 msgid "Review"
 msgstr "재검토"
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:383
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:382
 msgid "Discard"
 msgstr "삭제"
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:400
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:399
 #: src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:96
 msgid "Always Send Immediately"
 msgstr "항상 즉시 송신"
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:401
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:400
 #: src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:97
 msgid "Always Ask For Review"
 msgstr "항상 재검토를 요구"
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:402
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:401
 #: src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:98
 msgid "Always Discard All Errors"
 msgstr "항상 모든 에러를 삭제"
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:500
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:499
 msgid ""
 "FrostWire was unable to connect to the bug server in order to send the below "
 "bug report. For further help and to aid with debugging, please visit www."
@@ -3616,11 +3660,11 @@ msgstr ""
 "frostwire.com으로 방문하셔서 'Support'를 클릭하여 정보를 보내주십시오. 감사합"
 "니다."
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:529
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:528
 msgid "Copy Report"
 msgstr "리포트를 복사"
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:639
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:638
 msgid ""
 "FrostWire was unable to write a necessary file because your hard drive is "
 "full. To continue using FrostWire you must free up space on your hard drive."
@@ -3628,7 +3672,7 @@ msgstr ""
 "하드 디스크의 용량이 부족하므로 필요 파일을 기입할 수 없습니다. 계속해서 "
 "FrostWire를 사용하려면 하드 드라이브의 공간을 확보하십시오."
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:641
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:640
 msgid ""
 "FrostWire was unable to open a necessary file because another program has "
 "locked the file. FrostWire may act unexpectedly until this file is released."
@@ -3636,7 +3680,7 @@ msgstr ""
 "하드 디스크의 용량이 부족하므로 필요 파일을 열 수 없습니다. 파일이 방출될 떄 "
 "까지 FrostWire 예기치 않은 동작을 실행할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:643
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:642
 msgid ""
 "FrostWire was unable to write a necessary file because you do not have the "
 "necessary permissions. Your preferences may not be maintained the next time "
@@ -3645,7 +3689,7 @@ msgstr ""
 "필요한 접속권한이 없기 파일을 기입할 수 없습니다. 다음에 FrostWire가 시작되었"
 "을 때 선호 설정이 유지되지 않거나, 또는 예기치 않은 작동을 할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:645
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:644
 msgid ""
 "FrostWire cannot open a necessary file because the filename contains "
 "characters which are not supported by your operating system. FrostWire may "
@@ -3654,7 +3698,7 @@ msgstr ""
 "운영 시스템에 의하여 지원되지 않는 문자가 포함된 파일명이므로, FrostWire가 필"
 "요한 파일을 열 수 없습니다. FrostWire는 예기치 못한 작동을 할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:649
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:648
 msgid ""
 "FrostWire cannot download the selected file because your hard drive is full. "
 "To download more files, you must free up space on your hard drive."
@@ -3662,7 +3706,7 @@ msgstr ""
 "하드 디스크의 빈 용량이 부족하기 때문에, 선택한 파일을 다운로드할 수 없는 상"
 "태. 더욱 파일을 다운로드하려면 , 하드 디스크의 빈 용량을 늘리는 것."
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:651
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:650
 msgid ""
 "FrostWire was unable to download the selected file because another program "
 "is using the file. Please close the other program and retry the download."
@@ -3670,7 +3714,7 @@ msgstr ""
 "다른 프로그램이 파일을 사용하고 있기때문에, 선택한 파일을 다운로드할 수 없는 "
 "상태. 다른 프로그램을 종료시키고 나서, 다운로드를 재개하는 것."
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:653
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:652
 msgid ""
 "FrostWire was unable to create or continue writing an incomplete file for "
 "the selected download because you do not have permission to write files to "
@@ -3680,7 +3724,7 @@ msgstr ""
 "하드 디스크의 빈 용량이 부족하기 때문에, 선택한 파일을 다운로드할 수 없습니"
 "다. 파일을 다운로드 하려면, 하드 드라이브의 빈 공간을 늘리십시오."
 
-#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:655
+#: src/com/limegroup/gnutella/gui/bugs/BugManager.java:654
 msgid ""
 "FrostWire was unable to open the incomplete file for the selected download "
 "because the filename contains characters which are not supported by your "
@@ -3689,39 +3733,39 @@ msgstr ""
 "선택한 다운로드에 의한 파일명에, 사용의 시스템이 대응하고 있지 않는 문자가 있"
 "기때문에, 불완전한 파일을 열지 않는 상황."
 
-#: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:53
+#: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:51
 msgid "File & Protocol Associations"
 msgstr "파일 & 프로토콜 연계"
 
-#: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:53
+#: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:51
 msgid "What type of resources should FrostWire open?"
 msgstr "FrostWire 가 열어야하는 리소스는 무엇입니까?"
 
-#: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:84
+#: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:82
 #: src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:69
 msgid "What should FrostWire do with the selected associations on startup?"
 msgstr "선택된 연계와 관련하여 FrostWire 가 해야하는 일은 무엇입니까?"
 
-#: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:86
+#: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:84
 #: src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:71
 msgid "Always take the selected associations."
 msgstr "선택된 연계를 제거."
 
-#: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:87
+#: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:85
 #: src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:73
 msgid "Ignore all missing associations."
 msgstr "찾을 수 없는 연계를 무시합니다."
 
-#: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:88
+#: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:86
 #: src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:75
 msgid "Ask me what to do when an association is missing."
 msgstr "연계를 찾을 수 없을때 무엇을 할지 묻기."
 
-#: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:53
+#: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:52
 msgid "BitTorrent Sharing Settings"
 msgstr "BitTorrent 공유 설정"
 
-#: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:57
+#: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:56
 msgid ""
 "Choose a folder where files downloaded from the BitTorrent network should be "
 "saved to.\n"
@@ -3732,18 +3776,16 @@ msgstr ""
 "완료된 다운로드를  \"배포\" 또는 비 \"배포\" 할지 선택하십시오. 아래 링크를 "
 "통하여  \"배포\"에 관한 더 많은 정보를 볼 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:111
-#, java-format
-msgid ""
-"<html><p>You forgot to select your finished downloads \"Seeding\" setting.</"
-"p>\n"
-"<p></p><p align=\"right\"><a href=\"{0}\">What is \"Seeding\"?</a></p></html>"
+#: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:110
+msgid "You forgot to select your finished downloads \"Seeding\" setting."
 msgstr ""
-"<html><p>완료된 다운로드 \"배포\" 설정 선택을 잊으셨습니다.</p>\n"
-"<p></p><p align=\"right\"><a href=\"{0}\"> \"배포\"는 무엇입니까?</a></p></"
-"html>"
 
-#: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:125
+#: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:112
+#: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
+msgid "What is \"Seeding\"?"
+msgstr "\"배포\"는 무엇입니까?"
+
+#: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:127
 #, java-format
 msgid "FrostWire could not create the Torrent Data Folder {0}"
 msgstr "FrostWire 는 토렌트 데이터 폴더를 생성할 수 없습니다 {0}"
@@ -3753,7 +3795,8 @@ msgid "You're almost done!"
 msgstr "완료 직전입니다!"
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:64
-msgid "State your intent below to start using FrostWire "
+#, fuzzy
+msgid "State your intent below to start using FrostWire"
 msgstr "FrostWire를 사용하려면 아래에 의도를 표명하세요"
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:66
@@ -3771,28 +3814,24 @@ msgid "Find out more..."
 msgstr "더 알아보기..."
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:74
-#, java-format
-msgid ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>will not</b> "
-"use FrostWire {0} for copyright infringement.</div></html>"
+#, fuzzy, java-format
+msgid "I <b>will not</b> use FrostWire {0} for copyright infringement."
 msgstr ""
 "<html><div display=\"block\" color=\"#515151\" size=\"13\"><b></b> FrostWire "
 "{0}를 저작권을 위반하는 행위를 하지 않습니다.</div></html>"
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:82
-#, java-format
-msgid ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>might use</"
-"b> FrostWire {0} for copyright infringement.</div></html>"
+#, fuzzy, java-format
+msgid "I <b>might use</b> FrostWire {0} for copyright infringement."
 msgstr ""
 "<html><div display=\"block\" color=\"#515151\" size=\"13\"> <b></b> "
 "FrostWire {0}의 저작권을 위반하는 행위를 할 수 도 있습니다.</div></html>"
 
-#: src/com/limegroup/gnutella/gui/init/IntentWindow.java:42
+#: src/com/limegroup/gnutella/gui/init/IntentWindow.java:43
 msgid "State Your Intent"
 msgstr "의도 표명"
 
-#: src/com/limegroup/gnutella/gui/init/IntentWindow.java:42
+#: src/com/limegroup/gnutella/gui/init/IntentWindow.java:43
 msgid "One more thing..."
 msgstr "다른 한가지 사항..."
 
@@ -3800,24 +3839,24 @@ msgstr "다른 한가지 사항..."
 msgid "Language:"
 msgstr "언어："
 
-#: src/com/limegroup/gnutella/gui/init/MiscWindow.java:58
+#: src/com/limegroup/gnutella/gui/init/MiscWindow.java:57
 msgid "Miscellaneous Settings"
 msgstr "일반 설정"
 
-#: src/com/limegroup/gnutella/gui/init/MiscWindow.java:58
+#: src/com/limegroup/gnutella/gui/init/MiscWindow.java:57
 msgid "Below, are several options that affect the functionality of FrostWire."
 msgstr "아래는 FrostWire의 기능에 영향을 주는 여러 옵션입니다."
 
-#: src/com/limegroup/gnutella/gui/init/MiscWindow.java:71
-#: src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:22
+#: src/com/limegroup/gnutella/gui/init/MiscWindow.java:70
+#: src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:21
 msgid "System Startup"
 msgstr "시스템 시작"
 
-#: src/com/limegroup/gnutella/gui/init/MiscWindow.java:73
+#: src/com/limegroup/gnutella/gui/init/MiscWindow.java:72
 msgid "Start Automatically"
 msgstr "자동으로 시작"
 
-#: src/com/limegroup/gnutella/gui/init/MiscWindow.java:76
+#: src/com/limegroup/gnutella/gui/init/MiscWindow.java:75
 msgid ""
 "Would you like FrostWire to start when you log into your computer? This will "
 "cause FrostWire to start faster when you use it later."
@@ -3825,19 +3864,19 @@ msgstr ""
 "컴퓨터에 로그인했을 때에, FrostWire를 자동적으로 시작시킵니까? 이것에 의해 "
 "FrostWire를 시작시키는 것은 다음에보다 빠르게 할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/init/SetupManager.java:247
+#: src/com/limegroup/gnutella/gui/init/SetupManager.java:246
 msgid "FrostWire Setup Wizard"
 msgstr "FrostWire 설정 위자드"
 
-#: src/com/limegroup/gnutella/gui/init/SetupManager.java:520
+#: src/com/limegroup/gnutella/gui/init/SetupManager.java:519
 msgid "Next >>"
 msgstr "다음 >>"
 
-#: src/com/limegroup/gnutella/gui/init/SetupManager.java:536
+#: src/com/limegroup/gnutella/gui/init/SetupManager.java:535
 msgid "<< Back"
 msgstr "<< 뒤로"
 
-#: src/com/limegroup/gnutella/gui/init/SetupManager.java:552
+#: src/com/limegroup/gnutella/gui/init/SetupManager.java:551
 msgid "Finish"
 msgstr "완료"
 
@@ -3884,7 +3923,8 @@ msgstr ""
 "정을, 일련의 스텝을 통해 안내합니다."
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:104
-msgid "FrostWire is free software, "
+#, fuzzy
+msgid "FrostWire is free software,"
 msgstr "FrostWire는 무료 소프트웨어입니다,"
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:114
@@ -3921,10 +3961,6 @@ msgstr ""
 "안드로이드 폰, 타블렛 또는 구글 티비에 FrostWire 를 설치하십시오, 무료."
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
-msgid "What is \"Seeding\"?"
-msgstr "\"배포\"는 무엇입니까?"
-
-#: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
 msgid "Learn about BitTorrent Seeding"
 msgstr "BitTorrent 배포 소개"
 
@@ -3959,10 +3995,6 @@ msgid "Get a T-shirt, support the project. You'll get also 10 free stickers"
 msgstr ""
 "티-셔츠를 구매하신 후, 프로젝트를 지원하십시오. 10개의 무료 스티커가 제공됩니"
 "다."
-
-#: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:63
-msgid "FrostClick.com"
-msgstr "FrostClick.com"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:63
 msgid "Free Legal Downloads"
@@ -4019,15 +4051,15 @@ msgstr "FrostWire 에 관한 정보"
 msgid "Loading Menus..."
 msgstr "메뉴를 불러오는 중..."
 
-#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:47
+#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:46
 msgid "&Tools"
 msgstr "도구 (&T)"
 
-#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:69
+#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:68
 msgid "Rebuild iTunes \"FrostWire\" Playlist"
 msgstr "재생성 iTunes \"FrostWire\" 재생목록"
 
-#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:70
+#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:69
 msgid ""
 "Deletes and re-builds the \"FrostWire\" playlist on iTunes with all the "
 "audio files found on your Torrent Data Folder."
@@ -4035,7 +4067,7 @@ msgstr ""
 "iTunes 에서 토렌트 데이터 폴더에서 찾은 오디오 파일의  \"FrostWire\" 재생목록"
 "을 삭제 및 재생성하십시오."
 
-#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:75
+#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:74
 msgid ""
 "This will remove your \"FrostWire\" playlist in iTunes and replace\n"
 "it with one containing all the iTunes compatible files in your \n"
@@ -4055,38 +4087,38 @@ msgstr ""
 "\n"
 "계속하시겠습니까?"
 
-#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:89
+#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:88
 msgid "&Options"
 msgstr "옵션"
 
-#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:90
+#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:89
 msgid "Display the Options Screen"
 msgstr "옵션 화면을 표시"
 
-#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:103
+#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:102
 #, fuzzy
 msgid "&Update FrostWire"
 msgstr "FrostWire PRO 에 업그레이드"
 
-#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:104
+#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:103
 msgid "Update FrostWire to the latest version"
 msgstr ""
 
-#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:117
+#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:116
 #, fuzzy
 msgid "You are up to date with FrostWire"
 msgstr "FrostWire 토렌트 파일 생성"
 
-#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:122
+#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:121
 #, fuzzy
 msgid "Downloading update..."
 msgstr "다운로드 중"
 
-#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:127
+#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:126
 msgid "Install update"
 msgstr ""
 
-#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:132
+#: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:131
 #, fuzzy
 msgid "Check for update"
 msgstr "업데이트를 확인 중 입니다."
@@ -4157,15 +4189,15 @@ msgstr "복원"
 msgid "About"
 msgstr "개요..."
 
-#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:40
+#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:39
 msgid "Apply"
 msgstr "적용"
 
-#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:54
+#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:53
 msgid "Restore Defaults"
 msgstr "초기설정으로 복원"
 
-#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:55
+#: src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:54
 msgid "Revert All Settings to the Factory Defaults"
 msgstr "모든 설정을 초기 상태로 되돌림"
 
@@ -4243,7 +4275,7 @@ msgid "Network Interface"
 msgstr "네트워크 인터페이스"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:316
-#: src/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:58
+#: src/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:56
 msgid "File Associations"
 msgstr "파일 연계"
 
@@ -4293,11 +4325,11 @@ msgstr ""
 msgid "Use FrostWire for..."
 msgstr "FrostWire 소개..."
 
-#: src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:22
+#: src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:20
 msgid "Audio Options"
 msgstr "오디오 옵션"
 
-#: src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:24
+#: src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:22
 msgid "You can choose which audio player to use."
 msgstr "어느 오디오 플레이어를 사용할지 선택할 수 있습니다."
 
@@ -4306,19 +4338,19 @@ msgstr "어느 오디오 플레이어를 사용할지 선택할 수 있습니다
 #. * label on the component that allows to user to change the setting for
 #. * this <tt>PaneItem</tt>.
 #.
-#: src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:31
+#: src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:29
 msgid "Audio Player"
 msgstr "오디오 플레이어"
 
-#: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:19
+#: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:18
 msgid "Text Autocompletion"
 msgstr "자동 보완 기능"
 
-#: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:21
+#: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:20
 msgid "You can enable or disable autocompletion of text fields."
 msgstr "텍스트란 자동 보완 기능을 작동/정지 할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:28
+#: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:27
 msgid "Enable Autocompletion of Text Fields:"
 msgstr "텍스트란 자동 보완 기능을 사용:"
 
@@ -4339,11 +4371,11 @@ msgstr ""
 msgid "Download new installers for me (Recommended)"
 msgstr "새로운 설치기를 다운로드(추천됨)"
 
-#: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:28
+#: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:26
 msgid "Browser Options"
 msgstr "브라우저 옵션"
 
-#: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:30
+#: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:28
 msgid "You can choose which browser to use."
 msgstr "사용할 브라우저를 선택할 수 있습니다"
 
@@ -4352,7 +4384,7 @@ msgstr "사용할 브라우저를 선택할 수 있습니다"
 #. * label on the component that allows to user to change the setting for
 #. * this <tt>PaneItem</tt>.
 #.
-#: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:37
+#: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:35
 msgid "Browser"
 msgstr "브라우저"
 
@@ -4381,21 +4413,21 @@ msgstr ""
 msgid "Send Errors Automatically if FrostWire is Frozen"
 msgstr "FrostWire가 정지되면 자동으로 오류를 전송"
 
-#: src/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:40
+#: src/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:38
 #, fuzzy
 msgid "Details Page"
 msgstr "토렌트 상세정보 페이지"
 
-#: src/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:42
+#: src/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:40
 #, fuzzy
 msgid "Show details web page after a download starts."
 msgstr "다운로드 시작 후 토렌트 세부정보 웹 페이지 보이기.(추천됨)"
 
-#: src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:21
+#: src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:20
 msgid "License Warning"
 msgstr "다운로드를 지움"
 
-#: src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:23
+#: src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:22
 msgid ""
 "You can choose whether to be warned about downloading a file without a "
 "license."
@@ -4403,7 +4435,7 @@ msgstr ""
 "라이센스 없는 파일을 다운로드하는 것에 대하여, 알려줄 것인지 선택할 수 있습니"
 "다"
 
-#: src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:30
+#: src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:29
 msgid "Show License Warning:"
 msgstr "라이센스 경고 표시："
 
@@ -4455,11 +4487,11 @@ msgstr ""
 msgid "You must enter a valid port range."
 msgstr ""
 
-#: src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:23
+#: src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:22
 msgid "Filter Results"
 msgstr "결과를 필터"
 
-#: src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:25
+#: src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:24
 msgid "You can filter out search results containing specific words."
 msgstr "특정의 캐릭터 라인을 포함한 검색 결과를 낸다"
 
@@ -4467,15 +4499,15 @@ msgstr "특정의 캐릭터 라인을 포함한 검색 결과를 낸다"
 #. * Key for the locale-specifis string for the adult content check box
 #. * label.
 #.
-#: src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:42
+#: src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:41
 msgid "Ignore Adult Content"
 msgstr "성인 컨텐츠를 무시"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ImageViewerPaneItem.java:28
+#: src/com/limegroup/gnutella/gui/options/panes/ImageViewerPaneItem.java:26
 msgid "Image Options"
 msgstr "이미지 옵션"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ImageViewerPaneItem.java:30
+#: src/com/limegroup/gnutella/gui/options/panes/ImageViewerPaneItem.java:28
 msgid "You can choose which image viewer to use."
 msgstr "어느 이미지 viewer를 사용할지 선택할 수 있습니다."
 
@@ -4484,7 +4516,7 @@ msgstr "어느 이미지 viewer를 사용할지 선택할 수 있습니다."
 #. * label on the component that allows to user to change the setting for
 #. * this <tt>PaneItem</tt>.
 #.
-#: src/com/limegroup/gnutella/gui/options/panes/ImageViewerPaneItem.java:37
+#: src/com/limegroup/gnutella/gui/options/panes/ImageViewerPaneItem.java:35
 msgid "Image Viewer"
 msgstr "이미지 viewer"
 
@@ -4513,25 +4545,25 @@ msgstr "총 라디오 스테이션"
 msgid "Restore default Radio Stations"
 msgstr "총 라디오 스테이션"
 
-#: src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:19
+#: src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:17
 msgid "Locale Preferencing"
 msgstr "우선하는 지역"
 
-#: src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:21
+#: src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:19
 msgid "You can choose to preference hosts using the same language as you."
 msgstr ""
 "같은 지역으로서 신고하고 있는 호스트에게 접속하는 수를 선택할 수 있습니다. 우"
 "선하는 접속의 수가 많아지면(자), 네트워크에 접속하는데 시간이 걸린다."
 
-#: src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:24
+#: src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:22
 msgid "Turn preferencing on:"
 msgstr "우선 설정을 사용："
 
-#: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:22
+#: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:20
 msgid "Maximum Searches"
 msgstr "대검찰청색수"
 
-#: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:24
+#: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:22
 msgid ""
 "You can set the maximum number of simultaneous searches you can perform."
 msgstr "병행해 실시할 수 있는 대검찰청색수를 설정할 수 있습니다"
@@ -4541,11 +4573,11 @@ msgstr "병행해 실시할 수 있는 대검찰청색수를 설정할 수 있�
 #. * label on the component that allows to user to change the setting for
 #. * this <tt>PaneItem</tt>.
 #.
-#: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:31
+#: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:29
 msgid "Maximum Searches:"
 msgstr "대검찰청색수："
 
-#: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:86
+#: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:84
 msgid "The maximum parallel searches you can make is "
 msgstr "허용되는 최다 동시 검색 수"
 
@@ -4574,60 +4606,61 @@ msgstr ""
 "FrostWire 는 해당 장치에서 사용 가능한 네트워크 인터페이스를 결정하지 못하였"
 "습니다. 외부 접속을 임의 인터페이스와 복합합니다."
 
-#: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:20
+#: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:18
 msgid "Notifications"
 msgstr "공지"
 
-#: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:22
+#: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:20
+#, fuzzy
 msgid ""
 "FrostWire can display popups to notify you when certain things happen, such "
-"as a download completing. "
+"as a download completing."
 msgstr ""
 "FrostWire는 다운로드 완료와 같은 특정 동작이 발생하면, 팝업을 통하여 공지가 "
 "가능합니다."
 
-#: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:25
+#: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:23
 msgid "Show Notifications:"
 msgstr "공지 보이기:"
 
-#: src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:19
+#: src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:17
 msgid "Partial Files"
 msgstr "부분 파일"
 
-#: src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:21
+#: src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:19
 msgid ""
 "You can choose whether or not to automatically share partially downloaded "
 "files."
 msgstr "부분적으로 다운로드된 파일을, 공유할것인지 선택할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:28
+#: src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:26
 msgid "Allow Partial Sharing:"
 msgstr "부분적 공유 허용 :"
 
-#: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:38
+#: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:36
 #, fuzzy
 msgid "FrostWire Media Player"
 msgstr "FrostWire MP3 플레이어를 사용："
 
-#: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:40
+#: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:38
 msgid ""
 "You can play your media with the native operating system player if the "
 "format is supported."
 msgstr ""
 
-#: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:42
+#: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:40
 msgid "Play with the native media player"
 msgstr ""
 
-#: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:44
+#: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:42
 msgid "Play search result video previews with internal player"
 msgstr ""
 
-#: src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:20
+#: src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:19
 msgid "FrostWire Popups"
 msgstr "FrostWire 팝업"
 
-#: src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:22
+#: src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:21
 msgid ""
 "Redisplay messages for which you have chosen 'Do not display this message "
 "again' or 'Always use this answer'."
@@ -4635,60 +4668,44 @@ msgstr ""
 "\"다음부터 이 메시지를 표시하지 않음\" 또는 \"항상 이 내용을 적용\"과 설정된 "
 "메시지를 다시보여줌"
 
-#: src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:29
+#: src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:28
 msgid "Revert to Default:"
 msgstr "초기설정으로 되돌림:"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:39
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:38
 msgid "Login Details"
 msgstr "로그인 상세정보"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:41
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:40
 msgid "Configure username and password to be used for the proxy."
 msgstr "프록시에 사용하는 유저명과 비밀번호를 설정"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:49
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:48
 #, fuzzy
 msgid "Enable Authentication:"
 msgstr "내용 필터링"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:56
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:55
 msgid "Username:"
 msgstr "사용자명:"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:63
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:62
 msgid "Password:"
 msgstr "비밀번호:"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:37
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:36
 msgid "Proxy Options"
 msgstr "프록시 옵션"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:39
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:38
 msgid "Configure Proxy Options for FrostWire."
 msgstr "FrostWire 의 프록시 옵션을 설정"
-
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:46
-msgid "No Proxy"
-msgstr "프록시 없음"
-
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:48
-msgid "Socks v4"
-msgstr "Socks v4"
-
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:50
-msgid "Socks v5"
-msgstr "Socks v5"
-
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:52
-msgid "HTTP"
-msgstr "HTTP"
 
 #. *
 #. * Constant for the key of the locale-specific <tt>String</tt> for the
 #. * label on the proxy host field.
 #.
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:58
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:44
 msgid "Proxy:"
 msgstr "프록시"
 
@@ -4696,9 +4713,13 @@ msgstr "프록시"
 #. * Constant for the key of the locale-specific <tt>String</tt> for the
 #. * label on the port text field.
 #.
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:64
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:50
 msgid "Port:"
 msgstr "스마트 검색"
+
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:56
+msgid "No Proxy"
+msgstr "프록시 없음"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SearchEnginesPaneItem.java:23
 msgid "Search Engines"
@@ -4709,27 +4730,27 @@ msgstr "검색 엔진"
 msgid "Select which search engines you want FrostWire to use."
 msgstr "사용하는 언어를 선택"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ShowFrostWireRecommendationsPaneItem.java:36
+#: src/com/limegroup/gnutella/gui/options/panes/ShowFrostWireRecommendationsPaneItem.java:34
 #, fuzzy
 msgid "FrostWire Recommendations"
 msgstr "안드로이드 용 FrostWire"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ShowFrostWireRecommendationsPaneItem.java:38
+#: src/com/limegroup/gnutella/gui/options/panes/ShowFrostWireRecommendationsPaneItem.java:36
 msgid ""
 "By enabling this feature you become eligible to receive FrostWire sponsored "
 "offers and software recommendations to complement your experience."
 msgstr ""
 
-#: src/com/limegroup/gnutella/gui/options/panes/ShowFrostWireRecommendationsPaneItem.java:45
+#: src/com/limegroup/gnutella/gui/options/panes/ShowFrostWireRecommendationsPaneItem.java:43
 #, fuzzy
 msgid "Enable FrostWire Recommendations (highly recommended):"
 msgstr "FrostClick  프로모션 활성화(추천됨):"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:36
+#: src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:35
 msgid "FrostClick Promotions"
 msgstr "FrostClick 프로모션"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:38
+#: src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:37
 msgid ""
 "You can enable or disable the FrostClick Promotion on the welcome screen. "
 "FrostClick promotions help artists and content creators distribute their "
@@ -4742,27 +4763,27 @@ msgstr ""
 "Gnutella를 통하여 합법적으로 배포하는 것을 돕습니다. 콘텐츠 배포 및 공유를 지"
 "원하기 위하여 해당 옵션을 유지하십시오."
 
-#: src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:45
+#: src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:44
 msgid "Enable FrostClick Promotions (highly recommended):"
 msgstr "FrostClick  프로모션 활성화(추천됨):"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:40
+#: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:39
 msgid "Shutdown Behavior"
 msgstr "종료시의 옵션"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:42
+#: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:41
 msgid "You can choose the default shutdown behavior."
 msgstr "초기설정된 종료 동작을 선택할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:65
+#: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:64
 msgid "Shutdown Immediately"
 msgstr "즉시 종료"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:66
+#: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:65
 msgid "Minimize to System Tray"
 msgstr "시스템 트레이에 최소화함"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:70
+#: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:69
 msgid "Show dialog to ask before close"
 msgstr "닫기 전 다이얼로그 보이기"
 
@@ -4796,76 +4817,76 @@ msgstr "스마트 검색 "
 msgid "If you continue you will erase all the information related to\n"
 msgstr "계속하시면 관련된 모든 정보를 삭제합니다\n"
 
-#: src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:24
+#: src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:23
 msgid ""
 "You can choose whether or not to automatically run FrostWire when your "
 "computer starts."
 msgstr "컴퓨터에 로그인했을 때에 자동적으로 FrostWire를 실행할 수 있습니다"
 
-#: src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:31
+#: src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:30
 msgid "Run on System Startup:"
 msgstr "시스템 시작시에 FrostWire를 시작："
 
-#: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:34
+#: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:33
 msgid "Bandwidth Indicator"
 msgstr "처리 능력의 상황"
 
-#: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:36
+#: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:35
 msgid "You can display your bandwidth consumption in the status bar."
 msgstr "상태창에 처리 능력 사용치를 표시할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:43
+#: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:42
 msgid "Show Bandwidth Indicator:"
 msgstr "처리 능력의 상태를 표시:"
 
-#: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:21
+#: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:20
 msgid "Connection Quality Indicator"
 msgstr "접속 레벨 상태"
 
-#: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:23
+#: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:22
 msgid ""
 "You can display a measurement of your connection quality in the status bar."
 msgstr "접속 레벨의 측정치를 상태 바에 표시할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:30
+#: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:29
 msgid "Show Connection Quality Indicator:"
 msgstr "접속 레벨 표시:"
 
-#: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:21
+#: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:20
 msgid "Firewall Indicator"
 msgstr "방화벽 상황"
 
-#: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:23
+#: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:22
 msgid "You can display your firewall status in the status bar."
 msgstr "방화벽 상태를 상태 바로 표시할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:30
+#: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:29
 msgid "Show Firewall Indicator:"
 msgstr "방화벽 상태를 표시:"
 
-#: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:26
+#: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:25
 msgid "BitTorrent Connection Settings"
 msgstr "BitTorrent 연결 설정"
 
-#: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:28
+#: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:27
 msgid ""
 "Adjust connection settings to make better use of your internet connection"
 msgstr "인터넷 접속을 최적화하기 위하여 접속 설정을 조절하십시오"
 
-#: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:30
+#: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:29
 msgid "Maximum active downloads"
 msgstr "최대 활성화 다운로드"
 
-#: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:32
+#: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:31
 msgid "Global maximum number of connections"
 msgstr "글로벌 접속 최다 수"
 
-#: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:34
+#: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:33
 #, fuzzy
 msgid "Maximum number of peers"
 msgstr "토렌트 별 접속된 피어의 최대 수"
 
-#: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:36
+#: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:35
 #, fuzzy
 msgid "Maximum active seeds"
 msgstr "최대 활성화 다운로드"
@@ -4887,10 +4908,14 @@ msgid "Download Speed:"
 msgstr "다운로드 속도："
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
+msgid "Set the Maximum BitTorrent upload speed in KB/s."
+msgstr ""
+
+#: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
+#, fuzzy
 msgid ""
-"<html>Set the Maximum BitTorrent upload speed in KB/s.<p>Note: Too low "
-"upload speeds (leeching) could be penalized by some trackers, resulting in "
-"slower downloads.</html>"
+"Note: Too low upload speeds (leeching) could be penalized by some trackers, "
+"resulting in slower downloads."
 msgstr ""
 "<html>최대 BitTorrent 전송 속도를 KB/초로 설정.<p>참조: 매우 낮은 업로드 속도"
 "(리칭)은 다른 사용자들로부터 제외되어, 다운로드 속도를 저하시킵니다.</html>"
@@ -4924,11 +4949,11 @@ msgstr ""
 "된 파일의 조각들은 누구나 사용 가능 합니다. 다운로드하는 동안 조각들은 접속중"
 "인 피어로부터 사용이 가능합니다."
 
-#: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:36
+#: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:34
 msgid "Anonymous Usage Statistics"
 msgstr ""
 
-#: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:38
+#: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:36
 msgid ""
 "Send anonymous usage statistics so that FrostWire can be improved more "
 "effectively. No information regarding content searched, shared or played nor "
@@ -4936,15 +4961,15 @@ msgid ""
 "sent through the network."
 msgstr ""
 
-#: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:40
+#: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:38
 msgid "Send anonymous usage statistics"
 msgstr ""
 
-#: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
+#: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:26
 msgid "Video Options"
 msgstr "비디오 옵션"
 
-#: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:30
+#: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
 msgid "You can choose which video player to use."
 msgstr "어느 비디오 플레이어를 사용할지 선택할 수 있습니다."
 
@@ -4953,7 +4978,7 @@ msgstr "어느 비디오 플레이어를 사용할지 선택할 수 있습니다
 #. * label on the component that allows to user to change the setting for
 #. * this <tt>PaneItem</tt>.
 #.
-#: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:37
+#: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:35
 msgid "Video Player"
 msgstr "비디오 플레이어"
 
@@ -4965,11 +4990,11 @@ msgstr ""
 msgid "Active search and discovery of local peer files."
 msgstr ""
 
-#: src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:40
+#: src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:39
 msgid "You can have FrostWire import newly downloaded songs into iTunes."
 msgstr "iTunes에 새롭게 다운로드한 노래를 가져오기 할 수 있습니다."
 
-#: src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:42
+#: src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:41
 msgid "Enable iTunes importing:"
 msgstr "iTunes 가져오기 사용："
 
@@ -5014,73 +5039,73 @@ msgid ""
 "collections of files shared on the BitTorrent network.)"
 msgstr ""
 
-#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:45
+#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:44
 msgid "Stop"
 msgstr "정지"
 
-#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:48
+#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:47
 msgid "Open Options dialog"
 msgstr "옵션 다이얼로그 열기"
 
-#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:49
+#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:48
 msgid "Download All Selected Files"
 msgstr "선택한 파일 모든 것을 다운로드"
 
-#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:50
+#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:49
 msgid ""
 "See detail web page about the selected torrent (Contents, Comments, Seeds)"
 msgstr "선택된 토렌트의 웹 페이지 세부정보 보기(콘텐츠, 코멘트, 배포)"
 
-#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:51
+#: src/com/limegroup/gnutella/gui/search/SearchButtons.java:50
 msgid "Stop current search"
 msgstr "현재 검색 정지"
 
-#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:87
+#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:86
 msgid "Close Search"
 msgstr "검색 닫기"
 
-#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:89
+#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:88
 msgid "Launch Action"
 msgstr "작업 실시"
 
-#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:91
+#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:90
 msgid "Repeat Search"
 msgstr "재검색"
 
-#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:93
+#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:92
 msgid "Download Partial Files"
 msgstr "다운로드 부분 파일"
 
-#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:95
+#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:94
 msgid "Torrent Details"
 msgstr "토렌트 상세정보"
 
-#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:97
+#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:96
 msgid "View in YouTube"
 msgstr "유투브에서 보기"
 
-#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:99
+#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:98
 #, fuzzy
 msgid "View in Soundcloud"
 msgstr "유투브에서 보기"
 
-#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:101
+#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:100
 msgid "View in Archive.org"
 msgstr ""
 
 #. Set the splash screen text...
-#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:127
+#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:126
 msgid "Loading Search Window..."
 msgstr "검색 윈도우를 불러오는 중..."
 
-#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:214
+#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:213
 msgid ""
 "Your search must be at least three characters to avoid congesting the "
 "network."
 msgstr ""
 "네트워크의 혼잡을 피하기 위해서, 검색은 최저 세자 이상으로 입력해야합니다."
 
-#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:217
+#: src/com/limegroup/gnutella/gui/search/SearchMediator.java:216
 msgid "Your search is too long. Please make your search smaller and try again."
 msgstr "검색이 너무 길므로, 검색을 소규모로 해 재시행"
 
@@ -5115,16 +5140,16 @@ msgstr "보낼 내용 선택"
 msgid "results"
 msgstr "결과"
 
-#: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:357
+#: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:356
 msgid "Copy Hash"
 msgstr "해쉬 복사"
 
-#: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:371
+#: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:370
 msgid "Search More"
 msgstr "더깊이 검색"
 
+#: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:707
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:708
-#: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:709
 #, fuzzy
 msgid "Search tools"
 msgstr "검색 수"
@@ -5146,7 +5171,7 @@ msgstr "\".torrent\" 파일"
 msgid "\"magnet:\" links"
 msgstr "\"magnet:\" 링크"
 
-#: src/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:48
+#: src/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:46
 msgid ""
 "One or more files or protocols that FrostWire uses are no longer associated "
 "with FrostWire. Would you like FrostWire to re-associate them?"
@@ -5177,110 +5202,3 @@ msgstr "도구 팁 확장"
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:189
 msgid "You cannot turn off all columns."
 msgstr "모든 칼럼을 오프로 할 수  없는 상태"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:37
-msgid "Invalid Filename"
-msgstr "쓸모없는 파일명"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:40
-msgid "Download Already Finished"
-msgstr "이미 다운로드 완료"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:43
-msgid "No Write Permission"
-msgstr "기입 금지"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:46
-msgid "Folder Does Not Exist"
-msgstr "폴더 없음"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:49
-msgid "File Already Exists"
-msgstr "기존 파일 있어"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:52
-msgid "Filename Taken"
-msgstr "파일명이 기존"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:55
-msgid "Not a Folder"
-msgstr "폴더는 아니다"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:58
-msgid "Not a File"
-msgstr "파일은 아니다"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:61
-msgid "Filesystem Error"
-msgstr "파일 시스템 에러"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:64
-msgid "Same File Already Being Downloaded"
-msgstr "같은 파일이 이미 다운로드되고 있습니다"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:88
-#, java-format
-msgid ""
-"Could not set file location to {0}, because the filename is invalid and may "
-"corrupt your system."
-msgstr ""
-"파일명에 이상이 있어 유저의 시스템을 문제를 야기할 수 있으므로, 파일 위치를"
-"{0}으로 설정할 수 없다"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:91
-msgid "Could not set the file location, the download is already finished."
-msgstr "파일 위치를 설정하지 못하였으며, 다운로드는 이미 완료되었습니다."
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:94
-#, java-format
-msgid ""
-"Could not save download to the folder {0}, because you do not have write "
-"access to it."
-msgstr ""
-"쓰기위해 접근할 수 없어서, 다운로드를 폴더{0}에 다른 이름으로 저장 불가합니"
-"다."
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:98
-#, java-format
-msgid ""
-"Could not save download to folder {0}, because the folder does not exist."
-msgstr ""
-"폴더가 없기 때문에, 다운로드를 폴더 {0}에 다른 이름으로 저장할 수 없습니다."
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:102
-#, java-format
-msgid "A file already exists at {0}."
-msgstr "이미 파일은{0}에 존재합니다."
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:106
-#, java-format
-msgid "Another download is already saving to {0}."
-msgstr "다른 다운로드가 {0}에 다른 이름으로 저장되고 있습니다."
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:110
-#, java-format
-msgid ""
-"Could not set download folder to {0}, because it represents an individual "
-"file, not a folder."
-msgstr ""
-"개별의 파일로 폴더가 아니기 때문에, 다운로드 폴더를{0}으로 설정이 불가합니다."
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:114
-#, java-format
-msgid "Could not set file location to {0}, because it is not a regular file."
-msgstr "레귤러 파일은 아니기 때문에, 파일 위치를{0}으로 설정 불가합니다."
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:117
-msgid "Could not set file location due to an error in the filesystem."
-msgstr "파일 시스템의 에러에 의해 파일 위치를 설정할 수 없습니다"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:119
-msgid "The same file is already being downloaded."
-msgstr "같은 파일이 이미 다운로드 되었습니다."
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:121
-#, java-format
-msgid ""
-"The path of the parent folder exceeds the maximum length of paths on the "
-"filesystem. {0} "
-msgstr "부모 폴더의 경로가 파일 시스템의 최대 경로 길이를 초과하였습니다. {0}"

@@ -226,7 +226,7 @@ final class AboutWindow {
         sb.append("</ul>");
 
         // azureus/vuze devs.
-        sb.append("<h1>" + I18n.tr("Thanks to the Azureus Core Developers" + "</h1>"));
+        sb.append("<h1>" + I18n.tr("Thanks to the Azureus Core Developers") + "</h1>");
         String az_devs = "Olivier Chalouhi (gudy),Alon Rohter (nolar),Paul Gardner (parg),ArronM (TuxPaper),Paul Duran (fatal_2),Jonathan Ledlie(ledlie),Allan Crooks (amc1),Xyrio (muxumx),Michael Parker (shadowmatter),Aaron Grunthal (the8472)";
         sb.append("<ul>");
         appendListOfNames(az_devs, sb);
