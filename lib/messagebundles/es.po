@@ -431,7 +431,7 @@ msgstr "Error: No terminó de mover archivos"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:207
 msgid "Error: Wrong md5 hash"
-msgstr "Error: Hash md5 erroneo"
+msgstr "Error: Hash md5 erróneo"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:208
 msgid "Error: Wrong signature"
@@ -3884,7 +3884,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:110
 msgid "You forgot to select your finished downloads \"Seeding\" setting."
-msgstr "Olvidó seleccionar la configuracion de \"Seeding\" para descargas finalizadas"
+msgstr "Olvidó seleccionar la configuración de \"Seeding\" para descargas finalizadas"
 
 #: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:112
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
