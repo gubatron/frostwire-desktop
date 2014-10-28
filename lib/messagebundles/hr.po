@@ -57,7 +57,7 @@ msgstr "Pošalji u iTunes"
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:76
 #, fuzzy
 msgid "Send files to iTunes"
-msgstr "Pošalji files u iTunes"
+msgstr "Pošalji datoteke u iTunes"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:119
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:44
@@ -110,17 +110,19 @@ msgstr "Nastavi"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:194
 msgid "Reattempt Selected Downloads"
-msgstr "Pokusaj nastaviti preuzimanje."
+msgstr "Pokusaj nastaviti preuzimanje"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:213
 msgid ""
 "One of the transfers is complete and resuming will cause it to start seeding"
-msgstr "Jedan od prijenosa je završen i nastavak istoga će ga početi dijeliti"
+msgstr ""
+"Jedan od prijenosa je završen i nastavak istoga će ga početi dijeliti"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:213
 msgid ""
 "This transfer is already complete, resuming it will cause it to start seeding"
-msgstr "Ovaj prijenos je gotov, nastavak istoga će ga početi dijeliti"
+msgstr ""
+"Ovaj prijenos je gotov, nastavak istoga će ga početi dijeliti"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:214
 #, fuzzy
@@ -137,20 +139,20 @@ msgstr "Pauziraj preuzimanje"
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:242
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:89
 msgid "Pause"
-msgstr "Zaustaviti"
+msgstr "Pauziraj"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:243
 msgid "Pause Selected Downloads"
-msgstr "Pauziraj oznacene download-e."
+msgstr "Pauziraj oznacena preuzimanja"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:268
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:269
 msgid "Remove Torrent and Data"
-msgstr ""
+msgstr "Ukloni torrent i pripadajuce datoteke"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:270
 msgid "Remove Torrent and Data from selected downloads"
-msgstr "Ukloni torrent i pripadajuće datoteke odabranih preuzimanja"
+msgstr "Ukloni torrent i pripadajuce datoteke odabranih preuzimanja"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:272
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:273
@@ -173,7 +175,7 @@ msgstr "Ukloni"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:278
 msgid "Remove Selected Downloads"
-msgstr "Pauziraj oznacene download-e."
+msgstr "Pauziraj oznacena preuzimanja"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:288
 msgid ""
@@ -181,8 +183,8 @@ msgid ""
 "\n"
 "You won't be able to recover the files."
 msgstr ""
-"Jeste li sigurni da želite trajno ukloniti licencu s veše lokalne kopije ove "
-"datoteke."
+"Jeste li sigurni da želite ukloniti datoteke s vaseg racunala?\n"
+"\n"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:288
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:379
