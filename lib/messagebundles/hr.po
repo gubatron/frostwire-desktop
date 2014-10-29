@@ -4734,8 +4734,8 @@ msgid ""
 "Set the Maximum BitTorrent transfer speeds in KB/s.\n"
 "Tip: Use your keyboard arrows for more precision"
 msgstr ""
-"Postaviti maksimum BitTorrent brzinu prijenosa u KB/s.\n"
-"Savjet: Koristite svoju tipkovnicu da vecu preciznost"
+"Postaviti maksimalnu BitTorrent brzinu prijenosa u KB/s.\n"
+"Savjet: Koristite svoju tipkovnicu za vecu preciznost"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:38
 msgid "Download Speed:"
@@ -4743,7 +4743,7 @@ msgstr "Brzina preuzimanja:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
 msgid "Set the Maximum BitTorrent upload speed in KB/s."
-msgstr ""
+msgstr "Postaviti maksimalnu BitTorrent brzinu prijenosa u KB/s"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
 msgid ""
@@ -4767,7 +4767,7 @@ msgstr "Maksimalna brzina"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:44
 msgid "Choose the folder where downloads will be saved to"
-msgstr "Izaberite mapu u koju ce preuzimanja biti sacuvana:"
+msgstr "Izaberite mapu u koju ce se preuzimanja spremati:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:40
 msgid ""
@@ -4876,14 +4876,13 @@ msgstr "Otvoriti opcije dijaloga"
 
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:48
 msgid "Download All Selected Files"
-msgstr "Preuzeti sve odaberene datoteke"
+msgstr "Preuzeti sve odabrane datoteke"
 
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:49
 msgid ""
 "See detail web page about the selected torrent (Contents, Comments, Seeds)"
 msgstr ""
-"Vidjeti detalje web stranice o odabranom torrentu (Sadrzaj, Komentari, "
-"Seedovi)"
+"Vidjeti detalje web stranice o odabranom torrentu (Sadrzaj, Komentari, Seedovi)"
 
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:50
 msgid "Stop current search"
@@ -4936,9 +4935,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:216
 msgid "Your search is too long. Please make your search smaller and try again."
-msgstr ""
-"Vase pretrazivanje je pre veliko. Molimo napravite vase pretrazivanje manje "
-"i pokusajte ponovno."
+msgstr "Vase pretrazivanje je pre veliko. Molimo napravite vase pretrazivanje manje i pokusajte ponovno."
 
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:107
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:109
@@ -4954,8 +4951,8 @@ msgid ""
 "has been disabled on your FrostWire Search Options. (Go to Tools > Options > "
 "Search to enable)"
 msgstr ""
-"bilo je onemoguceno na opcijama pretrazivanja FrostWire-a. (Idite na Alati > "
-"Opcije >Traziti kako biste omogucili)"
+"bilo je onemoguceno na opcijama pretrazivanja FrostWire-a. (Idite na Alati > Opcije > "
+"Trazenje kako biste omogucili)"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:85
 #: src/com/limegroup/gnutella/gui/tables/AbstractActionsRenderer.java:85
@@ -4966,12 +4963,12 @@ msgstr "Igrati/Pregled"
 #: src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:111
 #, fuzzy
 msgid "Select content to download from this torrent."
-msgstr "Odabrati sadrzaj za preuzeti iz ovog torrenta."
+msgstr "Odaberi sadrzaj za preuzimanje iz ovog torrenta."
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultDisplayer.java:579
 #, fuzzy
 msgid "results"
-msgstr "Rezultati"
+msgstr "rezultati"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:356
 msgid "Copy Hash"
