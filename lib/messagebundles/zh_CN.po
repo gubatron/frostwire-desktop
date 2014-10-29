@@ -24,7 +24,7 @@ msgstr ""
 # （2）One word might be translated into different Chinese words according to the context.
 #      e.g. peer -> 伙伴 or 伙伴用户; authorize -> 允许 or 授权； track -> 音轨 or 曲目
 # （3）Some translations are comprehensible, but not perfect yet. They are listed as belows(perhaps you have better ideas):
-#      Handpicked -> 自选的
+#      Handpicked -> 自选的，Discard -> 丢弃，Review -> 审阅（Previous translation: 检视）
 # END of README
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/HideExitDialog.java:57
 msgid "Do you want to hide FrostWire?"
@@ -533,7 +533,7 @@ msgstr "接受"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:577
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:469
 msgid "Check again your tracker URL(s).\n"
-msgstr "再次检查您的Tracker服务器URL.\n"
+msgstr "再次检查你的Tracker服务器URL.\n"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:577
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:469
@@ -655,7 +655,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:235
 msgid "You have selected the following License"
-msgstr "您已选择以下许可证"
+msgstr "你已选择以下许可证"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:394
 msgid "Select what people can and can't do with this work"
@@ -2558,7 +2558,7 @@ msgid ""
 "then select 'Windows 2000' in the box below the check box. Then click the "
 "'OK' button at the bottom and restart FrostWire."
 msgstr ""
-"FrostWire在启动时遇到问题，无法继续。您可以通过改变FrostWire窗口兼容性以解决"
+"FrostWire在启动时遇到问题，无法继续。你可以通过改变FrostWire窗口兼容性以解决"
 "此问题。右击桌面上FrostWire图标，从弹出菜单中选择'属性'。单击顶部的'兼容性'标"
 "签，然后单击'用兼容模式运行这个程序'复选框，之后在复选框下的框中选择'Windows "
 "2000'。然后单击底部的'确认'按钮，并重启FrostWire。"
@@ -2568,7 +2568,7 @@ msgstr ""
 msgid ""
 "FrostWire could not locate your web browser to display the following "
 "webpage: {0}."
-msgstr "FrostWire无法找到您的浏览网以显示下列网页：{0}。"
+msgstr "FrostWire无法找到你的浏览网以显示下列网页：{0}。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIMediator.java:1335
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIMediator.java:1358
@@ -2650,7 +2650,7 @@ msgid ""
 "FrostWire will now exit.  Thank You."
 msgstr ""
 "FrostWire无法创建一个临时预置文件夹。\n"
-"这通常是由于缺少权限。请确认FrostWire（以及您）有在电脑上创建文件/文件夹的权"
+"这通常是由于缺少权限。请确认FrostWire（以及你）有在电脑上创建文件/文件夹的权"
 "限。如果问题仍然存在，请访问www.frostwire.com并点击'Support'链接。\n"
 "\n"
 "FrostWire现在将会推出，谢谢。"
@@ -2684,7 +2684,7 @@ msgid ""
 "version is known to have caused problems with FrostWire. Please upgrade to "
 "the final 1.6.0 release.\n"
 msgstr ""
-"您目前使用的是Java 1.6.0的测试版或预览版。此版本与FrostWire不兼容。请更新至"
+"你目前使用的是Java 1.6.0的测试版或预览版。此版本与FrostWire不兼容。请更新至"
 "1.6.0最终发行版。\n"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:85
@@ -2816,7 +2816,7 @@ msgstr "正在加载状态窗口……"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:141
 msgid "Creating donation buttons so you can give us a hand..."
-msgstr "正在创建捐赠按钮以便您能帮我们一把……"
+msgstr "正在创建捐赠按钮以便你能帮我们一把……"
 
 #. make icons and panels for connection quality
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:145
@@ -3018,16 +3018,16 @@ msgid ""
 "Seeds represents an approximate number of computers that have the entire "
 "file and are online."
 msgstr ""
-"可通过点击一列进行搜索结果排序。如果你在找寻一个种子，最有用的分类栏是'种子"
-"数'列，种子数表示拥有整个文件的在线计算机的大体数量。"
+"可通过点击列进行搜索结果排序。如果你在寻找一个种子，最有用的分类栏是'种子数'"
+"列，种子数表示拥有整个文件的在线计算机的大体数量。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:27
 msgid ""
 "It helps the network if you keep your FrostWire running. Others will connect "
 "to the network easier and searches will perform better."
 msgstr ""
-"保持FrostWire运行将有助于本共享网络。其他人能更容易连接该网络，实现更好的搜"
-"索。"
+"保持FrostWire运行将有助于本共享网络。其他人能更容易连接该网络，"
+"实现更好的搜索。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:28
 #, java-format
@@ -3055,8 +3055,8 @@ msgid ""
 "buddy is sharing 'Frosty' but you searched for 'My Frosty', your buddy's "
 "file will still be found."
 msgstr ""
-"搜索标题中的些许变化仍管用。例如：如果您的好友分享'Frosty'，而您搜索'My "
-"Frosty'，您好友的文件仍可以被找到。"
+"搜索词的小差异并不影响搜索运行。例如：如果你的好友分享'Frosty'，而你搜索'My "
+"Frosty'，你好友的文件仍可以被找到。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:31
 msgid ""
@@ -3091,7 +3091,7 @@ msgid ""
 "as long as they have the .torrent or a (magnet) link to it."
 msgstr ""
 "注意不要共享敏感信息，如：税收文件、密码，等等。只要有.torrent或者magnet链"
-"接，网络上的每个人都可以获取您作种的种子文件。"
+"接，网络上的每个人都可以获取你作种的种子文件。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:37
 msgid ""
@@ -3100,7 +3100,7 @@ msgid ""
 "anything extra because it happens automatically!"
 msgstr ""
 "与其它点对点文件共享程序不同，即使双方都设定了防火墙，FrostWire仍可以传输文"
-"件。这些是自动完成的，您无需做任何额外设置！"
+"件。这些是自动完成的，你无需做任何额外设置！"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:38
 msgid ""
@@ -3109,8 +3109,8 @@ msgid ""
 "your friend(s) are downloading. They can pause and resume the download all "
 "they want as long as you or somebody else is seeding the same content."
 msgstr ""
-"想要共享一份大文件？发送几百GB的数据毫无问题，当您的好友正在下载时，只需确保"
-"您的FrostWire运行。只要你或者其他人做种相同的内容，他们可以视情暂停和恢复下"
+"想要共享一份大文件？发送几百GB的数据毫无问题，当你的好友正在下载时，只需确保"
+"你的FrostWire运行。只要你或者其他人做种相同的内容，他们可以视情暂停和恢复下"
 "载。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:39
@@ -3128,13 +3128,14 @@ msgid ""
 "Don't want to seed? Go to Tools &gt; Options &gt; Bittorrent or select the "
 "Seeding - No Seeding icon at the bottom bar"
 msgstr ""
-"不想作种？进入工具 &gt; 选项 &gt; Bittorrent 或选择底部的 做种 - 不做种 图标"
+"不想作种？进入工具 &gt; 选项 &gt; Bittorrent， 或选择底部的 做种 - 不做种 图标"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:51
 msgid ""
 "You can find out which version of FrostWire you are using by choosing 'About "
 "FrostWire' from the Help menu."
-msgstr "可以通过帮助菜单中的'关于FrostWire'查看您所使用的FrostWire版本。"
+msgstr ""
+"可以通过帮助菜单中的'关于FrostWire'查看你所使用的FrostWire版本。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:52
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:69
@@ -3158,8 +3159,8 @@ msgid ""
 "display this message again' or 'Always Use This Answer'? Go to Tools &gt; "
 "Options, and check 'Revert To Default' under View &gt; FrostWire Popups."
 msgstr ""
-"想查看你以前标识'不再显示此信息'或'总是使用此答案'问题的对话框？进入工具 "
-"&gt;，在View &gt; FrostWire弹出窗口 中选取'恢复默认设置'。"
+"想查看被你标识为'不再显示此信息'或'总是使用此答案'的问题对话框？进入'工具' "
+"&gt; '选项'，在 '查看' &gt; 'FrostWire弹出窗口' 中选取'恢复默认设置'。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:55
 msgid ""
@@ -3167,8 +3168,8 @@ msgid ""
 "'Options' from the 'Tools' menu and adding new words to those listed under "
 "Filters &gt; Keywords."
 msgstr ""
-"可通过'工具'菜单中的'选项'，在过滤-关键词中添加新词，阻止某些词出现在你的搜索"
-"结果中。"
+"要禁止某些词出现在你的搜索结果中，可通过'工具'菜单中的'选项'，"
+"在'过滤' &gt; '关键词'列表中添加新词。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:56
 msgid ""
@@ -3177,9 +3178,8 @@ msgid ""
 "toggle other options here too, like whether or not to sort tables "
 "automatically and if you prefer the rows to be striped."
 msgstr ""
-"讨厌工具提示？喜欢工具提示？可在大部分表格中通过右击标题栏并选择'更多选项'进"
-"行开启或关闭。也可以在此切换其他选项，例如：是否进行表格自动分类，是否更喜欢"
-"实线。"
+"讨厌工具提示吗？喜欢工具提示吗？在大部分表格中，可通过右击标题栏并选择'更多选项'"
+"开启或关闭工具提示。也可以在此调整其他选项，例如：表格是否自动排序，以及是否倾向于用线框修饰表格的行。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:57
 msgid ""
@@ -3188,53 +3188,51 @@ msgid ""
 "sorting behavior off by right-clicking on a column header, choosing 'More "
 "Options' and un-checking 'Sort Automatically'."
 msgstr ""
-"可通过点击栏对上传、下载，等等...进行分类。表格随着信息的改变而重新分类。可通"
-"过右击栏目题头，选择'更多选项'，在'自动分类'不要打勾，进行关闭自动分类功能。"
+"单击列可以对上传、下载等进行排序。表格可随之重新排序。"
+"右击列标题，选择'更多选项'，取消勾选'自动分类'，可关闭自动排序功能。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:58
 msgid ""
 "Are you unhappy with the small number of search results you received? Right-"
 "click a search result, then choose Search More, then Get More Results."
 msgstr ""
-"是否因为搜索结果太少而不满意？右击一条搜索结果，然后选择更多搜索，就可以得到"
+"是否因为搜索结果太少而不满意？右击搜索结果，然后选择'更多搜索'，即可得到"
 "更多搜索结果。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:68
 msgid ""
 "You can find out which version of FrostWire you are using by choosing 'About "
 "FrostWire' from the FrostWire menu."
-msgstr "点击FrostWire菜单中的'关于FrostWire'，可以了解你的FrostWire版本号。"
+msgstr ""
+"点击FrostWire菜单中的'关于FrostWire'，即可得知你的FrostWire版本号。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:70
-#, fuzzy
 msgid ""
 "You can turn autocomplete for searching on or off by choosing 'Tools' from "
 "the 'FrostWire' menu, and changing the value of 'Autocomplete Text' under "
 "the 'View' option."
 msgstr ""
-"可通过'FrostWire'菜单中的'工具'，在'查看'选项中的'自动完成文本'更改值，进行搜"
-"索开启或关闭的自动完成设置。"
+"要开启或关闭所搜的文本自动补全功能，可选取'FrostWire'菜单中的'工具'，"
+"在'查看'选项中更改'自动补全文本'的取值。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:71
-#, fuzzy
 msgid ""
 "Want to see dialogs for questions which you previously marked 'Do not "
 "display this message again' or 'Always Use This Answer'? Go to FrostWire "
 "&gt; Tools, Options and check 'Revert To Default' under View &gt; FrostWire "
 "Popups."
 msgstr ""
-"想查看你以前标识'不再显示此信息'或'总是使用此答案'的问题对话框？进入工具选"
-"项，在查看中的'恢复默认设置'弹出窗口打勾。"
+"想查看被你标识为'不再显示此信息'或'总是使用此答案'的问题对话框？进入'FrostWire' "
+"&gt; '工具'，'选项'并在 '查看' &gt; 'FrostWire弹出窗口' 中勾选'恢复默认设置'。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:72
-#, fuzzy
 msgid ""
 "You can ban certain words from appearing in your search results by choosing "
 "'Tools' from the 'FrostWire' menu and adding new words to those listed under "
 "Filters &gt; Keywords."
 msgstr ""
-"可通过'FrostWire'菜单中的'预设'，在过滤-关键词中添加新词，阻止某些词出现在你"
-"的搜索结果中。"
+"要禁止某些词出现在你的搜索结果中，可通过'FrostWire'菜单中的'工具'，"
+"在'过滤' &gt; '关键词'列表中添加新词。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:73
 msgid ""
@@ -3243,9 +3241,8 @@ msgid ""
 "can toggle other options here too, like whether or not to sort tables "
 "automatically and if you prefer the rows to be striped."
 msgstr ""
-"讨厌工具提示？喜欢工具提示？可在大部分表格中通过右击标题栏并选择'更多选项'进"
-"行开启或关闭。也可以在此切换其他选项，例如：是否进行表格自动分类，是否更喜欢"
-"实线。"
+"讨厌工具提示吗？喜欢工具提示吗？在大部分表格中，可通过右击标题栏并选择'更多选项'"
+"开启或关闭工具提示。也可以在此调整其他选项，例如：表格是否自动排序，以及是否倾向于用线框修饰表格的行。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:74
 msgid ""
@@ -3254,8 +3251,8 @@ msgid ""
 "sorting behavior off by control-clicking on a column header, choosing 'More "
 "Options' and un-checking 'Sort Automatically'."
 msgstr ""
-"可通过点击栏对上传、下载，等等...进行分类。表格随着信息的改变而重新分类。可通"
-"过右击栏目题头，选择'更多选项'，在'自动分类'不要打勾，进行关闭自动分类功能。"
+"单击列可以对上传、下载等进行排序。表格可随之重新排序。"
+"右击列标题，选择'更多选项'，取消勾选'自动分类'，可关闭自动排序功能。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:75
 msgid ""
@@ -3263,40 +3260,38 @@ msgid ""
 "that when you delete a file from the Library, you have the option to either "
 "permanently delete the file from your computer or move it to the Trash."
 msgstr ""
-"FrostWire收藏库是文件管理器，不仅仅是MP3播放列表。意味着当你从收藏库中删除一"
-"份文件，你可以选择从电脑中永久性删除或者将其移至回收站。"
+"FrostWire的收藏库是一个文件管理器，而不仅仅是MP3播放列表。这意味着当你从收藏库中删除一"
+"个文件时，你可以选择从电脑中永久性删除该文件，或者将其移至回收站。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:76
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:97
-#, fuzzy
 msgid ""
 "Want to play music in your default media player instead of in FrostWire? go "
 "to 'Tools' on FrostWire menu and select the option 'Play with native media "
 "player'."
 msgstr ""
-"想要在默认的媒体播放器播放音乐而非在FrostWire？右击FrostWire状态栏，不选择'显"
-"示媒体播放器'。"
+"想要在默认的媒体播放器而非在FrostWire中播放音乐？"
+"进入Frostwire菜单的'工具'项，"
+"选择'使用默认媒体播放器进行播放'。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:77
-#, fuzzy
 msgid ""
 "Make FrostWire's block more results by making the filter stricter. Adjust "
 "that and more by going to FrostWire &gt; Tools &gt; Filters &gt;"
 msgstr ""
-"通过严格过滤对FrostWire垃圾信息过滤屏蔽更多结果。通过FrostWire-预设-过滤-垃圾"
-"信息进行调整或更多设置。"
+"要让FrostWire过滤更多搜索结果，可以设置更严格的过滤器。"
+"可以在 FrostWire &gt; 预设 &gt; 过滤 &gt; 中进行调整或更多设置。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:86
-#, fuzzy
 msgid ""
 "The icons that you see next to your search results in the '?' column are "
 "symbols of the program used to open that particular type of file. To change "
 "the program associated with a file, go to the 'Folder Options' in Windows "
 "Control Panel. This is a Windows setting, not a FrostWire setting."
 msgstr ""
-"你所看到的靠近'?'栏搜素结果的图标是用来打开指定文件类型程序的标志。进入（工具"
-"菜单中）Windows浏览器的文件夹选项，更改与文件相关的程序。这是Windows设置，不"
-"是FrostWire设置。"
+"在'?'列中紧邻搜索结果的图标，用于表示打开该文件类型的程序。"
+"要改变与文件关联的程序，可以到Windows控制面板的'文件夹选项'中设置，"
+"这是Windows的设置项，而不是FrostWire的设置项。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:87
 msgid ""
@@ -3304,8 +3299,8 @@ msgid ""
 "that when you delete a file from the Library, you have the option to either "
 "permanently delete the file from your computer or move it to the Recycle Bin."
 msgstr ""
-"FrostWire收藏库是文件管理器，不仅仅是MP3播放列表。意味着当你从收藏库中删除一"
-"份文件，你可以选择从电脑中永久性删除或者将其移至回收站。"
+"FrostWire的收藏库是一个文件管理器，而不仅仅是MP3播放列表。这意味着当你从收藏库中删除一"
+"个文件时，你可以选择从电脑中永久性删除该文件，或者将其移至回收站。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:88
 msgid ""
@@ -3313,16 +3308,16 @@ msgid ""
 "click the system tray icon (next to the time), and select Exit. You can "
 "change this behavior by going to Tools &gt; Options &gt; System Tray."
 msgstr ""
-"当关闭FrostWire时，它缩小到系统托盘。要退出，右击系统托盘图标（靠近时间），选"
-"择退出。可通过工具-选项-系统托盘对此进行更改。"
+"当关闭FrostWire时，它缩小到系统托盘。要退出，右击系统托盘图标（在时间旁边），选"
+"择退出。可通过工具 &gt; 选项 &gt; 系统托盘对此进行更改。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:114
 msgid "Thank you for using FrostWire"
-msgstr "使用 FrostWire 的 帮助. "
+msgstr "感谢您使用FrostWire"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:115
 msgid "Visit us at www.frostwire.com"
-msgstr "通过www.frostwire.com访问我们"
+msgstr "在www.frostwire.com访问我们"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:41
 msgid "New Version Available!"
@@ -3330,7 +3325,7 @@ msgstr "有新版本了！"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:108
 msgid "A new version of FrostWire is available."
-msgstr "FrostWire新版本可供下载。"
+msgstr "FrostWire的一个新版本可用。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:161
 msgid "Update Now"
@@ -3347,12 +3342,12 @@ msgid ""
 "update now, FrostWire will update automatically when you close. Would you "
 "like to update now?"
 msgstr ""
-"FrostWire需要重新启动以安装更新。如您选择不现在更新，FrostWire会在您关闭时自"
-"动更新。您要现在更新吗？"
+"FrostWire需要重新启动以安装更新。如你选择现在不更新，FrostWire会在关闭时自"
+"动更新。你要现在更新吗？"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:175
 msgid "Update Ready"
-msgstr "准备更新"
+msgstr "已做好更新准备"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:194
 msgid "Update Later"
@@ -3367,23 +3362,24 @@ msgstr "一个新的版本可用，升级吗？"
 msgid ""
 "FrostWire has detected a VPN connection, your privacy is safe from prying "
 "eyes."
-msgstr "FrostWire已经检测到一个虚拟专用网络（VPN）连接，你的隐私已有安全保障。"
+msgstr ""
+"FrostWire已经检测到一个虚拟专用网络（VPN）连接，你的隐私已有安全保障。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/VPNStatusButton.java:64
 msgid ""
 "FrostWire can't detect an encrypted VPN connection, your privacy is at risk. "
 "Click icon to set up an encrypted VPN connection."
 msgstr ""
-"FrostWire无法检测到一个加密的虚拟专用网络（VPN）连接，你的隐私存在泄漏风险。"
+"FrostWire没有检测到加密的虚拟专用网络（VPN）连接，你的隐私存在泄漏风险。"
 "点击图标，设置一个加密的虚拟专用网络（VPN）连接。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:60
 msgid "O&pen .Torrent or Magnet"
-msgstr "打开.Torrent或Magnet"
+msgstr "打开（&p）.Torrent或Magnet"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:62
 msgid "Opens a magnet link or torrent file"
-msgstr "打开magnet链接或种子文件"
+msgstr "打开一个magnet链接或种子文件"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:86
 msgid "Download .Torrent or Magnet or YouTube video link"
@@ -3395,7 +3391,9 @@ msgstr "下载.Torrent或者Magnet或者YouTube视频链接"
 msgid ""
 "Type a magnet link, the file path or web address of a torrent file and "
 "FrostWire will start downloading it for you."
-msgstr "输入种子文件的magnet链接，文件路径或者网址，FrostWire将开始为您下载。"
+msgstr ""
+"输入一个magnet链接，文件路径或者网络地址，"
+"FrostWire会为你启动下载。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:127
 msgid "Open:"
@@ -3405,7 +3403,8 @@ msgstr "打开："
 msgid ""
 "FrostWire cannot download this address. Make sure you typed it correctly, "
 "and then try again."
-msgstr "FrostWire无法下载该网址。确认输入正确，并重试。"
+msgstr ""
+"FrostWire无法下载该网址。确认输入正确，并重试。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:314
 msgid "&Close"
@@ -3425,11 +3424,11 @@ msgstr "关闭并退出本程序"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:354
 msgid "Send File or Folder..."
-msgstr "共享 文件夹 "
+msgstr "发送文件或文件夹 "
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:355
 msgid "Send a file or a folder to a friend"
-msgstr "把一个文件或文件夹发送给一位朋友"
+msgstr "发送一个文件或一个文件夹给一位朋友"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/SearchAction.java:40
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:383
@@ -3454,8 +3453,8 @@ msgid ""
 "'Review' to look at the information that will be sent. Thank you."
 msgstr ""
 "FrostWire碰到一个内部错误。FrostWire可以从错误中恢复并继续正常运行。请点击'发"
-"送'将问题告知FrostWire以便协助修正。如果您愿意，可以点击'检视'查看将要发送的"
-"信息。谢谢"
+"送'将问题告知FrostWire以便协助修正。如果愿意，你可以点击'审阅'查看将要发送的"
+"信息。谢谢。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:322
 msgid ""
@@ -3465,36 +3464,38 @@ msgid ""
 "about the error."
 msgstr ""
 "FrostWire碰到一个内部错误。FrostWire可以从错误中恢复并继续正常运行。要继续使"
-"用FrostWire，请点击'忽略'。如果您愿意，可以点击'检视'查看错误信息。"
+"用FrostWire，请点击'丢弃'。如果你愿意，可以点击'审阅'查看错误信息。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:340
 msgid ""
 "Please add any comments you may have (e.g what caused the error).\n"
 "Thank you and please use English."
-msgstr "请添加评论（例如：什么引起错误）谢谢，并请使用英文。"
+msgstr ""
+"请添加评论（例如：什么引起错误）。\n"
+"谢谢，并请使用英文。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:369
 msgid "Review"
-msgstr "评论"
+msgstr "审阅"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:383
 msgid "Discard"
-msgstr "去掉"
+msgstr "丢弃"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:400
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:96
 msgid "Always Send Immediately"
-msgstr "时常即时发送"
+msgstr "总是立即发送"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:401
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:97
 msgid "Always Ask For Review"
-msgstr "总是要求复查"
+msgstr "总是要求审阅"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:402
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:98
 msgid "Always Discard All Errors"
-msgstr "总是抛弃所有错误"
+msgstr "总是丢弃所有错误"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:500
 msgid ""
@@ -3502,7 +3503,7 @@ msgid ""
 "bug report. For further help and to aid with debugging, please visit www."
 "frostwire.com and click 'Support'. Thank you."
 msgstr ""
-"FrostWire无法连接到bug服务器传送错误报告。如需进一步帮助并配合调试错误，请访"
+"FrostWire无法连接到bug服务器传送下面的错误报告。如需进一步帮助并配合调试错误，请访"
 "问www.frostwire.com，点击'技术支持'。谢谢。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:529
@@ -3580,7 +3581,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:53
 msgid "File & Protocol Associations"
-msgstr "文件&协议关联"
+msgstr "文件 & 协议关联"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:53
 msgid "What type of resources should FrostWire open?"
@@ -3701,7 +3702,7 @@ msgstr "系统启动"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/MiscWindow.java:73
 msgid "Start Automatically"
-msgstr "自动启动. "
+msgstr "自动启动"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/MiscWindow.java:76
 msgid ""
@@ -3717,11 +3718,11 @@ msgstr "FrostWire设置向导"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/SetupManager.java:520
 msgid "Next >>"
-msgstr "前进>>"
+msgstr "前进 >>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/SetupManager.java:536
 msgid "<< Back"
-msgstr "<<返回"
+msgstr "<< 返回"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/SetupManager.java:552
 msgid "Finish"
@@ -3744,7 +3745,8 @@ msgstr ""
 msgid ""
 "Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
-msgstr "安装及使用该程序，不构成一个获取或散布未经授权内容的许可。"
+msgstr ""
+"安装及使用该程序，不构成一个获取或散布未经授权内容的许可。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:46
 msgid "Welcome"
@@ -3756,7 +3758,7 @@ msgid ""
 "features that require your configuration. FrostWire will guide you through a "
 "series of steps to configure these new features."
 msgstr ""
-"欢迎使用FrostWire安装向导. FrostWire新增功能需要进行配置。FrostWire将指导你通"
+"欢迎使用FrostWire安装向导。FrostWire新增功能需要进行配置。FrostWire将指导你通"
 "过一系列步骤配置上述新功能。 "
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:47
@@ -3764,7 +3766,7 @@ msgid ""
 "Welcome to the FrostWire setup wizard. FrostWire will guide you through a "
 "series of steps to configure FrostWire for optimum performance."
 msgstr ""
-"欢迎使用FrostWire安装向导. FrostWire将指导你通过一系列步骤配置 FrostWire, 以"
+"欢迎使用FrostWire安装向导. FrostWire将指导你通过一系列步骤配置FrostWire, 以"
 "便达到最佳性能."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:104
@@ -3801,7 +3803,7 @@ msgstr "FrostWire的安卓版本"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:50
 msgid "Get FrostWire on your Android phone, tablet or google tv, all free."
-msgstr "下载FrostWire到你的安卓手机，平板电脑或谷歌电视，全部免费。"
+msgstr "在你的安卓手机，平板电脑或谷歌电视上获取FrostWire，都是免费的。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
 msgid "What is \"Seeding\"?"
@@ -3818,7 +3820,8 @@ msgstr "什么是一个虚拟专用网络（VPN）？"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid ""
 "Learn about how to protect your internet connection and your privacy online"
-msgstr "了解如何保护你的互联网连接和你的网上隐私"
+msgstr ""
+"了解如何保护你的互联网连接和你的在线隐私"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 msgid "Order FrostWire Stickers"
@@ -3858,7 +3861,7 @@ msgstr "在Twitter关注我们"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:71
 msgid "Foru&m"
-msgstr "论坛(&m"
+msgstr "论坛（&m）"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:71
 msgid "Access the FrostWire Users' Forum"
@@ -3872,7 +3875,7 @@ msgstr "你为FrostWire付款了吗（&D）？ "
 msgid ""
 "Did you pay for FrostWire? FrostWire is Free as in Free Beer. Avoid Scams."
 msgstr ""
-"你为FrostWire付款了吗？FrostWire是免费软件。如同免费啤酒一样。当心诈骗。"
+"你为FrostWire付款了吗？FrostWire是免费软件。如同免费啤酒一样。当心（收费）诈骗。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:97
 msgid "Tip of the &Day"
@@ -3880,15 +3883,15 @@ msgstr "每日提示（&D）"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:98
 msgid "Show the Tip of the Day Window"
-msgstr "显示 每日提示 窗口."
+msgstr "显示“每日提示窗”口."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:117
 msgid "&About FrostWire"
-msgstr "关于FrostWire(&A)... "
+msgstr "关于FrostWire(&A)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:118
 msgid "Information about FrostWire"
-msgstr "关于FrostWire的信息."
+msgstr "关于FrostWire的信息"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/MenuMediator.java:92
 msgid "Loading Menus..."
@@ -3997,7 +4000,7 @@ msgstr "减小表格字体尺寸"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:56
 msgid "&Reset Font Size"
-msgstr "重置字体尺寸"
+msgstr "重置（&R）字体尺寸"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:56
 msgid "Reset the Table Font Size"
@@ -4005,7 +4008,7 @@ msgstr "重置表格字体尺寸"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:66
 msgid "C&hange Language"
-msgstr "更改语言（&h）"
+msgstr "更改（&h）语言"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:67
 msgid "Select your Language Prefereces"
@@ -4037,7 +4040,8 @@ msgstr "将所有设置恢复成出厂设置"
 msgid ""
 "You have made changes to some of FrostWire's settings. Would you like to "
 "save these changes?"
-msgstr "您已对FrostWire设置做了一些更改。是否保存这些设置？"
+msgstr ""
+"你已对FrostWire设置做了一些更改。是否保存这些设置？"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:237
 msgid "Search here"
@@ -4060,7 +4064,7 @@ msgstr "播放器"
 #. search options
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:283
 msgid "Searching"
-msgstr "正在搜索"
+msgstr "搜索"
 
 #. status bar
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:286
@@ -4091,7 +4095,7 @@ msgstr "关键词"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:311
 msgid "Updates"
-msgstr "图片 选项 "
+msgstr "更新"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:312
 msgid "Firewall"
@@ -4109,7 +4113,7 @@ msgstr "网络界面"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:316
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:58
 msgid "File Associations"
-msgstr "位置 "
+msgstr "文件关联"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:319
 msgid "System Boot"
@@ -4131,13 +4135,14 @@ msgstr "错误报告"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsMediator.java:82
 msgid "Loading Options Window..."
-msgstr "加载 选项 窗口..."
+msgstr "正在加载“选项” 窗口……"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsMediator.java:179
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsPaneManager.java:129
 msgid ""
 "One or more options will take effect the next time FrostWire is restarted."
-msgstr "一项或多项设定将在再次启动FrostWire后生效。"
+msgstr ""
+"一项或多项设定将在再次启动FrostWire后生效。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:29
 msgid "Links and File Types"
@@ -4149,16 +4154,16 @@ msgid ""
 "instruct FrostWire to always regain these associations if another program "
 "takes them."
 msgstr ""
-"可以使用FrostWire打开某些文件类型和协议。如果其他程序进行打开，也可以设置"
-"FrostWire始终获得关联。"
+"可以使用FrostWire打开某些文件类型和协议。如果已被其他程序占用，"
+"也可以设置FrostWire为总是重新获取这些关联。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:59
 msgid "Use FrostWire for..."
-msgstr "使用 FrostWire (&U) "
+msgstr "把FrostWire用于"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:22
 msgid "Audio Options"
-msgstr "音频 选项"
+msgstr "音频选项"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:24
 msgid "You can choose which audio player to use."
@@ -4171,23 +4176,23 @@ msgstr "你可以选择使用哪一种音频播放器。"
 #.
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:31
 msgid "Audio Player"
-msgstr "播放器 "
+msgstr "音频播放器 "
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:19
 msgid "Text Autocompletion"
-msgstr "文本自动完成"
+msgstr "文本自动补全"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:21
 msgid "You can enable or disable autocompletion of text fields."
-msgstr "可以启用或停用自动完成功能。"
+msgstr "可以启用或停用文本域的自动补全功能。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:28
 msgid "Enable Autocompletion of Text Fields:"
-msgstr "启用自动完成功能："
+msgstr "启用文本域的自动补全功能："
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
 msgid "Automatic Installer Download"
-msgstr "自动安装程序下载"
+msgstr "自动安装程序的下载"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:16
 msgid ""
@@ -4195,16 +4200,16 @@ msgid ""
 "when it's available. It won't install it but next time you start FrostWire "
 "it'll let you know that it's there for you."
 msgstr ""
-"如有新安装程序，FrostWire可以通过BitTorrent为您自动下载。不会自行安装，但下次"
-"启动FrostWire时，会让您知道它的存在。"
+"如有新安装程序，FrostWire可以通过BitTorrent为你自动下载。不会自行安装，但下次"
+"启动FrostWire时，会让你知道它的存在。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:24
 msgid "Download new installers for me (Recommended)"
-msgstr "帮我下载新安装程序（推荐）"
+msgstr "帮我下载新的安装程序（推荐）"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:28
 msgid "Browser Options"
-msgstr "浏览器 选项"
+msgstr "浏览器选项"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:30
 msgid "You can choose which browser to use."
@@ -4234,13 +4239,13 @@ msgid ""
 "recommended)."
 msgstr ""
 "可以选择错误报告如何发送。查看错误报告范例，点击'查看范例'。选择'始终立即发"
-"送'，则当FrostWire遇到内部问题时可以马上联系服务商。选择'始终要求重新审核'，"
-"则告诉FrosWire在发送错误报告给服务商前需征得您的同意。选择'始终忽略所有错"
+"送'，则当FrostWire遇到内部问题时可以马上联系bug服务器。选择'始终要求重新审核'，"
+"则告诉FrosWire在发送错误报告给bug服务器前需征得你的同意。选择'始终忽略所有错"
 "误'，则让FrostWire忽略所有错误（不推荐该选项）。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:99
 msgid "Send Errors Automatically if FrostWire is Frozen"
-msgstr "如果FrostWire被冻结，则自动发送错误"
+msgstr "如果FrostWire僵死（无响应），则自动发送错误"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:40
 msgid "Details Page"
@@ -4248,7 +4253,7 @@ msgstr "详细信息页面"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:42
 msgid "Show details web page after a download starts."
-msgstr "在下载开始后显示详细信息网页。"
+msgstr "当一个下载开始后显示详细信息网页。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:21
 msgid "License Warning"
@@ -4258,7 +4263,8 @@ msgstr "授权警告"
 msgid ""
 "You can choose whether to be warned about downloading a file without a "
 "license."
-msgstr "你可以选择是否在下载一个没有许可证的文件时收到警告。"
+msgstr ""
+"你可以选择是否在下载一个没有许可证的文件时收到警告。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:30
 msgid "Show License Warning:"
@@ -4278,10 +4284,10 @@ msgid ""
 "router if you choose manual configuration, but FrostWire will try its best "
 "so you don't have to.)"
 msgstr ""
-"FrostWire可以自动配置为透过防火墙或路由器进行运行。使用通用即插即用(UpnP)和其"
-"他内网互联技术，FrostWire能够自动配置您的路由器或防火墙，使其达到最佳效果。如"
-"果您的路由器不支持UPnP，FrostWire可以手动设置为外部接口。(如果选择手动配置，"
-"则必需设定您的路由器。不过FrostWire会尽量设置，因而无需您设置。)"
+"FrostWire可以自动配置为透过防火墙或路由器运行。使用通用即插即用（UpnP）和其"
+"他内网互联技术，FrostWire能够自动配置你的路由器或防火墙，使其达到最佳效果。如"
+"果你的路由器不支持UPnP，FrostWire可以手动设置为外部接口。（如果选择手动配置，"
+"则你可能需要相应设置你的路由器，不过FrostWire会尽力而为以便无需你动手设置路由器。）"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:63
 msgid "Use random port (Recommended)"
@@ -4306,15 +4312,15 @@ msgstr "当手动强制设置端口时，必须输入 1 到 65535 之间的数�
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:178
 msgid "You must enter a valid port range."
-msgstr "您必须输入合法的端口范围。"
+msgstr "你必须输入合法的端口范围。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:23
 msgid "Filter Results"
-msgstr "过滤"
+msgstr "过滤结果"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:25
 msgid "You can filter out search results containing specific words."
-msgstr "你 可以 过滤 调包含特殊 文字的 搜索 结果."
+msgstr "你可以过滤得带包含指定文字的搜索结果。"
 
 #. *
 #. * Key for the locale-specifis string for the adult content check box
@@ -4343,7 +4349,7 @@ msgstr "图片浏览器"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:36
 msgid "Library Included Folders"
-msgstr "共享 文件夹 "
+msgstr "收藏库包含文件夹 "
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:38
 msgid "You can choose the folders for include files when browsing the library."
@@ -4351,11 +4357,11 @@ msgstr "你可以选择用于浏览库时包含有文件的文件夹。 "
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:18
 msgid "Internet Radio Stations"
-msgstr "网络电台"
+msgstr "互联网广播电台"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:20
 msgid "You can restore the default internet radio stations."
-msgstr "你 可以 选择 缺省的 关闭 动作. "
+msgstr "你可以恢复默认的互联网广播电台。 "
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:42
 msgid "Total Radio Stations"
@@ -4367,24 +4373,25 @@ msgstr "恢复默认的广播电台"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:19
 msgid "Locale Preferencing"
-msgstr "优先 选择 "
+msgstr "区域设置偏好"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:21
 msgid "You can choose to preference hosts using the same language as you."
-msgstr "您可以优先选择与您使用同种语言的主机。"
+msgstr "你可以优先选择与你使用同种语言的主机。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:24
 msgid "Turn preferencing on:"
-msgstr "优先 选择 "
+msgstr "优先选择："
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:22
 msgid "Maximum Searches"
-msgstr "最多 搜索 数目"
+msgstr "最大搜索数目"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:24
 msgid ""
 "You can set the maximum number of simultaneous searches you can perform."
-msgstr "你可以设置能执行的最多的同时搜索数."
+msgstr ""
+"你可以设置可用的最大并发搜索数。"
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4393,7 +4400,7 @@ msgstr "你可以设置能执行的最多的同时搜索数."
 #.
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:31
 msgid "Maximum Searches:"
-msgstr "最多 搜索 数:"
+msgstr "最多搜索数："
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:86
 msgid "The maximum parallel searches you can make is "
@@ -4407,28 +4414,32 @@ msgid ""
 "disable this interface, FrostWire will revert to binding to an arbitrary "
 "address."
 msgstr ""
-"告诉FrostWire对指定网络界面的IP地址进行向外连接绑定。听套接口仍可听到所有可用"
-"界面。"
+"让FrostWire把输出连接绑定到一个指定网络接口的IP地址。"
+"监听套接口将继续监听所有可用接口。这对多宿主主机是有用的。"
+"如果你稍后禁用这个接口，FrostWire将恢复为绑定到一个任意的地址。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:63
 msgid "Use a specific network interface."
-msgstr "使用指定网络界面。"
+msgstr "使用一个指定的网络接口。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:123
 msgid ""
 "FrostWire was unable to determine which network interfaces are available on "
 "this machine. Outgoing connections will bind to any arbitrary interface."
-msgstr "FrostWire无法决定哪个网络界面适用于此机器。向外连接将绑定任一界面。"
+msgstr ""
+"FrostWire无法确认这台机器上哪个网络接口可用。"
+"输出连接连接将绑定到一个任意的接口。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:20
 msgid "Notifications"
-msgstr "位置 "
+msgstr "通知"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:22
 msgid ""
 "FrostWire can display popups to notify you when certain things happen, such "
 "as a download completing. "
-msgstr "当某些东西发生时，FrostWire会显示弹出窗口告知您，例如：下载完成时。"
+msgstr ""
+"有事情发生时，FrostWire会显示弹出窗口通知你，比如完成一个下载的时候。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:25
 msgid "Show Notifications:"
@@ -4442,7 +4453,8 @@ msgstr "部分文件"
 msgid ""
 "You can choose whether or not to automatically share partially downloaded "
 "files."
-msgstr "你可以选择是否自动共享部分下载的文件。"
+msgstr ""
+"你可以选择是否自动共享部分下载的文件。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:28
 msgid "Allow Partial Sharing:"
@@ -4456,7 +4468,8 @@ msgstr "FrostWire媒体播放器:"
 msgid ""
 "You can play your media with the native operating system player if the "
 "format is supported."
-msgstr "你可以用本地操作系统播放器来播放媒体文件（如果格式支持）。"
+msgstr ""
+"你可以用本地操作系统播放器来播放媒体文件，只要格式支持。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:42
 msgid "Play with the native media player"
@@ -4468,13 +4481,14 @@ msgstr "用内置播放器来播放搜索结果中的视频预览"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:20
 msgid "FrostWire Popups"
-msgstr "使用 FrostWire (&U) "
+msgstr "FrostWire弹出窗口"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:22
 msgid ""
 "Redisplay messages for which you have chosen 'Do not display this message "
 "again' or 'Always use this answer'."
-msgstr "对于已选择'不再显示此信息'或'始终这样回答'，重新显示信息。"
+msgstr ""
+"对于已选择'不再显示此信息'或'始终这样回答'的项目，重新显示信息。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:29
 msgid "Revert to Default:"
@@ -4486,7 +4500,7 @@ msgstr "登录详情"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:41
 msgid "Configure username and password to be used for the proxy."
-msgstr "配置代理服务器用户名及密码"
+msgstr "配置用于代理服务器的用户名及密码"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:49
 msgid "Enable Authentication:"
@@ -4498,11 +4512,11 @@ msgstr "用户名："
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:63
 msgid "Password:"
-msgstr "密码"
+msgstr "密码："
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:37
 msgid "Proxy Options"
-msgstr "播放 选项: "
+msgstr "代理选项"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:39
 msgid "Configure Proxy Options for FrostWire."
@@ -4510,7 +4524,7 @@ msgstr "配置FrostWire代理服务器选项"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:46
 msgid "No Proxy"
-msgstr "无代理服务器"
+msgstr "没有代理服务器"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:48
 msgid "Socks v4"
@@ -4538,11 +4552,11 @@ msgstr "代理服务器："
 #.
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:64
 msgid "Port:"
-msgstr "端口"
+msgstr "端口："
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/SearchEnginesPaneItem.java:23
 msgid "Search Engines"
-msgstr "关闭 搜索 "
+msgstr "搜索引擎"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/SearchEnginesPaneItem.java:25
 msgid "Select which search engines you want FrostWire to use."
@@ -4597,7 +4611,7 @@ msgstr "立即关闭"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:66
 msgid "Minimize to System Tray"
-msgstr "最小化 到系统托盘"
+msgstr "最小化到系统托盘"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:70
 msgid "Show dialog to ask before close"
@@ -4605,7 +4619,7 @@ msgstr "关闭前显示询问对话框"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:22
 msgid "Smart Search"
-msgstr "智能搜索 "
+msgstr "智能搜索"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:24
 msgid ""
@@ -4629,13 +4643,14 @@ msgstr "重置智能搜索数据库"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:80
 msgid "If you continue you will erase all the information related to\n"
-msgstr "如果继续，您会清除所有有关信息\n"
+msgstr "如果继续，你会清除所有有关信息\n"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:24
 msgid ""
 "You can choose whether or not to automatically run FrostWire when your "
 "computer starts."
-msgstr "你可以选择电脑启动时是否自动运行FrostWire。"
+msgstr ""
+"你可以选择电脑启动时是否自动运行FrostWire。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:31
 msgid "Run on System Startup:"
@@ -4651,24 +4666,25 @@ msgstr "可以在状态栏显示宽带流量。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:43
 msgid "Show Bandwidth Indicator:"
-msgstr "显示频宽指标："
+msgstr "显示带宽指示器："
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:21
 msgid "Connection Quality Indicator"
-msgstr "连接质量指标"
+msgstr "连接质量指示器"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:23
 msgid ""
 "You can display a measurement of your connection quality in the status bar."
-msgstr "可以在状态栏中显示连接质量状态。"
+msgstr ""
+"可以在状态栏中显示连接质量的测量值。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:30
 msgid "Show Connection Quality Indicator:"
-msgstr "显示连接质量指标："
+msgstr "显示连接质量指示器："
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:21
 msgid "Firewall Indicator"
-msgstr "防火墙 "
+msgstr "防火墙指示器"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:23
 msgid "You can display your firewall status in the status bar."
@@ -4676,12 +4692,13 @@ msgstr "可以在状态栏中显示防火墙状态。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:30
 msgid "Show Firewall Indicator:"
-msgstr "显示防火墙状态："
+msgstr "显示防火墙指示器："
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:26
 msgid "BitTorrent Connection Settings"
-msgstr "BitTorrent连接:设置"
+msgstr "BitTorrent连接设置"
 
+##############################I'M HERE ###########################3
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:28
 msgid ""
 "Adjust connection settings to make better use of your internet connection"
@@ -4749,7 +4766,7 @@ msgid ""
 "Seeding is the process of connecting to a torrent when you have a complete "
 "file(s). Pieces of the seeded file(s) will be available to everybody. While "
 "downloading pieces are always available to other peers in the swarm."
-msgstr "当您有完整文件时，作种是连接种子文件的过程。每个人可获取点滴种子文件。"
+msgstr "当你有完整文件时，作种是连接种子文件的过程。每个人可获取点滴种子文件。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:36
 msgid "Anonymous Usage Statistics"
@@ -5054,7 +5071,7 @@ msgstr "无法设置文件位置，下载已完成。"
 msgid ""
 "Could not save download to the folder {0}, because you do not have write "
 "access to it."
-msgstr "由于您没有写入权限，无法保存下载至文件夹{0}。"
+msgstr "由于你没有写入权限，无法保存下载至文件夹{0}。"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:98
 #, java-format
@@ -5189,7 +5206,7 @@ msgstr "父文件夹的路径超过文件系统允许的最大路径长度。{0}
 #~ "a download in progress by control-clicking the download and choosing "
 #~ "Change File Location."
 #~ msgstr ""
-#~ "可以保存个人下载到自定义位置。右击一份搜索结果，选择下载至。您还可以通过右"
+#~ "可以保存个人下载到自定义位置。右击一份搜索结果，选择下载至。你还可以通过右"
 #~ "击下载，选择更改文件位置进行更改进程中的下载位置。"
 
 #~ msgid ""
@@ -5220,7 +5237,7 @@ msgstr "父文件夹的路径超过文件系统允许的最大路径长度。{0}
 #~ "program of your choice."
 #~ msgstr ""
 #~ "想要在默认的媒体播放器播放音乐而非在FrostWire？右击FrostWire状态栏，不选"
-#~ "择'显示媒体播放器'。然后进入工具-选项-应用程序帮助，设置您所选的程序。"
+#~ "择'显示媒体播放器'。然后进入工具-选项-应用程序帮助，设置你所选的程序。"
 
 #~ msgid ""
 #~ "FrostWire's Community Chat Tab requires you to have a nickname to "
@@ -5228,7 +5245,7 @@ msgstr "父文件夹的路径超过文件系统允许的最大路径长度。{0}
 #~ msgstr "FrostWire的社区聊天标签需要用昵称在聊天室中与其他人交流。"
 
 #~ msgid "Type your chat nickname here (any name):"
-#~ msgstr "在此输入您的聊天昵称（任何名字）："
+#~ msgstr "在此输入你的聊天昵称（任何名字）："
 
 #~ msgid "Show Smi&leys"
 #~ msgstr "显示表情符号"
@@ -5242,7 +5259,7 @@ msgstr "父文件夹的路径超过文件系统允许的最大路径长度。{0}
 #~ msgid ""
 #~ "FrostWire's Community Chat Tab requires you to have a nickname to "
 #~ "communicate with others in the chatrooms"
-#~ msgstr "FrostWire社区交流标签需要您用昵称在聊天室与其他人交流"
+#~ msgstr "FrostWire社区交流标签需要你用昵称在聊天室与其他人交流"
 
 #~ msgid "The chosen nickname is not allowed."
 #~ msgstr "选中的昵称不可用。"
@@ -5411,7 +5428,7 @@ msgstr "父文件夹的路径超过文件系统允许的最大路径长度。{0}
 #~ "FrostWire was unable to create your settings folder and is using a "
 #~ "temporary folder.  Your settings may be deleted when you close FrostWire. "
 #~ msgstr ""
-#~ "FrostWire无法创建您的文件夹设置，正使用临时文件夹。FrostWire关闭时，设置可"
+#~ "FrostWire无法创建你的文件夹设置，正使用临时文件夹。FrostWire关闭时，设置可"
 #~ "能删除。"
 
 #~ msgid "Add..."
@@ -5544,7 +5561,7 @@ msgstr "父文件夹的路径超过文件系统允许的最大路径长度。{0}
 #~ msgid ""
 #~ "You can choose the default action that FrostWire will perform when you "
 #~ "try to download a file that already exists on disk."
-#~ msgstr "您可以选择当您下载已存在文件的FrostWire默认设置。"
+#~ msgstr "你可以选择当你下载已存在文件的FrostWire默认设置。"
 
 #~ msgid "Always Show the 'Save As' Dialog"
 #~ msgstr "始终显示'另存为'对话框"
@@ -5825,10 +5842,10 @@ msgstr "父文件夹的路径超过文件系统允许的最大路径长度。{0}
 #~ msgstr "加载 connection management..."
 
 #~ msgid "You have already downloaded {0}"
-#~ msgstr "您已经下载了{0}"
+#~ msgstr "你已经下载了{0}"
 
 #~ msgid "You are already downloading this file to {0}"
-#~ msgstr "您已经下载此文档于{0}"
+#~ msgstr "你已经下载此文档于{0}"
 
 #~ msgid "&Refresh Connections ("
 #~ msgstr "所有 邻居"
@@ -5943,7 +5960,7 @@ msgstr "父文件夹的路径超过文件系统允许的最大路径长度。{0}
 #~ msgid ""
 #~ "FrostWire has detected a corruption in the file {0}. Do you want to "
 #~ "continue the download?"
-#~ msgstr "FrostWire 发现文档有损毁{0}。您想继续下载吗?"
+#~ msgstr "FrostWire 发现文档有损毁{0}。你想继续下载吗?"
 
 #~ msgid "Lookup File with Bitzi"
 #~ msgstr "Bitzi 网 查找..."
@@ -5982,7 +5999,7 @@ msgstr "父文件夹的路径超过文件系统允许的最大路径长度。{0}
 #~ msgstr "连接 不上 主机"
 
 #~ msgid "You"
-#~ msgstr "您"
+#~ msgstr "你"
 
 #~ msgid "Could not send chat message"
 #~ msgstr "不能 浏览 主机 {0} ."
@@ -6605,7 +6622,7 @@ msgstr "父文件夹的路径超过文件系统允许的最大路径长度。{0}
 #~ msgstr "错误的 共享 文件夹. 请用 另 一个 文件夹 或者恢复到 缺省 设置."
 
 #~ msgid "To try your new skin, you must restart FrostWire."
-#~ msgstr "要尝试新貌，您必须重下次 启动 FrostWire, 皮肤 将会 改变..."
+#~ msgstr "要尝试新貌，你必须重下次 启动 FrostWire, 皮肤 将会 改变..."
 
 #~ msgid "Get New Skins"
 #~ msgstr "选新皮肤"
