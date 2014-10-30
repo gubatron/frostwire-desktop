@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-28 14:37+0300\n"
 "PO-Revision-Date: 2008-08-05 18:18+0000\n"
-"Last-Translator: FTA <Unknown>\n"
+"Last-Translator: win32re <win32re@gmail.com>\n"
 "Language-Team: none\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -1133,12 +1133,16 @@ msgid ""
 "<strong>Keep FrostWire Open</strong> until the file has been downloaded by "
 "at least one other friend."
 msgstr ""
+"<strong>Ostavi FrostWire otvoren</strong> dok datoteka nije preuzeo "
+"barem jedan prijatelj."
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:220
 msgid ""
 "<strong>The more, the merrier.</strong> The more people sharing the faster "
 "it can be downloaded by others."
 msgstr ""
+"<strong>Sto vise, to bolje.</strong> Sto vise ljudi dijeli to se brze "
+"moze preuzeti od ostalih."
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:221
 msgid ""
@@ -1146,6 +1150,9 @@ msgid ""
 "link and you seed the files they will be available to everybody on the "
 "BitTorrent network."
 msgstr ""
+"<strong>Vase datoteke mogu biti otkrivene.</strong> Kada podijelite ovaj "
+"link i dijelite ove datoteke one ce biti dostupne svima na "
+"BitTorrent mrezi."
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:223
 msgid "Tips"
@@ -1174,11 +1181,11 @@ msgstr "Kopiraj izvješće"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:408
 msgid "Copy entire message to Clipboard"
-msgstr "Kopiraj u međuspremnik"
+msgstr "Kopiraj u cijelu poruku u medjuspremnik"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:415
 msgid "Message copied to clipboard."
-msgstr "Kopiraj u međuspremnik"
+msgstr "Poruka kopirana u medjuspremnik."
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:427
 msgid "Copy Link"
@@ -1190,19 +1197,19 @@ msgstr "Kopiraj u međuspremnik"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:435
 msgid "Link copied to clipboard."
-msgstr "Kopiraj u međuspremnik"
+msgstr "Poveznica kopirana u medjuspremnik"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:450
 msgid "Copy Magnet URL to Clipboard"
-msgstr "Kopiraj u međuspremnik"
+msgstr "Kopiraj magnet URL u medjuspremnik"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:457
 msgid "Magnet copied to clipboard."
-msgstr "Kopiraj u međuspremnik"
+msgstr "Magnet kopiran u medjuspremnik."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:58
 msgid "Torrent Data Save Folder"
-msgstr "Nanovo ucitaj direktorije za razmjenu."
+msgstr "Folder za spremanje torrent datoteka"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:90
 msgid "You forgot to enter a path for the Torrent Data Folder."
@@ -1305,7 +1312,7 @@ msgstr "Audio pregled"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:303
 msgid "Play Audio preview of"
-msgstr "Pustite Audio pregled od"
+msgstr "Pustite zvucni pregled od"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:363
 msgid "Support %s with a tip, donation or voluntary payment"
@@ -1341,7 +1348,7 @@ msgstr "Pomoc pri korištenju FrostWire-a."
 #: src/com/frostwire/gui/library/AddLibraryDirectoryAction.java:45
 #: src/com/limegroup/gnutella/gui/ListEditor.java:238
 msgid "Add"
-msgstr "Dodati"
+msgstr "Dodaj"
 
 #: src/com/frostwire/gui/library/Device.java:294
 msgid ""
