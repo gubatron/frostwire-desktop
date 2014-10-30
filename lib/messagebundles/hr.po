@@ -4693,11 +4693,11 @@ msgstr "Pokazati indikator kvalitete mreze:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:20
 msgid "Firewall Indicator"
-msgstr "Firewall prikazatelj"
+msgstr "Indikator vatrozida"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:22
 msgid "You can display your firewall status in the status bar."
-msgstr ""
+msgstr "Mozete prikazati status vatrozida u status baru."
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:29
 msgid "Show Firewall Indicator:"
@@ -4711,8 +4711,7 @@ msgstr "BitTorent postavke"
 msgid ""
 "Adjust connection settings to make better use of your internet connection"
 msgstr ""
-"Podesite postavke konekcije da biste bolje koristili vasu internetsku "
-"konekciju"
+"Podesite postavke konekcije da biste bolje koristili vasu internetsku konekciju"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:29
 msgid "Maximum active downloads"
@@ -4734,7 +4733,7 @@ msgstr "Maksimalno aktivnih seed-ova"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:34
 msgid "BitTorrent Global Tranfer Speeds"
-msgstr "Golbalne brzine BitTorrent prijenosa"
+msgstr "Globalne brzine BitTorrent prijenosa"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:36
 msgid ""
@@ -4757,6 +4756,8 @@ msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
 msgstr ""
+"Biljeska: Jako niske brzine slanja (leechanja) bi mogle biti kaznjene od strane nekih pratitelja, "
+"sto bi moglo rezultirati sporijim preuzimanjima."
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:52
 msgid "Upload Speed:"
@@ -4774,7 +4775,7 @@ msgstr "Maksimalna brzina"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:44
 msgid "Choose the folder where downloads will be saved to"
-msgstr "Izaberite mapu u koju ce se preuzimanja spremati:"
+msgstr "Izaberite mapu u koju ce se preuzimanja spremati"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:40
 msgid ""
@@ -4794,6 +4795,10 @@ msgid ""
 "any information that can personally identify you will be stored on disk or "
 "sent through the network."
 msgstr ""
+"Posalji anonimne statistike koristenja tako da FrostWire moze biti poboljsan "
+"kvalitetnije. Informacije o trazenim, dijeljenim, sviranim ili "
+"informacije koje vas mogu osobno identificirati nece biti spremljeni na disk ili "
+"poslani kroz mrezu."
 
 #: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:38
 msgid "Send anonymous usage statistics"
@@ -4801,7 +4806,7 @@ msgstr "Poslati anonimne statistike koristenja"
 
 #: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:26
 msgid "Video Options"
-msgstr "Još postavki"
+msgstr "Video postavke"
 
 #: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
 msgid "You can choose which video player to use."
@@ -4818,13 +4823,11 @@ msgstr "Video igrac"
 
 #: src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:38
 msgid "You can see and share your file with peers in your local Wi-Fi network."
-msgstr ""
-"Mozete vidjeti i dijeliti vase datoteke sa peer-ovima u vasoj lokalnoj Wi-Fi "
-"konekciji."
+msgstr "Mozete vidjeti i dijeliti vase datoteke sa peerovima u vasoj lokalnoj Wi-Fi mrezi."
 
 #: src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:45
 msgid "Active search and discovery of local peer files."
-msgstr "Aktivna pretraga i otkrivanje lokalnih peer dokumenata"
+msgstr "Aktivna pretraga i otkrivanje lokalnih peer dokumenata."
 
 #: src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:39
 msgid "You can have FrostWire import newly downloaded songs into iTunes."
@@ -4832,7 +4835,7 @@ msgstr "FrostWire moze uvesti novo preuzene pjesme u iTunes."
 
 #: src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:41
 msgid "Enable iTunes importing:"
-msgstr "Ukljuciti iTunes uvoz"
+msgstr "Ukljuciti iTunes uvoz:"
 
 #: src/com/limegroup/gnutella/gui/search/LabeledRangeSlider.java:60
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:108
@@ -4854,7 +4857,7 @@ msgstr "%s Video datoteke pronadene (ukljucujuci .avi, .mpg, .wmv i jos vise)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:160
 msgid "%s Image files found (including .jpg, .gif, .png and more)"
-msgstr "%s Dadoteke slika pronadene (ukljucujuci .jpg, .gif, .png i jos vise)"
+msgstr "%s Slika pronadene (ukljucujuci .jpg, .gif, .png i jos vise)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:166
 msgid "%s Document files found (including .html, .txt, .pdf, and more)"
@@ -4862,8 +4865,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:171
 msgid "%s Program files found (including .exe, .zip, .gz, and more)"
-msgstr ""
-"%s Dokumenti progrrama pronadeni (ukljucujuci .exe, .zip, .gz i jos vise)"
+msgstr "%s Dokumenti progrrama pronadeni (ukljucujuci .exe, .zip, .gz i jos vise)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:176
 msgid ""
