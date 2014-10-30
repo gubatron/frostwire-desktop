@@ -3988,7 +3988,7 @@ msgstr "Instaliraj nadogradnju"
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:131
 #, fuzzy
 msgid "Check for update"
-msgstr "Provjeriti za azuracije"
+msgstr "Potraziti nadogradnje"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:42
 msgid "&View"
@@ -4016,7 +4016,7 @@ msgstr "&Povecati velicinu fonta"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:52
 msgid "Increases the Table Font Size"
-msgstr ""
+msgstr "Povecava velicinu fonta tablica"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:54
 msgid "&Decrease Font Size"
@@ -4024,7 +4024,7 @@ msgstr "&Smanjiti velicinu fonta"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:54
 msgid "Decreases the Table Font Size"
-msgstr ""
+msgstr "Smanjuje velicinu fonta tablica"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:56
 msgid "&Reset Font Size"
@@ -4032,7 +4032,7 @@ msgstr "&Resetirati velicinu fonta"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:56
 msgid "Reset the Table Font Size"
-msgstr ""
+msgstr "Resetiraj velicinu fonta tablica"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:66
 msgid "C&hange Language"
@@ -4069,6 +4069,8 @@ msgid ""
 "You have made changes to some of FrostWire's settings. Would you like to "
 "save these changes?"
 msgstr ""
+"Napravili ste promjene u postavkama FrostWire-a. Zelite li ih "
+"spremiti?"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:237
 msgid "Search here"
@@ -4086,7 +4088,7 @@ msgstr "Osnovno"
 #. player
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:280
 msgid "Player"
-msgstr "Igrac"
+msgstr "Svirac"
 
 #. search options
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:283
@@ -4126,7 +4128,7 @@ msgstr "Nadogradnje"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:312
 msgid "Firewall"
-msgstr "Firewall"
+msgstr "Vatrozid"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:313
 msgid "Proxy"
@@ -4203,7 +4205,7 @@ msgstr "Mozete izabrati koji Audio svirac zelite koristiti"
 #.
 #: src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:29
 msgid "Audio Player"
-msgstr "Player zvuka"
+msgstr "Svirac zvuka"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:18
 msgid "Text Autocompletion"
@@ -4215,7 +4217,7 @@ msgstr "Mozete omoguciti ili onemoguciti dovrsavanje teksta"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:27
 msgid "Enable Autocompletion of Text Fields:"
-msgstr "Omoguciti dovrsavanje teksta"
+msgstr "Omoguciti automatsko dovrsavanje tekstualnih polja:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
 msgid "Automatic Installer Download"
@@ -4227,6 +4229,9 @@ msgid ""
 "when it's available. It won't install it but next time you start FrostWire "
 "it'll let you know that it's there for you."
 msgstr ""
+"FrostWire moze automatski preuzeti novi instalacijski carobnjak preko BitTorrenta za vas "
+"kad je dostupan. Nece ga instalirati ali sljedeci put kada se FrostWire pokrene "
+"dati ce vam na znanje da je dostupan za instalaciju."
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:24
 msgid "Download new installers for me (Recommended)"
@@ -4238,7 +4243,7 @@ msgstr "Postavke trazilice"
 
 #: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:28
 msgid "You can choose which browser to use."
-msgstr "Mozete izabrati koju trazilicu zelite koristiti"
+msgstr "Mozete izabrati koju trazilicu zelite koristiti."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4247,7 +4252,7 @@ msgstr "Mozete izabrati koju trazilicu zelite koristiti"
 #.
 #: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:35
 msgid "Browser"
-msgstr "Pretraziti"
+msgstr "Pretrazivac"
 
 #: src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:40
 msgid "View Example"
@@ -4286,10 +4291,12 @@ msgid ""
 "You can choose whether to be warned about downloading a file without a "
 "license."
 msgstr ""
+"Mozete odabrati zelite li biti upozoreni o preuzimanju datoteka bez "
+"dozvole."
 
 #: src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:29
 msgid "Show License Warning:"
-msgstr "Pokazati upozorenje licence"
+msgstr "Pokazati upozorenje licence:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:47
 msgid "Router Configuration"
