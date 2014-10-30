@@ -17,13 +17,29 @@
 
 package com.frostwire.gui.bittorrent;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.torrent.CopyrightLicenseBroker;
+import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.util.HttpClient;
+import com.frostwire.util.HttpClientFactory;
+import com.frostwire.uxstats.UXAction;
+import com.frostwire.uxstats.UXStats;
+import com.limegroup.gnutella.gui.*;
+import com.limegroup.gnutella.settings.SharingSettings;
+import net.miginfocom.swing.MigLayout;
+import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
+import org.gudy.azureus2.core3.internat.MessageText;
+import org.gudy.azureus2.core3.torrent.*;
+import org.gudy.azureus2.core3.util.Debug;
+import org.gudy.azureus2.core3.util.TorrentUtils;
+import org.gudy.azureus2.core3.util.TrackersUtil;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileFilter;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -32,51 +48,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.filechooser.FileFilter;
-
-import net.miginfocom.swing.MigLayout;
-
-import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
-import org.gudy.azureus2.core3.internat.MessageText;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.torrent.TOTorrentCreator;
-import org.gudy.azureus2.core3.torrent.TOTorrentException;
-import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
-import org.gudy.azureus2.core3.torrent.TOTorrentProgressListener;
-import org.gudy.azureus2.core3.util.Debug;
-import org.gudy.azureus2.core3.util.TorrentUtils;
-
-import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.torrent.CopyrightLicenseBroker;
-import com.frostwire.torrent.PaymentOptions;
-import com.frostwire.util.HttpClient;
-import com.frostwire.util.HttpClientFactory;
-import com.frostwire.uxstats.UXAction;
-import com.frostwire.uxstats.UXStats;
-import com.limegroup.gnutella.gui.FileChooserHandler;
-import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.LimeTextField;
-import com.limegroup.gnutella.settings.SharingSettings;
-import org.gudy.azureus2.core3.util.TrackersUtil;
 
 /**
  * @author gubatron
@@ -89,53 +60,34 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     /**
      * TRACKER TYPES
      */
-    static final int TT_LOCAL = 1; // I Don't Think So
-    static final int TT_EXTERNAL = 2;
-    static final int TT_DECENTRAL = 3;
+    //static final int TT_LOCAL = 1; // I Don't Think So
+    private static final int TT_EXTERNAL = 2;
+    private static final int TT_DECENTRAL = 3;
 
-    public enum TriggerInThread {
-        SWT_THREAD, ANY_THREAD, NEW_THREAD
-    }
+    private static final String TT_EXTERNAL_DEFAULT = "http://";
 
-    static final String TT_EXTERNAL_DEFAULT = "http://";
-
-    /** dht:// */
-    static final String TT_DECENTRAL_DEFAULT = TorrentUtils.getDecentralisedEmptyURL().toString();
-
-    private static String default_save_dir = SharingSettings.TORRENTS_DIR_SETTING.getValueAsString();
-
-    private static String comment = I18n.tr("Torrent File Created with FrostWire http://www.frostwire.com");
+    private final static String comment = I18n.tr("Torrent File Created with FrostWire http://www.frostwire.com");
 
     private static int tracker_type = TT_EXTERNAL;
 
     // false : singleMode, true: directory
-    boolean create_from_dir;
-    String singlePath = null;
-    String directoryPath = null;
-    String savePath = null;
+    private boolean create_from_dir;
+    private String singlePath = null;
+    private String directoryPath = null;
+    private String dotTorrentSavePath = null;
 
-    String trackerURL = TT_EXTERNAL_DEFAULT;
+    private String trackerURL = TT_EXTERNAL_DEFAULT;
 
-    boolean computed_piece_size = true;
-    long manual_piece_size;
+    private  boolean computed_piece_size = true;
+    private long manual_piece_size;
 
-    boolean useMultiTracker = false;
-    boolean useWebSeed = false;
+    private boolean useMultiTracker = false;
     private boolean addOtherHashes = false;
 
     //String multiTrackerConfig = "";
     private final List<List<String>> trackers;
 
-    String webSeedConfig = "";
-    //Map webseeds = new HashMap();
-
-    boolean autoOpen = true;
-    boolean autoHost = false;
-    boolean permitDHT = true;
-    boolean privateTorrent = false;
-
-    TOTorrentCreator creator = null;
-
+    private boolean autoOpen = true;
     private File _saveDir;
 
     private final Container _container;
@@ -148,11 +100,13 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
     private LimeTextField _textSelectedContent;
     private JButton _buttonSelectFile;
+
+    /** Only used on MacOSX, as FileChooser does not support both File and Directory selection. */
+    private JButton _buttonSelectFolder;
     private JLabel _labelTrackers;
     private JTextArea _textTrackers;
     private JCheckBox _checkStartSeeding;
     private JCheckBox _checkUseDHT;
-    private JLabel _labelWebseeds;
     private JTextArea _textWebseeds;
 
     private JButton _buttonSaveAs;
@@ -161,9 +115,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(942, 750);
 
     private JScrollPane _textTrackersScrollPane;
-    private JFileChooser _fileChooser;
     private String _invalidTrackerURL;
-    private JFileChooser _saveAsDialog;
     private JButton _buttonClose;
 
     public CreateTorrentDialog(JFrame frame) {
@@ -239,9 +191,15 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         _textSelectedContent.setToolTipText(I18n.tr("These box shows the contents you've selected for your new .torrent.\nEither a file, or the contents of a folder."));
         torrentContentsPanel.add(_textSelectedContent, "north, growx, gap 5 5 0 0, wrap");
 
-        _buttonSelectFile = new JButton(I18n.tr("Select File or Folder..."));
-        _buttonSelectFile.setToolTipText(I18n.tr("Click here to select a single file or a folder as the content indexed by your new .torrent"));
-        torrentContentsPanel.add(_buttonSelectFile, "width 175px, align right, gaptop 5, gapright 5, gapbottom 5");
+        JPanel contentSelectionButtonsPanel = new JPanel(new MigLayout("ins 0, nogrid, fillx, wrap 1",""));
+        _buttonSelectFile = new JButton(I18n.tr("Select File"));
+        _buttonSelectFile.setToolTipText(I18n.tr("Click here to select a single file as the content indexed by your new .torrent"));
+        _buttonSelectFolder = new JButton(I18n.tr("Select Folder"));
+        _buttonSelectFolder.setToolTipText(I18n.tr("Click here to select a folder as the content indexed by your new .torrent"));
+
+        contentSelectionButtonsPanel.add(_buttonSelectFile, "align right, width 175px, gaptop 5, gapright 5, gapbottom 5");
+        contentSelectionButtonsPanel.add(_buttonSelectFolder, "align right, width 175px, gaptop 5, gapright 5, gapbottom 5");
+        torrentContentsPanel.add(contentSelectionButtonsPanel,"width 380px, align right, gaptop 5, gapright 5, gapbottom 5");
 
         _basicTorrentPane.add(torrentContentsPanel, "growx, wrap");
     }
@@ -271,7 +229,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         _textTrackersScrollPane = new JScrollPane(_textTrackers);
         torrentTrackingPanel.add(_textTrackersScrollPane, "gapright 5, gapleft 80, gapbottom 5, hmin 165px, growx 60, growy, wrap");
 
-        _labelWebseeds = new JLabel(I18n.tr("Web Seeds Mirror URLs"));
+        JLabel _labelWebseeds = new JLabel(I18n.tr("Web Seeds Mirror URLs"));
         _labelWebseeds.setToolTipText(I18n.tr("If these files can be downloaded from the web, enter the URLs of each possible mirror, one per line (GetRight style)."));
         torrentTrackingPanel.add(_labelWebseeds, "aligny top, pushy, gapleft 5, gapright 10, wmin 150px");
 
@@ -311,6 +269,13 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 onButtonSelectFile();
+            }
+        });
+
+        _buttonSelectFolder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onButtonSelectFolder();
             }
         });
 
@@ -356,43 +321,59 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         _labelTrackers.setForeground(useDHT ? Color.GRAY : Color.BLACK);
     }
 
-    protected void onButtonClose(ActionEvent e) {
+    void onButtonClose(ActionEvent e) {
         GUIUtils.getDisposeAction().actionPerformed(e);
     }
 
-    private void initFileChooser(int fileSelectionMode) {
-        if (_fileChooser == null) {
-            _fileChooser = new JFileChooser();
-            _fileChooser.setMultiSelectionEnabled(false);
-            _fileChooser.setApproveButtonText(I18n.tr("Select"));
-            _fileChooser.setSelectedFile(FileChooserHandler.getLastInputDirectory());
+    private void showFileChooser(final int fileFolderChoosingMode) {
+        FileFilter directoryFilesAllowedFilter = new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.isDirectory() || f.isFile();
+            }
+
+            @Override
+            public String getDescription() {
+                String desc = I18n.tr("Select a single file or one directory");
+                if (fileFolderChoosingMode == JFileChooser.FILES_ONLY) {
+                    desc = I18n.tr("Select a single file");
+                } else if (fileFolderChoosingMode == JFileChooser.DIRECTORIES_ONLY) {
+                    desc = I18n.tr("Select a single directory");
+                }
+                return desc;
+            }
+        };
+
+        File directory = FileChooserHandler.getLastInputDirectory();
+        File chosenFile = null;
+
+        if (fileFolderChoosingMode == JFileChooser.FILES_ONLY) {
+            chosenFile = FileChooserHandler.getInputFile(GUIMediator.getAppFrame(),
+                    I18n.tr("Select a single file"),
+                    directory,
+                    directoryFilesAllowedFilter);
+        } else if (fileFolderChoosingMode == JFileChooser.DIRECTORIES_ONLY) {
+            chosenFile = FileChooserHandler.getInputDirectory(GUIMediator.getAppFrame(),
+                    I18n.tr("Select a single directory"),
+                    I18n.tr("Select folder"),
+                    directory,
+                    directoryFilesAllowedFilter);
         }
 
-        _fileChooser.setFileSelectionMode(fileSelectionMode);
-    }
-
-    private void showFileChooser() {
-        int result = _fileChooser.showOpenDialog(this);
-
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File chosenFile = _fileChooser.getSelectedFile();
-            FileChooserHandler.setLastInputDirectory(chosenFile);
-
-            setChosenContent(chosenFile);
-        } else if (result == JFileChooser.ERROR_OPTION) {
-            _textSelectedContent.setText(I18n.tr("Unkown error. Try again please."));
+        if (chosenFile != null) {
+            FileChooserHandler.setLastInputDirectory(chosenFile); //might not be necessary.
+            setChosenContent(chosenFile, fileFolderChoosingMode);
         }
-
     }
 
-    public void setChosenContent(File chosenFile) {
+    public void setChosenContent(File chosenFile, int fileChoosingMode) {
         // if we don't have read permissions on that file/folder...
         if (!chosenFile.canRead()) {
             _textSelectedContent.setText(I18n.tr("Error: You can't read on that file/folder."));
             return;
         }
 
-        correctFileSelectionMode(chosenFile);
+        chosenFile = correctFileSelectionMode(chosenFile, fileChoosingMode);
         setTorrentPathFromChosenFile(chosenFile);
         displayChosenContent(chosenFile);
     }
@@ -403,14 +384,16 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     }
 
     private void setTorrentPathFromChosenFile(File chosenFile) {
-        File canonicalFile = null;
+        File canonicalFile;
         try {
             canonicalFile = chosenFile.getCanonicalFile();
 
             if (canonicalFile.isFile()) {
+                create_from_dir = false;
                 directoryPath = null;
                 singlePath = chosenFile.getAbsolutePath();
             } else if (canonicalFile.isDirectory()) {
+                create_from_dir = true;
                 directoryPath = chosenFile.getAbsolutePath();
                 singlePath = null;
             }
@@ -419,32 +402,32 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         }
     }
 
-    private void correctFileSelectionMode(File chosenFile) {
 
-        //when invoked from the library, we have to init the file chooser.
-        if (_fileChooser == null) {
-            initFileChooser(JFileChooser.FILES_AND_DIRECTORIES);
-        }
-
-        // user chose a folder that looks like a file (aka MacOSX .app files)
-        if (chosenFile.isDirectory() && _fileChooser.getFileSelectionMode() == JFileChooser.FILES_ONLY) {
-            _fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    private File correctFileSelectionMode(File chosenFile, int fileSelectionMode) {
+        if (fileSelectionMode == JFileChooser.DIRECTORIES_ONLY && chosenFile.isFile()) {
+            chosenFile = chosenFile.getParentFile();
         }
 
         create_from_dir = chosenFile.isDirectory();
+
+        return chosenFile;
     }
 
-    protected void onContentSelectionButton(int onContentSelectionButton) {
-        initFileChooser(onContentSelectionButton);
-        showFileChooser();
+
+    void onContentSelectionButton(int onContentSelectionButton) {
+        showFileChooser(onContentSelectionButton);
         revertSaveCloseButtons();
     }
 
-    protected void onButtonSelectFile() {
-        onContentSelectionButton(JFileChooser.FILES_AND_DIRECTORIES);
+    void onButtonSelectFile() {
+            onContentSelectionButton(JFileChooser.FILES_ONLY);
     }
 
-    protected void onButtonSaveAs() {
+    void onButtonSelectFolder() {
+        onContentSelectionButton(JFileChooser.DIRECTORIES_ONLY);
+    }
+
+    void onButtonSaveAs() {
         //Make sure a readable file or folder has been selected.
         if (singlePath == null && directoryPath == null) {
             JOptionPane.showMessageDialog(this, I18n.tr("Please select a file or a folder.\nYour new torrent will need content to index."), I18n.tr("Something's missing"), JOptionPane.ERROR_MESSAGE);
@@ -453,7 +436,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         }
 
         //if user chose a folder that's empty
-        if (directoryPath != null && new File(directoryPath).listFiles().length == 0) {
+        File[] fileArray;
+        if (directoryPath != null &&
+            ((fileArray = new File(directoryPath).listFiles()) != null) &&
+            fileArray.length == 0) {
             JOptionPane.showMessageDialog(this, I18n.tr("The folder you selected is empty."), I18n.tr("Invalid Folder"), JOptionPane.ERROR_MESSAGE);
             _tabbedPane.setSelectedIndex(0);
             return;
@@ -502,7 +488,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
                     if (autoOpen) {
                         SwingUtilities.invokeLater(new Runnable() {
                             public void run() {
-                                GUIMediator.instance().openTorrentForSeed(new File(savePath), _saveDir);
+                                GUIMediator.instance().openTorrentForSeed(new File(dotTorrentSavePath), _saveDir);
                             }
                         });
                     }
@@ -513,41 +499,36 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     }
 
     private boolean showSaveAsDialog() {
-        if (_saveAsDialog == null) {
-            _saveAsDialog = new JFileChooser(SharingSettings.DEFAULT_TORRENTS_DIR);
+        FileFilter saveAsFilter = new FileFilter() {
+            @Override
+            public String getDescription() {
+                return I18n.tr("Torrent File");
+            }
 
-            _saveAsDialog.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.getName().endsWith(".torrent");
+            }
+        };
 
-                @Override
-                public String getDescription() {
-                    return I18n.tr("Torrent File");
-                }
-
-                @Override
-                public boolean accept(File f) {
-                    return f.isDirectory() || f.getName().endsWith(".torrent");
-                }
-            });
-        }
-
-        File suggestedFileName = null;
+        File suggestedFile;
         File torrContents = (create_from_dir) ? new File(directoryPath) : new File(singlePath);
+        suggestedFile = new File(SharingSettings.DEFAULT_TORRENTS_DIR, torrContents.getName() + ".torrent");
 
-        suggestedFileName = new File(_saveAsDialog.getSelectedFile(), torrContents.getName() + ".torrent");
+        File chosenFile = FileChooserHandler.getSaveAsFile(GUIMediator.getAppFrame(),
+                I18n.tr("Save .torrent"),
+                suggestedFile,
+                saveAsFilter);
 
-        _saveAsDialog.setSelectedFile(suggestedFileName);
-
-        int result = _saveAsDialog.showSaveDialog(this);
-
-        if (result != JFileChooser.APPROVE_OPTION) {
-            savePath = null;
+        if (chosenFile == null) {
+            dotTorrentSavePath = null;
             return false;
         }
 
-        savePath = _saveAsDialog.getSelectedFile().getAbsolutePath();
+        dotTorrentSavePath = chosenFile.getAbsolutePath();
 
-        if (!savePath.endsWith(".torrent")) {
-            savePath = savePath + ".torrent";
+        if (!dotTorrentSavePath.endsWith(".torrent")) {
+            dotTorrentSavePath = dotTorrentSavePath + ".torrent";
         }
 
         return true;
@@ -603,38 +584,26 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         //re-write the tracker's text area with corrections
         StringBuilder builder = new StringBuilder();
         for (String valid_tracker_url : valid_tracker_urls) {
-            builder.append(valid_tracker_url + "\n");
+            builder.append(valid_tracker_url);
+            builder.append("\n");
         }
 
         _textTrackers.setText(builder.toString());
     }
 
-    protected int getTrackerType() {
+    int getTrackerType() {
         return (tracker_type);
     }
 
-    protected void setPieceSizeComputed() {
-        computed_piece_size = true;
-    }
-
-    public boolean getPieceSizeComputed() {
+    boolean getPieceSizeComputed() {
         return (computed_piece_size);
     }
 
-    protected void setPieceSizeManual(long _value) {
-        computed_piece_size = false;
-        manual_piece_size = _value;
-    }
-
-    protected long getPieceSizeManual() {
-        return (manual_piece_size);
-    }
-
-    protected void setTrackerType(int type) {
+    void setTrackerType(int type) {
         tracker_type = type;
     }
 
-    public boolean makeTorrent() {
+    boolean makeTorrent() {
         boolean result = false;
         
         disableSaveCloseButtons();
@@ -660,7 +629,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
             if (getPieceSizeComputed()) {
 
-                creator = TOTorrentFactory.createFromFileOrDirWithComputedPieceLength(f, url, addOtherHashes);
+                TOTorrentCreator creator = TOTorrentFactory.createFromFileOrDirWithComputedPieceLength(f, url, addOtherHashes);
 
                 creator.addListener(this);
 
@@ -676,7 +645,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
                         }
 
                         torrent.setComment(comment);
+                        boolean permitDHT = true; //TODO: If available on jlibtorrent, put in advanced settings.
                         TorrentUtils.setDHTBackupEnabled(torrent, permitDHT);
+                        boolean privateTorrent = false;  //TODO: If available on jlibtorrent, put in advanced settings.
                         TorrentUtils.setPrivate(torrent, privateTorrent);
                         LocaleTorrentUtil.setDefaultTorrentEncoding(torrent);
 
@@ -699,7 +670,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
                         reportCurrentTask(MessageText.getString("wizard.savingfile"));
 
-                        final File torrent_file = new File(savePath);
+                        final File torrent_file = new File(dotTorrentSavePath);
 
                         torrent.serialiseToBEncodedFile(torrent_file);
                         reportCurrentTask(MessageText.getString("wizard.filesaved"));
@@ -717,9 +688,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
             revertSaveCloseButtons();
             if (e instanceof TOTorrentException) {
                 TOTorrentException te = (TOTorrentException) e;
-                if (te.getReason() == TOTorrentException.RT_CANCELLED) {
-                    // expected failure, don't log exception
-                } else {
+                if (te.getReason() != TOTorrentException.RT_CANCELLED) {
                     reportCurrentTask(MessageText.getString("wizard.operationfailed"));
                     reportCurrentTask(TorrentUtils.exceptionToText(te));
                 }
@@ -734,12 +703,12 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     }
 
 
-    private boolean addAvailableWebSeeds(TOTorrent torrent, boolean isMultiFile) throws Exception {
+    private boolean addAvailableWebSeeds(TOTorrent torrent, boolean isMultiFile) {
         boolean result = true;
 	    if (_textWebseeds.getText().length() > 0) {
 	       List<String> mirrors = Arrays.asList(_textWebseeds.getText().split("\n"));
 	       
-	       if (mirrors!=null && !mirrors.isEmpty()) {
+	       if (!mirrors.isEmpty()) {
 	           //check just the first file on all mirrors.
 	           reportCurrentTask(I18n.tr("Checking Web seed mirror URLs..."));
                for (String mirror : mirrors) {
@@ -778,8 +747,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     /**
      * Sends HEAD request to the mirror location along with the test path to see if the file exists.
      * Read http://getright.com/seedtorrent.html to find out how mirror urls are interpreted
-     * @param mirror
-     * @return
      */
     private boolean checkWebSeedMirror(String mirror, TOTorrent torrent, boolean isMultiFile) {
         String urlPath = getWebSeedTestPath(mirror, torrent, isMultiFile);
@@ -796,7 +763,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     }
 
     private String getWebSeedTestPath(String mirror, TOTorrent torrent, boolean isMultiFile) {
-        String urlPath = null;
+        String urlPath;
         
         //fix mirror
         if (isMultiFile && !mirror.endsWith("/")) {
@@ -894,7 +861,13 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
             System.setProperty("com.apple.eawt.CocoaComponent.CompatibilityMode", "false");
         }
 
-        AzureusStarter.start();
+       // ThemeMediator.changeTheme();
+
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }catch(Exception ex) {
+            ex.printStackTrace();
+        }
 
         CreateTorrentDialog dlg = new CreateTorrentDialog(null);
         dlg.setVisible(true);
@@ -902,11 +875,11 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
             @Override
             public void windowClosing(WindowEvent e) {
                 System.out.println("End of Test");
-                AzureusStarter.getAzureusCore().stop();
                 System.out.println("Stopped");
                 System.exit(0);
             }
         });
     }
-       */
+    */
+
 }

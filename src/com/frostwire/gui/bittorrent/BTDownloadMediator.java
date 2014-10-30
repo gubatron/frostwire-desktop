@@ -712,8 +712,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                         GUIMediator.showError(
                                 I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.",
                                         torrentFile.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
-                        //System.out.println("***Error happened from Download Mediator: " +  ioe);
-                        //GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
                     }
                 }
 
@@ -735,7 +733,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         tc.setCellEditor(new GenericCellEditor(new PaymentOptionsRenderer()));
     }
 
-    public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
+    public void openTorrentFile(final File torrentFile, final boolean partialDownload, final Runnable onOpenRunnableForUIThread) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 try {
@@ -748,6 +746,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                         filesSelection = dlg.getFilesSelection();
                         if (filesSelection == null) {
                             return;
+                        }
+
+                        if (onOpenRunnableForUIThread != null) {
+                            onOpenRunnableForUIThread.run();
                         }
                     }
 

@@ -34,15 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.DropMode;
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
@@ -732,7 +724,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             }
 
             CreateTorrentDialog dlg = new CreateTorrentDialog(GUIMediator.getAppFrame());
-            dlg.setChosenContent(selectedFile);
+            dlg.setChosenContent(selectedFile, selectedFile.isFile() ? JFileChooser.FILES_ONLY : JFileChooser.DIRECTORIES_ONLY);
             dlg.setVisible(true);
 
         }
