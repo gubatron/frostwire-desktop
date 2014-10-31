@@ -1779,7 +1779,7 @@ msgstr "Ukloni označene stavke"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:782
 msgid "Rename Playlist"
-msgstr "Preimenuj playlistu"
+msgstr "Preimenuj popis pjesama"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:810
 msgid "Playlist Files (*.m3u)"
@@ -1788,7 +1788,7 @@ msgstr "Datoteke playliste (*.m3u)"
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:819
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:798
 msgid "Import .m3u to Playlist"
-msgstr "Importaj .m3u u playlistu"
+msgstr "Uvezi .m3u u popis pjesama"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:820
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:799
@@ -1805,7 +1805,7 @@ msgstr "Uvesti -m3u datoteku u novi popis pjesama"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:847
 msgid "Export playlist files to folder"
-msgstr "Izvesti datoteku popisa pjesama u mapu"
+msgstr "Izvedi datoteku popisa pjesama u mapu"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:848
 msgid "Copy all playlist files to a folder of your choosing"
@@ -1819,12 +1819,12 @@ msgstr "Gdje zelite spremiti datoteke popisa pjesama?"
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:920
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:813
 msgid "Export Playlist to .m3u"
-msgstr "Eksportaj playlistu u .m3u"
+msgstr "Izvedi playlistu u .m3u"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:921
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:814
 msgid "Export this playlist into a .m3u file"
-msgstr "Eksportaj ovu playlistu u .m3u datoteku"
+msgstr "Izvedi ovu playlistu u .m3u datoteku"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:935
 msgid "Export Playlist to iTunes"
@@ -1902,11 +1902,11 @@ msgstr "Osvjezi"
 
 #: src/com/frostwire/gui/library/LibraryUtils.java:747
 msgid "Importing from"
-msgstr "Importanje iz"
+msgstr "Uvoz iz"
 
 #: src/com/frostwire/gui/library/LibraryUtils.java:765
 msgid "Error importing Radio Station from"
-msgstr "Greska u importiranju radio postaje od"
+msgstr "Greska u uvozu radio postaje od"
 
 #: src/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:67
 #, fuzzy
@@ -1928,11 +1928,11 @@ msgstr "Legenda"
 
 #: src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:356
 msgid "Folder and subfolders are included in the Library."
-msgstr ""
+msgstr "Mape i pod-mape su ukljuceni u knjiznicu."
 
 #: src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:370
 msgid "Folder is not included and no subfolders are included in the Library."
-msgstr ""
+msgstr "Mapa nije ukljucena i pod-mape nisu ukljuceni u knjiznicu."
 
 #: src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:379
 msgid "Folder's files and some subfolders are included in the Library."
@@ -1983,7 +1983,7 @@ msgstr "azemp.failed.d3dbad"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:77
 msgid "Streaming Audio"
-msgstr "Strimanje audija"
+msgstr "Streamanje zvuka"
 
 #. *
 #. * Constant for the play button.
@@ -2025,7 +2025,7 @@ msgstr "Pokazi izvor ovog medija"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:320
 msgid "Shuffle songs"
-msgstr "Promijesati pjesme"
+msgstr "Promijesaj pjesme"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:327
 msgid "Repeat songs"
@@ -2046,12 +2046,12 @@ msgstr "Otvori Twitter stranicu od"
 #. won't be shown in 5.6.x, code here for 6.x
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1026
 msgid "Playing local file"
-msgstr "Svirati lokalnu datoteku"
+msgstr "Sviram lokalnu datoteku"
 
 #. won't be shown in 5.6.x, code here for 6.x
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1029
 msgid "Playing track from"
-msgstr "Svirati pjesmu iz"
+msgstr "Sviram pjesmu iz"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1032
 msgid "Open YouTube source page"
@@ -2067,11 +2067,11 @@ msgstr "Otvori Archive.org stranicu izvora"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1044
 msgid "Playing Internet Radio"
-msgstr "Sviram Interned radio"
+msgstr "Sviram internetski radio"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1047
 msgid "Playing local Wi-Fi Stream from"
-msgstr "Sviranje strima lokalnog Wi-Fi od"
+msgstr "Sviranje streama lokalnog Wi-Fi od"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1061
 msgid "unknown device"
@@ -2080,7 +2080,7 @@ msgstr "nepoznat uredjaj"
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1072
 #, fuzzy
 msgid "playlist"
-msgstr "playlist"
+msgstr "playlista"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1133
 #: src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:66
@@ -2192,15 +2192,15 @@ msgstr "SearchField.popupSource"
 #: src/com/frostwire/gui/tabs/LibraryTab.java:55
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:277
 msgid "Library"
-msgstr "Kolekcije"
+msgstr "Knjiznica"
 
 #: src/com/frostwire/gui/tabs/LibraryTab.java:55
 msgid ""
 "Browse, Search and Play files in your computer. Wi-Fi sharing, Internet "
 "Radio and more."
 msgstr ""
-"Pretrazuj, pregledavaj i sviraj datoteke na vasem racunalu. Wi-Fi "
-"dijeljenje, internet Radio i jos vise"
+"Pregledavaj, pretrazuj i sviraj datoteke na vasem racunalu. Wi-Fi dijeljenje, internet "
+"Radio i vise."
 
 #: src/com/frostwire/gui/tabs/SearchDownloadTab.java:51
 #, fuzzy
@@ -2312,17 +2312,17 @@ msgstr "FileChooser.renameErrorText"
 
 #: src/com/frostwire/gui/transfers/PeerHttpUpload.java:153
 msgid "Streaming"
-msgstr "Strimanje"
+msgstr "Streamanje"
 
 #: src/com/frostwire/gui/transfers/PeerHttpUpload.java:159
 #, fuzzy
 msgid "Cancelled"
-msgstr "Odustani"
+msgstr "Prekinuto"
 
 #: src/com/frostwire/gui/updates/InstallerUpdater.java:187
 #: src/com/frostwire/gui/updates/UpdateMediator.java:176
 msgid "Update"
-msgstr "Updejt"
+msgstr "Nadogradnja"
 
 #: src/com/frostwire/gui/updates/PortableUpdater.java:77
 #, fuzzy
@@ -2340,11 +2340,11 @@ msgstr "ProgressMonitor.progressText"
 #. These are used as resource keys to retreive descriptions in the GUI
 #: src/com/limegroup/gnutella/MediaType.java:44
 msgid "All Types"
-msgstr "Sve Vrste"
+msgstr "Sve vrste"
 
 #: src/com/limegroup/gnutella/MediaType.java:46
 msgid "Books/Docs"
-msgstr "Knjige/Dokumenti"
+msgstr "Knjige/dokumenti"
 
 #: src/com/limegroup/gnutella/MediaType.java:47
 msgid "Programs"
@@ -2360,36 +2360,36 @@ msgstr "O FrostWire-u"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:88
 msgid "End User License Agreement"
-msgstr "Svrsiti korisnicki sporazum licence"
+msgstr "Licencni ugovor za krajnjeg korisnika"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:89
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Pravila o privatnosti"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:94
 msgid "Close This Window"
-msgstr "Zatvori ovaj prozor."
+msgstr "Zatvori ovaj prozor"
 
 #. introduction
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:181
 #, fuzzy
 msgid "FrostWire Logo Designer"
-msgstr "<h1>FrostWire logo dizajneri</h1>"
+msgstr "FrostWire logo dizajneri"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:184
 #, fuzzy
 msgid "FrostWire Graphics Designers/Photographers"
-msgstr "<h1>FrostWire graficki dizajneri/fotograferi</h1>"
+msgstr "FrostWire graficki dizajneri/fotograferi"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:194
 #, fuzzy
 msgid "Thanks to Former FrostWire Developers"
-msgstr "<h1>Hvala prijasnjim FrostWire programerima</h1>"
+msgstr "Hvala prijasnjim FrostWire programerima"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:199
 #, fuzzy
 msgid "Thanks to the FrostWire Chat Community!"
-msgstr "<h1>Hvala FrostWire zajednici za razgovore!</h1>"
+msgstr "Hvala FrostWire zajednici za razgovore!"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:200
 msgid ""
