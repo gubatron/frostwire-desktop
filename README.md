@@ -1,31 +1,22 @@
-[![tip for next commit](http://tip4commit.com/projects/538.svg)](http://tip4commit.com/projects/538)
 ![alt text](http://biz.prlog.org/frostwire/logo.png "Frostwire")
 
+[![tip for next commit](http://tip4commit.com/projects/538.svg)](http://tip4commit.com/projects/538)
 
 # Hi there FrostWire hacker!
-
 
 FrostWire is a file sharing client and media management tool that was made using
 lots of cool open source projects. It was born from the legendary *LimeWire
 Gnutella* client, but it's evolved a hell of a lot since then.
 
-
-
 FrostWire no longer supports Gnutella,** it's a BitTorrent client, an Internet
 Radio client and Media Player.**
-
-
 
 Unlike most BitTorrent clients out there, FrostWire focuses on searching files
 and tries hard to make it as easy and convenient as possible to users.
 
-
-
 Old FrostWire users were used to the Gnutella experience (searching for single
 files), so FrostWire makes use of BitTorrent a little differently to make it
 simple for them.
-
-
 
 FrostWire will connect to all the major BitTorrent indexes of the internet and
 pre-fetch torrents (via the libtorrent DHT or via HTTP if it can't find it on the
@@ -43,7 +34,7 @@ layout has been simplified enourmously for FrostWire 6.
 
     - The BitTorrent power comes from the frostwire-jlibtorrent library.
 
-    - Media playback comes from the *mplayer* project
+    - Media playback comes from the *MPlayer* project
 
     - The good looks and skinning system comes from the Substance skinning project (which we've had to maintain on our repo to make it fit FrostWire needs)
 
@@ -53,116 +44,69 @@ layout has been simplified enourmously for FrostWire 6.
 
     - JSON parsing comes from google-gson, and so on and so on.
 
-    
-
 # Build requirements
-
-
 
 Introductions aside, here's how you build this.
 
-Make sure your **CLASSPATH**, **JAVA_HOME** and your **PATH** variables are set
+Make sure your **CLASSPATH**, **JAVA_HOME**, **ANT_HOME** and your **PATH** variables are set
 correctly.
 
 Example on a Ubuntu system's .bashrc file:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	JAVA_HOME=/usr/lib/jvm/java-7-sun
+	CLASSPATH=${CLASSPATH}:${JAVA_HOME}/lib
+	PATH=${PATH}:${JAVA_HOME}/bin
+	export JAVA_HOME CLASSPATH PATH
 
-JAVA_HOME=/usr/lib/jvm/java-7-sun
-
-CLASSPATH=${CLASSPATH}:${JAVA_HOME}/lib
-
-PATH=${PATH}:${JAVA_HOME}/bin
-
-export JAVA_HOME CLASSPATH PATH
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+In some cases, you will need to set the variable **ANT_HOME**
 
 Must build problems are usually solved by having those environment variables set
 correctly. If you are a Windows or Mac user the process is fairly similar.
 
+- Try having the JDK 1.7 or latest available (OpenJDK or Oracle JDK)
+- [Apache Ant](http://ant.apache.org/), [Gradle](http://www.gradle.org/)
+- GIT to clone, check out the project to your machine.
 
-
--   Try having the latest JDK available (OpenJDK or Sun's JDK should do it -
-    As of this document it can be built using Java 1.7)
-
--   ant, gradle
-
--   GIT to clone, check out the project to your machine.
-
-
-
-We recommend using [IntelliJ Idea][1] as your development environment.
-
-[1]: <http://www.jetbrains.com/idea/>
-
-
-
-
+We recommend using [IntelliJ Idea](http://www.jetbrains.com/idea/) as your development environment.
 
 # Getting the source
 
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-git clone https://github.com/frostwire/frostwire-common.git
-git clone https://github.com/frostwire/frostwire-jlibtorrent.git
-git clone https://github.com/frostwire/frostwire-desktop.git
-cd frostwire-desktop/
-git pull
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
+	git clone https://github.com/frostwire/frostwire-common.git
+	git clone https://github.com/frostwire/frostwire-jlibtorrent.git
+	git clone https://github.com/frostwire/frostwire-desktop.git
+	cd frostwire-desktop
+	git pull
 
 This will pull the latest changes and automatically merge them with your local
 copy of the repository.
-
-
 
 # How to build
 
 Be sure that you're in the project root, else then execute :
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cd frostwire-desktop/
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	cd frostwire-desktop
 
 If you're already in project root, simply execute :
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-gradle clean
-gradle build
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
+	gradle clean
+	gradle build
 
 # How to run
 
 Then run the project with:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-./run
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
+	./run
 
 ### HAVING ISSUES BUILDING?
 
-   * "My environment variables are fine, my requirements are met, there's an
-    error during the build."*
+"My environment variables are fine, my requirements are met, there's an error during the build."*
 
-    It's very hard that it happens but we might have pushed out a broken
-    build.
+It's very hard that it happens but we might have pushed out a broken build.
 
-    If you do have any issues building, please yell on the comments of the
-    offending commit log at github.com so we can address the issue right
-    away.
+If you do have any issues building, please yell on the comments of the
+offending commit log at github.com so we can address the issue right away.
 
-    If the build is not broken, hit us up at the [Developer Forum][2]
-
-[2]: <http://forum.frostwire.com/>
-
-
+If the build is not broken, hit us up at the [Developer Forum](http://forum.frostwire.com/)
 
 # How code is organized
 
@@ -174,8 +118,8 @@ Then run the project with:
 | **resources/** | This is where most graphical assets are stored.      | 
 | **lib/jars** | This is where we keep pre-compiled jars from projects we don't maintain.     | 
 | **lib/jars-src** | This is where we keep the sources of those third party projects. We do this because we hope one day we'll be accepted into  debian or ubuntu and it's a requirement that your packages  can be compiled without any binary dependency. This also helps us help those projects, sometimes we fix bugs that affect us and we send patches back to those projects.  Also on eclipse it's awesome to be able to browse the source  of those dependencies and to step-by-step debug to see what  the hell those developers were thinking.|
-|   **lib/messagebundles**  |   Where we keep the translation files. |
-|    **lib/icons**  |  Where we keep the FrostWire launcher icons for the differentoperating systems. |
+| **lib/messagebundles**  |   Where we keep the translation files. |
+| **lib/icons**  |  Where we keep the FrostWire launcher icons for the differentoperating systems. |
 | **splashes/**  |  Where we keep all the splash screens for each major version of FrostWire. There are tools there to build the splash.jar and to build a collage of pictures with all the splashes for a release. |
 
  
@@ -196,6 +140,8 @@ Basically, Keep it simple and try not to repeat yourself at all.
 # Contribute
 
 Every countribution merged to the master branch will automatically receive a tip of 1% of whatever funds are available on the [tip4commit fund](https://tip4commit.com/github/frostwire/frostwire-android).
+
+Tip for next commit: [![see here](http://tip4commit.com/projects/538.svg)](http://tip4commit.com/projects/538)
 
 If you want to contribute code, start by looking at the open issues on
 github.com 
@@ -218,25 +164,8 @@ _Repeat and rinse, if you send enough patches to demonstrate you have a good
 coding skills, we'll just give you commit access on the real repo and you will
 be part of the development team._
 
-# Official FrostWire sites
+### Official FrostWire sites
 
-Main Website [Frostwire.com][5]
-[5]: <http://www.frostwire.com>
+[Main Website Frostwire.com](http://www.frostwire.com) | [Frostwire Forum](http://forum.frostwire.com) | [Facebook](http://www.facebook.com/FrostWireOfficial) | [Twitter @frostwire](https://twitter.com/frostwire) | [Tumblr](http://tumblr.frostwire.com)
 
-Frostwire [Forum] [6]
-[6]: <http://forum.frostwire.com>
-
-[Git Repository at GitHub.com][7]
-[7]: <https://github.com/frostwire/frostwire-desktop.git>
-
-Twitter [@frostwire][8]
-[8]: <https://twitter.com/frostwire>
-
-[Facebook][9]
-[9]: <http://www.facebook.com/FrostWireOfficial>
-[Tumblr][10]
-[10]: <http://tumblr.frostwire.com>
-
-###### FrostWire Team Last updated - February 3rd 2014 15:44:50 EST
-
-[![tip for next commit](http://tip4commit.com/projects/538.svg)](http://tip4commit.com/projects/538)
+[Git Repository at GitHub.com](https://github.com/frostwire/frostwire-desktop.git)

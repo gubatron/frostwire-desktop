@@ -104,9 +104,9 @@ final class SearchOptionsPanel extends JPanel {
         sliderSize.setLowerValue(0);
         sliderSize.setUpperValue(1000);
 
-        sliderSeeds.getMinimumValueLabel().setText(I18n.tr("0"));
+        sliderSeeds.getMinimumValueLabel().setText("0");
         sliderSeeds.getMaximumValueLabel().setText(I18n.tr("Max"));
-        sliderSize.getMinimumValueLabel().setText(I18n.tr("0"));
+        sliderSize.getMinimumValueLabel().setText("0");
         sliderSize.getMaximumValueLabel().setText(I18n.tr("Max"));
 
         textFieldKeywords.setText("");
