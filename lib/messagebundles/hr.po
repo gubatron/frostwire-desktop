@@ -2403,38 +2403,39 @@ msgstr ""
 msgid ""
 "<br><br>In Special we give thanks to the Chatroom Operators and Forum "
 "Moderators"
-msgstr ""
+msgstr "<br><br>Posebno zahvaljujemo operatorima chat soba i forum "
+"moderatorima"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:206
 #, fuzzy
 msgid "FrostWire Chat Operators"
-msgstr "<h1>FrostWire operateri razgovora</h1>"
+msgstr "FrostWire operateri razgovora"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:211
 #, fuzzy
 msgid "FrostWire Forum Moderators"
-msgstr "<h1>FrostWire forum moderatori</h1>"
+msgstr "FrostWire forum moderatori"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:217
 #, fuzzy
 msgid "Many Former Chat Operators"
-msgstr "<h1>FrostWire operateri razgovora</h1>"
+msgstr "FrostWire operateri razgovora"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:223
 msgid "And also to the Support Volunteer Helpers:"
-msgstr "I takoder volonterima pomoci:"
+msgstr "I takodjer volonterima pomoci:"
 
 #. azureus/vuze devs.
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:229
 #, fuzzy
 msgid "Thanks to the Azureus Core Developers"
-msgstr "<h1>Hvala prijasnjim FrostWire programerima</h1>"
+msgstr "Hvala prijasnjim FrostWire programerima"
 
 #. developers
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:236
 #, fuzzy
 msgid "Thanks to the LimeWire Developer Team"
-msgstr "<h1>Hvala LimeWire programerskom timu</h1>"
+msgstr "Hvala LimeWire programerskom timu"
 
 #. community VIPs
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:254
@@ -2448,23 +2449,24 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:274
 #, fuzzy
 msgid "Thanks to the PJIRC Staff"
-msgstr "<h1>Hvala PJIRC osoblju</h1>"
+msgstr "Hvala PJIRC osoblju"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:283
 #, fuzzy
 msgid "Thanks to the Automatix Team"
-msgstr "<h1>Hvala Automatix timu</h1>"
+msgstr "Hvala Automatix timu"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:284
 msgid ""
 "For helping distribute Frostwire to opensource communities in a very simple "
 "manner."
 msgstr ""
+"Za pomaganje u distribuciji FrostWire-a zajednicama otvorenog koda u vrlo jednostavnom obliku."
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:292
 #, fuzzy
 msgid "Thanks to Ubuntu/Kubuntu Teams"
-msgstr "<h1>Hvala Ubuntu/Kubuntu timovima</h1>"
+msgstr "Hvala Ubuntu/Kubuntu timovima"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:293
 msgid ""
@@ -2475,16 +2477,16 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:295
 #, fuzzy
 msgid "Thanks to the NSIS Project"
-msgstr "<h1>Hvala HSIS projektu</h1>"
+msgstr "Hvala HSIS projektu"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:296
 msgid "Thanks for such an awesome installer builder system and documentation."
-msgstr ""
+msgstr "Hvala za takav fenomenalan sustav graditelja instalatera i dokumentacije."
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:298
 #, fuzzy
 msgid "Thanks to our families"
-msgstr "<h1>Hvala nasim obiteljima</h1>"
+msgstr "Hvala nasim obiteljima"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:299
 msgid "For being patient during our many sleepless nights"
@@ -2495,7 +2497,8 @@ msgid ""
 "BitTorrent, the BitTorrent Logo, and Torrent are trademarks of BitTorrent, "
 "Inc."
 msgstr ""
-"BitTorrent, BitTorrentov logo i Torrent su zaštitni znak BitTorenta, Inc."
+"BitTorrent, BitTorrentov logo i Torrent su zaštitni znak BitTorenta, "
+"Inc."
 
 #: src/com/limegroup/gnutella/gui/ApplicationHeader.java:187
 #, fuzzy
@@ -2504,7 +2507,7 @@ msgstr "Trazi ili upisi URL"
 
 #: src/com/limegroup/gnutella/gui/ApplicationHeader.java:199
 msgid "A new update has been downloaded."
-msgstr "Novi updejt je bio preuzet"
+msgstr "Nova nadogradnja je preuzeta."
 
 #: src/com/limegroup/gnutella/gui/ApplicationHeader.java:224
 msgid "Chat"
@@ -4939,15 +4942,15 @@ msgstr "Pogledati u Archive.org-u"
 #. Set the splash screen text...
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:126
 msgid "Loading Search Window..."
-msgstr "Ucitavanje pretraznog prozora..."
+msgstr "Ucitavanje prozora trazilice..."
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:213
 msgid ""
 "Your search must be at least three characters to avoid congesting the "
 "network."
 msgstr ""
-"Vase pretrazivanje mora biti barem tri slova dugacko kako bi izbjegli "
-"prepunitimrezu."
+"Vase pretrazivanje mora biti barem tri slova dugacko kako bi izbjegli preopterecivanje"
+"mreze."
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:216
 msgid "Your search is too long. Please make your search smaller and try again."
@@ -5035,7 +5038,7 @@ msgstr "Jos postavki"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:62
 msgid "Stripe Rows"
-msgstr ""
+msgstr "Prugasti redovi"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:68
 msgid "Sort Automatically"
@@ -5043,7 +5046,7 @@ msgstr "Automatski razvrstaj"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:74
 msgid "Extended Tooltips"
-msgstr ""
+msgstr "Prosireni opisi"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:189
 msgid "You cannot turn off all columns."
