@@ -508,11 +508,11 @@ msgstr "Pokreni odabrane datoteke"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:508
 msgid "Show in Library"
-msgstr "Prikaži u Knjiznici"
+msgstr "Prikaži u knjiznici"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:509
 msgid "Show Download in Library"
-msgstr "Prikeži preuzimanje u Knjižnici"
+msgstr "Prikeži preuzimanje u knjižnici"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediator.java:175
 msgid "Transfers"
@@ -557,6 +557,8 @@ msgid ""
 "FrostWire was unable to load the torrent file \"{0}\", - it may be malformed "
 "or FrostWire does not have permission to access this file."
 msgstr ""
+"FrostWire nije bio u mogucnosti ucitati torrent datoteku \"{0}\", - mozda je deformirana "
+"ili FrostWire nema ovlasti za pristup ovoj datoteci."
 
 #. advanced options
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:111
@@ -686,7 +688,7 @@ msgstr ""
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:101
 #, fuzzy
 msgid "Author's Name"
-msgstr "Autor"
+msgstr "Ime autora"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:103
 msgid "The name of the creator or creators of this work."
@@ -3116,9 +3118,8 @@ msgid ""
 "You can change the look and feel of FrostWire by going to View &gt; Use "
 "Small Icons, Show Icon Text and Increase-Decrease the Font Size."
 msgstr ""
-"Mozete promijeniti izgled i osjecaj od FrostWire-a tako da idete na Pregled "
-"&gt; Koristiti Make Ikone, Pokazati Tekst Ikona i Povecaj-Smalji Velicinu "
-"Fonta"
+"Mozete promijeniti izgled i osjecaj od FrostWire-a tako da idete na Pregled &gt; Koristiti 
+"Make Ikone, Pokazati Tekst Ikona i Povecaj-Smalji Velicinu Fonta"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:24
 #, fuzzy
@@ -3163,6 +3164,9 @@ msgid ""
 "buddy is sharing 'Frosty' but you searched for 'My Frosty', your buddy's "
 "file will still be found."
 msgstr ""
+"Male promjene u naslovu trazenja. Kao primjer, ako vaš "
+"prijatelj dijeli 'Frosty' a vi ste trazili 'My Frosty', naći će te "
+"datoteku vašeg prijatelja."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:29
 msgid ""
@@ -3241,6 +3245,8 @@ msgid ""
 "Be a good network participant, don't close FrostWire if someone is uploading "
 "from you."
 msgstr ""
+"Budite dobar član mreže, nemojte ugasiti FrostWire ako netko šalje "
+"od vas."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:51
 msgid ""
@@ -3423,6 +3429,8 @@ msgid ""
 "FrostWire has detected a VPN connection, your privacy is safe from prying "
 "eyes."
 msgstr ""
+"FrostWire je detektirao VPN konekciju, vaša privatnost je sigurna od znatiželjnih "
+"očiju."
 
 #: src/com/limegroup/gnutella/gui/VPNStatusButton.java:64
 msgid ""
@@ -3440,7 +3448,7 @@ msgstr "Otvara magnet link ili torrent dokument"
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:86
 msgid "Download .Torrent or Magnet or YouTube video link"
-msgstr ""
+msgstr "Preuzmi .torrent, magnet ili YouTube link videa"
 
 #. panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, the file path or web address of a torrent file, or a YouTube Web address and FrostWire will start downloading it for you."),
 #. true), constraints);
@@ -3466,11 +3474,11 @@ msgstr "&Zatvoriti"
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:311
 msgid "Close the program's main window"
-msgstr "Zatvori program."
+msgstr "Zatvori glavni prozor programa."
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:322
 msgid "E&xit"
-msgstr ""
+msgstr "Izadji"
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:323
 msgid "Close and exit the program"
@@ -3520,7 +3528,7 @@ msgid ""
 msgstr ""
 "FrostWire se susreo s internom greškom. Moguće je da se FrostWire oporavi i "
 "nastavi normalno raditi. Za nastavak korištenja FrostWirea klikni 'Odbaci'. "
-"Ako želite možete kliknut 'Pregled' da bi pogledali informacije o greški."
+"Ako želite možete kliknuti 'Pregled' da bi pogledali informacije o greški."
 
 #: src/com/limegroup/gnutella/gui/bugs/BugManager.java:339
 msgid ""
