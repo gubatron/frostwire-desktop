@@ -3881,7 +3881,7 @@ msgstr "Naruciti FrostWire naljepnice"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 msgid "Order FrostWire stickers, we ship worldwide."
-msgstr "Narucite FrostWire naljepnice, saljemo ih diljem svijeta"
+msgstr "Narucite FrostWire naljepnice, šaljemo ih diljem svijeta"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:60
 msgid "FrostWire T-Shirts"
@@ -3889,13 +3889,11 @@ msgstr "FrostWire majce"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:60
 msgid "Get a T-shirt, support the project. You'll get also 10 free stickers"
-msgstr ""
-"Dobite majcu, podrzavajte projekt. Takoder ce te dobiti 10 besplatnih "
-"naljepnica"
+msgstr "Dobijte majcu, podržavajte projekt. Također ce te dobiti 10 besplatnih naljepnica"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:63
 msgid "Free Legal Downloads"
-msgstr "Pauziraj oznacene download-e."
+msgstr "Besplatna legalna preuzimanja"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:67
 msgid "FrostWire on Facebook"
@@ -3903,7 +3901,7 @@ msgstr "FrostWire Media Player"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:67
 msgid "Come and say hi to the community on Facebook"
-msgstr "Dodite i recite bok zajednici na Facebook-u"
+msgstr "Dođite i recite bok zajednici na Facebook-u"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:69
 msgid "Follow us on Twitter"
@@ -3925,6 +3923,7 @@ msgstr "&Jeste li platili za FrostWire?"
 msgid ""
 "Did you pay for FrostWire? FrostWire is Free as in Free Beer. Avoid Scams."
 msgstr ""
+"Jeste li platili ste za FrostWire? FrostWire je besplatan kao besplatno pivo. Izbjegavajte prevare."
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:97
 msgid "Tip of the &Day"
@@ -3932,7 +3931,7 @@ msgstr "Savjet &dana"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:98
 msgid "Show the Tip of the Day Window"
-msgstr "Prikazati savjet dana."
+msgstr "Prikazati prozor savjeta dana."
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:117
 msgid "&About FrostWire"
@@ -3944,7 +3943,7 @@ msgstr "Informacije o FrostWire-u"
 
 #: src/com/limegroup/gnutella/gui/menu/MenuMediator.java:92
 msgid "Loading Menus..."
-msgstr "Ucitavanje menija"
+msgstr "Učitavanje menija..."
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:46
 msgid "&Tools"
@@ -3952,13 +3951,15 @@ msgstr "&Alati"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:68
 msgid "Rebuild iTunes \"FrostWire\" Playlist"
-msgstr ""
+msgstr "Obnavlja iTunes \"FrostWire\" playlistu"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:69
 msgid ""
 "Deletes and re-builds the \"FrostWire\" playlist on iTunes with all the "
 "audio files found on your Torrent Data Folder."
 msgstr ""
+"Briše i obnavlja \"FrostWire\" playlistu na iTunes-u sa svim "
+"audio datotekama nađenim u vašoj torrent podatkovnoj mapi."
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:74
 msgid ""
@@ -3983,11 +3984,11 @@ msgstr "Prikazati postavke"
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:102
 #, fuzzy
 msgid "&Update FrostWire"
-msgstr "&Azurirati FrostWire"
+msgstr "&Ažurirati FrostWire"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:103
 msgid "Update FrostWire to the latest version"
-msgstr "Azurirati Frostwire do zadnje verzije"
+msgstr "Ažurirati Frostwire do zadnje verzije"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:116
 #, fuzzy
@@ -4006,7 +4007,7 @@ msgstr "Instaliraj nadogradnju"
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:131
 #, fuzzy
 msgid "Check for update"
-msgstr "Potraziti nadogradnje"
+msgstr "Potražiti nadogradnje"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:42
 msgid "&View"
@@ -4018,7 +4019,7 @@ msgstr "Koristiti &male ikone"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:44
 msgid "Use Small Icons"
-msgstr "Koristi male icone."
+msgstr "Koristi male ikone"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:47
 msgid "Show Icon &Text"
@@ -4030,27 +4031,27 @@ msgstr "Prikaži tekst ispod ikona"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:52
 msgid "&Increase Font Size"
-msgstr "&Povecati velicinu fonta"
+msgstr "&Povećati velicinu fonta"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:52
 msgid "Increases the Table Font Size"
-msgstr "Povecava velicinu fonta tablica"
+msgstr "Povećava veličinu fonta tablica"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:54
 msgid "&Decrease Font Size"
-msgstr "&Smanjiti velicinu fonta"
+msgstr "&Smanjiti veličinu fonta"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:54
 msgid "Decreases the Table Font Size"
-msgstr "Smanjuje velicinu fonta tablica"
+msgstr "Smanjuje veličinu fonta tablica"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:56
 msgid "&Reset Font Size"
-msgstr "&Resetirati velicinu fonta"
+msgstr "&Resetirati veličinu fonta"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:56
 msgid "Reset the Table Font Size"
-msgstr "Resetiraj velicinu fonta tablica"
+msgstr "Resetiraj veličinu fonta tablica"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:66
 msgid "C&hange Language"
@@ -4058,7 +4059,7 @@ msgstr "Promi&jeni jezik"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:67
 msgid "Select your Language Prefereces"
-msgstr "Odaberite jezik vasih postavki"
+msgstr "Odaberite jezik vaših postavki"
 
 #. restore
 #: src/com/limegroup/gnutella/gui/notify/TrayNotifier.java:90
@@ -4155,7 +4156,7 @@ msgstr "Proxy"
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:314
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:48
 msgid "Network Interface"
-msgstr "Mrezni interface"
+msgstr "Mrezno sucelje"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:316
 #: src/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:56
@@ -4164,7 +4165,7 @@ msgstr "Asosijacije datoteka"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:319
 msgid "System Boot"
-msgstr "Prikazuj savjete pri pokretanju"
+msgstr "Pokretanje sistema"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
 #, fuzzy
