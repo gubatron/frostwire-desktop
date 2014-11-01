@@ -629,60 +629,52 @@ public final class FileChooserHandler {
      * @param titleKey the key for the locale-specific string to use for the
      *        file dialog title
      * @param suggestedFile the suggested file for saving
-     * @param the filter to use for what's shown.
+     * @param filter to use for what's shown.
      * @return the file or <code>null</code> when the user cancelled the
      *         dialog
      */
     public static File getSaveAsFile(Component parent, String titleKey,
 	                                 File suggestedFile, final FileFilter filter) {
-		if(OSUtils.isAnyMac()) {
-			FileDialog dialog = new FileDialog(GUIMediator.getAppFrame(),
-											   I18n.tr(titleKey),
-											   FileDialog.SAVE);
-			dialog.setDirectory(suggestedFile.getParent());
-			dialog.setFile(suggestedFile.getName()); 
-		    if(filter != null) {
-                FilenameFilter f = new FilenameFilter() {
-                    public boolean accept(File dir, String name) {
-                        return filter.accept(new File(dir, name));
-                    }
-                };
-                dialog.setFilenameFilter(f);
+        FileDialog dialog = new FileDialog(GUIMediator.getAppFrame(),
+                I18n.tr(titleKey),
+                FileDialog.SAVE);
+        dialog.setDirectory(suggestedFile.getParent());
+        dialog.setFile(suggestedFile.getName());
+        if(filter != null) {
+            FilenameFilter f = new FilenameFilter() {
+                public boolean accept(File dir, String name) {
+                    return filter.accept(new File(dir, name));
+                }
+            };
+            dialog.setFilenameFilter(f);
+        }
+
+        dialog.setVisible(true);
+        String dir = dialog.getDirectory();
+        String file = dialog.getFile();
+        if(dir != null && file != null) {
+
+            if (suggestedFile!=null ) {
+                String suggestedFileExtension = FilenameUtils
+                        .getExtension(suggestedFile.getName());
+
+                String newFileExtension = FilenameUtils.getExtension(file);
+
+                if (newFileExtension == null && suggestedFileExtension!=null) {
+                    file = file + "." + suggestedFileExtension;
+                }
             }
 
-			dialog.setVisible(true);
-			String dir = dialog.getDirectory();
-            setLastInputDirectory(new File(dir));
-			String file = dialog.getFile();
-			if(dir != null && file != null) {
-				
-				if (suggestedFile!=null ) {
-					String suggestedFileExtension = FilenameUtils
-							.getExtension(suggestedFile.getName());
-					
-					String newFileExtension = FilenameUtils.getExtension(file);
-
-					if (newFileExtension == null && suggestedFileExtension!=null) {
-						file = file + "." + suggestedFileExtension;
-					}
-				}
-
-				File f = new File(dir, file);
-			    if(filter != null && !filter.accept(f))
-			        return null;
-			    else
-			        return f;
-            } else {
+            File f = new File(dir, file);
+            if(filter != null && !filter.accept(f)) {
                 return null;
+            } else {
+                setLastInputDirectory(new File(dir));
+                return f;
             }
-		} else {
-			JFileChooser chooser = getDirectoryChooser(titleKey, null, null, JFileChooser.FILES_ONLY, filter);
-			chooser.setSelectedFile(suggestedFile);
-            int ret = chooser.showSaveDialog(parent);
-            File file = chooser.getSelectedFile();
-            setLastInputDirectory(file);
-            return ret != JFileChooser.APPROVE_OPTION ? null : file;
-		}
+        } else {
+            return null;
+        }
 	}
     
     public static File getSaveAsDir(Component parent, String titleKey, File suggestedFile) {
@@ -766,7 +758,7 @@ public final class FileChooserHandler {
 								int option,
 								boolean allowMultiSelect,
 								final FileFilter filter) {
-            if(!OSUtils.isAnyMac()) {
+            if(mode == JFileChooser.DIRECTORIES_ONLY) {
                 JFileChooser fileChooser = getDirectoryChooser(titleKey, approveKey, directory, mode, filter);
                 fileChooser.setMultiSelectionEnabled(allowMultiSelect);
                 try {
@@ -789,13 +781,10 @@ public final class FileChooserHandler {
                 }
                 
             } else {
-                FileDialog dialog;
-                if(mode == JFileChooser.DIRECTORIES_ONLY)
-                    dialog = MacUtils.getFolderDialog();
-                else
-                    dialog = new FileDialog(GUIMediator.getAppFrame(), "");
-                
+
+                FileDialog dialog = new FileDialog(GUIMediator.getAppFrame(), "");
                 dialog.setTitle(I18n.tr(titleKey));
+
                 if(filter != null) {
                     FilenameFilter f = new FilenameFilter() {
                         public boolean accept(File dir, String name) {
@@ -804,7 +793,11 @@ public final class FileChooserHandler {
                     };
                     dialog.setFilenameFilter(f);
                 }
-                
+
+                if (directory != null) {
+                    dialog.setDirectory(directory.getAbsolutePath());
+                }
+
                 dialog.setVisible(true);
                 String dirStr = dialog.getDirectory();
                 String fileStr = dialog.getFile();
@@ -818,7 +811,7 @@ public final class FileChooserHandler {
                     return null;
                 
                 return Collections.singletonList(f);
-            }		
+            }
 	}
 
 	/**
