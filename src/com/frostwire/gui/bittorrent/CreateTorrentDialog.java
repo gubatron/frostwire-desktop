@@ -616,6 +616,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
             if (torrent != null) {
                 if (addAvailableWebSeeds(torrent, create_from_dir)) {
+                    _saveDir = f.getParentFile();
+
                     addAvailablePaymentOptions(torrent);
                     addAvailableCopyrightLicense(torrent);
 
@@ -629,8 +631,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
                     boolean privateTorrent = false;  //TODO: If available on jlibtorrent, put in advanced settings.
                     TorrentUtils.setPrivate(torrent, privateTorrent);
                     LocaleTorrentUtil.setDefaultTorrentEncoding(torrent);
-
-                    _saveDir = (create_from_dir) ? f : f.getParentFile();
 
                     if (useMultiTracker) {
                         reportCurrentTask(MessageText.getString("wizard.addingmt"));
