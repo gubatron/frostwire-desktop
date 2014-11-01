@@ -85,7 +85,7 @@ public final class BugManager {
     private static final int DIALOG_BOX_HEIGHT = 100;
         
     /**
-     * The queue that processes processes the bugs.
+     * The queue that processes the bugs.
      */
     private final ExecutorService BUGS_QUEUE = ExecutorsHelper.newProcessingQueue(
                 new ThreadFactory() {

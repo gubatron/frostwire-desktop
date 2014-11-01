@@ -52,7 +52,7 @@ final class OptionsPaneImpl implements OptionsPane {
 
 	
 	/**
-	 * This sole constructor overrides the the public accessibility of the 
+	 * This sole constructor overrides the public accessibility of the 
 	 * default constructor and is usually called implicitly by subclasses.
 	 * 
 	 * @param name the unique identifying name of this

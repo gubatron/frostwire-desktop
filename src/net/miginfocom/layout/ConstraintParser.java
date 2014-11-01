@@ -1260,7 +1260,7 @@ public final class ConstraintParser
 	 * @param minChars The minimum number of characters to match for every element in <code>matches</code>. Needs
 	 * to be of same length as <code>matches</code>. Can be <code>null</code>.
 	 * @param acceptTrailing If after the required number of characters are matched on recognized characters that are not
-	 * in one of the the <code>matches</code> string should be accepted. For instance if "abczz" should be matched with
+	 * in one of the <code>matches</code> string should be accepted. For instance if "abczz" should be matched with
 	 * "abcdef" and min chars 3.
 	 * @return The index of the first unmatched character if <code>minChars</code> was reached or <code>-1</code> if a match was not
 	 * found.
@@ -1282,7 +1282,7 @@ public final class ConstraintParser
 	 * @param minChars The mimimum number of characters to match to <code>s</code> for it this to be considered a match. -1 means
 	 * the full length of <code>match</code>.
 	 * @param acceptTrailing If after the required number of charecters are matched unrecognized characters that are not
-	 * in one of the the <code>matches</code> string should be accepted. For instance if "abczz" should be matched with
+	 * in one of the <code>matches</code> string should be accepted. For instance if "abczz" should be matched with
 	 * "abcdef" and min chars 3.
 	 * @return The index of the first unmatched character if <code>minChars</code> was reached or <code>-1</code> if a match was not
 	 * found.

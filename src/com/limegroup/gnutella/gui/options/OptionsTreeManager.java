@@ -30,9 +30,9 @@ import org.limewire.util.StringUtils;
 import com.limegroup.gnutella.gui.trees.FilteredTreeModel;
 
 /**
- * Manages the <code>JTree</code> instance of the the options window.  This
+ * Manages the <code>JTree</code> instance of the options window.  This
  * class constructs the <tt>TreeModel</tt> and forwards many method calls
- * the the contained <tt>TreeModel</tt>.<p>
+ * the contained <tt>TreeModel</tt>.<p>
  *
  * In addition, this class controls the <tt>Component</tt> that contains
  * the <tt>JTree</tt> instance and provides access to that 

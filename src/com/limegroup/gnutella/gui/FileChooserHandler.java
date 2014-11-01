@@ -607,7 +607,7 @@ public final class FileChooserHandler {
 	
 	
 	/**
-     * Opens a dialog asking the user to choose a file which is is used for
+     * Opens a dialog asking the user to choose a file which is used for
      * saving to.
      * 
      * @param parent the parent component the dialog is centered on
@@ -622,7 +622,7 @@ public final class FileChooserHandler {
     }
 	
 	/**
-     * Opens a dialog asking the user to choose a file which is is used for
+     * Opens a dialog asking the user to choose a file which is used for
      * saving to.
      * 
      * @param parent the parent component the dialog is centered on

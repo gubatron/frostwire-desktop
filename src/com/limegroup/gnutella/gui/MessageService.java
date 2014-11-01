@@ -444,7 +444,7 @@ public final class MessageService {
      * the default response in IntSetting default.
      *
      * @param message the message to display to the user
-     * @param defValue the IntSetting to store/retrieve the the default
+     * @param defValue the IntSetting to store/retrieve the default
      *  value for this question.
      */ 
     final DialogOption showYesNoMessage(String message, IntSetting defValue, DialogOption defaultOption) {
@@ -525,7 +525,7 @@ public final class MessageService {
      * the default response in IntSetting default.
      *
      * @param message the message to display to the user
-     * @param defValue the IntSetting to store/retrieve the the default
+     * @param defValue the IntSetting to store/retrieve the default
      *  value for this question.
      */ 
     final DialogOption showYesNoCancelMessage(String message, IntSetting defValue) {
@@ -574,7 +574,7 @@ public final class MessageService {
      * the default response in IntSetting default.
      *
      * @param message the message to display to the user
-     * @param defValue the IntSetting to store/retrieve the the default
+     * @param defValue the IntSetting to store/retrieve the default
      *  value for this question.
      */ 
     final DialogOption showYesNoOtherMessage(String message, IntSetting defValue, String otherName) {

@@ -357,7 +357,7 @@ public final class GUIMediator {
     }
 
     /**
-     * Notification that the the core has been initialized.
+     * Notification that the core has been initialized.
      */
     public void coreInitialized() {
         startTimer();

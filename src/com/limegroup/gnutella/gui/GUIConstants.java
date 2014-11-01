@@ -25,7 +25,7 @@ public final class GUIConstants {
     public static final String FROSTWIRE_64x64_ICON = "frostwire64x64";
 
     /**
-     * Constant for the the path to the LimeWire Windows launcher.
+     * Constant for the path to the LimeWire Windows launcher.
      */
     public static final File FROSTWIRE_EXE_FILE = new File("FrostWire.exe").getAbsoluteFile();
 
