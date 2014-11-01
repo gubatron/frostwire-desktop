@@ -45,6 +45,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import com.frostwire.logging.Logger;
 import org.limewire.util.FileUtils;
 
 import com.frostwire.alexandria.InternetRadioStation;
@@ -72,6 +73,8 @@ import com.limegroup.gnutella.settings.SharingSettings;
  */
 public class LibraryExplorer extends AbstractLibraryListPanel {
 
+    private static final Logger LOG = Logger.getLogger(LibraryExplorer.class);
+
     private DefaultTreeModel model;
     private JTree tree;
 
@@ -98,7 +101,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         model.insertNodeInto(deviceNode, devicesNode, devicesNode.getChildCount() - 1);
         tree.expandPath(new TreePath(devicesNode.getPath()));
 
-        System.out.println("New Device: " + device);
+        LOG.info("New Device: " + device);
 
         refreshDeviceNode(device);
     }
