@@ -114,7 +114,7 @@ public class ConverterObjectInputStream extends ObjectInputStream {
         ObjectStreamClass read = super.readClassDescriptor();
         String className = read.getName();
 
-        LOG.debug("Looking up class: " + className);
+        //LOG.debug("Looking up class: " + className);
 
         boolean array = className.startsWith("[L") && className.endsWith(";");
         if (array) {
@@ -144,7 +144,7 @@ public class ConverterObjectInputStream extends ObjectInputStream {
             }
         }
 
-        LOG.debug("Located substitute class: " + clazzToReturn.getName());
+        //LOG.debug("Located substitute class: " + clazzToReturn.getName());
 
         // If it's an array, and we modified we we read off disk, convert
         // to array form.

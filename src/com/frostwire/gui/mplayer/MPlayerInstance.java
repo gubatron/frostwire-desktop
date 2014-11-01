@@ -888,7 +888,7 @@ MPlayerInstance
 			String	process_name = BINARY_PATH.getName();
 			
 			if ( LOG ){
-				System.out.println( "running killall -9 " + process_name );
+				//System.out.println( "running killall -9 " + process_name );
 			}
 	
 			if ( delay ){
