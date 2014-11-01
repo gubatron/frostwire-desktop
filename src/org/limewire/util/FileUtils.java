@@ -280,7 +280,7 @@ public class FileUtils {
     }
 
     /**
-     * Creates and returns the the osascript command to move
+     * Creates and returns the osascript command to move
      * a file or directory to the Trash
      * 
      * @param file The file or directory to move to Trash

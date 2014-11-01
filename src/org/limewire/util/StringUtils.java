@@ -132,7 +132,7 @@ public class StringUtils {
 
     /** 
      * @requires TODO3: fill this in
-     * @effects returns the the smallest i>=bigStart
+     * @effects returns the smallest i>=bigStart
      *  s.t. little[littleStart...littleStop-1] is a prefix of big[i...] 
      *  or -1 if no such i exists.  If ignoreCase==false, case doesn't matter
      *  when comparing characters.

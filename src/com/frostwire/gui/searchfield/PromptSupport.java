@@ -202,10 +202,10 @@ public class PromptSupport {
 	/**
 	 * Get the background color of the <code>textComponent</code>, when no
 	 * text is present. If no color has been set, the <code>textComponent</code>s
-	 * background color color will be returned.
+	 * background color will be returned.
 	 * 
 	 * @param textComponent
-	 * @return the the background color of the text component, when no text is
+	 * @return the background color of the text component, when no text is
 	 *         present
 	 */
 	public static Color getBackground(JTextComponent textComponent) {

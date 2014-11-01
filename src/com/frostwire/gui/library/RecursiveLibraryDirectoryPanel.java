@@ -445,7 +445,7 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
     }
 
     /**
-     * Expands node in in the tree corresponding to <code>dir</code>.  
+     * Expands node in the tree corresponding to <code>dir</code>.  
      */
     public void setExpanded(File dir) {
         directoryTree.expandPath(getTreePath(dir));

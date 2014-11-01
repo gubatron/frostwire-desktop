@@ -65,7 +65,7 @@ public final class DataUtils {
     public static final long ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
     
     /**
-     * Determines whether or not the the child Set contains any elements
+     * Determines whether or not the child Set contains any elements
      * that are in the parent's set.
      */
     public static boolean containsAny(Collection<?> parent, Collection<?> children) {

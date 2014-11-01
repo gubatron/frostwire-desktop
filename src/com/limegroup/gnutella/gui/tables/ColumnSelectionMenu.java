@@ -105,7 +105,7 @@ public class ColumnSelectionMenu {
             revert.addActionListener(reverter);
         _menu.add(revert);
         
-        // Add the options options menu.
+        // Add the options menu.
         if( settings != null ) {
             JMenu options = createMoreOptions(settings);
             _menu.add(options);

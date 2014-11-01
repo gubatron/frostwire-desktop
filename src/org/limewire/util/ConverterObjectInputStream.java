@@ -146,7 +146,7 @@ public class ConverterObjectInputStream extends ObjectInputStream {
 
         //LOG.debug("Located substitute class: " + clazzToReturn.getName());
 
-        // If it's an array, and we modified we we read off disk, convert
+        // If it's an array, and we modified what we read off disk, convert
         // to array form.
         if (array && read != clazzToReturn) {
             clazzToReturn = ObjectStreamClass.lookup(Class.forName("[L" + clazzToReturn.getName() + ";"));

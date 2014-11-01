@@ -773,7 +773,7 @@ public class JXSearchField extends JXTextField {
 	}
 
 	/**
-	 * Invoked when the the cancel button or the 'Esc' key is pressed. Sets the
+	 * Invoked when the cancel button or the 'Esc' key is pressed. Sets the
 	 * text in the search field to <code>null</code>.
 	 * 
 	 */
