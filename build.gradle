@@ -43,7 +43,6 @@ sourceSets {
             srcDir '../frostwire-common/jdownloader'
             srcDir '../frostwire-common/jmdns'
             srcDir '../frostwire-common/json'
-            srcDir '../frostwire-common/libtorrent'
             srcDir '../frostwire-common/mp4parser'
             srcDir '../frostwire-common/vuze'
             srcDir '../frostwire-common/core'
