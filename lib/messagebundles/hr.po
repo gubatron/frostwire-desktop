@@ -3714,7 +3714,7 @@ msgstr "Skoro ste gotovi!"
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:64
 #, fuzzy
 msgid "State your intent below to start using FrostWire"
-msgstr "Izrecite vasu namjeru ispod kako biste zapoceli koristiti FrostWire"
+msgstr "Izrecite vasu namjeru ispod kako biste započeli koristiti FrostWire"
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:66
 msgid ""
@@ -3730,7 +3730,7 @@ msgstr "Saznati vise..."
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:74
 #, java-format
 msgid "I <b>will not</b> use FrostWire {0} for copyright infringement."
-msgstr ""
+msgstr "Ja <b>necu</b> koristiti FrostWire {0} za kršenje autorskih prava."
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:82
 #, java-format
@@ -3774,7 +3774,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/init/SetupManager.java:246
 msgid "FrostWire Setup Wizard"
-msgstr "FrostWire instalacijski carobnjak"
+msgstr "FrostWire instalacijski čarobnjak"
 
 #: src/com/limegroup/gnutella/gui/init/SetupManager.java:519
 msgid "Next >>"
@@ -3791,7 +3791,7 @@ msgstr "Završi"
 #: src/com/limegroup/gnutella/gui/init/SetupWindow.java:140
 #: src/com/limegroup/gnutella/gui/options/panes/AbstractPaneItem.java:80
 msgid "Learn more about this option..."
-msgstr "Nauciti vise o ovoj opciji"
+msgstr "Naučiti vise o ovoj opciji..."
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:39
 msgid ""
@@ -3807,7 +3807,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:46
 msgid "Welcome"
-msgstr "Dobrodosli"
+msgstr "Dobrodošli"
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:46
 msgid ""
@@ -3821,11 +3821,13 @@ msgid ""
 "Welcome to the FrostWire setup wizard. FrostWire will guide you through a "
 "series of steps to configure FrostWire for optimum performance."
 msgstr ""
+"Dobrodošli u FrostWire instalacijski čarobnjak. FrostWire će vas voditi kroz "
+"nekoliko koraka kako bi konfigurirali FrostWire za optimalne performanse."
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:104
 #, fuzzy
 msgid "FrostWire is free software,"
-msgstr "FrostWire se budi iz načina rada sna."
+msgstr "FrostWire je besplatan softver,"
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:114
 msgid "Do not pay for FrostWire."
@@ -3837,15 +3839,15 @@ msgstr "&Datoteka"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
 msgid "&Help"
-msgstr "&Pomoc"
+msgstr "&Pomoć"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:46
 msgid "&FAQ"
-msgstr "&Cinjenice i pitanja"
+msgstr "&Činjenice i pitanja"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:46
 msgid "Frequently Asked Questions for FrostWire"
-msgstr "Cesto pitana pitanja za FrostWire"
+msgstr "Često pitana pitanja za FrostWire"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:48
 msgid "How to use FrostWire (Video)"
@@ -3858,8 +3860,7 @@ msgstr "FrostWire za Android"
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:50
 msgid "Get FrostWire on your Android phone, tablet or google tv, all free."
 msgstr ""
-"Dobiti Frostwire na vasem Android mobilnom telefonu, tabletu ili Google "
-"televiziji, sve za besplatno"
+"Dobijte FrostWire na vasem Android mobilnom telefonu, tabletu ili Google TV-u, sve za besplatno"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
 msgid "Learn about BitTorrent Seeding"
@@ -3867,12 +3868,13 @@ msgstr "Nauciti vise o BitTorrent seedanju"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid "What is a VPN?"
-msgstr "Sto je VPN?"
+msgstr "što je VPN?"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid ""
 "Learn about how to protect your internet connection and your privacy online"
 msgstr ""
+"Nauči kako zaštititi vašu internetsku konekciju i vašu privatnost online"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 #, fuzzy
