@@ -15,11 +15,11 @@ if (!System.getenv('ANT_HOME')?.trim()) {
 }
 
 if (!new File("../frostwire-common").exists()) {
-    throw new GradleException("ERROR: You need to checkout the dependency frostwire-common")
+    //throw new GradleException("ERROR: You need to checkout the dependency frostwire-common")
 }
 
 if (!new File("../frostwire-jlibtorrent").exists()) {
-    throw new GradleException("ERROR: You need to checkout the dependency frostwire-jlibtorrent")
+    //throw new GradleException("ERROR: You need to checkout the dependency frostwire-jlibtorrent")
 }
 
 sourceCompatibility = 1.7
