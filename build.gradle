@@ -65,7 +65,19 @@ sourceSets {
         }
 
         resources {
-            srcDir 'resources'
+            srcDir 'src'
+            include '**/*.properties'
+            include '**/*.png'
+            include '**/*.gif'
+            include '**/*.jpg'
+            include '**/*.html'
+            include '**/*.js'
+            include '**/*.sh'
+            include '**/*.dat'
+            include '**/*.icc'
+            exclude '**/*.DS_Store'
+
+	    srcDir 'resources'
             include '**/*.properties'
             include '**/*.png'
             include '**/*.gif'
