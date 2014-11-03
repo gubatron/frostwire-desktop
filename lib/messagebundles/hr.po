@@ -815,7 +815,7 @@ msgstr "Stvoriti novi torrent"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:236
 msgid "Torrent Contents"
-msgstr "Torrent sadrzaji"
+msgstr "Torrent sadržaji"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:239
 msgid ""
@@ -838,7 +838,7 @@ msgstr ""
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:251
 #, fuzzy
 msgid "Tracking"
-msgstr "Traka"
+msgstr "Pratim"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:253
 msgid "Trackerless Torrent (DHT)"
@@ -926,7 +926,7 @@ msgstr "Odaberi"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:383
 msgid "Unkown error. Try again please."
-msgstr "Nepoznata greska. Pokusajte ponovno molim."
+msgstr "Nepoznata greška. Molimo pokusajte ponovno."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:391
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:946
@@ -942,7 +942,7 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:450
 msgid "Something's missing"
-msgstr "Nesto nedostaje"
+msgstr "Nešto nedostaje"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:457
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:940
@@ -954,11 +954,11 @@ msgstr "Folder koji ste odabrali je prazan"
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:940
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:724
 msgid "Invalid Folder"
-msgstr "Nevazeci folder"
+msgstr "Nevažeća mapa"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:493
 msgid "Torrent Created."
-msgstr "Torrent stvoren"
+msgstr "Torrent stvoren."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:523
 msgid "Torrent File"
@@ -1000,7 +1000,7 @@ msgstr "Odaberite datoteke za preuzimanje"
 
 #: src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:178
 msgid "Download Selected Files Only"
-msgstr "Preuzmi samo oznacene datoteke"
+msgstr "Preuzmi samo označene datoteke"
 
 #. checkbox
 #. icon
@@ -1073,7 +1073,7 @@ msgstr "\"Recite svoju cijenu\", \"Savjeti\", \"Donacije\" mogucnosti isplate"
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:98
 #, fuzzy
 msgid "Name your price, Send a Tip or Donation in"
-msgstr "Recite svoju cijenu, posaljite napojnicu ili donaciju u"
+msgstr "Recite svoju cijenu, pošaljite napojnicu ili donaciju u" 
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 msgid "bitcoins"
@@ -1089,19 +1089,19 @@ msgstr "dogecoins"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:99
 msgid "Name your price, Send a Tip or Donation via Paypal"
-msgstr "Recite svoju cijenu, posaljite napojnicu ili donaciju preko PayPal-a"
+msgstr "Recite svoju cijenu, pošaljite napojnicu ili donaciju putem PayPal-a"
 
 #: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:90
 msgid "Preparing selection"
-msgstr "Pripremanje oznacenih datoteka"
+msgstr "Pripremanje označenih datoteka"
 
 #: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:91
 msgid "please wait..."
-msgstr "molimo sacekajte..."
+msgstr "molimo pričekajte..."
 
 #: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:179
 msgid "Select the content you want to send"
-msgstr "Zaustavi oznacene download-e."
+msgstr "Zaustavi označene download-e."
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:140
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:263
@@ -1120,7 +1120,7 @@ msgstr "kod"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:141
 msgid "via FrostWire"
-msgstr "FrostWire"
+msgstr "putem FrostWire-a"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:165
 msgid "Use the following text to share the \"%s\" folder"
@@ -1135,7 +1135,7 @@ msgid ""
 "<strong>Keep FrostWire Open</strong> until the file has been downloaded by "
 "at least one other friend."
 msgstr ""
-"<strong>Ostavi FrostWire otvoren</strong> dok datoteka nije preuzeo "
+"<strong>Ostavi FrostWire otvoren</strong> dok datoteku nije preuzeo "
 "barem jedan prijatelj."
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:220
@@ -1143,8 +1143,8 @@ msgid ""
 "<strong>The more, the merrier.</strong> The more people sharing the faster "
 "it can be downloaded by others."
 msgstr ""
-"<strong>Sto vise, to bolje.</strong> Sto vise ljudi dijeli to se brze "
-"moze preuzeti od ostalih."
+"<strong>Što vise, to bolje.</strong> Što vise ljudi dijeli to se brže "
+"može preuzeti od ostalih."
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:221
 msgid ""
@@ -1152,9 +1152,9 @@ msgid ""
 "link and you seed the files they will be available to everybody on the "
 "BitTorrent network."
 msgstr ""
-"<strong>Vase datoteke mogu biti otkrivene.</strong> Kada podijelite ovaj "
-"link i dijelite ove datoteke one ce biti dostupne svima na "
-"BitTorrent mrezi."
+"<strong>Vaše datoteke mogu biti otkrivene.</strong> Kada podijelite ovaj "
+"link i dijelite ove datoteke one će biti dostupne svima na "
+"BitTorrent mreži."
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:223
 msgid "Tips"
@@ -1175,7 +1175,7 @@ msgstr "Tweetaj"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:390
 msgid "Send the message above to Twitter"
-msgstr "Posalji poruku iznad na Twitter"
+msgstr "Pošalji poruku iznad na Twitter"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:407
 msgid "Copy Text"
@@ -1183,11 +1183,11 @@ msgstr "Kopiraj izvješće"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:408
 msgid "Copy entire message to Clipboard"
-msgstr "Kopiraj u cijelu poruku u medjuspremnik"
+msgstr "Kopiraj u cijelu poruku u međuspremnik"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:415
 msgid "Message copied to clipboard."
-msgstr "Poruka kopirana u medjuspremnik."
+msgstr "Poruka kopirana u međuspremnik."
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:427
 msgid "Copy Link"
@@ -5061,4 +5061,4 @@ msgstr "Prosireni opisi"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:189
 msgid "You cannot turn off all columns."
-msgstr "Ne mozete zatvoriti sve stupce."
+msgstr "Ne možete zatvoriti sve stupce."
