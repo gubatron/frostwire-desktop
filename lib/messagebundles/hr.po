@@ -4788,7 +4788,7 @@ msgstr "Maksimalna brzina"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:44
 msgid "Choose the folder where downloads will be saved to"
-msgstr "Izaberite mapu u koju ce se preuzimanja spremati"
+msgstr "Izaberite mapu u koju će se preuzimanja spremati"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:40
 msgid ""
@@ -4796,10 +4796,13 @@ msgid ""
 "file(s). Pieces of the seeded file(s) will be available to everybody. While "
 "downloading pieces are always available to other peers in the swarm."
 msgstr ""
+"Seedanje je proces spajanja na torrent kada imate cijelu/e "
+"datoteku/e. Dijelovi seedane/ih datoteke/a će biti dostupne svima. Tijekom "
+"preuzimanja dijelovi su uvijek dostupni drugim peerovima u roju."
 
 #: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:34
 msgid "Anonymous Usage Statistics"
-msgstr "Anonimne statistike koristenja"
+msgstr "Anonimne statistike korištenja"
 
 #: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:36
 msgid ""
@@ -4808,14 +4811,14 @@ msgid ""
 "any information that can personally identify you will be stored on disk or "
 "sent through the network."
 msgstr ""
-"Posalji anonimne statistike koristenja tako da FrostWire moze biti poboljsan "
-"kvalitetnije. Informacije o trazenim, dijeljenim, sviranim ili "
-"informacije koje vas mogu osobno identificirati nece biti spremljeni na disk ili "
-"poslani kroz mrezu."
+"Posalji anonimne statistike koristenja tako da FrostWire može biti poboljšan "
+"kvalitetnije. Informacije o traženim, dijeljenim, sviranim ili "
+"informacije koje vas mogu osobno identificirati neće biti spremljene na disk ili "
+"poslane kroz mrežu."
 
 #: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:38
 msgid "Send anonymous usage statistics"
-msgstr "Poslati anonimne statistike koristenja"
+msgstr "Poslati anonimne statistike korištenja"
 
 #: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:26
 msgid "Video Options"
@@ -4823,7 +4826,7 @@ msgstr "Video postavke"
 
 #: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
 msgid "You can choose which video player to use."
-msgstr "Mozete izabrati koji video igrac zelite koristiti"
+msgstr "Možete izabrati koji video igrač zelite koristiti"
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4832,23 +4835,23 @@ msgstr "Mozete izabrati koji video igrac zelite koristiti"
 #.
 #: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:35
 msgid "Video Player"
-msgstr "Video igrac"
+msgstr "Video igrač"
 
 #: src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:38
 msgid "You can see and share your file with peers in your local Wi-Fi network."
-msgstr "Mozete vidjeti i dijeliti vase datoteke sa peerovima u vasoj lokalnoj Wi-Fi mrezi."
+msgstr "Možete vidjeti i dijeliti vaše datoteke sa peerovima u vašoj lokalnoj Wi-Fi mreži."
 
 #: src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:45
 msgid "Active search and discovery of local peer files."
-msgstr "Aktivna pretraga i otkrivanje lokalnih peer dokumenata."
+msgstr "Aktivna pretraga i otkrivanje lokalnih peer datoteka."
 
 #: src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:39
 msgid "You can have FrostWire import newly downloaded songs into iTunes."
-msgstr "FrostWire moze uvesti novo preuzene pjesme u iTunes."
+msgstr "FrostWire može uvesti novo preuzete pjesme u iTunes."
 
 #: src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:41
 msgid "Enable iTunes importing:"
-msgstr "Ukljuciti iTunes uvoz:"
+msgstr "Uključiti iTunes uvoz:"
 
 #: src/com/limegroup/gnutella/gui/search/LabeledRangeSlider.java:60
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:108
@@ -4858,35 +4861,35 @@ msgstr "Maksimalno"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:116
 msgid "No results so far..."
-msgstr "Jos uvijek nema rezultata..."
+msgstr "Još uvijek nema rezultata..."
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:150
 msgid "%s Audio files found (including .mp3, .wav, .ogg, and more)"
-msgstr "%s Audio datoteke pronadene (ukljucujuci .mp3, .wav, .ogg i jos vise)"
+msgstr "%s Audio datoteka pronađeno (uključujući .mp3, .wav, .ogg i više)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:155
 msgid "%s Video files found (including .avi, .mpg, .wmv, and more)"
-msgstr "%s Video datoteke pronadene (ukljucujuci .avi, .mpg, .wmv i jos vise)"
+msgstr "%s Video datoteka pronađeno (uključujući .avi, .mpg, .wmv i više)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:160
 msgid "%s Image files found (including .jpg, .gif, .png and more)"
-msgstr "%s Slika pronadene (ukljucujuci .jpg, .gif, .png i jos vise)"
+msgstr "%s Slika pronađeno (uključujući .jpg, .gif, .png i više)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:166
 msgid "%s Document files found (including .html, .txt, .pdf, and more)"
-msgstr ""
+msgstr "%s Dokumenata pronađeno (uključujući .html, .txt, .pdf i više)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:171
 msgid "%s Program files found (including .exe, .zip, .gz, and more)"
-msgstr "%s Dokumenti progrrama pronadeni (ukljucujuci .exe, .zip, .gz i jos vise)"
+msgstr "%s Programskih datoteka pronađeni (uključujući .exe, .zip, .gz i više)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:176
 msgid ""
 "%s Torrent files found (includes only .torrent files. Torrent files point to "
 "collections of files shared on the BitTorrent network.)"
 msgstr ""
-"%s torrent datoteka nadjeno (sadrzi samo .torrent datoteke. Torrent datoteke "
-"pokazuju na kolekcije datoteka dijeljene na BitTorrent mrezi.)"
+"%s torrent datoteka nađeno (sadrži samo .torrent datoteke. Torrent datoteke "
+"pokazuju na kolekcije datoteka dijeljene na BitTorrent mreži.)"
 
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:44
 msgid "Stop"
