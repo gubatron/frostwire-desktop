@@ -4123,7 +4123,7 @@ msgstr "iTunes"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:295
 msgid "Helper Apps"
-msgstr "Pomocne aplikacije"
+msgstr "Pomoćne aplikacije"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:300
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:302
@@ -4154,7 +4154,7 @@ msgstr "Proxy"
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:314
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:48
 msgid "Network Interface"
-msgstr "Mrežno sućelje"
+msgstr "Mrežno sučelje"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:316
 #: src/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:56
@@ -4168,7 +4168,7 @@ msgstr "Pokretanje sistema"
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
 #, fuzzy
 msgid "Usage Statistics"
-msgstr "Statistike koristenja"
+msgstr "Statistike korištenja"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:324
 msgid "System Tray"
@@ -4182,7 +4182,7 @@ msgstr "Prijave grešaka"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsMediator.java:82
 msgid "Loading Options Window..."
-msgstr "Učitavanje opcijskog prozora"
+msgstr "Učitavanje opcijskog prozora..."
 
 #: src/com/limegroup/gnutella/gui/options/OptionsMediator.java:179
 #: src/com/limegroup/gnutella/gui/options/OptionsPaneManager.java:129
@@ -4221,23 +4221,23 @@ msgstr "Mozete izabrati koji Audio svirač želite koristiti."
 #.
 #: src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:29
 msgid "Audio Player"
-msgstr "Svirac zvuka"
+msgstr "Svirač zvuka"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:18
 msgid "Text Autocompletion"
-msgstr "Dovrsavanje teksta"
+msgstr "Dovršavanje teksta"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:20
 msgid "You can enable or disable autocompletion of text fields."
-msgstr "Mozete omoguciti ili onemoguciti dovrsavanje teksta"
+msgstr "Možete omoguciti ili onemoguciti dovrsavanje teksta"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:27
 msgid "Enable Autocompletion of Text Fields:"
-msgstr "Omoguciti automatsko dovrsavanje tekstualnih polja:"
+msgstr "Omoguciti automatsko dovršavanje tekstualnih polja:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
 msgid "Automatic Installer Download"
-msgstr "Automatsko preuzimanje instalacijskog carobnjaka"
+msgstr "Automatsko preuzimanje instalacijskog čarobnjaka"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:16
 msgid ""
@@ -4245,13 +4245,13 @@ msgid ""
 "when it's available. It won't install it but next time you start FrostWire "
 "it'll let you know that it's there for you."
 msgstr ""
-"FrostWire moze automatski preuzeti novi instalacijski carobnjak preko BitTorrenta za vas "
+"FrostWire može automatski preuzeti novi instalacijski carobnjak preko BitTorrenta za vas "
 "kad je dostupan. Nece ga instalirati ali sljedeci put kada se FrostWire pokrene "
-"dati ce vam na znanje da je dostupan za instalaciju."
+"dati će vam na znanje da je dostupan za instalaciju."
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:24
 msgid "Download new installers for me (Recommended)"
-msgstr "Preuzeti nove preuzimatelje za mene (preporuceno)"
+msgstr "Preuzeti nove preuzimatelje za mene (preporučeno)"
 
 #: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:26
 msgid "Browser Options"
@@ -4259,7 +4259,7 @@ msgstr "Postavke tražilice"
 
 #: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:28
 msgid "You can choose which browser to use."
-msgstr "Mozete izabrati koju tražilicu zelite koristiti."
+msgstr "Možete izabrati koju tražilicu zelite koristiti."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4287,7 +4287,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:99
 msgid "Send Errors Automatically if FrostWire is Frozen"
-msgstr "Poskati greske automatski ako je FrostWire zamrznut"
+msgstr "Poslati greske automatski ako je FrostWire zamrznut"
 
 #: src/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:38
 #, fuzzy
@@ -4296,7 +4296,7 @@ msgstr "Stranica detalja"
 
 #: src/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:40
 msgid "Show details web page after a download starts."
-msgstr "Pokazati stranicu detalja nakon sto preuzimanje zapocne."
+msgstr "Pokazati stranicu detalja nakon što preuzimanje zapocne."
 
 #: src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:20
 msgid "License Warning"
@@ -4307,7 +4307,7 @@ msgid ""
 "You can choose whether to be warned about downloading a file without a "
 "license."
 msgstr ""
-"Mozete odabrati zelite li biti upozoreni o preuzimanju datoteka bez "
+"Možete odabrati zelite li biti upozoreni o preuzimanju datoteka bez "
 "dozvole."
 
 #: src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:29
@@ -4316,7 +4316,7 @@ msgstr "Pokazati upozorenje licence:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:47
 msgid "Router Configuration"
-msgstr "Konfiguracije rutera"
+msgstr "Konfiguracija routera"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:49
 msgid ""
@@ -4331,7 +4331,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:63
 msgid "Use random port (Recommended)"
-msgstr "Koristiti nasumicni port (preporuceno)"
+msgstr "Koristiti nasumični port (preporuceno)"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:64
 msgid "Manual port range"
