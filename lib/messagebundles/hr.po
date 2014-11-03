@@ -55,7 +55,6 @@ msgid "Send to iTunes"
 msgstr "Pošalji u iTunes"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:76
-#, fuzzy
 msgid "Send files to iTunes"
 msgstr "Pošalji datoteke u iTunes"
 
@@ -125,9 +124,8 @@ msgstr ""
 "Ovaj prijenos je gotov, nastavak istoga će ga početi dijeliti"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:214
-#, fuzzy
 msgid "Do you want to enable torrent seeding?"
-msgstr "Hoćete li omogućiti dijeljenje torrenata?"
+msgstr "Želite li omogućiti dijeljenje torrenata?"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:241
 msgid "Pause Download"
@@ -290,7 +288,6 @@ msgstr "Ime"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:120
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:346
-#, fuzzy
 msgid "Tips/Donations"
 msgstr "Napojnice/donacije"
 
@@ -373,9 +370,8 @@ msgid "Queued for checking"
 msgstr "Poredano za provjeravanje"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:197
-#, fuzzy
 msgid "Checking..."
-msgstr "Provjeravanje"
+msgstr "Provjeravam..."
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:198
 #, fuzzy
@@ -383,9 +379,8 @@ msgid "Downloading metadata"
 msgstr "Preuzimanje nadogradnje..."
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:199
-#, fuzzy
 msgid "Downloading torrent"
-msgstr "Preuzimanje torrenta"
+msgstr "Preuzimam torrent"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:200
 #: src/com/frostwire/gui/library/DownloadTask.java:82
@@ -409,9 +404,8 @@ msgid "Allocating"
 msgstr "Dodjeljujem"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:204
-#, fuzzy
 msgid "Paused"
-msgstr "Zaustavljanje"
+msgstr "Pauzirano"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:205
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:629
@@ -439,17 +433,15 @@ msgstr "Greška: Krivi potpis"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:209
 msgid "Stopped"
-msgstr "Stalo"
+msgstr "Zaustavljeno"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:210
-#, fuzzy
 msgid "Pausing"
-msgstr "Zaustavljanje"
+msgstr "Pauzirano"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:211
-#, fuzzy
 msgid "Canceling"
-msgstr "Odustani"
+msgstr "Odustajem"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:212
 msgid "Canceled"
@@ -461,7 +453,6 @@ msgstr "Čekanje"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:214
 #: src/com/frostwire/gui/transfers/PeerHttpUpload.java:156
-#, fuzzy
 msgid "Complete"
 msgstr "Završeno"
 
@@ -473,7 +464,6 @@ msgid "Uploading"
 msgstr "Šaljem"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:216
-#, fuzzy
 msgid "Uncompressing"
 msgstr "Otpakiravam datoteke"
 
@@ -482,9 +472,8 @@ msgid "Demuxing"
 msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:265
-#, fuzzy
 msgid "Unknown status"
-msgstr "Nepoznato"
+msgstr "Status nepoznat"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:363
 msgid "ETA"
@@ -686,7 +675,6 @@ msgstr ""
 "sa licencom od Stvaratelja Sadrzaja."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:101
-#, fuzzy
 msgid "Author's Name"
 msgstr "Ime autora"
 
@@ -730,6 +718,8 @@ msgid ""
 "You let others copy, distribute, display, and perform your copyrighted work "
 "but only if they give credit the way you request."
 msgstr ""
+"Dajete mogučnost drugima da kopiraju, distribuiraju, pokazuju i izvode vaš rad zaštićen autorskim pravom "
+"ali samo ako daju zasluge kako vi zahtijevate."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:128
 msgid ""
@@ -750,14 +740,16 @@ msgid ""
 "You allow others to distribute derivative works only under a license "
 "identical to the license that governs your work."
 msgstr ""
-"Vi dozvoljavate ostalima da distribuiraju posao samo pod licencom identicnom "
-"licencom koja ureduje vas posao."
+"Vi dozvoljavate ostalima da distribuiraju posao samo pod licencom "
+"identičnom licencom koja uređuje vas posao."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:147
 msgid ""
 "This work has been identified as being free of known restrictions under "
 "copyright law, including all related and neighboring rights."
 msgstr ""
+"Ovaj rad je identificiran kao slobodno od poznatih ograničenja "
+"po zakonu od autorskih prava, uključujući sva povezana i srodna prava."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:148
 msgid ""
