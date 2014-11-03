@@ -834,6 +834,8 @@ msgid ""
 "Click here to select a single file or a folder as the content indexed by "
 "your new .torrent"
 msgstr ""
+"Kliknite ovdje kako bi ste odabrali datoteku ili mapu kao sadržaj koji će vaš "
+"novi .torrent indeksirati."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:251
 #, fuzzy
@@ -880,15 +882,15 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:274
 msgid "Web Seeds Mirror URLs"
-msgstr "Web Seed Zrcano ULRovi"
+msgstr "Internetsko smjeme mirror URL-i"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:275
 msgid ""
 "If these files can be downloaded from the web, enter the URLs of each "
 "possible mirror, one per line (GetRight style)."
 msgstr ""
-"Ako se ove datoteke mogu preuzeti sa interneta, upisite URLove za svakog "
-"moguces zrcala, jedan po redu (GetRight style)."
+"Ako se ove datoteke mogu preuzeti sa interneta, upišite URL-e za svakog "
+"mogućeg mirrora, jedan po redu (GetRight stil)."
 
 #. first button will dock all the way east,
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:292
@@ -932,13 +934,15 @@ msgstr "Nepoznata greška. Molimo pokusajte ponovno."
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:946
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:730
 msgid "Error: You can't read on that file/folder."
-msgstr "Greska: Nemoguce procitati na toj datoteci/folderu"
+msgstr "Greška: Nemoguće pročitati na toj datoteci/folderu"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:450
 msgid ""
 "Please select a file or a folder.\n"
 "Your new torrent will need content to index."
 msgstr ""
+"Molimo odaberite datoteku ili mapu.\n"
+"Vaš novi torrent će trebati sadržaj za indeksiranje."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:450
 msgid "Something's missing"
@@ -948,7 +952,7 @@ msgstr "Nešto nedostaje"
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:940
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:724
 msgid "The folder you selected is empty."
-msgstr "Folder koji ste odabrali je prazan"
+msgstr "Folder koji ste odabrali je prazan."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:457
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:940
@@ -984,7 +988,7 @@ msgstr "wizard.operationfailed"
 #. check just the first file on all mirrors.
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:744
 msgid "Checking Web seed mirror URLs..."
-msgstr "Provjeravanje Web seed mirror URLa..."
+msgstr "Provjeravam Web seed mirror URLa..."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:753
 msgid "Web seed not reachable."
@@ -992,7 +996,7 @@ msgstr "Internetski seed nije u dohvatu"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:850
 msgid "Saving Torrent..."
-msgstr "Spremanje torrenta..."
+msgstr "Spremam torrent..."
 
 #: src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:105
 msgid "Select files to download"
@@ -1021,11 +1025,11 @@ msgstr "Tip"
 #: src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:227
 #: src/com/limegroup/gnutella/gui/search/SearchTableColumns.java:56
 msgid "Extension"
-msgstr "Produzenje"
+msgstr "Produženje"
 
 #: src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:255
 msgid "Select/Unselect all files"
-msgstr "Odabrati/Maknuti odabir sa svih dokumenta"
+msgstr "Odabrati/maknuti odabir sa svih dokumenata"
 
 #: src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:533
 #: src/com/frostwire/gui/transfers/PeerHttpUpload.java:162
@@ -1037,8 +1041,8 @@ msgid ""
 "I am the content creator or I have the right to collect financial "
 "contributions for this work."
 msgstr ""
-"Ja sam stvoritelj sadrzaja ili ja imam pravo sakupiti financijske "
-"kontribucije za ovaj posao"
+"Ja sam stvoritelj sadržaja ili ja imam pravo sakupiti financijske "
+"kontribucije za ovaj posao."
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:50
 msgid ""
@@ -1049,23 +1053,23 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:126
 msgid "<strong>Bitcoin</strong> receiving wallet address"
-msgstr "<strong>Bitcoin</strong> primanje adrese novcanika"
+msgstr "<strong>Bitcoin</strong> primanje adrese novčanika"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:131
 msgid "<strong>Litecoin</strong> receiving wallet address"
-msgstr "<strong>Litecoin</strong> primanje adrese novcanika"
+msgstr "<strong>Litecoin</strong> primanje adrese novčanika"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:136
 msgid "<strong>Dogecoin</strong> receiving wallet address"
-msgstr "<strong>Dogecoin</strong> primanje adrese novcanika"
+msgstr "<strong>Dogecoin</strong> primanje adrese novčanika"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:141
 msgid "<strong>Paypal</strong> payment/donation page url"
-msgstr "<strong>Paypal</strong> isplate/donacije stranica url"
+msgstr "<strong>Paypal</strong> url stranice isplata/donacija"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:151
 msgid "\"Name your price\", \"Tips\", \"Donations\" payment options"
-msgstr "\"Recite svoju cijenu\", \"Savjeti\", \"Donacije\" mogucnosti isplate"
+msgstr "\"Recite svoju cijenu\", \"Savjeti\", \"Donacije\" mogućnosti isplate"
 
 #. We use "Bitcoin" for the protocol (upper case B), and "bitcoins" for the units of currency (lower case b)
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
