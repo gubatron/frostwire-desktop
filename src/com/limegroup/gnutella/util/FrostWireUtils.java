@@ -45,7 +45,7 @@ public final class FrostWireUtils {
 	private static final String FROSTWIRE_VERSION = "6.0.0";
 	
 	/** Build number for the current version, gets reset to 1 on every version bump*/
-	private static final int BUILD_NUMBER = 3;
+	private static final int BUILD_NUMBER = 4;
 
 	/**
 	 * Make sure the constructor can never be called.
@@ -169,7 +169,7 @@ public final class FrostWireUtils {
     }
     
     public static File getUserMusicFolder() {
-        File musicFile = null;
+        File musicFile;
         if (OSUtils.isMacOSX()) {
             musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
         } else if (OSUtils.isWindowsXP()) {
@@ -186,7 +186,7 @@ public final class FrostWireUtils {
     }
 
     public static File getUserVideoFolder() {
-        File videoFile = null;
+        File videoFile;
         if (OSUtils.isMacOSX()) {
             videoFile = new File(CommonUtils.getUserHomeDir(), "Movies");
         } else if (OSUtils.isWindowsXP()) {
