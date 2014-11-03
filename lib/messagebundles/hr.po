@@ -1093,7 +1093,7 @@ msgstr "Recite svoju cijenu, pošaljite napojnicu ili donaciju putem PayPal-a"
 
 #: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:90
 msgid "Preparing selection"
-msgstr "Pripremanje označenih datoteka"
+msgstr "Pripremam odabir"
 
 #: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:91
 msgid "please wait..."
@@ -1101,7 +1101,7 @@ msgstr "molimo pričekajte..."
 
 #: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:179
 msgid "Select the content you want to send"
-msgstr "Zaustavi označene download-e."
+msgstr "Odaberite sadržaj koji želite poslati"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:140
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:263
@@ -1124,11 +1124,11 @@ msgstr "putem FrostWire-a"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:165
 msgid "Use the following text to share the \"%s\" folder"
-msgstr "Koristite ovaj tekst da dijelite \"%s\" datoteku"
+msgstr "Koristite ovaj tekst kako bi ste dijelili \"%s\" mapu"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:167
 msgid "Use the following text to share the \"%s\" file"
-msgstr "Koristite ovaj tekst da dijelite \"%s\" datoteku"
+msgstr "Koristite ovaj tekst kako bi ste dijelili \"%s\" datoteku"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:219
 msgid ""
@@ -2896,17 +2896,17 @@ msgid ""
 "FrostWire has encountered problems in loading your settings.  FrostWire will "
 "attempt to use the default values; however, may behave unexpectedly."
 msgstr ""
-"FrostWire je naisao na problem u ucitavanju vasih postavki.  FrostWire ce "
-"pokusati koristiti osnovne vrijednosti; medutim, moze se ponasati "
-"neocekivano."
+"FrostWire je naišao na problem u učitavanju vaših postavki.  FrostWire će "
+"pokušati koristiti osnovne vrijednosti; međutim, može se ponašati "
+"neočekivano."
 
 #: src/com/limegroup/gnutella/gui/ShutdownWindow.java:30
 msgid "Shutting down FrostWire..."
-msgstr "Isključenje FrostWirea..."
+msgstr "Isključujem FrostWire..."
 
 #: src/com/limegroup/gnutella/gui/ShutdownWindow.java:54
 msgid "Please wait while FrostWire shuts down..."
-msgstr "Molimo sačekajte dok se FrostWire isključuje..."
+msgstr "Molimo pričekajte dok se FrostWire isključuje..."
 
 #: src/com/limegroup/gnutella/gui/SplashWindow.java:142
 msgid "Loading FrostWire..."
@@ -2918,13 +2918,13 @@ msgstr "Učitavanje prozora statusa..."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:141
 msgid "Creating donation buttons so you can give us a hand..."
-msgstr "Stvaranje gumbica za donacije tako da nam mozete pomoci"
+msgstr "Stvaranje gumbova za donacije tako da nam možete pomoći"
 
 #. make icons and panels for connection quality
 #: src/com/limegroup/gnutella/gui/StatusLine.java:145
 #, fuzzy
 msgid "Creating Connection Quality Indicator..."
-msgstr "Stvaranje indikator kvalitete mreze"
+msgstr "Stvaram indikator kvalitete mreže..."
 
 #. make the 'Language' button
 #: src/com/limegroup/gnutella/gui/StatusLine.java:149
@@ -2935,25 +2935,25 @@ msgstr "Dodavanje zastava ovdje i ondje..."
 #. make the 'Firewall Status' label
 #: src/com/limegroup/gnutella/gui/StatusLine.java:153
 msgid "Playing with pixels for the Firewall indicator..."
-msgstr "Igranje sa pixelima na Firewall indikatoru"
+msgstr "Igranje sa pikselima na Firewall indikatoru"
 
 #. make the social buttons
 #: src/com/limegroup/gnutella/gui/StatusLine.java:160
 msgid "Learning to socialize on Facebook..."
-msgstr "Ucenje kako socijalizirati na Facebook-u"
+msgstr "Učim kako se socijalizirati na Facebook-u..."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:162
 msgid "Learning to socialize on Twitter..."
-msgstr "Ucenje kako socijalizirati na Twitter-u"
+msgstr "Učim kako se socijalizirati na Twitter-u..."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:164
 msgid "Learning to socialize on G+..."
-msgstr "Ucenje kako socijalizirati na G+"
+msgstr "Učim kako se socijalizirati na G+"
 
 #. male Seeding status label
 #: src/com/limegroup/gnutella/gui/StatusLine.java:168
 msgid "Painting seeding sign..."
-msgstr ""
+msgstr "Crtam skin seedanja..."
 
 #. make the center panel
 #: src/com/limegroup/gnutella/gui/StatusLine.java:172
@@ -2970,8 +2970,8 @@ msgid ""
 "Like FrostWire on Facebook and stay in touch with the community. Get Help "
 "and Help Others."
 msgstr ""
-"Zavolite FrostWire na Facebook-u i ostanite u dodiru sa zajednicom. Dobiti "
-"pomoc I pomozite ostalima."
+"Zavolite FrostWire na Facebook-u i ostanite u dodiru sa zajednicom. Dobijte "
+"pomoć i pomozite ostalima."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:200
 #, fuzzy
@@ -2981,7 +2981,7 @@ msgstr "&Korištenje FrostWire-a."
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 #, fuzzy
 msgid "<b>Seeding</b><p>completed torrent downloads.</p>"
-msgstr "<html><b>Seedanje</b><p>Zavrsena torrent preuzimanja.</html>"
+msgstr "<html><b>Seedanje</b><p>Završena torrent preuzimanja.</html>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 #, fuzzy
