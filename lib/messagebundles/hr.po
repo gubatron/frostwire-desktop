@@ -21,7 +21,7 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: src/com/frostwire/gui/HideExitDialog.java:57
-msgid "Do you want to hide FrostWire?"
+msgid "Do you want to hide FrostWire?"	
 msgstr "Želite li sakriti FrostWire?"
 
 #: src/com/frostwire/gui/HideExitDialog.java:72
@@ -110,7 +110,7 @@ msgstr "Nastavi"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:194
 msgid "Reattempt Selected Downloads"
-msgstr "Pokusaj nastaviti preuzimanje"
+msgstr "Pokušaj nastaviti preuzimanje"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:213
 msgid ""
@@ -143,16 +143,16 @@ msgstr "Pauziraj"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:243
 msgid "Pause Selected Downloads"
-msgstr "Pauziraj oznacena preuzimanja"
+msgstr "Pauziraj označena preuzimanja"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:268
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:269
 msgid "Remove Torrent and Data"
-msgstr "Ukloni torrent i pripadajuce datoteke"
+msgstr "Ukloni torrent i pripadajuće datoteke"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:270
 msgid "Remove Torrent and Data from selected downloads"
-msgstr "Ukloni torrent i pripadajuce datoteke odabranih preuzimanja"
+msgstr "Ukloni torrent i pripadajuće datoteke odabranih preuzimanja"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:272
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:273
@@ -175,7 +175,7 @@ msgstr "Ukloni"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:278
 msgid "Remove Selected Downloads"
-msgstr "Pauziraj oznacena preuzimanja"
+msgstr "Pauziraj označena preuzimanja"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:288
 msgid ""
@@ -185,7 +185,7 @@ msgid ""
 msgstr ""
 "Jeste li sigurni da želite ukloniti datoteke s vaseg racunala?\n"
 "\n"
-"Vi nećete biti u mogućnosti da se oporavim datoteke."
+"Vi nećete biti u mogućnosti oporaviti datoteke."
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:288
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:379
@@ -278,7 +278,7 @@ msgstr "Dodaj na playlistu"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:60
 msgid " (Handpicked)"
-msgstr ""
+msgstr " (ručno odabrano)"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:116
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:336
@@ -406,7 +406,7 @@ msgstr "Brzina"
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:203
 #, fuzzy
 msgid "Allocating"
-msgstr "Lokacija"
+msgstr "Dodjeljujem"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:204
 #, fuzzy
@@ -423,19 +423,19 @@ msgstr "Zaustavljanje"
 #: src/com/limegroup/gnutella/gui/MessageService.java:123
 #: src/com/limegroup/gnutella/gui/MessageService.java:243
 msgid "Error"
-msgstr "Greska"
+msgstr "Greška"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:206
 msgid "Error: Moving incomplete"
-msgstr "Greska: Pomicanje neuspjesno"
+msgstr "Greška: Pomicanje neuspješno"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:207
 msgid "Error: Wrong md5 hash"
-msgstr "Greska: Krivo md5 mljeveno meso"
+msgstr "Greška: Kriva md5 smjesa"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:208
 msgid "Error: Wrong signature"
-msgstr "Greska: Krivi potpis"
+msgstr "Greška: Krivi potpis"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:209
 msgid "Stopped"
@@ -457,20 +457,20 @@ msgstr "Odustani"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:213
 msgid "Waiting"
-msgstr "Cekanje"
+msgstr "Čekanje"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:214
 #: src/com/frostwire/gui/transfers/PeerHttpUpload.java:156
 #, fuzzy
 msgid "Complete"
-msgstr "Zavrseno"
+msgstr "Završeno"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:215
 #: src/com/frostwire/gui/library/DeviceUploadTask.java:71
 #: src/com/frostwire/gui/library/DeviceUploadTask.java:83
 #: src/com/frostwire/gui/transfers/PeerHttpUpload.java:153
 msgid "Uploading"
-msgstr "Uploadavanje"
+msgstr "Šaljem"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:216
 #, fuzzy
@@ -488,7 +488,7 @@ msgstr "Nepoznato"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:363
 msgid "ETA"
-msgstr "Priblizno vrijeme zavrsetka"
+msgstr "Približno vrijeme završetka"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:488
 #: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:421
@@ -512,7 +512,7 @@ msgstr "Prikaži u knjiznici"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:509
 msgid "Show Download in Library"
-msgstr "Prikeži preuzimanje u knjižnici"
+msgstr "Prikaži preuzimanje u knjižnici"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediator.java:175
 msgid "Transfers"
@@ -557,7 +557,7 @@ msgid ""
 "FrostWire was unable to load the torrent file \"{0}\", - it may be malformed "
 "or FrostWire does not have permission to access this file."
 msgstr ""
-"FrostWire nije bio u mogucnosti ucitati torrent datoteku \"{0}\", - mozda je deformirana "
+"FrostWire nije bio u mogućnosti učitati torrent datoteku \"{0}\", - možda je deformirana "
 "ili FrostWire nema ovlasti za pristup ovoj datoteci."
 
 #. advanced options
@@ -629,11 +629,11 @@ msgstr "Izmjeni pratitelje"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:470
 msgid "Update Tracker"
-msgstr "Izmijeni pratitelje"
+msgstr "Izmjeni pratitelje"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:491
 msgid "Scrape Tracker"
-msgstr ""
+msgstr "Ogrebi pratitelja"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:517
 #, fuzzy
@@ -706,7 +706,7 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:108
 msgid "album name, movie title, book title, game title."
-msgstr "ime albuma, naslov filma, naslov knjige, naslov igre"
+msgstr "ime albuma, naslov filma, naslov knjige, naslov igre."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:110
 msgid "Attribution URL"
@@ -769,11 +769,11 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:235
 msgid "You have selected the following License"
-msgstr "Vi se izabrali sljedecu licencu"
+msgstr "Vi se izabrali sljedeću licencu"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:394
 msgid "Select what people can and can't do with this work"
-msgstr "Odaberite sto ljudi mogu i ne mogu s ovim radom"
+msgstr "Odaberite što ljudi smiju i ne smiju s ovim radom"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:425
 msgid ""
@@ -791,11 +791,11 @@ msgstr "Vrsta dozvole:"
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:107
 #, fuzzy
 msgid "Torrent File Created with FrostWire http://www.frostwire.com"
-msgstr "Trenutno se spajate na mrezu."
+msgstr "Torrent datoteka stvorena sa FrostWire-om http://www.frostwire.com"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:205
 msgid "Contents and Tracking"
-msgstr "Sadrzaj i pracenje"
+msgstr "Sadržaj i praćenje"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:206
 #, fuzzy
