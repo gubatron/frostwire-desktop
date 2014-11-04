@@ -4908,11 +4908,11 @@ msgstr "Preuzeti sve odabrane datoteke"
 msgid ""
 "See detail web page about the selected torrent (Contents, Comments, Seeds)"
 msgstr ""
-"Vidjeti detalje web stranice o odabranom torrentu (Sadrzaj, Komentari, Seedovi)"
+"Vidjeti detalje web stranice o odabranom torrentu (sadržaj, komentari, seedovi)"
 
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:50
 msgid "Stop current search"
-msgstr "Zatvori trenutacnu pretragu"
+msgstr "Zatvori trenutačnu pretragu"
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:86
 msgid "Close Search"
@@ -4928,7 +4928,7 @@ msgstr "Ponoviti pretragu"
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:92
 msgid "Download Partial Files"
-msgstr "Preuzeti djelomicne datoteke"
+msgstr "Preuzeti djelomične datoteke"
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:94
 msgid "Torrent Details"
@@ -4949,19 +4949,19 @@ msgstr "Pogledati u Archive.org-u"
 #. Set the splash screen text...
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:126
 msgid "Loading Search Window..."
-msgstr "Ucitavanje prozora trazilice..."
+msgstr "Učitavanje prozora tražilice..."
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:213
 msgid ""
 "Your search must be at least three characters to avoid congesting the "
 "network."
 msgstr ""
-"Vase pretrazivanje mora biti barem tri slova dugacko kako bi izbjegli preopterecivanje"
-"mreze."
+"Vaše pretraživanje mora biti barem tri slova dugačko kako bi ste izbjegli preopterečivanje"
+"mreže."
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:216
 msgid "Your search is too long. Please make your search smaller and try again."
-msgstr "Vase pretrazivanje je pre veliko. Molimo napravite vase pretrazivanje manje i pokusajte ponovno."
+msgstr "Vaše pretraživanje je pre veliko. Molimo smanjite vašu pretragu i pokušajte ponovno."
 
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:107
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:109
@@ -4977,8 +4977,8 @@ msgid ""
 "has been disabled on your FrostWire Search Options. (Go to Tools > Options > "
 "Search to enable)"
 msgstr ""
-"bilo je onemoguceno na opcijama pretrazivanja FrostWire-a. (Idite na Alati > Opcije > "
-"Trazenje kako biste omogucili)"
+"bilo je onemogućeno na opcijama pretraživanja FrostWire-a. (Idite na Alati > Opcije > "
+"Traženje kako bi ste omogučili)"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:85
 #: src/com/limegroup/gnutella/gui/tables/AbstractActionsRenderer.java:85
@@ -4989,7 +4989,7 @@ msgstr "Igrati/Pregled"
 #: src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:111
 #, fuzzy
 msgid "Select content to download from this torrent."
-msgstr "Odaberi sadrzaj za preuzimanje iz ovog torrenta."
+msgstr "Odaberi sadržaj za preuzimanje iz ovog torrenta."
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultDisplayer.java:579
 #, fuzzy
@@ -5002,13 +5002,13 @@ msgstr "Kopirati smjesu"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:370
 msgid "Search More"
-msgstr "Traziti vise"
+msgstr "Tražiti vise"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:707
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:708
 #, fuzzy
 msgid "Search tools"
-msgstr "Pretrazni alati"
+msgstr "Pretražni alati"
 
 #: src/com/limegroup/gnutella/gui/search/SearchTableColumns.java:50
 msgid "Source"
@@ -5032,8 +5032,8 @@ msgid ""
 "One or more files or protocols that FrostWire uses are no longer associated "
 "with FrostWire. Would you like FrostWire to re-associate them?"
 msgstr ""
-"Jedna ili vise datoteke ili protokola koji FrostWire koristi bise nisu "
-"asocijirani sa FrostWire. Zelite li da FrostWire ponovno asocijira s njima?"
+"Jedna ili više datoteka ili protokola koji FrostWire koristi vise nisu "
+"asocirani sa FrostWireom. Želite li da FrostWire ponovno asocira sa njima?"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:50
 msgid "Revert To Default"
@@ -5041,7 +5041,7 @@ msgstr "Povrati osnovne postavke"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:56
 msgid "More Options"
-msgstr "Jos postavki"
+msgstr "Još postavki"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:62
 msgid "Stripe Rows"
@@ -5053,7 +5053,7 @@ msgstr "Automatski razvrstaj"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:74
 msgid "Extended Tooltips"
-msgstr "Prosireni opisi"
+msgstr "Prošireni opisi"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:189
 msgid "You cannot turn off all columns."
