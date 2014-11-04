@@ -3114,7 +3114,7 @@ msgid ""
 "You can change the look and feel of FrostWire by going to View &gt; Use "
 "Small Icons, Show Icon Text and Increase-Decrease the Font Size."
 msgstr ""
-"Mozete promijeniti izgled i osjecaj od FrostWire-a tako da idete na Pregled &gt; Koristiti 
+"Mozete promijeniti izgled i osjecaj od FrostWire-a tako da idete na Pregled &gt; Koristiti "
 "Make Ikone, Pokazati Tekst Ikona i Povecaj-Smalji Velicinu Fonta"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:24

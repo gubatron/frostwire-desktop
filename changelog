@@ -1,4 +1,4 @@
-frostwire (6.0.0) unstable; urgency=high
+frostwire (6.0.0) stable; urgency=high
   * New BitTorrent engine based on frostwire-jlibtorrent,
     a libtorrent wrapper api created by FrostWire.
   * Russian translation updates.
@@ -7,7 +7,7 @@ frostwire (6.0.0) unstable; urgency=high
   * Fixes EzTV search, now with https support.
   * Multiple bug fixes.
 
- -- FrostWire Team <contact@frostwire.com>  Thu, 16 October 2014 14:15:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 03 November 2014 17:46:00 -0500
 
 frostwire (5.7.7) stable; urgency=high
   * New: VPN connection status indicator.
