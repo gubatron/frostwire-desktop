@@ -1195,15 +1195,15 @@ msgstr "Kopiraj u međuspremnik"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:435
 msgid "Link copied to clipboard."
-msgstr "Poveznica kopirana u medjuspremnik"
+msgstr "Poveznica kopirana u međuspremnik"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:450
 msgid "Copy Magnet URL to Clipboard"
-msgstr "Kopiraj magnet URL u medjuspremnik"
+msgstr "Kopiraj magnet URL u međuspremnik"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:457
 msgid "Magnet copied to clipboard."
-msgstr "Magnet kopiran u medjuspremnik."
+msgstr "Magnet kopiran u međuspremnik."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:58
 msgid "Torrent Data Save Folder"
@@ -1211,7 +1211,7 @@ msgstr "Folder za spremanje torrent datoteka"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:90
 msgid "You forgot to enter a path for the Torrent Data Folder."
-msgstr "Zaboravili ste napisati put to mape datoteka torrenta"
+msgstr "Zaboravili ste napisati put za mapu datoteka torrenta"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:114
 msgid "Please enter a valid path for the Torrent Data Folder"
@@ -1242,7 +1242,7 @@ msgstr "Koristi osnovne postavke"
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:174
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:200
 msgid "Browse..."
-msgstr "Pretrazuj..."
+msgstr "Pretražuj..."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:175
 msgid "Choose Another Folder"
@@ -1326,7 +1326,7 @@ msgstr "Postavke"
 
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:171
 msgid "You can configure the folders you share in FrostWire's Options."
-msgstr "Mozete podesiti mape koje dijelite u postavkama FrostWire-a"
+msgstr "Možete podesiti mape koje dijelite u postavkama FrostWire-a"
 
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:263
 #: src/com/limegroup/gnutella/gui/bugs/BugManager.java:359
@@ -1341,7 +1341,7 @@ msgstr "Spremi detalje u datoteku"
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1134
 #: src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:67
 msgid "Send files with FrostWire"
-msgstr "Pomoc pri korištenju FrostWire-a."
+msgstr "Šalji datoteke putem FrostWire-a"
 
 #: src/com/frostwire/gui/library/AddLibraryDirectoryAction.java:45
 #: src/com/limegroup/gnutella/gui/ListEditor.java:238
@@ -1359,15 +1359,15 @@ msgstr "Zatvori nakon prijenosa"
 
 #: src/com/frostwire/gui/library/DeviceUploadDialog.java:66
 msgid "Upload to device"
-msgstr "Uploadajte na uredaj"
+msgstr "Uploadajte na uređaj"
 
 #: src/com/frostwire/gui/library/DeviceUploadDialog.java:117
 msgid "Waiting for device authorization..."
-msgstr "Cekanje dopustenje uredaja"
+msgstr "Čekanje dopustenje uređaja"
 
 #: src/com/frostwire/gui/library/DownloadTask.java:142
 msgid "Wi-Fi download error. Please try again."
-msgstr "Wi-Fi greska u preuzimanju. Molimo pokusajte ponovno."
+msgstr "Wi-Fi greška u preuzimanju. Molimo pokušajte ponovno."
 
 #: src/com/frostwire/gui/library/InternetRadioDirectoryHolder.java:40
 msgid "Radio"
@@ -1866,11 +1866,11 @@ msgstr "Mapa"
 
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:771
 msgid "Delete Selected Files from this playlist"
-msgstr "Dodaj oznacene file-ove listi koja svira."
+msgstr "Obriši odabrane datoteke sa ove liste pjesama."
 
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:845
 msgid "Refresh the audio properties based on ID3 tags"
-msgstr "Procisti audio postavke bazirano na ID3 tagovima"
+msgstr "Pročisti audio postavke bazirano na ID3 tagovima"
 
 #: src/com/frostwire/gui/library/LibrarySearch.java:115
 msgid "search results"
@@ -1879,24 +1879,24 @@ msgstr "Prikaži filtere rezultata pretrage."
 #: src/com/frostwire/gui/library/LibrarySearch.java:158
 #, fuzzy
 msgid "Search in Library"
-msgstr "Trazi u knjiznici"
+msgstr "Traži u knjižnici"
 
 #: src/com/frostwire/gui/library/LibraryUtils.java:91
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
 #: src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:37
 msgid "Importing"
-msgstr "Uvazam"
+msgstr "Uvažam"
 
 #: src/com/frostwire/gui/library/LibraryUtils.java:174
 #: src/com/frostwire/gui/library/LibraryUtils.java:212
 #: src/com/frostwire/gui/library/LibraryUtils.java:213
 #: src/com/frostwire/gui/library/LibraryUtils.java:264
 msgid "Playlist name"
-msgstr "Ime playliste"
+msgstr "Ime liste pjesama"
 
 #: src/com/frostwire/gui/library/LibraryUtils.java:691
 msgid "Refreshing"
-msgstr "Osvjezi"
+msgstr "Osvježi"
 
 #: src/com/frostwire/gui/library/LibraryUtils.java:747
 msgid "Importing from"
@@ -1904,12 +1904,12 @@ msgstr "Uvoz iz"
 
 #: src/com/frostwire/gui/library/LibraryUtils.java:765
 msgid "Error importing Radio Station from"
-msgstr "Greska u uvozu radio postaje od"
+msgstr "Greška u uvozu radio postaje od"
 
 #: src/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:67
 #, fuzzy
 msgid "Holds the Results for"
-msgstr "Drzati rezultate za"
+msgstr "Držati rezultate za"
 
 #: src/com/frostwire/gui/library/NodeRenderer.java:65
 #, fuzzy
