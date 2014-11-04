@@ -4605,7 +4605,7 @@ msgstr "Omoguciti FrostWire preporucaje (visoko preporuceno):"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:35
 msgid "FrostClick Promotions"
-msgstr "FrostWire promocije"
+msgstr "FrostClick promocije"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:37
 msgid ""
@@ -4622,11 +4622,11 @@ msgstr "Omoguciti FrostClick promocije (visoko preporuceno):"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:39
 msgid "Shutdown Behavior"
-msgstr "Ponasanje gasenja"
+msgstr "Ponašanje gašenja"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:41
 msgid "You can choose the default shutdown behavior."
-msgstr "Mozete odabrati zadano ponasanje gasenja."
+msgstr "Mozžte odabrati zadano ponasanje gasenja."
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:64
 msgid "Shutdown Immediately"
@@ -4638,11 +4638,11 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:69
 msgid "Show dialog to ask before close"
-msgstr "Pokazati dijalog prije nego sto zatvorite"
+msgstr "Pokazati dijalog prije nego što zatvorite"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:22
 msgid "Smart Search"
-msgstr "Pametno pretrazivanje"
+msgstr "Pametno pretraživanje"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:24
 msgid ""
@@ -4656,28 +4656,28 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:47
 #, fuzzy
 msgid "Enable Smart Search"
-msgstr "Omoguciti pametno pretrazivanje"
+msgstr "Omogućiti pametno pretrazivanje"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:49
 msgid "Total torrents indexed"
-msgstr "Torrenata indeksirano"
+msgstr "Ukupno torrenata indeksirano"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:53
 #, fuzzy
 msgid "Reset Smart Search Database"
-msgstr "Resetirati bazu podataka pametnog pretrazivanja"
+msgstr "Resetirati bazu podataka pametnog pretraživanja"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:80
 msgid "If you continue you will erase all the information related to\n"
-msgstr "Ukoliko nastavite izbrisati ce te sve informacije u vezi\n"
+msgstr "Ukoliko nastavite izbrisati će te sve informacije u vezi\n"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:23
 msgid ""
 "You can choose whether or not to automatically run FrostWire when your "
 "computer starts."
 msgstr ""
-"Mozete izabrati zelite li automatski pokrenuti FrostWire kadase vase "
-"racunalo upali."
+"Možete izabrati želite li automatski pokrenuti FrostWire kada se vaše "
+"računalo upali."
 
 #: src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:30
 msgid "Run on System Startup:"
