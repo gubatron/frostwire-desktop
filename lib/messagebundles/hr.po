@@ -3008,7 +3008,7 @@ msgstr "Veza prekinuta"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:597
 msgid "Check your internet connection, FrostWire can't connect."
-msgstr "Provjerite vasu internet konekciju, FrostWire se ne može spojiti."
+msgstr "Provjerite vašu internet konekciju, FrostWire se ne može spojiti."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:600
 msgid "Turbo-Charged"
@@ -3086,7 +3086,7 @@ msgstr "Prikaži savjete pri pokretanju"
 #.
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMediator.java:86
 msgid "Next Tip"
-msgstr "Slijedeći savjet"
+msgstr "Sljedeći savjet"
 
 #. *
 #. * 'Previous'.
@@ -3379,7 +3379,7 @@ msgstr "Pomoć pri korištenju FrostWire-a."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:113
 msgid "Visit us at www.frostwire.com"
-msgstr "Nadji još skinova na frostwire.com."
+msgstr "Nađi još skinova na frostwire.com."
 
 #: src/com/limegroup/gnutella/gui/UpdateDialog.java:41
 msgid "New Version Available!"
@@ -3492,16 +3492,16 @@ msgstr "Poslati datoteku ili mapu prijatelju"
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:382
 #, java-format
 msgid "Search for Keywords: {0}"
-msgstr "Traziti kljucne rijeci: {0}"
+msgstr "Tražiti kljucne rijeci: {0}"
 
 #: src/com/limegroup/gnutella/gui/actions/SearchAction.java:45
 #, java-format
 msgid "Search for: {0}"
-msgstr "Traziti: {0}"
+msgstr "Tražiti: {0}"
 
 #: src/com/limegroup/gnutella/gui/bugs/BugManager.java:81
 msgid "Internal Error"
-msgstr "Interna greska"
+msgstr "Interna greška"
 
 #: src/com/limegroup/gnutella/gui/bugs/BugManager.java:319
 msgid ""
@@ -4617,7 +4617,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:44
 msgid "Enable FrostClick Promotions (highly recommended):"
-msgstr "Omoguciti FrostClick promocije (visoko preporuceno):"
+msgstr "Omogućiti FrostClick promocije (visoko preporuceno):"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:39
 msgid "Shutdown Behavior"
@@ -4625,7 +4625,7 @@ msgstr "Ponašanje gašenja"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:41
 msgid "You can choose the default shutdown behavior."
-msgstr "Mozžte odabrati zadano ponasanje gasenja."
+msgstr "Možete odabrati zadano ponasanje gasenja."
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:64
 msgid "Shutdown Immediately"
@@ -4680,7 +4680,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:30
 msgid "Run on System Startup:"
-msgstr "Pokrenuti na paljenju sistema"
+msgstr "Pokrenuti pri paljenju sistema"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:33
 msgid "Bandwidth Indicator"
@@ -4688,7 +4688,7 @@ msgstr "Indikator propusnosti"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:35
 msgid "You can display your bandwidth consumption in the status bar."
-msgstr "Mozete prikazati vasu propusnost potrosnje u traci stanja."
+msgstr "Možete prikazati vasu propusnost potrosnje u traci stanja."
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:42
 msgid "Show Bandwidth Indicator:"
@@ -4696,16 +4696,16 @@ msgstr "Pokazati indikator propusnosti"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:20
 msgid "Connection Quality Indicator"
-msgstr "Indikator kvalitete mreze"
+msgstr "Indikator kvalitete mreže"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:22
 msgid ""
 "You can display a measurement of your connection quality in the status bar."
-msgstr "Mozete pokazati mjerenje vase kvalitete mreze u traku stanja."
+msgstr "Možete pokazati mjerenje vase kvalitete mreze u traku stanja."
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:29
 msgid "Show Connection Quality Indicator:"
-msgstr "Pokazati indikator kvalitete mreze:"
+msgstr "Pokazati indikator kvalitete mreže:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:20
 msgid "Firewall Indicator"
@@ -4713,7 +4713,7 @@ msgstr "Indikator vatrozida"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:22
 msgid "You can display your firewall status in the status bar."
-msgstr "Mozete prikazati status vatrozida u status baru."
+msgstr "Možete prikazati status vatrozida u status baru."
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:29
 msgid "Show Firewall Indicator:"
@@ -4757,7 +4757,7 @@ msgid ""
 "Tip: Use your keyboard arrows for more precision"
 msgstr ""
 "Postaviti maksimalnu BitTorrent brzinu prijenosa u KB/s.\n"
-"Savjet: Koristite svoju tipkovnicu za vecu preciznost"
+"Savjet: Koristite svoju tipkovnicu za veću preciznost"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:38
 msgid "Download Speed:"
@@ -4772,8 +4772,8 @@ msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
 msgstr ""
-"Biljeska: Jako niske brzine slanja (leechanja) bi mogle biti kaznjene od strane nekih pratitelja, "
-"sto bi moglo rezultirati sporijim preuzimanjima."
+"Biljeska: Jako niske brzine slanja (leechanja) bi mogle biti kažnjene od strane nekih pratitelja, "
+"što bi moglo rezultirati sporijim preuzimanjima."
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:52
 msgid "Upload Speed:"
