@@ -1036,7 +1036,7 @@ msgid ""
 "contributions for this work."
 msgstr ""
 "Ja sam stvoritelj sadržaja ili ja imam pravo sakupiti financijske "
-"kontribucije za ovaj posao."
+"doprinose za ovaj posao."
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:50
 msgid ""
@@ -1213,25 +1213,25 @@ msgstr "Folder za spremanje torrent datoteka"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:90
 msgid "You forgot to enter a path for the Torrent Data Folder."
-msgstr "Zaboravili ste napisati put za mapu datoteka torrenta"
+msgstr "Zaboravili ste napisati put za mapu datoteka torrenta."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:114
 msgid "Please enter a valid path for the Torrent Data Folder"
-msgstr "Molimo unesite valjanu godinu za datoteku koju želite objaviti."
+msgstr "Molimo unesite valjanu putanju za mapu datoteka torrenta."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:132
 msgid "The Torrent Data Folder cannot be inside the"
-msgstr "Datoteka oštećena. podaci ne mogu biti sprmljeni."
+msgstr "Torrent podatkovna mapa ne može biti unutar"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:136
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:147
 msgid "Could not resolve folder path."
-msgstr "Nemoguce rijesiti put mape."
+msgstr "Nemoguće riješiti putanju mape."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:143
 #, fuzzy
 msgid "The Torrent Data Folder cannot be a parent folder of the"
-msgstr "Podatci torrent mape ne moze biti roditelj od"
+msgstr "Podatci torrent podatkovne mape ne moze biti podmapa od"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:160
 msgid "Use Default"
@@ -1284,7 +1284,6 @@ msgid "Leave a tip"
 msgstr "Ostaviti napojnicu"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:155
-#, fuzzy
 msgid "on"
 msgstr "upaljeno"
 
@@ -1298,17 +1297,17 @@ msgstr "Instaliraj"
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:283
 #, fuzzy
 msgid "Video Preview"
-msgstr "Prethodni"
+msgstr "Pretpregled videa"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:284
 msgid "Play Video preview of"
-msgstr "Svirati video pregled od"
+msgstr "Svirati video pretpregled od"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:301
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:302
 #, fuzzy
 msgid "Audio Preview"
-msgstr "Audio pregled"
+msgstr "Audio pretpregled"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:303
 msgid "Play Audio preview of"
@@ -1316,7 +1315,7 @@ msgstr "Pustite zvucni pregled od"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:363
 msgid "Support %s with a tip, donation or voluntary payment"
-msgstr "Podrzite %s sa napojnicom, donacijom ili dobrovoljnom isplatom"
+msgstr "Podržite %s sa napojnicom, donacijom ili dobrovoljnom isplatom"
 
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:171
 #: src/com/limegroup/gnutella/gui/StatusLine.java:231
@@ -1328,7 +1327,7 @@ msgstr "Postavke"
 
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:171
 msgid "You can configure the folders you share in FrostWire's Options."
-msgstr "Možete podesiti mape koje dijelite u postavkama FrostWire-a"
+msgstr "Možete podesiti mape koje dijelite u postavkama FrostWire-a."
 
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:263
 #: src/com/limegroup/gnutella/gui/bugs/BugManager.java:359
@@ -1353,7 +1352,8 @@ msgstr "Dodaj"
 #: src/com/frostwire/gui/library/Device.java:294
 msgid ""
 "The device is busy with another transfer or did not authorize your request"
-msgstr "Naprava je zauzeta sa drugim prijenosom ili nije odabrala vas zahtjev"
+msgstr ""
+"Naprava je zauzeta sa drugim prijenosom ili nije odabrala vaš zahtjev"
 
 #: src/com/frostwire/gui/library/Device.java:294
 msgid "Transfer failed"
@@ -1361,7 +1361,7 @@ msgstr "Zatvori nakon prijenosa"
 
 #: src/com/frostwire/gui/library/DeviceUploadDialog.java:66
 msgid "Upload to device"
-msgstr "Uploadajte na uređaj"
+msgstr "Pošaljite na uređaj"
 
 #: src/com/frostwire/gui/library/DeviceUploadDialog.java:117
 msgid "Waiting for device authorization..."
@@ -1422,7 +1422,7 @@ msgstr "Godina"
 
 #: src/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:90
 msgid "Date Added"
-msgstr "Datuma dodano"
+msgstr "Datum dodano"
 
 #: src/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:93
 msgid "Date Modified"
@@ -1445,13 +1445,13 @@ msgstr "Spremi"
 
 #: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:438
 msgid "Save Selected Files To Folder"
-msgstr "Zaustavi oznacene download-e."
+msgstr "Zaustavi označena preuzimanja."
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:143
 #: src/com/frostwire/gui/library/LibraryExplorer.java:197
 #, fuzzy
 msgid "Search your"
-msgstr "Pretrazite svoj"
+msgstr "Pretražite svoj"
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:145
 msgid "'s "
