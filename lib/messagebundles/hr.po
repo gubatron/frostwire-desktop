@@ -2190,7 +2190,7 @@ msgstr "SearchField.popupSource"
 #: src/com/frostwire/gui/tabs/LibraryTab.java:55
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:277
 msgid "Library"
-msgstr "Knjiznica"
+msgstr "Knjižnica"
 
 #: src/com/frostwire/gui/tabs/LibraryTab.java:55
 msgid ""
@@ -2377,12 +2377,12 @@ msgstr "FrostWire logo dizajneri"
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:184
 #, fuzzy
 msgid "FrostWire Graphics Designers/Photographers"
-msgstr "FrostWire graficki dizajneri/fotograferi"
+msgstr "FrostWire grafički dizajneri/fotograferi"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:194
 #, fuzzy
 msgid "Thanks to Former FrostWire Developers"
-msgstr "Hvala prijasnjim FrostWire programerima"
+msgstr "Hvala prijašnjim FrostWire programerima"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:199
 #, fuzzy
@@ -2421,13 +2421,13 @@ msgstr "FrostWire operateri razgovora"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:223
 msgid "And also to the Support Volunteer Helpers:"
-msgstr "I takodjer volonterima pomoci:"
+msgstr "I također volonterima pomoći:"
 
 #. azureus/vuze devs.
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:229
 #, fuzzy
 msgid "Thanks to the Azureus Core Developers"
-msgstr "Hvala prijasnjim FrostWire programerima"
+msgstr "Hvala programerima Azureus jezgre"
 
 #. developers
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:236
@@ -4088,12 +4088,12 @@ msgid ""
 "You have made changes to some of FrostWire's settings. Would you like to "
 "save these changes?"
 msgstr ""
-"Napravili ste promjene u postavkama FrostWire-a. Zelite li ih "
+"Napravili ste promjene u postavkama FrostWire-a. Želite li ih "
 "spremiti?"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:237
 msgid "Search here"
-msgstr "Traziti ovdje"
+msgstr "Tražiti ovdje"
 
 #. bittorrent
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:272
@@ -4107,12 +4107,12 @@ msgstr "Osnovno"
 #. player
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:280
 msgid "Player"
-msgstr "Svirac"
+msgstr "Svirač"
 
 #. search options
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:283
 msgid "Searching"
-msgstr "Trazenje"
+msgstr "Traženje"
 
 #. status bar
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:286
@@ -4139,7 +4139,7 @@ msgstr "Filteri"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:307
 msgid "Keywords"
-msgstr "Kljucne rijeci"
+msgstr "Ključne rijeci"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:311
 msgid "Updates"
@@ -4156,7 +4156,7 @@ msgstr "Proxy"
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:314
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:48
 msgid "Network Interface"
-msgstr "Mrezno sucelje"
+msgstr "Mrežno sućelje"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:316
 #: src/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:56
@@ -4180,19 +4180,18 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:328
 #: src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:74
 msgid "Bug Reports"
-msgstr "Prijave gresaka"
+msgstr "Prijave grešaka"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsMediator.java:82
 msgid "Loading Options Window..."
-msgstr "Ucitavanje opcijskog prozora"
+msgstr "Učitavanje opcijskog prozora"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsMediator.java:179
 #: src/com/limegroup/gnutella/gui/options/OptionsPaneManager.java:129
 msgid ""
 "One or more options will take effect the next time FrostWire is restarted."
 msgstr ""
-"Jedna ili više opcija će stupit na snagu tek sljedeći put kada otvorite "
-"FrostWire."
+"Jedna ili više opcija će stupiti na snagu tek sljedeći put kada otvorite FrostWire."
 
 #: src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:29
 msgid "Links and File Types"
@@ -4215,7 +4214,7 @@ msgstr "Audio postavke"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:22
 msgid "You can choose which audio player to use."
-msgstr "Mozete izabrati koji Audio svirac zelite koristiti"
+msgstr "Mozete izabrati koji Audio svirač želite koristiti."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
