@@ -2484,7 +2484,7 @@ msgstr "Hvala za takav fenomenalan sustav graditelja instalatera i dokumentacije
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:298
 #, fuzzy
 msgid "Thanks to our families"
-msgstr "Hvala nasim obiteljima"
+msgstr "Hvala našim obiteljima"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:299
 msgid "For being patient during our many sleepless nights"
@@ -2546,27 +2546,27 @@ msgstr "Ne"
 
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:55
 msgid "Support FrostWire development with a Bitcoin donation"
-msgstr "Podrzi razvoj FrostWire-a sa BitCoin donacijom"
+msgstr "Podrži razvoj FrostWire-a sa BitCoin donacijom"
 
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:56
 msgid "Support FrostWire development with a USD $1 donation"
-msgstr "Podrzi razvoj FrostWire-a sa donacijom od $1 USD"
+msgstr "Podrži razvoj FrostWire-a sa donacijom od $1 USD"
 
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:57
 msgid "Support FrostWire development with a USD $5 donation"
-msgstr "Podrzi razvoj FrostWire-a sa donacijom od $5 USD"
+msgstr "Podrži razvoj FrostWire-a sa donacijom od $5 USD"
 
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:58
 msgid "Support FrostWire development with a USD $10 donation"
-msgstr "Podrzi razvoj FrostWire-a sa donacijom od $10 USD"
+msgstr "Podrži razvoj FrostWire-a sa donacijom od $10 USD"
 
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:59
 msgid "Support FrostWire development with a USD $25 donation"
-msgstr "Podrzi razvoj FrostWire-a sa donacijom od $25 USD"
+msgstr "Podrži razvoj FrostWire-a sa donacijom od $25 USD"
 
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:60
 msgid "Support FrostWire development with a Paypal donation"
-msgstr "Podrzi razvoj FrostWire-a sa Paypal donacijom"
+msgstr "Podrži razvoj FrostWire-a sa Paypal donacijom"
 
 #. new Font("Helvetica", Font.BOLD, 12);
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:65
@@ -2931,7 +2931,7 @@ msgstr "Dodavanje zastava ovdje i ondje..."
 #. make the 'Firewall Status' label
 #: src/com/limegroup/gnutella/gui/StatusLine.java:153
 msgid "Playing with pixels for the Firewall indicator..."
-msgstr "Igranje sa pikselima na Firewall indikatoru"
+msgstr "Igranje sa pikselima na Firewall indikatoru..."
 
 #. make the social buttons
 #: src/com/limegroup/gnutella/gui/StatusLine.java:160
@@ -2944,7 +2944,7 @@ msgstr "Učim kako se socijalizirati na Twitter-u..."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:164
 msgid "Learning to socialize on G+..."
-msgstr "Učim kako se socijalizirati na G+"
+msgstr "Učim kako se socijalizirati na G+..."
 
 #. male Seeding status label
 #: src/com/limegroup/gnutella/gui/StatusLine.java:168
@@ -2998,11 +2998,11 @@ msgstr "<html><b>Ne Seeda</b></html>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:516
 msgid "FrostWire has not detected a firewall"
-msgstr "FrostWire nije našao firewal"
+msgstr "FrostWire nije našao firewall"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:519
 msgid "FrostWire has detected a firewall"
-msgstr "FrostWire je našao firewal"
+msgstr "FrostWire je našao firewall"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:596
 msgid "Disconnected"
@@ -3010,7 +3010,7 @@ msgstr "Veza prekinuta"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:597
 msgid "Check your internet connection, FrostWire can't connect."
-msgstr "Provjerite vasu internet konekciju, FrostWire se ne moze spojiti."
+msgstr "Provjerite vasu internet konekciju, FrostWire se ne može spojiti."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:600
 msgid "Turbo-Charged"
@@ -3027,7 +3027,7 @@ msgstr "Prikaži kvalitetu veze"
 #: src/com/limegroup/gnutella/gui/StatusLine.java:723
 #, fuzzy
 msgid "Show Connection Privacy Status"
-msgstr "Pokazati stanje privatnog prikljucka"
+msgstr "Pokazati stanje privatnog priključka"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:743
 msgid "Show Language Status"
@@ -3035,11 +3035,11 @@ msgstr "Pokaži status jezika"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:767
 msgid "Show Firewall Status"
-msgstr "Pokaži status firewala"
+msgstr "Pokaži status firewalla"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:787
 msgid "Show Bandwidth Consumption"
-msgstr "Pokazati propusnost potrosnje"
+msgstr "Pokazati propusnost potrošnje"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:804
 #, fuzzy
