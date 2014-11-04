@@ -1747,11 +1747,11 @@ msgstr ""
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:714
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:844
 msgid "Refresh Audio Properties"
-msgstr "Osvjezi audio svojstva"
+msgstr "Osvježi zvučna svojstva"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:715
 msgid "Refresh the audio properties based on ID3 tags of selected items"
-msgstr "Osvjezi audio postavke bazirano na ID3 tagovima od odabranih stvari"
+msgstr "Osvježi zvučna svojstva bazirano na ID3 tagovima od odabranih stvari"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:733
 msgid "Delete Playlist"
@@ -1762,13 +1762,13 @@ msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
 msgstr ""
-"Jeste li sugirni da zelite izbrisati ovu traku sviranja?\n"
+"Jeste li sugirni da želite izbrisati ovu traku sviranja?\n"
 "(Nijedna datoteka nece biti izbrisana)"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:762
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:828
 msgid "Cleanup playlist"
-msgstr "Pocisti popis pjesama"
+msgstr "Počisti popis pjesama"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:763
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:829
@@ -1781,7 +1781,7 @@ msgstr "Preimenuj popis pjesama"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:810
 msgid "Playlist Files (*.m3u)"
-msgstr "Datoteke playliste (*.m3u)"
+msgstr "Datoteke liste pjesama (*.m3u)"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:819
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:798
@@ -1791,15 +1791,15 @@ msgstr "Uvezi .m3u u popis pjesama"
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:820
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:799
 msgid "Import a .m3u file into the selected playlist"
-msgstr "Uvesti .m3u datoteku u odabrani popis pjesama"
+msgstr "Uvezi .m3u datoteku u odabrani popis pjesama"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:834
 msgid "Import .m3u to New Playlist"
-msgstr "Uvesti -m3u u Novi Popis Pjesama"
+msgstr "Uvezi -m3u u Novi Popis Pjesama"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:835
 msgid "Import a .m3u file to a new playlist"
-msgstr "Uvesti -m3u datoteku u novi popis pjesama"
+msgstr "Uvezi -m3u datoteku u novi popis pjesama"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:847
 msgid "Export playlist files to folder"
@@ -1812,17 +1812,17 @@ msgstr "Kopirati sve datoteke popisa pjesama u mapu koju vi odaberete"
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:866
 #, fuzzy
 msgid "Where do you want the playlist files copied to?"
-msgstr "Gdje zelite spremiti datoteke popisa pjesama?"
+msgstr "Gdje želite spremiti datoteke popisa pjesama?"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:920
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:813
 msgid "Export Playlist to .m3u"
-msgstr "Izvedi playlistu u .m3u"
+msgstr "Izvedi listu pjesama u .m3u"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:921
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:814
 msgid "Export this playlist into a .m3u file"
-msgstr "Izvedi ovu playlistu u .m3u datoteku"
+msgstr "Izvedi ovu listu pjesama u .m3u datoteku"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:935
 msgid "Export Playlist to iTunes"
@@ -1866,7 +1866,7 @@ msgstr "Mapa"
 
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:771
 msgid "Delete Selected Files from this playlist"
-msgstr "Obriši odabrane datoteke sa ove liste pjesama."
+msgstr "Obriši odabrane datoteke sa ove liste pjesama"
 
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:845
 msgid "Refresh the audio properties based on ID3 tags"
@@ -1926,7 +1926,7 @@ msgstr "Legenda"
 
 #: src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:356
 msgid "Folder and subfolders are included in the Library."
-msgstr "Mape i pod-mape su ukljuceni u knjiznicu."
+msgstr "Mape i pod-mape su uključeni u knjiznicu."
 
 #: src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:370
 msgid "Folder is not included and no subfolders are included in the Library."
@@ -2011,7 +2011,7 @@ msgstr "Prethodni"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:194
 msgid "Volume"
-msgstr "Glasnoca"
+msgstr "Glasnoća"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:249
 msgid "Send this file to a friend"
@@ -2019,11 +2019,11 @@ msgstr "Spremi detalje u datoteku"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:254
 msgid "Show the source of this media"
-msgstr "Pokazi izvor ovog medija"
+msgstr "Pokaži izvor ovog medija"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:320
 msgid "Shuffle songs"
-msgstr "Promijesaj pjesme"
+msgstr "Promiješaj pjesme"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:327
 msgid "Repeat songs"
@@ -2078,7 +2078,7 @@ msgstr "nepoznat uredjaj"
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1072
 #, fuzzy
 msgid "playlist"
-msgstr "playlista"
+msgstr "lista pjesama"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1133
 #: src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:66
@@ -2094,7 +2094,7 @@ msgstr "mapa"
 #: src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:67
 #, java-format
 msgid "Do you want to send this {0} to a friend?"
-msgstr "Zelite li poslati ovo {0} prijatelju?"
+msgstr "Želite li poslati ovo {0} prijatelju?"
 
 #: src/com/frostwire/gui/player/MediaPlayerLinux.java:27
 msgid ""
@@ -2488,7 +2488,7 @@ msgstr "Hvala našim obiteljima"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:299
 msgid "For being patient during our many sleepless nights"
-msgstr "Sto ste bili strpljivi za vrijeme neprospavanih noci"
+msgstr "Što ste bili strpljivi za vrijeme neprospavanih noći"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:304
 msgid ""
@@ -2501,7 +2501,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/ApplicationHeader.java:187
 #, fuzzy
 msgid "Search or enter URL"
-msgstr "Trazi ili upisi URL"
+msgstr "Traži ili upisi URL"
 
 #: src/com/limegroup/gnutella/gui/ApplicationHeader.java:199
 msgid "A new update has been downloaded."
