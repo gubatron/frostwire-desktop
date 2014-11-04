@@ -1235,11 +1235,11 @@ msgstr "Podatci torrent podatkovne mape ne moze biti podmapa od"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:160
 msgid "Use Default"
-msgstr "Koristi osnovne postavke"
+msgstr "Koristi osnovno"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:161
 msgid "Use the Default Folder"
-msgstr "Koristi osnovne postavke"
+msgstr "Koristi osnovnu mapu"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:174
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:200
@@ -1336,7 +1336,7 @@ msgstr "Poslati"
 
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:277
 msgid "Do you want to send this file to a friend?"
-msgstr "Spremi detalje u datoteku"
+msgstr "Želite li poslati ovu datoteku prijatelju?"
 
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:277
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1134
@@ -1357,7 +1357,7 @@ msgstr ""
 
 #: src/com/frostwire/gui/library/Device.java:294
 msgid "Transfer failed"
-msgstr "Zatvori nakon prijenosa"
+msgstr "Prijenos neuspješan"
 
 #: src/com/frostwire/gui/library/DeviceUploadDialog.java:66
 msgid "Upload to device"
@@ -1499,7 +1499,7 @@ msgstr "Otvori direktorij kolekcije"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:332
 msgid "Wi-Fi Shared"
-msgstr "Wi-Fi dijeljeno"
+msgstr "Dijeljeno putem Wi-Fi-a"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:342
 msgid "Path"
@@ -1585,7 +1585,7 @@ msgstr "Prikaži filtere rezultata pretrage."
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:966
 msgid "Delete Selected Files"
-msgstr "Izbriši oznacene file-ove."
+msgstr "Izbriši označene file-ove."
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:983
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:781
@@ -1595,15 +1595,15 @@ msgstr "Preimenuj"
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1000
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:747
 msgid "Send audio files to iTunes"
-msgstr "Spremi zbučne datoteke na iTunes"
+msgstr "Spremi zvučne datoteke na iTunes"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1024
 msgid "Extract Audio"
-msgstr "Ekstraktirati audio"
+msgstr "Ekstraktirati zvuk"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1025
 msgid "Extract .m4a Audio from this .mp4 video"
-msgstr "Ekstraktirati .m4a Audio iz ovog .mp3 videa"
+msgstr "Ekstraktirati .m4a zvuk iz ovog .mp3 videa"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1058
 msgid "Extracting audio from "
@@ -1611,12 +1611,12 @@ msgstr "Ekstraktiranje zvuka iz"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1060
 msgid "Extracting audio from selected video..."
-msgstr "Ekstraktiranje audija iz selektiranog videa"
+msgstr "Ekstraktiranje zvuka iz selektiranog videa"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1077
 #, fuzzy
 msgid "failed"
-msgstr "neuspjesno"
+msgstr "neuspješno"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1078
 msgid "Done extracting audio."
@@ -1629,7 +1629,7 @@ msgstr "izvan"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1134
 msgid "Could not extract audio from"
-msgstr "Nemoguce ekstraktirati zvuk iz"
+msgstr "Nemoguće ekstraktirati zvuk iz"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1224
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1226
@@ -1753,7 +1753,7 @@ msgstr "Osvježi zvučna svojstva bazirano na ID3 tagovima od odabranih stvari"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:733
 msgid "Delete Playlist"
-msgstr "Izbrisati popis pjesama"
+msgstr "Obrisati popis pjesama"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:743
 msgid ""
@@ -1793,7 +1793,7 @@ msgstr "Uvezi .m3u datoteku u odabrani popis pjesama"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:834
 msgid "Import .m3u to New Playlist"
-msgstr "Uvezi -m3u u Novi Popis Pjesama"
+msgstr "Uvezi -m3u u novi popis pjesama"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:835
 msgid "Import a .m3u file to a new playlist"
