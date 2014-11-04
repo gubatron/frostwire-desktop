@@ -21,7 +21,7 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: src/com/frostwire/gui/HideExitDialog.java:57
-msgid "Do you want to hide FrostWire?"	
+msgid "Do you want to hide FrostWire?"
 msgstr "Želite li sakriti FrostWire?"
 
 #: src/com/frostwire/gui/HideExitDialog.java:72
@@ -3114,8 +3114,8 @@ msgid ""
 "You can change the look and feel of FrostWire by going to View &gt; Use "
 "Small Icons, Show Icon Text and Increase-Decrease the Font Size."
 msgstr ""
-"Mozete promijeniti izgled i osjecaj od FrostWire-a tako da idete na Pregled &gt; Koristiti "
-"Make Ikone, Pokazati Tekst Ikona i Povecaj-Smalji Velicinu Fonta"
+"Možete promijeniti izgled i osjećaj od FrostWire-a tako da idete na Pregled &gt; Koristiti "
+"Make Ikone, Pokazati Tekst Ikona i Povečaj-Smanji Veličinu Fonta"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:24
 #, fuzzy
@@ -3134,8 +3134,8 @@ msgid ""
 "It helps the network if you keep your FrostWire running. Others will connect "
 "to the network easier and searches will perform better."
 msgstr ""
-"Pomaze mrezi ako ostavite FrostWire upaljen. Ostali ce se spojiti na mrezu "
-"lakse i pretrazivanja ce biti bolja."
+"Pomaže mreži ako ostavite FrostWire upaljen. Ostali će se spojiti na mrežu "
+"lakše i pretraživanja će biti bolja."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:26
 #, java-format
@@ -3160,8 +3160,8 @@ msgid ""
 "buddy is sharing 'Frosty' but you searched for 'My Frosty', your buddy's "
 "file will still be found."
 msgstr ""
-"Male promjene u naslovu trazenja. Kao primjer, ako vaš "
-"prijatelj dijeli 'Frosty' a vi ste trazili 'My Frosty', naći će te "
+"Male promjene u naslovu traženja. Kao primjer, ako vaš "
+"prijatelj dijeli 'Frosty' a vi ste tražili 'My Frosty', naći će te "
 "datoteku vašeg prijatelja."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:29
@@ -3170,7 +3170,7 @@ msgid ""
 "look for the globe. If there is a brick wall in front of it, your Internet "
 "connection is firewalled."
 msgstr ""
-"Jeste li iza firewala? Na dnu FrostWirea, u statusnoj traci, potražite "
+"Jeste li iza firewalla? Na dnu FrostWirea, u statusnoj traci, potražite "
 "globus. Ako je ispred njega zid od cigli, vaša internet veza je zaštićena "
 "firewalom."
 
@@ -3203,7 +3203,7 @@ msgid ""
 "files even if both parties are behind a firewall. You don't have to do "
 "anything extra because it happens automatically!"
 msgstr ""
-"Za razliku od ostalih klijent - klijet programa za razmjenu datoteka, "
+"Za razliku od ostalih klijent - klijent programa za razmjenu datoteka, "
 "FrostWire može prenositi datoteke čak i ako su obje strane iza firewala. Ne "
 "morate napraviti ništa dodatno jer se to sve događa automatski!"
 
@@ -3291,7 +3291,7 @@ msgid ""
 "You can find out which version of FrostWire you are using by choosing 'About "
 "FrostWire' from the FrostWire menu."
 msgstr ""
-"Mozete saznati koju verziju FrostWire-a koristite tako da izaberete 'O "
+"Možete saznati koju verziju FrostWire-a koristite tako da izaberete 'O "
 "FrostWire-u' u FrostWire meniu."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:68
@@ -3381,11 +3381,11 @@ msgstr "Pomoć pri korištenju FrostWire-a."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:113
 msgid "Visit us at www.frostwire.com"
-msgstr "Nadji još skin-ova na frostwire.com."
+msgstr "Nadji još skinova na frostwire.com."
 
 #: src/com/limegroup/gnutella/gui/UpdateDialog.java:41
 msgid "New Version Available!"
-msgstr "Nova verzija dostupna!"
+msgstr "Nova verzija je dostupna!"
 
 #: src/com/limegroup/gnutella/gui/UpdateDialog.java:108
 msgid "A new version of FrostWire is available."
@@ -3393,7 +3393,7 @@ msgstr "Nova verzija FrostWire-a je dostupna."
 
 #: src/com/limegroup/gnutella/gui/UpdateDialog.java:161
 msgid "Update Now"
-msgstr "Updejtati sada"
+msgstr "Nadograditi sada"
 
 #: src/com/limegroup/gnutella/gui/UpdateDialog.java:164
 #: src/com/limegroup/gnutella/gui/UpdateDialog.java:197
@@ -3436,11 +3436,11 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:60
 msgid "O&pen .Torrent or Magnet"
-msgstr ""
+msgstr "Otvori .Torrent ili magnet"
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:62
 msgid "Opens a magnet link or torrent file"
-msgstr "Otvara magnet link ili torrent dokument"
+msgstr "Otvara magnet link ili torrent datoteku"
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:86
 msgid "Download .Torrent or Magnet or YouTube video link"
@@ -3463,6 +3463,8 @@ msgid ""
 "FrostWire cannot download this address. Make sure you typed it correctly, "
 "and then try again."
 msgstr ""
+"FrostWire ne može otvoriti ovu adresu. Budite sigurni da ste je napisali točno, "
+"i onda pokušajte ponovno."
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:310
 msgid "&Close"
@@ -3474,7 +3476,7 @@ msgstr "Zatvori glavni prozor programa."
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:322
 msgid "E&xit"
-msgstr "Izadji"
+msgstr "Izađi"
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:323
 msgid "Close and exit the program"
