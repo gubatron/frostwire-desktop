@@ -1479,21 +1479,21 @@ msgstr "Podesiti opcije"
 #: src/com/frostwire/gui/library/LibraryExplorer.java:246
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:183
 msgid "You can configure the FrostWire's Options."
-msgstr "Mozete podesiti postavke FrostWire"
+msgstr "Možete podesiti postavke FrostWire-a."
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:675
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:699
 msgid "Refresh"
-msgstr "Osvjezi"
+msgstr "Osvježi"
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:676
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:700
 msgid "Refresh selected"
-msgstr "Osvjezi odabrano"
+msgstr "Osvježi odabrano"
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:693
 msgid "Open Library Folder"
-msgstr "Otvori direktorij kolekcije."
+msgstr "Otvori direktorij kolekcije"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:332
 msgid "Wi-Fi Shared"
@@ -1501,19 +1501,19 @@ msgstr "Wi-Fi dijeljeno"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:342
 msgid "Path"
-msgstr "Put"
+msgstr "Putanja"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:344
 msgid "Last Modified"
-msgstr "Zadnje podeseno"
+msgstr "Zadnje podešeno"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:526
 msgid "Move to Recycle Bin"
-msgstr "Premjesti u smece"
+msgstr "Premjesti u smeće"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:526
 msgid "Move to Trash"
-msgstr "Premjesti u smece"
+msgstr "Premjesti u smeće"
 
 #. *
 #. * The delete action.
@@ -1573,7 +1573,7 @@ msgstr "Pokreni u "
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:673
 #, fuzzy
 msgid "Launch Selected Files in"
-msgstr "Pokreni oznacene file-ove."
+msgstr "Pokreni označene datoteke."
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:931
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:715
@@ -1583,7 +1583,7 @@ msgstr "Prikaži filtere rezultata pretrage."
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:966
 msgid "Delete Selected Files"
-msgstr "Izbrisi oznacene file-ove."
+msgstr "Izbriši oznacene file-ove."
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:983
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:781
@@ -1593,7 +1593,7 @@ msgstr "Preimenuj"
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1000
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:747
 msgid "Send audio files to iTunes"
-msgstr "Spremi detalje u datoteku"
+msgstr "Spremi zbučne datoteke na iTunes"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1024
 msgid "Extract Audio"
@@ -1605,7 +1605,7 @@ msgstr "Ekstraktirati .m4a Audio iz ovog .mp3 videa"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1058
 msgid "Extracting audio from "
-msgstr "Ekstraktiranje audio iz"
+msgstr "Ekstraktiranje zvuka iz"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1060
 msgid "Extracting audio from selected video..."
@@ -1618,7 +1618,7 @@ msgstr "neuspjesno"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1078
 msgid "Done extracting audio."
-msgstr "Gotovo ekstraktiranje audia"
+msgstr "Gotovo ekstraktiranje zvuka"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1131
 #, fuzzy
@@ -1627,7 +1627,7 @@ msgstr "izvan"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1134
 msgid "Could not extract audio from"
-msgstr "Nemoguce ekstraktirati audio iz"
+msgstr "Nemoguce ekstraktirati zvuk iz"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1224
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1226
@@ -1642,11 +1642,11 @@ msgstr "Ne dijeli"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1229
 msgid "file on local Wi-Fi network"
-msgstr "datoteka na lokalnoj Wi-Fi mrezi"
+msgstr "datoteka na lokalnoj Wi-Fi mreži"
 
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:49
 msgid "Bookmarked"
-msgstr "Bukmarkano"
+msgstr "Zabilježeno"
 
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:55
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:204
@@ -1679,15 +1679,11 @@ msgstr "Opis"
 
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:379
 msgid "Are you sure you want to remove the selected radio station?"
-msgstr ""
-"Jeste li sigurni da želite trajno ukloniti licencu s veše lokalne kopije ove "
-"datoteke."
+msgstr "Jeste li sigurni da želite ukloniti odabranu radio postaju?"
 
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:379
 msgid "Are you sure you want to remove the selected radio stations?"
-msgstr ""
-"Jeste li sigurni da želite trajno ukloniti licencu s veše lokalne kopije ove "
-"datoteke."
+msgstr "Jeste li sigurni da želite ukloniti odabrane radio postaje?"
 
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:532
 msgid "Add Radio"
@@ -1695,11 +1691,11 @@ msgstr "Dodaj radio"
 
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:533
 msgid "Add a new Radio Station. You must enter the Stream's URL"
-msgstr "Dodati novu radio postaju. Morate upisati URL strima "
+msgstr "Dodati novu radio postaju. Morate upisati URL streama "
 
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:539
 msgid "Radio Station's stream URL"
-msgstr "URL strima radio postaje"
+msgstr "URL streama radio postaje"
 
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:539
 msgid "Add Radio Station"
@@ -1707,21 +1703,21 @@ msgstr "Dodaj radio postaju"
 
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:555
 msgid "Delete Radio Station"
-msgstr "Izbrisati radio postaju"
+msgstr "Ukloniti radio postaju"
 
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:611
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:612
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:613
 msgid "Copy Stream URL"
-msgstr "Kopirati URL strima"
+msgstr "Kopirati URL streama"
 
 #: src/com/frostwire/gui/library/LibraryMediator.java:106
 msgid "Loading Library Window..."
-msgstr "Ucitavanje prozora biblioteke"
+msgstr "Učitavanje prozora knjižnice..."
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:189
 msgid "New Playlist"
-msgstr "Nova playlista"
+msgstr "Nova lista pjesama"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:189
 msgid "Creates a new Playlist"
@@ -1741,7 +1737,7 @@ msgid ""
 "Warning: a file with the name {0} already exists in the folder. Overwrite "
 "this file?"
 msgstr ""
-"Upozorenje: datoteka sa imenom {0} vec postoji u mapi. Prebrisati ovu "
+"Upozorenje: datoteka sa imenom {0} već postoji u mapi. Prebrisati ovu "
 "datoteku?"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:714
