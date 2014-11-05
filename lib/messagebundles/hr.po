@@ -4600,7 +4600,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShowFrostWireRecommendationsPaneItem.java:43
 msgid "Enable FrostWire Recommendations (highly recommended):"
-msgstr "Omoguciti FrostWire preporucaje (visoko preporuceno):"
+msgstr "Omogućiti FrostWire preporučaje (visoko preporuceno):"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:35
 msgid "FrostClick Promotions"
@@ -4614,10 +4614,15 @@ msgid ""
 "BitTorrent and Gnutella. Keep this option on to support file sharing and the "
 "future of content distribution."
 msgstr ""
+"Možete upaliti ili ugasiti FrostClick promociju na prozoru dobrodošlice."
+"FrostClick promocije pomažu umjetnicima i stvarateljima sadržaja da distribuiraju njihov "
+"sadržaj legalno i besplatno stotinama i tisućama ljudi putem FrostWire-a, "
+"BitTorrenta i Gnutelle. Ostavite ovu opciju upaljenom kako bi ste podržali dijeljenje datoteka i "
+"budućnost distribucije sadržaja."
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:44
 msgid "Enable FrostClick Promotions (highly recommended):"
-msgstr "Omoguciti FrostClick promocije (visoko preporuceno):"
+msgstr "Omogućiti FrostClick promocije (visoko preporuceno):"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:39
 msgid "Shutdown Behavior"
@@ -4625,7 +4630,7 @@ msgstr "Ponašanje gašenja"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:41
 msgid "You can choose the default shutdown behavior."
-msgstr "Mozžte odabrati zadano ponasanje gasenja."
+msgstr "Možete odabrati zadano ponasanje gasenja."
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:64
 msgid "Shutdown Immediately"
@@ -4633,7 +4638,7 @@ msgstr "Ugasiti odmah"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:65
 msgid "Minimize to System Tray"
-msgstr ""
+msgstr "Sakriti u tray sistema"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:69
 msgid "Show dialog to ask before close"
@@ -4649,7 +4654,7 @@ msgid ""
 "how FrostWire remembers information about .torrent contents."
 msgstr ""
 "Baza podataka pametnog pretrazivanja se koristi da se pobrza pretrazivanje "
-"individualne datoteke, to jetako kako FrostWire zapamcuje informacije o ."
+"individualne datoteke, to je tako kako FrostWire zapamcuje informacije o ."
 "torrent sadrzaju."
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:47
@@ -4680,7 +4685,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:30
 msgid "Run on System Startup:"
-msgstr "Pokrenuti na paljenju sistema"
+msgstr "Pokrenuti pri paljenju sistema"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:33
 msgid "Bandwidth Indicator"
@@ -4696,16 +4701,16 @@ msgstr "Pokazati indikator propusnosti"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:20
 msgid "Connection Quality Indicator"
-msgstr "Indikator kvalitete mreze"
+msgstr "Indikator kvalitete mreže"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:22
 msgid ""
 "You can display a measurement of your connection quality in the status bar."
-msgstr "Mozete pokazati mjerenje vase kvalitete mreze u traku stanja."
+msgstr "Mozete pokazati mjerenje vaše kvalitete mreze u traku stanja."
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:29
 msgid "Show Connection Quality Indicator:"
-msgstr "Pokazati indikator kvalitete mreze:"
+msgstr "Pokazati indikator kvalitete mreže:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:20
 msgid "Firewall Indicator"
@@ -4713,7 +4718,7 @@ msgstr "Indikator vatrozida"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:22
 msgid "You can display your firewall status in the status bar."
-msgstr "Mozete prikazati status vatrozida u status baru."
+msgstr "Možete prikazati status vatrozida u status baru."
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:29
 msgid "Show Firewall Indicator:"
@@ -4727,7 +4732,7 @@ msgstr "BitTorent postavke"
 msgid ""
 "Adjust connection settings to make better use of your internet connection"
 msgstr ""
-"Podesite postavke konekcije da biste bolje koristili vasu internetsku konekciju"
+"Podesite postavke veze da biste bolje koristili vašu internetsku vezu"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:29
 msgid "Maximum active downloads"
@@ -4745,7 +4750,7 @@ msgstr "Maximalna slanja datoteka po torrentu"
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:35
 #, fuzzy
 msgid "Maximum active seeds"
-msgstr "Maksimalno aktivnih seed-ova"
+msgstr "Maksimum aktivnih seed-ova"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:34
 msgid "BitTorrent Global Tranfer Speeds"
@@ -4814,7 +4819,7 @@ msgid ""
 "any information that can personally identify you will be stored on disk or "
 "sent through the network."
 msgstr ""
-"Posalji anonimne statistike koristenja tako da FrostWire može biti poboljšan "
+"Pošalji anonimne statistike koristenja tako da FrostWire može biti poboljšan "
 "kvalitetnije. Informacije o traženim, dijeljenim, sviranim ili "
 "informacije koje vas mogu osobno identificirati neće biti spremljene na disk ili "
 "poslane kroz mrežu."
@@ -4829,7 +4834,7 @@ msgstr "Video postavke"
 
 #: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
 msgid "You can choose which video player to use."
-msgstr "Možete izabrati koji video igrač zelite koristiti"
+msgstr "Možete izabrati koji video igrač želite koristiti"
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4868,23 +4873,23 @@ msgstr "Još uvijek nema rezultata..."
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:150
 msgid "%s Audio files found (including .mp3, .wav, .ogg, and more)"
-msgstr "%s Audio datoteka pronađeno (uključujući .mp3, .wav, .ogg i više)"
+msgstr "%s audio datoteka pronađeno (uključujući .mp3, .wav, .ogg i više)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:155
 msgid "%s Video files found (including .avi, .mpg, .wmv, and more)"
-msgstr "%s Video datoteka pronađeno (uključujući .avi, .mpg, .wmv i više)"
+msgstr "%s video datoteka pronađeno (uključujući .avi, .mpg, .wmv i više)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:160
 msgid "%s Image files found (including .jpg, .gif, .png and more)"
-msgstr "%s Slika pronađeno (uključujući .jpg, .gif, .png i više)"
+msgstr "%s slika pronađeno (uključujući .jpg, .gif, .png i više)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:166
 msgid "%s Document files found (including .html, .txt, .pdf, and more)"
-msgstr "%s Dokumenata pronađeno (uključujući .html, .txt, .pdf i više)"
+msgstr "%s dokumenata pronađeno (uključujući .html, .txt, .pdf i više)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:171
 msgid "%s Program files found (including .exe, .zip, .gz, and more)"
-msgstr "%s Programskih datoteka pronađeni (uključujući .exe, .zip, .gz i više)"
+msgstr "%s programskih datoteka pronađeni (uključujući .exe, .zip, .gz i više)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:176
 msgid ""
