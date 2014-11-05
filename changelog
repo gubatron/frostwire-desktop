@@ -3,6 +3,7 @@ frostwire (6.0.0) stable; urgency=high
     a libtorrent wrapper api created by FrostWire.
   * Russian translation updates.
   * Croatian translation updates.
+  * Polish translation updates.
   * Simplified Chinese translation updates.
   * Fixes EzTV search, now with https support.
   * Multiple bug fixes.
