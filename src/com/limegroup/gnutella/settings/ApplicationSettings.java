@@ -135,6 +135,13 @@ public class ApplicationSettings extends LimeProps {
     /** The last directory used for opening a file chooser. */
     public static final FileSetting LAST_FILECHOOSER_DIRECTORY = FACTORY.createFileSetting("LAST_FILECHOOSER_DIR", new File("")).setAlwaysSave(true);
 
+
+    public static final IntSetting FILECHOOSER_WIDTH = (IntSetting) FACTORY.createIntSetting("FILECHOOSER_WIDTH", 900).setAlwaysSave(true);
+    public static final IntSetting FILECHOOSER_HEIGHT = (IntSetting) FACTORY.createIntSetting("FILECHOOSER_HEIGHT", 700).setAlwaysSave(true);
+
+    public static final IntSetting FILECHOOSER_X_POS = (IntSetting) FACTORY.createIntSetting("FILECHOOSER_X_POS",-1).setAlwaysSave(true);
+    public static final IntSetting FILECHOOSER_Y_POS = (IntSetting) FACTORY.createIntSetting("FILECHOOSER_Y_POS",-1).setAlwaysSave(true);
+
     /**
      * A flag for whether or not the application should be minimized
      * to the system tray on windows.

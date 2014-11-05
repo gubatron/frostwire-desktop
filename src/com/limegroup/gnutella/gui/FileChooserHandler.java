@@ -1,7 +1,8 @@
 package com.limegroup.gnutella.gui;
 
-import java.awt.Component;
-import java.awt.FileDialog;
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
@@ -14,7 +15,6 @@ import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.CommonUtils;
-import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -29,7 +29,7 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
 public final class FileChooserHandler {
     
     private FileChooserHandler() {}
-    
+
     /**
      * Returns the last directory that was used in a FileChooser.
      * 
@@ -814,7 +814,7 @@ public final class FileChooserHandler {
             }
 	}
 
-	/**
+    /**
      * Returns a new <tt>JFileChooser</tt> instance for selecting directories
      * and with internationalized strings for the caption and the selection
      * button.
@@ -854,6 +854,9 @@ public final class FileChooserHandler {
             	chooser = new JFileChooser(directory);
             }
         }
+
+        prepareForWindowEvents(chooser);
+
         if (filter != null) {
             chooser.setFileFilter(filter);
         } else {
@@ -872,10 +875,49 @@ public final class FileChooserHandler {
         String title = I18n.tr(titleKey);
         chooser.setDialogTitle(title);
 
-		if (approveKey != null) {
+        if (approveKey != null) {
 			String approveButtonText = I18n.tr(approveKey);
 			chooser.setApproveButtonText(approveButtonText);
 		}
         return chooser;
-    }    
+    }
+
+    private static void prepareForWindowEvents(JFileChooser fileChooser) {
+        fileChooser.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                onFileChooserResized(e.getComponent().getSize().width,
+                        e.getComponent().getSize().height);
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+                onFileChooserMoved(e.getComponent().getX(), e.getComponent().getY());
+            }
+        });
+
+        if (ApplicationSettings.FILECHOOSER_X_POS.getValue() == -1) {
+            //first time ever. calculate centered x,y offset. (Big-Small)/2.
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            ApplicationSettings.FILECHOOSER_X_POS.setValue((screenSize.width - ApplicationSettings.FILECHOOSER_WIDTH.getValue()) >> 1);
+            ApplicationSettings.FILECHOOSER_Y_POS.setValue((screenSize.height - ApplicationSettings.FILECHOOSER_HEIGHT.getValue()) >> 1);
+        }
+
+        fileChooser.setLocation(ApplicationSettings.FILECHOOSER_X_POS.getValue(),
+                ApplicationSettings.FILECHOOSER_Y_POS.getValue());
+
+        fileChooser.setPreferredSize(new Dimension(ApplicationSettings.FILECHOOSER_WIDTH.getValue(),
+                ApplicationSettings.FILECHOOSER_HEIGHT.getValue()));
+
+    }
+
+    private static void onFileChooserResized(int width, int height) {
+        ApplicationSettings.FILECHOOSER_WIDTH.setValue(width);
+        ApplicationSettings.FILECHOOSER_HEIGHT.setValue(height);
+    }
+
+    private static void onFileChooserMoved(int x, int y) {
+        ApplicationSettings.FILECHOOSER_X_POS.setValue(x);
+        ApplicationSettings.FILECHOOSER_Y_POS.setValue(y);
+    }
 }
