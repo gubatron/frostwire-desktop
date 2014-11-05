@@ -7,7 +7,7 @@ frostwire (6.0.0) stable; urgency=high
   * Fixes EzTV search, now with https support.
   * Multiple bug fixes.
 
- -- FrostWire Team <contact@frostwire.com>  Thu, 03 November 2014 17:46:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Tue, 04 November 2014 20:41:32 -0500
 
 frostwire (5.7.7) stable; urgency=high
   * New: VPN connection status indicator.
