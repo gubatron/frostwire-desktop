@@ -292,7 +292,7 @@ msgstr "Nazwa"
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:346
 #, fuzzy
 msgid "Tips/Donations"
-msgstr "Miejsca"
+msgstr "Napiwki/Darowizny"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:126
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:362
@@ -370,7 +370,7 @@ msgstr "Licencja"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:196
 msgid "Queued for checking"
-msgstr ""
+msgstr "Zakolejkowany do sprawdzenia"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:197
 #, fuzzy
@@ -401,12 +401,12 @@ msgstr "Zakończone"
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:202
 #, fuzzy
 msgid "Seeding"
-msgstr "nierozstrzygnięty"
+msgstr "Seedowanie"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:203
 #, fuzzy
 msgid "Allocating"
-msgstr "Lokalizacja"
+msgstr "Przydzielanie"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:204
 msgid "Paused"
@@ -475,11 +475,11 @@ msgstr "Wysyłanie"
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:216
 #, fuzzy
 msgid "Uncompressing"
-msgstr "Pliki niekompletne"
+msgstr "Dekompresowanie"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:217
 msgid "Demuxing"
-msgstr ""
+msgstr "Demuxowanie"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:265
 #, fuzzy
@@ -570,7 +570,7 @@ msgstr "Zawansowane"
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:189
 #, fuzzy
 msgid "Trackers"
-msgstr "Utwór"
+msgstr "Trackery"
 
 #. advanced > Download Speed Menu //
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:227
@@ -625,7 +625,7 @@ msgstr "Ustaw Szybkość"
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:454
 #, fuzzy
 msgid "Edit Trackers"
-msgstr "utwory"
+msgstr "Edytuj Trackery"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:470
 #, fuzzy
@@ -634,7 +634,7 @@ msgstr "Zaktualizuj tracker"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:491
 msgid "Scrape Tracker"
-msgstr ""
+msgstr "Wyciągnij dane z Trackera"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:517
 #, fuzzy
@@ -689,7 +689,7 @@ msgstr ""
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:101
 #, fuzzy
 msgid "Author's Name"
-msgstr "Autor"
+msgstr "Imiona Autorów"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:103
 msgid "The name of the creator or creators of this work."
@@ -704,6 +704,8 @@ msgid ""
 "The name of this work, i.e. the titleLabel of a music album, the titleLabel "
 "of a book, the titleLabel of a movie, etc."
 msgstr ""
+"Nazwa tego dzieła np. tytuł płyty muzycznej, tytuł książki,"
+"tytuł filmu itp."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:108
 msgid "album name, movie title, book title, game title."
@@ -718,6 +720,8 @@ msgid ""
 "The Content Creator's website to give attribution about this work if shared "
 "by others."
 msgstr ""
+"Strona internetowa twórcy by zostać przypisanym jeżeli dzieło jest"
+"dzielone przez innych."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:124
 msgid ""
@@ -725,6 +729,9 @@ msgid ""
 "your copyright. It means offering some of your rights to any member of the "
 "public but only under certain conditions."
 msgstr ""
+"Oferowanie swojego dzieła na licencji Creative Commons nie oznacza oddawania"
+"swoich praw autorskich. Oznacza to oddanie niektórych swoich praw dla dowolnego"
+"członka przestrzeni publicznej, ale tylko pod ustalonymi warunkami"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:126
 msgid ""
