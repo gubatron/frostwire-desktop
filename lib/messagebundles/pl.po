@@ -2873,14 +2873,17 @@ msgid ""
 "running an out-of-date version of Java \n"
 "Please visit %s in order to upgrade your version of Java"
 msgstr ""
+"FrostWire wymaga Java %s lub wyższej by działać. Masz obecnie "
+"zainstalowaną przestarzałą wersję Javy \n"
+"Prosze odwiedź %s w celu zaktualizowania twojej wersji Javy"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:95
 msgid "Current Java Version:"
-msgstr ""
+msgstr "Aktualna wersja Java"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:96
 msgid "Required Java Version:"
-msgstr ""
+msgstr "Wymagana wersja Java"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:106
 #, fuzzy
@@ -4571,15 +4574,15 @@ msgstr "Użyj dowolnego portu (Polecamy)"
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:64
 #, fuzzy
 msgid "Manual port range"
-msgstr "Manualny Forward Portu"
+msgstr "Manualny zakres portu"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:89
 msgid "TCP port start:"
-msgstr ""
+msgstr "początkowy port TCP"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:99
 msgid "TCP port end:"
-msgstr ""
+msgstr "końcowy port TCP"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:169
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:173
@@ -4590,7 +4593,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:178
 msgid "You must enter a valid port range."
-msgstr ""
+msgstr "Musisz wprowadzić prawidłowy zakres portów."
 
 #: src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:22
 msgid "Filter Results"
@@ -4912,6 +4915,8 @@ msgid ""
 "The Smart Search database is used to speed up individual file searches, it's "
 "how FrostWire remembers information about .torrent contents."
 msgstr ""
+"Sprytna baza wyszukiwania jest użyta by przyśpieszyć wyszukiwanie pojedyńczych "
+"plików, to tak FrostWire pamięta informacje o treści plików .torrent"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:47
 #, fuzzy
@@ -5027,7 +5032,7 @@ msgstr "Szybkość Pobierania:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
 msgid "Set the Maximum BitTorrent upload speed in KB/s."
-msgstr ""
+msgstr "Ustaw maksymalną prędkość wysyłania w KB/s."
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
 #, fuzzy
@@ -5070,7 +5075,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:34
 msgid "Anonymous Usage Statistics"
-msgstr ""
+msgstr "Anonimowe statystyki użytkowania"
 
 #: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:36
 msgid ""
@@ -5079,10 +5084,14 @@ msgid ""
 "any information that can personally identify you will be stored on disk or "
 "sent through the network."
 msgstr ""
+"Wyślij anonimowe statystyki użytkowania by FrostWire mógł być ulepszany "
+"bardziej efektywnie. Żadna informacja na temat szukanej, dzielonej lub odtwarzanej "
+"treści, oraz żadna informacja która mogłaby cię zidentyfikować nie będzie "
+"przechowywana na dysku ani wysyłana przez sieć."
 
 #: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:38
 msgid "Send anonymous usage statistics"
-msgstr ""
+msgstr "Anonimowe statystyki użytkowania"
 
 #: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:26
 msgid "Video Options"
