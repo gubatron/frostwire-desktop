@@ -2626,7 +2626,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:131
 msgid "&Search"
-msgstr "&Trazi"
+msgstr "&Traži"
 
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:131
 msgid "&Library"
@@ -2783,7 +2783,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:105
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:159
 msgid "Upgrade Java"
-msgstr "Nadogradi Javu"
+msgstr "Nadograditi Javu"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:92
 msgid ""
@@ -2795,7 +2795,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:95
 #, fuzzy
 msgid "Current Java Version:"
-msgstr "Trenutacna verzija Jave:"
+msgstr "Trenutačna verzija Jave:"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:96
 #, fuzzy
@@ -2805,7 +2805,7 @@ msgstr "Zahtjevana verzija Jave:"
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:106
 #, fuzzy
 msgid "Visit"
-msgstr "Posjeti "
+msgstr "Posjetiti"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:118
 #, fuzzy
@@ -3492,16 +3492,16 @@ msgstr "Poslati datoteku ili mapu prijatelju"
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:382
 #, java-format
 msgid "Search for Keywords: {0}"
-msgstr "Traziti kljucne rijeci: {0}"
+msgstr "Tražiti kljucne rijeci: {0}"
 
 #: src/com/limegroup/gnutella/gui/actions/SearchAction.java:45
 #, java-format
 msgid "Search for: {0}"
-msgstr "Traziti: {0}"
+msgstr "Tražiti: {0}"
 
 #: src/com/limegroup/gnutella/gui/bugs/BugManager.java:81
 msgid "Internal Error"
-msgstr "Interna greska"
+msgstr "Interna greška"
 
 #: src/com/limegroup/gnutella/gui/bugs/BugManager.java:319
 msgid ""
@@ -4255,11 +4255,11 @@ msgstr "Preuzeti nove preuzimatelje za mene (preporuceno)"
 
 #: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:26
 msgid "Browser Options"
-msgstr "Postavke trazilice"
+msgstr "Postavke tražilice"
 
 #: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:28
 msgid "You can choose which browser to use."
-msgstr "Mozete izabrati koju trazilicu zelite koristiti."
+msgstr "Mozete izabrati koju tražilicu zelite koristiti."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4268,7 +4268,7 @@ msgstr "Mozete izabrati koju trazilicu zelite koristiti."
 #.
 #: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:35
 msgid "Browser"
-msgstr "Pretrazivac"
+msgstr "Pretraživac"
 
 #: src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:40
 msgid "View Example"
@@ -4361,7 +4361,7 @@ msgstr "Filtrirati rezultate"
 #: src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:24
 msgid "You can filter out search results containing specific words."
 msgstr ""
-"Mozete filtrirati rezultate trazenja koje sadrzavaju specificne rijeci."
+"Mozete filtrirati rezultate traženja koje sadrzavaju specificne rijeci."
 
 #. *
 #. * Key for the locale-specifis string for the adult content check box
@@ -4369,7 +4369,7 @@ msgstr ""
 #.
 #: src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:41
 msgid "Ignore Adult Content"
-msgstr "Ignorirati odrasli sadrzaj"
+msgstr "Ignorirati sadržaj za odrasle"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ImageViewerPaneItem.java:26
 msgid "Image Options"
@@ -4427,12 +4427,12 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:20
 msgid "Maximum Searches"
-msgstr "Maksimalno trazenja"
+msgstr "Maksimalno traženja"
 
 #: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:22
 msgid ""
 "You can set the maximum number of simultaneous searches you can perform."
-msgstr "Mozete postaviti maksimalni broj istovremenih pretrazivanja."
+msgstr "Mozete postaviti maksimalni broj istovremenih pretraživanja."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4441,11 +4441,11 @@ msgstr "Mozete postaviti maksimalni broj istovremenih pretrazivanja."
 #.
 #: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:29
 msgid "Maximum Searches:"
-msgstr "Maksimalno trazenja:"
+msgstr "Maksimalno traženja:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:84
 msgid "The maximum parallel searches you can make is "
-msgstr "Maksimum paralelnih pretrazivanja koje mozete napraviti je "
+msgstr "Maksimum paralelnih pretraživanja koje mozete napraviti je "
 
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:50
 msgid ""
@@ -4580,7 +4580,7 @@ msgstr "Ne proxy"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SearchEnginesPaneItem.java:23
 msgid "Search Engines"
-msgstr "Trazilice"
+msgstr "Tražilice"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SearchEnginesPaneItem.java:25
 #, fuzzy
@@ -4655,7 +4655,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:47
 #, fuzzy
 msgid "Enable Smart Search"
-msgstr "Omogućiti pametno pretrazivanje"
+msgstr "Omogućiti pametno pretraživanje"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:49
 msgid "Total torrents indexed"
