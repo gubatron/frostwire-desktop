@@ -46,7 +46,7 @@ msgstr "Sakrij"
 #: src/com/frostwire/gui/HideExitDialog.java:103
 #: src/com/limegroup/gnutella/gui/notify/TrayNotifier.java:112
 msgid "Exit"
-msgstr "Izaci"
+msgstr "Izađi"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:75
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:999
@@ -251,7 +251,7 @@ msgstr "Prikaži transfere koji dijele"
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:462
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:221
 msgid "Create New Playlist"
-msgstr "Stvori novu playlistu"
+msgstr "Stvori novu listu pjesama"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:463
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:222
@@ -265,14 +265,14 @@ msgstr "Sviraj datoteku"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:494
 msgid "Play media file"
-msgstr "Svirati medija datoteku"
+msgstr "Svirati medijsku datoteku"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:522
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:165
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:175
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
 msgid "Add to playlist"
-msgstr "Dodaj na playlistu"
+msgstr "Dodaj na listu pjesama"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:60
 msgid " (Handpicked)"
@@ -671,8 +671,8 @@ msgid ""
 "I am the Content Creator of this work or I have been granted the rights to "
 "share this content under the following license by the Content Creator(s)."
 msgstr ""
-"Ja sam stvaratelj sadrzaja ovog rada ili imam prava da dijelim ovaj sadrzaj "
-"sa licencom od Stvaratelja Sadrzaja."
+"Ja sam stvaratelj sadržaja ovog rada ili imam prava da dijelim ovaj sadrzaj "
+"sa licencom od Stvaratelja Sadržaja."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:101
 msgid "Author's Name"
@@ -1141,7 +1141,7 @@ msgid ""
 "<strong>The more, the merrier.</strong> The more people sharing the faster "
 "it can be downloaded by others."
 msgstr ""
-"<strong>Što vise, to bolje.</strong> Što vise ljudi dijeli to se brže "
+"<strong>Što više, to bolje.</strong> Što više ljudi dijeli to se brže "
 "može preuzeti od ostalih."
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:221
@@ -1311,7 +1311,7 @@ msgstr "Audio pretpregled"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:303
 msgid "Play Audio preview of"
-msgstr "Pustite zvucni pregled od"
+msgstr "Pustite zvučni pregled od"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:363
 msgid "Support %s with a tip, donation or voluntary payment"
@@ -1507,7 +1507,7 @@ msgstr "Putanja"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:344
 msgid "Last Modified"
-msgstr "Zadnje podešeno"
+msgstr "Zadnje izmjenjeno"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:526
 msgid "Move to Recycle Bin"
@@ -1537,8 +1537,8 @@ msgid ""
 "Are you sure you want to delete the selected file(s), thus removing it from "
 "your computer?"
 msgstr ""
-"Jeste li sigurni da zelite obrisati odabrane datoteke, i micanje ih iz vaseg "
-"racunala?"
+"Jeste li sigurni da zelite obrisati odabrane datoteke, i micanje ih iz vašeg "
+"računala?"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:584
 #: src/com/limegroup/gnutella/gui/LanguageWindow.java:196
@@ -1585,7 +1585,7 @@ msgstr "Prikaži filtere rezultata pretrage."
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:966
 msgid "Delete Selected Files"
-msgstr "Izbriši označene file-ove."
+msgstr "Izbriši označene datoteke."
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:983
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:781
@@ -2196,7 +2196,7 @@ msgid ""
 "Radio and more."
 msgstr ""
 "Pregledavaj, pretražuj i sviraj datoteke na vasem racunalu. Wi-Fi dijeljenje, internet "
-"Radio i vise."
+"Radio i više."
 
 #: src/com/frostwire/gui/tabs/SearchDownloadTab.java:51
 #, fuzzy
@@ -3721,7 +3721,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:67
 msgid "Find out more..."
-msgstr "Saznati vise..."
+msgstr "Saznati više..."
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:74
 #, java-format
@@ -3787,7 +3787,7 @@ msgstr "Završi"
 #: src/com/limegroup/gnutella/gui/init/SetupWindow.java:140
 #: src/com/limegroup/gnutella/gui/options/panes/AbstractPaneItem.java:80
 msgid "Learn more about this option..."
-msgstr "Naučiti vise o ovoj opciji..."
+msgstr "Naučiti više o ovoj opciji..."
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:39
 msgid ""
@@ -3860,7 +3860,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
 msgid "Learn about BitTorrent Seeding"
-msgstr "Nauciti vise o BitTorrent seedanju"
+msgstr "Nauciti više o BitTorrent seedanju"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid "What is a VPN?"
@@ -5004,7 +5004,7 @@ msgstr "Kopirati smjesu"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:370
 msgid "Search More"
-msgstr "Tražiti vise"
+msgstr "Tražiti više"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:707
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:708
@@ -5034,7 +5034,7 @@ msgid ""
 "One or more files or protocols that FrostWire uses are no longer associated "
 "with FrostWire. Would you like FrostWire to re-associate them?"
 msgstr ""
-"Jedna ili više datoteka ili protokola koji FrostWire koristi vise nisu "
+"Jedna ili više datoteka ili protokola koji FrostWire koristi više nisu "
 "asocirani sa FrostWireom. Želite li da FrostWire ponovno asocira sa njima?"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:50
