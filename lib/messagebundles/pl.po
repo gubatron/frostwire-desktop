@@ -713,7 +713,7 @@ msgstr "nazwa albumu, tytuł filmu, tytuł książki, tytuł gry"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:110
 msgid "Attribution URL"
-msgstr ""
+msgstr "Przypisany URL"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:112
 msgid ""
@@ -729,15 +729,17 @@ msgid ""
 "your copyright. It means offering some of your rights to any member of the "
 "public but only under certain conditions."
 msgstr ""
-"Oferowanie swojego dzieła na licencji Creative Commons nie oznacza oddawania"
-"swoich praw autorskich. Oznacza to oddanie niektórych swoich praw dla dowolnego"
-"członka przestrzeni publicznej, ale tylko pod ustalonymi warunkami"
+"Oferowanie swojego dzieła na licencji Creative Commons nie oznacza oddawania "
+"swoich praw autorskich. Oznacza to oddanie niektórych swoich praw dla dowolnego "
+"członka przestrzeni publicznej, ale tylko pod ustalonymi warunkami "
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:126
 msgid ""
 "You let others copy, distribute, display, and perform your copyrighted work "
 "but only if they give credit the way you request."
 msgstr ""
+"Pozwalasz innym kopiować, dystrybuować, wyświetlać i wykonywać twoje dzieło "
+"ale tylko jeśli uwzględnią twoje autorstwo w sposób jaki żądasz "
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:128
 msgid ""
@@ -745,6 +747,9 @@ msgid ""
 "distribute, display, and perform your work &mdash; and derivative works "
 "based upon it &mdash; but for noncommercial purposes only."
 msgstr ""
+"<strong>Użycie komercyjne niedozwolone.</strong><br>Możesz pozwolić innym "
+"kopiować, dystrybuować, wyświetlać i wykonywać twoje dzieło &mdash; i dzieła "
+"pochodne oparte na nim &mdash; ale jedynie w celach niekomercyjnych."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:130
 msgid ""
@@ -752,12 +757,17 @@ msgid ""
 "display, and perform only verbatim copies of your work, not derivative works "
 "based upon it."
 msgstr ""
+"<strong>Remiksowanie niedozwolone.</strong><br>Możesz pozwolić innym kopiować, "
+"dystrybuować, wyświetlać i wykonywać tylko dokładne kopie twojego dzieła, "
+"nie utwory pochodne bazujące na nim."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:132
 msgid ""
 "You allow others to distribute derivative works only under a license "
 "identical to the license that governs your work."
 msgstr ""
+"Zezwalasz innym na dystrybuowanie dzieła pochodnego tylko pod licencją "
+"identyczną do licencji która reguluje twoje dzieło"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:147
 msgid ""
@@ -799,7 +809,7 @@ msgstr "Torrent Stworzony przez FrostWire"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:205
 msgid "Contents and Tracking"
-msgstr ""
+msgstr "Treść i Śledzenie"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:206
 #, fuzzy
@@ -844,7 +854,7 @@ msgstr ""
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:251
 #, fuzzy
 msgid "Tracking"
-msgstr "Utwór"
+msgstr "Śledzenie"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:253
 msgid "Trackerless Torrent (DHT)"
@@ -874,7 +884,7 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:262
 msgid "Tracker Announce URLs"
-msgstr ""
+msgstr "Tracker ogłaszający URL"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:262
 msgid "One tracker per line"
@@ -899,6 +909,8 @@ msgid ""
 "If these files can be downloaded from the web, enter the URLs of each "
 "possible mirror, one per line (GetRight style)."
 msgstr ""
+"Jeżeli te pliki mogą być pobrane z sieci, wpisz adresy URL każdego "
+"możliwego mirror, jeden na linię (styl GetRight)."
 
 #. first button will dock all the way east,
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:292
@@ -1061,30 +1073,30 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:126
 msgid "<strong>Bitcoin</strong> receiving wallet address"
-msgstr ""
+msgstr "Adres odbiorczy portfela <strong>Bitcoin</strong> "
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:131
 msgid "<strong>Litecoin</strong> receiving wallet address"
-msgstr ""
+msgstr "Adres odbiorczy portfela <strong>Litecoin</strong>"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:136
 msgid "<strong>Dogecoin</strong> receiving wallet address"
-msgstr ""
+msgstr "Adres odbiorczy portfela <strong>Dogecoin</strong>"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:141
 msgid "<strong>Paypal</strong> payment/donation page url"
-msgstr ""
+msgstr "strona płatności/dotacji <strong>Paypal</strong>"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:151
 msgid "\"Name your price\", \"Tips\", \"Donations\" payment options"
-msgstr ""
+msgstr "\"Określ cenę\", \"Napiwki\", \"Dotacje\" opcje płatności"
 
 #. We use "Bitcoin" for the protocol (upper case B), and "bitcoins" for the units of currency (lower case b)
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:97
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:98
 msgid "Name your price, Send a Tip or Donation in"
-msgstr ""
+msgstr "Określ cenę, wyślij napiwek lub dotację "
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 msgid "bitcoins"
