@@ -40,6 +40,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
+import com.apple.eawt.FullScreenUtilities;
 import net.miginfocom.swing.MigLayout;
 
 import org.limewire.setting.SettingsGroupManager;
@@ -221,7 +222,7 @@ public final class MainFrame {
         }
         
         if (OSUtils.isMacOSX()) {
-            MacUtils.enableFullscreen(FRAME);
+            FullScreenUtilities.setWindowCanFullScreen(FRAME, true);
         }
     }
 
