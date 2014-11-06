@@ -72,13 +72,14 @@ public class MacEventHandler {
                 handleOpenFile(file);
             }
         });
-        
-        MRJAdapter.addReopenApplicationListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+        */
+
+        app.addAppEventListener(new AppReOpenedListener() {
+            @Override
+            public void appReOpened(AppEvent.AppReOpenedEvent appReOpenedEvent) {
                 handleReopen();
             }
         });
-        */
     } 
     
     public void enable(ExternalControl externalControl, Initializer initializer) {

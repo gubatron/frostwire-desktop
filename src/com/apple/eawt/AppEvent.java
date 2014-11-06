@@ -21,4 +21,9 @@ public abstract class AppEvent extends EventObject {
         PreferencesEvent() {
         }
     }
+
+    public static class AppReOpenedEvent extends AppEvent {
+        AppReOpenedEvent() {
+        }
+    }
 }

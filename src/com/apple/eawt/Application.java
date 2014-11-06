@@ -14,4 +14,7 @@ public class Application {
 
     public void setPreferencesHandler(PreferencesHandler var1) {
     }
+
+    public void addAppEventListener(AppEventListener var1) {
+    }
 }
