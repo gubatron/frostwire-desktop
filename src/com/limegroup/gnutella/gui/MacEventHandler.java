@@ -93,15 +93,14 @@ public class MacEventHandler {
      * Enable preferences.
      */
     public void enablePreferences() {
-        /*
-        MRJAdapter.setPreferencesEnabled(true);
-        
-        MRJAdapter.addPreferencesListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                handlePreferences();
+        Application app = Application.getApplication();
+
+        app.setPreferencesHandler(new PreferencesHandler() {
+            @Override
+            public void handlePreferences(AppEvent.PreferencesEvent preferencesEvent) {
+                MacEventHandler.this.handlePreferences();
             }
         });
-        */
     }
     
     /**

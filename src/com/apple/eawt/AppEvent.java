@@ -16,4 +16,9 @@ public abstract class AppEvent extends EventObject {
         QuitEvent() {
         }
     }
+
+    public static class PreferencesEvent extends AppEvent {
+        PreferencesEvent() {
+        }
+    }
 }
