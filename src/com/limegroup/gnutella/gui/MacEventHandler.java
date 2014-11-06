@@ -19,9 +19,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import net.roydesign.event.ApplicationEvent;
-import net.roydesign.mac.MRJAdapter;
-
 import com.limegroup.gnutella.ExternalControl;
 
 /**
@@ -49,7 +46,7 @@ public class MacEventHandler {
     
     /** Creates a new instance of MacEventHandler */
     private MacEventHandler() {
-        
+        /*
         MRJAdapter.addAboutListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 handleAbout();
@@ -74,6 +71,7 @@ public class MacEventHandler {
                 handleReopen();
             }
         });
+        */
     } 
     
     public void enable(ExternalControl externalControl, Initializer initializer) {
@@ -88,6 +86,7 @@ public class MacEventHandler {
      * Enable preferences.
      */
     public void enablePreferences() {
+        /*
         MRJAdapter.setPreferencesEnabled(true);
         
         MRJAdapter.addPreferencesListener(new ActionListener() {
@@ -95,6 +94,7 @@ public class MacEventHandler {
                 handlePreferences();
             }
         });
+        */
     }
     
     /**
