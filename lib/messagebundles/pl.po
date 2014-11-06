@@ -1100,19 +1100,19 @@ msgstr "Określ cenę, wyślij napiwek lub dotację "
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 msgid "bitcoins"
-msgstr ""
+msgstr "bitcoiny"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:97
 msgid "litecoins"
-msgstr ""
+msgstr "litecoiny"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:98
 msgid "dogecoins"
-msgstr ""
+msgstr "dogecoiny"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:99
 msgid "Name your price, Send a Tip or Donation via Paypal"
-msgstr ""
+msgstr "Określ stawkę, wyślij napiwek lub dotację przez Paypal"
 
 #: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:90
 msgid "Preparing selection"
@@ -1159,12 +1159,16 @@ msgid ""
 "<strong>Keep FrostWire Open</strong> until the file has been downloaded by "
 "at least one other friend."
 msgstr ""
+"<strong>Nie zamykaj FrostWire</strong> dopóki plik nie będzie pobrany przez "
+"co najmniej jednego znajomego"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:220
 msgid ""
 "<strong>The more, the merrier.</strong> The more people sharing the faster "
 "it can be downloaded by others."
 msgstr ""
+"<strong>Im więcej tym weselej.</strong> Im więcej ludzi udostępnia tym szybciej"
+"może być pobrane przez innych."
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:221
 msgid ""
@@ -1172,6 +1176,9 @@ msgid ""
 "link and you seed the files they will be available to everybody on the "
 "BitTorrent network."
 msgstr ""
+"<strong>Twoje pliki mogą być odkryte przez innych.</strong> Gdy raz "
+"udostępnisz link i będziesz seedować pliki, będą one dostępne dla każdego "
+"w sieci BitTorrent"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:223
 msgid "Tips"
@@ -1316,7 +1323,7 @@ msgstr ""
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:133
 msgid "Leave a tip"
-msgstr ""
+msgstr "Zostaw napiwek"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:155
 #, fuzzy
@@ -1351,7 +1358,7 @@ msgstr "Odtwórz Podgląd Audio "
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:363
 msgid "Support %s with a tip, donation or voluntary payment"
-msgstr ""
+msgstr "Wesprzyj %s napiwkiem, dotacją lub dobrowolną płatnością"
 
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:171
 #: src/com/limegroup/gnutella/gui/StatusLine.java:231
@@ -5255,7 +5262,7 @@ msgstr "0"
 
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:127
 msgid "Name|Source|Ext."
-msgstr "Nazwa|Źródło|Skrót"
+msgstr "Nazwa|Źródło|Rozszerzenie"
 
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:194
 msgid ""
