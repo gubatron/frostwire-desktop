@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 import javax.swing.Action;
 import javax.swing.Box;
@@ -355,7 +357,7 @@ public final class GUIMediator {
     }
 
     /**
-     * Notification that the the core has been initialized.
+     * Notification that the core has been initialized.
      */
     public void coreInitialized() {
         startTimer();
@@ -745,8 +747,14 @@ public final class GUIMediator {
     }
 
     public final void openTorrentFile(File torrentFile, boolean partialSelection) {
-        getBTDownloadMediator().openTorrentFile(torrentFile, partialSelection);
-        setWindow(GUIMediator.Tabs.SEARCH);
+        Runnable onOpenRunnable = new Runnable() {
+            @Override
+            public void run() {
+                setWindow(GUIMediator.Tabs.SEARCH);
+            }
+        };
+        getBTDownloadMediator().openTorrentFile(torrentFile, partialSelection, onOpenRunnable);
+
     }
 
     public void openTorrentForSeed(File torrentFile, File saveDir) {

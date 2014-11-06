@@ -73,8 +73,10 @@ public class GoogleSearchField extends SearchField {
                 suggestionsThread.cancel();
             }
 
-            suggestionsThread = new SuggestionsThread(input, this);
-            suggestionsThread.start();
+            if (getAutoComplete()) {
+                suggestionsThread = new SuggestionsThread(input, this);
+                suggestionsThread.start();
+            }
 
         } else {
             hidePopup();

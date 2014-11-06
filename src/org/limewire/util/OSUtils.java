@@ -126,11 +126,12 @@ public class OSUtils {
     	_isMacOSX105 = false;
     	_isMacOSX106 = false;
     
-    	String os = System.getProperty("os.name").toLowerCase(Locale.US);
+    	String os = System.getProperty("os.name");
+        System.out.println("os.name=\"" + os + "\"");
+        os = os.toLowerCase(Locale.US);
     
     	// set the operating system variables
     	_isWindows = os.indexOf("windows") != -1;
-    	System.out.println("OS: " + os);
     	
     	if (os.indexOf("windows nt") != -1)
     		_isWindowsNT = true;

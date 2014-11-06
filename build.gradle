@@ -15,11 +15,11 @@ if (!System.getenv('ANT_HOME')?.trim()) {
 }
 
 if (!new File("../frostwire-common").exists()) {
-    throw new GradleException("ERROR: You need to checkout the dependency frostwire-common")
+    //throw new GradleException("ERROR: You need to checkout the dependency frostwire-common")
 }
 
 if (!new File("../frostwire-jlibtorrent").exists()) {
-    throw new GradleException("ERROR: You need to checkout the dependency frostwire-jlibtorrent")
+    //throw new GradleException("ERROR: You need to checkout the dependency frostwire-jlibtorrent")
 }
 
 sourceCompatibility = 1.7
@@ -43,7 +43,6 @@ sourceSets {
             srcDir '../frostwire-common/jdownloader'
             srcDir '../frostwire-common/jmdns'
             srcDir '../frostwire-common/json'
-            srcDir '../frostwire-common/libtorrent'
             srcDir '../frostwire-common/mp4parser'
             srcDir '../frostwire-common/vuze'
             srcDir '../frostwire-common/core'
@@ -66,7 +65,19 @@ sourceSets {
         }
 
         resources {
-            srcDir 'resources'
+            srcDir 'src'
+            include '**/*.properties'
+            include '**/*.png'
+            include '**/*.gif'
+            include '**/*.jpg'
+            include '**/*.html'
+            include '**/*.js'
+            include '**/*.sh'
+            include '**/*.dat'
+            include '**/*.icc'
+            exclude '**/*.DS_Store'
+
+	    srcDir 'resources'
             include '**/*.properties'
             include '**/*.png'
             include '**/*.gif'

@@ -20,7 +20,7 @@ public final class GURLHandler {
     static {
         try {
         	System.loadLibrary("GURLLeopard");
-        	System.out.println("GURLLeopard loadded.");
+        	//System.out.println("GURLLeopard loadded.");
         }
         catch (UnsatisfiedLinkError err) {
             ErrorService.error(err);

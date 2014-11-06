@@ -135,13 +135,11 @@ public final class TipOfTheDayMediator {
      */
     private TipOfTheDayMediator() {
         tipPane = new JEditorPane();
-        dialog = new JDialog();
+        dialog = new JDialog(GUIMediator.getAppFrame(), TOTD_TITLE, false);
         this.messages = new ArrayList<String>();
         initializeMessages(this.messages);
 
-        dialog.setModal(false);
         dialog.setResizable(true);
-        dialog.setTitle(TOTD_TITLE);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {

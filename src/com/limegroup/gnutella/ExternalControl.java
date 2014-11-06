@@ -289,7 +289,6 @@ public class ExternalControl {
     }
 
     public void enqueueControlRequest(String arg) {
-        LOG.info("enter enqueueControlRequest");
         enqueuedRequest = arg;
     }
 
@@ -300,13 +299,13 @@ public class ExternalControl {
             enqueuedRequest = null;
 
             if (isTorrentMagnetRequest(request)) {
-                System.out.println("ExternalControl.runQueuedControlRequest() handleTorrentMagnetRequest() - " + request);
+                LOG.info("ExternalControl.runQueuedControlRequest() handleTorrentMagnetRequest() - " + request);
                 handleTorrentMagnetRequest(request);
             } else if (isTorrentRequest(request)) {
-                System.out.println("ExternalControl.runQueuedControlRequest() handleTorrentRequest() - " + request);
+                LOG.info("ExternalControl.runQueuedControlRequest() handleTorrentRequest() - " + request);
                 handleTorrentRequest(request);
             } else {
-                System.out.println("ExternalControl.runQueuedControlRequest() handleMagnetRequest() - " + request);
+                LOG.info("ExternalControl.runQueuedControlRequest() handleMagnetRequest() - " + request);
                 handleMagnetRequest(request);
             }
         }
@@ -317,9 +316,8 @@ public class ExternalControl {
     }
 
     private void handleTorrentMagnetRequest(String request) {
-        //activityCallback.setRemoteDownloadsAllowed(false);
         ActivityCallback callback = restoreApplication();
-        System.out.println("handleTorrentMagnetRequest restored application. About to callback.handleTorrentMagnet()");
+        LOG.info("handleTorrentMagnetRequest restored application. About to callback.handleTorrentMagnet()");
         callback.handleTorrentMagnet(request, true);
     }
 
@@ -339,7 +337,7 @@ public class ExternalControl {
         LOG.info("enter handleMagnetRequest");
 
         if (isTorrentMagnetRequest(arg)) {
-            System.out.println("ExternalControl.handleMagnetRequest(" + arg + ") -> handleTorrentMagnetRequest()");
+            LOG.info("ExternalControl.handleMagnetRequest(" + arg + ") -> handleTorrentMagnetRequest()");
             handleTorrentMagnetRequest(arg);
             return;
         }
@@ -377,7 +375,7 @@ public class ExternalControl {
      */
     private boolean testForFrostWire(String arg) {
         try {
-            System.out.println("testForFrostWire(arg = ["+arg+"])");
+            //LOG.info("testForFrostWire(arg = ["+arg+"])");
             
             String urlParameter = null;
             if (arg != null && (arg.startsWith("http://") || arg.startsWith("https://") || arg.startsWith("magnet:?") || arg.endsWith(".torrent"))) {
@@ -386,7 +384,7 @@ public class ExternalControl {
                 urlParameter = "/show";
             }
 
-            System.out.println("urlParameter = " + urlParameter);
+            //LOG.info("urlParameter = " + urlParameter);
             final String response = HttpClientFactory.newInstance().get("http://" + LOCALHOST_IP + ":" + SERVER_PORT + urlParameter, 1000);
 
             if (response != null) {

@@ -346,6 +346,7 @@ public final class ThemeMediator {
     }
 
     private static void applyCommonSkinUI() {
+
         UIManager.put("PopupMenuUI", "com.frostwire.gui.theme.SkinPopupMenuUI");
         UIManager.put("MenuItemUI", "com.frostwire.gui.theme.SkinMenuItemUI");
         UIManager.put("MenuUI", "com.frostwire.gui.theme.SkinMenuUI");
@@ -354,6 +355,7 @@ public final class ThemeMediator {
         UIManager.put("RadioButtonMenuItemUI", "com.frostwire.gui.theme.SkinRadioButtonMenuItemUI");
         UIManager.put("PopupMenuSeparatorUI", "com.frostwire.gui.theme.SkinPopupMenuSeparatorUI");
         UIManager.put("FileChooserUI", "com.frostwire.gui.theme.SkinFileChooserUI");
+        //UIManager.put("FileChooserUI", "javax.swing.plaf.FileChooserUI");
         UIManager.put("TabbedPaneUI", "com.frostwire.gui.theme.SkinTabbedPaneUI");
         UIManager.put("OptionPaneUI", "com.frostwire.gui.theme.SkinOptionPaneUI");
         UIManager.put("LabelUI", "com.frostwire.gui.theme.SkinLabelUI");
@@ -369,6 +371,7 @@ public final class ThemeMediator {
         UIManager.put("RangeSliderUI", "com.frostwire.gui.theme.SkinRangeSliderUI");
         UIManager.put("TableUI", "com.frostwire.gui.theme.SkinTableUI");
         UIManager.put("RadioButtonUI", "com.frostwire.gui.theme.SkinRadioButtonUI");
+
     }
 
     private static FontUIResource getControlFont() {

@@ -100,7 +100,7 @@ public final class PowerOfTwoSetting extends LongSetting {
     /** Makes value a power of two by rounding down if necessary
      * and delegates the rest of the normalization to the superclass.
      * 
-     * Non-positive values cannot be made made powers of two by rounding
+     * Non-positive values cannot be made powers of two by rounding
      * down, and are special-cased to return MIN_VALUE, which is forced by
      * the constructor to be non-negative.
      * 

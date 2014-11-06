@@ -116,11 +116,13 @@ msgstr "Ponowów Próbę Pobierania Wybranych Plików."
 msgid ""
 "One of the transfers is complete and resuming will cause it to start seeding"
 msgstr ""
+"Jeden z transferów jest zakończony, wznowienie spowoduje rozpoczęcie seedowania"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:213
 msgid ""
 "This transfer is already complete, resuming it will cause it to start seeding"
 msgstr ""
+"Ten transfer jest już zakończony, wznowienie spowoduje rozpoczęcie seedowania"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:214
 #, fuzzy
@@ -290,7 +292,7 @@ msgstr "Nazwa"
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:346
 #, fuzzy
 msgid "Tips/Donations"
-msgstr "Miejsca"
+msgstr "Napiwki/Darowizny"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:126
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:362
@@ -368,7 +370,7 @@ msgstr "Licencja"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:196
 msgid "Queued for checking"
-msgstr ""
+msgstr "Zakolejkowany do sprawdzenia"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:197
 #, fuzzy
@@ -399,12 +401,12 @@ msgstr "Zakończone"
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:202
 #, fuzzy
 msgid "Seeding"
-msgstr "nierozstrzygnięty"
+msgstr "Seedowanie"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:203
 #, fuzzy
 msgid "Allocating"
-msgstr "Lokalizacja"
+msgstr "Przydzielanie"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:204
 msgid "Paused"
@@ -429,11 +431,11 @@ msgstr "Błąd usuwania pliku"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:207
 msgid "Error: Wrong md5 hash"
-msgstr ""
+msgstr "Błąd: niewłaściwy hash md5"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:208
 msgid "Error: Wrong signature"
-msgstr ""
+msgstr "Błąd: Zła sygnatura"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:209
 msgid "Stopped"
@@ -473,11 +475,11 @@ msgstr "Wysyłanie"
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:216
 #, fuzzy
 msgid "Uncompressing"
-msgstr "Pliki niekompletne"
+msgstr "Dekompresowanie"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:217
 msgid "Demuxing"
-msgstr ""
+msgstr "Demuxowanie"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:265
 #, fuzzy
@@ -568,7 +570,7 @@ msgstr "Zawansowane"
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:189
 #, fuzzy
 msgid "Trackers"
-msgstr "Utwór"
+msgstr "Trackery"
 
 #. advanced > Download Speed Menu //
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:227
@@ -623,31 +625,31 @@ msgstr "Ustaw Szybkość"
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:454
 #, fuzzy
 msgid "Edit Trackers"
-msgstr "utwory"
+msgstr "Edytuj Trackery"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:470
 #, fuzzy
 msgid "Update Tracker"
-msgstr "Zaktualizuj Później"
+msgstr "Zaktualizuj tracker"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:491
 msgid "Scrape Tracker"
-msgstr ""
+msgstr "Wyciągnij dane z Trackera"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:517
 #, fuzzy
 msgid "Edit trackers"
-msgstr "utwory"
+msgstr "Edytuj trackery"
 
 #. columns
 #. rows
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:534
 msgid "Edit trackers, one by line"
-msgstr ""
+msgstr "Edytuj trackery, jeden na linię"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:543
 msgid "Accept"
-msgstr ""
+msgstr "Akceptuj"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:577
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:469
@@ -670,50 +672,56 @@ msgstr "Pochodzenie"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:52
 msgid "Public Domain"
-msgstr ""
+msgstr "Domena Publiczna"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:96
 msgid "Choose a Copyright License for this work"
-msgstr ""
+msgstr "Wybierz licencję praw autorskich dla tego dzieła"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:99
 msgid ""
 "I am the Content Creator of this work or I have been granted the rights to "
 "share this content under the following license by the Content Creator(s)."
 msgstr ""
+"Jestem twórcją treści tego dzieła, lub mam przyznane prawa przez "
+"twórcę (twórców) do udostępniania tej treści pod następującą licencją"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:101
 #, fuzzy
 msgid "Author's Name"
-msgstr "Autor"
+msgstr "Imiona Autorów"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:103
 msgid "The name of the creator or creators of this work."
-msgstr ""
+msgstr "Nazwa twórcy lub twórców tego dzieła."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:105
 msgid "Work's Title"
-msgstr ""
+msgstr "Tytuł dzieła"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:107
 msgid ""
 "The name of this work, i.e. the titleLabel of a music album, the titleLabel "
 "of a book, the titleLabel of a movie, etc."
 msgstr ""
+"Nazwa tego dzieła np. tytuł płyty muzycznej, tytuł książki,"
+"tytuł filmu itp."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:108
 msgid "album name, movie title, book title, game title."
-msgstr ""
+msgstr "nazwa albumu, tytuł filmu, tytuł książki, tytuł gry"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:110
 msgid "Attribution URL"
-msgstr ""
+msgstr "Przypisany URL"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:112
 msgid ""
 "The Content Creator's website to give attribution about this work if shared "
 "by others."
 msgstr ""
+"Strona internetowa twórcy by zostać przypisanym jeżeli dzieło jest"
+"dzielone przez innych."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:124
 msgid ""
@@ -721,12 +729,17 @@ msgid ""
 "your copyright. It means offering some of your rights to any member of the "
 "public but only under certain conditions."
 msgstr ""
+"Oferowanie swojego dzieła na licencji Creative Commons nie oznacza oddawania "
+"swoich praw autorskich. Oznacza to oddanie niektórych swoich praw dla dowolnego "
+"członka przestrzeni publicznej, ale tylko pod ustalonymi warunkami "
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:126
 msgid ""
 "You let others copy, distribute, display, and perform your copyrighted work "
 "but only if they give credit the way you request."
 msgstr ""
+"Pozwalasz innym kopiować, dystrybuować, wyświetlać i wykonywać twoje dzieło "
+"ale tylko jeśli uwzględnią twoje autorstwo w sposób jaki żądasz "
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:128
 msgid ""
@@ -734,6 +747,9 @@ msgid ""
 "distribute, display, and perform your work &mdash; and derivative works "
 "based upon it &mdash; but for noncommercial purposes only."
 msgstr ""
+"<strong>Użycie komercyjne niedozwolone.</strong><br>Możesz pozwolić innym "
+"kopiować, dystrybuować, wyświetlać i wykonywać twoje dzieło &mdash; i dzieła "
+"pochodne oparte na nim &mdash; ale jedynie w celach niekomercyjnych."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:130
 msgid ""
@@ -741,12 +757,17 @@ msgid ""
 "display, and perform only verbatim copies of your work, not derivative works "
 "based upon it."
 msgstr ""
+"<strong>Remiksowanie niedozwolone.</strong><br>Możesz pozwolić innym kopiować, "
+"dystrybuować, wyświetlać i wykonywać tylko dokładne kopie twojego dzieła, "
+"nie utwory pochodne bazujące na nim."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:132
 msgid ""
 "You allow others to distribute derivative works only under a license "
 "identical to the license that governs your work."
 msgstr ""
+"Zezwalasz innym na dystrybuowanie dzieła pochodnego tylko pod licencją "
+"identyczną do licencji która reguluje twoje dzieło"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:147
 msgid ""
@@ -764,11 +785,11 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:235
 msgid "You have selected the following License"
-msgstr ""
+msgstr "Wybrałeś następującą licencję"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:394
 msgid "Select what people can and can't do with this work"
-msgstr ""
+msgstr "Wybierz co ludzie mogą i nie mogą robić z twoim dziełem"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:425
 msgid ""
@@ -788,7 +809,7 @@ msgstr "Torrent Stworzony przez FrostWire"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:205
 msgid "Contents and Tracking"
-msgstr ""
+msgstr "Treść i Śledzenie"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:206
 #, fuzzy
@@ -797,7 +818,7 @@ msgstr "Prawa Autorskie"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:207
 msgid "Payments/Tips"
-msgstr ""
+msgstr "Płatności/Napiwki"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:224
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:930
@@ -833,7 +854,7 @@ msgstr ""
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:251
 #, fuzzy
 msgid "Tracking"
-msgstr "Utwór"
+msgstr "Śledzenie"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:253
 msgid "Trackerless Torrent (DHT)"
@@ -863,11 +884,11 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:262
 msgid "Tracker Announce URLs"
-msgstr ""
+msgstr "Tracker ogłaszający URL"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:262
 msgid "One tracker per line"
-msgstr ""
+msgstr "Jeden tracker na linię"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:263
 msgid ""
@@ -888,6 +909,8 @@ msgid ""
 "If these files can be downloaded from the web, enter the URLs of each "
 "possible mirror, one per line (GetRight style)."
 msgstr ""
+"Jeżeli te pliki mogą być pobrane z sieci, wpisz adresy URL każdego "
+"możliwego mirror, jeden na linię (styl GetRight)."
 
 #. first button will dock all the way east,
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:292
@@ -1050,30 +1073,30 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:126
 msgid "<strong>Bitcoin</strong> receiving wallet address"
-msgstr ""
+msgstr "Adres odbiorczy portfela <strong>Bitcoin</strong> "
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:131
 msgid "<strong>Litecoin</strong> receiving wallet address"
-msgstr ""
+msgstr "Adres odbiorczy portfela <strong>Litecoin</strong>"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:136
 msgid "<strong>Dogecoin</strong> receiving wallet address"
-msgstr ""
+msgstr "Adres odbiorczy portfela <strong>Dogecoin</strong>"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:141
 msgid "<strong>Paypal</strong> payment/donation page url"
-msgstr ""
+msgstr "strona płatności/dotacji <strong>Paypal</strong>"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:151
 msgid "\"Name your price\", \"Tips\", \"Donations\" payment options"
-msgstr ""
+msgstr "\"Określ cenę\", \"Napiwki\", \"Dotacje\" opcje płatności"
 
 #. We use "Bitcoin" for the protocol (upper case B), and "bitcoins" for the units of currency (lower case b)
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:97
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:98
 msgid "Name your price, Send a Tip or Donation in"
-msgstr ""
+msgstr "Określ cenę, wyślij napiwek lub dotację "
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 msgid "bitcoins"
@@ -2850,14 +2873,17 @@ msgid ""
 "running an out-of-date version of Java \n"
 "Please visit %s in order to upgrade your version of Java"
 msgstr ""
+"FrostWire wymaga Java %s lub wyższej by działać. Masz obecnie "
+"zainstalowaną przestarzałą wersję Javy \n"
+"Prosze odwiedź %s w celu zaktualizowania twojej wersji Javy"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:95
 msgid "Current Java Version:"
-msgstr ""
+msgstr "Aktualna wersja Java"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:96
 msgid "Required Java Version:"
-msgstr ""
+msgstr "Wymagana wersja Java"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:106
 #, fuzzy
@@ -4548,15 +4574,15 @@ msgstr "Użyj dowolnego portu (Polecamy)"
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:64
 #, fuzzy
 msgid "Manual port range"
-msgstr "Manualny Forward Portu"
+msgstr "Manualny zakres portu"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:89
 msgid "TCP port start:"
-msgstr ""
+msgstr "początkowy port TCP"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:99
 msgid "TCP port end:"
-msgstr ""
+msgstr "końcowy port TCP"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:169
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:173
@@ -4567,7 +4593,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:178
 msgid "You must enter a valid port range."
-msgstr ""
+msgstr "Musisz wprowadzić prawidłowy zakres portów."
 
 #: src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:22
 msgid "Filter Results"
@@ -4889,6 +4915,8 @@ msgid ""
 "The Smart Search database is used to speed up individual file searches, it's "
 "how FrostWire remembers information about .torrent contents."
 msgstr ""
+"Sprytna baza wyszukiwania jest użyta by przyśpieszyć wyszukiwanie pojedyńczych "
+"plików, to tak FrostWire pamięta informacje o treści plików .torrent"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:47
 #, fuzzy
@@ -5004,7 +5032,7 @@ msgstr "Szybkość Pobierania:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
 msgid "Set the Maximum BitTorrent upload speed in KB/s."
-msgstr ""
+msgstr "Ustaw maksymalną prędkość wysyłania w KB/s."
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
 #, fuzzy
@@ -5047,7 +5075,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:34
 msgid "Anonymous Usage Statistics"
-msgstr ""
+msgstr "Anonimowe statystyki użytkowania"
 
 #: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:36
 msgid ""
@@ -5056,10 +5084,14 @@ msgid ""
 "any information that can personally identify you will be stored on disk or "
 "sent through the network."
 msgstr ""
+"Wyślij anonimowe statystyki użytkowania by FrostWire mógł być ulepszany "
+"bardziej efektywnie. Żadna informacja na temat szukanej, dzielonej lub odtwarzanej "
+"treści, oraz żadna informacja która mogłaby cię zidentyfikować nie będzie "
+"przechowywana na dysku ani wysyłana przez sieć."
 
 #: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:38
 msgid "Send anonymous usage statistics"
-msgstr ""
+msgstr "Anonimowe statystyki użytkowania"
 
 #: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:26
 msgid "Video Options"

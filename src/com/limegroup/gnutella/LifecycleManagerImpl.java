@@ -154,12 +154,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     
     private void doStart() {
         loadBackgroundTasksBlocking();
-        
-        // Restore any downloads in progress.
-        LOG.info("START DownloadManager.postGuiInit");
-        //activityCallback.componentLoading(I18nMarker.marktr("Loading Old Downloads..."));
-        //downloadManager.loadSavedDownloadsAndScheduleWriting();
-        LOG.info("STOP DownloadManager.postGuiInit");
 
         if(ApplicationSettings.AUTOMATIC_MANUAL_GC.getValue())
             startManualGCThread();
@@ -258,28 +252,10 @@ public class LifecycleManagerImpl implements LifecycleManager {
         return true;
     }
 
-    /** Runs all shutdown items. */
-//    private void runShutdownItems() {
-//        if(!shutdownBegin.get())
-//            return;
-//        
-//        // Start each shutdown item.
-//        for(Thread t : SHUTDOWN_ITEMS)
-//            t.start();
-//        
-//        // Now that we started them all, iterate back and wait for each one to finish.
-//        for(Thread t : SHUTDOWN_ITEMS) {
-//            try {
-//                t.join();
-//            } catch(InterruptedException ie) {}
-//        }
-//    }
-    
     /** Runs all tasks that can be done in the background while the gui inits. */
     private void doBackgroundTasks() {
         limeCoreGlue.install(); // ensure glue is set before running tasks.
         
-        //acceptor.get().init();
         backgroundDone.set(true);
     }
 
@@ -303,17 +279,17 @@ public class LifecycleManagerImpl implements LifecycleManager {
                     try {
                         Thread.sleep(5 * 60 * 1000);
                     } catch(InterruptedException ignored) {}
-                    LOG.info("Running GC");
+                    //LOG.info("Running GC");
                     System.gc();
-                    LOG.info("GC finished, running finalizers");
+                    //LOG.info("GC finished, running finalizers");
                     System.runFinalization();
-                    LOG.info("Finalizers finished.");
+                    //LOG.info("Finalizers finished.");
                 }
             }
         }, "ManualGC");
         t.setDaemon(true);
         t.start();
-        LOG.info("Started manual GC thread.");
+        //LOG.info("Started manual GC thread.");
     }
 
     public void addListener(EventListener<LifeCycleEvent> listener) {

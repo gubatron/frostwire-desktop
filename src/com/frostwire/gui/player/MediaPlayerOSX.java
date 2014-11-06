@@ -50,7 +50,6 @@ public class MediaPlayerOSX extends MediaPlayer {
     private String getNonReleasePlayerPath() {
         String frostWireJarPath = FrostWireUtils.getFrostWireJarPath();
         String pathPreffix = frostWireJarPath.substring(0, frostWireJarPath.indexOf("frostwire-desktop"));
-        System.out.println("Non Release Path: " + pathPreffix + "frostwire-desktop/lib/native/fwplayer_osx");
         return pathPreffix + "frostwire-desktop/lib/native/fwplayer_osx";
     }
 }

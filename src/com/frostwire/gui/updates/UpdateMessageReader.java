@@ -341,7 +341,7 @@ public final class UpdateMessageReader implements ContentHandler {
             String userAgent = "FrostWire/" + OSUtils.getOS() + "-" + OSUtils.getArchitecture() + "/" + FrostWireUtils.getFrostWireVersion();
             connection = (HttpURLConnection) (new URL(getUpdateURL())).openConnection();
             String url = getUpdateURL();
-            System.out.println("Reading update file from " + url);
+            //LOG.info("Reading update file from " + url);
             connection.setRequestProperty("User-Agent", userAgent);
             connection.setRequestProperty("Connection", "close");
             connection.setReadTimeout(10000); // 10 secs timeout
@@ -432,7 +432,7 @@ public final class UpdateMessageReader implements ContentHandler {
 
             if (atts.getValue("md5") != null) {
                 _bufferMessage.setRemoteMD5(atts.getValue("md5"));
-                LOG.debug("UpdateMessageReader.startElement overlay md5=" + atts.getValue("md5"));
+                //LOG.debug("UpdateMessageReader.startElement overlay md5=" + atts.getValue("md5"));
             }
 
             // language properties available only inside overlay
