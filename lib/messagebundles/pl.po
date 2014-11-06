@@ -1600,8 +1600,8 @@ msgid ""
 "The following files could not be deleted. They may be in use by another "
 "application or are currently being downloaded to."
 msgstr ""
-"Poniższe pliki nie mogly zostać usunięte. Mogą być używane przez inną "
-"aplikację lub w tej chwili pobierane."
+"Poniższe pliki nie mogły zostać usunięte. Mogą być używane przez inną "
+"aplikację lub są w tej chwili pobierane."
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:888
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:672
@@ -2032,7 +2032,7 @@ msgstr "Odtwórz"
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:82
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:87
 msgid "Long Press to Stop Playback"
-msgstr ""
+msgstr "Długie wciśnięcie stopuje odtwarzanie"
 
 #. *
 #. * Constant for the forward button.
@@ -2272,7 +2272,7 @@ msgstr "FileChooser.fileNameLabelText"
 
 #: src/com/frostwire/gui/theme/BaseFileChooserUI.java:537
 msgid "FileChooser.folderNameLabelText"
-msgstr ""
+msgstr "FileChooser.folderNameLabelText"
 
 #: src/com/frostwire/gui/theme/BaseFileChooserUI.java:540
 msgid "FileChooser.filesOfTypeLabelText"
@@ -2379,15 +2379,15 @@ msgstr "Aktualizuj"
 #: src/com/frostwire/gui/updates/PortableUpdater.java:77
 #, fuzzy
 msgid "Uncompressing files"
-msgstr "Pliki niekompletne"
+msgstr "Rozpakowywanie plików"
 
 #: src/com/frostwire/gui/updates/ProgressMonitor.java:155
 msgid "OptionPane.cancelButtonText"
-msgstr ""
+msgstr "OptionPane.cancelButtonText"
 
 #: src/com/frostwire/gui/updates/ProgressMonitor.java:314
 msgid "ProgressMonitor.progressText"
-msgstr ""
+msgstr "ProgressMonitor.progressText"
 
 #. These are used as resource keys to retreive descriptions in the GUI
 #: src/com/limegroup/gnutella/MediaType.java:44
@@ -2416,7 +2416,7 @@ msgstr "Umowa Licencyjna Użytkownika Końcowego"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:89
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Polityka prywatności"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:94
 msgid "Close This Window"
@@ -2431,7 +2431,7 @@ msgstr "<h1>Projektant Loga FrostWire</h1>"
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:184
 #, fuzzy
 msgid "FrostWire Graphics Designers/Photographers"
-msgstr "<h1>Projektant Grafiki FrostWire</h1>"
+msgstr "<h1>Projektanci Grafiki FrostWire</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:194
 #, fuzzy
@@ -2518,6 +2518,8 @@ msgid ""
 "For helping distribute Frostwire to opensource communities in a very simple "
 "manner."
 msgstr ""
+"Na pomoc w dystrybucji FrostWire społeczności opensource w bardzo prosty "
+"sposób."
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:292
 #, fuzzy
@@ -2531,7 +2533,7 @@ msgid ""
 "the ones to make a difference on the desktop."
 msgstr ""
 "<p>Tworząc tak niesamowite oprogramowanie, to wy będziecie tymi, którzy na "
-"prawde ulepszą komputery, a tym samym cały świat.</p>"
+"prawdę ulepszą komputery, a tym samym cały świat.</p>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:295
 #, fuzzy
@@ -2551,7 +2553,7 @@ msgstr "<h1>Dzięki dla naszych rodzin</h1>"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:299
 msgid "For being patient during our many sleepless nights"
-msgstr "Za cierpliwość i zrozumienie podczas naszych wielu bezsennych nocy"
+msgstr "Za cierpliwość podczas naszych wielu bezsennych nocy"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:304
 msgid ""
@@ -2631,7 +2633,7 @@ msgstr "Wspomagaj rozwój FrostWire darowizną 75zł"
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:60
 #, fuzzy
 msgid "Support FrostWire development with a Paypal donation"
-msgstr "Wspomagaj rozwój FrostWire darowizną 3zł"
+msgstr "Wspomagaj rozwój FrostWire darowizną Paypal"
 
 #. new Font("Helvetica", Font.BOLD, 12);
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:65
@@ -2998,7 +3000,7 @@ msgstr "Ładowanie Okna Statusu..."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:141
 msgid "Creating donation buttons so you can give us a hand..."
-msgstr "Tworzę guziki darowizn abyś mógł nam pomóc..."
+msgstr "Tworzę przyciski darowizn abyś mógł nam pomóc..."
 
 #. make icons and panels for connection quality
 #: src/com/limegroup/gnutella/gui/StatusLine.java:145
@@ -3015,7 +3017,7 @@ msgstr "Dodawanie chorągiewek tu i tam..."
 #. make the 'Firewall Status' label
 #: src/com/limegroup/gnutella/gui/StatusLine.java:153
 msgid "Playing with pixels for the Firewall indicator..."
-msgstr "Bawienie sie pixelami dla wskaźnika zapory internetowej... "
+msgstr "Bawienie sie pikselami dla wskaźnika zapory internetowej... "
 
 #. make the social buttons
 #: src/com/limegroup/gnutella/gui/StatusLine.java:160
@@ -3342,6 +3344,7 @@ msgid ""
 "Don't want to seed? Go to Tools &gt; Options &gt; Bittorrent or select the "
 "Seeding - No Seeding icon at the bottom bar"
 msgstr "Nie chcesz seedować? Idź do Narzędzia &gt; Opcje &gt; BitTorent "
+"ikona Seedowanie - Brak Sedowania jest na dolnym pasku"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:49
 msgid ""
@@ -3606,12 +3609,16 @@ msgid ""
 "FrostWire has detected a VPN connection, your privacy is safe from prying "
 "eyes."
 msgstr ""
+"FrostWire wykrył połączenie VPN twoja prywatność jest zabezpieczona przed "
+" szpiegowaniem."
 
 #: src/com/limegroup/gnutella/gui/VPNStatusButton.java:64
 msgid ""
 "FrostWire can't detect an encrypted VPN connection, your privacy is at risk. "
 "Click icon to set up an encrypted VPN connection."
 msgstr ""
+"FrostWire nie może wykryć szyfrowanego połączenia VPN, twoja prywatność "
+"jest zagrożona. Kliknij w ikonę by ustawić szyfrowane połączenie VPN"
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:60
 msgid "O&pen .Torrent or Magnet"
@@ -3876,7 +3883,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:110
 msgid "You forgot to select your finished downloads \"Seeding\" setting."
-msgstr ""
+msgstr "Zapomniałeś wybrać opcji ustawień \"Seeding\" dla ukończonych pobrań."
 
 #: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:112
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
@@ -4053,7 +4060,7 @@ msgstr "Najczęściej zadawane pytania dotyczące FrostWire."
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:48
 msgid "How to use FrostWire (Video)"
-msgstr ""
+msgstr "Jak używać FrostWire (Wideo)"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:50
 msgid "FrostWire for Android"
@@ -4071,12 +4078,13 @@ msgstr "Więcej o Seedowaniu na sieci BitTorrent"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid "What is a VPN?"
-msgstr ""
+msgstr "Czym jest VPN?"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid ""
 "Learn about how to protect your internet connection and your privacy online"
 msgstr ""
+"Naucz się jak chronić twoje połączenie internetowe i twoją prywatność online"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 #, fuzzy
@@ -4097,7 +4105,7 @@ msgstr "Koszulki FrostWire"
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:60
 msgid "Get a T-shirt, support the project. You'll get also 10 free stickers"
 msgstr ""
-"Kup koszulkę, wspomajag nasz projekt. Dostaniesz również 10 darmowych "
+"Kup koszulkę, wspomagaj nasz projekt. Dostaniesz również 10 darmowych "
 "naklejek."
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:63
@@ -4771,7 +4779,7 @@ msgstr "Odtwarzaj w systemowym odtwarzaczu multimedialnym:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:42
 msgid "Play search result video previews with internal player"
-msgstr ""
+msgstr "Wyświetl podgląd wyszukanego wideo w wewnętrznym odtwarzaczu"
 
 #: src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:19
 msgid "FrostWire Popups"
@@ -5140,23 +5148,23 @@ msgstr "Na razie brak rezultatów..."
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:150
 msgid "%s Audio files found (including .mp3, .wav, .ogg, and more)"
-msgstr " plików Audio znalezionych (.mp3, .wav, .ogg, i innych)"
+msgstr "%s plików Audio znalezionych (.mp3, .wav, .ogg, i innych)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:155
 msgid "%s Video files found (including .avi, .mpg, .wmv, and more)"
-msgstr " plików Wideo znalezionych (.avi, .mpg, .wmv, i innych)"
+msgstr "%s plików Wideo znalezionych (.avi, .mpg, .wmv, i innych)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:160
 msgid "%s Image files found (including .jpg, .gif, .png and more)"
-msgstr " plików Obrazków znalezionych (.jpg, .gif, .png i innych)"
+msgstr "%s plików Obrazków znalezionych (.jpg, .gif, .png i innych)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:166
 msgid "%s Document files found (including .html, .txt, .pdf, and more)"
-msgstr " plików Dokumentów znalezionych (.html, .txt, .pdf, i innych)"
+msgstr "%s plików Dokumentów znalezionych (.html, .txt, .pdf, i innych)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:171
 msgid "%s Program files found (including .exe, .zip, .gz, and more)"
-msgstr " plików Programów znalezionych (.exe, .zip, .gz, i innych)"
+msgstr "%s plików Programów znalezionych (.exe, .zip, .gz, i innych)"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:176
 msgid ""
@@ -5247,7 +5255,7 @@ msgstr "0"
 
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:127
 msgid "Name|Source|Ext."
-msgstr ""
+msgstr "Nazwa|Źródło|Skrót"
 
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:194
 msgid ""
