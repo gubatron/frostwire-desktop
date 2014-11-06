@@ -754,11 +754,11 @@ public final class FileChooserHandler {
 	public static List<File> getInput(Component parent, String titleKey,
 								String approveKey,
 								File directory,
-								int mode,
+								final int mode,
 								int option,
 								boolean allowMultiSelect,
 								final FileFilter filter) {
-            if(mode == JFileChooser.DIRECTORIES_ONLY) {
+            if(mode == JFileChooser.DIRECTORIES_ONLY && !OSUtils.isAnyMac()) {
                 JFileChooser fileChooser = getDirectoryChooser(titleKey, approveKey, directory, mode, filter);
                 fileChooser.setMultiSelectionEnabled(allowMultiSelect);
                 try {
@@ -781,6 +781,9 @@ public final class FileChooserHandler {
                 }
                 
             } else {
+                if (mode == JFileChooser.DIRECTORIES_ONLY) {
+                    System.setProperty("apple.awt.fileDialogForDirectories", "true");
+                }
 
                 FileDialog dialog = new FileDialog(GUIMediator.getAppFrame(), "");
                 dialog.setTitle(I18n.tr(titleKey));
@@ -788,6 +791,9 @@ public final class FileChooserHandler {
                 if(filter != null) {
                     FilenameFilter f = new FilenameFilter() {
                         public boolean accept(File dir, String name) {
+                            if (mode == JFileChooser.DIRECTORIES_ONLY) {
+                                return  new File(dir,name).isDirectory();
+                            }
                             return filter.accept(new File(dir, name));
                         }
                     };
@@ -801,6 +807,12 @@ public final class FileChooserHandler {
                 dialog.setVisible(true);
                 String dirStr = dialog.getDirectory();
                 String fileStr = dialog.getFile();
+
+                if (mode == JFileChooser.DIRECTORIES_ONLY) {
+                    //revert
+                    System.setProperty("apple.awt.fileDialogForDirectories", "false");
+                }
+
                 if((dirStr==null) || (fileStr==null))
                     return null;
                 setLastInputDirectory(new File(dirStr));
