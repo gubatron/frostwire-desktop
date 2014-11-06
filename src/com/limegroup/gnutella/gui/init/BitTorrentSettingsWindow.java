@@ -23,7 +23,6 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import org.limewire.i18n.I18nMarker;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
@@ -50,11 +49,11 @@ class BitTorrentSettingsWindow extends SetupWindow {
      * Creates the window and its components
      */
     BitTorrentSettingsWindow(SetupManager manager) {
-        super(manager, I18nMarker.marktr("BitTorrent Sharing Settings"), describeText(), LEARN_MORE_URL);
+        super(manager, I18n.tr("BitTorrent Sharing Settings"), describeText(), LEARN_MORE_URL);
     }
 
     private static String describeText() {
-        return I18nMarker.marktr("Choose a folder where files downloaded from the BitTorrent network should be saved to.\nPlease select if you want to \"Seed\" or to not \"Seed\" finished downloads. The link below has more information about \"Seeding\".");
+        return I18n.tr("Choose a folder where files downloaded from the BitTorrent network should be saved to.\nPlease select if you want to \"Seed\" or to not \"Seed\" finished downloads. The link below has more information about \"Seeding\".");
     }
 
     protected void createWindow() {
@@ -108,7 +107,10 @@ class BitTorrentSettingsWindow extends SetupWindow {
 
     private void applyTorrentSeedingSeetings(List<String> errors) {
         if (!_torrentSeedingSettingComponent.hasOneBeenSelected()) {
-            errors.add(I18n.tr("<html><p>You forgot to select your finished downloads \"Seeding\" setting.</p>\n<p></p><p align=\"right\"><a href=\"{0}\">What is \"Seeding\"?</a></p></html>", "http://support.frostwire.com/hc/en-us/articles/200302295-What-is-seeding-"));
+            errors.add("<html><p>" + I18n.tr("You forgot to select your finished downloads \"Seeding\" setting.") + "</p>\n"+
+            "<p></p><p align=\"right\"><a href=\"http://support.frostwire.com/hc/en-us/articles/200302295-What-is-seeding-\">"+
+            I18n.tr("What is \"Seeding\"?")+
+            "</a></p></html>");
             return;
         }
 

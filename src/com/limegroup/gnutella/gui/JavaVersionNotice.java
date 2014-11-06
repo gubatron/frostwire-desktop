@@ -14,7 +14,6 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import org.limewire.i18n.I18nMarker;
 import org.limewire.util.Version;
 import org.limewire.util.VersionFormatException;
 import org.limewire.util.VersionUtils;
@@ -66,8 +65,7 @@ class JavaVersionNotice {
 
         if (javaVersion.startsWith(JAVA_16_BETA_VERSION)
                 || javaVersion.startsWith(JAVA_16_RC_VERSION)) {
-            String text = I18n.tr(I18nMarker
-                    .marktr("You are currently using a beta or pre-release version of Java 1.6.0. This version is known to have caused problems with FrostWire. Please upgrade to the final 1.6.0 release.\n"));
+            String text = I18n.tr(I18n.tr("You are currently using a beta or pre-release version of Java 1.6.0. This version is known to have caused problems with FrostWire. Please upgrade to the final 1.6.0 release.\n"));
             return new UpgradeRecommendedDialog(text);
         }
         
@@ -94,8 +92,8 @@ class JavaVersionNotice {
             String text = String.format(I18n.tr("FrostWire requires Java %s or higher in order to run. " +
             "You are currently running an out-of-date version of Java \n" +
             "Please visit %s in order to upgrade your version of Java"), REQUIRED, URL)+ "\n\n" +
-            I18n.tr("Current Java Version : ") + VersionUtils.getJavaVersion() + "\n" +
-            I18n.tr("Required Java Version: ") + REQUIRED + "\n\n";
+            I18n.tr("Current Java Version:") + " " + VersionUtils.getJavaVersion() + "\n" +
+            I18n.tr("Required Java Version:") + " " + REQUIRED + "\n\n";
             MultiLineLabel label = new MultiLineLabel(text, 500);
 
             JPanel labelPanel = new JPanel();
@@ -105,7 +103,7 @@ class JavaVersionNotice {
 
             JPanel buttonPanel = new JPanel();
             JButton now = new JButton(I18n.tr("Upgrade Java"));
-            now.setToolTipText(I18n.tr("Visit ") + URL);
+            now.setToolTipText(I18n.tr("Visit") + " " + URL);
             now.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     try {
@@ -176,7 +174,7 @@ class JavaVersionNotice {
 
             JPanel buttonPanel = new JPanel();
             JButton nowButton = new JButton(I18n.tr("More Information"));
-            nowButton.setToolTipText(I18n.tr(I18nMarker.marktr("Visit {0}"), URL));
+            nowButton.setToolTipText(I18n.tr("Visit {0}", URL));
             nowButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     dispose();

@@ -519,8 +519,8 @@ final class BTDownloadActions {
 
         public AddToPlaylistAction(Playlist playlist) {
             super(getTruncatedString(playlist.getName(),MAX_VISIBLE_PLAYLIST_NAME_LENGTH_IN_MENU));
-            putValue(Action.LONG_DESCRIPTION, I18n.tr("Add to playlist ") + "\"" + getValue(Action.NAME) + "\"");
-            System.out.println("Truncated playlist name was: " + getValue(Action.NAME));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Add to playlist") + " \"" + getValue(Action.NAME) + "\"");
+            System.out.println("Truncated playlist name was:" + " " + getValue(Action.NAME));
             this.playlist = playlist;
         }
         

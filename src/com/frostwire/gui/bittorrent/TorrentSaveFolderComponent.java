@@ -129,7 +129,7 @@ public final class TorrentSaveFolderComponent extends JPanel {
         //is folder inside gnutella save folder?
         try {
             if (torrentFolder.getCanonicalPath().startsWith(otherFolder.getCanonicalPath())) {
-                errorMessage = I18n.tr("The Torrent Data Folder cannot be inside the " + errorMessageSuffix);
+                errorMessage = I18n.tr("The Torrent Data Folder cannot be inside the") +" "+ errorMessageSuffix;
                 return true;
             }
         } catch (IOException e) {
@@ -140,7 +140,7 @@ public final class TorrentSaveFolderComponent extends JPanel {
         //is folder a parent of the gnutella save folder?
         try {
             if (otherFolder.getCanonicalPath().startsWith(torrentFolder.getCanonicalPath())) {
-                errorMessage = I18n.tr("The Torrent Data Folder cannot be a parent folder of the " + errorMessageSuffix);
+                errorMessage = I18n.tr("The Torrent Data Folder cannot be a parent folder of the") + " " + errorMessageSuffix;
                 return true;
             }
         } catch (IOException e) {

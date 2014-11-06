@@ -140,7 +140,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             LibraryMediator.instance().updateTableFiles(deviceFileTypeNode.getDevice(), deviceFileTypeNode.getFileType());
             
             if (deviceFileTypeNode.getDevice().isLocal()) {
-                searchPrompt = I18n.tr("Search your ") + node.getUserObject();
+                searchPrompt = I18n.tr("Search your") + " " + node.getUserObject();
             } else {
                 searchPrompt = I18n.tr("Search") + " " + deviceFileTypeNode.getDevice().getName() + I18n.tr("'s ") + deviceFileTypeNode.getUserObject();
             }
@@ -194,7 +194,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         }
         
         if (searchPrompt == null) {
-            searchPrompt = I18n.tr("Search your ") + node.getUserObject();
+            searchPrompt = I18n.tr("Search your") + " " + node.getUserObject();
         }
 
         LibraryMediator.instance().getLibrarySearch().clear();

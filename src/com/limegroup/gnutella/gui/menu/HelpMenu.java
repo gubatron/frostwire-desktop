@@ -26,15 +26,15 @@ import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.actions.OpenLinkAction;
 
 /**
- * Handles all of the contents of the help menu in the menu bar.  This 
+ * Handles all of the contents of the help menu in the menu bar.  This
  * includes such items as the link to the "Using LimeWire" page of the
  * web site as well as links to the forum, faq, "tell a friend", etc.
  */
 final class HelpMenu extends AbstractMenu {
 
     /**
-     * Creates a new <tt>HelpMenu</tt>, using the <tt>key</tt> 
-     * argument for setting the locale-specific title and 
+     * Creates a new <tt>HelpMenu</tt>, using the <tt>key</tt>
+     * argument for setting the locale-specific title and
      * accessibility text.
      *
      * @param key the key for locale-specific string resources unique
@@ -44,7 +44,7 @@ final class HelpMenu extends AbstractMenu {
         super(I18n.tr("&Help"));
 
         addMenuItem(new OpenLinkAction("http://www.frostwire.com/?id=faq", I18n.tr("&FAQ"), I18n.tr("Frequently Asked Questions for FrostWire")));
-        
+
         addMenuItem(new OpenLinkAction("http://www.frostwire-preview.com/?type=yt&displayName=How%20to%20search%20and%20download%20files%20with%20FrostWire%20Wynwood%20(5.6)%20-%20YouTube&source=YouTube+-+FrostWireVideos&detailsUrl=http://www.youtube.com/watch?v=A0p_DpOjpO8", I18n.tr("How to use FrostWire (Video)"), I18n.tr("How to use FrostWire (Video)")));
 
         addMenuItem(new OpenLinkAction("http://www.frostwire.com/android", I18n.tr("FrostWire for Android"),I18n.tr("Get FrostWire on your Android phone, tablet or google tv, all free.")));
@@ -52,26 +52,26 @@ final class HelpMenu extends AbstractMenu {
         addMenuItem(new OpenLinkAction("http://support.frostwire.com/hc/en-us/articles/200302295-What-is-seeding-", I18n.tr("What is \"Seeding\"?"), I18n.tr("Learn about BitTorrent Seeding")));
 
         addMenuItem(new OpenLinkAction("http://www.frostwire.com/vpn", I18n.tr("What is a VPN?"), I18n.tr("Learn about how to protect your internet connection and your privacy online")));
-        
+
         addSeparator();
-        
+
         addMenuItem(new OpenLinkAction("http://www.frostwire.com/stickers",I18n.tr("Order FrostWire Stickers"),I18n.tr("Order FrostWire stickers, we ship worldwide.")));
-        
+
         addMenuItem(new OpenLinkAction("http://www.frostwire.com/shop",I18n.tr("FrostWire T-Shirts"),I18n.tr("Get a T-shirt, support the project. You'll get also 10 free stickers")));
-        
+
         addMenuItem(new OpenLinkAction("http://www.frostclick.com/wp/?from=frostwire" + com.limegroup.gnutella.util.FrostWireUtils.getFrostWireVersion(),
-                I18n.tr("FrostClick.com"), I18n.tr("Free Legal Downloads")));
+                "FrostClick.com", I18n.tr("Free Legal Downloads")));
 
         addSeparator();
 
         addMenuItem(new OpenLinkAction("http://www.facebook.com/pages/FrostWire/110265295669948",I18n.tr("FrostWire on Facebook"),I18n.tr("Come and say hi to the community on Facebook")));
-        
+
         addMenuItem(new OpenLinkAction("http://twitter.com/#!/frostwire", I18n.tr("Follow us on Twitter"), I18n.tr("Follow us on Twitter")));
-        
+
         addMenuItem(new OpenLinkAction("http://www.frostwire.com/forum/viewforum.php?f=1", I18n.tr("Foru&m"), I18n.tr("Access the FrostWire Users\' Forum")));
 
         addSeparator();
-        
+
         addMenuItem(new OpenLinkAction("http://frostwire.wordpress.com/2012/02/14/dont-get-scammed-frostwire-is-free/", I18n.tr("&Did you pay for FrostWire?"),
                 I18n.tr("Did you pay for FrostWire? FrostWire is Free as in Free Beer. Avoid Scams.")));
 
@@ -89,7 +89,7 @@ final class HelpMenu extends AbstractMenu {
     private static class ShowTipOfTheDayAction extends AbstractAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = -4964160055694967725L;
 
@@ -109,7 +109,7 @@ final class HelpMenu extends AbstractMenu {
     private static class ShowAboutDialogAction extends AbstractAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 2425666944873627828L;
 

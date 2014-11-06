@@ -37,7 +37,6 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import org.limewire.i18n.I18nMarker;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
@@ -501,7 +500,7 @@ public class SetupManager {
         private static final long serialVersionUID = -337264221787811634L;
 
         public CancelAction() {
-            super(I18nMarker.marktr("Cancel"));
+            super(I18n.tr("Cancel"));
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -517,7 +516,7 @@ public class SetupManager {
         private static final long serialVersionUID = 8396346766881170337L;
 
         public NextAction() {
-            super(I18nMarker.marktr("Next >>"));
+            super(I18n.tr("Next >>"));
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -533,7 +532,7 @@ public class SetupManager {
         private static final long serialVersionUID = -6355909946850317926L;
 
         public PreviousAction() {
-            super(I18nMarker.marktr("<< Back"));
+            super(I18n.tr("<< Back"));
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -549,7 +548,7 @@ public class SetupManager {
         private static final long serialVersionUID = 7243495030424309213L;
 
         public FinishAction() {
-            super(I18nMarker.marktr("Finish"));
+            super(I18n.tr("Finish"));
         }
 
         public void actionPerformed(ActionEvent e) {

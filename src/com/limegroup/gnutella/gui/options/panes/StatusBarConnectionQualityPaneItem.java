@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -27,7 +26,7 @@ public final class StatusBarConnectionQualityPaneItem extends AbstractPaneItem {
      * the connection quality status should be displayed in the status bar.
      */
     private final String CHECK_BOX_LABEL = 
-        I18nMarker.marktr("Show Connection Quality Indicator:");
+        I18n.tr("Show Connection Quality Indicator:");
 
     private final JCheckBox CHECK_BOX = new JCheckBox();
 

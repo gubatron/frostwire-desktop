@@ -27,8 +27,9 @@ import java.util.Properties;
 import javax.swing.JPanel;
 
 import org.apache.commons.io.IOUtils;
-import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
+
+import com.limegroup.gnutella.gui.I18n;
 
 import com.frostwire.gui.theme.ThemeMediator;
 
@@ -39,7 +40,7 @@ final class IntentWindow extends SetupWindow {
     private Properties properties;
 
     IntentWindow(SetupManager manager) {
-        super(manager, I18nMarker.marktr("State Your Intent"), I18nMarker.marktr("One more thing..."));
+        super(manager, I18n.tr("State Your Intent"), I18n.tr("One more thing..."));
     }
 
     private boolean isCurrentVersionChecked() {

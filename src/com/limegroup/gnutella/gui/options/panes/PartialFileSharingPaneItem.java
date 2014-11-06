@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
-
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -25,7 +23,7 @@ public final class PartialFileSharingPaneItem extends AbstractPaneItem {
 	 * upload pane check box label in the options window.
 	 */
 	private final String CHECK_BOX_LABEL = 
-		I18nMarker.marktr("Allow Partial Sharing:");
+		I18n.tr("Allow Partial Sharing:");
 
 	/**
 	 * Constant for the check box that specifies whether or not partial

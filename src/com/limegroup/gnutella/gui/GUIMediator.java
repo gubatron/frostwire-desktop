@@ -53,7 +53,6 @@ import javax.swing.SwingUtilities;
 import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
 import com.frostwire.search.torrent.TorrentCrawledSearchResult;
 import org.limewire.concurrent.ThreadExecutor;
-import org.limewire.i18n.I18nMarker;
 import org.limewire.service.ErrorService;
 import org.limewire.service.Switch;
 import org.limewire.setting.IntSetting;
@@ -119,8 +118,7 @@ public final class GUIMediator {
     /**
      * Message key for the disconnected message
      */
-    private static final String DISCONNECTED_MESSAGE = I18nMarker
-            .marktr("Your machine does not appear to have an active Internet connection or a firewall is blocking FrostWire from accessing the internet. FrostWire will automatically keep trying to connect you to the network unless you select \"Disconnect\" from the File menu.");
+    private static final String DISCONNECTED_MESSAGE = I18n.tr("Your machine does not appear to have an active Internet connection or a firewall is blocking FrostWire from accessing the internet. FrostWire will automatically keep trying to connect you to the network unless you select \"Disconnect\" from the File menu.");
 
     /**
      * Singleton for easy access to the mediator.

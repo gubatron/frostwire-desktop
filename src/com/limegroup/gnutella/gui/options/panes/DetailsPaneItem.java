@@ -22,8 +22,6 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
-
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
@@ -47,7 +45,7 @@ public class DetailsPaneItem extends AbstractPaneItem {
         super(TITLE, "");
 
         BoxPanel panel = new BoxPanel();
-        LabeledComponent comp = new LabeledComponent(I18nMarker.marktr(DETAILS), DETAILS_CHECK_BOX, LabeledComponent.LEFT_GLUE, LabeledComponent.LEFT);
+        LabeledComponent comp = new LabeledComponent(I18n.tr(DETAILS), DETAILS_CHECK_BOX, LabeledComponent.LEFT_GLUE, LabeledComponent.LEFT);
         panel.add(comp.getComponent());
 
         add(panel);

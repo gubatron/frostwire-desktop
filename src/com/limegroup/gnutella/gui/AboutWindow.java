@@ -41,9 +41,9 @@ final class AboutWindow {
 	private final ScrollingTextPane SCROLLING_PANE;
 
 	private final JLabel EULA_LABEL;
-	
+
 	private final JLabel PRIVACY_POLICY_LABEL;
-	
+
 	/**
 	 * Constructs the elements of the about window.
 	 */
@@ -72,7 +72,7 @@ final class AboutWindow {
 		SCROLLING_PANE.addHyperlinkListener(GUIUtils.getHyperlinkListener());
 
 		// set up limewire version label
-		JLabel client = new JLabel(I18n.tr("FrostWire") + " "
+		JLabel client = new JLabel("FrostWire" + " "
 				+ FrostWireUtils.getFrostWireVersion() + " (build " + FrostWireUtils.getBuildNumber() + ")");
 		client.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -86,7 +86,7 @@ final class AboutWindow {
 
 
 		EULA_LABEL = new URLLabel("http://www.frostwire.com/eula",I18n.tr("End User License Agreement"));
-		PRIVACY_POLICY_LABEL = new URLLabel("http://www.frostwire.com/privacy","Privacy Policy");
+		PRIVACY_POLICY_LABEL = new URLLabel("http://www.frostwire.com/privacy",I18n.tr("Privacy Policy"));
 
 		// set up close button
 		JButton button = new JButton(I18n.tr("Close"));
@@ -144,7 +144,7 @@ final class AboutWindow {
 		legalLinksPanel.setMinimumSize(new Dimension(300,27));
 		legalLinksPanel.add(EULA_LABEL,BorderLayout.LINE_START);
 		legalLinksPanel.add(PRIVACY_POLICY_LABEL,BorderLayout.LINE_END);
-		
+
 		gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridwidth = 1;
@@ -152,7 +152,7 @@ final class AboutWindow {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.WEST;
 		pane.add(legalLinksPanel, gbc);
-		
+
 		gbc = new GridBagConstraints();
 		gbc.gridy = 8;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -160,7 +160,7 @@ final class AboutWindow {
 		pane.add(button, gbc);
 
 	}
-	
+
 	private void appendListOfNames(String commaSepNames, StringBuilder sb) {
 		for (String name : commaSepNames.split(","))
 			sb.append("<li>"+name+"</li>");
@@ -178,10 +178,10 @@ final class AboutWindow {
         sb.append("<body text='#" + hex + "'>");
 
         //  introduction
-        sb.append(I18n.tr("<h1>FrostWire Logo Designer</h1>"));
+        sb.append("<h1>" + I18n.tr("FrostWire Logo Designer") + "</h1>");
         sb.append("<ul><li>Luis Ramirez (Venezuela - <a href='http://www.elblogo.com'>ElBlogo.com</a>)</li></ul>");
 
-        sb.append(I18n.tr("<h1>FrostWire Graphics Designers/Photographers</h1>"));
+        sb.append("<h1>" + I18n.tr("FrostWire Graphics Designers/Photographers") + "</h1>");
         sb.append("<ul>");
         sb.append("<li>Kirill Grouchnikov - Substance library <a href='http://www.pushing-pixels.org/'>Pushing-Pixels.org</a></li>");
         sb.append("<li>Arianys Wilson - Splash 4.18 (New York - <a href='http://nanynany.com/blog/?from=frostwire'>NanyNany.com</a>)</li>");
@@ -191,30 +191,30 @@ final class AboutWindow {
         sb.append("<li>Marcelina Knitter - <a href='https://twitter.com/#!/marcelinkaaa'>@Marcelinkaaa</a></li>");
         sb.append("</ul>");
 
-        sb.append(I18n.tr("<h1>Thanks to Former FrostWire Developers</h1>"));
+        sb.append("<h1>" + I18n.tr("Thanks to Former FrostWire Developers") + "</h1>");
         sb.append("<li>Gregorio Roper (Germany)</li>");
         sb.append("<li>Fernando Toussaint '<strong>FTA</strong>' - <a href='http://www.cybercultura.net'>Web</a></li>");
         sb.append("<br><br>");
 
-        sb.append(I18n.tr("<h1>Thanks to the FrostWire Chat Community!</h1>"));
+        sb.append("<h1>" + I18n.tr("Thanks to the FrostWire Chat Community!") + "</h1>");
         sb.append(I18n.tr("Thanks to everybody that has helped us everyday in the forums and chatrooms, " +
         		"you not only help new users but you also warn the FrostWire team of any problem that " +
                 "occur on our networks. Thank you all, without you this wouldn't be possible!"));
         sb.append(I18n.tr("<br><br>In Special we give thanks to the Chatroom Operators and Forum Moderators"));
         sb.append("<ul>");
 
-        sb.append(I18n.tr("<h1>FrostWire Chat Operators</h1>"));
+        sb.append("<h1>" + I18n.tr("FrostWire Chat Operators") + "</h1>");
         String chat_operators = "Aubrey,Casper,COOTMASTER,Emily,Gummo,Hobo,Humanoid,iDan,lexie,OfficerSparker,Scott1x,THX1138,WolfWalker,Wyrdjax,Daemon,Trinity";
         appendListOfNames(chat_operators, sb);
         sb.append("</ul>");
 
-        sb.append(I18n.tr("<h1>FrostWire Forum Moderators</h1>"));
+        sb.append("<h1>" + I18n.tr("FrostWire Forum Moderators") + "</h1>");
         String forum_moderators="Aaron.Walkhouse,Calliope,cootmaster,Efrain,et voil&agrave;,nonprofessional,Only A Hobo,spuggy,stief,The_Fox";
         sb.append("<ul>");
         appendListOfNames(forum_moderators,sb);
         sb.append("</ul>");
-        
-        sb.append("<h1>Many Former Chat Operators</h1>");
+
+        sb.append("<h1>" + I18n.tr("Many Former Chat Operators") + "</h1>");
         String former_operators="AlleyCat,Coelacanth,Gollum,Jewels,Jordan,Kaapeli,Malachi,Maya,Sabladowah,Sweet_Songbird,UB4T,jwb,luna_moon,nonproffessional,sug,the-jack,yummy-brummy";
         sb.append("<ul>");
         appendListOfNames(former_operators, sb);
@@ -224,37 +224,37 @@ final class AboutWindow {
         sb.append("<ul>");
         appendListOfNames("dutchboy,Lelu,udsteve",sb);
         sb.append("</ul>");
-        
+
         // azureus/vuze devs.
-        sb.append("<h1>Thanks to the Azureus Core Developers</h1>");
+        sb.append("<h1>" + I18n.tr("Thanks to the Azureus Core Developers") + "</h1>");
         String az_devs = "Olivier Chalouhi (gudy),Alon Rohter (nolar),Paul Gardner (parg),ArronM (TuxPaper),Paul Duran (fatal_2),Jonathan Ledlie(ledlie),Allan Crooks (amc1),Xyrio (muxumx),Michael Parker (shadowmatter),Aaron Grunthal (the8472)";
         sb.append("<ul>");
         appendListOfNames(az_devs, sb);
         sb.append("</ul>");
 
-        //  developers                                                                                                                                                               
-        sb.append(I18n.tr("<h1>Thanks to the LimeWire Developer Team</h1>"));
+        //  developers
+        sb.append("<h1>" + I18n.tr("Thanks to the LimeWire Developer Team") + "</h1>");
         sb.append("<ul>\n" +
-        		"  <li>Greg Bildson</li>\n" + 
-        		"  <li>Sam Berlin</li>\n" + 
-        		"  <li>Zlatin Balevsky</li>\n" + 
+        		"  <li>Greg Bildson</li>\n" +
+        		"  <li>Sam Berlin</li>\n" +
+        		"  <li>Zlatin Balevsky</li>\n" +
         		"  <li>Felix Berger</li>\n" +
         		"  <li>Mike Everett</li>\n" +
         		"  <li>Kevin Faaborg</li>\n" +
-        		"  <li>Jay Jeyaratnam</li>\n" +               
+        		"  <li>Jay Jeyaratnam</li>\n" +
         		"  <li>Curtis Jones</li>\n" +
         		"  <li>Tim Julien</li>\n" +
         		"  <li>Akshay Kumar</li>\n" +
-        		"  <li>Jeff Palm</li>\n" + 
+        		"  <li>Jeff Palm</li>\n" +
         		"  <li>Mike Sorvillo</li>\n" +
         		"  <li>Dan Sullivan</li>\n" +
         "</ul>");
-        
+
         //  community VIPs
         sb.append(I18n.tr("Several colleagues in the Gnutella community merit special thanks. These include:"));
-        sb.append("<ul>\n" + 
-        		"  <li>Vincent Falco -- Free Peers, Inc.</li>\n" + 
-        		"  <li>Gordon Mohr -- Bitzi, Inc.</li>\n" + 
+        sb.append("<ul>\n" +
+        		"  <li>Vincent Falco -- Free Peers, Inc.</li>\n" +
+        		"  <li>Gordon Mohr -- Bitzi, Inc.</li>\n" +
         		"  <li>John Marshall -- Gnucleus</li>\n" +
         		"  <li>Jason Thomas -- Swapper</li>\n" +
         		"  <li>Brander Lien -- ToadNode</li>\n" +
@@ -270,8 +270,8 @@ final class AboutWindow {
         		"  <li>Sean Ediger</li>\n" +
         		"  <li>Kath Whittle</li>\n" +
         "</ul>");
-        
-        sb.append(I18n.tr("<h1>Thanks to the PJIRC Staff</h1>"));
+
+        sb.append("<h1>" + I18n.tr("Thanks to the PJIRC Staff") + "</h1>");
         sb.append("<ul>");
         sb.append("<li>Plouf</li>");
         sb.append("<li>Jiquera</li>");
@@ -280,32 +280,32 @@ final class AboutWindow {
         sb.append("<li>Thema</li>");
         sb.append("</ul>");
 
-        sb.append(I18n.tr("<h1>Thanks to the Automatix Team</h1>"));
-        sb.append("<p>For helping distribute Frostwire to opensource communities in a very simple manner.");
+        sb.append("<h1>" + I18n.tr("Thanks to the Automatix Team") + "</h1>");
+        sb.append("<p>" + I18n.tr("For helping distribute Frostwire to opensource communities in a very simple manner.") + "</p>");
         sb.append("<ul>");
         sb.append("<li>Arnieboy</li>");
         sb.append("<li>JimmyJazz</li>");
         sb.append("<li>Mstlyevil</li>");
         sb.append("<li>WildTangent</li>");
         sb.append("</ul>");
-        
-        sb.append(I18n.tr("<h1>Thanks to Ubuntu/Kubuntu Teams</h1>"));
-        sb.append(I18n.tr("<p>For making the world a better place with such an excellent distro, you'll be the ones to make a difference on the desktop.</p>"));
 
-        sb.append(I18n.tr("<h1>Thanks to the NSIS Project</h1>"));
-        sb.append(I18n.tr("<p>Thanks for such an awesome installer builder system and documentation.</p>"));
+        sb.append("<h1>" + I18n.tr("Thanks to Ubuntu/Kubuntu Teams") + "</h1>");
+        sb.append("<p>" + I18n.tr("For making the world a better place with such an excellent distro, you'll be the ones to make a difference on the desktop.")+"</p>");
 
-        sb.append(I18n.tr("<h1>Thanks to our families</h1>"));
-        sb.append(I18n.tr("For being patient during our many sleepless nights"));        
-        
+        sb.append("<h1>" + I18n.tr("Thanks to the NSIS Project") + "</h1>");
+        sb.append("<p>" + I18n.tr("Thanks for such an awesome installer builder system and documentation.") + "</p>");
+
+        sb.append("<h1>" + I18n.tr("Thanks to our families") + "</h1>");
+        sb.append(I18n.tr("For being patient during our many sleepless nights"));
+
         // bt notice
         sb.append("<small>");
         sb.append("<br><br>");
         sb.append(I18n.tr("BitTorrent, the BitTorrent Logo, and Torrent are trademarks of BitTorrent, Inc."));
         sb.append("</small>");
-        
+
         sb.append("</body></html>");
-        
+
         return new ScrollingTextPane(sb.toString());
     }
 

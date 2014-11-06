@@ -119,7 +119,7 @@ task gettextExtract {
         println 'gettext extract...'
         ant.gettextExtract(keysFile: 'frostwire.pot',
                 poDirectory: 'lib/messagebundles',
-                keywords: '-kgetStringResource -kgetFormattedStringResource -ktrc -ktr -kmarktr -ktrn:1,2 -ktrl') {
+                keywords: '-kgetStringResource -kgetFormattedStringResource -ktrc -ktr -ktrn:1,2 -ktrl') {
             fileset(dir: "src") {
                 include(name: '**/*.java')
             }

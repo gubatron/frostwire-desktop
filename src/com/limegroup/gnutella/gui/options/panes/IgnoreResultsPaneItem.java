@@ -7,7 +7,6 @@ import java.util.Vector;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ListEditor;
@@ -39,7 +38,7 @@ public final class IgnoreResultsPaneItem extends AbstractPaneItem {
      * Key for the locale-specifis string for the adult content check box 
      * label.
      */
-    private String ADULT_BOX_LABEL = I18nMarker.marktr("Ignore Adult Content");
+    private String ADULT_BOX_LABEL = I18n.tr("Ignore Adult Content");
 
 	/**
 	 * The constructor constructs all of the elements of this 

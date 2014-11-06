@@ -73,8 +73,8 @@ public class TorrentSeedingSettingComponent extends JPanel {
 	}
 	
 	private void initOptionButtons() {
-		seedingRadioButton = new JRadioButton(I18n.tr("<html><strong>Seed finished torrent downloads.</strong> BitTorrent users on the internet will be able<br/>to download file chunks of the data your torrents seed. (Recommended)</html>"));
-		notSeedingRadioButton = new JRadioButton(I18n.tr("<html><strong>Don't seed finished torrent downloads.</strong> BitTorrent users on the internet may<br/>only download file chunks of that torrent from you while you're downloading its<br/>data files. <strong>Some trackers will penalize this Leeching behavior</strong>.</html>"));
+		seedingRadioButton = new JRadioButton("<html>"+I18n.tr("<strong>Seed finished torrent downloads.</strong> BitTorrent users on the internet will be able<br/>to download file chunks of the data your torrents seed. (Recommended)")+"</html>");
+		notSeedingRadioButton = new JRadioButton("<html>"+I18n.tr("<strong>Don't seed finished torrent downloads.</strong> BitTorrent users on the internet may<br/>only download file chunks of that torrent from you while you're downloading its<br/>data files. <strong>Some trackers will penalize this Leeching behavior</strong>.")+"</html>");
 		radioGroup = new ButtonGroup();
 		radioGroup.add(seedingRadioButton);
 		radioGroup.add(notSeedingRadioButton);
@@ -89,7 +89,7 @@ public class TorrentSeedingSettingComponent extends JPanel {
 			}
 		}
 		
-		handPickedSeedingCheckbox = new JCheckBox(I18n.tr("<html><strong>Seed handpicked torrent files.</strong> Handpicked file torrents downloads (Partial Downloads) can result in seeding data chunks of neighboring incomplete files.<br/>This feature is <strong>recommended for advanced users only</strong> as it can lead to downloading parts of files you may have not explicitly chosen for download.</html>"));
+		handPickedSeedingCheckbox = new JCheckBox("<html>"+I18n.tr("<strong>Seed handpicked torrent files.</strong> Handpicked file torrents downloads (Partial Downloads) can result in seeding data chunks of neighboring incomplete files.<br/>This feature is <strong>recommended for advanced users only</strong> as it can lead to downloading parts of files you may have not explicitly chosen for download.")+"</html>");
 		handPickedSeedingCheckbox.setSelected(SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue());
 		handPickedSeedingCheckbox.setEnabled(seedingRadioButton.isSelected());
 		

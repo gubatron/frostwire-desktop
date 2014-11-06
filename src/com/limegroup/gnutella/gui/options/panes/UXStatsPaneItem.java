@@ -20,8 +20,6 @@ package com.limegroup.gnutella.gui.options.panes;
 
 import javax.swing.JCheckBox;
 
-import org.limewire.i18n.I18nMarker;
-
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.settings.ApplicationSettings;

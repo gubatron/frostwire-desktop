@@ -21,7 +21,6 @@ import com.frostwire.jlibtorrent.Session;
 import com.limegroup.gnutella.gui.*;
 import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
 import com.limegroup.gnutella.settings.ConnectionSettings;
-import org.limewire.i18n.I18nMarker;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
@@ -40,41 +39,24 @@ public final class ProxyPaneItem extends AbstractPaneItem {
 
     /**
      * Constant for the key of the locale-specific <tt>String</tt> for the
-     * label on the RadioButtons.
-     */
-    private final String NO_PROXY_LABEL_KEY =
-            I18nMarker.marktr("No Proxy");
-    private final String SOCKS4_PROXY_LABEL_KEY =
-            I18nMarker.marktr("Socks v4");
-    private final String SOCKS5_PROXY_LABEL_KEY =
-            I18nMarker.marktr("Socks v5");
-    private final String HTTP_PROXY_LABEL_KEY =
-            I18nMarker.marktr("HTTP");
-
-    /**
-     * Constant for the key of the locale-specific <tt>String</tt> for the
      * label on the proxy host field.
      */
-    private final String PROXY_HOST_LABEL_KEY = I18nMarker.marktr("Proxy:");
+    private final String PROXY_HOST_LABEL_KEY = I18n.tr("Proxy:");
 
     /**
      * Constant for the key of the locale-specific <tt>String</tt> for the
      * label on the port text field.
      */
-    private final String PROXY_PORT_LABEL_KEY = I18nMarker.marktr("Port:");
+    private final String PROXY_PORT_LABEL_KEY = I18n.tr("Port:");
 
     /**
      * Constant handle to the check box that enables or disables this feature.
      */
     private final ButtonGroup BUTTONS = new ButtonGroup();
-    private final JRadioButton NO_PROXY_BUTTON =
-            new JRadioButton(I18n.tr(NO_PROXY_LABEL_KEY));
-    private final JRadioButton SOCKS4_PROXY_BUTTON =
-            new JRadioButton(I18n.tr(SOCKS4_PROXY_LABEL_KEY));
-    private final JRadioButton SOCKS5_PROXY_BUTTON =
-            new JRadioButton(I18n.tr(SOCKS5_PROXY_LABEL_KEY));
-    private final JRadioButton HTTP_PROXY_BUTTON =
-            new JRadioButton(I18n.tr(HTTP_PROXY_LABEL_KEY));
+    private final JRadioButton NO_PROXY_BUTTON     = new JRadioButton(I18n.tr("No Proxy"));
+    private final JRadioButton SOCKS4_PROXY_BUTTON = new JRadioButton("Socks v4");
+    private final JRadioButton SOCKS5_PROXY_BUTTON = new JRadioButton("Socks v5");
+    private final JRadioButton HTTP_PROXY_BUTTON   = new JRadioButton("HTTP");
 
     /**
      * Constant <tt>JTextField</tt> instance that holds the ip address to use

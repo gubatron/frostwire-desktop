@@ -32,7 +32,6 @@ import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.MacOSXUtils;
 import org.gudy.azureus2.core3.util.protocol.AzURLStreamHandlerFactory;
-import org.limewire.i18n.I18nMarker;
 import org.limewire.service.ErrorService;
 import org.limewire.util.*;
 
@@ -451,7 +450,7 @@ public final class Initializer {
         // Instruct the gui to perform tasks that can only be performed
         // after the backend has been constructed.
         GUIMediator.instance().coreInitialized();
-        GUIMediator.setSplashScreenString(I18nMarker.marktr("Loading Old Downloads..."));
+        GUIMediator.setSplashScreenString(I18n.tr("Loading Old Downloads..."));
         limeWireCore.getDownloadManager().loadSavedDownloadsAndScheduleWriting();
     }
 
@@ -521,8 +520,7 @@ public final class Initializer {
      * Fails because preferences can't be set.
      */
     private void failPreferencesPermissions() {
-        fail(I18nMarker
-                .marktr("FrostWire could not create a temporary preferences folder.\n\nThis is generally caused by a lack of permissions.  Please make sure that FrostWire (and you) have access to create files/folders on your computer.  If the problem persists, please visit www.frostwire.com and click the 'Support' link.\n\nFrostWire will now exit.  Thank You."));
+        fail(I18n.tr("FrostWire could not create a temporary preferences folder.\n\nThis is generally caused by a lack of permissions.  Please make sure that FrostWire (and you) have access to create files/folders on your computer.  If the problem persists, please visit www.frostwire.com and click the 'Support' link.\n\nFrostWire will now exit.  Thank You."));
     }
 
     /**
