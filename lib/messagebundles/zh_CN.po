@@ -3300,12 +3300,7 @@ msgid ""
 msgstr ""
 "点击FrostWire菜单中的'关于FrostWire'，即可得知你的FrostWire版本号。"
 
-<<<<<<< HEAD
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:70
-=======
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:68
-#, fuzzy
->>>>>>> 89520a09f3d59e441d559c99fda2b2ecb968de92
 msgid ""
 "You can turn autocomplete for searching on or off by choosing 'Tools' from "
 "the 'FrostWire' menu, and changing the value of 'Autocomplete Text' under "
@@ -3314,12 +3309,8 @@ msgstr ""
 "要开启或关闭所搜的文本自动补全功能，可选取'FrostWire'菜单中的'工具'，"
 "在'查看'选项中更改'自动补全文本'的取值。"
 
-<<<<<<< HEAD
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:71
-=======
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:71
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:69
-#, fuzzy
->>>>>>> 89520a09f3d59e441d559c99fda2b2ecb968de92
 msgid ""
 "Want to see dialogs for questions which you previously marked 'Do not "
 "display this message again' or 'Always Use This Answer'? Go to FrostWire "
@@ -3329,11 +3320,7 @@ msgstr ""
 "想查看被你标识为'不再显示此信息'或'总是使用此答案'的问题对话框？进入'FrostWire' "
 "&gt; '工具'，'选项'并在 '查看' &gt; 'FrostWire弹出窗口' 中勾选'恢复默认设置'。"
 
-<<<<<<< HEAD
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:72
-=======
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:70
-#, fuzzy
 >>>>>>> 89520a09f3d59e441d559c99fda2b2ecb968de92
 msgid ""
 "You can ban certain words from appearing in your search results by choosing "
@@ -3372,14 +3359,8 @@ msgstr ""
 "FrostWire的收藏库是一个文件管理器，而不仅仅是MP3播放列表。这意味着当你从收藏库中删除一"
 "个文件时，你可以选择从电脑中永久性删除该文件，或者将其移至回收站。"
 
-<<<<<<< HEAD
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:76
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:97
-=======
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:74
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:95
-#, fuzzy
->>>>>>> 89520a09f3d59e441d559c99fda2b2ecb968de92
 msgid ""
 "Want to play music in your default media player instead of in FrostWire? go "
 "to 'Tools' on FrostWire menu and select the option 'Play with native media "
@@ -3389,11 +3370,7 @@ msgstr ""
 "进入Frostwire菜单的'工具'项，"
 "选择'使用默认媒体播放器进行播放'。"
 
-<<<<<<< HEAD
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:77
-=======
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:75
-#, fuzzy
 >>>>>>> 89520a09f3d59e441d559c99fda2b2ecb968de92
 msgid ""
 "Make FrostWire's block more results by making the filter stricter. Adjust "
@@ -3402,12 +3379,7 @@ msgstr ""
 "要让FrostWire过滤更多搜索结果，可以设置更严格的过滤器。"
 "可以在 FrostWire &gt; 预设 &gt; 过滤 &gt; 中进行调整或更多设置。"
 
-<<<<<<< HEAD
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:86
-=======
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:84
-#, fuzzy
->>>>>>> 89520a09f3d59e441d559c99fda2b2ecb968de92
 msgid ""
 "The icons that you see next to your search results in the '?' column are "
 "symbols of the program used to open that particular type of file. To change "
@@ -4549,17 +4521,11 @@ msgid "Notifications"
 msgstr "通知"
 
 #: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:20
-#, fuzzy
 msgid ""
 "FrostWire can display popups to notify you when certain things happen, such "
-<<<<<<< HEAD
 "as a download completing. "
 msgstr ""
 "有事情发生时，FrostWire会显示弹出窗口通知你，比如完成一个下载的时候。"
-=======
-"as a download completing."
-msgstr "当某些东西发生时，FrostWire会显示弹出窗口告知您，例如：下载完成时。"
->>>>>>> 89520a09f3d59e441d559c99fda2b2ecb968de92
 
 #: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:23
 msgid "Show Notifications:"
@@ -4642,25 +4608,22 @@ msgstr "代理选项"
 msgid "Configure Proxy Options for FrostWire."
 msgstr "配置FrostWire代理服务器选项"
 
-<<<<<<< HEAD
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:46
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:46
 msgid "No Proxy"
 msgstr "没有代理服务器"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:48
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:48
 msgid "Socks v4"
 msgstr "Socks v4"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:50
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:50
 msgid "Socks v5"
 msgstr "Socks v5"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:52
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:52
 msgid "HTTP"
 msgstr "HTTP"
 
-=======
->>>>>>> 89520a09f3d59e441d559c99fda2b2ecb968de92
 #. *
 #. * Constant for the key of the locale-specific <tt>String</tt> for the
 #. * label on the proxy host field.
@@ -4825,19 +4788,15 @@ msgstr "显示防火墙指示器："
 msgid "BitTorrent Connection Settings"
 msgstr "BitTorrent连接设置"
 
-<<<<<<< HEAD
-##############################I'M HERE ###########################3
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:28
-=======
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:27
->>>>>>> 89520a09f3d59e441d559c99fda2b2ecb968de92
 msgid ""
 "Adjust connection settings to make better use of your internet connection"
-msgstr "调整连接设置，更好地利用网络连接"
+msgstr ""
+"调整连接设置，更好地利用网络连接"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:29
 msgid "Maximum active downloads"
-msgstr "最多 下载 数目 "
+msgstr "最大活跃下载数目"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:31
 msgid "Global maximum number of connections"
@@ -4853,34 +4812,36 @@ msgstr "最大活跃种子数目 "
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:34
 msgid "BitTorrent Global Tranfer Speeds"
-msgstr "BitTorrent全球传输速度"
+msgstr "BitTorrent全局传输速度"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:36
 msgid ""
 "Set the Maximum BitTorrent transfer speeds in KB/s.\n"
 "Tip: Use your keyboard arrows for more precision"
-msgstr "设置最大BitTorrent传输速度为KB/s提示：使用键盘箭头更为精确"
+msgstr ""
+"设置最大BitTorrent传输速度为KB/s.\n"
+"提示：使用键盘箭头更为精确"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:38
 msgid "Download Speed:"
-msgstr "下载 带宽:"
+msgstr "下载速度："
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
 msgid "Set the Maximum BitTorrent upload speed in KB/s."
-msgstr ""
+msgstr "设置BitTorrent的最大上传速度，以KB/为单位。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
-#, fuzzy
+
 msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
 msgstr ""
-"设置最大BitTorrent上传速度为KB/s。注意：上传速度（下载）太慢会被一些定位器惩"
-"罚，导致更慢的下载。"
+"注意：过低的上传速度（吸血行为）会被一些track服务器惩罚，"
+"导致更慢的下载。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:52
 msgid "Upload Speed:"
-msgstr "上载 带宽:"
+msgstr "上传速度："
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:72
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:100
@@ -4901,7 +4862,9 @@ msgid ""
 "Seeding is the process of connecting to a torrent when you have a complete "
 "file(s). Pieces of the seeded file(s) will be available to everybody. While "
 "downloading pieces are always available to other peers in the swarm."
-msgstr "当你有完整文件时，作种是连接种子文件的过程。每个人可获取点滴种子文件。"
+msgstr ""
+"当你有完整的文件时，做种是连接种子文件的过程。每个人都以获取被做种文件的切片。"
+"下载时,这些文件切片对群中的其他伙伴用户就总是可用的。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:34
 msgid "Anonymous Usage Statistics"
@@ -4914,7 +4877,7 @@ msgid ""
 "any information that can personally identify you will be stored on disk or "
 "sent through the network."
 msgstr ""
-"发送匿名的使用统计，以便FrostWire能更有效地提高。任何可能泄漏你搜索、共享或播"
+"发送匿名的使用统计，以便FrostWire能提高得更有效率。任何可能泄漏你搜索、共享或播"
 "放内容以及其它隐私信息，均不会被存储到磁盘或发送到网络上。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:38
@@ -4923,7 +4886,7 @@ msgstr "发送匿名的使用统计"
 
 #: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:26
 msgid "Video Options"
-msgstr "视频 选项"
+msgstr "视频选项"
 
 #: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
 msgid "You can choose which video player to use."
@@ -4944,7 +4907,7 @@ msgstr "在你的本地Wi-Fi无线网中，你可以与其他伙伴用户看见�
 
 #: src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:45
 msgid "Active search and discovery of local peer files."
-msgstr "活跃的搜索和探寻本地伙伴文件。"
+msgstr "对于本地伙伴文件的活跃搜索和探寻。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:39
 msgid "You can have FrostWire import newly downloaded songs into iTunes."
@@ -4952,13 +4915,13 @@ msgstr "FrostWire可以将最新下载的歌曲导入到iTunes中。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:41
 msgid "Enable iTunes importing:"
-msgstr "开启iTunes导入："
+msgstr "允许iTunes导入："
 
 #: src/com/limegroup/gnutella/gui/search/LabeledRangeSlider.java:60
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:108
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:110
 msgid "Max"
-msgstr "最大 值"
+msgstr "最大"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:116
 msgid "No results so far..."
@@ -4966,23 +4929,23 @@ msgstr "截至目前尚无结果……"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:150
 msgid "%s Audio files found (including .mp3, .wav, .ogg, and more)"
-msgstr "已找到 %s 音频文件（包括 .mp3, .wav, .ogg 及更多）"
+msgstr "已找到 %s 个音频文件（包括 .mp3, .wav, .ogg 及更多）"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:155
 msgid "%s Video files found (including .avi, .mpg, .wmv, and more)"
-msgstr "已找到 %s 视频文件（包括 .avi, .mpg, .wmv 及更多）"
+msgstr "已找到 %s 个视频文件（包括 .avi, .mpg, .wmv 及更多）"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:160
 msgid "%s Image files found (including .jpg, .gif, .png and more)"
-msgstr "已找到 %s 图片文件（包括. jpg, .gif, .png 及更多）"
+msgstr "已找到 %s 个图片文件（包括. jpg, .gif, .png 及更多）"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:166
 msgid "%s Document files found (including .html, .txt, .pdf, and more)"
-msgstr "已找到 %s 文件（包括 .html, .txt, .pdf 及更多）"
+msgstr "已找到 %s 个文件（包括 .html, .txt, .pdf 及更多）"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:171
 msgid "%s Program files found (including .exe, .zip, .gz, and more)"
-msgstr "已找到 %s 程序文件（包括 .exe, .zip, .gz 及更多）"
+msgstr "已找到 %s 个程序文件（包括 .exe, .zip, .gz 及更多）"
 
 #: src/com/limegroup/gnutella/gui/search/SchemaBox.java:176
 msgid ""
@@ -4998,16 +4961,17 @@ msgstr "停止"
 
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:47
 msgid "Open Options dialog"
-msgstr "图片 选项 "
+msgstr "打开选项对话框"
 
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:48
 msgid "Download All Selected Files"
-msgstr "下载 所有 选中的 文件."
+msgstr "下载所有选中的文件."
 
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:49
 msgid ""
 "See detail web page about the selected torrent (Contents, Comments, Seeds)"
-msgstr "查看有关选定种子文件的详细网页(内容、评论、种子)"
+msgstr ""
+"查看有关选定种子文件的详细网页（内容、评论、种子）"
 
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:50
 msgid "Stop current search"
@@ -5023,23 +4987,23 @@ msgstr "运行"
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:90
 msgid "Repeat Search"
-msgstr "重新 搜索"
+msgstr "重复搜索"
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:92
 msgid "Download Partial Files"
-msgstr "下载网页 "
+msgstr "下载部分文件"
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:94
 msgid "Torrent Details"
-msgstr "许可证资料 "
+msgstr "种子细节"
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:96
 msgid "View in YouTube"
-msgstr "在YouTube观看"
+msgstr "在YouTube中观看"
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:98
 msgid "View in Soundcloud"
-msgstr "在SoundCloud查看"
+msgstr "在SoundCloud中查看"
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:100
 msgid "View in Archive.org"
@@ -5048,17 +5012,18 @@ msgstr "在Archive.org中查看"
 #. Set the splash screen text...
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:126
 msgid "Loading Search Window..."
-msgstr "加载 搜索 窗口..."
+msgstr "加载搜索窗口……"
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:213
 msgid ""
 "Your search must be at least three characters to avoid congesting the "
 "network."
-msgstr "你必须输入至少3个字符进行搜索，以免造成网络阻塞。"
+msgstr ""
+"你必须输入至少3个字符进行搜索，以免造成网络阻塞。"
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:216
 msgid "Your search is too long. Please make your search smaller and try again."
-msgstr "搜索太长。请精简搜索项并重试。"
+msgstr "搜索词太长。请精简搜索词并重试。"
 
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:107
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:109
@@ -5092,11 +5057,11 @@ msgstr "结果"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:356
 msgid "Copy Hash"
-msgstr "复制 "
+msgstr "复制哈希值"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:370
 msgid "Search More"
-msgstr "搜索 "
+msgstr "搜索更多"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:707
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:708
@@ -5109,7 +5074,7 @@ msgstr "来源"
 
 #: src/com/limegroup/gnutella/gui/search/SearchTableColumns.java:53
 msgid "Created"
-msgstr "创建"
+msgstr "已创建"
 
 #: src/com/limegroup/gnutella/gui/shell/FrostAssociations.java:104
 #: src/com/limegroup/gnutella/gui/shell/FrostAssociations.java:116
@@ -5124,7 +5089,8 @@ msgstr "\"magnet:\"链接"
 msgid ""
 "One or more files or protocols that FrostWire uses are no longer associated "
 "with FrostWire. Would you like FrostWire to re-associate them?"
-msgstr "FrostWire使用的一个或多个文件或协议不再与FrostWire关联。是否再次关联？"
+msgstr ""
+"FrostWire使用的一个或多个文件或协议不再与FrostWire关联。是否重新关联？"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:50
 msgid "Revert To Default"
@@ -5132,7 +5098,7 @@ msgstr "恢复默认设置 "
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:56
 msgid "More Options"
-msgstr "更多 搜索 选项 "
+msgstr "更多选项 "
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:62
 msgid "Stripe Rows"
@@ -5140,117 +5106,120 @@ msgstr "条纹列"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:68
 msgid "Sort Automatically"
-msgstr "自动 滚动. "
+msgstr "自动滚动"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:74
 msgid "Extended Tooltips"
-msgstr "更多工具提示"
+msgstr "扩展的工具提示"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:189
 msgid "You cannot turn off all columns."
 msgstr "你不能关掉所有列。"
-<<<<<<< HEAD
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:37
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:37
 msgid "Invalid Filename"
-msgstr "文件名 "
+msgstr "非法的文件名"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:40
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:40
 msgid "Download Already Finished"
-msgstr "下载 所有 选中的 文件. "
+msgstr "下载已完成"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:43
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:43
 msgid "No Write Permission"
 msgstr "无写入权限"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:46
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:46
 msgid "Folder Does Not Exist"
-msgstr "添加到 播放列表 "
+msgstr "文件夹不存在"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:49
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:49
 msgid "File Already Exists"
 msgstr "文件已存在"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:52
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:52
 msgid "Filename Taken"
 msgstr "文件名 "
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:55
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:55
 msgid "Not a Folder"
-msgstr "文件夹: "
+msgstr "不是一个文件夹"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:58
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:58
 msgid "Not a File"
-msgstr "非文件"
+msgstr "不是一个文件"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:61
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:61
 msgid "Filesystem Error"
 msgstr "文件系统错误"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:64
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:64
 msgid "Same File Already Being Downloaded"
 msgstr "同样的文件已在下载中"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:88
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:88
 #, java-format
 msgid ""
 "Could not set file location to {0}, because the filename is invalid and may "
 "corrupt your system."
-msgstr "由于文件名无效且可能影响系统，因此无法下载至文件夹{0}。"
+msgstr ""
+"由于文件名无效且可能影响系统，因此无法下载至文件夹{0}。"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:91
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:91
 msgid "Could not set the file location, the download is already finished."
 msgstr "无法设置文件位置，下载已完成。"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:94
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:94
 #, java-format
 msgid ""
 "Could not save download to the folder {0}, because you do not have write "
 "access to it."
-msgstr "由于你没有写入权限，无法保存下载至文件夹{0}。"
+msgstr ""
+"由于你没有写入权限，无法保存下载至文件夹{0}。"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:98
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:98
 #, java-format
 msgid ""
 "Could not save download to folder {0}, because the folder does not exist."
 msgstr "由于文件夹不存在，无法保存下载至文件夹{0}。"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:102
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:102
 #, java-format
 msgid "A file already exists at {0}."
 msgstr "文件已存在于{0}。"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:106
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:106
 #, java-format
 msgid "Another download is already saving to {0}."
 msgstr "另一下载已存于{0}。"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:110
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:110
 #, java-format
 msgid ""
 "Could not set download folder to {0}, because it represents an individual "
 "file, not a folder."
-msgstr "由于其是一个独立的文件，而非文件夹，因此无法下载至文件夹{0}。"
+msgstr ""
+"由于其是一个独立的文件，而非文件夹，因此无法下载至文件夹{0}。"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:114
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:114
 #, java-format
 msgid "Could not set file location to {0}, because it is not a regular file."
-msgstr "由于文件异常，无法下载至文件夹{0}。"
+msgstr "由于不是一个正常文件，无法下载至文件夹{0}。"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:117
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:117
 msgid "Could not set file location due to an error in the filesystem."
 msgstr "由于文件系统错误，无法设置文件位置。"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:119
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:119
 msgid "The same file is already being downloaded."
 msgstr "同一文件已在下载中。"
 
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:121
+#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:121
 #, java-format
 msgid ""
 "The path of the parent folder exceeds the maximum length of paths on the "
 "filesystem. {0} "
-msgstr "父文件夹的路径超过文件系统允许的最大路径长度。{0}"
+msgstr""
+"父文件夹的路径超过文件系统允许的最大路径长度。{0}"
 
 #~ msgid "Duplicated"
 #~ msgstr "复制"
@@ -7181,5 +7150,4 @@ msgstr "父文件夹的路径超过文件系统允许的最大路径长度。{0}
 
 #~ msgid "Firewall Config"
 #~ msgstr "防火墙"
-=======
->>>>>>> 89520a09f3d59e441d559c99fda2b2ecb968de92
+
