@@ -19,9 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import com.apple.eawt.AboutHandler;
-import com.apple.eawt.AppEvent;
-import com.apple.eawt.Application;
+import com.apple.eawt.*;
 import com.limegroup.gnutella.ExternalControl;
 
 /**
@@ -58,14 +56,16 @@ public class MacEventHandler {
                 MacEventHandler.this.handleAbout();
             }
         });
-        /*
-        
-        MRJAdapter.addQuitApplicationListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+
+        app.setQuitHandler(new QuitHandler() {
+            @Override
+            public void handleQuitRequestWith(AppEvent.QuitEvent quitEvent, QuitResponse quitResponse) {
                 handleQuit();
             }
         });
-        
+
+        /*
+
         MRJAdapter.addOpenDocumentListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 File file = ((ApplicationEvent)evt).getFile();

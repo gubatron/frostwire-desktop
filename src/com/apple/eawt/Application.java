@@ -8,10 +8,7 @@
 /*    */   {
 /*    */   }
 /*    */ 
-/*    */   public void addApplicationListener(ApplicationListener paramApplicationListener)
-/*    */   {
-/*    */   }
-/*    */ 
+/*    */
 /*    */   public void addPreferencesMenuItem()
 /*    */   {
 /*    */   }
@@ -30,10 +27,7 @@
 /*    */   {
 /*    */   }
 /*    */ 
-/*    */   public void removeApplicationListener(ApplicationListener paramApplicationListener)
-/*    */   {
-/*    */   }
-/*    */ 
+/*    */
 /*    */   public void removePreferencesMenuItem()
 /*    */   {
 /*    */   }
@@ -47,6 +41,8 @@
 /*    */   }
 
     public void setAboutHandler(AboutHandler var1) {
-
     }
-/*    */ }
+
+    public void setQuitHandler(QuitHandler var1) {
+    }
+}

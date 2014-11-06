@@ -11,4 +11,9 @@ public abstract class AppEvent extends EventObject {
         AboutEvent() {
         }
     }
+
+    public static class QuitEvent extends AppEvent {
+        QuitEvent() {
+        }
+    }
 }
