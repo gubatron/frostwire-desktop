@@ -115,7 +115,7 @@ msgstr "Fortsetzen"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:194
 msgid "Reattempt Selected Downloads"
-msgstr "Download erneut starten."
+msgstr "Retry Ausgewählte Downloads"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:213
 msgid ""
@@ -445,12 +445,10 @@ msgid "Stopped"
 msgstr "Gestoppt "
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:210
-#, fuzzy
 msgid "Pausing"
 msgstr "Anhalten..."
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:211
-#, fuzzy
 msgid "Canceling"
 msgstr "Abbrechen"
 
@@ -475,18 +473,16 @@ msgid "Uploading"
 msgstr "Upload läuft"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:216
-#, fuzzy
 msgid "Uncompressing"
-msgstr "Unvollständige Dateien"
+msgstr "Dekomprimieren"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:217
 msgid "Demuxing"
 msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:265
-#, fuzzy
 msgid "Unknown status"
-msgstr "Unbekannte Anfragen"
+msgstr "Unbekannter Status"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:363
 msgid "ETA"
@@ -571,9 +567,8 @@ msgid "Advanced"
 msgstr "Erweitert"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:189
-#, fuzzy
 msgid "Trackers"
-msgstr "Track"
+msgstr "Trackers"
 
 #. advanced > Download Speed Menu //
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:227
@@ -626,23 +621,20 @@ msgid "Set Up Speed"
 msgstr "Upload-Geschwindigkeit wählen"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:454
-#, fuzzy
 msgid "Edit Trackers"
-msgstr "Track"
+msgstr "Bearbeiten Track"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:470
-#, fuzzy
 msgid "Update Tracker"
-msgstr "Später updaten"
+msgstr "Aktualisierung Tracker"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:491
 msgid "Scrape Tracker"
-msgstr "Scrape Tracker"
+msgstr "Kratzen Tracker"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:517
-#, fuzzy
 msgid "Edit trackers"
-msgstr "Track"
+msgstr "bearbeiten trackers"
 
 #. columns
 #. rows
@@ -651,9 +643,8 @@ msgid "Edit trackers, one by line"
 msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:543
-#, fuzzy
 msgid "Accept"
-msgstr "Angenommen"
+msgstr "Akzeptieren"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:577
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:469
@@ -2071,66 +2062,66 @@ msgstr "Titel wiederholen"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:913
 msgid "this artist(s)"
-msgstr "
-dieser Künstler"
+msgstr "dieser Künstler"
+
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:917
 msgid "Open Facebook page of"
-msgstr ""
+msgstr "Offene Facebook-Seite von"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:919
 msgid "Open Twitter page of"
-msgstr ""
+msgstr "Offene Twitter-Seite von"
 
 #. won't be shown in 5.6.x, code here for 6.x
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1026
 msgid "Playing local file"
-msgstr ""
+msgstr "Spielen lokale Datei"
 
 #. won't be shown in 5.6.x, code here for 6.x
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1029
 msgid "Playing track from"
-msgstr ""
+msgstr "Spielen Track aus"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1032
 msgid "Open YouTube source page"
-msgstr ""
+msgstr "YouTube öffnen Quellseite"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1036
 msgid "Open SoundCloud source page"
-msgstr ""
+msgstr "Offene Soundcloud Quellseite"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1040
 msgid "Open Archive.org source page"
-msgstr ""
+msgstr "Offene Archive.org Quellseite"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1044
 #, fuzzy
 msgid "Playing Internet Radio"
-msgstr "Internet Radio"
+msgstr "Wiedergabe von Internetradio"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1047
 msgid "Playing local Wi-Fi Stream from"
-msgstr ""
+msgstr "Spielen lokalen Wi-Fi-Stream aus"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1061
 msgid "unknown device"
-msgstr ""
+msgstr "unbekanntes Gerät"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1072
 #, fuzzy
 msgid "playlist"
-msgstr "Neue Wiedergabeliste"
+msgstr "playlist"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1133
 #: src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:66
 msgid "file"
-msgstr "Datei"
+msgstr "datei"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1133
 #: src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:66
 msgid "folder"
-msgstr "Verzeichnis"
+msgstr "verzeichnis"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1134
 #: src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:67
@@ -2145,6 +2136,10 @@ msgid ""
 "mplayer already at a custom location, <b>make sure to have a symlink "
 "pointing to your mplayer executable</b> at <b><font color=\"blue\">"
 msgstr ""
+"<br><br>So installieren Sie <b>mPlayer</b> in Ubuntu öffnen Sie ein Terminal-Fenster und geben Sie "
+"\"<b>sudo apt-get install mplayer</b>\". <br><br>Wenn Sie installiert haben "
+"bereits in einem benutzerdefinierten Speicherort mplayer, <b>stellen Sie sicher, einen Symlink haben "
+", die auf Ihre mplayer ausführbare</b> in <b> <font color=\"blue\">"
 
 #: src/com/frostwire/gui/player/MediaPlayerLinux.java:33
 msgid ""
@@ -2153,6 +2148,10 @@ msgid ""
 "already at a custom location, <b>make sure to have a symlink pointing to "
 "your mplayer executable</b> at <b><font color=\"blue\">"
 msgstr ""
+"<br><br>So installieren Sie <b>mPlayer</b> in Fedora öffnen Sie ein Terminal-Fenster und geben Sie "
+"\"<b>sudo yum install mplayer</b>\". <br><br>Wenn Sie installiert haben "
+"bereits in einem benutzerdefinierten Speicherort mplayer, <b>stellen Sie sicher, einen Symlink haben "
+", die auf Ihre mplayer ausführbare</b> in <b> <font color=\"blue\">"
 
 #: src/com/frostwire/gui/player/MediaPlayerLinux.java:37
 msgid ""
@@ -2160,10 +2159,13 @@ msgid ""
 "in your computer.<br><br>If you want to use FrostWire as a media player "
 "<b>Please install mplayer and restart FrostWire.</b>"
 msgstr ""
+"<b>Frostwire erfordert Mplayer um Ihre Medien zu spielen </b>, aber ich konnte sie nicht finden "
+"in Ihrem Computer.<br><br>Wenn Sie Frostwire als Media Player verwenden wollen "
+"<b>Bitte installieren mplayer und starten Frostwire.</b>"
 
 #: src/com/frostwire/gui/searchfield/GoogleSearchField.java:64
 msgid "Hints by Google"
-msgstr "Vorschläge von Google"
+msgstr "Hinweise von Google"
 
 #: src/com/frostwire/gui/searchfield/RecentSearches.java:320
 msgid "SearchField.noRecentsText"
