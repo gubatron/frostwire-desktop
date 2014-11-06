@@ -45,4 +45,8 @@
 /*    */   public void setEnabledPreferencesMenu(boolean paramBoolean)
 /*    */   {
 /*    */   }
+
+    public void setAboutHandler(AboutHandler var1) {
+
+    }
 /*    */ }

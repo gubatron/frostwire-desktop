@@ -19,6 +19,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import com.apple.eawt.AboutHandler;
+import com.apple.eawt.AppEvent;
+import com.apple.eawt.Application;
 import com.limegroup.gnutella.ExternalControl;
 
 /**
@@ -46,12 +49,16 @@ public class MacEventHandler {
     
     /** Creates a new instance of MacEventHandler */
     private MacEventHandler() {
-        /*
-        MRJAdapter.addAboutListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                handleAbout();
+
+        Application app = Application.getApplication();
+
+        app.setAboutHandler(new AboutHandler() {
+            @Override
+            public void handleAbout(AppEvent.AboutEvent aboutEvent) {
+                MacEventHandler.this.handleAbout();
             }
         });
+        /*
         
         MRJAdapter.addQuitApplicationListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
