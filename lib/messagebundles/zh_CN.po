@@ -3321,7 +3321,6 @@ msgstr ""
 "&gt; '工具'，'选项'并在 '查看' &gt; 'FrostWire弹出窗口' 中勾选'恢复默认设置'。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:70
->>>>>>> 89520a09f3d59e441d559c99fda2b2ecb968de92
 msgid ""
 "You can ban certain words from appearing in your search results by choosing "
 "'Tools' from the 'FrostWire' menu and adding new words to those listed under "
@@ -3371,7 +3370,6 @@ msgstr ""
 "选择'使用默认媒体播放器进行播放'。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:75
->>>>>>> 89520a09f3d59e441d559c99fda2b2ecb968de92
 msgid ""
 "Make FrostWire's block more results by making the filter stricter. Adjust "
 "that and more by going to FrostWire &gt; Tools &gt; Filters &gt;"
@@ -4608,10 +4606,6 @@ msgstr "代理选项"
 msgid "Configure Proxy Options for FrostWire."
 msgstr "配置FrostWire代理服务器选项"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:46
-msgid "No Proxy"
-msgstr "没有代理服务器"
-
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:48
 msgid "Socks v4"
 msgstr "Socks v4"
@@ -5263,8 +5257,6 @@ msgstr""
 #~ "<html><p>Tracker Announce URLs</p><p>(One tracker per line)</p></html>"
 #~ msgstr "服务器通知 （每行一个服务器）"
 
-#~ msgid "Stopped"
-#~ msgstr "停止 "
 
 #~ msgid "Crawling"
 #~ msgstr "检索"
