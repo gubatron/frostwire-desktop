@@ -8,8 +8,10 @@ frostwire (6.0.0) stable; urgency=high
   * German translation updates. Thanks @paulinka.
   * Fixes EzTV search, now with https support.
   * Multiple bug fixes.
+  * Improved OS event handling in MacOSX.
+  * Extensive cleanup.
 
- -- FrostWire Team <contact@frostwire.com>  Thu, 06 November 2014 18:26:15 -0500
+ -- FrostWire Team <contact@frostwire.com>  Fri, 07 November 2014 18:10:15 -0500
 
 frostwire (5.7.7) stable; urgency=high
   * New: VPN connection status indicator.
