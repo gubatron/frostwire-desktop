@@ -20,4 +20,7 @@ public class Application {
 
     public void setOpenFileHandler(OpenFilesHandler var1) {
     }
+
+    public void setOpenURIHandler(OpenURIHandler var1) {
+    }
 }

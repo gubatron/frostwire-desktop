@@ -65,7 +65,21 @@ public class MacEventHandler {
                 List<File> files = openFilesEvent.getFiles();
                 if (files != null && files.size() > 0) {
                     File file = files.get(0);
-                    runFileOpen(file);
+                    LOG.debug("File: " + file);
+                    if (file.getName().endsWith(".torrent")) {
+                        GUIMediator.instance().openTorrentFile(file, false);
+                    }
+                }
+            }
+        });
+
+        app.setOpenURIHandler(new OpenURIHandler() {
+            @Override
+            public void openURI(AppEvent.OpenURIEvent openURIEvent) {
+                String uri = openURIEvent.getURI().toString();
+                LOG.debug("URI: " + uri);
+                if (uri.startsWith("magnet:?xt=urn:btih")) {
+                    GUIMediator.instance().openTorrentURI(uri, false);
                 }
             }
         });
@@ -105,18 +119,6 @@ public class MacEventHandler {
     private void handleQuit() {
         GUIMediator.applyWindowSettings();
         GUIMediator.close(false);
-    }
-
-    private void runFileOpen(final File file) {
-        String filename = file.getPath();
-        LOG.debug("File: " + file);
-        if (filename.startsWith("magnet")) {
-            if (file.getAbsolutePath().startsWith("magnet:?xt=urn:btih")) {
-                GUIMediator.instance().openTorrentURI(file.getAbsolutePath(), false);
-            }
-        } else if (filename.endsWith("torrent")) {
-            GUIMediator.instance().openTorrentFile(file, false);
-        }
     }
 
     private void handleReopen() {

@@ -1,6 +1,7 @@
 package com.apple.eawt;
 
 import java.io.File;
+import java.net.URI;
 import java.util.EventObject;
 import java.util.List;
 
@@ -51,6 +52,18 @@ public abstract class AppEvent extends EventObject {
 
         public List<File> getFiles() {
             return this.files;
+        }
+    }
+
+    public static class OpenURIEvent extends AppEvent {
+        final URI uri;
+
+        OpenURIEvent(URI var1) {
+            this.uri = var1;
+        }
+
+        public URI getURI() {
+            return this.uri;
         }
     }
 }
