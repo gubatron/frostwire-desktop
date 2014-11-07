@@ -129,6 +129,7 @@ public final class Initializer {
         runQueuedRequests(limeWireCore);
 
         if (OSUtils.isMacOSX()) {
+            GURLHandler.getInstance().register();
             MacEventHandler.instance();
         }
 

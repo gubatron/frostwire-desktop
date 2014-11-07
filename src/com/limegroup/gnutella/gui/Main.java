@@ -61,15 +61,6 @@ public class Main {
         Frame splash = null;
         try {
             if (OSUtils.isMacOSX()) {
-                // Register GURL to receive AppleEvents, such as magnet links.
-                // Use reflection to not slow down non-OSX systems.
-                // "GURLHandler.getInstance().register();"
-                Class<?> clazz = Class.forName("com.limegroup.gnutella.gui.GURLHandler");
-                Method getInstance = clazz.getMethod("getInstance", new Class[0]);
-                Object gurl = getInstance.invoke(null, new Object[0]);
-                Method register = gurl.getClass().getMethod("register", new Class[0]);
-                register.invoke(gurl, new Object[0]);
-
                 if (isOlderThanLeopard()) {
                     System.setProperty("java.nio.preferSelect", String.valueOf(System.getProperty("java.version").startsWith("1.5")));
                 } else {
