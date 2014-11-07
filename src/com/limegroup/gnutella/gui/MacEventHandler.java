@@ -64,6 +64,13 @@ public class MacEventHandler {
             }
         });
 
+        app.setOpenFileHandler(new OpenFilesHandler() {
+            @Override
+            public void openFiles(AppEvent.OpenFilesEvent openFilesEvent) {
+
+            }
+        });
+
         /*
 
         MRJAdapter.addOpenDocumentListener(new ActionListener() {

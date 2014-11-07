@@ -17,4 +17,7 @@ public class Application {
 
     public void addAppEventListener(AppEventListener var1) {
     }
+
+    public void setOpenFileHandler(OpenFilesHandler var1) {
+    }
 }
