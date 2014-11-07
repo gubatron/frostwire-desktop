@@ -128,6 +128,10 @@ public final class Initializer {
         startCore(limeWireCore);
         runQueuedRequests(limeWireCore);
 
+        if (OSUtils.isMacOSX()) {
+            MacEventHandler.instance();
+        }
+
         // Run any after-init tasks.
         postinit();
     }
@@ -155,23 +159,13 @@ public final class Initializer {
     private void setupCallbacksAndListeners() {
         // Set the error handler so we can receive core errors.
         ErrorService.setErrorCallback(new ErrorHandler());
-        //stopwatch.resetAndLog("ErrorHandler install");
 
         // Set the messaging handler so we can receive core messages
         org.limewire.service.MessageService.setCallback(new MessageHandler());
-        //stopwatch.resetAndLog("MessageHandler install");
 
         // Set the default event error handler so we can receive uncaught
         // AWT errors.
         DefaultErrorCatcher.install();
-        //stopwatch.resetAndLog("DefaultErrorCatcher install");
-
-        if (OSUtils.isMacOSX()) {
-            // Raise the number of allowed concurrent open files to 1024.
-            SystemUtils.setOpenFileLimit(1024);
-
-            MacEventHandler.instance();
-        }
     }
 
     /**
@@ -225,10 +219,6 @@ public final class Initializer {
      */
     private void runExternalChecks(LimeWireCore limeWireCore, String[] args) {
         ExternalControl externalControl = limeWireCore.getExternalControl();
-        if (OSUtils.isMacOSX()) {
-            GURLHandler.getInstance().enable(externalControl);
-            MacEventHandler.instance().enable(externalControl, this);
-        }
 
         // Test for preexisting FrostWire and pass it a magnet URL if one
         // has been passed in.

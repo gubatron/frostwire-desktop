@@ -15,37 +15,32 @@
 
 package com.limegroup.gnutella.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-
 import com.apple.eawt.*;
-import com.limegroup.gnutella.ExternalControl;
+import com.frostwire.logging.Logger;
+
+import java.io.File;
+import java.util.List;
 
 /**
- * This class handles Macintosh specific events. The handled events  
+ * This class handles Macintosh specific events. The handled events
  * include the selection of the "About" option in the Mac file menu,
  * the selection of the "Quit" option from the Mac file menu, and the
  * dropping of a file on LimeWire on the Mac, which LimeWire would be
  * expected to handle in some way.
  */
 public class MacEventHandler {
-    
+
+    private static final Logger LOG = Logger.getLogger(MacEventHandler.class);
+
     private static MacEventHandler INSTANCE;
-    
+
     public static synchronized MacEventHandler instance() {
-        if (INSTANCE==null)
+        if (INSTANCE == null)
             INSTANCE = new MacEventHandler();
-        
+
         return INSTANCE;
     }
-    
-    private volatile File lastFileOpened = null;
-    private volatile boolean enabled;
-    private volatile ExternalControl externalControl = null;
-    private volatile Initializer initializer = null;
-    
-    /** Creates a new instance of MacEventHandler */
+
     private MacEventHandler() {
 
         Application app = Application.getApplication();
@@ -67,19 +62,13 @@ public class MacEventHandler {
         app.setOpenFileHandler(new OpenFilesHandler() {
             @Override
             public void openFiles(AppEvent.OpenFilesEvent openFilesEvent) {
-
+                List<File> files = openFilesEvent.getFiles();
+                if (files != null && files.size() > 0) {
+                    File file = files.get(0);
+                    runFileOpen(file);
+                }
             }
         });
-
-        /*
-
-        MRJAdapter.addOpenDocumentListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                File file = ((ApplicationEvent)evt).getFile();
-                handleOpenFile(file);
-            }
-        });
-        */
 
         app.addAppEventListener(new AppReOpenedListener() {
             @Override
@@ -87,21 +76,6 @@ public class MacEventHandler {
                 handleReopen();
             }
         });
-    } 
-    
-    public void enable(ExternalControl externalControl, Initializer initializer) {
-        this.externalControl = externalControl;
-        this.initializer = initializer;
-        this.enabled = true;
-        if(lastFileOpened != null)
-            runFileOpen(lastFileOpened);
-    }
-    
-    /**
-     * Enable preferences.
-     */
-    public void enablePreferences() {
-        Application app = Application.getApplication();
 
         app.setPreferencesHandler(new PreferencesHandler() {
             @Override
@@ -110,65 +84,45 @@ public class MacEventHandler {
             }
         });
     }
-    
+
     /**
-    * This responds to the selection of the about option by displaying the
-    * about window to the user.  On OSX, this runs in a new ManagedThread to handle
-    * the possibility that event processing can become blocked if launched
-    * in the calling thread.
-    */
-    private void handleAbout() {      
+     * This responds to the selection of the about option by displaying the
+     * about window to the user.  On OSX, this runs in a new ManagedThread to handle
+     * the possibility that event processing can become blocked if launched
+     * in the calling thread.
+     */
+    private void handleAbout() {
         GUIMediator.showAboutWindow();
     }
-    
+
     /**
-    * This method responds to a quit event by closing the application in
-    * the whichever method the user has configured (closing after completed
-    * file transfers by default).  On OSX, this runs in a new ManagedThread to handle
-    * the possibility that event processing can become blocked if launched
-    * in the calling thread.
-    */
+     * This method responds to a quit event by closing the application in
+     * the whichever method the user has configured (closing after completed
+     * file transfers by default).  On OSX, this runs in a new ManagedThread to handle
+     * the possibility that event processing can become blocked if launched
+     * in the calling thread.
+     */
     private void handleQuit() {
         GUIMediator.applyWindowSettings();
         GUIMediator.close(false);
     }
-    
-    /**
-     * This method handles a request to open the specified file.
-     */
-    private void handleOpenFile(File file) {
-        if(!enabled) {
-            lastFileOpened = file;
-        } else {
-            runFileOpen(file);
-        }
-    }
-    
-    private void runFileOpen(File file) {
+
+    private void runFileOpen(final File file) {
         String filename = file.getPath();
-        if (filename.endsWith("limestart")) {
-            initializer.setStartup();
-        } else if (filename.startsWith("magnet")) { 
-            if (!GUIMediator.isConstructed() || !GuiCoreMediator.getLifecycleManager().isStarted())
-                externalControl.enqueueControlRequest(file.getAbsolutePath());
-            else if (file.getAbsolutePath().startsWith("magnet:?xt=urn:btih")) {
-            	GUIMediator.instance().openTorrentURI(file.getAbsolutePath(), false);
+        LOG.debug("File: " + file);
+        if (filename.startsWith("magnet")) {
+            if (file.getAbsolutePath().startsWith("magnet:?xt=urn:btih")) {
+                GUIMediator.instance().openTorrentURI(file.getAbsolutePath(), false);
             }
-        }
-        else if (filename.endsWith("torrent")) {
-            if (!GUIMediator.isConstructed() || !GuiCoreMediator.getLifecycleManager().isStarted())
-                externalControl.enqueueControlRequest(file.getAbsolutePath());
-            else
-                GUIMediator.instance().openTorrentFile(file, false);
-        } else {
-            //PackagedMediaFileLauncher.launchFile(filename, false);
+        } else if (filename.endsWith("torrent")) {
+            GUIMediator.instance().openTorrentFile(file, false);
         }
     }
-    
+
     private void handleReopen() {
         GUIMediator.handleReopen();
     }
-    
+
     private void handlePreferences() {
         GUIMediator.instance().setOptionsVisible(true);
     }

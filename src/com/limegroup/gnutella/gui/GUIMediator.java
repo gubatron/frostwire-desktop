@@ -798,8 +798,6 @@ public final class GUIMediator {
      * Notification that visibility is now allowed.
      */
     public static void allowVisibility() {
-        if (!_allowVisible && OSUtils.isAnyMac())
-            MacEventHandler.instance().enablePreferences();
         _allowVisible = true;
     }
 
