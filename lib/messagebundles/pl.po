@@ -238,7 +238,7 @@ msgstr "Wyslij do przyjaciela"
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:437
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:438
 msgid "Hide Seeding Transfers"
-msgstr "Ukryj Seedujące Pliki "
+msgstr "Ukryj Seedujące Pobrania"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:439
 msgid "Don't show Seeding Transfers"
@@ -248,7 +248,7 @@ msgstr "Nie pokazuj Seedujących Pobrań"
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:442
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:443
 msgid "Show Seeding Transfers"
-msgstr "Pokaż Seekujące Pobrania"
+msgstr "Pokaż Seedujące Pobrania"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:462
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:221
@@ -349,7 +349,7 @@ msgstr "Seedy"
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:168
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:360
 msgid "Peers"
-msgstr "Hosty"
+msgstr "Peery"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:171
 msgid "Share Ratio"
@@ -357,7 +357,7 @@ msgstr "Share Ratio"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:174
 msgid "Seeds/Peers"
-msgstr "Hosty"
+msgstr "Seedy/Peery"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:177
 msgid "Started On"
@@ -427,11 +427,11 @@ msgstr "Błąd"
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:206
 #, fuzzy
 msgid "Error: Moving incomplete"
-msgstr "Błąd usuwania pliku"
+msgstr "Błąd: Przenoszenie niekompletne"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:207
 msgid "Error: Wrong md5 hash"
-msgstr "Błąd: niewłaściwy hash md5"
+msgstr "Błąd: Niewłaściwy hash md5"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:208
 msgid "Error: Wrong signature"
@@ -668,7 +668,7 @@ msgstr "Creative Commons"
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:51
 #, fuzzy
 msgid "Open Source"
-msgstr "Pochodzenie"
+msgstr "Open Source"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:52
 msgid "Public Domain"
@@ -774,6 +774,8 @@ msgid ""
 "This work has been identified as being free of known restrictions under "
 "copyright law, including all related and neighboring rights."
 msgstr ""
+"Ten utwór został zidentyfikowany jako niepodlegający znanym ograniczeniom "
+"prawa autorskiego, łącznie z prawami pokrewnymi lub podobnymi."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:148
 msgid ""
@@ -782,6 +784,10 @@ msgid ""
 "under copyright law, including all related and neighboring rights, to the "
 "extent allowed by law."
 msgstr ""
+"Osoba, która opatrzyła utwór tym oświadczeniem przekazała go do domeny publicznej "
+"zrzekając się wykonywania wszelkich jej praw do utworu objętych przepisami prawa "
+"autorskiego na całym świecie, włączając w to wszelkie prawa pokrewne, w zakresie "
+"dozwolonym przez prawo."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:235
 msgid "You have selected the following License"
@@ -796,6 +802,8 @@ msgid ""
 "You can copy, modify, distribute and perform the work, even for commercial "
 "purposes, all without asking permission."
 msgstr ""
+"Możesz kopiować, zmieniać, rozprowadzać i wykonywać dzieło, także w celach "
+"komercyjnych bez pytania o pozwolenie."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:467
 #, fuzzy
@@ -902,7 +910,7 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:274
 msgid "Web Seeds Mirror URLs"
-msgstr ""
+msgstr "Sieciowe Seedy Mirror URL"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:275
 msgid ""
@@ -1014,7 +1022,7 @@ msgstr "Sprawdzanie aktualizacji..."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:753
 msgid "Web seed not reachable."
-msgstr ""
+msgstr "Sieć jest nieosiągalna."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:850
 msgid "Saving Torrent..."
@@ -1063,6 +1071,8 @@ msgid ""
 "I am the content creator or I have the right to collect financial "
 "contributions for this work."
 msgstr ""
+"Jestem twórcą tego dzieła lub mam prawa pobierać finansowe "
+"opłaty za to dzieło."
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:50
 msgid ""
@@ -1070,6 +1080,9 @@ msgid ""
 "works can make me liable for counterfeiting and criminal copyright "
 "infringement."
 msgstr ""
+"Rozumiem że czerpanie zysków finansowych z nieautoryzowanych "
+"prac chronionych prawem autorskim czyni mnie odpowiedzialnym za "
+"podrabianie i karne naruszanie praw autorskich."
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:126
 msgid "<strong>Bitcoin</strong> receiving wallet address"
@@ -1085,18 +1098,18 @@ msgstr "Adres odbiorczy portfela <strong>Dogecoin</strong>"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:141
 msgid "<strong>Paypal</strong> payment/donation page url"
-msgstr "strona płatności/dotacji <strong>Paypal</strong>"
+msgstr "strona płatności/darowizn <strong>Paypal</strong>"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:151
 msgid "\"Name your price\", \"Tips\", \"Donations\" payment options"
-msgstr "\"Określ cenę\", \"Napiwki\", \"Dotacje\" opcje płatności"
+msgstr "\"Określ cenę\", \"Napiwki\", \"Darowizny\" opcje płatności"
 
 #. We use "Bitcoin" for the protocol (upper case B), and "bitcoins" for the units of currency (lower case b)
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:97
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:98
 msgid "Name your price, Send a Tip or Donation in"
-msgstr "Określ cenę, wyślij napiwek lub dotację "
+msgstr "Określ cenę, wyślij napiwek lub darowiznę "
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 msgid "bitcoins"
@@ -1112,7 +1125,7 @@ msgstr "dogecoiny"
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:99
 msgid "Name your price, Send a Tip or Donation via Paypal"
-msgstr "Określ stawkę, wyślij napiwek lub dotację przez Paypal"
+msgstr "Określ stawkę, wyślij napiwek lub darowiznę przez Paypal"
 
 #: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:90
 msgid "Preparing selection"
@@ -1358,7 +1371,7 @@ msgstr "Odtwórz Podgląd Audio "
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:363
 msgid "Support %s with a tip, donation or voluntary payment"
-msgstr "Wesprzyj %s napiwkiem, dotacją lub dobrowolną płatnością"
+msgstr "Wesprzyj %s napiwkiem, darowizną lub dobrowolną płatnością"
 
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:171
 #: src/com/limegroup/gnutella/gui/StatusLine.java:231
