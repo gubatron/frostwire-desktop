@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-28 14:37+0300\n"
-"PO-Revision-Date: 2014-10-23 19:55+0800\n"
+"PO-Revision-Date: 2014-11-08 18:57+0800\n"
 "Last-Translator: Liu Xuan <liuxuan01@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -20,7 +20,8 @@ msgstr ""
 # README for < English -> Chinese Simplified tranlation >, by Liu Xuan, 2014.10
 # （1）Prepositions in English such as 'from' & 'of', are a bit difficult to translate when a whole sentence is sliced into pieces.
 #      e.g. 'Playing track from Internet' is easy to transalte into '正在从互联网播放音轨'，but 'Playing track from' will be
-#           incomplete in Chinese. Current solution is '正在从此处播放音频：'（notice the Full-width colon added in the end!）
+#           incomplete in Chinese. Current solution is '正在从此处播放音频：'（notice the Full-width colon added in the end!）；
+#      e.g. ‘out of' -> '/'.
 # （2）One word might be translated into different Chinese words according to the context.
 #      e.g. peer -> 伙伴 or 伙伴用户; authorize -> 允许 or 授权； track -> 音轨 or 曲目
 # （3）Some translations are comprehensible, but not perfect yet. They are listed as belows(perhaps you have better ideas):
@@ -368,22 +369,19 @@ msgstr "许可证"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:196
 msgid "Queued for checking"
-msgstr ""
+msgstr "已加入检查序列"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:197
-#, fuzzy
 msgid "Checking..."
-msgstr "正在检查"
+msgstr "正在检查……"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:198
-#, fuzzy
 msgid "Downloading metadata"
-msgstr "正在下载更新……"
+msgstr "下载元数据"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:199
-#, fuzzy
 msgid "Downloading torrent"
-msgstr "下载 "
+msgstr "下载种子"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:200
 #: src/com/frostwire/gui/library/DownloadTask.java:82
@@ -397,14 +395,12 @@ msgid "Finished"
 msgstr "已完成"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:202
-#, fuzzy
 msgid "Seeding"
-msgstr "搜索"
+msgstr "做种"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:203
-#, fuzzy
 msgid "Allocating"
-msgstr "位置"
+msgstr "分配"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:204
 msgid "Paused"
@@ -423,21 +419,20 @@ msgid "Error"
 msgstr "错误"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:206
-#, fuzzy
 msgid "Error: Moving incomplete"
-msgstr "正在 上载"
+msgstr "错误：未完成的移动"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:207
 msgid "Error: Wrong md5 hash"
-msgstr ""
+msgstr "错误：错误的md5哈希值"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:208
 msgid "Error: Wrong signature"
-msgstr ""
+msgstr "错误：错误的签名"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:209
 msgid "Stopped"
-msgstr "停止 "
+msgstr "已停止"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:210
 msgid "Pausing"
@@ -468,18 +463,17 @@ msgid "Uploading"
 msgstr "正在上传"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:216
-#, fuzzy
 msgid "Uncompressing"
-msgstr "正在解压文件"
+msgstr "正在解压"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:217
+#, fuzzy
 msgid "Demuxing"
-msgstr ""
+msgstr "多路复用"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:265
-#, fuzzy
 msgid "Unknown status"
-msgstr "未知"
+msgstr "未知状态"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:363
 msgid "ETA"
@@ -1067,9 +1061,8 @@ msgstr "\"给出你的报价\", \"小费\", \"捐赠\" 付款选项"
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:97
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:98
-#, fuzzy
 msgid "Name your price, Send a Tip or Donation in"
-msgstr "给出你的报价，以该形式提供一份小费或捐赠："
+msgstr "给出你的报价，提供一份小费或捐赠："
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 msgid "bitcoins"
@@ -1155,7 +1148,7 @@ msgstr "提示"
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:230
 #, fuzzy
 msgid "Feedback here to clipboard"
-msgstr "已被复制到粘贴板的信息。"
+msgstr "在此反馈到粘贴板"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:301
 msgid "All done! Now share the link"
@@ -1249,29 +1242,26 @@ msgid "Seeding Settings"
 msgstr "做种设置 "
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:76
-#, fuzzy
 msgid ""
 "<strong>Seed finished torrent downloads.</strong> BitTorrent users on the "
 "internet will be able<br/>to download file chunks of the data your torrents "
 "seed. (Recommended)"
 msgstr ""
-"<html><strong>为已完成下载的文件做种。</strong>即使你已完成文件下载<br/>，互"
-"联网上的BitTorrent用户仍可以从你这里下载该文件。（推荐）</html>"
+"<strong>为已完成下载的文件做种。</strong>即使你已完成文件下载<br/>，互联网上"
+"的BitTorrent用户仍可以从你这里下载该文件。（推荐）"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:77
-#, fuzzy
 msgid ""
 "<strong>Don't seed finished torrent downloads.</strong> BitTorrent users on "
 "the internet may<br/>only download file chunks of that torrent from you "
 "while you're downloading its<br/>data files. <strong>Some trackers will "
 "penalize this Leeching behavior</strong>."
 msgstr ""
-"<html><strong>不为已完成下载的文件做种。</strong>只有在你下载时，<br/>互联网"
-"上的BitTorrent用户才能从你这里获取文件数据。<br/><strong>有些tracker服务器会"
-"处罚这种吸血式的自私行为</strong>。</html>"
+"<strong>不为已完成下载的文件做种。</strong>只有在你下载时，<br/>互联网上的"
+"BitTorrent用户才能从你这里获取文件数据。<br/><strong>有些tracker服务器会处罚"
+"这种吸血式的自私行为</strong>。"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:92
-#, fuzzy
 msgid ""
 "<strong>Seed handpicked torrent files.</strong> Handpicked file torrents "
 "downloads (Partial Downloads) can result in seeding data chunks of "
@@ -1279,10 +1269,9 @@ msgid ""
 "advanced users only</strong> as it can lead to downloading parts of files "
 "you may have not explicitly chosen for download."
 msgstr ""
-"<html><strong>为自选种子文件做种。</strong> 自选文件种子下载（部分下载）会为"
-"相邻的不完整文件数据做种。<br/><strong>建议该功能仅供高级用户使用</strong> "
-"<br/>，因为它允许其他人下载某些文件的部分内容——即使这些文件是你没有明确允许下"
-"载。</html>"
+"<strong>为自选种子文件做种。</strong> 自选文件种子下载（部分下载）会为相邻的"
+"不完整文件数据做种。<br/>该功能<strong>建议仅供高级用户使用</strong> <br/>，"
+"因为它允许其他人下载某些文件的部分内容——即使这些文件是你没有明确允许下载。"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:133
 msgid "Leave a tip"
@@ -1899,7 +1888,7 @@ msgstr "从此处导入广播电台是出错"
 #: src/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:67
 #, fuzzy
 msgid "Holds the Results for"
-msgstr "为这些项目保持结果："
+msgstr "为这些项目保留结果："
 
 #: src/com/frostwire/gui/library/NodeRenderer.java:65
 msgid "My files"
@@ -2356,7 +2345,7 @@ msgstr "最终用户许可协议"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:89
 msgid "Privacy Policy"
-msgstr ""
+msgstr "隐私策略"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:94
 msgid "Close This Window"
@@ -2364,24 +2353,20 @@ msgstr "关闭此窗口"
 
 #. introduction
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:181
-#, fuzzy
 msgid "FrostWire Logo Designer"
-msgstr "<h1>FrostWire商标设计师</h1>"
+msgstr "FrostWire商标设计师"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:184
-#, fuzzy
 msgid "FrostWire Graphics Designers/Photographers"
-msgstr "<h1>FrostWire图案设计师/摄影师</h1>"
+msgstr "FrostWire图案设计师/摄影师"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:194
-#, fuzzy
 msgid "Thanks to Former FrostWire Developers"
-msgstr "<h1>感谢FrostWire以前的开发人员</h1>"
+msgstr "感谢FrostWire以前的开发人员"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:199
-#, fuzzy
 msgid "Thanks to the FrostWire Chat Community!"
-msgstr "<h1>感谢FrostWire聊天社区！</h1>"
+msgstr "感谢FrostWire聊天社区！"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:200
 msgid ""
@@ -2400,19 +2385,16 @@ msgid ""
 msgstr "<br><br>特别感谢聊天室管理员和论坛版主"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:206
-#, fuzzy
 msgid "FrostWire Chat Operators"
-msgstr "<h1>FrostWire聊天室管理员</h1>"
+msgstr "FrostWire聊天室管理员"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:211
-#, fuzzy
 msgid "FrostWire Forum Moderators"
-msgstr "<h1>FrostWire论坛版主</h1>"
+msgstr "FrostWire论坛版主"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:217
-#, fuzzy
 msgid "Many Former Chat Operators"
-msgstr "<h1>FrostWire聊天室管理员</h1>"
+msgstr "FrostWire聊天室管理员"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:223
 msgid "And also to the Support Volunteer Helpers:"
@@ -2420,15 +2402,13 @@ msgstr "还有支持帮助的志愿者"
 
 #. azureus/vuze devs.
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:229
-#, fuzzy
 msgid "Thanks to the Azureus Core Developers"
-msgstr "<h1>感谢FrostWire以前的开发人员</h1>"
+msgstr "感谢Azureus核心开发人员"
 
 #. developers
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:236
-#, fuzzy
 msgid "Thanks to the LimeWire Developer Team"
-msgstr "<h1>感谢LimeWire开发团队</h1>"
+msgstr "感谢LimeWire开发团队"
 
 #. community VIPs
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:254
@@ -2438,47 +2418,42 @@ msgid ""
 msgstr "特别感谢Gnutella社区的一些同事。包括："
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:274
-#, fuzzy
 msgid "Thanks to the PJIRC Staff"
-msgstr "<h1>感谢PJIRC员工</h1>"
+msgstr "感谢PJIRC员工"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:283
-#, fuzzy
 msgid "Thanks to the Automatix Team"
-msgstr "<h1>感谢Automatix团队</h1>"
+msgstr "感谢Automatix团队"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:284
 msgid ""
 "For helping distribute Frostwire to opensource communities in a very simple "
 "manner."
 msgstr ""
+"以一种非常简单的方式，帮着向开源社区发布Fostwire。"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:292
-#, fuzzy
 msgid "Thanks to Ubuntu/Kubuntu Teams"
-msgstr "<h1>感谢Ubuntu/Kubuntu团队</h1>"
+msgstr "感谢Ubuntu/Kubuntu团队"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:293
-#, fuzzy
 msgid ""
 "For making the world a better place with such an excellent distro, you'll be "
 "the ones to make a difference on the desktop."
-msgstr "<p>让世界因如此优秀的套件而更美好，你们将是让桌面与众不同的人。</p>"
+msgstr ""
+"让世界因如此优秀的套件而更美好，你们将是让桌面与众不同的人。"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:295
-#, fuzzy
 msgid "Thanks to the NSIS Project"
-msgstr "<h1>感谢NSIS项目</h1>"
+msgstr "感谢NSIS项目"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:296
-#, fuzzy
 msgid "Thanks for such an awesome installer builder system and documentation."
-msgstr "<p>感谢了不起的安装程序生成器系统和文档。</p>"
+msgstr "感谢了不起的安装程序生成器系统和文档。"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:298
-#, fuzzy
 msgid "Thanks to our families"
-msgstr "<h1>感谢我们的家人</h1>"
+msgstr "感谢我们的家人"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:299
 msgid "For being patient during our many sleepless nights"
@@ -2791,17 +2766,14 @@ msgstr ""
 "请访问 %s 以便更新你的Java版本"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:95
-#, fuzzy
 msgid "Current Java Version:"
 msgstr "当前的Java版本："
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:96
-#, fuzzy
 msgid "Required Java Version:"
 msgstr "需要的Java版本："
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:106
-#, fuzzy
 msgid "Visit"
 msgstr "访问"
 
@@ -2964,26 +2936,22 @@ msgid "Circle FrostWire on G+"
 msgstr "在G+上圈住（Circle）FrostWire"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
-#, fuzzy
 msgid "<b>Seeding</b><p>completed torrent downloads.</p>"
-msgstr "<html><b>做种</b><p>完整的种子下载。"
+msgstr "<b>做种</b><p>完整的种子下载。</p>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
-#, fuzzy
 msgid ""
 "<b>Not Seeding</b><p>File chunks might be shared only duringa torrent "
 "download.</p>"
-msgstr "<html><b>没有做种</b>。<p>数据块仅在<p>种子下载期间可以共享。</html>"
+msgstr "<b>不做种</b><p>数据块仅在种子下载期间可以共享。</p>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
-#, fuzzy
 msgid "<b>Seeding</b>"
-msgstr "<html><b>正在做种</b></html>"
+msgstr "<b>做种</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
-#, fuzzy
 msgid "<b>Not Seeding</b>"
-msgstr "<html><b>没有做种</b></html>"
+msgstr "<b>不做种</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:516
 msgid "FrostWire has not detected a firewall"
@@ -3223,7 +3191,7 @@ msgid ""
 "Don't want to seed? Go to Tools &gt; Options &gt; Bittorrent or select the "
 "Seeding - No Seeding icon at the bottom bar"
 msgstr ""
-"不想作种？进入工具 &gt; 选项 &gt; Bittorrent， 或选择底部的 做种 - 不做种 图标"
+"不想做种？进入工具 &gt; 选项 &gt; Bittorrent， 或选择底部的 做种 - 不做种 图标"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:49
 msgid ""
@@ -3718,7 +3686,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:110
 msgid "You forgot to select your finished downloads \"Seeding\" setting."
-msgstr ""
+msgstr "你还没有选取已完成下载的\"做种\"设置。"
 
 #: src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:112
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
@@ -3753,18 +3721,14 @@ msgid "Find out more..."
 msgstr "发现更多……"
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:74
-#, fuzzy, java-format
+#, java-format
 msgid "I <b>will not</b> use FrostWire {0} for copyright infringement."
-msgstr ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\">我<b>不会</b>把"
-"FrostWire {0} </div>用于侵犯版权。</html>"
+msgstr "我<b>不会</b>把FrostWire {0} 用于侵犯版权。"
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:82
-#, fuzzy, java-format
+#, java-format
 msgid "I <b>might use</b> FrostWire {0} for copyright infringement."
-msgstr ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\">我<b>可能会把</b> "
-"FrostWire {0} 用于侵犯版权。</div></html>"
+msgstr "我<b>可能会把</b> FrostWire {0} 用于侵犯版权。"
 
 #: src/com/limegroup/gnutella/gui/init/IntentWindow.java:43
 msgid "State Your Intent"
@@ -3861,9 +3825,8 @@ msgstr ""
 "便达到最佳性能."
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:104
-#, fuzzy
 msgid "FrostWire is free software,"
-msgstr "FrostWire是免费软件，"
+msgstr "FrostWire是自由软件，"
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:114
 msgid "Do not pay for FrostWire."
@@ -4606,13 +4569,13 @@ msgstr "代理选项"
 msgid "Configure Proxy Options for FrostWire."
 msgstr "配置FrostWire代理服务器选项"
 
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:46
+msgid "No Proxy"
+msgstr "没有代理服务器"
+
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:48
 msgid "Socks v4"
 msgstr "Socks v4"
-
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:50
-msgid "Socks v5"
-msgstr "Socks v5"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:52
 msgid "HTTP"
@@ -4633,10 +4596,6 @@ msgstr "代理服务器："
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:50
 msgid "Port:"
 msgstr "端口："
-
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:56
-msgid "No Proxy"
-msgstr "无代理服务器"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SearchEnginesPaneItem.java:23
 msgid "Search Engines"
@@ -4857,8 +4816,8 @@ msgid ""
 "file(s). Pieces of the seeded file(s) will be available to everybody. While "
 "downloading pieces are always available to other peers in the swarm."
 msgstr ""
-"当你有完整的文件时，做种是连接种子文件的过程。每个人都以获取被做种文件的切片。"
-"下载时,这些文件切片对群中的其他伙伴用户就总是可用的。"
+"当你有完整的文件时，做种是连接种子文件的过程。每个人都可以获取被做种文件的切"
+"片。下载时,这些文件切片对群中的其他伙伴用户就总是可用的。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:34
 msgid "Anonymous Usage Statistics"
@@ -4871,8 +4830,8 @@ msgid ""
 "any information that can personally identify you will be stored on disk or "
 "sent through the network."
 msgstr ""
-"发送匿名的使用统计，以便FrostWire能提高得更有效率。任何可能泄漏你搜索、共享或播"
-"放内容以及其它隐私信息，均不会被存储到磁盘或发送到网络上。"
+"发送匿名的使用统计，以便FrostWire能提高得更有效率。任何可能泄漏你搜索、共享或"
+"播放内容以及其它隐私信息，均不会被存储到磁盘或发送到网络上。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:38
 msgid "Send anonymous usage statistics"
@@ -5214,7 +5173,6 @@ msgid ""
 "filesystem. {0} "
 msgstr""
 "父文件夹的路径超过文件系统允许的最大路径长度。{0}"
-
 #~ msgid "Duplicated"
 #~ msgstr "复制"
 
@@ -5256,7 +5214,6 @@ msgstr""
 #~ msgid ""
 #~ "<html><p>Tracker Announce URLs</p><p>(One tracker per line)</p></html>"
 #~ msgstr "服务器通知 （每行一个服务器）"
-
 
 #~ msgid "Crawling"
 #~ msgstr "检索"
@@ -7142,4 +7099,3 @@ msgstr""
 
 #~ msgid "Firewall Config"
 #~ msgstr "防火墙"
-
