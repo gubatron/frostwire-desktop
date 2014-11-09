@@ -1,11 +1,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # nishizhen <nishizhen@gmail.com>, 2007.
 #
+#: src/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:46
 msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-28 14:37+0300\n"
+"POT-Creation-Date: 2014-11-10 02:09+0300\n"
 "PO-Revision-Date: 2014-11-08 18:57+0800\n"
 "Last-Translator: Liu Xuan <liuxuan01@gmail.com>\n"
 "Language-Team: none\n"
@@ -56,8 +57,8 @@ msgid "Exit"
 msgstr "退出"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:75
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:999
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:746
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:987
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:738
 msgid "Send to iTunes"
 msgstr "发送至iTunes"
 
@@ -83,17 +84,17 @@ msgstr "显示种子文件详细信息"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:137
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:138
-#: src/com/frostwire/gui/library/LibraryExplorer.java:692
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:906
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:907
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:690
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:691
+#: src/com/frostwire/gui/library/LibraryExplorer.java:695
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:894
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:895
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:682
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:683
 msgid "Explore"
 msgstr "浏览"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:139
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:908
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:692
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:896
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:684
 msgid "Open Folder Containing the File"
 msgstr "打开包含该文件的文件夹"
 
@@ -390,7 +391,7 @@ msgid "Downloading"
 msgstr "正在下载"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:201
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1131
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1119
 msgid "Finished"
 msgstr "已完成"
 
@@ -407,11 +408,11 @@ msgid "Paused"
 msgstr "已暂停"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:205
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:629
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:946
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:730
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:617
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:934
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:722
 #: src/com/frostwire/gui/library/LibraryUtils.java:765
-#: src/com/limegroup/gnutella/gui/Initializer.java:535
+#: src/com/limegroup/gnutella/gui/Initializer.java:526
 #: src/com/limegroup/gnutella/gui/MessageService.java:103
 #: src/com/limegroup/gnutella/gui/MessageService.java:123
 #: src/com/limegroup/gnutella/gui/MessageService.java:243
@@ -481,17 +482,17 @@ msgstr "预计完成时间"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:488
 #: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:421
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:862
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:850
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:517
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:646
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:638
 msgid "Launch"
 msgstr "运行"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:489
 #: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:422
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:863
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:851
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:518
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:647
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:639
 msgid "Launch Selected Files"
 msgstr "运行所选文件"
 
@@ -524,8 +525,8 @@ msgstr "取消下载"
 #: src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:161
 #: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:127
 #: src/com/frostwire/gui/library/DeviceUploadDialog.java:89
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:527
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:529
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:515
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:517
 #: src/com/limegroup/gnutella/gui/DialogOption.java:24
 #: src/com/limegroup/gnutella/gui/InputFieldDialog.java:88
 #: src/com/limegroup/gnutella/gui/LanguageWindow.java:210
@@ -540,7 +541,7 @@ msgid "Cancel Selected Downloads"
 msgstr "取消所选下载"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediator.java:713
-#: src/com/frostwire/gui/bittorrent/BTDownloadMediator.java:761
+#: src/com/frostwire/gui/bittorrent/BTDownloadMediator.java:763
 #, java-format
 msgid ""
 "FrostWire was unable to load the torrent file \"{0}\", - it may be malformed "
@@ -637,12 +638,12 @@ msgid "Accept"
 msgstr "接受"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:577
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:469
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:450
 msgid "Check again your tracker URL(s).\n"
 msgstr "再次检查你的Tracker服务器URL.\n"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:577
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:469
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:450
 msgid "Invalid Tracker URL\n"
 msgstr "无效的Tracker服务器URL\n"
 
@@ -778,34 +779,34 @@ msgstr ""
 msgid "License type:"
 msgstr "许可证类型"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:107
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:69
 msgid "Torrent File Created with FrostWire http://www.frostwire.com"
 msgstr "FrostWire创建的种子文件 http://www.frostwire.com"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:205
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:152
 msgid "Contents and Tracking"
 msgstr "内容和曲目"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:206
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:153
 msgid "Copyright License"
 msgstr "版权许可"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:207
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:154
 msgid "Payments/Tips"
 msgstr "付款/小费"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:224
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:930
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:714
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:171
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:918
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:706
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:335
 msgid "Create New Torrent"
 msgstr "创建新种子文件"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:236
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:183
 msgid "Torrent Contents"
 msgstr "种子文件内容"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:239
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:186
 msgid ""
 "These box shows the contents you've selected for your new .torrent.\n"
 "Either a file, or the contents of a folder."
@@ -813,35 +814,54 @@ msgstr ""
 "这些方框显示了你为新种子文件选择的内容。\n"
 "或是一个文件，或是一个文件夹的内容"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:242
-msgid "Select File or Folder..."
-msgstr "选择文件或文件夹……"
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:190
+#, fuzzy
+msgid "Select File"
+msgstr "选择文件夹"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:243
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:191
+#, fuzzy
 msgid ""
-"Click here to select a single file or a folder as the content indexed by "
-"your new .torrent"
+"Click here to select a single file as the content indexed by your new ."
+"torrent"
 msgstr "单击此处选择单一文件或文件夹作为新种子文件索引的内容"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:251
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:192
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:81
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:99
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:121
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:252
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:271
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:446
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:465
+msgid "Select Folder"
+msgstr "选择文件夹"
+
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:193
+#, fuzzy
+msgid ""
+"Click here to select a folder as the content indexed by your new .torrent"
+msgstr "单击此处选择单一文件或文件夹作为新种子文件索引的内容"
+
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:204
 msgid "Tracking"
 msgstr "追溯中"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:253
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:206
 msgid "Trackerless Torrent (DHT)"
 msgstr "无须服务器的种子文件（分布式哈希表）"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:254
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:207
 msgid ""
 "Select this option to create torrents that don't need trackers, completely "
 "descentralized. (Recommended)"
 msgstr "选择该选项，可创建无须服务器的种子文件，即完全分布式。（推荐）"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:257
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:210
 msgid "Start seeding"
 msgstr "开始做种"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:259
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:212
 msgid ""
 "Announce yourself as a seed for the content indexed by this torrent as soon "
 "as it's created.\n"
@@ -851,15 +871,15 @@ msgstr ""
 "应。\n"
 "如果无人作种，种子文件则无法运行。（推荐）"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:262
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:215
 msgid "Tracker Announce URLs"
 msgstr "Tracker服务器公开地址"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:262
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:215
 msgid "One tracker per line"
 msgstr "每行一个tracker服务器"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:263
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:216
 msgid ""
 "Enter a list of valid BitTorrent Tracker Server URLs.\n"
 "Your new torrent will be announced to these trackers if you start seeding "
@@ -868,11 +888,11 @@ msgstr ""
 "输入一系列有效的BitTorrent追踪服务器网址。\n"
 "做种时，你的新种子文件会发布到这些tracker服务器中。"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:274
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:227
 msgid "Web Seeds Mirror URLs"
 msgstr "网络种子镜像网址"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:275
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:228
 msgid ""
 "If these files can be downloaded from the web, enter the URLs of each "
 "possible mirror, one per line (GetRight style)."
@@ -881,8 +901,8 @@ msgstr ""
 "style)."
 
 #. first button will dock all the way east,
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:292
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:839
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:245
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:768
 msgid "Save torrent as..."
 msgstr "种子文件另存为……"
 
@@ -891,40 +911,39 @@ msgstr "种子文件另存为……"
 #. *
 #. * 'Close'.
 #.
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:296
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:249
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:92
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMediator.java:96
 msgid "Close"
 msgstr "关闭 (&C) "
 
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:332
+msgid "Select a single file or one directory"
+msgstr ""
+
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:334
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:347
+#, fuzzy
+msgid "Select a single file"
+msgstr "选择/取消选择所有文件. "
+
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:336
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:352
+msgid "Select a single directory"
+msgstr ""
+
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:353
+#, fuzzy
+msgid "Select folder"
+msgstr "选择文件夹"
+
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:367
-#: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:180
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:100
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:122
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:144
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:167
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:253
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:272
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:293
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:315
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:447
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:466
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:487
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:509
-msgid "Select"
-msgstr "选择"
-
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:383
-msgid "Unkown error. Try again please."
-msgstr "未知错误。请重试。"
-
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:391
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:946
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:730
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:934
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:722
 msgid "Error: You can't read on that file/folder."
 msgstr "错误：无法读取文件/文件夹。"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:450
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:428
 msgid ""
 "Please select a file or a folder.\n"
 "Your new torrent will need content to index."
@@ -932,57 +951,62 @@ msgstr ""
 "请选择文件或文件夹。\n"
 "新种子文件需要索引内容。"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:450
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:428
 msgid "Something's missing"
 msgstr "某些数据丢失"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:457
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:940
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:724
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:438
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:928
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:716
 msgid "The folder you selected is empty."
 msgstr "所选文件夹为空。"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:457
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:940
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:724
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:438
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:928
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:716
 msgid "Invalid Folder"
 msgstr "不合法的文件夹"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:493
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:474
 msgid "Torrent Created."
 msgstr "种子文件已创建。"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:523
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:500
 msgid "Torrent File"
 msgstr "种子文件"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:696
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:513
+#, fuzzy
+msgid "Save .torrent"
+msgstr "种子文件另存为……"
+
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:636
 msgid "wizard.addingmt"
 msgstr "wizard.addingmt"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:700
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:640
 msgid "wizard.savingfile"
 msgstr "wizard.savingfile"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:705
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:643
 msgid "wizard.filesaved"
 msgstr "wizard.filesaved"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:723
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:728
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:657
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:662
 msgid "wizard.operationfailed"
 msgstr "wizard.operationfailed"
 
 #. check just the first file on all mirrors.
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:744
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:677
 msgid "Checking Web seed mirror URLs..."
 msgstr "检查网络种子镜像网址……"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:753
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:686
 msgid "Web seed not reachable."
 msgstr "网络种子不可达。"
 
-#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:850
+#: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:780
 msgid "Saving Torrent..."
 msgstr "正在保存种子文件……"
 
@@ -1091,6 +1115,22 @@ msgstr "请稍候……"
 #: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:179
 msgid "Select the content you want to send"
 msgstr "选择你打算发送的内容"
+
+#: src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:180
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:100
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:122
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:144
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:167
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:253
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:272
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:293
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:315
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:447
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:466
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:487
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:509
+msgid "Select"
+msgstr "选择"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:140
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:263
@@ -1419,10 +1459,10 @@ msgid "Date Modified"
 msgstr "日期已修改"
 
 #: src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:145
-#: src/com/frostwire/gui/library/LibraryExplorer.java:145
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:322
+#: src/com/frostwire/gui/library/LibraryExplorer.java:148
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:310
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:166
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:273
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:265
 #: src/com/frostwire/gui/library/LibrarySearch.java:199
 #: src/com/frostwire/gui/tabs/SearchDownloadTab.java:51
 msgid "Search"
@@ -1437,51 +1477,51 @@ msgstr "保存"
 msgid "Save Selected Files To Folder"
 msgstr "把选中的文件保存到文件夹"
 
-#: src/com/frostwire/gui/library/LibraryExplorer.java:143
-#: src/com/frostwire/gui/library/LibraryExplorer.java:197
+#: src/com/frostwire/gui/library/LibraryExplorer.java:146
+#: src/com/frostwire/gui/library/LibraryExplorer.java:200
 msgid "Search your"
 msgstr "搜索你的"
 
-#: src/com/frostwire/gui/library/LibraryExplorer.java:145
+#: src/com/frostwire/gui/library/LibraryExplorer.java:148
 msgid "'s "
 msgstr "的"
 
-#: src/com/frostwire/gui/library/LibraryExplorer.java:162
+#: src/com/frostwire/gui/library/LibraryExplorer.java:165
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:316
 msgid "tracks"
 msgstr "曲目"
 
-#: src/com/frostwire/gui/library/LibraryExplorer.java:222
+#: src/com/frostwire/gui/library/LibraryExplorer.java:225
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:39
 msgid "Default Save Folder"
 msgstr "默认存储文件夹"
 
-#: src/com/frostwire/gui/library/LibraryExplorer.java:224
+#: src/com/frostwire/gui/library/LibraryExplorer.java:227
 #: src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:36
 msgid "Wi-Fi Sharing"
 msgstr "正在共享的Wi-Fi"
 
-#: src/com/frostwire/gui/library/LibraryExplorer.java:246
+#: src/com/frostwire/gui/library/LibraryExplorer.java:249
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:183
 msgid "Configure Options"
 msgstr "配置选项"
 
-#: src/com/frostwire/gui/library/LibraryExplorer.java:246
+#: src/com/frostwire/gui/library/LibraryExplorer.java:249
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:183
 msgid "You can configure the FrostWire's Options."
 msgstr "你可以配置FrostWire的Options。"
 
-#: src/com/frostwire/gui/library/LibraryExplorer.java:675
+#: src/com/frostwire/gui/library/LibraryExplorer.java:678
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:699
 msgid "Refresh"
 msgstr "刷新"
 
-#: src/com/frostwire/gui/library/LibraryExplorer.java:676
+#: src/com/frostwire/gui/library/LibraryExplorer.java:679
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:700
 msgid "Refresh selected"
 msgstr "刷新选中项"
 
-#: src/com/frostwire/gui/library/LibraryExplorer.java:693
+#: src/com/frostwire/gui/library/LibraryExplorer.java:696
 msgid "Open Library Folder"
 msgstr "打开库文件夹"
 
@@ -1497,36 +1537,36 @@ msgstr "路径"
 msgid "Last Modified"
 msgstr "最后一次修改"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:526
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:514
 msgid "Move to Recycle Bin"
 msgstr "移到回收站"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:526
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:514
 msgid "Move to Trash"
 msgstr "移到垃圾箱"
 
 #. *
 #. * The delete action.
 #.
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:527
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:529
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:965
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:515
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:517
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:953
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:554
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:732
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:770
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:762
 #: src/com/frostwire/gui/searchfield/SearchField.java:271
 #: src/com/limegroup/gnutella/gui/LimeTextField.java:108
 msgid "Delete"
 msgstr "刪除"
 
 #. display list of files that should be deleted
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:579
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:567
 msgid ""
 "Are you sure you want to delete the selected file(s), thus removing it from "
 "your computer?"
 msgstr "确认删除选中文件，从电脑中移除吗？"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:584
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:572
 #: src/com/limegroup/gnutella/gui/LanguageWindow.java:196
 #: src/com/limegroup/gnutella/gui/MessageService.java:173
 #: src/com/limegroup/gnutella/gui/MessageService.java:187
@@ -1545,90 +1585,90 @@ msgid "Message"
 msgstr "消息"
 
 #. display list of files that could not be deleted
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:627
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:615
 msgid ""
 "The following files could not be deleted. They may be in use by another "
 "application or are currently being downloaded to."
 msgstr "下列文件无法删除。它们可能正在被另一个程序使用，或者正在被用于下载。"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:888
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:672
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:876
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:664
 #, fuzzy
 msgid "Launch in"
 msgstr "运行于"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:889
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:673
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:877
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:665
 #, fuzzy
 msgid "Launch Selected Files in"
 msgstr "运行所选文件于"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:931
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:715
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:919
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:707
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:336
 msgid "Create a new .torrent file"
 msgstr "创建一个新的.torrent文件"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:966
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:954
 msgid "Delete Selected Files"
 msgstr "删除选中的文件"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:983
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:971
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:781
 msgid "Rename"
 msgstr "重命名"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1000
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:747
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:988
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:739
 msgid "Send audio files to iTunes"
 msgstr "把音频文件发送给iTunes"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1024
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1012
 msgid "Extract Audio"
 msgstr "解压音频"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1025
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1013
 msgid "Extract .m4a Audio from this .mp4 video"
 msgstr "从该.mp4视频文件中解压.m4a音频文件"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1058
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1046
 msgid "Extracting audio from "
 msgstr "正在从此处解压音频："
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1060
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1048
 msgid "Extracting audio from selected video..."
 msgstr "正在从已选择的视频中解压音频……"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1077
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1065
 msgid "failed"
 msgstr "已失败"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1078
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1066
 msgid "Done extracting audio."
 msgstr "已完成音频解压。"
 
 # According to source files mentioned above, 'out of' means 'proportion', 'ratio'.
 # Since it's impossible to translate into Chinese, a forward slash '/' used instead. BY Liu Xuan.
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1131
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1119
 #, fuzzy
 msgid "out of"
 msgstr " / "
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1134
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1122
 msgid "Could not extract audio from"
 msgstr "无法从此处解压音频："
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1224
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1226
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1212
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1214
 msgid "Share"
 msgstr "共享"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1224
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1226
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1212
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1214
 msgid "Unshare"
 msgstr "未共享"
 
-#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1229
+#: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1217
 msgid "file on local Wi-Fi network"
 msgstr "在本地Wi-Fi无线网上的文件"
 
@@ -1727,7 +1767,7 @@ msgid ""
 msgstr "警告：一个名为{0}的文件已存在。是否覆盖该文件？"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:714
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:844
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:836
 msgid "Refresh Audio Properties"
 msgstr "刷新音频属性"
 
@@ -1746,12 +1786,12 @@ msgid ""
 msgstr "你确认要删除这个播放列表吗? （不会删除任何文件）"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:762
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:828
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:820
 msgid "Cleanup playlist"
 msgstr "清除播放列表"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:763
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:829
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:821
 msgid "Remove the deleted items"
 msgstr "删除所选条目"
 
@@ -1764,12 +1804,12 @@ msgid "Playlist Files (*.m3u)"
 msgstr "播放列表文件（*.m3u）"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:819
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:798
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:790
 msgid "Import .m3u to Playlist"
 msgstr "导入.m3u到播放列表"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:820
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:799
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:791
 msgid "Import a .m3u file into the selected playlist"
 msgstr "导入一个.m3u文件到选中的播放列表"
 
@@ -1794,12 +1834,12 @@ msgid "Where do you want the playlist files copied to?"
 msgstr "你打算把这些播放列表文件复制到哪里? "
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:920
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:813
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
 msgid "Export Playlist to .m3u"
 msgstr "导出播放列表为.m3u"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:921
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:814
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:806
 msgid "Export this playlist into a .m3u file"
 msgstr "导出该播放列表到一个.m3u文件中"
 
@@ -1843,11 +1883,11 @@ msgstr "用时"
 msgid "Folder"
 msgstr "文件夹"
 
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:771
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:763
 msgid "Delete Selected Files from this playlist"
 msgstr "从这个播放列表中删除选中的文件"
 
-#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:845
+#: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:837
 msgid "Refresh the audio properties based on ID3 tags"
 msgstr "刷新基于ID3标签的音频属性"
 
@@ -2429,8 +2469,7 @@ msgstr "感谢Automatix团队"
 msgid ""
 "For helping distribute Frostwire to opensource communities in a very simple "
 "manner."
-msgstr ""
-"以一种非常简单的方式，帮着向开源社区发布Fostwire。"
+msgstr "以一种非常简单的方式，帮着向开源社区发布Fostwire。"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:292
 msgid "Thanks to Ubuntu/Kubuntu Teams"
@@ -2440,8 +2479,7 @@ msgstr "感谢Ubuntu/Kubuntu团队"
 msgid ""
 "For making the world a better place with such an excellent distro, you'll be "
 "the ones to make a difference on the desktop."
-msgstr ""
-"让世界因如此优秀的套件而更美好，你们将是让桌面与众不同的人。"
+msgstr "让世界因如此优秀的套件而更美好，你们将是让桌面与众不同的人。"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:295
 msgid "Thanks to the NSIS Project"
@@ -2539,17 +2577,7 @@ msgstr "通过Paypal捐助支持FrostWire开发"
 msgid "Donate"
 msgstr "捐赠"
 
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:81
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:99
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:121
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:252
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:271
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:446
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:465
-msgid "Select Folder"
-msgstr "选择文件夹"
-
-#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:873
+#: src/com/limegroup/gnutella/gui/FileChooserHandler.java:881
 msgid "All Folders"
 msgstr "所有文件夹"
 
@@ -2579,8 +2607,8 @@ msgstr "以太网"
 #. *
 #. * Message key for the disconnected message
 #.
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:121
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1403
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:123
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1409
 msgid ""
 "Your machine does not appear to have an active Internet connection or a "
 "firewall is blocking FrostWire from accessing the internet. FrostWire will "
@@ -2590,16 +2618,16 @@ msgstr ""
 "设备网络连接无效，或者防火墙屏蔽FrostWire访问网络。如果不选择文件菜单中的\"断"
 "开连接\"，FrostWire会自动尝试连接到网络。"
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:131
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:133
 msgid "&Search"
 msgstr "搜索（&S）"
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:131
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:133
 msgid "&Library"
 msgstr "收藏库（&L）"
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:143
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:171
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:145
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:173
 #, java-format
 msgid "Display the {0} Screen"
 msgstr "显示{0}屏幕"
@@ -2607,11 +2635,11 @@ msgstr "显示{0}屏幕"
 #. *
 #. * String to be displayed in title bar of LW client.
 #.
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:265
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:267
 msgid "FrostWire: Share Big Files"
 msgstr "FrostWire：分享大文件"
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:408
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:410
 msgid ""
 "FrostWire has encountered a problem during startup and cannot proceed. You "
 "may be able to fix this problem by changing FrostWire's Windows "
@@ -2626,20 +2654,20 @@ msgstr ""
 "签，然后单击'用兼容模式运行这个程序'复选框，之后在复选框下的框中选择'Windows "
 "2000'。然后单击底部的'确认'按钮，并重启FrostWire。"
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1313
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1319
 #, java-format
 msgid ""
 "FrostWire could not locate your web browser to display the following "
 "webpage: {0}."
 msgstr "FrostWire无法找到你的浏览网以显示下列网页：{0}。"
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1333
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1356
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1339
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1362
 msgid "FrostWire will not launch the specified file for security reasons."
 msgstr "基於安全理由, FrostWire 将不会运行指定文档。"
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1335
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1358
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1341
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1364
 #, java-format
 msgid ""
 "FrostWire could not launch the specified file.\n"
@@ -2650,8 +2678,8 @@ msgstr ""
 "\n"
 "执行指令：{0}"
 
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1337
-#: src/com/limegroup/gnutella/gui/GUIMediator.java:1360
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1343
+#: src/com/limegroup/gnutella/gui/GUIMediator.java:1366
 msgid "FrostWire could not launch the specified file."
 msgstr "FrostWire无法运行指定的文件. "
 
@@ -2676,32 +2704,32 @@ msgid "KB/s"
 msgstr "KB/秒"
 
 #. Load up the HTML engine.
-#: src/com/limegroup/gnutella/gui/Initializer.java:311
+#: src/com/limegroup/gnutella/gui/Initializer.java:302
 msgid "Loading HTML Engine..."
 msgstr "正在加载HTML引擎……"
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:365
+#: src/com/limegroup/gnutella/gui/Initializer.java:356
 msgid "Loading User Interface..."
 msgstr "正在加载用户界面……"
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:375
+#: src/com/limegroup/gnutella/gui/Initializer.java:366
 msgid "Loading Core Components..."
 msgstr "正在加载核心组件……"
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:432
+#: src/com/limegroup/gnutella/gui/Initializer.java:423
 msgid "Loading Icons..."
 msgstr "正在加载图标……"
 
 #. Touch the I18N stuff to ensure it loads properly.
-#: src/com/limegroup/gnutella/gui/Initializer.java:438
+#: src/com/limegroup/gnutella/gui/Initializer.java:429
 msgid "Loading Internationalization Support..."
 msgstr "正在加载国际化支持……"
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:453
+#: src/com/limegroup/gnutella/gui/Initializer.java:444
 msgid "Loading Old Downloads..."
 msgstr "正在加载以前的下载……"
 
-#: src/com/limegroup/gnutella/gui/Initializer.java:523
+#: src/com/limegroup/gnutella/gui/Initializer.java:514
 msgid ""
 "FrostWire could not create a temporary preferences folder.\n"
 "\n"
@@ -2940,8 +2968,9 @@ msgid "<b>Seeding</b><p>completed torrent downloads.</p>"
 msgstr "<b>做种</b><p>完整的种子下载。</p>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
+#, fuzzy
 msgid ""
-"<b>Not Seeding</b><p>File chunks might be shared only duringa torrent "
+"<b>Not Seeding</b><p>File chunks might be shared only during a torrent "
 "download.</p>"
 msgstr "<b>不做种</b><p>数据块仅在种子下载期间可以共享。</p>"
 
@@ -3052,7 +3081,7 @@ msgstr "下一条提示"
 msgid "Previous Tip"
 msgstr "前一条提示"
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMediator.java:342
+#: src/com/limegroup/gnutella/gui/TipOfTheDayMediator.java:340
 msgid "Loading tips..."
 msgstr "正在加载提示……"
 
@@ -3081,16 +3110,16 @@ msgid ""
 "Seeds represents an approximate number of computers that have the entire "
 "file and are online."
 msgstr ""
-"可通过点击列进行搜索结果排序。如果你在寻找一个种子，最有用的分类栏是'种子数'"
-"列，种子数表示拥有整个文件的在线计算机的大体数量。"
+"可通过点击列进行搜索结果排序。如果你在寻找一个种子，最有用的分类栏是'种子"
+"数'列，种子数表示拥有整个文件的在线计算机的大体数量。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:25
 msgid ""
 "It helps the network if you keep your FrostWire running. Others will connect "
 "to the network easier and searches will perform better."
 msgstr ""
-"保持FrostWire运行将有助于本共享网络。其他人能更容易连接该网络，"
-"实现更好的搜索。"
+"保持FrostWire运行将有助于本共享网络。其他人能更容易连接该网络，实现更好的搜"
+"索。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:26
 #, java-format
@@ -3191,14 +3220,14 @@ msgid ""
 "Don't want to seed? Go to Tools &gt; Options &gt; Bittorrent or select the "
 "Seeding - No Seeding icon at the bottom bar"
 msgstr ""
-"不想做种？进入工具 &gt; 选项 &gt; Bittorrent， 或选择底部的 做种 - 不做种 图标"
+"不想做种？进入工具 &gt; 选项 &gt; Bittorrent， 或选择底部的 做种 - 不做种 图"
+"标"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:49
 msgid ""
 "You can find out which version of FrostWire you are using by choosing 'About "
 "FrostWire' from the Help menu."
-msgstr ""
-"可以通过帮助菜单中的'关于FrostWire'查看你所使用的FrostWire版本。"
+msgstr "可以通过帮助菜单中的'关于FrostWire'查看你所使用的FrostWire版本。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:50
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:67
@@ -3230,8 +3259,8 @@ msgid ""
 "'Options' from the 'Tools' menu and adding new words to those listed under "
 "Filters &gt; Keywords."
 msgstr ""
-"要禁止某些词出现在你的搜索结果中，可通过'工具'菜单中的'选项'，"
-"在'过滤' &gt; '关键词'列表中添加新词。"
+"要禁止某些词出现在你的搜索结果中，可通过'工具'菜单中的'选项'，在'过滤' &gt; "
+"'关键词'列表中添加新词。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:54
 msgid ""
@@ -3240,8 +3269,9 @@ msgid ""
 "toggle other options here too, like whether or not to sort tables "
 "automatically and if you prefer the rows to be striped."
 msgstr ""
-"讨厌工具提示吗？喜欢工具提示吗？在大部分表格中，可通过右击标题栏并选择'更多选项'"
-"开启或关闭工具提示。也可以在此调整其他选项，例如：表格是否自动排序，以及是否倾向于用线框修饰表格的行。"
+"讨厌工具提示吗？喜欢工具提示吗？在大部分表格中，可通过右击标题栏并选择'更多选"
+"项'开启或关闭工具提示。也可以在此调整其他选项，例如：表格是否自动排序，以及是"
+"否倾向于用线框修饰表格的行。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:55
 msgid ""
@@ -3250,23 +3280,22 @@ msgid ""
 "sorting behavior off by right-clicking on a column header, choosing 'More "
 "Options' and un-checking 'Sort Automatically'."
 msgstr ""
-"单击列可以对上传、下载等进行排序。表格可随之重新排序。"
-"右击列标题，选择'更多选项'，取消勾选'自动分类'，可关闭自动排序功能。"
+"单击列可以对上传、下载等进行排序。表格可随之重新排序。右击列标题，选择'更多选"
+"项'，取消勾选'自动分类'，可关闭自动排序功能。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:56
 msgid ""
 "Are you unhappy with the small number of search results you received? Right-"
 "click a search result, then choose Search More, then Get More Results."
 msgstr ""
-"是否因为搜索结果太少而不满意？右击搜索结果，然后选择'更多搜索'，即可得到"
-"更多搜索结果。"
+"是否因为搜索结果太少而不满意？右击搜索结果，然后选择'更多搜索'，即可得到更多"
+"搜索结果。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:66
 msgid ""
 "You can find out which version of FrostWire you are using by choosing 'About "
 "FrostWire' from the FrostWire menu."
-msgstr ""
-"点击FrostWire菜单中的'关于FrostWire'，即可得知你的FrostWire版本号。"
+msgstr "点击FrostWire菜单中的'关于FrostWire'，即可得知你的FrostWire版本号。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:68
 msgid ""
@@ -3274,10 +3303,9 @@ msgid ""
 "the 'FrostWire' menu, and changing the value of 'Autocomplete Text' under "
 "the 'View' option."
 msgstr ""
-"要开启或关闭所搜的文本自动补全功能，可选取'FrostWire'菜单中的'工具'，"
-"在'查看'选项中更改'自动补全文本'的取值。"
+"要开启或关闭所搜的文本自动补全功能，可选取'FrostWire'菜单中的'工具'，在'查"
+"看'选项中更改'自动补全文本'的取值。"
 
-#: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:71
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:69
 msgid ""
 "Want to see dialogs for questions which you previously marked 'Do not "
@@ -3285,8 +3313,9 @@ msgid ""
 "&gt; Tools, Options and check 'Revert To Default' under View &gt; FrostWire "
 "Popups."
 msgstr ""
-"想查看被你标识为'不再显示此信息'或'总是使用此答案'的问题对话框？进入'FrostWire' "
-"&gt; '工具'，'选项'并在 '查看' &gt; 'FrostWire弹出窗口' 中勾选'恢复默认设置'。"
+"想查看被你标识为'不再显示此信息'或'总是使用此答案'的问题对话框？进"
+"入'FrostWire' &gt; '工具'，'选项'并在 '查看' &gt; 'FrostWire弹出窗口' 中勾"
+"选'恢复默认设置'。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:70
 msgid ""
@@ -3294,8 +3323,8 @@ msgid ""
 "'Tools' from the 'FrostWire' menu and adding new words to those listed under "
 "Filters &gt; Keywords."
 msgstr ""
-"要禁止某些词出现在你的搜索结果中，可通过'FrostWire'菜单中的'工具'，"
-"在'过滤' &gt; '关键词'列表中添加新词。"
+"要禁止某些词出现在你的搜索结果中，可通过'FrostWire'菜单中的'工具'，在'过滤' "
+"&gt; '关键词'列表中添加新词。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:71
 msgid ""
@@ -3304,8 +3333,9 @@ msgid ""
 "can toggle other options here too, like whether or not to sort tables "
 "automatically and if you prefer the rows to be striped."
 msgstr ""
-"讨厌工具提示吗？喜欢工具提示吗？在大部分表格中，可通过右击标题栏并选择'更多选项'"
-"开启或关闭工具提示。也可以在此调整其他选项，例如：表格是否自动排序，以及是否倾向于用线框修饰表格的行。"
+"讨厌工具提示吗？喜欢工具提示吗？在大部分表格中，可通过右击标题栏并选择'更多选"
+"项'开启或关闭工具提示。也可以在此调整其他选项，例如：表格是否自动排序，以及是"
+"否倾向于用线框修饰表格的行。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:72
 msgid ""
@@ -3314,8 +3344,8 @@ msgid ""
 "sorting behavior off by control-clicking on a column header, choosing 'More "
 "Options' and un-checking 'Sort Automatically'."
 msgstr ""
-"单击列可以对上传、下载等进行排序。表格可随之重新排序。"
-"右击列标题，选择'更多选项'，取消勾选'自动分类'，可关闭自动排序功能。"
+"单击列可以对上传、下载等进行排序。表格可随之重新排序。右击列标题，选择'更多选"
+"项'，取消勾选'自动分类'，可关闭自动排序功能。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:73
 msgid ""
@@ -3323,8 +3353,8 @@ msgid ""
 "that when you delete a file from the Library, you have the option to either "
 "permanently delete the file from your computer or move it to the Trash."
 msgstr ""
-"FrostWire的收藏库是一个文件管理器，而不仅仅是MP3播放列表。这意味着当你从收藏库中删除一"
-"个文件时，你可以选择从电脑中永久性删除该文件，或者将其移至回收站。"
+"FrostWire的收藏库是一个文件管理器，而不仅仅是MP3播放列表。这意味着当你从收藏"
+"库中删除一个文件时，你可以选择从电脑中永久性删除该文件，或者将其移至回收站。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:74
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:95
@@ -3333,17 +3363,16 @@ msgid ""
 "to 'Tools' on FrostWire menu and select the option 'Play with native media "
 "player'."
 msgstr ""
-"想要在默认的媒体播放器而非在FrostWire中播放音乐？"
-"进入Frostwire菜单的'工具'项，"
-"选择'使用默认媒体播放器进行播放'。"
+"想要在默认的媒体播放器而非在FrostWire中播放音乐？进入Frostwire菜单的'工"
+"具'项，选择'使用默认媒体播放器进行播放'。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:75
 msgid ""
 "Make FrostWire's block more results by making the filter stricter. Adjust "
 "that and more by going to FrostWire &gt; Tools &gt; Filters &gt;"
 msgstr ""
-"要让FrostWire过滤更多搜索结果，可以设置更严格的过滤器。"
-"可以在 FrostWire &gt; 预设 &gt; 过滤 &gt; 中进行调整或更多设置。"
+"要让FrostWire过滤更多搜索结果，可以设置更严格的过滤器。可以在 FrostWire &gt; "
+"预设 &gt; 过滤 &gt; 中进行调整或更多设置。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:84
 msgid ""
@@ -3352,9 +3381,9 @@ msgid ""
 "the program associated with a file, go to the 'Folder Options' in Windows "
 "Control Panel. This is a Windows setting, not a FrostWire setting."
 msgstr ""
-"在'?'列中紧邻搜索结果的图标，用于表示打开该文件类型的程序。"
-"要改变与文件关联的程序，可以到Windows控制面板的'文件夹选项'中设置，"
-"这是Windows的设置项，而不是FrostWire的设置项。"
+"在'?'列中紧邻搜索结果的图标，用于表示打开该文件类型的程序。要改变与文件关联的"
+"程序，可以到Windows控制面板的'文件夹选项'中设置，这是Windows的设置项，而不是"
+"FrostWire的设置项。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:85
 msgid ""
@@ -3362,8 +3391,8 @@ msgid ""
 "that when you delete a file from the Library, you have the option to either "
 "permanently delete the file from your computer or move it to the Recycle Bin."
 msgstr ""
-"FrostWire的收藏库是一个文件管理器，而不仅仅是MP3播放列表。这意味着当你从收藏库中删除一"
-"个文件时，你可以选择从电脑中永久性删除该文件，或者将其移至回收站。"
+"FrostWire的收藏库是一个文件管理器，而不仅仅是MP3播放列表。这意味着当你从收藏"
+"库中删除一个文件时，你可以选择从电脑中永久性删除该文件，或者将其移至回收站。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:86
 msgid ""
@@ -3371,8 +3400,8 @@ msgid ""
 "click the system tray icon (next to the time), and select Exit. You can "
 "change this behavior by going to Tools &gt; Options &gt; System Tray."
 msgstr ""
-"当关闭FrostWire时，它缩小到系统托盘。要退出，右击系统托盘图标（在时间旁边），选"
-"择退出。可通过工具 &gt; 选项 &gt; 系统托盘对此进行更改。"
+"当关闭FrostWire时，它缩小到系统托盘。要退出，右击系统托盘图标（在时间旁边），"
+"选择退出。可通过工具 &gt; 选项 &gt; 系统托盘对此进行更改。"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:112
 msgid "Thank you for using FrostWire"
@@ -3405,8 +3434,8 @@ msgid ""
 "update now, FrostWire will update automatically when you close. Would you "
 "like to update now?"
 msgstr ""
-"FrostWire需要重新启动以安装更新。如你选择现在不更新，FrostWire会在关闭时自"
-"动更新。你要现在更新吗？"
+"FrostWire需要重新启动以安装更新。如你选择现在不更新，FrostWire会在关闭时自动"
+"更新。你要现在更新吗？"
 
 #: src/com/limegroup/gnutella/gui/UpdateDialog.java:175
 msgid "Update Ready"
@@ -3425,16 +3454,15 @@ msgstr "一个新的版本可用，升级吗？"
 msgid ""
 "FrostWire has detected a VPN connection, your privacy is safe from prying "
 "eyes."
-msgstr ""
-"FrostWire已经检测到一个虚拟专用网络（VPN）连接，你的隐私已有安全保障。"
+msgstr "FrostWire已经检测到一个虚拟专用网络（VPN）连接，你的隐私已有安全保障。"
 
 #: src/com/limegroup/gnutella/gui/VPNStatusButton.java:64
 msgid ""
 "FrostWire can't detect an encrypted VPN connection, your privacy is at risk. "
 "Click icon to set up an encrypted VPN connection."
 msgstr ""
-"FrostWire没有检测到加密的虚拟专用网络（VPN）连接，你的隐私存在泄漏风险。"
-"点击图标，设置一个加密的虚拟专用网络（VPN）连接。"
+"FrostWire没有检测到加密的虚拟专用网络（VPN）连接，你的隐私存在泄漏风险。点击"
+"图标，设置一个加密的虚拟专用网络（VPN）连接。"
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:60
 msgid "O&pen .Torrent or Magnet"
@@ -3454,9 +3482,7 @@ msgstr "下载.Torrent或者Magnet或者YouTube视频链接"
 msgid ""
 "Type a magnet link, the file path or web address of a torrent file and "
 "FrostWire will start downloading it for you."
-msgstr ""
-"输入一个magnet链接，文件路径或者网络地址，"
-"FrostWire会为你启动下载。"
+msgstr "输入一个magnet链接，文件路径或者网络地址，FrostWire会为你启动下载。"
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:127
 msgid "Open:"
@@ -3466,8 +3492,7 @@ msgstr "打开："
 msgid ""
 "FrostWire cannot download this address. Make sure you typed it correctly, "
 "and then try again."
-msgstr ""
-"FrostWire无法下载该网址。确认输入正确，并重试。"
+msgstr "FrostWire无法下载该网址。确认输入正确，并重试。"
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:310
 msgid "&Close"
@@ -3566,8 +3591,8 @@ msgid ""
 "bug report. For further help and to aid with debugging, please visit www."
 "frostwire.com and click 'Support'. Thank you."
 msgstr ""
-"FrostWire无法连接到bug服务器传送下面的错误报告。如需进一步帮助并配合调试错误，请访"
-"问www.frostwire.com，点击'技术支持'。谢谢。"
+"FrostWire无法连接到bug服务器传送下面的错误报告。如需进一步帮助并配合调试错"
+"误，请访问www.frostwire.com，点击'技术支持'。谢谢。"
 
 #: src/com/limegroup/gnutella/gui/bugs/BugManager.java:528
 msgid "Copy Report"
@@ -3800,8 +3825,7 @@ msgstr ""
 msgid ""
 "Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
-msgstr ""
-"安装及使用该程序，不构成一个获取或散布未经授权内容的许可。"
+msgstr "安装及使用该程序，不构成一个获取或散布未经授权内容的许可。"
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:46
 msgid "Welcome"
@@ -3821,8 +3845,8 @@ msgid ""
 "Welcome to the FrostWire setup wizard. FrostWire will guide you through a "
 "series of steps to configure FrostWire for optimum performance."
 msgstr ""
-"欢迎使用FrostWire安装向导. FrostWire将指导你通过一系列步骤配置FrostWire, 以"
-"便达到最佳性能."
+"欢迎使用FrostWire安装向导. FrostWire将指导你通过一系列步骤配置FrostWire, 以便"
+"达到最佳性能."
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:104
 msgid "FrostWire is free software,"
@@ -3871,8 +3895,7 @@ msgstr "什么是一个虚拟专用网络（VPN）？"
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid ""
 "Learn about how to protect your internet connection and your privacy online"
-msgstr ""
-"了解如何保护你的互联网连接和你的在线隐私"
+msgstr "了解如何保护你的互联网连接和你的在线隐私"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 msgid "Order FrostWire Stickers"
@@ -3922,7 +3945,8 @@ msgstr "你为FrostWire付款了吗（&D）？ "
 msgid ""
 "Did you pay for FrostWire? FrostWire is Free as in Free Beer. Avoid Scams."
 msgstr ""
-"你为FrostWire付款了吗？FrostWire是免费软件。如同免费啤酒一样。当心（收费）诈骗。"
+"你为FrostWire付款了吗？FrostWire是免费软件。如同免费啤酒一样。当心（收费）诈"
+"骗。"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:97
 msgid "Tip of the &Day"
@@ -4087,8 +4111,7 @@ msgstr "将所有设置恢复成出厂设置"
 msgid ""
 "You have made changes to some of FrostWire's settings. Would you like to "
 "save these changes?"
-msgstr ""
-"你已对FrostWire设置做了一些更改。是否保存这些设置？"
+msgstr "你已对FrostWire设置做了一些更改。是否保存这些设置？"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:237
 msgid "Search here"
@@ -4188,8 +4211,7 @@ msgstr "正在加载“选项” 窗口……"
 #: src/com/limegroup/gnutella/gui/options/OptionsPaneManager.java:129
 msgid ""
 "One or more options will take effect the next time FrostWire is restarted."
-msgstr ""
-"一项或多项设定将在再次启动FrostWire后生效。"
+msgstr "一项或多项设定将在再次启动FrostWire后生效。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:29
 msgid "Links and File Types"
@@ -4201,8 +4223,8 @@ msgid ""
 "instruct FrostWire to always regain these associations if another program "
 "takes them."
 msgstr ""
-"可以使用FrostWire打开某些文件类型和协议。如果已被其他程序占用，"
-"也可以设置FrostWire为总是重新获取这些关联。"
+"可以使用FrostWire打开某些文件类型和协议。如果已被其他程序占用，也可以设置"
+"FrostWire为总是重新获取这些关联。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:59
 msgid "Use FrostWire for..."
@@ -4286,9 +4308,9 @@ msgid ""
 "recommended)."
 msgstr ""
 "可以选择错误报告如何发送。查看错误报告范例，点击'查看范例'。选择'始终立即发"
-"送'，则当FrostWire遇到内部问题时可以马上联系bug服务器。选择'始终要求重新审核'，"
-"则告诉FrosWire在发送错误报告给bug服务器前需征得你的同意。选择'始终忽略所有错"
-"误'，则让FrostWire忽略所有错误（不推荐该选项）。"
+"送'，则当FrostWire遇到内部问题时可以马上联系bug服务器。选择'始终要求重新审"
+"核'，则告诉FrosWire在发送错误报告给bug服务器前需征得你的同意。选择'始终忽略所"
+"有错误'，则让FrostWire忽略所有错误（不推荐该选项）。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:99
 msgid "Send Errors Automatically if FrostWire is Frozen"
@@ -4310,8 +4332,7 @@ msgstr "授权警告"
 msgid ""
 "You can choose whether to be warned about downloading a file without a "
 "license."
-msgstr ""
-"你可以选择是否在下载一个没有许可证的文件时收到警告。"
+msgstr "你可以选择是否在下载一个没有许可证的文件时收到警告。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:29
 msgid "Show License Warning:"
@@ -4331,10 +4352,11 @@ msgid ""
 "router if you choose manual configuration, but FrostWire will try its best "
 "so you don't have to.)"
 msgstr ""
-"FrostWire可以自动配置为透过防火墙或路由器运行。使用通用即插即用（UpnP）和其"
-"他内网互联技术，FrostWire能够自动配置你的路由器或防火墙，使其达到最佳效果。如"
-"果你的路由器不支持UPnP，FrostWire可以手动设置为外部接口。（如果选择手动配置，"
-"则你可能需要相应设置你的路由器，不过FrostWire会尽力而为以便无需你动手设置路由器。）"
+"FrostWire可以自动配置为透过防火墙或路由器运行。使用通用即插即用（UpnP）和其他"
+"内网互联技术，FrostWire能够自动配置你的路由器或防火墙，使其达到最佳效果。如果"
+"你的路由器不支持UPnP，FrostWire可以手动设置为外部接口。（如果选择手动配置，则"
+"你可能需要相应设置你的路由器，不过FrostWire会尽力而为以便无需你动手设置路由"
+"器。）"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:63
 msgid "Use random port (Recommended)"
@@ -4437,8 +4459,7 @@ msgstr "最大搜索数目"
 #: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:22
 msgid ""
 "You can set the maximum number of simultaneous searches you can perform."
-msgstr ""
-"你可以设置可用的最大并发搜索数。"
+msgstr "你可以设置可用的最大并发搜索数。"
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4461,9 +4482,9 @@ msgid ""
 "disable this interface, FrostWire will revert to binding to an arbitrary "
 "address."
 msgstr ""
-"让FrostWire把输出连接绑定到一个指定网络接口的IP地址。"
-"监听套接口将继续监听所有可用接口。这对多宿主主机是有用的。"
-"如果你稍后禁用这个接口，FrostWire将恢复为绑定到一个任意的地址。"
+"让FrostWire把输出连接绑定到一个指定网络接口的IP地址。监听套接口将继续监听所有"
+"可用接口。这对多宿主主机是有用的。如果你稍后禁用这个接口，FrostWire将恢复为绑"
+"定到一个任意的地址。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:63
 msgid "Use a specific network interface."
@@ -4474,19 +4495,19 @@ msgid ""
 "FrostWire was unable to determine which network interfaces are available on "
 "this machine. Outgoing connections will bind to any arbitrary interface."
 msgstr ""
-"FrostWire无法确认这台机器上哪个网络接口可用。"
-"输出连接连接将绑定到一个任意的接口。"
+"FrostWire无法确认这台机器上哪个网络接口可用。输出连接连接将绑定到一个任意的接"
+"口。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:18
 msgid "Notifications"
 msgstr "通知"
 
 #: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:20
+#, fuzzy
 msgid ""
 "FrostWire can display popups to notify you when certain things happen, such "
-"as a download completing. "
-msgstr ""
-"有事情发生时，FrostWire会显示弹出窗口通知你，比如完成一个下载的时候。"
+"as a download completing."
+msgstr "有事情发生时，FrostWire会显示弹出窗口通知你，比如完成一个下载的时候。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:23
 msgid "Show Notifications:"
@@ -4500,8 +4521,7 @@ msgstr "部分文件"
 msgid ""
 "You can choose whether or not to automatically share partially downloaded "
 "files."
-msgstr ""
-"你可以选择是否自动共享部分下载的文件。"
+msgstr "你可以选择是否自动共享部分下载的文件。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:26
 msgid "Allow Partial Sharing:"
@@ -4515,8 +4535,7 @@ msgstr "FrostWire媒体播放器:"
 msgid ""
 "You can play your media with the native operating system player if the "
 "format is supported."
-msgstr ""
-"你可以用本地操作系统播放器来播放媒体文件，只要格式支持。"
+msgstr "你可以用本地操作系统播放器来播放媒体文件，只要格式支持。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:40
 msgid "Play with the native media player"
@@ -4534,8 +4553,7 @@ msgstr "FrostWire弹出窗口"
 msgid ""
 "Redisplay messages for which you have chosen 'Do not display this message "
 "again' or 'Always use this answer'."
-msgstr ""
-"对于已选择'不再显示此信息'或'始终这样回答'的项目，重新显示信息。"
+msgstr "对于已选择'不再显示此信息'或'始终这样回答'的项目，重新显示信息。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:28
 msgid "Revert to Default:"
@@ -4569,18 +4587,6 @@ msgstr "代理选项"
 msgid "Configure Proxy Options for FrostWire."
 msgstr "配置FrostWire代理服务器选项"
 
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:46
-msgid "No Proxy"
-msgstr "没有代理服务器"
-
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:48
-msgid "Socks v4"
-msgstr "Socks v4"
-
-#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:52
-msgid "HTTP"
-msgstr "HTTP"
-
 #. *
 #. * Constant for the key of the locale-specific <tt>String</tt> for the
 #. * label on the proxy host field.
@@ -4596,6 +4602,10 @@ msgstr "代理服务器："
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:50
 msgid "Port:"
 msgstr "端口："
+
+#: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:56
+msgid "No Proxy"
+msgstr "没有代理服务器"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SearchEnginesPaneItem.java:23
 msgid "Search Engines"
@@ -4692,8 +4702,7 @@ msgstr "如果继续，你会清除所有有关信息\n"
 msgid ""
 "You can choose whether or not to automatically run FrostWire when your "
 "computer starts."
-msgstr ""
-"你可以选择电脑启动时是否自动运行FrostWire。"
+msgstr "你可以选择电脑启动时是否自动运行FrostWire。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:30
 msgid "Run on System Startup:"
@@ -4718,8 +4727,7 @@ msgstr "连接质量指示器"
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:22
 msgid ""
 "You can display a measurement of your connection quality in the status bar."
-msgstr ""
-"可以在状态栏中显示连接质量的测量值。"
+msgstr "可以在状态栏中显示连接质量的测量值。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:29
 msgid "Show Connection Quality Indicator:"
@@ -4744,8 +4752,7 @@ msgstr "BitTorrent连接设置"
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:27
 msgid ""
 "Adjust connection settings to make better use of your internet connection"
-msgstr ""
-"调整连接设置，更好地利用网络连接"
+msgstr "调整连接设置，更好地利用网络连接"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:29
 msgid "Maximum active downloads"
@@ -4784,13 +4791,11 @@ msgid "Set the Maximum BitTorrent upload speed in KB/s."
 msgstr "设置BitTorrent的最大上传速度，以KB/为单位。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
-
 msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
 msgstr ""
-"注意：过低的上传速度（吸血行为）会被一些track服务器惩罚，"
-"导致更慢的下载。"
+"注意：过低的上传速度（吸血行为）会被一些track服务器惩罚，导致更慢的下载。"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:52
 msgid "Upload Speed:"
@@ -4923,8 +4928,7 @@ msgstr "下载所有选中的文件."
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:49
 msgid ""
 "See detail web page about the selected torrent (Contents, Comments, Seeds)"
-msgstr ""
-"查看有关选定种子文件的详细网页（内容、评论、种子）"
+msgstr "查看有关选定种子文件的详细网页（内容、评论、种子）"
 
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:50
 msgid "Stop current search"
@@ -4971,17 +4975,11 @@ msgstr "加载搜索窗口……"
 msgid ""
 "Your search must be at least three characters to avoid congesting the "
 "network."
-msgstr ""
-"你必须输入至少3个字符进行搜索，以免造成网络阻塞。"
+msgstr "你必须输入至少3个字符进行搜索，以免造成网络阻塞。"
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:216
 msgid "Your search is too long. Please make your search smaller and try again."
 msgstr "搜索词太长。请精简搜索词并重试。"
-
-#: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:107
-#: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:109
-msgid "0"
-msgstr "0"
 
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:127
 msgid "Name|Source|Ext."
@@ -5042,8 +5040,7 @@ msgstr "\"magnet:\"链接"
 msgid ""
 "One or more files or protocols that FrostWire uses are no longer associated "
 "with FrostWire. Would you like FrostWire to re-associate them?"
-msgstr ""
-"FrostWire使用的一个或多个文件或协议不再与FrostWire关联。是否重新关联？"
+msgstr "FrostWire使用的一个或多个文件或协议不再与FrostWire关联。是否重新关联？"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:50
 msgid "Revert To Default"
@@ -5068,2034 +5065,3 @@ msgstr "扩展的工具提示"
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:189
 msgid "You cannot turn off all columns."
 msgstr "你不能关掉所有列。"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:37
-msgid "Invalid Filename"
-msgstr "非法的文件名"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:40
-msgid "Download Already Finished"
-msgstr "下载已完成"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:43
-msgid "No Write Permission"
-msgstr "无写入权限"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:46
-msgid "Folder Does Not Exist"
-msgstr "文件夹不存在"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:49
-msgid "File Already Exists"
-msgstr "文件已存在"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:52
-msgid "Filename Taken"
-msgstr "文件名 "
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:55
-msgid "Not a Folder"
-msgstr "不是一个文件夹"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:58
-msgid "Not a File"
-msgstr "不是一个文件"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:61
-msgid "Filesystem Error"
-msgstr "文件系统错误"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:64
-msgid "Same File Already Being Downloaded"
-msgstr "同样的文件已在下载中"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:88
-#, java-format
-msgid ""
-"Could not set file location to {0}, because the filename is invalid and may "
-"corrupt your system."
-msgstr ""
-"由于文件名无效且可能影响系统，因此无法下载至文件夹{0}。"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:91
-msgid "Could not set the file location, the download is already finished."
-msgstr "无法设置文件位置，下载已完成。"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:94
-#, java-format
-msgid ""
-"Could not save download to the folder {0}, because you do not have write "
-"access to it."
-msgstr ""
-"由于你没有写入权限，无法保存下载至文件夹{0}。"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:98
-#, java-format
-msgid ""
-"Could not save download to folder {0}, because the folder does not exist."
-msgstr "由于文件夹不存在，无法保存下载至文件夹{0}。"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:102
-#, java-format
-msgid "A file already exists at {0}."
-msgstr "文件已存在于{0}。"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:106
-#, java-format
-msgid "Another download is already saving to {0}."
-msgstr "另一下载已存于{0}。"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:110
-#, java-format
-msgid ""
-"Could not set download folder to {0}, because it represents an individual "
-"file, not a folder."
-msgstr ""
-"由于其是一个独立的文件，而非文件夹，因此无法下载至文件夹{0}。"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:114
-#, java-format
-msgid "Could not set file location to {0}, because it is not a regular file."
-msgstr "由于不是一个正常文件，无法下载至文件夹{0}。"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:117
-msgid "Could not set file location due to an error in the filesystem."
-msgstr "由于文件系统错误，无法设置文件位置。"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:119
-msgid "The same file is already being downloaded."
-msgstr "同一文件已在下载中。"
-
-#: src/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:121
-#, java-format
-msgid ""
-"The path of the parent folder exceeds the maximum length of paths on the "
-"filesystem. {0} "
-msgstr""
-"父文件夹的路径超过文件系统允许的最大路径长度。{0}"
-#~ msgid "Duplicated"
-#~ msgstr "复制"
-
-#~ msgid "Downloading Torrent"
-#~ msgstr "下载 "
-
-#~ msgid "globalmanager.download.remove.veto"
-#~ msgstr "全球管理器。下载。移除。否决"
-
-#~ msgid "TCP:"
-#~ msgstr "TCP:"
-
-#~ msgid "UDP:"
-#~ msgstr "UDP:"
-
-#~ msgid ""
-#~ "You must enter a port between 1 and 65535 when manually forcing your UDP "
-#~ "port."
-#~ msgstr "你 必须输入 1 到 65535 之间的 数. "
-
-#~ msgid "Enable Authentication (Does Not Work for HTTP Proxies):"
-#~ msgstr "启用身份验证（不适用于HTTP代理服务器）："
-
-#~ msgid "Number of upload slots per torrent"
-#~ msgstr "每份种子文件上传槽的数目"
-
-#~ msgid "Buy"
-#~ msgstr "购买"
-
-#~ msgid "Loading Community Chat..."
-#~ msgstr "加载社区聊天..."
-
-#~ msgid "Loading Community Chat Window..."
-#~ msgstr "加载监控窗口...  "
-
-#~ msgid "Torrent Properties"
-#~ msgstr "你 正在 共享 文件的 数目. "
-
-#~ msgid ""
-#~ "<html><p>Tracker Announce URLs</p><p>(One tracker per line)</p></html>"
-#~ msgstr "服务器通知 （每行一个服务器）"
-
-#~ msgid "Crawling"
-#~ msgstr "检索"
-
-#~ msgid ""
-#~ "Unable to rename the file '{0}'. It may be in use by another application."
-#~ msgstr "不能 重命名 此 文件 {0} . 它可能 正在 被别的 程序 使用."
-
-#, fuzzy
-#~ msgid " selected videos..."
-#~ msgstr "选择 文件夹"
-
-#~ msgid "C&hat"
-#~ msgstr "结束聊天 "
-
-#~ msgid ""
-#~ "The more stars a search result has, the better the chances of the "
-#~ "download completing successfully! Some search results may even appear "
-#~ "with four blue stars and a speed of 'Ethernet'. These results have the "
-#~ "greatest chance of completing successfully."
-#~ msgstr ""
-#~ "搜索结果的星级越多，下载完全成功的机会则越大！一些搜索结果还可能出现四颗蓝"
-#~ "星和'以太网'的速度。这些搜索结果成功下载的机会最大。"
-
-#~ msgid ""
-#~ "FrostWire is written in Java, which means that having the latest version "
-#~ "of Java will improve FrostWire's speed and stability. You can find the "
-#~ "most recent Java release at <a href=\"{0}\">www.java.com</a>."
-#~ msgstr ""
-#~ "FrostWire是用Java写的，表示拥有最新版本的Java会提高FrostWire的速度与稳定"
-#~ "性。可在www.java.com找到最新Java版本。"
-
-#~ msgid ""
-#~ "Want to see dialogs for questions which you previously marked 'Do not "
-#~ "display this message again' or 'Always Use This Answer'? Go to FrostWire "
-#~ "&gt; Preferences, and check 'Revert To Default' under View &gt; Popups."
-#~ msgstr ""
-#~ "想查看你以前标识'不再显示此信息'或'总是使用此答案'的问题对话框？进入"
-#~ "FrostWire预设选项，在查看中的'恢复默认设置'弹出窗口打勾。"
-
-#~ msgid ""
-#~ "You can save individual downloads to custom locations. Control-click a "
-#~ "search result and choose Download As. You can even change the location of "
-#~ "a download in progress by control-clicking the download and choosing "
-#~ "Change File Location."
-#~ msgstr ""
-#~ "可以保存个人下载到自定义位置。右击一份搜索结果，选择下载至。你还可以通过右"
-#~ "击下载，选择更改文件位置进行更改进程中的下载位置。"
-
-#~ msgid ""
-#~ "Did you just download a file that you don't want to share? In the "
-#~ "Library, control-click it and choose 'Stop Sharing File'."
-#~ msgstr "只想下载文档不想共享吗？在收藏库中，右击并选择'停止共享文件'。"
-
-#~ msgid ""
-#~ "Did you know you can save different types of files, such as audio, video, "
-#~ "or images, in different folders on your computer automatically? Just go "
-#~ "to FrostWire &gt; Preferences &gt; Saving to choose the location for each "
-#~ "type of file."
-#~ msgstr ""
-#~ "你知道可以在电脑不同的文件夹中自动保存不同类型的文档吗？如：音频、录像、或"
-#~ "者图片。只需进入FrostWire-预设，为每种类型的文件选择保存位置。"
-
-#~ msgid ""
-#~ "Want FrostWire to look like your other Windows programs? Choose the "
-#~ "Windows theme, available from the View &gt; Apply Skins menu."
-#~ msgstr ""
-#~ "想让FrostWire看上去像其他Windows程序？从查看-皮肤应用菜单中选择Windows主"
-#~ "题。"
-
-#~ msgid ""
-#~ "Want to play music in your preferred media player instead of in "
-#~ "FrostWire? Right-click the FrostWire status bar and deselect 'Show Media "
-#~ "Player'. Then go to Tools &gt; Options &gt; Helper Apps to set the "
-#~ "program of your choice."
-#~ msgstr ""
-#~ "想要在默认的媒体播放器播放音乐而非在FrostWire？右击FrostWire状态栏，不选"
-#~ "择'显示媒体播放器'。然后进入工具-选项-应用程序帮助，设置你所选的程序。"
-
-#~ msgid ""
-#~ "FrostWire's Community Chat Tab requires you to have a nickname to "
-#~ "communicate with others in the chatrooms."
-#~ msgstr "FrostWire的社区聊天标签需要用昵称在聊天室中与其他人交流。"
-
-#~ msgid "Type your chat nickname here (any name):"
-#~ msgstr "在此输入你的聊天昵称（任何名字）："
-
-#~ msgid "Show Smi&leys"
-#~ msgstr "显示表情符号"
-
-#~ msgid "Show emoticons in chat"
-#~ msgstr "在聊天中显示表情符号"
-
-#~ msgid "Community Chat"
-#~ msgstr "社区聊天"
-
-#~ msgid ""
-#~ "FrostWire's Community Chat Tab requires you to have a nickname to "
-#~ "communicate with others in the chatrooms"
-#~ msgstr "FrostWire社区交流标签需要你用昵称在聊天室与其他人交流"
-
-#~ msgid "The chosen nickname is not allowed."
-#~ msgstr "选中的昵称不可用。"
-
-#~ msgid "Warning: Forbidden name!"
-#~ msgstr "警告：禁止使用该名！"
-
-#, fuzzy
-#~ msgid ""
-#~ " torrents that FrostWire has learned to speed up your search results.\n"
-#~ "Do you wish to continue?"
-#~ msgstr "FrostWire已提高搜索结果速度的文件。确定继续？"
-
-#~ msgid "language"
-#~ msgstr "语言: "
-
-#~ msgid "languageencoding"
-#~ msgstr "语言编码"
-
-#~ msgid "lngextension"
-#~ msgstr "扩展名: "
-
-#~ msgid "backuplanguage"
-#~ msgstr "语言: "
-
-#~ msgid "backuplanguageencoding"
-#~ msgstr "备份语言编码"
-
-#~ msgid "gui"
-#~ msgstr "gui"
-
-#~ msgid "authorizedjoinlist"
-#~ msgstr "授权加入列表"
-
-#~ msgid "authorizedleavelist"
-#~ msgstr "授权离开列表"
-
-#~ msgid "authorizedcommandlist"
-#~ msgstr "授权命令列表"
-
-#~ msgid "aslseparatorstring"
-#~ msgstr "分隔符"
-
-#~ msgid "noasldisplayprefix"
-#~ msgstr "显示前缀"
-
-#~ msgid "quitmessage"
-#~ msgstr "消息 "
-
-#~ msgid "aslmale"
-#~ msgstr "男性"
-
-#~ msgid "aslfemale"
-#~ msgstr "女性"
-
-#~ msgid "userid"
-#~ msgstr "停留 "
-
-#~ msgid "aslunknown"
-#~ msgstr "未知"
-
-#~ msgid "fingerreply"
-#~ msgstr "回答"
-
-#~ msgid "userinforeply"
-#~ msgstr "用户信息答复"
-
-#~ msgid "mouse"
-#~ msgstr "鼠标"
-
-#~ msgid "helppage"
-#~ msgstr "帮助页面"
-
-#~ msgid "Language"
-#~ msgstr "语言:"
-
-#~ msgid "Comments"
-#~ msgstr "评语"
-
-#~ msgid "Director"
-#~ msgstr "导演"
-
-#~ msgid "Producer"
-#~ msgstr "出品人"
-
-#~ msgid "Studio"
-#~ msgstr "工作室"
-
-#~ msgid "Stars"
-#~ msgstr "星星"
-
-#~ msgid "Subtitles"
-#~ msgstr "字幕"
-
-#~ msgid "Rating"
-#~ msgstr "排名"
-
-#~ msgid "Height"
-#~ msgstr "高度"
-
-#~ msgid "Width"
-#~ msgstr "宽度"
-
-#~ msgid "Image"
-#~ msgstr "图象"
-
-#~ msgid "Document"
-#~ msgstr "文件"
-
-#~ msgid "Topic"
-#~ msgstr "课题"
-
-#~ msgid "Application"
-#~ msgstr "应用"
-
-#~ msgid "Publisher"
-#~ msgstr "出版社"
-
-#~ msgid "Platform"
-#~ msgstr "平台"
-
-#~ msgid "Send audio to iTunes"
-#~ msgstr "保存 当前的 播放列表. "
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-
-#~ msgid " (Partial)"
-#~ msgstr "喜爱"
-
-#~ msgid "Finished Downloads"
-#~ msgstr "搜索 和 下载 文件 "
-
-#~ msgid "Devices"
-#~ msgstr "复查 "
-
-#~ msgid "Search in "
-#~ msgstr "搜索"
-
-#~ msgid "View Repository of Saved Files"
-#~ msgstr "查看 保存的 文件"
-
-#~ msgid "Automatically Scroll"
-#~ msgstr "自动 滚动."
-
-#~ msgid "FrostWire: BitTorrent so simple"
-#~ msgstr "FrostWire: BitTorrent如此简单"
-
-#~ msgid "This Alpha version has expired.  Press Ok to exit. "
-#~ msgstr "Alpha版本已到期。按确认键退出。"
-
-#~ msgid "Download Page"
-#~ msgstr "下载网页"
-
-#~ msgid "File Listing for"
-#~ msgstr "登录文档于"
-
-#~ msgid "Magnet Links for Fast Downloads (if you have FrostWire installed)"
-#~ msgstr "Magnet快速下载链接（如果已安装FrostWire）"
-
-#~ msgid ""
-#~ "FrostWire was unable to create your settings folder and is using a "
-#~ "temporary folder.  Your settings may be deleted when you close FrostWire. "
-#~ msgstr ""
-#~ "FrostWire无法创建你的文件夹设置，正使用临时文件夹。FrostWire关闭时，设置可"
-#~ "能删除。"
-
-#~ msgid "Add..."
-#~ msgstr "添加 "
-
-#~ msgid "Add New List Item"
-#~ msgstr "添加 新的 列表 条目"
-
-#~ msgid "Remove Selected Item"
-#~ msgstr "去掉所选条目"
-
-#~ msgid "Always Save As..."
-#~ msgstr "保存... "
-
-#~ msgid "Always Append (#)"
-#~ msgstr "始终附加(#)"
-
-#~ msgid "Always Ask"
-#~ msgstr "始终 "
-
-#~ msgid "Choose a Default Action:"
-#~ msgstr "选择默认动作："
-
-#~ msgid "Warning: {0}"
-#~ msgstr "警告：{0}"
-
-#~ msgid "Error: {0}"
-#~ msgstr "错误：{0}"
-
-#~ msgid ""
-#~ "<b>Note</b>: A file with the same content already exists in the library "
-#~ "at {0}"
-#~ msgstr "注意：一份相同內容的档案已存在于收藏库中 {0}"
-
-#~ msgid "Overwrite"
-#~ msgstr "覆盖"
-
-#~ msgid "Overwrite the Existing File"
-#~ msgstr "覆盖已有文件"
-
-#~ msgid "Save As..."
-#~ msgstr "另存为"
-
-#~ msgid "Choose a different location for the Download"
-#~ msgstr "为下载文件选择不同位置"
-
-#~ msgid "Append (#)"
-#~ msgstr "丢弃 (入/出) "
-
-#~ msgid "Appends (#) to filename"
-#~ msgstr "附加(#)到文件名"
-
-#~ msgid "Cancel the Download"
-#~ msgstr "取消 下载 "
-
-#~ msgid "You are already downloading this file to \"{0}\"."
-#~ msgstr "已在下载这份文件到\"{0}\""
-
-#~ msgid "You already have the exact same file at {0}"
-#~ msgstr "已经有一份相同的文件在{0}"
-
-#~ msgid "Do you want to continue downloading anyway?"
-#~ msgstr "仍然要继续下载吗？"
-
-#~ msgid "Continue"
-#~ msgstr "连续 "
-
-#~ msgid "Same File Already In Library"
-#~ msgstr "相同的文件已存在"
-
-#~ msgid "Save Download As"
-#~ msgstr "取消 下载 "
-
-#~ msgid "Filter&s"
-#~ msgstr "过滤器 "
-
-#~ msgid "&Configure Content Filters"
-#~ msgstr "配置内容过滤"
-
-#~ msgid "Configure FrostWire's Content Filtering Options"
-#~ msgstr "配置FrostWire的内容过滤选项"
-
-#~ msgid "&Learn More..."
-#~ msgstr "加载 菜单... "
-
-#~ msgid "Learn More about FrostWire's Content Filtering System"
-#~ msgstr "更多关于FrostWire内容过滤系统"
-
-#~ msgid "&Navigation"
-#~ msgstr "导航 (&N)"
-
-#~ msgid "&Resources"
-#~ msgstr "资源 (&R)"
-
-#~ msgid "Result &Filters"
-#~ msgstr "结果 "
-
-#~ msgid "Show Search Result Filters"
-#~ msgstr "搜索 结果 等级 "
-
-#~ msgid "Sho&w/Hide"
-#~ msgstr "显示/隐藏"
-
-#~ msgid "&Apply Skins"
-#~ msgstr "&应用皮肤"
-
-#~ msgid "Use &Default"
-#~ msgstr "缺省 设置 "
-
-#~ msgid "Use your default skin"
-#~ msgstr "缺省 设置 "
-
-#~ msgid "Content Filters"
-#~ msgstr "过滤器 "
-
-#~ msgid ""
-#~ "You can tell FrostWire to filter files that copyright owners request not "
-#~ "be shared. By enabling filtering, you are instructing FrostWire to "
-#~ "confirm all files you download or share with a list of removed content."
-#~ msgstr ""
-#~ "FrostWire 可以过滤版权所有者不希望被共享的文件。启用过滤，FrostWire 将会通"
-#~ "过一系列移除的内容确认所有下载或共享的文件。"
-
-#~ msgid "Enable Content Filters"
-#~ msgstr "启用内容过滤"
-
-#~ msgid "File Already Exists Behavior"
-#~ msgstr "文件已存在"
-
-#~ msgid ""
-#~ "You can choose the default action that FrostWire will perform when you "
-#~ "try to download a file that already exists on disk."
-#~ msgstr "你可以选择当你下载已存在文件的FrostWire默认设置。"
-
-#~ msgid "Always Show the 'Save As' Dialog"
-#~ msgstr "始终显示'另存为'对话框"
-
-#~ msgid "Always Append (#) to the Filename"
-#~ msgstr "始终附加(#)到文件名"
-
-#~ msgid "Always Ask What to do"
-#~ msgstr "始终询问我"
-
-#~ msgid "Shared Extensions"
-#~ msgstr "共享 扩展"
-
-#~ msgid "You can choose which file extensions you would like to share."
-#~ msgstr "你 可以 选择 你 要 共享的 是那种类型的 文件."
-
-#~ msgid "Extensions:"
-#~ msgstr "扩展名:"
-
-#~ msgid "Use Defaults"
-#~ msgstr "缺省 设置"
-
-#~ msgid "Share the Default File Extensions"
-#~ msgstr "设置 缺省的 文件 扩展名"
-
-#~ msgid "Filter Result Types"
-#~ msgstr "过滤 类型"
-
-#~ msgid "You can specify general types of search results to filter."
-#~ msgstr "你 可以 设置 下列 几种 过滤 类型."
-
-#~ msgid "Ignore .htm/.html Files"
-#~ msgstr "忽略 .htm/.html 文件"
-
-#~ msgid "Ignore .vbs Files"
-#~ msgstr "忽略 .vbs 文件"
-
-#~ msgid "Ignore .wmv, .wma, .au, .asf files"
-#~ msgstr "忽略 .vbs 文件 "
-
-#~ msgid "Total files indexed"
-#~ msgstr "文件索引总数"
-
-#~ msgid " torrents and "
-#~ msgstr "你 正在 共享 文件的 数目. "
-
-#~ msgid "All"
-#~ msgstr "全部"
-
-#~ msgid "Select Search Types:"
-#~ msgstr "重新 搜索 "
-
-#~ msgid "Search for related products on Amazon"
-#~ msgstr "搜索Amazon上相关产品"
-
-#~ msgid "Open a .torrent or Magnet link or YouTube video link"
-#~ msgstr "打开.torrent或Magnet链接或YouTube视频链接"
-
-#~ msgid ""
-#~ "Send a file or folder to a friend (No size limit, No third parties "
-#~ "involved)"
-#~ msgstr "发送文件或文件夹给好友(无大小限制，无第三方介入)"
-
-#~ msgid "Filter"
-#~ msgstr "过滤器 "
-
-#~ msgid "<html><strong>Refine Results</strong></html>"
-#~ msgstr "结果调整"
-
-#~ msgid "Show search result filter controls"
-#~ msgstr "搜索 结果 等级 "
-
-#~ msgid "Hide search result filter controls"
-#~ msgstr "搜索 结果 等级 "
-
-#~ msgid "Buy this item now"
-#~ msgstr "立即购买此项目"
-
-#~ msgid ""
-#~ "Please wait, FrostWire must finish loading before a search can be started."
-#~ msgstr "请稍候，在搜索开始前FrostWire必须完成加载。"
-
-#~ msgid "Show Torrent Details page when a download starts"
-#~ msgstr "开始下载时显示种子文件详细页面"
-
-#~ msgid "Speed"
-#~ msgstr "速度: "
-
-#~ msgid "Vendor"
-#~ msgstr "软件"
-
-#~ msgid "Media"
-#~ msgstr "媒体"
-
-#~ msgid "Uploading "
-#~ msgstr "上载中"
-
-#~ msgid "More Search Options"
-#~ msgstr "更多 搜索 选项"
-
-#~ msgid ""
-#~ "Your search is too specific. Please make your search smaller and try "
-#~ "again."
-#~ msgstr "搜索太详细。请精简搜索项并重试。"
-
-#~ msgid "Loading phones and tablets..."
-#~ msgstr "加载共享文档"
-
-#~ msgid "Videos"
-#~ msgstr "视频"
-
-#~ msgid "Sort:"
-#~ msgstr "端口"
-
-#~ msgid "None"
-#~ msgstr "否"
-
-#~ msgid "Name Asc"
-#~ msgstr "名称"
-
-#~ msgid "Name Desc"
-#~ msgstr "名称"
-
-#~ msgid "Size Asc"
-#~ msgstr "保存..."
-
-#~ msgid "Size Desc"
-#~ msgstr "大小:"
-
-#~ msgid "Open"
-#~ msgstr "打开..."
-
-#~ msgid "Delete Files"
-#~ msgstr "删除 选中的 文件."
-
-#~ msgid "System"
-#~ msgstr "关闭"
-
-#~ msgid "Error deleting file"
-#~ msgstr "正在 上载"
-
-#~ msgid "Connected"
-#~ msgstr "连接 (&O)"
-
-#~ msgid "New Folder"
-#~ msgstr "文件夹:"
-
-#~ msgid "File Transfers"
-#~ msgstr "传输完 退出"
-
-#~ msgid "Cancel All"
-#~ msgstr "撤销"
-
-#~ msgid "Clear Finished"
-#~ msgstr "完成"
-
-#~ msgid "Should I stop all transfers?"
-#~ msgstr "传输 完后 关闭"
-
-#~ msgid "one file"
-#~ msgstr "正在 上载"
-
-#~ msgid "pending"
-#~ msgstr "搜索"
-
-#~ msgid "canceled"
-#~ msgstr "撤销"
-
-#~ msgid "error"
-#~ msgstr "错误"
-
-#~ msgid "Upload"
-#~ msgstr "正在 上载"
-
-#~ msgid "to"
-#~ msgstr "停止"
-
-#~ msgid "Preparing selected folder"
-#~ msgstr "取消 选中的 下载."
-
-#~ msgid "Open in Folder"
-#~ msgstr "停止 共享"
-
-#~ msgid "Open Folder Containing a Selected File"
-#~ msgstr "删除 选中的 文件."
-
-#~ msgid "Enqueue"
-#~ msgstr "添加 到 播放列表"
-
-#~ msgid "Add Selected Files to the Playlist"
-#~ msgstr "添加 选中的 文件 到 播放列表."
-
-#~ msgid "Delete from playlist"
-#~ msgstr "从 播放列表中 删除 选中的 文件."
-
-#~ msgid "Toggle the {0} Screen"
-#~ msgstr "显示{0}荧幕"
-
-#~ msgid "Connection"
-#~ msgstr "连接 (&O)"
-
-#~ msgid "Show Media Player"
-#~ msgstr "FrostWire 多媒体 播放器"
-
-#~ msgid "Send File..."
-#~ msgstr "文档保存中..."
-
-#~ msgid "Folder:"
-#~ msgstr "文件夹:"
-
-#~ msgid "You can choose the folder for saving files."
-#~ msgstr "你 可以 选择 保存 文件的 文件夹."
-
-#~ msgid ""
-#~ "The selected save folder is invalid. You may not have permissions to "
-#~ "write to the selected folder. FrostWire will revert to your previously "
-#~ "selected folder."
-#~ msgstr ""
-#~ "你的 保存 文件夹 不正确. 它可能 被 删除了, 你 可能 没有 写的 权限或者是其"
-#~ "他问题. 请 选择 另 一个 文件夹."
-
-#~ msgid "Player Options"
-#~ msgstr "播放器 选项"
-
-#~ msgid ""
-#~ "You can choose to play media with FrostWire or your system's default "
-#~ "player. The media player and playlist will appear only if this option is "
-#~ "set. A restart will be required when enabling or disabling the media "
-#~ "controls."
-#~ msgstr "你 可以 选用 内部 播放器 或者系统 缺省的 播放器."
-
-#~ msgid "Seeding Status"
-#~ msgstr "搜索"
-
-#~ msgid "Loading TLS Encryption..."
-#~ msgstr "加载TLS加码程序"
-
-#~ msgid "Loading Safe Content Management..."
-#~ msgstr "加载安全内容管理"
-
-#~ msgid "Loading Message Router..."
-#~ msgstr "加载通信路线器"
-
-#~ msgid "Loading Upload Management..."
-#~ msgstr "加载上载管理"
-
-#~ msgid "Loading Connection Listener..."
-#~ msgstr "加载联结聆听者"
-
-#~ msgid "Loading Connection Management..."
-#~ msgstr "加载联结管理"
-
-#~ msgid "Loading Download Management..."
-#~ msgstr "加载下载管理"
-
-#~ msgid "Loading Ultrapeer/DHT Management..."
-#~ msgstr "加载超同级/DHT管理"
-
-#~ msgid "Locating Peers..."
-#~ msgstr "搜寻侪"
-
-#~ msgid "Loading Directed Querier..."
-#~ msgstr "加载 directed querier..."
-
-#~ msgid "Loading Magnet Listener..."
-#~ msgstr "加载 MAGNET listener..."
-
-#~ msgid "Loading Peer Listener..."
-#~ msgstr "加载侪聆听者"
-
-#~ msgid "Loading Stale Connection Management..."
-#~ msgstr "加载 stale connection management..."
-
-#~ msgid "Loading Saved Files..."
-#~ msgstr "加载已存文档"
-
-#~ msgid "Loading Spam Management..."
-#~ msgstr "加载 connection management..."
-
-#~ msgid "You have already downloaded {0}"
-#~ msgstr "你已经下载了{0}"
-
-#~ msgid "You are already downloading this file to {0}"
-#~ msgstr "你已经下载此文档于{0}"
-
-#~ msgid "&Refresh Connections ("
-#~ msgstr "所有 邻居"
-
-#~ msgid "&Refreshing Connections ("
-#~ msgstr "所有 邻居"
-
-#~ msgid "Automatically start torrents"
-#~ msgstr "自动 滚动."
-
-#~ msgid ""
-#~ "You can choose whether to automatically start torrents downloaded from "
-#~ "Gnutella."
-#~ msgstr "你 可以 选择 是否 自动 清除 已完成的 下载 条目."
-
-#~ msgid "Start automatically"
-#~ msgstr "自动启动"
-
-#~ msgid "Clear"
-#~ msgstr "颜色"
-
-#~ msgid "What's New"
-#~ msgstr "新特点"
-
-#~ msgid "&Monitor"
-#~ msgstr "监视"
-
-#~ msgid "&Connections"
-#~ msgstr "所有 邻居"
-
-#~ msgid "C&onsole"
-#~ msgstr "连接 (&O)"
-
-#~ msgid "Loading Digital Audio Access Protocol..."
-#~ msgstr "加载 Digital Audio Access Protocol..."
-
-#~ msgid "Verify"
-#~ msgstr "核实"
-
-#~ msgid "FrostWire was unable to locate the details of this license."
-#~ msgstr "FrostWire无法找到此许可证的资料。"
-
-#~ msgid "View Verification Page"
-#~ msgstr "观看核实页"
-
-#~ msgid "License Details:"
-#~ msgstr "许可证资料："
-
-#~ msgid "View License Deed"
-#~ msgstr "观看许可证契约。"
-
-#~ msgid "FrostWire is currently locating the details of this license."
-#~ msgstr "FrostWire正寻找此许可证的资料。"
-
-#~ msgid "View Usage Rights"
-#~ msgstr "观看使用权。"
-
-#~ msgid "Loading Monitor Window..."
-#~ msgstr "加载监控窗口..."
-
-#~ msgid "Show Incoming Searches"
-#~ msgstr "显示进来的搜索"
-
-#~ msgid ""
-#~ "Your client is a leaf node shielded by an Ultrapeer. Hence you will see "
-#~ "few or no searches in the monitor window."
-#~ msgstr ""
-#~ "你的 客户是一 超级 节点保护的 一个 叶节点. 因此 你 将在监视 窗口中 看见很"
-#~ "少或者 没有 搜索."
-
-#~ msgid ""
-#~ "Your save folder is not valid. It may have been deleted, you may not have "
-#~ "permissions to write to it, or there may be another problem. Please "
-#~ "choose a different folder."
-#~ msgstr ""
-#~ "你的 保存 文件夹 不正确. 它可能 被 删除了, 你 可能 没有 写的 权限或者是其"
-#~ "他问题. 请 选择 另 一个 文件夹."
-
-#~ msgid "You are not connected to the FrostWire VIP Area"
-#~ msgstr "连接 到 网络"
-
-#~ msgid "You are currently connecting to the network"
-#~ msgstr "连接 到 网络"
-
-#~ msgid "Poor"
-#~ msgstr "端口"
-
-#~ msgid "Good"
-#~ msgstr "好"
-
-#~ msgid "Excellent"
-#~ msgstr "很好"
-
-#~ msgid "Waking Up"
-#~ msgstr "请求 已发出, 等待"
-
-#~ msgid "Show Store Indicator"
-#~ msgstr "共享 文件夹"
-
-#~ msgid "Upgrade to FrostWire?"
-#~ msgstr "使用 FrostWire (&U)"
-
-#~ msgid "Upgrade Your Java"
-#~ msgstr "升级 到 “增强版”"
-
-#~ msgid "Why"
-#~ msgstr "为什么"
-
-#~ msgid "What does frostwire give me?"
-#~ msgstr "“增强版” 带来什么?"
-
-#~ msgid ""
-#~ "FrostWire has detected a corruption in the file {0}. Do you want to "
-#~ "continue the download?"
-#~ msgstr "FrostWire 发现文档有损毁{0}。你想继续下载吗?"
-
-#~ msgid "Lookup File with Bitzi"
-#~ msgstr "Bitzi 网 查找..."
-
-#~ msgid "C&onnect"
-#~ msgstr "连接 (&O)"
-
-#~ msgid "Connect to the Network"
-#~ msgstr "连接 到 网络"
-
-#~ msgid "D&isconnect"
-#~ msgstr "断开 连接 (&I)"
-
-#~ msgid "Disconnect from the Network"
-#~ msgstr "断开 网络 连接"
-
-#~ msgid "Share New File..."
-#~ msgstr "保存中 文件..."
-
-#~ msgid "Block Host"
-#~ msgstr "屏蔽 对方"
-
-#~ msgid "Send Message"
-#~ msgstr "发送通信"
-
-#~ msgid "Block Current Host"
-#~ msgstr "屏蔽 对方."
-
-#~ msgid "Send a Message to a Host"
-#~ msgstr "发送通信予主机。"
-
-#~ msgid "Chatting with"
-#~ msgstr "正在 聊天和"
-
-#~ msgid "Host is unavailable"
-#~ msgstr "连接 不上 主机"
-
-#~ msgid "You"
-#~ msgstr "你"
-
-#~ msgid "Could not send chat message"
-#~ msgstr "不能 浏览 主机 {0} ."
-
-#~ msgid "Browse Host"
-#~ msgstr "浏览器 选项"
-
-#~ msgid "Create a New Outgoing Connection"
-#~ msgstr "产生 一个 新的 传出 连接."
-
-#~ msgid "Remove the Selected Connections"
-#~ msgstr "去掉所选的连接"
-
-#~ msgid "View All Files on the Selected Computer"
-#~ msgstr "观看所选计算机的全部文档。"
-
-#~ msgid "Host"
-#~ msgstr "主机"
-
-#~ msgid "Messages (I/O)"
-#~ msgstr "通信(入/出)"
-
-#~ msgid "Bandwidth (I/O)"
-#~ msgstr "宽频(入/出)"
-
-#~ msgid "Dropped (I/O)"
-#~ msgstr "掉落(入/出)"
-
-#~ msgid "Protocol"
-#~ msgstr "协议"
-
-#~ msgid "Vendor/Version"
-#~ msgstr "软件"
-
-#~ msgid "Compressed (I/O)"
-#~ msgstr "丢弃 (入/出)"
-
-#~ msgid "QRP (%)"
-#~ msgstr "QRP (%/大小)"
-
-#~ msgid "Connecting..."
-#~ msgstr "连接 (&O)"
-
-#~ msgid "Outgoing"
-#~ msgstr "传出 邻居"
-
-#~ msgid "Incoming"
-#~ msgstr "HTTP 请求"
-
-#~ msgid "Ultrapeer"
-#~ msgstr "Ultrapeers"
-
-#~ msgid "Leaf"
-#~ msgstr "叶子"
-
-#~ msgid "Connecting"
-#~ msgstr "连接 (&O)"
-
-#~ msgid "Leaves"
-#~ msgstr "叶子"
-
-#~ msgid "Ultrapeers"
-#~ msgstr "Ultrapeers"
-
-#~ msgid "Standard"
-#~ msgstr "标准"
-
-#~ msgid "Loading Connections Window..."
-#~ msgstr "加载 连接 窗口..."
-
-#~ msgid "Host:"
-#~ msgstr "主机"
-
-#~ msgid "Peer"
-#~ msgstr "播放器"
-
-#~ msgid "0.6"
-#~ msgstr "0.6"
-
-#~ msgid "Share Dropped Files?"
-#~ msgstr "共享 文件夹"
-
-#~ msgid "No, Share Nothing"
-#~ msgstr "你 正在 共享 文件的 数目."
-
-#~ msgid "Queue"
-#~ msgstr "等候"
-
-#~ msgid "Queued"
-#~ msgstr "等候"
-
-#~ msgid "Waiting On Busy Hosts"
-#~ msgstr "等待繁忙主机"
-
-#~ msgid "Aborted"
-#~ msgstr "放弃"
-
-#~ msgid "Awaiting Sources"
-#~ msgstr "等待资源"
-
-#~ msgid "Downloading from"
-#~ msgstr "从...下载"
-
-#~ msgid "Disk Problem"
-#~ msgstr "磁碟问题"
-
-#~ msgid "File Corrupted"
-#~ msgstr "文档已毁坏"
-
-#~ msgid "Waiting {0}s for Sources"
-#~ msgstr "请求 已发出, 等待 {0}秒 返回 结果"
-
-#~ msgid "Need More Sources"
-#~ msgstr "秒 返回 结果"
-
-#~ msgid "Waiting for Stable Connections"
-#~ msgstr "加载 stale connection management..."
-
-#~ msgid "Waiting in Line, Position"
-#~ msgstr "等待因为繁忙"
-
-#~ msgid "Verifying File Contents..."
-#~ msgstr "文档内容核实中..."
-
-#~ msgid "Downloading .torrent file..."
-#~ msgstr "加载 saved files..."
-
-#~ msgid "Average Bandwidth"
-#~ msgstr "宽频平均"
-
-#~ msgid "Lost To Corruption"
-#~ msgstr "主机 联系"
-
-#~ msgid "hosts"
-#~ msgstr "主机"
-
-#~ msgid "host"
-#~ msgstr "主机"
-
-#~ msgid "Possible Hosts"
-#~ msgstr "过滤 主机"
-
-#~ msgid "Busy Hosts"
-#~ msgstr "屏蔽 对方"
-
-#~ msgid "Locating Sources..."
-#~ msgstr "加载 资源..."
-
-#~ msgid "Priority"
-#~ msgstr "端口"
-
-#~ msgid "Downloads"
-#~ msgstr "下载"
-
-#~ msgid "Find More Sources for Download"
-#~ msgstr "Try to locate other sources for failed download."
-
-#~ msgid "Try to Find Additional Sources for Downloads"
-#~ msgstr "尝试为下载寻找其他资源"
-
-#~ msgid "&Refresh Skins"
-#~ msgstr "刷新"
-
-#~ msgid ""
-#~ "Invalid folder for saving files. Please use another folder or revert to "
-#~ "the default."
-#~ msgstr ""
-#~ "错误的 保存 文件的 文件夹. 请用 另 一个 文件夹 或者恢复到 缺省 设置."
-
-#~ msgid "Search..."
-#~ msgstr "搜索"
-
-#~ msgid "Clear Download"
-#~ msgstr "清除 下载 条目"
-
-#~ msgid "Clear Selected Downloads"
-#~ msgstr "取消 选中的 下载."
-
-#~ msgid "Launch Download"
-#~ msgstr "取消 下载"
-
-#~ msgid "Launch Selected Downloads"
-#~ msgstr "取消 选中的 下载."
-
-#~ msgid "Preview Download"
-#~ msgstr "预览下载"
-
-#~ msgid "Chat with Host"
-#~ msgstr "和对方 聊天"
-
-#~ msgid "Remove Inactive Downloads"
-#~ msgstr "去掉不活跃下载"
-
-#~ msgid "No Filename"
-#~ msgstr "文件名"
-
-#~ msgid "Firewall Setup"
-#~ msgstr "防火墙"
-
-#~ msgid ""
-#~ "FrostWire was unable to use the specified folder for saving files. Please "
-#~ "try a different folder."
-#~ msgstr "FrostWire 不能 够 使用 指定的 保存 文件夹. 请 选择 另 一个 文件夹."
-
-#~ msgid "Search In Shared Files:"
-#~ msgstr "搜索 和 下载 文件"
-
-#~ msgid "Uploads"
-#~ msgstr "正在 上载"
-
-#~ msgid "Hits"
-#~ msgstr "命中"
-
-#~ msgid "Describe..."
-#~ msgstr "注释..."
-
-#~ msgid "Add Description to Selected File"
-#~ msgstr "所 选 文件的 注释."
-
-#~ msgid "Continue Downloading Selected Incomplete File"
-#~ msgstr "重新 尝试 下载."
-
-#~ msgid "Stop Sharing File"
-#~ msgstr "停止共享文件"
-
-#~ msgid "Share Folder"
-#~ msgstr "共享文件夹"
-
-#~ msgid "Saved Files"
-#~ msgstr "共享 文件夹"
-
-#~ msgid "FrostWire cannot stop sharing this folder."
-#~ msgstr "你 确认要 停止 共享 此 文件夹 吗?"
-
-#~ msgid "Are you sure you want to stop sharing this folder?"
-#~ msgstr "你 确认要 停止 共享 此 文件夹 吗?"
-
-#~ msgid "Shared Files"
-#~ msgstr "共享 文件夹"
-
-#~ msgid "Reload Shared Folders"
-#~ msgstr "刷新 共享 目录."
-
-#~ msgid "Loading Logging Window..."
-#~ msgstr "加载 选项 窗口..."
-
-#~ msgid "&Get More Skins"
-#~ msgstr "浏览 新的 皮肤"
-
-#~ msgid "seconds left)"
-#~ msgstr "秒"
-
-#~ msgid "Saving"
-#~ msgstr "保存"
-
-#~ msgid "Slots"
-#~ msgstr "扩展槽"
-
-#~ msgid "Connections"
-#~ msgstr "连接 (&O)"
-
-#~ msgid "Popups"
-#~ msgstr "Hops"
-
-#~ msgid "Hosts"
-#~ msgstr "主机"
-
-#~ msgid "Preferencing"
-#~ msgstr "优先 选择"
-
-#~ msgid "Allow Hosts"
-#~ msgstr "允可 主机"
-
-#~ msgid ""
-#~ "You can allow messages from specific hosts by adding their IP addresses "
-#~ "(e.g. \"192.168.0.1\", \"192.*.*.*\", \"192.168.12.16/255.255.255.240\" "
-#~ "or \"192.168.12.16/28\") to the allow list. This list is only needed to "
-#~ "override the banned list."
-#~ msgstr ""
-#~ "通过添加 IP 地址到 许可 列表, 你 可以 允许 接受 下列 主机 发送的 消息 (例"
-#~ "如: “18.239.0.1” 或 “18.*.*.*”). 许可 列表 可以 覆盖 禁止 列表."
-
-#~ msgid "Clear Downloads"
-#~ msgstr "清除 下载 条目"
-
-#~ msgid ""
-#~ "You can choose whether or not to automatically clear downloads that have "
-#~ "completed."
-#~ msgstr "你 可以 选择 是否 自动 清除 已完成的 下载 条目."
-
-#~ msgid ""
-#~ "You can choose whether or not to automatically clear uploads that have "
-#~ "completed."
-#~ msgstr "你 可以 选择 是否 自动 清除 已完成的 上载."
-
-#~ msgid "Automatically Clear Completed Uploads:"
-#~ msgstr "自动 清楚 已完成的 上载:"
-
-#~ msgid "Host Communication"
-#~ msgstr "主机 联系"
-
-#~ msgid "Chat Configuration"
-#~ msgstr "主机 联系"
-
-#~ msgid "You can turn chat on or off."
-#~ msgstr "你 可以 设置 聊天为 开启 和 关闭 状态."
-
-#~ msgid "Connect on Startup"
-#~ msgstr "启动 时 连接"
-
-#~ msgid ""
-#~ "You can choose whether or not to automatically connect to the network "
-#~ "when the application starts up."
-#~ msgstr "你 可以 选择 应用 程序 启动 时 是否 自动 连接 到 网络 上."
-
-#~ msgid "Connect on Startup:"
-#~ msgstr "启动 时 连接:"
-
-#~ msgid "Connection Preferencing"
-#~ msgstr "连接 优先 选择"
-
-#~ msgid ""
-#~ "You can limit who is able to connect to you based on the number of files "
-#~ "they share."
-#~ msgstr "你 可以 根据 他们 共享 文件的 数目 来限 制谁能 连接 你."
-
-#~ msgid "Files You Must Share to Not be a Freeloader:"
-#~ msgstr "不使 你 成为 白食者 而必须 共享的 文件 数:"
-
-#~ msgid "Allow Freeloaders:"
-#~ msgstr "允许 白食者:"
-
-#~ msgid "Rarely"
-#~ msgstr "几乎不"
-
-#~ msgid "Always"
-#~ msgstr "始终"
-
-#~ msgid "Shared Name:"
-#~ msgstr "共享 文件夹"
-
-#~ msgid "Disable Ultrapeer Capabilities:"
-#~ msgstr "设置 超级 节点为无效:"
-
-#~ msgid "Disable Mojito DHT Capabilities:"
-#~ msgstr "设置 超级 节点为无效:"
-
-#~ msgid "Disable TLS Capabilities:"
-#~ msgstr "设置 超级 节点为无效:"
-
-#~ msgid "OOB Searching"
-#~ msgstr "搜索"
-
-#~ msgid "Enable OOB Searching:"
-#~ msgstr "搜索"
-
-#~ msgid "Download Bandwidth"
-#~ msgstr "下载 带宽"
-
-#~ msgid "You can set the percentage of your bandwidth devoted to downloads."
-#~ msgstr "你 可以 设置 一定比例的 下载 带宽."
-
-#~ msgid "Filter Hosts"
-#~ msgstr "过滤 主机"
-
-#~ msgid ""
-#~ "You can disallow messages from specific hosts by adding their IP "
-#~ "addresses (e.g. \"192.168.0.1\", \"192.*.*.*\", "
-#~ "\"192.168.12.16/255.255.255.240\" or \"192.168.12.16/28\") to the banned "
-#~ "list."
-#~ msgstr ""
-#~ "通过添加 IP 地址到 禁止 列表, 你 可以 不 允许 接受 下列 主机 发送的 消息 "
-#~ "(例如: “18.239.0.1” 或 “18.*.*.*”)."
-
-#~ msgid "You can set the maximum number of simultaneous downloads."
-#~ msgstr "你 可以 设置 同时 下载的 最多的 数目."
-
-#~ msgid "Maximum Downloads:"
-#~ msgstr "最多 下载 数:"
-
-#~ msgid "Max Upload Slots"
-#~ msgstr "最大 上载 槽"
-
-#~ msgid ""
-#~ "Never allow more than this many uploads. This value will only be reached "
-#~ "if you have enough bandwidth."
-#~ msgstr "不允许 超过 此 数目的 上载. 这个值 只 有在 带宽 足够时才能 达到."
-
-#~ msgid "Max Upload Slots:"
-#~ msgstr "最大 上载 槽:"
-
-#~ msgid "Open Dialog to Select a Folder"
-#~ msgstr "选择 文件夹"
-
-#~ msgid "Reset"
-#~ msgstr "恢复"
-
-#~ msgid "Uploads Per Person"
-#~ msgstr "每个人的 上载 数"
-
-#~ msgid "Allow this many uploads per person."
-#~ msgstr "允许 每个人 这么多的 上载 数目."
-
-#~ msgid "Uploads Per Person:"
-#~ msgstr "每个人的 上载 数:"
-
-#~ msgid "Listening Port"
-#~ msgstr "监听 端口"
-
-#~ msgid ""
-#~ "You can set the local network port that listens for incoming connections. "
-#~ "This port can be freely changed in case of conflict with another service "
-#~ "on your system, or if a specific port number is required by the "
-#~ "configuration of your firewall to direct incoming connections to your "
-#~ "host."
-#~ msgstr "你 可以 为其他 主机 设置 你的 网络 监听 端口 号."
-
-#~ msgid "Listen on Port:"
-#~ msgstr "监听 端口:"
-
-#~ msgid "Port not available. Please select a different port."
-#~ msgstr "端口 不可提供. 请 选择 一个 不同的 端口."
-
-#~ msgid "Please enter a port between 1 and 65535."
-#~ msgstr "请输入 1 到 65535的 端口 号."
-
-#~ msgid "You can automatically delete old incomplete download files."
-#~ msgstr "你 可以 自动 删除 老的 不完全的 下载 文件."
-
-#~ msgid "Days to Keep Incomplete Files:"
-#~ msgstr "不完全 文件 保留天 数:"
-
-#~ msgid "Search Result Quality"
-#~ msgstr "搜索 结果 等级"
-
-#~ msgid ""
-#~ "You can select the \"quality\" of search results to display. Four star "
-#~ "results indicate that the host returning the result is not firewalled and "
-#~ "has free upload slots."
-#~ msgstr ""
-#~ "你 可以 选择 搜索 结果中的 “等级” 进行 显示. 四星 指示 搜索 返回的 结果 没"
-#~ "有 防火墙 并且 可以 自由 下载."
-
-#~ msgid "Show Only Four Star Results"
-#~ msgstr "只 显示 四星 级 搜索 结果"
-
-#~ msgid "Show Only Three and Four Star Results"
-#~ msgstr "只 显示 三星 和 四星 级 搜索 结果"
-
-#~ msgid "Show Only Two, Three, and Four Star Results"
-#~ msgstr "只 显示 两星, 三星 和 四星 级 搜索 结果"
-
-#~ msgid "Show All Qualities"
-#~ msgstr "显示 全部 等级的 搜索 结果"
-
-#~ msgid "Search Result Speed"
-#~ msgstr "搜索 结果 速度"
-
-#~ msgid "You can select the minimum speed of search results to display."
-#~ msgstr "你 可以 选择 搜索 结果中的 最小 速度 进行 显示."
-
-#~ msgid "Show Only Results of T3 Speed or Higher"
-#~ msgstr "只 显示 T3 或更高 速度的 搜索 结果"
-
-#~ msgid "Show Only Results of T1 Speed or Higher"
-#~ msgstr "只 显示 T1 或更高 速度的 搜索 结果"
-
-#~ msgid "Show Only Results of Cable/DSL Speed or Higher"
-#~ msgstr "只 显示 Cable/DSL 或更高 速度的 搜索 结果"
-
-#~ msgid "Show All Speeds"
-#~ msgstr "显示 全部 速度的 搜索 结果"
-
-#~ msgid "Download Sharing"
-#~ msgstr "正在 下载 从"
-
-#~ msgid "You can automatically share .torrent files."
-#~ msgstr "你 可以 自动 删除 老的 不完全的 下载 文件."
-
-#~ msgid "Start Upload Slots"
-#~ msgstr "起始 上载 槽:"
-
-#~ msgid "Start Upload Slots:"
-#~ msgstr "起始 上载 槽:"
-
-#~ msgid "Connection Speed"
-#~ msgstr "启动 时 连接"
-
-#~ msgid ""
-#~ "You can specify your connection speed so that FrostWire can optimize "
-#~ "performance."
-#~ msgstr "你 可以 指定 你的 连接 速度 从 而进行性能 优化."
-
-#~ msgid "Speed:"
-#~ msgstr "速度:"
-
-#~ msgid "LimeWire Store Indicator"
-#~ msgstr "防火墙"
-
-#~ msgid "Show LimeWire Store Indicator:"
-#~ msgstr "共享 文件夹"
-
-#~ msgid "Shared Files Indicator"
-#~ msgstr "共享 文件夹"
-
-#~ msgid ""
-#~ "You can choose the folder for saving files purchased from the LimeWire "
-#~ "Store."
-#~ msgstr "你 可以 选择 保存 文件的 文件夹."
-
-#~ msgid "System Tray Icon"
-#~ msgstr "关闭"
-
-#~ msgid "Show System Tray Icon:"
-#~ msgstr "关闭"
-
-#~ msgid "Upload Bandwidth"
-#~ msgstr "上载 带宽"
-
-#~ msgid ""
-#~ "You can set the percentage of your bandwidth devoted to uploads. To turn "
-#~ "off uploads, reduce your upload slots to zero."
-#~ msgstr "你 可以 设置 一定比例的 上载 带宽. 关闭 上载, 减少 上载 槽至 0."
-
-#~ msgid "Open an Existing Playlist"
-#~ msgstr "打开 一个 新的 存在的 播放列表."
-
-#~ msgid "Save the Current Playlist to a File"
-#~ msgstr "保存 当前的 播放列表."
-
-#~ msgid "#"
-#~ msgstr "#"
-
-#~ msgid "Loading Playlist Window..."
-#~ msgstr "加载 播放列表 窗口..."
-
-#~ msgid "Play Options:"
-#~ msgstr "播放 选项:"
-
-#~ msgid "Continuous"
-#~ msgstr "连续"
-
-#~ msgid "Option"
-#~ msgstr "选项"
-
-#~ msgid "Filter Results:"
-#~ msgstr "过滤"
-
-#~ msgid "Back To Search"
-#~ msgstr "关闭 搜索"
-
-#~ msgid "Download As..."
-#~ msgstr "下载"
-
-#~ msgid "View All Files on Selected Computer"
-#~ msgstr "浏览已 选中的 计算机上的 所有 共享 文件."
-
-#~ msgid "Stop Collecting Search Results for Selected Tab"
-#~ msgstr "终止为已选清单收集寻结果"
-
-#~ msgid "New"
-#~ msgstr "网络"
-
-#~ msgid "Keyword"
-#~ msgstr "关键词"
-
-#~ msgid "Direct Connect"
-#~ msgstr "断开 连接 (&I)"
-
-#~ msgid "Hide Adult Content"
-#~ msgstr "隐藏色情内容"
-
-#~ msgid "Filename"
-#~ msgstr "文档名"
-
-#~ msgid "Search the Network for the Given Words"
-#~ msgstr "以给定的 文字 搜索 网络."
-
-#~ msgid "Chat With Host"
-#~ msgstr "和对方 聊天"
-
-#~ msgid "Block Hosts"
-#~ msgstr "屏蔽 对方"
-
-#~ msgid "Get More Results"
-#~ msgstr "过滤"
-
-#~ msgid ""
-#~ "One of the selected files is an executable program and could contain a "
-#~ "virus. Are you sure you want to download it?"
-#~ msgstr "选中的 文件中 包含可执行程序 可能 携带病毒. 你 确认要 下载 吗?"
-
-#~ msgid "Location"
-#~ msgstr "位置"
-
-#~ msgid "Show Connections to Other Clients"
-#~ msgstr "连接 到其他 客户端"
-
-#~ msgid "Console"
-#~ msgstr "关闭 (&C)"
-
-#~ msgid "View Console Messages"
-#~ msgstr "Vendor 平均"
-
-#~ msgid "View Logging Messages"
-#~ msgstr "加载 消息..."
-
-#~ msgid "Monitor"
-#~ msgstr "监控"
-
-#~ msgid "View Searches and Uploads"
-#~ msgstr "显示 搜索 和 上载"
-
-#~ msgid "Test action!"
-#~ msgstr "说明"
-
-#~ msgid ""
-#~ "The skin file you selected does not exist or is invalid. Please choose "
-#~ "another file, or use the default."
-#~ msgstr "错误的 共享 文件夹. 请用 另 一个 文件夹 或者恢复到 缺省 设置."
-
-#~ msgid "To try your new skin, you must restart FrostWire."
-#~ msgstr "要尝试新貌，你必须重下次 启动 FrostWire, 皮肤 将会 改变..."
-
-#~ msgid "Get New Skins"
-#~ msgstr "选新皮肤"
-
-#~ msgid "Kill Upload"
-#~ msgstr "清除 上载"
-
-#~ msgid "Stop Selected Uploads"
-#~ msgstr "终止已选上载。"
-
-#~ msgid "Remove Inactive Uploads"
-#~ msgstr "清除 不活动的 上载."
-
-#~ msgid "Freeloader Uploading"
-#~ msgstr "自由加载者上载"
-
-#~ msgid "Transfer Interrupted"
-#~ msgstr "传输中 断"
-
-#~ msgid "File Not Found"
-#~ msgstr "没有 找到 文件"
-
-#~ msgid "Queued at"
-#~ msgstr "等候"
-
-#~ msgid "Range Unavailable"
-#~ msgstr "连接 不上 主机"
-
-#~ msgid "Malformed Request"
-#~ msgstr "Magnet 请求"
-
-#~ msgid "Uploading Hash Tree"
-#~ msgstr "正在 上载"
-
-#~ msgid "Suspended"
-#~ msgstr "速度:"
-
-#~ msgid "Awaiting Requests"
-#~ msgstr "Chat 请求"
-
-#~ msgid "Loading Upload Window..."
-#~ msgstr "加载 上载 窗口..."
-
-#~ msgid "Info"
-#~ msgstr "信息"
-
-#~ msgid "Copyright Holder:"
-#~ msgstr "停止 共享"
-
-#~ msgid "Title of Work:"
-#~ msgstr "监听 端口:"
-
-#~ msgid "Size:"
-#~ msgstr "大小:"
-
-#~ msgid "Internal Document Error. Data could not be saved."
-#~ msgstr "内部 文档错误. 数据 不能 保存."
-
-#~ msgid "Internal Error. Data could not be saved."
-#~ msgstr "内部 错误. 数据 不能 保存."
-
-#~ msgid "Nothing to save."
-#~ msgstr "没什么可存。"
-
-#~ msgid "File not found or corrupt file. Data could not be saved"
-#~ msgstr "文档不存在或已毁坏。数据无法储存。"
-
-#~ msgid "Read Write Error. Data could not be saved."
-#~ msgstr "读写错误。 数据无法储存。"
-
-#~ msgid "Incorrect format entered. Changes will not be saved."
-#~ msgstr "输入了 不正确的 格式. 修改 没有 保存."
-
-#~ msgid "Unable to remove data."
-#~ msgstr "不能 移 动 数据."
-
-#~ msgid "Title:"
-#~ msgstr "标题:"
-
-#~ msgid "Artist:"
-#~ msgstr "演艺员"
-
-#~ msgid "Type:"
-#~ msgstr "类型:"
-
-#~ msgid "Length:"
-#~ msgstr "时长"
-
-#~ msgid "Bitrate:"
-#~ msgstr "比特率"
-
-#~ msgid "Comments:"
-#~ msgstr "文档"
-
-#~ msgid "SHA1:"
-#~ msgstr "SHA1:"
-
-#~ msgid "Price:"
-#~ msgstr "预览"
-
-#~ msgid "Action:"
-#~ msgstr "位置"
-
-#~ msgid "Rating:"
-#~ msgstr "请求 已发出, 等待"
-
-#~ msgid "Director:"
-#~ msgstr "导演"
-
-#~ msgid "MPEG-1 Audio Layer 3"
-#~ msgstr "MPEG-1 音频 Layer 3"
-
-#~ msgid "MPEG-4 Audio"
-#~ msgstr "MPEG-4 音频"
-
-#~ msgid "Ogg Vorbis"
-#~ msgstr "Ogg Vorbis"
-
-#~ msgid "other"
-#~ msgstr "Ethernet"
-
-#~ msgid "string"
-#~ msgstr "共享"
-
-#~ msgid "1"
-#~ msgstr "T1"
-
-#~ msgid "test1"
-#~ msgstr "恢复"
-
-#~ msgid "test2"
-#~ msgstr "恢复"
-
-#~ msgid "I"
-#~ msgstr "I"
-
-#~ msgid "Routing Errors"
-#~ msgstr "路由 错误"
-
-#~ msgid "Modem"
-#~ msgstr "调制解调器"
-
-#~ msgid "Cable/DSL"
-#~ msgstr "Cable/DSL"
-
-#~ msgid "English"
-#~ msgstr "完成"
-
-#~ msgid "Loading Languages"
-#~ msgstr "加载 菜单..."
-
-#~ msgid "false"
-#~ msgstr "停留"
-
-#~ msgid "Finish Setup"
-#~ msgstr "安装完成"
-
-#~ msgid ""
-#~ "Your FrostWire setup has successfully completed. Please press the \"Finish"
-#~ "\" button to begin using FrostWire."
-#~ msgstr "FrostWire 安装成功. 请按 “完成” 按钮, 开始 使用 FrostWire."
-
-#~ msgid "Language Options"
-#~ msgstr "图片 选项"
-
-#~ msgid "Choose Language:"
-#~ msgstr "语言:"
-
-#~ msgid ""
-#~ "Please choose a folder where you would like your files to be downloaded. "
-#~ "This folder will also be shared with other gnutella users by default."
-#~ msgstr ""
-#~ "请 选择 你 希望 保存 下载 文件的 文件夹. 此 文件夹 缺省的 与其他 Gnutella "
-#~ "用户 同享."
-
-#~ msgid "Confirm Scan"
-#~ msgstr "确认扫描"
-
-#~ msgid ""
-#~ "We identified the folders below as ones that you might like to share. If "
-#~ "you would like to share one of these folders, simply check its associated "
-#~ "checkbox. Subfolders of shared folders will also be shared."
-#~ msgstr ""
-#~ "我们鉴定那些 文件夹 下面的 东西有 共享的 可能. 如果 你 想 共享 这些 文件"
-#~ "夹, 仅仅检查它相关的 选择 框. 共享的 文件夹的 子 文件夹 目录 也将被 共享."
-
-#~ msgid "The selected folders below (and their subfolders) will be shared."
-#~ msgstr "错误的 共享 文件夹. 请用 另 一个 文件夹 或者恢复到 缺省 设置."
-
-#~ msgid ""
-#~ "Would you like FrostWire to quickly scan your hard drive for other media "
-#~ "files? You will have the opportunity to specify which folders you would "
-#~ "like to share when the scan is complete."
-#~ msgstr ""
-#~ "你 想要 FrostWire 迅速为其他媒介 文件 扫描 你的 硬盘 吗? 你 将有机会确切说"
-#~ "明当扫描完成时, 你 想分享哪份 文件夹."
-
-#~ msgid "Scan Hard Drive?"
-#~ msgstr "正在 扫描硬盘"
-
-#~ msgid ""
-#~ "Please choose the speed of your Internet connection. Setting this speed "
-#~ "correctly is important for optimum network performance. If you are not "
-#~ "sure what type of Internet connection you have, or if your connection "
-#~ "type is not listed, simply select whichever one seems the most "
-#~ "appropriate."
-#~ msgstr ""
-#~ "请 选择 你的 因特网 连接 速度. 正确的 设定此 速度 对于优化 网络 非常重要. "
-#~ "如果 你 不能 确认 你 是何种 网络 连接 类型或者 网络 类型 没有 列出, 只 需"
-#~ "简单地 选择 看上去最合适的 ."
-
-#~ msgid "Please wait as FrostWire scans your hard drive..."
-#~ msgstr "FrostWire 正在 扫描 你的 硬盘, 请等待..."
-
-#~ msgid "Scanning Hard Drive..."
-#~ msgstr "正在 扫描硬盘"
-
-#~ msgid "Cancel Scan"
-#~ msgstr "取消 操作."
-
-#~ msgid ""
-#~ "Your search must be at least three characters long to avoid too many "
-#~ "meaningless results."
-#~ msgstr "你 必须键入至少 3 个字符, 从 而避免阻塞 网络."
-
-#~ msgid "&MagnetMix"
-#~ msgstr "&MagnetMix"
-
-#~ msgid "Annotating file"
-#~ msgstr "注释 文件"
-
-#~ msgid "Edit annotation of type:"
-#~ msgstr "编辑类型的 注释:"
-
-#~ msgid "Add annotation of type:"
-#~ msgstr "添加类型的 注释:"
-
-#~ msgid "Cannot remove unsaved info."
-#~ msgstr "不能 移 除 没有 保存的 信息."
-
-#~ msgid ""
-#~ "Please wait while FrostWire is uploading your files to the Internet "
-#~ "Archive"
-#~ msgstr "FrostWire 正在 扫描 你的 硬盘, 请等待..."
-
-#~ msgid "Connecting to the Internet Archive..."
-#~ msgstr "连接 到 网络"
-
-#~ msgid "Connected..."
-#~ msgstr "连接 (&O)"
-
-#~ msgid "Close the Window"
-#~ msgstr "关闭 窗口."
-
-#~ msgid "P"
-#~ msgstr "P"
-
-#~ msgid "N"
-#~ msgstr "N"
-
-#~ msgid "V"
-#~ msgstr "V"
-
-#~ msgid "W"
-#~ msgstr "W"
-
-#~ msgid "Display the Statistics Screen"
-#~ msgstr "显示 统计 窗口."
-
-#~ msgid "U"
-#~ msgstr "U"
-
-#~ msgid "G"
-#~ msgstr "G"
-
-#~ msgid "Querying Network"
-#~ msgstr "正在 请求 网络"
-
-#~ msgid "Gnutella"
-#~ msgstr "Gnutella"
-
-#~ msgid "Stop Chatting with a Host"
-#~ msgstr "停止 和对方 谈话."
-
-#~ msgid "Loading Statistics Window..."
-#~ msgstr "加载 统计 窗口..."
-
-#~ msgid ""
-#~ "Could not find a port to use for incoming connections.\n"
-#~ "Please specify a port from the configuration window."
-#~ msgstr ""
-#~ "不能 找到 一个 端口 为进来的 连接 使用.\n"
-#~ "请 从 结构 窗口 指定 一个 端口."
-
-#~ msgid "QRP"
-#~ msgstr "QRP"
-
-#~ msgid "Errors"
-#~ msgstr "错误"
-
-#~ msgid "Query Replies"
-#~ msgstr "搜索 结果"
-
-#~ msgid "Ping Replies"
-#~ msgstr "Pong 结果"
-
-#~ msgid "Hit Routing Errors"
-#~ msgstr "搜索 结果 路由 错误"
-
-#~ msgid "Average"
-#~ msgstr "平均 值"
-
-#~ msgid "Total Upstream"
-#~ msgstr "传出 总价 带宽"
-
-#~ msgid "Total Downstream"
-#~ msgstr "传入 总价 带宽"
-
-#~ msgid "HTTP Total"
-#~ msgstr "HTTP 总价 值"
-
-#~ msgid "Gnutella Total"
-#~ msgstr "Gnutella 总价 值"
-
-#~ msgid "Gnutella Messages"
-#~ msgstr "Gnutella 消息"
-
-#~ msgid "All Clients"
-#~ msgstr "任何 型的 客户端"
-
-#~ msgid "All Messages"
-#~ msgstr "全部 消息"
-
-#~ msgid "Hops 1"
-#~ msgstr "Hops 1"
-
-#~ msgid "Hops 2"
-#~ msgstr "Hops 2"
-
-#~ msgid "Hops 3"
-#~ msgstr "Hops 3"
-
-#~ msgid "Hops 4"
-#~ msgstr "Hops 4"
-
-#~ msgid "Hops 5"
-#~ msgstr "Hops 5"
-
-#~ msgid "Hops 6"
-#~ msgstr "Hops 6"
-
-#~ msgid "Hops 7"
-#~ msgstr "Hops 7"
-
-#~ msgid "Hops 8"
-#~ msgstr "Hops 8"
-
-#~ msgid "Hops 9"
-#~ msgstr "Hops 9"
-
-#~ msgid "TTL 0"
-#~ msgstr "TTL 0"
-
-#~ msgid "TTL 1"
-#~ msgstr "TTL 1"
-
-#~ msgid "TTL 2"
-#~ msgstr "TTL 2"
-
-#~ msgid "TTL 3"
-#~ msgstr "TTL 3"
-
-#~ msgid "TTL 4"
-#~ msgstr "TTL 4"
-
-#~ msgid "TTL 5"
-#~ msgstr "TTL 5"
-
-#~ msgid "TTL 6"
-#~ msgstr "TTL 6"
-
-#~ msgid "TTL 7"
-#~ msgstr "TTL 7"
-
-#~ msgid "TTL 8"
-#~ msgstr "TTL 8"
-
-#~ msgid "TTL 9"
-#~ msgstr "TTL 9"
-
-#~ msgid "All Requests"
-#~ msgstr "全部 请求"
-
-#~ msgid "HEAD Requests"
-#~ msgstr "HEAD 请求"
-
-#~ msgid "GET Requests"
-#~ msgstr "GET 请求"
-
-#~ msgid "Push Requests"
-#~ msgstr "Push 请求"
-
-#~ msgid "Gnutella Requests"
-#~ msgstr "Gnutella 请求"
-
-#~ msgid "Gnutella (FrostWire) Requests"
-#~ msgstr "Gnutella (FrostWire) 请求"
-
-#~ msgid "THEX Request"
-#~ msgstr "THEX 请求"
-
-#~ msgid "Incoming Attempts"
-#~ msgstr "传入 邻居"
-
-#~ msgid "FrostWire: Enabling Open Information Sharing"
-#~ msgstr "FrostWire: 运行在 Gnutella 网络"
-
-#~ msgid "Content"
-#~ msgstr "连接 (&O)"
-
-#~ msgid "Firewall Config"
-#~ msgstr "防火墙"
