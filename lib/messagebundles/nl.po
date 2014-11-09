@@ -30,7 +30,7 @@ msgid "Closing the FrostWire window will only hide the application"
 msgstr ""
 "Het sluiten van het FrostWire venster zal alleen het programma "
 "verbergen<p>Er kunnen docuement transfers kunnen in de achtergrond doorgaan."
-"</html>"
+""
 
 #: src/com/frostwire/gui/HideExitDialog.java:72
 msgid "This way file transfers may continue in the background."
@@ -1304,9 +1304,9 @@ msgid ""
 "internet will be able<br/>to download file chunks of the data your torrents "
 "seed. (Recommended)"
 msgstr ""
-"<html><strong>Seed voltooide torrent downloads.</strong> BitTorrent "
+"<strong>Seed voltooide torrent downloads.</strong> BitTorrent "
 "gebruikers op het internet kunnen<br/>file onderdelen van de gegevens die uw "
-"torrents seeden downloaden. (Aanbevolen)</html>"
+"torrents seeden downloaden. (Aanbevolen)"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:77
 #, fuzzy
@@ -1316,10 +1316,10 @@ msgid ""
 "while you're downloading its<br/>data files. <strong>Some trackers will "
 "penalize this Leeching behavior</strong>."
 msgstr ""
-"<html><strong>Seed voltooide downloads niet.</strong> BitTorrent gebruikers "
+"<strong>Seed voltooide downloads niet.</strong> BitTorrent gebruikers "
 "op internet kunnen<br/>alleen bestandonderdelen downloaden van die torrent "
 "waarvan je de<br/>data bestanden aan het downloaden bent. <strong>Sommige "
-"trackers zullen dit Leeching gedrag bestraffen</strong>.</html>"
+"trackers zullen dit Leeching gedrag bestraffen</strong>."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:92
 msgid ""
@@ -2429,22 +2429,22 @@ msgstr "Venster sluiten"
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:181
 #, fuzzy
 msgid "FrostWire Logo Designer"
-msgstr "<h1>FrostWire Logo Ontwerper</h1>"
+msgstr "FrostWire Logo Ontwerper"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:184
 #, fuzzy
 msgid "FrostWire Graphics Designers/Photographers"
-msgstr "<h1>FrostWire Graphics Designers/Fotografen</h1>"
+msgstr "FrostWire Graphics Designers/Fotografen"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:194
 #, fuzzy
 msgid "Thanks to Former FrostWire Developers"
-msgstr "<h1>Dankzij Eerdere FrostWire Ontwerpers</h1>"
+msgstr "Dankzij Eerdere FrostWire Ontwerpers"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:199
 #, fuzzy
 msgid "Thanks to the FrostWire Chat Community!"
-msgstr "<h1>Dankzij de FrostWire Chat Community!</h1>"
+msgstr "Dankzij de FrostWire Chat Community!"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:200
 msgid ""
@@ -2468,17 +2468,17 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:206
 #, fuzzy
 msgid "FrostWire Chat Operators"
-msgstr "<h1>FrostWire Chat Operators</h1>"
+msgstr "FrostWire Chat Operators"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:211
 #, fuzzy
 msgid "FrostWire Forum Moderators"
-msgstr "<h1>FrostWire Forum Operators</h1>"
+msgstr "FrostWire Forum Operators"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:217
 #, fuzzy
 msgid "Many Former Chat Operators"
-msgstr "<h1>FrostWire Chat Operators</h1>"
+msgstr "FrostWire Chat Operators"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:223
 msgid "And also to the Support Volunteer Helpers:"
@@ -2488,13 +2488,13 @@ msgstr "En ook voor de Support Vrijwillige Helpers:"
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:229
 #, fuzzy
 msgid "Thanks to the Azureus Core Developers"
-msgstr "<h1>Dankzij Eerdere FrostWire Ontwerpers</h1>"
+msgstr "Dankzij Eerdere FrostWire Ontwerpers"
 
 #. developers
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:236
 #, fuzzy
 msgid "Thanks to the LimeWire Developer Team"
-msgstr "<h1>Bedankt, LimeWire Developer Team</h1>"
+msgstr "Bedankt, LimeWire Developer Team"
 
 #. community VIPs
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:254
@@ -2507,12 +2507,12 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:274
 #, fuzzy
 msgid "Thanks to the PJIRC Staff"
-msgstr "<h1>Bedankt, PJIRC Medewerkers</h1>"
+msgstr "Bedankt, PJIRC Medewerkers"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:283
 #, fuzzy
 msgid "Thanks to the Automatix Team"
-msgstr "<h1>Bedankt, Automatix Team</h1>"
+msgstr "Bedankt, Automatix Team"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:284
 msgid ""
@@ -2523,7 +2523,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:292
 #, fuzzy
 msgid "Thanks to Ubuntu/Kubuntu Teams"
-msgstr "<h1>Bedankt, Ubuntu/Kubuntu Teams</h1>"
+msgstr "Bedankt, Ubuntu/Kubuntu Teams"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:293
 #, fuzzy
@@ -2537,7 +2537,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:295
 #, fuzzy
 msgid "Thanks to the NSIS Project"
-msgstr "<h1>Bedankt, NSIS Project</h1>"
+msgstr "Bedankt, NSIS Project"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:296
 #, fuzzy
@@ -2548,7 +2548,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:298
 #, fuzzy
 msgid "Thanks to our families"
-msgstr "<h1>Ook een dankwoord voor onze families</h1>"
+msgstr "Ook een dankwoord voor onze families"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:299
 msgid "For being patient during our many sleepless nights"
@@ -3052,7 +3052,7 @@ msgstr "Krijg FrostWire Nu"
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 #, fuzzy
 msgid "<b>Seeding</b><p>completed torrent downloads.</p>"
-msgstr "<html><b>Seeding</b><p>voltooide torrent downloads.</html>"
+msgstr "<b>Seeding</b><p>voltooide torrent downloads."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 #, fuzzy
@@ -3060,18 +3060,18 @@ msgid ""
 "<b>Not Seeding</b><p>File chunks might be shared only during a torrent "
 "download.</p>"
 msgstr ""
-"<html><b>Niet aan het Seeden</b>.<p>Bestandonderdelen kunnen alleen worden "
-"gedeeld tijdens<p>a torrent download.</html>"
+"<b>Niet aan het Seeden</b>.<p>Bestandonderdelen kunnen alleen worden "
+"gedeeld tijdens<p>a torrent download."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
 #, fuzzy
 msgid "<b>Seeding</b>"
-msgstr "<html><b>Seeding</b></html>"
+msgstr "<b>Seeding</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
 #, fuzzy
 msgid "<b>Not Seeding</b>"
-msgstr "<html><b>Niet aan het Seeden</b></html>"
+msgstr "<b>Niet aan het Seeden</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:516
 msgid "FrostWire has not detected a firewall"
@@ -3915,15 +3915,15 @@ msgstr "Kom meer te weten..."
 #, fuzzy, java-format
 msgid "I <b>will not</b> use FrostWire {0} for copyright infringement."
 msgstr ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\">IK <b>zal</b> "
-"FrostWire {0} niet gebruiken voor copyright overtredingen.</div></html>"
+"<div display=\"block\" color=\"#515151\" size=\"13\">IK <b>zal</b> "
+"FrostWire {0} niet gebruiken voor copyright overtredingen.</div>"
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:82
 #, fuzzy, java-format
 msgid "I <b>might use</b> FrostWire {0} for copyright infringement."
 msgstr ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\">Ik <b>zal</b> "
-"FrostWire {0} misschien gebruiken voor copyright overtredingen.</div></html>"
+"<div display=\"block\" color=\"#515151\" size=\"13\">Ik <b>zal</b> "
+"FrostWire {0} misschien gebruiken voor copyright overtredingen.</div>"
 
 #: src/com/limegroup/gnutella/gui/init/IntentWindow.java:43
 msgid "State Your Intent"
@@ -5038,9 +5038,9 @@ msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
 msgstr ""
-"<html>Stel de Maximum BitTorrent upload snelheid in KB/s in.<p>NB: Te lage "
+"Stel de Maximum BitTorrent upload snelheid in KB/s in.<p>NB: Te lage "
 "upload snelheid (leeching) kan door sommige trackers bestraft worden, wat "
-"resulteert in langzamere downloads.</html>"
+"resulteert in langzamere downloads."
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:52
 msgid "Upload Speed:"

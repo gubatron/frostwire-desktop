@@ -28,8 +28,8 @@ msgstr "FrostWire를 감추시겠습니까?"
 #, fuzzy
 msgid "Closing the FrostWire window will only hide the application"
 msgstr ""
-"<html>FrostWire를 닫으시면 어플리케이션을 표시하지 않습니다<p>파일 이동은 계"
-"속됩니다.</html>"
+"FrostWire를 닫으시면 어플리케이션을 표시하지 않습니다<p>파일 이동은 계"
+"속됩니다."
 
 #: src/com/frostwire/gui/HideExitDialog.java:72
 msgid "This way file transfers may continue in the background."
@@ -1298,8 +1298,8 @@ msgid ""
 "internet will be able<br/>to download file chunks of the data your torrents "
 "seed. (Recommended)"
 msgstr ""
-"<html><strong>완료된 토렌트 다운로드 배포.</strong> BitTorrent 사용자는<br/>"
-"배포한 토렌트 파일의 일부를 다운로드 할 수 있습니다 (추천)</html>"
+"<strong>완료된 토렌트 다운로드 배포.</strong> BitTorrent 사용자는<br/>"
+"배포한 토렌트 파일의 일부를 다운로드 할 수 있습니다 (추천)"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:77
 #, fuzzy
@@ -1309,10 +1309,10 @@ msgid ""
 "while you're downloading its<br/>data files. <strong>Some trackers will "
 "penalize this Leeching behavior</strong>."
 msgstr ""
-"<html><strong>완료된 토렌트 다운로드를 배포하지 않음.</strong> BitTorrent 사"
+"<strong>완료된 토렌트 다운로드를 배포하지 않음.</strong> BitTorrent 사"
 "용자는<br/> 귀하가 데이터 파일을 다운로드하는 동안에만 파일 부부분을 다운로"
 "드 할 수 있습니다<br/>. <strong>일부 트랙커들은 해당 동작에 벌칙을 수행할 수 "
-"있습니다</strong>.</html>"
+"있습니다</strong>."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:92
 msgid ""
@@ -2416,22 +2416,22 @@ msgstr "현재 창 닫기"
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:181
 #, fuzzy
 msgid "FrostWire Logo Designer"
-msgstr "<h1>FrostWire 로고 디자이너</h1>"
+msgstr "FrostWire 로고 디자이너"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:184
 #, fuzzy
 msgid "FrostWire Graphics Designers/Photographers"
-msgstr "<h1>FrostWire 그래픽 디자이너/포토그래프 </h1>"
+msgstr "FrostWire 그래픽 디자이너/포토그래프 "
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:194
 #, fuzzy
 msgid "Thanks to Former FrostWire Developers"
-msgstr "<h1> FrostWire 개발자들에게 감사의 인사</h1>"
+msgstr " FrostWire 개발자들에게 감사의 인사"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:199
 #, fuzzy
 msgid "Thanks to the FrostWire Chat Community!"
-msgstr "<h1>FrostWire 채팅 커뮤니티에 감사의 인사</h1>"
+msgstr "FrostWire 채팅 커뮤니티에 감사의 인사"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:200
 msgid ""
@@ -2453,17 +2453,17 @@ msgstr "br><br>채팅방 관리인 및 포럼 수정인들에게 감사의 인�
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:206
 #, fuzzy
 msgid "FrostWire Chat Operators"
-msgstr "<h1>FrostWire 채팅 관리인</h1>"
+msgstr "FrostWire 채팅 관리인"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:211
 #, fuzzy
 msgid "FrostWire Forum Moderators"
-msgstr "<h1>FrostWire 포럼 수정인</h1>"
+msgstr "FrostWire 포럼 수정인"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:217
 #, fuzzy
 msgid "Many Former Chat Operators"
-msgstr "<h1>FrostWire 채팅 관리인</h1>"
+msgstr "FrostWire 채팅 관리인"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:223
 msgid "And also to the Support Volunteer Helpers:"
@@ -2473,13 +2473,13 @@ msgstr "지원 봉사 지원자들에게 감사드립니다:"
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:229
 #, fuzzy
 msgid "Thanks to the Azureus Core Developers"
-msgstr "<h1> FrostWire 개발자들에게 감사의 인사</h1>"
+msgstr " FrostWire 개발자들에게 감사의 인사"
 
 #. developers
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:236
 #, fuzzy
 msgid "Thanks to the LimeWire Developer Team"
-msgstr "<h1>LimeWire 개발 팀에게 감사드립닏</h1>"
+msgstr "LimeWire 개발 팀에게 감사드립닏"
 
 #. community VIPs
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:254
@@ -2491,12 +2491,12 @@ msgstr "그누테라 커뮤니티의 모든 동료분들께 감사의 말씀 올
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:274
 #, fuzzy
 msgid "Thanks to the PJIRC Staff"
-msgstr "<h1>PJIRC 직원들에게 감사드립니다</h1>"
+msgstr "PJIRC 직원들에게 감사드립니다"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:283
 #, fuzzy
 msgid "Thanks to the Automatix Team"
-msgstr "<h1> Automatix 직원들에게 감사드립니다</h1>"
+msgstr " Automatix 직원들에게 감사드립니다"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:284
 msgid ""
@@ -2507,7 +2507,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:292
 #, fuzzy
 msgid "Thanks to Ubuntu/Kubuntu Teams"
-msgstr "<h1> Ubuntu/Kubuntu 직원들에게 감사드립니다</h1>"
+msgstr " Ubuntu/Kubuntu 직원들에게 감사드립니다"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:293
 #, fuzzy
@@ -2521,7 +2521,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:295
 #, fuzzy
 msgid "Thanks to the NSIS Project"
-msgstr "<h1> NSIS 프로젝트에 감사드립니다</h1>"
+msgstr " NSIS 프로젝트에 감사드립니다"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:296
 #, fuzzy
@@ -2531,7 +2531,7 @@ msgstr "<p>뛰어난 설치기 제조 시스템 및 문서에 감사드립니다
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:298
 #, fuzzy
 msgid "Thanks to our families"
-msgstr "<h1>저희의 가족들에게 감사드립니다</h1>"
+msgstr "저희의 가족들에게 감사드립니다"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:299
 msgid "For being patient during our many sleepless nights"
@@ -3024,7 +3024,7 @@ msgstr "FrostWire PRO 를 금방 구입"
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 #, fuzzy
 msgid "<b>Seeding</b><p>completed torrent downloads.</p>"
-msgstr "<html><b>완료된</b><p>토렌트 다운로드 배포.</html>"
+msgstr "<b>완료된</b><p>토렌트 다운로드 배포."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 #, fuzzy
@@ -3032,18 +3032,18 @@ msgid ""
 "<b>Not Seeding</b><p>File chunks might be shared only during a torrent "
 "download.</p>"
 msgstr ""
-"<html><b>배포하지 않음</b>.<p>토렌트 다운로드 중에만 파일을<p>공유할 수 있습"
-"니다.</html>"
+"<b>배포하지 않음</b>.<p>토렌트 다운로드 중에만 파일을<p>공유할 수 있습"
+"니다."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
 #, fuzzy
 msgid "<b>Seeding</b>"
-msgstr "<html><b>배포</b></html>"
+msgstr "<b>배포</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
 #, fuzzy
 msgid "<b>Not Seeding</b>"
-msgstr "<html><b>배포하지 않음</b></html>"
+msgstr "<b>배포하지 않음</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:516
 msgid "FrostWire has not detected a firewall"
@@ -3848,15 +3848,15 @@ msgstr "더 알아보기..."
 #, fuzzy, java-format
 msgid "I <b>will not</b> use FrostWire {0} for copyright infringement."
 msgstr ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\"><b></b> FrostWire "
-"{0}를 저작권을 위반하는 행위를 하지 않습니다.</div></html>"
+"<div display=\"block\" color=\"#515151\" size=\"13\"><b></b> FrostWire "
+"{0}를 저작권을 위반하는 행위를 하지 않습니다.</div>"
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:82
 #, fuzzy, java-format
 msgid "I <b>might use</b> FrostWire {0} for copyright infringement."
 msgstr ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\"> <b></b> "
-"FrostWire {0}의 저작권을 위반하는 행위를 할 수 도 있습니다.</div></html>"
+"<div display=\"block\" color=\"#515151\" size=\"13\"> <b></b> "
+"FrostWire {0}의 저작권을 위반하는 행위를 할 수 도 있습니다.</div>"
 
 #: src/com/limegroup/gnutella/gui/init/IntentWindow.java:43
 msgid "State Your Intent"
@@ -4948,8 +4948,8 @@ msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
 msgstr ""
-"<html>최대 BitTorrent 전송 속도를 KB/초로 설정.<p>참조: 매우 낮은 업로드 속도"
-"(리칭)은 다른 사용자들로부터 제외되어, 다운로드 속도를 저하시킵니다.</html>"
+"최대 BitTorrent 전송 속도를 KB/초로 설정.<p>참조: 매우 낮은 업로드 속도"
+"(리칭)은 다른 사용자들로부터 제외되어, 다운로드 속도를 저하시킵니다."
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:52
 msgid "Upload Speed:"

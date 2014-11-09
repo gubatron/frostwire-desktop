@@ -1335,9 +1335,9 @@ msgid ""
 "internet will be able<br/>to download file chunks of the data your torrents "
 "seed. (Recommended)"
 msgstr ""
-"<html><strong>Seeduj dane zakończonych pobrań torrentowych.</strong> "
+"<strong>Seeduj dane zakończonych pobrań torrentowych.</strong> "
 "Użytkownicy  sieci BitTorrent na internecie<br/>będą mogli pobrać od ciebie "
-"fragmenty danych torrentów które seedujesz. (Recommended)</html>"
+"fragmenty danych torrentów które seedujesz. (Recommended)"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:77
 #, fuzzy
@@ -1347,7 +1347,7 @@ msgid ""
 "while you're downloading its<br/>data files. <strong>Some trackers will "
 "penalize this Leeching behavior</strong>."
 msgstr ""
-"<html><strong>Nie seeduj zakończonych pobrań torrentowych.</strong> "
+"<strong>Nie seeduj zakończonych pobrań torrentowych.</strong> "
 "Użytkownicy  sieci BitTorrent na internecie<br/>mogą pobrać tylko fragmenty "
 "danych plików, które ty aktywnie pobierasz w danej chwili.a <br/"
 "><strong>Niektóre trackery karzą takie pasożytnicze zachowanie.</strong></"
@@ -1362,12 +1362,12 @@ msgid ""
 "advanced users only</strong> as it can lead to downloading parts of files "
 "you may have not explicitly chosen for download."
 msgstr ""
-"<html><strong>Seeduj wyselekcjonowane pliki torrentu.</strong> "
+"<strong>Seeduj wyselekcjonowane pliki torrentu.</strong> "
 "Wyselekcjonowane pobrania torrentów (Częściowe Pobrania) mogą spowodować "
 "seedowanie fragmentów danych sąsiednich niekompletnych plików.<br/>Ta "
 "właściwość jest <strong>polecana tylko dla zaawansowanych użytkowników,</"
 "strong> ponieważ może spowodować pobieranie części plików które mogły nie "
-"być przez ciebie wyraźnie wybrane do pobrania.</html>"
+"być przez ciebie wyraźnie wybrane do pobrania."
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:133
 msgid "Leave a tip"
@@ -2223,7 +2223,7 @@ msgid ""
 "in your computer.<br><br>If you want to use FrostWire as a media player "
 "<b>Please install mplayer and restart FrostWire.</b>"
 msgstr ""
-"<html><b>FrostWire wymaga MPlayer aby odtwarzać media,</b> ale nie może "
+"<b>FrostWire wymaga MPlayer aby odtwarzać media,</b> ale nie może "
 "znaleźć go na twoim komputerze.<br><br>Jeżeli chcesz używać FrostWire jako "
 "odtwarzacz, <b>proszę zainstaluj MPlayer i zrestartuj FrostWire.</b>"
 
@@ -2481,22 +2481,22 @@ msgstr "Zamknij To Okno"
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:181
 #, fuzzy
 msgid "FrostWire Logo Designer"
-msgstr "<h1>Projektant Loga FrostWire</h1>"
+msgstr "Projektant Loga FrostWire"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:184
 #, fuzzy
 msgid "FrostWire Graphics Designers/Photographers"
-msgstr "<h1>Projektanci Grafiki FrostWire</h1>"
+msgstr "Projektanci Grafiki FrostWire"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:194
 #, fuzzy
 msgid "Thanks to Former FrostWire Developers"
-msgstr "<h1>Dzięki dla Byłych Programistów FrostWire</h1>"
+msgstr "Dzięki dla Byłych Programistów FrostWire"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:199
 #, fuzzy
 msgid "Thanks to the FrostWire Chat Community!"
-msgstr "<h1>Dzięki dla Społeczności Czatu FrostWire!</h1>"
+msgstr "Dzięki dla Społeczności Czatu FrostWire!"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:200
 msgid ""
@@ -2521,17 +2521,17 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:206
 #, fuzzy
 msgid "FrostWire Chat Operators"
-msgstr "<h1>Operatorzy Czatu FrostWire</h1>"
+msgstr "Operatorzy Czatu FrostWire"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:211
 #, fuzzy
 msgid "FrostWire Forum Moderators"
-msgstr "<h1>Moderatorzy Forum FrostWire</h1>"
+msgstr "Moderatorzy Forum FrostWire"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:217
 #, fuzzy
 msgid "Many Former Chat Operators"
-msgstr "<h1>Operatorzy Czatu FrostWire</h1>"
+msgstr "Operatorzy Czatu FrostWire"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:223
 msgid "And also to the Support Volunteer Helpers:"
@@ -2541,13 +2541,13 @@ msgstr "A także pomocy od Wolontariuszy"
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:229
 #, fuzzy
 msgid "Thanks to the Azureus Core Developers"
-msgstr "<h1>Dzięki dla Byłych Programistów FrostWire</h1>"
+msgstr "Dzięki dla Byłych Programistów FrostWire"
 
 #. developers
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:236
 #, fuzzy
 msgid "Thanks to the LimeWire Developer Team"
-msgstr "<h1>Dzięki dla Zespołu Programistów LimeWire</h1>"
+msgstr "Dzięki dla Zespołu Programistów LimeWire"
 
 #. community VIPs
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:254
@@ -2561,12 +2561,12 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:274
 #, fuzzy
 msgid "Thanks to the PJIRC Staff"
-msgstr "<h1>Dzięki dla załogi PJIRC</h1>"
+msgstr "Dzięki dla załogi PJIRC"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:283
 #, fuzzy
 msgid "Thanks to the Automatix Team"
-msgstr "<h1>Dzięki dla załogi Automatix</h1>"
+msgstr "Dzięki dla załogi Automatix"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:284
 msgid ""
@@ -2579,7 +2579,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:292
 #, fuzzy
 msgid "Thanks to Ubuntu/Kubuntu Teams"
-msgstr "<h1>Dzięki dla załogi Ubuntu/Kubuntu</h1>"
+msgstr "Dzięki dla załogi Ubuntu/Kubuntu"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:293
 #, fuzzy
@@ -2593,7 +2593,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:295
 #, fuzzy
 msgid "Thanks to the NSIS Project"
-msgstr "<h1>Dzięki dla projektu NSIS</h1>"
+msgstr "Dzięki dla projektu NSIS"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:296
 #, fuzzy
@@ -2604,7 +2604,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:298
 #, fuzzy
 msgid "Thanks to our families"
-msgstr "<h1>Dzięki dla naszych rodzin</h1>"
+msgstr "Dzięki dla naszych rodzin"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:299
 msgid "For being patient during our many sleepless nights"
@@ -3108,7 +3108,7 @@ msgstr "FrostWire na G+"
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 #, fuzzy
 msgid "<b>Seeding</b><p>completed torrent downloads.</p>"
-msgstr "<html><b>Seeduje</b><p>zakończone pobrania torrentowe.</html>"
+msgstr "<b>Seeduje</b><p>zakończone pobrania torrentowe."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 #, fuzzy
@@ -3116,18 +3116,18 @@ msgid ""
 "<b>Not Seeding</b><p>File chunks might be shared only during a torrent "
 "download.</p>"
 msgstr ""
-"<html><b>Nie Seeduję.</b>.<p>Fragmenty pliów mogą być udostępniane tylko<p>a "
-"podczas pobierania torrentu.</html>"
+"<b>Nie Seeduję.</b>.<p>Fragmenty pliów mogą być udostępniane tylko<p>a "
+"podczas pobierania torrentu."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
 #, fuzzy
 msgid "<b>Seeding</b>"
-msgstr "<html><b>Seeduję</b></html>"
+msgstr "<b>Seeduję</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
 #, fuzzy
 msgid "<b>Not Seeding</b>"
-msgstr "<html><b>Nie Seeduję</b></html>"
+msgstr "<b>Nie Seeduję</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:516
 msgid "FrostWire has not detected a firewall"
@@ -3969,15 +3969,15 @@ msgstr "Dowiedz się więcej..."
 #, fuzzy, java-format
 msgid "I <b>will not</b> use FrostWire {0} for copyright infringement."
 msgstr ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\"><b>Nie będę</b> "
-"używać FrostWire {0} do naruszania praw autorskich.</div></html>"
+"<div display=\"block\" color=\"#515151\" size=\"13\"><b>Nie będę</b> "
+"używać FrostWire {0} do naruszania praw autorskich.</div>"
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:82
 #, fuzzy, java-format
 msgid "I <b>might use</b> FrostWire {0} for copyright infringement."
 msgstr ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\"><b>Możliwe</b> że "
-"użyję FrostWire {0} do naruszania praw autorskich.</div></html>"
+"<div display=\"block\" color=\"#515151\" size=\"13\"><b>Możliwe</b> że "
+"użyję FrostWire {0} do naruszania praw autorskich.</div>"
 
 #: src/com/limegroup/gnutella/gui/init/IntentWindow.java:43
 msgid "State Your Intent"
@@ -5095,9 +5095,9 @@ msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
 msgstr ""
-"<html>Ustaw Maksymalą szybkość transferów przez BitTorrent w KB/s.<p> Za "
+"Ustaw Maksymalą szybkość transferów przez BitTorrent w KB/s.<p> Za "
 "wolne wysyłania (leeching) mogą być karane przez niektóre trakery, powodując "
-"wolniejsze pobierania.</html>"
+"wolniejsze pobierania."
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:52
 msgid "Upload Speed:"

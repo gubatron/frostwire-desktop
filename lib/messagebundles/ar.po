@@ -1290,9 +1290,9 @@ msgid ""
 "internet will be able<br/>to download file chunks of the data your torrents "
 "seed. (Recommended)"
 msgstr ""
-"<html><strong>تم الانتهاء من رفع الملفات .</strong>BitTorrentسوف يتمكن "
+"<strong>تم الانتهاء من رفع الملفات .</strong>BitTorrentسوف يتمكن "
 "مستخدمي على الإنترنت من<br/> تحميل أجزاء الملفات من  مرفوعات تورينت. (موصى "
-"به) </html>"
+"به) "
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:77
 #, fuzzy
@@ -1302,10 +1302,10 @@ msgid ""
 "while you're downloading its<br/>data files. <strong>Some trackers will "
 "penalize this Leeching behavior</strong>."
 msgstr ""
-"<html><strong>لا ترفع تحميلات التورينت المنتهية .</strong> BitTorrent ربما "
+"<strong>لا ترفع تحميلات التورينت المنتهية .</strong> BitTorrent ربما "
 "يستطيع مستخدمي الإنترنت <br/>من تحميل أجزاء الملف لهذا التورينت من  بينما "
 "تقوم بتحميل<br/>ملفات بياناته. <strong>سوف تقوم بعض المتتبعات ب ر سلوك "
-"التحميل هذا</strong>.</html>"
+"التحميل هذا</strong>."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:92
 msgid ""
@@ -3004,7 +3004,7 @@ msgstr "استخدم FrostWire لـ..."
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 #, fuzzy
 msgid "<b>Seeding</b><p>completed torrent downloads.</p>"
-msgstr "<html><b>الرفع</b><p>اكتمال تنزيلات تورينت.</html>"
+msgstr "<b>الرفع</b><p>اكتمال تنزيلات تورينت."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 #, fuzzy
@@ -3012,7 +3012,7 @@ msgid ""
 "<b>Not Seeding</b><p>File chunks might be shared only during a torrent "
 "download.</p>"
 msgstr ""
-"<html><b>لم يرفع</b>.<p>وقد تشارك أجزاء الملف فقط خلال<p>a تحميل التورينت.</"
+"<b>لم يرفع</b>.<p>وقد تشارك أجزاء الملف فقط خلال<p>a تحميل التورينت.</"
 "html>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
@@ -3023,7 +3023,7 @@ msgstr "بدء الرفع الآنال"
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
 #, fuzzy
 msgid "<b>Not Seeding</b>"
-msgstr "<html><b>لا يرفع</b></html>"
+msgstr "<b>لا يرفع</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:516
 msgid "FrostWire has not detected a firewall"
@@ -4866,7 +4866,7 @@ msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
 msgstr ""
-"<html>اضبط سرعة التحميل القصوى بـ ك.ب/ث..<p>ملاحظة: بطيء جدا. سرعات التحميل "
+"اضبط سرعة التحميل القصوى بـ ك.ب/ث..<p>ملاحظة: بطيء جدا. سرعات التحميل "
 "(التنزيل) يمكن أن تحصل على عقوبات من بعض المتتبعات في التنزيلات البطيئة..</"
 "html>"
 
