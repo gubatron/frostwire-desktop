@@ -28,8 +28,8 @@ msgstr "क्या आप के लिए FrostWire छुपाना चा
 #, fuzzy
 msgid "Closing the FrostWire window will only hide the application"
 msgstr ""
-"<html>फ्रोस्ट वाइर  विंडो बंद करने से केवल  अप्प्लिकेशन छिपा जायेगा. <p>इस तरह फ़ाइल "
-"स्थानांतरण पृष्ठभूमि में जारी रख सकते है.</html>"
+"फ्रोस्ट वाइर  विंडो बंद करने से केवल  अप्प्लिकेशन छिपा जायेगा. <p>इस तरह फ़ाइल "
+"स्थानांतरण पृष्ठभूमि में जारी रख सकते है."
 
 #: src/com/frostwire/gui/HideExitDialog.java:72
 msgid "This way file transfers may continue in the background."
@@ -1300,9 +1300,9 @@ msgid ""
 "internet will be able<br/>to download file chunks of the data your torrents "
 "seed. (Recommended)"
 msgstr ""
-"<html><strong> बीज  तोर्रेंट   डाउनलोड समाप्त हो गया. </strong> इंटरनेट पर बिटटोरेंट "
+"<strong> बीज  तोर्रेंट   डाउनलोड समाप्त हो गया. </strong> इंटरनेट पर बिटटोरेंट "
 "उपयोगकर्ताओं को सक्षम होंगें  <br/>फ़ाइल  टुकड़ा डाउनलोड करने के लिए करें अपने  टोरेंट के  "
-"बीज डेटा के  लिए . (अनुशंसित) </html>"
+"बीज डेटा के  लिए . (अनुशंसित) "
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:77
 #, fuzzy
@@ -1312,10 +1312,10 @@ msgid ""
 "while you're downloading its<br/>data files. <strong>Some trackers will "
 "penalize this Leeching behavior</strong>."
 msgstr ""
-"<html><strong>समाप्त हो गए टोरेंट डाउनलोड को सीड नहीं करें </strong>. बिटटोरेंट "
+"<strong>समाप्त हो गए टोरेंट डाउनलोड को सीड नहीं करें </strong>. बिटटोरेंट "
 "उपयोगकर्ताओं हो सकता है  इंटरनेट पर  <br/> वही टोरेंट टुकड़ा  फ़ाइल आपसे डाउनलोड  कर रहे "
 "हैं जब आप डाउनलोडअपने डेटा फ़ाइलों  <br/>कर रहें हो है. <strong> कुछ  ट्रैकर  इस चिपकने "
-"वाले व्यव्हार के लिए दंडित होंगे. </strong>.</html>"
+"वाले व्यव्हार के लिए दंडित होंगे. </strong>."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:92
 msgid ""
@@ -2422,22 +2422,22 @@ msgstr "अबौट विन्डो को बन्द करो."
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:181
 #, fuzzy
 msgid "FrostWire Logo Designer"
-msgstr "<h1>फ्रोस्ट वाइर लोगो डिजाइनर</h1>"
+msgstr "फ्रोस्ट वाइर लोगो डिजाइनर"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:184
 #, fuzzy
 msgid "FrostWire Graphics Designers/Photographers"
-msgstr "<h1> FrostWire ग्राफिक्स डिजाइनर/फोटोग्राफर </h1>"
+msgstr " FrostWire ग्राफिक्स डिजाइनर/फोटोग्राफर "
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:194
 #, fuzzy
 msgid "Thanks to Former FrostWire Developers"
-msgstr "<h1>पूर्व फ्रोस्ट वाइर डेवलपर्स को धन्यवाद</h1>"
+msgstr "पूर्व फ्रोस्ट वाइर डेवलपर्स को धन्यवाद"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:199
 #, fuzzy
 msgid "Thanks to the FrostWire Chat Community!"
-msgstr "<h1> चैट समुदाय को धन्यवाद !</h1>"
+msgstr " चैट समुदाय को धन्यवाद !"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:200
 msgid ""
@@ -2459,17 +2459,17 @@ msgstr "<br><br>विशेष रूप से हम चैट रूम ऑ�
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:206
 #, fuzzy
 msgid "FrostWire Chat Operators"
-msgstr "<h1> फ्रोस्ट वाइर चैट ऑपरेटर्स</h1> "
+msgstr " फ्रोस्ट वाइर चैट ऑपरेटर्स "
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:211
 #, fuzzy
 msgid "FrostWire Forum Moderators"
-msgstr "<h1>  फ्रोस्ट वाइर   फोरम   मध्यस्थ </h1>"
+msgstr "  फ्रोस्ट वाइर   फोरम   मध्यस्थ "
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:217
 #, fuzzy
 msgid "Many Former Chat Operators"
-msgstr "<h1> फ्रोस्ट वाइर चैट ऑपरेटर्स</h1> "
+msgstr " फ्रोस्ट वाइर चैट ऑपरेटर्स "
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:223
 msgid "And also to the Support Volunteer Helpers:"
@@ -2479,13 +2479,13 @@ msgstr "और समर्थन स्वयंसेवी सहायको
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:229
 #, fuzzy
 msgid "Thanks to the Azureus Core Developers"
-msgstr "<h1>पूर्व फ्रोस्ट वाइर डेवलपर्स को धन्यवाद</h1>"
+msgstr "पूर्व फ्रोस्ट वाइर डेवलपर्स को धन्यवाद"
 
 #. developers
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:236
 #, fuzzy
 msgid "Thanks to the LimeWire Developer Team"
-msgstr "<h1> लीम  वाइर  डेवलपर टीम को भी धन्यवाद</h1>"
+msgstr " लीम  वाइर  डेवलपर टीम को भी धन्यवाद"
 
 #. community VIPs
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:254
@@ -2497,12 +2497,12 @@ msgstr "ग्नुतेल्ला समुदाय योग्यता 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:274
 #, fuzzy
 msgid "Thanks to the PJIRC Staff"
-msgstr "<h1> PJIRC कर्मचारी  को  धन्यवाद</h1>"
+msgstr " PJIRC कर्मचारी  को  धन्यवाद"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:283
 #, fuzzy
 msgid "Thanks to the Automatix Team"
-msgstr "<h1> औतोमतिक्स टीम  को  धन्यवाद</h1>"
+msgstr " औतोमतिक्स टीम  को  धन्यवाद"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:284
 msgid ""
@@ -2513,7 +2513,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:292
 #, fuzzy
 msgid "Thanks to Ubuntu/Kubuntu Teams"
-msgstr "<h1> उबुन्तु / कुबुन्टु  टीम  को  धन्यवाद</h1>"
+msgstr " उबुन्तु / कुबुन्टु  टीम  को  धन्यवाद"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:293
 #, fuzzy
@@ -2527,7 +2527,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:295
 #, fuzzy
 msgid "Thanks to the NSIS Project"
-msgstr "<h1>एनसिस प्रोजेक्ट  को  धन्यवाद</h1>"
+msgstr "एनसिस प्रोजेक्ट  को  धन्यवाद"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:296
 #, fuzzy
@@ -2537,7 +2537,7 @@ msgstr "<p> इंस्टॉलर बिल्डर प्रणाली �
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:298
 #, fuzzy
 msgid "Thanks to our families"
-msgstr "<h1> हमारे परिवार  को  धन्यवाद</h1>"
+msgstr " हमारे परिवार  को  धन्यवाद"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:299
 msgid "For being patient during our many sleepless nights"
@@ -3031,7 +3031,7 @@ msgstr "लैमवैर का उपयोग (&U)"
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 #, fuzzy
 msgid "<b>Seeding</b><p>completed torrent downloads.</p>"
-msgstr "<html><b>सीडिंग </b><p>टोरेन्टो डाउनलोड पूरा हो गया.</html>"
+msgstr "<b>सीडिंग </b><p>टोरेन्टो डाउनलोड पूरा हो गया."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 #, fuzzy
@@ -3039,18 +3039,18 @@ msgid ""
 "<b>Not Seeding</b><p>File chunks might be shared only during a torrent "
 "download.</p>"
 msgstr ""
-"<html><b>सीडिंग नहीं हो रहा है </b>.<p>फाइल का हिस्सा <p>टोरेन्ट डाउनलोड के दौरान "
-"पूरा हो सकता है .</html>"
+"<b>सीडिंग नहीं हो रहा है </b>.<p>फाइल का हिस्सा <p>टोरेन्ट डाउनलोड के दौरान "
+"पूरा हो सकता है ."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
 #, fuzzy
 msgid "<b>Seeding</b>"
-msgstr "<html><b>सीडिंग</b></html>"
+msgstr "<b>सीडिंग</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
 #, fuzzy
 msgid "<b>Not Seeding</b>"
-msgstr "<html><b>सीडिंग नहीं हो रहा है </b></html>"
+msgstr "<b>सीडिंग नहीं हो रहा है </b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:516
 msgid "FrostWire has not detected a firewall"
@@ -3874,15 +3874,15 @@ msgstr "और अधिक जानकारी प्राप्त कर�
 #, fuzzy, java-format
 msgid "I <b>will not</b> use FrostWire {0} for copyright infringement."
 msgstr ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>नहीं होगा </"
-"b>  फ्रोस्ट वाइर   का प्रयोग करें {0} कॉपीराइट का उल्लंघन के लिए .</div></html>"
+"<div display=\"block\" color=\"#515151\" size=\"13\">I <b>नहीं होगा </"
+"b>  फ्रोस्ट वाइर   का प्रयोग करें {0} कॉपीराइट का उल्लंघन के लिए .</div>"
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:82
 #, fuzzy, java-format
 msgid "I <b>might use</b> FrostWire {0} for copyright infringement."
 msgstr ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>प्रयोग कर "
-"सकता है </b>  फ्रोस्ट वाइर {0} कॉपीराइट का उल्लंघन के लिए .</div></html>"
+"<div display=\"block\" color=\"#515151\" size=\"13\">I <b>प्रयोग कर "
+"सकता है </b>  फ्रोस्ट वाइर {0} कॉपीराइट का उल्लंघन के लिए .</div>"
 
 #: src/com/limegroup/gnutella/gui/init/IntentWindow.java:43
 msgid "State Your Intent"
@@ -4978,9 +4978,9 @@ msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
 msgstr ""
-"<html> बिटटोरेंट अपलोड की अधिकतम गति सेट करें केबी में <p> नोट: बहुत कम अपलोड "
+" बिटटोरेंट अपलोड की अधिकतम गति सेट करें केबी में <p> नोट: बहुत कम अपलोड "
 "गति(leeching) कुछ  ट्रैकर  द्वारा दंडित किया जा सकता है, जिसके परिणामस्वरूप धीमी "
-"डाउनलोड  हो सकता है .</html> "
+"डाउनलोड  हो सकता है . "
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:52
 msgid "Upload Speed:"

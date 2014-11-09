@@ -3004,24 +3004,24 @@ msgstr "Zaokruži FrostWire na G+"
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 #, fuzzy
 msgid "<b>Seeding</b><p>completed torrent downloads.</p>"
-msgstr "<html><b>Seedanje</b><p>Završena torrent preuzimanja.</html>"
+msgstr "<b>Seedanje</b><p>Završena torrent preuzimanja."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 #, fuzzy
 msgid ""
 "<b>Not Seeding</b><p>File chunks might be shared only during a torrent "
 "download.</p>"
-msgstr "<html><b>Ne seedam</b><p>Zavrsena torrent preuzimanja.</html>"
+msgstr "<b>Ne seedam</b><p>Zavrsena torrent preuzimanja."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
 #, fuzzy
 msgid "<b>Seeding</b>"
-msgstr "<html><b>Seedam</b></html>"
+msgstr "<b>Seedam</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
 #, fuzzy
 msgid "<b>Not Seeding</b>"
-msgstr "<html><b>Ne seedam</b></html>"
+msgstr "<b>Ne seedam</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:516
 msgid "FrostWire has not detected a firewall"
