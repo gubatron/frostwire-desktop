@@ -26,11 +26,11 @@ msgstr "Czy chcesz ukryć FrostWire?"
 
 #: src/com/frostwire/gui/HideExitDialog.java:72
 msgid "Closing the FrostWire window will only hide the application"
-msgstr "Zamknięcie okna FrostWire tylko ukryje aplikacje"
+msgstr "Zamknięcie okna FrostWire tylko ukryje aplikację"
 
 #: src/com/frostwire/gui/HideExitDialog.java:72
 msgid "This way file transfers may continue in the background."
-msgstr "W ten sposób przesyłka plików może kontynuowac w tle."
+msgstr "W ten sposób przesyłanie plików może kontynuowac w tle."
 
 #: src/com/frostwire/gui/HideExitDialog.java:79
 msgid "Don't show this again"
@@ -5127,7 +5127,7 @@ msgstr "Opcje Wideo"
 
 #: src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
 msgid "You can choose which video player to use."
-msgstr "Możesz wybrać jakiego odtarzacza wideo będziesz używać."
+msgstr "Możesz wybrać jakiego odtwarzacza wideo będziesz używać."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -5191,7 +5191,7 @@ msgid ""
 "%s Torrent files found (includes only .torrent files. Torrent files point to "
 "collections of files shared on the BitTorrent network.)"
 msgstr ""
-" plików Torrentów znalezionych (tylko pliki .torrent. Pliki Torrentów "
+"%s plików Torrentów znalezionych (tylko pliki .torrent. Pliki Torrentów "
 "kierują do zbiorów plików udostępnianych na sieci BitTorrent.)"
 
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:44
@@ -5211,7 +5211,7 @@ msgid ""
 "See detail web page about the selected torrent (Contents, Comments, Seeds)"
 msgstr ""
 "Zobacz strony internetowe z detalami o wybranych torrentach (Zawartość, "
-"Komentarze, Seeds)"
+"Komentarze, Seedy)"
 
 #: src/com/limegroup/gnutella/gui/search/SearchButtons.java:50
 msgid "Stop current search"
@@ -5259,13 +5259,13 @@ msgid ""
 "Your search must be at least three characters to avoid congesting the "
 "network."
 msgstr ""
-"Prosimy wpisać zapytanie o długości przynajmniej trzech znaków aby uniknąc "
+"Prosimy wpisać zapytanie o długości przynajmniej trzech znaków aby uniknąć "
 "przeciążania sieci."
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:216
 msgid "Your search is too long. Please make your search smaller and try again."
 msgstr ""
-"Twoje zapytanie jest za długie. Prosze wprowadzić krótsze zapytanie i "
+"Twoje zapytanie jest za długie. Proszę wprowadzić krótsze zapytanie i "
 "spróbować ponownie."
 
 #: src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:107
@@ -5289,12 +5289,12 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/tables/AbstractActionsRenderer.java:85
 #, fuzzy
 msgid "Play/Preview"
-msgstr "Podgląd"
+msgstr "Odtwórz/Podgląd"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:111
 #, fuzzy
 msgid "Select content to download from this torrent."
-msgstr "Wstrzymanie pobierania wybranych plików"
+msgstr "Wybierz treść do pobrania z tego torrenta."
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultDisplayer.java:579
 #, fuzzy
@@ -5307,7 +5307,7 @@ msgstr "Kopiuj Hasha"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:370
 msgid "Search More"
-msgstr "Wyszujaj Więcej"
+msgstr "Wyszukaj Więcej"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:707
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:708
@@ -5342,11 +5342,11 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:50
 msgid "Revert To Default"
-msgstr "Przywróc Domyślne Ustawienia"
+msgstr "Przywróć Domyślne Ustawienia"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:56
 msgid "More Options"
-msgstr "Wiecej Opcji"
+msgstr "Więcej Opcji"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:62
 msgid "Stripe Rows"
