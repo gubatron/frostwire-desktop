@@ -265,7 +265,7 @@ public class TorrentFetcherDownload implements BTDownload {
                         cancel();
                     }
                 } else {
-                    state = TransferState.ERROR;
+                    state = TransferState.ERROR_NOT_ENOUGH_PEERS;
                 }
             } catch (Throwable e) {
                 state = TransferState.ERROR;

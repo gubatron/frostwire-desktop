@@ -206,6 +206,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
         TRANSFER_STATE_STRING_MAP.put(TransferState.ERROR_MOVING_INCOMPLETE, I18n.tr("Error: Moving incomplete"));
         TRANSFER_STATE_STRING_MAP.put(TransferState.ERROR_HASH_MD5, I18n.tr("Error: Wrong md5 hash"));
         TRANSFER_STATE_STRING_MAP.put(TransferState.ERROR_SIGNATURE, I18n.tr("Error: Wrong signature"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.ERROR_NOT_ENOUGH_PEERS, I18n.tr("Try again, not enough peers"));
         TRANSFER_STATE_STRING_MAP.put(TransferState.STOPPED, I18n.tr("Stopped"));
         TRANSFER_STATE_STRING_MAP.put(TransferState.PAUSING, I18n.tr("Pausing"));
         TRANSFER_STATE_STRING_MAP.put(TransferState.CANCELING, I18n.tr("Canceling"));
