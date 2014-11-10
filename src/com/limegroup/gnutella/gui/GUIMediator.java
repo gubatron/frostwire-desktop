@@ -1315,7 +1315,7 @@ public final class GUIMediator {
     public static final int openURL(String url) {
         try {
             return Launcher.openURL(url);
-        } catch (IOException ioe) {
+        } catch (Throwable e) {
             GUIMediator.showError(I18n.tr("FrostWire could not locate your web browser to display the following webpage: {0}.", url));
             return -1;
         }

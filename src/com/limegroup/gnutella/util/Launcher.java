@@ -66,30 +66,6 @@ import com.limegroup.gnutella.settings.URLHandlerSettings;
 public final class Launcher {
 
 	/**
-	 * <tt>boolean</tt> specifying whether or not the necessary Mac
-	 * classes were loaded successfully.
-	 */
-	private static boolean _macClassesLoadedSuccessfully = true;
-
-	/**
-	 * The openURL method of com.apple.mrj.MRJFileUtils.
-	 */
-	private static Method _openURL;
-
-	/** 
-	 * Loads the necessary Mac classes if running on Mac.
-	 */
-	static {
-	    if(OSUtils.isMacOSX()) {
-			try {
-				loadMacClasses();		
-			} catch(IOException ioe) {
-				_macClassesLoadedSuccessfully = false;
-			}
-		}
-	}
-
-	/** 
 	 * This class should be never be instantiated; this just ensures so. 
 	 */
 	private Launcher() {}
@@ -154,24 +130,8 @@ public final class Launcher {
 	 *         throws -- it wraps these exceptions in an <tt>IOException</tt>
 	 */
 	private static void openURLMac(String url) throws IOException {
-		if(!_macClassesLoadedSuccessfully) throw new IOException();
-		try {
-			Object[] params = new Object[] {url};
-			_openURL.invoke(null, params);
-		} 
-		catch (NoSuchMethodError err) {
-			throw new IOException();
-			// this can occur when earlier versions of MRJ are used which
-			// do not support the openURL method.
-		} catch (NoClassDefFoundError err) {
-			throw new IOException();
-			// this can occur under runtime environments other than MRJ.
-		} catch (IllegalAccessException iae) {
-			throw new IOException();
-		} catch (InvocationTargetException ite) {
-			throw new IOException();
-		}
-	}
+        Runtime.getRuntime().exec(new String[] {"open", url});
+    }
 
 	/**
 	 * Launches the file whose abstract path is specified in the <tt>File</tt>
@@ -301,29 +261,6 @@ public final class Launcher {
         
         return command;
     }
-    
-	/** 
-	 * Loads specialized classes for the Mac needed to launch files.
-	 *
-	 * @return <tt>true</tt>  if initialization succeeded,
-	 *	   	   <tt>false</tt> if initialization failed
-	 *
-	 * @throws <tt>IOException</tt> if an exception occurs loading the
-	 *         necessary classes
-	 */
-	private static void loadMacClasses() throws IOException {
-		try {
-			Class<?> mrjAdapter = Class.forName("net.roydesign.mac.MRJAdapter");
-			_openURL = mrjAdapter.getDeclaredMethod("openURL", new Class[]{String.class});
-		} catch (ClassNotFoundException cnfe) {
-			throw new IOException();
-		} catch (NoSuchMethodException nsme) {
-			throw new IOException();
-		} catch (SecurityException se) {
-			throw new IOException();
-		} 
-	}
-    
     
 	/**
 	 * Attempts to launch the given file.
