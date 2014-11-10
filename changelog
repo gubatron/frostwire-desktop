@@ -10,8 +10,9 @@ frostwire (6.0.0) stable; urgency=high
   * Multiple bug fixes.
   * Improved OS event handling in MacOSX.
   * Extensive cleanup.
+  * Fixes issues opening .torrents and magnets outside of FrostWire.
 
- -- FrostWire Team <contact@frostwire.com>  Fri, 07 November 2014 18:10:15 -0500
+ -- FrostWire Team <contact@frostwire.com>  Mon, 10 November 2014 13:44:52 -0500
 
 frostwire (5.7.7) stable; urgency=high
   * New: VPN connection status indicator.
