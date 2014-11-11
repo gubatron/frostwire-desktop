@@ -47,6 +47,7 @@ import com.limegroup.gnutella.util.FrostWireUtils;
 public final class UpdateMessageReader implements ContentHandler {
 
     private static final Logger LOG = Logger.getLogger(UpdateMessageReader.class);
+    private static final String DEFAULT_UPDATE_URL = "http://update.frostwire.com";
 
     public HashSet<UpdateMessage> _announcements = null;
 
@@ -61,11 +62,7 @@ public final class UpdateMessageReader implements ContentHandler {
     public UpdateMessage _updateMessage = null;
 
     // public void UpdateMessageReader() {}
-    public String _updateURL = "http://update.frostwire.com";
-    public String _updateServer = ""; // FTA: Used to connect using NIO
-                                      // (non-blocking). I've found that
-                                      // update.frostwire.com was down causing
-                                      // part of the abnormal behaviour.
+    public String _updateURL = DEFAULT_UPDATE_URL;
 
     /**
      * Only ads Announcements that have not expired
@@ -387,7 +384,7 @@ public final class UpdateMessageReader implements ContentHandler {
 
     public void setUpdateURL(String updateURL) {
         if (updateURL == null)
-            _updateURL = "http://update.frostwire.com";
+            _updateURL = DEFAULT_UPDATE_URL;
         else
             _updateURL = updateURL;
     }
