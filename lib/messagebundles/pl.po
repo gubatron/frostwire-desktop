@@ -1429,7 +1429,7 @@ msgstr "Możesz wybrać katalogi którymi się dzielisz w Opcjach FrostWire."
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:263
 #: src/com/limegroup/gnutella/gui/bugs/BugManager.java:359
 msgid "Send"
-msgstr "Wyslij"
+msgstr "Wyślij"
 
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:277
 msgid "Do you want to send this file to a friend?"
@@ -1450,11 +1450,11 @@ msgstr "Dodaj"
 msgid ""
 "The device is busy with another transfer or did not authorize your request"
 msgstr ""
-"Urządzenie jest zajęte innym transferem albo nie zatwierdziło twojej prośby"
+"Urządzenie jest zajęte innym transferem albo nie zatwierdziło twojego żądania"
 
 #: src/com/frostwire/gui/library/Device.java:294
 msgid "Transfer failed"
-msgstr "Transfer się nie udał"
+msgstr "Transfer nie udał się "
 
 #: src/com/frostwire/gui/library/DeviceUploadDialog.java:66
 msgid "Upload to device"
@@ -1462,7 +1462,7 @@ msgstr "Wyślij do urządzenia"
 
 #: src/com/frostwire/gui/library/DeviceUploadDialog.java:117
 msgid "Waiting for device authorization..."
-msgstr "Czekam na zatwierdzienie urządzenia..."
+msgstr "Czekam na zatwierdzenie urządzenia..."
 
 #: src/com/frostwire/gui/library/DownloadTask.java:142
 msgid "Wi-Fi download error. Please try again."
@@ -1563,7 +1563,7 @@ msgstr "utwory"
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:39
 #, fuzzy
 msgid "Default Save Folder"
-msgstr "Katalog Zapisu Domyślny"
+msgstr "Domyślny Katalog Zapisu"
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:227
 #: src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:36
@@ -1634,7 +1634,7 @@ msgid ""
 "Are you sure you want to delete the selected file(s), thus removing it from "
 "your computer?"
 msgstr ""
-"Czy na pewno chcesz usunąć wybrane pliki i tym samym usunąć je z twojego "
+"Czy na pewno chcesz skasować wybrane pliki i tym samym usunąć je z twojego "
 "komputera?"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:572
@@ -1698,11 +1698,11 @@ msgstr "Wyślij pliki muzyczne do iTunes"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1012
 msgid "Extract Audio"
-msgstr "Wydobyj Audio"
+msgstr "Wydobądź Audio"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1013
 msgid "Extract .m4a Audio from this .mp4 video"
-msgstr "Wydobyj .m4a Audio z tego .mp4 widea"
+msgstr "Wydobądź .m4a Audio z tego .mp4 widea"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1046
 msgid "Extracting audio from "
@@ -1784,7 +1784,7 @@ msgstr "Czy na pewno chcesz usunąć wybraną stację radiową?"
 
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:379
 msgid "Are you sure you want to remove the selected radio stations?"
-msgstr "Czy na pewno chcesz usunąć wybrane stacje radiowe"
+msgstr "Czy na pewno chcesz usunąć wybrane stacje radiowe?"
 
 #: src/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:532
 msgid "Add Radio"
@@ -1814,7 +1814,7 @@ msgstr "Kopiuj URL Strumienia"
 
 #: src/com/frostwire/gui/library/LibraryMediator.java:106
 msgid "Loading Library Window..."
-msgstr "Ładuję Okna Plikoteki..."
+msgstr "Ładuję Okno Plikoteki..."
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:189
 msgid "New Playlist"
@@ -1838,8 +1838,8 @@ msgid ""
 "Warning: a file with the name {0} already exists in the folder. Overwrite "
 "this file?"
 msgstr ""
-"Uwaga: plik o nazwie {0} już istnieje w tym katalogu. Chy chcesz ten plik "
-"zastąpić?"
+"Uwaga: plik o nazwie {0} już istnieje w tym katalogu. Czy chcesz zastąpić "
+"ten plik?"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:714
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:836
@@ -1910,7 +1910,7 @@ msgstr "Skpiuj wszystkie pliki playlisty do wybranego katalogu"
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:866
 #, fuzzy
 msgid "Where do you want the playlist files copied to?"
-msgstr "Dokąd chcesz skpiować pliki playlisty?"
+msgstr "Dokąd chcesz skopiować pliki playlisty?"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:920
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
@@ -2204,7 +2204,7 @@ msgid ""
 "mplayer already at a custom location, <b>make sure to have a symlink "
 "pointing to your mplayer executable</b> at <b><font color=\"blue\">"
 msgstr ""
-"<br><br>Aby zainstalować <b>MPlayer</b> w Ubuntu, otwórz okno terminału i "
+"<br><br>Aby zainstalować <b>MPlayer</b> w Ubuntu, otwórz okno terminalu i "
 "napisz \"<b>sudo apt-get install MPlayer</b>\".<br><br>Jeżeli MPlayer jest "
 "już zainstalowany w innym miejscu, <b>upewnij się że masz symlink kierujący "
 "do instalacji MPlayer</b> w <b><font color=\"blue\">"
@@ -2217,7 +2217,7 @@ msgid ""
 "already at a custom location, <b>make sure to have a symlink pointing to "
 "your mplayer executable</b> at <b><font color=\"blue\">"
 msgstr ""
-"<br><br>Aby zainstalować <b>MPlayer</b> w Ubuntu, otwórz okno terminału i "
+"<br><br>Aby zainstalować <b>MPlayer</b> w Ubuntu, otwórz okno terminalu i "
 "napisz \"<b>sudo apt-get install MPlayer</b>\".<br><br>Jeżeli MPlayer jest "
 "już zainstalowany w innym miejscu, <b>upewnij się że masz symlink kierujący "
 "do instalacji MPlayer</b> w <b><font color=\"blue\">"
@@ -2521,7 +2521,7 @@ msgid ""
 "<br><br>In Special we give thanks to the Chatroom Operators and Forum "
 "Moderators"
 msgstr ""
-"<br><br>Szególnie, chcielibyśmy podziękować Operatorom Czatu oraz "
+"<br><br>Szczególnie, chcielibyśmy podziękować Operatorom Czatu oraz "
 "Moderatorom Forum"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:206
@@ -2778,7 +2778,7 @@ msgid ""
 msgstr ""
 "FrostWire napotkał na problem podczas startu i nie może kontynuować. Możesz "
 "naprawić ten problem zmieniając ustawienia zgodności FrostWire z Windowsem. "
-"Kliknij prawym klawiszem na ikone FrostWire znajdującą się na Pulpicie i "
+"Kliknij prawym klawiszem na ikonę FrostWire znajdującą się na Pulpicie i "
 "wybierz \"Właściwości\" z menu kontekstowego. Kliknij zakładkę \"Zgodność\", "
 "następnie kliknij na \"Uruchom ten program w trybie zgodności z\" i wybierz "
 "\"Windows 2000\" w polu poniżej. Następnie kliknij \"OK\" i ponownie "
@@ -2879,7 +2879,7 @@ msgstr ""
 "komputerze.  Jeżeli problem będzie się powtarzać, idź na www.frostwire.com i "
 "kliknij na link 'Support'.\n"
 "\n"
-"FrostWire się teraz wyłączy. Dziekuję."
+"FrostWire się teraz wyłączy. Dziękuję."
 
 #: src/com/limegroup/gnutella/gui/InputFieldDialog.java:66
 msgid "Input"
@@ -3122,7 +3122,7 @@ msgid ""
 "<b>Not Seeding</b><p>File chunks might be shared only during a torrent "
 "download.</p>"
 msgstr ""
-"<b>Nie Seeduję.</b>.<p>Fragmenty pliów mogą być udostępniane tylko<p>a "
+"<b>Nie Seeduję.</b>.<p>Fragmenty plików mogą być udostępniane tylko<p>a "
 "podczas pobierania torrentu."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
@@ -3227,7 +3227,7 @@ msgstr "Pokazuj Wskazówki po Starcie Programu"
 #.
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMediator.java:86
 msgid "Next Tip"
-msgstr "Natstępna Wskazówka"
+msgstr "Następna Wskazówka"
 
 #. *
 #. * 'Previous'.
@@ -3250,8 +3250,8 @@ msgid ""
 msgstr ""
 "Zmęczony pobraniami, które się zatrzymują w połowie? Osiągniesz lepsze "
 "rezultaty  z pobraniami z większą ilością '#' w kolumnie. Ta # jest ilością "
-"pojedyńczych źródeł na sieci które przechowują ten plik. Im więcej źródeł, "
-"tym lepsze szanse na pełne pobranie pliku! W przypadku kiedy resultat wydaje "
+"pojedynczych źródeł na sieci które przechowują ten plik. Im więcej źródeł, "
+"tym lepsze szanse na pełne pobranie pliku! W przypadku kiedy rezultat wydaje "
 "się być śmieciem, a ma wiele źródeł, użyj przycisku <font color="
 "\"185ea8\">Śmieć</font> aby wytrenować filter śmieci FrostWire."
 
@@ -3352,7 +3352,7 @@ msgid ""
 msgstr ""
 "Bądź ostrożny aby nie dzielić się osobistymi dokumentami, jak hasła czy "
 "podatki. Torrenty które seedujesz są dostępne dla każdego na internecie "
-"kiedy tylkomają plik .torrent lub link [magnet] do niego."
+"kiedy tylko mają plik .torrent lub link [magnet] do niego."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:35
 msgid ""
@@ -3361,7 +3361,7 @@ msgid ""
 "anything extra because it happens automatically!"
 msgstr ""
 "W przeciwieństwie do innych programów P2P, FrostWire może transferować pliki "
-"nawet jeżeli oby dwie strony są poza zaporą sieciową. Wszystko dzieje sie "
+"nawet jeżeli oby dwie strony są poza zaporą sieciową. Wszystko dzieje się "
 "automatycznie - nie musisz nic ustawiać!"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:36
@@ -3386,7 +3386,7 @@ msgid ""
 msgstr ""
 "Linki Magnetów pozwalają użytkownikom FrostWire pobiranie plików poprzez "
 "stronę internetową. Jeżeli wklejasz link magnetu na swoją stronę (jako "
-"'href')i inny użytkownik kliknie na link, pobieranie rozpocznie sie w "
+"'href')i inny użytkownik kliknie na link, pobieranie rozpocznie się w "
 "programie FrostWire."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:38
@@ -3434,7 +3434,7 @@ msgid ""
 msgstr ""
 "Chcesz zobaczyć wiadomości które poprzednio zaznaczyłeś 'Nie pokazuj tego "
 "ponownie' albo 'Zawsze używaj tej odpowiedzi'? Idź do 'Narzędzia' &gt; "
-"'Opcje', i zaznacz 'Przywróc Domyślne Ustawienia' pod 'Widok' &gt; Popups."
+"'Opcje', i zaznacz 'Przywróć Domyślne Ustawienia' pod 'Widok' &gt; Popups."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:53
 msgid ""
@@ -3475,7 +3475,7 @@ msgid ""
 "Are you unhappy with the small number of search results you received? Right-"
 "click a search result, then choose Search More, then Get More Results."
 msgstr ""
-"Jesteś niezadowolony z małej liczby resultatów wyszukiwania? Kliknij prawym "
+"Jesteś niezadowolony z małej liczby rezultatów wyszukiwania? Kliknij prawym "
 "przyciskiem myszy na twój rezultat i wybierz 'Szukaj Więcej'."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:66
@@ -3506,7 +3506,7 @@ msgid ""
 msgstr ""
 "Chcesz zobaczyć wiadomości które poprzednio zaznaczyłeś 'Nie pokazuj tego "
 "ponownie' albo 'Zawsze używaj tej odpowiedzi'? Idź do 'Narzędzia' &gt; "
-"'Opcje', i zaznacz 'Przywróc Domyślne Ustawienia' pod 'Widok' &gt; Popups."
+"'Opcje', i zaznacz 'Przywróć Domyślne Ustawienia' pod 'Widok' &gt; Popups."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:70
 #, fuzzy
@@ -3571,8 +3571,8 @@ msgid ""
 "Make FrostWire's block more results by making the filter stricter. Adjust "
 "that and more by going to FrostWire &gt; Tools &gt; Filters &gt;"
 msgstr ""
-"Aby filtr 'Śmieci' FrostWire blokował więcej rezultatów, wyrególuj swoje "
-"ustanienia w 'FrostWire' &gt; 'Opcje' &gt; 'Filtry' &gt; 'Śmieci'."
+"Aby filtr 'Śmieci' FrostWire blokował więcej rezultatów, wyreguluj swoje "
+"ustawienia w 'FrostWire' &gt; 'Opcje' &gt; 'Filtry' &gt; 'Śmieci'."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:84
 #, fuzzy
@@ -3661,7 +3661,7 @@ msgid ""
 "FrostWire has detected a VPN connection, your privacy is safe from prying "
 "eyes."
 msgstr ""
-"FrostWire wykrył połączenie VPN twoja prywatność jest zabezpieczona przed  "
+"FrostWire wykrył połączenie VPN twoja prywatność jest zabezpieczona przed "
 "szpiegowaniem."
 
 #: src/com/limegroup/gnutella/gui/VPNStatusButton.java:64
@@ -3756,7 +3756,7 @@ msgstr ""
 "w stanie usunąć usterki i kontynuować działanie. Aby pomóc w usuwaniu "
 "błędów, prosimy o kliknięcie 'Wyślij' aby poinformować załogę FrostWire o "
 "tym problemie. Jeżeli chcesz, możesz obejrzeć informację które będzie "
-"wysłana. Dziekujemy!"
+"wysłana. Dziękujemy!"
 
 #: src/com/limegroup/gnutella/gui/bugs/BugManager.java:321
 msgid ""
