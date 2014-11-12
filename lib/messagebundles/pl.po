@@ -30,7 +30,7 @@ msgstr "Zamknięcie okna FrostWire tylko ukryje aplikację"
 
 #: src/com/frostwire/gui/HideExitDialog.java:72
 msgid "This way file transfers may continue in the background."
-msgstr "W ten sposób przesyłanie plików może kontynuowac w tle."
+msgstr "W ten sposób przesyłanie plików można kontynuować w tle."
 
 #: src/com/frostwire/gui/HideExitDialog.java:79
 msgid "Don't show this again"
@@ -233,7 +233,7 @@ msgstr "Kopiuj Info Hasha"
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:262
 #: src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:264
 msgid "Send to friend"
-msgstr "Wyslij do przyjaciela"
+msgstr "Wyślij do przyjaciela"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:437
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:438
@@ -370,7 +370,7 @@ msgstr "Licencja"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:196
 msgid "Queued for checking"
-msgstr "Zakolejkowany do sprawdzenia"
+msgstr "W kolejce do sprawdzenia"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:197
 #, fuzzy
@@ -565,7 +565,7 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:274
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:310
 msgid "Advanced"
-msgstr "Zawansowane"
+msgstr "Zaawansowane"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:189
 #, fuzzy
@@ -683,7 +683,7 @@ msgid ""
 "I am the Content Creator of this work or I have been granted the rights to "
 "share this content under the following license by the Content Creator(s)."
 msgstr ""
-"Jestem twórcją treści tego dzieła, lub mam przyznane prawa przez "
+"Jestem twórcą treści tego dzieła, lub mam przyznane prawa przez "
 "twórcę (twórców) do udostępniania tej treści pod następującą licencją"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:101
@@ -888,7 +888,7 @@ msgid ""
 msgstr ""
 "Ogłoś siebie jako seed zawartości zindeksowanej przez ten torrent jak tylko "
 "zostanie stworzony.\n"
-"Jeżeli nikt nie seeduje torrentu, nie pracuj. (Recommended)"
+"Jeżeli nikt nie seeduje torrentu, nie pracuj. (Polecane)"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:262
 msgid "Tracker Announce URLs"
@@ -957,7 +957,7 @@ msgstr "Zaznacz"
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:383
 #, fuzzy
 msgid "Unkown error. Try again please."
-msgstr "Nieznany błąd. Prosze spróbować ponownie. "
+msgstr "Nieznany błąd. Proszę spróbować ponownie. "
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:391
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:946
@@ -975,7 +975,7 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:450
 msgid "Something's missing"
-msgstr "Coś brakuje"
+msgstr "Czegoś brakuje"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:457
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:940
@@ -1059,7 +1059,7 @@ msgstr "Rozszerzenie"
 
 #: src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:255
 msgid "Select/Unselect all files"
-msgstr "Zaznacz/Odznacz wszyskie pliki"
+msgstr "Zaznacz/Odznacz wszystkie pliki"
 
 #: src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:533
 #: src/com/frostwire/gui/transfers/PeerHttpUpload.java:162
@@ -1269,7 +1269,7 @@ msgstr "Nie mogłem rozszyfrowac ścieżki katalogu."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:143
 msgid "The Torrent Data Folder cannot be a parent folder of the"
-msgstr "Katalog Danych Torrentu nie może byc katalogiem obejmującym "
+msgstr "Katalog Danych Torrentu nie może być katalogiem obejmującym "
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:160
 msgid "Use Default"
@@ -1315,7 +1315,7 @@ msgstr ""
 "<html><strong>Nie seeduj zakończonych pobrań torrentowych.</strong> "
 "Użytkownicy  sieci BitTorrent na internecie<br/>mogą pobrać tylko fragmenty "
 "danych plików, które ty aktywnie pobierasz w danej chwili.a <br/"
-"><strong>Niektóre trackery karają takie pasożytnicze zachowanie.</strong></"
+"><strong>Niektóre trackery karzą takie pasożytnicze zachowanie.</strong></"
 "html>"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:92
@@ -1328,9 +1328,9 @@ msgid ""
 "you may have not explicitly chosen for download."
 msgstr ""
 "<html><strong>Seeduj wyselekcjonowane pliki torrentu.</strong> "
-"Wyselekcjonowane pobraniatorrentów (Częściowe Pobrania) mogą spowodowac "
+"Wyselekcjonowane pobrania torrentów (Częściowe Pobrania) mogą spowodować "
 "seedowanie fragmentów danych sąsiednich niekompletnych plików.<br/>Ta "
-"własciwość jest <strong>polecana tylko dla zaawansowanych użytkowników,</"
+"właściwość jest <strong>polecana tylko dla zaawansowanych użytkowników,</"
 "strong> ponieważ może spowodować pobieranie części plików które mogły nie "
 "być przez ciebie wyraźnie wybrane do pobrania.</html>"
 
