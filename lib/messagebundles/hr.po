@@ -608,7 +608,7 @@ msgstr "Nema limita"
 #. advanced >Upload Speed Menu //
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:334
 msgid "Set Up Speed"
-msgstr "Postavi brzinu uploada"
+msgstr "Postavi brzinu slanja"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:454
 #, fuzzy
@@ -617,7 +617,7 @@ msgstr "Izmjeni pratitelje"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:470
 msgid "Update Tracker"
-msgstr "Izmjeni pratitelje"
+msgstr "Nadogradi pratitelje"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:491
 msgid "Scrape Tracker"
@@ -626,7 +626,7 @@ msgstr "Ogrebi pratitelja"
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:517
 #, fuzzy
 msgid "Edit trackers"
-msgstr "Podesiti pratitelje"
+msgstr "Izmijeniti pratitelje"
 
 #. columns
 #. rows
@@ -679,7 +679,7 @@ msgstr "Ime autora"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:103
 msgid "The name of the creator or creators of this work."
-msgstr "Ime stvoritelja ovog posla"
+msgstr "Ime tvorca ili tvoraca ovog posla"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:105
 msgid "Work's Title"
@@ -719,8 +719,8 @@ msgid ""
 "You let others copy, distribute, display, and perform your copyrighted work "
 "but only if they give credit the way you request."
 msgstr ""
-"Dajete mogučnost drugima da kopiraju, distribuiraju, pokazuju i izvode vaš "
-"rad zaštićen autorskim pravom ali samo ako daju zasluge kako vi zahtijevate."
+"Dajete mogućnost drugima da kopiraju, distribuiraju, pokazuju i izvode vaš rad zaštićen autorskim pravom, "
+"ali samo ako daju zasluge kako vi zahtijevate."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:128
 msgid ""
@@ -773,7 +773,7 @@ msgid ""
 "You can copy, modify, distribute and perform the work, even for commercial "
 "purposes, all without asking permission."
 msgstr ""
-"Možete kopirati, podesiti, distribuirati i obaviti posao, cak i za "
+"Možete kopirati, podesiti, distribuirati i obaviti posao, čak i za "
 "komercijalne upotrebe, sve bez pitanja za dozvolu."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:467
@@ -815,7 +815,7 @@ msgid ""
 "These box shows the contents you've selected for your new .torrent.\n"
 "Either a file, or the contents of a folder."
 msgstr ""
-"Ove kutije pokazuju sadržaj koji ste odabrali za vas novi .torrent\n"
+"Ove kutije pokazuju sadržaj koji ste odabrali za vaš novi .torrent\n"
 "Ili datoteku, ili sadrzaj mape."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:190
@@ -893,6 +893,9 @@ msgid ""
 "Your new torrent will be announced to these trackers if you start seeding "
 "the torrent."
 msgstr ""
+"Unesite listu vazecih BitTorrent pratećih posluziteljskih URL-ova.\n"
+"Vaš novi torrent će biti objavljen pratiteljima ako počnete seedati "
+"torrent."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:227
 msgid "Web Seeds Mirror URLs"
@@ -925,29 +928,29 @@ msgstr "Zatvori"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:332
 msgid "Select a single file or one directory"
-msgstr ""
+msgstr "Odabrati jedni datoteku ili jednu mapu"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:334
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:347
 #, fuzzy
 msgid "Select a single file"
-msgstr "Odabrati/maknuti odabir sa svih dokumenata"
+msgstr "Odabrati jednu datoteku"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:336
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:352
 msgid "Select a single directory"
-msgstr ""
+msgstr "Odabrati jednu mapu"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:353
 #, fuzzy
 msgid "Select folder"
-msgstr "Odaberi mapu"
+msgstr "Odabrati mapu"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:367
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:934
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:722
 msgid "Error: You can't read on that file/folder."
-msgstr "Greška: Nemoguće pročitati na toj datoteci/folderu"
+msgstr "Greška: Nije moguće čitati na toj datoteci/folderu"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:428
 msgid ""
@@ -965,7 +968,7 @@ msgstr "Nešto nedostaje"
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:928
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:716
 msgid "The folder you selected is empty."
-msgstr "Folder koji ste odabrali je prazan."
+msgstr "Mapa koju ste odabrali je prazna."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:438
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:928
@@ -984,7 +987,7 @@ msgstr "Torrent dadoteka"
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:513
 #, fuzzy
 msgid "Save .torrent"
-msgstr "Spremi torrent kao..."
+msgstr "Spremi torrent"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:636
 msgid "wizard.addingmt"
@@ -1059,8 +1062,8 @@ msgid ""
 "I am the content creator or I have the right to collect financial "
 "contributions for this work."
 msgstr ""
-"Ja sam stvoritelj sadržaja ili ja imam pravo sakupiti financijske doprinose "
-"za ovaj posao."
+"Ja sam stvoritelj sadržaja ili ja imam pravo sakupiti financijske "
+"doprinose za ovaj posao."
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:50
 msgid ""
