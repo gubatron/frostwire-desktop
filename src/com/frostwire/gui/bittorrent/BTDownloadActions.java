@@ -36,6 +36,7 @@ import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
@@ -92,7 +93,7 @@ final class BTDownloadActions {
         }
 
     }
-    
+
     private static abstract class RefreshingAction extends AbstractAction {
 
         private static final long serialVersionUID = -937688457597255711L;
@@ -106,12 +107,12 @@ final class BTDownloadActions {
 
     }
 
-	
-    
+
+
     private static class ShowDetailsAction extends RefreshingAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 6100070262538050091L;
 
@@ -129,7 +130,7 @@ final class BTDownloadActions {
 
     private static class ExploreAction extends RefreshingAction {
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = -4648558721588938475L;
 
@@ -156,7 +157,7 @@ final class BTDownloadActions {
 
     private static class ShowInLibraryAction extends RefreshingAction {
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = -4648558721588938475L;
 
@@ -184,7 +185,7 @@ final class BTDownloadActions {
     private static class ResumeAction extends RefreshingAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = -4449981369424872994L;
 
@@ -225,7 +226,7 @@ final class BTDownloadActions {
                     downloaders[i].resume();
                 }
             }
-            
+
             UXStats.instance().log(UXAction.DOWNLOAD_RESUME);
         }
     }
@@ -233,7 +234,7 @@ final class BTDownloadActions {
     private static class PauseAction extends RefreshingAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 4682149704934484393L;
 
@@ -256,7 +257,7 @@ final class BTDownloadActions {
     public static class RemoveAction extends RefreshingAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = -1742554445891016991L;
 
@@ -285,11 +286,11 @@ final class BTDownloadActions {
 
         public void performAction(ActionEvent e) {
             if (_deleteData) {
-                int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Are you sure you want to remove the data files from your computer?\n\nYou won't be able to recover the files."), I18n.tr("Are you sure?"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-                if (result != JOptionPane.YES_OPTION) {
+                DialogOption result = GUIMediator.showYesNoMessage(I18n.tr("Are you sure you want to remove the data files from your computer?\n\nYou won't be able to recover the files."), I18n.tr("Are you sure?"), JOptionPane.QUESTION_MESSAGE);
+
+                if (result != DialogOption.YES)
                     return;
-                }
             }
 
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
@@ -313,7 +314,7 @@ final class BTDownloadActions {
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Remove Download and Data from selected downloads"));
         }
     }
-    
+
     private static class ClearInactiveAction extends RefreshingAction {
 
         private static final long serialVersionUID = 808308856961429212L;
@@ -324,7 +325,7 @@ final class BTDownloadActions {
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Clear Inactive (completed) transfers from the Transfers list."));
             putValue(LimeAction.ICON_NAME, "DOWNLOAD_CLEAR_INACTIVE");
         }
-        
+
         @Override
         protected void performAction(ActionEvent e) {
             BTDownloadMediator.instance().removeCompleted();
@@ -335,7 +336,7 @@ final class BTDownloadActions {
     private static class CopyMagnetAction extends RefreshingAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 1602974659454016547L;
 
@@ -367,7 +368,7 @@ final class BTDownloadActions {
     private static class CopyInfoHashAction extends RefreshingAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 1138409323772464985L;
 
@@ -394,7 +395,7 @@ final class BTDownloadActions {
     private static class ShareTorrentAction extends RefreshingAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 1138409323772464985L;
 
@@ -484,24 +485,24 @@ final class BTDownloadActions {
 
         }
     }
-    
+
     static final class PlaySingleMediaFileAction extends AbstractAction {
-        
+
         private static final long serialVersionUID = -3628469680044329612L;
 
         public PlaySingleMediaFileAction() {
             super(I18n.tr("Play file"));
             putValue(Action.LONG_DESCRIPTION,I18n.tr("Play media file"));
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             File file = BTDownloadMediator.instance().getSelectedDownloaders()[0].getSaveLocation();
-            
+
             if (file.isDirectory() && LibraryUtils.directoryContainsASinglePlayableFile(file, 4)) {
                 file = file.listFiles()[0];
             }
-            
+
             if (MediaPlayer.isPlayableFile(file)) {
             	    MediaPlayer.instance().loadMedia(new MediaSource(file),true,false);
             }
@@ -515,7 +516,7 @@ final class BTDownloadActions {
      */
     static class AddToPlaylistAction extends AbstractAction {
         private static final int MAX_VISIBLE_PLAYLIST_NAME_LENGTH_IN_MENU = 80;
-        private Playlist playlist; 
+        private Playlist playlist;
 
         public AddToPlaylistAction(Playlist playlist) {
             super(getTruncatedString(playlist.getName(),MAX_VISIBLE_PLAYLIST_NAME_LENGTH_IN_MENU));
@@ -523,11 +524,11 @@ final class BTDownloadActions {
             System.out.println("Truncated playlist name was:" + " " + getValue(Action.NAME));
             this.playlist = playlist;
         }
-        
+
         private static String getTruncatedString(String string, int MAX_LENGTH) {
-            return string.length() > MAX_LENGTH ? (string.substring(0, MAX_LENGTH-1) + "...") : string;            
+            return string.length() > MAX_LENGTH ? (string.substring(0, MAX_LENGTH-1) + "...") : string;
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();

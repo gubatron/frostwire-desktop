@@ -396,16 +396,34 @@ public final class MessageService {
     final DialogOption showYesNoMessage(String message, String title) {
         return showYesNoMessage(message, title, DialogOption.YES);
     }
-    
+
+    final DialogOption showYesNoMessage(String message, String title, int msgType) {
+        return showYesNoMessage(message, title, msgType, DialogOption.YES);
+    }
+
     /**
-     * Displays a message to the user and returns 
+     * Displays a message to the user and returns
      * MessageService.YES_OPTION if the user selects yes and
      * MessageService.NO_OPTION if the user selects no.
      *
      * @param message the message to display to the user
-     * @title the title on the dialog
-     */ 
+     * @param title the title on the dialog
+     */
     final DialogOption showYesNoMessage(String message, String title, DialogOption defaultOption) {
+        return showYesNoMessage(message, title, JOptionPane.WARNING_MESSAGE, defaultOption);
+    }
+
+    /**
+     * Displays a message to the user and returns
+     * MessageService.YES_OPTION if the user selects yes and
+     * MessageService.NO_OPTION if the user selects no.
+     *
+     * @param message the message to display to the user
+     * @param title the title on the dialog
+     * @param msgType type message and icon
+     * @param defaultOption
+     */
+    final DialogOption showYesNoMessage(String message, String title, int msgType, DialogOption defaultOption) {
        final String[] options = {DialogOption.YES.getText(),
             DialogOption.NO.getText()
            };
@@ -418,7 +436,7 @@ public final class MessageService {
                               getLabel(message), 
                               title,
                               JOptionPane.YES_NO_OPTION, 
-                              JOptionPane.WARNING_MESSAGE, null,
+                              msgType, null,
                               options, defaultOption.getText());
         } catch(InternalError ie) {
             // happens occasionally, assume no.

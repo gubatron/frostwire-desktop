@@ -29,6 +29,7 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.UpdateSettings;
 
@@ -173,9 +174,9 @@ public final class UpdateMediator {
             return;
         }
 
-        int result = JOptionPane.showConfirmDialog(null, latestMsg.getMessageInstallerReady(), I18n.tr("Update"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        DialogOption result = GUIMediator.showYesNoMessage(latestMsg.getMessageInstallerReady(), I18n.tr("Update"), JOptionPane.INFORMATION_MESSAGE);
 
-        if (result == JOptionPane.YES_OPTION) {
+        if (result == DialogOption.YES) {
             startUpdate();
         }
     }

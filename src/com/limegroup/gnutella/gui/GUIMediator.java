@@ -1077,8 +1077,20 @@ public final class GUIMediator {
     /**
      * Acts as a proxy for the <tt>MessageService</tt> class. Displays a
      * locale-specific message to the user in the form of a yes or no question.
-     * <p/>
-     * <p/>
+     *
+     * @param message      the locale-specific message to display
+     * @param title        the locale-specific title dialog to display
+     * @param msgType      type messages example JOptionPane.QUESTION_MESSAGE
+     * @return an integer indicating a yes or a no response from the user
+     */
+    public static final DialogOption showYesNoMessage(final String message, final String title, final int msgType) {
+      return MessageService.instance().showYesNoMessage(message, title, msgType);
+    }
+
+    /**
+     * Acts as a proxy for the <tt>MessageService</tt> class. Displays a
+     * locale-specific message to the user in the form of a yes or no question.
+     *
      * The <tt>messageKey</tt> parameter must be the key for a locale- specific
      * message <tt>String</tt> and not a hard-coded value.
      *

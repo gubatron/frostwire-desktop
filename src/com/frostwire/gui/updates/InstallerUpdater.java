@@ -32,6 +32,7 @@ import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpRangeException;
 import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.UpdateSettings;
 import org.apache.commons.io.FilenameUtils;
@@ -184,9 +185,9 @@ public class InstallerUpdater implements Runnable {
                     return;
                 }
 
-                int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), _updateMessage.getMessageInstallerReady(), I18n.tr("Update"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                DialogOption result = GUIMediator.showYesNoMessage(_updateMessage.getMessageInstallerReady(), I18n.tr("Update"), JOptionPane.INFORMATION_MESSAGE);
 
-                if (result == JOptionPane.YES_OPTION) {
+                if (result == DialogOption.YES) {
                     try {
                         if (CommonUtils.isPortable()) {
                             //UpdateMediator.instance().installPortable(_executableFile);

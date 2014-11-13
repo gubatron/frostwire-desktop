@@ -58,6 +58,7 @@ import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
@@ -376,10 +377,9 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     public void removeSelection() {
         LibraryInternetRadioTableDataLine[] lines = getSelectedLibraryLines();
 
-        int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.trn(I18n.tr("Are you sure you want to remove the selected radio station?"), I18n.tr("Are you sure you want to remove the selected radio stations?"), lines.length), I18n.tr("Are you sure?"), JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
+        DialogOption result = GUIMediator.showYesNoMessage(I18n.trn(I18n.tr("Are you sure you want to remove the selected radio station?"), I18n.tr("Are you sure you want to remove the selected radio stations?"), lines.length), I18n.tr("Are you sure?"), JOptionPane.QUESTION_MESSAGE);
 
-        if (result != JOptionPane.YES_OPTION) {
+        if (result != DialogOption.YES) {
             return;
         }
 

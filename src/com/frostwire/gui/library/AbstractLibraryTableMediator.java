@@ -42,6 +42,7 @@ import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.actions.LimeAction;
@@ -271,12 +272,12 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
             File file = LibraryMediator.instance().getSelectedFile();
 
             if (file == null) {
-                return;
+              return;
             }
 
-            int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Do you want to send this file to a friend?") + "\n\n\"" + file.getName() + "\"", I18n.tr("Send files with FrostWire"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            DialogOption result = GUIMediator.showYesNoMessage(I18n.tr("Do you want to send this file to a friend?") + "\n\n\"" + file.getName() + "\"", I18n.tr("Send files with FrostWire"), JOptionPane.QUESTION_MESSAGE);
 
-            if (result == JOptionPane.YES_OPTION) {
+            if (result == DialogOption.YES) {
                 new SendFileProgressDialog(GUIMediator.getAppFrame(), file).setVisible(true);
                 GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
                 UXStats.instance().log(UXAction.SHARING_TORRENT_CREATED_WITH_SEND_TO_FRIEND_FROM_LIBRARY);

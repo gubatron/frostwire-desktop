@@ -739,12 +739,10 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
             Playlist selectedPlaylist = getSelectedPlaylist();
 
             if (selectedPlaylist != null) {
+                DialogOption showConfirmDialog = GUIMediator.showYesNoMessage(I18n.tr("Are you sure you want to delete the playlist?\n(No files will be deleted)"), I18n.tr("Are you sure?"), JOptionPane.QUESTION_MESSAGE);
 
-                int showConfirmDialog = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Are you sure you want to delete the playlist?\n(No files will be deleted)"), I18n.tr("Are you sure?"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-                if (showConfirmDialog != JOptionPane.YES_OPTION) {
-                    return;
-                }
+                if (showConfirmDialog != DialogOption.YES)
+                  return;
 
                 selectedPlaylist.delete();
                 _model.removeElement(_list.getSelectedValue());
