@@ -204,7 +204,9 @@ public final class Launcher {
         } else if (OSUtils.isLinux()) {
             if (file.isDirectory()) {
                 Desktop.getDesktop().open(file);
-            }
+            } else if (file.isFile()) {
+				Desktop.getDesktop().open(file.getParentFile());
+			}
         }
     }
     
