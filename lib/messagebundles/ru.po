@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-10 02:09+0300\n"
-"PO-Revision-Date: 2014-11-10 02:29+0300\n"
+"PO-Revision-Date: 2014-11-13 23:52+0300\n"
 "Last-Translator: X-NicON <x-icon@ya.ru>\n"
 "Language-Team: Russian Team\n"
 "Language: ru\n"
@@ -2119,7 +2119,7 @@ msgstr "файл"
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1133
 #: src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:66
 msgid "folder"
-msgstr "Папка"
+msgstr "папку"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1134
 #: src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:67
@@ -2646,11 +2646,11 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:133
 msgid "&Search"
-msgstr "&Поиск"
+msgstr "Поиск"
 
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:133
 msgid "&Library"
-msgstr "&Библиотека"
+msgstr "Библиотека"
 
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:145
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:173
@@ -3555,7 +3555,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:60
 msgid "O&pen .Torrent or Magnet"
-msgstr "&Открыть .torrent или Magnet-ссылку"
+msgstr "Открыть .torrent или Magnet-ссылку"
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:62
 msgid "Opens a magnet link or torrent file"
@@ -3589,7 +3589,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:310
 msgid "&Close"
-msgstr "&Закрыть"
+msgstr "Закрыть"
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:311
 msgid "Close the program's main window"
@@ -3597,7 +3597,7 @@ msgstr "Закрыть программу"
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:322
 msgid "E&xit"
-msgstr "&Выход"
+msgstr "Выход"
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:323
 msgid "Close and exit the program"
@@ -3967,15 +3967,15 @@ msgstr "не нужно платить."
 
 #: src/com/limegroup/gnutella/gui/menu/FileMenu.java:40
 msgid "&File"
-msgstr "&Файл"
+msgstr "Файл"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
 msgid "&Help"
-msgstr "&Помощь"
+msgstr "Помощь"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:46
 msgid "&FAQ"
-msgstr "&FAQ"
+msgstr "FAQ"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:46
 msgid "Frequently Asked Questions for FrostWire"
@@ -4046,7 +4046,7 @@ msgstr "Следите за нами в Twitter"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:71
 msgid "Foru&m"
-msgstr "&Форум"
+msgstr "Форум"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:71
 msgid "Access the FrostWire Users' Forum"
@@ -4054,7 +4054,7 @@ msgstr "Форум для пользователей FrostWire"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:75
 msgid "&Did you pay for FrostWire?"
-msgstr "&Вы платите за FrostWire?"
+msgstr "Вы платите за FrostWire?"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:76
 msgid ""
@@ -4073,7 +4073,7 @@ msgstr "Показать окно с советом дня"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:117
 msgid "&About FrostWire"
-msgstr "&О программе"
+msgstr "О программе"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:118
 msgid "Information about FrostWire"
@@ -4085,7 +4085,7 @@ msgstr "Инициализация меню..."
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:46
 msgid "&Tools"
-msgstr "&Инструменты"
+msgstr "Инструменты"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:68
 msgid "Rebuild iTunes \"FrostWire\" Playlist"
@@ -4121,7 +4121,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:88
 msgid "&Options"
-msgstr "&Настройки"
+msgstr "Настройки"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:89
 msgid "Display the Options Screen"
@@ -4129,7 +4129,7 @@ msgstr "Показать экран настроек"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:102
 msgid "&Update FrostWire"
-msgstr "&Обновить FrostWire"
+msgstr "Обновить FrostWire"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:103
 msgid "Update FrostWire to the latest version"
@@ -4153,7 +4153,7 @@ msgstr "Проверить обновлений"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:42
 msgid "&View"
-msgstr "&Вид"
+msgstr "Вид"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:44
 msgid "Use &Small Icons"
@@ -4189,7 +4189,7 @@ msgstr "Уменьшает размер шрифта"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:56
 msgid "&Reset Font Size"
-msgstr "&Сбросить Размер Шрифта"
+msgstr "Сбросить Размер Шрифта"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:56
 msgid "Reset the Table Font Size"
@@ -5189,7 +5189,7 @@ msgstr "Создано"
 #: src/com/limegroup/gnutella/gui/shell/FrostAssociations.java:104
 #: src/com/limegroup/gnutella/gui/shell/FrostAssociations.java:116
 msgid "\".torrent\" files"
-msgstr "файлы \".торрент\""
+msgstr "файлы \".torrent\""
 
 #: src/com/limegroup/gnutella/gui/shell/FrostAssociations.java:129
 msgid "\"magnet:\" links"
