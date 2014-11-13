@@ -33,7 +33,7 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 public class VPNStatusButton extends IconButton {
 	private static final long serialVersionUID = 5469124590465161094L;
 	private final String VPN_URL = "http://www.frostwire.com/vpn";
-    private final long REFRESH_INTERVAL_IN_MILLIS = 20000;
+    private final long REFRESH_INTERVAL_IN_MILLIS = 20000;//20000;
     private long lastRefresh = 0;
 
     public VPNStatusButton() {
@@ -70,7 +70,7 @@ public class VPNStatusButton extends IconButton {
         long now = System.currentTimeMillis();
         if (lastRefresh == 0 || (now-lastRefresh >= REFRESH_INTERVAL_IN_MILLIS)) {
             lastRefresh = now;
-            BackgroundExecutorService.schedule(new Runnable() {
+            Thread vpnStatusCheckerThread = new Thread("VPNStatus-checker") {
 				@Override
 				public void run() {
 					//possibly blocking code
@@ -82,7 +82,9 @@ public class VPNStatusButton extends IconButton {
 						}
 					});
 				}
-            });
+            };
+            vpnStatusCheckerThread.setDaemon(true);
+            vpnStatusCheckerThread.start();
         }
     }
 }
