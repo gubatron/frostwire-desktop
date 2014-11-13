@@ -3772,7 +3772,7 @@ msgstr "Ja <b>neću</b> koristiti FrostWire {0} za kršenje autorskih prava."
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:82
 #, java-format
 msgid "I <b>might use</b> FrostWire {0} for copyright infringement."
-msgstr ""
+msgstr "Ja <b>ću mozda koristiti</b> FrostWire {0} za kršenje autorskih prava."
 
 #: src/com/limegroup/gnutella/gui/init/IntentWindow.java:43
 msgid "State Your Intent"
@@ -3792,12 +3792,12 @@ msgstr "Razne postavke"
 
 #: src/com/limegroup/gnutella/gui/init/MiscWindow.java:57
 msgid "Below, are several options that affect the functionality of FrostWire."
-msgstr ""
+msgstr "Ispod je par opcija koje utječu na funkcionalnost FrostWire-a."
 
 #: src/com/limegroup/gnutella/gui/init/MiscWindow.java:70
 #: src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:21
 msgid "System Startup"
-msgstr ""
+msgstr "Podizanje sustava"
 
 #: src/com/limegroup/gnutella/gui/init/MiscWindow.java:72
 msgid "Start Automatically"
@@ -3837,12 +3837,16 @@ msgid ""
 "FrostWire is a Peer to Peer Application that enables you to share files of "
 "your choosing with other users connected to the BitTorrent network."
 msgstr ""
+"FrostWire je klijent-klijent aplikacija koja vam omogućava da dijelite datoteke "
+"po vašem izboru sa ostalim korisnicima spojenima na BitTorrent mrezu."
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:40
 msgid ""
 "Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
 msgstr ""
+"Instaliranje i korištenje programa ne odobrava licencu za dobavljanje "
+"ili distribuciju neovlaštenog sadrzaja."
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:46
 msgid "Welcome"
@@ -3870,7 +3874,7 @@ msgstr "FrostWire je besplatan softver,"
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:114
 msgid "Do not pay for FrostWire."
-msgstr "Pomoć pri korištenju FrostWire-a."
+msgstr "Nemojte platiti za FrostWIre."
 
 #: src/com/limegroup/gnutella/gui/menu/FileMenu.java:40
 msgid "&File"
@@ -3898,28 +3902,26 @@ msgstr "FrostWire za Android"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:50
 msgid "Get FrostWire on your Android phone, tablet or google tv, all free."
-msgstr ""
-"Dobijte FrostWire na vasem Android mobilnom telefonu, tabletu ili Google TV-"
-"u, sve za besplatno"
+msgstr "Dobijte FrostWire na vasem Android mobilnom telefonu, tabletu ili Google TV-u, sve besplatno"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
 msgid "Learn about BitTorrent Seeding"
-msgstr "Nauciti više o BitTorrent seedanju"
+msgstr "Naučiti više o BitTorrent seedanju"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid "What is a VPN?"
-msgstr "što je VPN?"
+msgstr "Što je VPN?"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid ""
 "Learn about how to protect your internet connection and your privacy online"
 msgstr ""
-"Nauči kako zaštititi vašu internetsku konekciju i vašu privatnost online"
+"Nauči kako zaštititi vašu internetsku vezu i vašu privatnost online"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 #, fuzzy
 msgid "Order FrostWire Stickers"
-msgstr "Naruciti FrostWire naljepnice"
+msgstr "Naručiti FrostWire naljepnice"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 msgid "Order FrostWire stickers, we ship worldwide."
@@ -3967,8 +3969,7 @@ msgstr "&Jeste li platili za FrostWire?"
 msgid ""
 "Did you pay for FrostWire? FrostWire is Free as in Free Beer. Avoid Scams."
 msgstr ""
-"Jeste li platili ste za FrostWire? FrostWire je besplatan kao besplatno "
-"pivo. Izbjegavajte prevare."
+"Jeste li platili ste za FrostWire? FrostWire je besplatan kao i besplatno pivo. Izbjegavajte prevare."
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:97
 msgid "Tip of the &Day"
@@ -3976,7 +3977,7 @@ msgstr "Savjet &dana"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:98
 msgid "Show the Tip of the Day Window"
-msgstr "Prikazati prozor savjeta dana."
+msgstr "Prikazati prozor savjeta dana"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:117
 msgid "&About FrostWire"
@@ -4003,8 +4004,8 @@ msgid ""
 "Deletes and re-builds the \"FrostWire\" playlist on iTunes with all the "
 "audio files found on your Torrent Data Folder."
 msgstr ""
-"Briše i obnavlja \"FrostWire\" playlistu na iTunes-u sa svim audio "
-"datotekama nađenim u vašoj torrent podatkovnoj mapi."
+"Briše i obnavlja \"FrostWire\" playlistu na iTunes-u sa svim "
+"audio datotekama nađenim u vašoj torrent podatkovnoj mapi."
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:74
 msgid ""
@@ -4016,7 +4017,15 @@ msgid ""
 "and this could result in duplicate files on your iTunes library\n"
 "\n"
 "Are you sure you want to continue?"
-msgstr "Jeste li sigurni da zelite nastaviti?"
+msgstr ""
+"Ovo će ukloniti vašu \"FrostWire\" playlist-u u iTunes-ima i zamijeniti\n"
+"i zamjeniti ju sa onom koja sadrzi sve iTunes kompatibilne datoteke u vašem \n"
+"Frostwire \"Torrent podatkovnoj mapi\"\n"
+"\n"
+"Please note that it will add the files to the iTunes library as well\n"
+"and this could result in duplicate files on your iTunes library\n"
+"\n"
+"Jeste li sigurni da zelite nastaviti?"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:88
 msgid "&Options"
@@ -4076,7 +4085,7 @@ msgstr "Prikaži tekst ispod ikona"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:52
 msgid "&Increase Font Size"
-msgstr "&Povećati velicinu fonta"
+msgstr "&Povećati veličinu fonta"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:52
 msgid "Increases the Table Font Size"
@@ -4248,6 +4257,9 @@ msgid ""
 "instruct FrostWire to always regain these associations if another program "
 "takes them."
 msgstr ""
+"Mozete koristiti FrostWire za otvaranje pojedinih vrsta datoteka i protokola. Također mozete "
+"narediti FrostWire-u da uvijek dohvati ove asocijacije ako ih drugi program "
+"uzme."
 
 #: src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:59
 msgid "Use FrostWire for..."
@@ -4292,8 +4304,8 @@ msgid ""
 "when it's available. It won't install it but next time you start FrostWire "
 "it'll let you know that it's there for you."
 msgstr ""
-"FrostWire može automatski preuzeti novi instalacijski carobnjak preko "
-"BitTorrenta za vas kad je dostupan. Nece ga instalirati ali sljedeci put "
+"FrostWire može automatski preuzeti novi instalacijski čarobnjak preko "
+"BitTorrenta za vas kad je dostupan. Neće ga instalirati ali sljedeci put "
 "kada se FrostWire pokrene dati će vam na znanje da je dostupan za "
 "instalaciju."
 
@@ -4316,7 +4328,7 @@ msgstr "Možete izabrati koju tražilicu zelite koristiti."
 #.
 #: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:35
 msgid "Browser"
-msgstr "Pretraživac"
+msgstr "Pretraživač"
 
 #: src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:40
 msgid "View Example"
