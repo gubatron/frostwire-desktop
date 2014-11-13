@@ -1368,7 +1368,6 @@ msgid ""
 "advanced users only</strong> as it can lead to downloading parts of files "
 "you may have not explicitly chosen for download."
 msgstr ""
-<<<<<<< HEAD
 "<strong>Seeduj wyselekcjonowane pliki torrentu.</strong> "
 "Wyselekcjonowane pobrania torrentów (Częściowe Pobrania) mogą spowodować "
 "seedowanie fragmentów danych sąsiednich niekompletnych plików.<br/>Ta "
