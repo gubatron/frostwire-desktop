@@ -683,7 +683,12 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 GUIMediator.launchExplorer(selectedFile);
                 return;
             } else if (!MediaPlayer.isPlayableFile(selectedFile)) {
-                GUIMediator.launchFile(selectedFile);
+                String extension = FilenameUtils.getExtension(selectedFile.getName());
+                if (extension != null && extension.equals("torrent")) {
+                    GUIMediator.instance().openTorrentFile(selectedFile, true);
+                } else {
+                    GUIMediator.launchFile(selectedFile);
+                }
                 return;
             }
 
