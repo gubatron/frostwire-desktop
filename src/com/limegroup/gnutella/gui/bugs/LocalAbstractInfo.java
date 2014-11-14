@@ -1,5 +1,7 @@
 package com.limegroup.gnutella.gui.bugs;
 
+import com.limegroup.gnutella.util.FrostWireUtils;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -314,7 +316,7 @@ abstract class LocalAbstractInfo {
     public String toBugReport() {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
-        pw.println("FrostWire version " + _limewireVersion);
+        pw.println("FrostWire version " + _limewireVersion + " build " + FrostWireUtils.getBuildNumber());
         pw.println("Java version " + _javaVersion + " from " + _javaVendor);
         pw.println(_os + " v. " + _osVersion + " on " + _architecture);
         pw.println("Free/total memory: " + _freeMemory + "/" + _totalMemory);
