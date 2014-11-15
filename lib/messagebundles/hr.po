@@ -2921,7 +2921,7 @@ msgid ""
 "are saved properly you should save them to a sub-folder of {1}.  Would you "
 "like to choose another location?"
 msgstr ""
-"Spreuzimanja
+""
 
 #: src/com/limegroup/gnutella/gui/SettingsWarningManager.java:35
 msgid ""
