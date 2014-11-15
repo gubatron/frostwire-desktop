@@ -3428,7 +3428,7 @@ msgid ""
 "the 'View' option."
 msgstr ""
 "Możesz włączyć lub wyłączyć autodokańczanie dla wyszukiwania przez wybranie "
-"'Ustawienia' z menu 'FrostWire', i zmienić wartość '' pod 
+"'Ustawienia' z menu 'FrostWire', i zmienić wartość pod  "
 "opcją 'Widok'."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:69
