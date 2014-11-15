@@ -202,7 +202,6 @@ msgstr "Ukloni preuzimanje i podatke odabranih preuzimanja"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:322
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:323
-#, fuzzy
 msgid "Clear Inactive"
 msgstr "Očisti neaktivne"
 
@@ -258,7 +257,6 @@ msgid "Create and add to a new playlist"
 msgstr "Stvori i dodaj u novu listu pjesama"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:493
-#, fuzzy
 msgid "Play file"
 msgstr "Sviraj datoteku"
 
@@ -393,12 +391,10 @@ msgid "Finished"
 msgstr "Zavrseno"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:202
-#, fuzzy
 msgid "Seeding"
-msgstr "Seedanje"
+msgstr "Dijeljenje"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:203
-#, fuzzy
 msgid "Allocating"
 msgstr "Dodjeljujem"
 
@@ -2930,7 +2926,9 @@ msgid ""
 "are saved properly you should save them to a sub-folder of {1}.  Would you "
 "like to choose another location?"
 msgstr ""
-""
+"Spremanje preuzimanja u {0} mozda neće poptuno funkcionirati.  Kako bi ste bili sigurni da se preuzimanja "
+"spremaju kako trebaju, trebali bi ste ih spremati u podfolder od {1}.  Zelite li "
+"odabrati drugu lokaciju?"
 
 #: src/com/limegroup/gnutella/gui/SettingsWarningManager.java:35
 msgid ""
@@ -3006,7 +3004,6 @@ msgstr "Crtam skin seedanja..."
 
 #. make the center panel
 #: src/com/limegroup/gnutella/gui/StatusLine.java:172
-#, fuzzy
 msgid "Creating center panel..."
 msgstr "Stvaram središnji panel..."
 
@@ -3023,31 +3020,27 @@ msgstr ""
 "i pomozite ostalima."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:200
-#, fuzzy
 msgid "Circle FrostWire on G+"
 msgstr "Zaokruži FrostWire na G+"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
-#, fuzzy
 msgid "<b>Seeding</b><p>completed torrent downloads.</p>"
-msgstr "<b>Seedanje</b><p>Završena torrent preuzimanja."
+msgstr "<b>Seedanje</b><p>torrent preuzimanja završena.</p>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
-#, fuzzy
 msgid ""
 "<b>Not Seeding</b><p>File chunks might be shared only during a torrent "
 "download.</p>"
-msgstr "<b>Ne seedam</b><p>Zavrsena torrent preuzimanja."
+msgstr "<b>Ne seedam</b><p>Dijelovi datoteke se mogu dijeliti samo tijekom torrent "
+"preuzimanja.</p>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
-#, fuzzy
 msgid "<b>Seeding</b>"
 msgstr "<b>Seedam</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
-#, fuzzy
 msgid "<b>Not Seeding</b>"
-msgstr "<b>Ne seedam</b>"
+msgstr "<b>Ne dijelim</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:516
 msgid "FrostWire has not detected a firewall"
@@ -3078,9 +3071,8 @@ msgid "Show Connection Quality"
 msgstr "Prikaži kvalitetu veze"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:723
-#, fuzzy
 msgid "Show Connection Privacy Status"
-msgstr "Pokazati stanje privatnog priključka"
+msgstr "Prikazati stanje privatnosti priključka"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:743
 msgid "Show Language Status"
@@ -3095,9 +3087,8 @@ msgid "Show Bandwidth Consumption"
 msgstr "Pokazati propusnost potrošnje"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:804
-#, fuzzy
 msgid "Show Donation Buttons"
-msgstr "Prikaži gumbe donacija"
+msgstr "Prikaži gumbe za donacije"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:840
 msgid "Downloads:"
@@ -3172,16 +3163,16 @@ msgstr ""
 "Fonta"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:24
-#, fuzzy
 msgid ""
 "You can sort your search results by clicking on a column. The most useful "
 "column to sort by is the 'Seeds' column if you are looking for a torrent, "
 "Seeds represents an approximate number of computers that have the entire "
 "file and are online."
 msgstr ""
-"Možete sortirati svoje rezultate pretrage ako kliknete na stupac. "
-"Najkorisniji stupac je '#' stupac, koji može rezultate, koji imaju najvćeu "
-"šansu za preuzimanje, staviti na vrh liste."
+"Možete sortirati svoje rezultate pretrage ako kliknete na stupac. Najkorisniji "
+"stupac za sortiranje je 'Seeds' stupac ako trazite torrent, "
+"Dijeljenja zastupa broj računala koji imaju cijelu "
+"datoteku i koji su online."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:25
 msgid ""
@@ -3775,7 +3766,6 @@ msgid "You're almost done!"
 msgstr "Skoro ste gotovi!"
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:64
-#, fuzzy
 msgid "State your intent below to start using FrostWire"
 msgstr "Izrecite vašu namjeru ispod kako biste započeli koristiti FrostWire"
 
@@ -5078,12 +5068,10 @@ msgid "Play/Preview"
 msgstr "Igrati/Pregled"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:111
-#, fuzzy
 msgid "Select content to download from this torrent."
-msgstr "Odaberi sadržaj za preuzimanje iz ovog torrenta."
+msgstr "Odaberite sadržaj za preuzimanje iz ovog torrenta."
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultDisplayer.java:579
-#, fuzzy
 msgid "results"
 msgstr "rezultati"
 
@@ -5097,7 +5085,6 @@ msgstr "Tražiti više"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:707
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:708
-#, fuzzy
 msgid "Search tools"
 msgstr "Pretražni alati"
 
