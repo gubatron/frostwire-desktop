@@ -632,7 +632,7 @@ msgstr "Izmijeniti pratitelje"
 #. rows
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:534
 msgid "Edit trackers, one by line"
-msgstr "Izmjeni pratitelje, jedan po jedan"
+msgstr "Izmijeniti pratitelje, jedan po jedan"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:543
 msgid "Accept"
@@ -713,13 +713,16 @@ msgid ""
 "your copyright. It means offering some of your rights to any member of the "
 "public but only under certain conditions."
 msgstr ""
+"Nuditi tvoj rad pod Kreativni Uobičajeni licenci ne znači odustajanje od "
+"vaših autorskih prava. To znači nuđenje nekih od svojih prava svakom članu "
+"javnosti ali samo pod određenim uvjetima."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:126
 msgid ""
 "You let others copy, distribute, display, and perform your copyrighted work "
 "but only if they give credit the way you request."
 msgstr ""
-"Dajete mogućnost drugima da kopiraju, distribuiraju, pokazuju i izvode vaš rad zaštićen autorskim pravom, "
+"Dajete mogućnost drugima da kopiraju, distributiraju, pokazuju i izvode vaš rad zaštićen autorskim pravom, "
 "ali samo ako daju zasluge kako vi zahtijevate."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:128
@@ -728,6 +731,9 @@ msgid ""
 "distribute, display, and perform your work &mdash; and derivative works "
 "based upon it &mdash; but for noncommercial purposes only."
 msgstr ""
+"<strong>Komercijalno korištenje nije dopušteno.</strong><br>Dajete mogućnost drugima da kopiraju, "
+"distributiraju, pokazuju i izvode vaš rad &mdash; i derivative "
+"bazirane na njemu &mdash; ali samo za nekomercijalne upotrebe."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:130
 msgid ""
@@ -815,7 +821,7 @@ msgid ""
 "These box shows the contents you've selected for your new .torrent.\n"
 "Either a file, or the contents of a folder."
 msgstr ""
-"Ove kutije pokazuju sadržaj koji ste odabrali za vaš novi .torrent\n"
+"Ove kutije pokazuju sadržaj koji ste odabrali za vaš novi .torrent.\n"
 "Ili datoteku, ili sadrzaj mape."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:190
@@ -829,8 +835,8 @@ msgid ""
 "Click here to select a single file as the content indexed by your new ."
 "torrent"
 msgstr ""
-"Kliknite ovdje kako bi ste odabrali datoteku ili mapu kao sadržaj koji će "
-"vaš novi .torrent indeksirati."
+"Kliknite ovdje kako bi ste odabrali datoteku kao sadržaj koji će indeksirati vaš novi ."
+"torrent"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:192
 #: src/com/limegroup/gnutella/gui/FileChooserHandler.java:81
@@ -841,15 +847,14 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/FileChooserHandler.java:446
 #: src/com/limegroup/gnutella/gui/FileChooserHandler.java:465
 msgid "Select Folder"
-msgstr "Odaberi mapu"
+msgstr "Odabrati mapu"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:193
 #, fuzzy
 msgid ""
 "Click here to select a folder as the content indexed by your new .torrent"
 msgstr ""
-"Kliknite ovdje kako bi ste odabrali datoteku ili mapu kao sadržaj koji će "
-"vaš novi .torrent indeksirati."
+"Kliknite ovdje kako bi ste odabrali mapu kao sadržaj koji će indeksirati vaš novi .torrent"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:204
 #, fuzzy
@@ -893,13 +898,13 @@ msgid ""
 "Your new torrent will be announced to these trackers if you start seeding "
 "the torrent."
 msgstr ""
-"Unesite listu vazecih BitTorrent pratećih posluziteljskih URL-ova.\n"
+"Unesite listu vazećih BitTorrent pratećih posluziteljskih URL-ova.\n"
 "Vaš novi torrent će biti objavljen pratiteljima ako počnete seedati "
 "torrent."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:227
 msgid "Web Seeds Mirror URLs"
-msgstr "Internetsko smjeme mirror URL-i"
+msgstr "Internetsko smjeme mirrora URLa"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:228
 msgid ""
@@ -1251,7 +1256,7 @@ msgstr "Magnet kopiran u međuspremnik."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:58
 msgid "Torrent Data Save Folder"
-msgstr "Folder za spremanje torrent datoteka"
+msgstr "Mapa za spremanje torrent datoteka"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:90
 msgid "You forgot to enter a path for the Torrent Data Folder."
@@ -1259,7 +1264,7 @@ msgstr "Zaboravili ste napisati putanju mape datoteka torrenta."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:114
 msgid "Please enter a valid path for the Torrent Data Folder"
-msgstr "Molimo unesite valjanu putanju mape datoteka torrenta."
+msgstr "Molimo unesite valjanu putanju mape datoteka torrenta"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:132
 msgid "The Torrent Data Folder cannot be inside the"
@@ -1268,7 +1273,7 @@ msgstr "Torrent podatkovna mapa ne može biti unutar"
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:136
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:147
 msgid "Could not resolve folder path."
-msgstr "Nemoguće riješiti putanju mape."
+msgstr "Nije moguće riješiti putanju mape."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:143
 #, fuzzy
@@ -1286,11 +1291,11 @@ msgstr "Koristi osnovnu mapu"
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:174
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:200
 msgid "Browse..."
-msgstr "Pretražuj..."
+msgstr "Pretraži..."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:175
 msgid "Choose Another Folder"
-msgstr "Izaberite drugi folder"
+msgstr "Izabrati drugi folder"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:49
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:38
@@ -1311,6 +1316,10 @@ msgid ""
 "while you're downloading its<br/>data files. <strong>Some trackers will "
 "penalize this Leeching behavior</strong>."
 msgstr ""
+"<strong>Ne dijeli završena torrent preuzimanja.</strong> BitTorrent korisnici "
+"na internetu će<br/>preuzeti samo dijelove datoteke od torrenta od vas "
+"dok vi preuzimate njegove<br/>podatkovne datoteke. <strong>Neki pratitelji će  "
+"ovakvo ponašanje leechanja.</strong>."
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:92
 msgid ""
@@ -1333,7 +1342,7 @@ msgstr "upaljeno"
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:245
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:246
 msgid "Install"
-msgstr "Instaliraj"
+msgstr "Instalirati"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:282
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:283
