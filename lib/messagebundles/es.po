@@ -840,7 +840,7 @@ msgstr ""
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:190
 
 msgid "Select File"
-msgstr "Seleccionar carpeta"
+msgstr "Seleccionar archivo"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:191
 
@@ -4114,15 +4114,14 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 
 msgid "Order FrostWire Stickers"
-msgstr "Calcomanías gratis de FrostWire"
+msgstr "Pide etiquetas adhesivas de FrostWire"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 
 msgid "Order FrostWire stickers, we ship worldwide."
 msgstr ""
-"Ordena etiquetas adhesivas de FrostWire gratis, las enviamos a cualquier "
-"parte del mundo. Las etiquetas adhesivas son gratis, solo pagas céntimos por "
-"el envío."
+"Ordena etiquetas adhesivas de FrostWire, las enviamos a cualquier "
+"parte del mundo. "
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:60
 msgid "FrostWire T-Shirts"
