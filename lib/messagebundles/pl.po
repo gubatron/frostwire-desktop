@@ -10,9 +10,9 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-10 02:09+0300\n"
 "PO-Revision-Date: 2008-07-30 15:35+0000\n"
-"Last-Translator: FTA <Unknown>\n"
+"Last-Translator: nalesnikld <akum5@vp.pl>\n"
 "Language-Team: none\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -127,9 +127,8 @@ msgstr ""
 "Ten transfer jest już zakończony, wznowienie spowoduje rozpoczęcie seedowania"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:214
-#, fuzzy
 msgid "Do you want to enable torrent seeding?"
-msgstr "Czy chcesz wysłać ten plik to przyjaciela?"
+msgstr "Czy chcesz zezwolić na seedowanie torrenta?"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:241
 msgid "Pause Download"
@@ -292,7 +291,6 @@ msgstr "Nazwa"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:120
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:346
-#, fuzzy
 msgid "Tips/Donations"
 msgstr "Napiwki/Darowizny"
 
@@ -375,19 +373,16 @@ msgid "Queued for checking"
 msgstr "W kolejce do sprawdzenia"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:197
-#, fuzzy
 msgid "Checking..."
-msgstr "Sprawdzanie"
+msgstr "Sprawdzanie..."
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:198
-#, fuzzy
 msgid "Downloading metadata"
-msgstr "Pobieranie aktualizacji..."
+msgstr "Pobieranie metadanych..."
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:199
-#, fuzzy
 msgid "Downloading torrent"
-msgstr "Pobieram Torrent"
+msgstr "Pobieram torrent"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:200
 #: src/com/frostwire/gui/library/DownloadTask.java:82
@@ -401,12 +396,10 @@ msgid "Finished"
 msgstr "Zakończone"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:202
-#, fuzzy
 msgid "Seeding"
 msgstr "Seedowanie"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:203
-#, fuzzy
 msgid "Allocating"
 msgstr "Przydzielanie"
 
@@ -427,7 +420,6 @@ msgid "Error"
 msgstr "Błąd"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:206
-#, fuzzy
 msgid "Error: Moving incomplete"
 msgstr "Błąd: Przenoszenie niekompletne"
 
@@ -444,14 +436,12 @@ msgid "Stopped"
 msgstr "Zatrzymany"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:210
-#, fuzzy
 msgid "Pausing"
 msgstr "Wstrzymuję"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:211
-#, fuzzy
 msgid "Canceling"
-msgstr "Anuluje"
+msgstr "Anuluję"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:212
 msgid "Canceled"
@@ -463,7 +453,6 @@ msgstr "Oczekiwanie"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:214
 #: src/com/frostwire/gui/transfers/PeerHttpUpload.java:156
-#, fuzzy
 msgid "Complete"
 msgstr "Zakończone"
 
@@ -475,7 +464,6 @@ msgid "Uploading"
 msgstr "Wysyłanie"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:216
-#, fuzzy
 msgid "Uncompressing"
 msgstr "Dekompresowanie"
 
@@ -484,9 +472,8 @@ msgid "Demuxing"
 msgstr "Demuxowanie"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:265
-#, fuzzy
 msgid "Unknown status"
-msgstr "Nieznany"
+msgstr "Nieznany status"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:363
 msgid "ETA"
@@ -570,7 +557,6 @@ msgid "Advanced"
 msgstr "Zaawansowane"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:189
-#, fuzzy
 msgid "Trackers"
 msgstr "Trackery"
 
@@ -625,21 +611,18 @@ msgid "Set Up Speed"
 msgstr "Ustaw Szybkość"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:454
-#, fuzzy
 msgid "Edit Trackers"
 msgstr "Edytuj Trackery"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:470
-#, fuzzy
 msgid "Update Tracker"
-msgstr "Zaktualizuj tracker"
+msgstr "Zaktualizuj Tracker"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:491
 msgid "Scrape Tracker"
 msgstr "Wyciągnij dane z Trackera"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:517
-#, fuzzy
 msgid "Edit trackers"
 msgstr "Edytuj trackery"
 
@@ -689,7 +672,6 @@ msgstr ""
 "twórcę (twórców) do udostępniania tej treści pod następującą licencją"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:101
-#, fuzzy
 msgid "Author's Name"
 msgstr "Imiona Autorów"
 
@@ -807,21 +789,18 @@ msgstr ""
 "komercyjnych bez pytania o pozwolenie."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:467
-#, fuzzy
 msgid "License type:"
 msgstr "Typ licencji:"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:69
-#, fuzzy
 msgid "Torrent File Created with FrostWire http://www.frostwire.com"
-msgstr "Torrent Stworzony przez FrostWire"
+msgstr "Plik Torrent Stworzony przez FrostWire http://www.frostwire.com"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:152
 msgid "Contents and Tracking"
 msgstr "Treść i Śledzenie"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:153
-#, fuzzy
 msgid "Copyright License"
 msgstr "Prawa Autorskie"
 
@@ -849,17 +828,15 @@ msgstr ""
 "albo plik, albo zawartosc katalogu."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:190
-#, fuzzy
 msgid "Select File"
-msgstr "Wybierz Katalog"
+msgstr "Wybierz Plik"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:191
-#, fuzzy
 msgid ""
 "Click here to select a single file as the content indexed by your new ."
 "torrent"
 msgstr ""
-"Kliknij tutuaj aby wybrać plik lub katalog jako zawartość zindeksowana przez "
+"Kliknij tutuaj aby wybrać plik jako zawartość zindeksowaną przez "
 "twój nowy .torrent"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:192
@@ -874,11 +851,10 @@ msgid "Select Folder"
 msgstr "Wybierz Katalog"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:193
-#, fuzzy
 msgid ""
 "Click here to select a folder as the content indexed by your new .torrent"
 msgstr ""
-"Kliknij tutuaj aby wybrać plik lub katalog jako zawartość zindeksowana przez "
+"Kliknij tutaj aby wybrać katalog jako zawartość zindeksowaną przez "
 "twój nowy .torrent"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:204
@@ -965,17 +941,15 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:334
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:347
-#, fuzzy
 msgid "Select a single file"
-msgstr "Zaznacz/Odznacz wszyskie pliki"
+msgstr "Wybierz pojedynczy plik"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:336
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:352
 msgid "Select a single directory"
-msgstr ""
+msgstr "Wybierz pojedynczy katalog"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:353
-#, fuzzy
 msgid "Select folder"
 msgstr "Wybierz Katalog"
 
@@ -1018,9 +992,8 @@ msgid "Torrent File"
 msgstr "Plik Typu Torrent"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:513
-#, fuzzy
 msgid "Save .torrent"
-msgstr "Zapisz torrent jako..."
+msgstr "Zapisz .torrent"
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:636
 msgid "wizard.addingmt"
@@ -1043,7 +1016,7 @@ msgstr "wizard.operationfailed"
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:677
 #, fuzzy
 msgid "Checking Web seed mirror URLs..."
-msgstr "Sprawdzanie aktualizacji..."
+msgstr "Sprawdzanie Sieciowych Seedów lustrzanych URL..."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:686
 msgid "Web seed not reachable."
@@ -1201,12 +1174,11 @@ msgstr "poprzez FrostWire"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:165
 msgid "Use the following text to share the \"%s\" folder"
-msgstr "Użyj poniższego tekstu aby dzielic sie katalogiem \"%s\""
+msgstr "Użyj poniższego tekstu aby dzielić się katalogiem \"%s\""
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:167
-#, fuzzy
 msgid "Use the following text to share the \"%s\" file"
-msgstr "Użyj poniższego tekstu aby dzielic sie katalogiem \"%s\""
+msgstr "Użyj poniższego tekstu aby dzielić się plikiem \"%s\""
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:219
 msgid ""
@@ -1335,15 +1307,14 @@ msgid "Seeding Settings"
 msgstr "Ustawienia Seedowania"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:76
-#, fuzzy
 msgid ""
 "<strong>Seed finished torrent downloads.</strong> BitTorrent users on the "
 "internet will be able<br/>to download file chunks of the data your torrents "
 "seed. (Recommended)"
 msgstr ""
 "<strong>Seeduj dane zakończonych pobrań torrentowych.</strong> "
-"Użytkownicy  sieci BitTorrent na internecie<br/>będą mogli pobrać od ciebie "
-"fragmenty danych torrentów które seedujesz. (Recommended)"
+"Użytkownicy  sieci BitTorrent w internecie<br/>będą mogli pobrać od ciebie "
+"fragmenty danych torrentów które seedujesz. (Zalecane)"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:77
 #, fuzzy
@@ -1354,9 +1325,9 @@ msgid ""
 "penalize this Leeching behavior</strong>."
 msgstr ""
 "<strong>Nie seeduj zakończonych pobrań torrentowych.</strong> "
-"Użytkownicy  sieci BitTorrent na internecie<br/>mogą pobrać tylko fragmenty "
-"danych plików, które ty aktywnie pobierasz w danej chwili.<br/>"
-"<strong>Niektóre trackery karzą takie pasożytnicze zachowanie.</strong>"
+"Użytkownicy  sieci BitTorrent w internecie<br/>mogą pobrać tylko fragmenty "
+"danych plików, które pobierasz w danej chwili.<br/><strong>Niektóre trackery"
+"karzą takie pasożytnicze zachowanie.</strong>"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:92
 #, fuzzy
@@ -1367,7 +1338,7 @@ msgid ""
 "advanced users only</strong> as it can lead to downloading parts of files "
 "you may have not explicitly chosen for download."
 msgstr ""
-"<strong>Seeduj wyselekcjonowane pliki torrentu.</strong> "
+"<strong>Seeduj wyselekcjonowane pliki torrent.</strong> "
 "Wyselekcjonowane pobrania torrentów (Częściowe Pobrania) mogą spowodować "
 "seedowanie fragmentów danych sąsiednich niekompletnych plików.<br/>Ta "
 "właściwość jest <strong>polecana tylko dla zaawansowanych użytkowników,</"
@@ -1391,7 +1362,6 @@ msgstr "Zainstaluj"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:282
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:283
-#, fuzzy
 msgid "Video Preview"
 msgstr "Podgląd Wideo"
 
@@ -1401,13 +1371,12 @@ msgstr "Odtwórz Podgląd Wideo "
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:301
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:302
-#, fuzzy
 msgid "Audio Preview"
 msgstr "Podgląd Audio"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:303
 msgid "Play Audio preview of"
-msgstr "Odtwórz Podgląd Audio "
+msgstr "Odtwórz Podgląd Audio"
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:363
 msgid "Support %s with a tip, donation or voluntary payment"
@@ -1479,7 +1448,6 @@ msgstr "Radio Internetowe"
 #: src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:330
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:44
 #: src/com/limegroup/gnutella/gui/search/SearchTableColumns.java:35
-#, fuzzy
 msgid "Actions"
 msgstr "Akcje"
 
@@ -1560,7 +1528,6 @@ msgstr "utwory"
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:225
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:39
-#, fuzzy
 msgid "Default Save Folder"
 msgstr "Domyślny Katalog Zapisu"
 
@@ -1898,7 +1865,6 @@ msgid "Import a .m3u file to a new playlist"
 msgstr "Importuj plik .m3u do Nowej Playlisty "
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:847
-#, fuzzy
 msgid "Export playlist files to folder"
 msgstr "Eksportuj pliki playlisty do katalogu"
 
@@ -1907,9 +1873,8 @@ msgid "Copy all playlist files to a folder of your choosing"
 msgstr "Skpiuj wszystkie pliki playlisty do wybranego katalogu"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:866
-#, fuzzy
 msgid "Where do you want the playlist files copied to?"
-msgstr "Dokąd chcesz skopiować pliki playlisty?"
+msgstr "Dokąd chcesz skopiować pliki z playlisty?"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:920
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
@@ -1922,7 +1887,6 @@ msgid "Export this playlist into a .m3u file"
 msgstr "Eksportuj tą playlistę do pliku .m3u"
 
 #: src/com/frostwire/gui/library/LibraryPlaylists.java:935
-#, fuzzy
 msgid "Export Playlist to iTunes"
 msgstr "Eksportuj Playlistę do iTunes"
 
@@ -1931,7 +1895,6 @@ msgid "Export this playlist into an iTunes playlist"
 msgstr "Eksportuj tą playlistę jako playlistę z iTunes"
 
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:40
-#, fuzzy
 msgid "Index"
 msgstr "Indeks"
 
@@ -1976,7 +1939,6 @@ msgid "search results"
 msgstr "rezultaty wyszukiwania"
 
 #: src/com/frostwire/gui/library/LibrarySearch.java:158
-#, fuzzy
 msgid "Search in Library"
 msgstr "Wyszukaj w Plikotece"
 
@@ -2011,7 +1973,6 @@ msgid "Holds the Results for"
 msgstr "Trzyma Rezultaty dla "
 
 #: src/com/frostwire/gui/library/NodeRenderer.java:65
-#, fuzzy
 msgid "My files"
 msgstr "Moje Pliki"
 
@@ -2204,7 +2165,7 @@ msgid ""
 "pointing to your mplayer executable</b> at <b><font color=\"blue\">"
 msgstr ""
 "<br><br>Aby zainstalować <b>MPlayer</b> w Ubuntu, otwórz okno terminalu i "
-"napisz \"<b>sudo apt-get install MPlayer</b>\".<br><br>Jeżeli MPlayer jest "
+"wpisz \"<b>sudo apt-get install MPlayer</b>\".<br><br>Jeżeli MPlayer jest "
 "już zainstalowany w innym miejscu, <b>upewnij się że masz symlink kierujący "
 "do instalacji MPlayer</b> w <b><font color=\"blue\">"
 
@@ -2314,7 +2275,6 @@ msgstr ""
 "Fi, Internet Radio i więcej."
 
 #: src/com/frostwire/gui/tabs/SearchDownloadTab.java:51
-#, fuzzy
 msgid "Search and Download Files from the Internet."
 msgstr "Wyszukuj i Pobieraj Pliki z Internetu"
 
@@ -2437,7 +2397,6 @@ msgid "Update"
 msgstr "Aktualizuj"
 
 #: src/com/frostwire/gui/updates/PortableUpdater.java:77
-#, fuzzy
 msgid "Uncompressing files"
 msgstr "Rozpakowywanie plików"
 
@@ -2494,14 +2453,12 @@ msgid "FrostWire Graphics Designers/Photographers"
 msgstr "Projektanci Grafiki FrostWire"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:194
-#, fuzzy
 msgid "Thanks to Former FrostWire Developers"
-msgstr "Dzięki dla Byłych Programistów FrostWire"
+msgstr "Podziękowania dla Byłych Programistów FrostWire"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:199
-#, fuzzy
 msgid "Thanks to the FrostWire Chat Community!"
-msgstr "Dzięki dla Społeczności Czatu FrostWire!"
+msgstr "Podziękowania dla Społeczności Czatu FrostWire!"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:200
 msgid ""
@@ -2524,19 +2481,16 @@ msgstr ""
 "Moderatorom Forum"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:206
-#, fuzzy
 msgid "FrostWire Chat Operators"
 msgstr "Operatorzy Czatu FrostWire"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:211
-#, fuzzy
 msgid "FrostWire Forum Moderators"
 msgstr "Moderatorzy Forum FrostWire"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:217
-#, fuzzy
 msgid "Many Former Chat Operators"
-msgstr "Operatorzy Czatu FrostWire"
+msgstr "Wielu byłych Operatorów Czatu FrostWire"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:223
 msgid "And also to the Support Volunteer Helpers:"
@@ -2544,15 +2498,13 @@ msgstr "A także pomocy od Wolontariuszy"
 
 #. azureus/vuze devs.
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:229
-#, fuzzy
 msgid "Thanks to the Azureus Core Developers"
-msgstr "Dzięki dla Byłych Programistów FrostWire"
+msgstr "Podziękowania dla Programistów Azureusa"
 
 #. developers
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:236
-#, fuzzy
 msgid "Thanks to the LimeWire Developer Team"
-msgstr "Dzięki dla Zespołu Programistów LimeWire"
+msgstr "Podziękowania dla Zespołu Programistów LimeWire"
 
 #. community VIPs
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:254
@@ -2564,14 +2516,12 @@ msgstr ""
 "innymi:"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:274
-#, fuzzy
 msgid "Thanks to the PJIRC Staff"
-msgstr "Dzięki dla załogi PJIRC"
+msgstr "Podziękowania dla załogi PJIRC"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:283
-#, fuzzy
 msgid "Thanks to the Automatix Team"
-msgstr "Dzięki dla załogi Automatix"
+msgstr "Podziękowania dla zespołu Automatix"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:284
 msgid ""
@@ -2582,34 +2532,29 @@ msgstr ""
 "sposób."
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:292
-#, fuzzy
 msgid "Thanks to Ubuntu/Kubuntu Teams"
-msgstr "Dzięki dla załogi Ubuntu/Kubuntu"
+msgstr "Podziękowania dla zespołów Ubuntu/Kubuntu"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:293
-#, fuzzy
 msgid ""
 "For making the world a better place with such an excellent distro, you'll be "
 "the ones to make a difference on the desktop."
 msgstr ""
-"<p>Tworząc tak niesamowite oprogramowanie, to wy będziecie tymi, którzy na "
-"prawdę ulepszą komputery, a tym samym cały świat.</p>"
+"Za tworzenie świata lepszym miejscem z tak świetną dystrybucją, będziecie "
+"tymi którzy dokonali zmiany dla oprogramowania komputerowego."
+
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:295
-#, fuzzy
 msgid "Thanks to the NSIS Project"
-msgstr "Dzięki dla projektu NSIS"
+msgstr "Podziękowania dla projektu NSIS"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:296
-#, fuzzy
 msgid "Thanks for such an awesome installer builder system and documentation."
-msgstr ""
-"<p>Dzięki za taki świetny system budowniczy instalatora i dokumentację.</p>"
+msgstr "Podziękowania za świetny konstruktor instalatora i dokumentację."
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:298
-#, fuzzy
 msgid "Thanks to our families"
-msgstr "Dzięki dla naszych rodzin"
+msgstr "Podziękowania dla naszych rodzin"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:299
 msgid "For being patient during our many sleepless nights"
@@ -2678,7 +2623,6 @@ msgid "Support FrostWire development with a USD $1 donation"
 msgstr "Wspomagaj rozwój FrostWire darowizną 3zł"
 
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:57
-#, fuzzy
 msgid "Support FrostWire development with a USD $5 donation"
 msgstr "Wspomagaj rozwój FrostWire darowizną 15zł"
 
@@ -2691,7 +2635,6 @@ msgid "Support FrostWire development with a USD $25 donation"
 msgstr "Wspomagaj rozwój FrostWire darowizną 75zł"
 
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:60
-#, fuzzy
 msgid "Support FrostWire development with a Paypal donation"
 msgstr "Wspomagaj rozwój FrostWire darowizną Paypal"
 
@@ -2940,17 +2883,15 @@ msgstr "Wymagana wersja Java"
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:106
 #, fuzzy
 msgid "Visit"
-msgstr "Wizyt {0}"
+msgstr "Wizyt"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:118
-#, fuzzy
 msgid "Upgrade Later"
 msgstr "Zaktualizuj Później"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:119
-#, fuzzy
 msgid "Exit FrostWire"
-msgstr "poprzez FrostWire"
+msgstr "Wyjdź z FrostWire"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:176
 msgid "More Information"
@@ -3056,13 +2997,13 @@ msgstr "Tworzę przyciski darowizn abyś mógł nam pomóc..."
 #: src/com/limegroup/gnutella/gui/StatusLine.java:145
 #, fuzzy
 msgid "Creating Connection Quality Indicator..."
-msgstr "Stwarzanie Wskaźnika Jakości Połączenia"
+msgstr "Tworzenie Wskaźnika Jakości Połączenia..."
 
 #. make the 'Language' button
 #: src/com/limegroup/gnutella/gui/StatusLine.java:149
 #, fuzzy
 msgid "Adding flags here and there..."
-msgstr "Dodawanie chorągiewek tu i tam..."
+msgstr "Dodawanie flag tu i tam..."
 
 #. make the 'Firewall Status' label
 #: src/com/limegroup/gnutella/gui/StatusLine.java:153
@@ -3111,18 +3052,16 @@ msgid "Circle FrostWire on G+"
 msgstr "FrostWire na G+"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
-#, fuzzy
 msgid "<b>Seeding</b><p>completed torrent downloads.</p>"
-msgstr "<b>Seeduję</b><p>zakończone pobrania torrentowe."
+msgstr "<b>Seeduję</b><p>zakończone pobrania torrent.</p>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
-#, fuzzy
 msgid ""
 "<b>Not Seeding</b><p>File chunks might be shared only during a torrent "
 "download.</p>"
 msgstr ""
-"<b>Nie Seeduję.</b>.<p>Fragmenty plików mogą być udostępniane tylko<p>a "
-"podczas pobierania torrentu."
+"<b>Nie Seeduję.</b>.<p>Fragmenty plików mogą być udostępniane tylko "
+"podczas pobierania torrentu.</p>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
 #, fuzzy
@@ -3163,9 +3102,8 @@ msgid "Show Connection Quality"
 msgstr "Pokaż Jakość Połączenia"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:723
-#, fuzzy
 msgid "Show Connection Privacy Status"
-msgstr "Połącz na starcie:"
+msgstr "Pokaż Status Prywatności Połączenia"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:743
 msgid "Show Language Status"
@@ -3182,7 +3120,7 @@ msgstr "Pokaż Zużycie Przepustowości"
 #: src/com/limegroup/gnutella/gui/StatusLine.java:804
 #, fuzzy
 msgid "Show Donation Buttons"
-msgstr "Pokaż Guziki Darowizn"
+msgstr "Pokaż Przyciski Darowizn"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:840
 msgid "Downloads:"
@@ -3194,11 +3132,11 @@ msgstr "Wysyłania:"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:841
 msgid "Total Downstream:"
-msgstr "Łączne Pobierania:"
+msgstr "Łącznie Pobrano:"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:841
 msgid "Total Upstream:"
-msgstr "Łączne Wysyłania"
+msgstr "Łącznie Wysyłano"
 
 #. *
 #. * The title for the TOTD window.
@@ -3240,16 +3178,15 @@ msgid "Loading tips..."
 msgstr "Ładowanie wskazówek..."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:5
-#, fuzzy
 msgid ""
 "Tired of downloads stopping halfway through? It helps to pick search results "
 "with a higher number in the 'Seeds' column. The Seeds are the amount of "
 "unique places on the network that are hosting the file. The more sources, "
 "the better the chance of getting your torrent file!"
 msgstr ""
-"Zmęczony pobraniami, które się zatrzymują w połowie? Osiągniesz lepsze "
+"Zmęczony pobraniami, które się zatrzymują w trakcie? Osiągniesz lepsze "
 "rezultaty  z pobraniami z większą ilością 'Seedów' w kolumnie. Seedy są ilością "
-"pojedynczych źródeł w sieci które przechowują ten plik. Im więcej źródeł, "
+"unikalnych źródeł w sieci które przechowują ten plik. Im więcej źródeł, "
 "tym lepsze szanse na pełne pobranie pliku!"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:23
