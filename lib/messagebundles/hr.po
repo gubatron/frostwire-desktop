@@ -2697,13 +2697,13 @@ msgid ""
 "FrostWire could not locate your web browser to display the following "
 "webpage: {0}."
 msgstr ""
-"FrostWire nije mogao pronaći vaš web pretraživač za prikazivanje slijedeće "
+"FrostWire nije mogao pronaći vaš web pretraživač za prikazivanje sljedeće "
 "web stranice: {0}."
 
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:1339
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:1362
 msgid "FrostWire will not launch the specified file for security reasons."
-msgstr "FrostWire neće pokrenuti naznačenu datoteku iz sigurnosnih razloga."
+msgstr "FrostWire neće pokrenuti odabranu datoteku iz sigurnosnih razloga."
 
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:1341
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:1364
@@ -2713,14 +2713,14 @@ msgid ""
 "\n"
 "Executed command: {0}."
 msgstr ""
-"FrostWire nije mogao pokrenuti naznačenu datoteku.\n"
+"FrostWire nije mogao pokrenuti označenu datoteku.\n"
 "\n"
 "Izvršena naredba: {0}."
 
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:1343
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:1366
 msgid "FrostWire could not launch the specified file."
-msgstr "FrostWire nije mogao pokrenuti naznačenu datoteku."
+msgstr "FrostWire nije mogao pokrenuti odabranu datoteku."
 
 #: src/com/limegroup/gnutella/gui/GUIUtils.java:143
 msgid "KB"
@@ -2745,28 +2745,28 @@ msgstr "KB/s"
 #. Load up the HTML engine.
 #: src/com/limegroup/gnutella/gui/Initializer.java:302
 msgid "Loading HTML Engine..."
-msgstr "Učitavanje HTML mehanizma..."
+msgstr "Učitavam HTML mehanizam..."
 
 #: src/com/limegroup/gnutella/gui/Initializer.java:356
 msgid "Loading User Interface..."
-msgstr "Učitavanje korisničkog sučelja..."
+msgstr "Učitavam korisničko sučelje..."
 
 #: src/com/limegroup/gnutella/gui/Initializer.java:366
 msgid "Loading Core Components..."
-msgstr "Učitavanje ključnih komponenti..."
+msgstr "Učitavam ključne komponente..."
 
 #: src/com/limegroup/gnutella/gui/Initializer.java:423
 msgid "Loading Icons..."
-msgstr "Učitavanje ikona..."
+msgstr "Učitavam ikona..."
 
 #. Touch the I18N stuff to ensure it loads properly.
 #: src/com/limegroup/gnutella/gui/Initializer.java:429
 msgid "Loading Internationalization Support..."
-msgstr "Učitavanje podrške internacionalizacije..."
+msgstr "Učitavam podrške internacionalizacije..."
 
 #: src/com/limegroup/gnutella/gui/Initializer.java:444
 msgid "Loading Old Downloads..."
-msgstr "Učitavanje starih preuzetih datoteka..."
+msgstr "Učitavam stara preuzimanja..."
 
 #: src/com/limegroup/gnutella/gui/Initializer.java:514
 msgid ""
@@ -2779,6 +2779,14 @@ msgid ""
 "\n"
 "FrostWire will now exit.  Thank You."
 msgstr ""
+"FrostWire nije mogao stvoriti mapu privremenih postavki.\n"
+"\n"
+"Ovo se događa radi manjka ovlasti.  Molimo provjerite da "
+"FrostWire (i vi) imate ovlasti stvarati datoteke/mape na vašem računalu.  "
+"Ako se problem ponovi, molimo posjetite www.frostwire.com i kliknite na "
+"'Support' link.\n"
+"\n"
+"FrostWire će sada izaći.  Hvala Vam."
 
 #: src/com/limegroup/gnutella/gui/InputFieldDialog.java:66
 msgid "Input"
@@ -2809,7 +2817,7 @@ msgid ""
 "version is known to have caused problems with FrostWire. Please upgrade to "
 "the final 1.6.0 release.\n"
 msgstr ""
-"Trenutno koristite beta ili pre-izdanje verzije Java 1.6.0. Za tu verziju je "
+"Trenutno koristite beta ili predizdanje verzije Java 1.6.0. Za tu verziju je "
 "poznato da uzrokuje probleme s FrostWireom. Molimo nadogradite do konačnog "
 "izdanja 1.6.0.\n"
 
@@ -2825,16 +2833,19 @@ msgid ""
 "running an out-of-date version of Java \n"
 "Please visit %s in order to upgrade your version of Java"
 msgstr ""
+"FrostWire zahtijeva Javu %s ili noviju za pokretanje. Trenutno "
+"koristite staru inačicu Jave \n"
+"Molimo posjetite %s kako bi ste nadogradili vašu inačicu Jave"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:95
 #, fuzzy
 msgid "Current Java Version:"
-msgstr "Trenutačna verzija Jave:"
+msgstr "Trenutačna inačica Jave:"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:96
 #, fuzzy
 msgid "Required Java Version:"
-msgstr "Zahtjevana verzija Jave:"
+msgstr "Zahtjevana inačica Jave:"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:106
 #, fuzzy
@@ -2870,7 +2881,7 @@ msgstr "Ne prikazuj ponovno"
 
 #: src/com/limegroup/gnutella/gui/LanguageWindow.java:192
 msgid "FrostWire must be restarted for the new language to take effect."
-msgstr "FrostWire se mora ponovno pokrenuti da bi se primjenio novi jezik ."
+msgstr "FrostWire se mora ponovno pokrenuti da bi se primjenio novi jezik."
 
 #: src/com/limegroup/gnutella/gui/LanguageWindow.java:208
 msgid "Change Language"
@@ -2910,14 +2921,15 @@ msgid ""
 "are saved properly you should save them to a sub-folder of {1}.  Would you "
 "like to choose another location?"
 msgstr ""
+"Spreuzimanja
 
 #: src/com/limegroup/gnutella/gui/SettingsWarningManager.java:35
 msgid ""
 "FrostWire has encountered problems in managing your settings.  Your settings "
 "changes may not be saved on shutdown."
 msgstr ""
-"FrostWire je naišao na probleme u upravljanju vasih postavki.  Vase promjene "
-"u postavkama se neće sacuvati kada ugasite."
+"FrostWire je naišao na probleme u upravljanju vaših postavki.  Vaše promjene "
+"u postavkama se neće sačuvati pri gašenju."
 
 #: src/com/limegroup/gnutella/gui/SettingsWarningManager.java:38
 msgid ""
@@ -2991,15 +3003,15 @@ msgstr "Stvaram središnji panel..."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:189
 msgid "Follow us @frostwire"
-msgstr "Pratite nas na @frostwire"
+msgstr "Pratite nas @frostwire"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:194
 msgid ""
 "Like FrostWire on Facebook and stay in touch with the community. Get Help "
 "and Help Others."
 msgstr ""
-"Zavolite FrostWire na Facebook-u i ostanite u dodiru sa zajednicom. Dobijte "
-"pomoć i pomozite ostalima."
+"Zavolite FrostWire na Facebook-u i ostanite u dodiru sa zajednicom. Dobijte pomoć "
+"i pomozite ostalima."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:200
 #, fuzzy
@@ -3042,7 +3054,7 @@ msgstr "Veza prekinuta"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:597
 msgid "Check your internet connection, FrostWire can't connect."
-msgstr "Provjerite vasu internet konekciju, FrostWire se ne može spojiti."
+msgstr "Provjerite vašu internet konekciju, FrostWire se ne može spojiti."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:600
 msgid "Turbo-Charged"
