@@ -736,6 +736,9 @@ msgid ""
 "display, and perform only verbatim copies of your work, not derivative works "
 "based upon it."
 msgstr ""
+"<strong>Ponovno miksanje nije dopušteno.</strong><br>Drugi mogu kopirati, distribuirati, "
+"pokazivati, i izvoditi samo verbatimske kopije vašeg rada, ne derivative "
+"bazirane na njemu."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:132
 msgid ""
@@ -1067,6 +1070,9 @@ msgid ""
 "works can make me liable for counterfeiting and criminal copyright "
 "infringement."
 msgstr ""
+"Razumijem da dobivanje financija od neovlaštenog rada pod autorskim pravom "
+"me moze teretiti za krivotvorenje i kriminalno "
+"kršenje autorskih prava."
 
 #: src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:126
 msgid "<strong>Bitcoin</strong> receiving wallet address"
@@ -2652,6 +2658,13 @@ msgid ""
 "then select 'Windows 2000' in the box below the check box. Then click the "
 "'OK' button at the bottom and restart FrostWire."
 msgstr ""
+"FrostWire je naišao na problem tijekom pokretanja i ne moze nastaviti. Vi "
+"mozda mozete popraviti ovaj problem promjenom FrostWire Windows "
+"kompatibilnosti. Desno kliknite na FrostWire ikonu na Desktopu i odaberite "
+"'Properties' iz menija. Kliknite na 'Compatibility' karticu gore, "
+"i onda kliknite na 'Run this program in compatibility mode for' kućicu, i onda "
+"odaberite 'Windows 2000' u padajućem izborniku ispod kućice. Onda kliknite na "
+"'OK' gumb dolje i ponovno pokrenite FrostWire."
 
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:1319
 #, java-format
@@ -4539,6 +4552,8 @@ msgid ""
 "Redisplay messages for which you have chosen 'Do not display this message "
 "again' or 'Always use this answer'."
 msgstr ""
+"Ponovno prikazi poruke za koje ste odabrali 'Ne prikazuj ovu poruku "
+"ponovno' ili 'Uvijek koristi ovaj odgovor'."
 
 #: src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:28
 msgid "Revert to Default:"
@@ -4550,7 +4565,7 @@ msgstr "Detalji prijavljivanja"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:40
 msgid "Configure username and password to be used for the proxy."
-msgstr "Konfigurirati korisnicko ime i lozinku koje cete koristiti za proxy."
+msgstr "Konfigurirati korisnicko ime i lozinku koje ćete koristiti za proxy."
 
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:48
 msgid "Enable Authentication:"
