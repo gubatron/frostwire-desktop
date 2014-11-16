@@ -41,6 +41,8 @@ import javax.swing.SwingConstants;
 import javax.swing.ToolTipManager;
 
 import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.jlibtorrent.DHT;
+import com.frostwire.jlibtorrent.Session;
 import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
@@ -601,6 +603,13 @@ public final class StatusLine {
             tip = I18n.tr("Your connection to the network is extremely strong");
             break;
         }
+
+        Session session = BTEngine.getInstance().getSession();
+        if (session != null) {
+            DHT dht = new DHT(session);
+            tip = tip + ". (DHT: " + dht.nodes() + " " + I18n.tr("nodes") + ")";
+        }
+
         _connectionQualityMeter.setToolTipText(tip);
         _connectionQualityMeter.setText(status);
     }
