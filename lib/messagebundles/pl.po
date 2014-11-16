@@ -3190,16 +3190,14 @@ msgstr ""
 "tym lepsze szanse na pełne pobranie pliku!"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:23
-#, fuzzy
 msgid ""
 "You can change the look and feel of FrostWire by going to View &gt; Use "
 "Small Icons, Show Icon Text and Increase-Decrease the Font Size."
 msgstr ""
-"Możesz zmienić wygląd FrostWire przez Widok &gt; Zastosuj Skórki i wybierz "
-"małe ikony, pokaż opis ikon oraz zwiększ-zmniejsz rozmiar czcionki"
+"Możesz zmienić wygląd FrostWire przez Widok &gt; Używaj Małych Ikon, "
+"Pokaż Opis Ikon oraz Zwiększ-Zmniejsz Rozmiar Czcionek"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:24
-#, fuzzy
 msgid ""
 "You can sort your search results by clicking on a column. The most useful "
 "column to sort by is the 'Seeds' column if you are looking for a torrent, "
@@ -3207,17 +3205,17 @@ msgid ""
 "file and are online."
 msgstr ""
 "Możesz sortować twoje rezultaty przez kliknięcie na kolumnę. Najbardziej "
-"użyteczna kolumna, to kolumna 'Seeds', która reprezentuje przybliżoną liczbę "
-"komputerów, które posiadają cały plik i są podłączone do sieci."
+"użyteczna kolumna, to 'Seedy', jeśli szukasz pliku torrent, Reprezentuje "
+"ona przybliżoną liczbę komputerów, które posiadają cały plik i są "
+"podłączone do sieci."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:25
 msgid ""
 "It helps the network if you keep your FrostWire running. Others will connect "
 "to the network easier and searches will perform better."
 msgstr ""
-"Pozostawienie FrostWire otwartego, pomaga wszystkim użytkownikom. Inni "
-"pobierający pliki połączą się łatwiej z siecią i wyszukiwania będą miały "
-"lepsze wyniki."
+"Pozostawienie uruchomionego FrostWire pomaga sieci. Inni połączą się łatwiej "
+"z siecią i wyszukiwania będą miały lepsze wyniki."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:26
 #, java-format
@@ -3249,7 +3247,7 @@ msgid ""
 msgstr ""
 "Małe zmiany we frazach kluczowych nadal powinny zwrócić poprawne rezultaty. "
 "Na przykład: szukasz 'Kapelusz' ale wpisałeś 'Mój Kapelusz', plik znajomego "
-"nadal powinien być odnaleziony."
+"nadal będzie znaleziony."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:29
 msgid ""
@@ -3299,7 +3297,6 @@ msgstr ""
 "automatycznie - nie musisz nic ustawiać!"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:36
-#, fuzzy
 msgid ""
 "Want to share a large file? Send several hundred gigabytes with no problems "
 "at all, just make sure you leave your FrostWire running and seeding while "
@@ -3307,9 +3304,9 @@ msgid ""
 "they want as long as you or somebody else is seeding the same content."
 msgstr ""
 "Chcesz udostępnić duży plik? Wyślij setki gigabajtów bez żadnych problemów, "
-"tylko się upewnij ze twój FrostWire jest uruchomiony kiedy twoi znajomi "
-"pobierają od ciebie. Mogą wstrzymać pobieranie kiedy chcą, jeżeli ktokolwiek "
-"seeduje ten sam plik lub katalog."
+"upewnij się tylko się że twój FrostWire będzie uruchomiony podczas pobierania"
+"przez znajomych. Mogą wstrzymać i wznowić pobieranie kiedy chcą, jeżeli "
+"ty lub  ktokolwiek seeduje ten sam plik lub katalog."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:37
 msgid ""
@@ -3324,13 +3321,12 @@ msgstr ""
 "programie FrostWire."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:38
-#, fuzzy
 msgid ""
 "Don't want to seed? Go to Tools &gt; Options &gt; Bittorrent or select the "
 "Seeding - No Seeding icon at the bottom bar"
 msgstr ""
-"Nie chcesz seedować? Idź do Narzędzia &gt; Opcje &gt; BitTorent ikona "
-"Seedowanie - Brak Sedowania jest na dolnym pasku"
+"Nie chcesz seedować? Idź do Narzędzia &gt; Opcje &gt; BitTorent lub zaznacz "
+"ikonę Seedowanie - Brak Sedowania z dolnego pasku"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:49
 msgid ""
@@ -3350,13 +3346,12 @@ msgstr ""
 "pobiera fragmenty pliku."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:51
-#, fuzzy
 msgid ""
 "You can turn autocomplete for searching on or off by choosing 'Options' from "
 "the 'Tools' menu, and selecting the option 'Text Autocompletion'."
 msgstr ""
-"Możesz włączyć lub wyłączyć opcję automatycznego dokańczania w 'Opcjach' z "
-"menu 'Narzędzi', przez zmienienie 'Autodokańczanie Tekstu'."
+"Możesz włączyć lub wyłączyć opcję automatyczne uzupełnianie w 'Opcjach' z "
+"menu 'Narzędzi', przez zmianę 'Autouzupełnianie Tekstu'."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:52
 #, fuzzy
@@ -3421,14 +3416,13 @@ msgstr ""
 "FrostWire' z menu FrostWire."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:68
-#, fuzzy
 msgid ""
 "You can turn autocomplete for searching on or off by choosing 'Tools' from "
 "the 'FrostWire' menu, and changing the value of 'Autocomplete Text' under "
 "the 'View' option."
 msgstr ""
-"Możesz włączyć lub wyłączyć autodokańczanie dla wyszukiwania przez wybranie "
-"'Ustawienia' z menu 'FrostWire', i zmienić wartość pod  "
+"Możesz włączyć lub wyłączyć autouzupełnianie dla wyszukiwania przez wybranie "
+"'Ustawienia' z menu 'FrostWire', i zmienić wartość 'Autouzupełnianie Tekstu' pod 
 "opcją 'Widok'."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:69
@@ -4069,16 +4063,12 @@ msgstr ""
 "Naucz się jak chronić twoje połączenie internetowe i twoją prywatność online"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
-#, fuzzy
 msgid "Order FrostWire Stickers"
-msgstr "Darmowe Naklejki FrostWire"
+msgstr "Zamów Naklejki FrostWire"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
-#, fuzzy
 msgid "Order FrostWire stickers, we ship worldwide."
-msgstr ""
-"Zamów darmowe naklejki FrostWire. Wysyłamy je po całym świecie - ty płacisz "
-"tylko za przesyłkę."
+msgstr "Zamów naklejki FrostWire, wysyłamy na cały świat."
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:60
 msgid "FrostWire T-Shirts"
@@ -4191,7 +4181,6 @@ msgid "Display the Options Screen"
 msgstr "Pokaż Panel Opcji"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:102
-#, fuzzy
 msgid "&Update FrostWire"
 msgstr "Aktualizuj FrostWire"
 
@@ -4200,12 +4189,10 @@ msgid "Update FrostWire to the latest version"
 msgstr "Aktualizuj FrostWire do najnowszej wersji"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:116
-#, fuzzy
 msgid "You are up to date with FrostWire"
 msgstr "Twój FrostWire jest aktualny"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:121
-#, fuzzy
 msgid "Downloading update..."
 msgstr "Pobieranie aktualizacji..."
 
@@ -4214,9 +4201,8 @@ msgid "Install update"
 msgstr "Zainstaluj aktualizację"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:131
-#, fuzzy
 msgid "Check for update"
-msgstr "Sprawdź czy istnieją nowe aktualizacje"
+msgstr "Sprawdź aktualizacje"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:42
 msgid "&View"
@@ -4232,7 +4218,7 @@ msgstr "Używaj Małych Ikon"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:47
 msgid "Show Icon &Text"
-msgstr "Pokaż Tekst Ikon"
+msgstr "Pokaż Opis Ikon"
 
 #: src/com/limegroup/gnutella/gui/menu/ViewMenu.java:47
 msgid "Show Text Below Icons"
@@ -4375,9 +4361,8 @@ msgid "System Boot"
 msgstr "Uruchomienie Systemu"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
-#, fuzzy
 msgid "Usage Statistics"
-msgstr "&Statystyki"
+msgstr "Statystyki Użytkowania"
 
 #: src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:324
 msgid "System Tray"
@@ -4437,15 +4422,15 @@ msgstr "Odtwarzacz audio"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:18
 msgid "Text Autocompletion"
-msgstr "Autodokańczanie Tekstu"
+msgstr "Autouzupełnianie Tekstu"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:20
 msgid "You can enable or disable autocompletion of text fields."
-msgstr "Możesz włączyć lub wyłączyć autodokańczanie pól tekstowych."
+msgstr "Możesz włączyć lub wyłączyć autouzupełnianie pól tekstowych."
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:27
 msgid "Enable Autocompletion of Text Fields:"
-msgstr "Włącz Autodokańczanie Pól Tekstowych:"
+msgstr "Włącz Autouzupełnianie Pól Tekstowych:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
 msgid "Automatic Installer Download"
@@ -4562,7 +4547,6 @@ msgid "Use random port (Recommended)"
 msgstr "Użyj dowolnego portu (Polecamy)"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:64
-#, fuzzy
 msgid "Manual port range"
 msgstr "Manualny zakres portu"
 
@@ -4576,10 +4560,9 @@ msgstr "końcowy port TCP"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:169
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:173
-#, fuzzy
 msgid "You must enter a port between 1 and 65535 when manually forcing port."
-msgstr ""
-"Opcja wymuszania portu TCP wymaga podania numeru portu w przedziale 1-65535."
+msgstr "Musisz podać port z przedziału 1-65535 gdy manualnie wymuszasz port."
+
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:178
 msgid "You must enter a valid port range."
@@ -4641,14 +4624,12 @@ msgid "Total Radio Stations"
 msgstr "Liczba Stacji Radiowych"
 
 #: src/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:46
-#, fuzzy
 msgid "Restore default Radio Stations"
-msgstr "Liczba Stacji Radiowych"
+msgstr "Przywróć domyślne Stacje Radiowe"
 
 #: src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:17
-#, fuzzy
 msgid "Locale Preferencing"
-msgstr "Lokalne Przedkładanie"
+msgstr "Lokalne Preferencje"
 
 #: src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:19
 msgid "You can choose to preference hosts using the same language as you."
@@ -4788,13 +4769,12 @@ msgid "Configure username and password to be used for the proxy."
 msgstr "Ustaw nazwę użytkownika i hasło dla proxy."
 
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:48
-#, fuzzy
 msgid "Enable Authentication:"
-msgstr "Włącz czat:"
+msgstr "Włącz Uwierzytelnianie:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:55
 msgid "Username:"
-msgstr "Nazwa Użytkownika"
+msgstr "Nazwa Użytkownika:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:62
 msgid "Password:"
@@ -4838,9 +4818,8 @@ msgid "Select which search engines you want FrostWire to use."
 msgstr "Wybierz jakie wyszukiwarki ma używać FrostWire."
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShowFrostWireRecommendationsPaneItem.java:34
-#, fuzzy
 msgid "FrostWire Recommendations"
-msgstr "Polecamy"
+msgstr "Rekomendacje FrostWire"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShowFrostWireRecommendationsPaneItem.java:36
 msgid ""
@@ -4898,7 +4877,7 @@ msgstr "Pokaż okno aby zapytać się przed zamknięciem"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:22
 msgid "Smart Search"
-msgstr "Sprytne Wyszukiwanie"
+msgstr "Inteligentne Wyszukiwanie"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:24
 msgid ""
@@ -4910,18 +4889,16 @@ msgstr ""
 "torrent"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:47
-#, fuzzy
 msgid "Enable Smart Search"
-msgstr "Włącz Sprytne Wyszukiwanie"
+msgstr "Włącz Inteligentne Wyszukiwanie"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:49
 msgid "Total torrents indexed"
 msgstr "Łączna Ilość Zindeksowanych Torrentów"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:53
-#, fuzzy
 msgid "Reset Smart Search Database"
-msgstr "Sprytne Wyszukiwanie"
+msgstr "Wyczyść Bazę Inteligentnego Wyszukiwania"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:80
 msgid "If you continue you will erase all the information related to\n"
@@ -4996,14 +4973,12 @@ msgid "Global maximum number of connections"
 msgstr "Łączny max ilości połączeń"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:33
-#, fuzzy
 msgid "Maximum number of peers"
-msgstr "Max ilość połączonych peerów na jeden torrent"
+msgstr "Maksymalna ilość peerów"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:35
-#, fuzzy
 msgid "Maximum active seeds"
-msgstr "Max ilość jednoczesnych pobrań"
+msgstr "Maksimum aktywnych seedów"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:34
 msgid "BitTorrent Global Tranfer Speeds"
@@ -5031,9 +5006,8 @@ msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
 msgstr ""
-"Ustaw Maksymalną szybkość transferów przez BitTorrent w KB/s.<p> Za "
-"wolne wysyłania (leeching) mogą być karane przez niektóre trakery, powodując "
-"wolniejsze pobierania."
+"Uwaga: Zbyt wolna prędkość wysyłania (leeching) mogą być karane przez niektóre "
+"trackery, powodując wolniejsze pobieranie."
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:52
 msgid "Upload Speed:"
