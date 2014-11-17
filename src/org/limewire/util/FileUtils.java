@@ -269,7 +269,7 @@ public class FileUtils {
     		ProcessBuilder builder = new ProcessBuilder(command);
     		builder.redirectErrorStream();
     		Process process = builder.start();
-    		ProcessUtils.consumeAllInput(process);
+    		consumeAllInput(process);
     		process.waitFor();
     	} catch (InterruptedException err) {
     		LOG.error("InterruptedException", err);
@@ -277,6 +277,26 @@ public class FileUtils {
     		LOG.error("IOException", err);
     	}
     	return !file.exists();
+    }
+
+    /**
+     * Consumes all input from a Process. See also
+     * ProcessBuilder.redirectErrorStream()
+     */
+    private static void consumeAllInput(Process p) throws IOException {
+        InputStream in = null;
+
+        try {
+            in = new BufferedInputStream(p.getInputStream());
+            byte[] buf = new byte[1024];
+            while(in.read(buf, 0, buf.length) >= 0);
+        } finally {
+            try {
+                if(in != null) {
+                    in.close();
+                }
+            } catch(IOException ignored) {}
+        }
     }
 
     /**

@@ -51,7 +51,6 @@ import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.MultilineToolTip;
 import com.limegroup.gnutella.gui.search.FWAbstractJPanelTableCellRenderer;
-import com.limegroup.gnutella.util.DataUtils;
 
 /**
  * A specialized JTable for use with special Lime functions.
@@ -67,6 +66,11 @@ import com.limegroup.gnutella.util.DataUtils;
  * @author Sam Berlin
  */
 public class LimeJTable extends JTable implements JSortTable {
+
+    /**
+     * Constant empty string array for any class to use -- immutable.
+     */
+    public static String[] EMPTY_STRING_ARRAY = new String[0];
 
     /**
      * The columns that are currently hidden.
@@ -419,7 +423,7 @@ public class LimeJTable extends JTable implements JSortTable {
             } else
                 return dlm.get(row).toString() + col;
         }
-        tips = DataUtils.EMPTY_STRING_ARRAY;
+        tips = EMPTY_STRING_ARRAY;
         return null;
     }
 
@@ -439,7 +443,7 @@ public class LimeJTable extends JTable implements JSortTable {
             stripHTMLFromTips();
             return ((DataLineModel<?, ?>) dataModel).get(row).toString() + col;
         } else {
-            tips = DataUtils.EMPTY_STRING_ARRAY;
+            tips = EMPTY_STRING_ARRAY;
             return null;
         }
     }
@@ -499,7 +503,7 @@ public class LimeJTable extends JTable implements JSortTable {
         if (tips != null && tips.length > 0) {
             ret.setTipArray(tips);
         }
-        tips = DataUtils.EMPTY_STRING_ARRAY;
+        tips = EMPTY_STRING_ARRAY;
         return ret;
     }
 

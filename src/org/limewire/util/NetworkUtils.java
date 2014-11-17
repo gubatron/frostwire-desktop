@@ -146,42 +146,6 @@ public final class NetworkUtils {
         return dst;
     }
     
-    /**                                                                                                                                                                                                                                     
-     * Returns the IP:Port as byte array.                                                                                                                                                                                                   
-     * <p>                                                                                                                                                                                                                                  
-     * This method is IPv6 compliant                                                                                                                                                                                                        
-     */
-    public static byte[] getBytes(SocketAddress addr, java.nio.ByteOrder order) throws UnknownHostException {
-        InetSocketAddress iaddr = (InetSocketAddress)addr;
-        if (iaddr.isUnresolved()) {
-            throw new UnknownHostException(iaddr.toString());
-        }
-
-        return getBytes(iaddr.getAddress(), iaddr.getPort(), order);
-    }
-    
-    /**                                                                                                                                                                                                                                     
-     * Returns the IP:Port as byte array.                                                                                                                                                                                                   
-     * <p>                                                                                                                                                                                                                                  
-     * This method is IPv6 compliant                                                                                                                                                                                                        
-     */
-    public static byte[] getBytes(InetAddress addr, int port, java.nio.ByteOrder order) {
-        if (!isValidPort(port))
-            throw new IllegalArgumentException("Port out of range: " + port);
-        if(!isValidAddress(addr))
-            throw new IllegalArgumentException("invalid addr: " + addr);
-
-        byte[] address = addr.getAddress();
-
-        byte[] dst = new byte[address.length + 2];
-        System.arraycopy(address, 0, dst, 0, address.length);
-        if(order == java.nio.ByteOrder.BIG_ENDIAN)
-            ByteUtils.short2beb((short)port, dst, dst.length-2);
-        else // if order == LITTLE_ENDIAN                                                                                                                                                                                                   
-            ByteUtils.short2leb((short)port, dst, dst.length-2);
-        return dst;
-    }
-    
     /**
      * Returns true if the given byte-array is an IPv4 address
      */

@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import com.frostwire.util.ByteUtils;
 import org.apache.commons.io.IOUtils;
 import org.limewire.setting.SettingsFactory;
 import org.limewire.util.CommonUtils;
@@ -73,7 +74,7 @@ public final class FrostWireUtils {
             url += "?";
         else
             url += "&";
-        url += "guid=" + EncodingUtils.encode(new GUID(myClientGUID).toHexString())+ 
+        url += "guid=" + EncodingUtils.encode(ByteUtils.encodeHex(myClientGUID))+
             "&lang=" + EncodingUtils.encode(ApplicationSettings.getLanguage()) +
             "&lv="   + EncodingUtils.encode(FrostWireUtils.getFrostWireVersion()) +
             "&jv="   + EncodingUtils.encode(VersionUtils.getJavaVersion()) +

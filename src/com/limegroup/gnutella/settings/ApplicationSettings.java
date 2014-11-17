@@ -22,7 +22,7 @@ import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.IntSetting;
 import org.limewire.setting.StringSetting;
-import org.limewire.util.ByteUtils;
+import com.frostwire.util.ByteUtils;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
