@@ -3400,7 +3400,7 @@ msgid ""
 "the 'View' option."
 msgstr ""
 "Możesz włączyć lub wyłączyć autouzupełnianie dla wyszukiwania przez wybranie "
-"'Ustawienia' z menu 'FrostWire', i zmienić wartość 'Autouzupełnianie Tekstu' pod 
+"'Ustawienia' z menu 'FrostWire', i zmienić wartość 'Autouzupełnianie Tekstu' pod "
 "opcją 'Widok'."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:69
@@ -3470,7 +3470,7 @@ msgid ""
 msgstr ""
 "Czy chcesz odtwarzać muzykę w twoim domyślnym odtwarzaczu zamiast w "
 "FrostWire? Idź do Narzędzia  &gt; Opcje &gt; Odtwarzacz i zaznacz opcję "
-'Odtwarzaj w systemowym odtwarzaczu multimedialnym'"
+"'Odtwarzaj w systemowym odtwarzaczu multimedialnym'"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:75
 msgid ""
