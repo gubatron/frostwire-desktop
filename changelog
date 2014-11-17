@@ -1,3 +1,16 @@
+frostwire (6.0.1) stable; urgency=high
+  * Fixes YouTube download Error.
+  * Updated splash screen.
+  * Misc. bugs.
+
+  TRANSLATIONS:
+  * Croatian translation updates. Thanks @win32re, @darthxjanus.
+  * Polish translation updates. Thanks @nalesnikld, @paulinka.
+  * Spanish translation updates.
+
+ -- FrostWire Team <contact@frostwire.com>  Mon, 17 November 2014 14:16:00 -0500
+
+
 frostwire (6.0.0) stable; urgency=high
   PERFORMANCE:
   * New BitTorrent engine based on frostwire-jlibtorrent,
