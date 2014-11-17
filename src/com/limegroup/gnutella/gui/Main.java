@@ -30,6 +30,10 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.theme.ThemeMediator;
 
+import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.I18n;
+
+
 /**
  * This class constructs an <tt>Initializer</tt> instance that constructs
  * all of the necessary classes for the application.
@@ -38,13 +42,28 @@ public class Main {
 
     private static URL CHOSEN_SPLASH_URL = null;
 
-    /** 
-     * Creates an <tt>Initializer</tt> instance that constructs the 
+    /**
+     * Creates an <tt>Initializer</tt> instance that constructs the
      * necessary classes for the application.
      *
      * @param args the array of command line arguments
      */
     public static void main(String args[]) {
+
+        //System.out.println("Main::main() arch=" + System.getProperty("os.arch") + " is_64_bit=" + OSUtils.isMachineX64()) ;
+        if (!OSUtils.isMachineX64())
+        {
+            GUIMediator.safeInvokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    String error = I18n.tr("<br>Sorry, you need a 64-bit computer to use FrostWire</b>");
+                    GUIMediator.showError("<html>" + error + "</html>");
+                    System.exit(0);
+                }
+            });
+            return;
+        }
+
         ThemeMediator.changeTheme();
 
         System.setProperty("sun.awt.noerasebackground", "true");
@@ -109,7 +128,7 @@ public class Main {
     }
 
     /**
-     * Tries to get a random splash every time. It keeps track of the 
+     * Tries to get a random splash every time. It keeps track of the
      * last 2 shown splashes to avoid recent collisions.
      * @return
      */
