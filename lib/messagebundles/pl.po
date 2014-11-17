@@ -56,7 +56,6 @@ msgid "Send to iTunes"
 msgstr "Wyślij do iTunes"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:76
-#, fuzzy
 msgid "Send files to iTunes"
 msgstr "Wyślij pliki do iTunes"
 
@@ -206,7 +205,6 @@ msgstr "Usuń Plik Pobrany i Dane z Wybranych Plikow"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:322
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:323
-#, fuzzy
 msgid "Clear Inactive"
 msgstr "Wyczyść Nieaktywne"
 
@@ -262,9 +260,8 @@ msgid "Create and add to a new playlist"
 msgstr "Dodaj do Nowej Playlisty"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:493
-#, fuzzy
 msgid "Play file"
-msgstr "Odtwarzaj"
+msgstr "Odtwarzaj plik"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:494
 msgid "Play media file"
@@ -651,7 +648,6 @@ msgid "Creative Commons"
 msgstr "Creative Commons"
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:51
-#, fuzzy
 msgid "Open Source"
 msgstr "Open Source"
 
@@ -1317,7 +1313,6 @@ msgstr ""
 "fragmenty danych torrentów które seedujesz. (Zalecane)"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:77
-#, fuzzy
 msgid ""
 "<strong>Don't seed finished torrent downloads.</strong> BitTorrent users on "
 "the internet may<br/>only download file chunks of that torrent from you "
@@ -1330,7 +1325,6 @@ msgstr ""
 "karzą takie pasożytnicze zachowanie.</strong>"
 
 #: src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:92
-#, fuzzy
 msgid ""
 "<strong>Seed handpicked torrent files.</strong> Handpicked file torrents "
 "downloads (Partial Downloads) can result in seeding data chunks of "
@@ -1341,8 +1335,8 @@ msgstr ""
 "<strong>Seeduj wyselekcjonowane pliki torrent.</strong> "
 "Wyselekcjonowane pobrania torrentów (Częściowe Pobrania) mogą spowodować "
 "seedowanie fragmentów danych sąsiednich niekompletnych plików.<br/>Ta "
-"właściwość jest <strong>polecana tylko dla zaawansowanych użytkowników,</"
-"strong> ponieważ może spowodować pobieranie części plików które mogły nie "
+"właściwość jest <strong>polecana tylko zaawansowanym użytkownikom</strong> "
+"ponieważ może spowodować pobieranie części plików które mogły nie "
 "być przez ciebie wyraźnie wybrane do pobrania."
 
 #: src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:133
@@ -1513,7 +1507,6 @@ msgstr "Zapisz Wybrane Pliki do Katalogu"
 
 #: src/com/frostwire/gui/library/LibraryExplorer.java:146
 #: src/com/frostwire/gui/library/LibraryExplorer.java:200
-#, fuzzy
 msgid "Search your"
 msgstr "Szukaj w swoim "
 
@@ -1632,15 +1625,13 @@ msgstr ""
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:876
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:664
-#, fuzzy
 msgid "Launch in"
-msgstr "Załaduj w "
+msgstr "Uruchom w "
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:877
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:665
-#, fuzzy
 msgid "Launch Selected Files in"
-msgstr "Załaduj Wybrane Pliki w "
+msgstr "Uruchom Wybrane Pliki w "
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:919
 #: src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:707
@@ -1699,13 +1690,12 @@ msgstr "Nie udało się wydobyć dźwięku z "
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1212
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1214
 msgid "Share"
-msgstr "Podziel się"
+msgstr "Udostępniaj"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1212
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1214
-#, fuzzy
 msgid "Unshare"
-msgstr "Nie Dziel się"
+msgstr "Nie Udostępniaj"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1217
 msgid "file on local Wi-Fi network"
@@ -2382,7 +2372,6 @@ msgid "FileChooser.renameErrorText"
 msgstr "FileChooser.renameErrorText"
 
 #: src/com/frostwire/gui/transfers/PeerHttpUpload.java:153
-#, fuzzy
 msgid "Streaming"
 msgstr "Strumieniowanie"
 
@@ -2443,14 +2432,12 @@ msgstr "Zamknij To Okno"
 
 #. introduction
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:181
-#, fuzzy
 msgid "FrostWire Logo Designer"
-msgstr "Projektant Loga FrostWire"
+msgstr "Projektant Logo FrostWire"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:184
-#, fuzzy
 msgid "FrostWire Graphics Designers/Photographers"
-msgstr "Projektanci Grafiki FrostWire"
+msgstr "Graficy/Fotografowie FrostWire"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:194
 msgid "Thanks to Former FrostWire Developers"
@@ -2569,7 +2556,6 @@ msgstr ""
 "Inc."
 
 #: src/com/limegroup/gnutella/gui/ApplicationHeader.java:187
-#, fuzzy
 msgid "Search or enter URL"
 msgstr "Wyszukuj lub wpisz URL"
 
@@ -2640,7 +2626,6 @@ msgstr "Wspomagaj rozwój FrostWire darowizną Paypal"
 
 #. new Font("Helvetica", Font.BOLD, 12);
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:65
-#, fuzzy
 msgid "Donate"
 msgstr "Wspomagaj"
 
@@ -2995,13 +2980,11 @@ msgstr "Tworzę przyciski darowizn abyś mógł nam pomóc..."
 
 #. make icons and panels for connection quality
 #: src/com/limegroup/gnutella/gui/StatusLine.java:145
-#, fuzzy
 msgid "Creating Connection Quality Indicator..."
 msgstr "Tworzenie Wskaźnika Jakości Połączenia..."
 
 #. make the 'Language' button
 #: src/com/limegroup/gnutella/gui/StatusLine.java:149
-#, fuzzy
 msgid "Adding flags here and there..."
 msgstr "Dodawanie flag tu i tam..."
 
@@ -3030,9 +3013,8 @@ msgstr "Maluję znak seedowania..."
 
 #. make the center panel
 #: src/com/limegroup/gnutella/gui/StatusLine.java:172
-#, fuzzy
 msgid "Creating center panel..."
-msgstr "Tworzę interfejs użytkownika..."
+msgstr "Tworzę panel centralny..."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:189
 msgid "Follow us @frostwire"
@@ -3047,9 +3029,8 @@ msgstr ""
 "pomocy i pomagaj innym."
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:200
-#, fuzzy
 msgid "Circle FrostWire on G+"
-msgstr "FrostWire na G+"
+msgstr "Dodaj FrostWire na G+"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:223
 msgid "<b>Seeding</b><p>completed torrent downloads.</p>"
@@ -3064,12 +3045,10 @@ msgstr ""
 "podczas pobierania torrentu.</p>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
-#, fuzzy
 msgid "<b>Seeding</b>"
 msgstr "<b>Seeduję</b>"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:485
-#, fuzzy
 msgid "<b>Not Seeding</b>"
 msgstr "<b>Nie Seeduję</b>"
 
@@ -3118,7 +3097,6 @@ msgid "Show Bandwidth Consumption"
 msgstr "Pokaż Zużycie Przepustowości"
 
 #: src/com/limegroup/gnutella/gui/StatusLine.java:804
-#, fuzzy
 msgid "Show Donation Buttons"
 msgstr "Pokaż Przyciski Darowizn"
 
@@ -3485,27 +3463,24 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:74
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:95
-#, fuzzy
 msgid ""
 "Want to play music in your default media player instead of in FrostWire? go "
 "to 'Tools' on FrostWire menu and select the option 'Play with native media "
 "player'."
 msgstr ""
 "Czy chcesz odtwarzać muzykę w twoim domyślnym odtwarzaczu zamiast w "
-"FrostWire? Kliknij prawym przyciskiem myszy na pasek statusu i odznacz "
-"'Pokaż Odtwarzacz Multimedialny'."
+"FrostWire? Idź do Narzędzia  &gt; Opcje &gt; Odtwarzacz i zaznacz opcję "
+'Odtwarzaj w systemowym odtwarzaczu multimedialnym'"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:75
-#, fuzzy
 msgid ""
 "Make FrostWire's block more results by making the filter stricter. Adjust "
 "that and more by going to FrostWire &gt; Tools &gt; Filters &gt;"
 msgstr ""
-"Aby filtr 'Śmieci' FrostWire blokował więcej rezultatów, wyreguluj swoje "
-"ustawienia w 'FrostWire' &gt; 'Opcje' &gt; 'Filtry' &gt; 'Śmieci'."
+"Spraw by FrostWire blokował więcej wyników tworząc bardziej dokładny filtr. "
+"Ustaw to idąc do Narzędzia &gt; Opcje &gt; Filtry &gt;"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:84
-#, fuzzy
 msgid ""
 "The icons that you see next to your search results in the '?' column are "
 "symbols of the program used to open that particular type of file. To change "
@@ -3514,8 +3489,8 @@ msgid ""
 msgstr ""
 "Ikony które widzisz przy twoich rezultatach wyszukiwania w kolumnie '?' są "
 "symbolami programów używanych do otwierania poszczególnych typów plików. Aby "
-"zmienić programy kojarzone z plikiem, idź do Opcji Katalogu w Eksplorerze "
-"Windowsa (z menu 'Narzędzi'). To jest ustawienie Windowsa, nie FrostWire."
+"zmienić programy kojarzone z plikiem, idź do 'Opcje Folderów' w Panelu "
+"Sterowania Windows. To jest ustawienie Windowsa, nie FrostWire."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:85
 msgid ""
@@ -3882,7 +3857,6 @@ msgid "You're almost done!"
 msgstr "Już prawie koniec!"
 
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:64
-#, fuzzy
 msgid "State your intent below to start using FrostWire"
 msgstr "Określ swoje zamiary aby zacząć używać FrostWire"
 
@@ -4010,7 +3984,6 @@ msgstr ""
 "szereg czynności konfiguracyjnych aby zoptymalizować jego pracę."
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:104
-#, fuzzy
 msgid "FrostWire is free software,"
 msgstr "FrostWire jest darmowym programem,"
 
@@ -4723,7 +4696,6 @@ msgid "Allow Partial Sharing:"
 msgstr "Pozwól na Częściowe Udostępnianie"
 
 #: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:36
-#, fuzzy
 msgid "FrostWire Media Player"
 msgstr "Odtwarzacz Multimedialny FrostWire"
 
@@ -4736,9 +4708,8 @@ msgstr ""
 "odtworzyć."
 
 #: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:40
-#, fuzzy
 msgid "Play with the native media player"
-msgstr "Odtwarzaj w systemowym odtwarzaczu multimedialnym:"
+msgstr "Odtwarzaj w systemowym odtwarzaczu multimedialnym"
 
 #: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:42
 msgid "Play search result video previews with internal player"
@@ -4813,7 +4784,6 @@ msgid "Search Engines"
 msgstr "Wyszukiwarki"
 
 #: src/com/limegroup/gnutella/gui/options/panes/SearchEnginesPaneItem.java:25
-#, fuzzy
 msgid "Select which search engines you want FrostWire to use."
 msgstr "Wybierz jakie wyszukiwarki ma używać FrostWire."
 
@@ -5001,7 +4971,6 @@ msgid "Set the Maximum BitTorrent upload speed in KB/s."
 msgstr "Ustaw maksymalną prędkość wysyłania w KB/s."
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
-#, fuzzy
 msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
@@ -5024,9 +4993,8 @@ msgid "Max speed"
 msgstr "Max szybkość"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:44
-#, fuzzy
 msgid "Choose the folder where downloads will be saved to"
-msgstr "Wybierz katalog do zapisywania pobrań"
+msgstr "Wybierz katalog do którego pobrania będą zapisane"
 
 #: src/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:40
 msgid ""
@@ -5219,17 +5187,14 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:85
 #: src/com/limegroup/gnutella/gui/tables/AbstractActionsRenderer.java:85
-#, fuzzy
 msgid "Play/Preview"
 msgstr "Odtwórz/Podgląd"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:111
-#, fuzzy
 msgid "Select content to download from this torrent."
 msgstr "Wybierz treść do pobrania z tego torrenta."
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultDisplayer.java:579
-#, fuzzy
 msgid "results"
 msgstr "rezultaty"
 
@@ -5243,7 +5208,6 @@ msgstr "Wyszukaj Więcej"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:707
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:708
-#, fuzzy
 msgid "Search tools"
 msgstr "Narzędzia Wyszukiwania"
 
