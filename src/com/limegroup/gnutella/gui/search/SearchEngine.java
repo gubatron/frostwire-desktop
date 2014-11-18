@@ -85,10 +85,10 @@ public abstract class SearchEngine {
         }
     };
 
-    public static final SearchEngine KAT = new SearchEngine(KAT_ID, "KAT", SearchEnginesSettings.KAT_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("kickass.to")) {
+    public static final SearchEngine KAT = new SearchEngine(KAT_ID, "KAT", SearchEnginesSettings.KAT_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("kickass.so")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
-            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("kickass.to");
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("kickass.so");
             return new KATSearchPerformer(m, token, keywords, DEFAULT_TIMEOUT);
         }
     };
