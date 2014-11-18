@@ -387,7 +387,7 @@ msgstr "Preuzimam"
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:201
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1119
 msgid "Finished"
-msgstr "Zavrseno"
+msgstr "Završeno"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:202
 msgid "Seeding"
@@ -3425,6 +3425,9 @@ msgid ""
 "update now, FrostWire will update automatically when you close. Would you "
 "like to update now?"
 msgstr ""
+"FrostWire se treba restartati kako bi instalirao nadogradnju. Ako ne zelite "
+"sada nadograditi, FrostWire će se automatski nadograditi kada ga zatvorite. Zelite li "
+"sada nadograditi?"
 
 #: src/com/limegroup/gnutella/gui/UpdateDialog.java:175
 msgid "Update Ready"
@@ -3574,7 +3577,7 @@ msgstr "Uvijek pitati za pregled"
 #: src/com/limegroup/gnutella/gui/bugs/BugManager.java:401
 #: src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:98
 msgid "Always Discard All Errors"
-msgstr "Uvijek odbaciti sve greske"
+msgstr "Uvijek odbaciti sve greške"
 
 #: src/com/limegroup/gnutella/gui/bugs/BugManager.java:499
 msgid ""
@@ -3670,7 +3673,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:51
 msgid "File & Protocol Associations"
-msgstr ""
+msgstr "Datotečne & protokolne asocijacije"
 
 #: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:51
 msgid "What type of resources should FrostWire open?"
@@ -3679,12 +3682,12 @@ msgstr "Koji tip resursa bi FrostWire trebao otvoriti?"
 #: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:82
 #: src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:69
 msgid "What should FrostWire do with the selected associations on startup?"
-msgstr "Što ce FrostWire napraviti sa odabranom asosijacijom pri paljenju?"
+msgstr "Što će FrostWire napraviti sa odabranom asosijacijom pri paljenju?"
 
 #: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:84
 #: src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:71
 msgid "Always take the selected associations."
-msgstr "Uvijek uzeti odabranu asocijaciju"
+msgstr "Uvijek uzeti odabrane asocijacije."
 
 #: src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:85
 #: src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:73
@@ -3902,7 +3905,7 @@ msgstr "Naručiti FrostWire naljepnice"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 msgid "Order FrostWire stickers, we ship worldwide."
-msgstr "Narucite FrostWire naljepnice, šaljemo ih diljem svijeta"
+msgstr "Naručite FrostWire naljepnice, šaljemo ih diljem svijeta"
 
 #: src/com/limegroup/gnutella/gui/menu/HelpMenu.java:60
 msgid "FrostWire T-Shirts"
@@ -4260,11 +4263,11 @@ msgstr "Dovršavanje teksta"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:20
 msgid "You can enable or disable autocompletion of text fields."
-msgstr "Možete omoguciti ili onemoguciti dovrsavanje teksta"
+msgstr "Možete omogućiti ili onemogućiti dovršavanje teksta"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:27
 msgid "Enable Autocompletion of Text Fields:"
-msgstr "Omoguciti automatsko dovršavanje tekstualnih polja:"
+msgstr "Omogućiti automatsko dovršavanje tekstualnih polja:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
 msgid "Automatic Installer Download"
@@ -4277,7 +4280,7 @@ msgid ""
 "it'll let you know that it's there for you."
 msgstr ""
 "FrostWire može automatski preuzeti novi instalacijski čarobnjak preko "
-"BitTorrenta za vas kad je dostupan. Neće ga instalirati ali sljedeci put "
+"BitTorrenta za vas kad je dostupan. Neće ga instalirati ali sljedeći put "
 "kada se FrostWire pokrene dati će vam na znanje da je dostupan za "
 "instalaciju."
 
@@ -4319,7 +4322,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:99
 msgid "Send Errors Automatically if FrostWire is Frozen"
-msgstr "Poslati greske automatski ako je FrostWire zamrznut"
+msgstr "Poslati greške automatski ako je FrostWire zamrznut"
 
 #: src/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:38
 msgid "Details Page"
@@ -4327,7 +4330,7 @@ msgstr "Stranica detalja"
 
 #: src/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:40
 msgid "Show details web page after a download starts."
-msgstr "Pokazati stranicu detalja nakon što preuzimanje zapocne."
+msgstr "Pokazati stranicu detalja nakon što preuzimanje započne."
 
 #: src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:20
 msgid "License Warning"
@@ -4338,7 +4341,8 @@ msgid ""
 "You can choose whether to be warned about downloading a file without a "
 "license."
 msgstr ""
-"Možete odabrati zelite li biti upozoreni o preuzimanju datoteka bez dozvole."
+"Možete odabrati zelite li biti upozoreni o preuzimanju datoteka bez "
+"dozvole."
 
 #: src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:29
 msgid "Show License Warning:"
@@ -4424,7 +4428,7 @@ msgstr "Mape uključene u knjiznicu"
 
 #: src/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:38
 msgid "You can choose the folders for include files when browsing the library."
-msgstr "Možete izabrati koje mape zelite ukljuciti kada pregledavate knjiznicu"
+msgstr "Možete izabrati koje mape zelite uključiti kada pregledavate knjiznicu"
 
 #: src/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:18
 msgid "Internet Radio Stations"
@@ -4569,7 +4573,7 @@ msgstr "Konfigurirati korisnicko ime i lozinku koje ćete koristiti za proxy."
 
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:48
 msgid "Enable Authentication:"
-msgstr "Omoguciti autentičnosticnost"
+msgstr "Omogučiti autentičnost"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:55
 msgid "Username:"
