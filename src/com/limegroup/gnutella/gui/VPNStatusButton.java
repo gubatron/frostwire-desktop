@@ -20,7 +20,9 @@ package com.limegroup.gnutella.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.LinkedBlockingQueue;
 
+import com.frostwire.util.ThreadPool;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
 /**
@@ -35,6 +37,8 @@ public class VPNStatusButton extends IconButton {
 	private final String VPN_URL = "http://www.frostwire.com/vpn";
     private final long REFRESH_INTERVAL_IN_MILLIS = 20000;//20000;
     private long lastRefresh = 0;
+
+    private static final ThreadPool pool = new ThreadPool("VPNStatusButton", 1, 1, Integer.MAX_VALUE, new LinkedBlockingQueue<Runnable>(), true);
 
     public VPNStatusButton() {
         super("vpn_off");
@@ -83,8 +87,7 @@ public class VPNStatusButton extends IconButton {
 					});
 				}
             };
-            vpnStatusCheckerThread.setDaemon(true);
-            vpnStatusCheckerThread.start();
+            pool.execute(vpnStatusCheckerThread);
         }
     }
 }
