@@ -115,12 +115,14 @@ msgstr "Pokušaj nastaviti preuzimanje"
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:213
 msgid ""
 "One of the transfers is complete and resuming will cause it to start seeding"
-msgstr "Jedan od prijenosa je završen i nastavak istoga će ga početi dijeliti"
+msgstr ""
+"Jedan od prijenosa je završen i nastavak istoga će ga početi dijeliti"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:213
 msgid ""
 "This transfer is already complete, resuming it will cause it to start seeding"
-msgstr "Ovaj prijenos je gotov, nastavak istoga će ga početi dijeliti"
+msgstr ""
+"Ovaj prijenos je gotov, nastavak istoga će ga početi dijeliti"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:214
 msgid "Do you want to enable torrent seeding?"
@@ -762,7 +764,10 @@ msgid ""
 "the public domain by waiving all of his or her rights to the work worldwide "
 "under copyright law, including all related and neighboring rights, to the "
 "extent allowed by law."
-msgstr ""
+msgstr "Osoba koja je asocirala rad sa ovim djelom je posvetila rad "
+"javnoj domeni odricanjem svih njegovih ili njezinih prava za rad u cijelom svijetu "
+"pod zakonom autorskog prava, uključujući sva povezana i srodna prava, u "
+"mjeri dopuštenoj zakonom."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:235
 msgid "You have selected the following License"
@@ -895,7 +900,7 @@ msgid ""
 "Your new torrent will be announced to these trackers if you start seeding "
 "the torrent."
 msgstr ""
-"Unesite listu vazećih BitTorrent pratećih posluziteljskih URL-ova.\n"
+"Unesite listu važećih BitTorrent pratećih posluziteljskih URL-ova.\n"
 "Vaš novi torrent će biti objavljen pratiteljima ako počnete seedati "
 "torrent."
 
@@ -1576,7 +1581,7 @@ msgid ""
 "Are you sure you want to delete the selected file(s), thus removing it from "
 "your computer?"
 msgstr ""
-"Jeste li sigurni da zelite obrisati odabrane datoteke i maknuti ih iz "
+"Jeste li sigurni da želite obrisati odabrane datoteke i maknuti ih iz "
 "vašeg računala?"
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:572
@@ -3425,7 +3430,7 @@ msgid ""
 "update now, FrostWire will update automatically when you close. Would you "
 "like to update now?"
 msgstr ""
-"FrostWire se treba restartati kako bi instalirao nadogradnju. Ako ne zelite "
+"FrostWire se treba restartati kako bi instalirao nadogradnju. Ako ne želite "
 "sada nadograditi, FrostWire će se automatski nadograditi kada ga zatvorite. Zelite li "
 "sada nadograditi?"
 
@@ -4005,7 +4010,7 @@ msgstr ""
 "Please note that it will add the files to the iTunes library as well\n"
 "and this could result in duplicate files on your iTunes library\n"
 "\n"
-"Jeste li sigurni da zelite nastaviti?"
+"Jeste li sigurni da želite nastaviti?"
 
 #: src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:88
 msgid "&Options"
@@ -4294,7 +4299,7 @@ msgstr "Postavke tražilice"
 
 #: src/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:28
 msgid "You can choose which browser to use."
-msgstr "Možete izabrati koju tražilicu zelite koristiti."
+msgstr "Možete izabrati koju tražilicu želite koristiti."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4341,7 +4346,7 @@ msgid ""
 "You can choose whether to be warned about downloading a file without a "
 "license."
 msgstr ""
-"Možete odabrati zelite li biti upozoreni o preuzimanju datoteka bez "
+"Možete odabrati želite li biti upozoreni o preuzimanju datoteka bez "
 "dozvole."
 
 #: src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:29
@@ -4411,7 +4416,7 @@ msgstr "Postavke slika"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ImageViewerPaneItem.java:28
 msgid "You can choose which image viewer to use."
-msgstr "Možete izabrati koji preglednik slika zelite koristiti"
+msgstr "Možete izabrati koji preglednik slika želite koristiti"
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4545,7 +4550,7 @@ msgstr "Svirati sa materinjim sviračem medija"
 
 #: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:42
 msgid "Play search result video previews with internal player"
-msgstr ""
+msgstr "Sviraj video pretpreglede rezultata pretrage sa internim sviračem"
 
 #: src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:19
 msgid "FrostWire Popups"
@@ -4993,7 +4998,7 @@ msgid ""
 "network."
 msgstr ""
 "Vaše pretraživanje mora biti barem tri slova dugačko kako bi ste izbjegli "
-"preopterečivanjemreže."
+"preopterečivanje mreže."
 
 #: src/com/limegroup/gnutella/gui/search/SearchMediator.java:216
 msgid "Your search is too long. Please make your search smaller and try again."
