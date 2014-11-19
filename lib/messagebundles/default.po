@@ -4801,7 +4801,3 @@ msgstr ""
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:189
 msgid "You cannot turn off all columns."
 msgstr ""
-
-#: src/com/limegroup/gnutella/gui/Main.java:59
-msgid "<br>Sorry, you need a 64-bit computer to use FrostWire</b>"
-msgstr ""

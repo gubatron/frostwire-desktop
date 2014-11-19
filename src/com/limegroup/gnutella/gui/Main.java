@@ -30,9 +30,6 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.theme.ThemeMediator;
 
-import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.I18n;
-
 
 /**
  * This class constructs an <tt>Initializer</tt> instance that constructs
@@ -49,20 +46,6 @@ public class Main {
      * @param args the array of command line arguments
      */
     public static void main(String args[]) {
-
-        //System.out.println("Main::main() arch=" + System.getProperty("os.arch") + " is_64_bit=" + OSUtils.isMachineX64()) ;
-        if (!OSUtils.isMachineX64())
-        {
-            GUIMediator.safeInvokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    String error = I18n.tr("<br>Sorry, you need a 64-bit computer to use FrostWire</b>");
-                    GUIMediator.showError("<html>" + error + "</html>");
-                    System.exit(0);
-                }
-            });
-            return;
-        }
 
         ThemeMediator.changeTheme();
 
