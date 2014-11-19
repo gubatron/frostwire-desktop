@@ -2897,7 +2897,7 @@ msgid ""
 "like to choose another location?"
 msgstr ""
 "Spremanje preuzimanja u {0} mozda neće poptuno funkcionirati.  Kako bi ste bili sigurni da se preuzimanja "
-"spremaju kako trebaju, trebali bi ste ih spremati u podfolder od {1}.  Zelite li "
+"spremaju kako trebaju, trebali bi ste ih spremati u podfolder od {1}.  Želite li "
 "odabrati drugu lokaciju?"
 
 #: src/com/limegroup/gnutella/gui/SettingsWarningManager.java:35
@@ -3431,7 +3431,7 @@ msgid ""
 "like to update now?"
 msgstr ""
 "FrostWire se treba restartati kako bi instalirao nadogradnju. Ako ne želite "
-"sada nadograditi, FrostWire će se automatski nadograditi kada ga zatvorite. Zelite li "
+"sada nadograditi, FrostWire će se automatski nadograditi kada ga zatvorite. Želite li "
 "sada nadograditi?"
 
 #: src/com/limegroup/gnutella/gui/UpdateDialog.java:175
@@ -4433,7 +4433,7 @@ msgstr "Mape uključene u knjiznicu"
 
 #: src/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:38
 msgid "You can choose the folders for include files when browsing the library."
-msgstr "Možete izabrati koje mape zelite uključiti kada pregledavate knjiznicu"
+msgstr "Možete izabrati koje mape želite uključiti kada pregledavate knjiznicu"
 
 #: src/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:18
 msgid "Internet Radio Stations"
@@ -4496,7 +4496,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:63
 msgid "Use a specific network interface."
-msgstr "Koristiti određeno sucelje mreze"
+msgstr "Koristiti određeno sucelje mreže"
 
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:123
 msgid ""
@@ -4527,7 +4527,7 @@ msgid ""
 "You can choose whether or not to automatically share partially downloaded "
 "files."
 msgstr ""
-"Možete izabrati zelite ili ne automatski dijeliti djelomicno preuzete "
+"Možete izabrati želite ili ne automatski dijeliti djelomicno preuzete "
 "datoteke."
 
 #: src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:26
@@ -4740,7 +4740,7 @@ msgstr "Indikator kvalitete mreže"
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:22
 msgid ""
 "You can display a measurement of your connection quality in the status bar."
-msgstr "Mozete pokazati mjerenje vaše kvalitete mreze u traku stanja."
+msgstr "Mozete pokazati mjerenje vaše kvalitete mreže u traku stanja."
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:29
 msgid "Show Connection Quality Indicator:"
