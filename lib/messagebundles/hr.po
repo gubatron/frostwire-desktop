@@ -1961,11 +1961,11 @@ msgstr "Legenda"
 
 #: src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:356
 msgid "Folder and subfolders are included in the Library."
-msgstr "Mape i pod-mape su uključeni u knjiznicu."
+msgstr "Mape i pod-mape su uključeni u knjižnicu."
 
 #: src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:370
 msgid "Folder is not included and no subfolders are included in the Library."
-msgstr "Mapa nije ukljucena i pod-mape nisu ukljuceni u knjiznicu."
+msgstr "Mapa nije ukljucena i pod-mape nisu ukljuceni u knjižnicu."
 
 #: src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:379
 msgid "Folder's files and some subfolders are included in the Library."
@@ -2664,7 +2664,7 @@ msgid ""
 "'OK' button at the bottom and restart FrostWire."
 msgstr ""
 "FrostWire je naišao na problem tijekom pokretanja i ne moze nastaviti. Vi "
-"mozda mozete popraviti ovaj problem promjenom FrostWire Windows "
+"mozda možete popraviti ovaj problem promjenom FrostWire Windows "
 "kompatibilnosti. Desno kliknite na FrostWire ikonu na Desktopu i odaberite "
 "'Properties' iz menija. Kliknite na 'Compatibility' karticu gore, "
 "i onda kliknite na 'Run this program in compatibility mode for' kućicu, i onda "
@@ -4237,7 +4237,7 @@ msgid ""
 "instruct FrostWire to always regain these associations if another program "
 "takes them."
 msgstr ""
-"Mozete koristiti FrostWire za otvaranje pojedinih vrsta datoteka i protokola. Također mozete "
+"Možete koristiti FrostWire za otvaranje pojedinih vrsta datoteka i protokola. Također možete "
 "narediti FrostWire-u da uvijek dohvati ove asocijacije ako ih drugi program "
 "uzme."
 
@@ -4251,7 +4251,7 @@ msgstr "Audio postavke"
 
 #: src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:22
 msgid "You can choose which audio player to use."
-msgstr "Mozete izabrati koji Audio svirač želite koristiti."
+msgstr "Možete izabrati koji Audio svirač želite koristiti."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4370,7 +4370,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:63
 msgid "Use random port (Recommended)"
-msgstr "Koristiti nasumični port (preporuceno)"
+msgstr "Koristiti nasumični port (preporučeno)"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:64
 msgid "Manual port range"
@@ -4400,7 +4400,7 @@ msgstr "Filtrirati rezultate"
 #: src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:24
 msgid "You can filter out search results containing specific words."
 msgstr ""
-"Mozete filtrirati rezultate traženja koje sadrzavaju specificne rijeci."
+"Možete filtrirati rezultate traženja koje sadrzavaju specificne rijeci."
 
 #. *
 #. * Key for the locale-specifis string for the adult content check box
@@ -4429,11 +4429,11 @@ msgstr "Preglednik slika"
 
 #: src/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:36
 msgid "Library Included Folders"
-msgstr "Mape uključene u knjiznicu"
+msgstr "Mape uključene u knjižnicu"
 
 #: src/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:38
 msgid "You can choose the folders for include files when browsing the library."
-msgstr "Možete izabrati koje mape želite uključiti kada pregledavate knjiznicu"
+msgstr "Možete izabrati koje mape želite uključiti kada pregledavate knjižnicu"
 
 #: src/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:18
 msgid "Internet Radio Stations"
@@ -4470,7 +4470,7 @@ msgstr "Maksimum traženja"
 #: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:22
 msgid ""
 "You can set the maximum number of simultaneous searches you can perform."
-msgstr "Mozete postaviti maksimalni broj istovremenih pretraživanja."
+msgstr "Možete postaviti maksimalni broj istovremenih pretraživanja."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4496,38 +4496,42 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:63
 msgid "Use a specific network interface."
-msgstr "Koristiti određeno sucelje mreže"
+msgstr "Koristiti određeno sučelje mreže"
 
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:123
 msgid ""
 "FrostWire was unable to determine which network interfaces are available on "
 "this machine. Outgoing connections will bind to any arbitrary interface."
 msgstr ""
+"FrostWire nije bio u mogučnosti odrediti koja mrežna sučelja su dostupna na "
+"ovom računalu. Vanjske veze će se spajati na bilo koje sučelje."
 
 #: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:18
 msgid "Notifications"
-msgstr "Obavjestenja"
+msgstr "Obavještenja"
 
 #: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:20
 msgid ""
 "FrostWire can display popups to notify you when certain things happen, such "
 "as a download completing."
 msgstr ""
+"FrostWire može prikazivati skočne prozore kako bi vas obavijestio kada se određene stvari dogode, kao "
+"kada je preuzimanje završeno."
 
 #: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:23
 msgid "Show Notifications:"
-msgstr "Pokazati obavjestenja:"
+msgstr "Pokazati obavještenja:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:17
 msgid "Partial Files"
-msgstr "Djelomicne datoteke"
+msgstr "Djelomične datoteke"
 
 #: src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:19
 msgid ""
 "You can choose whether or not to automatically share partially downloaded "
 "files."
 msgstr ""
-"Možete izabrati želite ili ne automatski dijeliti djelomicno preuzete "
+"Možete izabrati želite ili ne automatski dijeliti djelomično preuzete "
 "datoteke."
 
 #: src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:26
@@ -4543,6 +4547,8 @@ msgid ""
 "You can play your media with the native operating system player if the "
 "format is supported."
 msgstr ""
+"Možete svirati medije sa materinjim sviračem operativnog sustava ako je "
+"format podržan."
 
 #: src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:40
 msgid "Play with the native media player"
@@ -4658,7 +4664,7 @@ msgstr ""
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:44
 msgid "Enable FrostClick Promotions (highly recommended):"
-msgstr "Omogućiti FrostClick promocije (visoko preporuceno):"
+msgstr "Omogućiti FrostClick promocije (visoko preporučeno):"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:39
 msgid "Shutdown Behavior"
@@ -4727,7 +4733,7 @@ msgstr "Indikator propusnosti"
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:35
 msgid "You can display your bandwidth consumption in the status bar."
-msgstr "Mozete prikazati vasu propusnost potrosnje u traci stanja."
+msgstr "Možete prikazati vasu propusnost potrosnje u traci stanja."
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:42
 msgid "Show Bandwidth Indicator:"
