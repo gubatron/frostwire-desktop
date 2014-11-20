@@ -12,22 +12,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 
 import org.limewire.util.OSUtils;
 import org.limewire.util.VersionUtils;
 
-import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.gui.bugs.FatalBugManager;
 
@@ -49,15 +41,7 @@ public class GUILoader {
       */
     public static void load(String args[], Frame frame) {
 
-        // 64-bit sanity check outside of try block
-        // because instantiating a swing component will itself throw many exceptions
-        if (!OSUtils.isMachineX64() && !OSUtils.isWindows())
-        {
-            hideSplash(frame);
-            String errorMsg = I18n.tr("Sorry, you need a 64-bit computer\nto use FrostWire on ") + OSUtils.getOS() ;
-            displayError(errorMsg, I18n.tr("Unsupported Platform"), null, null);
-            System.exit(0);
-        }
+        architectureSanityCheck(frame);
 
         try {
             if (JavaVersionNotice.upgradeRequired(VersionUtils.getJavaVersion())) {
@@ -84,6 +68,27 @@ public class GUILoader {
         }
     }
 
+    private static void architectureSanityCheck(Frame frame) {
+        if (!OSUtils.isMachineX64() && !OSUtils.isWindows()) {
+            hideSplash(frame);
+            final String errorMsg = I18n.tr("Sorry, you need a 64-bit computer\nto use FrostWire on") + " " + OSUtils.getOS();
+            try {
+                SwingUtilities.invokeAndWait(new Runnable() {
+                    @Override
+                    public void run() {
+                        displayError(errorMsg, I18n.tr("Unsupported Platform"), null, null);
+                        System.exit(0);
+                    }
+                });
+            } catch (Throwable e) {
+                //if you can't show the dialog for some reason
+                e.printStackTrace();
+                System.out.println("\n\nError: " + errorMsg + "\n\n");
+                System.exit(0);
+            }
+        }
+    }
+
     private static void hideSplash(Frame frame) {
         try {
         if(frame != null)
@@ -96,8 +101,6 @@ public class GUILoader {
     /**
       * Display a standardly formatted internal error message
       * coming from the backend.
-      *
-      * @param message the message to display to the user
       *
       * @param err the <tt>Throwable</tt> object containing information
       *  about the error
@@ -198,7 +201,7 @@ public class GUILoader {
       * Displays an internal error with specialized formatting.
       */
     private static final void displayError(String error, String title, JPanel labelPanel, JButton copyButton) {
-        System.out.println("Error: " + error);
+        System.out.println("\n\nError: " + error + "\n\n");
         final JDialog DIALOG = new JDialog();
         DIALOG.setTitle(title);
         DIALOG.setModal(true);

@@ -41,6 +41,7 @@ public class WinRegistryWrapper {
 				}
 			}
 		} catch (Throwable t) {
+            t.printStackTrace();
 		}
 	}
  
@@ -56,14 +57,14 @@ public class WinRegistryWrapper {
   
     /* Windows error or status codes. */
     public static final int ERROR_SUCCESS = 0;
-    public static final int ERROR_FILE_NOT_FOUND = 2;
-    public static final int ERROR_ACCESS_DENIED = 5;
+    //public static final int ERROR_FILE_NOT_FOUND = 2;
+    //public static final int ERROR_ACCESS_DENIED = 5;
     public static final int ERROR_ITEM_EXIST = 0;
     public static final int ERROR_ITEM_NOTEXIST = 9;
   
     /* Constants for Windows registry element size limits */
     public static final int MAX_KEY_LENGTH = 255;
-    public static final int MAX_VALUE_NAME_LENGTH = 255;
+    //public static final int MAX_VALUE_NAME_LENGTH = 255;
 
     /* Constants used to interpret returns of native functions  */
     private static final int OPENED_KEY_HANDLE = 0;
