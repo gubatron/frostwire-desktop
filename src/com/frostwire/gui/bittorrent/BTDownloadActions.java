@@ -144,13 +144,23 @@ final class BTDownloadActions {
         public void performAction(ActionEvent e) {
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             if (downloaders.length > 0) {
+                // when the downloader is a single file, this is appending a folder to the actual file path
+                // treating it like a bittorrent download.
                 File toExplore = new File(downloaders[0].getSaveLocation(),downloaders[0].getDisplayName());
 
-                if (toExplore == null || !toExplore.exists()) {
-                    return;
-                }
+                if (toExplore != null) {
+                    // but perhaps it's a single file, make sure it is then... (Re: Issue #366)
+                    if (!toExplore.exists() &&
+                            downloaders[0].getSaveLocation() != null &&
+                            downloaders[0].getSaveLocation().isFile()) {
+                        // (made this if very explicit and dumb on purpose to make logic clear, reverse logic is shorter)
+                        toExplore = downloaders[0].getSaveLocation();
+                    }
 
-                GUIMediator.launchExplorer(toExplore);
+                    if (toExplore.exists()) {
+                        GUIMediator.launchExplorer(toExplore);
+                    }
+                }
             }
         }
     }

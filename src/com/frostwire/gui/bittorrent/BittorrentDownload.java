@@ -38,6 +38,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -122,6 +123,22 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public File getSaveLocation() {
+        // Returns the torrent folder.
+        if (!dl.isPartial())
+            return dl.getSavePath();
+
+        List<TransferItem> items = dl.getItems();
+        for (int i=0; i < items.size(); i++) {
+            TransferItem item = items.get(i);
+            if (item.isSkipped()) {
+                continue;
+            }
+
+            if (item.getDisplayName().equals(getDisplayName())) {
+                return item.getFile();
+            }
+        }
+
         return dl.getSavePath();
     }
 
