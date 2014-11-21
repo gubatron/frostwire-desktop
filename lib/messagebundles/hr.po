@@ -667,7 +667,7 @@ msgid ""
 "I am the Content Creator of this work or I have been granted the rights to "
 "share this content under the following license by the Content Creator(s)."
 msgstr ""
-"Ja sam stvoritelj sadržaja ovog rada ili imam prava da dijelim ovaj sadrzaj "
+"Ja sam stvoritelj sadržaja ovog rada ili imam prava da dijelim ovaj sadržaj "
 "sa licencom od stvoritelja sadržaja."
 
 #: src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:101
@@ -825,7 +825,7 @@ msgid ""
 "Either a file, or the contents of a folder."
 msgstr ""
 "Ove kutije pokazuju sadržaj koji ste odabrali za vaš novi .torrent.\n"
-"Ili datoteku, ili sadrzaj mape."
+"Ili datoteku, ili sadržaj mape."
 
 #: src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:190
 
@@ -3833,7 +3833,7 @@ msgid ""
 "or distributing unauthorized content."
 msgstr ""
 "Instaliranje i korištenje programa ne odobrava licencu za dobavljanje "
-"ili distribuciju neovlaštenog sadrzaja."
+"ili distribuciju neovlaštenog sadržaja."
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:46
 msgid "Welcome"
@@ -4004,7 +4004,7 @@ msgid ""
 "Are you sure you want to continue?"
 msgstr ""
 "Ovo će ukloniti vašu \"FrostWire\" playlist-u u iTunes-ima i zamijeniti\n"
-"i zamjeniti ju sa onom koja sadrzi sve iTunes kompatibilne datoteke u vašem \n"
+"i zamjeniti ju sa onom koja sadrži sve iTunes kompatibilne datoteke u vašem \n"
 "Frostwire \"Torrent podatkovnoj mapi\"\n"
 "\n"
 "Please note that it will add the files to the iTunes library as well\n"
@@ -4400,7 +4400,7 @@ msgstr "Filtrirati rezultate"
 #: src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:24
 msgid "You can filter out search results containing specific words."
 msgstr ""
-"Možete filtrirati rezultate traženja koje sadrzavaju specificne rijeci."
+"Možete filtrirati rezultate traženja koje sadržavaju specificne rijeci."
 
 #. *
 #. * Key for the locale-specifis string for the adult content check box
@@ -4483,7 +4483,7 @@ msgstr "Maksimum traženja:"
 
 #: src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:84
 msgid "The maximum parallel searches you can make is "
-msgstr "Maksimum paralelnih pretraživanja koje mozete napraviti je "
+msgstr "Maksimum paralelnih pretraživanja koje možete napraviti je "
 
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:50
 msgid ""
@@ -4493,6 +4493,11 @@ msgid ""
 "disable this interface, FrostWire will revert to binding to an arbitrary "
 "address."
 msgstr ""
+"Možete reći FrostWire-u da dodjeli izlazne veze na IP adresu od "
+"specifičnog mrežnog sučelja. Slušaće utičnice će nastaviti slušati na svim "
+"dostupnim sučeljima. Ovo je korisno za multi-kućne domaćine. Ako kasnije "
+"onemogućite ovo sučelje, FrostWire će se vratiti na dodjeljivanje na nasumičnu "
+"adresu."
 
 #: src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:63
 msgid "Use a specific network interface."
@@ -4600,7 +4605,7 @@ msgstr "Proxy postavke"
 
 #: src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:38
 msgid "Configure Proxy Options for FrostWire."
-msgstr "Podesiti proxy postavke za Frostwire"
+msgstr "Podesiti proxy postavke za FrostWire."
 
 #. *
 #. * Constant for the key of the locale-specific <tt>String</tt> for the
@@ -4697,7 +4702,7 @@ msgid ""
 msgstr ""
 "Baza podataka pametnog pretrazivanja se koristi da se pobrza pretrazivanje "
 "individualne datoteke, to je tako kako FrostWire zapamcuje informacije o ."
-"torrent sadrzaju."
+"torrent sadržaju."
 
 #: src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:47
 msgid "Enable Smart Search"
@@ -4746,7 +4751,7 @@ msgstr "Indikator kvalitete mreže"
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:22
 msgid ""
 "You can display a measurement of your connection quality in the status bar."
-msgstr "Mozete pokazati mjerenje vaše kvalitete mreže u traku stanja."
+msgstr "možete pokazati mjerenje vaše kvalitete mreže u traku stanja."
 
 #: src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:29
 msgid "Show Connection Quality Indicator:"
