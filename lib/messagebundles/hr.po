@@ -3339,6 +3339,9 @@ msgid ""
 "'Tools' from the 'FrostWire' menu and adding new words to those listed under "
 "Filters &gt; Keywords."
 msgstr ""
+"Možete zabraniti određene riječi da se pojavljuju u vašim rezultatima traženja tako da odaberete "
+"'Alati' iz 'FrostWire' menija i dodate nove riječi onima izlistanim ispod "
+"Filteri &gt; Ključne riječi."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:71
 msgid ""
@@ -3347,6 +3350,10 @@ msgid ""
 "can toggle other options here too, like whether or not to sort tables "
 "automatically and if you prefer the rows to be striped."
 msgstr ""
+"Mrzite opise? Volite opise? Možete ih uključiti ili isključiti u većini tablica "
+"sa kontrol-klikom na zaglavlje stupaca i tako da odaberete 'Više opcija'. "
+"Možete također prebacivati više opcija, kao i hoće li ili neće li se tablice sortirati "
+"automatski i ako vam je draže da su redci prugasti."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:72
 msgid ""
@@ -3355,6 +3362,10 @@ msgid ""
 "sorting behavior off by control-clicking on a column header, choosing 'More "
 "Options' and un-checking 'Sort Automatically'."
 msgstr ""
+"Možete sortirati slanja, preuzimanja, itd..., tako da kliknete na stupac. Tablica "
+"će se sortirati dok se informacije mjenjaju. Možete isključiti ovo automatsko "
+"sortiranje sa kontrol-klikom na zaglavlje stupca, te odabirom 'Više "
+"opcija' i od-odabirom 'Sortiraj automatski'."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:73
 msgid ""
@@ -3362,6 +3373,9 @@ msgid ""
 "that when you delete a file from the Library, you have the option to either "
 "permanently delete the file from your computer or move it to the Trash."
 msgstr ""
+"FrostWire-ova Knjižnica je datotečni upravitelj, ne samo MP3 lista pjesama. To znači "
+"da kada obrišete datoteke iz Knjižnice, imate opciju da ili "
+"permanentno obrišete datoteku iz vašeg računala ili da je maknete u Otpad."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:74
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:95
@@ -3370,6 +3384,9 @@ msgid ""
 "to 'Tools' on FrostWire menu and select the option 'Play with native media "
 "player'."
 msgstr ""
+"Želite slušati glazbu u zadanom medijskom sviraču umjesto u FrostWire-u? Odite "
+"u 'Alati' na FrostWire meniju i odaberite opciju 'Sviraj sa nativnim medijskim "
+"sviračem'."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:75
 msgid ""
