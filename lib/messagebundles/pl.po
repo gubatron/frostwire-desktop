@@ -1213,7 +1213,7 @@ msgstr "Wiadomość skopiowana do schowka"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:301
 msgid "All done! Now share the link"
-msgstr "Gotowe! Teraz podziel sie linkiem"
+msgstr "Gotowe! Teraz podziel się linkiem"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:389
 msgid "Twitter it"
@@ -2126,7 +2126,6 @@ msgid "unknown device"
 msgstr "nieznane urządzenie"
 
 #: src/com/frostwire/gui/player/MediaPlayerComponent.java:1072
-#, fuzzy
 msgid "playlist"
 msgstr "playlista"
 
@@ -2147,7 +2146,6 @@ msgid "Do you want to send this {0} to a friend?"
 msgstr "Czy chcesz wysłać ten {0} do przyjaciela?"
 
 #: src/com/frostwire/gui/player/MediaPlayerLinux.java:27
-#, fuzzy
 msgid ""
 "<br><br>To Install <b>mplayer</b> in Ubuntu open a terminal window and type "
 "\"<b>sudo apt-get install mplayer</b>\".<br><br>If you have installed "
@@ -2157,10 +2155,9 @@ msgstr ""
 "<br><br>Aby zainstalować <b>MPlayer</b> w Ubuntu, otwórz okno terminalu i "
 "wpisz \"<b>sudo apt-get install MPlayer</b>\".<br><br>Jeżeli MPlayer jest "
 "już zainstalowany w innym miejscu, <b>upewnij się że masz symlink kierujący "
-"do instalacji MPlayer</b> w <b><font color=\"blue\">"
+"do pliku wykonywalnego MPlayer</b> w <b><font color=\"blue\">"
 
 #: src/com/frostwire/gui/player/MediaPlayerLinux.java:33
-#, fuzzy
 msgid ""
 "<br><br>To Install <b>mplayer</b> in Fedora open a terminal window and type "
 "\"<b>sudo yum install mplayer</b>\".<br><br>If you have installed mplayer "
@@ -2170,10 +2167,9 @@ msgstr ""
 "<br><br>Aby zainstalować <b>MPlayer</b> w Ubuntu, otwórz okno terminalu i "
 "napisz \"<b>sudo apt-get install MPlayer</b>\".<br><br>Jeżeli MPlayer jest "
 "już zainstalowany w innym miejscu, <b>upewnij się że masz symlink kierujący "
-"do instalacji MPlayer</b> w <b><font color=\"blue\">"
+"do pliku wykonywalnego MPlayer</b> w <b><font color=\"blue\">"
 
 #: src/com/frostwire/gui/player/MediaPlayerLinux.java:37
-#, fuzzy
 msgid ""
 "<b>FrostWire requires Mplayer to play your media</b> but I could not find it "
 "in your computer.<br><br>If you want to use FrostWire as a media player "
@@ -2376,7 +2372,6 @@ msgid "Streaming"
 msgstr "Strumieniowanie"
 
 #: src/com/frostwire/gui/transfers/PeerHttpUpload.java:159
-#, fuzzy
 msgid "Cancelled"
 msgstr "Anulowane"
 
@@ -2689,9 +2684,8 @@ msgstr "Pokaż ekran {0}"
 #. * String to be displayed in title bar of LW client.
 #.
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:267
-#, fuzzy
 msgid "FrostWire: Share Big Files"
-msgstr "FrostWire: Dzielenie Się Dużymi Plikami"
+msgstr "FrostWire: Udostępnianie Dużych Plików"
 
 #: src/com/limegroup/gnutella/gui/GUIMediator.java:410
 msgid ""
@@ -2866,7 +2860,6 @@ msgid "Required Java Version:"
 msgstr "Wymagana wersja Java"
 
 #: src/com/limegroup/gnutella/gui/JavaVersionNotice.java:106
-#, fuzzy
 msgid "Visit"
 msgstr "Wizyt"
 
@@ -3217,15 +3210,14 @@ msgstr ""
 "możesz pomóc w tłumaczeniu FrostWire!"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:28
-#, fuzzy
 msgid ""
 "Small variations in the search title will still work. For example, if your "
 "buddy is sharing 'Frosty' but you searched for 'My Frosty', your buddy's "
 "file will still be found."
 msgstr ""
 "Małe zmiany we frazach kluczowych nadal powinny zwrócić poprawne rezultaty. "
-"Na przykład: szukasz 'Kapelusz' ale wpisałeś 'Mój Kapelusz', plik znajomego "
-"nadal będzie znaleziony."
+"Na przykład twój znajomy udostępnia 'Kapelusz' ale wpisałeś 'Mój Kapelusz', "
+"plik znajomego nadal będzie znaleziony."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:29
 msgid ""
@@ -3332,7 +3324,6 @@ msgstr ""
 "menu 'Narzędzi', przez zmianę 'Autouzupełnianie Tekstu'."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:52
-#, fuzzy
 msgid ""
 "Want to see dialogs for questions which you previously marked 'Do not "
 "display this message again' or 'Always Use This Answer'? Go to Tools &gt; "
@@ -3404,7 +3395,6 @@ msgstr ""
 "opcją 'Widok'."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:69
-#, fuzzy
 msgid ""
 "Want to see dialogs for questions which you previously marked 'Do not "
 "display this message again' or 'Always Use This Answer'? Go to FrostWire "
@@ -4668,7 +4658,6 @@ msgid "Notifications"
 msgstr "Powiadomienia"
 
 #: src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:20
-#, fuzzy
 msgid ""
 "FrostWire can display popups to notify you when certain things happen, such "
 "as a download completing."
@@ -5200,7 +5189,7 @@ msgstr "rezultaty"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:356
 msgid "Copy Hash"
-msgstr "Kopiuj Hasha"
+msgstr "Kopiuj Hash"
 
 #: src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:370
 msgid "Search More"
@@ -5234,11 +5223,11 @@ msgid ""
 "with FrostWire. Would you like FrostWire to re-associate them?"
 msgstr ""
 "Jeden lub więcej plików lub protokołów które używa FrostWire nie jest już "
-"kojarzony z FrostWire. Czy chcesz żeby FrostWire je ponownie skojarzył?"
+"kojarzonych z FrostWire. Czy chcesz żeby FrostWire je ponownie skojarzył?"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:50
 msgid "Revert To Default"
-msgstr "Przywróć Domyślne Ustawienia"
+msgstr "Przywróć Ustawienia Domyślne"
 
 #: src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:56
 msgid "More Options"
