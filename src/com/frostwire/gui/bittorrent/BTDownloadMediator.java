@@ -159,16 +159,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * @return
      */
     public Action[] getActions() {
-        Action[] actions;
-        if (OSUtils.isWindows() || OSUtils.isMacOSX())
-            actions = new Action[]{resumeAction, pauseAction, showInLibraryAction, exploreAction, removeAction, clearInactiveAction};
-        else
-            actions = new Action[]{resumeAction, pauseAction, removeAction};
-
-        return actions;
+        return new Action[]{resumeAction, pauseAction, showInLibraryAction, exploreAction, removeAction, clearInactiveAction};
     }
 
-    /**
+    /**getActionsgetActions
      * Set up the necessary constants.
      */
     protected void setupConstants() {
@@ -381,49 +375,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      *                complete.
      */
     public void remove(BTDownload dloader) {
-        //        DownloadStatus state = dloader.getState();
-        //        
-        //        if (state == DownloadStatus.COMPLETE 
-        //        		&& isThemeFile(dloader.getSaveFile().getName())) {
-        //        	File themeFile = dloader.getDownloadFragment();
-        //        	themeFile = copyToThemeDir(themeFile);
-        //        	// don't allow changing of theme while options are visible,
-        //        	// but notify the user how to change the theme
-        //        	if (OptionsMediator.instance().isOptionsVisible()) {
-        //        		GUIMediator.showMessage(I18n.tr("You have downloaded a skin titled \"{0}\", you can activate the new skin by clicking \"{1}\" in the \"{2}\"->\"{3}\" menu and then selecting it from the list of available skins.",
-        //        		        ThemeSettings.formatName(dloader.getSaveFile().getName()),
-        //        				I18n.tr("&Refresh Skins"),
-        //        				I18n.tr("&View"),
-        //        				I18n.tr("&Apply Skins")));
-        //        	}
-        //        	else {
-        //        	    DialogOption response = GUIMediator.showYesNoMessage(
-        //        				I18n.tr("You have downloaded a new skin titled {0}. Would you like to use this new skin?",
-        //        				        ThemeSettings.formatName(dloader.getSaveFile().getName())),
-        //        				QuestionsHandler.THEME_DOWNLOADED, DialogOption.YES
-        //        				);
-        //        		if( response == DialogOption.YES ) {
-        //        			//ThemeMediator.changeTheme(themeFile);
-        //        		}
-        //        	}
-        //        }
-        //        
-        //        if (state == DownloadStatus.COMPLETE &&
-        //        		BittorrentSettings.TORRENT_AUTO_START.getValue() &&
-        //        		isTorrentFile(dloader.getSaveFile().getName())) 
-        //        	GUIMediator.instance().openTorrent(dloader.getSaveFile());
-        //        
-        //        if(SharingSettings.CLEAR_DOWNLOAD.getValue()
-        //           && ( state == DownloadStatus.COMPLETE ||
-        //                state == DownloadStatus.ABORTED ) ) {
-        //        	super.remove(dloader);
-        //        } else {
-        //            DownloadDataLine ddl = DATA_MODEL.get(dloader);
-        //            if (ddl != null) ddl.setEndTime(System.currentTimeMillis());
-        //        }
-
         super.remove(dloader);
-
         dloader.remove();
     }
 
@@ -541,10 +493,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         menu.add(new SkinMenuItem(resumeAction));
         menu.add(new SkinMenuItem(pauseAction));
 
-        if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
-            menu.add(new SkinMenuItem(showInLibraryAction));
-            menu.add(new SkinMenuItem(exploreAction));
-        }
+        menu.addSeparator();
+        menu.add(new SkinMenuItem(showInLibraryAction));
+        menu.add(new SkinMenuItem(exploreAction));
 
         menu.addSeparator();
         menu.add(new SkinMenuItem(shareTorrentAction));
