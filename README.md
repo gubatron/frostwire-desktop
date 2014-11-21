@@ -147,17 +147,21 @@ Please follow the following procedure when creating features to avoid unnecessar
 * Clone it locally
 * Create a branch with a descriptive name of the issue you are solving.
 * Make sure the name of your feature branch describes what you're trying to fix. If you don't know what to name it and there's an issue created for it, name your branch issue-233 (where 233 would be the number of the issue you're fixing).
+* Focus on your patch, do not waste time re-formatting code too much as it makes it hard
+  to review the actual fix. Good patches will be rejected if there's too much code formatting
+  noise, we are a very small team and we can't waste too much time reviewing if something
+  got lost or added in the middle of hundreds of lines that got shifted.
 * Code, Commit, Push, Code, Commit, Push, until the feature is fully implemented.
 * If you can add tests to demonstrate the issue and the fix, even better.
 * Submit a pull request that's as descriptive as possible. Adding (issue #233) to the commit message or in PR comments automatically references them on the issue tracker.
 * We'll code review you, maybe ask you for some more changes, and after we've tested it we'll merge your changes.
 
-If your branch has taken a while to be accepted for merging into master, it's very likely that the master branch will have moved forward while you work. In this case, make sure to sync your master.
+If your branch has taken a while to be accepted for merging into `master`, it's very likely that the `master` branch will have moved forward while you work. In this case, make sure to sync your `master`.
 
     git checkout master
     git pull upstream master
 
-and then rebase your branch to bring it up to speed so it can be merged properly:
+and then rebase your branch to bring it up to speed so it can be merged properly (do not merge `master` into your branch):
 
     git checkout my-branch
     git rebase master
