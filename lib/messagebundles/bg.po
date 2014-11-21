@@ -102,7 +102,7 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:192
 msgid "Resume Download"
-msgstr ""
+msgstr "Продължи изтегляне"
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:193
 msgid "Resume"
@@ -128,7 +128,7 @@ msgstr ""
 
 #: src/com/frostwire/gui/bittorrent/BTDownloadActions.java:241
 msgid "Pause Download"
-msgstr ""
+msgstr "Пауза изтегляне"
 
 #. *
 #. * Constant for the pause button.
@@ -1121,7 +1121,7 @@ msgstr "Избиране"
 #: src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:98
 #: src/com/limegroup/gnutella/gui/tables/AbstractActionsRenderer.java:98
 msgid "Download"
-msgstr ""
+msgstr "Изтегляне"
 
 #: src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:140
 msgid "at"
