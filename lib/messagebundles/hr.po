@@ -2423,13 +2423,18 @@ msgid ""
 "problem that occur on our networks. Thank you all, without you this wouldn't "
 "be possible!"
 msgstr ""
+"Hvala svima koji su nam pomogli svaki dan u forumima i chat sobama, "
+"vi ne samo da pomazete novim korisnicima nego i upozoravate FrostWire tim na bilo koje "
+"probleme koji se dogode na našim mrezama. Hvala svima, bez vas ovo nebi "
+"bilo moguće!"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:203
 msgid ""
 "<br><br>In Special we give thanks to the Chatroom Operators and Forum "
 "Moderators"
 msgstr ""
-"<br><br>Posebno zahvaljujemo operatorima chat soba i forum moderatorima"
+"<br><br>Posebno zahvaljujemo operatorima chat soba i forum "
+"moderatorima"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:206
 msgid "FrostWire Chat Operators"
@@ -3393,6 +3398,8 @@ msgid ""
 "Make FrostWire's block more results by making the filter stricter. Adjust "
 "that and more by going to FrostWire &gt; Tools &gt; Filters &gt;"
 msgstr ""
+"Učinite FrostWire da blokira više rezultata tako da filter učinite strozijim. Prilagodite "
+"to i više tako da odete u FrostWire &gt; Opcije &gt; Filteri &gt;"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:84
 msgid ""
@@ -3401,6 +3408,10 @@ msgid ""
 "the program associated with a file, go to the 'Folder Options' in Windows "
 "Control Panel. This is a Windows setting, not a FrostWire setting."
 msgstr ""
+"Ikone koje vidite pored rezultata trazenja u '?' stupcu su "
+"simboli programa koji se koristi za otvaranje specifične vrste datoteke. Kako bi ste promijenili "
+"program asociran s datotekom, odite u 'Opcije mape' u Windows "
+"Kontrolnom panelu. Ovo je Windows, a ne FrostWire postavka."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:85
 msgid ""
@@ -3408,6 +3419,9 @@ msgid ""
 "that when you delete a file from the Library, you have the option to either "
 "permanently delete the file from your computer or move it to the Recycle Bin."
 msgstr ""
+"FrostWire-ova knjiznica je datotečni upravitelj, ne i MP3 lista pjesama. To znači "
+"da kada izbrišete datoteku iz Knjiznice, imate opciju da ili "
+"permanentno izbrišete datoteku sa računala ili da je maknete u Smeće."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:86
 msgid ""
@@ -3415,6 +3429,9 @@ msgid ""
 "click the system tray icon (next to the time), and select Exit. You can "
 "change this behavior by going to Tools &gt; Options &gt; System Tray."
 msgstr ""
+"Kada zatvorite FrostWire, sakrije se u sistemsku traku. Kako bi ste izašli, desno"
+"kliknite na ikonu sistemske trake (pored sata) i odaberite Izadji. Mozete "
+"promijeniti ovo ponašanje tako da odete u Alati &gt; Options &gt; Sistemska traka."
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:112
 msgid "Thank you for using FrostWire"
@@ -3477,6 +3494,8 @@ msgid ""
 "FrostWire can't detect an encrypted VPN connection, your privacy is at risk. "
 "Click icon to set up an encrypted VPN connection."
 msgstr ""
+"FrostWire ne moze detektirati šifriranu VPN vezu, vaša privatnost je pod rizikom. "
+"Kliknite ikonu kako bi ste postavili šifriranu VPN vezu."
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:60
 msgid "O&pen .Torrent or Magnet"
@@ -3497,6 +3516,8 @@ msgid ""
 "Type a magnet link, the file path or web address of a torrent file and "
 "FrostWire will start downloading it for you."
 msgstr ""
+"Upišite magnet link, putanju datoteke ili internetsku adresu torrent datoteke i "
+"FrostWire će je početi preuzimati za vas."
 
 #: src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:127
 msgid "Open:"
@@ -3577,6 +3598,8 @@ msgid ""
 "Please add any comments you may have (e.g what caused the error).\n"
 "Thank you and please use English."
 msgstr ""
+"Molimo dodajte komentare koje imate (npr. što je uzrokovalo grešku).\n"
+"Hvala vam i molimo vas da koristite engleski."
 
 #: src/com/limegroup/gnutella/gui/bugs/BugManager.java:368
 msgid "Review"
