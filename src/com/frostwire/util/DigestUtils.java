@@ -47,7 +47,7 @@ public class DigestUtils {
         }
         
         // Check length AND characters
-        return (md5.matches("^[0-9A-Fa-f]{32}+$"));
+        return md5.matches("^[0-9A-Fa-f]{32}+$");
     }
 
     public final static String getMD5(File f) {
