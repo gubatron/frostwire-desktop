@@ -38,10 +38,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author gubatron
@@ -55,6 +52,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     private String displayName;
     private long size;
+    private List<TransferItem> items;
     private boolean partial;
 
     private boolean deleteTorrentWhenRemove;
@@ -70,6 +68,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
         this.displayName = dl.getDisplayName();
         this.size = calculateSize(dl);
+        this.items = calculateItems(dl);
         this.partial = dl.isPartial();
 
         if (!dl.wasPaused()) {
@@ -124,15 +123,12 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     @Override
     public File getSaveLocation() {
         // Returns the torrent folder.
-        if (!dl.isPartial())
+        if (!partial) {
             return dl.getSavePath();
+        }
 
-        List<TransferItem> items = dl.getItems();
-        for (int i=0; i < items.size(); i++) {
+        for (int i = 0; i < items.size(); i++) {
             TransferItem item = items.get(i);
-            if (item.isSkipped()) {
-                continue;
-            }
 
             if (item.getDisplayName().equals(getDisplayName())) {
                 return item.getFile();
@@ -247,6 +243,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
         public void update(BTDownload dl) {
             displayName = dl.getDisplayName();
             size = calculateSize(dl);
+            items = calculateItems(dl);
             partial = dl.isPartial();
         }
 
@@ -349,5 +346,17 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
         }
 
         return size;
+    }
+
+    private List<TransferItem> calculateItems(BTDownload dl) {
+        List<TransferItem> l = new LinkedList<TransferItem>();
+
+        for (TransferItem item : dl.getItems()) {
+            if (!item.isSkipped()) {
+                l.add(item);
+            }
+        }
+
+        return l;
     }
 }
