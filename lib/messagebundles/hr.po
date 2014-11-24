@@ -1608,7 +1608,7 @@ msgid ""
 "The following files could not be deleted. They may be in use by another "
 "application or are currently being downloaded to."
 msgstr ""
-"Navedene datoteke se nisu mogle obrisati. Mozda ih koristi druga "
+"Navedene datoteke se nisu mogle obrisati. možda ih koristi druga "
 "aplikacija ili se trenutno preuzimaju."
 
 #: src/com/frostwire/gui/library/LibraryFilesTableMediator.java:876
@@ -2424,8 +2424,8 @@ msgid ""
 "be possible!"
 msgstr ""
 "Hvala svima koji su nam pomogli svaki dan u forumima i chat sobama, "
-"vi ne samo da pomazete novim korisnicima nego i upozoravate FrostWire tim na bilo koje "
-"probleme koji se dogode na našim mrezama. Hvala svima, bez vas ovo nebi "
+"vi ne samo da pomažete novim korisnicima nego i upozoravate FrostWire tim na bilo koje "
+"probleme koji se dogode na našim mrežama. Hvala svima, bez vas ovo nebi "
 "bilo moguće!"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:203
@@ -2496,6 +2496,8 @@ msgid ""
 "For making the world a better place with such an excellent distro, you'll be "
 "the ones to make a difference on the desktop."
 msgstr ""
+"Učinivši svijet ljepšim mjestom sa takvom izvanrednom distribucijom, vi će te biti "
+"oni koji će napraviti promjenu na desktopu."
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:295
 msgid "Thanks to the NSIS Project"
@@ -2503,8 +2505,7 @@ msgstr "Hvala HSIS projektu"
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:296
 msgid "Thanks for such an awesome installer builder system and documentation."
-msgstr ""
-"Hvala za takav fenomenalan sustav graditelja instalatera i dokumentacije."
+msgstr "Hvala za takav fenomenalan sustav graditelja instalatera i dokumentacije."
 
 #: src/com/limegroup/gnutella/gui/AboutWindow.java:298
 msgid "Thanks to our families"
@@ -2519,11 +2520,12 @@ msgid ""
 "BitTorrent, the BitTorrent Logo, and Torrent are trademarks of BitTorrent, "
 "Inc."
 msgstr ""
-"BitTorrent, BitTorrentov logo i Torrent su zaštitni znak BitTorenta, Inc."
+"BitTorrent, BitTorrentov logo i Torrent su zaštitni znak BitTorenta, "
+"Inc."
 
 #: src/com/limegroup/gnutella/gui/ApplicationHeader.java:187
 msgid "Search or enter URL"
-msgstr "Traži ili upisi URL"
+msgstr "Traži ili upiši URL"
 
 #: src/com/limegroup/gnutella/gui/ApplicationHeader.java:199
 msgid "A new update has been downloaded."
@@ -2539,7 +2541,7 @@ msgstr "Pokaži pokazatelj trgovine"
 
 #: src/com/limegroup/gnutella/gui/CheckBoxList.java:606
 msgid "Marks all Items as Selected"
-msgstr "Obilježi sve stavke kao Označene"
+msgstr "Obilježi sve stavke kao označene"
 
 #: src/com/limegroup/gnutella/gui/CheckBoxList.java:629
 msgid "Deselect All"
@@ -2568,27 +2570,27 @@ msgstr "Ne"
 
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:55
 msgid "Support FrostWire development with a Bitcoin donation"
-msgstr "Podrži razvoj FrostWire-a sa BitCoin donacijom"
+msgstr "Podržati razvoj FrostWire-a sa BitCoin donacijom"
 
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:56
 msgid "Support FrostWire development with a USD $1 donation"
-msgstr "Podrži razvoj FrostWire-a sa donacijom od $1 USD"
+msgstr "Podržati razvoj FrostWire-a sa donacijom od $1 USD"
 
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:57
 msgid "Support FrostWire development with a USD $5 donation"
-msgstr "Podrži razvoj FrostWire-a sa donacijom od $5 USD"
+msgstr "Podržati razvoj FrostWire-a sa donacijom od $5 USD"
 
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:58
 msgid "Support FrostWire development with a USD $10 donation"
-msgstr "Podrži razvoj FrostWire-a sa donacijom od $10 USD"
+msgstr "Podržati razvoj FrostWire-a sa donacijom od $10 USD"
 
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:59
 msgid "Support FrostWire development with a USD $25 donation"
-msgstr "Podrži razvoj FrostWire-a sa donacijom od $25 USD"
+msgstr "Podržati razvoj FrostWire-a sa donacijom od $25 USD"
 
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:60
 msgid "Support FrostWire development with a Paypal donation"
-msgstr "Podrži razvoj FrostWire-a sa Paypal donacijom"
+msgstr "Podržati razvoj FrostWire-a sa Paypal donacijom"
 
 #. new Font("Helvetica", Font.BOLD, 12);
 #: src/com/limegroup/gnutella/gui/DonationButtons.java:65
@@ -2669,7 +2671,7 @@ msgid ""
 "'OK' button at the bottom and restart FrostWire."
 msgstr ""
 "FrostWire je naišao na problem tijekom pokretanja i ne moze nastaviti. Vi "
-"mozda možete popraviti ovaj problem promjenom FrostWire Windows "
+"možda možete popraviti ovaj problem promjenom FrostWire Windows "
 "kompatibilnosti. Desno kliknite na FrostWire ikonu na Desktopu i odaberite "
 "'Properties' iz menija. Kliknite na 'Compatibility' karticu gore, "
 "i onda kliknite na 'Run this program in compatibility mode for' kućicu, i onda "
@@ -2901,7 +2903,7 @@ msgid ""
 "are saved properly you should save them to a sub-folder of {1}.  Would you "
 "like to choose another location?"
 msgstr ""
-"Spremanje preuzimanja u {0} mozda neće poptuno funkcionirati.  Kako bi ste bili sigurni da se preuzimanja "
+"Spremanje preuzimanja u {0} možda neće poptuno funkcionirati.  Kako bi ste bili sigurni da se preuzimanja "
 "spremaju kako trebaju, trebali bi ste ih spremati u podfolder od {1}.  Želite li "
 "odabrati drugu lokaciju?"
 
@@ -3125,13 +3127,17 @@ msgid ""
 "unique places on the network that are hosting the file. The more sources, "
 "the better the chance of getting your torrent file!"
 msgstr ""
+"Umorni od preuzimanja koja se zaustave na pola? Pomaže odabir rezultata traženja "
+"sa većim brojem u 'Seedovi' stupcu. Seedovi su broj "
+"jedinstvenih izvora na mreži koji hostaju ovu datoteku. Više izvora jamči "
+"veču šansu da dobijete vašu torrent datoteku!"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:23
 msgid ""
 "You can change the look and feel of FrostWire by going to View &gt; Use "
 "Small Icons, Show Icon Text and Increase-Decrease the Font Size."
 msgstr ""
-"Možete promijeniti izgled i osjećaj od FrostWire-a tako da idete na Pregled "
+"Možete promijeniti izgled i osjećaj od FrostWire-a tako da odete na Pregled "
 "&gt; Koristiti Make Ikone, Pokazati Tekst Ikona i Povečaj-Smanji Veličinu "
 "Fonta"
 
@@ -3171,6 +3177,10 @@ msgid ""
 "<a href=\"{0}\">internationalization page</a> for information on how you can "
 "help translation efforts!"
 msgstr ""
+"FrostWire se prevodi u puno jezika uključujući Kineski, "
+"Francuski, Njemački, Japanski, Talijanski, Španjolski i više. Posjetite FrostWire-ovu "
+"<a href=\"{0}\">internacionalizacijsku stranicu</a> za informacije kako možete "
+"pomoći volji prevođenja!"
 
 #: src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:28
 msgid ""
@@ -3187,7 +3197,7 @@ msgid ""
 "look for the globe. If there is a brick wall in front of it, your Internet "
 "connection is firewalled."
 msgstr ""
-"Jeste li iza firewalla? Na dnu FrostWirea, u statusnoj traci, potražite "
+"Jeste li iza firewalla? Na dnu FrostWire-a, u statusnoj traci, potražite "
 "globus. Ako je ispred njega zid od cigli, vaša internet veza je zaštićena "
 "firewallom."
 
@@ -3799,7 +3809,7 @@ msgstr "Ja <b>neću</b> koristiti FrostWire {0} za kršenje autorskih prava."
 #: src/com/limegroup/gnutella/gui/init/IntentPanel.java:82
 #, java-format
 msgid "I <b>might use</b> FrostWire {0} for copyright infringement."
-msgstr "Ja <b>ću mozda koristiti</b> FrostWire {0} za kršenje autorskih prava."
+msgstr "Ja <b>ću možda koristiti</b> FrostWire {0} za kršenje autorskih prava."
 
 #: src/com/limegroup/gnutella/gui/init/IntentWindow.java:43
 msgid "State Your Intent"
@@ -3865,7 +3875,7 @@ msgid ""
 "your choosing with other users connected to the BitTorrent network."
 msgstr ""
 "FrostWire je klijent-klijent aplikacija koja vam omogućava da dijelite datoteke "
-"po vašem izboru sa ostalim korisnicima spojenima na BitTorrent mrezu."
+"po vašem izboru sa ostalim korisnicima spojenima na BitTorrent mrežu."
 
 #: src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:40
 msgid ""
