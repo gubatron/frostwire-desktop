@@ -115,10 +115,11 @@ public abstract class AbstractSkinPainter extends AbstractRegionPainter {
     }
 
     protected final Image getImage(String name) {
+        String imagePath = IMAGES_PATH + name + ".png";
         try {
-            return ImageIO.read(ClassLoader.getSystemResource(IMAGES_PATH + name + ".png"));
-        } catch (IOException e) {
-            throw new RuntimeException("Error loading skin image", e);
+            return ImageIO.read(ClassLoader.getSystemResource(imagePath));
+        } catch (Throwable e) {
+            throw new RuntimeException("Error loading skin image: " + imagePath, e);
         }
     }
 }
