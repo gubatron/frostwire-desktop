@@ -34,11 +34,7 @@ public class DigestUtils {
     }
 
     public final static boolean compareMD5(String md5a, String md5b) {
-        if (!isValidMD5(md5a)) {
-            return false;
-        }
-
-        if (!isValidMD5(md5b)) {
+        if ((!isValidMD5(md5a)) || (!isValidMD5(md5b))) {
             return false;
         }
 
@@ -49,8 +45,9 @@ public class DigestUtils {
         if (md5 == null) {
             return false;
         }
-
-        return (md5.length() == 32);
+        
+        // Check length AND characters
+        return md5.matches("^[0-9A-Fa-f]{32}+$");
     }
 
     public final static String getMD5(File f) {
@@ -58,18 +55,18 @@ public class DigestUtils {
     }
     
     public final static String getMD5(File f, DigestProgressListener listener) {
-    	try {
-			return getMD5(new FileInputStream(f), f.length(), listener);
-		} catch (FileNotFoundException e) {
-			return null;
-		}
+        try {
+            return getMD5(new FileInputStream(f), f.length(), listener);
+        } catch (FileNotFoundException e) {
+            return null;
+        }
     }
 
     public final static String getMD5(InputStream is, long streamLength, DigestProgressListener listener) {
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
 
-            byte[] buf = new byte[4096];
+            byte[] buf = new byte[1024*4];
             int num_read;
 
             InputStream in = new BufferedInputStream(is);
@@ -82,13 +79,13 @@ public class DigestUtils {
                 m.update(buf, 0, num_read);
 
                 if (listener != null) {
-                	if (streamLength > 0) {
-	                    int progressPercentage = (int) (total_read * 100 / streamLength);
-	                    try {
-	                        listener.onProgress(progressPercentage);
-	                    } catch (Exception e) {
-	                    }
-                	}
+                    if (streamLength > 0) {
+                        int progressPercentage = (int) (total_read * 100 / streamLength);
+                        try {
+                            listener.onProgress(progressPercentage);
+                        } catch (Exception e) {
+                        }
+                    }
                     
                     if (listener.stopDigesting()) {
                         stopped = true;
@@ -102,7 +99,7 @@ public class DigestUtils {
             if (!stopped) {
                 String result = new BigInteger(1, m.digest()).toString(16);
     
-                //pad with zeros if until it's 32 chars long.
+                // pad with zeros if until it's 32 chars long.
                 if (result.length() < 32) {
                     int paddingSize = 32 - result.length();
                     for (int i = 0; i < paddingSize; i++) {
@@ -121,18 +118,18 @@ public class DigestUtils {
     }
     
     public final static String getMD5(String s) {
-		try {
-			byte[] bytes = s.getBytes("UTF-8");
-			ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-			return getMD5(bais,bytes.length,null);
-		} catch (UnsupportedEncodingException e) {
-			return null;
-		}
+        try {
+            byte[] bytes = s.getBytes("UTF-8");
+            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+            return getMD5(bais,bytes.length,null);
+
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
     }
 
     public interface DigestProgressListener {
         public void onProgress(int progressPercentage);
-
         public boolean stopDigesting();
     }
 }
