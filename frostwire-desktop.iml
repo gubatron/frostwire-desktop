@@ -29,5 +29,14 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="gettext-commons" level="project" />
     <orderEntry type="library" name="messages" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/resources" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
