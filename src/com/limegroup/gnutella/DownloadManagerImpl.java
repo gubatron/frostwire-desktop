@@ -41,33 +41,36 @@ public class DownloadManagerImpl implements DownloadManager {
     }
 
     public void loadSavedDownloadsAndScheduleWriting() {
+        try {
+            BTEngine engine = BTEngine.getInstance();
 
-        BTEngine engine = BTEngine.getInstance();
+            engine.setListener(new BTEngineAdapter() {
+                @Override
+                public void downloadAdded(BTEngine engine, BTDownload dl) {
+                    String name = dl.getName();
+                    if (name != null && name.contains("fetchMagnet - ")) {
+                        return;
+                    }
 
-        engine.setListener(new BTEngineAdapter() {
-            @Override
-            public void downloadAdded(BTEngine engine, BTDownload dl) {
-                String name = dl.getName();
-                if (name != null && name.contains("fetchMagnet - ")) {
-                    return;
-                }
+                    File savePath = dl.getSavePath();
 
-                File savePath = dl.getSavePath();
-
-                if (savePath != null && savePath.getParentFile().getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
-                    LOG.info("Update download: " + savePath);
-                    return;
-                }
+                    if (savePath != null && savePath.getParentFile().getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
+                        LOG.info("Update download: " + savePath);
+                        return;
+                    }
 
 //                if (CommonUtils.isPortable()) {
 //                    updateDownloadManagerPortableSaveLocation(downloadManager);
 //                }
 
-                addDownload(dl);
-            }
-        });
+                    addDownload(dl);
+                }
+            });
 
-        engine.restoreDownloads();
+            engine.restoreDownloads();
+        } catch (Throwable t) {
+
+        }
     }
 
     /*

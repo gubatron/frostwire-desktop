@@ -533,24 +533,32 @@ public final class StatusLine {
      * Updates the firewall text. 
      */
     public void updateFirewall() {
-        BTEngine engine = BTEngine.getInstance();
-        updateFirewallLabel(!engine.isFirewalled());
+        try {
+            BTEngine engine = BTEngine.getInstance();
+            updateFirewallLabel(!engine.isFirewalled());
+        } catch (Throwable t) {
+
+        }
     }
 
     /**
      * Updates the bandwidth statistics.
      */
     public void updateBandwidth() {
-        //  format strings
-        String sDown = GUIUtils.rate2speed(GUIMediator.instance().getBTDownloadMediator().getDownloadsBandwidth());
-        String sUp = GUIUtils.rate2speed(GUIMediator.instance().getBTDownloadMediator().getUploadsBandwidth());
+        try {
+            //  format strings
+            String sDown = GUIUtils.rate2speed(GUIMediator.instance().getBTDownloadMediator().getDownloadsBandwidth());
+            String sUp = GUIUtils.rate2speed(GUIMediator.instance().getBTDownloadMediator().getUploadsBandwidth());
 
-        // number of uploads (seeding) and downloads
-        int downloads = GUIMediator.instance().getCurrentDownloads();
-        int uploads = GUIMediator.instance().getCurrentUploads();
+            // number of uploads (seeding) and downloads
+            int downloads = GUIMediator.instance().getCurrentDownloads();
+            int uploads = GUIMediator.instance().getCurrentUploads();
 
-        _bandwidthUsageDown.setText(downloads + " @ " + sDown);
-        _bandwidthUsageUp.setText(uploads + " @ " + sUp);
+            _bandwidthUsageDown.setText(downloads + " @ " + sDown);
+            _bandwidthUsageUp.setText(uploads + " @ " + sUp);
+        } catch (Throwable t) {
+
+        }
     }
 
     /**
@@ -604,13 +612,17 @@ public final class StatusLine {
             break;
         }
 
-        Session session = BTEngine.getInstance().getSession();
-        if (session != null) {
-            DHT dht = new DHT(session);
-            tip = tip + ". (DHT: " + dht.nodes() + " " + I18n.tr("nodes") + ")";
-        }
+        try {
+            Session session = BTEngine.getInstance().getSession();
+            if (session != null) {
+                DHT dht = new DHT(session);
+                tip = tip + ". (DHT: " + dht.nodes() + " " + I18n.tr("nodes") + ")";
+            }
 
-        _connectionQualityMeter.setToolTipText(tip);
+            _connectionQualityMeter.setToolTipText(tip);
+        } catch (Throwable t) {
+
+        }
         _connectionQualityMeter.setText(status);
     }
 
