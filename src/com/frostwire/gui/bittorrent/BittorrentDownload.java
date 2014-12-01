@@ -297,12 +297,15 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
         if (holder == null) {
             try {
                 File torrent = dl.getTorrentFile();
-                holder = new BTInfoAditionalMetadataHolder(torrent, getDisplayName());
-                licenseBroker = holder.getLicenseBroker();
-                paymentOptions = holder.getPaymentOptions();
 
-                if (paymentOptions != null) {
-                    paymentOptions.setItemName(getDisplayName());
+                if (torrent != null) {
+                    holder = new BTInfoAditionalMetadataHolder(torrent, getDisplayName());
+                    licenseBroker = holder.getLicenseBroker();
+                    paymentOptions = holder.getPaymentOptions();
+
+                    if (paymentOptions != null) {
+                        paymentOptions.setItemName(getDisplayName());
+                    }
                 }
             } catch (Throwable e) {
                 LOG.error("Unable to setup licence holder");
@@ -312,18 +315,20 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     //Deletes incomplete files and the save location from the itunes import settings
     private void finalCleanup(Set<File> incompleteFiles) {
-        for (File f : incompleteFiles) {
-            try {
-                if (f.exists() && !f.delete()) {
-                    LOG.warn("Can't delete file: " + f);
+        if (incompleteFiles != null) {
+            for (File f : incompleteFiles) {
+                try {
+                    if (f.exists() && !f.delete()) {
+                        LOG.warn("Can't delete file: " + f);
+                    }
+                } catch (Throwable e) {
+                    LOG.warn("Can't delete file: " + f + ", ex: " + e.getMessage());
                 }
-            } catch (Throwable e) {
-                LOG.warn("Can't delete file: " + f + ", ex: " + e.getMessage());
             }
+            File saveLocation = dl.getSavePath();
+            DirectoryUtils.deleteEmptyDirectoryRecursive(saveLocation);
+            iTunesImportSettings.IMPORT_FILES.remove(saveLocation);
         }
-        File saveLocation = dl.getSavePath();
-        DirectoryUtils.deleteEmptyDirectoryRecursive(saveLocation);
-        iTunesImportSettings.IMPORT_FILES.remove(saveLocation);
     }
 
     private long calculateSize(BTDownload dl) {
