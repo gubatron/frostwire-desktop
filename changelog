@@ -1,3 +1,15 @@
+frostwire (6.0.3) stable; urgency=high
+  * Solves issue getting correct single file location from transfer manager.
+  * Improved MD5 verification. Thanks @abderraouf-adjal
+  * Important UI transfer related actions restored for Linux users.
+  * Updated frostwire-jlibtorrent libraries,
+    now built with older Boost 1.55, fixes Windows UI Freeze issue.
+  * CPU usage reduced managing transfer items.
+  * Croatian, Bulgarian, Polish, translation updates.
+  * More cleanups and refactors.
+
+ -- FrostWire Team <contact@frostwire.com>  Wed, 3 December 2014 16:53:57 -0500
+
 frostwire (6.0.2) stable; urgency=high
   * Maximum concurrent torrent download settings defaults raised to 10.
   * KAT search fix.
