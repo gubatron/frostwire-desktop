@@ -29,6 +29,7 @@ import javax.swing.JOptionPane;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.library.LibraryMediator;
+import com.frostwire.gui.library.LibrarySearch;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MediaPlayer;

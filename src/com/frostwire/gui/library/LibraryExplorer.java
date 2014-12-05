@@ -557,7 +557,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
 
     public void selectFinishedDownloads() {
         try {
-            if (selectionListenerForSameItem(StarredDirectoryHolder.class)) {
+            if (selectionListenerForSameItem(SavedFilesDirectoryHolder.class)) {
                 return;
             }
 
