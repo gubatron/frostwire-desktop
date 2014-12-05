@@ -18,41 +18,12 @@
 
 package com.frostwire.gui.library;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JScrollPane;
-import javax.swing.JTree;
-import javax.swing.ToolTipManager;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.plaf.basic.BasicTreeUI;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
-
-import com.frostwire.logging.Logger;
-import org.limewire.util.FileUtils;
-
 import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
+import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -65,11 +36,24 @@ import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.SharingSettings;
+import org.limewire.util.FileUtils;
+
+import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.plaf.basic.BasicTreeUI;
+import javax.swing.tree.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.util.*;
+import java.util.List;
 
 /**
  * @author gubatron
  * @author aldenml
- * 
  */
 public class LibraryExplorer extends AbstractLibraryListPanel {
 
@@ -133,7 +117,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         LibraryNode node = (LibraryNode) tree.getLastSelectedPathComponent();
 
         String searchPrompt = null;
-        
+
         if (node == null) {
             return;
         }
@@ -141,17 +125,17 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         if (node instanceof DeviceFileTypeTreeNode) {
             DeviceFileTypeTreeNode deviceFileTypeNode = (DeviceFileTypeTreeNode) node;
             LibraryMediator.instance().updateTableFiles(deviceFileTypeNode.getDevice(), deviceFileTypeNode.getFileType());
-            
+
             if (deviceFileTypeNode.getDevice().isLocal()) {
                 searchPrompt = I18n.tr("Search your") + " " + node.getUserObject();
             } else {
                 searchPrompt = I18n.tr("Search") + " " + deviceFileTypeNode.getDevice().getName() + I18n.tr("'s ") + deviceFileTypeNode.getUserObject();
             }
-            
+
         } else {
             LibraryMediator.instance().clearLibraryTable();
         }
-        
+
         if (node instanceof DeviceNode || node instanceof DevicesNode) {
             searchPrompt = "";
         }
@@ -195,7 +179,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
 
         }
-        
+
         if (searchPrompt == null) {
             searchPrompt = I18n.tr("Search your") + " " + node.getUserObject();
         }
@@ -670,7 +654,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
     private class RefreshAction extends AbstractAction {
 
         /**
-         * 
+         *
          */
         private static final long serialVersionUID = 412879927060208864L;
 

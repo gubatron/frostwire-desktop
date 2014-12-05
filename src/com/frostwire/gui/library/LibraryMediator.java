@@ -18,22 +18,6 @@
 
 package com.frostwire.gui.library;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-
 import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
@@ -49,6 +33,14 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.UISettings;
+
+import javax.swing.*;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.util.*;
+import java.util.List;
 
 /**
  * 
