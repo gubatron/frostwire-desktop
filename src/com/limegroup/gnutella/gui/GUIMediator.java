@@ -54,6 +54,7 @@ import javax.swing.SwingUtilities;
 
 import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
 import com.frostwire.search.torrent.TorrentCrawledSearchResult;
+import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.service.ErrorService;
 import org.limewire.service.Switch;
@@ -599,14 +600,26 @@ public final class GUIMediator {
             }
         }
 
-        // update the status panel
-        int quality = getConnectionQuality();
+        updateConnectionQualityAsync();
+    }
 
-        if (quality != StatusLine.STATUS_DISCONNECTED) {
-            hideDisposableMessage(DISCONNECTED_MESSAGE);
-        }
+    private void updateConnectionQualityAsync() {
+        BackgroundExecutorService.schedule(new Runnable() {
+            @Override
+            public void run() {
+                final int quality = getConnectionQuality();
+                safeInvokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (quality != StatusLine.STATUS_DISCONNECTED) {
+                            hideDisposableMessage(DISCONNECTED_MESSAGE);
+                        }
 
-        updateConnectionUI(quality);
+                        updateConnectionUI(quality);
+                    }
+                });
+            }
+        });
     }
 
     /**

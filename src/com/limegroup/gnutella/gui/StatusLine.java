@@ -594,8 +594,9 @@ public final class StatusLine {
      */
     public void setConnectionQuality(int quality) {
         // make sure we don't go over our bounds.
-        if (quality >= _connectionQualityMeterIcons.length)
+        if (quality >= _connectionQualityMeterIcons.length) {
             quality = _connectionQualityMeterIcons.length - 1;
+        }
 
         _connectionQualityMeter.setIcon(_connectionQualityMeterIcons[quality]);
 
