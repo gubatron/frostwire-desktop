@@ -227,9 +227,25 @@ final class BTDownloadActions {
                 }
             }
 
+            boolean resumedAPartial = false;
+
             if (allowedToResume) {
                 for (int i = 0; i < downloaders.length; i++) {
                     downloaders[i].resume();
+
+                    if (downloaders[i].isPartialDownload() && downloaders[i] instanceof BittorrentDownload) {
+                        resumedAPartial = true;
+                    }
+                }
+            }
+
+            if (resumedAPartial && !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue()) {
+                final StringBuffer message = new StringBuffer();
+                message.append(I18n.tr("Handpicked torrent file seeding is turned off, yet you have chosen to seed a handpicked file from a torrent.\n\n"));
+                message.append(I18n.tr("Would you like to Seed handpicked torrent files from now on?"));
+
+                if (GUIMediator.showYesNoMessage(message.toString(),DialogOption.NO).equals(DialogOption.YES)) {
+                    SharingSettings.SEED_HANDPICKED_TORRENT_FILES.setValue(true);
                 }
             }
 
