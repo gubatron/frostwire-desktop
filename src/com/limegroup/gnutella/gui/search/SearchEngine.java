@@ -18,14 +18,10 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.limewire.setting.BooleanSetting;
-
 import com.frostwire.search.SearchPerformer;
 import com.frostwire.search.archiveorg.ArchiveorgSearchPerformer;
 import com.frostwire.search.bitsnoop.BitSnoopSearchPerformer;
+import com.frostwire.search.btjunkie.BtjunkieSearchPerformer;
 import com.frostwire.search.domainalias.DomainAliasManager;
 import com.frostwire.search.domainalias.DomainAliasManagerBroker;
 import com.frostwire.search.extratorrent.ExtratorrentSearchPerformer;
@@ -43,6 +39,11 @@ import com.frostwire.search.yify.YifySearchPerformer;
 import com.frostwire.search.youtube.YouTubeSearchPerformer;
 import com.limegroup.gnutella.settings.SearchEnginesSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
+import org.limewire.setting.BooleanSetting;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author gubatron
@@ -74,6 +75,7 @@ public abstract class SearchEngine {
     public static final int EZTV_ID = 15;
     public static final int TORRENTS_ID = 16;
     public static final int YIFI_ID = 17;
+    public static final int BTJUNKIE_ID = 18;
     
     public static final DomainAliasManagerBroker DOMAIN_ALIAS_MANAGER_BROKER = new DomainAliasManagerBroker();
 
@@ -191,6 +193,13 @@ public abstract class SearchEngine {
         }
     };
 
+    public static final SearchEngine BTJUNKIE = new SearchEngine(BTJUNKIE_ID, "BTJunkie", SearchEnginesSettings.BTJUNKIE_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("btjunkie.eu")) {
+        @Override
+        public SearchPerformer getPerformer(long token, String keywords) {
+            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("btjunkie.eu");
+            return new BtjunkieSearchPerformer(m, token, keywords, DEFAULT_TIMEOUT);
+        }
+    };
     
     private SearchEngine(int id, String name, BooleanSetting setting, DomainAliasManager domainAliasManager) {
         _id = id;
@@ -225,7 +234,20 @@ public abstract class SearchEngine {
     }
 
     public static List<SearchEngine> getEngines() {
-        return Arrays.asList(YOUTUBE, EXTRATORRENT, TPB, BITSNOOP, TORRENTS, SOUNDCLOUD, FROSTCLICK, MININOVA, KAT, MONOVA, ARCHIVEORG, TORLOCK, EZTV, YIFY);
+        return Arrays.asList(YOUTUBE, EXTRATORRENT, TPB, BITSNOOP, TORRENTS, SOUNDCLOUD, FROSTCLICK, MININOVA, KAT, MONOVA, ARCHIVEORG, TORLOCK, EZTV, YIFY, BTJUNKIE);
+    }
+
+    public static List<SearchEngine> getActiveEngines() {
+        final List<SearchEngine> result = new ArrayList<SearchEngine>();
+        final List<SearchEngine> activeEngines = getEngines();
+
+        for (SearchEngine searchEngine : activeEngines) {
+            if (searchEngine.isEnabled()) {
+                result.add(searchEngine);
+            }
+        }
+
+        return result;
     }
 
     public abstract SearchPerformer getPerformer(long token, String keywords);
