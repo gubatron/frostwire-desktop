@@ -861,8 +861,7 @@ msgstr "Odabrati mapu"
 msgid ""
 "Click here to select a folder as the content indexed by your new .torrent"
 msgstr ""
-"Kliknite ovdje kako bi ste odabrali mapu kao sadržaj koji će indeksirati vaš "
-"novi .torrent"
+"Kliknite ovdje kako bi ste odabrali mapu kao sadržaj koji će indeksirati vaš novi .torrent"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:204
 msgid "Tracking"
@@ -877,8 +876,8 @@ msgid ""
 "Select this option to create torrents that don't need trackers, completely "
 "descentralized. (Recommended)"
 msgstr ""
-"Odaberite ovu mogućnost kako biste stvorili torrente koje ne trebaju "
-"pratitelje, potpuno decentralizirano. (preporučeno)"
+"Odaberite ovu mogućnost kako biste stvorili torrente koje ne trebaju pratitelje, potpuno "
+"decentralizirano. (preporučeno)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:210
 msgid "Start seeding"
@@ -890,6 +889,8 @@ msgid ""
 "as it's created.\n"
 "If nobody is seeding the torrent won't work. (Recommended)"
 msgstr ""
+"Objavite sebe kao djelitelja za sadržaj koji je ovaj torrent indeksirao čim "
+"je stvoren.\n"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:215
 msgid "Tracker Announce URLs"
@@ -959,7 +960,7 @@ msgstr "Odabrati mapu"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:939
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:722
 msgid "Error: You can't read on that file/folder."
-msgstr "Greška: Nije moguće čitati na toj datoteci/folderu"
+msgstr "Greška: Nije moguće čitati na toj datoteci/folderu."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:428
 msgid ""
@@ -1021,7 +1022,7 @@ msgstr "Provjeravam Web seed mirror URLa..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:686
 msgid "Web seed not reachable."
-msgstr "Internetski seed nije u dohvatu"
+msgstr "Internetski seed nije moguće dohvatiti."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:780
 msgid "Saving Torrent..."
@@ -1070,8 +1071,8 @@ msgid ""
 "I am the content creator or I have the right to collect financial "
 "contributions for this work."
 msgstr ""
-"Ja sam stvoritelj sadržaja ili ja imam pravo sakupiti financijske doprinose "
-"za ovaj posao."
+"Ja sam stvoritelj sadržaja ili ja imam pravo sakupiti financijske "
+"doprinose za ovaj posao."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:50
 msgid ""
@@ -1080,7 +1081,7 @@ msgid ""
 "infringement."
 msgstr ""
 "Razumijem da dobivanje financija od neovlaštenog rada pod autorskim pravom "
-"me moze teretiti za krivotvorenje i kriminalno kršenje autorskih prava."
+"me može teretiti za krivotvorenje i kriminalno kršenje autorskih prava."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:126
 msgid "<strong>Bitcoin</strong> receiving wallet address"
@@ -2672,7 +2673,7 @@ msgid ""
 "then select 'Windows 2000' in the box below the check box. Then click the "
 "'OK' button at the bottom and restart FrostWire."
 msgstr ""
-"FrostWire je naišao na problem tijekom pokretanja i ne moze nastaviti. Vi "
+"FrostWire je naišao na problem tijekom pokretanja i ne može nastaviti. Vi "
 "možda možete popraviti ovaj problem promjenom FrostWire Windows "
 "kompatibilnosti. Desno kliknite na FrostWire ikonu na Desktopu i odaberite "
 "'Properties' iz menija. Kliknite na 'Compatibility' karticu gore, i onda "
@@ -3447,7 +3448,7 @@ msgid ""
 msgstr ""
 "Kada zatvorite FrostWire, sakrije se u sistemsku traku. Kako bi ste izašli, "
 "desnokliknite na ikonu sistemske trake (pored sata) i odaberite Izadji. "
-"Mozete promijeniti ovo ponašanje tako da odete u Alati &gt; Options &gt; "
+"Možete promijeniti ovo ponašanje tako da odete u Alati &gt; Options &gt; "
 "Sistemska traka."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:112
@@ -3511,7 +3512,7 @@ msgid ""
 "FrostWire can't detect an encrypted VPN connection, your privacy is at risk. "
 "Click icon to set up an encrypted VPN connection."
 msgstr ""
-"FrostWire ne moze detektirati šifriranu VPN vezu, vaša privatnost je pod "
+"FrostWire ne može detektirati šifriranu VPN vezu, vaša privatnost je pod "
 "rizikom. Kliknite ikonu kako bi ste postavili šifriranu VPN vezu."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:60
@@ -3978,7 +3979,7 @@ msgstr "FrostWire majce"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:60
 msgid "Get a T-shirt, support the project. You'll get also 10 free stickers"
 msgstr ""
-"Dobijte majcu, podržavajte projekt. Također ce te dobiti 10 besplatnih "
+"Dobijte majcu, podržavajte projekt. Također će te dobiti 10 besplatnih "
 "naljepnica"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:63
@@ -4013,8 +4014,7 @@ msgstr "&Jeste li platili za FrostWire?"
 msgid ""
 "Did you pay for FrostWire? FrostWire is Free as in Free Beer. Avoid Scams."
 msgstr ""
-"Jeste li platili ste za FrostWire? FrostWire je besplatan kao i besplatno "
-"pivo. Izbjegavajte prevare."
+"Jeste li platili ste za FrostWire? FrostWire je besplatan kao i besplatno pivo. Izbjegavajte prevare."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:97
 msgid "Tip of the &Day"
@@ -4049,8 +4049,8 @@ msgid ""
 "Deletes and re-builds the \"FrostWire\" playlist on iTunes with all the "
 "audio files found on your Torrent Data Folder."
 msgstr ""
-"Briše i obnavlja \"FrostWire\" playlistu na iTunes-u sa svim audio "
-"datotekama nađenim u vašoj torrent podatkovnoj mapi."
+"Briše i obnavlja \"FrostWire\" playlistu na iTunes-u sa svim "
+"audio datotekama nađenim u vašoj torrent podatkovnoj mapi."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:74
 msgid ""
@@ -4151,7 +4151,7 @@ msgstr "Resetiraj veličinu fonta tablica"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:66
 msgid "C&hange Language"
-msgstr "Promi&jeni jezik"
+msgstr "Promi&jeniti jezik"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:67
 msgid "Select your Language Prefereces"
@@ -4184,7 +4184,8 @@ msgid ""
 "You have made changes to some of FrostWire's settings. Would you like to "
 "save these changes?"
 msgstr ""
-"Napravili ste promjene u postavkama FrostWire-a. Želite li ih spremiti?"
+"Napravili ste promjene u postavkama FrostWire-a. Želite li "
+"spremiti ove postavke?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:237
 msgid "Search here"
@@ -4285,8 +4286,7 @@ msgstr "Učitavanje opcijskog prozora..."
 msgid ""
 "One or more options will take effect the next time FrostWire is restarted."
 msgstr ""
-"Jedna ili više opcija će stupiti na snagu tek sljedeći put kada otvorite "
-"FrostWire."
+"Jedna ili više opcija će stupiti na snagu sljedeći put kada je FrostWire ponovno pokrenut."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:29
 msgid "Links and File Types"
@@ -4329,7 +4329,7 @@ msgstr "Dovršavanje teksta"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:20
 msgid "You can enable or disable autocompletion of text fields."
-msgstr "Možete omogućiti ili onemogućiti dovršavanje teksta"
+msgstr "Možete omogućiti ili onemogućiti dovršavanje tekstualnih polja."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:27
 msgid "Enable Autocompletion of Text Fields:"
@@ -4407,7 +4407,8 @@ msgid ""
 "You can choose whether to be warned about downloading a file without a "
 "license."
 msgstr ""
-"Možete odabrati želite li biti upozoreni o preuzimanju datoteka bez dozvole."
+"Možete odabrati želite li biti upozoreni o preuzimanju datoteka bez "
+"dozvole."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:29
 msgid "Show License Warning:"
@@ -4427,6 +4428,13 @@ msgid ""
 "router if you choose manual configuration, but FrostWire will try its best "
 "so you don't have to.)"
 msgstr ""
+"FrostWire se može postaviti tako da radi iza vatrozida ili routera. "
+"Koristeći Univeral Plug 'n Play (UPnP) i ostale NAT tehnike "
+"FrostWire može automatski postaviti vaš router za optimalne "
+"performanse. Ako vaš router ne podržava UPnP, FrostWire se može postaviti da "
+"reklamira eksterni port manualno. (Možda će te morati postaviti vaš "
+"router ako odaberete manualnu konfiguraciju, ali će FrostWire pokušati sve što može "
+"tako da vi ne morate.)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:63
 msgid "Use random port (Recommended)"
@@ -4459,8 +4467,7 @@ msgstr "Filtrirati rezultate"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:24
 msgid "You can filter out search results containing specific words."
-msgstr ""
-"Možete filtrirati rezultate traženja koje sadržavaju specificne rijeci."
+msgstr "Možete filtrirati rezultate traženja koje sadržavaju specifične rijeci."
 
 #. *
 #. * Key for the locale-specifis string for the adult content check box
@@ -4476,7 +4483,7 @@ msgstr "Postavke slika"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ImageViewerPaneItem.java:28
 msgid "You can choose which image viewer to use."
-msgstr "Možete izabrati koji preglednik slika želite koristiti"
+msgstr "Možete izabrati koji preglednik slika želite koristiti."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4493,7 +4500,7 @@ msgstr "Mape uključene u knjižnicu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:38
 msgid "You can choose the folders for include files when browsing the library."
-msgstr "Možete izabrati koje mape želite uključiti kada pregledavate knjižnicu"
+msgstr "Možete izabrati koje mape želite uključiti kada pregledavate knjižnicu."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:18
 msgid "Internet Radio Stations"
