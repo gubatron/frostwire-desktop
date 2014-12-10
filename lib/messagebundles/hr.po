@@ -1957,7 +1957,7 @@ msgstr "Moje datoteke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:168
 msgid "Library Folders"
-msgstr "Otvori direktorij kolekcije."
+msgstr "Mape Knjižnice"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:347
 msgid "Legend"
@@ -1965,15 +1965,15 @@ msgstr "Legenda"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:356
 msgid "Folder and subfolders are included in the Library."
-msgstr "Mape i pod-mape su uključeni u knjižnicu."
+msgstr "Mape i pod-mape su uključene u Knjižnicu."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:370
 msgid "Folder is not included and no subfolders are included in the Library."
-msgstr "Mapa nije ukljucena i pod-mape nisu ukljuceni u knjižnicu."
+msgstr "Mapa nije uključena i pod-mape nisu uključeni u Knjižnicu."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:379
 msgid "Folder's files and some subfolders are included in the Library."
-msgstr ""
+msgstr "Datoteke mape i neke pod-mape su uključene u Knjižnicu."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/TorrentDirectoryHolder.java:34
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/MediaType.java:51
@@ -2032,7 +2032,7 @@ msgstr "Sviraj"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:83
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:88
 msgid "Long Press to Stop Playback"
-msgstr ""
+msgstr "Dugo pritisnite kako bi ste prekinuli izvedbu"
 
 #. *
 #. * Constant for the forward button.
@@ -2054,15 +2054,15 @@ msgstr "Glasnoća"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:250
 msgid "Send this file to a friend"
-msgstr "Spremi detalje u datoteku"
+msgstr "Spremiti detalje u datoteku"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:255
 msgid "Show the source of this media"
-msgstr "Pokaži izvor ovog medija"
+msgstr "Pokazati izvor ovog medija"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:321
 msgid "Shuffle songs"
-msgstr "Promiješaj pjesme"
+msgstr "Promiješati pjesme"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:328
 msgid "Repeat songs"
@@ -2074,11 +2074,11 @@ msgstr "Ovaj umjetnik"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:918
 msgid "Open Facebook page of"
-msgstr "Otvori Facebook stranicu od"
+msgstr "Otvoriti Facebook stranicu od"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:920
 msgid "Open Twitter page of"
-msgstr "Otvori Twitter stranicu od"
+msgstr "Otvoriti Twitter stranicu od"
 
 #. won't be shown in 5.6.x, code here for 6.x
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1027
@@ -2092,15 +2092,15 @@ msgstr "Sviram pjesmu iz"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1033
 msgid "Open YouTube source page"
-msgstr "Otvori YouTube stranicu izvora"
+msgstr "Otvoriti YouTube stranicu izvora"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1037
 msgid "Open SoundCloud source page"
-msgstr "Otvori SoundCloud stranicu izvora"
+msgstr "Otvoriti SoundCloud stranicu izvora"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1041
 msgid "Open Archive.org source page"
-msgstr "Otvori Archive.org stranicu izvora"
+msgstr "Otvoriti Archive.org stranicu izvora"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1045
 msgid "Playing Internet Radio"
@@ -2108,11 +2108,11 @@ msgstr "Sviram internetski radio"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1048
 msgid "Playing local Wi-Fi Stream from"
-msgstr "Sviranje streama lokalnog Wi-Fi od"
+msgstr "Sviram stream lokalnog Wi-Fi od"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1062
 msgid "unknown device"
-msgstr "nepoznat uredjaj"
+msgstr "nepoznat uređaj"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1073
 msgid "playlist"
@@ -2156,6 +2156,9 @@ msgid ""
 "in your computer.<br><br>If you want to use FrostWire as a media player "
 "<b>Please install mplayer and restart FrostWire.</b>"
 msgstr ""
+"<b>FrostWire zahtijeva Mplayer za sviranje vaših medija</b> ali ga nisam mogao naći"
+"u vašem računalu.<br><br>Ako želite koristiti FrostWire kao medijski svirač "
+"<b>Molimo vas da instalirate Mplayer i ponovno pokrenete FrostWire.</b>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/searchfield/GoogleSearchField.java:64
 msgid "Hints by Google"
