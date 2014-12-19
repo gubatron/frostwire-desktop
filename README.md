@@ -1,4 +1,5 @@
-![alt text](http://biz.prlog.org/frostwire/logo.png "Frostwire")
+<a href="http://frostwire.com"><img src="http://biz.prlog.org/frostwire/logo.png"></a>
+
 
 [![tip for next commit](http://tip4commit.com/projects/538.svg)](http://tip4commit.com/projects/538)
 
