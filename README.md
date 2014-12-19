@@ -134,10 +134,7 @@ Every countribution merged to the master branch will automatically receive a tip
 
 Tip for next commit: [![see here](http://tip4commit.com/projects/538.svg)](http://tip4commit.com/projects/538)
 
-If you want to contribute code, start by looking at the open issues on
-github.com
-[https://github.com/frostwire/frostwire-desktop/issues][4]
-[4]: <https://github.com/frostwire/frostwire-desktop/issues>.
+If you want to contribute code, start by looking at the [open issues on github.com](https://github.com/frostwire/frostwire-desktop/issues).
 
 If you want to fix a new issue that's not listed there, create the issue, see if
 we can discuss a solution.
