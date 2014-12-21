@@ -251,7 +251,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
         public void finished(BTDownload dl) {
             if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue() || (dl.isPartial() && !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue())) {
                 dl.pause();
-                finalCleanup(dl.getIncompleteFiles(true));
+                finalCleanup(dl.getIncompleteFiles());
             }
 
             File saveLocation = dl.getSavePath();
