@@ -1114,15 +1114,15 @@ msgstr "Recite svoju cijenu, pošaljite napojnicu ili donaciju u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:96
 msgid "bitcoins"
-msgstr "bitcoins"
+msgstr "bitcoini"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:97
 msgid "litecoins"
-msgstr "litecoins"
+msgstr "litecoini"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:98
 msgid "dogecoins"
-msgstr "dogecoins"
+msgstr "dogecoini"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:99
 msgid "Name your price, Send a Tip or Donation via Paypal"
@@ -1188,8 +1188,8 @@ msgid ""
 "<strong>Keep FrostWire Open</strong> until the file has been downloaded by "
 "at least one other friend."
 msgstr ""
-"<strong>Ostavi FrostWire otvoren</strong> dok datoteku nije preuzeo barem "
-"jedan prijatelj."
+"<strong>Ostavi FrostWire otvoren</strong> dok datoteku nije preuzeo "
+"barem jedan prijatelj."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:220
 msgid ""
@@ -1313,6 +1313,9 @@ msgid ""
 "internet will be able<br/>to download file chunks of the data your torrents "
 "seed. (Recommended)"
 msgstr ""
+"<strong>Dijeli završena torrent preuzimanja.</strong> Bittorrent korisnici na "
+"internetu će<br/>preuzimati samo dijelove datoteka od torrenta koje "
+"dijelite. (preporučeno)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:77
 msgid ""
@@ -1322,7 +1325,7 @@ msgid ""
 "penalize this Leeching behavior</strong>."
 msgstr ""
 "<strong>Ne dijeli završena torrent preuzimanja.</strong> BitTorrent "
-"korisnici na internetu će<br/>preuzeti samo dijelove datoteke od torrenta od "
+"korisnici na internetu će<br/>preuzimati samo dijelove datoteka od torrenta od "
 "vas dok vi preuzimate njegove<br/>podatkovne datoteke. <strong>Neki "
 "pratitelji će  ovakvo ponašanje leechanja.</strong>."
 
@@ -1334,10 +1337,15 @@ msgid ""
 "advanced users only</strong> as it can lead to downloading parts of files "
 "you may have not explicitly chosen for download."
 msgstr ""
+"<strong>Dijeli ručno odabrane torrent datoteke.</strong> Ručno odabrane torrent datoteke "
+"preuzimanja (dijelomična preuzimanja) mogu rezultirati dijeljenjem dijelova podataka od "
+"susjednih nedovršenih datoteka.<br/>Ova mogućnost je <strong>preporučena samo za "
+"napredne korisnike</strong> jer može doći do preuzimanja dijelova "
+"koje niste točno označili za preuzimanje."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:133
 msgid "Leave a tip"
-msgstr "Ostaviti napojnicu"
+msgstr "Ostavi napojnicu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:155
 msgid "on"
@@ -1407,7 +1415,7 @@ msgstr "Dodaj"
 msgid ""
 "The device is busy with another transfer or did not authorize your request"
 msgstr "
-"Naprava je zauzeta sa drugim prijenosom ili nije odabrala vaš zahtjev"
+"Uređaj je zauzet sa drugim prijenosom ili nije odobrio vaš zahtjev"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/Device.java:294
 msgid "Transfer failed"
@@ -1489,7 +1497,7 @@ msgstr "Datum promjene"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibrarySearch.java:188
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/tabs/SearchDownloadTab.java:51
 msgid "Search"
-msgstr "Traziti"
+msgstr "Tražiti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:436
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:437
@@ -1550,7 +1558,7 @@ msgstr "Otvori direktorij kolekcije"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:332
 msgid "Wi-Fi Shared"
-msgstr "Dijeljeno putem Wi-Fi-a"
+msgstr "Dijeljeno putem Wi-Fia"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:342
 msgid "Path"
@@ -1588,8 +1596,8 @@ msgid ""
 "Are you sure you want to delete the selected file(s), thus removing it from "
 "your computer?"
 msgstr ""
-"Jeste li sigurni da želite obrisati odabrane datoteke i maknuti ih iz vašeg "
-"računala?"
+"Jeste li sigurni da želite obrisati odabrane datoteke i maknuti ih iz "
+"vašeg računala?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:572
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/LanguageWindow.java:196
