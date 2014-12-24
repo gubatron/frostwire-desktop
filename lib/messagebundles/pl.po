@@ -134,11 +134,13 @@ msgid ""
 "Handpicked torrent file seeding is turned off, yet you have chosen to seed a "
 "handpicked file from a torrent.\n"
 "\n"
-msgstr ""
+msgstr "Seedowanie wyselekcjonowanych plików torrent jest wyłączone, ale wybrałeś "
+"seedowanie wyselekcjonowanego pliku torrent.\n"
+"\n"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:245
 msgid "Would you like to seed handpicked torrent files from now on?"
-msgstr ""
+msgstr "Czy chcesz od teraz seedować wyselekcjonowane pliki torrent?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:264
 msgid "Pause Download"
@@ -441,7 +443,7 @@ msgstr "Błąd: Zła sygnatura"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:209
 msgid "Try again, not enough peers"
-msgstr ""
+msgstr "Spróbój ponownie, niewystarczająca ilośc peerów"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:210
 msgid "Stopped"
@@ -3085,7 +3087,7 @@ msgstr "Twoje połączenie z siecią jest bardzo mocne."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:620
 msgid "nodes"
-msgstr ""
+msgstr "węzły"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:730
 msgid "Show Connection Quality"
