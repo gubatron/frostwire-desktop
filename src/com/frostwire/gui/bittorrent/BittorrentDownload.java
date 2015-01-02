@@ -90,6 +90,10 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
         return displayName;
     }
 
+    public String getName() {
+        return dl.getName();
+    }
+
     @Override
     public boolean isResumable() {
         return dl.isPaused();
@@ -254,7 +258,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
                 finalCleanup(dl.getIncompleteFiles());
             }
 
-            File saveLocation = dl.getSavePath();
+            File saveLocation = new File(dl.getSavePath(), dl.getName());
 
             if (iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(saveLocation)) {
                 if ((OSUtils.isMacOSX() || OSUtils.isWindows())) {

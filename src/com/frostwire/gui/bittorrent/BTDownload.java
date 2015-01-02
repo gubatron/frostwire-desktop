@@ -33,6 +33,8 @@ public interface BTDownload {
 
     public long getSize();
 
+    public String getName();
+
     public String getDisplayName();
 
     public boolean isResumable();

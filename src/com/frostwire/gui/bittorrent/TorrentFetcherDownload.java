@@ -71,6 +71,11 @@ public class TorrentFetcherDownload implements BTDownload {
         return -1;
     }
 
+    @Override
+    public String getName() {
+        return null;
+    }
+
     public String getDisplayName() {
         return displayName;
     }

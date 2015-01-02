@@ -112,6 +112,11 @@ public class HttpDownload implements BTDownload {
     }
 
     @Override
+    public String getName() {
+        return saveFile.getName();
+    }
+
+    @Override
     public String getDisplayName() {
         return title;
     }

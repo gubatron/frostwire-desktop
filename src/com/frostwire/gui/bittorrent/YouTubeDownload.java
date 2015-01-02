@@ -113,6 +113,11 @@ public class YouTubeDownload implements BTDownload {
     }
 
     @Override
+    public String getName() {
+        return completeFile.getName();
+    }
+
+    @Override
     public String getDisplayName() {
         return sr.getDisplayName();
     }

@@ -107,6 +107,11 @@ public class SoundcloudDownload implements BTDownload {
     }
 
     @Override
+    public String getName() {
+        return sr.getFilename();
+    }
+
+    @Override
     public boolean isResumable() {
         return false;
     }

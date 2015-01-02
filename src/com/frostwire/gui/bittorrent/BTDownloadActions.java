@@ -80,8 +80,17 @@ final class BTDownloadActions {
 
             if (downloaders != null && downloaders.length > 0) {
                 try {
-                    System.out.println("Sending to iTunes " + downloaders[0].getSaveLocation());
-                    iTunesMediator.instance().scanForSongs(downloaders[0].getSaveLocation());
+                    final BTDownload downloader = downloaders[0];
+                    File saveLocation = downloader.getSaveLocation();
+
+                    if (downloader instanceof BittorrentDownload) {
+                        BittorrentDownload btDownload = (BittorrentDownload) downloader;
+                        saveLocation = new File(btDownload.getSaveLocation(), btDownload.getName());
+                    }
+
+                    System.out.println("Sending to iTunes " + saveLocation.getAbsolutePath());
+
+                    iTunesMediator.instance().scanForSongs(saveLocation);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
