@@ -34,12 +34,12 @@ The main software architecture (how things are organized) depends on the late
 *LimeWire 4,* but it has evolved through FrostWire 5, and now the source code
 layout has been simplified enourmously for FrostWire 6.
 
-- The BitTorrent power comes from the frostwire-jlibtorrent library.
-- Media playback comes from the *MPlayer* project
+- The BitTorrent power comes from the [frostwire-jlibtorrent](https://github.com/frostwire/frostwire-jlibtorrent) library.
+- Media playback comes from the [MPlayer](http://www.mplayerhq.hu/design7/news.html) project
 - The good looks and skinning system comes from the Substance skinning project (which we've had to maintain on our repo to make it fit FrostWire needs)
-- HTTP interaction comes from the Apache Commons project
-- The search is built using the awesome H2 database and Lucene indexes
-- JSON parsing comes from google-gson, and so on and so on.
+- HTTP interaction comes from the [Apache Commons](http://commons.apache.org/) project
+- The search is built using the awesome [H2 database](http://www.h2database.com/html/main.html) and [Lucene indexes](http://lucene.apache.org/core/).
+- JSON parsing comes from [google-gson](https://code.google.com/p/google-gson/), and so on and so on.
 
 
 # Build Requirements
