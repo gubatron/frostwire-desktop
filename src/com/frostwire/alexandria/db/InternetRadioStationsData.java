@@ -640,7 +640,8 @@ public final class InternetRadioStationsData {
         add(data, "PANDASHOWRADIO.COM - Pranks in spanish, live from Mexico City, featuring El Panda Zambran", "PANDASHOWRADIO.COM - Pranks in spanish, live from Mexico City, featuring El Panda Zambran", "http://173.193.138.136:7290", "24 kbps", "MP3", "http://www.pandashowradio.com", "latin latino cumbia salsa", "");
         add(data, "Happyday Newage Radio EZ Channel", "Happyday Newage Radio EZ Channel", "http://222.122.131.69:8000", "128 kbps", "MP3", "http://inewage.com/happyday", "Classical,New Age,Easy Listening", "");
         add(data, "Metropol FM", "Metropol FM", "http://91.121.193.100:8200", "64 kbps", "MP3", "http://www.metropolfm.de", "World", "");
-
+        add(data, "Radio Danz (MP3)","The world's pure dance channel (South Beach, FL)", "http://server1.radiodanz.com:8000/listen.pls", "80 Kbps", "MP3", "http://www.radiodanz.com", "dance, edm", "");
+        add(data, "Radio Danz (AAC+)","The world's pure dance channel (South Beach, FL)", "http://server1.radiodanz.com:8020/", "80 Kbps", "AAC", "http://www.radiodanz.com", "dance, edm", "");
         //System.out.println("Loaded " + data.size() + " radio stations");
     }
 
