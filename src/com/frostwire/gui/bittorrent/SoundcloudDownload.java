@@ -345,19 +345,16 @@ public class SoundcloudDownload implements BTDownload {
 
         @Override
         public void onComplete(HttpClient client) {
-            if (setAlbumArt(tempAudio.getAbsolutePath(), completeFile.getAbsolutePath())) {
-                state = TransferState.FINISHED;
-                cleanupIncomplete();
-            } else {
+            if (!setAlbumArt(tempAudio.getAbsolutePath(), completeFile.getAbsolutePath())) {
                 boolean renameTo = tempAudio.renameTo(completeFile);
 
                 if (!renameTo) {
                     state = TransferState.ERROR_MOVING_INCOMPLETE;
-                } else {
-                    state = TransferState.FINISHED;
-                    cleanupIncomplete();
+                    return;
                 }
             }
+            state = TransferState.FINISHED;
+            cleanupIncomplete();
         }
 
         @Override
