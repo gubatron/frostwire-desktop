@@ -240,16 +240,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting> {
             if (expired)
                 LAST_EXPIRE_TIME.setValue(System.currentTimeMillis());
         }
-    }       
-    
-    /**
-     * Changes the backing file to use for this factory.
-     */
-    public synchronized void changeFile(File toUse) {
-        SETTINGS_FILE = toUse;
-        if(SETTINGS_FILE.isDirectory()) SETTINGS_FILE.delete();
-        revertToDefault();
-        reload();
     }
     
     /**
@@ -428,22 +418,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting> {
     }
 
     /**
-     * Creates a new <tt>PowerOfTwoSetting</tt> instance with the specified
-     * key and default value.
-     *
-     * @param key the key for the setting
-     * @param defaultValue the default value for the setting, which must be a
-     *            power of two.
-     */
-    public synchronized PowerOfTwoSetting createPowerOfTwoSetting(String key,
-                       long defaultValue) {
-        PowerOfTwoSetting result = 
-            new PowerOfTwoSetting(DEFAULT_PROPS, PROPS, key, defaultValue);
-        handleSettingInternal(result, null);
-        return result;
-    }
-
-    /**
      * Creates a new <tt>FileSetting</tt> instance with the specified
      * key and default value.
      *
@@ -466,14 +440,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting> {
         handleSettingInternal(result, null);
         return result;
     }
-	
-	public synchronized ProxyFileSetting createProxyFileSetting(String key,
-			FileSetting defaultSetting) {
-		ProxyFileSetting result = 
-			new ProxyFileSetting(DEFAULT_PROPS, PROPS, key, defaultSetting);
-		handleSettingInternal(result, null);
-		return result;
-	}
 
     /**
      * Creates a new <tt>ColorSetting</tt> instance with the specified
@@ -570,22 +536,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting> {
         handleSettingInternal(result, null);
         return result;
     }
-   
-    /**
-     * Creates a new expiring <tt>BooleanSetting</tt> instance with the
-     * specified key and default value.
-     *
-     * @param key the key for the setting
-     * @param defaultValue the default value for the setting 
-     */
-    public synchronized BooleanSetting createExpirableBooleanSetting(String key,
-                                                        boolean defaultValue) {
-        BooleanSetting result = createBooleanSetting(key, defaultValue);
-        
-        if (expired)
-            result.revertToDefault();
-        return result;
-    }
     
     /**
      * Creates a new expiring <tt>IntSetting</tt> instance with the specified
@@ -605,23 +555,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting> {
     }
     
     /**
-     * Creates a new expiring <tt>LongSetting</tt> instance with the specified
-     * key and default value.
-     *
-     * @param key the key for the setting
-     * @param defaultValue the default value for the setting
-     */
-    public synchronized LongSetting createExpirableLongSetting(String key, 
-                                                             long defaultValue) {
-        LongSetting result = createLongSetting(key, defaultValue);
-        
-        if (expired)
-            result.revertToDefault();
-        
-        return result;
-    }
-    
-    /**
      * Creates a new <tt>FontNameSetting</tt> instance with the specified
      * key and default value.
      *
@@ -632,13 +565,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting> {
                                                            String defaultValue){
         FontNameSetting result = 
         new FontNameSetting(DEFAULT_PROPS, PROPS, key, defaultValue);
-        handleSettingInternal(result, null);
-        return result;
-    }
-
-    public synchronized PBooleanArraySetting createPBooleanArraySetting(
-            String key, String [] defaultValue) {
-        PBooleanArraySetting result = new PBooleanArraySetting(DEFAULT_PROPS, PROPS, key, defaultValue);
         handleSettingInternal(result, null);
         return result;
     }

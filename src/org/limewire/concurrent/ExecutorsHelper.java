@@ -80,21 +80,6 @@ public class ExecutorsHelper {
      * although an unlimited number of threads will be created to handle
      * the tasks.  Each thread is set to linger for a short period of time,
      * ready to handle new tasks, before the thread terminates.
-     */
-    public static ExecutorService newThreadPool(String name) {
-        return Executors.unconfigurableExecutorService(
-                new ThreadPoolExecutor(0, Integer.MAX_VALUE,
-                        5L, TimeUnit.SECONDS,
-                        new SynchronousQueue<Runnable>(),
-                        daemonThreadFactory(name)));
-    }
-    
-    /**
-     * Creates a new ThreadPool.
-     * The pool is tuned to begin with zero threads and maintain zero threads,
-     * although an unlimited number of threads will be created to handle
-     * the tasks.  Each thread is set to linger for a short period of time,
-     * ready to handle new tasks, before the thread terminates.
      * 
      * @param factory the factory used for creating a new processing thread 
      */
@@ -118,26 +103,6 @@ public class ExecutorsHelper {
                 daemonThreadFactory(name));
         tpe.allowCoreThreadTimeOut(true);
         return Executors.unconfigurableExecutorService(tpe);
-    }
-    
-    /**
-     * Creates a new ThreadPool with the maximum number of available threads.
-     * Items added while no threads are available to process them will wait
-     * until an executing item is finished and then be processed.
-     */
-    public static ExecutorService newFixedSizePriorityThreadPool(int size, String name) {
-        ThreadPoolExecutor tpe =  new ThreadPoolExecutor(size, size,
-                5L, TimeUnit.SECONDS,
-                new PriorityBlockingQueue<Runnable>(),
-                daemonThreadFactory(name));
-        tpe.allowCoreThreadTimeOut(true);
-        return Executors.unconfigurableExecutorService(tpe);
-    }
-    
-    /** Returns the default thread factory, using the given name. 
-     * */
-    public static ThreadFactory defaultThreadFactory(String name) {
-        return new DefaultThreadFactory(name, false);
     }
     
     /** Returns the a thread factory of daemon threads, using the given name. 

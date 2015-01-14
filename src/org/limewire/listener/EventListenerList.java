@@ -192,9 +192,7 @@ public class EventListenerList<E> implements ListenerSupport<E>, EventBroadcaste
             }
 
             BlockingEvent blockingEvent;
-            if(method.getAnnotation(SwingEDTEvent.class) != null) {
-                return DispatchStrategy.SWING;
-            } else if((blockingEvent = method.getAnnotation(BlockingEvent.class)) != null) {
+            if((blockingEvent = method.getAnnotation(BlockingEvent.class)) != null) {
                 return DispatchStrategy.getBlockingStrategy(context, blockingEvent);
             } else {
                 return DispatchStrategy.INLINE;
