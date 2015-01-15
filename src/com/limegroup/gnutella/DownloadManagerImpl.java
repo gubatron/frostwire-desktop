@@ -18,13 +18,12 @@ package com.limegroup.gnutella;
 import com.frostwire.bittorrent.BTDownload;
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.bittorrent.BTEngineAdapter;
-import com.frostwire.bittorrent.BTEngineListener;
 import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.settings.UpdateSettings;
 
 import java.io.File;
 
-public class DownloadManagerImpl implements DownloadManager {
+public final class DownloadManagerImpl implements DownloadManager {
 
     private static final Logger LOG = Logger.getLogger(DownloadManagerImpl.class);
 
@@ -68,8 +67,8 @@ public class DownloadManagerImpl implements DownloadManager {
             });
 
             engine.restoreDownloads();
-        } catch (Throwable t) {
-
+        } catch (Throwable e) {
+            LOG.error("General error loading saved downloads", e);
         }
     }
 
