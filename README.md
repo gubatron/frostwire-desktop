@@ -172,6 +172,10 @@ _Repeat and rinse, if you send enough patches to demonstrate you have a good
 coding skills, we'll just give you commit access on the real repo and you will
 be part of the development team._
 
+# License
+
+See [COPYING](LICENSE.txt) for the license. Frostwire for Android is offered under the [GNU General Public License](http://www.gnu.org/copyleft/gpl.html).
+
 
 # Official FrostWire Sites
 
