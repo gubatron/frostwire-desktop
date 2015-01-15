@@ -31,7 +31,7 @@ import org.limewire.util.OSUtils;
 /**
  * Displays a status update in various ways, depending on the
  * operating system & JDK.
- * 
+ *
  * OSX:
  *   - Displays an indeterminate JProgressBar with a JLabel
  *     left justified above it.
@@ -138,19 +138,5 @@ public final class StatusComponent extends JPanel {
             BAR.setStringPainted(true);
             add(BAR);
         }
-        /**
-        
-        if (STEPPING || OSUtils.isMacOSX()) {
-            JPanel panel = new JPanel(new BorderLayout());
-            panel.setPreferredSize(new Dimension(400,375));
-            panel.setMaximumSize(new Dimension(400,375));
-            panel.add(LABEL, BorderLayout.SOUTH);
-            add(panel);
-            //add(Box.createVerticalStrut(9));
-        } else {
-            BAR.setStringPainted(true);
-        }
-        add(BAR);
-        */
     }
 }

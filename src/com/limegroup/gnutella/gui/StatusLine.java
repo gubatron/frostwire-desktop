@@ -582,9 +582,6 @@ public final class StatusLine {
     public void updateTheme() {
         _connectionQualityMeterIcons[StatusLine.STATUS_DISCONNECTED] = GUIMediator.getThemeImage("connect_small_0");
         _connectionQualityMeterIcons[StatusLine.STATUS_TURBOCHARGED] = GUIMediator.getThemeImage("connect_small_6");
-
-        //		if (_mediaPlayer != null)
-        //			_mediaPlayer.updateTheme();
     }
 
     /**

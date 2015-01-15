@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.swing.Action;
 import javax.swing.Box;
@@ -54,6 +55,7 @@ import javax.swing.SwingUtilities;
 
 import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
 import com.frostwire.search.torrent.TorrentCrawledSearchResult;
+import com.frostwire.util.ThreadPool;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.service.ErrorService;
@@ -603,8 +605,10 @@ public final class GUIMediator {
         updateConnectionQualityAsync();
     }
 
+    private static final ThreadPool pool = new ThreadPool("GUIMediator-updateConnectionQuality", 1, 1, Integer.MAX_VALUE, new LinkedBlockingQueue<Runnable>(), true);
+
     private void updateConnectionQualityAsync() {
-        BackgroundExecutorService.schedule(new Runnable() {
+        pool.execute(new Runnable() {
             @Override
             public void run() {
                 final int quality = getConnectionQuality();
