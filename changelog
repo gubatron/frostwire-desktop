@@ -1,8 +1,11 @@
 frostwire (6.0.4) stable; urgency=high
   * Fixes issues with incomplete files.
   * Fixes issues importing too many songs to iTunes playlist.
+  * Fixes issue on which adding a whole torrent after starting a partial
+    download would not merge the two and continue to download the rest
+    of the torrent.
 
- -- FrostWire Team <contact@frostwire.com>  Fri, 02 January 2015 00:12:20 -0500
+ -- FrostWire Team <contact@frostwire.com>  Fri, 16 January 2015 14:31:06 -0500
 
 frostwire (6.0.3) stable; urgency=high
   * Solves issue getting correct single file location from transfer manager.
