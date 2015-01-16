@@ -1,4 +1,6 @@
 frostwire (6.0.4) stable; urgency=high
+  * When transfers are finished they no longer show as 'Paused', 
+    they show as 'Finished'.
   * Fixes issues with incomplete files.
   * Fixes issues importing too many songs to iTunes playlist.
   * Fixes issue on which adding a whole torrent after starting a partial
