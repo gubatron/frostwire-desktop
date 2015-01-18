@@ -1,4 +1,6 @@
 frostwire (6.0.4) stable; urgency=high
+  * Implements torrent loading algorithm to avoid CPU overuse when checking
+    torrent integrity.
   * When transfers are finished they no longer show as 'Paused', 
     they show as 'Finished'.
   * Fixes issues with incomplete files.
