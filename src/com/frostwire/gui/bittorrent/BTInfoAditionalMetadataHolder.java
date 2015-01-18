@@ -58,7 +58,7 @@ public class BTInfoAditionalMetadataHolder {
         if (hasPaymentOptions) {
             paymentOptions = new PaymentOptions(paymentOptionsMap);
         } else {
-            paymentOptions = new PaymentOptions(null, null, null, null);
+            paymentOptions = new PaymentOptions(null, null);
         }
         paymentOptions.setItemName(paymentOptionsDisplayName);
     }

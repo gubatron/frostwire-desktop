@@ -18,16 +18,6 @@
 
 package com.frostwire.gui.bittorrent;
 
-import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JTable;
-
-import net.miginfocom.swing.MigLayout;
-
 import com.frostwire.JsonEngine;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.torrent.PaymentOptions.PaymentMethod;
@@ -38,6 +28,12 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.FWAbstractJPanelTableCellRenderer;
 import com.limegroup.gnutella.gui.tables.TableActionLabel;
+import net.miginfocom.swing.MigLayout;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * 
@@ -49,18 +45,10 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
     private final static ImageIcon bitcoin_enabled;
     private final static ImageIcon bitcoin_disabled;
 
-    private final static ImageIcon litecoin_enabled;
-    private final static ImageIcon litecoin_disabled;
-
-    private final static ImageIcon dogecoin_enabled;
-    private final static ImageIcon dogecoin_disabled;
-
     private final static ImageIcon paypal_enabled;
     private final static ImageIcon paypal_disabled;
 
     private final TableActionLabel labelBitcoin;
-    private final TableActionLabel labelLitecoin;
-    private final TableActionLabel labelDogecoin;
     private final TableActionLabel labelPaypal;
 
     //mutable
@@ -70,20 +58,12 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
         bitcoin_enabled = GUIMediator.getThemeImage("bitcoin_enabled");
         bitcoin_disabled = GUIMediator.getThemeImage("bitcoin_disabled");
 
-        litecoin_enabled = GUIMediator.getThemeImage("litecoin_enabled");
-        litecoin_disabled = GUIMediator.getThemeImage("litecoin_disabled");
-
-        dogecoin_enabled = GUIMediator.getThemeImage("dogecoin_enabled");
-        dogecoin_disabled = GUIMediator.getThemeImage("dogecoin_disabled");
-        
         paypal_enabled = GUIMediator.getThemeImage("paypal_enabled");
         paypal_disabled = GUIMediator.getThemeImage("paypal_disabled");
     }
 
     public PaymentOptionsRenderer() {
         labelBitcoin = new TableActionLabel(bitcoin_enabled, bitcoin_disabled);
-        labelLitecoin = new TableActionLabel(litecoin_enabled, litecoin_disabled);
-        labelDogecoin = new TableActionLabel(dogecoin_enabled, dogecoin_disabled);
         labelPaypal = new TableActionLabel(paypal_enabled, paypal_disabled);
         setupUI();
     }
@@ -94,8 +74,6 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
 
         //We use "Bitcoin" for the protocol (upper case B), and "bitcoins" for the units of currency (lower case b)
         labelBitcoin.setToolTipText(I18n.tr("Name your price, Send a Tip or Donation in") +" "+ I18n.tr("bitcoins"));
-        labelLitecoin.setToolTipText(I18n.tr("Name your price, Send a Tip or Donation in") +" "+ I18n.tr("litecoins"));
-        labelDogecoin.setToolTipText(I18n.tr("Name your price, Send a Tip or Donation in") +" "+ I18n.tr("dogecoins"));
         labelPaypal.setToolTipText(I18n.tr("Name your price, Send a Tip or Donation via Paypal"));
 
         initMouseListeners();
@@ -103,10 +81,8 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
     }
 
     private void initComponentsLayout() {
-        setLayout(new MigLayout("gap 2px, fillx, center, insets 5px 5px 5px 5px","[20px!][20px!][20px!][20px!]"));
+        setLayout(new MigLayout("gap 2px, fillx, center, insets 5px 5px 5px 5px", "[20px!][20px!][20px!][20px!]"));
         add(labelBitcoin, "width 20px!, growx 0, aligny top, push");
-        add(labelLitecoin, "width 20px!, growx 0, aligny top");
-        add(labelDogecoin, "width 20px!, growx 0, aligny top");
         add(labelPaypal, "width 20px!, growx 0, aligny top, push");
     }
 
@@ -115,20 +91,6 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
             @Override
             public void mouseReleased(MouseEvent e) {
                 labelBitcoin_mouseReleased(e);
-            }
-        });
-
-        labelLitecoin.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                labelLitecoin_mouseReleased(e);
-            }
-        });
-
-        labelDogecoin.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                labelDogecoin_mouseReleased(e);
             }
         });
 
@@ -150,8 +112,6 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
             }
 
             labelBitcoin.updateActionIcon(gotPaymentOptions && !StringUtils.isNullOrEmpty(paymentOptions.bitcoin), showSolid);
-            labelLitecoin.updateActionIcon(gotPaymentOptions && !StringUtils.isNullOrEmpty(paymentOptions.litecoin), showSolid);
-            labelDogecoin.updateActionIcon(gotPaymentOptions && !StringUtils.isNullOrEmpty(paymentOptions.dogecoin), showSolid);
             labelPaypal.updateActionIcon(gotPaymentOptions && !StringUtils.isNullOrEmpty(paymentOptions.paypalUrl), showSolid);
         } catch (Throwable t) {
             t.printStackTrace();
@@ -180,24 +140,6 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
         }
     }
 
-    private void labelLitecoin_mouseReleased(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1 && labelLitecoin.isActionEnabled()) {
-            if (paymentOptions != null && !StringUtils.isNullOrEmpty(paymentOptions.litecoin)) {
-                openPaymentOptionsURL(paymentOptions, PaymentMethod.LITECOIN);
-                UXStats.instance().log(UXAction.DOWNLOAD_CLICK_LITECOIN_PAYMENT);
-            }
-        }
-    }
-
-    private void labelDogecoin_mouseReleased(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1 && labelDogecoin.isActionEnabled()) {
-            if (paymentOptions != null && !StringUtils.isNullOrEmpty(paymentOptions.dogecoin)) {
-                openPaymentOptionsURL(paymentOptions, PaymentMethod.DOGECOIN);
-                UXStats.instance().log(UXAction.DOWNLOAD_CLICK_DOGECOIN_PAYMENT);
-            }
-        }
-    }
-    
     private void labelPaypal_mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1 && labelPaypal.isActionEnabled()) {
             if (paymentOptions != null && !StringUtils.isNullOrEmpty(paymentOptions.paypalUrl)) {

@@ -375,10 +375,6 @@ final class SlideControlsOverlay extends JPanel {
             
             if (!StringUtils.isNullOrEmpty(paymentOptions.bitcoin)) {
                 paymentMethod = PaymentOptions.PaymentMethod.BITCOIN.toString();
-            } else if (!StringUtils.isNullOrEmpty(paymentOptions.litecoin)) {
-                paymentMethod = PaymentOptions.PaymentMethod.LITECOIN.toString();
-            } else if (!StringUtils.isNullOrEmpty(paymentOptions.dogecoin)) {
-                paymentMethod = PaymentOptions.PaymentMethod.DOGECOIN.toString();
             } else if (!StringUtils.isNullOrEmpty(paymentOptions.paypalUrl)) {
                 paymentMethod = PaymentOptions.PaymentMethod.PAYPAL.toString();
             }

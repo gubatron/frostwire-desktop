@@ -15,33 +15,26 @@
 
 package com.frostwire.gui.bittorrent;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
-import javax.swing.BorderFactory;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-
-import net.miginfocom.swing.MigLayout;
-
 import com.frostwire.gui.bittorrent.CryptoCurrencyTextField.CurrencyURIPrefix;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LimeTextField;
+import net.miginfocom.swing.MigLayout;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class PaymentOptionsPanel extends JPanel {
 
     private final JCheckBox confirmationCheckbox;
     private final CryptoCurrencyTextField bitcoinAddress;
-    private final CryptoCurrencyTextField litecoinAddress;
-    private final CryptoCurrencyTextField dogecoinAddress;
     private final LimeTextField paypalUrlAddress;
     
 
@@ -49,8 +42,6 @@ public class PaymentOptionsPanel extends JPanel {
         initBorder();
         confirmationCheckbox = new JCheckBox("<html><strong>" + I18n.tr("I am the content creator or I have the right to collect financial contributions for this work.")+"</strong><br>"+I18n.tr("I understand that incurring in financial gains from unauthorized copyrighted works can make me liable for counterfeiting and criminal copyright infringement.")+"</html>");
         bitcoinAddress = new CryptoCurrencyTextField(CurrencyURIPrefix.BITCOIN);
-        litecoinAddress = new CryptoCurrencyTextField(CurrencyURIPrefix.LITECOIN);
-        dogecoinAddress = new CryptoCurrencyTextField(CurrencyURIPrefix.DOGECOIN);
         paypalUrlAddress = new LimeTextField();
         
         setLayout(new MigLayout("fill"));
@@ -72,24 +63,10 @@ public class PaymentOptionsPanel extends JPanel {
                 onCryptoAddressPressed(bitcoinAddress);
             }
         });
-        litecoinAddress.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                onCryptoAddressPressed(litecoinAddress);
-            }
-        });
-        dogecoinAddress.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                onCryptoAddressPressed(dogecoinAddress);
-            }
-        });
     }
 
     protected void onConfirmationCheckbox() {
         bitcoinAddress.setEnabled(confirmationCheckbox.isSelected());
-        litecoinAddress.setEnabled(confirmationCheckbox.isSelected());
-        dogecoinAddress.setEnabled(confirmationCheckbox.isSelected());
         paypalUrlAddress.setEnabled(confirmationCheckbox.isSelected());
     }
 
@@ -126,18 +103,8 @@ public class PaymentOptionsPanel extends JPanel {
         add(new JLabel("<html>"+I18n.tr("<strong>Bitcoin</strong> receiving wallet address")+"</html>"),"wrap, span");
         add(new JLabel(GUIMediator.getThemeImage("bitcoin_accepted.png")),"aligny top");
         bitcoinAddress.setPrompt("bitcoin:1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-        add(bitcoinAddress,"aligny top, growx, push, wrap");
+        add(bitcoinAddress,"aligny top, growx, gapbottom 10px, wrap");
         
-        add(new JLabel("<html>"+I18n.tr("<strong>Litecoin</strong> receiving wallet address")+"</html>"),"wrap, span");
-        add(new JLabel(GUIMediator.getThemeImage("litecoin_accepted.png")),"aligny top");
-        litecoinAddress.setPrompt("litecoin:Lxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-        add(litecoinAddress, "aligny top, growx, push, wrap");
-
-        add(new JLabel("<html>"+I18n.tr("<strong>Dogecoin</strong> receiving wallet address")+"</html>"),"wrap, span");
-        add(new JLabel(GUIMediator.getThemeImage("dogecoin_accepted.png")),"aligny top");
-        dogecoinAddress.setPrompt("dogecoin:Dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-        add(dogecoinAddress, "aligny top, growx, push, wrap");
-
         add(new JLabel("<html>"+I18n.tr("<strong>Paypal</strong> payment/donation page url")+"</html>"),"wrap, span");
         add(new JLabel(GUIMediator.getThemeImage("paypal_accepted.png")), "aligny top");
         paypalUrlAddress.setPrompt("http://your.paypal.button/url/here");
@@ -159,15 +126,11 @@ public class PaymentOptionsPanel extends JPanel {
 
         if (confirmationCheckbox.isSelected()) {
             boolean validBitcoin = bitcoinAddress.hasValidAddress();
-            boolean validLitecoin = litecoinAddress.hasValidAddress();
-            boolean validDogecoin = dogecoinAddress.hasValidAddress();
-                
-            if (validBitcoin || validLitecoin || validDogecoin || (paypalUrlAddress.getText()!=null && !paypalUrlAddress.getText().isEmpty())) {
-                String bitcoin = validBitcoin ? bitcoinAddress.normalizeValidAddress() : null;
-                String litecoin = validLitecoin ? litecoinAddress.normalizeValidAddress() : null;
-                String dogecoin = validDogecoin ? dogecoinAddress.normalizeValidAddress() : null;
-                String paypal = (paypalUrlAddress != null && paypalUrlAddress.getText() != null && !paypalUrlAddress.getText().isEmpty()) ? paypalUrlAddress.getText() : null;
-                result = new PaymentOptions(bitcoin,litecoin,dogecoin,paypal);
+
+            if (validBitcoin || (paypalUrlAddress.getText()!=null && !paypalUrlAddress.getText().isEmpty())) {
+                final String bitcoin = validBitcoin ? bitcoinAddress.normalizeValidAddress() : null;
+                final String paypal = (paypalUrlAddress != null && paypalUrlAddress.getText() != null && !paypalUrlAddress.getText().isEmpty()) ? paypalUrlAddress.getText() : null;
+                result = new PaymentOptions(bitcoin, paypal);
             }
         }
         

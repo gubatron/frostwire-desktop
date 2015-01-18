@@ -18,16 +18,6 @@
 
 package com.frostwire.gui.library;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Map;
-
-import javax.swing.Icon;
-
-import org.apache.commons.io.FilenameUtils;
-import org.limewire.util.FileUtils;
-
 import com.frostwire.gui.Librarian;
 import com.frostwire.gui.bittorrent.TorrentInfoManipulator;
 import com.frostwire.gui.player.MediaPlayer;
@@ -40,6 +30,13 @@ import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.NameHolder;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
+import org.apache.commons.io.FilenameUtils;
+
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * This class acts as a single line containing all
@@ -236,7 +233,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
             if (hasPaymentOptions) {
                 paymentOptions = new PaymentOptions(paymentOptionsMap);
             } else {
-                paymentOptions = new PaymentOptions(null, null, null, null);
+                paymentOptions = new PaymentOptions(null, null);
             }
             paymentOptions.setItemName(_name);
         }
