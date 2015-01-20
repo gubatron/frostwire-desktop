@@ -113,9 +113,11 @@ class SlidePanel extends JPanel {
 
                         @Override
                         public void run() {
-                            imageLabel.setIcon(new ImageIcon(image));
-                            imageLabel.setBounds(0, 0, image.getWidth(), image.getHeight());
-                            overlayControls.setBounds(0, 0, image.getWidth(), image.getHeight());
+                            if (image != null) {
+                                imageLabel.setIcon(new ImageIcon(image));
+                                imageLabel.setBounds(0, 0, image.getWidth(), image.getHeight());
+                                overlayControls.setBounds(0, 0, image.getWidth(), image.getHeight());
+                            }
                         }
                     });
                 }
