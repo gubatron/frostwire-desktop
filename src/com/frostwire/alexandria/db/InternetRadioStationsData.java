@@ -447,7 +447,7 @@ public final class InternetRadioStationsData {
         add(data, "SLOW JAMZ", "SLOW JAMZ", "http://173.193.32.153:8028", "128 kbps", "MP3", "http://www.slowjamz.com.br", "R&B", "");
         add(data, "XL Radio Gurbani Kirtan 24/7- Canada", "XL Radio Gurbani Kirtan 24/7- Canada", "http://67.228.177.153:8459/Live", "64 kbps", "MP3", "http://www.xlradio.ca", "Indian", "");
         add(data, "AceRadio.net - Glee Radio", "AceRadio.net - Glee Radio", "http://174.36.42.110:8360", "128 kbps", "MP3", "http://www.aceradio.net", "Various", "");
-        add(data, "Music One", "Music One", "http://stream-91.shoutcast.com:80/musicone_mp3_128kbps", "128 kbps", "MP3", "http://www.musicone.fm", "Dance", "");
+        add(data, "Music One", "Music One", "http://app.musicone.fm/listen/mp3_128.pls", "128 kbps", "MP3", "http://www.musicone.fm", "Dance", "");
         add(data, "Fine Art: The Essential Art Bell (www.fineartstream.com)", "Fine Art: The Essential Art Bell (www.fineartstream.com)", "http://198.154.112.233:8374", "24 kbps", "MP3", "http://www.fineartstream.com", "Talk", "");
         add(data, "Radyo KBYN - At Home With Great Philippine Philippines Pinoy OPM Radyo Kabayan Filipino Music!", "Radyo KBYN - At Home With Great Philippine Philippines Pinoy OPM Radyo Kabayan Filipino Music!", "http://69.175.127.154:9044", "64 kbps", "MP3", "http://www.radyokabayan.com", "Pop", "");
         add(data, "Birdsong Radio", "Birdsong Radio", "http://83.170.84.48:7309/Live", "128 kbps", "MP3", "http://www.birdsongradio.com", "Chill", "");
