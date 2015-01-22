@@ -132,7 +132,7 @@ public final class iTunesMediator {
             }
         }
 
-        files = completeFiles.toArray(new File[0]);
+        files = completeFiles.toArray(new File[completeFiles.size()]);
 
         if (files.length == 0) {
             return;
@@ -155,8 +155,8 @@ public final class iTunesMediator {
         }
 
         String[] types = iTunesSettings.ITUNES_SUPPORTED_FILE_TYPES.getValue();
-        for (int i = 0; i < types.length; i++) {
-            if (extension.equalsIgnoreCase(types[i])) {
+        for (String type : types) {
+            if (extension.equalsIgnoreCase(type)) {
                 return true;
             }
         }
@@ -204,7 +204,7 @@ public final class iTunesMediator {
         command.add("-e");
         command.add("end tell");
 
-        return command.toArray(new String[0]);
+        return command.toArray(new String[command.size()]);
     }
 
     private static String[] createWSHScriptCommand(String playlist, File[] files) {
@@ -218,7 +218,7 @@ public final class iTunesMediator {
             command.add(file.getAbsolutePath());
         }
 
-        return command.toArray(new String[0]);
+        return command.toArray(new String[command.size()]);
     }
 
     /**
@@ -319,8 +319,6 @@ public final class iTunesMediator {
         iTunesImportSettings.IMPORT_FILES.add(file);
         if (OSUtils.isMacOSX() || OSUtils.isWindows()) {
             addSongsITunes(playlist, file);
-        } else if (OSUtils.isUbuntu()) {
-            //System.out.println("Import in Banshee: " + file);
         }
     }
 
@@ -357,7 +355,7 @@ public final class iTunesMediator {
         }
     }
 
-    public void deleteFrostWirePlaylist() {
+    void deleteFrostWirePlaylist() {
         String playlistName = iTunesSettings.ITUNES_PLAYLIST.getValue();
 
         try {
@@ -373,7 +371,7 @@ public final class iTunesMediator {
                 command.add(new File(CommonUtils.getUserSettingsDir(), JS_REMOVE_PLAYLIST_SCRIPT_NAME).getAbsolutePath());
                 command.add(playlistName);
 
-                Runtime.getRuntime().exec(command.toArray(new String[0]));
+                Runtime.getRuntime().exec(command.toArray(new String[command.size()]));
             }
         } catch (IOException e) {
             LOG.error("Error executing itunes command", e);
