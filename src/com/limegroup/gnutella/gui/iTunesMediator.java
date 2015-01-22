@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -59,7 +60,7 @@ public final class iTunesMediator {
     /**
      * The queue that will process the tunes to add.
      */
-    private final ExecutorService QUEUE = ExecutorsHelper.newProcessingQueue("iTunesAdderThread");
+    private final ExecutorService QUEUE = ExecutorsHelper.newFixedSizeThreadPool(4,"iTunesAdderThread");
 
     /**
      * Returns the sole instance of this class.
@@ -225,6 +226,7 @@ public final class iTunesMediator {
      */
     private class ExecOSAScriptCommand implements Runnable {
 
+        private final int MAX_SCRIPT_FILE_NUMBER_OF_ARGUMENTS = 300;
         private final String playlist;
 
         /**
@@ -245,7 +247,14 @@ public final class iTunesMediator {
          */
         public void run() {
             try {
-                Runtime.getRuntime().exec(createOSAScriptCommand(playlist, files));
+                if (files.length > MAX_SCRIPT_FILE_NUMBER_OF_ARGUMENTS) {
+                    List<File[]> fileArrays = splitArray(files, MAX_SCRIPT_FILE_NUMBER_OF_ARGUMENTS);
+                    for (File[] fileSubset : fileArrays ) {
+                        Runtime.getRuntime().exec(createOSAScriptCommand(playlist, fileSubset));
+                    }
+                } else {
+                    Runtime.getRuntime().exec(createOSAScriptCommand(playlist, files));
+                }
             } catch (Throwable e) {
                 LOG.error(e.getMessage(),e);
             }
@@ -253,6 +262,8 @@ public final class iTunesMediator {
     }
 
     private class ExecWSHScriptCommand implements Runnable {
+
+        private final int MAX_SCRIPT_FILE_NUMBER_OF_ARGUMENTS = 100;
 
         private final String playlist;
 
@@ -274,7 +285,15 @@ public final class iTunesMediator {
          */
         public void run() {
             try {
-                Runtime.getRuntime().exec(createWSHScriptCommand(playlist, files));
+                if (files.length > MAX_SCRIPT_FILE_NUMBER_OF_ARGUMENTS) {
+                    List<File[]> fileArrays = splitArray(files, MAX_SCRIPT_FILE_NUMBER_OF_ARGUMENTS);
+                    for (File[] fileSubset : fileArrays ) {
+                        Runtime.getRuntime().exec(createWSHScriptCommand(playlist, fileSubset));
+                    }
+                } else {
+                    Runtime.getRuntime().exec(createWSHScriptCommand(playlist, files));
+                }
+
             } catch (IOException e) {
                 LOG.error(e.getMessage(),e);
             }
@@ -284,6 +303,17 @@ public final class iTunesMediator {
     public void scanForSongs(File file) {
         scanForSongs(iTunesSettings.ITUNES_PLAYLIST.getValue(), file);
     }
+
+    public void scanForSongs(File[] files) {
+        if (OSUtils.isMacOSX() || OSUtils.isWindows()) {
+            for (File f : files) {
+                iTunesImportSettings.IMPORT_FILES.add(f);
+            }
+
+            addSongsiTunes(iTunesSettings.ITUNES_PLAYLIST.getValue(), files);
+        }
+    }
+
 
     private void scanForSongs(String playlist, File file) {
         iTunesImportSettings.IMPORT_FILES.add(file);
@@ -363,5 +393,27 @@ public final class iTunesMediator {
                 iTunesMediator.instance().scanForSongs(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
             }
         });
+    }
+
+    // This could be moved to a utils class if we ever needed elsewhere.
+    // I use this to split list of files to be imported to itunes
+    // because the script interpreters can only handle so many characters as arguments.
+    private static <T> List<T[]> splitArray(T[] items, int maxSubArraySize) {
+        List<T[]> result = new ArrayList<T[]>();
+        if (items ==null || items.length == 0) {
+            return result;
+        }
+
+        int from = 0;
+        int to = 0;
+        int slicedItems = 0;
+        while (slicedItems < items.length) {
+            to = from + Math.min(maxSubArraySize, items.length - to);
+            T[] slice = Arrays.copyOfRange(items, from, to);
+            result.add(slice);
+            slicedItems += slice.length;
+            from = to;
+        }
+        return result;
     }
 }

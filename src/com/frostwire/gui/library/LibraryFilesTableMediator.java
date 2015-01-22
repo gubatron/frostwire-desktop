@@ -997,12 +997,13 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         @Override
         public void actionPerformed(ActionEvent e) {
             int[] rows = TABLE.getSelectedRows();
+            List<File> files = new ArrayList<File>();
             for (int i = 0; i < rows.length; i++) {
                 int index = rows[i]; // current index to add
                 File file = DATA_MODEL.getFile(index);
-
-                iTunesMediator.instance().scanForSongs(file);
+                files.add(file);
             }
+            iTunesMediator.instance().scanForSongs(files.toArray(new File[0]));
         }
     }
 
