@@ -60,7 +60,7 @@ public final class iTunesMediator {
     /**
      * The queue that will process the tunes to add.
      */
-    private final ExecutorService QUEUE = ExecutorsHelper.newFixedSizeThreadPool(4,"iTunesAdderThread");
+    private final ExecutorService QUEUE = ExecutorsHelper.newFixedSizeThreadPool(4, "iTunesAdderThread");
 
     /**
      * Returns the sole instance of this class.
@@ -104,7 +104,7 @@ public final class iTunesMediator {
         if (file.isDirectory()) {
             files = FileUtils.getFilesRecursive(file, iTunesSettings.ITUNES_SUPPORTED_FILE_TYPES.getValue());
         } else if (file.isFile() && isSupported(FilenameUtils.getExtension(file.getName()))) {
-            files = new File[] { file };
+            files = new File[]{file};
         } else {
             return;
         }
@@ -249,14 +249,14 @@ public final class iTunesMediator {
             try {
                 if (files.length > MAX_SCRIPT_FILE_NUMBER_OF_ARGUMENTS) {
                     List<File[]> fileArrays = splitArray(files, MAX_SCRIPT_FILE_NUMBER_OF_ARGUMENTS);
-                    for (File[] fileSubset : fileArrays ) {
+                    for (File[] fileSubset : fileArrays) {
                         Runtime.getRuntime().exec(createOSAScriptCommand(playlist, fileSubset));
                     }
                 } else {
                     Runtime.getRuntime().exec(createOSAScriptCommand(playlist, files));
                 }
             } catch (Throwable e) {
-                LOG.error(e.getMessage(),e);
+                LOG.error(e.getMessage(), e);
             }
         }
     }
@@ -287,7 +287,7 @@ public final class iTunesMediator {
             try {
                 if (files.length > MAX_SCRIPT_FILE_NUMBER_OF_ARGUMENTS) {
                     List<File[]> fileArrays = splitArray(files, MAX_SCRIPT_FILE_NUMBER_OF_ARGUMENTS);
-                    for (File[] fileSubset : fileArrays ) {
+                    for (File[] fileSubset : fileArrays) {
                         Runtime.getRuntime().exec(createWSHScriptCommand(playlist, fileSubset));
                     }
                 } else {
@@ -295,7 +295,7 @@ public final class iTunesMediator {
                 }
 
             } catch (IOException e) {
-                LOG.error(e.getMessage(),e);
+                LOG.error(e.getMessage(), e);
             }
         }
     }
@@ -362,7 +362,7 @@ public final class iTunesMediator {
 
         try {
             if (OSUtils.isMacOSX()) {
-                String[] command = new String[] { "osascript", "-e", "tell application \"iTunes\"", "-e", "delete playlist \"" + playlistName + "\"", "-e", "end tell" };
+                String[] command = new String[]{"osascript", "-e", "tell application \"iTunes\"", "-e", "delete playlist \"" + playlistName + "\"", "-e", "end tell"};
 
                 Runtime.getRuntime().exec(command);
             } else if (OSUtils.isWindows()) {
@@ -372,7 +372,7 @@ public final class iTunesMediator {
                 command.add("//NoLogo");
                 command.add(new File(CommonUtils.getUserSettingsDir(), JS_REMOVE_PLAYLIST_SCRIPT_NAME).getAbsolutePath());
                 command.add(playlistName);
-                
+
                 Runtime.getRuntime().exec(command.toArray(new String[0]));
             }
         } catch (IOException e) {
@@ -400,7 +400,7 @@ public final class iTunesMediator {
     // because the script interpreters can only handle so many characters as arguments.
     private static <T> List<T[]> splitArray(T[] items, int maxSubArraySize) {
         List<T[]> result = new ArrayList<T[]>();
-        if (items ==null || items.length == 0) {
+        if (items == null || items.length == 0) {
             return result;
         }
 
