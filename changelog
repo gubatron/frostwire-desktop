@@ -1,3 +1,9 @@
+frostwire (6.0.5) stable; urgency=high
+  * Fixes out of memory crash and freeze when importing lots of songs from the FrostWire
+    library to iTunes.
+
+ -- FrostWire Team <contact@frostwire.com>  Fri, 22 January 2015 17:38:00 -0500
+
 frostwire (6.0.4) stable; urgency=high
   * Implements torrent loading algorithm to avoid CPU overuse when checking
     torrent integrity.
