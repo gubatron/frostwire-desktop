@@ -572,7 +572,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
         playSingleMediaFileAction.setEnabled(getSelectedDownloaders().length == 1 && hasMediaFiles && isSingleFile);
 
-        removeYouTubeAction.setEnabled(isYouTubeTransfer(dataLine.getInitializeObject()));
+        removeYouTubeAction.setEnabled(isHttpTransfer(dataLine.getInitializeObject()));
+
         BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(!isHttpTransfer(dataLine.getInitializeObject()));
         BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION.setEnabled(!isHttpTransfer(dataLine.getInitializeObject()));
     }

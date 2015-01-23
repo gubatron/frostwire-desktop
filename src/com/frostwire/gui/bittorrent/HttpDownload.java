@@ -81,6 +81,7 @@ public class HttpDownload implements BTDownload {
     private int md5CheckingProgress;
 
     private boolean isResumable;
+    private boolean deleteDataWhenRemoved;
 
     public HttpDownload(String theURL, String theTitle, String saveFileAs, long fileSize, String md5hash, boolean shouldResume, boolean deleteFileWhenTransferCancelled) {
         url = theURL;
@@ -146,6 +147,10 @@ public class HttpDownload implements BTDownload {
         if (state != TransferState.FINISHED) {
             state = TransferState.CANCELING;
             httpClient.cancel();
+        }
+
+        if (deleteDataWhenRemoved) {
+            getSaveLocation().delete();
         }
     }
 
@@ -466,7 +471,7 @@ public class HttpDownload implements BTDownload {
 
     @Override
     public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove) {
-
+        this.deleteDataWhenRemoved = deleteDataWhenRemove;
     }
 
     @Override

@@ -68,6 +68,7 @@ public class YouTubeDownload implements BTDownload {
     // variables to keep the download rate of file transfer
     private long speedMarkTimestamp;
     private long totalReceivedSinceLastSpeedStamp;
+    private boolean deleteDataWhenRemoved;
 
     public YouTubeDownload(YouTubeCrawledSearchResult sr) {
         this.sr = sr;
@@ -147,6 +148,10 @@ public class YouTubeDownload implements BTDownload {
         if (state != TransferState.FINISHED) {
             state = TransferState.CANCELING;
             httpClient.cancel();
+        }
+
+        if (deleteDataWhenRemoved) {
+            cleanup();
         }
     }
 
@@ -445,6 +450,7 @@ public class YouTubeDownload implements BTDownload {
 
     @Override
     public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove) {
+        this.deleteDataWhenRemoved = deleteDataWhenRemove;
     }
 
     private static enum DownloadType {

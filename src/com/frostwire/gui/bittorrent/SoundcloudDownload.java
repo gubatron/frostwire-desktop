@@ -75,6 +75,7 @@ public class SoundcloudDownload implements BTDownload {
     // variables to keep the download rate of file transfer
     private long speedMarkTimestamp;
     private long totalReceivedSinceLastSpeedStamp;
+    private boolean deleteDataWhenRemoved;
 
     public SoundcloudDownload(SoundcloudSearchResult sr) {
         this.sr = sr;
@@ -136,6 +137,10 @@ public class SoundcloudDownload implements BTDownload {
         if (state != TransferState.FINISHED) {
             state = TransferState.CANCELING;
             httpClient.cancel();
+        }
+
+        if (deleteDataWhenRemoved) {
+            getSaveLocation().delete();
         }
     }
 
@@ -380,6 +385,7 @@ public class SoundcloudDownload implements BTDownload {
 
     @Override
     public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove) {
+        this.deleteDataWhenRemoved = deleteDataWhenRemove;
     }
 
     @Override
