@@ -216,6 +216,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
         TRANSFER_STATE_STRING_MAP.put(TransferState.UPLOADING, I18n.tr("Uploading"));
         TRANSFER_STATE_STRING_MAP.put(TransferState.UNCOMPRESSING, I18n.tr("Uncompressing"));
         TRANSFER_STATE_STRING_MAP.put(TransferState.DEMUXING, I18n.tr("Demuxing"));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.ERROR_DISK_FULL, I18n.tr("Error: Disk full - Change default save location."));
+        TRANSFER_STATE_STRING_MAP.put(TransferState.REDIRECTING, I18n.tr("Redirecting"));
     }
 
     /**

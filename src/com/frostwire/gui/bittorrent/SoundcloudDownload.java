@@ -18,13 +18,16 @@
 
 package com.frostwire.gui.bittorrent;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import com.frostwire.core.CommonConstants;
+import com.frostwire.search.soundcloud.SoundCloudRedirectResponse;
 import com.frostwire.transfers.TransferState;
 import com.frostwire.mp3.ID3Wrapper;
 import com.frostwire.mp3.ID3v1Tag;
@@ -36,6 +39,7 @@ import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.JsonUtils;
 import com.limegroup.gnutella.settings.SharingSettings;
 import org.apache.commons.io.FilenameUtils;
 
@@ -99,6 +103,10 @@ public class SoundcloudDownload implements BTDownload {
 
     @Override
     public long getSize() {
+        if (isComplete() && getSaveLocation().exists()) {
+            return getSaveLocation().length();
+        }
+
         return size;
     }
 
@@ -173,6 +181,10 @@ public class SoundcloudDownload implements BTDownload {
             return -1;
         }
 
+        if (isComplete()) {
+            return 100;
+        }
+
         int progress = (int) ((bytesReceived * 100) / size);
 
         return Math.min(100, progress);
@@ -180,6 +192,10 @@ public class SoundcloudDownload implements BTDownload {
 
     @Override
     public long getBytesReceived() {
+        if (isComplete() && getSaveLocation().exists()) {
+            bytesReceived = getSaveLocation().length();
+        }
+
         return bytesReceived;
     }
 
@@ -259,7 +275,7 @@ public class SoundcloudDownload implements BTDownload {
             public void run() {
                 try {
                     httpClient.save(sr.getDownloadUrl(), temp, false);
-                } catch (IOException e) {
+                } catch (Throwable e) {
                     e.printStackTrace();
                     httpClientListener.onError(httpClient, e);
                 }
@@ -346,20 +362,58 @@ public class SoundcloudDownload implements BTDownload {
                 updateAverageDownloadSpeed();
                 state = TransferState.DOWNLOADING;
             }
+
+            //if we get a redirect result.
+            if (buffer!=null && length > 0 && length < 4096) {
+                handlePossibleRedirect(buffer, length);
+            }
+        }
+
+        private void handlePossibleRedirect(byte[] buffer, int length) {
+            String possibleJsonOutput = "n/a";
+
+            try {
+                possibleJsonOutput = new String(buffer,0, "{\"status\"".length());
+                if (!possibleJsonOutput.startsWith("{\"status")) {
+                    return;
+                }
+                possibleJsonOutput = new String(buffer,0,length);
+                final SoundCloudRedirectResponse redirectResponse = JsonUtils.toObject(possibleJsonOutput, SoundCloudRedirectResponse.class);
+                if (redirectResponse.status.startsWith("302") && redirectResponse.location != null && !redirectResponse.location.isEmpty()) {
+                    redirect(redirectResponse);
+                }
+            } catch (Throwable e) {
+                System.out.println("SoundCloudDownload.handlePossibleRedirect() error: " + e.getMessage());
+               //e.printStackTrace();
+            }
+
+        }
+
+        private void redirect(SoundCloudRedirectResponse redirectResponse) {
+            cleanup();
+            state = TransferState.REDIRECTING;
+            BTDownloadMediator.instance().remove(SoundcloudDownload.this);
+            sr.getSoundcloudItem().download_url = redirectResponse.location;
+            sr.getSoundcloudItem().downloadable = true;
+            state = TransferState.DOWNLOADING;
+            SoundcloudSearchResult scSearchResult = new SoundcloudSearchResult(sr.getSoundcloudItem(), null, null);
+            BTDownloadMediator.instance().downloadSoundcloudFromTrackUrlOrSearchResult(scSearchResult.getDownloadUrl(), getDisplayName(), scSearchResult);
         }
 
         @Override
         public void onComplete(HttpClient client) {
-            if (!setAlbumArt(tempAudio.getAbsolutePath(), completeFile.getAbsolutePath())) {
-                boolean renameTo = tempAudio.renameTo(completeFile);
+            if (state != TransferState.REDIRECTING) {
+                if (!setAlbumArt(tempAudio.getAbsolutePath(), completeFile.getAbsolutePath())) {
+                    boolean renameTo = tempAudio.renameTo(completeFile);
 
-                if (!renameTo) {
-                    state = TransferState.ERROR_MOVING_INCOMPLETE;
-                    return;
+                    if (!renameTo) {
+                        state = TransferState.ERROR_MOVING_INCOMPLETE;
+                        return;
+                    }
                 }
+                state = TransferState.FINISHED;
+                cleanupIncomplete();
             }
-            state = TransferState.FINISHED;
-            cleanupIncomplete();
         }
 
         @Override
@@ -428,4 +482,5 @@ public class SoundcloudDownload implements BTDownload {
     public CopyrightLicenseBroker getCopyrightLicenseBroker() {
         return null;
     }
+
 }

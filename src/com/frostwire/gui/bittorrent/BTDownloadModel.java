@@ -121,6 +121,10 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
         super.remove(i);
     }
 
+    public void remove(String hash) {
+        _hashDownloads.remove(hash);
+    }
+
     public BTDownloadDataLine getDataline(int i) {
         return get(i);
     }
