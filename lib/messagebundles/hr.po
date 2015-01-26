@@ -1414,7 +1414,7 @@ msgstr "Dodaj"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/Device.java:294
 msgid ""
 "The device is busy with another transfer or did not authorize your request"
-msgstr "
+msgstr ""
 "Uređaj je zauzet sa drugim prijenosom ili nije odobrio vaš zahtjev"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/Device.java:294
