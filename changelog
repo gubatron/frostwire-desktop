@@ -4,8 +4,9 @@ frostwire (6.0.5) stable; urgency=high
   * Removed Litecoin and Dogecoin from torrent creation dialog, Bitcoin and payment
     urls only. Litecoin and Dogecoin are pretty much dead compared to Bitcoin.
   * Remove Download and Data now enabled for http downloads too.
+  * Fixes possible errors for SoundCloud downloads.
 	
- -- FrostWire Team <contact@frostwire.com>  Fri, 22 January 2015 23:32:14 -0500
+ -- FrostWire Team <contact@frostwire.com>  Sat, 24 January 2015 08:45:13 -0500
 
 frostwire (6.0.4) stable; urgency=high
   * Implements torrent loading algorithm to avoid CPU overuse when checking
