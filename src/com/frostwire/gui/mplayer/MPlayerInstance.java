@@ -176,6 +176,10 @@ MPlayerInstance
                 cmdList.add("-cache-min");
                 cmdList.add("50");
             }
+
+			if (fileOrUrl.startsWith("https://")) {
+				fileOrUrl = fileOrUrl.replace("https://", "ffmpeg://https://");
+			}
 			
 			//cmdList.add("-quiet");
 			
@@ -278,7 +282,8 @@ MPlayerInstance
                 cmdList.add(fileOrUrl);
             } else if (OSUtils.isWindows()) {
 
-                if (fileOrUrl.length() > 250 && !fileOrUrl.toLowerCase().startsWith("http://")) {
+                if (fileOrUrl.length() > 250 && !fileOrUrl.toLowerCase().startsWith("http://")
+						&& !fileOrUrl.toLowerCase().startsWith("ffmpeg://")) {
                     String shortFileName = SystemUtils.getShortFileName(fileOrUrl);
 
                     if (shortFileName == null) {
