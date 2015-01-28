@@ -6,8 +6,10 @@ frostwire (6.0.5) stable; urgency=high
   * Remove Download and Data now enabled for http downloads too.
   * Fixes possible errors for SoundCloud downloads.
   * Updates on Hungarian and Romanian translations.
+  * Fixes YT search issues.
+  * New mplayer binaries with HTTPS support.
 	
- -- FrostWire Team <contact@frostwire.com>  Sat, 24 January 2015 08:45:13 -0500
+ -- FrostWire Team <contact@frostwire.com>  Wed, 28 January 2015 14:18:12 -0500
 
 frostwire (6.0.4) stable; urgency=high
   * Implements torrent loading algorithm to avoid CPU overuse when checking
