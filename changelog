@@ -5,6 +5,7 @@ frostwire (6.0.5) stable; urgency=high
     urls only. Litecoin and Dogecoin are pretty much dead compared to Bitcoin.
   * Remove Download and Data now enabled for http downloads too.
   * Fixes possible errors for SoundCloud downloads.
+  * Updates on Hungarian and Romanian translations.
 	
  -- FrostWire Team <contact@frostwire.com>  Sat, 24 January 2015 08:45:13 -0500
 
