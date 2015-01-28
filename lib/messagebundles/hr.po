@@ -124,7 +124,7 @@ msgstr "Ovaj prijenos je gotov, nastavak istoga će ga početi dijeliti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:221
 msgid "Do you want to enable torrent seeding?"
-msgstr "Želite li omogućiti seedanje torrenata?"
+msgstr "Želite li omogućiti dijeljenje torrenata?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:244
 msgid ""
@@ -132,10 +132,13 @@ msgid ""
 "handpicked file from a torrent.\n"
 "\n"
 msgstr ""
+"Dijeljenje ručno odabranih datoteka je ugašeno, a vi želite dijeliti "
+"ručno odabranu datoteku iz torrenta.\n"
+"\n"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:245
 msgid "Would you like to seed handpicked torrent files from now on?"
-msgstr ""
+msgstr "Želite li od sada dijeliti ručno odabrane torrent datoteke?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:264
 msgid "Pause Download"
@@ -245,17 +248,17 @@ msgstr "Pošalji prijatelju"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:460
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:461
 msgid "Hide Seeding Transfers"
-msgstr "Sakrij transfere koji dijele"
+msgstr "Sakrij transfere koji se dijele"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:462
 msgid "Don't show Seeding Transfers"
-msgstr "Nemoj prikazati transfere koji dijele"
+msgstr "Nemoj prikazati transfere koji se dijele"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:464
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:465
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:466
 msgid "Show Seeding Transfers"
-msgstr "Prikaži transfere koji dijele"
+msgstr "Prikaži transfere koji se dijele"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:485
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:222
@@ -1327,7 +1330,7 @@ msgstr ""
 "<strong>Ne dijeli završena torrent preuzimanja.</strong> BitTorrent "
 "korisnici na internetu će<br/>preuzimati samo dijelove datoteka od torrenta od "
 "vas dok vi preuzimate njegove<br/>podatkovne datoteke. <strong>Neki "
-"pratitelji će  ovakvo ponašanje leechanja.</strong>."
+"pratitelji će ovakvo ponašanje leechanja kazniti.</strong>."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:92
 msgid ""
@@ -3023,12 +3026,12 @@ msgid ""
 "<b>Not Seeding</b><p>File chunks might be shared only during a torrent "
 "download.</p>"
 msgstr ""
-"<b>Ne seedam</b><p>Dijelovi datoteke se mogu dijeliti samo tijekom torrent "
+"<b>Ne dijelim</b><p>Dijelovi datoteke se mogu dijeliti samo tijekom torrent "
 "preuzimanja.</p>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:487
 msgid "<b>Seeding</b>"
-msgstr "<b>Seedam</b>"
+msgstr "<b>Dijelim</b>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:487
 msgid "<b>Not Seeding</b>"
@@ -3244,7 +3247,7 @@ msgid ""
 "as long as they have the .torrent or a (magnet) link to it."
 msgstr ""
 "Budite oprezni da ne dijelite osjetljive informacije kao porezne dokumente, "
-"šifre, itd. Torrenti koje seedate mogu pristupati svi na mreži dokle god oni "
+"šifre, itd. Torrenti koje dijelite mogu pristupati svi na mreži dokle god oni "
 "imaju istu .torrent ili (magnet) poveznicu."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:35
@@ -3265,9 +3268,9 @@ msgid ""
 "they want as long as you or somebody else is seeding the same content."
 msgstr ""
 "Želite dijeliti veliku datoteku? Šaljite par stotina gigabajta bez "
-"problema , samo pazite da ostavite FrostWire upaljen i da seeda dok vaš(i) "
+"problema , samo pazite da ostavite FrostWire upaljen i da dijeli datoteke dok vaš(i) "
 "prijatelj(i) preuzimaju. Oni mogu pauzirati i nastaviti preuzimanje sve što "
-"hoće dokle god vi ili netko drugi seeda isti sadržaj."
+"hoće dokle god vi ili netko drugi dijeli isti sadržaj."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:37
 msgid ""
@@ -3808,7 +3811,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:112
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
 msgid "What is \"Seeding\"?"
-msgstr "Što se \"Seeda\"?"
+msgstr "Što je \"dijeljenje\"?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:127
 #, java-format
@@ -3905,7 +3908,7 @@ msgstr "Završi"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/SetupWindow.java:140
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AbstractPaneItem.java:80
 msgid "Learn more about this option..."
-msgstr "Naučiti više o ovoj opciji..."
+msgstr "Nauči više o ovoj opciji..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:39
 msgid ""
@@ -3913,8 +3916,7 @@ msgid ""
 "your choosing with other users connected to the BitTorrent network."
 msgstr ""
 "FrostWire je klijent-klijent aplikacija koja vam omogućava da dijelite "
-"datoteke po vašem izboru sa ostalim korisnicima spojenima na BitTorrent "
-"mrežu."
+"datoteke po vašem izboru sa ostalim korisnicima spojenima na BitTorrent mrežu."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:40
 msgid ""
@@ -3984,7 +3986,7 @@ msgstr "Dobijte FrostWire na vasem Android mobilnom telefonu, tabletu ili Google
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
 msgid "Learn about BitTorrent Seeding"
-msgstr "Naučiti više o BitTorrent seedanju"
+msgstr "Naučiti više o BitTorrent dijeljenju"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid "What is a VPN?"
@@ -4942,7 +4944,7 @@ msgid ""
 "file(s). Pieces of the seeded file(s) will be available to everybody. While "
 "downloading pieces are always available to other peers in the swarm."
 msgstr ""
-"Seedanje je proces spajanja na torrent kada imate cijelu/e datoteku/e. "
+"Dijeljenje je proces spajanja na torrent kada imate cijelu/e datoteku/e. "
 "Dijelovi seedane/ih datoteke/a će biti dostupne svima. Tijekom preuzimanja "
 "dijelovi su uvijek dostupni drugim peerovima u roju."
 
@@ -4964,7 +4966,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:38
 msgid "Send anonymous usage statistics"
-msgstr "Poslati anonimne statistike korištenja"
+msgstr "Pošalji anonimne statistike korištenja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:26
 msgid "Video Options"
@@ -4981,13 +4983,11 @@ msgstr "Možete izabrati koji video igrač želite koristiti"
 #.
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:35
 msgid "Video Player"
-msgstr "Video igrač"
+msgstr "Video svirač"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:38
 msgid "You can see and share your file with peers in your local Wi-Fi network."
-msgstr ""
-"Možete vidjeti i dijeliti vaše datoteke sa peerovima u vašoj lokalnoj Wi-Fi "
-"mreži."
+msgstr "Možete vidjeti i dijeliti vaše datoteke sa peerovima u vašoj lokalnoj Wi-Fi mreži."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:45
 msgid "Active search and discovery of local peer files."
@@ -5045,7 +5045,7 @@ msgstr "Stani"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchButtons.java:47
 msgid "Open Options dialog"
-msgstr "Otvoriti opcije dijaloga"
+msgstr "Otvoriti dijalog s opcijama"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchButtons.java:48
 msgid "Download All Selected Files"
