@@ -1929,7 +1929,7 @@ msgstr "Traži u knjižnici"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:37
 msgid "Importing"
-msgstr "Uvažam"
+msgstr "Uvoz"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryUtils.java:174
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryUtils.java:212
@@ -3643,7 +3643,7 @@ msgid ""
 "Thank you and please use English."
 msgstr ""
 "Molimo dodajte komentare koje imate (npr. što je uzrokovalo grešku).\n"
-"Hvala vam i molimo vas da koristite engleski."
+"Hvala Vam i molimo vas da koristite engleski."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:368
 msgid "Review"
@@ -4075,7 +4075,7 @@ msgstr "&Alati"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:68
 msgid "Rebuild iTunes \"FrostWire\" Playlist"
-msgstr "Obnavlja iTunes \"FrostWire\" playlistu"
+msgstr "Obnovi iTunes \"FrostWire\" playlistu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:69
 msgid ""
@@ -4677,7 +4677,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:28
 msgid "Revert to Default:"
-msgstr "Povrati osnovne postavke"
+msgstr "Revert osnovne postavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:38
 msgid "Login Details"
@@ -4685,7 +4685,7 @@ msgstr "Detalji prijavljivanja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:40
 msgid "Configure username and password to be used for the proxy."
-msgstr "Konfigurirati korisnicko ime i lozinku koje ćete koristiti za proxy."
+msgstr "Postavi korisničko ime i lozinku koje ćete koristiti za proxy."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:48
 msgid "Enable Authentication:"
@@ -4693,7 +4693,7 @@ msgstr "Omogučiti autentičnost"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:55
 msgid "Username:"
-msgstr "Korisnicko ime:"
+msgstr "Korisničko ime:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:62
 msgid "Password:"
@@ -4725,7 +4725,7 @@ msgstr "Port:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:56
 msgid "No Proxy"
-msgstr "Ne proxy"
+msgstr "Ne koristi proxy"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/SearchEnginesPaneItem.java:23
 msgid "Search Engines"
@@ -4737,13 +4737,15 @@ msgstr "Odaberite tražilice koje želite da FrostWire koristi."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShowFrostWireRecommendationsPaneItem.java:34
 msgid "FrostWire Recommendations"
-msgstr "Frostwire preporučaji"
+msgstr "FrostWire preporuke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShowFrostWireRecommendationsPaneItem.java:36
 msgid ""
 "By enabling this feature you become eligible to receive FrostWire sponsored "
 "offers and software recommendations to complement your experience."
 msgstr ""
+"Uključivanjem ove značajke pristajete na primanje FrostWire sponzoriranih "
+"ponuda i softverskih preporuka za nadopunjavanje Vašeg iskustva."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShowFrostWireRecommendationsPaneItem.java:43
 msgid "Enable FrostWire Recommendations (highly recommended):"
@@ -4838,11 +4840,11 @@ msgstr "Indikator propusnosti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:35
 msgid "You can display your bandwidth consumption in the status bar."
-msgstr "Možete prikazati vasu propusnost potrosnje u traci stanja."
+msgstr "Možete prikazati vašu propusnost potrosnje u traci stanja."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:42
 msgid "Show Bandwidth Indicator:"
-msgstr "Pokazati indikator propusnosti"
+msgstr "Pokazuj indikator propusnosti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:20
 msgid "Connection Quality Indicator"
@@ -4851,11 +4853,12 @@ msgstr "Indikator kvalitete mreže"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:22
 msgid ""
 "You can display a measurement of your connection quality in the status bar."
-msgstr "možete pokazati mjerenje vaše kvalitete mreže u traku stanja."
+msgstr ""
+"Možete pokazati mjerenje vaše kvalitete mreže u traku stanja."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:29
 msgid "Show Connection Quality Indicator:"
-msgstr "Pokazati indikator kvalitete mreže:"
+msgstr "Pokazuj indikator kvalitete mreže:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:20
 msgid "Firewall Indicator"
@@ -4867,7 +4870,7 @@ msgstr "Možete prikazati status vatrozida u status baru."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:29
 msgid "Show Firewall Indicator:"
-msgstr "Pokazati Firewall pokazatelj:"
+msgstr "Pokazuj Firewall pokazatelj:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:25
 msgid "BitTorrent Connection Settings"
