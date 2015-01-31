@@ -34,7 +34,6 @@ import com.frostwire.search.monova.MonovaSearchPerformer;
 import com.frostwire.search.soundcloud.SoundcloudSearchPerformer;
 import com.frostwire.search.tbp.TPBSearchPerformer;
 import com.frostwire.search.torlock.TorLockSearchPerformer;
-import com.frostwire.search.torrentsfm.TorrentsfmSearchPerformer;
 import com.frostwire.search.yify.YifySearchPerformer;
 import com.frostwire.search.youtube.YouTubeSearchPerformer;
 import com.limegroup.gnutella.settings.SearchEnginesSettings;
@@ -73,7 +72,7 @@ public abstract class SearchEngine {
     public static final int BITSNOOP_ID = 13;
     public static final int TORLOCK_ID = 14;
     public static final int EZTV_ID = 15;
-    public static final int TORRENTS_ID = 16;
+
     public static final int YIFI_ID = 17;
     public static final int BTJUNKIE_ID = 18;
     
@@ -177,14 +176,6 @@ public abstract class SearchEngine {
         }
     };
 
-    public static final SearchEngine TORRENTS = new SearchEngine(TORRENTS_ID, "Torrents", SearchEnginesSettings.TORRENTS_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("torrents.fm")) {
-        @Override
-        public SearchPerformer getPerformer(long token, String keywords) {
-            DomainAliasManager m = DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("torrents.fm");
-            return new TorrentsfmSearchPerformer(m, token, keywords, DEFAULT_TIMEOUT);
-        }
-    };
-    
     public static final SearchEngine YIFY = new SearchEngine(YIFI_ID, "Yify", SearchEnginesSettings.YIFY_SEARCH_ENABLED, DOMAIN_ALIAS_MANAGER_BROKER.getDomainAliasManager("www.yify-torrent.org")) {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
@@ -234,7 +225,7 @@ public abstract class SearchEngine {
     }
 
     public static List<SearchEngine> getEngines() {
-        return Arrays.asList(YOUTUBE, EXTRATORRENT, TPB, BITSNOOP, TORRENTS, SOUNDCLOUD, FROSTCLICK, MININOVA, KAT, MONOVA, ARCHIVEORG, TORLOCK, EZTV, YIFY, BTJUNKIE);
+        return Arrays.asList(YOUTUBE, EXTRATORRENT, TPB, BITSNOOP, SOUNDCLOUD, FROSTCLICK, MININOVA, KAT, MONOVA, ARCHIVEORG, TORLOCK, EZTV, YIFY, BTJUNKIE);
     }
 
     public static List<SearchEngine> getActiveEngines() {
