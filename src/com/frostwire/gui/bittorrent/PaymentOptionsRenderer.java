@@ -81,7 +81,7 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
     }
 
     private void initComponentsLayout() {
-        setLayout(new MigLayout("gap 2px, fillx, center, insets 5px 5px 5px 5px", "[20px!][20px!][20px!][20px!]"));
+        setLayout(new MigLayout("gap 2px, fillx, center, insets 5px 5px 5px 5px", "[20px!][20px!]"));
         add(labelBitcoin, "width 20px!, growx 0, aligny top, push");
         add(labelPaypal, "width 20px!, growx 0, aligny top, push");
     }
