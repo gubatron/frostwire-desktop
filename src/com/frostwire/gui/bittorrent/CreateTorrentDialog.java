@@ -18,6 +18,10 @@
 package com.frostwire.gui.bittorrent;
 
 import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.jlibtorrent.Entry;
+import com.frostwire.jlibtorrent.TorrentInfo;
+import com.frostwire.jlibtorrent.Vectors;
+import com.frostwire.jlibtorrent.swig.*;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.util.HttpClient;
@@ -26,21 +30,29 @@ import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.*;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import net.miginfocom.swing.MigLayout;
-import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
 import org.gudy.azureus2.core3.internat.MessageText;
-import org.gudy.azureus2.core3.torrent.*;
+import org.gudy.azureus2.core3.torrent.TOTorrent;
+import org.gudy.azureus2.core3.torrent.TOTorrentException;
+import org.gudy.azureus2.core3.torrent.TOTorrentProgressListener;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 import org.gudy.azureus2.core3.util.TrackersUtil;
+import org.limewire.util.FileUtils;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -78,10 +90,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
     private String trackerURL = TT_EXTERNAL_DEFAULT;
     private boolean useMultiTracker = false;
-    private boolean addOtherHashes = false;
-
-    //String multiTrackerConfig = "";
-    private final List<List<String>> trackers;
+    private final List<String> trackers;
 
     private boolean autoOpen = true;
     private File _saveDir;
@@ -116,11 +125,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
     public CreateTorrentDialog(JFrame frame) {
         super(frame);
-        addOtherHashes = false;
-
-        // they had it like this
-        trackers = new ArrayList<List<String>>();
-        trackers.add(new ArrayList<String>());
+        trackers = new ArrayList<String>();
 
         _container = getContentPane();
         _tabbedPane = new JTabbedPane();
@@ -546,7 +551,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
                 continue;
             }
 
-            //asume http if the user does not specify it
+            // assume http if the user does not specify it
             if (!tracker_url.startsWith("http://") && !tracker_url.startsWith("udp://")) {
                 tracker_url = "http://" + tracker_url.trim();
             }
@@ -564,13 +569,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
         //update the trackers list of lists
         trackers.clear();
-        trackers.add(valid_tracker_urls);
+        trackers.addAll(valid_tracker_urls);
         trackerURL = valid_tracker_urls.get(0);
-
         useMultiTracker = valid_tracker_urls.size() > 1;
-
         _invalidTrackerURL = null;
-
         return true;
     }
 
@@ -607,41 +609,49 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         File f = new File((create_from_dir) ? directoryPath : singlePath);
 
         try {
-            URL url = new URL(trackerURL);
-            final TOTorrent torrent;
+            int flags = create_torrent.flags_t.calculate_file_hashes.swigValue();
+            file_storage fs = new file_storage();
+            reportCurrentTask(I18n.tr("Adding files..."));
+            libtorrent.add_files(fs, f.getPath(), flags);
 
-            TOTorrentCreator creator = TOTorrentFactory.createFromFileOrDirWithComputedPieceLength(f, url, addOtherHashes);
-            creator.addListener(this);
-            torrent = creator.create();
+            create_torrent torrent = new create_torrent(fs, 0, -1, flags, -1);
+            torrent.set_priv(false);
+            torrent.set_creator("FrostWire " + FrostWireUtils.getFrostWireVersion() + " build " + FrostWireUtils.getBuildNumber());
+
+            if (useMultiTracker && trackers != null && !trackers.isEmpty()) {
+                reportCurrentTask(I18n.tr("Adding trackers..."));
+                for (String trackerUrl : trackers) {
+                    torrent.add_tracker(trackerUrl);
+                }
+            }
 
             if (torrent != null) {
                 if (addAvailableWebSeeds(torrent, create_from_dir)) {
                     _saveDir = f.getParentFile();
 
-                    addAvailablePaymentOptions(torrent);
-                    addAvailableCopyrightLicense(torrent);
+                    reportCurrentTask(I18n.tr("Calculating piece hashes..."));
 
-                    if (tracker_type == TT_DECENTRAL) {
-                        TorrentUtils.setDecentralised(torrent);
-                    }
+                    File containing_path = (create_from_dir) ? f : f.getParentFile();
+                    error_code ec = new error_code();
+                    libtorrent.set_piece_hashes(torrent, containing_path.getAbsolutePath(), ec);
 
-                    torrent.setComment(comment);
-                    boolean permitDHT = true; //TODO: If available on jlibtorrent, put in advanced settings.
-                    TorrentUtils.setDHTBackupEnabled(torrent, permitDHT);
-                    boolean privateTorrent = false;  //TODO: If available on jlibtorrent, put in advanced settings.
-                    TorrentUtils.setPrivate(torrent, privateTorrent);
-                    LocaleTorrentUtil.setDefaultTorrentEncoding(torrent);
+                    reportCurrentTask(I18n.tr("Generating torrent entry..."));
+                    Entry entry = new Entry(torrent.generate());
+                    addAvailablePaymentOptions(entry);
+                    addAvailableCopyrightLicense(entry);
 
-                    if (useMultiTracker) {
-                        reportCurrentTask(MessageText.getString("wizard.addingmt"));
-                        TorrentUtils.listToAnnounceGroups(trackers, torrent);
-                    }
-
-                    reportCurrentTask(MessageText.getString("wizard.savingfile"));
                     final File torrent_file = new File(dotTorrentSavePath);
-                    torrent.serialiseToBEncodedFile(torrent_file);
-                    reportCurrentTask(MessageText.getString("wizard.filesaved"));
+                    reportCurrentTask(I18n.tr("Saving torrent to disk..."));
+                    final byte[] bencoded_torrent_bytes = entry.bencode();
+                    FileOutputStream fos = new FileOutputStream(torrent_file);
+                    BufferedOutputStream bos = new BufferedOutputStream(fos);
+                    bos.write(bencoded_torrent_bytes);
+                    bos.flush();
+                    bos.close();
+
+                    //torrent.serialiseToBEncodedFile(torrent_file);
                     result = true;
+                    reportCurrentTask("");
                 } else {
                     result = false;
                     revertSaveCloseButtons();
@@ -654,12 +664,11 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
             if (e instanceof TOTorrentException) {
                 TOTorrentException te = (TOTorrentException) e;
                 if (te.getReason() != TOTorrentException.RT_CANCELLED) {
-                    reportCurrentTask(MessageText.getString("wizard.operationfailed"));
-                    reportCurrentTask(TorrentUtils.exceptionToText(te));
+                    reportCurrentTask(I18n.tr("Operation failed."));
                 }
             } else {
                 Debug.printStackTrace(e);
-                reportCurrentTask(MessageText.getString("wizard.operationfailed"));
+                reportCurrentTask(I18n.tr("Operation failed."));
             }
         }
 
@@ -667,7 +676,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
     }
 
 
-    private boolean addAvailableWebSeeds(TOTorrent torrent, boolean isMultiFile) {
+    private boolean addAvailableWebSeeds(create_torrent torrent, boolean isMultiFile) {
         boolean result = true;
 	    if (_textWebSeeds.getText().length() > 0) {
 	       List<String> mirrors = Arrays.asList(_textWebSeeds.getText().split("\n"));
@@ -689,7 +698,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
                }
 	           
                if (result) {
-        	           torrent.setAdditionalListProperty("url-list",mirrors);
+        	           //torrent.setAdditionalListProperty("url-list",mirrors);
+                       for (String mirror : mirrors) {
+                           torrent.add_http_seed(mirror);
+                       }
         	           result = true;
                }
 	       }
@@ -712,7 +724,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
      * Sends HEAD request to the mirror location along with the test path to see if the file exists.
      * Read http://getright.com/seedtorrent.html to find out how mirror urls are interpreted
      */
-    private boolean checkWebSeedMirror(String mirror, TOTorrent torrent, boolean isMultiFile) {
+    private boolean checkWebSeedMirror(String mirror, create_torrent torrent, boolean isMultiFile) {
         String urlPath = getWebSeedTestPath(mirror, torrent, isMultiFile);
         HttpClient browser = HttpClientFactory.newInstance();
 
@@ -726,7 +738,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         return responseCode == 200;
     }
 
-    private String getWebSeedTestPath(String mirror, TOTorrent torrent, boolean isMultiFile) {
+    private String getWebSeedTestPath(String mirror, create_torrent torrent, boolean isMultiFile) {
         String urlPath;
         
         //fix mirror
@@ -735,8 +747,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         }
 
         if (isMultiFile) {
+            final file_storage files = torrent.files();
             //path should be <http://mirror-url/> + torrentName + "/" + relativeFilePath
-            urlPath = mirror + new String(torrent.getName()) + "/" + torrent.getFiles()[0].getRelativePath();
+            urlPath = mirror + new String(files.name()) + "/" + files.file_path(0);//torrent.getFiles()[0].getRelativePath();
         } else {
             //url-list should point straight to the file.
             urlPath = mirror;
@@ -744,22 +757,20 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         return urlPath;
     }
 
-    private void addAvailableCopyrightLicense(final TOTorrent torrent) {
+    private void addAvailableCopyrightLicense(final Entry entry) {
         if (_licenseSelectorPanel.hasConfirmedRightfulUseOfLicense()) {
             CopyrightLicenseBroker license = _licenseSelectorPanel.getLicenseBroker();
             if (license != null) {
-                TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(torrent);
-                infoManipulator.addAdditionalInfoProperty("license", license.asMap());
+                entry.dictionary().put("license", Entry.fromMap(license.asMap()));
             }
         }
     }
 
-    private void addAvailablePaymentOptions(final TOTorrent torrent) {
+    private void addAvailablePaymentOptions(final Entry entry) {
         if (_paymentOptionsPanel.hasPaymentOptions()) {
             PaymentOptions paymentOptions = _paymentOptionsPanel.getPaymentOptions();
             if (paymentOptions != null) {
-                TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(torrent);
-                infoManipulator.addAdditionalInfoProperty("paymentOptions", paymentOptions.asMap());
+                entry.dictionary().put("paymentOptions", Entry.fromMap(paymentOptions.asMap()));
             }
         }
     }
