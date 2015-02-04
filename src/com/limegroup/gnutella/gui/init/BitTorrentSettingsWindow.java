@@ -40,7 +40,7 @@ class BitTorrentSettingsWindow extends SetupWindow {
 
     private static final long serialVersionUID = 4918724013794478084L;
 
-    private static final String LEARN_MORE_URL = "http://www.frostwire.com/faq#fil7";
+    private static final String LEARN_MORE_URL = "http://support.frostwire.com/hc/en-us/articles/200302295-What-is-seeding-";
 
     private TorrentSaveFolderComponent _torrentSaveFolderComponent;
     private TorrentSeedingSettingComponent _torrentSeedingSettingComponent;
