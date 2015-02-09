@@ -120,44 +120,51 @@ public final class UpdateMediator {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 File executableFile = getUpdateBinaryFile();
-
                 if (executableFile == null || latestMsg == null) {
                     return;
                 }
-
-                try {
-                    if (CommonUtils.isPortable()) {
-                        //UpdateMediator.instance().installPortable(executableFile);
-                        return; // pending refactor
-                    }
-
-                    if (OSUtils.isWindows()) {
-                        String[] commands = new String[] { "CMD.EXE", "/C", executableFile.getAbsolutePath() };
-
-                        ProcessBuilder pbuilder = new ProcessBuilder(commands);
-                        pbuilder.start();
-                    } else if (OSUtils.isLinux() && OSUtils.isUbuntu()) {
-                        installUbuntu(executableFile);
-                    } else if (OSUtils.isMacOSX()) {
-                        String[] mountCommand = new String[] { "hdiutil", "attach", executableFile.getAbsolutePath() };
-
-                        String[] finderShowCommand = new String[] { "open", "/Volumes/" + FilenameUtils.getBaseName(executableFile.getName()) };
-
-                        ProcessBuilder pbuilder = new ProcessBuilder(mountCommand);
-                        Process mountingProcess = pbuilder.start();
-
-                        mountingProcess.waitFor();
-
-                        pbuilder = new ProcessBuilder(finderShowCommand);
-                        pbuilder.start();
-                    }
-
-                    GUIMediator.shutdown();
-                } catch (Throwable e) {
-                    LOG.error("Unable to launch new installer", e);
-                }
+                openInstallerAndShutdown(executableFile);
             }
         });
+    }
+
+    public static void openInstallerAndShutdown(File executableFile) {
+        try {
+            if (CommonUtils.isPortable()) {
+                //UpdateMediator.instance().installPortable(executableFile);
+                return; // pending refactor
+            }
+
+            if (OSUtils.isWindows()) {
+                String[] commands = new String[] { "CMD.EXE", "/C", executableFile.getAbsolutePath() };
+                ProcessBuilder pbuilder = new ProcessBuilder(commands);
+                pbuilder.start();
+            } else if (OSUtils.isLinux() && OSUtils.isUbuntu()) {
+                installUbuntu(executableFile);
+            } else if (OSUtils.isMacOSX()) {
+                final String[] mountCommand = new String[] { "hdiutil", "attach", executableFile.getAbsolutePath() };
+                final String[] finderShowCommand = new String[] { "open", "/Volumes/" + FilenameUtils.getBaseName(executableFile.getName()) };
+                final String[] finderShowCommandFallback = new String[]{"open", "file:///Volumes/Frostwire Installer"};
+
+                ProcessBuilder pbuilder = new ProcessBuilder(mountCommand);
+                Process mountingProcess = pbuilder.start();
+                mountingProcess.waitFor();
+
+                pbuilder = new ProcessBuilder(finderShowCommand);
+                Process showProcess = pbuilder.start();
+                showProcess.waitFor();
+
+                pbuilder = new ProcessBuilder(finderShowCommandFallback);
+                showProcess = pbuilder.start();
+                showProcess.waitFor();
+
+                Runtime.getRuntime().exec(finderShowCommandFallback);
+            }
+
+            GUIMediator.shutdown();
+        } catch (Throwable e) {
+            LOG.error("Unable to launch new installer", e);
+        }
     }
 
     public void checkForUpdate() {
@@ -186,7 +193,7 @@ public final class UpdateMediator {
         pu.update();
     }
 
-    void installUbuntu(File executableFile) throws IOException {
+    static void installUbuntu(File executableFile) throws IOException {
         boolean success = trySoftwareCenter(executableFile) || tryGdebiGtk(executableFile);
 
         if (!success) {
@@ -194,15 +201,15 @@ public final class UpdateMediator {
         }
     }
 
-    private boolean trySoftwareCenter(File executableFile) {
+    private static boolean trySoftwareCenter(File executableFile) {
         return tryUbuntuInstallCmd("/usr/bin/software-center", executableFile);
     }
 
-    private boolean tryGdebiGtk(File executableFile) {
+    private static boolean tryGdebiGtk(File executableFile) {
         return tryUbuntuInstallCmd("gdebi-gtk", executableFile);
     }
 
-    private boolean tryUbuntuInstallCmd(String cmd, File executableFile) {
+    private static boolean tryUbuntuInstallCmd(String cmd, File executableFile) {
         try {
             String[] commands = new String[] { cmd, executableFile.getAbsolutePath() };
 

@@ -188,37 +188,7 @@ public class InstallerUpdater implements Runnable {
                 DialogOption result = GUIMediator.showYesNoMessage(_updateMessage.getMessageInstallerReady(), I18n.tr("Update"), JOptionPane.INFORMATION_MESSAGE);
 
                 if (result == DialogOption.YES) {
-                    try {
-                        if (CommonUtils.isPortable()) {
-                            //UpdateMediator.instance().installPortable(_executableFile);
-                            return; // pending refactor
-                        }
-
-                        if (OSUtils.isWindows()) {
-                            String[] commands = new String[]{"CMD.EXE", "/C", _executableFile.getAbsolutePath()};
-
-                            ProcessBuilder pbuilder = new ProcessBuilder(commands);
-                            pbuilder.start();
-                        } else if (OSUtils.isLinux() && OSUtils.isUbuntu()) {
-                            UpdateMediator.instance().installUbuntu(_executableFile);
-                        } else if (OSUtils.isMacOSX()) {
-                            String[] mountCommand = new String[]{"hdiutil", "attach", _executableFile.getAbsolutePath()};
-
-                            String[] finderShowCommand = new String[]{"open", "/Volumes/" + FilenameUtils.getBaseName(_executableFile.getName())};
-
-                            ProcessBuilder pbuilder = new ProcessBuilder(mountCommand);
-                            Process mountingProcess = pbuilder.start();
-
-                            mountingProcess.waitFor();
-
-                            pbuilder = new ProcessBuilder(finderShowCommand);
-                            pbuilder.start();
-                        }
-
-                        GUIMediator.shutdown();
-                    } catch (Throwable e) {
-                        LOG.error("Unable to launch new installer", e);
-                    }
+                    UpdateMediator.openInstallerAndShutdown(_executableFile);
                 }
             }
         });
