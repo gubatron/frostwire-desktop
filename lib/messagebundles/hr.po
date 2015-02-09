@@ -3483,7 +3483,7 @@ msgstr "Pomoć pri korištenju FrostWirea."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:113
 msgid "Visit us at www.frostwire.com"
-msgstr "Nađi još skinova na frostwire.com."
+msgstr "Nađi još izgleda na frostwire.com."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:41
 msgid "New Version Available!"
@@ -3509,8 +3509,8 @@ msgid ""
 "like to update now?"
 msgstr ""
 "FrostWire se treba restartati kako bi instalirao nadogradnju. Ako ne želite "
-"sada ažurirajti, FrostWire će se automatski ažurirajti kada ga zatvorite. "
-"Želite li sada ažurirajti?"
+"sada ažurirati, FrostWire će se automatski ažurirati kada ga zatvorite. "
+"Želite li sada ažurirati?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:175
 msgid "Update Ready"
@@ -3523,7 +3523,7 @@ msgstr "Nadogradi kasnije"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdatePanel.java:25
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdatePanel.java:43
 msgid "A newer version is available, update?"
-msgstr "Nova inačica je dostupna, ažurirajti?"
+msgstr "Nova inačica je dostupna, ažurirati?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/VPNStatusButton.java:59
 msgid ""
@@ -3538,8 +3538,8 @@ msgid ""
 "FrostWire can't detect an encrypted VPN connection, your privacy is at risk. "
 "Click icon to set up an encrypted VPN connection."
 msgstr ""
-"FrostWire ne može detektirati šifriranu VPN vezu, vaša privatnost je pod "
-"rizikom.Kliknite ikonu kako bi ste postavili šifriranu VPN vezu."
+"FrostWire ne može detektirati šifriranu VPN vezu, vaša privatnost je pod rizikom. "
+"Kliknite na ikonu kako bi ste postavili šifriranu VPN vezu."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:60
 msgid "O&pen .Torrent or Magnet"
@@ -3572,8 +3572,8 @@ msgid ""
 "FrostWire cannot download this address. Make sure you typed it correctly, "
 "and then try again."
 msgstr ""
-"FrostWire ne može otvoriti ovu adresu. Budite sigurni da ste je napisali "
-"točno, i onda pokušajte ponovno."
+"FrostWire ne može otvoriti ovu adresu. Budite sigurni da ste je napisali točno, "
+"i onda pokušajte ponovno."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:310
 msgid "&Close"
@@ -3748,7 +3748,7 @@ msgstr ""
 "FrostWire nije mogao kreirati ili nastaviti sa zapisivanjem nepotpune "
 "datoteke označene za preuzimanje jer nemate dopuštenje za zapisivanje "
 "datoteka u mapu nepotpuno. Za nastavak korištenja FrostWirea, molimo odaberite "
- drukčiju mapu za spremanje."
+"drukčiju mapu za spremanje."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:654
 msgid ""
@@ -5204,15 +5204,3 @@ msgstr "Prošireni opisi"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:189
 msgid "You cannot turn off all columns."
 msgstr "Ne možete zatvori sve stupce."
-
-#~ msgid "<strong>Litecoin</strong> receiving wallet address"
-#~ msgstr "<strong>Litecoin</strong> adresa novčanika za primanje"
-
-#~ msgid "<strong>Dogecoin</strong> receiving wallet address"
-#~ msgstr "<strong>Dogecoin</strong> adresa novčanika za primanje"
-
-#~ msgid "litecoins"
-#~ msgstr "litecoini"
-
-#~ msgid "dogecoins"
-#~ msgstr "dogecoini"
