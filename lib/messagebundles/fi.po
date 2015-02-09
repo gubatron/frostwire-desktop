@@ -1055,13 +1055,13 @@ msgstr "Tiedostopäätteet:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:255
 msgid "Select/Unselect all files"
-msgstr "Poista valitut tiedostot."
+msgstr "Valitse/poista valinta kaikista tiedostoista"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:533
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/transfers/PeerHttpUpload.java:162
 #, fuzzy
 msgid "Unknown"
-msgstr "Tuntemattomat pyynnöt"
+msgstr "Tuntematon"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/PaymentOptionsPanel.java:43
 msgid ""
@@ -1103,7 +1103,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:90
 msgid "Preparing selection"
-msgstr "Avaa valitut tiedostot."
+msgstr "Valmistellaan valintaa"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:91
 msgid "please wait..."
@@ -1111,7 +1111,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:179
 msgid "Select the content you want to send"
-msgstr "Tyhjennä valitut lataukset listasta"
+msgstr "Valitse lähetettävä sisältö"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:180
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/FileChooserHandler.java:100
@@ -1142,11 +1142,11 @@ msgstr "Lataa"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:140
 msgid "at"
-msgstr "Chat"
+msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:141
 msgid "via FrostWire"
-msgstr "FrostWire"
+msgstr "FrostWiren kautta"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:165
 msgid "Use the following text to share the \"%s\" folder"
@@ -1198,39 +1198,39 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:407
 msgid "Copy Text"
-msgstr "Kopioi raportti"
+msgstr "Kopioi teksti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:408
 msgid "Copy entire message to Clipboard"
-msgstr "Kopio Magnet linkit leikepöydälle"
+msgstr "Kopio viesti leikepöydälle"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:415
 msgid "Message copied to clipboard."
-msgstr "Kopioi leikepöydälle"
+msgstr "Viesti kopioitu leikepöydälle"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:427
 msgid "Copy Link"
-msgstr "Kopioi"
+msgstr "Kopioi linkki"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:428
 msgid "Copy Link to Clipboard"
-msgstr "Kopioi leikepöydälle"
+msgstr "Kopioi linkki leikepöydälle"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:435
 msgid "Link copied to clipboard."
-msgstr "Kopioi leikepöydälle"
+msgstr "Linkki kopioitu leikepöydälle"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:450
 msgid "Copy Magnet URL to Clipboard"
-msgstr "Kopio Magnet linkit leikepöydälle"
+msgstr "Kopio Magnet-linkit leikepöydälle"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:457
 msgid "Magnet copied to clipboard."
-msgstr "Kopio Magnet linkit leikepöydälle"
+msgstr "Magnet-linkit kopioitu leikepöydälle"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:58
 msgid "Torrent Data Save Folder"
-msgstr "Tallenna hakemistoon"
+msgstr "Tallenna torrent-data hakemistoon"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:90
 msgid "You forgot to enter a path for the Torrent Data Folder."
@@ -1238,17 +1238,16 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:114
 msgid "Please enter a valid path for the Torrent Data Folder"
-msgstr ""
-"Ole hyvä ja ilmoita kelvollinen vuosi tiedostolle, jonka haluat julkaista."
+msgstr "Anna kelvollinen polku data-kansiolle"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:132
 msgid "The Torrent Data Folder cannot be inside the"
-msgstr "Tiedosto korruptoitunut. Ei voitu tallentaa."
+msgstr "Datakansio ei voi olla sisällä"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:136
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:147
 msgid "Could not resolve folder path."
-msgstr "Palvelinta ei voitu selata. {0} ."
+msgstr "Kansiota ei voitu paikantaa."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:143
 msgid "The Torrent Data Folder cannot be a parent folder of the"
@@ -1274,7 +1273,7 @@ msgstr "Valitse toinen hakemisto"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:49
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:38
 msgid "Seeding Settings"
-msgstr "Lataa asetuksia..."
+msgstr "Seed-asetukset"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:76
 msgid ""
@@ -1307,7 +1306,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:155
 #, fuzzy
 msgid "on"
-msgstr "Kuvake"
+msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:244
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/components/slides/SlideControlsOverlay.java:245
@@ -1349,7 +1348,7 @@ msgstr "&Asetukset..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:172
 msgid "You can configure the folders you share in FrostWire's Options."
-msgstr "Voit muokata jaettavia tiedostoja FrostWiren asetuksista"
+msgstr "Voit muokata jaettavia kansioita FrostWiren asetuksista"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:264
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:359
@@ -1358,13 +1357,13 @@ msgstr "Lähetä"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:278
 msgid "Do you want to send this file to a friend?"
-msgstr "Etsinnät tiedostoista samalla tiedosto nimellä."
+msgstr "Lähetetäänkö tämä tiedosto kaverille?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/AbstractLibraryTableMediator.java:278
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1135
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:67
 msgid "Send files with FrostWire"
-msgstr "Ohjeet FrostWiren käyttämiseksi"
+msgstr "Lähetä tiedostoja Frostwirellä"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/AddLibraryDirectoryAction.java:45
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/ListEditor.java:238
@@ -1378,11 +1377,11 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/Device.java:294
 msgid "Transfer failed"
-msgstr "Siirtoja"
+msgstr "Siirto epäonnistui"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/DeviceUploadDialog.java:66
 msgid "Upload to device"
-msgstr "Jakojen raja saavutettu"
+msgstr "Lataa laitteelle"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/DeviceUploadDialog.java:117
 msgid "Waiting for device authorization..."
@@ -1406,7 +1405,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchTableColumns.java:35
 #, fuzzy
 msgid "Actions"
-msgstr "Toiminto"
+msgstr "Toiminnot"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:57
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:331
@@ -1443,7 +1442,7 @@ msgstr "Vuosi"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:90
 msgid "Date Added"
-msgstr "Tallenna nimellä"
+msgstr "Lisätty:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:93
 msgid "Date Modified"
@@ -1457,7 +1456,7 @@ msgstr "Muutettu viimeksi:"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibrarySearch.java:188
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/tabs/SearchDownloadTab.java:51
 msgid "Search"
-msgstr "Hakua"
+msgstr "Haku"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:436
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:437
@@ -1466,7 +1465,7 @@ msgstr "Tallenna"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:438
 msgid "Save Selected Files To Folder"
-msgstr "Tyhjennä valitut lataukset listasta"
+msgstr "Tallenna valitut tiedostot kansioon"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryExplorer.java:130
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryExplorer.java:184
@@ -1481,13 +1480,13 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryExplorer.java:149
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:316
 msgid "tracks"
-msgstr "Kappale"
+msgstr "kappaleita"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryExplorer.java:209
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:39
 #, fuzzy
 msgid "Default Save Folder"
-msgstr "Hakemisto:"
+msgstr "Oletushakemisto:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryExplorer.java:211
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:36
@@ -1512,7 +1511,7 @@ msgstr "Päivitä"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryExplorer.java:663
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:700
 msgid "Refresh selected"
-msgstr "Yhteydet"
+msgstr "Päivitä valitut"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryExplorer.java:680
 msgid "Open Library Folder"
@@ -1590,19 +1589,19 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:664
 #, fuzzy
 msgid "Launch in"
-msgstr "Käynnistä toiminto"
+msgstr "Käynnistä sovelluksessa"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:882
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:665
 #, fuzzy
 msgid "Launch Selected Files in"
-msgstr "Avaa valitut tiedostot."
+msgstr "Avaa valitut tiedostot sovelluksessa"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:924
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:707
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:336
 msgid "Create a new .torrent file"
-msgstr "Jaa \".torrent\"-tiedostot"
+msgstr "Luo uusi \".torrent\"-tiedosto"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:959
 msgid "Delete Selected Files"
@@ -1616,7 +1615,7 @@ msgstr "Nimeä uudelleen"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:993
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:739
 msgid "Send audio files to iTunes"
-msgstr "tallenna yksityiskohdat tiedostoon"
+msgstr "Lähetä äänitiedostot iTunesiin"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1018
 msgid "Extract Audio"
