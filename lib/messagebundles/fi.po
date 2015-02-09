@@ -503,7 +503,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:268
 #, fuzzy
 msgid "Unknown status"
-msgstr "Tuntemattomat pyynnöt"
+msgstr "Tuntematon tila"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:366
 msgid "ETA"
@@ -535,7 +535,7 @@ msgstr "Näytä lataukset kirjastossa"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediator.java:170
 msgid "Transfers"
-msgstr "Siirtoja"
+msgstr "Siirrot"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediator.java:252
 msgid "Loading Download Window..."
@@ -587,7 +587,7 @@ msgstr "Asiantuntija"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:189
 #, fuzzy
 msgid "Trackers"
-msgstr "Kappale"
+msgstr "Trackerit"
 
 #. advanced > Download Speed Menu //
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:227
@@ -597,7 +597,7 @@ msgstr "Valitse nopeus"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:236
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:343
 msgid "Disabled"
-msgstr "Ohita"
+msgstr "Pois päältä"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:241
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:348
@@ -637,17 +637,17 @@ msgstr ""
 #. advanced >Upload Speed Menu //
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:334
 msgid "Set Up Speed"
-msgstr "Valitse nopeus"
+msgstr "Valitse jakonopeus"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:454
 #, fuzzy
 msgid "Edit Trackers"
-msgstr "Kappale"
+msgstr "Muokkaa trackereita"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:470
 #, fuzzy
 msgid "Update Tracker"
-msgstr "Päivitä myöhemmin"
+msgstr "Päivitä tracker"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:491
 msgid "Scrape Tracker"
@@ -656,7 +656,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:517
 #, fuzzy
 msgid "Edit trackers"
-msgstr "Kappale"
+msgstr "Muokkaa trackereita"
 
 #. columns
 #. rows
@@ -685,7 +685,7 @@ msgstr "Creative Commons"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:51
 #, fuzzy
 msgid "Open Source"
-msgstr "Etsi palvelimia"
+msgstr "Avoin lähdekoodi"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CopyrightLicenseSelectorPanel.java:52
 msgid "Public Domain"
@@ -804,7 +804,7 @@ msgstr "Lisenssityyppi:"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:69
 #, fuzzy
 msgid "Torrent File Created with FrostWire http://www.frostwire.com"
-msgstr "Otetaan yhteyttä verkkoon"
+msgstr "Torrent luotu FrostWirellä http://www.frostwire.com"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:152
 #, fuzzy
@@ -829,7 +829,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:183
 msgid "Torrent Contents"
-msgstr "Poista aikuisviihde"
+msgstr "Torrentin sisältö"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:186
 msgid ""
@@ -840,7 +840,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:190
 #, fuzzy
 msgid "Select File"
-msgstr "Valitse hakemisto"
+msgstr "Valitse tiedosto"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:191
 msgid ""
@@ -867,7 +867,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:204
 #, fuzzy
 msgid "Tracking"
-msgstr "Kappale"
+msgstr "Tracking"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:206
 msgid "Trackerless Torrent (DHT)"
@@ -881,7 +881,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:210
 msgid "Start seeding"
-msgstr "Käynnistetään"
+msgstr "Käynnistetään seedaus"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:212
 msgid ""
@@ -919,7 +919,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:245
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:768
 msgid "Save torrent as..."
-msgstr "Jaa \".torrent\"-tiedostot"
+msgstr "Tallenna .torrent-tiedosto nimellä"
 
 #. then this one will dock east (west of) the next to the existing component
 #. set up close button
@@ -940,7 +940,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:347
 #, fuzzy
 msgid "Select a single file"
-msgstr "Poista valitut tiedostot."
+msgstr "Valitse yksi tiedosto"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:336
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:352
@@ -978,11 +978,11 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:933
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:716
 msgid "Invalid Folder"
-msgstr "Vahingoittunut tiedostonimi"
+msgstr "Epäkelpo kansio"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:474
 msgid "Torrent Created."
-msgstr "Luotu"
+msgstr "Torrent luotu."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:500
 msgid "Torrent File"
@@ -991,7 +991,7 @@ msgstr "\".torrent\"-tiedostot"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:513
 #, fuzzy
 msgid "Save .torrent"
-msgstr "Jaa \".torrent\"-tiedostot"
+msgstr "Tallenna \".torrent\"-tiedosto"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:636
 msgid "wizard.addingmt"
@@ -1014,7 +1014,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:677
 #, fuzzy
 msgid "Checking Web seed mirror URLs..."
-msgstr "Tarkistaa päivityksiä..."
+msgstr "Tarkistetaan web-seed-linkkejä..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:686
 msgid "Web seed not reachable."
@@ -1022,15 +1022,15 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:780
 msgid "Saving Torrent..."
-msgstr "Tiedosto tallennetaan..."
+msgstr "Torrent tallennetaan..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:105
 msgid "Select files to download"
-msgstr "Tyhjennä valitut lataukset listasta"
+msgstr "Valitse ladattavat tiedostot"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:178
 msgid "Download Selected Files Only"
-msgstr "Lataa valitut tiedostot."
+msgstr "Lataa vain valitut tiedostot."
 
 #. checkbox
 #. icon
