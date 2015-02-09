@@ -1,3 +1,9 @@
+frostwire (6.0.6) stable; urgency=high
+  * Romanian and Finnish translation updates.
+  * YT search upgrades.
+	
+ -- FrostWire Team <contact@frostwire.com>  Mon, 09 February 2015 11:53:10 -0500
+
 frostwire (6.0.5) stable; urgency=high
   * Fixes out of memory crash and freeze when importing lots of songs from the FrostWire
     library to iTunes.
