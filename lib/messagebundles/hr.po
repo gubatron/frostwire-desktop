@@ -4555,15 +4555,7 @@ msgstr "Povrati osnovne postavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:17
 msgid "Locale Preferencing"
-msgstr ""
-
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:19
-msgid "You can choose to preference hosts using the same language as you."
-msgstr ""
-
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:22
-msgid "Turn preferencing on:"
-msgstr ""
+msgstr "Preferințe Locale"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:20
 msgid "Maximum Searches"
@@ -5205,15 +5197,3 @@ msgstr "Prošireni opisi"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:189
 msgid "You cannot turn off all columns."
 msgstr "Ne možete zatvori sve stupce."
-
-#~ msgid "<strong>Litecoin</strong> receiving wallet address"
-#~ msgstr "<strong>Litecoin</strong> adresa novčanika za primanje"
-
-#~ msgid "<strong>Dogecoin</strong> receiving wallet address"
-#~ msgstr "<strong>Dogecoin</strong> adresa novčanika za primanje"
-
-#~ msgid "litecoins"
-#~ msgstr "litecoini"
-
-#~ msgid "dogecoins"
-#~ msgstr "dogecoini"
