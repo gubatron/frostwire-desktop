@@ -20,6 +20,7 @@ package com.limegroup.gnutella.gui.options.panes;
 import java.io.File;
 import java.io.IOException;
 
+import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -59,13 +60,14 @@ public final class TorrentSaveFolderPaneItem extends AbstractPaneItem {
 			throw new IOException();
 		}
 
-        if (isDirty()) {
+        boolean dirty = isDirty();
+        if (dirty) {
             final File newSaveFolder = new File(COMPONENT.getTorrentSaveFolderPath());
             updateLibraryFolders(newSaveFolder);
             updateDefaultSaveFolders(newSaveFolder);
         }
 		
-		return false;
+		return dirty;
 	}
 
 	/**
@@ -82,8 +84,15 @@ public final class TorrentSaveFolderPaneItem extends AbstractPaneItem {
     }
 
     private void updateDefaultSaveFolders(File newSaveFolder) {
-        //torrent save folder
         SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(newSaveFolder);
+        BTEngine.getInstance().reloadBTContext(SharingSettings.TORRENTS_DIR_SETTING.getValue(),
+                SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(),
+                BTEngine.ctx.homeDir,
+                BTEngine.ctx.port0,
+                BTEngine.ctx.port1,
+                BTEngine.ctx.iface,
+                true, //stop
+                true);//start
     }
 
     @Override

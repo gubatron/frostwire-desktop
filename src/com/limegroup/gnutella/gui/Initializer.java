@@ -17,7 +17,6 @@ package com.limegroup.gnutella.gui;
 
 import com.frostwire.bittorrent.BTContext;
 import com.frostwire.bittorrent.BTEngine;
-import com.frostwire.logging.Logger;
 import com.frostwire.util.UserAgentGenerator;
 import com.limegroup.gnutella.ExternalControl;
 import com.limegroup.gnutella.LimeCoreGlue;
@@ -33,7 +32,9 @@ import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.MacOSXUtils;
 import org.gudy.azureus2.core3.util.protocol.AzURLStreamHandlerFactory;
 import org.limewire.service.ErrorService;
-import org.limewire.util.*;
+import org.limewire.util.CommonUtils;
+import org.limewire.util.I18NConvert;
+import org.limewire.util.OSUtils;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicHTML;
@@ -471,17 +472,17 @@ public final class Initializer {
             iface = ConnectionSettings.CUSTOM_INETADRESS.getValue();
         }
 
-        BTContext ctx = new BTContext();
-        ctx.homeDir = homeDir;
-        ctx.torrentsDir = SharingSettings.TORRENTS_DIR_SETTING.getValue();
-        ctx.dataDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
-        ctx.port0 = port0;
-        ctx.port1 = port1;
-        ctx.iface = iface;
+        BTEngine.ctx = new BTContext();
 
-        BTEngine.ctx = ctx;
-
-        BTEngine.getInstance().start();
+        // Sets the BTContext on the BTEngine and starts it.
+        BTEngine.getInstance().reloadBTContext(SharingSettings.TORRENTS_DIR_SETTING.getValue(),
+                SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(),
+                homeDir,
+                port0,
+                port1,
+                iface,
+                false,// Don't stop, as it's not even started yet :)
+                true);// Start
     }
 
     /**
