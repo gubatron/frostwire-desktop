@@ -38,6 +38,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
+import com.frostwire.bittorrent.BTEngine;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.ConnectionSettings;
@@ -160,6 +161,8 @@ public class NetworkInterfacePaneItem extends AbstractPaneItem {
      * @throws IOException if the options could not be fully applied
      */
     public boolean applyOptions() throws IOException {
+        boolean isDirty = isDirty();
+
         ConnectionSettings.CUSTOM_NETWORK_INTERFACE.setValue(CUSTOM.isSelected());
         Enumeration<AbstractButton> buttons = GROUP.getElements();
         while(buttons.hasMoreElements()) {
@@ -169,8 +172,23 @@ public class NetworkInterfacePaneItem extends AbstractPaneItem {
                 ConnectionSettings.CUSTOM_INETADRESS.setValue(addr.getHostAddress());
             }
         }
-        
-        return true;
+
+        String iface = "0.0.0.0";
+
+        if (ConnectionSettings.CUSTOM_NETWORK_INTERFACE.getValue()) {
+            iface = ConnectionSettings.CUSTOM_INETADRESS.getValue();
+        }
+
+        BTEngine.getInstance().reloadBTContext(BTEngine.ctx.torrentsDir,
+                BTEngine.ctx.dataDir,
+                BTEngine.ctx.homeDir,
+                BTEngine.ctx.port0,
+                BTEngine.ctx.port1,
+                iface,
+                true,
+                true);
+
+        return isDirty;
     }
     
     public boolean isDirty() {
