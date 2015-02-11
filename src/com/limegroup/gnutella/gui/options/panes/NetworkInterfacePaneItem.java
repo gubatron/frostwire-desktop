@@ -39,6 +39,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
 import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.jlibtorrent.TorrentHandle;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.ConnectionSettings;
@@ -50,7 +51,7 @@ public class NetworkInterfacePaneItem extends AbstractPaneItem {
     
     public final static String LABEL = I18n.tr("You can tell FrostWire to bind outgoing connections to an IP address from a specific network interface. Listening sockets will still listen on all available interfaces. This is useful on multi-homed hosts. If you later disable this interface, FrostWire will revert to binding to an arbitrary address.");
 
-    private static final String ADDRESS = "limewire.networkinterfacepane.address";
+    private static final String ADDRESS = "frostwire.networkinterfacepane.address";
     
     private final ButtonGroup GROUP = new ButtonGroup();
     
@@ -163,6 +164,10 @@ public class NetworkInterfacePaneItem extends AbstractPaneItem {
     public boolean applyOptions() throws IOException {
         boolean isDirty = isDirty();
 
+        if (!isDirty) {
+            return false;
+        }
+
         ConnectionSettings.CUSTOM_NETWORK_INTERFACE.setValue(CUSTOM.isSelected());
         Enumeration<AbstractButton> buttons = GROUP.getElements();
         while(buttons.hasMoreElements()) {
@@ -185,8 +190,15 @@ public class NetworkInterfacePaneItem extends AbstractPaneItem {
                 BTEngine.ctx.port0,
                 BTEngine.ctx.port1,
                 iface,
-                true,
-                true);
+                false,
+                false);
+
+        final List<TorrentHandle> torrents = BTEngine.getInstance().getSession().getTorrents();
+        if (torrents != null) {
+            for (TorrentHandle th : torrents) {
+                th.useInterface(iface);
+            }
+        }
 
         return isDirty;
     }
