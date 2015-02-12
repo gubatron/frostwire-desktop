@@ -85,14 +85,19 @@ public final class TorrentSaveFolderPaneItem extends AbstractPaneItem {
 
     private void updateDefaultSaveFolders(File newSaveFolder) {
         SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(newSaveFolder);
-        BTEngine.getInstance().reloadBTContext(SharingSettings.TORRENTS_DIR_SETTING.getValue(),
-                SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(),
-                BTEngine.ctx.homeDir,
-                BTEngine.ctx.port0,
-                BTEngine.ctx.port1,
-                BTEngine.ctx.iface,
-                true, //stop
-                true);//start
+        GUIMediator.instance().safeInvokeLater(new Runnable() {
+            @Override
+            public void run() {
+                BTEngine.getInstance().reloadBTContext(SharingSettings.TORRENTS_DIR_SETTING.getValue(),
+                        SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(),
+                        BTEngine.ctx.homeDir,
+                        BTEngine.ctx.port0,
+                        BTEngine.ctx.port1,
+                        BTEngine.ctx.iface,
+                        true, //stop
+                        true);//start
+            }
+        });
     }
 
     @Override
