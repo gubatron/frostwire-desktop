@@ -28,6 +28,7 @@ import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.SharingSettings;
+import org.limewire.concurrent.ExecutorsHelper;
 
 /**
  * 
@@ -85,7 +86,8 @@ public final class TorrentSaveFolderPaneItem extends AbstractPaneItem {
 
     private void updateDefaultSaveFolders(File newSaveFolder) {
         SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(newSaveFolder);
-        GUIMediator.instance().safeInvokeLater(new Runnable() {
+
+        new Thread() {
             @Override
             public void run() {
                 BTEngine.getInstance().reloadBTContext(SharingSettings.TORRENTS_DIR_SETTING.getValue(),
@@ -97,7 +99,7 @@ public final class TorrentSaveFolderPaneItem extends AbstractPaneItem {
                         true, //stop
                         true);//start
             }
-        });
+        }.start();
     }
 
     @Override
