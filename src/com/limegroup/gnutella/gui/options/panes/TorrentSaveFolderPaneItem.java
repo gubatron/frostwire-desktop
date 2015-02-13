@@ -96,8 +96,8 @@ public final class TorrentSaveFolderPaneItem extends AbstractPaneItem {
                         BTEngine.ctx.port0,
                         BTEngine.ctx.port1,
                         BTEngine.ctx.iface,
-                        true, //stop
-                        true);//start
+                        false, //stop
+                        false);//start
             }
         }.start();
     }
