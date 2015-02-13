@@ -1,11 +1,14 @@
 frostwire (6.0.6) stable; urgency=high
+  * Fixes bug where default save location for torrents would not be accounted for.
+  * New: When changing default save location, any ongoing torrent transfers are
+    moved to the new location.
   * Romanian and Finnish translation updates.
   * YT search upgrades.
   * OSX: When shutting down to start the installer for an update
     now the window is focused to make sure doesn't get lost during the
     update process.
 	
- -- FrostWire Team <contact@frostwire.com>  Mon, 09 February 2015 13:03:55 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 12 February 2015 19:03:55 -0500
 
 frostwire (6.0.5) stable; urgency=high
   * Fixes out of memory crash and freeze when importing lots of songs from the FrostWire
