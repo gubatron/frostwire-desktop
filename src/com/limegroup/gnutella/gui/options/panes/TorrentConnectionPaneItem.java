@@ -17,7 +17,9 @@ package com.limegroup.gnutella.gui.options.panes;
 
 import com.frostwire.bittorrent.BTEngine;
 import com.limegroup.gnutella.gui.*;
+import com.limegroup.gnutella.settings.SharingSettings;
 
+import javax.swing.*;
 import java.io.IOException;
 
 public final class TorrentConnectionPaneItem extends AbstractPaneItem {
@@ -34,6 +36,8 @@ public final class TorrentConnectionPaneItem extends AbstractPaneItem {
 
     public final static String MAX_ACTIVE_SEEDS = I18n.tr("Maximum active seeds");
 
+    private final static String ENABLE_DISTRIBUTED_HASH_TABLE = I18n.tr("Enable Distributed Hash Table (DHT)");
+
     private WholeNumberField MAX_ACTIVE_DOWNLOADS_FIELD = new SizedWholeNumberField(4);
 
     private WholeNumberField MAX_GLOBAL_NUM_CONNECTIONS_FIELD = new SizedWholeNumberField(4);
@@ -42,12 +46,22 @@ public final class TorrentConnectionPaneItem extends AbstractPaneItem {
 
     private WholeNumberField MAX_ACTIVE_SEEDS_FIELD = new SizedWholeNumberField(4);
 
+    private final JCheckBox ENABLE_DISTRIBUTED_HASH_TABLE_CHECKBOX_FIELD = new JCheckBox();
+
     public TorrentConnectionPaneItem() {
         super(TITLE, TEXT);
 
         BoxPanel panel = new BoxPanel();
 
-        LabeledComponent comp = new LabeledComponent(
+        LabeledComponent comp = new LabeledComponent(ENABLE_DISTRIBUTED_HASH_TABLE,
+                ENABLE_DISTRIBUTED_HASH_TABLE_CHECKBOX_FIELD,
+                LabeledComponent.LEFT_GLUE,
+                LabeledComponent.LEFT);
+
+        panel.add(comp.getComponent());
+        panel.addVerticalComponentGap();
+
+        comp = new LabeledComponent(
                 MAX_ACTIVE_DOWNLOADS,
                 MAX_ACTIVE_DOWNLOADS_FIELD, LabeledComponent.LEFT_GLUE,
                 LabeledComponent.LEFT);
@@ -81,26 +95,43 @@ public final class TorrentConnectionPaneItem extends AbstractPaneItem {
 
     @Override
     public boolean isDirty() {
-        return (BTEngine.getInstance().getMaxActiveDownloads() != MAX_ACTIVE_DOWNLOADS_FIELD.getValue()) ||
-                (BTEngine.getInstance().getMaxConnections() != MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue()) ||
-                (BTEngine.getInstance().getMaxPeers() != MAX_PEERS_FIELD.getValue()) ||
-                (BTEngine.getInstance().getMaxActiveSeeds() != MAX_ACTIVE_SEEDS_FIELD.getValue());
+        final BTEngine btEngine = BTEngine.getInstance();
+
+        return (btEngine.getSession().isDHTRunning() == ENABLE_DISTRIBUTED_HASH_TABLE_CHECKBOX_FIELD.isSelected() ||
+                btEngine.getMaxActiveDownloads() != MAX_ACTIVE_DOWNLOADS_FIELD.getValue()) ||
+                (btEngine.getMaxConnections() != MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue()) ||
+                (btEngine.getMaxPeers() != MAX_PEERS_FIELD.getValue()) ||
+                (btEngine.getMaxActiveSeeds() != MAX_ACTIVE_SEEDS_FIELD.getValue());
     }
 
     @Override
     public void initOptions() {
-        MAX_GLOBAL_NUM_CONNECTIONS_FIELD.setValue(BTEngine.getInstance().getMaxConnections());
-        MAX_PEERS_FIELD.setValue(BTEngine.getInstance().getMaxPeers());
-        MAX_ACTIVE_DOWNLOADS_FIELD.setValue(BTEngine.getInstance().getMaxActiveDownloads());
-        MAX_ACTIVE_SEEDS_FIELD.setValue(BTEngine.getInstance().getMaxActiveSeeds());
+        final BTEngine btEngine = BTEngine.getInstance();
+        ENABLE_DISTRIBUTED_HASH_TABLE_CHECKBOX_FIELD.setSelected(btEngine.getSession().isDHTRunning());
+        MAX_GLOBAL_NUM_CONNECTIONS_FIELD.setValue(btEngine.getMaxConnections());
+        MAX_PEERS_FIELD.setValue(btEngine.getMaxPeers());
+        MAX_ACTIVE_DOWNLOADS_FIELD.setValue(btEngine.getMaxActiveDownloads());
+        MAX_ACTIVE_SEEDS_FIELD.setValue(btEngine.getMaxActiveSeeds());
     }
 
     @Override
     public boolean applyOptions() throws IOException {
-        BTEngine.getInstance().setMaxConnections(MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue());
-        BTEngine.getInstance().setMaxPeers(MAX_PEERS_FIELD.getValue());
-        BTEngine.getInstance().setMaxActiveDownloads(MAX_ACTIVE_DOWNLOADS_FIELD.getValue());
-        BTEngine.getInstance().setMaxActiveSeeds(MAX_ACTIVE_SEEDS_FIELD.getValue());
+        BTEngine btEngine = BTEngine.getInstance();
+
+        boolean dhtExpectedValue = ENABLE_DISTRIBUTED_HASH_TABLE_CHECKBOX_FIELD.isSelected();
+        boolean dhtCurrentStatus = btEngine.getSession().isDHTRunning();
+        if (dhtCurrentStatus && !dhtExpectedValue) {
+            btEngine.getSession().stopDHT();
+            SharingSettings.ENABLE_DISTRIBUTED_HASH_TABLE.setValue(false);
+        } else if (!dhtCurrentStatus && dhtExpectedValue) {
+            btEngine.getSession().startDHT();
+            SharingSettings.ENABLE_DISTRIBUTED_HASH_TABLE.setValue(true);
+        }
+
+        btEngine.setMaxConnections(MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue());
+        btEngine.setMaxPeers(MAX_PEERS_FIELD.getValue());
+        btEngine.setMaxActiveDownloads(MAX_ACTIVE_DOWNLOADS_FIELD.getValue());
+        btEngine.setMaxActiveSeeds(MAX_ACTIVE_SEEDS_FIELD.getValue());
 
         return false;
     }

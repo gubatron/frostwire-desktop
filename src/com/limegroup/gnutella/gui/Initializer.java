@@ -483,6 +483,10 @@ public final class Initializer {
                 iface,
                 false,// Don't stop, as it's not even started yet :)
                 true);// Start
+
+        if (!SharingSettings.ENABLE_DISTRIBUTED_HASH_TABLE.getValue()) {
+            BTEngine.getInstance().getSession().stopDHT();
+        }
     }
 
     /**

@@ -56,6 +56,8 @@ public class SharingSettings extends LimeProps {
 
     public static final BooleanSetting SEED_HANDPICKED_TORRENT_FILES = FACTORY.createBooleanSetting("SEED_HANDPICKED_TORRENT_FILES", false);
 
+    public static final BooleanSetting ENABLE_DISTRIBUTED_HASH_TABLE = FACTORY.createBooleanSetting("ENABLE_DISTRIBUTED_HASH_TABLE", true);
+
     public static final File IMAGE_CACHE_DIR = new File(CommonUtils.getUserSettingsDir(), "image_cache");
 
     /**
