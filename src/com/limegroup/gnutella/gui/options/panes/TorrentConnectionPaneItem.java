@@ -117,7 +117,17 @@ public final class TorrentConnectionPaneItem extends AbstractPaneItem {
     @Override
     public boolean applyOptions() throws IOException {
         BTEngine btEngine = BTEngine.getInstance();
+        applyDHTOptions(btEngine);
+        btEngine.getSession().getSettings().
+        btEngine.setMaxConnections(MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue());
+        btEngine.setMaxPeers(MAX_PEERS_FIELD.getValue());
+        btEngine.setMaxActiveDownloads(MAX_ACTIVE_DOWNLOADS_FIELD.getValue());
+        btEngine.setMaxActiveSeeds(MAX_ACTIVE_SEEDS_FIELD.getValue());
 
+        return false;
+    }
+
+    private void applyDHTOptions(BTEngine btEngine) {
         boolean dhtExpectedValue = ENABLE_DISTRIBUTED_HASH_TABLE_CHECKBOX_FIELD.isSelected();
         boolean dhtCurrentStatus = btEngine.getSession().isDHTRunning();
         if (dhtCurrentStatus && !dhtExpectedValue) {
@@ -127,12 +137,5 @@ public final class TorrentConnectionPaneItem extends AbstractPaneItem {
             btEngine.getSession().startDHT();
             SharingSettings.ENABLE_DISTRIBUTED_HASH_TABLE.setValue(true);
         }
-
-        btEngine.setMaxConnections(MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue());
-        btEngine.setMaxPeers(MAX_PEERS_FIELD.getValue());
-        btEngine.setMaxActiveDownloads(MAX_ACTIVE_DOWNLOADS_FIELD.getValue());
-        btEngine.setMaxActiveSeeds(MAX_ACTIVE_SEEDS_FIELD.getValue());
-
-        return false;
     }
 }
