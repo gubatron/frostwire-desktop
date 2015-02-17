@@ -118,7 +118,6 @@ public final class TorrentConnectionPaneItem extends AbstractPaneItem {
     public boolean applyOptions() throws IOException {
         BTEngine btEngine = BTEngine.getInstance();
         applyDHTOptions(btEngine);
-        btEngine.getSession().getSettings().
         btEngine.setMaxConnections(MAX_GLOBAL_NUM_CONNECTIONS_FIELD.getValue());
         btEngine.setMaxPeers(MAX_PEERS_FIELD.getValue());
         btEngine.setMaxActiveDownloads(MAX_ACTIVE_DOWNLOADS_FIELD.getValue());

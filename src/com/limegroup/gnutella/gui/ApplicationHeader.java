@@ -134,7 +134,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
             
             @Override
             public void processKeyEvent(KeyEvent evt) {
-                if ((evt.getID()  == KeyEvent.KEY_PRESSED) && 
+                if ((evt.getID()  == KeyEvent.KEY_PRESSED) &&
                     evt.getKeyCode() == KeyEvent.VK_ENTER) {
                     UXStats.instance().log(UXAction.SEARCH_STARTED_ENTER_KEY);
                 }
@@ -549,19 +549,18 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
 
     private class SearchListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            //keep the query if there was one before switching to the search tab
+            // Keep the query if there was one before switching to the search tab.
             String query = cloudSearchField.getText();
             String queryTitle = query;
             GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);                
 
-            //start a download from the search box by entering a URL.
+            // Start a download from the search box by entering a URL.
             if (FileMenuActions.openMagnetOrTorrent(query,FileMenuActions.ActionInvocationSource.FROM_SEARCH_FIELD)) {
                 cloudSearchField.setText("");
                 cloudSearchField.hidePopup();
                 return;
             }
-            
-            
+
             if (query.contains("www.frostclick.com/cloudplayer/?type=yt") ||
                 query.contains("frostwire-preview.com/?type=yt")) {
                 try {
@@ -578,6 +577,10 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
                     query = query.split("#")[0];
                 }
                 queryTitle = "youtube:" + query;
+            }
+
+            if (query.contains("y2u.be")) {
+                query = query.replace("y2u.be", "youtu.be");
             }
 
             if (query.contains("http://youtu.be/")) {

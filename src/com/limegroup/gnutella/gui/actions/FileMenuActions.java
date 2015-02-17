@@ -259,7 +259,7 @@ public final class FileMenuActions {
             GUIMediator.instance().openTorrentURI(userText, true);
             UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_MAGNET_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_MAGNET_URL_FROM_SEARCH_FIELD);
             return true;
-        } else if (userText.matches(".*youtube.com.*") || userText.matches(".*youtu.be.*")) {
+        } else if (userText.matches(".*youtube.com.*") || userText.matches(".*youtu.be.*") || userText.matches(".*y2u.be.*")) {
             UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_CLOUD_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_CLOUD_URL_FROM_SEARCH_FIELD);
             return false;
         } else if (userText.matches(".*soundcloud.com.*")) {
@@ -268,7 +268,7 @@ public final class FileMenuActions {
             GUIMediator.instance().openSoundcloudTrackUrl(soundCloudURL, null);
             UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_CLOUD_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_CLOUD_URL_FROM_SEARCH_FIELD);
             return true;
-        } else if (userText.startsWith("http://")) {
+        } else if (userText.startsWith("http://") || (userText.startsWith("https://"))) {
             GUIMediator.instance().openTorrentURI(userText, true);
             UXStats.instance().log(invokedFrom == ActionInvocationSource.FROM_FILE_MENU ? UXAction.DOWNLOAD_TORRENT_URL_FROM_FILE_ACTION : UXAction.DOWNLOAD_TORRENT_URL_FROM_SEARCH_FIELD);
             return true;
