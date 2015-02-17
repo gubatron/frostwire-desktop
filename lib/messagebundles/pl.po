@@ -488,11 +488,11 @@ msgstr "Demuxowanie"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:219
 msgid "Error: Disk full - Change default save location."
-msgstr ""
+msgstr "Błąd: Dysk jest pełny - Zmień domyślne miejsce zapisu."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:220
 msgid "Redirecting"
-msgstr ""
+msgstr "Przekierowanie"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:268
 msgid "Unknown status"
@@ -959,7 +959,7 @@ msgstr "Zamknij"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:332
 msgid "Select a single file or one directory"
-msgstr ""
+msgstr "Wybierz pojedynczy plik lub katalog"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:334
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:347
