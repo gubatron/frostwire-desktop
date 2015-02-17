@@ -359,7 +359,7 @@ msgstr "Dijeljenja"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:168
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:363
 msgid "Peers"
-msgstr "Peerovi"
+msgstr "Preuzimatelj"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:171
 msgid "Share Ratio"
@@ -367,7 +367,7 @@ msgstr "Omjer dijeljenja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:174
 msgid "Seeds/Peers"
-msgstr "Dijeljitelji/Peer-ovi"
+msgstr "Dijeljitelji/preuzimatelji"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:177
 msgid "Started On"
@@ -443,7 +443,7 @@ msgstr "Greška: krivi potpis"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:209
 msgid "Try again, not enough peers"
-msgstr "Pokušajte ponovno, nedovoljno peerova"
+msgstr "Pokušajte ponovno, nedovoljno preuzimatelja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:210
 msgid "Stopped"
@@ -1320,8 +1320,8 @@ msgid ""
 msgstr ""
 "<strong>Ne dijeli završena torrent preuzimanja.</strong> BitTorrent "
 "korisnici na internetu će<br/>preuzimati samo dijelove datoteka od torrenta "
-"od vas dok vi preuzimate njegove<br/>podatkovne datoteke. <strong>Neki "
-"pratitelji će ovakvo ponašanje leechanja kazniti.</strong>."
+"od vas dok vi preuzimate njegove<br/>podatkovne datoteke. <strong>Neki pratitelji će "
+"ovakvo ponašanje dijeljenja kazniti.</strong>."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:92
 msgid ""
@@ -1651,19 +1651,19 @@ msgstr "Spremiti glazbene datoteke na iTunes"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1018
 msgid "Extract Audio"
-msgstr "Izdvoji glazbu"
+msgstr "Izdvoji zvuk"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1019
 msgid "Extract .m4a Audio from this .mp4 video"
-msgstr "Izdvajam .m4a glazbu iz ovog .mp3 videa"
+msgstr "Izdvajam .m4a zvuk iz ovog .mp3 videa"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1052
 msgid "Extracting audio from "
-msgstr "Izdvajam glazbu iz"
+msgstr "Izdvajam zvuk iz"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1054
 msgid "Extracting audio from selected video..."
-msgstr "Izdvajam glazbe iz selektiranog videa"
+msgstr "Izdvajam zvuk iz odabranog videa..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1071
 msgid "failed"
@@ -1671,7 +1671,7 @@ msgstr "neuspješno"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1072
 msgid "Done extracting audio."
-msgstr "Gotovo izdvajanje glazbe"
+msgstr "Gotovo izdvajanje zvuka."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1125
 msgid "out of"
@@ -1991,7 +1991,7 @@ msgstr "Aplikacija"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/UITool.java:105
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/MediaType.java:48
 msgid "Audio"
-msgstr "Zvuk"
+msgstr "Audio"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/UITool.java:107
 msgid "Documents"
@@ -4342,7 +4342,7 @@ msgstr "Koristi FrostWire za..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:20
 msgid "Audio Options"
-msgstr "Zvučne postavke"
+msgstr "Audio postavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:22
 msgid "You can choose which audio player to use."
@@ -4899,11 +4899,11 @@ msgstr "Maksimum globalnih veza"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:33
 msgid "Maximum number of peers"
-msgstr "Maksimalni broj peerova"
+msgstr "Maksimalni broj preuzimatelja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:35
 msgid "Maximum active seeds"
-msgstr "Maksimum aktivnih seed-ova"
+msgstr "Maksimum aktivnih dijelitelja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:34
 msgid "BitTorrent Global Tranfer Speeds"
@@ -4923,14 +4923,14 @@ msgstr "Brzina preuzimanja:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
 msgid "Set the Maximum BitTorrent upload speed in KB/s."
-msgstr "Postaviti maksimalnu BitTorrent brzinu prijenosa u KB/s"
+msgstr "Postavi maksimalnu BitTorrent brzinu prijenosa u KB/s"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:50
 msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
 msgstr ""
-"Bilješka: Jako niske brzine slanja (leechanja) bi mogle biti kaznjene od "
+"Bilješka: Jako niske brzine slanja (dijeljenja) bi mogle biti kaznjene od "
 "strane nekih pratitelja, što bi moglo rezultirati sporijim preuzimanjima."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:52
@@ -4959,7 +4959,7 @@ msgid ""
 msgstr ""
 "Dijeljenje je proces spajanja na torrent kada imate cijelu/e datoteku/e. "
 "Dijelovi dijeljene/ih datoteke/a će biti dostupne svima. Tijekom "
-"preuzimanja dijelovi su uvijek dostupni drugim peerovima u roju."
+"preuzimanja dijelovi su uvijek dostupni drugim preuzimateljima u roju."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:34
 msgid "Anonymous Usage Statistics"
@@ -5000,7 +5000,7 @@ msgstr "Video pokazivač"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:38
 msgid "You can see and share your file with peers in your local Wi-Fi network."
-msgstr "Možete vidjeti i dijeliti vaše datoteke sa peerovima u vašoj lokalnoj Wi-Fi mreži."
+msgstr "Možete vidjeti i dijeliti vaše datoteke sa preuzimateljima u vašoj lokalnoj Wi-Fi mreži."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:45
 msgid "Active search and discovery of local peer files."
@@ -5026,7 +5026,7 @@ msgstr "Još uvijek nema rezultata..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SchemaBox.java:150
 msgid "%s Audio files found (including .mp3, .wav, .ogg, and more)"
-msgstr "%s zvučnih datoteka pronađeno (uključujući .mp3, .wav, .ogg i više)"
+msgstr "%s audio datoteka pronađeno (uključujući .mp3, .wav, .ogg i više)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SchemaBox.java:155
 msgid "%s Video files found (including .avi, .mpg, .wmv, and more)"
@@ -5042,15 +5042,15 @@ msgstr "%s dokumenata pronađeno (uključujući .html, .txt, .pdf i više)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SchemaBox.java:171
 msgid "%s Program files found (including .exe, .zip, .gz, and more)"
-msgstr "%s programskih datoteka pronađeni (uključujući .exe, .zip, .gz i više)"
+msgstr "%s programskih datoteka pronađeno (uključujući .exe, .zip, .gz i više)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SchemaBox.java:176
 msgid ""
 "%s Torrent files found (includes only .torrent files. Torrent files point to "
 "collections of files shared on the BitTorrent network.)"
 msgstr ""
-"%s torrent datoteka nađeno (sadrži samo .torrent datoteke. Torrent datoteke "
-"pokazuju na kolekcije datoteka dijeljene na BitTorrent mreži.)"
+"%s torrent datoteka nađeno (sadrži samo .torrent datoteke. Torrent datoteke pokazuju na "
+"kolekcije datoteka dijeljene na BitTorrent mreži.)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchButtons.java:44
 msgid "Stop"
@@ -5080,11 +5080,11 @@ msgstr "Zatvori pretragu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:88
 msgid "Launch Action"
-msgstr "Pokrenuti akciju"
+msgstr "Pokreni akciju"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:90
 msgid "Repeat Search"
-msgstr "Ponoviti pretragu"
+msgstr "Ponovi pretragu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:92
 msgid "Download Partial Files"
@@ -5116,31 +5116,30 @@ msgid ""
 "Your search must be at least three characters to avoid congesting the "
 "network."
 msgstr ""
-"Vaše pretraživanje mora biti barem tri slova dugačko kako bi ste izbjegli preopterečivanje "
+"Vaše pretraživanje mora biti barem tri slova dugačko kako bi ste izbjegli preopterećivanje "
 "mreže."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:216
 msgid "Your search is too long. Please make your search smaller and try again."
 msgstr ""
-"Vaše pretraživanje je preveliko. Molimo smanjite vašu pretragu i pokušajte "
-"ponovno."
+"Vaše pretraživanje je preveliko. Molimo smanjite vašu pretragu i pokušajte ponovno."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:127
 msgid "Name|Source|Ext."
-msgstr "Ime|Izvor|Prosirenje."
+msgstr "Ime|Izvor|Proširenje."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:194
 msgid ""
 "has been disabled on your FrostWire Search Options. (Go to Tools > Options > "
 "Search to enable)"
 msgstr ""
-"bilo je onemogućeno na opcijama pretraživanja FrostWirea. (Idite na Alati > "
-"Opcije > Traženje kako bi ste omogučili)"
+"bilo je onemogućeno na opcijama pretraživanja FrostWirea. (Idite na Alati > Opcije > "
+"Traženje kako bi ste omogučili)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:85
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/tables/AbstractActionsRenderer.java:85
 msgid "Play/Preview"
-msgstr "Igrati/Pregled"
+msgstr "Sviraj/pregledaj"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:111
 msgid "Select content to download from this torrent."
@@ -5185,8 +5184,8 @@ msgid ""
 "One or more files or protocols that FrostWire uses are no longer associated "
 "with FrostWire. Would you like FrostWire to re-associate them?"
 msgstr ""
-"Jedna ili više datoteka ili protokola koji FrostWire koristi više nisu "
-"asocirani sa FrostWireom. Želite li da FrostWire ponovno asocira sa njima?"
+"Jedna ili više datoteka ili protokola koji FrostWire koristi više nisu asocirani "
+ sa FrostWireom. Želite li da FrostWire ponovno asocira sa njima?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:50
 msgid "Revert To Default"
