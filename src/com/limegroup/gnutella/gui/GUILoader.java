@@ -52,6 +52,7 @@ public class GUILoader {
                 JavaVersionNotice.showUpgradeRequiredDialog();
             }
 	        //sanityCheck();
+                System.out.println("FrostWire version " + FrostWireUtils.getFrostWireVersion() + " build " + FrostWireUtils.getBuildNumber());
 	        Initializer initializer = new Initializer();
 	        initializer.initialize(args, frame);
         } catch(Throwable err) {

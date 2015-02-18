@@ -59,7 +59,7 @@ public final class FrostWireUtils {
          * a string, e.g., "5.2.9".
 	 */
 	public static String getFrostWireVersion() {
-        return FROSTWIRE_VERSION;
+            return FROSTWIRE_VERSION;
 	}
 	
 	public static int getBuildNumber() {
