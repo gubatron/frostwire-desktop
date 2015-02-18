@@ -32,7 +32,7 @@ import com.frostwire.search.kat.KATSearchPerformer;
 import com.frostwire.search.mininova.MininovaSearchPerformer;
 import com.frostwire.search.monova.MonovaSearchPerformer;
 import com.frostwire.search.soundcloud.SoundcloudSearchPerformer;
-import com.frostwire.search.tbp.TPBSearchPerformer;
+import com.frostwire.search.tpb.TPBSearchPerformer;
 import com.frostwire.search.torlock.TorLockSearchPerformer;
 import com.frostwire.search.yify.YifySearchPerformer;
 import com.frostwire.search.youtube.YouTubeSearchPerformer;
