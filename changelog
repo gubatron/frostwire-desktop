@@ -1,3 +1,10 @@
+frostwire (6.0.7) stable; urgency=high
+  * Fixes bug where soundcloud, archive.org audio downloads would not be automatically
+    be scanned by iTunes.
+  * Croatian translation updates.
+	
+ -- FrostWire Team <contact@frostwire.com>  Thu, 19 February 2015 14:34:30 -0500
+
 frostwire (6.0.6) stable; urgency=high
   * Fixes bug where default save location for torrents would not be accounted for.
   * New: When changing default save location, any ongoing torrent transfers are
