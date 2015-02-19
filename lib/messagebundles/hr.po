@@ -3322,7 +3322,9 @@ msgid ""
 "display this message again' or 'Always Use This Answer'? Go to Tools &gt; "
 "Options, and check 'Revert To Default' under View &gt; FrostWire Popups."
 msgstr ""
-"
+"Želite li vidjeti dijaloge za pitanja koja ste označili 'Ne "
+"pokazuj ovu poruku ponovno' ili 'Uvijek koristi ovaj odgovor'? Odite u Alati &gt; "
+"Opcije, i odaberite 'Vrati na zadane postavke' ispod Pregled &gt; FrostWire skočni prozori."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:53
 msgid ""
@@ -3341,6 +3343,10 @@ msgid ""
 "toggle other options here too, like whether or not to sort tables "
 "automatically and if you prefer the rows to be striped."
 msgstr ""
+"Mrzite tool tipove? Volite tool tipove? Možete ih upaliti ili ugasiti u većini tablica "
+"desnim klikom na zaglavlje stupca i odabiron 'Više opcija'. Ovdje možete "
+"mijenati i druge opcije, kao i želite li ili ne sortirati tablice "
+"automatski i da li bi radije da su retci prugasti."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:55
 msgid ""
@@ -3377,8 +3383,8 @@ msgid ""
 "the 'FrostWire' menu, and changing the value of 'Autocomplete Text' under "
 "the 'View' option."
 msgstr ""
-"Možete upaliti ili ugasiti automatsko dovršavanje riječi za traženje "
-"odabirom 'Opcije' iz 'FrostWire' menija te promjenom vrijednosti "
+"Možete upaliti ili ugasiti automatsko dovršavanje riječi za traženje odabirom 'Alati' iz  "
+"'FrostWire' menija te promjenom vrijednosti "
 "'Automatksko dovšavanje teksta' ispod opcije 'Pregled'."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:69
@@ -3635,8 +3641,8 @@ msgid ""
 msgstr ""
 "FrostWire se susreo s internom greškom. Moguće je da se FrostWire oporavi i "
 "nastavi normalno raditi. Za pomoć kod ispravljanja greške, molimo kliknite "
-"'Posalji'da bi obavijestili FrostWire o problemu. Ako želite, možete "
-"kliknuti 'Pregled' da bi vidjeli informacije koje će biti poslane. Hvala."
+"'Posalji'da bi obavijestili FrostWire o problemu. Ako želite, možete kliknuti "
+"'Pregledaj' da bi vidjeli informacije koje će biti poslane. Hvala."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:321
 msgid ""
@@ -3659,7 +3665,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:368
 msgid "Review"
-msgstr "Pregled"
+msgstr "Pregledaj"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:382
 msgid "Discard"
@@ -3668,17 +3674,17 @@ msgstr "Odbaci"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:399
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:96
 msgid "Always Send Immediately"
-msgstr "Uvijek poslati odmah"
+msgstr "Uvijek pošalji odmah"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:400
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:97
 msgid "Always Ask For Review"
-msgstr "Uvijek pitati za pregled"
+msgstr "Uvijek pitaj za pregled"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:401
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:98
 msgid "Always Discard All Errors"
-msgstr "Uvijek odbaciti sve greške"
+msgstr "Uvijek odbaci sve greške"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:499
 msgid ""
@@ -3693,16 +3699,15 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:528
 msgid "Copy Report"
-msgstr "Kopirati izvješće"
+msgstr "Kopiraj izvješće"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:638
 msgid ""
 "FrostWire was unable to write a necessary file because your hard drive is "
 "full. To continue using FrostWire you must free up space on your hard drive."
 msgstr ""
-"FrostWire nije mogao zapisati potrebnu datoteku jer je vaš tvrdi disk. pun. "
-"Za nastavak korištenja FrostWirea morate osloboditi mjesta na vašem tvrdom "
-"disku."
+"FrostWire nije mogao zapisati potrebnu datoteku jer je vaš tvrdi disk "
+"pun.  Za nastavak korištenja FrostWirea morate osloboditi mjesta na vašem tvrdom disku."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:640
 msgid ""
@@ -3710,8 +3715,7 @@ msgid ""
 "locked the file. FrostWire may act unexpectedly until this file is released."
 msgstr ""
 "FrostWire nije mogao otvoriti potrebnu datoteku jer je drugi program "
-"zaključao tu datoteku. FrostWire se može ponašati neočekivano dok se ta "
-"datoteka ne oslobodi."
+"zaključao tu datoteku. FrostWire se može ponašati neočekivano dok se ta datoteka ne oslobodi."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:642
 msgid ""
