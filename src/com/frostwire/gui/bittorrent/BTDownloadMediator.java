@@ -953,7 +953,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                 HttpDownload downloader = new HttpDownload(httpUrl, title, saveFileAs, fileSize, null, false, true) {
                     @Override
                     protected void onComplete() {
-                        File savedFile = new File(saveFileAs);
+                        final File savedFile = getSaveLocation();
                         if (savedFile.exists()) {
                             if (iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(savedFile)) {
                                 if ((OSUtils.isMacOSX() || OSUtils.isWindows())) {
