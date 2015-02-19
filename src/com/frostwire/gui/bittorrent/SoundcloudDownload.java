@@ -40,8 +40,11 @@ import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.JsonUtils;
+import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.settings.iTunesSettings;
 import org.apache.commons.io.FilenameUtils;
+import org.limewire.util.OSUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -412,6 +415,13 @@ public class SoundcloudDownload implements BTDownload {
                     }
                 }
                 state = TransferState.FINISHED;
+
+                if (iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(completeFile)) {
+                    if ((OSUtils.isMacOSX() || OSUtils.isWindows())) {
+                        iTunesMediator.instance().scanForSongs(completeFile);
+                    }
+                }
+
                 cleanupIncomplete();
             }
         }

@@ -326,10 +326,6 @@ public final class iTunesMediator {
         return iTunesImportSettings.IMPORT_FILES.contains(file);
     }
 
-    public void removeFromScanned(File file) {
-        iTunesImportSettings.IMPORT_FILES.remove(file);
-    }
-
     private static void createiTunesJavaScript(String scriptName) {
         File fileJS = new File(CommonUtils.getUserSettingsDir(), scriptName);
         if (fileJS.exists()) {

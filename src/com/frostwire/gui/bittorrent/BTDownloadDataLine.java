@@ -446,9 +446,6 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
                 }
                 notification = new Notification(theDownload.getDisplayName(), getIcon(), actions);
                 LibraryMediator.instance().getLibraryExplorer().clearDirectoryHolderCaches();
-
-                iTunesScanIfNecessaryForNonTorrentDownloadItem(theDownload, file);
-
             } else {
                 return;
             }
@@ -456,26 +453,6 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
             if (notification != null) {
                 NotifyUserProxy.instance().showMessage(notification);
             }
-        }
-    }
-
-    /**
-     * Gubatron: iTunes auto scanning hack for non-torrents.
-     * This logic was taken from BTDownloadCreator::createDownload(DownloadManager downloadManager, final boolean triggerFilter)
-     * in that method, the DownloadManager (azureus) sets up a listener that takes care of this when the torrent download is finished.
-     * 
-     * With YouTubeItemDownload and SoundcloudTrackDownload I've yet to find the equivalent listeners to move this logic at the end of the
-     * download, for now, showNotification is the hack that I have...
-     * Suggestion: Use BTDownloadCreator to normalize the initialization of all downloads, and setup there the behavior of the
-     * equivalent download managers if they exist, if not we could create listeners, and so all this logic will be maintained
-     * in one place.
-     * 
-     * @param theDownload
-     * @param file
-     */
-    private void iTunesScanIfNecessaryForNonTorrentDownloadItem(BTDownload theDownload, File file) {
-        if ((OSUtils.isMacOSX() || OSUtils.isWindows()) && (theDownload instanceof YouTubeDownload || theDownload instanceof SoundcloudDownload) && iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(file)) {
-            iTunesMediator.instance().scanForSongs(file);
         }
     }
 
