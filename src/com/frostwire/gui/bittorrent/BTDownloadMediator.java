@@ -47,6 +47,7 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
+import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.search.GenericCellEditor;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
@@ -949,7 +950,19 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         GUIMediator.safeInvokeLater(new Runnable() {
             @Override
             public void run() {
-                HttpDownload downloader = new HttpDownload(httpUrl, title, saveFileAs, fileSize, null, false, true);
+                HttpDownload downloader = new HttpDownload(httpUrl, title, saveFileAs, fileSize, null, false, true) {
+                    @Override
+                    protected void onComplete() {
+                        File savedFile = new File(saveFileAs);
+                        if (savedFile.exists()) {
+                            if (iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() && !iTunesMediator.instance().isScanned(savedFile)) {
+                                if ((OSUtils.isMacOSX() || OSUtils.isWindows())) {
+                                    iTunesMediator.instance().scanForSongs(savedFile);
+                                }
+                            }
+                        }
+                    }
+                };
                 add(downloader);
             }
         });
