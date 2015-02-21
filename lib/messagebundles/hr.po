@@ -1280,7 +1280,7 @@ msgstr "Nije moguće riješiti putanju mape."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:143
 msgid "The Torrent Data Folder cannot be a parent folder of the"
-msgstr "Podaci torrent podatkovne mape ne mogu biti podmapa od"
+msgstr "Podatci torrent podatkovne mape ne mogu biti podmapa od"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:160
 msgid "Use Default"
@@ -1503,7 +1503,7 @@ msgstr "Spremi"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryDeviceTableMediator.java:438
 msgid "Save Selected Files To Folder"
-msgstr "Spremiti označene datoteke u mapu"
+msgstr "Spremi označene datoteke u mapu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryExplorer.java:130
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryExplorer.java:184
@@ -2149,6 +2149,10 @@ msgid ""
 "mplayer already at a custom location, <b>make sure to have a symlink "
 "pointing to your mplayer executable</b> at <b><font color=\"blue\">"
 msgstr ""
+"<br><br>Kako biste instalirali <b>mplayer</b> u Ubuntu otvorite prozor terminala i upišite "
+"\"<b>sudo apt-get install mplayer</b>\".<br><br>Ako ste već instalirali "
+"mplayer u drugu lokaciju, <b>provjerite da li imate symlink "
+"koji pokazuje na vašu mplayer izvršnu datoteku</b> u <b><font color=\"blue\">"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerLinux.java:33
 msgid ""
@@ -2157,6 +2161,10 @@ msgid ""
 "already at a custom location, <b>make sure to have a symlink pointing to "
 "your mplayer executable</b> at <b><font color=\"blue\">"
 msgstr ""
+"<br><br>Kako biste instalirali <b>mplayer</b> u Fedori otvorite prozor terminala i upišite "
+"\"<b>sudo yum install mplayer</b>\".<br><br>Ako ste već instalirali "
+"mplayer u drugu lokaciju, <b>provjerite da li imate symlink "
+"koji pokazuje na vašu mplayer izvršnu datoteku</b> u <b><font color=\"blue\">"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerLinux.java:37
 msgid ""
@@ -2449,7 +2457,8 @@ msgid ""
 "<br><br>In Special we give thanks to the Chatroom Operators and Forum "
 "Moderators"
 msgstr ""
-"<br><br>Posebno zahvaljujemo operatorima chat soba i forum moderatorima"
+"<br><br>Posebno zahvaljujemo operatorima chat soba i forum "
+"moderatorima"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:206
 msgid "FrostWire Chat Operators"
@@ -2585,27 +2594,27 @@ msgstr "Ne"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/DonationButtons.java:55
 msgid "Support FrostWire development with a Bitcoin donation"
-msgstr "Podržati razvoj FrostWirea sa BitCoin donacijom"
+msgstr "Podrži razvoj FrostWirea sa BitCoin donacijom"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/DonationButtons.java:56
 msgid "Support FrostWire development with a USD $1 donation"
-msgstr "Podržati razvoj FrostWirea sa donacijom od $1 USD"
+msgstr "Podrži razvoj FrostWirea sa donacijom od $1 USD"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/DonationButtons.java:57
 msgid "Support FrostWire development with a USD $5 donation"
-msgstr "Podržati razvoj FrostWirea sa donacijom od $5 USD"
+msgstr "Podrži razvoj FrostWirea sa donacijom od $5 USD"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/DonationButtons.java:58
 msgid "Support FrostWire development with a USD $10 donation"
-msgstr "Podržati razvoj FrostWirea sa donacijom od $10 USD"
+msgstr "Podrži razvoj FrostWirea sa donacijom od $10 USD"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/DonationButtons.java:59
 msgid "Support FrostWire development with a USD $25 donation"
-msgstr "Podržati razvoj FrostWirea sa donacijom od $25 USD"
+msgstr "Podrži razvoj FrostWirea sa donacijom od $25 USD"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/DonationButtons.java:60
 msgid "Support FrostWire development with a Paypal donation"
-msgstr "Podržati razvoj FrostWirea sa Paypal donacijom"
+msgstr "Podrži razvoj FrostWirea sa Paypal donacijom"
 
 #. new Font("Helvetica", Font.BOLD, 12);
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/DonationButtons.java:65
@@ -2787,7 +2796,7 @@ msgstr ""
 "Ovo se događa radi manjka ovlasti.  Molimo provjerite da "
 "FrostWire (i vi) imate ovlasti stvarati datoteke/mape na vašem računalu.  "
 "Ako se problem  ponovi, molimo posjetite www.frostwire.com i kliknite na "
-"'Support' poveznicu.\n
+"'Support' poveznicu.\n"
 "\n"
 "FrostWire će sada izaći.  Hvala Vam."
 
@@ -3305,7 +3314,7 @@ msgid ""
 "from you."
 msgstr ""
 "Budite dobar član mreže, nemojte ugasiti FrostWire ako netko dijeli "
-"putem vas."
+"od vas."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:51
 msgid ""
