@@ -1,4 +1,5 @@
 frostwire (6.0.7) stable; urgency=high
+  * TPB search fixed.
   * Monova search fixed.
   * Fixes bug where soundcloud, archive.org audio downloads would not be automatically
     be scanned by iTunes.
