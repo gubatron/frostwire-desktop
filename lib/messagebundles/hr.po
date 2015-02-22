@@ -4673,7 +4673,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:26
 msgid "Allow Partial Sharing:"
-msgstr "Dozvoliti djelomično dijeljenje"
+msgstr "Dozvoli djelomično dijeljenje"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:36
 msgid "FrostWire Media Player"
@@ -4721,7 +4721,7 @@ msgstr "Postavi korisničko ime i lozinku koje ćete koristiti za proxy."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:48
 msgid "Enable Authentication:"
-msgstr "Omogučiti autentičnost"
+msgstr "Omogući autentičnost"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:55
 msgid "Username:"
@@ -4819,7 +4819,7 @@ msgstr "Ugasi odmah"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:65
 msgid "Minimize to System Tray"
-msgstr "Sakriti u ladicu sistema"
+msgstr "Sakrij u ladicu sistema"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:69
 msgid "Show dialog to ask before close"
@@ -4834,12 +4834,12 @@ msgid ""
 "The Smart Search database is used to speed up individual file searches, it's "
 "how FrostWire remembers information about .torrent contents."
 msgstr ""
-"Baza podataka pametnog pretraživanja se koristi kako bi se ubrzale datotečne pretrage, to je način "
-"na koji FrostWire zapamćuje informacije o .torrent sadržajima."
+"Baza podataka pametnog pretraživanja se koristi kako bi se ubrzale datotečne pretrage, to je način na "
+"koji FrostWire zapamćuje informacije o .torrent sadržajima."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:47
 msgid "Enable Smart Search"
-msgstr "Omogućiti pametno pretraživanje"
+msgstr "Omogući pametno pretraživanje"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:49
 msgid "Total torrents indexed"
@@ -4885,7 +4885,7 @@ msgstr "Indikator kvalitete mreže"
 msgid ""
 "You can display a measurement of your connection quality in the status bar."
 msgstr ""
-"Možete pokazati mjerenje vaše kvalitete mreže u traku stanja."
+"Možete pokazati mjerenje vaše kvalitete mreže u traci stanja."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:29
 msgid "Show Connection Quality Indicator:"
@@ -4897,7 +4897,7 @@ msgstr "Indikator vatrozida"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:22
 msgid "You can display your firewall status in the status bar."
-msgstr "Možete prikazati status vatrozida u statusnoj traci."
+msgstr "Možete prikazati status vatrozida u traci stanja."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:29
 msgid "Show Firewall Indicator:"
@@ -4954,8 +4954,8 @@ msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
 msgstr ""
-"Bilješka: Jako niske brzine slanja (dijeljenja) bi mogle biti kaznjene od "
-"strane nekih pratitelja, što bi moglo rezultirati sporijim preuzimanjima."
+"Bilješka: Jako niske brzine slanja (dijeljenja) bi neki pratitelji mogli kazniti, "
+"što bi mogao biti razlog za sporija preuzimanjima."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:52
 msgid "Upload Speed:"
@@ -4998,8 +4998,8 @@ msgid ""
 msgstr ""
 "Šalji anonimne statistike koristenja tako da FrostWire može biti poboljšan "
 "kvalitetnije. Informacije o traženim, dijeljenim, sviranim ili informacije "
-"koje vas mogu osobno identificirati neće biti spremljene na disk ili poslane "
-"kroz mrežu."
+"koje vas mogu osobno identificirati neće biti spremljene na disk ili "
+"poslane kroz mrežu."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/UXStatsPaneItem.java:38
 msgid "Send anonymous usage statistics"
@@ -5020,7 +5020,7 @@ msgstr "Možete izabrati koji video pokazivač želite koristiti"
 #.
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:35
 msgid "Video Player"
-msgstr "Video pokazivač"
+msgstr "Video izvođač"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:38
 msgid "You can see and share your file with peers in your local Wi-Fi network."
@@ -5028,7 +5028,7 @@ msgstr "Možete vidjeti i dijeliti vaše datoteke sa preuzimateljima u vašoj lo
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/WiFiSharingPaneItem.java:45
 msgid "Active search and discovery of local peer files."
-msgstr "Aktivna pretraga i otkrivanje lokalnih peer datoteka."
+msgstr "Aktivna pretraga i otkrivanje lokalnih djeliteljskih datoteka."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:39
 msgid "You can have FrostWire import newly downloaded songs into iTunes."
@@ -5036,7 +5036,7 @@ msgstr "FrostWire može uvesti nedavno preuzete pjesme u iTunes."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:41
 msgid "Enable iTunes importing:"
-msgstr "Uključiti iTunes uvoz:"
+msgstr "Uključi iTunes uvoz:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/LabeledRangeSlider.java:60
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:108
@@ -5073,7 +5073,7 @@ msgid ""
 "%s Torrent files found (includes only .torrent files. Torrent files point to "
 "collections of files shared on the BitTorrent network.)"
 msgstr ""
-"%s torrent datoteka nađeno (sadrži samo .torrent datoteke. Torrent datoteke pokazuju na "
+"%s torrent datoteka pronađeno (sadrži samo .torrent datoteke. Torrent datoteke pokazuju na "
 "kolekcije datoteka dijeljene na BitTorrent mreži.)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchButtons.java:44
@@ -5145,8 +5145,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:216
 msgid "Your search is too long. Please make your search smaller and try again."
-msgstr ""
-"Vaše pretraživanje je preveliko. Molimo smanjite vašu pretragu i pokušajte ponovno."
+msgstr "Vaše pretraživanje je preveliko. Molimo smanjite vašu pretragu i pokušajte ponovno."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:127
 msgid "Name|Source|Ext."
@@ -5167,7 +5166,7 @@ msgstr "Sviraj/pregledaj"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultActionsRenderer.java:111
 msgid "Select content to download from this torrent."
-msgstr "Odaberite sadržaj za preuzimanje iz ovog torrenta."
+msgstr "Odaberi sadržaj za preuzimanje iz ovog torrenta."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultDisplayer.java:579
 msgid "results"
@@ -5175,7 +5174,7 @@ msgstr "rezultati"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:356
 msgid "Copy Hash"
-msgstr "Kopirati smjesu"
+msgstr "Kopiraj smjesu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:370
 msgid "Search More"
