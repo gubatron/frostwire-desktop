@@ -1532,7 +1532,7 @@ msgstr "Wi-Fi dijeljenje"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryExplorer.java:233
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:183
 msgid "Configure Options"
-msgstr "Podesi opcije"
+msgstr "Konfiguriraj opcije"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryExplorer.java:233
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:183
@@ -4101,15 +4101,15 @@ msgstr "&Alati"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:68
 msgid "Rebuild iTunes \"FrostWire\" Playlist"
-msgstr "Obnovi iTunes \"FrostWire\" playlistu"
+msgstr "Obnovi iTunes \"FrostWire\" listu pjesama"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:69
 msgid ""
 "Deletes and re-builds the \"FrostWire\" playlist on iTunes with all the "
 "audio files found on your Torrent Data Folder."
 msgstr ""
-"Briše i obnavlja \"FrostWire\" playlistu na iTunesu sa svim audio "
-"datotekama nađenim u vašoj torrent podatkovnoj mapi."
+"Briše i obnavlja \"FrostWire\" listu pjesama na iTunesu sa svim "
+"zvukovnim datotekama nađenim u vašoj torrent podatkovnoj mapi."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:74
 msgid ""
@@ -4124,8 +4124,8 @@ msgid ""
 msgstr ""
 "Ovo će ukloniti vašu \"FrostWire\" listu pjesama u iTunesu i zamijeniti\n"
 "ju sa onom koja sadrži sve iTunes kompatibilne datoteke u "
-"vašem \n"
-"Frostwire \"Torrent podatkovnoj mapi\"\n"
+"vašoj \n"
+"FrostWire \"Torrent podatkovnoj mapi\"\n"
 "\n"
 "Please note that it will add the files to the iTunes library as well\n"
 "and this could result in duplicate files on your iTunes library\n"
@@ -4134,7 +4134,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:88
 msgid "&Options"
-msgstr "&Postavke"
+msgstr "Postavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:89
 msgid "Display the Options Screen"
@@ -4142,7 +4142,7 @@ msgstr "Pokaži postavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:102
 msgid "&Update FrostWire"
-msgstr "&Ažuriraj FrostWire"
+msgstr "Ažuriraj FrostWire"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:103
 msgid "Update FrostWire to the latest version"
@@ -4166,11 +4166,11 @@ msgstr "Potraži nadogradnje"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:42
 msgid "&View"
-msgstr "&Pregled"
+msgstr "Pregled"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:44
 msgid "Use &Small Icons"
-msgstr "Koristi &male ikone"
+msgstr "Koristi male ikone"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:44
 msgid "Use Small Icons"
@@ -4186,7 +4186,7 @@ msgstr "Pokaži tekst ispod ikona"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:52
 msgid "&Increase Font Size"
-msgstr "&Povećati veličinu fonta"
+msgstr "Povećati veličinu fonta"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:52
 msgid "Increases the Table Font Size"
@@ -4194,7 +4194,7 @@ msgstr "Povećava veličinu fonta tablica"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:54
 msgid "&Decrease Font Size"
-msgstr "&Smanjiti veličinu fonta"
+msgstr "Smanji veličinu fonta"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:54
 msgid "Decreases the Table Font Size"
@@ -4210,7 +4210,7 @@ msgstr "Resetiraj veličinu fonta tablica"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:66
 msgid "C&hange Language"
-msgstr "Promi&jeniti jezik"
+msgstr "Promijeni jezik"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:67
 msgid "Select your Language Prefereces"
@@ -4232,7 +4232,7 @@ msgstr "Primijeni"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:53
 msgid "Restore Defaults"
-msgstr "Povrati osnovne postavke"
+msgstr "Vrati na osnovne postavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:54
 msgid "Revert All Settings to the Factory Defaults"
@@ -4498,7 +4498,7 @@ msgstr ""
 "Koristeći Univeral Plug 'n Play (UPnP) i ostale NAT tehnike FrostWire može "
 "automatski postaviti vaš router za optimalne performanse. Ako vaš router ne "
 "podržava UPnP, FrostWire se može postaviti da reklamira eksterni port "
-"manualno. (Možda će te morati postaviti vaš router ako odaberete manualnu "
+"ručno. (Možda će te morati postaviti vaš router ako odaberete ručnu "
 "konfiguraciju, ali će FrostWire pokušati sve što može tako da vi ne morate.)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:63
@@ -4507,7 +4507,7 @@ msgstr "Koristiti nasumični port (preporučeno)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:64
 msgid "Manual port range"
-msgstr "Manualni domet porta"
+msgstr "Ručni domet porta"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:89
 msgid "TCP port start:"
@@ -4520,7 +4520,7 @@ msgstr "TCP port kraj:"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:169
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:173
 msgid "You must enter a port between 1 and 65535 when manually forcing port."
-msgstr "Morate upisati port između 1 i 65535 kada manualno forsirate port."
+msgstr "Morate upisati port između 1 i 65535 kada ručno forsirate port."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:178
 msgid "You must enter a valid port range."
@@ -4597,12 +4597,13 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:20
 msgid "Maximum Searches"
-msgstr "Maksimum traženja"
+msgstr "Maksimalni broj traženja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:22
 msgid ""
 "You can set the maximum number of simultaneous searches you can perform."
-msgstr "Možete postaviti maksimalni broj istovremenih pretraživanja."
+msgstr ""
+"Možete postaviti maksimalni broj istovremenih pretraživanja."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4611,11 +4612,11 @@ msgstr "Možete postaviti maksimalni broj istovremenih pretraživanja."
 #.
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:29
 msgid "Maximum Searches:"
-msgstr "Maksimum traženja:"
+msgstr "Maksimalni broj traženja:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:84
 msgid "The maximum parallel searches you can make is "
-msgstr "Maksimum paralelnih pretraživanja koje možete napraviti je "
+msgstr "Maksimalni broj paralelnih pretraživanja koje možete napraviti je "
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:50
 msgid ""
@@ -4689,7 +4690,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:40
 msgid "Play with the native media player"
-msgstr "Svirati sa materinjim izvođačem medija"
+msgstr "Sviraj sa materinjim izvođačem medija"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:42
 msgid "Play search result video previews with internal player"
@@ -4737,7 +4738,7 @@ msgstr "Proxy postavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:38
 msgid "Configure Proxy Options for FrostWire."
-msgstr "Podesi proxy postavke za FrostWire."
+msgstr "Konfiguriraj proxy postavke za FrostWire."
 
 #. *
 #. * Constant for the key of the locale-specific <tt>String</tt> for the
@@ -4781,7 +4782,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShowFrostWireRecommendationsPaneItem.java:43
 msgid "Enable FrostWire Recommendations (highly recommended):"
-msgstr "Omogući FrostWire preporuke (visoko preporučeno):"
+msgstr "Omogući FrostWire preporuke (vrlo preporučeno):"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:35
 msgid "FrostClick Promotions"
@@ -4803,7 +4804,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:44
 msgid "Enable FrostClick Promotions (highly recommended):"
-msgstr "Omogućiti FrostClick promocije (visoko preporučeno):"
+msgstr "Omogući FrostClick promocije (vrlo preporučeno):"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:39
 msgid "Shutdown Behavior"
@@ -4871,7 +4872,7 @@ msgstr "Indikator propusnosti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:35
 msgid "You can display your bandwidth consumption in the status bar."
-msgstr "Možete prikazati vašu propusnost potrosnje u traci stanja."
+msgstr "Možete prikazati vašu propusnost potrosnje u statusnoj traci."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:42
 msgid "Show Bandwidth Indicator:"
@@ -4885,7 +4886,7 @@ msgstr "Indikator kvalitete mreže"
 msgid ""
 "You can display a measurement of your connection quality in the status bar."
 msgstr ""
-"Možete pokazati mjerenje vaše kvalitete mreže u traci stanja."
+"Možete pokazati mjerenja vaše kvalitete mreže u statusnoj traci."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:29
 msgid "Show Connection Quality Indicator:"
@@ -4897,7 +4898,7 @@ msgstr "Indikator vatrozida"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:22
 msgid "You can display your firewall status in the status bar."
-msgstr "Možete prikazati status vatrozida u traci stanja."
+msgstr "Možete prikazati status vatrozida u statusnoj traci."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:29
 msgid "Show Firewall Indicator:"
@@ -4911,7 +4912,7 @@ msgstr "BitTorent postavke veze"
 msgid ""
 "Adjust connection settings to make better use of your internet connection"
 msgstr ""
-"Podesite postavke veze kako biste bolje koristili vašu internetsku vezu"
+"Podesite postavke veze kako biste što bolje iskoristili vašu internetsku vezu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:29
 msgid "Maximum active downloads"
@@ -5011,7 +5012,7 @@ msgstr "Video postavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
 msgid "You can choose which video player to use."
-msgstr "Možete izabrati koji video pokazivač želite koristiti"
+msgstr "Možete izabrati koji video izvođač želite koristiti"
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -5149,7 +5150,7 @@ msgstr "Vaše pretraživanje je preveliko. Molimo smanjite vašu pretragu i poku
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:127
 msgid "Name|Source|Ext."
-msgstr "Ime|Izvor|Proširenje."
+msgstr "Ime|Izvor|Proširenje"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:194
 msgid ""
