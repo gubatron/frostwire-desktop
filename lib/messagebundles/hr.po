@@ -2930,7 +2930,7 @@ msgid ""
 msgstr ""
 "Spremanje preuzimanja u {0} možda neće poptuno funkcionirati.  Kako biste bili sigurni da se preuzimanja "
 "spremaju kako trebaju, trebali biste ih spremati u podfolder od {1}.  Želite li "
-"odabrati drugu lokaciju?"
+"izabrati drugu lokaciju?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/SettingsWarningManager.java:35
 msgid ""
@@ -3830,7 +3830,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:110
 msgid "You forgot to select your finished downloads \"Seeding\" setting."
-msgstr "Zaboravili ste odabrati postavke \"Dijeljenja\" za završena preuzimanja."
+msgstr "Zaboravili ste izabrati postavke \"Dijeljenja\" za završena preuzimanja."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:112
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
@@ -4371,7 +4371,7 @@ msgstr "Audio postavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:22
 msgid "You can choose which audio player to use."
-msgstr "Možete odabrati koji izvođač glazbe želite koristiti."
+msgstr "Možete izabrati koji izvođač glazbe želite koristiti."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4444,7 +4444,7 @@ msgid ""
 "All Errors' will cause FrostWire to ignore all bugs (this is not "
 "recommended)."
 msgstr ""
-"Možete odabrati kako da se šalju izvještaji grešaka. Kako biste pogledali primjer izvještaja "
+"Možete izabrati kako da se šalju izvještaji grešaka. Kako biste pogledali primjer izvještaja "
 "greške, kliknite na 'Vidi primjer'. Odabirom 'Uvijek šalji odmah' će "
 "se odmah kontaktirati poslužitelj za greške kada u FrostWireu dođe do interne "
 "greške. Odabirom 'Uvijek pitaj za pregled' će uvijek reći FrostWireu da vas pita za vašu "
@@ -4473,7 +4473,7 @@ msgid ""
 "You can choose whether to be warned about downloading a file without a "
 "license."
 msgstr ""
-"Možete odabrati želite li biti upozoreni o preuzimanju datoteka bez "
+"Možete izabrati želite li biti upozoreni o preuzimanju datoteka bez "
 "dozvole."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:29
@@ -4577,11 +4577,11 @@ msgstr "Možete obnoviti osnovne internetske radio postaje."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:42
 msgid "Total Radio Stations"
-msgstr "Ukupno radio postaja"
+msgstr "Ukupni broj radio postaja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:46
 msgid "Restore default Radio Stations"
-msgstr "Povrati osnovne postavke"
+msgstr "Vrati na osnovne postavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:17
 msgid "Locale Preferencing"
@@ -4812,7 +4812,7 @@ msgstr "Ponašanje gašenja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:41
 msgid "You can choose the default shutdown behavior."
-msgstr "Možete odabrati zadano ponašanje gašenja."
+msgstr "Možete izabrati zadano ponašanje gašenja."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:64
 msgid "Shutdown Immediately"
@@ -4824,7 +4824,7 @@ msgstr "Sakrij u ladicu sistema"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShutdownPaneItem.java:69
 msgid "Show dialog to ask before close"
-msgstr "Pokazuj dijalog prije nego što zatvorite"
+msgstr "Pokazuj dijalog da pita prije nego što ga zatvorite"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:22
 msgid "Smart Search"
@@ -4835,8 +4835,8 @@ msgid ""
 "The Smart Search database is used to speed up individual file searches, it's "
 "how FrostWire remembers information about .torrent contents."
 msgstr ""
-"Baza podataka pametnog pretraživanja se koristi kako bi se ubrzale datotečne pretrage, to je način na "
-"koji FrostWire zapamćuje informacije o .torrent sadržajima."
+"Baza podataka pametnog pretraživanja se koristi kako bi se ubrzale datotečne pretrage, to je "
+"način na koji FrostWire zapamćuje informacije o .torrent sadržajima."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:47
 msgid "Enable Smart Search"
@@ -4916,11 +4916,11 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:29
 msgid "Maximum active downloads"
-msgstr "Maksimum aktivnih preuzimanja"
+msgstr "Maksimalni broj aktivnih preuzimanja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:31
 msgid "Global maximum number of connections"
-msgstr "Maksimum globalnih veza"
+msgstr "Maksimalni broj globalnih veza"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:33
 msgid "Maximum number of peers"
@@ -4928,7 +4928,7 @@ msgstr "Maksimalni broj preuzimatelja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:35
 msgid "Maximum active seeds"
-msgstr "Maksimum aktivnih dijelitelja"
+msgstr "Maksimalni broj aktivnih dijelitelja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:34
 msgid "BitTorrent Global Tranfer Speeds"
@@ -4955,8 +4955,8 @@ msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
 msgstr ""
-"Bilješka: Jako niske brzine slanja (dijeljenja) bi neki pratitelji mogli kazniti, "
-"što bi mogao biti razlog za sporija preuzimanjima."
+"Bilješka: Jako niske brzine slanja (dijeljenja) bi neki pratitelji mogli kazniti "
+"što bi moglo uzrokovati sporija preuzimanja."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:52
 msgid "Upload Speed:"
