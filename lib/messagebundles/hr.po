@@ -3226,8 +3226,7 @@ msgid ""
 "connection is firewalled."
 msgstr ""
 "Jeste li iza firewalla? Na dnu FrostWirea, u statusnoj traci, potražite "
-"globus. Ako je ispred njega zid od cigli, vaša internet veza je zaštićena "
-"firewallom."
+"globus. Ako je ispred njega zid od cigli, vaša internet veza je zaštićena vatrozidom."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:30
 msgid ""
@@ -3393,8 +3392,8 @@ msgid ""
 "the 'View' option."
 msgstr ""
 "Možete upaliti ili ugasiti automatsko dovršavanje riječi za traženje odabirom 'Alati' iz  "
-"'FrostWire' menija te promjenom vrijednosti "
-"'Automatksko dovšavanje teksta' ispod opcije 'Pregled'."
+"'FrostWire' menija te promjenom vrijednosti 'Automatksko dovšavanje teksta' ispod "
+"opcije 'Pregled'."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:69
 msgid ""
@@ -3448,7 +3447,7 @@ msgid ""
 "that when you delete a file from the Library, you have the option to either "
 "permanently delete the file from your computer or move it to the Trash."
 msgstr ""
-"FrostWire-ova Knjižnica je datotečni upravitelj, ne samo MP3 lista pjesama. "
+"FrostWireova Knjižnica je datotečni upravitelj, ne samo MP3 lista pjesama. "
 "To znači da kada obrišete datoteke iz Knjižnice, imate opciju da ili "
 "permanentno obrišete datoteku iz vašeg računala ili da je maknete u Otpad."
 
@@ -3506,7 +3505,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:112
 msgid "Thank you for using FrostWire"
-msgstr "Pomoć pri korištenju FrostWirea."
+msgstr "Hvala vam što koristite FrostWire"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:113
 msgid "Visit us at www.frostwire.com"
@@ -3570,7 +3569,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:60
 msgid "O&pen .Torrent or Magnet"
-msgstr "Otvori .torrent datoteku ili magnet poveznicu"
+msgstr "Otvori .torrent datoteku ili magnet &poveznicu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:62
 msgid "Opens a magnet link or torrent file"
@@ -3600,11 +3599,11 @@ msgid ""
 "and then try again."
 msgstr ""
 "FrostWire ne može otvoriti ovu adresu. Budite sigurni da ste je točno napisali, "
-"i onda pokušajte ponovno."
+"zatim onda pokušajte ponovno."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:310
 msgid "&Close"
-msgstr "&Zatvori"
+msgstr "Zatvori"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:311
 msgid "Close the program's main window"
@@ -3612,7 +3611,7 @@ msgstr "Zatvori glavni prozor programa"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:322
 msgid "E&xit"
-msgstr "I&zađi"
+msgstr "Izađi"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:323
 msgid "Close and exit the program"
@@ -3662,7 +3661,7 @@ msgid ""
 msgstr ""
 "FrostWire se susreo s internom greškom. Moguće je da se FrostWire oporavi i "
 "nastavi normalno raditi. Za nastavak korištenja FrostWirea klikni"
-"'Odbaci'.  Ako želite možete kliknuti 'Pregled' da bi pogledali informacije o grešci."
+"'Odbaci'. Ako želite možete kliknuti 'Pregled' da bi pogledali informacije o grešci."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:339
 msgid ""
@@ -3683,7 +3682,7 @@ msgstr "Odbaci"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:399
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:96
 msgid "Always Send Immediately"
-msgstr "Uvijek pošalji odmah"
+msgstr "Uvijek šalji odmah"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:400
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:97
@@ -3742,8 +3741,8 @@ msgid ""
 "characters which are not supported by your operating system. FrostWire may "
 "behave in unexpected ways."
 msgstr ""
-"FrostWire ne može otvoriti potrebnu datoteku jer ime datoteke sadrži znakove "
-"koji nisu podržani od strane vašeg operativnog sustava. FrostWire se može "
+"FrostWire ne može otvoriti potrebnu datoteku jer ime datoteke sadrži "
+"znakove koji nisu podržani od strane vašeg operativnog sustava. FrostWire se može "
 "ponašati na neočekivane načine."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:648
