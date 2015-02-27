@@ -1123,7 +1123,7 @@ msgstr "bitcoinima"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/PaymentOptionsRenderer.java:77
 msgid "Name your price, Send a Tip or Donation via Paypal"
-msgstr "Recite svoju cijenu, pošaljite napojnicu ili donaciju putem PayPala"
+msgstr "Recite svoju cijenu, pošaljite napojnicu ili donaciju putem PayPal-a"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:90
 msgid "Preparing selection"
@@ -1555,7 +1555,7 @@ msgstr "Otvori direktorij kolekcije"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:329
 msgid "Wi-Fi Shared"
-msgstr "Dijeljeno putem Wi-Fia"
+msgstr "Dijeljeno putem Wi-Fi-a"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableDataLine.java:339
 msgid "Path"
@@ -2116,7 +2116,7 @@ msgstr "Sviram internetski radio"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1048
 msgid "Playing local Wi-Fi Stream from"
-msgstr "Sviram strujanje lokalnog Wi-Fia od"
+msgstr "Sviram strujanje lokalnog Wi-Fi-a od"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1062
 msgid "unknown device"
@@ -2173,13 +2173,12 @@ msgid ""
 "<b>Please install mplayer and restart FrostWire.</b>"
 msgstr ""
 "<b>FrostWire zahtijeva Mplayer za sviranje vaših medija</b> ali ga nisam "
-"mogao naćiu vašem računalu.<br><br>Ako želite koristiti FrostWire kao "
-"medijski izvođač <b>Molimo vas da instalirate Mplayer i ponovno pokrenete "
-"FrostWire.</b>"
+"mogao naćiu vašem računalu.<br><br>Ako želite koristiti FrostWire kao medijski izvođač "
+"<b>Molimo vas da instalirate Mplayer i ponovno pokrenete FrostWire.</b>"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/searchfield/GoogleSearchField.java:64
 msgid "Hints by Google"
-msgstr "Savjeti od Googlea"
+msgstr "Savjeti od Google-a"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/searchfield/RecentSearches.java:320
 msgid "SearchField.noRecentsText"
@@ -2255,8 +2254,8 @@ msgid ""
 "Browse, Search and Play files in your computer. Wi-Fi sharing, Internet "
 "Radio and more."
 msgstr ""
-"Pregledavaj, pretražuj i sviraj datoteke na vasem racunalu. Wi-Fi "
-"dijeljenje, internet Radio i više."
+"Pregledavaj, pretražuj i sviraj datoteke na vasem racunalu. Wi-Fi dijeljenje, internet "
+"Radio i više."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/tabs/SearchDownloadTab.java:51
 msgid "Search and Download Files from the Internet."
@@ -2367,7 +2366,7 @@ msgstr "FileChooser.renameErrorText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/transfers/PeerHttpUpload.java:153
 msgid "Streaming"
-msgstr "Streamanje"
+msgstr "Strujanje"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/transfers/PeerHttpUpload.java:159
 msgid "Cancelled"
@@ -2525,7 +2524,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:295
 msgid "Thanks to the NSIS Project"
-msgstr "Hvala HSIS projektu"
+msgstr "Hvala NSIS projektu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:296
 msgid "Thanks for such an awesome installer builder system and documentation."
@@ -2666,11 +2665,11 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIMediator.java:136
 msgid "&Search"
-msgstr "&Traži"
+msgstr "Traži"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIMediator.java:136
 msgid "&Library"
-msgstr "&Knjižnica"
+msgstr "Knjižnica"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIMediator.java:148
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIMediator.java:176
@@ -5109,19 +5108,19 @@ msgstr "Preuzimaj djelomične datoteke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:94
 msgid "Torrent Details"
-msgstr "Detalji torrenta"
+msgstr "Detalji torrent-a"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:96
 msgid "View in YouTube"
-msgstr "Pogledaj u YouTubeu"
+msgstr "Pogledaj u YouTube-u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:98
 msgid "View in Soundcloud"
-msgstr "Pogledaj u SoundCloudu"
+msgstr "Pogledaj u SoundCloud-u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:100
 msgid "View in Archive.org"
-msgstr "Pogledaj u Archive.orgu"
+msgstr "Pogledaj u Archive.org-u"
 
 #. Set the splash screen text...
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:126
