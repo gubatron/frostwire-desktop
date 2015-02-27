@@ -196,7 +196,7 @@ msgid ""
 "\n"
 "You won't be able to recover the files."
 msgstr ""
-"Jeste li sigurni da želite ukloniti datoteke s vašeg racunala?\n"
+"Jeste li sigurni da želite ukloniti datoteke s vašeg računala?\n"
 "\n"
 "Nećete biti u mogućnosti oporaviti datoteke."
 
@@ -1806,20 +1806,20 @@ msgstr "Osvježi zvučna svojstva bazirano na ID3 tagovima od odabranih stvari"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:733
 msgid "Delete Playlist"
-msgstr "Obrisati spisak pjesama"
+msgstr "Obriši listu pjesama"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:742
 msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
 msgstr ""
-"Jeste li sugirni da želite izbrisati ovaj spisak pjesama?\n"
+"Jeste li sugirni da želite izbrisati ovu listu pjesama?\n"
 "(nijedna datoteka neće biti izbrisana)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:760
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:825
 msgid "Cleanup playlist"
-msgstr "Počisti popis pjesama"
+msgstr "Očisti listu pjesama"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:761
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:826
@@ -1828,7 +1828,7 @@ msgstr "Ukloni označene stavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:780
 msgid "Rename Playlist"
-msgstr "Preimenuj popis pjesama"
+msgstr "Preimenuj listu pjesama"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:808
 msgid "Playlist Files (*.m3u)"
@@ -2409,7 +2409,7 @@ msgstr "Slike"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:58
 msgid "About FrostWire"
-msgstr "O FrostWireu"
+msgstr "O FrostWire-u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:88
 msgid "End User License Agreement"
@@ -3288,7 +3288,7 @@ msgstr ""
 "Magnet poveznice omogućuju korisnicima da preuzimaju datoteke putem "
 "FrostWirea sa web stranice. Kada stavite magnet poveznicu na vašu web "
 "stranicu (u 'href' atribut strelica sidra), i korisnik klikne na link, "
-"download će se pokrenuti u FrostWireu."
+"download će se pokrenuti u FrostWire-u."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:38
 msgid ""
@@ -3304,7 +3304,7 @@ msgid ""
 "FrostWire' from the Help menu."
 msgstr ""
 "Možete saznati koji verziju FrostWirea koristite tako da odaberete 'O "
-"FrostWireu' iz menija Pomoć."
+"FrostWire-u' iz menija Pomoć."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:50
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:67
@@ -3383,7 +3383,7 @@ msgid ""
 "FrostWire' from the FrostWire menu."
 msgstr ""
 "Možete saznati koju verziju FrostWirea koristite tako da izaberete 'O "
-"FrostWireu' u FrostWire meniju."
+"FrostWire-u' u FrostWire meniju."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:68
 msgid ""
@@ -3458,7 +3458,7 @@ msgid ""
 "to 'Tools' on FrostWire menu and select the option 'Play with native media "
 "player'."
 msgstr ""
-"Želite slušati glazbu u zadanom medijskom izvođaču umjesto u FrostWireu? "
+"Želite slušati glazbu u zadanom medijskom izvođaču umjesto u FrostWire-u? "
 "Odite u 'Alati' na FrostWire meniju i odaberite opciju 'Sviraj sa nativnim "
 "medijskim izvođačem'."
 
@@ -3799,7 +3799,7 @@ msgstr "Što će FrostWire napraviti sa odabranom asosijacijom pri paljenju?"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:84
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:71
 msgid "Always take the selected associations."
-msgstr "Uvijek uzimaj odabrane asocijacije."
+msgstr "Uvijek uzmi odabrane asocijacije."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/AssociationsWindow.java:85
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:73
@@ -3936,8 +3936,7 @@ msgid ""
 "your choosing with other users connected to the BitTorrent network."
 msgstr ""
 "FrostWire je klijent-klijent aplikacija koja vam omogućava da dijelite "
-"datoteke po vašem izboru sa ostalim korisnicima spojenima na BitTorrent "
-"mrežu."
+"datoteke po vašem izboru sa ostalim korisnicima spojenima na BitTorrent mreži."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:40
 msgid ""
@@ -3957,9 +3956,9 @@ msgid ""
 "features that require your configuration. FrostWire will guide you through a "
 "series of steps to configure these new features."
 msgstr ""
-"Dobrodošli u FrostWire instalacijski čarobnjak. FrostWire je nedavno dodao "
-"nove značajke koje zahtijevaju vašu konfiguraciju. FrostWire će vas voditi "
-"kroz nekoliko koraka konfiguracije ovih značajki."
+"Dobrodošli u FrostWire instalacijski čarobnjak. FrostWire je nedavno dodao nove "
+"značajke koje zahtijevaju vašu konfiguraciju. FrostWire će vas voditi kroz "
+"nekoliko koraka konfiguracije ovih značajki."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:47
 msgid ""
@@ -4011,7 +4010,7 @@ msgstr "Nauči više o BitTorrent dijeljenju"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid "What is a VPN?"
-msgstr "Što je VPN?"
+msgstr "Što je to VPN?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid ""
@@ -4061,7 +4060,7 @@ msgstr "Pristup forumu FrostWire korisnika."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:75
 msgid "&Did you pay for FrostWire?"
-msgstr "&Jeste li platili za FrostWire?"
+msgstr "Jeste li platili za FrostWire?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:76
 msgid ""
@@ -4079,11 +4078,11 @@ msgstr "Pokaži prozor savjeta dana"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:117
 msgid "&About FrostWire"
-msgstr "O FrostWireu"
+msgstr "O FrostWire-u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:118
 msgid "Information about FrostWire"
-msgstr "Informacije o FrostWireu"
+msgstr "Informacije o FrostWire-u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/MenuMediator.java:92
 msgid "Loading Menus..."
@@ -4091,7 +4090,7 @@ msgstr "Učitavam menija..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:46
 msgid "&Tools"
-msgstr "&Alati"
+msgstr "Ala&ti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:68
 msgid "Rebuild iTunes \"FrostWire\" Playlist"
@@ -4352,7 +4351,7 @@ msgid ""
 "takes them."
 msgstr ""
 "Možete koristiti FrostWire za otvaranje pojedinih vrsta datoteka i protokola. Također možete "
-"narediti FrostWireu da uvijek dohvati ove asocijacije ako ih drugi program "
+"narediti FrostWire-u da uvijek dohvati ove asocijacije ako ih drugi program "
 "uzme."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:59
@@ -4439,8 +4438,8 @@ msgid ""
 msgstr ""
 "Možete izabrati kako da se šalju izvještaji grešaka. Kako biste pogledali primjer izvještaja "
 "greške, kliknite na 'Vidi primjer'. Odabirom 'Uvijek šalji odmah' će "
-"se odmah kontaktirati poslužitelj za greške kada u FrostWireu dođe do interne "
-"greške. Odabirom 'Uvijek pitaj za pregled' će uvijek reći FrostWireu da vas pita za vašu "
+"se odmah kontaktirati poslužitelj za greške kada u FrostWire-u dođe do interne "
+"greške. Odabirom 'Uvijek pitaj za pregled' će uvijek reći FrostWire-u da vas pita za vašu "
 "dozvolu prije nego što pošalje grešku poslužitelju za greške. Odabirom 'Uvijek zanemari "
 "sve greške' FrostWire će ignorirati sve greške (ovo nije "
 "preporučeno)."
@@ -4619,7 +4618,7 @@ msgid ""
 "disable this interface, FrostWire will revert to binding to an arbitrary "
 "address."
 msgstr ""
-"Možete reći FrostWireu da dodjeli izlazne veze na IP adresu od specifičnog "
+"Možete reći FrostWire-u da dodjeli izlazne veze na IP adresu od specifičnog "
 "mrežnog sučelja. Slušaće utičnice će nastaviti slušati na svim dostupnim "
 "sučeljima. Ovo je korisno za multi-kućne domaćine. Ako kasnije onemogućite "
 "ovo sučelje, FrostWire će se vratiti na dodjeljivanje na nasumičnu "
