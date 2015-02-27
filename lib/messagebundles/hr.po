@@ -4019,7 +4019,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 msgid "Order FrostWire Stickers"
-msgstr "Naručiti FrostWire naljepnice"
+msgstr "Naruči FrostWire naljepnice"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 msgid "Order FrostWire stickers, we ship worldwide."
@@ -4065,7 +4065,7 @@ msgstr "Jeste li platili za FrostWire?"
 msgid ""
 "Did you pay for FrostWire? FrostWire is Free as in Free Beer. Avoid Scams."
 msgstr ""
-"Jeste li platili ste za FrostWire? FrostWire je besplatan kao i besplatno pivo. Izbjegavajte prevare."
+"Platili ste za FrostWire? FrostWire je besplatan kao i besplatno pivo. Izbjegavajte prijevare."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:97
 msgid "Tip of the &Day"
@@ -4101,7 +4101,7 @@ msgid ""
 "audio files found on your Torrent Data Folder."
 msgstr ""
 "Briše i obnavlja \"FrostWire\" listu pjesama na iTunesu sa svim "
-"zvukovnim datotekama nađenim u vašoj torrent podatkovnoj mapi."
+"audio datotekama nađenim u vašoj torrent podatkovnoj mapi."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:74
 msgid ""
@@ -4423,7 +4423,7 @@ msgstr "Pretraživač"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:40
 msgid "View Example"
-msgstr "Pogledati primjer"
+msgstr "Pogledaj primjer"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:76
 msgid ""
@@ -4449,11 +4449,11 @@ msgstr "Pošalji greške automatski ako je FrostWire zamrznut"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:38
 msgid "Details Page"
-msgstr "Stranica detalja"
+msgstr "Stranica s detaljima"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/DetailsPaneItem.java:40
 msgid "Show details web page after a download starts."
-msgstr "Pokazuj stranicu detalja nakon što preuzimanje započne."
+msgstr "Pokazuj stranicu s detaljima nakon što preuzimanje započne."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:20
 msgid "License Warning"
@@ -4465,7 +4465,7 @@ msgid ""
 "license."
 msgstr ""
 "Možete izabrati želite li biti upozoreni o preuzimanju datoteka bez "
-"dozvole."
+"licence."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:29
 msgid "Show License Warning:"
@@ -4498,15 +4498,15 @@ msgstr "Koristiti nasumični port (preporučeno)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:64
 msgid "Manual port range"
-msgstr "Ručni domet porta"
+msgstr "Ručni domet port-a"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:89
 msgid "TCP port start:"
-msgstr "TCP port početak:"
+msgstr "početak TCP port-a:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:99
 msgid "TCP port end:"
-msgstr "TCP port kraj:"
+msgstr "kraj TCP port-a:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:169
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:173
@@ -4515,7 +4515,7 @@ msgstr "Morate upisati port između 1 i 65535 kada ručno forsirate port."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:178
 msgid "You must enter a valid port range."
-msgstr "Morate upisati valjani domet porta."
+msgstr "Morate upisati valjani domet port-a."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:22
 msgid "Filter Results"
@@ -4594,7 +4594,7 @@ msgstr "Maksimalni broj traženja"
 msgid ""
 "You can set the maximum number of simultaneous searches you can perform."
 msgstr ""
-"Možete postaviti maksimalni broj istovremenih pretraživanja."
+"Možete postaviti maksimalni broj istovremenih pretraživanja koje možete napraviti."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4930,7 +4930,7 @@ msgid ""
 "Set the Maximum BitTorrent transfer speeds in KB/s.\n"
 "Tip: Use your keyboard arrows for more precision"
 msgstr ""
-"Postaviti maksimalnu BitTorrent brzinu prijenosa u KB/s.\n"
+"Postavi maksimalnu BitTorrent brzinu prijenosa u KB/s.\n"
 "Savjet: Koristite svoju tipkovnicu za veću preciznost"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:38
