@@ -2986,11 +2986,11 @@ msgstr "Igram se sa pikselima na indikatoru vatrozida..."
 #. make the social buttons
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:162
 msgid "Learning to socialize on Facebook..."
-msgstr "Učim kako se socijalizirati na Facebooku..."
+msgstr "Učim kako se socijalizirati na Facebook-u..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:164
 msgid "Learning to socialize on Twitter..."
-msgstr "Učim kako se socijalizirati na Twitteru..."
+msgstr "Učim kako se socijalizirati na Twitter-u..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:166
 msgid "Learning to socialize on G+..."
@@ -3015,7 +3015,7 @@ msgid ""
 "Like FrostWire on Facebook and stay in touch with the community. Get Help "
 "and Help Others."
 msgstr ""
-"Zavolite FrostWire na Facebooku i ostanite u dodiru sa zajednicom. Dobijte pomoć "
+"Zavolite FrostWire na Facebook-u i ostanite u dodiru sa zajednicom. Dobijte pomoć "
 "i pomozite ostalima."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:202
@@ -3088,7 +3088,7 @@ msgstr "Pokaži status firewalla"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:806
 msgid "Show Bandwidth Consumption"
-msgstr "Pokazuj propusnost potrošnje"
+msgstr "Pokaži propusnost potrošnje"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:823
 msgid "Show Donation Buttons"
@@ -3104,11 +3104,11 @@ msgstr "Slanja:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:860
 msgid "Total Downstream:"
-msgstr "Totalni downstream:"
+msgstr "Ukupno strujanje preuzimanja:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:860
 msgid "Total Upstream:"
-msgstr "Totalni upstream:"
+msgstr "Ukupno strujanje slanja:"
 
 #. *
 #. * The title for the TOTD window.
@@ -3158,8 +3158,8 @@ msgid ""
 msgstr ""
 "Umorni od preuzimanja koja se zaustave na pola? Pomaže odabir rezultata "
 "traženja sa većim brojem u 'Dijeljenja' stupcu. Dijeljenja su broj jedinstvenih "
-"izvora na mreži koji hostaju ovu datoteku. Više izvora jamči veču šansu da "
-"dobijete vašu torrent datoteku!"
+"izvora na mreži koji šalju ovu datoteku. Više izvora "
+"jamči veču šansu da dobijete vašu torrent datoteku!"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:23
 msgid ""
@@ -3731,7 +3731,7 @@ msgid ""
 "you start FrostWire, or FrostWire may behave in unexpected ways."
 msgstr ""
 "FrostWire nije mogao zapisati potrebnu datoteku jer nemate potrebna "
-"dopuštenja. Vaše postavke možda neće biti sačuvane slijedeći put kada "
+"dopuštenja. Vaše postavke možda neće biti sačuvane sljedeći put kada "
 "pokrenete FrostWire, ili se FrostWire neće ponašati na očekivani način."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:644
@@ -3973,7 +3973,7 @@ msgstr "FrostWire je besplatan softver,"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:114
 msgid "Do not pay for FrostWire."
-msgstr "Nemojte platiti za FrostWire."
+msgstr "Nemojte plaćati za FrostWire."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/FileMenu.java:40
 msgid "&File"
@@ -4039,15 +4039,15 @@ msgstr "Besplatna legalna preuzimanja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:67
 msgid "FrostWire on Facebook"
-msgstr "FrostWire na Facebooku"
+msgstr "FrostWire na Facebook-u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:67
 msgid "Come and say hi to the community on Facebook"
-msgstr "Dođite i recite bok zajednici na Facebooku"
+msgstr "Dođite i recite bok zajednici na Facebook-u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:69
 msgid "Follow us on Twitter"
-msgstr "Slijedite nas na Twitteru"
+msgstr "Slijedite nas na Twitter-u"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:71
 msgid "Foru&m"
@@ -4059,7 +4059,7 @@ msgstr "Pristup forumu FrostWire korisnika."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:75
 msgid "&Did you pay for FrostWire?"
-msgstr "Jeste li platili za FrostWire?"
+msgstr "Platili ste za FrostWire?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:76
 msgid ""
@@ -4384,7 +4384,7 @@ msgstr "Možete omogućiti ili onemogućiti dovršavanje tekstualnih polja."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AutoCompletePaneItem.java:27
 msgid "Enable Autocompletion of Text Fields:"
-msgstr "Omogućiti automatsko dovršavanje tekstualnih polja:"
+msgstr "Omogući automatsko dovršavanje tekstualnih polja:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
 msgid "Automatic Installer Download"
