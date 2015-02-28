@@ -58,6 +58,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -627,29 +628,27 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
             if (torrent != null) {
                 if (addAvailableWebSeeds(torrent, create_from_dir)) {
-                    _saveDir = f.getParentFile();
-
                     reportCurrentTask(I18n.tr("Calculating piece hashes..."));
-
-                    File containing_path = (create_from_dir) ? f : f.getParentFile();
+                    _saveDir = (create_from_dir && f.isDirectory()) ? f : f.getParentFile();
                     error_code ec = new error_code();
-                    libtorrent.set_piece_hashes(torrent, containing_path.getAbsolutePath(), ec);
-
+                    libtorrent.set_piece_hashes(torrent, _saveDir.getAbsolutePath(), ec);
                     reportCurrentTask(I18n.tr("Generating torrent entry..."));
+
                     Entry entry = new Entry(torrent.generate());
-                    addAvailablePaymentOptions(entry);
-                    addAvailableCopyrightLicense(entry);
+                    Map<String, Entry> entryMap = entry.dictionary();
+                    entryMap = addAvailablePaymentOptions(entryMap);
+                    entryMap = addAvailableCopyrightLicense(entryMap);
 
                     final File torrent_file = new File(dotTorrentSavePath);
                     reportCurrentTask(I18n.tr("Saving torrent to disk..."));
-                    final byte[] bencoded_torrent_bytes = entry.bencode();
+
+                    Entry entryFromUpdatedMap = Entry.fromMap(entryMap);
+                    final byte[] bencoded_torrent_bytes = entryFromUpdatedMap.bencode();
                     FileOutputStream fos = new FileOutputStream(torrent_file);
                     BufferedOutputStream bos = new BufferedOutputStream(fos);
                     bos.write(bencoded_torrent_bytes);
                     bos.flush();
                     bos.close();
-
-                    //torrent.serialiseToBEncodedFile(torrent_file);
                     result = true;
                     reportCurrentTask("");
                 } else {
@@ -757,22 +756,28 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         return urlPath;
     }
 
-    private void addAvailableCopyrightLicense(final Entry entry) {
+    private Map<String, Entry> addAvailableCopyrightLicense(final Map<String, Entry> entryMap) {
         if (_licenseSelectorPanel.hasConfirmedRightfulUseOfLicense()) {
             CopyrightLicenseBroker license = _licenseSelectorPanel.getLicenseBroker();
             if (license != null) {
-                entry.dictionary().put("license", Entry.fromMap(license.asMap()));
+                final Map<String, Entry> info = entryMap.get("info").dictionary();
+                info.put("license", Entry.fromMap(license.asMap()));
+                entryMap.put("info", Entry.fromMap(info));
             }
         }
+        return entryMap;
     }
 
-    private void addAvailablePaymentOptions(final Entry entry) {
+    private Map<String, Entry> addAvailablePaymentOptions(final Map<String, Entry> entryMap) {
         if (_paymentOptionsPanel.hasPaymentOptions()) {
             PaymentOptions paymentOptions = _paymentOptionsPanel.getPaymentOptions();
             if (paymentOptions != null) {
-                entry.dictionary().put("paymentOptions", Entry.fromMap(paymentOptions.asMap()));
+                final Map<String, Entry> info = entryMap.get("info").dictionary();
+                info.put("paymentOptions", Entry.fromMap(paymentOptions.asMap()));
+                entryMap.put("info", Entry.fromMap(info));
             }
         }
+        return entryMap;
     }
 
     private void revertSaveCloseButtons() {
