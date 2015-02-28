@@ -667,7 +667,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	           
                if (result) {
                        for (String mirror : mirrors) {
-                           torrent.add_http_seed(mirror);
+                           torrent.add_url_seed(mirror);
                        }
         	           result = true;
                }
