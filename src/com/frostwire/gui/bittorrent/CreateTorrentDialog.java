@@ -572,7 +572,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         _textTrackers.setText(builder.toString());
     }
 
-
     boolean makeTorrent() {
         boolean result = false;
         disableSaveCloseButtons();
@@ -598,7 +597,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
             if (torrent != null) {
                 if (addAvailableWebSeeds(torrent, create_from_dir)) {
                     reportCurrentTask(I18n.tr("Calculating piece hashes..."));
-                    _saveDir = (create_from_dir && f.isDirectory()) ? f : f.getParentFile();
+                    _saveDir = f.getParentFile();
                     error_code ec = new error_code();
                     libtorrent.set_piece_hashes(torrent, _saveDir.getAbsolutePath(), ec);
                     reportCurrentTask(I18n.tr("Generating torrent entry..."));
@@ -642,7 +641,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
         return result;
     }
-
 
     private boolean addAvailableWebSeeds(create_torrent torrent, boolean isMultiFile) {
         boolean result = true;
