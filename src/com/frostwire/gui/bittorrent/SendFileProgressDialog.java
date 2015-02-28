@@ -226,8 +226,6 @@ public class SendFileProgressDialog extends JDialog {
                 }
             });
             
-            
-
             torrent = _torrentCreator.create();
             TorrentUtils.setDecentralised(torrent);
             TorrentUtils.setDHTBackupEnabled(torrent, true);

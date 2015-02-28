@@ -1,13 +1,13 @@
 package com.frostwire.gui.bittorrent;
 
-import org.gudy.azureus2.core3.torrent.TOTorrentFile;
+import com.frostwire.jlibtorrent.FileEntry;
 
 public class TorrentFileInfo {
-    public TOTorrentFile torrentFile;
+    public FileEntry fileEntry;
     public boolean selected;
 
-    public TorrentFileInfo(TOTorrentFile torrentFile, boolean selected) {
-        this.torrentFile = torrentFile;
+    public TorrentFileInfo(FileEntry torrentFile, boolean selected) {
+        this.fileEntry = torrentFile;
         this.selected = selected;
     }
 }
