@@ -69,28 +69,14 @@ import java.util.regex.Pattern;
  */
 @SuppressWarnings("serial")
 public class CreateTorrentDialog extends JDialog implements TOTorrentProgressListener {
-
-    /**
-     * TRACKER TYPES
-     */
-    //static final int TT_LOCAL = 1; // I Don't Think So
-    private static final int TT_EXTERNAL = 2;
-    private static final int TT_DECENTRAL = 3;
-
     private static final String TT_EXTERNAL_DEFAULT = "http://";
-
-    private final static String comment = I18n.tr("Torrent File Created with FrostWire http://www.frostwire.com");
-
-    private static int tracker_type = TT_EXTERNAL;
-
-    // false : singleMode, true: directory
+    private final static String COMMENT = I18n.tr("Torrent File Created with FrostWire http://www.frostwire.com");
     private boolean create_from_dir;
     private String singlePath = null;
     private String directoryPath = null;
     private String dotTorrentSavePath = null;
 
     private String trackerURL = TT_EXTERNAL_DEFAULT;
-    private boolean useMultiTracker = false;
     private final List<String> trackers;
 
     private boolean autoOpen = true;
@@ -456,11 +442,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
                 JOptionPane.showMessageDialog(this, I18n.tr("Check again your tracker URL(s).\n" + _invalidTrackerURL), I18n.tr("Invalid Tracker URL\n"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
-            setTrackerType(TT_EXTERNAL);
         } else {
             trackers.clear();
-            setTrackerType(TT_DECENTRAL);
         }
 
         //Whether or not to start seeding this torrent right away
@@ -553,7 +536,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
             }
 
             // assume http if the user does not specify it
-            if (!tracker_url.startsWith("http://") && !tracker_url.startsWith("udp://")) {
+            if (!tracker_url.startsWith("http://") &&
+                !tracker_url.startsWith("https://") &&
+                !tracker_url.startsWith("udp://")) {
                 tracker_url = "http://" + tracker_url.trim();
             }
 
@@ -572,7 +557,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         trackers.clear();
         trackers.addAll(valid_tracker_urls);
         trackerURL = valid_tracker_urls.get(0);
-        useMultiTracker = valid_tracker_urls.size() > 1;
         _invalidTrackerURL = null;
         return true;
     }
@@ -588,25 +572,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         _textTrackers.setText(builder.toString());
     }
 
-    int getTrackerType() {
-        return (tracker_type);
-    }
-
-    void setTrackerType(int type) {
-        tracker_type = type;
-    }
 
     boolean makeTorrent() {
         boolean result = false;
-        
         disableSaveCloseButtons();
-
-        int tracker_type = getTrackerType();
-
-        if (tracker_type == TT_EXTERNAL) {
-            TrackersUtil.getInstance().addTracker(trackerURL);
-        }
-
         File f = new File((create_from_dir) ? directoryPath : singlePath);
 
         try {
@@ -619,7 +588,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
             torrent.set_priv(false);
             torrent.set_creator("FrostWire " + FrostWireUtils.getFrostWireVersion() + " build " + FrostWireUtils.getBuildNumber());
 
-            if (useMultiTracker && trackers != null && !trackers.isEmpty()) {
+            if (trackers != null && !trackers.isEmpty()) {
                 reportCurrentTask(I18n.tr("Adding trackers..."));
                 for (String trackerUrl : trackers) {
                     torrent.add_tracker(trackerUrl);
@@ -636,8 +605,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
                     Entry entry = new Entry(torrent.generate());
                     Map<String, Entry> entryMap = entry.dictionary();
-                    entryMap = addAvailablePaymentOptions(entryMap);
-                    entryMap = addAvailableCopyrightLicense(entryMap);
+                    addAvailablePaymentOptions(entryMap);
+                    addAvailableCopyrightLicense(entryMap);
 
                     final File torrent_file = new File(dotTorrentSavePath);
                     reportCurrentTask(I18n.tr("Saving torrent to disk..."));
@@ -697,7 +666,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
                }
 	           
                if (result) {
-        	           //torrent.setAdditionalListProperty("url-list",mirrors);
                        for (String mirror : mirrors) {
                            torrent.add_http_seed(mirror);
                        }
@@ -756,7 +724,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         return urlPath;
     }
 
-    private Map<String, Entry> addAvailableCopyrightLicense(final Map<String, Entry> entryMap) {
+    private void addAvailableCopyrightLicense(final Map<String, Entry> entryMap) {
         if (_licenseSelectorPanel.hasConfirmedRightfulUseOfLicense()) {
             CopyrightLicenseBroker license = _licenseSelectorPanel.getLicenseBroker();
             if (license != null) {
@@ -765,10 +733,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
                 entryMap.put("info", Entry.fromMap(info));
             }
         }
-        return entryMap;
     }
 
-    private Map<String, Entry> addAvailablePaymentOptions(final Map<String, Entry> entryMap) {
+    private void addAvailablePaymentOptions(final Map<String, Entry> entryMap) {
         if (_paymentOptionsPanel.hasPaymentOptions()) {
             PaymentOptions paymentOptions = _paymentOptionsPanel.getPaymentOptions();
             if (paymentOptions != null) {
@@ -777,7 +744,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
                 entryMap.put("info", Entry.fromMap(info));
             }
         }
-        return entryMap;
     }
 
     private void revertSaveCloseButtons() {
