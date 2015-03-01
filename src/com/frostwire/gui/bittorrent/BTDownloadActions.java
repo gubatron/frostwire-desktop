@@ -23,6 +23,7 @@ import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
+import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.DialogOption;
@@ -32,7 +33,6 @@ import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -71,7 +71,6 @@ final class BTDownloadActions {
         public SendBTDownloaderAudioFilesToiTunes() {
             putValue(Action.NAME, I18n.tr("Send to iTunes"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send files to iTunes"));
-            //putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH")
         }
 
         @Override
@@ -447,7 +446,7 @@ final class BTDownloadActions {
             BTDownload btDownload = downloaders[0];
 
             if (btDownload instanceof BittorrentDownload) {
-                TOTorrent t = ((BittorrentDownload) btDownload).getTOTorrent();
+                TorrentInfo t = ((BittorrentDownload) btDownload).getTorrentInfo();
                 if (t != null) { // avoid NPE due to an invalid torrent handle
                     new ShareTorrentDialog(t).setVisible(true);
                 }
