@@ -43,17 +43,13 @@
  */
 package com.frostwire.gui.bittorrent;
 
-import com.frostwire.bittorrent.BTDownloadItem;
+import com.frostwire.jlibtorrent.AnnounceEntry;
+import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.logging.Logger;
 import com.frostwire.transfers.TransferItem;
-import com.frostwire.util.StringUtils;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLGroup;
-import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLSet;
 import org.gudy.azureus2.core3.util.UrlUtils;
 
 import java.io.File;
-import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -129,47 +125,18 @@ public final class TorrentUtil {
         return "magnet:?xt=urn:btih:" + hash;
     }
 
-    public static String getMagnetURLParameters(TOTorrent torrent) {
+    public static String getMagnetURLParameters(TorrentInfo torrent) {
         StringBuilder sb = new StringBuilder();
+
         //dn
-        if (StringUtils.isNullOrEmpty(torrent.getUTF8Name())) {
-            sb.append("dn=" + UrlUtils.encode(new String(torrent.getName())));
-        } else {
-            sb.append("dn=" + UrlUtils.encode(torrent.getUTF8Name()));
-        }
+        sb.append("dn=" + UrlUtils.encode(torrent.getName()));
 
-        TOTorrentAnnounceURLGroup announceURLGroup = torrent.getAnnounceURLGroup();
-        TOTorrentAnnounceURLSet[] announceURLSets = announceURLGroup.getAnnounceURLSets();
-
-        for (TOTorrentAnnounceURLSet set : announceURLSets) {
-            URL[] announceURLs = set.getAnnounceURLs();
-            for (URL url : announceURLs) {
-                sb.append("&tr=");
-                sb.append(UrlUtils.encode(url.toString()));
-            }
-        }
-
-        if (torrent.getAnnounceURL() != null) {
+        final List<AnnounceEntry> trackers = torrent.getTrackers();
+        for (AnnounceEntry tracker : trackers) {
+            final String url = tracker.getUrl();
             sb.append("&tr=");
-            sb.append(UrlUtils.encode(torrent.getAnnounceURL().toString()));
+            sb.append(UrlUtils.encode(url));
         }
-
-        //iipp = internal ip port, for lan
-        /*
-        try {
-            String localAddress = NetworkUtils.getLocalAddress().getHostAddress();
-            int localPort = TCPNetworkManager.getSingleton().getTCPListeningPortNumber();
-
-            if (localPort != -1) {
-                sb.append("&iipp=");
-                sb.append(NetworkUtils.convertIPPortToHex(localAddress, localPort));
-            }
-
-        } catch (Throwable e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        */
 
         return sb.toString();
     }
