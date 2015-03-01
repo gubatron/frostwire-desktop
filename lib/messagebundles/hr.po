@@ -519,11 +519,11 @@ msgstr "Pokreni odabrane datoteke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:511
 msgid "Show in Library"
-msgstr "Pokaži u knjižnici"
+msgstr "Pokazati u knjižnici"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:512
 msgid "Show Download in Library"
-msgstr "Pokaži preuzimanje u knjižnici"
+msgstr "Pokazati preuzimanje u knjižnici"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediator.java:170
 msgid "Transfers"
@@ -559,7 +559,7 @@ msgstr "Odustani"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediator.java:557
 msgid "Cancel Selected Downloads"
-msgstr "Zaustavi označena preuzimanja"
+msgstr "Zaustaviti označena preuzimanja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediator.java:666
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediator.java:716
@@ -585,7 +585,7 @@ msgstr "Pratitelji"
 #. advanced > Download Speed Menu //
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:227
 msgid "Set Down Speed"
-msgstr "Postavi brzinu preuzimanja"
+msgstr "Postaviti brzinu preuzimanja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:236
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:343
@@ -630,7 +630,7 @@ msgstr "Nema limita"
 #. advanced >Upload Speed Menu //
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:334
 msgid "Set Up Speed"
-msgstr "Postavi brzinu slanja"
+msgstr "Postaviti brzinu slanja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:454
 msgid "Edit Trackers"
@@ -656,7 +656,7 @@ msgstr "Promijeni pratitelje, jedan po jedan"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:543
 msgid "Accept"
-msgstr "Prihvati"
+msgstr "Prihvatiti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:577
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:450
