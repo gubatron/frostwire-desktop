@@ -42,6 +42,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.ToolTipManager;
 
+import com.frostwire.jlibtorrent.TorrentInfo;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.TOTorrentFile;
@@ -92,7 +93,7 @@ public class ShareTorrentDialog extends JDialog {
 		}
 	}
 
-	private TOTorrent _torrent;
+	private TorrentInfo _torrent;
 	private Container _container;
 	private JLabel _introLabel;
 	private JEditorPane _textArea;
@@ -115,9 +116,8 @@ public class ShareTorrentDialog extends JDialog {
 	private String _info_hash;
 	private String _torrent_name;
 
-	public ShareTorrentDialog(TOTorrent torrent) {
+	public ShareTorrentDialog(TorrentInfo torrent) {
 		_torrent = torrent;
-
 		setupUI();
 	}
 
@@ -159,8 +159,7 @@ public class ShareTorrentDialog extends JDialog {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
 		c.insets = new Insets(20, 10, 10, 10);
-		TOTorrentFile[] files = _torrent.getFiles();
-		boolean folderTorrent = files.length > 1;
+		boolean folderTorrent = _torrent.getNumFiles() > 1;
 		_introLabel = new JLabel(folderTorrent ? String.format(
 				I18n.tr("Use the following text to share the \"%s\" folder"),
 				_torrent_name) : String.format(I18n.tr(
@@ -250,18 +249,11 @@ public class ShareTorrentDialog extends JDialog {
 	}
 
 	private void initTorrentname() {
-		_torrent_name = _torrent.getUTF8Name();
-
-		if (_torrent_name == null) {
-			_torrent_name = new String(_torrent.getName());
-		}
+		_torrent_name = _torrent.getName();
 	}
 
 	private void initInfoHash() {
-		try {
-			_info_hash = TorrentUtil.hashToString(_torrent.getHash());
-		} catch (TOTorrentException e) {
-		}
+		_info_hash = _torrent.getInfoHash().toString();
 	}
 
 	private String getLink() {
