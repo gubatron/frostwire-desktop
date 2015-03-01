@@ -18,6 +18,7 @@
 
 package com.frostwire.torrent;
 
+import com.frostwire.jlibtorrent.Entry;
 import com.frostwire.util.StringUtils;
 
 import java.util.HashMap;
@@ -29,7 +30,7 @@ import java.util.Map;
  * @author aldenml
  *
  */
-public class PaymentOptions extends AbstractMappable<String, Map<String, String>> {
+public class PaymentOptions implements Mappable<String, Map<String, String>> {
     /** BitCoin URI, see BIP-0021 - https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki 
      * bitcoinurn     = "bitcoin:" bitcoinaddress [ "?" bitcoinparams ]
      * bitcoinaddress = base58 *base58
@@ -63,10 +64,25 @@ public class PaymentOptions extends AbstractMappable<String, Map<String, String>
         this.paypalUrl = paypal;
     }
 
-    public PaymentOptions(Map<String, Map<String, Object>> paymentOptionsMap) {
-        Map<String, Object> paymentOptions = paymentOptionsMap.get("paymentOptions");
-        this.bitcoin = getStringFromEncodedMap("bitcoin", paymentOptions);
-        this.paypalUrl = getStringFromEncodedMap("paypalUrl", paymentOptions);
+    public PaymentOptions(Map<String, Entry> paymentOptionsMap) {
+        final Entry paymentOptions = paymentOptionsMap.get("paymentOptions");
+        if (paymentOptions != null) {
+            final Map<String, Entry> dictionary = paymentOptions.dictionary();
+            if (dictionary.containsKey("bitcoin")) {
+                this.bitcoin = dictionary.get("bitcoin").string();
+            } else {
+                this.bitcoin = null;
+            }
+
+            if (dictionary.containsKey("paypalUrl")) {
+                this.paypalUrl = dictionary.get("paypalUrl").string();
+            } else {
+                this.paypalUrl = null;
+            }
+        } else {
+            this.bitcoin = null;
+            this.paypalUrl = null;
+        }
     }
 
     public Map<String, Map<String, String>> asMap() {
