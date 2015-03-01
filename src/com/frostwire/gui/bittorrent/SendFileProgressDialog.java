@@ -17,39 +17,25 @@
 
 package com.frostwire.gui.bittorrent;
 
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-import java.net.URL;
-
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JProgressBar;
-import javax.swing.SwingUtilities;
-
-import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLSet;
-import org.gudy.azureus2.core3.torrent.TOTorrentCreator;
-import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
-import org.gudy.azureus2.core3.torrent.TOTorrentProgressListener;
-import org.gudy.azureus2.core3.util.TorrentUtils;
-
+import com.frostwire.jlibtorrent.TorrentInfo;
+import com.frostwire.jlibtorrent.Vectors;
+import com.frostwire.jlibtorrent.swig.*;
 import com.frostwire.logging.Logger;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.util.FrostWireUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 
 /**
  * @author gubatron
@@ -64,7 +50,6 @@ public class SendFileProgressDialog extends JDialog {
 	private JButton _cancelButton;
 	
     private Container _container;
-	private TOTorrentCreator _torrentCreator;
 	private int _percent_complete;
 	private File _preselectedFile;
 
@@ -105,9 +90,6 @@ public class SendFileProgressDialog extends JDialog {
             
             @Override
             public void windowClosing(WindowEvent e) {
-            	if (_torrentCreator != null) {
-            		_torrentCreator.cancel();
-            	}
             }
         });
         
@@ -138,10 +120,6 @@ public class SendFileProgressDialog extends JDialog {
 	}
 
 	protected void onCancelButton() {
-		if (_torrentCreator != null) {
-			_torrentCreator.cancel();
-		}
-		
 		dispose();
 	}
 
@@ -212,34 +190,37 @@ public class SendFileProgressDialog extends JDialog {
 
     private void makeTorrentAndDownload(final File file) {
         try {
-
-            final TOTorrent torrent;
-
-            _torrentCreator = TOTorrentFactory.createFromFileOrDirWithComputedPieceLength(file, new URL("http://"), false);
-
-            _torrentCreator.addListener(new TOTorrentProgressListener() {
-                public void reportProgress(int percent_complete) {
-                    torrentCreator_reportProgress(percent_complete);
-                }
-
-                public void reportCurrentTask(String task_description) {
-                }
-            });
-            
-            torrent = _torrentCreator.create();
-            TorrentUtils.setDecentralised(torrent);
-            TorrentUtils.setDHTBackupEnabled(torrent, true);
-            TOTorrentAnnounceURLSet announceURLSet = torrent.getAnnounceURLGroup().createAnnounceURLSet(new URL[] { new URL("udp://tracker.openbittorrent.com:80"), new URL("udp://tracker.publicbt.com:80"), new URL("udp://tracker.ccc.de:80") });
-            
-            torrent.getAnnounceURLGroup().setAnnounceURLSets(new TOTorrentAnnounceURLSet[] { announceURLSet });            
-            
-            TorrentUtils.setPrivate(torrent, false);
-            
-            LocaleTorrentUtil.setDefaultTorrentEncoding(torrent);
-
+            int flags = create_torrent.flags_t.calculate_file_hashes.swigValue();
+            file_storage fs = new file_storage();
+            libtorrent.add_files(fs, file.getAbsolutePath(), flags);
+            create_torrent torrentCreator = new create_torrent(fs);
+            torrentCreator.add_tracker("udp://tracker.openbittorrent.com:80");
+            torrentCreator.add_tracker("udp://tracker.publicbt.com:80");
+            torrentCreator.add_tracker("udp://tracker.ccc.de:80");
+            torrentCreator.set_priv(false);
+            torrentCreator.set_creator("FrostWire " + FrostWireUtils.getFrostWireJarPath() + " build " + FrostWireUtils.getBuildNumber());
             final File torrentFile = new File(SharingSettings.TORRENTS_DIR_SETTING.getValue(), file.getName() + ".torrent");
+            final error_code ec = new error_code();
+            libtorrent.set_piece_hashes(torrentCreator,file.getParentFile().getAbsolutePath(), ec);
+            if (ec.value() != 0) {
+                GUIMediator.safeInvokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                          _progressBar.setString("Error: " + ec.message());
+                    }
+                });
+                return;
+            }
 
-            torrent.serialiseToBEncodedFile(torrentFile.getAbsoluteFile());
+            final entry torrentEntry = torrentCreator.generate();
+            byte[] bencoded_torrent_bytes = Vectors.char_vector2bytes(torrentEntry.bencode());
+            FileOutputStream fos = new FileOutputStream(torrentFile);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            bos.write(bencoded_torrent_bytes);
+            bos.flush();
+            bos.close();
+
+            final TorrentInfo torrent = new TorrentInfo(bencoded_torrent_bytes);
 
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
