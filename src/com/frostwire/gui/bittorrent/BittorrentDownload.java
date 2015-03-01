@@ -21,6 +21,7 @@ package com.frostwire.gui.bittorrent;
 import com.frostwire.bittorrent.BTDownload;
 import com.frostwire.bittorrent.BTDownloadListener;
 import com.frostwire.gui.library.LibraryMediator;
+import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.logging.Logger;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
@@ -288,14 +289,8 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
         return dl.makeMagnetUri();
     }
 
-    public TOTorrent getTOTorrent() {
-        try {
-            File torrent = dl.getTorrentFile();
-            return TOTorrentFactory.deserialiseFromBEncodedFile(torrent);
-        } catch (Throwable e) {
-            LOG.error("Error building vuze torrent from file", e);
-        }
-        return null;
+    public TorrentInfo getTorrentInfo() {
+        return new TorrentInfo(dl.getTorrentFile());
     }
 
     private void setupMetadataHolder() {
