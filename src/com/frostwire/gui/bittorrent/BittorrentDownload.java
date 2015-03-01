@@ -33,9 +33,6 @@ import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.iTunesImportSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
-import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import java.io.File;
@@ -59,7 +56,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     private boolean deleteTorrentWhenRemove;
     private boolean deleteDataWhenRemove;
 
-    private BTInfoAditionalMetadataHolder holder;
+    private BTInfoAdditionalMetadataHolder holder;
     private CopyrightLicenseBroker licenseBroker;
     private PaymentOptions paymentOptions;
 
@@ -299,7 +296,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
                 File torrent = dl.getTorrentFile();
 
                 if (torrent != null) {
-                    holder = new BTInfoAditionalMetadataHolder(torrent, getDisplayName());
+                    holder = new BTInfoAdditionalMetadataHolder(torrent, getDisplayName());
                     licenseBroker = holder.getLicenseBroker();
                     paymentOptions = holder.getPaymentOptions();
 
