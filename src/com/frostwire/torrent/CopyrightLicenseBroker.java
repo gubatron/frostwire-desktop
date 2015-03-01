@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.frostwire.jlibtorrent.Entry;
 import com.frostwire.licences.ApacheLicense;
 import com.frostwire.licences.BSD2ClauseLicense;
 import com.frostwire.licences.BSD3ClauseLicense;
@@ -43,7 +44,7 @@ import com.frostwire.licences.PublicDomainMarkLicense;
  * @author aldenml
  *
  */
-public class CopyrightLicenseBroker extends AbstractMappable<String, Map<String, String>> {
+public class CopyrightLicenseBroker implements Mappable<String, Map<String, String>> {
 
     public enum LicenseCategory {
         CreativeCommons("creative-commons"), OpenSource("open-source"), PublicDomain("public-domain"), NoLicense("no-license");
@@ -164,8 +165,9 @@ public class CopyrightLicenseBroker extends AbstractMappable<String, Map<String,
         }
     }
 
-    /** Deserialization constructor */
-    public CopyrightLicenseBroker(Map<String, Map<String, Object>> map) {
+    /** Deserialization constructor
+     * @param map*/
+    public CopyrightLicenseBroker(Map<String, Entry> map) {
         if (map.containsKey("creative-commons")) {
             licenseCategory = LicenseCategory.CreativeCommons;
         } else if (map.containsKey("open-source")) {
@@ -177,11 +179,12 @@ public class CopyrightLicenseBroker extends AbstractMappable<String, Map<String,
         }
 
         if (licenseCategory != LicenseCategory.NoLicense) {
-            Map<String, Object> innerMap = map.get(licenseCategory.toString());
-            this.license = urlToLicense.get(getStringFromEncodedMap("licenseUrl", innerMap));
-            this.attributionTitle = getStringFromEncodedMap("attributionTitle", innerMap);
-            this.attributionAuthor = getStringFromEncodedMap("attributionAuthor", innerMap);
-            this.attributionUrl = getStringFromEncodedMap("attributionUrl", innerMap);
+            Map<String, Entry> innerMap = map.get(licenseCategory.toString()).dictionary();
+            String licenseUrl = innerMap.get("licenseUrl").string();
+            this.license = urlToLicense.get(licenseUrl);
+            this.attributionTitle = innerMap.get("attributionTitle").string();
+            this.attributionAuthor = innerMap.get("attributionAuthor").string();
+            this.attributionUrl = innerMap.get("attributionUrl").string();
         } else {
             this.license = null;
             this.attributionTitle = null;

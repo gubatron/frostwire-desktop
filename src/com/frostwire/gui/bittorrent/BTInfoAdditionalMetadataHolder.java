@@ -18,6 +18,8 @@
 
 package com.frostwire.gui.bittorrent;
 
+import com.frostwire.jlibtorrent.Entry;
+import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 
@@ -30,33 +32,29 @@ import java.util.Map;
  *
  * @author gubatron
  */
-public class BTInfoAditionalMetadataHolder {
+public class BTInfoAdditionalMetadataHolder {
 
     private final CopyrightLicenseBroker license;
     private final PaymentOptions paymentOptions;
 
-    public BTInfoAditionalMetadataHolder(File torrent, String paymentOptionsDisplayName) {
-        final TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(torrent);
-        @SuppressWarnings("unchecked")
-        Map<String, Object> additionalInfoProperties = infoManipulator.getAdditionalInfoProperties();
+    public BTInfoAdditionalMetadataHolder(File torrent, String paymentOptionsDisplayName) {
+        TorrentInfo tinfo = new TorrentInfo(torrent);
+        final Map<String, Entry> additionalInfoProperties = tinfo.toEntry().dictionary().get("info").dictionary();
 
-        @SuppressWarnings("unchecked")
-        Map<String, Map<String, Object>> licenseMap = (additionalInfoProperties != null) ? (Map<String, Map<String, Object>>) additionalInfoProperties.get("license") : null;
+        final Entry licenseEntry = additionalInfoProperties.get("license");
+        final Entry paymentOptionsEntry = additionalInfoProperties.get("paymentOptions");
 
-        @SuppressWarnings("unchecked")
-        Map<String, Map<String, Object>> paymentOptionsMap = (additionalInfoProperties != null) ? (Map<String, Map<String, Object>>) additionalInfoProperties.get("paymentOptions") : null;
-
-        boolean hasLicense = licenseMap != null && !licenseMap.isEmpty();
-        boolean hasPaymentOptions = paymentOptionsMap != null && !paymentOptionsMap.isEmpty();
+        boolean hasLicense = licenseEntry != null;
+        boolean hasPaymentOptions = paymentOptionsEntry != null;
 
         if (hasLicense) {
-            license = new CopyrightLicenseBroker(licenseMap);
+            license = new CopyrightLicenseBroker(licenseEntry.dictionary());
         } else {
             license = null;
         }
 
         if (hasPaymentOptions) {
-            paymentOptions = new PaymentOptions(paymentOptionsMap);
+            paymentOptions = new PaymentOptions(paymentOptionsEntry.dictionary());
         } else {
             paymentOptions = new PaymentOptions(null, null);
         }
@@ -70,5 +68,4 @@ public class BTInfoAditionalMetadataHolder {
     public PaymentOptions getPaymentOptions() {
         return paymentOptions;
     }
-
 }

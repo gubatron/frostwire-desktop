@@ -18,50 +18,19 @@
 
 package com.frostwire.gui.bittorrent;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.RowFilter;
-import javax.swing.SwingConstants;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableRowSorter;
-
-import org.apache.commons.io.FilenameUtils;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.torrent.TOTorrentException;
-import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
-import org.gudy.azureus2.core3.util.TorrentUtils;
-import org.limewire.util.StringUtils;
-
-import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.IconManager;
-import com.limegroup.gnutella.gui.LabeledTextField;
+import com.frostwire.jlibtorrent.TorrentInfo;
+import com.limegroup.gnutella.gui.*;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
+import org.apache.commons.io.FilenameUtils;
+import org.limewire.util.StringUtils;
+
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
 
 /**
  * 
@@ -83,7 +52,7 @@ public class PartialFilesDialog extends JDialog {
     private JButton _buttonOK;
     private JButton _buttonCancel;
 
-    private final TOTorrent _torrent;
+    private final TorrentInfo _torrent;
     private final String _name;
     private final TorrentTableModel _model;
 
@@ -93,15 +62,15 @@ public class PartialFilesDialog extends JDialog {
     /** Has the table been painted at least once? */
     protected boolean tablePainted;
 
-    public PartialFilesDialog(JFrame frame, File torrentFile) throws TOTorrentException {
-        this(frame, TorrentUtils.readFromFile(torrentFile, false), torrentFile.getName());
+    public PartialFilesDialog(JFrame frame, File torrentFile) {
+        this(frame, new TorrentInfo(torrentFile), torrentFile.getName());
     }
 
-    public PartialFilesDialog(JFrame frame, byte[] bytes, String name) throws TOTorrentException {
-        this(frame, TOTorrentFactory.deserialiseFromBEncodedByteArray(bytes), name);
+    public PartialFilesDialog(JFrame frame, byte[] bytes, String name) {
+        this(frame, new TorrentInfo(bytes), name);
     }
 
-    public PartialFilesDialog(JFrame frame, TOTorrent torrent, String name) throws TOTorrentException {
+    public PartialFilesDialog(JFrame frame, TorrentInfo torrent, String name) {
         super(frame, I18n.tr("Select files to download"));
 
         this._torrent = torrent;
@@ -310,10 +279,10 @@ public class PartialFilesDialog extends JDialog {
     private void setupTitle() {
         GridBagConstraints c;
 
-        String title = _torrent.getUTF8Name();
+        String title = _torrent.getName();
         if (title == null) {
             if (_torrent.getName() != null) {
-                title = StringUtils.getUTF8String(_torrent.getName());
+                title = StringUtils.getUTF8String(_torrent.getName().getBytes());
             } else {
                 title = _name.replace("_", " ").replace(".torrent", "").replace("&quot;", "\"");
             }
@@ -409,21 +378,21 @@ public class PartialFilesDialog extends JDialog {
 
         private static final long serialVersionUID = -8689494570949104116L;
 
-        private final TOTorrent _torrent;
+        private final TorrentInfo _torrent;
         private final TorrentFileInfo[] _fileInfos;
 
-        public TorrentTableModel(TOTorrent torrent) {
+        public TorrentTableModel(TorrentInfo torrent) {
             _torrent = torrent;
-            _fileInfos = new TorrentFileInfo[torrent.getFiles().length];
+            _fileInfos = new TorrentFileInfo[torrent.getNumFiles()];
             for (int i = 0; i < _fileInfos.length; i++) {
-                _fileInfos[i] = new TorrentFileInfo(torrent.getFiles()[i], true);
+                _fileInfos[i] = new TorrentFileInfo(_torrent.getFileAt(i), true);
             }
 
         }
 
         @Override
         public int getRowCount() {
-            return _torrent.getFiles().length;
+            return _torrent.getNumFiles();
         }
 
         @Override
@@ -459,7 +428,7 @@ public class PartialFilesDialog extends JDialog {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            String filePath = _fileInfos[rowIndex].torrentFile.getRelativePath();
+            String filePath = _fileInfos[rowIndex].fileEntry.getPath();
             String extension = FilenameUtils.getExtension(filePath);
 
             switch (columnIndex) {
@@ -480,7 +449,7 @@ public class PartialFilesDialog extends JDialog {
                 return extension;
             case 5:
                 //file size
-                return new SizeHolder(_fileInfos[rowIndex].torrentFile.getLength());
+                return new SizeHolder(_fileInfos[rowIndex].fileEntry.getSize());
             default:
                 return null;
             }

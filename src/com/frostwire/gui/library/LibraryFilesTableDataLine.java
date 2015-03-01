@@ -19,9 +19,8 @@
 package com.frostwire.gui.library;
 
 import com.frostwire.gui.Librarian;
-import com.frostwire.gui.bittorrent.TorrentInfoManipulator;
+import com.frostwire.gui.bittorrent.BTInfoAdditionalMetadataHolder;
 import com.frostwire.gui.player.MediaPlayer;
-import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -36,7 +35,6 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * This class acts as a single line containing all
@@ -203,39 +201,26 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
             initializer.isFile() && 
             FilenameUtils.getExtension(initializer.getName()) != null &&
             FilenameUtils.getExtension(initializer.getName()).endsWith("torrent")) {
-            
-            TorrentInfoManipulator infoManipulator = new TorrentInfoManipulator(initializer);
-            
-            @SuppressWarnings("unchecked")
-            Map<String, Object> additionalInfoProperties = infoManipulator.getAdditionalInfoProperties();
-            
-            @SuppressWarnings("unchecked")
-            Map<String,Map<String,Object>> licenseMap = (additionalInfoProperties != null) ? (Map<String,Map<String,Object>>) additionalInfoProperties.get("license") : null;
 
-            @SuppressWarnings("unchecked")
-            Map<String,Map<String,Object>> paymentOptionsMap = (additionalInfoProperties != null) ? (Map<String,Map<String,Object>>) additionalInfoProperties.get("paymentOptions") : null;
-            
-            boolean hasLicense = licenseMap != null && !licenseMap.isEmpty();
-            boolean hasPaymentOptions = paymentOptionsMap != null && !paymentOptionsMap.isEmpty();
+            BTInfoAdditionalMetadataHolder additionalMetadataHolder = new BTInfoAdditionalMetadataHolder(initializer, initializer.getName());
+
+            boolean hasLicense = additionalMetadataHolder.getLicenseBroker() != null;
+            boolean hasPaymentOptions = additionalMetadataHolder.getPaymentOptions() != null;
             
             if (hasLicense) {
                  System.out.println(initializer);
-                 CopyrightLicenseBroker copyrightLicenseBroker = new CopyrightLicenseBroker(licenseMap);
-                 if (copyrightLicenseBroker.license != null && copyrightLicenseBroker.license.getName() != null) {
-                     license = new CopyrightLicenseBroker(licenseMap).license.getName();
-                 } else {
-                     license = "";
-                 }
+                 license = additionalMetadataHolder.getLicenseBroker().getLicenseName();
             } else {
                 license = "";
             }
             
             if (hasPaymentOptions) {
-                paymentOptions = new PaymentOptions(paymentOptionsMap);
+                paymentOptions = additionalMetadataHolder.getPaymentOptions();
             } else {
                 paymentOptions = new PaymentOptions(null, null);
             }
             paymentOptions.setItemName(_name);
+
         }
     }
 
