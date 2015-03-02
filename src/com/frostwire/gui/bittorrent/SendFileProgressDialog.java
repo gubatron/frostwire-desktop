@@ -190,9 +190,8 @@ public class SendFileProgressDialog extends JDialog {
 
     private void makeTorrentAndDownload(final File file) {
         try {
-            int flags = create_torrent.flags_t.calculate_file_hashes.swigValue();
             file_storage fs = new file_storage();
-            libtorrent.add_files(fs, file.getAbsolutePath(), flags);
+            libtorrent.add_files(fs, file.getAbsolutePath());
             create_torrent torrentCreator = new create_torrent(fs);
             torrentCreator.add_tracker("udp://tracker.openbittorrent.com:80");
             torrentCreator.add_tracker("udp://tracker.publicbt.com:80");

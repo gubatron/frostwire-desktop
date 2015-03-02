@@ -573,12 +573,11 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         File f = new File((create_from_dir) ? directoryPath : singlePath);
 
         try {
-            int flags = create_torrent.flags_t.calculate_file_hashes.swigValue();
             file_storage fs = new file_storage();
             reportCurrentTask(I18n.tr("Adding files..."));
-            libtorrent.add_files(fs, f.getPath(), flags);
+            libtorrent.add_files(fs, f.getPath());
 
-            create_torrent torrent = new create_torrent(fs, 0, -1, flags, -1);
+            create_torrent torrent = new create_torrent(fs);
             torrent.set_priv(false);
             torrent.set_creator("FrostWire " + FrostWireUtils.getFrostWireVersion() + " build " + FrostWireUtils.getBuildNumber());
 
