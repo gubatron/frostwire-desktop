@@ -196,7 +196,8 @@ public class NetworkInterfacePaneItem extends AbstractPaneItem {
         final List<TorrentHandle> torrents = BTEngine.getInstance().getSession().getTorrents();
         if (torrents != null) {
             for (TorrentHandle th : torrents) {
-                th.useInterface(iface);
+                // TODO: review this deprecared API
+                //th.useInterface(iface);
             }
         }
 
