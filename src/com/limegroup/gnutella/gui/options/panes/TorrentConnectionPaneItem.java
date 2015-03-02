@@ -16,6 +16,7 @@
 package com.limegroup.gnutella.gui.options.panes;
 
 import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.jlibtorrent.DHT;
 import com.limegroup.gnutella.gui.*;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -129,11 +130,12 @@ public final class TorrentConnectionPaneItem extends AbstractPaneItem {
     private void applyDHTOptions(BTEngine btEngine) {
         boolean dhtExpectedValue = ENABLE_DISTRIBUTED_HASH_TABLE_CHECKBOX_FIELD.isSelected();
         boolean dhtCurrentStatus = btEngine.getSession().isDHTRunning();
+        DHT dht = new DHT(btEngine.getSession());
         if (dhtCurrentStatus && !dhtExpectedValue) {
-            btEngine.getSession().stopDHT();
+            dht.stop();
             SharingSettings.ENABLE_DISTRIBUTED_HASH_TABLE.setValue(false);
         } else if (!dhtCurrentStatus && dhtExpectedValue) {
-            btEngine.getSession().startDHT();
+            dht.start();
             SharingSettings.ENABLE_DISTRIBUTED_HASH_TABLE.setValue(true);
         }
     }
