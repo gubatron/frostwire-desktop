@@ -18,6 +18,7 @@
 
 package com.frostwire.gui.bittorrent;
 
+import com.frostwire.jlibtorrent.FileStorage;
 import com.frostwire.jlibtorrent.TorrentInfo;
 import com.limegroup.gnutella.gui.*;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
@@ -384,8 +385,9 @@ public class PartialFilesDialog extends JDialog {
         public TorrentTableModel(TorrentInfo torrent) {
             _torrent = torrent;
             _fileInfos = new TorrentFileInfo[torrent.getNumFiles()];
+            FileStorage fs = torrent.getFiles();
             for (int i = 0; i < _fileInfos.length; i++) {
-                _fileInfos[i] = new TorrentFileInfo(_torrent.getFileAt(i), true);
+                _fileInfos[i] = new TorrentFileInfo(fs.getFilePath(i), fs.getFileSize(i), true);
             }
 
         }
@@ -428,7 +430,7 @@ public class PartialFilesDialog extends JDialog {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            String filePath = _fileInfos[rowIndex].fileEntry.getPath();
+            String filePath = _fileInfos[rowIndex].path;
             String extension = FilenameUtils.getExtension(filePath);
 
             switch (columnIndex) {
@@ -449,7 +451,7 @@ public class PartialFilesDialog extends JDialog {
                 return extension;
             case 5:
                 //file size
-                return new SizeHolder(_fileInfos[rowIndex].fileEntry.getSize());
+                return new SizeHolder(_fileInfos[rowIndex].size);
             default:
                 return null;
             }
