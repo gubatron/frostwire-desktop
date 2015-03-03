@@ -1,11 +1,15 @@
 frostwire (6.0.7) stable; urgency=high
+  * Memory and CPU savings when parsing search results on some search engines.
+  * BTJunkie fixed.
   * TPB search fixed.
   * Monova search fixed.
   * Fixes bug where soundcloud, archive.org audio downloads would not be automatically
     be scanned by iTunes.
   * Croatian translation updates.
+  * Torrent creation and parsing now done using frostwire-jlibtorrent api. More
+    Azureus cleanups.
 	
- -- FrostWire Team <contact@frostwire.com>  Thu, 19 February 2015 14:34:30 -0500
+ -- FrostWire Team <contact@frostwire.com>  Tue, 3 March 2015 12:57:40 -0500
 
 frostwire (6.0.6) stable; urgency=high
   * Fixes bug where default save location for torrents would not be accounted for.
