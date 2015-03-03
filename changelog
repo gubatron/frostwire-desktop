@@ -2,6 +2,7 @@ frostwire (6.0.7) stable; urgency=high
   * Memory and CPU savings when parsing search results on some search engines.
   * BTJunkie fixed.
   * TPB search fixed.
+  * KAT search fixed.
   * Monova search fixed.
   * Fixes bug where soundcloud, archive.org audio downloads would not be automatically
     be scanned by iTunes.
