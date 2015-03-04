@@ -1916,11 +1916,11 @@ msgstr "Mapa"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:768
 msgid "Delete Selected Files from this playlist"
-msgstr "Obriši odabrane datoteke sa ove liste pjesama"
+msgstr "Obrisati odabrane datoteke sa ove liste pjesama"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:842
 msgid "Refresh the audio properties based on ID3 tags"
-msgstr "Pročisti audio postavke bazirane na ID3 tagovima"
+msgstr "Pročistiti audio postavke bazirane na ID3 tagovima"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibrarySearch.java:104
 msgid "search results"
@@ -2198,7 +2198,7 @@ msgstr "SearchField.clearRecentsText"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/searchfield/SearchField.java:231
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/LimeTextField.java:52
 msgid "Undo"
-msgstr "Poništi"
+msgstr "Poništiti"
 
 #. *
 #. * The cut action
@@ -2232,12 +2232,12 @@ msgstr "Zalijepi"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/CheckBoxList.java:604
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/LimeTextField.java:122
 msgid "Select All"
-msgstr "Označi sve"
+msgstr "Označiti sve"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/searchfield/SearchField.java:627
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/ClearableAutoCompleteTextField.java:326
 msgid "Clear History"
-msgstr "Izbriši povijest"
+msgstr "Izbrisati povijest"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/searchfield/SearchFieldUI.java:410
 msgid "SearchField.popupSource"
@@ -2420,7 +2420,7 @@ msgstr "Pravila privatnosti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:94
 msgid "Close This Window"
-msgstr "Zatvori ovaj prozor"
+msgstr "Zatvoriti ovaj prozor"
 
 #. introduction
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:181
@@ -2564,7 +2564,7 @@ msgstr "Pokaži pokazatelj trgovine"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/CheckBoxList.java:606
 msgid "Marks all Items as Selected"
-msgstr "Obilježi sve stavke kao označene"
+msgstr "Obilježava sve stavke kao označene"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/CheckBoxList.java:629
 msgid "Deselect All"
@@ -2572,7 +2572,7 @@ msgstr "Skini oznaku sa svih"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/CheckBoxList.java:631
 msgid "Deselects all Items in the List"
-msgstr "Skini oznaku sa svih stavaka na listi"
+msgstr "Skida oznaku sa svih stavki na listi"
 
 #. NOTE: The IDs are serialized to disk, and should never change.
 #. *
@@ -2815,12 +2815,12 @@ msgstr "U redu"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:43
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:45
 msgid "Apply Operation"
-msgstr "Primjeni radnju"
+msgstr "Primjeniti radnju"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/InputFieldDialog.java:93
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:44
 msgid "Cancel Operation"
-msgstr "Odustani od radnje"
+msgstr "Odustati od radnje"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:68
 msgid ""
@@ -2875,7 +2875,7 @@ msgstr "Više informacija"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:177
 #, java-format
 msgid "Visit {0}"
-msgstr "Posjeti {0}"
+msgstr "Posjetiti {0}"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:185
 msgid "Remind Me Later"
@@ -2954,7 +2954,7 @@ msgstr "Isključujem FrostWire..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/ShutdownWindow.java:54
 msgid "Please wait while FrostWire shuts down..."
-msgstr "Molimo pričekajte dok se FrostWire isključuje..."
+msgstr "Molimo pričekajte da se FrostWire isključi..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/SplashWindow.java:142
 msgid "Loading FrostWire..."
